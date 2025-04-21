@@ -15,9 +15,6 @@ repositories {
 		name = "Terraformers"
 		url = "https://maven.terraformersmc.com/"
 	}
-	maven {
-		url = "https://maven.kyrptonaught.dev"
-	}
 }
 
 fabricApi {
@@ -34,8 +31,6 @@ dependencies {
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	modImplementation "net.kyrptonaught:customportalapi:${project.customportalapi_version}"
-	include "net.kyrptonaught:customportalapi:${project.customportalapi_version}"
 }
 
 processResources {

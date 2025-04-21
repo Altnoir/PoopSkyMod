@@ -13,8 +13,6 @@ import com.altnoir.poopsky.worldgen.PSWorldGeneration;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
-import net.kyrptonaught.customportalapi.api.CustomPortalBuilder;
-import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,14 +64,6 @@ public class PoopSky implements ModInitializer {
 		FlammableBlockRegistry.getDefaultInstance().add(ToiletBlocks.DARK_OAK_TOILET, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(ToiletBlocks.MANGROVE_TOILET, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(ToiletBlocks.BAMBOO_TOILET, 5, 20);
-
-		CustomPortalBuilder.beginPortal()
-				.frameBlock(PSBlocks.POOP_BLOCK)
-				.lightWithFluid(PSFluids.URINE)
-				.destDimID(Identifier.of("minecraft", "the_nether"))
-				.tintColor(70, 50, 20)
-				.onlyLightInOverworld()
-				.registerPortal();
 
 		LOGGER.info("Hello Fabric world!");
 	}

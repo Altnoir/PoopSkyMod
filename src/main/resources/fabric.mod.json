@@ -3,13 +3,13 @@
 	"id": "poopsky",
 	"version": "${version}",
 	"name": "PoopSky",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "POOSKY MOD FOR 1.21.1!",
 	"authors": [
 		"Altnoir"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://github.com/Altnoir",
+		"sources": "https://github.com/Altnoir/PoopSkyMod/tree/master"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/poopsky/icon.png",
