@@ -1,0 +1,9 @@
+{
+	"parent": "block/template_azalea",
+	"textures": {
+		"side": "poopsky:block/poop_sapling_side",
+		"top": "poopsky:block/poop_sapling_top",
+		"plant": "poopsky:block/poop_sapling",
+		"particle": "poopsky:block/poop_sapling"
+	}
+}

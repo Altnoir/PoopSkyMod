@@ -1,11 +1,14 @@
 {
-	"required": true,
-	"package": "com.altnoir.poopsky.mixin",
-	"compatibilityLevel": "JAVA_21",
-	"mixins": [
-		"ExampleMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
+  "required": true,
+  "package": "com.altnoir.poopsky.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "BlockSetTypeMixin",
+    "DispenserBehaviorMixin",
+    "PistonHandlerMixin",
+    "WoodTypeMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
 	}
 }

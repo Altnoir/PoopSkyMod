@@ -1,0 +1,6 @@
+{
+  "parent": "item/template_music_disc",
+  "textures": {
+    "layer0": "poopsky:item/music_disc_kiiteokini"
+  }
+}

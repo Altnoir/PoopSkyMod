@@ -1,23 +1,79 @@
 package com.altnoir.poopsky;
 
+import com.altnoir.poopsky.Fluid.PSFluids;
+import com.altnoir.poopsky.block.PSBlocks;
+import com.altnoir.poopsky.block.ToiletBlocks;
+import com.altnoir.poopsky.component.PSComponents;
+import com.altnoir.poopsky.effect.PSEffect;
+import com.altnoir.poopsky.entity.PSBlockEntities;
+import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.potion.PSPotions;
+import com.altnoir.poopsky.sound.PSSounds;
+import com.altnoir.poopsky.worldgen.PSWorldGeneration;
 import net.fabricmc.api.ModInitializer;
-
+import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
+import net.fabricmc.fabric.api.registry.FuelRegistry;
+import net.kyrptonaught.customportalapi.api.CustomPortalBuilder;
+import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class PoopSky implements ModInitializer {
 	public static final String MOD_ID = "poopsky";
-
-	// This logger is used to write text to the console and the log file.
-	// It is considered best practice to use your mod id as the logger's name.
-	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
 	@Override
 	public void onInitialize() {
-		// This code runs as soon as Minecraft is in a mod-load-ready state.
-		// However, some things (like resources) may still be uninitialized.
-		// Proceed with mild caution.
+		PSItemGroups.registerItemGroups();
+
+		PSFluids.registerModFluids();
+		PSBlocks.registerModBlocks();
+		PSItems.registerModItems();
+
+		PSSounds.registerSounds();
+
+		PSEffect.registerEffects();
+		PSPotions.registerPotions();
+
+		PSComponents.registerComponents();
+		PSBlockEntities.registerBlockEntities();
+
+		PSWorldGeneration.genenatePSWorldGen();
+
+		FuelRegistry.INSTANCE.add(PSItems.POOP, 200);
+		FuelRegistry.INSTANCE.add(PSItems.POOP_BALL, 400);
+		FuelRegistry.INSTANCE.add(PSItems.KIITEOOKINI_MUSIC_DISC, 1600);
+		FuelRegistry.INSTANCE.add(PSBlocks.POOP_SAPLING, 200);
+		FuelRegistry.INSTANCE.add(PSBlocks.POOP_LEAVES, 200);
+		FuelRegistry.INSTANCE.add(PSBlocks.POOP_BLOCK, 800);
+		FuelRegistry.INSTANCE.add(PSBlocks.POOP_STAIRS, 800);
+		FuelRegistry.INSTANCE.add(PSBlocks.POOP_SLAB, 400);
+		FuelRegistry.INSTANCE.add(PSBlocks.POOP_VERTICAL_SLAB, 400);
+		FuelRegistry.INSTANCE.add(PSBlocks.POOP_BUTTON, 200);
+		FuelRegistry.INSTANCE.add(PSBlocks.POOP_PRESSURE_PLATE, 400);
+		FuelRegistry.INSTANCE.add(PSBlocks.POOP_FENCE, 800);
+		FuelRegistry.INSTANCE.add(PSBlocks.POOP_FENCE_GATE, 800);
+		FuelRegistry.INSTANCE.add(PSBlocks.POOP_WALL, 800);
+		FuelRegistry.INSTANCE.add(PSBlocks.POOP_DOOR, 800);
+		FuelRegistry.INSTANCE.add(PSBlocks.POOP_TRAPDOOR, 800);
+
+		FlammableBlockRegistry.getDefaultInstance().add(ToiletBlocks.OAK_TOILET, 5, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(ToiletBlocks.SPRUCE_TOILET, 5, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(ToiletBlocks.BIRCH_TOILET, 5, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(ToiletBlocks.JUNGLE_TOILET, 5, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(ToiletBlocks.ACACIA_TOILET, 5, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(ToiletBlocks.CHERRY_TOILET, 5, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(ToiletBlocks.DARK_OAK_TOILET, 5, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(ToiletBlocks.MANGROVE_TOILET, 5, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(ToiletBlocks.BAMBOO_TOILET, 5, 20);
+
+		CustomPortalBuilder.beginPortal()
+				.frameBlock(PSBlocks.POOP_BLOCK)
+				.lightWithFluid(PSFluids.URINE)
+				.destDimID(Identifier.of("minecraft", "the_nether"))
+				.tintColor(70, 50, 20)
+				.onlyLightInOverworld()
+				.registerPortal();
 
 		LOGGER.info("Hello Fabric world!");
 	}

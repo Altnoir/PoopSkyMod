@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_poop": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:poop"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:jungle_toilet"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_poop"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "poopsky:jungle_toilet"
+    ]
+  }
+}

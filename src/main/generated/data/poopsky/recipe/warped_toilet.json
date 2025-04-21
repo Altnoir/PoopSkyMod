@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": {
+      "item": "minecraft:warped_planks"
+    },
+    "P": {
+      "item": "poopsky:poop"
+    }
+  },
+  "pattern": [
+    "#P#",
+    "###",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "poopsky:warped_toilet"
+  }
+}

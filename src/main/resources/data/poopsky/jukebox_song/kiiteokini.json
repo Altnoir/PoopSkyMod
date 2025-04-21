@@ -1,0 +1,8 @@
+{
+  "comparator_output": 8,
+  "description": {
+    "translate": "item.poopsky.music_disc_kiiteokini.desc"
+  },
+  "length_in_seconds": 88.0,
+  "sound_event": "poopsky:kiiteokini"
+}

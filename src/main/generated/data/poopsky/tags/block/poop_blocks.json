@@ -1,0 +1,17 @@
+{
+  "values": [
+    "poopsky:poop_sapling",
+    "poopsky:poop_leaves",
+    "poopsky:poop_block",
+    "poopsky:poop_stairs",
+    "poopsky:poop_slab",
+    "poopsky:poop_vertical_slab",
+    "poopsky:poop_button",
+    "poopsky:poop_pressure_plate",
+    "poopsky:poop_fence",
+    "poopsky:poop_fence_gate",
+    "poopsky:poop_wall",
+    "poopsky:poop_door",
+    "poopsky:poop_trapdoor"
+  ]
+}

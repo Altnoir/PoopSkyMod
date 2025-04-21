@@ -1,0 +1,17 @@
+{
+    "fart": {
+        "subtitle": "subtitle.poopsky.fart",
+        "sounds": [
+            "poopsky:fart_1",
+            "poopsky:fart_2"
+        ]
+    },
+    "kiiteokini": {
+    "sounds": [
+        {
+            "name":"poopsky:kiiteokini",
+            "stream": true
+        }
+    ]
+}
+}
