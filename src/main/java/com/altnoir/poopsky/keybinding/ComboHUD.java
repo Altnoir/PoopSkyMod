@@ -18,9 +18,8 @@ public class ComboHUD {
         MinecraftClient client = MinecraftClient.getInstance();
         if (!shouldRender(client)) return;
 
-        // 获取目标组合键（这里暂时硬编码WDSSS）
-        int[] targetKeys = KeyUtil.parseSequence("WDSSS");
-        renderComboDisplay(context, targetKeys);
+        // 获取目标组合键
+        renderComboDisplay(context);
     }
 
     private static boolean shouldRender(MinecraftClient client) {
@@ -29,8 +28,8 @@ public class ComboHUD {
                 && KeyUtil.isHoldingPoopBall(client.player);
     }
 
-    private static void renderComboDisplay(DrawContext context, int[] targetKeys) {
-        int keyCount = targetKeys.length;
+    private static void renderComboDisplay(DrawContext context) {
+        int keyCount = ComboHandler.TARGET_SEQUENCE.length;
         int boxWidth = keyCount * KEY_SPACING - BACKGROUND_PADDING;
         int boxHeight = KEY_SPACING + BACKGROUND_PADDING;
 
@@ -45,18 +44,18 @@ public class ComboHUD {
 
         // 绘制键位序列
         List<Integer> inputBuffer = ComboHandler.getInputBuffer();
-        for (int i = 0; i < targetKeys.length; i++) {
+        for (int i = 0; i < ComboHandler.TARGET_SEQUENCE.length; i++) {
             int color;
             if (i < inputBuffer.size()) {
                 // 已输入部分：正确显示灰色，错误显示红色
-                color = (inputBuffer.get(i) == targetKeys[i]) ? 0x808080 : 0xFF0000;
+                color = (inputBuffer.get(i) == ComboHandler.TARGET_SEQUENCE[i]) ? 0x808080 : 0xFF0000;
             } else {
                 // 未输入部分保持白色
                 color = 0xFFFFFF;
             }
             context.drawTextWithShadow(
                     MinecraftClient.getInstance().textRenderer,
-                    KeyUtil.getKeySymbol(targetKeys[i]),
+                    KeyUtil.getKeySymbol(ComboHandler.TARGET_SEQUENCE[i]),
                     HUD_X + i * KEY_SPACING,
                     HUD_Y,
                     color
