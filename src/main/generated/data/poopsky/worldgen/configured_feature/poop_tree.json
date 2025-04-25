@@ -43,7 +43,10 @@
     "trunk_provider": {
       "type": "minecraft:simple_state_provider",
       "state": {
-        "Name": "poopsky:poop_block"
+        "Name": "poopsky:poop_log",
+        "Properties": {
+          "axis": "y"
+        }
       }
     }
   }

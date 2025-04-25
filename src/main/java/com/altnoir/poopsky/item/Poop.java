@@ -14,7 +14,7 @@ public class Poop extends BoneMealItem {
             .saturationModifier(0.2F)
             .snack()
             .alwaysEdible()
-            .statusEffect(new StatusEffectInstance(StatusEffects.POISON, 200, 0), 1.0F)
+            .statusEffect(new StatusEffectInstance(StatusEffects.POISON, 200, 0), 0.5F)
             .statusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 600, 0), 0.8F)
             .statusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 300, 0), 0.1F)
             .build();

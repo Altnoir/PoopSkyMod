@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": {
+      "item": "poopsky:poop_block"
+    },
+    "P": {
+      "item": "poopsky:poop"
+    }
+  },
+  "pattern": [
+    "BPB",
+    "BPB"
+  ],
+  "result": {
+    "count": 3,
+    "id": "poopsky:poop_fence"
+  }
+}

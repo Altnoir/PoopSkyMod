@@ -1,10 +1,8 @@
 package com.altnoir.poopsky.block;
 
+import com.altnoir.poopsky.worldgen.PSConfigureFeatures;
 import net.minecraft.advancement.criterion.Criteria;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ShapeContext;
+import net.minecraft.block.*;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.component.type.FoodComponent;
 import net.minecraft.entity.Entity;
@@ -14,16 +12,22 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.vehicle.AbstractMinecartEntity;
 import net.minecraft.entity.vehicle.BoatEntity;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldView;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.UndergroundConfiguredFeatures;
 
-public class PoopBlock extends Block {
+public class PoopBlock extends Block implements Fertilizable {
     protected static final VoxelShape SHAPE = Block.createCuboidShape(1.0, 0.0, 1.0, 15.0, 12.0, 15.0);
 
     public PoopBlock(AbstractBlock.Settings settings) {
@@ -90,7 +94,6 @@ public class PoopBlock extends Block {
             }
         }
     }
-
     public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
         double d = Math.abs(entity.getVelocity().y);
         if (d < 0.1 && !entity.bypassesSteppingEffects()) {
@@ -101,11 +104,30 @@ public class PoopBlock extends Block {
         super.onSteppedOn(world, pos, state, entity);
     }
 
-
     protected VoxelShape getSidesShape(BlockState state, BlockView world, BlockPos pos) {
         return VoxelShapes.fullCube();
     }
     protected VoxelShape getCameraCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return VoxelShapes.fullCube();
+    }
+
+    @Override
+    public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
+        return world.getBlockState(pos.up()).isAir();
+    }
+    @Override
+    public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
+        return true;
+    }
+    @Override
+    public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
+        world.getRegistryManager()
+                .getOptional(RegistryKeys.CONFIGURED_FEATURE)
+                .flatMap(key -> key.getEntry(PSConfigureFeatures.POOP_PATCH_BONEMEAL))
+                .ifPresent(entry -> ((ConfiguredFeature)entry.value()).generate(world, world.getChunkManager().getChunkGenerator(), random, pos.up()));
+    }
+    @Override
+    public Fertilizable.FertilizableType getFertilizableType() {
+        return Fertilizable.FertilizableType.NEIGHBOR_SPREADER;
     }
 }

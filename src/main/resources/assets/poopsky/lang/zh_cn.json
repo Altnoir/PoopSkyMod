@@ -17,9 +17,16 @@
   "item.minecraft.potion.effect.fecal_incontinence_potion": "大便失禁药水",
   "item.minecraft.splash_potion.effect.fecal_incontinence_potion": "喷溅型大便失禁药水",
   "item.minecraft.lingering_potion.effect.fecal_incontinence_potion": "滞留型大便失禁药水",
+  "item.minecraft.potion.effect.long_fecal_incontinence_potion": "大便失禁药水",
+  "item.minecraft.splash_potion.effect.long_fecal_incontinence_potion": "喷溅型大便失禁药水",
+  "item.minecraft.lingering_potion.effect.long_fecal_incontinence_potion": "滞留型大便失禁药水",
+  "item.minecraft.potion.effect.strong_fecal_incontinence_potion": "大便失禁药水",
+  "item.minecraft.splash_potion.effect.strong_fecal_incontinence_potion": "喷溅型大便失禁药水",
+  "item.minecraft.lingering_potion.effect.strong_fecal_incontinence_potion": "滞留型大便失禁药水",
 
   "effect.poopsky.fecal_incontinence": "大便失禁",
 
+  "block.poopsky.poop_piece": "粪便片",
   "block.poopsky.poop_block": "粪便块",
   "block.poopsky.poop_stairs": "粪便楼梯",
   "block.poopsky.poop_slab": "粪便台阶",
@@ -34,6 +41,8 @@
 
   "block.poopsky.poop_sapling": "粪便树苗",
   "block.poopsky.poop_leaves": "粪便树叶",
+  "block.poopsky.poop_log": "粪便木",
+  "block.poopsky.stripped_poop_log": "去皮粪便木",
 
   "block.poopsky.urine": "尿",
   "block.poopsky.toilet_block": "厕所",

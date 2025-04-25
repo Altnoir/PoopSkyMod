@@ -29,6 +29,7 @@
 		"poopsky.mixins.json"
 	],
 	"depends": {
+		"fabric-key-binding-api-v1": "*",
 		"fabricloader": ">=0.16.13",
 		"minecraft": "~1.21.1",
 		"java": ">=21",

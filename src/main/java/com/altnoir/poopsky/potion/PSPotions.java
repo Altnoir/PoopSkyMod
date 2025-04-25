@@ -14,6 +14,12 @@ public class PSPotions {
     public static final RegistryEntry<Potion> FECAL_INCONTINENCE_POTION = registerPotion("fecal_incontinence_potion",
             new Potion(new StatusEffectInstance(PSEffect.FECAL_INCONTINENCE, 3600, 0))
     );
+    public static final RegistryEntry<Potion> LONG_FECAL_INCONTINENCE_POTION = registerPotion("long_fecal_incontinence_potion",
+            new Potion(new StatusEffectInstance(PSEffect.FECAL_INCONTINENCE, 9600, 0))
+    );
+    public static final RegistryEntry<Potion> STRONG_FECAL_INCONTINENCE_POTION = registerPotion("strong_fecal_incontinence_potion",
+            new Potion(new StatusEffectInstance(PSEffect.FECAL_INCONTINENCE, 1800, 1))
+    );
     private static RegistryEntry<Potion> registerPotion(String name, Potion potion) {
         return Registry.registerReference(Registries.POTION, Identifier.of(PoopSky.MOD_ID, name), potion);
     }

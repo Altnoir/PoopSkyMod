@@ -99,6 +99,35 @@ public class PSBlocks {
             )
     );
 
+    public static final Block POOP_PIECE = registerBlock("poop_piece",
+            new PoopPiece(AbstractBlock.Settings.create()
+                    .mapColor(MapColor.BROWN)
+                    .replaceable()
+                    .notSolid()
+                    .strength(0.1F)
+                    .sounds(BlockSoundGroup.MUD)
+                    .blockVision((state, world, pos) -> (Integer)state.get(SnowBlock.LAYERS) >= 8)
+                    .pistonBehavior(PistonBehavior.DESTROY)
+            )
+    );
+    public static final Block POOP_LOG = registerBlock("poop_log",
+            new AxeEPBlock(AbstractBlock.Settings.create()
+                    .mapColor(MapColor.BROWN)
+                    .notSolid()
+                    .instrument(NoteBlockInstrument.BASS)
+                    .strength(2.0F)
+                    .sounds(BlockSoundGroup.BAMBOO_WOOD)
+            )
+    );
+    public static final Block STRIPPED_POOP_LOG = registerBlock("stripped_poop_log",
+            new EmptyPillarBlock(AbstractBlock.Settings.create()
+                    .mapColor(MapColor.BROWN)
+                    .notSolid()
+                    .instrument(NoteBlockInstrument.BASS)
+                    .strength(2.0F)
+                    .sounds(BlockSoundGroup.BAMBOO_WOOD)
+            )
+    );
     public static final Block POOP_SAPLING = registerBlock("poop_sapling",
             new PoopTreeBlock(AbstractBlock.Settings.create()
                     .mapColor(MapColor.BROWN)

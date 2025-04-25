@@ -15,7 +15,7 @@ public class PSEffect {
     public static final RegistryEntry<StatusEffect> FECAL_INCONTINENCE = registerStatusEffect("fecal_incontinence",
             new FecalIncontinenceEffect(StatusEffectCategory.HARMFUL, 0x47311A)
                     .addAttributeModifier(EntityAttributes.GENERIC_JUMP_STRENGTH,
-                            Identifier.of(PoopSky.MOD_ID, "fecal_incontinence"), -0.4F,
+                            Identifier.of(PoopSky.MOD_ID, "fecal_incontinence"), -0.1F,
                             EntityAttributeModifier.Operation.ADD_VALUE)
     );
 

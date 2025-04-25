@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=y": {"model": "poopsky:block/stripped_poop_log"},
+    "axis=z": {"model": "poopsky:block/stripped_poop_log_horizontal"},
+    "axis=x": {"model": "poopsky:block/stripped_poop_log_horizontal", "y":  90}
+  }
+}

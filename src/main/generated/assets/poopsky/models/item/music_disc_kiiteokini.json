@@ -1,5 +1,5 @@
 {
-  "parent": "item/template_music_disc",
+  "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "poopsky:item/music_disc_kiiteokini"
   }

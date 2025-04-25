@@ -18,10 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(DispenserBehavior.class)
 public interface DispenserBehaviorMixin {
-    @Inject(
-            method = "registerDefaults()V",
-            at = @At("TAIL")
-    )
+    @Inject(method = "registerDefaults()V", at = @At("TAIL"))
     private static void poopsky$registerPoopBallBehavior(CallbackInfo ci) {
         DispenserBlock.registerProjectileBehavior(PSItems.POOP_BALL);
         DispenserBlock.registerBehavior(PSItems.POOP, new FallibleItemDispenserBehavior() {

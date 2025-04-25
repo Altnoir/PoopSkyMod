@@ -1,0 +1,7 @@
+{
+	"parent": "poopsky:block/empty_log_horizontal",
+	"textures": {
+		"0": "poopsky:block/stripped_poop_log",
+		"1": "poopsky:block/stripped_poop_log_top_empty"
+	}
+}

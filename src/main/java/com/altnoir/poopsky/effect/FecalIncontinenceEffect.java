@@ -2,6 +2,7 @@ package com.altnoir.poopsky.effect;
 
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.particle.PSParticle;
 import com.altnoir.poopsky.sound.PSSounds;
 import net.minecraft.block.Block;
 import net.minecraft.entity.ItemEntity;
@@ -10,6 +11,7 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 
 public class FecalIncontinenceEffect extends StatusEffect {
@@ -19,11 +21,11 @@ public class FecalIncontinenceEffect extends StatusEffect {
 
     @Override
     public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
-        int i = entity.getRandom().nextInt(Math.max(1, 20 - amplifier * 2));
+        int i = entity.getRandom().nextInt(Math.max(1, 20 - amplifier * 4));
         if (i == 0) {
             if (entity instanceof PlayerEntity playerEntity) {
                 if (!playerEntity.isSpectator()) {
-                    playerEntity.addExhaustion(0.1F * (amplifier + 1));
+                    playerEntity.addExhaustion(0.1F * (amplifier + 2));
                     fecalIncontinence(playerEntity);
                 }
             } else {
@@ -47,16 +49,14 @@ public class FecalIncontinenceEffect extends StatusEffect {
             );
             poop.setPickupDelay(20);
             entity.getWorld().spawnEntity(poop);
-            entity.getWorld().syncWorldEvent(2001,
-                    BlockPos.ofFloored(
-                            entity.getX(),
-                            entity.getY() + 0.1,
-                            entity.getZ()
-                    ), Block.getRawIdFromState(PSBlocks.POOP_BLOCK.getDefaultState())
-            );
+
+            ((ServerWorld) entity.getWorld()).spawnParticles(PSParticle.POOP_PARTICLE,
+                    entity.getX(), entity.getY() + 0.1, entity.getZ(),
+                    8, 0.0, -0.1, 0.0, 3.0);
+
             entity.getWorld().playSound(null,
                     entity.getX(),
-                    entity.getY(),
+                    entity.getY() + 0.1,
                     entity.getZ(),
                     PSSounds.FART,
                     entity.getSoundCategory(),

@@ -7,12 +7,17 @@ import com.altnoir.poopsky.component.PSComponents;
 import com.altnoir.poopsky.effect.PSEffect;
 import com.altnoir.poopsky.entity.PSBlockEntities;
 import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.particle.PSParticle;
 import com.altnoir.poopsky.potion.PSPotions;
 import com.altnoir.poopsky.sound.PSSounds;
 import com.altnoir.poopsky.worldgen.PSWorldGeneration;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.registry.FabricBrewingRecipeRegistryBuilder;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
+import net.minecraft.item.Items;
+import net.minecraft.potion.Potions;
+import net.minecraft.registry.tag.ItemTags;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +34,7 @@ public class PoopSky implements ModInitializer {
 		PSItems.registerModItems();
 
 		PSSounds.registerSounds();
+		PSParticle.registerParticles();
 
 		PSEffect.registerEffects();
 		PSPotions.registerPotions();
@@ -64,6 +70,13 @@ public class PoopSky implements ModInitializer {
 		FlammableBlockRegistry.getDefaultInstance().add(ToiletBlocks.DARK_OAK_TOILET, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(ToiletBlocks.MANGROVE_TOILET, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(ToiletBlocks.BAMBOO_TOILET, 5, 20);
+
+		FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> {
+			builder.registerPotionRecipe(Potions.WATER, Items.ROTTEN_FLESH, PSPotions.FECAL_INCONTINENCE_POTION);
+			builder.registerPotionRecipe(PSPotions.FECAL_INCONTINENCE_POTION, Items.REDSTONE, PSPotions.LONG_FECAL_INCONTINENCE_POTION);
+			builder.registerPotionRecipe(PSPotions.FECAL_INCONTINENCE_POTION, Items.GLOWSTONE_DUST, PSPotions.STRONG_FECAL_INCONTINENCE_POTION);
+		});
+
 
 		LOGGER.info("Hello Fabric world!");
 	}

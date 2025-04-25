@@ -14,14 +14,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 
 public class ToiletBlocks {
-    public static final Block TOILET_BLOCK = registerBlock("toilet_block",
-            new Toilet(AbstractBlock.Settings.create()
-                    .mapColor(MapColor.BLACK)
-                    .strength(3.0F,100.0F)
-                    .requiresTool()
-                    .sounds(BlockSoundGroup.DEEPSLATE_BRICKS)
-            ));
-
     public static final Block OAK_TOILET = registerWoodToilet("oak_toilet", MapColor.OAK_TAN, BlockSoundGroup.WOOD);
     public static final Block SPRUCE_TOILET = registerWoodToilet("spruce_toilet", MapColor.SPRUCE_BROWN, BlockSoundGroup.WOOD);
     public static final Block BIRCH_TOILET = registerWoodToilet("birch_toilet", MapColor.PALE_YELLOW, BlockSoundGroup.WOOD);

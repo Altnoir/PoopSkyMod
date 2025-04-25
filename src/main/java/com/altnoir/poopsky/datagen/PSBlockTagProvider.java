@@ -27,10 +27,17 @@ public class PSBlockTagProvider extends FabricTagProvider.BlockTagProvider {
 
         getOrCreateTagBuilder(BlockTags.DIRT)
                 .add(PSBlocks.POOP_BLOCK);
-        getOrCreateTagBuilder(BlockTags.LOGS_THAT_BURN)
+        getOrCreateTagBuilder(BlockTags.SNOW_LAYER_CAN_SURVIVE_ON)
                 .add(PSBlocks.POOP_BLOCK);
 
-        getOrCreateTagBuilder(BlockTags.FENCES).add(PSBlocks.POOP_FENCE);
+        getOrCreateTagBuilder(BlockTags.LOGS_THAT_BURN)
+                .add(PSBlocks.POOP_LOG)
+                .add(PSBlocks.STRIPPED_POOP_LOG);
+        getOrCreateTagBuilder(BlockTags.LOGS)
+                .add(PSBlocks.POOP_LOG)
+                .add(PSBlocks.STRIPPED_POOP_LOG);
+
+        getOrCreateTagBuilder(BlockTags.WOODEN_FENCES).add(PSBlocks.POOP_FENCE);
         getOrCreateTagBuilder(BlockTags.FENCE_GATES).add(PSBlocks.POOP_FENCE_GATE);
         getOrCreateTagBuilder(BlockTags.WALLS).add(PSBlocks.POOP_WALL);
 
@@ -54,6 +61,7 @@ public class PSBlockTagProvider extends FabricTagProvider.BlockTagProvider {
     private static final Block[] POOP_BLOCKS = {
             PSBlocks.POOP_SAPLING,
             PSBlocks.POOP_LEAVES,
+            PSBlocks.POOP_PIECE,
             PSBlocks.POOP_BLOCK,
             PSBlocks.POOP_STAIRS,
             PSBlocks.POOP_SLAB,

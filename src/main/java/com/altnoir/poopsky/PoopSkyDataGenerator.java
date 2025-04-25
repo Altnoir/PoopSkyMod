@@ -17,6 +17,7 @@ public class PoopSkyDataGenerator implements DataGeneratorEntrypoint {
 		pack.addProvider(PSBlockTagProvider::new);
 		pack.addProvider(PSFluidTagProvider::new);
 
+		pack.addProvider(PSModelProvider::new);
 		pack.addProvider(PSLootTableProvider::new);
 		pack.addProvider(PSRecipeProvider::new);
 

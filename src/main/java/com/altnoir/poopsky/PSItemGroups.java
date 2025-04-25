@@ -20,10 +20,13 @@ public class PSItemGroups {
                     .displayName(Text.translatable("itemgroup.poopsky"))
                     .entries((displayContext, entries) -> {
                         entries.add(PSItems.POOP);
-                        entries.add(PSItems.POOP_BALL);
                         entries.add(PSItems.TOILET_LINKER);
+                        entries.add(PSItems.POOP_BALL);
                         entries.add(PSBlocks.POOP_SAPLING);
                         entries.add(PSBlocks.POOP_LEAVES);
+                        entries.add(PSBlocks.POOP_LOG);
+                        entries.add(PSBlocks.STRIPPED_POOP_LOG);
+                        entries.add(PSBlocks.POOP_PIECE);
                         entries.add(PSBlocks.POOP_BLOCK);
                         entries.add(PSBlocks.POOP_STAIRS);
                         entries.add(PSBlocks.POOP_SLAB);

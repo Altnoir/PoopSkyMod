@@ -1,8 +1,0 @@
-{
-  "variants": {
-    "facing=north": { "model": "poopsky:block/toilet_block", "uvlock": true },
-    "facing=east":  { "model": "poopsky:block/toilet_block", "y":  90, "uvlock": true },
-    "facing=south": { "model": "poopsky:block/toilet_block", "y": 180, "uvlock": true },
-    "facing=west":  { "model": "poopsky:block/toilet_block", "y": 270, "uvlock": true }
-  }
-}
