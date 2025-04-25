@@ -3,35 +3,28 @@ package com.altnoir.poopsky;
 import com.altnoir.poopsky.Fluid.PSFluids;
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.block.ToiletBlocks;
-import com.altnoir.poopsky.keybinding.ComboConfig;
 import com.altnoir.poopsky.keybinding.ComboHUD;
 import com.altnoir.poopsky.keybinding.ComboHandler;
 import com.altnoir.poopsky.particle.PSParticle;
 import com.altnoir.poopsky.particle.PoopParticle;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.block.Block;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.particle.ParticleFactory;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.util.InputUtil;
 import net.minecraft.util.Identifier;
-import org.lwjgl.glfw.GLFW;
-
-import java.util.Arrays;
 
 public class PoopSkyClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        ComboConfig.init();
-        ComboHandler.init();
-        HudRenderCallback.EVENT.register((drawContext, tickDelta) -> ComboHUD.render(drawContext));
+        ComboHandler.initialize();
+        HudRenderCallback.EVENT.register((drawContext, tickDelta) -> {
+            ComboHUD.render(drawContext);
+        });
 
         BlockRenderLayerMap.INSTANCE.putBlock(PSBlocks.POOP_DOOR, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PSBlocks.POOP_TRAPDOOR, RenderLayer.getCutout());

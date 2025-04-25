@@ -40,18 +40,6 @@ public class KeyUtil {
         return InputUtil.isKeyPressed(window, GLFW.GLFW_KEY_LEFT_CONTROL) || InputUtil.isKeyPressed(window, GLFW.GLFW_KEY_RIGHT_CONTROL);
     }
 
-    public static boolean isNewKeyPress(long window, int key) {
-        boolean isPressed = InputUtil.isKeyPressed(window, key);
-        boolean wasPressed = ComboHandler.pressedKeys.contains(key);
-
-        if (isPressed && !wasPressed) {
-            ComboHandler.pressedKeys.add(key);
-            return true;
-        } else if (!isPressed && wasPressed) {
-            ComboHandler.pressedKeys.remove(key);
-        }
-        return false;
-    }
 
     public static boolean isHoldingPoopBall(PlayerEntity player) {
         return player.getMainHandStack().getItem() == PSItems.POOP_BALL || player.getOffHandStack().getItem() == PSItems.POOP_BALL;

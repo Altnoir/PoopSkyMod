@@ -4,88 +4,99 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.client.util.InputUtil;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
 
 @Environment(EnvType.CLIENT)
 public class ComboHandler {
-    private static final int BUFFER_SIZE = 10;
-    private static final ArrayDeque<Integer> inputBuffer = new ArrayDeque<>(BUFFER_SIZE);
-    public static final Set<Integer> pressedKeys = new HashSet<>();
+    private static final List<Integer> inputBuffer = new ArrayList<>();
+    private static final boolean[] keyStates = new boolean[KeyUtil.MOVEMENT_KEYS.length];
 
-    public static void init() {
+    private static boolean isComboActive = false;
+    private static final int[] TARGET_SEQUENCE = KeyUtil.parseSequence("WDSSS");
+    private static long lastKeyPressTime = 0;
+
+    public static void initialize() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (!shouldProcessInput(client)) {
-                if (!inputBuffer.isEmpty()) {
-                    inputBuffer.clear();
-                    pressedKeys.clear();
-                }
-                return;
+            if (client.player == null) return;
+
+            // 检查激活条件
+            boolean shouldListen = KeyUtil.isCtrlHeld() &&
+                    KeyUtil.isHoldingPoopBall(client.player);
+
+            if (shouldListen) {
+                handleInput(client);
+            } else {
+                resetCombo();
             }
-            processKeys(client.getWindow().getHandle());
-            checkCombination(client.player);
         });
     }
 
-    private static boolean shouldProcessInput(MinecraftClient client) {
-        return client.player != null
-                && KeyUtil.isCtrlHeld()
-                && KeyUtil.isHoldingPoopBall(client.player);
+    private static void handleInput(MinecraftClient client) {
+        long currentTime = System.currentTimeMillis();
+
+        for (int i = 0; i < KeyUtil.MOVEMENT_KEYS.length; i++) {
+            int key = KeyUtil.MOVEMENT_KEYS[i];
+            boolean isPressed = InputUtil.isKeyPressed(client.getWindow().getHandle(), key);
+
+            // 检测按键状态变化
+            if (isPressed) {
+                if (!keyStates[i]) { // 首次按下
+                    addKeyToBuffer(key);
+                    lastKeyPressTime = currentTime;
+                    keyStates[i] = true; // 标记为已处理
+                }
+            } else {
+                keyStates[i] = false; // 松开时重置状态
+            }
+        }
+
+        checkSequence();
     }
 
-    private static void processKeys(long window) {
-        Arrays.stream(KeyUtil.MOVEMENT_KEYS)
-                .filter(key -> KeyUtil.isNewKeyPress(window, key))
-                .findFirst()
-                .ifPresent(key -> {
-                    // 添加新按键前检查是否存在有效前缀
-                    String currentInput = inputBuffer.stream()
-                            .map(KeyUtil::getKeySymbol)
-                            .collect(Collectors.joining());
-
-                    if (hasValidPrefix(currentInput + KeyUtil.getKeySymbol(key))) {
-                        inputBuffer.clear();
-                    }
-
-                    // 保持缓冲区大小限制
-                    if (inputBuffer.size() >= BUFFER_SIZE) {
-                        inputBuffer.removeFirst();
-                    }
-                    inputBuffer.addLast(key);
-
-                    // 添加后再次检查有效性
-                    currentInput = inputBuffer.stream()
-                            .map(KeyUtil::getKeySymbol)
-                            .collect(Collectors.joining());
-
-                    if (hasValidPrefix(currentInput)) {
-                        inputBuffer.clear();
-                    }
-                });
+    private static void addKeyToBuffer(int key) {
+        if (inputBuffer.size() >= TARGET_SEQUENCE.length) return;
+        inputBuffer.add(key);
     }
-    private static boolean hasValidPrefix(String input) {
-        return ComboConfig.COMBO_MAP.keySet().stream()
-                .noneMatch(combo -> combo.sequence().startsWith(input));
-    }
-    private static void checkCombination(PlayerEntity player) {
-        String input = inputBuffer.stream()
-                .map(KeyUtil::getKeySymbol)
-                .collect(Collectors.joining());
 
-        ComboConfig.COMBO_MAP.keySet().stream()
-                .filter(combo -> input.endsWith(combo.sequence()))
-                .findFirst()
-                .ifPresent(matched -> {
-                    ComboConfig.COMBO_MAP.get(matched).accept(player);
-                    inputBuffer.clear();
-                    pressedKeys.clear();
-                });
+    private static void checkSequence() {
+        // 检查顺序和按键是否匹配
+        for (int i = 0; i < inputBuffer.size(); i++) {
+            if (inputBuffer.get(i) != TARGET_SEQUENCE[i]) {
+                resetCombo();
+                return;
+            }
+        }
+        // 成功触发
+        if (inputBuffer.size() == TARGET_SEQUENCE.length) {
+            onComboSuccess();
+            resetCombo();
+        }
+    }
+
+    private static void onComboSuccess() {
+        // 输出
+        MinecraftClient.getInstance().player.sendMessage(
+                Text.literal("Poop Combo!"),
+                true
+        );
+        MinecraftClient.getInstance().player.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 1.0f, 1.0f);
+        isComboActive = true;
+    }
+
+    public static void resetCombo() {
+        // 重置
+        inputBuffer.clear();
+        isComboActive = false;
     }
 
     public static List<Integer> getInputBuffer() {
         return new ArrayList<>(inputBuffer);
     }
 }
+
 
