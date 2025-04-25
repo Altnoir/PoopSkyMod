@@ -13,8 +13,7 @@ public class KeyUtil {
             GLFW.GLFW_KEY_S,
             GLFW.GLFW_KEY_D
     };
-
-    public static String getKeySymbol(int key) {
+    public static String getKey(int key) {
         return switch(key) {
             case GLFW.GLFW_KEY_W -> "↑";
             case GLFW.GLFW_KEY_A -> "←";
@@ -39,8 +38,6 @@ public class KeyUtil {
         long window = MinecraftClient.getInstance().getWindow().getHandle();
         return InputUtil.isKeyPressed(window, GLFW.GLFW_KEY_LEFT_CONTROL) || InputUtil.isKeyPressed(window, GLFW.GLFW_KEY_RIGHT_CONTROL);
     }
-
-
     public static boolean isHoldingPoopBall(PlayerEntity player) {
         return player.getMainHandStack().getItem() == PSItems.POOP_BALL || player.getOffHandStack().getItem() == PSItems.POOP_BALL;
     }
