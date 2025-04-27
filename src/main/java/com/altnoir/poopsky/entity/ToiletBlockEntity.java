@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class ToiletBlockEntity extends BlockEntity{
     public ToiletBlockEntity(BlockPos pos, BlockState state) {
-        super(PSBlockEntities.TOILET_BLOCK_ENTITY, pos, state);
+        super(PSEntities.TOILET_BLOCK_ENTITY, pos, state);
     }
 
     private BlockPos linkedPos;

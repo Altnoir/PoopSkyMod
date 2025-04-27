@@ -1,11 +1,12 @@
 package com.altnoir.poopsky.keybinding;
 
-import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.component.PSComponents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Environment(EnvType.CLIENT)
-public class ComboHandler {
+public class PoopComboHandler {
     private static final List<Integer> inputBuffer = new ArrayList<>();
     private static final boolean[] keyStates = new boolean[KeyUtil.MOVEMENT_KEYS.length];
     public static final int[] COMBO_1 = KeyUtil.parseSequence("WDSSS");
@@ -37,7 +38,6 @@ public class ComboHandler {
         for (int i = 0; i < KeyUtil.MOVEMENT_KEYS.length; i++) {
             int key = KeyUtil.MOVEMENT_KEYS[i];
             boolean isPressed = InputUtil.isKeyPressed(client.getWindow().getHandle(), key);
-
             // 检测按键状态变化
             if (isPressed) {
                 if (!keyStates[i]) { // 首次按下
@@ -58,7 +58,7 @@ public class ComboHandler {
         if (key == expectedKey) {
             playKeySuccessSound(inputBuffer.size()); // 正确按键音效
         } else {
-            MinecraftClient.getInstance().player.playSound(SoundEvents.BLOCK_NOTE_BLOCK_DIDGERIDOO.value(), 0.8f, 0.6f);
+            MinecraftClient.getInstance().player.playSound(SoundEvents.BLOCK_NOTE_BLOCK_DIDGERIDOO.value(), 0.5f, 0.6f);
         }
         inputBuffer.add(key);
     }
@@ -80,17 +80,20 @@ public class ComboHandler {
 
     private static void onComboSuccess() {
         // 输出
-        MinecraftClient.getInstance().player.sendMessage(Text.literal("Poop Combo!"), true);
-        MinecraftClient.getInstance().player.playSound(SoundEvents.BLOCK_NOTE_BLOCK_BELL.value(), 0.8f, 0.8f);
+        MinecraftClient client = MinecraftClient.getInstance();
+        ItemStack stack = client.player.getMainHandStack();
+
+        if (!stack.contains(PSComponents.POOP_BALL_COMPONENT)) {
+            stack.set(PSComponents.POOP_BALL_COMPONENT, 1);
+        }
+
+        client.player.sendMessage(Text.literal("Poop Combo!"), true);
+        client.player.playSound(SoundEvents.BLOCK_NOTE_BLOCK_BELL.value(), 0.5f, 1.0f);
     }
 
     private static void playKeySuccessSound(int i) {
-        float pitch = 0.85F + 0.05F * (i - COMBO_1.length);
-        MinecraftClient.getInstance().player.playSound(
-                SoundEvents.BLOCK_NOTE_BLOCK_BIT.value(),
-                0.8f,
-                pitch
-        );
+        float pitch = 1.05F + 0.05F * (i - COMBO_1.length);
+        MinecraftClient.getInstance().player.playSound(SoundEvents.UI_BUTTON_CLICK.value(), 0.35f, pitch);
     }
 }
 

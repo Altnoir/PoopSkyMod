@@ -8,7 +8,7 @@ import net.minecraft.client.gui.DrawContext;
 import java.util.List;
 
 @Environment(EnvType.CLIENT)
-public class ComboHUD {
+public class PoopComboHUD {
     private static final int HUD_X = 10;
     private static final int HUD_Y = 37;
     private static final int KEY_SPACING = 12;
@@ -27,7 +27,7 @@ public class ComboHUD {
                 && KeyUtil.isHoldingPoopBall(client.player);
     }
     private static void renderComboDisplay(DrawContext context) {
-        int keyCount = ComboHandler.COMBO_1.length;
+        int keyCount = PoopComboHandler.COMBO_1.length;
         int boxWidth = keyCount * KEY_SPACING - BACKGROUND_PADDING;
 
         // 绘制半透明背景
@@ -40,19 +40,19 @@ public class ComboHUD {
         );
 
         // 绘制键位序列
-        List<Integer> inputBuffer = ComboHandler.getInputBuffer();
-        for (int i = 0; i < ComboHandler.COMBO_1.length; i++) {
+        List<Integer> inputBuffer = PoopComboHandler.getInputBuffer();
+        for (int i = 0; i < PoopComboHandler.COMBO_1.length; i++) {
             int color;
             if (i < inputBuffer.size()) {
                 // 已输入部分：正确显示灰色，错误显示红色
-                color = (inputBuffer.get(i) == ComboHandler.COMBO_1[i]) ? 0x808080 : 0xFF0000;
+                color = (inputBuffer.get(i) == PoopComboHandler.COMBO_1[i]) ? 0x808080 : 0xFF0000;
             } else {
                 // 未输入部分保持白色
                 color = 0xFFFFFF;
             }
             context.drawTextWithShadow(
                     MinecraftClient.getInstance().textRenderer,
-                    KeyUtil.getKey(ComboHandler.COMBO_1[i]),
+                    KeyUtil.getKey(PoopComboHandler.COMBO_1[i]),
                     HUD_X + i * KEY_SPACING,
                     HUD_Y,
                     color

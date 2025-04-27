@@ -2,12 +2,23 @@ package com.altnoir.poopsky.entity;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.ToiletBlocks;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.EntityDimensions;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
-public class PSBlockEntities {
+public class PSEntities {
+    //普通实体
+    public static final EntityType<ToiletPlugEntity> TOILET_PLUG_ENTITY_TYPE = Registry.register(Registries.ENTITY_TYPE,
+            Identifier.of(PoopSky.MOD_ID, "toilet_plug"),
+            EntityType.Builder.create( ToiletPlugEntity::new,SpawnGroup.MISC)
+                    .dimensions(0.75f, 0.75f).build()
+    );
+    //方块实体
     public static final BlockEntityType<ToiletBlockEntity> TOILET_BLOCK_ENTITY = Registry.register(
             Registries.BLOCK_ENTITY_TYPE, Identifier.of(PoopSky.MOD_ID, "toilet_block_entity"),
             BlockEntityType.Builder.create(ToiletBlockEntity::new,
@@ -42,6 +53,9 @@ public class PSBlockEntities {
             ).build(null)
     );
 
+    public static void registerEntities() {
+        PoopSky.LOGGER.info("Registering entities for " + PoopSky.MOD_ID);
+    }
     public static void registerBlockEntities() {
         PoopSky.LOGGER.info("Registering Block Entities for " + PoopSky.MOD_ID);
     }

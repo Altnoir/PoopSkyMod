@@ -22,6 +22,7 @@ public class PSItemGroups {
                         entries.add(PSItems.POOP);
                         entries.add(PSItems.TOILET_LINKER);
                         entries.add(PSItems.POOP_BALL);
+                        entries.add(PSItems.TOILET_PLUG);
                         entries.add(PSBlocks.POOP_SAPLING);
                         entries.add(PSBlocks.POOP_LEAVES);
                         entries.add(PSBlocks.POOP_LOG);

@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "poopsky:toilet",
+      "required": false
+    }
+  ]
+}

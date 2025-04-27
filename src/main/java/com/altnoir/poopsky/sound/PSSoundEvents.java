@@ -9,8 +9,9 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
-public class PSSounds {
+public class PSSoundEvents {
     public static final SoundEvent FART = registerSoundEvent("fart");
+    public static final SoundEvent ENTITY_VILLAGER_WORK_TOILET = registerSoundEvent("entity.villager.work_toilet");
     public static final SoundEvent KIITEOOKINI = registerSoundEvent("kiiteokini");
     public static final RegistryKey<JukeboxSong> KIITEOOKINI_KEY = RegistryKey.of(RegistryKeys.JUKEBOX_SONG, Identifier.of(PoopSky.MOD_ID, "kiiteokini"));
     private static SoundEvent registerSoundEvent(String name) {

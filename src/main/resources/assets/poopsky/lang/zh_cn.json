@@ -1,6 +1,7 @@
 {
   "item.poopsky.poop": "粪便",
   "item.poopsky.poop_ball": "粪便球",
+  "item.poopsky.toilet_plug": "马桶塞子",
   "item.poopsky.urine_bucket": "尿桶",
 
   "item.poopsky.toilet_linker": "厕所连接器",
@@ -10,6 +11,8 @@
   "message.poopsky.toilet_linker.4": "已清除",
   "tooltip.poopsky.toilet_linker.info_1": "厕所①-维度ID：%1$s，坐标：%2$s, %3$s, %4$s",
   "tooltip.poopsky.toilet_linker.info_2": "厕所②-维度ID：%1$s，坐标：%2$s, %3$s, %4$s",
+
+  "tooltip.poopsky.poop_ball.info": "已激活",
 
   "item.poopsky.music_disc_kiiteokini": "音乐唱片",
   "item.poopsky.music_disc_kiiteokini.desc": "江浙沪乱步 - 聞いておおきに",
@@ -75,13 +78,15 @@
   "block.poopsky.black_concrete_toilet": "黑色混凝土厕所",
   "block.poopsky.rainbow_toilet": "彩虹厕所",
 
-
   "block.customportalapi.customportalblock": "粪便传送门",
+  "entity.minecraft.villager.poopmaker": "造粪者",
+  "entity.poopsky.toilet_plug": "马桶塞子",
 
   "advancements.adventure.poop_block_slide.title": "踩屎大师",
   "advancements.adventure.poop_block_slide.description": "在粪便块上滑行",
 
   "subtitle.poopsky.fart": "屁声",
+  "subtitle.poopsky.villager.work_toilet": "造粪者：工作",
 
 
   "itemgroup.poopsky": "空中厕所"

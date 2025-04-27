@@ -1,10 +1,8 @@
 package com.altnoir.poopsky.effect;
 
-import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.particle.PSParticle;
-import com.altnoir.poopsky.sound.PSSounds;
-import net.minecraft.block.Block;
+import com.altnoir.poopsky.sound.PSSoundEvents;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
@@ -12,7 +10,6 @@ import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
 
 public class FecalIncontinenceEffect extends StatusEffect {
     public FecalIncontinenceEffect(StatusEffectCategory category, int color) {
@@ -58,7 +55,7 @@ public class FecalIncontinenceEffect extends StatusEffect {
                     entity.getX(),
                     entity.getY() + 0.1,
                     entity.getZ(),
-                    PSSounds.FART,
+                    PSSoundEvents.FART,
                     entity.getSoundCategory(),
                     1.0F, pitch
             );

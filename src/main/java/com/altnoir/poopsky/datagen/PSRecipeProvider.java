@@ -136,6 +136,11 @@ public class PSRecipeProvider extends FabricRecipeProvider {
                 .input(PSBlocks.STRIPPED_POOP_LOG)
                 .criterion(hasItem(PSBlocks.POOP_LOG), conditionsFromItem(PSBlocks.POOP_LOG))
                 .offerTo(exporter, "poop_block_from_stripped_log");
+        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOP_PIECE, 3)
+                .pattern("PP")
+                .input('P', PSBlocks.POOP_BLOCK)
+                .criterion(hasItem(PSBlocks.POOP_BLOCK), conditionsFromItem(PSBlocks.POOP_BLOCK))
+                .offerTo(exporter);
 
         ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, PSItems.KIITEOOKINI_MUSIC_DISC)
                 .input(ConventionalItemTags.MUSIC_DISCS)

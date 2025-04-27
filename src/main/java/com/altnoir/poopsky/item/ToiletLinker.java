@@ -28,6 +28,17 @@ public class ToiletLinker extends Item {
     }
 
     @Override
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+        ItemStack stack = player.getStackInHand(hand);
+        if (player.isSneaking() && !world.isClient()) {
+            stack.set(PSComponents.TOILET_COMPONENT_1, new PSComponents.ToiletComponent(null, 0, 0, 0));
+            stack.set(PSComponents.TOILET_COMPONENT_2, new PSComponents.ToiletComponent(null, 0, 0, 0));
+            player.sendMessage(Text.translatable("message.poopsky.toilet_linker.4"), true);
+            return TypedActionResult.success(stack);
+        }
+        return super.use(world, player, hand);
+    }
+    @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         World world = context.getWorld();
         BlockPos pos = context.getBlockPos();
@@ -70,40 +81,6 @@ public class ToiletLinker extends Item {
         }
         return ActionResult.SUCCESS;
     }
-
-    @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-        ItemStack stack = player.getStackInHand(hand);
-        if (player.isSneaking() && !world.isClient()) {
-            stack.set(PSComponents.TOILET_COMPONENT_1, new PSComponents.ToiletComponent(null, 0, 0, 0));
-            stack.set(PSComponents.TOILET_COMPONENT_2, new PSComponents.ToiletComponent(null, 0, 0, 0));
-            player.sendMessage(Text.translatable("message.poopsky.toilet_linker.4"), true);
-            return TypedActionResult.success(stack);
-        }
-        return super.use(world, player, hand);
-    }
-
-    @Override
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-        if (stack.contains(PSComponents.TOILET_COMPONENT_1)) {
-            PSComponents.ToiletComponent comp1 = stack.get(PSComponents.TOILET_COMPONENT_1);
-            String dim1 = comp1.world();
-            if (dim1 != null) {
-                int x1 = comp1.x(), y1 = comp1.y(), z1 = comp1.z();
-
-                tooltip.add(Text.translatable("tooltip.poopsky.toilet_linker.info_1", dim1, x1, y1, z1).formatted(Formatting.AQUA));
-            }
-        }
-        if (stack.contains(PSComponents.TOILET_COMPONENT_2)) {
-            PSComponents.ToiletComponent comp2 = stack.get(PSComponents.TOILET_COMPONENT_2);
-            String dim2 = comp2.world();
-            if (dim2 != null) {
-                int x2 = comp2.x(), y2 = comp2.y(), z2 = comp2.z();
-                tooltip.add(Text.translatable("tooltip.poopsky.toilet_linker.info_2", dim2, x2, y2, z2).formatted(Formatting.AQUA));
-            }
-        }
-    }
-
     private void linkToilets(ItemStack stack, World world, PlayerEntity player) {
         if (!world.isClient && world instanceof ServerWorld serverWorld) {
             PSComponents.ToiletComponent comp1 = stack.get(PSComponents.TOILET_COMPONENT_1);
@@ -145,4 +122,26 @@ public class ToiletLinker extends Item {
             }
         }
     }
+
+    @Override
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+        if (stack.contains(PSComponents.TOILET_COMPONENT_1)) {
+            PSComponents.ToiletComponent comp1 = stack.get(PSComponents.TOILET_COMPONENT_1);
+            String dim1 = comp1.world();
+            if (dim1 != null) {
+                int x1 = comp1.x(), y1 = comp1.y(), z1 = comp1.z();
+
+                tooltip.add(Text.translatable("tooltip.poopsky.toilet_linker.info_1", dim1, x1, y1, z1).formatted(Formatting.AQUA));
+            }
+        }
+        if (stack.contains(PSComponents.TOILET_COMPONENT_2)) {
+            PSComponents.ToiletComponent comp2 = stack.get(PSComponents.TOILET_COMPONENT_2);
+            String dim2 = comp2.world();
+            if (dim2 != null) {
+                int x2 = comp2.x(), y2 = comp2.y(), z2 = comp2.z();
+                tooltip.add(Text.translatable("tooltip.poopsky.toilet_linker.info_2", dim2, x2, y2, z2).formatted(Formatting.AQUA));
+            }
+        }
+    }
+
 }

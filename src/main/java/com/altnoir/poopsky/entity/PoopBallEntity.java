@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.entity;
 
+import com.altnoir.poopsky.component.PSComponents;
 import com.altnoir.poopsky.item.PSItems;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -11,9 +12,12 @@ import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.item.BoneMealItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -21,6 +25,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class PoopBallEntity extends ThrownItemEntity {
+    private int componentValue = 0;
     public PoopBallEntity(EntityType<? extends PoopBallEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -31,15 +36,33 @@ public class PoopBallEntity extends ThrownItemEntity {
 
     public PoopBallEntity(World world, double x, double y, double z) {
         super(EntityType.SNOWBALL, x, y, z, world);
+
     }
 
     protected Item getDefaultItem() {
         return PSItems.POOP_BALL;
     }
-
-    private ParticleEffect getParticleParameters() {
-        ItemStack itemStack = this.getStack();
-        return (ParticleEffect)(!itemStack.isEmpty() && !itemStack.isOf(this.getDefaultItem()) ? new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack) : ParticleTypes.ITEM_SNOWBALL);
+    @Override
+    public void setItem(ItemStack stack) {
+        super.setItem(stack);
+        updateComponentValue(stack);
+    }
+    private void updateComponentValue(ItemStack stack) {
+        if (stack.contains(PSComponents.POOP_BALL_COMPONENT)) {
+            this.componentValue = stack.get(PSComponents.POOP_BALL_COMPONENT);
+        } else {
+            this.componentValue = 0;
+        }
+    }
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        nbt.putInt("PoopData", componentValue);
+    }
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+        componentValue = nbt.getInt("PoopData");
     }
 
     public void handleStatus(byte status) {
@@ -50,7 +73,10 @@ public class PoopBallEntity extends ThrownItemEntity {
                 this.getWorld().addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
             }
         }
-
+    }
+    private ParticleEffect getParticleParameters() {
+        ItemStack itemStack = this.getStack();
+        return (ParticleEffect)(!itemStack.isEmpty() && !itemStack.isOf(this.getDefaultItem()) ? new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack) : ParticleTypes.ITEM_SNOWBALL);
     }
 
     protected void onEntityHit(EntityHitResult entityHitResult) {
@@ -72,20 +98,34 @@ public class PoopBallEntity extends ThrownItemEntity {
         super.onCollision(hitResult);
         if (!this.getWorld().isClient) {
             if (hitResult.getType() == HitResult.Type.BLOCK) {
-                BlockHitResult blockHitResult = (BlockHitResult) hitResult;
-                BlockPos originPos = blockHitResult.getBlockPos();
-                World world = this.getWorld();
-                ItemStack stack = this.getStack();
+                if (this.componentValue == 1) {
+                    float explosionPower = 20.0f; // 爆炸威力可调整
+                    boolean createFire = true;  // 是否生成火焰
+                    World.ExplosionSourceType explosionType = World.ExplosionSourceType.TNT; // 爆炸类型
 
-                BlockPos.stream(originPos.add(-3, -1, -3), originPos.add(3, 1, 3))
-                        .forEach(targetPos -> {
-                            boolean fertilized = BoneMealItem.useOnFertilizable(stack, world, targetPos);
-                            if (!fertilized) {
-                                BoneMealItem.useOnGround(stack, world, targetPos, null);
-                            }
-                        });
+                    this.getWorld().createExplosion(
+                            this.getOwner(), // 爆炸来源
+                            this.getX(), this.getY(), this.getZ(), // 爆炸位置
+                            explosionPower,
+                            createFire,
+                            explosionType
+                    );
+                }else {
+                    BlockHitResult blockHitResult = (BlockHitResult) hitResult;
+                    BlockPos originPos = blockHitResult.getBlockPos();
+                    World world = this.getWorld();
+                    ItemStack stack = this.getStack();
 
-                world.syncWorldEvent(1505, originPos, 15);
+                    BlockPos.stream(originPos.add(-3, -1, -3), originPos.add(3, 1, 3))
+                            .forEach(targetPos -> {
+                                boolean fertilized = BoneMealItem.useOnFertilizable(stack, world, targetPos);
+                                if (!fertilized) {
+                                    BoneMealItem.useOnGround(stack, world, targetPos, null);
+                                }
+                            });
+
+                    world.syncWorldEvent(1505, originPos, 15);
+                }
             }
 
             this.getWorld().sendEntityStatus(this, (byte)3);

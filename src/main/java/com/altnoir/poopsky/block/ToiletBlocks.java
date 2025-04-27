@@ -27,21 +27,21 @@ public class ToiletBlocks {
     public static final Block WARPED_TOILET = registerWoodToilet("warped_toilet", MapColor.DARK_AQUA, BlockSoundGroup.NETHER_WOOD);
 
     public static final Block WHITE_CONCRETE_TOILET = registerConcreteToilet("white_concrete_toilet", DyeColor.WHITE);
+    public static final Block LIGHT_GRAY_CONCRETE_TOILET = registerConcreteToilet("light_gray_concrete_toilet", DyeColor.LIGHT_GRAY);
+    public static final Block GRAY_CONCRETE_TOILET = registerConcreteToilet("gray_concrete_toilet", DyeColor.GRAY);
+    public static final Block BLACK_CONCRETE_TOILET = registerConcreteToilet("black_concrete_toilet", DyeColor.BLACK);
+    public static final Block BROWN_CONCRETE_TOILET = registerConcreteToilet("brown_concrete_toilet", DyeColor.BROWN);
+    public static final Block RED_CONCRETE_TOILET = registerConcreteToilet("red_concrete_toilet", DyeColor.RED);
     public static final Block ORANGE_CONCRETE_TOILET = registerConcreteToilet("orange_concrete_toilet", DyeColor.ORANGE);
-    public static final Block MAGENTA_CONCRETE_TOILET = registerConcreteToilet("magenta_concrete_toilet", DyeColor.MAGENTA);
-    public static final Block LIGHT_BLUE_CONCRETE_TOILET = registerConcreteToilet("light_blue_concrete_toilet", DyeColor.LIGHT_BLUE);
     public static final Block YELLOW_CONCRETE_TOILET = registerConcreteToilet("yellow_concrete_toilet", DyeColor.YELLOW);
     public static final Block LIME_CONCRETE_TOILET = registerConcreteToilet("lime_concrete_toilet", DyeColor.LIME);
-    public static final Block PINK_CONCRETE_TOILET = registerConcreteToilet("pink_concrete_toilet", DyeColor.PINK);
-    public static final Block GRAY_CONCRETE_TOILET = registerConcreteToilet("gray_concrete_toilet", DyeColor.GRAY);
-    public static final Block LIGHT_GRAY_CONCRETE_TOILET = registerConcreteToilet("light_gray_concrete_toilet", DyeColor.LIGHT_GRAY);
-    public static final Block CYAN_CONCRETE_TOILET = registerConcreteToilet("cyan_concrete_toilet", DyeColor.CYAN);
-    public static final Block PURPLE_CONCRETE_TOILET = registerConcreteToilet("purple_concrete_toilet", DyeColor.PURPLE);
-    public static final Block BLUE_CONCRETE_TOILET = registerConcreteToilet("blue_concrete_toilet", DyeColor.BLUE);
-    public static final Block BROWN_CONCRETE_TOILET = registerConcreteToilet("brown_concrete_toilet", DyeColor.BROWN);
     public static final Block GREEN_CONCRETE_TOILET = registerConcreteToilet("green_concrete_toilet", DyeColor.GREEN);
-    public static final Block RED_CONCRETE_TOILET = registerConcreteToilet("red_concrete_toilet", DyeColor.RED);
-    public static final Block BLACK_CONCRETE_TOILET = registerConcreteToilet("black_concrete_toilet", DyeColor.BLACK);
+    public static final Block CYAN_CONCRETE_TOILET = registerConcreteToilet("cyan_concrete_toilet", DyeColor.CYAN);
+    public static final Block LIGHT_BLUE_CONCRETE_TOILET = registerConcreteToilet("light_blue_concrete_toilet", DyeColor.LIGHT_BLUE);
+    public static final Block BLUE_CONCRETE_TOILET = registerConcreteToilet("blue_concrete_toilet", DyeColor.BLUE);
+    public static final Block PURPLE_CONCRETE_TOILET = registerConcreteToilet("purple_concrete_toilet", DyeColor.PURPLE);
+    public static final Block MAGENTA_CONCRETE_TOILET = registerConcreteToilet("magenta_concrete_toilet", DyeColor.MAGENTA);
+    public static final Block PINK_CONCRETE_TOILET = registerConcreteToilet("pink_concrete_toilet", DyeColor.PINK);
     public static final Block RAINBOW_TOILET = registerConcreteToilet("rainbow_toilet", DyeColor.WHITE);
 
     private static Block registerWoodToilet(String name, MapColor color, BlockSoundGroup soundGroup) {

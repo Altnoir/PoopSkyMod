@@ -4,7 +4,7 @@ import com.altnoir.poopsky.effect.PSEffect;
 import com.altnoir.poopsky.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.particle.PSParticle;
-import com.altnoir.poopsky.sound.PSSounds;
+import com.altnoir.poopsky.sound.PSSoundEvents;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -21,7 +21,6 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
-import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
@@ -135,7 +134,7 @@ public class Toilet extends BlockWithEntity implements Portal{
         poop.setPickupDelay(20);
 
         float pitch = world.random.nextFloat() + 0.5F;
-        world.playSound(null, entity.getX(), entity.getY() + 0.1, entity.getZ(), PSSounds.FART, entity.getSoundCategory(), 1.0F, pitch);
+        world.playSound(null, entity.getX(), entity.getY() + 0.1, entity.getZ(), PSSoundEvents.FART, entity.getSoundCategory(), 1.0F, pitch);
 
         ((ServerWorld) world).spawnParticles(PSParticle.POOP_PARTICLE,
                 entity.getX(), entity.getY() + 0.1, entity.getZ(),

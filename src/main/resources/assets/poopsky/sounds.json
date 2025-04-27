@@ -6,6 +6,13 @@
             "poopsky:fart_2"
         ]
     },
+    "entity.villager.work_toilet": {
+        "subtitle": "subtitle.poopsky.villager.work_toilet",
+        "sounds": [
+            "poopsky:fart_1",
+            "poopsky:fart_2"
+        ]
+    },
     "kiiteokini": {
     "sounds": [
         {
