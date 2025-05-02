@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_spall": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:spall"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:cobbled_deepslate_from_spall"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_spall"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:cobbled_deepslate_from_spall"
+    ]
+  }
+}

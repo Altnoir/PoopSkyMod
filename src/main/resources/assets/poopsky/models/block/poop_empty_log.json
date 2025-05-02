@@ -1,0 +1,7 @@
+{
+	"parent": "poopsky:block/empty_log",
+	"textures": {
+		"0": "poopsky:block/poop_log",
+		"1": "poopsky:block/poop_log_top_empty"
+	}
+}

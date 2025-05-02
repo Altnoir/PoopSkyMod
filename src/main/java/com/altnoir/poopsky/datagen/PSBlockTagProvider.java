@@ -24,7 +24,6 @@ public class PSBlockTagProvider extends FabricTagProvider.BlockTagProvider {
                 .add(WOODEN_TOILETS)
                 .add(CONCRETE_RAINBOW_TOILETS);
 
-
         getOrCreateTagBuilder(BlockTags.DIRT)
                 .add(PSBlocks.POOP_BLOCK);
         getOrCreateTagBuilder(BlockTags.SNOW_LAYER_CAN_SURVIVE_ON)
@@ -32,10 +31,14 @@ public class PSBlockTagProvider extends FabricTagProvider.BlockTagProvider {
 
         getOrCreateTagBuilder(BlockTags.LOGS_THAT_BURN)
                 .add(PSBlocks.POOP_LOG)
-                .add(PSBlocks.STRIPPED_POOP_LOG);
+                .add(PSBlocks.POOP_EMPTY_LOG)
+                .add(PSBlocks.STRIPPED_POOP_LOG)
+                .add(PSBlocks.STRIPPED_POOP_EMPTY_LOG);
         getOrCreateTagBuilder(BlockTags.LOGS)
                 .add(PSBlocks.POOP_LOG)
-                .add(PSBlocks.STRIPPED_POOP_LOG);
+                .add(PSBlocks.POOP_EMPTY_LOG)
+                .add(PSBlocks.STRIPPED_POOP_LOG)
+                .add(PSBlocks.STRIPPED_POOP_EMPTY_LOG);
 
         getOrCreateTagBuilder(BlockTags.WOODEN_FENCES).add(PSBlocks.POOP_FENCE);
         getOrCreateTagBuilder(BlockTags.FENCE_GATES).add(PSBlocks.POOP_FENCE_GATE);
@@ -52,7 +55,9 @@ public class PSBlockTagProvider extends FabricTagProvider.BlockTagProvider {
                 .add(WOODEN_TOILETS);
 
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
-                .add(CONCRETE_RAINBOW_TOILETS);
+                .add(CONCRETE_RAINBOW_TOILETS)
+                .add(PSBlocks.POOP_LOG)
+                .add(PSBlocks.STRIPPED_POOP_LOG);
 
         getOrCreateTagBuilder(BlockTags.HOE_MINEABLE)
                 .addTag(PSBlockTags.POOP_BLOCKS);

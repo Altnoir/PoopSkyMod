@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "poopsky:spall"
+    },
+    {
+      "item": "poopsky:spall"
+    },
+    {
+      "item": "poopsky:spall"
+    },
+    {
+      "item": "poopsky:spall"
+    },
+    {
+      "item": "poopsky:spall"
+    },
+    {
+      "item": "poopsky:spall"
+    },
+    {
+      "item": "poopsky:spall"
+    },
+    {
+      "item": "poopsky:spall"
+    },
+    {
+      "item": "poopsky:spall"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:mossy_cobblestone"
+  }
+}

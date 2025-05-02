@@ -2,8 +2,24 @@ package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.block.ToiletBlocks;
+import com.altnoir.poopsky.item.PSItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
+import net.minecraft.block.Block;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.item.Items;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootTable;
+import net.minecraft.loot.condition.TableBonusLootCondition;
+import net.minecraft.loot.entry.ItemEntry;
+import net.minecraft.loot.entry.LeafEntry;
+import net.minecraft.loot.entry.LootPoolEntry;
+import net.minecraft.loot.function.ApplyBonusLootFunction;
+import net.minecraft.loot.function.SetCountLootFunction;
+import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
+import net.minecraft.loot.provider.number.UniformLootNumberProvider;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 
 import java.util.concurrent.CompletableFuture;
@@ -54,9 +70,48 @@ public class PSLootTableProvider extends FabricBlockLootTableProvider {
         addDrop(PSBlocks.POOP_DOOR, doorDrops(PSBlocks.POOP_DOOR));
         addDrop(PSBlocks.POOP_TRAPDOOR);
 
-        addDrop(PSBlocks.POOP_LOG);
-        addDrop(PSBlocks.STRIPPED_POOP_LOG);
+        addDrop(PSBlocks.POOP_LOG, spallOreDrops(PSBlocks.POOP_LOG));
+        addDrop(PSBlocks.POOP_EMPTY_LOG);
+        addDrop(PSBlocks.STRIPPED_POOP_LOG, spallOreDrops(PSBlocks.POOP_LOG));
+        addDrop(PSBlocks.STRIPPED_POOP_EMPTY_LOG);
         addDrop(PSBlocks.POOP_SAPLING);
-        addDrop(PSBlocks.POOP_LEAVES, leavesDrops(PSBlocks.POOP_LEAVES, PSBlocks.POOP_SAPLING, 0.1F));
+        addDrop(PSBlocks.POOP_LEAVES, poopLeavesDrops(PSBlocks.POOP_LEAVES, PSBlocks.POOP_SAPLING, 0.1F));
+        addDrop(PSBlocks.STOOL);
+    }
+
+    public LootTable.Builder spallOreDrops(Block drop) {
+        RegistryWrapper.Impl<Enchantment> impl = this.registryLookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT);
+        return this.dropsWithSilkTouch(
+                drop,
+                (LootPoolEntry.Builder<?>)this.applyExplosionDecay(
+                        drop,
+                        ItemEntry.builder(PSItems.SPALL)
+                                .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0F, 4.0F)))
+                                .apply(ApplyBonusLootFunction.uniformBonusCount(impl.getOrThrow(Enchantments.FORTUNE)))
+                )
+        );
+    }
+    public LootTable.Builder poopLeavesDrops(Block leaves, Block sapling, float... saplingChance) {
+        RegistryWrapper.Impl<Enchantment> impl = this.registryLookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT);
+
+        return this.dropsWithSilkTouchOrShears(
+                leaves,
+                ((LeafEntry.Builder<?>)this.addSurvivesExplosionCondition(
+                        leaves,
+                        ItemEntry.builder(sapling)))
+                                .conditionally(TableBonusLootCondition.builder(impl.getOrThrow(Enchantments.FORTUNE), saplingChance))
+                ).pool(LootPool.builder()
+                        .rolls(ConstantLootNumberProvider.create(1.0F))
+                        .conditionally(this.createWithoutShearsOrSilkTouchCondition())
+                        .with(this.applyExplosionDecay(leaves, ItemEntry.builder(Items.IRON_NUGGET)
+                                .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0.0F, 2.0F))))
+                                .conditionally(TableBonusLootCondition.builder(impl.getOrThrow(Enchantments.FORTUNE), 0.077F, 0.21F, 0.42F, 0.69F, 1.0F))
+                        )
+                ).pool(LootPool.builder()
+                        .rolls(ConstantLootNumberProvider.create(1.0F))
+                        .conditionally(this.createWithoutShearsOrSilkTouchCondition())
+                        .with(this.applyExplosionDecay(leaves, ItemEntry.builder(Items.STICK)
+                                .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0F, 4.0F)))))
+                );
     }
 }

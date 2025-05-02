@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.worldgen;
 
 public class PSWorldGeneration {
-    public static void genenatePSWorldGen() {
+    public static void generatePSWorldGen() {
     }
 }

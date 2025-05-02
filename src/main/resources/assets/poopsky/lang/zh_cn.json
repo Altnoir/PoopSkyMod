@@ -1,18 +1,21 @@
 {
   "item.poopsky.poop": "粪便",
   "item.poopsky.poop_ball": "粪便球",
+  "item.poopsky.spall": "碎石",
   "item.poopsky.toilet_plug": "马桶塞子",
-  "item.poopsky.urine_bucket": "尿桶",
+  "item.poopsky.urine_bottle": "尿瓶",
 
   "item.poopsky.toilet_linker": "厕所连接器",
-  "message.poopsky.toilet_linker.1": "绑定第一个厕所",
-  "message.poopsky.toilet_linker.2": "绑定第二个厕所",
+  "message.poopsky.toilet_linker.1": "连接厕所①",
+  "message.poopsky.toilet_linker.2": "连接厕所②",
   "message.poopsky.toilet_linker.3": "已绑定",
   "message.poopsky.toilet_linker.4": "已清除",
+  "tooltip.poopsky.toilet_linker.info_0": "§7按住 §6[Shift] §7显示详细",
   "tooltip.poopsky.toilet_linker.info_1": "厕所①-维度ID：%1$s，坐标：%2$s, %3$s, %4$s",
   "tooltip.poopsky.toilet_linker.info_2": "厕所②-维度ID：%1$s，坐标：%2$s, %3$s, %4$s",
 
-  "tooltip.poopsky.poop_ball.info": "已激活",
+  "tooltip.poopsky.poop_ball.info_1": "村民支援",
+  "tooltip.poopsky.poop_ball.info_2": "粪便500KG",
 
   "item.poopsky.music_disc_kiiteokini": "音乐唱片",
   "item.poopsky.music_disc_kiiteokini.desc": "江浙沪乱步 - 聞いておおきに",
@@ -45,7 +48,10 @@
   "block.poopsky.poop_sapling": "粪便树苗",
   "block.poopsky.poop_leaves": "粪便树叶",
   "block.poopsky.poop_log": "粪便木",
+  "block.poopsky.poop_empty_log": "粪便空心木",
   "block.poopsky.stripped_poop_log": "去皮粪便木",
+  "block.poopsky.stripped_poop_empty_log": "去皮粪便空心木",
+  "block.poopsky.stool": "粪便凳",
 
   "block.poopsky.urine": "尿",
   "block.poopsky.toilet_block": "厕所",
@@ -81,6 +87,10 @@
   "block.customportalapi.customportalblock": "粪便传送门",
   "entity.minecraft.villager.poopmaker": "造粪者",
   "entity.poopsky.toilet_plug": "马桶塞子",
+  "entity.poopsky.stool_entity": "粪便凳",
+
+  "key.poopsky.category": "空中厕所",
+  "key.poopsky.use_plug": "召唤马桶塞",
 
   "advancements.adventure.poop_block_slide.title": "踩屎大师",
   "advancements.adventure.poop_block_slide.description": "在粪便块上滑行",

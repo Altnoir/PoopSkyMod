@@ -4,6 +4,7 @@ import com.altnoir.poopsky.block.Toilet;
 import com.altnoir.poopsky.component.PSComponents;
 import com.altnoir.poopsky.entity.ToiletBlockEntity;
 import net.minecraft.block.Block;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -31,9 +32,8 @@ public class ToiletLinker extends Item {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getStackInHand(hand);
         if (player.isSneaking() && !world.isClient()) {
-            stack.set(PSComponents.TOILET_COMPONENT_1, new PSComponents.ToiletComponent(null, 0, 0, 0));
-            stack.set(PSComponents.TOILET_COMPONENT_2, new PSComponents.ToiletComponent(null, 0, 0, 0));
-            player.sendMessage(Text.translatable("message.poopsky.toilet_linker.4"), true);
+            stack.set(PSComponents.TOILET_COMPONENT, new PSComponents.ToiletComponent("", "", 0, 0, 0, 0, 0, 0));
+            player.sendMessage(Text.translatable("message.poopsky.toilet_linker.4").formatted(Formatting.DARK_RED), true);
             return TypedActionResult.success(stack);
         }
         return super.use(world, player, hand);
@@ -46,32 +46,31 @@ public class ToiletLinker extends Item {
         ItemStack stack = context.getStack();
 
         if (world.getBlockState(pos).getBlock() instanceof Toilet) {
-            PSComponents.ToiletComponent comp1 = stack.getOrDefault(PSComponents.TOILET_COMPONENT_1, new PSComponents.ToiletComponent(null,0,0,0));
-            PSComponents.ToiletComponent comp2 = stack.getOrDefault(PSComponents.TOILET_COMPONENT_2, new PSComponents.ToiletComponent(null,0,0,0));
+            if (stack.contains(PSComponents.TOILET_COMPONENT)) {
+                PSComponents.ToiletComponent comp = stack.getOrDefault(PSComponents.TOILET_COMPONENT, new PSComponents.ToiletComponent("", "", 0, 0, 0, 0, 0, 0));
 
-            if (!player.isSneaking()) {
-                if (stack.contains(PSComponents.TOILET_COMPONENT_1) && comp1.world() == null) {
-                    stack.set(PSComponents.TOILET_COMPONENT_1, new PSComponents.ToiletComponent(
-                            world.getRegistryKey().getValue().toString(),
-                            pos.getX(),
-                            pos.getY(),
-                            pos.getZ()
-                    ));
-                    if (comp2.world() == null) {
-                        player.sendMessage(Text.translatable("message.poopsky.toilet_linker.1"), true);
-                    }else {
-                        linkToilets(stack, world, player);
+                if (player != null && !player.isSneaking()) {
+                    if ( comp.world1().isEmpty()) {
+                        stack.set(PSComponents.TOILET_COMPONENT, new PSComponents.ToiletComponent(
+                                world.getRegistryKey().getValue().toString(),
+                                comp.world2(),
+                                pos.getX(), pos.getY(), pos.getZ(),
+                                comp.x2(), comp.y2(), comp.z2()
+                        ));
+                        if (comp.world2().isEmpty()) {
+                            player.sendMessage(Text.translatable("message.poopsky.toilet_linker.1"), true);
+                        }else {
+                            linkToilets(stack, world, player);
+                        }
                     }
-                }
-            } else {
-                if (stack.contains(PSComponents.TOILET_COMPONENT_2) && comp2.world() == null) {
-                    stack.set(PSComponents.TOILET_COMPONENT_2, new PSComponents.ToiletComponent(
+                } else if (comp.world2().isEmpty()) {
+                    stack.set(PSComponents.TOILET_COMPONENT, new PSComponents.ToiletComponent(
+                            comp.world1(),
                             world.getRegistryKey().getValue().toString(),
-                            pos.getX(),
-                            pos.getY(),
-                            pos.getZ()
+                            comp.x1(), comp.y1(), comp.z1(),
+                            pos.getX(), pos.getY(), pos.getZ()
                     ));
-                    if (comp1.world() == null) {
+                    if (comp.world1().isEmpty()) {
                         player.sendMessage(Text.translatable("message.poopsky.toilet_linker.2"), true);
                     }else {
                         linkToilets(stack, world, player);
@@ -83,22 +82,21 @@ public class ToiletLinker extends Item {
     }
     private void linkToilets(ItemStack stack, World world, PlayerEntity player) {
         if (!world.isClient && world instanceof ServerWorld serverWorld) {
-            PSComponents.ToiletComponent comp1 = stack.get(PSComponents.TOILET_COMPONENT_1);
-            PSComponents.ToiletComponent comp2 = stack.get(PSComponents.TOILET_COMPONENT_2);
+            PSComponents.ToiletComponent comp = stack.get(PSComponents.TOILET_COMPONENT);
 
             MinecraftServer server = serverWorld.getServer();
 
             ServerWorld world1 = server.getWorld(RegistryKey.of(
                     RegistryKeys.WORLD,
-                    Identifier.of(comp1.world()))
+                    Identifier.of(comp.world1()))
             );
             ServerWorld world2 = server.getWorld(RegistryKey.of(
                     RegistryKeys.WORLD,
-                    Identifier.of(comp2.world()))
+                    Identifier.of(comp.world2()))
             );
 
-            BlockPos pos1 = new BlockPos(comp1.x(), comp1.y(), comp1.z());
-            BlockPos pos2 = new BlockPos(comp2.x(), comp2.y(), comp2.z());
+            BlockPos pos1 = new BlockPos(comp.x1(), comp.y1(), comp.z1());
+            BlockPos pos2 = new BlockPos(comp.x2(), comp.y2(), comp.z2());
 
             ToiletBlockEntity toilet1 = (ToiletBlockEntity) world1.getBlockEntity(pos1);
             ToiletBlockEntity toilet2 = (ToiletBlockEntity) world2.getBlockEntity(pos2);
@@ -116,32 +114,29 @@ public class ToiletLinker extends Item {
                 world1.updateListeners(pos1, serverWorld.getBlockState(pos1), serverWorld.getBlockState(pos1), Block.NOTIFY_ALL);
                 world2.updateListeners(pos2, serverWorld.getBlockState(pos2), serverWorld.getBlockState(pos2), Block.NOTIFY_ALL);
 
-                player.sendMessage(Text.translatable("message.poopsky.toilet_linker.3"), true);
-                stack.set(PSComponents.TOILET_COMPONENT_1, new PSComponents.ToiletComponent(null, 0, 0, 0));
-                stack.set(PSComponents.TOILET_COMPONENT_2, new PSComponents.ToiletComponent(null, 0, 0, 0));
+                player.sendMessage(Text.translatable("message.poopsky.toilet_linker.3").formatted(Formatting.GREEN), true);
+                stack.set(PSComponents.TOILET_COMPONENT, new PSComponents.ToiletComponent("", "", 0, 0, 0, 0, 0, 0));
             }
         }
     }
 
     @Override
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-        if (stack.contains(PSComponents.TOILET_COMPONENT_1)) {
-            PSComponents.ToiletComponent comp1 = stack.get(PSComponents.TOILET_COMPONENT_1);
-            String dim1 = comp1.world();
-            if (dim1 != null) {
-                int x1 = comp1.x(), y1 = comp1.y(), z1 = comp1.z();
+        PSComponents.ToiletComponent comp = stack.get(PSComponents.TOILET_COMPONENT);
+        String dim1 = comp.world1();
+        String dim2 = comp.world2();
 
-                tooltip.add(Text.translatable("tooltip.poopsky.toilet_linker.info_1", dim1, x1, y1, z1).formatted(Formatting.AQUA));
+        if (!dim1.isEmpty() || !dim2.isEmpty()) {
+            if (!Screen.hasShiftDown()) {
+                tooltip.add(Text.translatable("tooltip.poopsky.toilet_linker.info_0"));
+            } else if (!dim1.isEmpty()) {
+                int x1 = comp.x1(), y1 = comp.y1(), z1 = comp.z1();
+                tooltip.add(Text.translatable("tooltip.poopsky.toilet_linker.info_1", dim1, x1, y1, z1).formatted(Formatting.GRAY));
             }
-        }
-        if (stack.contains(PSComponents.TOILET_COMPONENT_2)) {
-            PSComponents.ToiletComponent comp2 = stack.get(PSComponents.TOILET_COMPONENT_2);
-            String dim2 = comp2.world();
-            if (dim2 != null) {
-                int x2 = comp2.x(), y2 = comp2.y(), z2 = comp2.z();
-                tooltip.add(Text.translatable("tooltip.poopsky.toilet_linker.info_2", dim2, x2, y2, z2).formatted(Formatting.AQUA));
+            if (!dim2.isEmpty()) {
+                int x2 = comp.x2(), y2 = comp.y2(), z2 = comp.z2();
+                tooltip.add(Text.translatable("tooltip.poopsky.toilet_linker.info_2", dim2, x2, y2, z2).formatted(Formatting.GRAY));
             }
         }
     }
-
 }

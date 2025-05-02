@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.entity;
 
+import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.sound.TPFlySoundWrapper;
 import net.fabricmc.api.EnvType;
@@ -13,11 +14,15 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.item.Item;
+import net.minecraft.particle.DustParticleEffect;
+import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.explosion.Explosion;
+import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
 
 public class ToiletPlugEntity extends BoatEntity {
@@ -41,14 +46,16 @@ public class ToiletPlugEntity extends BoatEntity {
     public Item asItem() {
         return PSItems.TOILET_PLUG;
     }
+    //乘骑数量
     @Override
     protected boolean canAddPassenger(Entity passenger) {
         return this.getPassengerList().size() < 2;
     }
+    // 骑乘位置
     @Override
     protected void updatePassengerPosition(Entity passenger, PositionUpdater positionUpdater) {
         super.updatePassengerPosition(passenger, positionUpdater);
-        passenger.setPosition(passenger.getX(),passenger.getY()+0.6 +floatingValue,passenger.getZ());
+        passenger.setPosition(passenger.getX(),passenger.getY()+0.15 +floatingValue,passenger.getZ());
     }
 
     @Environment(EnvType.CLIENT)
@@ -90,15 +97,15 @@ public class ToiletPlugEntity extends BoatEntity {
             isFast = false;
         }
     }
-    private boolean isMoving(){
-        return isForward || isBackward || isLeft || isRight || isUp || isDown;
-    }
-    // 下落
+
     private void autoFall() {
         if (!this.hasPassengers()) {
             this.setVelocity(0, -0.1, 0);
             this.move(MovementType.SELF, this.getVelocity());
         }
+    }
+    private boolean isMoving(){
+        return isForward || isBackward || isLeft || isRight || isUp || isDown;
     }
     private float yawVelocity = 0;    // 当前转向速度
     private float verVelocity = 0;    // 当前垂直速度
@@ -109,8 +116,11 @@ public class ToiletPlugEntity extends BoatEntity {
         if (this.getWorld().isClient()){
             clientTick();
             updateKeyStates();
-            if(this.hasPassengers() && MinecraftClient.getInstance().player.getId() == this.getFirstPassenger().getId()){
-                TPFlySound.tick();
+            if (this.hasPassengers()) {
+                if (MinecraftClient.getInstance().player.getId() == this.getFirstPassenger().getId()) {
+                    TPFlySound.tick();
+                }
+                spawnParticles();
             }
             if(isLogicalSideForUpdatingMovement()){
                 //最大速度
@@ -202,16 +212,6 @@ public class ToiletPlugEntity extends BoatEntity {
         this.smoothPitch = pitch;
         this.smooth = 3;
     }
-    @Override
-    public boolean isCollidable() {
-        // 设为false为无碰撞
-        return super.isCollidable();
-    }
-    @Override
-    protected void refreshPosition() {
-        super.refreshPosition();
-    }
-
     // 交互逻辑
     @Override
     public ActionResult interact(PlayerEntity player, Hand hand) {
@@ -222,17 +222,50 @@ public class ToiletPlugEntity extends BoatEntity {
         }
     }
     @Override
+    public boolean isInvulnerableTo(DamageSource damageSource) {
+        return super.isInvulnerableTo(damageSource) || damageSource.isIn(DamageTypeTags.IS_FIRE);
+    }
+    @Override
+    public boolean isImmuneToExplosion(Explosion explosion) {
+        return true;
+    }
+    @Override
+    public boolean isCollidable() {
+        // 设为false为无碰撞
+        return super.isCollidable();
+    }
+    @Override
     public boolean damage(DamageSource source, float amount) {
-        if (source.getSource() instanceof PlayerEntity player){
+        if (source.getSource() instanceof PlayerEntity player && player.isSneaking()) {
             this.kill();
-            if (!player.isCreative()) {
-                if(!player.getInventory().insertStack(PSItems.TOILET_PLUG.getDefaultStack())){
-                    dropItem(asItem());
-                }
+            if (!player.isCreative() && !player.getInventory().insertStack(PSItems.TOILET_PLUG.getDefaultStack())) {
+                dropItem(asItem());
             }
             return true;
         }
-        return false;
+        return super.damage(source, amount);
+    }
+    @Environment(EnvType.CLIENT)
+    private void spawnParticles() {
+        World world = this.getWorld();
+        Vec3d velocity = this.getVelocity();
+        double speed = velocity.length();
+
+        if (speed > 0.1) {
+            float yawRad = (float) Math.toRadians(this.getYaw());
+            double offsetX = Math.sin(yawRad) * 0.55;
+            double offsetZ = -Math.cos(yawRad) * 0.55;
+
+            world.addParticle(new DustParticleEffect(
+                    new Vector3f(0.4f, 0.25f, 0.0f), 2.0f),
+                    this.getX() + offsetX,
+                    this.getY() + 0.3 + floatingValue,
+                    this.getZ() + offsetZ,
+                    velocity.x * -0.1,
+                    velocity.y * 0.1,
+                    velocity.z * -0.1
+            );
+        }
     }
     public float getFloatingValue(float tickDelta){
         return MathHelper.lerp(tickDelta, this.prevFloatingValue, this.floatingValue);

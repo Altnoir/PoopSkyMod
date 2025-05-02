@@ -5,6 +5,8 @@
   "mixins": [
     "BlockSetTypeMixin",
     "DispenserBehaviorMixin",
+    "GlassBottleItemAccessor",
+    "GlassBottleItemMixin",
     "PistonHandlerMixin",
     "WoodTypeMixin"
   ],

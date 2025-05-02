@@ -8,16 +8,15 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.SlimeEntity;
+import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.item.BoneMealItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.util.Hand;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -29,16 +28,13 @@ public class PoopBallEntity extends ThrownItemEntity {
     public PoopBallEntity(EntityType<? extends PoopBallEntity> entityType, World world) {
         super(entityType, world);
     }
-
     public PoopBallEntity(World world, LivingEntity owner) {
         super(EntityType.SNOWBALL, owner, world);
     }
-
     public PoopBallEntity(World world, double x, double y, double z) {
         super(EntityType.SNOWBALL, x, y, z, world);
 
     }
-
     protected Item getDefaultItem() {
         return PSItems.POOP_BALL;
     }
@@ -54,17 +50,6 @@ public class PoopBallEntity extends ThrownItemEntity {
             this.componentValue = 0;
         }
     }
-    @Override
-    public void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
-        nbt.putInt("PoopData", componentValue);
-    }
-    @Override
-    public void readCustomDataFromNbt(NbtCompound nbt) {
-        super.readCustomDataFromNbt(nbt);
-        componentValue = nbt.getInt("PoopData");
-    }
-
     public void handleStatus(byte status) {
         if (status == 3) {
             ParticleEffect particleEffect = this.getParticleParameters();
@@ -91,6 +76,11 @@ public class PoopBallEntity extends ThrownItemEntity {
                     100,
                     0
             ), this.getOwner());
+            switch (this.componentValue) {
+                case 1: spawnVillager();
+                case 2: spawnExplosion();
+                break;
+            }
         }
     }
 
@@ -98,38 +88,44 @@ public class PoopBallEntity extends ThrownItemEntity {
         super.onCollision(hitResult);
         if (!this.getWorld().isClient) {
             if (hitResult.getType() == HitResult.Type.BLOCK) {
-                if (this.componentValue == 1) {
-                    float explosionPower = 20.0f; // 爆炸威力可调整
-                    boolean createFire = true;  // 是否生成火焰
-                    World.ExplosionSourceType explosionType = World.ExplosionSourceType.TNT; // 爆炸类型
+                BlockHitResult blockHitResult = (BlockHitResult) hitResult;
+                BlockPos originPos = blockHitResult.getBlockPos();
+                World world = this.getWorld();
+                ItemStack stack = this.getStack();
 
-                    this.getWorld().createExplosion(
-                            this.getOwner(), // 爆炸来源
-                            this.getX(), this.getY(), this.getZ(), // 爆炸位置
-                            explosionPower,
-                            createFire,
-                            explosionType
-                    );
-                }else {
-                    BlockHitResult blockHitResult = (BlockHitResult) hitResult;
-                    BlockPos originPos = blockHitResult.getBlockPos();
-                    World world = this.getWorld();
-                    ItemStack stack = this.getStack();
+                BlockPos.stream(originPos.add(-3, -1, -3), originPos.add(3, 1, 3))
+                        .forEach(targetPos -> {
+                            boolean fertilized = BoneMealItem.useOnFertilizable(stack, world, targetPos);
+                            if (!fertilized) {
+                                BoneMealItem.useOnGround(stack, world, targetPos, null);
+                            }
+                        });
 
-                    BlockPos.stream(originPos.add(-3, -1, -3), originPos.add(3, 1, 3))
-                            .forEach(targetPos -> {
-                                boolean fertilized = BoneMealItem.useOnFertilizable(stack, world, targetPos);
-                                if (!fertilized) {
-                                    BoneMealItem.useOnGround(stack, world, targetPos, null);
-                                }
-                            });
-
-                    world.syncWorldEvent(1505, originPos, 15);
-                }
+                world.syncWorldEvent(1505, originPos, 15);
             }
 
             this.getWorld().sendEntityStatus(this, (byte)3);
             this.discard();
         }
+    }
+    private void spawnExplosion() {
+        World.ExplosionSourceType explosionType = World.ExplosionSourceType.NONE; // 爆炸类型
+
+        this.getWorld().createExplosion(
+                this.getOwner(),
+                this.getX(), this.getY(), this.getZ(),
+                16.0F, // 爆炸威力
+                true, // 生成火焰
+                explosionType
+        );
+    }
+    private void spawnVillager() {
+        VillagerEntity villager = new VillagerEntity(EntityType.VILLAGER, this.getWorld());
+        villager.setPosition(this.getX(), this.getY(), this.getZ());
+        villager.setBaby(true);
+        this.getWorld().spawnEntity(villager);
+        this.getWorld().addParticle(ParticleTypes.HAPPY_VILLAGER, this.getX(), this.getY() + 1, this.getZ(), 0, 0, 0);
+        this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.ENTITY_CHICKEN_EGG, this.getSoundCategory(), 1.0F, 1.0F);
+
     }
 }

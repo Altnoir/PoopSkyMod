@@ -17,13 +17,13 @@
               "layers": "1"
             }
           },
-          "weight": 50
+          "weight": 60
         },
         {
           "data": {
-            "Name": "minecraft:short_grass"
+            "Name": "minecraft:bamboo_sapling"
           },
-          "weight": 25
+          "weight": 15
         }
       ]
     }

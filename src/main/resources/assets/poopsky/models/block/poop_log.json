@@ -1,7 +1,7 @@
 {
-	"parent": "poopsky:block/empty_log",
+	"parent": "minecraft:block/cube_column",
 	"textures": {
-		"0": "poopsky:block/poop_log",
-		"1": "poopsky:block/poop_log_top_empty"
+		"side": "poopsky:block/poop_log",
+		"end": "poopsky:block/poop_log_top"
 	}
 }

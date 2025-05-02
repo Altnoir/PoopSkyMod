@@ -1,41 +1,30 @@
 package com.altnoir.poopsky;
 
-import com.altnoir.poopsky.Fluid.PSFluids;
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.block.ToiletBlocks;
+import com.altnoir.poopsky.entity.ChairRenderer;
 import com.altnoir.poopsky.entity.PSEntities;
-import com.altnoir.poopsky.entity.ToiletPlugEntityRenderer;
 import com.altnoir.poopsky.entity.ToiletPlugModel;
-import com.altnoir.poopsky.keybinding.PoopComboHUD;
-import com.altnoir.poopsky.keybinding.PoopComboHandler;
+import com.altnoir.poopsky.entity.ToiletPlugRenderer;
 import com.altnoir.poopsky.particle.PSParticle;
 import com.altnoir.poopsky.particle.PoopParticle;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
-import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
-import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.block.Block;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.util.Identifier;
 
 public class PoopSkyClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        PoopComboHandler.initialize();
-        HudRenderCallback.EVENT.register((drawContext, tickDelta) -> {
-            PoopComboHUD.render(drawContext);
-        });
-
         BlockRenderLayerMap.INSTANCE.putBlock(PSBlocks.POOP_DOOR, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PSBlocks.POOP_TRAPDOOR, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PSBlocks.POOP_SAPLING, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(PSBlocks.POOP_LOG, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(PSBlocks.STRIPPED_POOP_LOG, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(PSBlocks.POOP_EMPTY_LOG, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(PSBlocks.STRIPPED_POOP_EMPTY_LOG, RenderLayer.getCutout());
 
         Block[] ccb = {
                 ToiletBlocks.OAK_TOILET,
@@ -78,18 +67,13 @@ public class PoopSkyClient implements ClientModInitializer {
                     block
             );
         }
-
-        FluidRenderHandlerRegistry.INSTANCE.register(PSFluids.URINE, PSFluids.FLOWING_URINE,
-                new SimpleFluidRenderHandler(
-                        Identifier.of("minecraft:block/water_still"),
-                        Identifier.of("minecraft:block/water_flow"),
-                        0x47311A
-                )
-        );
-        BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(), PSFluids.URINE, PSFluids.FLOWING_URINE);
         ParticleFactoryRegistry.getInstance().register(PSParticle.POOP_PARTICLE, PoopParticle.Factory::new);
 
         EntityModelLayerRegistry.registerModelLayer(ToiletPlugModel.TOILET_PLUG_LAYER, ToiletPlugModel::getTexturedModelData);
-        EntityRendererRegistry.register(PSEntities.TOILET_PLUG_ENTITY_TYPE, ToiletPlugEntityRenderer::new);
+        EntityRendererRegistry.register(PSEntities.TOILET_PLUG_ENTITY, ToiletPlugRenderer::new);
+        EntityRendererRegistry.register(PSEntities.STOOL_ENTITY, ChairRenderer::new);
+
+//        PoopComboHandler.initialize();
+//        HudRenderCallback.EVENT.register(PoopComboHUD::render);
     }
 }

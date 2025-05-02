@@ -30,17 +30,18 @@ public class TPFlySoundWrapper {
 
     @Environment(EnvType.CLIENT)
     private TPFlySound bsf;
+
+    @Environment(EnvType.CLIENT)
+    private void stop0(){
+        MinecraftClient.getInstance().getSoundManager().stop(bsf);
+        bsf=null;
+    }
     @Environment(EnvType.CLIENT)
     private void play0(){
         if(bsf==null){
             bsf = new TPFlySound(attachedInstance);
         }
         MinecraftClient.getInstance().getSoundManager().play(bsf);
-    }
-    @Environment(EnvType.CLIENT)
-    private void stop0(){
-        MinecraftClient.getInstance().getSoundManager().stop(bsf);
-        bsf=null;
     }
     @Environment(EnvType.CLIENT)
     private void tick0(){

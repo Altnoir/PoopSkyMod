@@ -1,6 +1,5 @@
 package com.altnoir.poopsky.datagen;
 
-import com.altnoir.poopsky.Fluid.PSFluids;
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.item.PSItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -25,9 +24,10 @@ public class PSModelProvider extends FabricModelProvider {
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
         itemModelGenerator.register(PSItems.POOP, Models.GENERATED);
         itemModelGenerator.register(PSItems.POOP_BALL, Models.GENERATED);
+        itemModelGenerator.register(PSItems.SPALL, Models.GENERATED);
         itemModelGenerator.register(PSItems.TOILET_LINKER, Models.GENERATED);
         itemModelGenerator.register(PSItems.TOILET_PLUG, Models.GENERATED);
         itemModelGenerator.register(PSItems.KIITEOOKINI_MUSIC_DISC, Models.GENERATED);
-        itemModelGenerator.register(PSFluids.URINE_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(PSItems.URINE_BOTTLE, Models.GENERATED);
     }
 }

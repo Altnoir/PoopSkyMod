@@ -1,17 +1,27 @@
 package com.altnoir.poopsky.block;
 
-import com.altnoir.poopsky.Fluid.PSFluids;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.lib.PoopBlockSetType;
 import com.altnoir.poopsky.lib.PoopWoodType;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.block.piston.PistonBehavior;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.ItemActionResult;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraft.world.event.GameEvent;
 
 public class PSBlocks {
 
@@ -111,15 +121,61 @@ public class PSBlocks {
             )
     );
     public static final Block POOP_LOG = registerBlock("poop_log",
-            new AxeEPBlock(AbstractBlock.Settings.create()
+            new PillarBlock(AbstractBlock.Settings.create()
+                    .mapColor(MapColor.BROWN)
+                    .notSolid()
+                    .instrument(NoteBlockInstrument.BASS)
+                    .strength(2.0F)
+                    .sounds(BlockSoundGroup.STONE)
+            ){
+                @Override
+                protected ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+                    if (stack.isIn(ItemTags.AXES)) {
+                        BlockState state1 = PSBlocks.STRIPPED_POOP_LOG.getDefaultState().with(EmptyPillarBlock.AXIS, state.get(EmptyPillarBlock.AXIS));
+
+                        world.playSound(player, pos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                        world.setBlockState(pos, state1);
+                        world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Emitter.of(player, state1));
+
+                        return ItemActionResult.SUCCESS;
+                    }
+                    return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
+                }
+            }
+    );
+    public static final Block POOP_EMPTY_LOG = registerBlock("poop_empty_log",
+            new EmptyPillarBlock(AbstractBlock.Settings.create()
                     .mapColor(MapColor.BROWN)
                     .notSolid()
                     .instrument(NoteBlockInstrument.BASS)
                     .strength(2.0F)
                     .sounds(BlockSoundGroup.BAMBOO_WOOD)
-            )
+            ){
+                @Override
+                protected ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+                    if (stack.isIn(ItemTags.AXES)) {
+                        BlockState state1 = PSBlocks.STRIPPED_POOP_EMPTY_LOG.getDefaultState().with(EmptyPillarBlock.AXIS, state.get(EmptyPillarBlock.AXIS));
+
+                        world.playSound(player, pos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                        world.setBlockState(pos, state1);
+                        world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Emitter.of(player, state1));
+
+                        return ItemActionResult.SUCCESS;
+                    }
+                    return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
+                }
+            }
     );
     public static final Block STRIPPED_POOP_LOG = registerBlock("stripped_poop_log",
+            new PillarBlock(AbstractBlock.Settings.create()
+                    .mapColor(MapColor.BROWN)
+                    .notSolid()
+                    .instrument(NoteBlockInstrument.BASS)
+                    .strength(2.0F)
+                    .sounds(BlockSoundGroup.STONE)
+            )
+    );
+    public static final Block STRIPPED_POOP_EMPTY_LOG = registerBlock("stripped_poop_empty_log",
             new EmptyPillarBlock(AbstractBlock.Settings.create()
                     .mapColor(MapColor.BROWN)
                     .notSolid()
@@ -153,18 +209,14 @@ public class PSBlocks {
                     .solidBlock(Blocks::never)
             )
     );
-    public static final Block URINE_BLOCK = registerBlock("urine",
-            new FluidBlock(PSFluids.URINE, AbstractBlock.Settings.create()
+    public static final Block STOOL = registerBlock("stool",
+            new ChairBlock(AbstractBlock.Settings.create()
                     .mapColor(MapColor.BROWN)
-                    .replaceable()
-                    .noCollision()
-                    .strength(100.0F)
+                    .strength(0.5F)
+                    .sounds(BlockSoundGroup.MUD)
                     .pistonBehavior(PistonBehavior.DESTROY)
-                    .dropsNothing().liquid()
-                    .sounds(BlockSoundGroup.INTENTIONALLY_EMPTY)
             )
     );
-
 
     private static Block registerBlock(String name, Block block) {
         registerBlockItem(name, block);

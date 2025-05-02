@@ -9,6 +9,7 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.FallingBlockEntity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.pathing.NavigationType;
@@ -21,6 +22,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
+import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
@@ -34,13 +36,16 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.TeleportTarget;
 import net.minecraft.world.World;
+import net.minecraft.world.explosion.Explosion;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
+import java.util.function.BiConsumer;
 
 import static net.minecraft.block.HorizontalFacingBlock.FACING;
 
 public class Toilet extends BlockWithEntity implements Portal{
+    public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
     private static final VoxelShape SHAPE = VoxelShapes.union(createCuboidShape(0, 0, 0, 16, 16, 16));
     protected MapCodec<? extends BlockWithEntity> getCodec() {
         return createCodec(Toilet::new);
@@ -48,21 +53,9 @@ public class Toilet extends BlockWithEntity implements Portal{
 
     public Toilet(Settings settings) {
         super(settings);
-        setDefaultState(getDefaultState()
-                .with(Properties.HORIZONTAL_FACING, Direction.NORTH)
+        setDefaultState(getDefaultState().with(FACING, Direction.NORTH)
         );
     }
-    @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(Properties.HORIZONTAL_FACING);
-    }
-    @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        Direction facing = ctx.getHorizontalPlayerFacing().getOpposite();
-        return Objects.requireNonNull(super.getPlacementState(ctx))
-                .with(Properties.HORIZONTAL_FACING, facing);
-    }
-
     @Override
     public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
         if (entity.canUsePortals(false) && !world.isClient) {
@@ -74,6 +67,9 @@ public class Toilet extends BlockWithEntity implements Portal{
                 float damageMultiplier = 1.0F / (1.0F + fd);
 
                 livingEntity.handleFallDamage(fallDistance, damageMultiplier, world.getDamageSources().fall());
+            }
+            if (entity instanceof FallingBlockEntity fallingBlock && fallingBlock.getBlockState().isOf(Blocks.ANVIL)) {
+                poopBoom(world,entity);
             }
         }
     }
@@ -141,7 +137,27 @@ public class Toilet extends BlockWithEntity implements Portal{
                 8, 0.0, -0.1, 0.0, 3.0);
         world.spawnEntity(poop);
     }
-
+    private void poopBoom(World world, Entity entity) {
+        ItemEntity poop = new ItemEntity(
+                world,
+                entity.getX(),
+                entity.getY() + 0.1,
+                entity.getZ(),
+                new ItemStack(PSItems.POOP,64)
+        );
+        poop.setPickupDelay(20);
+        world.spawnEntity(poop);
+    }
+    @Override
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        builder.add(FACING);
+    }
+    @Override
+    public BlockState getPlacementState(ItemPlacementContext ctx) {
+        Direction facing = ctx.getHorizontalPlayerFacing().getOpposite();
+        return Objects.requireNonNull(super.getPlacementState(ctx))
+                .with(FACING, facing);
+    }
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return SHAPE;
@@ -154,14 +170,15 @@ public class Toilet extends BlockWithEntity implements Portal{
     protected BlockState mirror(BlockState state, BlockMirror mirror) {
         return state.rotate(mirror.getRotation(state.get(FACING)));
     }
-    @Override
-    protected boolean canPathfindThrough(BlockState state, NavigationType type) {
-        return true;
-    }
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new ToiletBlockEntity(pos, state);
+    }
+
+    @Override
+    protected boolean canPathfindThrough(BlockState state, NavigationType type) {
+        return false;
     }
     @Override
     protected BlockRenderType getRenderType(BlockState state) {

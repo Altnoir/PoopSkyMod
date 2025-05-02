@@ -1,13 +1,13 @@
 package com.altnoir.poopsky;
 
-import com.altnoir.poopsky.Fluid.PSFluids;
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.block.ToiletBlocks;
 import com.altnoir.poopsky.component.PSComponents;
 import com.altnoir.poopsky.effect.PSEffect;
 import com.altnoir.poopsky.entity.PSEntities;
 import com.altnoir.poopsky.item.PSItems;
-import com.altnoir.poopsky.keybinding.KeyInputHandler;
+import com.altnoir.poopsky.keybinding.PlugActionPayload;
+import com.altnoir.poopsky.keybinding.PoopBallPayload;
 import com.altnoir.poopsky.particle.PSParticle;
 import com.altnoir.poopsky.potion.PSPotions;
 import com.altnoir.poopsky.sound.PSSoundEvents;
@@ -18,6 +18,7 @@ import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.fabricmc.fabric.api.registry.FabricBrewingRecipeRegistryBuilder;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
+import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.Potions;
@@ -26,32 +27,32 @@ import net.minecraft.village.TradedItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Optional;
+
 public class PoopSky implements ModInitializer {
 	public static final String MOD_ID = "poopsky";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	@Override
 	public void onInitialize() {
-		PSItemGroups.registerItemGroups();
-
-		PSFluids.registerModFluids();
 		PSBlocks.registerModBlocks();
 		PSItems.registerModItems();
 
 		PSSoundEvents.registerSounds();
 		PSParticle.registerParticles();
-
 		PSEffect.registerEffects();
 		PSPotions.registerPotions();
-
 		PSComponents.registerComponents();
-		PSWorldGeneration.genenatePSWorldGen();
 
 		PSEntities.registerBlockEntities();
 		PSEntities.registerEntities();
 		PSVillagers.registerVillagers();
 
-		KeyInputHandler.register();
-		KeyInputHandler.registerServerReceiver();
+		PSItemGroups.registerItemGroups();
+		PSWorldGeneration.generatePSWorldGen();
+
+		PoopBallPayload.register();
+		PlugActionPayload.register();
+		PlugActionPayload.registerServerReceiver();
 
 		FuelRegistry.INSTANCE.add(PSItems.POOP, 200);
 		FuelRegistry.INSTANCE.add(PSItems.POOP_BALL, 400);
@@ -72,6 +73,7 @@ public class PoopSky implements ModInitializer {
 		FuelRegistry.INSTANCE.add(PSBlocks.POOP_LOG, 800);
 		FuelRegistry.INSTANCE.add(PSBlocks.STRIPPED_POOP_LOG, 800);
 		FuelRegistry.INSTANCE.add(PSBlocks.POOP_PIECE, 400);
+		FuelRegistry.INSTANCE.add(PSBlocks.STOOL, 800);
 
 		FlammableBlockRegistry.getDefaultInstance().add(ToiletBlocks.OAK_TOILET, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(ToiletBlocks.SPRUCE_TOILET, 5, 20);
@@ -91,36 +93,57 @@ public class PoopSky implements ModInitializer {
 
 		TradeOfferHelper.registerVillagerOffers(PSVillagers.POOP_MAKER, 1, factories -> {
 			factories.add((entity, random) -> new TradeOffer(
-					new TradedItem(PSItems.POOP, 8),
-					new ItemStack(Items.EMERALD, 1),44, 5, 0.05f)
+					new TradedItem(Items.EMERALD, 1),
+					new ItemStack(PSItems.POOP, 4),44, 3, 0.05f)
 			);
 			factories.add((entity, random) -> new TradeOffer(
 					new TradedItem(PSBlocks.POOP_BLOCK, 2),
-					new ItemStack(Items.EMERALD,1),22, 10, 0.2f)
+					new ItemStack(Items.EMERALD,1),88, 5, 0.1f)
 			);
 		});
 		TradeOfferHelper.registerVillagerOffers(PSVillagers.POOP_MAKER, 2, factories -> {
 			factories.add((entity, random) -> new TradeOffer(
 					new TradedItem(Items.EMERALD, 1),
-					new ItemStack(PSBlocks.POOP_SAPLING, 1),8, 20, 0.07f)
+					new ItemStack(PSBlocks.POOP_SAPLING, 1),16, 10, 0.07f)
+			);
+			factories.add((entity, random) -> new TradeOffer(
+					new TradedItem(PSBlocks.STRIPPED_POOP_EMPTY_LOG, 1),
+					new ItemStack(Items.EMERALD,3),44, 10, 0.1f)
 			);
 		});
 		TradeOfferHelper.registerVillagerOffers(PSVillagers.POOP_MAKER, 3, factories -> {
 			factories.add((entity, random) -> new TradeOffer(
+					new TradedItem(Items.EMERALD, 12),
+					new ItemStack(PSItems.KIITEOOKINI_MUSIC_DISC, 1),4, 15, 0.1f)
+			);
+			factories.add((entity, random) -> new TradeOffer(
 					new TradedItem(Items.EMERALD, 8),
-					new ItemStack(PSItems.KIITEOOKINI_MUSIC_DISC, 1),4, 30, 0.1f)
+					new ItemStack(PSBlocks.STOOL, 1),16, 15, 0.1f)
+			);
+			factories.add((entity, random) -> new TradeOffer(
+					new TradedItem(PSItems.URINE_BOTTLE, 1),
+					PotionContentsComponent.createStack(Items.POTION, Potions.WATER),3, 15, 0.1f)
 			);
 		});
 		TradeOfferHelper.registerVillagerOffers(PSVillagers.POOP_MAKER, 4, factories -> {
 			factories.add((entity, random) -> new TradeOffer(
-					new TradedItem(Items.EMERALD, 12),
-					new ItemStack(ToiletBlocks.RAINBOW_TOILET, 1),8, 50, 0.25f)
+					new TradedItem(Items.EMERALD, 16),
+					new ItemStack(ToiletBlocks.RAINBOW_TOILET, 1),8, 25, 0.25f)
+			);
+			factories.add((entity, random) -> new TradeOffer(
+					new TradedItem(Items.EMERALD, 21),
+					new ItemStack(Items.LAVA_BUCKET, 1),1, 25, 0.25f)
 			);
 		});
 		TradeOfferHelper.registerVillagerOffers(PSVillagers.POOP_MAKER, 5, factories -> {
 			factories.add((entity, random) -> new TradeOffer(
-					new TradedItem(Items.EMERALD, 32),
-					new ItemStack(PSItems.TOILET_LINKER, 1),4, 100, 0.5f)
+					new TradedItem(Items.EMERALD, 37),
+					new ItemStack(PSItems.TOILET_LINKER, 1),4, 50, 0.5f)
+			);
+			factories.add((entity, random) -> new TradeOffer(
+					new TradedItem(Items.EMERALD, 64),
+					Optional.of(new TradedItem(Items.BREEZE_ROD, 12)),
+					new ItemStack(PSItems.TOILET_PLUG, 1),1, 100, 1.0f)
 			);
 		});
 	}

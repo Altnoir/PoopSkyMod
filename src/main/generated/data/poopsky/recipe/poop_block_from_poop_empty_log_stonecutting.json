@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "poopsky:poop_empty_log"
+  },
+  "result": {
+    "count": 4,
+    "id": "poopsky:poop_block"
+  }
+}

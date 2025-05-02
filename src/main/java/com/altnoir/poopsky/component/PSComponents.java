@@ -8,35 +8,33 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
+import java.util.function.UnaryOperator;
+
 public class PSComponents {
+    public static final ComponentType<ToiletComponent> TOILET_COMPONENT =
+            register("toilet_data", builder -> builder.codec(ToiletComponent.CODEC));
+    public static final ComponentType<Integer> POOP_BALL_COMPONENT =
+            register("poop_ball_component", builder -> builder.codec(Codec.INT));
 
-    public static final ComponentType<ToiletComponent> TOILET_COMPONENT_1 = Registry.register(
-            Registries.DATA_COMPONENT_TYPE,
-            Identifier.of(PoopSky.MOD_ID, "toilet_data_1"),
-            ComponentType.<ToiletComponent>builder().codec(ToiletComponent.CODEC).build()
-    );
-    public static final ComponentType<ToiletComponent> TOILET_COMPONENT_2 = Registry.register(
-            Registries.DATA_COMPONENT_TYPE,
-            Identifier.of(PoopSky.MOD_ID, "toilet_data_2"),
-            ComponentType.<ToiletComponent>builder().codec(ToiletComponent.CODEC).build()
-    );
-    public static final ComponentType<Integer> POOP_BALL_COMPONENT = Registry.register(
-            Registries.DATA_COMPONENT_TYPE,
-            Identifier.of(PoopSky.MOD_ID, "poop_ball_component"),
-            ComponentType.<Integer>builder().codec(Codec.INT).build()
-    );
-
-    public record ToiletComponent(String world, int x, int y, int z) {
+    public record ToiletComponent(String world1,String world2, int x1, int y1, int z1, int x2, int y2, int z2) {
         public static final Codec<ToiletComponent> CODEC = RecordCodecBuilder.create(builder -> {
             return builder.group(
-                    Codec.STRING.fieldOf("world").forGetter(ToiletComponent::world),
-                    Codec.INT.fieldOf("x").forGetter(ToiletComponent::x),
-                    Codec.INT.fieldOf("y").forGetter(ToiletComponent::y),
-                    Codec.INT.fieldOf("z").forGetter(ToiletComponent::z)
+                    Codec.STRING.fieldOf("world1").forGetter(ToiletComponent::world1),
+                    Codec.STRING.fieldOf("world2").forGetter(ToiletComponent::world2),
+                    Codec.INT.fieldOf("x1").forGetter(ToiletComponent::x1),
+                    Codec.INT.fieldOf("y1").forGetter(ToiletComponent::y1),
+                    Codec.INT.fieldOf("z1").forGetter(ToiletComponent::z1),
+                    Codec.INT.fieldOf("x2").forGetter(ToiletComponent::x2),
+                    Codec.INT.fieldOf("y2").forGetter(ToiletComponent::y2),
+                    Codec.INT.fieldOf("z2").forGetter(ToiletComponent::z2)
             ).apply(builder, ToiletComponent::new);
         });
     }
 
+    private static <T>ComponentType<T> register(String name, UnaryOperator<ComponentType.Builder<T>>  builderOperator) {
+        return Registry.register(Registries.DATA_COMPONENT_TYPE, Identifier.of(PoopSky.MOD_ID, name),
+                builderOperator.apply(ComponentType.builder()).build());
+    }
     public static void registerComponents() {
         PoopSky.LOGGER.info("Registering Components for " + PoopSky.MOD_ID);
     }

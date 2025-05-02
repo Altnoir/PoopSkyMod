@@ -64,7 +64,9 @@ public class PoopBall extends Item implements ProjectileItem {
         if (stack.contains(PSComponents.POOP_BALL_COMPONENT)) {
             int count = stack.get(PSComponents.POOP_BALL_COMPONENT);
             if (count == 1) {
-                tooltip.add(Text.translatable("tooltip.poopsky.poop_ball.info").formatted(Formatting.DARK_RED));
+                tooltip.add(Text.translatable("tooltip.poopsky.poop_ball.info_1").formatted(Formatting.GOLD));
+            } else if (count == 2) {
+                tooltip.add(Text.translatable("tooltip.poopsky.poop_ball.info_2", count).formatted(Formatting.DARK_RED));
             }
         }
     }

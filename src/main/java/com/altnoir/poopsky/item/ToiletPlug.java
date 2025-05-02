@@ -7,7 +7,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -29,7 +28,7 @@ public class ToiletPlug extends Item {
             Direction face = result.getSide();
 
             if (!world.isClient()){
-                ToiletPlugEntity entity = PSEntities.TOILET_PLUG_ENTITY_TYPE.create(world);
+                ToiletPlugEntity entity = PSEntities.TOILET_PLUG_ENTITY.create(world);
 
                 float h = 1.0F;
                 double x = blockPos.getX() + 0.5;

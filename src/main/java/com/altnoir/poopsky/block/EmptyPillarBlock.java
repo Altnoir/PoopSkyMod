@@ -5,6 +5,7 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
+import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
@@ -84,5 +85,10 @@ public class EmptyPillarBlock extends Block {
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         Direction facing = ctx.getSide();
         return this.getDefaultState().with(AXIS, facing.getAxis());
+    }
+
+    @Override
+    protected boolean canPathfindThrough(BlockState state, NavigationType type) {
+        return false;
     }
 }

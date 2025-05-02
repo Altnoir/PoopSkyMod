@@ -62,8 +62,8 @@ public class PSConfigureFeatures {
                 new WeightedBlockStateProvider(
                         DataPool.<BlockState>builder()
                                 .add(PSBlocks.POOP_SAPLING.getDefaultState(), 25)
-                                .add(PSBlocks.POOP_PIECE.getDefaultState(), 50)
-                                .add(Blocks.SHORT_GRASS.getDefaultState(), 25)
+                                .add(PSBlocks.POOP_PIECE.getDefaultState(), 60)
+                                .add(Blocks.BAMBOO_SAPLING.getDefaultState(), 15)
                 ))
         );
         register(context, POOP_PATCH_BONEMEAL, Feature.VEGETATION_PATCH, new VegetationPatchFeatureConfig(
