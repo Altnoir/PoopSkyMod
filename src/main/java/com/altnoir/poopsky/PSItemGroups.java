@@ -42,7 +42,7 @@ public class PSItemGroups {
                         entries.add(PSBlocks.POOP_DOOR);
                         entries.add(PSBlocks.POOP_TRAPDOOR);
                         entries.add(PSBlocks.STOOL);
-                        entries.add(PSItems.KIITEOOKINI_MUSIC_DISC);
+                        entries.add(PSItems.LAWRENCE_MUSIC_DISC);
                         entries.add(PSItems.URINE_BOTTLE);
                         //撤锁大家庭
                         entries.add(ToiletBlocks.OAK_TOILET);

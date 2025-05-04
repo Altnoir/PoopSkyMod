@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "tag": "c:music_discs"
+    },
+    {
+      "item": "poopsky:poop"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "poopsky:music_disc_lawrence"
+  }
+}

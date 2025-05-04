@@ -86,7 +86,7 @@ public class PSLootTableProvider extends FabricBlockLootTableProvider {
                 (LootPoolEntry.Builder<?>)this.applyExplosionDecay(
                         drop,
                         ItemEntry.builder(PSItems.SPALL)
-                                .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0F, 4.0F)))
+                                .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0F, 6.0F)))
                                 .apply(ApplyBonusLootFunction.uniformBonusCount(impl.getOrThrow(Enchantments.FORTUNE)))
                 )
         );
@@ -110,8 +110,8 @@ public class PSLootTableProvider extends FabricBlockLootTableProvider {
                 ).pool(LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1.0F))
                         .conditionally(this.createWithoutShearsOrSilkTouchCondition())
-                        .with(this.applyExplosionDecay(leaves, ItemEntry.builder(Items.STICK)
-                                .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0F, 4.0F)))))
+                        .with(this.applyExplosionDecay(leaves, ItemEntry.builder(PSItems.POOP)
+                                .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0F, 2.0F)))))
                 );
     }
 }

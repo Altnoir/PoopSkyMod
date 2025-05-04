@@ -2,6 +2,7 @@ package com.altnoir.poopsky.entity;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.keybinding.PlugActionPayload;
 import com.altnoir.poopsky.sound.TPFlySoundWrapper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -86,7 +87,7 @@ public class ToiletPlugEntity extends BoatEntity {
         isLeft = MinecraftClient.getInstance().options.leftKey.isPressed();
         isRight = MinecraftClient.getInstance().options.rightKey.isPressed();
         isUp = MinecraftClient.getInstance().options.jumpKey.isPressed();
-        isDown = InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), GLFW.GLFW_KEY_LEFT_CONTROL);
+        isDown = PlugActionPayload.getDownKey().isPressed();
 
         boolean isSprintingNow = MinecraftClient.getInstance().options.sprintKey.isPressed();
 

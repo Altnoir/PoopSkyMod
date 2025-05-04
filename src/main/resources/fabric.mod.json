@@ -3,7 +3,7 @@
 	"id": "poopsky",
 	"version": "${version}",
 	"name": "PoopSky",
-	"description": "POOSKY MOD FOR 1.21.1!",
+	"description": "POOSKY MOD FOR 1.21.1",
 	"authors": [
 		"Altnoir"
 	],
@@ -11,7 +11,7 @@
 		"homepage": "https://github.com/Altnoir",
 		"sources": "https://github.com/Altnoir/PoopSkyMod/tree/master"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/poopsky/icon.png",
 	"environment": "*",
 	"entrypoints": {

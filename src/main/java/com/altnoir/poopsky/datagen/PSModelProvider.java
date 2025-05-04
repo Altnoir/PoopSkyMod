@@ -27,7 +27,7 @@ public class PSModelProvider extends FabricModelProvider {
         itemModelGenerator.register(PSItems.SPALL, Models.GENERATED);
         itemModelGenerator.register(PSItems.TOILET_LINKER, Models.GENERATED);
         itemModelGenerator.register(PSItems.TOILET_PLUG, Models.GENERATED);
-        itemModelGenerator.register(PSItems.KIITEOOKINI_MUSIC_DISC, Models.GENERATED);
+        itemModelGenerator.register(PSItems.LAWRENCE_MUSIC_DISC, Models.GENERATED);
         itemModelGenerator.register(PSItems.URINE_BOTTLE, Models.GENERATED);
     }
 }

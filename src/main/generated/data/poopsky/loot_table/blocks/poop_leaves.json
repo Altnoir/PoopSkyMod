@@ -169,7 +169,7 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 4.0,
+                "max": 2.0,
                 "min": 1.0
               },
               "function": "minecraft:set_count"
@@ -178,7 +178,7 @@
               "function": "minecraft:explosion_decay"
             }
           ],
-          "name": "minecraft:stick"
+          "name": "poopsky:poop"
         }
       ],
       "rolls": 1.0

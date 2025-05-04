@@ -26,6 +26,7 @@ public record PlugActionPayload() implements CustomPayload {
 
     private static final String CATEGORY = "key.poopsky.category";
     private static KeyBinding plugKey;
+    private static KeyBinding downKey;
 
     public static void register() {
         plugKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
@@ -34,11 +35,20 @@ public record PlugActionPayload() implements CustomPayload {
                 GLFW.GLFW_KEY_V,
                 CATEGORY
         ));
+        downKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.poopsky.plug_down",
+                InputUtil.Type.KEYSYM,
+                GLFW.GLFW_KEY_LEFT_CONTROL,
+                CATEGORY
+        ));
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (plugKey.wasPressed()) {
                 ClientPlayNetworking.send(new PlugActionPayload());
             }
         });
+    }
+    public static KeyBinding getDownKey() {
+        return downKey;
     }
     public static void registerServerReceiver() {
         PayloadTypeRegistry.playC2S().register(PlugActionPayload.ID, PlugActionPayload.CODEC);

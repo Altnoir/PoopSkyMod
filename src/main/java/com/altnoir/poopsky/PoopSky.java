@@ -56,7 +56,6 @@ public class PoopSky implements ModInitializer {
 
 		FuelRegistry.INSTANCE.add(PSItems.POOP, 200);
 		FuelRegistry.INSTANCE.add(PSItems.POOP_BALL, 400);
-		FuelRegistry.INSTANCE.add(PSItems.KIITEOOKINI_MUSIC_DISC, 1600);
 		FuelRegistry.INSTANCE.add(PSBlocks.POOP_SAPLING, 200);
 		FuelRegistry.INSTANCE.add(PSBlocks.POOP_LEAVES, 200);
 		FuelRegistry.INSTANCE.add(PSBlocks.POOP_BLOCK, 800);
@@ -114,7 +113,7 @@ public class PoopSky implements ModInitializer {
 		TradeOfferHelper.registerVillagerOffers(PSVillagers.POOP_MAKER, 3, factories -> {
 			factories.add((entity, random) -> new TradeOffer(
 					new TradedItem(Items.EMERALD, 12),
-					new ItemStack(PSItems.KIITEOOKINI_MUSIC_DISC, 1),4, 15, 0.1f)
+					new ItemStack(PSItems.LAWRENCE_MUSIC_DISC, 1),4, 15, 0.1f)
 			);
 			factories.add((entity, random) -> new TradeOffer(
 					new TradedItem(Items.EMERALD, 8),

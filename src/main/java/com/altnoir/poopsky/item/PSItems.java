@@ -23,8 +23,8 @@ public class PSItems {
                     .component(PSComponents.TOILET_COMPONENT, new PSComponents.ToiletComponent("","",0,0,0,0,0,0))
                     .maxCount(1)));
 
-    public static final Item KIITEOOKINI_MUSIC_DISC = registerItem("music_disc_kiiteokini",
-            new Item(new Item.Settings().jukeboxPlayable(PSSoundEvents.KIITEOOKINI_KEY).rarity(Rarity.RARE).maxCount(1)));
+    public static final Item LAWRENCE_MUSIC_DISC = registerItem("music_disc_lawrence",
+            new Item(new Item.Settings().jukeboxPlayable(PSSoundEvents.LAWRENCE_KEY).rarity(Rarity.RARE).maxCount(1)));
     public static final Item URINE_BOTTLE = registerItem("urine_bottle",
             new UrineBottle(new Item.Settings().maxCount(16)));
 

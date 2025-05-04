@@ -141,13 +141,20 @@ public class PSRecipeProvider extends FabricRecipeProvider {
                 .input('P', PSBlocks.POOP_BLOCK)
                 .criterion(hasItem(PSBlocks.POOP_BLOCK), conditionsFromItem(PSBlocks.POOP_BLOCK))
                 .offerTo(exporter);
-
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, PSItems.KIITEOOKINI_MUSIC_DISC)
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, PSItems.LAWRENCE_MUSIC_DISC)
                 .input(ConventionalItemTags.MUSIC_DISCS).input(PSItems.POOP)
                 .criterion(hasItem(PSItems.POOP), conditionsFromItem(PSItems.POOP))
                 .offerTo(exporter);
 
         //原版物品配方
+        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Blocks.CRAFTING_TABLE)
+                .pattern("SS")
+                .pattern("PP")
+                .input('S', PSItems.SPALL)
+                .input('P', PSBlocks.POOP_BLOCK)
+                .criterion(hasItem( PSBlocks.POOP_BLOCK), conditionsFromItem( PSBlocks.POOP_BLOCK))
+                .offerTo(exporter,  getItemPath(Blocks.CRAFTING_TABLE) + "_from_poop_block");
+
         ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, Blocks.POINTED_DRIPSTONE)
                 .pattern("S")
                 .pattern("S")
@@ -218,7 +225,6 @@ public class PSRecipeProvider extends FabricRecipeProvider {
         offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, PSBlocks.STRIPPED_POOP_EMPTY_LOG, PSBlocks.POOP_EMPTY_LOG);
         offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOP_BLOCK, PSBlocks.POOP_EMPTY_LOG, 4);
         offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOP_BLOCK, PSBlocks.STRIPPED_POOP_EMPTY_LOG, 4);
-
 
         toiletRecipes(exporter, ToiletBlocks.OAK_TOILET, Blocks.OAK_PLANKS);
         toiletRecipes(exporter, ToiletBlocks.SPRUCE_TOILET, Blocks.SPRUCE_PLANKS);

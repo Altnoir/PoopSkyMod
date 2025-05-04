@@ -17,8 +17,8 @@
   "tooltip.poopsky.poop_ball.info_1": "村民支援",
   "tooltip.poopsky.poop_ball.info_2": "粪便500KG",
 
-  "item.poopsky.music_disc_kiiteokini": "音乐唱片",
-  "item.poopsky.music_disc_kiiteokini.desc": "江浙沪乱步 - 聞いておおきに",
+  "item.poopsky.music_disc_lawrence": "音乐唱片",
+  "item.poopsky.music_disc_lawrence.desc": "坂本龍一 - Merry Christmas Mr. Lawrence",
 
   "item.minecraft.potion.effect.fecal_incontinence_potion": "大便失禁药水",
   "item.minecraft.splash_potion.effect.fecal_incontinence_potion": "喷溅型大便失禁药水",
@@ -91,6 +91,7 @@
 
   "key.poopsky.category": "空中厕所",
   "key.poopsky.use_plug": "召唤马桶塞",
+  "key.poopsky.plug_down": "下降",
 
   "advancements.adventure.poop_block_slide.title": "踩屎大师",
   "advancements.adventure.poop_block_slide.description": "在粪便块上滑行",

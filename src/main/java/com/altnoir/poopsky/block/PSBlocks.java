@@ -29,35 +29,35 @@ public class PSBlocks {
             new PoopBlock(AbstractBlock.Settings.create()
                     .mapColor(MapColor.BROWN)
                     .instrument(NoteBlockInstrument.COW_BELL)
-                    .strength(0.1F)
+                    .strength(0.2F)
                     .sounds(BlockSoundGroup.MUD)
             )
     );
     public static final Block POOP_STAIRS = registerBlock("poop_stairs",
             new StairsBlock(POOP_BLOCK.getDefaultState(), AbstractBlock.Settings.create()
                     .mapColor(MapColor.BROWN)
-                    .strength(0.1F)
+                    .strength(0.2F)
                     .sounds(BlockSoundGroup.MUD)
             )
     );
     public static final Block POOP_SLAB = registerBlock("poop_slab",
             new SlabBlock(AbstractBlock.Settings.create()
                     .mapColor(MapColor.BROWN)
-                    .strength(0.1F)
+                    .strength(0.2F)
                     .sounds(BlockSoundGroup.MUD)
             )
     );
     public static final Block POOP_VERTICAL_SLAB = registerBlock("poop_vertical_slab",
             new VerticalSlabBlock(AbstractBlock.Settings.create()
                     .mapColor(MapColor.BROWN)
-                    .strength(0.1F)
+                    .strength(0.2F)
                     .sounds(BlockSoundGroup.MUD)
             )
     );
     public static final Block POOP_BUTTON = registerBlock("poop_button",
             new ButtonBlock(PoopBlockSetType.POOP,200,AbstractBlock.Settings.create()
                     .mapColor(MapColor.BROWN)
-                    .strength(0.1F)
+                    .strength(0.2F)
                     .sounds(BlockSoundGroup.MUD)
                     .noCollision()
             )
@@ -65,7 +65,7 @@ public class PSBlocks {
     public static final Block POOP_PRESSURE_PLATE = registerBlock("poop_pressure_plate",
             new PressurePlateBlock(PoopBlockSetType.POOP, AbstractBlock.Settings.create()
                     .mapColor(MapColor.BROWN)
-                    .strength(0.1F)
+                    .strength(0.2F)
                     .sounds(BlockSoundGroup.MUD)
                     .noCollision()
             )
@@ -73,21 +73,21 @@ public class PSBlocks {
     public static final Block POOP_FENCE = registerBlock("poop_fence",
             new FenceBlock(AbstractBlock.Settings.create()
                     .mapColor(MapColor.BROWN)
-                    .strength(0.1F)
+                    .strength(0.2F)
                     .sounds(BlockSoundGroup.MUD)
             )
     );
     public static final Block POOP_FENCE_GATE = registerBlock("poop_fence_gate",
             new FenceGateBlock(PoopWoodType.POOP, AbstractBlock.Settings.create()
                     .mapColor(MapColor.BROWN)
-                    .strength(0.1F)
+                    .strength(0.2F)
                     .sounds(BlockSoundGroup.MUD)
             )
     );
     public static final Block POOP_WALL = registerBlock("poop_wall",
             new WallBlock(AbstractBlock.Settings.create()
                     .mapColor(MapColor.BROWN)
-                    .strength(0.1F)
+                    .strength(0.2F)
                     .sounds(BlockSoundGroup.MUD)
             )
     );
@@ -95,7 +95,7 @@ public class PSBlocks {
     public static final Block POOP_DOOR = registerBlock("poop_door",
             new DoorBlock(PoopBlockSetType.POOP,AbstractBlock.Settings.create()
                     .mapColor(MapColor.BROWN)
-                    .strength(0.1F)
+                    .strength(0.2F)
                     .sounds(BlockSoundGroup.MUD)
                     .nonOpaque()
             )
@@ -103,7 +103,7 @@ public class PSBlocks {
     public static final Block POOP_TRAPDOOR = registerBlock("poop_trapdoor",
             new TrapdoorBlock(PoopBlockSetType.POOP,AbstractBlock.Settings.create()
                     .mapColor(MapColor.BROWN)
-                    .strength(0.1F)
+                    .strength(0.2F)
                     .sounds(BlockSoundGroup.MUD)
                     .nonOpaque()
             )
@@ -114,7 +114,7 @@ public class PSBlocks {
                     .mapColor(MapColor.BROWN)
                     .replaceable()
                     .notSolid()
-                    .strength(0.1F)
+                    .strength(0.2F)
                     .sounds(BlockSoundGroup.MUD)
                     .blockVision((state, world, pos) -> (Integer)state.get(SnowBlock.LAYERS) >= 8)
                     .pistonBehavior(PistonBehavior.DESTROY)
@@ -212,7 +212,7 @@ public class PSBlocks {
     public static final Block STOOL = registerBlock("stool",
             new ChairBlock(AbstractBlock.Settings.create()
                     .mapColor(MapColor.BROWN)
-                    .strength(0.5F)
+                    .strength(0.2F)
                     .sounds(BlockSoundGroup.MUD)
                     .pistonBehavior(PistonBehavior.DESTROY)
             )
