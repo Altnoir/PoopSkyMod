@@ -11,15 +11,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsage;
 import net.minecraft.item.Items;
+import net.minecraft.item.consume.UseAction;
 import net.minecraft.potion.Potions;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 
 public class UrineBottle extends Item{
@@ -60,9 +58,9 @@ public class UrineBottle extends Item{
                 ItemStack waterPotion = PotionContentsComponent.createStack(Items.POTION, Potions.WATER);
 
                 chicken.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 1200, 1));
-                chicken.damage(player.getDamageSources().playerAttack(player), 1.0F);
+                chicken.damage((ServerWorld) player.getWorld(), player.getDamageSources().playerAttack(player), 1.0F);
                 stack.decrement(1);
-                entity.dropStack(waterPotion);
+                entity.dropStack((ServerWorld) player.getWorld(), waterPotion);
             }
         }
         return super.useOnEntity(stack, player, entity, hand);
@@ -79,17 +77,7 @@ public class UrineBottle extends Item{
     }
 
     @Override
-    public SoundEvent getDrinkSound() {
-        return super.getDrinkSound();
-    }
-
-    @Override
-    public SoundEvent getEatSound() {
-        return SoundEvents.ENTITY_GENERIC_DRINK;
-    }
-
-    @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+    public ActionResult use(World world, PlayerEntity user, Hand hand) {
         return ItemUsage.consumeHeldItem(world, user, hand);
     }
 }

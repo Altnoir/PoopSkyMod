@@ -124,7 +124,7 @@ public class PoopBlock extends Block implements Fertilizable {
         world.getRegistryManager()
                 .getOptional(RegistryKeys.CONFIGURED_FEATURE)
                 .flatMap(key -> key.getEntry(PSConfigureFeatures.POOP_PATCH_BONEMEAL))
-                .ifPresent(entry -> ((ConfiguredFeature)entry.value()).generate(world, world.getChunkManager().getChunkGenerator(), random, pos.up()));
+                .ifPresent(entry -> ((ConfiguredFeature<?, ?>)entry.value()).generate(world, world.getChunkManager().getChunkGenerator(), random, pos.up()));
     }
     @Override
     public Fertilizable.FertilizableType getFertilizableType() {

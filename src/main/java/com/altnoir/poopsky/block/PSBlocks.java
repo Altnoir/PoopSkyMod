@@ -9,24 +9,29 @@ import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.ItemActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 
+import java.util.function.Function;
+
 public class PSBlocks {
 
     public static final Block POOP_BLOCK = registerBlock("poop_block",
-            new PoopBlock(AbstractBlock.Settings.create()
+            new PoopBlock(AbstractBlock.Settings.create().registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(PoopSky.MOD_ID, "poop_block")))
                     .mapColor(MapColor.BROWN)
                     .instrument(NoteBlockInstrument.COW_BELL)
                     .strength(0.2F)
@@ -34,28 +39,28 @@ public class PSBlocks {
             )
     );
     public static final Block POOP_STAIRS = registerBlock("poop_stairs",
-            new StairsBlock(POOP_BLOCK.getDefaultState(), AbstractBlock.Settings.create()
+            new StairsBlock(POOP_BLOCK.getDefaultState(), AbstractBlock.Settings.create().registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(PoopSky.MOD_ID, "poop_stairs")))
                     .mapColor(MapColor.BROWN)
                     .strength(0.2F)
                     .sounds(BlockSoundGroup.MUD)
             )
     );
     public static final Block POOP_SLAB = registerBlock("poop_slab",
-            new SlabBlock(AbstractBlock.Settings.create()
+            new SlabBlock(AbstractBlock.Settings.create().registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(PoopSky.MOD_ID, "poop_slab")))
                     .mapColor(MapColor.BROWN)
                     .strength(0.2F)
                     .sounds(BlockSoundGroup.MUD)
             )
     );
     public static final Block POOP_VERTICAL_SLAB = registerBlock("poop_vertical_slab",
-            new VerticalSlabBlock(AbstractBlock.Settings.create()
+            new VerticalSlabBlock(AbstractBlock.Settings.create().registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(PoopSky.MOD_ID, "poop_vertical_slab")))
                     .mapColor(MapColor.BROWN)
                     .strength(0.2F)
                     .sounds(BlockSoundGroup.MUD)
             )
     );
     public static final Block POOP_BUTTON = registerBlock("poop_button",
-            new ButtonBlock(PoopBlockSetType.POOP,200,AbstractBlock.Settings.create()
+            new ButtonBlock(PoopBlockSetType.POOP,200,AbstractBlock.Settings.create().registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(PoopSky.MOD_ID, "poop_button")))
                     .mapColor(MapColor.BROWN)
                     .strength(0.2F)
                     .sounds(BlockSoundGroup.MUD)
@@ -63,7 +68,7 @@ public class PSBlocks {
             )
     );
     public static final Block POOP_PRESSURE_PLATE = registerBlock("poop_pressure_plate",
-            new PressurePlateBlock(PoopBlockSetType.POOP, AbstractBlock.Settings.create()
+            new PressurePlateBlock(PoopBlockSetType.POOP, AbstractBlock.Settings.create().registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(PoopSky.MOD_ID, "poop_pressure_plate")))
                     .mapColor(MapColor.BROWN)
                     .strength(0.2F)
                     .sounds(BlockSoundGroup.MUD)
@@ -71,21 +76,21 @@ public class PSBlocks {
             )
     );
     public static final Block POOP_FENCE = registerBlock("poop_fence",
-            new FenceBlock(AbstractBlock.Settings.create()
+            new FenceBlock(AbstractBlock.Settings.create().registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(PoopSky.MOD_ID, "poop_fence")))
                     .mapColor(MapColor.BROWN)
                     .strength(0.2F)
                     .sounds(BlockSoundGroup.MUD)
             )
     );
     public static final Block POOP_FENCE_GATE = registerBlock("poop_fence_gate",
-            new FenceGateBlock(PoopWoodType.POOP, AbstractBlock.Settings.create()
+            new FenceGateBlock(PoopWoodType.POOP, AbstractBlock.Settings.create().registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(PoopSky.MOD_ID, "poop_fence_gate")))
                     .mapColor(MapColor.BROWN)
                     .strength(0.2F)
                     .sounds(BlockSoundGroup.MUD)
             )
     );
     public static final Block POOP_WALL = registerBlock("poop_wall",
-            new WallBlock(AbstractBlock.Settings.create()
+            new WallBlock(AbstractBlock.Settings.create().registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(PoopSky.MOD_ID, "poop_wall")))
                     .mapColor(MapColor.BROWN)
                     .strength(0.2F)
                     .sounds(BlockSoundGroup.MUD)
@@ -93,7 +98,7 @@ public class PSBlocks {
     );
 
     public static final Block POOP_DOOR = registerBlock("poop_door",
-            new DoorBlock(PoopBlockSetType.POOP,AbstractBlock.Settings.create()
+            new DoorBlock(PoopBlockSetType.POOP,AbstractBlock.Settings.create().registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(PoopSky.MOD_ID, "poop_door")))
                     .mapColor(MapColor.BROWN)
                     .strength(0.2F)
                     .sounds(BlockSoundGroup.MUD)
@@ -101,7 +106,7 @@ public class PSBlocks {
             )
     );
     public static final Block POOP_TRAPDOOR = registerBlock("poop_trapdoor",
-            new TrapdoorBlock(PoopBlockSetType.POOP,AbstractBlock.Settings.create()
+            new TrapdoorBlock(PoopBlockSetType.POOP,AbstractBlock.Settings.create().registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(PoopSky.MOD_ID, "poop_trapdoor")))
                     .mapColor(MapColor.BROWN)
                     .strength(0.2F)
                     .sounds(BlockSoundGroup.MUD)
@@ -110,7 +115,7 @@ public class PSBlocks {
     );
 
     public static final Block POOP_PIECE = registerBlock("poop_piece",
-            new PoopPiece(AbstractBlock.Settings.create()
+            new PoopPiece(AbstractBlock.Settings.create().registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(PoopSky.MOD_ID, "poop_piece")))
                     .mapColor(MapColor.BROWN)
                     .replaceable()
                     .notSolid()
@@ -121,7 +126,7 @@ public class PSBlocks {
             )
     );
     public static final Block POOP_LOG = registerBlock("poop_log",
-            new PillarBlock(AbstractBlock.Settings.create()
+            new PillarBlock(AbstractBlock.Settings.create().registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(PoopSky.MOD_ID, "poop_log")))
                     .mapColor(MapColor.BROWN)
                     .notSolid()
                     .instrument(NoteBlockInstrument.BASS)
@@ -129,7 +134,7 @@ public class PSBlocks {
                     .sounds(BlockSoundGroup.STONE)
             ){
                 @Override
-                protected ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+                protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
                     if (stack.isIn(ItemTags.AXES)) {
                         BlockState state1 = PSBlocks.STRIPPED_POOP_LOG.getDefaultState().with(EmptyPillarBlock.AXIS, state.get(EmptyPillarBlock.AXIS));
 
@@ -137,14 +142,14 @@ public class PSBlocks {
                         world.setBlockState(pos, state1);
                         world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Emitter.of(player, state1));
 
-                        return ItemActionResult.SUCCESS;
+                        return ActionResult.SUCCESS;
                     }
                     return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
                 }
             }
     );
     public static final Block POOP_EMPTY_LOG = registerBlock("poop_empty_log",
-            new EmptyPillarBlock(AbstractBlock.Settings.create()
+            new EmptyPillarBlock(AbstractBlock.Settings.create().registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(PoopSky.MOD_ID, "poop_empty_log")))
                     .mapColor(MapColor.BROWN)
                     .notSolid()
                     .instrument(NoteBlockInstrument.BASS)
@@ -152,7 +157,7 @@ public class PSBlocks {
                     .sounds(BlockSoundGroup.BAMBOO_WOOD)
             ){
                 @Override
-                protected ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+                protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
                     if (stack.isIn(ItemTags.AXES)) {
                         BlockState state1 = PSBlocks.STRIPPED_POOP_EMPTY_LOG.getDefaultState().with(EmptyPillarBlock.AXIS, state.get(EmptyPillarBlock.AXIS));
 
@@ -160,14 +165,14 @@ public class PSBlocks {
                         world.setBlockState(pos, state1);
                         world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Emitter.of(player, state1));
 
-                        return ItemActionResult.SUCCESS;
+                        return ActionResult.SUCCESS;
                     }
                     return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
                 }
             }
     );
     public static final Block STRIPPED_POOP_LOG = registerBlock("stripped_poop_log",
-            new PillarBlock(AbstractBlock.Settings.create()
+            new PillarBlock(AbstractBlock.Settings.create().registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(PoopSky.MOD_ID, "stripped_poop_log")))
                     .mapColor(MapColor.BROWN)
                     .notSolid()
                     .instrument(NoteBlockInstrument.BASS)
@@ -176,7 +181,7 @@ public class PSBlocks {
             )
     );
     public static final Block STRIPPED_POOP_EMPTY_LOG = registerBlock("stripped_poop_empty_log",
-            new EmptyPillarBlock(AbstractBlock.Settings.create()
+            new EmptyPillarBlock(AbstractBlock.Settings.create().registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(PoopSky.MOD_ID, "stripped_poop_empty_log")))
                     .mapColor(MapColor.BROWN)
                     .notSolid()
                     .instrument(NoteBlockInstrument.BASS)
@@ -185,7 +190,7 @@ public class PSBlocks {
             )
     );
     public static final Block POOP_SAPLING = registerBlock("poop_sapling",
-            new PoopTreeBlock(AbstractBlock.Settings.create()
+            new PoopTreeBlock(AbstractBlock.Settings.create().registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(PoopSky.MOD_ID, "poop_sapling")))
                     .mapColor(MapColor.BROWN)
                     .notSolid()
                     .breakInstantly()
@@ -195,7 +200,7 @@ public class PSBlocks {
             )
     );
     public static final Block POOP_LEAVES = registerBlock("poop_leaves",
-            new LeavesBlock(AbstractBlock.Settings.create()
+            new LeavesBlock(AbstractBlock.Settings.create().registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(PoopSky.MOD_ID, "poop_leaves")))
                     .mapColor(MapColor.BROWN)
                     .strength(0.2F)
                     .ticksRandomly()
@@ -210,7 +215,7 @@ public class PSBlocks {
             )
     );
     public static final Block STOOL = registerBlock("stool",
-            new ChairBlock(AbstractBlock.Settings.create()
+            new ChairBlock(AbstractBlock.Settings.create().registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(PoopSky.MOD_ID, "stool")))
                     .mapColor(MapColor.BROWN)
                     .strength(0.2F)
                     .sounds(BlockSoundGroup.MUD)
@@ -224,7 +229,7 @@ public class PSBlocks {
     }
     private static void registerBlockItem(String name, Block block) {
         Registry.register(Registries.ITEM, Identifier.of(PoopSky.MOD_ID, name),
-                new BlockItem(block, new BlockItem.Settings().maxCount(88)));
+                new BlockItem(block, new BlockItem.Settings().registryKey(RegistryKey.of(RegistryKeys.ITEM, Identifier.of(PoopSky.MOD_ID, name))).maxCount(88)));
     }
     public static void registerModBlocks() {
         PoopSky.LOGGER.info("Registering Mod Blocks for " + PoopSky.MOD_ID);

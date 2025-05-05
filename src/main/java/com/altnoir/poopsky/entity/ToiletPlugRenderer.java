@@ -1,12 +1,14 @@
 package com.altnoir.poopsky.entity;
 
 import com.altnoir.poopsky.PoopSky;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.client.render.entity.state.EntityRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.RotationAxis;
@@ -16,6 +18,12 @@ public class ToiletPlugRenderer extends EntityRenderer<ToiletPlugEntity> {
     public ToiletPlugRenderer(EntityRendererFactory.Context ctx) {
         super(ctx);
     }
+
+    @Override
+    public EntityRenderState createRenderState() {
+        return null;
+    }
+
     @Override
     public Identifier getTexture(ToiletPlugEntity entity) {
         return Identifier.of(PoopSky.MOD_ID, "textures/entity/toilet_plug.png");

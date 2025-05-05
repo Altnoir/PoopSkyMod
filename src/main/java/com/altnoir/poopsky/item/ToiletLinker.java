@@ -16,7 +16,10 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ChunkTicketType;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
+import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
@@ -29,12 +32,12 @@ public class ToiletLinker extends Item {
     }
 
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    public ActionResult use(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getStackInHand(hand);
         if (player.isSneaking() && !world.isClient()) {
             stack.set(PSComponents.TOILET_COMPONENT, new PSComponents.ToiletComponent("", "", 0, 0, 0, 0, 0, 0));
             player.sendMessage(Text.translatable("message.poopsky.toilet_linker.4").formatted(Formatting.DARK_RED), true);
-            return TypedActionResult.success(stack);
+            return ActionResult.SUCCESS;
         }
         return super.use(world, player, hand);
     }

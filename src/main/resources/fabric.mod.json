@@ -3,7 +3,7 @@
 	"id": "poopsky",
 	"version": "${version}",
 	"name": "PoopSky",
-	"description": "POOSKY MOD FOR 1.21.1",
+	"description": "POOSKY MOD FOR 1.21.4",
 	"authors": [
 		"Altnoir"
 	],
@@ -30,8 +30,8 @@
 	],
 	"depends": {
 		"fabric-key-binding-api-v1": "*",
-		"fabricloader": ">=0.16.13",
-		"minecraft": "~1.21.1",
+		"fabricloader": ">=0.16.14",
+		"minecraft": "~1.21.4",
 		"java": ">=21",
 		"fabric-api": "*"
 	},

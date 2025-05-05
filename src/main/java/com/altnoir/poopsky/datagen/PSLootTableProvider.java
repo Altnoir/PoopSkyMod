@@ -80,7 +80,7 @@ public class PSLootTableProvider extends FabricBlockLootTableProvider {
     }
 
     public LootTable.Builder spallOreDrops(Block drop) {
-        RegistryWrapper.Impl<Enchantment> impl = this.registryLookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT);
+        RegistryWrapper.Impl<Enchantment> impl = this.registries.getOrThrow(RegistryKeys.ENCHANTMENT);
         return this.dropsWithSilkTouch(
                 drop,
                 (LootPoolEntry.Builder<?>)this.applyExplosionDecay(
@@ -92,7 +92,7 @@ public class PSLootTableProvider extends FabricBlockLootTableProvider {
         );
     }
     public LootTable.Builder poopLeavesDrops(Block leaves, Block sapling, float... saplingChance) {
-        RegistryWrapper.Impl<Enchantment> impl = this.registryLookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT);
+        RegistryWrapper.Impl<Enchantment> impl = this.registries.getOrThrow(RegistryKeys.ENCHANTMENT);
 
         return this.dropsWithSilkTouchOrShears(
                 leaves,
