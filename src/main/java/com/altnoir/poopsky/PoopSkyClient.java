@@ -6,6 +6,7 @@ import com.altnoir.poopsky.entity.ChairRenderer;
 import com.altnoir.poopsky.entity.PSEntities;
 import com.altnoir.poopsky.entity.ToiletPlugModel;
 import com.altnoir.poopsky.entity.ToiletPlugRenderer;
+import com.altnoir.poopsky.keybinding.PlugActionPayload;
 import com.altnoir.poopsky.particle.PSParticle;
 import com.altnoir.poopsky.particle.PoopParticle;
 import net.fabricmc.api.ClientModInitializer;
@@ -73,7 +74,9 @@ public class PoopSkyClient implements ClientModInitializer {
         EntityRendererRegistry.register(PSEntities.TOILET_PLUG_ENTITY, ToiletPlugRenderer::new);
         EntityRendererRegistry.register(PSEntities.STOOL_ENTITY, ChairRenderer::new);
 
-//        PoopComboHandler.initialize();
-//        HudRenderCallback.EVENT.register(PoopComboHUD::render);
+        PlugActionPayload.register();
+
+/*        PoopComboHandler.initialize();
+        HudRenderCallback.EVENT.register(PoopComboHUD::render);*/
     }
 }

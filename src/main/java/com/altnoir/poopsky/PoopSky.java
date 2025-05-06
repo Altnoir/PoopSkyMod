@@ -51,7 +51,6 @@ public class PoopSky implements ModInitializer {
 		PSWorldGeneration.generatePSWorldGen();
 
 		PoopBallPayload.register();
-		PlugActionPayload.register();
 		PlugActionPayload.registerServerReceiver();
 
 		FuelRegistry.INSTANCE.add(PSItems.POOP, 200);
