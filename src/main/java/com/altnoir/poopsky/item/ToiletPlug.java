@@ -5,6 +5,9 @@ import com.altnoir.poopsky.entity.ToiletPlugEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUsageContext;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.HitResult;
@@ -18,38 +21,37 @@ public class ToiletPlug extends Item {
     public ToiletPlug(Settings settings) {
         super(settings);
     }
+
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        ItemStack itemStack = user.getStackInHand(hand);
-        var result = raycast(world,user, RaycastContext.FluidHandling.ANY);
+    public ActionResult useOnBlock(ItemUsageContext context) {
+        if (!context.getWorld().isClient && context.getPlayer() != null) {
+            World world = context.getWorld();
+            BlockPos pos = context.getBlockPos();
+            Direction face = context.getSide();
+            PlayerEntity player = context.getPlayer();
+            ItemStack stack = context.getStack();
+            ToiletPlugEntity plug = PSEntities.TOILET_PLUG_ENTITY.create(world);
 
-        if (result.getType() == HitResult.Type.BLOCK){
-            BlockPos blockPos = result.getBlockPos();
-            Direction face = result.getSide();
+            float h = 1.0F;
+            double x = pos.getX() + 0.5;
+            double y = pos.getY() + h;
+            double z = pos.getZ() + 0.5;
 
-            if (!world.isClient()){
-                ToiletPlugEntity entity = PSEntities.TOILET_PLUG_ENTITY.create(world);
-
-                float h = 1.0F;
-                double x = blockPos.getX() + 0.5;
-                double y = blockPos.getY() + h;
-                double z = blockPos.getZ() + 0.5;
-
-                if (face == Direction.DOWN) {
-                    y = blockPos.getY() - h;
-                } else if (face != Direction.UP) {
-                    Vec3d offset = new Vec3d(face.getOffsetX(), face.getOffsetY(), face.getOffsetZ());
-                    x += offset.x;
-                    y += offset.y - h;
-                    z += offset.z;
-                }
-                entity.setPosition(x, y, z);
-                world.spawnEntity(entity);
-
-                if (!user.isCreative()) itemStack.decrement(1);
+            if (face == Direction.DOWN) {
+                y = pos.getY() - h;
+            } else if (face != Direction.UP) {
+                Vec3d offset = new Vec3d(face.getOffsetX(), face.getOffsetY(), face.getOffsetZ());
+                x += offset.x;
+                y += offset.y - h;
+                z += offset.z;
             }
+            plug.setPosition(x, y, z);
+            world.spawnEntity(plug);
+            player.getWorld().playSound(null, plug.getX(),  plug.getY(), plug.getZ(), SoundEvents.ENTITY_ITEM_FRAME_REMOVE_ITEM,  plug.getSoundCategory(), 0.5F, 1.0F);
+
+            if (!player.isCreative()) stack.decrement(1);
         }
-        return super.use(world, user, hand);
+        return super.useOnBlock(context);
     }
 
     @Override

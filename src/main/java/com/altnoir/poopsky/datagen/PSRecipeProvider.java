@@ -154,6 +154,13 @@ public class PSRecipeProvider extends FabricRecipeProvider {
                 .input('P', PSBlocks.POOP_BLOCK)
                 .criterion(hasItem( PSBlocks.POOP_BLOCK), conditionsFromItem( PSBlocks.POOP_BLOCK))
                 .offerTo(exporter,  getItemPath(Blocks.CRAFTING_TABLE) + "_from_poop_block");
+        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Blocks.COARSE_DIRT, 4)
+                .pattern("PG")
+                .pattern("GP")
+                .input('G', Blocks.GRAVEL)
+                .input('P', PSBlocks.POOP_BLOCK)
+                .criterion(hasItem( PSBlocks.POOP_BLOCK), conditionsFromItem( PSBlocks.POOP_BLOCK))
+                .offerTo(exporter,  getItemPath(Blocks.COARSE_DIRT) + "_from_poop_block");
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, Blocks.POINTED_DRIPSTONE)
                 .pattern("S")
@@ -176,6 +183,10 @@ public class PSRecipeProvider extends FabricRecipeProvider {
                 .offerTo(exporter,getItemPath(Blocks.GRAVEL) + "_from_flint_x4");
 
         offerCompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, Blocks.MOSSY_COBBLESTONE, PSItems.SPALL);
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Blocks.GRASS_BLOCK)
+                .input(Blocks.DIRT).input(Blocks.MOSS_BLOCK)
+                .criterion(hasItem(Blocks.MOSS_BLOCK), conditionsFromItem(Blocks.MOSS_BLOCK))
+                .offerTo(exporter);
         ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Blocks.COBBLESTONE)
                 .input(Blocks.GRAVEL).input(PSItems.SPALL)
                 .criterion(hasItem(PSItems.SPALL), conditionsFromItem(PSItems.SPALL))

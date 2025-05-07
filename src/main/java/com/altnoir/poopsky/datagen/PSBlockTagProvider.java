@@ -50,6 +50,9 @@ public class PSBlockTagProvider extends FabricTagProvider.BlockTagProvider {
                 .addTag(PSBlockTags.TOILET_BLOCKS)
                 .addTag(PSBlockTags.POOP_BLOCKS);
 
+        getOrCreateTagBuilder(PSBlockTags.CONVERTABLE_TO_MOSS)
+                .add(PSBlocks.POOP_BLOCK);
+
         //工具标签
         getOrCreateTagBuilder(BlockTags.AXE_MINEABLE)
                 .add(WOODEN_TOILETS);

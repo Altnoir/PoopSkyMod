@@ -8,6 +8,7 @@
     "GlassBottleItemAccessor",
     "GlassBottleItemMixin",
     "PistonHandlerMixin",
+    "PotionItemMixin",
     "WoodTypeMixin"
   ],
   "injectors": {

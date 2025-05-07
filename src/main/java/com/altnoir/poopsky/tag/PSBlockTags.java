@@ -9,6 +9,7 @@ import net.minecraft.util.Identifier;
 public class PSBlockTags {
     public static final TagKey<Block> TOILET_BLOCKS = of("toilet_blocks");
     public static final TagKey<Block> POOP_BLOCKS = of("poop_blocks");
+    public static final TagKey<Block> CONVERTABLE_TO_MOSS = of("convertable_to_moss");
     private static TagKey<Block> of(String id) {
         return TagKey.of(RegistryKeys.BLOCK, Identifier.of(PoopSky.MOD_ID, id));
     }
