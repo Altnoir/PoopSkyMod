@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "poopsky:block/cut_poop_block_slab"
+    },
+    "type=double": {
+      "model": "poopsky:block/cut_poop_block"
+    },
+    "type=top": {
+      "model": "poopsky:block/cut_poop_block_slab_top"
+    }
+  }
+}

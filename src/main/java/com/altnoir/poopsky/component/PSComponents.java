@@ -13,8 +13,6 @@ import java.util.function.UnaryOperator;
 public class PSComponents {
     public static final ComponentType<ToiletComponent> TOILET_COMPONENT =
             register("toilet_data", builder -> builder.codec(ToiletComponent.CODEC));
-    public static final ComponentType<Integer> POOP_BALL_COMPONENT =
-            register("poop_ball_component", builder -> builder.codec(Codec.INT));
 
     public record ToiletComponent(String world1,String world2, int x1, int y1, int z1, int x2, int y2, int z2) {
         public static final Codec<ToiletComponent> CODEC = RecordCodecBuilder.create(builder -> {

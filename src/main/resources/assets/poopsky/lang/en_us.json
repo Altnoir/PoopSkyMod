@@ -53,6 +53,7 @@
   "block.poopsky.stripped_poop_log": "Stripped Poop Log",
   "block.poopsky.stripped_poop_empty_log": "Stripped Hollow Poop Log",
   "block.poopsky.stool": "Stool",
+  "block.poopsky.compooper": "Compooper",
 
   "block.poopsky.urine": "Urine",
   "block.poopsky.toilet_block": "Toilet",
@@ -99,6 +100,8 @@
 
   "subtitle.poopsky.fart": "Fart Sound",
   "subtitle.poopsky.villager.work_toilet": "Poopmaker: Working",
+
+  "tag.item.poopsky.compooper_saplings": "Compooper Saplings",
 
   "itemgroup.poopsky": "POOPSKY"
 }

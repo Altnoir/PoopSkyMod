@@ -6,11 +6,16 @@ import com.altnoir.poopsky.item.PSItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.minecraft.block.Block;
+import net.minecraft.block.CropBlock;
+import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
+import net.minecraft.loot.condition.BlockStatePropertyLootCondition;
+import net.minecraft.loot.condition.LootCondition;
 import net.minecraft.loot.condition.TableBonusLootCondition;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.entry.LeafEntry;
@@ -19,6 +24,7 @@ import net.minecraft.loot.function.ApplyBonusLootFunction;
 import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
+import net.minecraft.predicate.StatePredicate;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 
@@ -70,6 +76,33 @@ public class PSLootTableProvider extends FabricBlockLootTableProvider {
         addDrop(PSBlocks.POOP_DOOR, doorDrops(PSBlocks.POOP_DOOR));
         addDrop(PSBlocks.POOP_TRAPDOOR);
 
+        addDrop(PSBlocks.POOP_BRICKS);
+        addDrop(PSBlocks.CRACKED_POOP_BRICKS);
+        addDrop(PSBlocks.POOP_BRICK_STAIRS);
+        addDrop(PSBlocks.POOP_BRICK_SLAB, slabDrops(PSBlocks.POOP_BRICK_SLAB));
+        addDrop(PSBlocks.POOP_BRICK_VERTICAL_SLAB);
+        addDrop(PSBlocks.POOP_BRICK_WALL);
+        addDrop(PSBlocks.MOSSY_POOP_BRICKS);
+        addDrop(PSBlocks.MOSSY_POOP_BRICK_STAIRS);
+        addDrop(PSBlocks.MOSSY_POOP_BRICK_SLAB, slabDrops(PSBlocks.MOSSY_POOP_BRICK_SLAB));
+        addDrop(PSBlocks.MOSSY_POOP_BRICK_VERTICAL_SLAB);
+        addDrop(PSBlocks.MOSSY_POOP_BRICK_WALL);
+        addDrop(PSBlocks.DRIED_POOP_BLOCK);
+        addDrop(PSBlocks.DRIED_POOP_BLOCK_STAIRS);
+        addDrop(PSBlocks.DRIED_POOP_BLOCK_SLAB, slabDrops(PSBlocks.DRIED_POOP_BLOCK_SLAB));
+        addDrop(PSBlocks.DRIED_POOP_BLOCK_VERTICAL_SLAB);
+        addDrop(PSBlocks.DRIED_POOP_BLOCK_WALL);
+        addDrop(PSBlocks.SMOOTH_POOP_BLOCK);
+        addDrop(PSBlocks.SMOOTH_POOP_BLOCK_STAIRS);
+        addDrop(PSBlocks.SMOOTH_POOP_BLOCK_SLAB, slabDrops(PSBlocks.SMOOTH_POOP_BLOCK_SLAB));
+        addDrop(PSBlocks.SMOOTH_POOP_BLOCK_VERTICAL_SLAB);
+        addDrop(PSBlocks.SMOOTH_POOP_BLOCK_WALL);
+        addDrop(PSBlocks.CUT_POOP_BLOCK);
+        addDrop(PSBlocks.CUT_POOP_BLOCK_STAIRS);
+        addDrop(PSBlocks.CUT_POOP_BLOCK_SLAB, slabDrops(PSBlocks.CUT_POOP_BLOCK_SLAB));
+        addDrop(PSBlocks.CUT_POOP_BLOCK_VERTICAL_SLAB);
+        addDrop(PSBlocks.CUT_POOP_BLOCK_WALL);
+
         addDrop(PSBlocks.POOP_LOG, spallOreDrops(PSBlocks.POOP_LOG));
         addDrop(PSBlocks.POOP_EMPTY_LOG);
         addDrop(PSBlocks.STRIPPED_POOP_LOG, spallOreDrops(PSBlocks.POOP_LOG));
@@ -77,8 +110,32 @@ public class PSLootTableProvider extends FabricBlockLootTableProvider {
         addDrop(PSBlocks.POOP_SAPLING);
         addDrop(PSBlocks.POOP_LEAVES, poopLeavesDrops(PSBlocks.POOP_LEAVES, PSBlocks.POOP_SAPLING, 0.1F));
         addDrop(PSBlocks.STOOL);
-    }
 
+//        BlockStatePropertyLootCondition.Builder builder = BlockStatePropertyLootCondition.builder(PSBlocks.MAGGOTS)
+//                .properties(StatePredicate.Builder.create().exactMatch(CropBlock.AGE, CropBlock.MAX_AGE));
+//        this.addDrop(PSBlocks.MAGGOTS, this.maggotsCropDrops(PSBlocks.MAGGOTS, PSItems.MAGGOTS_SEEDS, builder));
+    }
+    public LootTable.Builder maggotsCropDrops(Block crop, Item seeds, LootCondition.Builder condition) {
+        RegistryWrapper.Impl<Enchantment> impl = this.registryLookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT);
+        return this.applyExplosionDecay(
+                crop,
+                LootTable.builder()
+                        .pool(LootPool.builder()
+                                .with(ItemEntry.builder(Items.WHEAT_SEEDS).conditionally(condition).alternatively(ItemEntry.builder(seeds)))
+                                .with(ItemEntry.builder(Items.COCOA_BEANS).conditionally(condition).alternatively(ItemEntry.builder(seeds)))
+                                .with(ItemEntry.builder(Items.PUMPKIN_SEEDS).conditionally(condition).alternatively(ItemEntry.builder(seeds)))
+                                .with(ItemEntry.builder(Items.MELON_SEEDS).conditionally(condition).alternatively(ItemEntry.builder(seeds)))
+                                .with(ItemEntry.builder(Items.BEETROOT_SEEDS).conditionally(condition).alternatively(ItemEntry.builder(seeds)))
+                                .with(ItemEntry.builder(Items.CARROT).conditionally(condition).alternatively(ItemEntry.builder(seeds)))
+                                .with(ItemEntry.builder(Items.POTATO).conditionally(condition).alternatively(ItemEntry.builder(seeds)))
+                        )
+                        .pool(
+                                LootPool.builder()
+                                        .conditionally(condition)
+                                        .with(ItemEntry.builder(seeds).apply(ApplyBonusLootFunction.binomialWithBonusCount(impl.getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3)))
+                        )
+        );
+    }
     public LootTable.Builder spallOreDrops(Block drop) {
         RegistryWrapper.Impl<Enchantment> impl = this.registryLookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT);
         return this.dropsWithSilkTouch(

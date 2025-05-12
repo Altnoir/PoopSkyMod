@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:blasting",
+  "category": "blocks",
+  "cookingtime": 100,
+  "experience": 0.1,
+  "group": "dried_poop_block",
+  "ingredient": {
+    "item": "poopsky:poop_block"
+  },
+  "result": {
+    "id": "poopsky:dried_poop_block"
+  }
+}

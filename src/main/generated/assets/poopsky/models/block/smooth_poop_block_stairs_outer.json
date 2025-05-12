@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "poopsky:block/smooth_poop_block",
+    "side": "poopsky:block/smooth_poop_block",
+    "top": "poopsky:block/smooth_poop_block"
+  }
+}

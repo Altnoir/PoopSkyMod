@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smelting",
+  "category": "blocks",
+  "cookingtime": 200,
+  "experience": 0.1,
+  "group": "cracked_poop_bricks",
+  "ingredient": {
+    "item": "poopsky:poop_bricks"
+  },
+  "result": {
+    "id": "poopsky:cracked_poop_bricks"
+  }
+}

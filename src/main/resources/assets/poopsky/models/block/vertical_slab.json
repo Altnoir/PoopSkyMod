@@ -1,9 +1,7 @@
 {
 	"parent": "block/block",
 	"textures": {
-		"particle": "#side",
-		"side": "poopsky:block/poop_block",
-		"top": "poopsky:block/poop_slab"
+		"particle": "#side"
 	},
 	"elements": [
 		{

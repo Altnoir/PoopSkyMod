@@ -1,7 +1,6 @@
 {
 	"parent": "poopsky:block/toilet",
 	"textures": {
-		"0": "block/orange_concrete",
-		"1": "block/water_still"
+		"0": "block/orange_concrete"
 	}
 }

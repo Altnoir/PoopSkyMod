@@ -4,33 +4,17 @@ import com.altnoir.poopsky.worldgen.PSConfigureFeatures;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.*;
 import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.FoodComponent;
-import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.TntEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.vehicle.AbstractMinecartEntity;
 import net.minecraft.entity.vehicle.BoatEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsage;
-import net.minecraft.item.Items;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.potion.Potions;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.stat.Stats;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ItemActionResult;
-import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
@@ -38,9 +22,7 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
-import net.minecraft.world.event.GameEvent;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.UndergroundConfiguredFeatures;
 
 public class PoopBlock extends Block implements Fertilizable {
     protected static final VoxelShape SHAPE = Block.createCuboidShape(1.0, 0.0, 1.0, 15.0, 12.0, 15.0);
@@ -139,10 +121,45 @@ public class PoopBlock extends Block implements Fertilizable {
         world.getRegistryManager()
                 .getOptional(RegistryKeys.CONFIGURED_FEATURE)
                 .flatMap(key -> key.getEntry(PSConfigureFeatures.POOP_PATCH_BONEMEAL))
-                .ifPresent(entry -> ((ConfiguredFeature)entry.value()).generate(world, world.getChunkManager().getChunkGenerator(), random, pos.up()));
+                .ifPresent(entry -> ((ConfiguredFeature<?, ?>)entry.value()).generate(world, world.getChunkManager().getChunkGenerator(), random, pos.up()));
     }
     @Override
     public Fertilizable.FertilizableType getFertilizableType() {
         return Fertilizable.FertilizableType.NEIGHBOR_SPREADER;
+    }
+
+    @Override
+    protected boolean hasComparatorOutput(BlockState state) {
+        return true;
+    }
+    @Override
+    protected int getComparatorOutput(BlockState state, World world, BlockPos pos) {
+        return 1;
+    }
+
+    @Override
+    protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        if (hasHot(world, pos)) {
+            world.setBlockState(pos, Blocks.SAND.getDefaultState());
+            world.playSound(null, pos, SoundEvents.BLOCK_SAND_PLACE, SoundCategory.BLOCKS, 1.0f, 1.0f);
+        }
+    }
+    @Override
+    public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean moved) {
+        super.onBlockAdded(state, world, pos, oldState, moved);
+        if (hasHot((ServerWorld) world, pos)) {
+            world.scheduleBlockTick(pos, this, 100);
+        }
+    }
+    @Override
+    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
+        super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
+        if (sourcePos.equals(pos.up()) && hasHot((ServerWorld) world, pos)) {
+            world.scheduleBlockTick(pos, this, 100);
+        }
+    }
+    private boolean hasHot (ServerWorld world, BlockPos pos) {
+        BlockState aboveState = world.getBlockState(pos.up());
+        return aboveState.isOf(Blocks.FIRE) || aboveState.isOf(Blocks.LAVA);
     }
 }

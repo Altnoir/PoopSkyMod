@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_wall_side_tall",
+  "textures": {
+    "wall": "poopsky:block/cut_poop_block"
+  }
+}

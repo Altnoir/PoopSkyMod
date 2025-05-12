@@ -1,6 +1,5 @@
 package com.altnoir.poopsky.mixin;
 
-
 import com.altnoir.poopsky.item.PSItems;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.DispenserBehavior;
@@ -9,8 +8,8 @@ import net.minecraft.item.BoneMealItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldEvents;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -25,13 +24,12 @@ public interface DispenserBehaviorMixin {
             protected ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
                 this.setSuccess(true);
                 World world = pointer.world();
-                BlockPos blockPos = pointer.pos().offset((Direction)pointer.state().get(DispenserBlock.FACING));
-                if (!BoneMealItem.useOnFertilizable(stack, world, blockPos) && !BoneMealItem.useOnGround(stack, world, blockPos, (Direction)null)) {
+                BlockPos blockPos = pointer.pos().offset(pointer.state().get(DispenserBlock.FACING));
+                if (!BoneMealItem.useOnFertilizable(stack, world, blockPos) && !BoneMealItem.useOnGround(stack, world, blockPos, null)) {
                     this.setSuccess(false);
                 } else if (!world.isClient) {
-                    world.syncWorldEvent(1505, blockPos, 15);
+                    world.syncWorldEvent(WorldEvents.BONE_MEAL_USED, blockPos, 15);
                 }
-
                 return stack;
             }
         });

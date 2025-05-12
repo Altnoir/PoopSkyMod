@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smelting",
+  "category": "blocks",
+  "cookingtime": 200,
+  "experience": 0.1,
+  "group": "smooth_poop_block",
+  "ingredient": {
+    "item": "poopsky:dried_poop_block"
+  },
+  "result": {
+    "id": "poopsky:smooth_poop_block"
+  }
+}

@@ -1,7 +1,0 @@
-{
-  "parent": "block/door_bottom_left",
-  "textures": {
-    "bottom": "poopsky:block/poop_door_bottom",
-    "top": "poopsky:block/poop_door_top"
-  }
-}

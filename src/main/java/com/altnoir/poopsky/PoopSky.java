@@ -7,7 +7,6 @@ import com.altnoir.poopsky.effect.PSEffect;
 import com.altnoir.poopsky.entity.PSEntities;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.keybinding.PlugActionPayload;
-import com.altnoir.poopsky.keybinding.PoopBallPayload;
 import com.altnoir.poopsky.particle.PSParticle;
 import com.altnoir.poopsky.potion.PSPotions;
 import com.altnoir.poopsky.sound.PSSoundEvents;
@@ -15,6 +14,7 @@ import com.altnoir.poopsky.villager.PSVillagers;
 import com.altnoir.poopsky.worldgen.PSWorldGeneration;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
+import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.fabricmc.fabric.api.registry.FabricBrewingRecipeRegistryBuilder;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
@@ -34,8 +34,8 @@ public class PoopSky implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	@Override
 	public void onInitialize() {
-		PSBlocks.registerModBlocks();
 		PSItems.registerModItems();
+		PSBlocks.registerModBlocks();
 
 		PSSoundEvents.registerSounds();
 		PSParticle.registerParticles();
@@ -50,7 +50,6 @@ public class PoopSky implements ModInitializer {
 		PSItemGroups.registerItemGroups();
 		PSWorldGeneration.generatePSWorldGen();
 
-		PoopBallPayload.register();
 		PlugActionPayload.registerServerReceiver();
 
 		FuelRegistry.INSTANCE.add(PSItems.POOP, 200);
@@ -70,6 +69,8 @@ public class PoopSky implements ModInitializer {
 		FuelRegistry.INSTANCE.add(PSBlocks.POOP_TRAPDOOR, 800);
 		FuelRegistry.INSTANCE.add(PSBlocks.POOP_LOG, 800);
 		FuelRegistry.INSTANCE.add(PSBlocks.STRIPPED_POOP_LOG, 800);
+		FuelRegistry.INSTANCE.add(PSBlocks.POOP_EMPTY_LOG, 800);
+		FuelRegistry.INSTANCE.add(PSBlocks.STRIPPED_POOP_EMPTY_LOG, 800);
 		FuelRegistry.INSTANCE.add(PSBlocks.POOP_PIECE, 400);
 		FuelRegistry.INSTANCE.add(PSBlocks.STOOL, 800);
 
@@ -82,6 +83,8 @@ public class PoopSky implements ModInitializer {
 		FlammableBlockRegistry.getDefaultInstance().add(ToiletBlocks.DARK_OAK_TOILET, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(ToiletBlocks.MANGROVE_TOILET, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(ToiletBlocks.BAMBOO_TOILET, 5, 20);
+
+		CompostingChanceRegistry.INSTANCE.add(PSItems.MAGGOTS_SEEDS, 0.3f);
 
 		FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> {
 			builder.registerPotionRecipe(Potions.WATER, Items.ROTTEN_FLESH, PSPotions.FECAL_INCONTINENCE_POTION);

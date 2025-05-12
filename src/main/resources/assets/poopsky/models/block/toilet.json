@@ -2,7 +2,8 @@
 	"credit": "Made with LLMION",
 	"parent": "block/block",
 	"textures": {
-		"particle": "#0"
+		"particle": "#0",
+		"liquid": "poopsky:block/poop_liquid"
 	},
 	"elements": [
 		{
@@ -11,7 +12,7 @@
 			"to": [11, 14, 15],
 			"rotation": {"angle": 0, "axis": "y", "origin": [5, 12, 1]},
 			"faces": {
-				"up": {"uv": [5, 1, 11, 15], "texture": "#1", "tintindex": 0}
+				"up": {"uv": [5, 1, 11, 15], "texture": "#liquid", "tintindex": 1}
 			}
 		},
 		{

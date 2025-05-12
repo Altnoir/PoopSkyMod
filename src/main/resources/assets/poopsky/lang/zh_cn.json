@@ -46,6 +46,33 @@
   "block.poopsky.poop_door": "粪便门",
   "block.poopsky.poop_trapdoor": "粪便活板门",
 
+  "block.poopsky.poop_bricks": "粪便砖 ",
+  "block.poopsky.cracked_poop_bricks": "裂纹粪便砖",
+  "block.poopsky.poop_brick_stairs": "粪便砖楼梯",
+  "block.poopsky.poop_brick_slab": "粪便砖台阶",
+  "block.poopsky.poop_brick_vertical_slab": "粪便砖竖台阶",
+  "block.poopsky.poop_brick_wall": "粪便砖墙",
+  "block.poopsky.mossy_poop_bricks": "青苔粪便砖 ",
+  "block.poopsky.mossy_poop_brick_stairs": "青苔粪便砖楼梯",
+  "block.poopsky.mossy_poop_brick_slab": "青苔粪便砖台阶",
+  "block.poopsky.mossy_poop_brick_vertical_slab": "青苔粪便砖竖台阶",
+  "block.poopsky.mossy_poop_brick_wall": "青苔粪便砖墙",
+  "block.poopsky.dried_poop_block": "干粪便块 ",
+  "block.poopsky.dried_poop_block_stairs": "干粪便块楼梯",
+  "block.poopsky.dried_poop_block_slab": "干粪便块台阶",
+  "block.poopsky.dried_poop_block_vertical_slab": "干粪便块竖台阶",
+  "block.poopsky.dried_poop_block_wall": "干粪块砖墙",
+  "block.poopsky.smooth_poop_block": "平滑粪便块 ",
+  "block.poopsky.smooth_poop_block_stairs": "平滑粪便块楼梯",
+  "block.poopsky.smooth_poop_block_slab": "平滑粪便块台阶",
+  "block.poopsky.smooth_poop_block_vertical_slab": "平滑粪便块竖台阶",
+  "block.poopsky.smooth_poop_block_wall": "平滑粪块砖墙",
+  "block.poopsky.cut_poop_block": "切制粪便块 ",
+  "block.poopsky.cut_poop_block_stairs": "切制粪便块楼梯",
+  "block.poopsky.cut_poop_block_slab": "切制粪便块台阶",
+  "block.poopsky.cut_poop_block_vertical_slab": "切制粪便块竖台阶",
+  "block.poopsky.cut_poop_block_wall": "切制粪块砖墙",
+
   "block.poopsky.poop_sapling": "粪便树苗",
   "block.poopsky.poop_leaves": "粪便树叶",
   "block.poopsky.poop_log": "粪便木",
@@ -53,6 +80,10 @@
   "block.poopsky.stripped_poop_log": "去皮粪便木",
   "block.poopsky.stripped_poop_empty_log": "去皮粪便空心木",
   "block.poopsky.stool": "粪便凳",
+  "block.poopsky.compooper": "堆粪桶",
+
+  "item.poopsky.maggots_seeds": "蛆",
+  "block.poopsky.maggots": "蛆",
 
   "block.poopsky.urine": "尿",
   "block.poopsky.toilet_block": "厕所",
@@ -100,6 +131,7 @@
   "subtitle.poopsky.fart": "屁声",
   "subtitle.poopsky.villager.work_toilet": "造粪者：工作",
 
+  "tag.item.poopsky.compooper_saplings": "堆粪桶产出树苗",
 
   "itemgroup.poopsky": "空中厕所"
 }

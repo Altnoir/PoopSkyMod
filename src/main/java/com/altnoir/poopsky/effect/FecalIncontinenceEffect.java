@@ -44,7 +44,7 @@ public class FecalIncontinenceEffect extends StatusEffect {
                     entity.getZ(),
                     new ItemStack(PSItems.POOP)
             );
-            poop.setPickupDelay(20);
+            poop.setToDefaultPickupDelay();
             entity.getWorld().spawnEntity(poop);
 
             ((ServerWorld) entity.getWorld()).spawnParticles(PSParticle.POOP_PARTICLE,

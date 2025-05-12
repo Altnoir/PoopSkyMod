@@ -1,11 +1,12 @@
 package com.altnoir.poopsky;
 
+import com.altnoir.poopsky.block.CompooperBlock;
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.block.ToiletBlocks;
-import com.altnoir.poopsky.entity.ChairRenderer;
+import com.altnoir.poopsky.entity.renderer.ChairRenderer;
 import com.altnoir.poopsky.entity.PSEntities;
-import com.altnoir.poopsky.entity.ToiletPlugModel;
-import com.altnoir.poopsky.entity.ToiletPlugRenderer;
+import com.altnoir.poopsky.entity.model.ToiletPlugModel;
+import com.altnoir.poopsky.entity.renderer.ToiletPlugRenderer;
 import com.altnoir.poopsky.keybinding.PlugActionPayload;
 import com.altnoir.poopsky.particle.PSParticle;
 import com.altnoir.poopsky.particle.PoopParticle;
@@ -16,6 +17,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.render.RenderLayer;
 
 public class PoopSkyClient implements ClientModInitializer {
@@ -27,7 +29,7 @@ public class PoopSkyClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(PSBlocks.POOP_EMPTY_LOG, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PSBlocks.STRIPPED_POOP_EMPTY_LOG, RenderLayer.getCutout());
 
-        Block[] ccb = {
+        /*Block[] ccb = {
                 ToiletBlocks.OAK_TOILET,
                 ToiletBlocks.SPRUCE_TOILET,
                 ToiletBlocks.BIRCH_TOILET,
@@ -59,15 +61,20 @@ public class PoopSkyClient implements ClientModInitializer {
         };
 
         for (Block block : ccb) {
-            ColorProviderRegistry.BLOCK.register(
-                    (state, world, pos, tintIndex) -> 0x47311A,
-                    block
-            );
-            ColorProviderRegistry.ITEM.register(
-                    (stack, tintIndex) -> 0x47311A,
-                    block
-            );
-        }
+            ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> tintIndex == 1 ? 0x47311A : -1, block);
+            ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex == 1 ? 0x47311A : -1, block);
+        }*/
+
+        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> {
+            if (tintIndex == 1) {
+                if (state.get(CompooperBlock.LEVEL) == 4 && state.get(CompooperBlock.LIQUID)) {
+                    return world != null && pos != null ? BiomeColors.getWaterColor(world, pos) : 0x3F76E4; // 默认水色
+                }
+                return 0x47311A;
+            }
+            return -1;
+        }, PSBlocks.COMPOOPER);
+
         ParticleFactoryRegistry.getInstance().register(PSParticle.POOP_PARTICLE, PoopParticle.Factory::new);
 
         EntityModelLayerRegistry.registerModelLayer(ToiletPlugModel.TOILET_PLUG_LAYER, ToiletPlugModel::getTexturedModelData);
@@ -75,8 +82,5 @@ public class PoopSkyClient implements ClientModInitializer {
         EntityRendererRegistry.register(PSEntities.STOOL_ENTITY, ChairRenderer::new);
 
         PlugActionPayload.register();
-
-/*        PoopComboHandler.initialize();
-        HudRenderCallback.EVENT.register(PoopComboHUD::render);*/
     }
 }

@@ -37,10 +37,6 @@ public class PoopBall extends Item implements ProjectileItem {
             poopballEntity.setItem(itemStack);
             poopballEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, 1.5F, 1.0F);
             world.spawnEntity(poopballEntity);
-
-            if (itemStack.contains(PSComponents.POOP_BALL_COMPONENT)) {
-                itemStack.remove(PSComponents.POOP_BALL_COMPONENT);
-            }
         }
         user.incrementStat(Stats.USED.getOrCreateStat(this));
         itemStack.decrementUnlessCreative(1, user);
@@ -57,17 +53,5 @@ public class PoopBall extends Item implements ProjectileItem {
         );
         poopballEntity.setItem(stack);
         return poopballEntity;
-    }
-
-    @Override
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-        if (stack.contains(PSComponents.POOP_BALL_COMPONENT)) {
-            int count = stack.get(PSComponents.POOP_BALL_COMPONENT);
-            if (count == 1) {
-                tooltip.add(Text.translatable("tooltip.poopsky.poop_ball.info_1").formatted(Formatting.GOLD));
-            } else if (count == 2) {
-                tooltip.add(Text.translatable("tooltip.poopsky.poop_ball.info_2", count).formatted(Formatting.DARK_RED));
-            }
-        }
     }
 }

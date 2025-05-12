@@ -12,11 +12,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MovementType;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.item.Item;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.registry.tag.DamageTypeTags;
+import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
@@ -56,7 +58,18 @@ public class ToiletPlugEntity extends BoatEntity {
     @Override
     protected void updatePassengerPosition(Entity passenger, PositionUpdater positionUpdater) {
         super.updatePassengerPosition(passenger, positionUpdater);
-        passenger.setPosition(passenger.getX(),passenger.getY()+0.15 +floatingValue,passenger.getZ());
+        if (!passenger.getType().isIn(EntityTypeTags.CAN_TURN_IN_BOATS)) {
+            // 第一个乘客0，第二个乘客1
+            if (this.getPassengerList().indexOf(passenger) == 1) {
+                float yawRad = (float) Math.toRadians(-this.getYaw());
+                double xOffset = Math.sin(yawRad) * 0.375;
+                double zOffset = Math.cos(yawRad) * 0.375;
+
+                passenger.setPosition(passenger.getX() + xOffset, passenger.getY() + 0.15 + floatingValue, passenger.getZ() + zOffset);
+            } else {
+                passenger.setPosition(passenger.getX(), passenger.getY() + 0.15 + floatingValue, passenger.getZ());
+            }
+        }
     }
 
     @Environment(EnvType.CLIENT)

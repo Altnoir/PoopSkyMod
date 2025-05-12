@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "P": {
+      "item": "poopsky:dried_poop_block"
+    }
+  },
+  "pattern": [
+    "PP",
+    "PP"
+  ],
+  "result": {
+    "count": 4,
+    "id": "poopsky:cut_poop_block"
+  }
+}

@@ -24,7 +24,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class PoopBallEntity extends ThrownItemEntity {
-    private int componentValue = 0;
     public PoopBallEntity(EntityType<? extends PoopBallEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -41,14 +40,7 @@ public class PoopBallEntity extends ThrownItemEntity {
     @Override
     public void setItem(ItemStack stack) {
         super.setItem(stack);
-        updateComponentValue(stack);
-    }
-    private void updateComponentValue(ItemStack stack) {
-        if (stack.contains(PSComponents.POOP_BALL_COMPONENT)) {
-            this.componentValue = stack.get(PSComponents.POOP_BALL_COMPONENT);
-        } else {
-            this.componentValue = 0;
-        }
+
     }
     public void handleStatus(byte status) {
         if (status == 3) {
@@ -76,11 +68,6 @@ public class PoopBallEntity extends ThrownItemEntity {
                     100,
                     0
             ), this.getOwner());
-            switch (this.componentValue) {
-                case 1: spawnVillager();
-                case 2: spawnExplosion();
-                break;
-            }
         }
     }
 

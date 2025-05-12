@@ -1,0 +1,7 @@
+{
+  "parent": "poopsky:block/vertical_slab",
+  "textures": {
+    "top": "poopsky:block/smooth_poop_block",
+    "side": "poopsky:block/smooth_poop_block"
+  }
+}

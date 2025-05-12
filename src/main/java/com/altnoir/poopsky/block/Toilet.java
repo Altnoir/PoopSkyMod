@@ -127,7 +127,7 @@ public class Toilet extends BlockWithEntity implements Portal{
                 entity.getZ(),
                 new ItemStack(PSItems.POOP)
         );
-        poop.setPickupDelay(20);
+        poop.setToDefaultPickupDelay();
 
         float pitch = world.random.nextFloat() + 0.5F;
         world.playSound(null, entity.getX(), entity.getY() + 0.1, entity.getZ(), PSSoundEvents.FART, entity.getSoundCategory(), 1.0F, pitch);
@@ -145,7 +145,7 @@ public class Toilet extends BlockWithEntity implements Portal{
                 entity.getZ(),
                 new ItemStack(PSItems.POOP,64)
         );
-        poop.setPickupDelay(20);
+        poop.setToDefaultPickupDelay();
         world.spawnEntity(poop);
     }
     @Override

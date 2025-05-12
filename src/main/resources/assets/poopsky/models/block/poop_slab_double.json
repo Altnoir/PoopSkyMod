@@ -2,6 +2,6 @@
   "parent": "block/cube_column",
   "textures": {
     "end": "poopsky:block/poop_block",
-    "side": "poopsky:block/poop_slab"
+    "side": "poopsky:block/poop_block"
   }
 }

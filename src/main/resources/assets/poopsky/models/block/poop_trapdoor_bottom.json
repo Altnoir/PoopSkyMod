@@ -1,6 +1,0 @@
-{
-  "parent": "block/template_orientable_trapdoor_bottom",
-  "textures": {
-    "texture": "poopsky:block/poop_trapdoor"
-  }
-}

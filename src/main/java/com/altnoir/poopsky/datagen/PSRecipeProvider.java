@@ -11,10 +11,12 @@ import net.minecraft.block.Blocks;
 import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class PSRecipeProvider extends FabricRecipeProvider {
@@ -24,6 +26,20 @@ public class PSRecipeProvider extends FabricRecipeProvider {
 
     @Override
     public void generate(RecipeExporter exporter) {
+        List<ItemConvertible> POOP_LIST = List.of(PSBlocks.POOP_BLOCK);
+        List<ItemConvertible> POOP_BRICK_LIST = List.of(PSBlocks.POOP_BRICKS);
+        List<ItemConvertible> SMOOTH_POOP_LIST = List.of(PSBlocks.DRIED_POOP_BLOCK);
+
+        offerSmelting(exporter, POOP_LIST, RecipeCategory.BUILDING_BLOCKS, PSBlocks.DRIED_POOP_BLOCK, 0.1F, 200, "dried_poop_block");
+        offerBlasting(exporter, POOP_LIST, RecipeCategory.BUILDING_BLOCKS, PSBlocks.DRIED_POOP_BLOCK, 0.1F, 100, "dried_poop_block");
+
+        offerSmelting(exporter, POOP_BRICK_LIST, RecipeCategory.BUILDING_BLOCKS, PSBlocks.CRACKED_POOP_BRICKS, 0.1F, 200, "cracked_poop_bricks");
+        offerBlasting(exporter, POOP_BRICK_LIST, RecipeCategory.BUILDING_BLOCKS, PSBlocks.CRACKED_POOP_BRICKS, 0.1F, 100, "cracked_poop_bricks");
+
+        offerSmelting(exporter, SMOOTH_POOP_LIST, RecipeCategory.BUILDING_BLOCKS, PSBlocks.SMOOTH_POOP_BLOCK, 0.1F, 200, "smooth_poop_block");
+        offerBlasting(exporter, SMOOTH_POOP_LIST, RecipeCategory.BUILDING_BLOCKS, PSBlocks.SMOOTH_POOP_BLOCK, 0.1F, 100, "smooth_poop_block");
+
+        create2x2Recipe(exporter, PSBlocks.POOP_BLOCK, PSItems.POOP, 1);
         ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Blocks.COBWEB)
                 .pattern("SSS")
                 .pattern("SPS")
@@ -39,29 +55,44 @@ public class PSRecipeProvider extends FabricRecipeProvider {
                 .criterion(hasItem(Items.ENDER_EYE), conditionsFromItem(Items.ENDER_EYE))
                 .offerTo(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOP_BLOCK)
-                .pattern("PP")
-                .pattern("PP")
-                .input('P', PSItems.POOP)
-                .criterion(hasItem(PSItems.POOP), conditionsFromItem(PSItems.POOP))
-                .offerTo(exporter);
         ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, PSItems.POOP, 4)
                 .input(PSBlocks.POOP_BLOCK)
                 .criterion(hasItem(PSBlocks.POOP_BLOCK), conditionsFromItem(PSBlocks.POOP_BLOCK))
                 .offerTo(exporter);
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOP_STAIRS, 8)
-                .pattern("P  ")
-                .pattern("PP ")
-                .pattern("PPP")
-                .input('P', PSBlocks.POOP_BLOCK)
-                .criterion(hasItem(PSBlocks.POOP_BLOCK), conditionsFromItem(PSBlocks.POOP_BLOCK))
-                .offerTo(exporter);
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOP_SLAB, 6)
-                .pattern("PPP")
-                .input('P', PSBlocks.POOP_BLOCK)
-                .criterion(hasItem(PSBlocks.POOP_BLOCK), conditionsFromItem(PSBlocks.POOP_BLOCK))
-                .offerTo(exporter);
+        createStairsRecipe(exporter, PSBlocks.POOP_STAIRS, PSBlocks.POOP_BLOCK);
+        createSlabRecipe(exporter, PSBlocks.POOP_SLAB, PSBlocks.POOP_BLOCK);
+        createVerticalSlabRecipe(exporter, PSBlocks.POOP_VERTICAL_SLAB, PSBlocks.POOP_BLOCK);
+        createWallRecipe(exporter, PSBlocks.POOP_WALL, PSBlocks.POOP_BLOCK);
+
+        createStairsRecipe(exporter, PSBlocks.DRIED_POOP_BLOCK_STAIRS, PSBlocks.DRIED_POOP_BLOCK);
+        createSlabRecipe(exporter, PSBlocks.DRIED_POOP_BLOCK_SLAB, PSBlocks.DRIED_POOP_BLOCK);
+        createVerticalSlabRecipe(exporter, PSBlocks.DRIED_POOP_BLOCK_VERTICAL_SLAB, PSBlocks.DRIED_POOP_BLOCK);
+        createWallRecipe(exporter, PSBlocks.DRIED_POOP_BLOCK_WALL, PSBlocks.DRIED_POOP_BLOCK);
+
+        createStairsRecipe(exporter, PSBlocks.SMOOTH_POOP_BLOCK_STAIRS, PSBlocks.SMOOTH_POOP_BLOCK);
+        createSlabRecipe(exporter, PSBlocks.SMOOTH_POOP_BLOCK_SLAB, PSBlocks.SMOOTH_POOP_BLOCK);
+        createVerticalSlabRecipe(exporter, PSBlocks.SMOOTH_POOP_BLOCK_VERTICAL_SLAB, PSBlocks.SMOOTH_POOP_BLOCK);
+        createWallRecipe(exporter, PSBlocks.SMOOTH_POOP_BLOCK_WALL, PSBlocks.SMOOTH_POOP_BLOCK);
+
+        create2x2Recipe(exporter, PSBlocks.CUT_POOP_BLOCK, PSBlocks.DRIED_POOP_BLOCK, 4);
+        createStairsRecipe(exporter, PSBlocks.CUT_POOP_BLOCK_STAIRS, PSBlocks.CUT_POOP_BLOCK);
+        createSlabRecipe(exporter, PSBlocks.CUT_POOP_BLOCK_SLAB, PSBlocks.CUT_POOP_BLOCK);
+        createVerticalSlabRecipe(exporter, PSBlocks.CUT_POOP_BLOCK_VERTICAL_SLAB, PSBlocks.CUT_POOP_BLOCK);
+        createWallRecipe(exporter, PSBlocks.CUT_POOP_BLOCK_WALL, PSBlocks.CUT_POOP_BLOCK);
+
+        create2x2Recipe(exporter, PSBlocks.POOP_BRICKS, PSBlocks.DRIED_POOP_BLOCK, 4);
+        createStairsRecipe(exporter, PSBlocks.POOP_BRICK_STAIRS, PSBlocks.POOP_BLOCK);
+        createSlabRecipe(exporter, PSBlocks.POOP_BRICK_SLAB, PSBlocks.POOP_BLOCK);
+        createVerticalSlabRecipe(exporter, PSBlocks.POOP_BRICK_VERTICAL_SLAB, PSBlocks.POOP_BLOCK);
+        createWallRecipe(exporter, PSBlocks.POOP_BRICK_WALL, PSBlocks.POOP_BLOCK);
+
+        create1x2ShapelessFrom(exporter, PSBlocks.MOSSY_POOP_BRICKS, PSBlocks.POOP_BRICKS, Blocks.MOSS_BLOCK);
+        create1x2ShapelessFrom(exporter, PSBlocks.MOSSY_POOP_BRICKS, PSBlocks.POOP_BRICKS, Blocks.VINE);
+        createStairsRecipe(exporter, PSBlocks.MOSSY_POOP_BRICK_STAIRS, PSBlocks.MOSSY_POOP_BRICKS);
+        createSlabRecipe(exporter, PSBlocks.MOSSY_POOP_BRICK_SLAB, PSBlocks.MOSSY_POOP_BRICKS);
+        createVerticalSlabRecipe(exporter, PSBlocks.MOSSY_POOP_BRICK_VERTICAL_SLAB, PSBlocks.MOSSY_POOP_BRICKS);
+        createWallRecipe(exporter, PSBlocks.MOSSY_POOP_BRICK_WALL, PSBlocks.MOSSY_POOP_BRICKS);
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOP_BLOCK)
                 .pattern("P")
@@ -70,13 +101,6 @@ public class PSRecipeProvider extends FabricRecipeProvider {
                 .criterion(hasItem(PSBlocks.POOP_BLOCK), conditionsFromItem(PSBlocks.POOP_BLOCK))
                 .offerTo(exporter, getItemPath(PSBlocks.POOP_BLOCK) + "_from_slab");
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOP_VERTICAL_SLAB, 6)
-                .pattern("P")
-                .pattern("P")
-                .pattern("P")
-                .input('P', PSBlocks.POOP_BLOCK)
-                .criterion(hasItem(PSBlocks.POOP_BLOCK), conditionsFromItem(PSBlocks.POOP_BLOCK))
-                .offerTo(exporter);
         ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOP_BLOCK)
                 .pattern("PP")
                 .input('P', PSBlocks.POOP_VERTICAL_SLAB)
@@ -107,13 +131,6 @@ public class PSRecipeProvider extends FabricRecipeProvider {
                 .input('P', PSItems.POOP)
                 .criterion(hasItem(PSBlocks.POOP_BLOCK), conditionsFromItem(PSBlocks.POOP_BLOCK))
                 .offerTo(exporter);
-        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOP_WALL, 6)
-                .pattern("PPP")
-                .pattern("PPP")
-                .input('P', PSBlocks.POOP_BLOCK)
-                .criterion(hasItem(PSBlocks.POOP_BLOCK), conditionsFromItem(PSBlocks.POOP_BLOCK))
-                .offerTo(exporter);
-
         ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOP_DOOR, 3)
                 .pattern("PP")
                 .pattern("PP")
@@ -144,6 +161,14 @@ public class PSRecipeProvider extends FabricRecipeProvider {
         ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, PSItems.LAWRENCE_MUSIC_DISC)
                 .input(ConventionalItemTags.MUSIC_DISCS).input(PSItems.POOP)
                 .criterion(hasItem(PSItems.POOP), conditionsFromItem(PSItems.POOP))
+                .offerTo(exporter);
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, PSBlocks.COMPOOPER)
+                .pattern("S S")
+                .pattern("S S")
+                .pattern("SSS")
+                .input('S', Blocks.MOSSY_COBBLESTONE_SLAB)
+                .criterion(hasItem(Blocks.MOSSY_COBBLESTONE_SLAB), conditionsFromItem(Blocks.MOSSY_COBBLESTONE_SLAB))
                 .offerTo(exporter);
 
         //原版物品配方
@@ -183,39 +208,14 @@ public class PSRecipeProvider extends FabricRecipeProvider {
                 .offerTo(exporter,getItemPath(Blocks.GRAVEL) + "_from_flint_x4");
 
         offerCompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, Blocks.MOSSY_COBBLESTONE, PSItems.SPALL);
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Blocks.GRASS_BLOCK)
-                .input(Blocks.DIRT).input(Blocks.MOSS_BLOCK)
-                .criterion(hasItem(Blocks.MOSS_BLOCK), conditionsFromItem(Blocks.MOSS_BLOCK))
-                .offerTo(exporter);
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Blocks.COBBLESTONE)
-                .input(Blocks.GRAVEL).input(PSItems.SPALL)
-                .criterion(hasItem(PSItems.SPALL), conditionsFromItem(PSItems.SPALL))
-                .offerTo(exporter,getItemPath(Blocks.COBBLESTONE) + "_from_spall");
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Blocks.ANDESITE)
-                .input(Blocks.GRAVEL).input(Items.FLINT)
-                .criterion(hasItem(Items.FLINT), conditionsFromItem(Items.FLINT))
-                .offerTo(exporter,getItemPath(Blocks.COBBLESTONE) + "_from_flint");
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Blocks.DIORITE)
-                .input(Blocks.GRAVEL).input(Items.CLAY_BALL)
-                .criterion(hasItem(Items.CLAY_BALL), conditionsFromItem(Items.CLAY_BALL))
-                .offerTo(exporter,getItemPath(Blocks.COBBLESTONE) + "_from_clay_ball");
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Blocks.GRANITE)
-                .input(Blocks.GRAVEL).input(Items.BRICK)
-                .criterion(hasItem(Items.CLAY_BALL), conditionsFromItem(Items.CLAY_BALL))
-                .offerTo(exporter,getItemPath(Blocks.COBBLESTONE) + "_from_brick");
-
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Blocks.TUFF)
-                .input(Blocks.ANDESITE).input(PSItems.SPALL)
-                .criterion(hasItem(PSItems.SPALL), conditionsFromItem(PSItems.SPALL))
-                .offerTo(exporter,getItemPath(Blocks.TUFF) + "_from_spall");
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Blocks.CALCITE)
-                .input(Blocks.DIORITE).input(PSItems.SPALL)
-                .criterion(hasItem(PSItems.SPALL), conditionsFromItem(PSItems.SPALL))
-                .offerTo(exporter,getItemPath(Blocks.CALCITE) + "_from_spall");
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Blocks.COBBLED_DEEPSLATE)
-                .input(Blocks.MUD).input(PSItems.SPALL)
-                .criterion(hasItem(PSItems.SPALL), conditionsFromItem(PSItems.SPALL))
-                .offerTo(exporter,getItemPath(Blocks.COBBLED_DEEPSLATE) + "_from_spall");
+        create1x2ShapelessFrom(exporter, Blocks.GRASS_BLOCK, Blocks.DIRT, Blocks.MOSS_BLOCK);
+        create1x2ShapelessFrom(exporter, Blocks.COBBLESTONE, Blocks.GRAVEL, PSItems.SPALL);
+        create1x2ShapelessFrom(exporter, Blocks.ANDESITE, Blocks.GRAVEL, Items.FLINT);
+        create1x2ShapelessFrom(exporter, Blocks.DIORITE, Blocks.GRAVEL, Items.CLAY_BALL);
+        create1x2ShapelessFrom(exporter, Blocks.GRANITE, Blocks.GRAVEL, Items.BRICK);
+        create1x2ShapelessFrom(exporter, Blocks.TUFF, Blocks.ANDESITE, PSItems.SPALL);
+        create1x2ShapelessFrom(exporter, Blocks.CALCITE, Blocks.DIORITE, PSItems.SPALL);
+        create1x2ShapelessFrom(exporter, Blocks.COBBLED_DEEPSLATE, Blocks.MUD, PSItems.SPALL);
 
         offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, PSBlocks.STOOL, PSBlocks.POOP_BLOCK);
         offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOP_PIECE, PSBlocks.POOP_BLOCK, 8);
@@ -271,6 +271,54 @@ public class PSRecipeProvider extends FabricRecipeProvider {
                 .input(ToiletBlocks.BLUE_CONCRETE_TOILET)
                 .criterion(hasItem(PSItems.POOP), conditionsFromItem(PSItems.POOP))
                 .offerTo(exporter);
+    }
+
+    public void createStairsRecipe(RecipeExporter exporter, Block output, Block input) {
+        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 8)
+                .pattern("P  ")
+                .pattern("PP ")
+                .pattern("PPP")
+                .input('P', input)
+                .criterion(hasItem(input), conditionsFromItem(input))
+                .offerTo(exporter);
+    }
+    private void createSlabRecipe(RecipeExporter exporter, Block output, Block input) {
+        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 6)
+            .pattern("PPP")
+            .input('P', input)
+            .criterion(hasItem(input), conditionsFromItem(input))
+            .offerTo(exporter);
+    }
+    private void createVerticalSlabRecipe(RecipeExporter exporter, Block output, Block input) {
+        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 6)
+                .pattern("P")
+                .pattern("P")
+                .pattern("P")
+                .input('P', input)
+                .criterion(hasItem(input), conditionsFromItem(input))
+                .offerTo(exporter);
+    }
+    private void createWallRecipe(RecipeExporter exporter, Block output, Block input) {
+        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 6)
+            .pattern("PPP")
+            .pattern("PPP")
+            .input('P', input)
+            .criterion(hasItem(input), conditionsFromItem(input))
+            .offerTo(exporter);
+    }
+    private void create2x2Recipe(RecipeExporter exporter, ItemConvertible output, ItemConvertible input, int count) {
+        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, count)
+            .pattern("PP")
+            .pattern("PP")
+            .input('P', input)
+            .criterion(hasItem(input), conditionsFromItem(input))
+            .offerTo(exporter);
+    }
+    private void create1x2ShapelessFrom(RecipeExporter exporter, ItemConvertible output, ItemConvertible input1, ItemConvertible input2) {
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output)
+                .input(input1).input(input2)
+                .criterion(hasItem(input2), conditionsFromItem(input2))
+                .offerTo(exporter,getItemPath(output) + "_from_" + getItemPath(input2));
     }
 
     private void toiletRecipes(RecipeExporter exporter, Block toilet, Block block) {

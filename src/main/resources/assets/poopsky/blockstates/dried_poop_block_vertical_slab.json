@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "poopsky:block/dried_poop_block_vertical_slab"},
+    "facing=east":  { "model": "poopsky:block/dried_poop_block_vertical_slab", "y": 90},
+    "facing=south": { "model": "poopsky:block/dried_poop_block_vertical_slab", "y": 180},
+    "facing=west":  { "model": "poopsky:block/dried_poop_block_vertical_slab", "y": 270}
+  }
+}
