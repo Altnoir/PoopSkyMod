@@ -28,6 +28,7 @@ public class PoopSkyClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(PSBlocks.POOP_SAPLING, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PSBlocks.POOP_EMPTY_LOG, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PSBlocks.STRIPPED_POOP_EMPTY_LOG, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(PSBlocks.MAGGOTS, RenderLayer.getCutout());
 
         /*Block[] ccb = {
                 ToiletBlocks.OAK_TOILET,

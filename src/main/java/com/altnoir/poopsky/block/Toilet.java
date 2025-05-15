@@ -20,8 +20,10 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
+import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.BlockMirror;
@@ -31,6 +33,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
@@ -39,6 +42,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 
@@ -53,8 +57,7 @@ public class Toilet extends BlockWithEntity implements Portal{
 
     public Toilet(Settings settings) {
         super(settings);
-        setDefaultState(getDefaultState().with(FACING, Direction.NORTH)
-        );
+        setDefaultState(getDefaultState().with(FACING, Direction.NORTH));
     }
     @Override
     public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
@@ -107,7 +110,7 @@ public class Toilet extends BlockWithEntity implements Portal{
                 if (player.hasStatusEffect(PSEffect.FECAL_INCONTINENCE)) {
                     onPoop(world,player);
                     player.addExhaustion(0.05F);
-                }else if (world.getTime() % 20 == 0) {
+                } else if (world.getTime() % 20 == 0) {
                     onPoop(world,entity);
                     player.addExhaustion(1.0F);
                 }
@@ -115,11 +118,11 @@ public class Toilet extends BlockWithEntity implements Portal{
         }
         super.onSteppedOn(world, pos, state, entity);
     }
-    private boolean isPlayerCentered(BlockPos blockPos, PlayerEntity player) {
+    protected boolean isPlayerCentered(BlockPos blockPos, PlayerEntity player) {
         Box blockBox = new Box(blockPos).expand(0.2);
         return blockBox.contains(player.getPos());
     }
-    private void onPoop(World world, Entity entity) {
+    protected void onPoop(World world, Entity entity) {
         ItemEntity poop = new ItemEntity(
                 world,
                 entity.getX(),
@@ -143,7 +146,7 @@ public class Toilet extends BlockWithEntity implements Portal{
                 entity.getX(),
                 entity.getY() + 0.1,
                 entity.getZ(),
-                new ItemStack(PSItems.POOP,64)
+                new ItemStack(PSItems.POOP,88)
         );
         poop.setToDefaultPickupDelay();
         world.spawnEntity(poop);
@@ -183,5 +186,43 @@ public class Toilet extends BlockWithEntity implements Portal{
     @Override
     protected BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
+    }
+
+    @Override
+    protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        if (hasHot(world, pos)) {
+            world.createExplosion(
+                    null, // 爆炸源
+                    pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5,
+                    4.0F, // 爆炸威力
+                    World.ExplosionSourceType.BLOCK
+            );
+            world.setBlockState(pos.up(), Blocks.AIR.getDefaultState());
+            ItemEntity poop = new ItemEntity(
+                    world,
+                    pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5,
+                    new ItemStack(PSItems.POOP, 88)
+            );
+            world.spawnEntity(poop);
+        }
+    }
+    @Override
+    public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean moved) {
+        super.onBlockAdded(state, world, pos, oldState, moved);
+        if (hasHot((ServerWorld) world, pos)) {
+            world.scheduleBlockTick(pos, this, 1);
+        }
+    }
+    @Override
+    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
+        super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
+        if (sourcePos.equals(pos.up()) && hasHot((ServerWorld) world, pos)) {
+            world.scheduleBlockTick(pos, this, 1);
+        }
+    }
+    private boolean hasHot (ServerWorld world, BlockPos pos) {
+        BlockState aboveState = world.getBlockState(pos.up());
+        if (!world.isInBuildLimit(pos.up())) return false;
+        return aboveState.isOf(Blocks.FIRE);
     }
 }

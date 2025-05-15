@@ -28,6 +28,14 @@ public class PSVillagers {
     public static final PointOfInterestType TOILET_POI_BAMBOO = registerPoi("toilet", ToiletBlocks.BAMBOO_TOILET);
     public static final PointOfInterestType TOILET_POI_CRIMSON = registerPoi("toilet", ToiletBlocks.CRIMSON_TOILET);
     public static final PointOfInterestType TOILET_POI_WARPED = registerPoi("toilet", ToiletBlocks.WARPED_TOILET);
+
+    public static final PointOfInterestType TOILET_POI_STONE = registerPoi("toilet", ToiletBlocks.STONE_TOILET);
+    public static final PointOfInterestType TOILET_POI_COBBLESTONE = registerPoi("toilet", ToiletBlocks.COBBLESTONE_TOILET);
+    public static final PointOfInterestType TOILET_POI_MOSSY_COBBLESTONE = registerPoi("toilet", ToiletBlocks.MOSSY_COBBLESTONE_TOILET);
+    public static final PointOfInterestType TOILET_POI_SMOOTH_STONE = registerPoi("toilet", ToiletBlocks.SMOOTH_STONE_TOILET);
+    public static final PointOfInterestType TOILET_POI_STONE_BRICK = registerPoi("toilet", ToiletBlocks.STONE_BRICK_TOILET);
+    public static final PointOfInterestType TOILET_POI_MOSSY_STONE_BRICK = registerPoi("toilet", ToiletBlocks.MOSSY_STONE_BRICK_TOILET);
+
     public static final PointOfInterestType TOILET_POI_WHITE = registerPoi("toilet", ToiletBlocks.WHITE_CONCRETE_TOILET);
     public static final PointOfInterestType TOILET_POI_LIGHT_GRAY = registerPoi("toilet", ToiletBlocks.LIGHT_GRAY_CONCRETE_TOILET);
     public static final PointOfInterestType TOILET_POI_GRAY = registerPoi("toilet", ToiletBlocks.GRAY_CONCRETE_TOILET);
@@ -45,7 +53,6 @@ public class PSVillagers {
     public static final PointOfInterestType TOILET_POI_MAGENTA = registerPoi("toilet", ToiletBlocks.MAGENTA_CONCRETE_TOILET);
     public static final PointOfInterestType TOILET_POI_PINK = registerPoi("toilet", ToiletBlocks.PINK_CONCRETE_TOILET);
     public static final PointOfInterestType TOILET_POI_RAINBOW = registerPoi("toilet", ToiletBlocks.RAINBOW_TOILET);
-
 
     public static final VillagerProfession POOP_MAKER = registerProfession("poopmaker", TOILET_POI);
 

@@ -50,7 +50,6 @@ public class CompooperBlock extends Block implements InventoryProvider {
     public static final BooleanProperty LIQUID = BooleanProperty.of("liquid");
     public static final BooleanProperty POWERED = BooleanProperty.of("powered");
     public static final Object2FloatMap<ItemConvertible> ITEM_TO_LEVEL_INCREASE_CHANCE = new Object2FloatOpenHashMap<>();
-    public static final Object2FloatMap<ItemConvertible> LIQUID_TO_LEVEL_INCREASE_CHANCE = new Object2FloatOpenHashMap<>();
     private static final VoxelShape RAYCAST_SHAPE = VoxelShapes.fullCube();
     private static final VoxelShape COLLISION_SHAPE = VoxelShapes.combineAndSimplify(
             RAYCAST_SHAPE,
@@ -92,23 +91,19 @@ public class CompooperBlock extends Block implements InventoryProvider {
         registerCompostableItem(0.25F, PSBlocks.POOP_DOOR);
         registerCompostableItem(0.15F, PSBlocks.POOP_TRAPDOOR);
         registerCompostableItem(0.1F, PSBlocks.STOOL);
-    }
-    public static void registerDefaultCompostableLiquid() {
-        registerCompostableLiquid(1.0F, PSItems.URINE_BOTTLE);
+        registerCompostableItem(0.2F, PSItems.BAKED_MAGGOTS);
+        registerCompostableItem(0.5F, PSItems.POOP_BREAD);
+//        registerCompostableItem(0.1F, PSItems.MAGGOTS_SEEDS);
+//        registerCompostableItem(1.0F, PSBlocks.POOP_CAKE); // 不知道什么神必bug，如果加上这两会提示item为null
     }
 
     static {
         ITEM_TO_LEVEL_INCREASE_CHANCE.defaultReturnValue(-1.0F);
-        LIQUID_TO_LEVEL_INCREASE_CHANCE.defaultReturnValue(-1.0F);
         registerDefaultCompostableItems();
-        registerDefaultCompostableLiquid();
     }
 
     private static void registerCompostableItem(float chance, ItemConvertible item) {
         ITEM_TO_LEVEL_INCREASE_CHANCE.put(item.asItem(), chance);
-    }
-    private static void registerCompostableLiquid(float chance, ItemConvertible item) {
-        LIQUID_TO_LEVEL_INCREASE_CHANCE.put(item.asItem(), chance);
     }
 
     public CompooperBlock(AbstractBlock.Settings settings) {
@@ -148,7 +143,7 @@ public class CompooperBlock extends Block implements InventoryProvider {
             if (stack.getItem() == Items.WATER_BUCKET && level == 0) {
                 return waterBucket(world, pos, player, stack);
             }
-            if (LIQUID_TO_LEVEL_INCREASE_CHANCE.containsKey(stack.getItem()) && (hasLiquid || level == 0)) {
+            if (stack.getItem() == PSItems.URINE_BOTTLE && (hasLiquid || level == 0)) {
                 return LiquidItemUse(level, state, world, pos, player, stack);
             }
             if (ITEM_TO_LEVEL_INCREASE_CHANCE.containsKey(stack.getItem()) && !hasLiquid) {
@@ -203,12 +198,10 @@ public class CompooperBlock extends Block implements InventoryProvider {
                 emptyFullComposter(player, state, world, pos);
                 return ActionResult.success(world.isClient);
             } else {
-                ItemStack stack1 = player.getStackInHand(Hand.MAIN_HAND);
-                if (stack1.isOf(Items.BUCKET)) {
-                    if (!player.isCreative()) {
-                        stack1.decrement(1);
-                        player.giveItemStack(new ItemStack(Items.WATER_BUCKET));
-                    }else if (!player.getInventory().contains(Items.WATER_BUCKET.getDefaultStack())) {
+                ItemStack stackInHand = player.getStackInHand(Hand.MAIN_HAND);
+                if (stackInHand.isOf(Items.BUCKET)) {
+                    stackInHand.decrementUnlessCreative(1, player);
+                    if (!player.isCreative() || !player.getInventory().contains(Items.WATER_BUCKET.getDefaultStack())) {
                         player.giveItemStack(new ItemStack(Items.WATER_BUCKET));
                     }
                     world.setBlockState(pos, getDefaultState(), Block.NOTIFY_ALL);
@@ -230,8 +223,7 @@ public class CompooperBlock extends Block implements InventoryProvider {
             itemEntity.setToDefaultPickupDelay();
             world.spawnEntity(itemEntity);
         }
-        BlockState blockState = emptyComposter(user, state, world, pos);
-        return blockState;
+        return emptyComposter(user, state, world, pos);
     }
 
     static BlockState emptyComposter(@Nullable Entity user, BlockState state, WorldAccess world, BlockPos pos) {
@@ -261,17 +253,16 @@ public class CompooperBlock extends Block implements InventoryProvider {
     }
     static void addLiquidToComposter(@Nullable Entity user, BlockState state, WorldAccess world, BlockPos pos, ItemStack stack) {
         int i = (Integer)state.get(LEVEL);
-        float f = LIQUID_TO_LEVEL_INCREASE_CHANCE.getFloat(stack.getItem());
+        float f = 1.0F;
 
-        if ((i != 0 || !(f > 0.0F)) && !(world.getRandom().nextDouble() < f)) {
-        } else {
-            int j = i + 1;
-            BlockState blockState = state.with(LEVEL, j).with(LIQUID, true);
-            world.setBlockState(pos, blockState, Block.NOTIFY_ALL);
-            world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Emitter.of(user, blockState));
-            if (j == 3) {
-                world.scheduleBlockTick(pos, state.getBlock(), 20);
-            }
+        if (i != 0 && !(world.getRandom().nextDouble() < f)) return;
+
+        int j = i + 1;
+        BlockState blockState = state.with(LEVEL, j).with(LIQUID, true);
+        world.setBlockState(pos, blockState, Block.NOTIFY_ALL);
+        world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Emitter.of(user, blockState));
+        if (j == 3) {
+            world.scheduleBlockTick(pos, state.getBlock(), 20);
         }
     }
 
@@ -339,8 +330,9 @@ public class CompooperBlock extends Block implements InventoryProvider {
                     BlockPos targetPos = pos.up();
                     BlockState targetState = world.getBlockState(targetPos);
 
+                    if (!world.isInBuildLimit(pos.up())) return;
                     if (!isReplaceable(targetState)) {
-                        System.out.println(targetState.getBlock().getName().getString() + " 不可替换");
+                        System.out.println(targetState.getBlock().getName().getString() + " False");
                         break;
                     }
 

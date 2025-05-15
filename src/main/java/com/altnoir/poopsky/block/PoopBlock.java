@@ -7,6 +7,7 @@ import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.TntEntity;
+import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.entity.vehicle.AbstractMinecartEntity;
 import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.registry.RegistryKeys;
@@ -25,10 +26,10 @@ import net.minecraft.world.WorldView;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 
 public class PoopBlock extends Block implements Fertilizable {
-    protected static final VoxelShape SHAPE = Block.createCuboidShape(1.0, 0.0, 1.0, 15.0, 12.0, 15.0);
+    protected static final VoxelShape SHAPE = Block.createCuboidShape(1.0, 0.0, 1.0, 15.0, 14.0, 15.0);
 
     public PoopBlock(AbstractBlock.Settings settings) {
-        super(settings.pistonBehavior(PistonBehavior.NORMAL));
+        super(settings);
     }
     private static boolean poopBlockEffects(Entity entity) {
         return entity instanceof LivingEntity || entity instanceof AbstractMinecartEntity || entity instanceof TntEntity || entity instanceof BoatEntity;
@@ -138,28 +139,7 @@ public class PoopBlock extends Block implements Fertilizable {
     }
 
     @Override
-    protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        if (hasHot(world, pos)) {
-            world.setBlockState(pos, Blocks.SAND.getDefaultState());
-            world.playSound(null, pos, SoundEvents.BLOCK_SAND_PLACE, SoundCategory.BLOCKS, 1.0f, 1.0f);
-        }
-    }
-    @Override
-    public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean moved) {
-        super.onBlockAdded(state, world, pos, oldState, moved);
-        if (hasHot((ServerWorld) world, pos)) {
-            world.scheduleBlockTick(pos, this, 100);
-        }
-    }
-    @Override
-    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
-        if (sourcePos.equals(pos.up()) && hasHot((ServerWorld) world, pos)) {
-            world.scheduleBlockTick(pos, this, 100);
-        }
-    }
-    private boolean hasHot (ServerWorld world, BlockPos pos) {
-        BlockState aboveState = world.getBlockState(pos.up());
-        return aboveState.isOf(Blocks.FIRE) || aboveState.isOf(Blocks.LAVA);
+    protected boolean canPathfindThrough(BlockState state, NavigationType type) {
+        return false;
     }
 }

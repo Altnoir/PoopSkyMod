@@ -6,8 +6,8 @@ import com.altnoir.poopsky.item.PSItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.CropBlock;
-import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
@@ -46,6 +46,14 @@ public class PSLootTableProvider extends FabricBlockLootTableProvider {
         addDrop(ToiletBlocks.DARK_OAK_TOILET);
         addDrop(ToiletBlocks.MANGROVE_TOILET);
         addDrop(ToiletBlocks.BAMBOO_TOILET);
+        //石制
+        addDrop(ToiletBlocks.STONE_TOILET);
+        addDrop(ToiletBlocks.COBBLESTONE_TOILET);
+        addDrop(ToiletBlocks.MOSSY_STONE_BRICK_TOILET);
+        addDrop(ToiletBlocks.SMOOTH_STONE_TOILET);
+        addDrop(ToiletBlocks.STONE_BRICK_TOILET);
+        addDrop(ToiletBlocks.MOSSY_STONE_BRICK_TOILET);
+        //混凝土
         addDrop(ToiletBlocks.WHITE_CONCRETE_TOILET);
         addDrop(ToiletBlocks.ORANGE_CONCRETE_TOILET);
         addDrop(ToiletBlocks.MAGENTA_CONCRETE_TOILET);
@@ -109,11 +117,14 @@ public class PSLootTableProvider extends FabricBlockLootTableProvider {
         addDrop(PSBlocks.STRIPPED_POOP_EMPTY_LOG);
         addDrop(PSBlocks.POOP_SAPLING);
         addDrop(PSBlocks.POOP_LEAVES, poopLeavesDrops(PSBlocks.POOP_LEAVES, PSBlocks.POOP_SAPLING, 0.1F));
+        addDrop(PSBlocks.POOP_LEAVES_IRON, poopLeavesIronDrops(PSBlocks.POOP_LEAVES, PSBlocks.POOP_SAPLING, 0.01F));
+        addDrop(PSBlocks.POOP_LEAVES_GOLD, poopLeavesGoldDrops(PSBlocks.POOP_LEAVES, PSBlocks.POOP_SAPLING, 0.01F));
         addDrop(PSBlocks.STOOL);
+        addDrop(PSBlocks.COMPOOPER);
 
-//        BlockStatePropertyLootCondition.Builder builder = BlockStatePropertyLootCondition.builder(PSBlocks.MAGGOTS)
-//                .properties(StatePredicate.Builder.create().exactMatch(CropBlock.AGE, CropBlock.MAX_AGE));
-//        this.addDrop(PSBlocks.MAGGOTS, this.maggotsCropDrops(PSBlocks.MAGGOTS, PSItems.MAGGOTS_SEEDS, builder));
+        BlockStatePropertyLootCondition.Builder builder = BlockStatePropertyLootCondition.builder(PSBlocks.MAGGOTS)
+                .properties(StatePredicate.Builder.create().exactMatch(CropBlock.AGE, CropBlock.MAX_AGE));
+        this.addDrop(PSBlocks.MAGGOTS, this.maggotsCropDrops(PSBlocks.MAGGOTS, PSItems.MAGGOTS_SEEDS, builder));
     }
     public LootTable.Builder maggotsCropDrops(Block crop, Item seeds, LootCondition.Builder condition) {
         RegistryWrapper.Impl<Enchantment> impl = this.registryLookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT);
@@ -140,7 +151,7 @@ public class PSLootTableProvider extends FabricBlockLootTableProvider {
         RegistryWrapper.Impl<Enchantment> impl = this.registryLookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT);
         return this.dropsWithSilkTouch(
                 drop,
-                (LootPoolEntry.Builder<?>)this.applyExplosionDecay(
+                this.applyExplosionDecay(
                         drop,
                         ItemEntry.builder(PSItems.SPALL)
                                 .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0F, 6.0F)))
@@ -160,15 +171,46 @@ public class PSLootTableProvider extends FabricBlockLootTableProvider {
                 ).pool(LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1.0F))
                         .conditionally(this.createWithoutShearsOrSilkTouchCondition())
-                        .with(this.applyExplosionDecay(leaves, ItemEntry.builder(Items.IRON_NUGGET)
-                                .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0.0F, 2.0F))))
-                                .conditionally(TableBonusLootCondition.builder(impl.getOrThrow(Enchantments.FORTUNE), 0.077F, 0.21F, 0.42F, 0.69F, 1.0F))
-                        )
-                ).pool(LootPool.builder()
-                        .rolls(ConstantLootNumberProvider.create(1.0F))
-                        .conditionally(this.createWithoutShearsOrSilkTouchCondition())
                         .with(this.applyExplosionDecay(leaves, ItemEntry.builder(PSItems.POOP)
-                                .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0F, 2.0F)))))
+                                .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0.0F, 1.0F)))))
+                        .with(this.applyExplosionDecay(leaves, ItemEntry.builder(PSItems.MAGGOTS_SEEDS)
+                                .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0.0F, 2.0F)))))
+                );
+    }
+    public LootTable.Builder poopLeavesIronDrops(Block leaves, Block sapling, float... saplingChance) {
+        RegistryWrapper.Impl<Enchantment> impl = this.registryLookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT);
+
+        return this.dropsWithSilkTouchOrShears(
+                leaves,
+                ((LeafEntry.Builder<?>)this.addSurvivesExplosionCondition(
+                        leaves,
+                        ItemEntry.builder(sapling)))
+                                .conditionally(TableBonusLootCondition.builder(impl.getOrThrow(Enchantments.FORTUNE), saplingChance))
+                ).pool(LootPool.builder()
+                        .rolls(UniformLootNumberProvider.create(1.0F, 3.0F))
+                        .conditionally(this.createWithoutShearsOrSilkTouchCondition())
+                        .with(this.applyExplosionDecay(leaves, ItemEntry.builder(Items.IRON_NUGGET)
+                                .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0.0F, 3.0F))))
+                                .apply(ApplyBonusLootFunction.uniformBonusCount(impl.getOrThrow(Enchantments.FORTUNE)))
+                        )
+                );
+    }
+    public LootTable.Builder poopLeavesGoldDrops(Block leaves, Block sapling, float... saplingChance) {
+        RegistryWrapper.Impl<Enchantment> impl = this.registryLookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT);
+
+        return this.dropsWithSilkTouchOrShears(
+                leaves,
+                ((LeafEntry.Builder<?>)this.addSurvivesExplosionCondition(
+                        leaves,
+                        ItemEntry.builder(sapling)))
+                                .conditionally(TableBonusLootCondition.builder(impl.getOrThrow(Enchantments.FORTUNE), saplingChance))
+                ).pool(LootPool.builder()
+                        .rolls(UniformLootNumberProvider.create(1.0F, 3.0F))
+                        .conditionally(this.createWithoutShearsOrSilkTouchCondition())
+                        .with(this.applyExplosionDecay(leaves, ItemEntry.builder(Items.GOLD_NUGGET)
+                                .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0.0F, 2.0F))))
+                                .apply(ApplyBonusLootFunction.uniformBonusCount(impl.getOrThrow(Enchantments.FORTUNE)))
+                        )
                 );
     }
 }

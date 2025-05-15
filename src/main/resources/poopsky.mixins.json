@@ -10,6 +10,7 @@
     "GlassBottleItemMixin",
     "PistonHandlerMixin",
     "PotionItemMixin",
+    "VillagerEntityMixin",
     "WoodTypeMixin"
   ],
   "injectors": {

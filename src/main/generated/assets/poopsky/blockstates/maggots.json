@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "poopsky:block/maggots_stage0"
+    },
+    "age=1": {
+      "model": "poopsky:block/maggots_stage1"
+    },
+    "age=2": {
+      "model": "poopsky:block/maggots_stage2"
+    },
+    "age=3": {
+      "model": "poopsky:block/maggots_stage3"
+    },
+    "age=4": {
+      "model": "poopsky:block/maggots_stage4"
+    },
+    "age=5": {
+      "model": "poopsky:block/maggots_stage5"
+    },
+    "age=6": {
+      "model": "poopsky:block/maggots_stage6"
+    },
+    "age=7": {
+      "model": "poopsky:block/maggots_stage7"
+    }
+  }
+}

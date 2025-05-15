@@ -1,0 +1,23 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "poopsky:block/acacia_toilet",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "poopsky:block/acacia_toilet",
+      "uvlock": true
+    },
+    "facing=south": {
+      "model": "poopsky:block/acacia_toilet",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west": {
+      "model": "poopsky:block/acacia_toilet",
+      "uvlock": true,
+      "y": 270
+    }
+  }
+}

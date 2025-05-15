@@ -1,9 +1,7 @@
 {
 	"credit": "Made with ALTNOIR",
 	"textures": {
-		"0": "poopsky:block/poop_log",
-		"1": "poopsky:block/poop_log_top_empty",
-		"particle": "poopsky:block/poop_log"
+		"particle": "#0"
 	},
 	"elements": [
 		{
@@ -19,14 +17,14 @@
 			}
 		},
 		{
-			"from": [15, 15, 16],
-			"to": [1, 1, 0],
-			"rotation": {"angle": 0, "axis": "y", "origin": [1, 1, 0]},
+			"from": [14, 14, 16],
+			"to": [2, 2, 0],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2, 2, 0]},
 			"faces": {
-				"east": {"uv": [1, 0, 15, 16], "rotation": 90, "texture": "#0"},
-				"west": {"uv": [1, 0, 15, 16], "rotation": 90, "texture": "#0"},
-				"up": {"uv": [1, 0, 15, 16], "texture": "#0"},
-				"down": {"uv": [1, 0, 15, 16], "texture": "#0"}
+				"east": {"uv": [2, 0, 14, 16], "rotation": 90, "texture": "#0"},
+				"west": {"uv": [2, 0, 14, 16], "rotation": 90, "texture": "#0"},
+				"up": {"uv": [2, 0, 14, 16], "texture": "#0"},
+				"down": {"uv": [2, 0, 14, 16], "texture": "#0"}
 			}
 		}
 	],

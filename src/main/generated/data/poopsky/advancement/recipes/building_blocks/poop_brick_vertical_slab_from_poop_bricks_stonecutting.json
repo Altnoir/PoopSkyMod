@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_poop_bricks": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:poop_bricks"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:poop_brick_vertical_slab_from_poop_bricks_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_poop_bricks"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:poop_brick_vertical_slab_from_poop_bricks_stonecutting"
+    ]
+  }
+}

@@ -22,7 +22,7 @@
       "model": "poopsky:block/poop_height14"
     },
     "layers=8": {
-      "model": "poopsky:block/poop_block"
+      "model": "poopsky:block/poop_block1"
     }
   }
 }

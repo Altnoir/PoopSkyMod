@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "M": {
+      "item": "poopsky:maggots_seeds"
+    },
+    "P": {
+      "item": "poopsky:poop"
+    }
+  },
+  "pattern": [
+    "PMP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "poopsky:poop_bread"
+  }
+}

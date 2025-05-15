@@ -19,17 +19,17 @@ public class PSItemGroups {
                     .displayName(Text.translatable("itemgroup.poopsky"))
                     .entries((displayContext, entries) -> {
                         entries.add(PSItems.POOP);
-                        entries.add(PSItems.TOILET_LINKER);
                         entries.add(PSItems.POOP_BALL);
                         entries.add(PSItems.TOILET_PLUG);
                         entries.add(PSItems.SPALL);
                         entries.add(PSBlocks.COMPOOPER);
                         entries.add(PSBlocks.POOP_SAPLING);
                         entries.add(PSBlocks.POOP_LEAVES);
-                        entries.add(PSBlocks.POOP_PIECE);
+                        entries.add(PSBlocks.POOP_LEAVES_IRON);
+                        entries.add(PSBlocks.POOP_LEAVES_GOLD);
                         entries.add(PSBlocks.POOP_LOG);
-                        entries.add(PSBlocks.STRIPPED_POOP_LOG);
                         entries.add(PSBlocks.POOP_EMPTY_LOG);
+                        entries.add(PSBlocks.STRIPPED_POOP_LOG);
                         entries.add(PSBlocks.STRIPPED_POOP_EMPTY_LOG);
                         entries.add(PSBlocks.POOP_BLOCK);
                         entries.add(PSBlocks.POOP_STAIRS);
@@ -62,17 +62,24 @@ public class PSItemGroups {
                         entries.add(PSBlocks.CUT_POOP_BLOCK_SLAB);
                         entries.add(PSBlocks.CUT_POOP_BLOCK_VERTICAL_SLAB);
                         entries.add(PSBlocks.CUT_POOP_BLOCK_WALL);
-                        entries.add(PSItems.MAGGOTS_SEEDS);
+                        entries.add(PSBlocks.STOOL);
                         entries.add(PSBlocks.POOP_BUTTON);
                         entries.add(PSBlocks.POOP_PRESSURE_PLATE);
                         entries.add(PSBlocks.POOP_FENCE);
                         entries.add(PSBlocks.POOP_FENCE_GATE);
                         entries.add(PSBlocks.POOP_DOOR);
                         entries.add(PSBlocks.POOP_TRAPDOOR);
-                        entries.add(PSBlocks.STOOL);
-                        entries.add(PSItems.LAWRENCE_MUSIC_DISC);
+                        entries.add(PSBlocks.POOP_PIECE);
+                        entries.add(PSItems.MAGGOTS_SEEDS);
+                        entries.add(PSItems.BAKED_MAGGOTS);
+                        entries.add(PSItems.POOP_BREAD);
+                        entries.add(PSItems.POOP_SOUP);
+                        entries.add(PSBlocks.POOP_CAKE);
                         entries.add(PSItems.URINE_BOTTLE);
+                        entries.add(PSItems.DRAGON_BREATH_CHILI);
+                        entries.add(PSItems.LAWRENCE_MUSIC_DISC);
                         //撤锁大家庭
+                        entries.add(PSItems.TOILET_LINKER);
                         entries.add(ToiletBlocks.OAK_TOILET);
                         entries.add(ToiletBlocks.SPRUCE_TOILET);
                         entries.add(ToiletBlocks.BIRCH_TOILET);
@@ -84,6 +91,14 @@ public class PSItemGroups {
                         entries.add(ToiletBlocks.BAMBOO_TOILET);
                         entries.add(ToiletBlocks.CRIMSON_TOILET);
                         entries.add(ToiletBlocks.WARPED_TOILET);
+                        //石制
+                        entries.add(ToiletBlocks.STONE_TOILET);
+                        entries.add(ToiletBlocks.COBBLESTONE_TOILET);
+                        entries.add(ToiletBlocks.MOSSY_COBBLESTONE_TOILET);
+                        entries.add(ToiletBlocks.SMOOTH_STONE_TOILET);
+                        entries.add(ToiletBlocks.STONE_BRICK_TOILET);
+                        entries.add(ToiletBlocks.MOSSY_STONE_BRICK_TOILET);
+                        //混凝土
                         entries.add(ToiletBlocks.WHITE_CONCRETE_TOILET);
                         entries.add(ToiletBlocks.LIGHT_GRAY_CONCRETE_TOILET);
                         entries.add(ToiletBlocks.GRAY_CONCRETE_TOILET);

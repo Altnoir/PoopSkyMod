@@ -1,5 +1,11 @@
 {
   "values": [
+    "poopsky:stone_toilet",
+    "poopsky:cobblestone_toilet",
+    "poopsky:mossy_cobblestone_toilet",
+    "poopsky:smooth_stone_toilet",
+    "poopsky:stone_brick_toilet",
+    "poopsky:mossy_stone_brick_toilet",
     "poopsky:white_concrete_toilet",
     "poopsky:orange_concrete_toilet",
     "poopsky:magenta_concrete_toilet",

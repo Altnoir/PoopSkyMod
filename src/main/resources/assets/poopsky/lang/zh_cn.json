@@ -2,7 +2,7 @@
   "item.poopsky.poop": "粪便",
   "item.poopsky.poop_ball": "粪便球",
   "item.poopsky.spall": "碎石",
-  "item.poopsky.toilet_plug": "马桶塞子",
+  "item.poopsky.toilet_plug": "马桶搋子",
   "item.poopsky.urine_bottle": "尿瓶",
 
   "item.poopsky.toilet_linker": "厕所连接器",
@@ -31,10 +31,10 @@
   "item.minecraft.lingering_potion.effect.strong_fecal_incontinence_potion": "滞留型大便失禁药水",
 
   "effect.poopsky.fecal_incontinence": "大便失禁",
+  "effect.poopsky.intestinal_spasm": "肠道痉挛",
 
   "block.poopsky.poop_piece": "粪便片",
   "block.poopsky.poop_block": "粪便块",
-  "block.poopsky.smooth_poop_block": "平滑粪便块",
   "block.poopsky.poop_stairs": "粪便楼梯",
   "block.poopsky.poop_slab": "粪便台阶",
   "block.poopsky.poop_vertical_slab": "粪便竖台阶",
@@ -75,6 +75,8 @@
 
   "block.poopsky.poop_sapling": "粪便树苗",
   "block.poopsky.poop_leaves": "粪便树叶",
+  "block.poopsky.poop_leaves_iron": "含铁的粪便树叶",
+  "block.poopsky.poop_leaves_gold": "含金的粪便树叶",
   "block.poopsky.poop_log": "粪便木",
   "block.poopsky.poop_empty_log": "粪便空心木",
   "block.poopsky.stripped_poop_log": "去皮粪便木",
@@ -82,8 +84,13 @@
   "block.poopsky.stool": "粪便凳",
   "block.poopsky.compooper": "堆粪桶",
 
+  "item.poopsky.dragon_breath_chili": "龙息辣椒",
   "item.poopsky.maggots_seeds": "蛆",
   "block.poopsky.maggots": "蛆",
+  "item.poopsky.baked_maggots": "烤蛆",
+  "item.poopsky.poop_bread": "粪便面包",
+  "item.poopsky.poop_soup": "粪便汤",
+  "block.poopsky.poop_cake": "粪便蛋糕",
 
   "block.poopsky.urine": "尿",
   "block.poopsky.toilet_block": "厕所",
@@ -98,6 +105,14 @@
   "block.poopsky.bamboo_toilet": "竹厕所",
   "block.poopsky.crimson_toilet": "绯红厕所",
   "block.poopsky.warped_toilet": "诡异厕所",
+
+  "block.poopsky.stone_toilet": "石头厕所",
+  "block.poopsky.cobblestone_toilet": "圆石厕所",
+  "block.poopsky.mossy_cobblestone_toilet": "苔石厕所",
+  "block.poopsky.smooth_stone_toilet": "平滑石头厕所",
+  "block.poopsky.stone_brick_toilet": "石砖厕所",
+  "block.poopsky.mossy_stone_brick_toilet": "苔石砖厕所",
+
   "block.poopsky.white_concrete_toilet": "白色混凝土厕所",
   "block.poopsky.orange_concrete_toilet": "橙色混凝土厕所",
   "block.poopsky.magenta_concrete_toilet": "品红色混凝土厕所",
@@ -118,11 +133,11 @@
 
   "block.customportalapi.customportalblock": "粪便传送门",
   "entity.minecraft.villager.poopmaker": "造粪者",
-  "entity.poopsky.toilet_plug": "马桶塞子",
+  "entity.poopsky.toilet_plug": "马桶搋子",
   "entity.poopsky.stool_entity": "粪便凳",
 
   "key.poopsky.category": "空中厕所",
-  "key.poopsky.use_plug": "召唤马桶塞",
+  "key.poopsky.use_plug": "召唤马桶搋子",
   "key.poopsky.plug_down": "下降",
 
   "advancements.adventure.poop_block_slide.title": "踩屎大师",
@@ -131,7 +146,7 @@
   "subtitle.poopsky.fart": "屁声",
   "subtitle.poopsky.villager.work_toilet": "造粪者：工作",
 
-  "tag.item.poopsky.compooper_saplings": "堆粪桶产出树苗",
+  "tag.item.poopsky.compooper_saplings": "堆粪桶可产出树苗",
 
   "itemgroup.poopsky": "空中厕所"
 }

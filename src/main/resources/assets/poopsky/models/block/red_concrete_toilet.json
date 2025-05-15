@@ -1,6 +1,0 @@
-{
-	"parent": "poopsky:block/toilet",
-	"textures": {
-		"0": "block/red_concrete"
-	}
-}

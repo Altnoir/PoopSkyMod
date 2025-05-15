@@ -2,6 +2,7 @@ package com.altnoir.poopsky.entity;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.ToiletBlocks;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
@@ -37,6 +38,14 @@ public class PSEntities {
                     ToiletBlocks.BAMBOO_TOILET,
                     ToiletBlocks.CRIMSON_TOILET,
                     ToiletBlocks.WARPED_TOILET,
+
+                    ToiletBlocks.STONE_TOILET,
+                    ToiletBlocks.COBBLESTONE_TOILET,
+                    ToiletBlocks.MOSSY_COBBLESTONE_TOILET,
+                    ToiletBlocks.SMOOTH_STONE_TOILET,
+                    ToiletBlocks.STONE_BRICK_TOILET,
+                    ToiletBlocks.MOSSY_STONE_BRICK_TOILET,
+
                     ToiletBlocks.WHITE_CONCRETE_TOILET,
                     ToiletBlocks.LIGHT_GRAY_CONCRETE_TOILET,
                     ToiletBlocks.GRAY_CONCRETE_TOILET,

@@ -1,7 +1,21 @@
 {
   "variants": {
-    "": {
-      "model": "poopsky:block/poop_sapling"
-    }
+    "": [
+      {
+        "model": "poopsky:block/poop_sapling"
+      },
+      {
+        "model": "poopsky:block/poop_sapling",
+        "y": 90
+      },
+      {
+        "model": "poopsky:block/poop_sapling",
+        "y": 180
+      },
+      {
+        "model": "poopsky:block/poop_sapling",
+        "y": 270
+      }
+    ]
   }
 }

@@ -19,22 +19,52 @@
       }
     },
     "foliage_placer": {
-      "type": "minecraft:random_spread_foliage_placer",
-      "foliage_height": 3,
-      "leaf_placement_attempts": 255,
-      "offset": 0,
-      "radius": 4
+      "type": "poopsky:poop_mega_foliage_placer",
+      "crown_height": {
+        "type": "minecraft:uniform",
+        "max_inclusive": 17,
+        "min_inclusive": 13
+      },
+      "offset": 3,
+      "radius": 0
     },
     "foliage_provider": {
-      "type": "minecraft:simple_state_provider",
-      "state": {
-        "Name": "poopsky:poop_leaves",
-        "Properties": {
-          "distance": "7",
-          "persistent": "false",
-          "waterlogged": "false"
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "poopsky:poop_leaves",
+            "Properties": {
+              "distance": "7",
+              "persistent": "false",
+              "waterlogged": "false"
+            }
+          },
+          "weight": 5
+        },
+        {
+          "data": {
+            "Name": "poopsky:poop_leaves_iron",
+            "Properties": {
+              "distance": "7",
+              "persistent": "false",
+              "waterlogged": "false"
+            }
+          },
+          "weight": 2
+        },
+        {
+          "data": {
+            "Name": "poopsky:poop_leaves_gold",
+            "Properties": {
+              "distance": "7",
+              "persistent": "false",
+              "waterlogged": "false"
+            }
+          },
+          "weight": 1
         }
-      }
+      ]
     },
     "force_dirt": true,
     "ignore_vines": false,
@@ -46,9 +76,9 @@
     },
     "trunk_placer": {
       "type": "minecraft:giant_trunk_placer",
-      "base_height": 9,
+      "base_height": 12,
       "height_rand_a": 2,
-      "height_rand_b": 2
+      "height_rand_b": 14
     },
     "trunk_provider": {
       "type": "minecraft:simple_state_provider",

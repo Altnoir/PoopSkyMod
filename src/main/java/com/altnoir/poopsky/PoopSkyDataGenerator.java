@@ -13,8 +13,8 @@ public class PoopSkyDataGenerator implements DataGeneratorEntrypoint {
 	public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
 		FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
 
-		pack.addProvider(PSItemTagProvider::new);
 		pack.addProvider(PSBlockTagProvider::new);
+		pack.addProvider(PSItemTagProvider::new);
 
 		pack.addProvider(PSModelProvider::new);
 		pack.addProvider(PSLootTableProvider::new);

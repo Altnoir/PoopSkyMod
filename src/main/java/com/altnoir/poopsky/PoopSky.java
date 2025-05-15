@@ -11,13 +11,12 @@ import com.altnoir.poopsky.particle.PSParticle;
 import com.altnoir.poopsky.potion.PSPotions;
 import com.altnoir.poopsky.sound.PSSoundEvents;
 import com.altnoir.poopsky.villager.PSVillagers;
+import com.altnoir.poopsky.villager.VillagerTrade;
 import com.altnoir.poopsky.worldgen.PSWorldGeneration;
+import com.altnoir.poopsky.worldgen.PSFoliagePlacerType;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
-import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
-import net.fabricmc.fabric.api.registry.FabricBrewingRecipeRegistryBuilder;
-import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
-import net.fabricmc.fabric.api.registry.FuelRegistry;
+import net.fabricmc.fabric.api.registry.*;
 import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -34,22 +33,23 @@ public class PoopSky implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	@Override
 	public void onInitialize() {
-		PSItems.registerModItems();
 		PSBlocks.registerModBlocks();
+		ToiletBlocks.registerToiletBlocks();
+		PSItems.registerModItems();
 
+		PSComponents.registerComponents();
 		PSSoundEvents.registerSounds();
 		PSParticle.registerParticles();
 		PSEffect.registerEffects();
 		PSPotions.registerPotions();
-		PSComponents.registerComponents();
+
+		PSItemGroups.registerItemGroups();
 
 		PSEntities.registerBlockEntities();
 		PSEntities.registerEntities();
 		PSVillagers.registerVillagers();
-
-		PSItemGroups.registerItemGroups();
+		PSFoliagePlacerType.registerFoliagePlacer();
 		PSWorldGeneration.generatePSWorldGen();
-
 		PlugActionPayload.registerServerReceiver();
 
 		FuelRegistry.INSTANCE.add(PSItems.POOP, 200);
@@ -84,7 +84,9 @@ public class PoopSky implements ModInitializer {
 		FlammableBlockRegistry.getDefaultInstance().add(ToiletBlocks.MANGROVE_TOILET, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(ToiletBlocks.BAMBOO_TOILET, 5, 20);
 
-		CompostingChanceRegistry.INSTANCE.add(PSItems.MAGGOTS_SEEDS, 0.3f);
+		//CompostingChanceRegistry.INSTANCE.add(PSItems.MAGGOTS_SEEDS, 0.3f);
+		StrippableBlockRegistry.register(PSBlocks.POOP_LOG,  PSBlocks.STRIPPED_POOP_LOG);
+		StrippableBlockRegistry.register(PSBlocks.POOP_EMPTY_LOG,  PSBlocks.STRIPPED_POOP_EMPTY_LOG);
 
 		FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> {
 			builder.registerPotionRecipe(Potions.WATER, Items.ROTTEN_FLESH, PSPotions.FECAL_INCONTINENCE_POTION);
@@ -92,60 +94,6 @@ public class PoopSky implements ModInitializer {
 			builder.registerPotionRecipe(PSPotions.FECAL_INCONTINENCE_POTION, Items.GLOWSTONE_DUST, PSPotions.STRONG_FECAL_INCONTINENCE_POTION);
 		});
 
-		TradeOfferHelper.registerVillagerOffers(PSVillagers.POOP_MAKER, 1, factories -> {
-			factories.add((entity, random) -> new TradeOffer(
-					new TradedItem(Items.EMERALD, 1),
-					new ItemStack(PSItems.POOP, 4),44, 3, 0.05f)
-			);
-			factories.add((entity, random) -> new TradeOffer(
-					new TradedItem(PSBlocks.POOP_BLOCK, 2),
-					new ItemStack(Items.EMERALD,1),88, 5, 0.1f)
-			);
-		});
-		TradeOfferHelper.registerVillagerOffers(PSVillagers.POOP_MAKER, 2, factories -> {
-			factories.add((entity, random) -> new TradeOffer(
-					new TradedItem(Items.EMERALD, 1),
-					new ItemStack(PSBlocks.POOP_SAPLING, 1),16, 10, 0.07f)
-			);
-			factories.add((entity, random) -> new TradeOffer(
-					new TradedItem(PSBlocks.STRIPPED_POOP_EMPTY_LOG, 1),
-					new ItemStack(Items.EMERALD,3),44, 10, 0.1f)
-			);
-		});
-		TradeOfferHelper.registerVillagerOffers(PSVillagers.POOP_MAKER, 3, factories -> {
-			factories.add((entity, random) -> new TradeOffer(
-					new TradedItem(Items.EMERALD, 12),
-					new ItemStack(PSItems.LAWRENCE_MUSIC_DISC, 1),4, 15, 0.1f)
-			);
-			factories.add((entity, random) -> new TradeOffer(
-					new TradedItem(Items.EMERALD, 8),
-					new ItemStack(PSBlocks.STOOL, 1),16, 15, 0.1f)
-			);
-			factories.add((entity, random) -> new TradeOffer(
-					new TradedItem(PSItems.URINE_BOTTLE, 1),
-					PotionContentsComponent.createStack(Items.POTION, Potions.WATER),3, 15, 0.1f)
-			);
-		});
-		TradeOfferHelper.registerVillagerOffers(PSVillagers.POOP_MAKER, 4, factories -> {
-			factories.add((entity, random) -> new TradeOffer(
-					new TradedItem(Items.EMERALD, 16),
-					new ItemStack(ToiletBlocks.RAINBOW_TOILET, 1),8, 25, 0.25f)
-			);
-			factories.add((entity, random) -> new TradeOffer(
-					new TradedItem(Items.EMERALD, 21),
-					new ItemStack(Items.LAVA_BUCKET, 1),1, 25, 0.25f)
-			);
-		});
-		TradeOfferHelper.registerVillagerOffers(PSVillagers.POOP_MAKER, 5, factories -> {
-			factories.add((entity, random) -> new TradeOffer(
-					new TradedItem(Items.EMERALD, 37),
-					new ItemStack(PSItems.TOILET_LINKER, 1),4, 50, 0.5f)
-			);
-			factories.add((entity, random) -> new TradeOffer(
-					new TradedItem(Items.EMERALD, 64),
-					Optional.of(new TradedItem(Items.BREEZE_ROD, 12)),
-					new ItemStack(PSItems.TOILET_PLUG, 1),1, 100, 1.0f)
-			);
-		});
+		VillagerTrade.registerVillagerTrades();
 	}
 }

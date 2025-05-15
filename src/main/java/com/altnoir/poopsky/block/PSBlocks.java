@@ -1,27 +1,20 @@
 package com.altnoir.poopsky.block;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.component.PSFoodComponents;
+import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.lib.PoopBlockSetType;
 import com.altnoir.poopsky.lib.PoopWoodType;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.AliasedBlockItem;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.ItemActionResult;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
 
 public class PSBlocks {
     private static final float POOP = 0.5F;
@@ -130,21 +123,7 @@ public class PSBlocks {
                     .instrument(NoteBlockInstrument.BASS)
                     .strength(LOG)
                     .sounds(BlockSoundGroup.STONE)
-            ){
-                @Override
-                protected ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-                    if (stack.isIn(ItemTags.AXES)) {
-                        BlockState state1 = PSBlocks.STRIPPED_POOP_LOG.getDefaultState().with(EmptyPillarBlock.AXIS, state.get(EmptyPillarBlock.AXIS));
-
-                        world.playSound(player, pos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
-                        world.setBlockState(pos, state1);
-                        world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Emitter.of(player, state1));
-
-                        return ItemActionResult.SUCCESS;
-                    }
-                    return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
-                }
-            }
+            )
     );
     public static final Block POOP_EMPTY_LOG = registerBlock("poop_empty_log",
             new EmptyPillarBlock(AbstractBlock.Settings.create()
@@ -153,21 +132,7 @@ public class PSBlocks {
                     .instrument(NoteBlockInstrument.BASS)
                     .strength(LOG)
                     .sounds(BlockSoundGroup.BAMBOO_WOOD)
-            ){
-                @Override
-                protected ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-                    if (stack.isIn(ItemTags.AXES)) {
-                        BlockState state1 = PSBlocks.STRIPPED_POOP_EMPTY_LOG.getDefaultState().with(EmptyPillarBlock.AXIS, state.get(EmptyPillarBlock.AXIS));
-
-                        world.playSound(player, pos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
-                        world.setBlockState(pos, state1);
-                        world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Emitter.of(player, state1));
-
-                        return ItemActionResult.SUCCESS;
-                    }
-                    return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
-                }
-            }
+            )
     );
     public static final Block STRIPPED_POOP_LOG = registerBlock("stripped_poop_log",
             new PillarBlock(AbstractBlock.Settings.create()
@@ -192,14 +157,46 @@ public class PSBlocks {
                     .mapColor(MapColor.BROWN)
                     .notSolid()
                     .breakInstantly()
-                    .sounds(BlockSoundGroup.MUD)
                     .nonOpaque()
+                    .sounds(BlockSoundGroup.MUD)
+                    .offset(AbstractBlock.OffsetType.XYZ)
+                    .dynamicBounds()
                     .pistonBehavior(PistonBehavior.DESTROY)
             )
     );
     public static final Block POOP_LEAVES = registerBlock("poop_leaves",
             new LeavesBlock(AbstractBlock.Settings.create()
                     .mapColor(MapColor.BROWN)
+                    .strength(0.2F)
+                    .ticksRandomly()
+                    .sounds(BlockSoundGroup.SCULK_SENSOR)
+                    .nonOpaque()
+                    .allowsSpawning(Blocks::canSpawnOnLeaves)
+                    .suffocates(Blocks::never)
+                    .blockVision(Blocks::never)
+                    .burnable()
+                    .pistonBehavior(PistonBehavior.DESTROY)
+                    .solidBlock(Blocks::never)
+            )
+    );
+    public static final Block POOP_LEAVES_IRON = registerBlock("poop_leaves_iron",
+            new LeavesBlock(AbstractBlock.Settings.create()
+                    .mapColor(MapColor.WHITE)
+                    .strength(0.2F)
+                    .ticksRandomly()
+                    .sounds(BlockSoundGroup.SCULK_SENSOR)
+                    .nonOpaque()
+                    .allowsSpawning(Blocks::canSpawnOnLeaves)
+                    .suffocates(Blocks::never)
+                    .blockVision(Blocks::never)
+                    .burnable()
+                    .pistonBehavior(PistonBehavior.DESTROY)
+                    .solidBlock(Blocks::never)
+            )
+    );
+    public static final Block POOP_LEAVES_GOLD = registerBlock("poop_leaves_gold",
+            new LeavesBlock(AbstractBlock.Settings.create()
+                    .mapColor(MapColor.GOLD)
                     .strength(0.2F)
                     .ticksRandomly()
                     .sounds(BlockSoundGroup.SCULK_SENSOR)
@@ -227,7 +224,6 @@ public class PSBlocks {
                     .requiresTool()
                     .strength(0.6F)
                     .sounds(BlockSoundGroup.METAL)
-                    .pistonBehavior(PistonBehavior.PUSH_ONLY)
             )
     );
 
@@ -322,11 +318,12 @@ public class PSBlocks {
     );
 
     public static final Block DRIED_POOP_BLOCK = registerBlock("dried_poop_block",
-            new Block(AbstractBlock.Settings.create()
+            new DriedPoopBlock(AbstractBlock.Settings.create()
                     .mapColor(MapColor.ORANGE)
                     .requiresTool()
                     .strength(HARDEN)
-                    .sounds(BlockSoundGroup.MUD_BRICKS)
+                    .instrument(NoteBlockInstrument.COW_BELL)
+                    .sounds(BlockSoundGroup.TUFF)
             )
     );
     public static final Block DRIED_POOP_BLOCK_STAIRS = registerBlock("dried_poop_block_stairs",
@@ -334,7 +331,7 @@ public class PSBlocks {
                     .mapColor(MapColor.DARK_GREEN)
                     .requiresTool()
                     .strength(HARDEN)
-                    .sounds(BlockSoundGroup.MUD_BRICKS)
+                    .sounds(BlockSoundGroup.TUFF)
             )
     );
     public static final Block DRIED_POOP_BLOCK_SLAB = registerBlock("dried_poop_block_slab",
@@ -342,7 +339,7 @@ public class PSBlocks {
                     .mapColor(MapColor.DARK_GREEN)
                     .requiresTool()
                     .strength(HARDEN)
-                    .sounds(BlockSoundGroup.MUD_BRICKS)
+                    .sounds(BlockSoundGroup.TUFF)
             )
     );
     public static final Block DRIED_POOP_BLOCK_VERTICAL_SLAB = registerBlock("dried_poop_block_vertical_slab",
@@ -350,7 +347,7 @@ public class PSBlocks {
                     .mapColor(MapColor.DARK_GREEN)
                     .requiresTool()
                     .strength(HARDEN)
-                    .sounds(BlockSoundGroup.MUD_BRICKS)
+                    .sounds(BlockSoundGroup.TUFF)
             )
     );
     public static final Block DRIED_POOP_BLOCK_WALL = registerBlock("dried_poop_block_wall",
@@ -358,7 +355,7 @@ public class PSBlocks {
                     .mapColor(MapColor.DARK_GREEN)
                     .requiresTool()
                     .strength(HARDEN)
-                    .sounds(BlockSoundGroup.MUD_BRICKS)
+                    .sounds(BlockSoundGroup.TUFF)
             )
     );
 
@@ -367,7 +364,7 @@ public class PSBlocks {
                     .mapColor(MapColor.ORANGE)
                     .requiresTool()
                     .strength(HARDEN)
-                    .sounds(BlockSoundGroup.MUD_BRICKS)
+                    .sounds(BlockSoundGroup.CALCITE)
             )
     );
     public static final Block SMOOTH_POOP_BLOCK_STAIRS = registerBlock("smooth_poop_block_stairs",
@@ -375,7 +372,7 @@ public class PSBlocks {
                     .mapColor(MapColor.DARK_GREEN)
                     .requiresTool()
                     .strength(HARDEN)
-                    .sounds(BlockSoundGroup.MUD_BRICKS)
+                    .sounds(BlockSoundGroup.CALCITE)
             )
     );
     public static final Block SMOOTH_POOP_BLOCK_SLAB = registerBlock("smooth_poop_block_slab",
@@ -383,7 +380,7 @@ public class PSBlocks {
                     .mapColor(MapColor.DARK_GREEN)
                     .requiresTool()
                     .strength(HARDEN)
-                    .sounds(BlockSoundGroup.MUD_BRICKS)
+                    .sounds(BlockSoundGroup.CALCITE)
             )
     );
     public static final Block SMOOTH_POOP_BLOCK_VERTICAL_SLAB = registerBlock("smooth_poop_block_vertical_slab",
@@ -391,7 +388,7 @@ public class PSBlocks {
                     .mapColor(MapColor.DARK_GREEN)
                     .requiresTool()
                     .strength(HARDEN)
-                    .sounds(BlockSoundGroup.MUD_BRICKS)
+                    .sounds(BlockSoundGroup.CALCITE)
             )
     );
     public static final Block SMOOTH_POOP_BLOCK_WALL = registerBlock("smooth_poop_block_wall",
@@ -399,7 +396,7 @@ public class PSBlocks {
                     .mapColor(MapColor.DARK_GREEN)
                     .requiresTool()
                     .strength(HARDEN)
-                    .sounds(BlockSoundGroup.MUD_BRICKS)
+                    .sounds(BlockSoundGroup.CALCITE)
             )
     );
 
@@ -444,6 +441,13 @@ public class PSBlocks {
             )
     );
 
+    public static final Block POOP_CAKE = registerBlock("poop_cake",
+            new PoopCakeBlock(AbstractBlock.Settings.create()
+                    .solid().strength(0.5F)
+                    .sounds(BlockSoundGroup.WOOL)
+                    .pistonBehavior(PistonBehavior.DESTROY))
+    );
+
     public static final Block MAGGOTS = registerBlockOnly("maggots",
             new MaggotsBlock(AbstractBlock.Settings.create()
                     .mapColor(MapColor.DARK_GREEN)
@@ -468,5 +472,8 @@ public class PSBlocks {
     }
     public static void registerModBlocks() {
         PoopSky.LOGGER.info("Registering Mod Blocks for " + PoopSky.MOD_ID);
+
+        PSItems.MAGGOTS_SEEDS = Registry.register(Registries.ITEM, Identifier.of(PoopSky.MOD_ID, "maggots_seeds"),
+               new AliasedBlockItem(PSBlocks.MAGGOTS, new Item.Settings().food(PSFoodComponents.MAGGOTS_SEEDS).maxCount(88)));
     }
 }

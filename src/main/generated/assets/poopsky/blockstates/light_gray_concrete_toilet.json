@@ -1,0 +1,92 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "poopsky:block/light_gray_concrete_toilet",
+        "uvlock": true,
+        "y": 0
+      },
+      "when": {
+        "facing": "north",
+        "lava": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/light_gray_concrete_toilet_lava",
+        "uvlock": true,
+        "y": 0
+      },
+      "when": {
+        "facing": "north",
+        "lava": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/light_gray_concrete_toilet",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "lava": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/light_gray_concrete_toilet_lava",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "lava": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/light_gray_concrete_toilet",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "lava": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/light_gray_concrete_toilet_lava",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "lava": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/light_gray_concrete_toilet",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "lava": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/light_gray_concrete_toilet_lava",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "lava": "true"
+      }
+    }
+  ]
+}

@@ -23,21 +23,22 @@ import net.minecraft.world.BlockView;
 public class EmptyPillarBlock extends Block {
     public static final MapCodec<EmptyPillarBlock> CODEC = createCodec(EmptyPillarBlock::new);
     public static final EnumProperty<Direction.Axis> AXIS = Properties.AXIS;
-    private static final VoxelShape RAYCAST_SHAPE_1 = createCuboidShape(1.0, 0.0, 1.0, 15.0, 16.0, 15.0);
-    private static final VoxelShape RAYCAST_SHAPE_2 = createCuboidShape(1.0, 1.0, 0.0, 15.0, 15.0, 16.0);
-    private static final VoxelShape RAYCAST_SHAPE_3 = createCuboidShape(0.0, 1.0, 1.0, 16.0, 15.0, 15.0);
+    private static final VoxelShape RAYCAST_SHAPE_1 = createCuboidShape(2.0, 0.0, 2.0, 14.0, 16.0, 14.0);
+    private static final VoxelShape RAYCAST_SHAPE_2 = createCuboidShape(2.0, 2.0, 0.0, 14.0, 14.0, 16.0);
+    private static final VoxelShape RAYCAST_SHAPE_3 = createCuboidShape(0.0, 2.0, 2.0, 16.0, 14.0, 14.0);
+    private static final VoxelShape RAYCAST_SHAPE = VoxelShapes.fullCube();
     protected static final VoxelShape OUTLINE_SHAPE_1 = VoxelShapes.combineAndSimplify(
-            VoxelShapes.fullCube(),
+            RAYCAST_SHAPE,
             VoxelShapes.union(RAYCAST_SHAPE_1),
             BooleanBiFunction.ONLY_FIRST
     );
     protected static final VoxelShape OUTLINE_SHAPE_2 = VoxelShapes.combineAndSimplify(
-            VoxelShapes.fullCube(),
+            RAYCAST_SHAPE,
             VoxelShapes.union(RAYCAST_SHAPE_2),
             BooleanBiFunction.ONLY_FIRST
     );
     protected static final VoxelShape OUTLINE_SHAPE_3 = VoxelShapes.combineAndSimplify(
-            VoxelShapes.fullCube(),
+            RAYCAST_SHAPE,
             VoxelShapes.union(RAYCAST_SHAPE_3),
             BooleanBiFunction.ONLY_FIRST
     );
@@ -60,6 +61,11 @@ public class EmptyPillarBlock extends Block {
             case Z -> OUTLINE_SHAPE_2;
             default -> OUTLINE_SHAPE_1;
         };
+    }
+
+    @Override
+    protected VoxelShape getRaycastShape(BlockState state, BlockView world, BlockPos pos) {
+        return RAYCAST_SHAPE;
     }
 
     @Override

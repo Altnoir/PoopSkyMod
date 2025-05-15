@@ -48,7 +48,6 @@ public class UrineBottle extends Item{
                     playerEntity.dropItem(itemStack, false);
                 }
             }
-
             return stack;
         }
     }
@@ -61,7 +60,7 @@ public class UrineBottle extends Item{
 
                 chicken.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 1200, 1));
                 chicken.damage(player.getDamageSources().playerAttack(player), 1.0F);
-                stack.decrement(1);
+                stack.decrementUnlessCreative(1, player);
                 entity.dropStack(waterPotion);
             }
         }

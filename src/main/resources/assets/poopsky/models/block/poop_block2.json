@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "poopsky:block/poop_block_maggots",
+    "particle": "poopsky:block/poop_block"
+  }
+}

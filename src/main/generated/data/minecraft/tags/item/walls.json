@@ -1,0 +1,10 @@
+{
+  "values": [
+    "poopsky:poop_wall",
+    "poopsky:poop_brick_wall",
+    "poopsky:mossy_poop_brick_wall",
+    "poopsky:dried_poop_block_wall",
+    "poopsky:smooth_poop_block_wall",
+    "poopsky:cut_poop_block_wall"
+  ]
+}

@@ -22,10 +22,12 @@ public class PSBlockTagProvider extends FabricTagProvider.BlockTagProvider {
                 .add(POOP_BLOCKS);
         getOrCreateTagBuilder(PSBlockTags.TOILET_BLOCKS)
                 .add(WOODEN_TOILETS)
-                .add(CONCRETE_RAINBOW_TOILETS);
+                .add(HARD_TOILETS);
 
         getOrCreateTagBuilder(BlockTags.DIRT)
                 .add(PSBlocks.POOP_BLOCK);
+        getOrCreateTagBuilder(BlockTags.SAND)
+                .add(PSBlocks.DRIED_POOP_BLOCK);
         getOrCreateTagBuilder(BlockTags.SNOW_LAYER_CAN_SURVIVE_ON)
                 .add(PSBlocks.POOP_BLOCK);
 
@@ -34,24 +36,7 @@ public class PSBlockTagProvider extends FabricTagProvider.BlockTagProvider {
                 .add(PSBlocks.POOP_EMPTY_LOG)
                 .add(PSBlocks.STRIPPED_POOP_LOG)
                 .add(PSBlocks.STRIPPED_POOP_EMPTY_LOG);
-        getOrCreateTagBuilder(BlockTags.LOGS)
-                .add(PSBlocks.POOP_LOG)
-                .add(PSBlocks.POOP_EMPTY_LOG)
-                .add(PSBlocks.STRIPPED_POOP_LOG)
-                .add(PSBlocks.STRIPPED_POOP_EMPTY_LOG);
 
-        getOrCreateTagBuilder(BlockTags.WOODEN_FENCES).add(PSBlocks.POOP_FENCE);
-        getOrCreateTagBuilder(BlockTags.FENCE_GATES).add(PSBlocks.POOP_FENCE_GATE);
-        getOrCreateTagBuilder(BlockTags.WALLS)
-                .add(PSBlocks.POOP_WALL)
-                .add(PSBlocks.POOP_BRICK_WALL)
-                .add(PSBlocks.MOSSY_POOP_BRICK_WALL)
-                .add(PSBlocks.DRIED_POOP_BLOCK_WALL)
-                .add(PSBlocks.SMOOTH_POOP_BLOCK_WALL)
-                .add(PSBlocks.CUT_POOP_BLOCK_WALL);
-
-        getOrCreateTagBuilder(BlockTags.LEAVES)
-                .add(PSBlocks.POOP_LEAVES);
         getOrCreateTagBuilder(BlockTags.FLOWERS)
                 .addTag(PSBlockTags.TOILET_BLOCKS)
                 .addTag(PSBlockTags.POOP_BLOCKS);
@@ -59,12 +44,66 @@ public class PSBlockTagProvider extends FabricTagProvider.BlockTagProvider {
         getOrCreateTagBuilder(PSBlockTags.CONVERTABLE_TO_MOSS)
                 .add(PSBlocks.POOP_BLOCK);
 
+        getOrCreateTagBuilder(BlockTags.MUSHROOM_GROW_BLOCK)
+                .add(PSBlocks.POOP_BLOCK)
+                .add(PSBlocks.POOP_BRICKS)
+                .add(PSBlocks.MOSSY_POOP_BRICKS)
+                .add(PSBlocks.DRIED_POOP_BLOCK)
+                .add(PSBlocks.POOP_LOG)
+                .add(PSBlocks.POOP_EMPTY_LOG)
+                .add(PSBlocks.STRIPPED_POOP_LOG)
+                .add(PSBlocks.STRIPPED_POOP_EMPTY_LOG);
+
+        //方块基础标签
+        getOrCreateTagBuilder(BlockTags.CROPS)
+                .add(PSBlocks.MAGGOTS);
+        getOrCreateTagBuilder(BlockTags.MAINTAINS_FARMLAND)
+                .add(PSBlocks.MAGGOTS);
+        getOrCreateTagBuilder(BlockTags.SAPLINGS)
+                .add(PSBlocks.POOP_SAPLING);
+        getOrCreateTagBuilder(BlockTags.LEAVES)
+                .add(PSBlocks.POOP_LEAVES)
+                .add(PSBlocks.POOP_LEAVES_IRON);
+        getOrCreateTagBuilder(BlockTags.LOGS)
+                .add(PSBlocks.POOP_LOG)
+                .add(PSBlocks.POOP_EMPTY_LOG)
+                .add(PSBlocks.STRIPPED_POOP_LOG)
+                .add(PSBlocks.STRIPPED_POOP_EMPTY_LOG);
+        getOrCreateTagBuilder(BlockTags.STAIRS)
+                .add(PSBlocks.POOP_STAIRS)
+                .add(PSBlocks.POOP_BRICK_STAIRS)
+                .add(PSBlocks.MOSSY_POOP_BRICK_STAIRS)
+                .add(PSBlocks.DRIED_POOP_BLOCK_STAIRS)
+                .add(PSBlocks.SMOOTH_POOP_BLOCK_STAIRS)
+                .add(PSBlocks.CUT_POOP_BLOCK_STAIRS);
+        getOrCreateTagBuilder(BlockTags.SLABS)
+                .add(PSBlocks.POOP_SLAB)
+                .add(PSBlocks.POOP_BRICK_SLAB)
+                .add(PSBlocks.MOSSY_POOP_BRICK_SLAB)
+                .add(PSBlocks.DRIED_POOP_BLOCK_SLAB)
+                .add(PSBlocks.SMOOTH_POOP_BLOCK_SLAB)
+                .add(PSBlocks.CUT_POOP_BLOCK_SLAB);
+        getOrCreateTagBuilder(BlockTags.WALLS)
+                .add(PSBlocks.POOP_WALL)
+                .add(PSBlocks.POOP_BRICK_WALL)
+                .add(PSBlocks.MOSSY_POOP_BRICK_WALL)
+                .add(PSBlocks.DRIED_POOP_BLOCK_WALL)
+                .add(PSBlocks.SMOOTH_POOP_BLOCK_WALL)
+                .add(PSBlocks.CUT_POOP_BLOCK_WALL);
+        getOrCreateTagBuilder(BlockTags.BUTTONS).add(PSBlocks.POOP_BUTTON);
+        getOrCreateTagBuilder(BlockTags.PRESSURE_PLATES).add(PSBlocks.POOP_PRESSURE_PLATE);
+        getOrCreateTagBuilder(BlockTags.FENCES).add(PSBlocks.POOP_FENCE);
+        getOrCreateTagBuilder(BlockTags.FENCE_GATES).add(PSBlocks.POOP_FENCE_GATE);
+        getOrCreateTagBuilder(BlockTags.DOORS).add(PSBlocks.POOP_DOOR);
+        getOrCreateTagBuilder(BlockTags.TRAPDOORS).add(PSBlocks.POOP_TRAPDOOR);
+
         //工具标签
         getOrCreateTagBuilder(BlockTags.AXE_MINEABLE)
-                .add(WOODEN_TOILETS);
+                .add(WOODEN_TOILETS)
+                .add(PSBlocks.MAGGOTS);
 
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
-                .add(CONCRETE_RAINBOW_TOILETS)
+                .add(HARD_TOILETS)
                 .add(PSBlocks.POOP_LOG)
                 .add(PSBlocks.STRIPPED_POOP_LOG)
                 .add(HARDEN_POOP)
@@ -74,7 +113,7 @@ public class PSBlockTagProvider extends FabricTagProvider.BlockTagProvider {
                 .addTag(PSBlockTags.POOP_BLOCKS);
     }
 
-    private static final Block[] POOP_BLOCKS = {
+    public static final Block[] POOP_BLOCKS = {
             PSBlocks.POOP_SAPLING,
             PSBlocks.POOP_LEAVES,
             PSBlocks.POOP_PIECE,
@@ -90,7 +129,7 @@ public class PSBlockTagProvider extends FabricTagProvider.BlockTagProvider {
             PSBlocks.POOP_DOOR,
             PSBlocks.POOP_TRAPDOOR,
     };
-    private static final Block[] HARDEN_POOP = {
+    public static final Block[] HARDEN_POOP = {
             PSBlocks.POOP_BRICKS,
             PSBlocks.CRACKED_POOP_BRICKS,
             PSBlocks.POOP_BRICK_STAIRS,
@@ -118,7 +157,7 @@ public class PSBlockTagProvider extends FabricTagProvider.BlockTagProvider {
             PSBlocks.CUT_POOP_BLOCK_VERTICAL_SLAB,
             PSBlocks.CUT_POOP_BLOCK_WALL
     };
-    private static final Block[] WOODEN_TOILETS = {
+    public static final Block[] WOODEN_TOILETS = {
             ToiletBlocks.OAK_TOILET,
             ToiletBlocks.SPRUCE_TOILET,
             ToiletBlocks.BIRCH_TOILET,
@@ -129,7 +168,15 @@ public class PSBlockTagProvider extends FabricTagProvider.BlockTagProvider {
             ToiletBlocks.MANGROVE_TOILET,
             ToiletBlocks.BAMBOO_TOILET
     };
-    private static final Block[] CONCRETE_RAINBOW_TOILETS = {
+    public static final Block[] HARD_TOILETS = {
+            //石制
+            ToiletBlocks.STONE_TOILET,
+            ToiletBlocks.COBBLESTONE_TOILET,
+            ToiletBlocks.MOSSY_COBBLESTONE_TOILET,
+            ToiletBlocks.SMOOTH_STONE_TOILET,
+            ToiletBlocks.STONE_BRICK_TOILET,
+            ToiletBlocks.MOSSY_STONE_BRICK_TOILET,
+            //混凝土
             ToiletBlocks.WHITE_CONCRETE_TOILET,
             ToiletBlocks.ORANGE_CONCRETE_TOILET,
             ToiletBlocks.MAGENTA_CONCRETE_TOILET,
