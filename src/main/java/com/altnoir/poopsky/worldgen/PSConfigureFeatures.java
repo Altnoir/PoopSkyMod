@@ -2,6 +2,7 @@ package com.altnoir.poopsky.worldgen;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.PSBlocks;
+import com.altnoir.poopsky.worldgen.foliage.PoopMegaFoliagePlacer;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -56,7 +57,7 @@ public class PSConfigureFeatures {
                 new GiantTrunkPlacer(12, 2, 14),
 
                 new WeightedBlockStateProvider(DataPool.<BlockState>builder()
-                        .add(PSBlocks.POOP_LEAVES.getDefaultState(), 5)
+                        .add(PSBlocks.POOP_LEAVES.getDefaultState(), 7)
                         .add(PSBlocks.POOP_LEAVES_IRON.getDefaultState(), 2)
                         .add(PSBlocks.POOP_LEAVES_GOLD.getDefaultState(), 1)
                 ),

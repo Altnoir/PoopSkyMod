@@ -117,8 +117,8 @@ public class PSLootTableProvider extends FabricBlockLootTableProvider {
         addDrop(PSBlocks.STRIPPED_POOP_EMPTY_LOG);
         addDrop(PSBlocks.POOP_SAPLING);
         addDrop(PSBlocks.POOP_LEAVES, poopLeavesDrops(PSBlocks.POOP_LEAVES, PSBlocks.POOP_SAPLING, 0.1F));
-        addDrop(PSBlocks.POOP_LEAVES_IRON, poopLeavesIronDrops(PSBlocks.POOP_LEAVES, PSBlocks.POOP_SAPLING, 0.01F));
-        addDrop(PSBlocks.POOP_LEAVES_GOLD, poopLeavesGoldDrops(PSBlocks.POOP_LEAVES, PSBlocks.POOP_SAPLING, 0.01F));
+        addDrop(PSBlocks.POOP_LEAVES_IRON, poopLeavesIronDrops(PSBlocks.POOP_LEAVES_IRON, PSBlocks.POOP_SAPLING, 0.01F));
+        addDrop(PSBlocks.POOP_LEAVES_GOLD, poopLeavesGoldDrops(PSBlocks.POOP_LEAVES_GOLD, PSBlocks.POOP_SAPLING, 0.01F));
         addDrop(PSBlocks.STOOL);
         addDrop(PSBlocks.COMPOOPER);
 

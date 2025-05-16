@@ -26,8 +26,8 @@ public class VillagerTrade {
                     new ItemStack(Items.EMERALD,1),88, 5, 0.1f)
             );
             factories.add((entity, random) -> new TradeOffer(
-                    new TradedItem(Items.EMERALD, 8),
-                    new ItemStack(PSItems.DRAGON_BREATH_CHILI,1),8, 5, 0.15f)
+                    new TradedItem(Items.EMERALD, 16),
+                    new ItemStack(PSItems.DRAGON_BREATH_CHILI,1),10, 5, 0.15f)
             );
         });
 
@@ -79,7 +79,7 @@ public class VillagerTrade {
             );
             factories.add((entity, random) -> new TradeOffer(
                     new TradedItem(Items.EMERALD, 64),
-                    Optional.of(new TradedItem(Items.BREEZE_ROD, 12)),
+                    Optional.of(new TradedItem(Items.BREEZE_ROD, 8)),
                     new ItemStack(PSItems.TOILET_PLUG, 1),1, 100, 1.0f)
             );
         });

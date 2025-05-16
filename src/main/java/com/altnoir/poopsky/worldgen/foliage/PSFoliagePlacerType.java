@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.worldgen;
+package com.altnoir.poopsky.worldgen.foliage;
 
 import com.altnoir.poopsky.PoopSky;
 import com.mojang.serialization.MapCodec;

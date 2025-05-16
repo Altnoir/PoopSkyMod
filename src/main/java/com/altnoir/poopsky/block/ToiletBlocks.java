@@ -3,6 +3,7 @@ package com.altnoir.poopsky.block;
 import com.altnoir.poopsky.PoopSky;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.item.BlockItem;
@@ -13,6 +14,8 @@ import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.PathUtil;
 import net.minecraft.util.Rarity;
+
+import java.util.function.ToIntFunction;
 
 public class ToiletBlocks {
     public static final Block OAK_TOILET = registerToilet("oak_toilet", MapColor.OAK_TAN, BlockSoundGroup.WOOD);
@@ -65,6 +68,7 @@ public class ToiletBlocks {
         return registerBlock(name, new ToiletLava(AbstractBlock.Settings.create()
                 .mapColor(color)
                 .instrument(NoteBlockInstrument.BASEDRUM)
+                .luminance(createLightLevelFromLavaBlockState(15))
                 .strength(2.0F,100.0F)
                 .requiresTool()
         ));
@@ -73,11 +77,15 @@ public class ToiletBlocks {
         return registerBlock(name, new ToiletLava(AbstractBlock.Settings.create()
                 .mapColor(color)
                 .instrument(NoteBlockInstrument.BASEDRUM)
+                .luminance(createLightLevelFromLavaBlockState(15))
                 .strength(2.0F,100.0F)
                 .requiresTool()
         ));
     }
 
+    public static ToIntFunction<BlockState> createLightLevelFromLavaBlockState(int litLevel) {
+        return state -> state.get(ToiletLava.LAVA) ? litLevel : 0;
+    }
     private static Block registerBlock(String name, Block block) {
         registerBlockItem(name, block);
         return Registry.register(Registries.BLOCK, Identifier.of(PoopSky.MOD_ID, name), block);

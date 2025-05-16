@@ -34,7 +34,7 @@ public class ToiletLava extends Toilet{
     @Override
     public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
         if (!world.isClient && entity instanceof PlayerEntity player) {
-            if (player.isSneaking() && isPlayerCentered(pos, player)) {
+            if (player.isSneaking() && isPlayerCentered(pos, player) && !state.get(LAVA)) {
                 if (player.hasStatusEffect(PSEffect.FECAL_INCONTINENCE)) {
                     onPoop(world, player);
                     player.addExhaustion(0.05F);
@@ -44,7 +44,7 @@ public class ToiletLava extends Toilet{
                     player.removeStatusEffect(PSEffect.INTESTINAL_SPASM);
                     player.addExhaustion(1.0F);
                 } else if (world.getTime() % 20 == 0) {
-                    onPoop(world, entity);
+                    onPoop(world, player);
                     player.addExhaustion(1.0F);
                 }
             }

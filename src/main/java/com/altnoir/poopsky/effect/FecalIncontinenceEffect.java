@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.effect;
 
+import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.particle.PSParticle;
 import com.altnoir.poopsky.sound.PSSoundEvents;
@@ -46,6 +47,9 @@ public class FecalIncontinenceEffect extends StatusEffect {
             );
             poop.setToDefaultPickupDelay();
             entity.getWorld().spawnEntity(poop);
+            if (entity instanceof PlayerEntity player) {
+                player.increaseStat(PoopSky.POOP_STAT, 1);
+            }
 
             ((ServerWorld) entity.getWorld()).spawnParticles(PSParticle.POOP_PARTICLE,
                     entity.getX(), entity.getY() + 0.1, entity.getZ(),

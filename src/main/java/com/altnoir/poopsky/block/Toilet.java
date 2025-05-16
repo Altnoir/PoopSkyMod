@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.block;
 
+import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.effect.PSEffect;
 import com.altnoir.poopsky.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.item.PSItems;
@@ -20,10 +21,8 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.BlockMirror;
@@ -39,14 +38,9 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.TeleportTarget;
 import net.minecraft.world.World;
-import net.minecraft.world.explosion.Explosion;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.function.BiConsumer;
-
-import static net.minecraft.block.HorizontalFacingBlock.FACING;
 
 public class Toilet extends BlockWithEntity implements Portal{
     public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
@@ -108,10 +102,10 @@ public class Toilet extends BlockWithEntity implements Portal{
         if (!world.isClient && entity instanceof PlayerEntity player) {
             if (player.isSneaking() && isPlayerCentered(pos, player)) {
                 if (player.hasStatusEffect(PSEffect.FECAL_INCONTINENCE)) {
-                    onPoop(world,player);
+                    onPoop(world, player);
                     player.addExhaustion(0.05F);
                 } else if (world.getTime() % 20 == 0) {
-                    onPoop(world,entity);
+                    onPoop(world, player);
                     player.addExhaustion(1.0F);
                 }
             }
@@ -122,21 +116,22 @@ public class Toilet extends BlockWithEntity implements Portal{
         Box blockBox = new Box(blockPos).expand(0.2);
         return blockBox.contains(player.getPos());
     }
-    protected void onPoop(World world, Entity entity) {
+    protected void onPoop(World world, PlayerEntity player) {
         ItemEntity poop = new ItemEntity(
                 world,
-                entity.getX(),
-                entity.getY() + 0.1,
-                entity.getZ(),
+                player.getX(),
+                player.getY() + 0.1,
+                player.getZ(),
                 new ItemStack(PSItems.POOP)
         );
         poop.setToDefaultPickupDelay();
+        player.increaseStat(PoopSky.POOP_STAT, 1);
 
         float pitch = world.random.nextFloat() + 0.5F;
-        world.playSound(null, entity.getX(), entity.getY() + 0.1, entity.getZ(), PSSoundEvents.FART, entity.getSoundCategory(), 1.0F, pitch);
+        world.playSound(null, player.getX(), player.getY() + 0.1, player.getZ(), PSSoundEvents.FART, player.getSoundCategory(), 1.0F, pitch);
 
         ((ServerWorld) world).spawnParticles(PSParticle.POOP_PARTICLE,
-                entity.getX(), entity.getY() + 0.1, entity.getZ(),
+                player.getX(), player.getY() + 0.1, player.getZ(),
                 8, 0.0, -0.1, 0.0, 3.0);
         world.spawnEntity(poop);
     }

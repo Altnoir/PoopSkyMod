@@ -13,24 +13,23 @@ import com.altnoir.poopsky.sound.PSSoundEvents;
 import com.altnoir.poopsky.villager.PSVillagers;
 import com.altnoir.poopsky.villager.VillagerTrade;
 import com.altnoir.poopsky.worldgen.PSWorldGeneration;
-import com.altnoir.poopsky.worldgen.PSFoliagePlacerType;
+import com.altnoir.poopsky.worldgen.foliage.PSFoliagePlacerType;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.fabricmc.fabric.api.registry.*;
-import net.minecraft.component.type.PotionContentsComponent;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.Potions;
-import net.minecraft.village.TradeOffer;
-import net.minecraft.village.TradedItem;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.stat.StatFormatter;
+import net.minecraft.stat.Stats;
+import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Optional;
 
 public class PoopSky implements ModInitializer {
 	public static final String MOD_ID = "poopsky";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+	public static final Identifier POOP_STAT = Identifier.of(MOD_ID, "poop_stat");
 	@Override
 	public void onInitialize() {
 		PSBlocks.registerModBlocks();
@@ -51,6 +50,9 @@ public class PoopSky implements ModInitializer {
 		PSFoliagePlacerType.registerFoliagePlacer();
 		PSWorldGeneration.generatePSWorldGen();
 		PlugActionPayload.registerServerReceiver();
+
+		Registry.register(Registries.CUSTOM_STAT, POOP_STAT, POOP_STAT);
+		Stats.CUSTOM.getOrCreateStat(POOP_STAT, StatFormatter.DEFAULT);
 
 		FuelRegistry.INSTANCE.add(PSItems.POOP, 200);
 		FuelRegistry.INSTANCE.add(PSItems.POOP_BALL, 400);

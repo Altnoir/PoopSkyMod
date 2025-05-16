@@ -14,7 +14,10 @@ import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
+
+import java.util.function.ToIntFunction;
 
 public class PSBlocks {
     private static final float POOP = 0.5F;
