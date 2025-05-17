@@ -16,6 +16,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
@@ -23,6 +24,7 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
+import net.minecraft.world.chunk.light.ChunkLightProvider;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 
 public class PoopBlock extends Block implements Fertilizable {
@@ -100,6 +102,21 @@ public class PoopBlock extends Block implements Fertilizable {
         }
 
         super.onSteppedOn(world, pos, state, entity);
+    }
+
+    @Override
+    protected void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        if (canSurvive(world, pos)) {
+            world.setBlockState(pos, Blocks.DIRT.getDefaultState());
+            world.playSound(null, pos, SoundEvents.BLOCK_ROOTED_DIRT_PLACE, SoundCategory.BLOCKS, 1.0F, 1.0F);
+        }
+    }
+    private static boolean canSurvive(WorldView world, BlockPos pos) {
+        BlockPos blockPos = pos.down();
+        BlockState blockState = world.getBlockState(blockPos);
+        boolean isFullCube = blockState.isSolidBlock(world, blockPos) || blockState.isFullCube(world, blockPos);
+        
+        return isFullCube && world.getBlockState(blockPos.down()).isOf(Blocks.POINTED_DRIPSTONE);
     }
 
     protected VoxelShape getSidesShape(BlockState state, BlockView world, BlockPos pos) {

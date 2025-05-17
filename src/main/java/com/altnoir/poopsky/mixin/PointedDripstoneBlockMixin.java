@@ -1,3 +1,4 @@
+/*
 package com.altnoir.poopsky.mixin;
 
 import com.altnoir.poopsky.block.PSBlocks;
@@ -133,4 +134,4 @@ public abstract class PointedDripstoneBlockMixin {
 
         return Optional.empty();
     }
-}
+}*/

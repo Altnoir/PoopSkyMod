@@ -28,6 +28,7 @@ public class PSBlocks {
                     .solidBlock(Blocks::always) // 是否完整
                     .suffocates(Blocks::always) // 窒息
                     .instrument(NoteBlockInstrument.COW_BELL)
+                    .ticksRandomly()
                     .strength(POOP)
                     .sounds(BlockSoundGroup.MUD)
             )
