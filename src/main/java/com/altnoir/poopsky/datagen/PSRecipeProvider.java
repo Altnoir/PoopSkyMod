@@ -231,14 +231,14 @@ public class PSRecipeProvider extends FabricRecipeProvider {
 
         offerCompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, Blocks.MOSSY_COBBLESTONE, PSItems.SPALL);
         create1x2ShapelessFrom(exporter, Blocks.GRASS_BLOCK, Blocks.DIRT, Blocks.MOSS_BLOCK);
-        create1x2ShapelessFrom(exporter, Blocks.COBBLESTONE, Blocks.GRAVEL, PSItems.SPALL);
-        create1x2ShapelessFrom(exporter, Blocks.ANDESITE, Blocks.GRAVEL, Items.FLINT);
-        create1x2ShapelessFrom(exporter, Blocks.DIORITE, Blocks.GRAVEL, Items.CLAY_BALL);
-        create1x2ShapelessFrom(exporter, Blocks.GRANITE, Blocks.GRAVEL, Items.BRICK);
+
+        create1x2ShapelessFrom(exporter, Blocks.DIORITE, Blocks.COBBLESTONE, Blocks.CLAY, 2);
+        create1x2ShapelessFrom(exporter, Blocks.GRANITE, Blocks.COBBLESTONE, Blocks.DRIPSTONE_BLOCK, 2);
+        create1x2ShapelessFrom(exporter, Blocks.COBBLED_DEEPSLATE, Blocks.COBBLESTONE, Blocks.MUD, 2);
         create1x2ShapelessFrom(exporter, Blocks.TUFF, Blocks.ANDESITE, PSItems.SPALL);
         create1x2ShapelessFrom(exporter, Blocks.CALCITE, Blocks.DIORITE, PSItems.SPALL);
-        create1x2ShapelessFrom(exporter, Blocks.COBBLED_DEEPSLATE, Blocks.MUD, PSItems.SPALL);
 
+        //切石配方
         offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, PSBlocks.STOOL, PSBlocks.POOP_BLOCK);
         offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOP_PIECE, PSBlocks.POOP_BLOCK, 8);
         offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOP_STAIRS, PSBlocks.POOP_BLOCK);
@@ -294,6 +294,7 @@ public class PSRecipeProvider extends FabricRecipeProvider {
         offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOP_BLOCK, PSBlocks.POOP_EMPTY_LOG, 4);
         offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOP_BLOCK, PSBlocks.STRIPPED_POOP_EMPTY_LOG, 4);
 
+        //厕所配方
         toiletRecipes(exporter, ToiletBlocks.OAK_TOILET, Blocks.OAK_PLANKS);
         toiletRecipes(exporter, ToiletBlocks.SPRUCE_TOILET, Blocks.SPRUCE_PLANKS);
         toiletRecipes(exporter, ToiletBlocks.BIRCH_TOILET, Blocks.BIRCH_PLANKS);
@@ -381,6 +382,12 @@ public class PSRecipeProvider extends FabricRecipeProvider {
     }
     private void create1x2ShapelessFrom(RecipeExporter exporter, ItemConvertible output, ItemConvertible input1, ItemConvertible input2) {
         ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output)
+                .input(input1).input(input2)
+                .criterion(hasItem(input2), conditionsFromItem(input2))
+                .offerTo(exporter,getItemPath(output) + "_from_" + getItemPath(input2));
+    }
+    private void create1x2ShapelessFrom(RecipeExporter exporter, ItemConvertible output, ItemConvertible input1, ItemConvertible input2, int count) {
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, count)
                 .input(input1).input(input2)
                 .criterion(hasItem(input2), conditionsFromItem(input2))
                 .offerTo(exporter,getItemPath(output) + "_from_" + getItemPath(input2));

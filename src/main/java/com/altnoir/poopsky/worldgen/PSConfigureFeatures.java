@@ -41,8 +41,8 @@ public class PSConfigureFeatures {
                 new StraightTrunkPlacer(3, 1, 1),
 
                 new WeightedBlockStateProvider(DataPool.<BlockState>builder()
-                        .add(PSBlocks.POOP_LEAVES.getDefaultState(), 5)
-                        .add(PSBlocks.POOP_LEAVES_IRON.getDefaultState(), 2)
+                        .add(PSBlocks.POOP_LEAVES.getDefaultState(), 11)
+                        .add(PSBlocks.POOP_LEAVES_IRON.getDefaultState(), 3)
                         .add(PSBlocks.POOP_LEAVES_GOLD.getDefaultState(), 1)
                 ),
                 new RandomSpreadFoliagePlacer(ConstantIntProvider.create(3), ConstantIntProvider.create(0), ConstantIntProvider.create(2), 114),
@@ -57,8 +57,8 @@ public class PSConfigureFeatures {
                 new GiantTrunkPlacer(12, 2, 14),
 
                 new WeightedBlockStateProvider(DataPool.<BlockState>builder()
-                        .add(PSBlocks.POOP_LEAVES.getDefaultState(), 7)
-                        .add(PSBlocks.POOP_LEAVES_IRON.getDefaultState(), 2)
+                        .add(PSBlocks.POOP_LEAVES.getDefaultState(), 11)
+                        .add(PSBlocks.POOP_LEAVES_IRON.getDefaultState(), 3)
                         .add(PSBlocks.POOP_LEAVES_GOLD.getDefaultState(), 1)
                 ),
                 new PoopMegaFoliagePlacer(ConstantIntProvider.create(0), ConstantIntProvider.create(3), UniformIntProvider.create(13, 17)),

@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_clay_ball": {
+    "has_dripstone_block": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:clay_ball"
+            "items": "minecraft:dripstone_block"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:diorite_from_clay_ball"
+        "recipe": "minecraft:granite_from_dripstone_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_clay_ball"
+      "has_dripstone_block"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:diorite_from_clay_ball"
+      "minecraft:granite_from_dripstone_block"
     ]
   }
 }

@@ -9,6 +9,7 @@
     "GlassBottleItemAccessor",
     "GlassBottleItemMixin",
     "PistonHandlerMixin",
+    "PointedDripstoneBlockMixin",
     "PotionItemMixin",
     "VillagerEntityMixin",
     "WoodTypeMixin"

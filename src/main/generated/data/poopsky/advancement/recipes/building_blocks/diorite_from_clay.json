@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_spall": {
+    "has_clay": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:spall"
+            "items": "minecraft:clay"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:cobbled_deepslate_from_spall"
+        "recipe": "minecraft:diorite_from_clay"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_spall"
+      "has_clay"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:cobbled_deepslate_from_spall"
+      "minecraft:diorite_from_clay"
     ]
   }
 }

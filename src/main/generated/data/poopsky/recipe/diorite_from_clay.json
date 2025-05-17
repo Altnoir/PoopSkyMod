@@ -3,14 +3,14 @@
   "category": "building",
   "ingredients": [
     {
-      "item": "minecraft:gravel"
+      "item": "minecraft:cobblestone"
     },
     {
-      "item": "minecraft:flint"
+      "item": "minecraft:clay"
     }
   ],
   "result": {
-    "count": 1,
-    "id": "minecraft:andesite"
+    "count": 2,
+    "id": "minecraft:diorite"
   }
 }

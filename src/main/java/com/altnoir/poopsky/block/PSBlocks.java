@@ -14,10 +14,7 @@ import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
-
-import java.util.function.ToIntFunction;
 
 public class PSBlocks {
     private static final float POOP = 0.5F;
@@ -27,6 +24,9 @@ public class PSBlocks {
     public static final Block POOP_BLOCK = registerBlock("poop_block",
             new PoopBlock(AbstractBlock.Settings.create()
                     .mapColor(MapColor.BROWN)
+                    .allowsSpawning(Blocks::always) // 是否刷怪
+                    .solidBlock(Blocks::always) // 是否完整
+                    .suffocates(Blocks::always) // 窒息
                     .instrument(NoteBlockInstrument.COW_BELL)
                     .strength(POOP)
                     .sounds(BlockSoundGroup.MUD)
