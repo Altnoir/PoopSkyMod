@@ -1,8 +1,7 @@
 package com.altnoir.poopsky;
 
-import com.altnoir.poopsky.block.CompooperBlock;
+import com.altnoir.poopsky.block.custom.CompooperBlock;
 import com.altnoir.poopsky.block.PSBlocks;
-import com.altnoir.poopsky.block.ToiletBlocks;
 import com.altnoir.poopsky.entity.renderer.ChairRenderer;
 import com.altnoir.poopsky.entity.PSEntities;
 import com.altnoir.poopsky.entity.model.ToiletPlugModel;
@@ -16,7 +15,6 @@ import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.minecraft.block.Block;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.render.RenderLayer;
 

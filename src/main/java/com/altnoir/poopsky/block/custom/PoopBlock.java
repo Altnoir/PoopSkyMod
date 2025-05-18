@@ -1,9 +1,8 @@
-package com.altnoir.poopsky.block;
+package com.altnoir.poopsky.block.custom;
 
 import com.altnoir.poopsky.worldgen.PSConfigureFeatures;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.*;
-import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.TntEntity;
@@ -16,7 +15,6 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
@@ -24,7 +22,6 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
-import net.minecraft.world.chunk.light.ChunkLightProvider;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 
 public class PoopBlock extends Block implements Fertilizable {

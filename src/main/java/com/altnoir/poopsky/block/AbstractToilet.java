@@ -42,17 +42,16 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public class Toilet extends BlockWithEntity implements Portal{
+public abstract class AbstractToilet extends BlockWithEntity implements Portal {
     public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
-    private static final VoxelShape SHAPE = VoxelShapes.union(createCuboidShape(0, 0, 0, 16, 16, 16));
-    protected MapCodec<? extends BlockWithEntity> getCodec() {
-        return createCodec(Toilet::new);
-    }
 
-    public Toilet(Settings settings) {
+    private static final VoxelShape SHAPE = VoxelShapes.union(createCuboidShape(0, 0, 0, 16, 16, 16));
+
+    public AbstractToilet(Settings settings) {
         super(settings);
         setDefaultState(getDefaultState().with(FACING, Direction.NORTH));
     }
+
     @Override
     public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
         if (entity.canUsePortals(false) && !world.isClient) {
@@ -95,7 +94,6 @@ public class Toilet extends BlockWithEntity implements Portal{
         }
         return null;
     }
-
 
     @Override
     public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
@@ -211,6 +209,7 @@ public class Toilet extends BlockWithEntity implements Portal{
     @Override
     protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
         super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
+
         if (sourcePos.equals(pos.up()) && hasHot((ServerWorld) world, pos)) {
             world.scheduleBlockTick(pos, this, 1);
         }

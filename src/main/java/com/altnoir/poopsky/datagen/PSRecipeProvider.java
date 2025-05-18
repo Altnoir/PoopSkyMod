@@ -110,10 +110,10 @@ public class PSRecipeProvider extends FabricRecipeProvider {
         createWallRecipe(exporter, PSBlocks.CUT_POOP_BLOCK_WALL, PSBlocks.CUT_POOP_BLOCK);
 
         offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOP_BRICKS, PSBlocks.POOP_BLOCK, 4);
-        createStairsRecipe(exporter, PSBlocks.POOP_BRICK_STAIRS, PSBlocks.POOP_BLOCK);
-        createSlabRecipe(exporter, PSBlocks.POOP_BRICK_SLAB, PSBlocks.POOP_BLOCK);
-        createVerticalSlabRecipe(exporter, PSBlocks.POOP_BRICK_VERTICAL_SLAB, PSBlocks.POOP_BLOCK);
-        createWallRecipe(exporter, PSBlocks.POOP_BRICK_WALL, PSBlocks.POOP_BLOCK);
+        createStairsRecipe(exporter, PSBlocks.POOP_BRICK_STAIRS, PSBlocks.POOP_BRICKS);
+        createSlabRecipe(exporter, PSBlocks.POOP_BRICK_SLAB, PSBlocks.POOP_BRICKS);
+        createVerticalSlabRecipe(exporter, PSBlocks.POOP_BRICK_VERTICAL_SLAB, PSBlocks.POOP_BRICKS);
+        createWallRecipe(exporter, PSBlocks.POOP_BRICK_WALL, PSBlocks.POOP_BRICKS);
 
         create1x2ShapelessFrom(exporter, PSBlocks.MOSSY_POOP_BRICKS, PSBlocks.POOP_BRICKS, Blocks.MOSS_BLOCK);
         create1x2ShapelessFrom(exporter, PSBlocks.MOSSY_POOP_BRICKS, PSBlocks.POOP_BRICKS, Blocks.VINE);

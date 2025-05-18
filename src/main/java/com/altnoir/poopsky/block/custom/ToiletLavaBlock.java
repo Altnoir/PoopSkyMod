@@ -1,15 +1,17 @@
-package com.altnoir.poopsky.block;
+package com.altnoir.poopsky.block.custom;
 
+import com.altnoir.poopsky.block.AbstractToilet;
 import com.altnoir.poopsky.effect.PSEffect;
-import com.altnoir.poopsky.sound.PSSoundEvents;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.CauldronBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
@@ -20,11 +22,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
-public class ToiletLava extends Toilet{
+public class ToiletLavaBlock extends AbstractToilet {
+    public static final MapCodec<ToiletLavaBlock> CODEC = createCodec(ToiletLavaBlock::new);
     public static final BooleanProperty LAVA = BooleanProperty.of("lava");
-    public ToiletLava(Settings settings) {
+    public ToiletLavaBlock(Settings settings) {
         super(settings);
         this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.NORTH).with(LAVA, false));
+    }
+
+    @Override
+    protected MapCodec<ToiletLavaBlock> getCodec() {
+        return CODEC;
     }
 
     @Override

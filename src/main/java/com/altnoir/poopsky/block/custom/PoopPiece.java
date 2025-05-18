@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.block;
+package com.altnoir.poopsky.block.custom;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;

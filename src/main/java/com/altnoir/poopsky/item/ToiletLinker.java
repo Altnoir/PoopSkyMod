@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.item;
 
-import com.altnoir.poopsky.block.Toilet;
+import com.altnoir.poopsky.block.AbstractToilet;
 import com.altnoir.poopsky.component.PSComponents;
 import com.altnoir.poopsky.entity.ToiletBlockEntity;
 import net.minecraft.block.Block;
@@ -45,7 +45,7 @@ public class ToiletLinker extends Item {
         PlayerEntity player = context.getPlayer();
         ItemStack stack = context.getStack();
 
-        if (world.getBlockState(pos).getBlock() instanceof Toilet) {
+        if (world.getBlockState(pos).getBlock() instanceof AbstractToilet) {
             if (stack.contains(PSComponents.TOILET_COMPONENT)) {
                 PSComponents.ToiletComponent comp = stack.getOrDefault(PSComponents.TOILET_COMPONENT, new PSComponents.ToiletComponent("", "", 0, 0, 0, 0, 0, 0));
 

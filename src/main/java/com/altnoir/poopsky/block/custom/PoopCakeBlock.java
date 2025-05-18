@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.block;
+package com.altnoir.poopsky.block.custom;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

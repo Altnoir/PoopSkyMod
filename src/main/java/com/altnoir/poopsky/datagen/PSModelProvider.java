@@ -3,14 +3,14 @@ package com.altnoir.poopsky.datagen;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.block.ToiletBlocks;
-import com.altnoir.poopsky.block.ToiletLava;
+import com.altnoir.poopsky.block.custom.ToiletBlock;
+import com.altnoir.poopsky.block.custom.ToiletLavaBlock;
 import com.altnoir.poopsky.item.PSItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CropBlock;
-import net.minecraft.block.MapColor;
 import net.minecraft.data.client.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.state.property.Properties;
@@ -176,86 +176,90 @@ public class PSModelProvider extends FabricModelProvider {
 
     private void registerToilet(BlockStateModelGenerator generator, Block toilet, Block texture) {
         String texturePath = Registries.BLOCK.getId(texture).getPath();
-        Identifier baseTexture = Identifier.ofVanilla( "block/" + texturePath);
+        Identifier baseTexture = Identifier.ofVanilla("block/" + texturePath);
         TextureMap textureMap = new TextureMap()
                 .put(TOILET_TEXTURE, baseTexture);
 
-        Identifier modelId = TOILET.upload(toilet, textureMap, generator.modelCollector);
-
-        generator.blockStateCollector.accept(
-                VariantsBlockStateSupplier.create(toilet)
-                        .coordinate(BlockStateVariantMap.create(Properties.HORIZONTAL_FACING)
-                                .register(Direction.NORTH,
-                                        BlockStateVariant.create()
-                                                .put(VariantSettings.MODEL, modelId)
-                                                .put(VariantSettings.UVLOCK, true)
-                                )
-                                .register(Direction.EAST,
-                                        BlockStateVariant.create()
-                                                .put(VariantSettings.MODEL, modelId)
-                                                .put(VariantSettings.Y, VariantSettings.Rotation.R90)
-                                                .put(VariantSettings.UVLOCK, true)
-                                )
-                                .register(Direction.SOUTH,
-                                        BlockStateVariant.create()
-                                                .put(VariantSettings.MODEL, modelId)
-                                                .put(VariantSettings.Y, VariantSettings.Rotation.R180)
-                                                .put(VariantSettings.UVLOCK, true)
-                                )
-                                .register(Direction.WEST,
-                                        BlockStateVariant.create()
-                                                .put(VariantSettings.MODEL, modelId)
-                                                .put(VariantSettings.Y, VariantSettings.Rotation.R270)
-                                                .put(VariantSettings.UVLOCK, true)
-                                )
-                        )
+        Identifier baseModelId = TOILET.upload(
+            toilet, 
+            textureMap, 
+            generator.modelCollector
         );
-        generator.registerParentedItemModel(toilet, modelId);
-    }
-    private void registerToiletLava(BlockStateModelGenerator generator, Block toilet, Block texture) {
-        String toiletPath = Registries.BLOCK.getId(toilet).getPath();
-        String texturePath = Registries.BLOCK.getId(texture).getPath();
-        Identifier baseTexture = Identifier.ofVanilla( "block/" + texturePath);
-        TextureMap textureMap = new TextureMap()
-                .put(TOILET_TEXTURE, baseTexture);
 
-        Identifier baseModelId = Identifier.of(PoopSky.MOD_ID, "block/" + toiletPath);
-        Identifier lavaModelId = Identifier.of(PoopSky.MOD_ID, "block/" + toiletPath + "_lava");
-
-        Identifier modelId1 = TOILET.upload(baseModelId, textureMap, generator.modelCollector);
-        Identifier modelId2 = TOILET_LAVA.upload(lavaModelId, textureMap, generator.modelCollector);
+        Identifier modelN = new Model(
+            Optional.of(Identifier.of(PoopSky.MOD_ID, "block/toilet_n")),
+            Optional.empty(),
+            TOILET_TEXTURE
+        ).upload(toilet, "_n", textureMap, generator.modelCollector);
+        
+        Identifier modelS = new Model(
+            Optional.of(Identifier.of(PoopSky.MOD_ID, "block/toilet_s")),
+            Optional.empty(),
+            TOILET_TEXTURE
+        ).upload(toilet, "_s", textureMap, generator.modelCollector);
+        
+        Identifier modelNS = new Model(
+            Optional.of(Identifier.of(PoopSky.MOD_ID, "block/toilet_ns")),
+            Optional.empty(),
+            TOILET_TEXTURE
+        ).upload(toilet, "_ns", textureMap, generator.modelCollector);
 
         MultipartBlockStateSupplier supplier = MultipartBlockStateSupplier.create(toilet);
 
         for (Direction direction : Properties.HORIZONTAL_FACING.getValues()) {
-            VariantSettings.Rotation rotation = getRotationForDirection(direction);
             supplier.with(
-                    When.create()
-                            .set(Properties.HORIZONTAL_FACING, direction)
-                            .set(ToiletLava.LAVA, false),
-                    BlockStateVariant.create()
-                            .put(VariantSettings.MODEL, modelId1)
-                            .put(VariantSettings.Y, rotation)
-                            .put(VariantSettings.UVLOCK, true)
+                When.create()
+                        .set(Properties.HORIZONTAL_FACING, direction)
+                        .set(ToiletBlock.FORWARD, false)
+                        .set(ToiletBlock.BACKWARD, false),
+                BlockStateVariant.create()
+                        .put(VariantSettings.MODEL, baseModelId)
+                        .put(VariantSettings.Y, getRotationForDirection(direction))
+                        .put(VariantSettings.UVLOCK, true)
             );
             supplier.with(
-                    When.create()
-                            .set(Properties.HORIZONTAL_FACING, direction)
-                            .set(ToiletLava.LAVA, true),
-                    BlockStateVariant.create()
-                            .put(VariantSettings.MODEL, modelId2)
-                            .put(VariantSettings.Y, rotation)
-                            .put(VariantSettings.UVLOCK, true)
+                When.create()
+                        .set(Properties.HORIZONTAL_FACING, direction)
+                        .set(ToiletBlock.FORWARD, true)
+                        .set(ToiletBlock.BACKWARD, false),
+                BlockStateVariant.create()
+                        .put(VariantSettings.MODEL, modelN)
+                        .put(VariantSettings.Y, getRotationForDirection(direction))
+                        .put(VariantSettings.UVLOCK, true)
+            );
+            supplier.with(
+                When.create()
+                        .set(Properties.HORIZONTAL_FACING, direction)
+                        .set(ToiletBlock.FORWARD, false)
+                        .set(ToiletBlock.BACKWARD, true),
+                BlockStateVariant.create()
+                        .put(VariantSettings.MODEL, modelS)
+                        .put(VariantSettings.Y, getRotationForDirection(direction))
+                        .put(VariantSettings.UVLOCK, true)
+            );
+            supplier.with(
+                When.create()
+                        .set(Properties.HORIZONTAL_FACING, direction)
+                        .set(ToiletBlock.FORWARD, true)
+                        .set(ToiletBlock.BACKWARD, true),
+                BlockStateVariant.create()
+                        .put(VariantSettings.MODEL, modelNS)
+                        .put(VariantSettings.Y, getRotationForDirection(direction))
+                        .put(VariantSettings.UVLOCK, true)
             );
         }
 
         generator.blockStateCollector.accept(supplier);
-        generator.registerParentedItemModel(toilet, modelId1);
+        generator.registerParentedItemModel(toilet, baseModelId);
     }
-
-    private void registerToiletLava(BlockStateModelGenerator generator, Block toilet, String texture) {
+    private void registerToiletLava(BlockStateModelGenerator generator, Block toilet, Object texture) {
+        String texturePath = texture instanceof Block ? Registries.BLOCK.getId((Block) texture).getPath() : texture.toString();
         String toiletPath = Registries.BLOCK.getId(toilet).getPath();
-        Identifier baseTexture = Identifier.of(PoopSky.MOD_ID, "block/" + texture);
+        
+        Identifier baseTexture = (texture instanceof Block) ? 
+            Identifier.ofVanilla("block/" + texturePath) : 
+            Identifier.of(PoopSky.MOD_ID, "block/" + texturePath);
+
         TextureMap textureMap = new TextureMap()
                 .put(TOILET_TEXTURE, baseTexture);
 
@@ -272,7 +276,7 @@ public class PSModelProvider extends FabricModelProvider {
             supplier.with(
                     When.create()
                             .set(Properties.HORIZONTAL_FACING, direction)
-                            .set(ToiletLava.LAVA, false),
+                            .set(ToiletLavaBlock.LAVA, false),
                     BlockStateVariant.create()
                             .put(VariantSettings.MODEL, modelId1)
                             .put(VariantSettings.Y, rotation)
@@ -281,7 +285,7 @@ public class PSModelProvider extends FabricModelProvider {
             supplier.with(
                     When.create()
                             .set(Properties.HORIZONTAL_FACING, direction)
-                            .set(ToiletLava.LAVA, true),
+                            .set(ToiletLavaBlock.LAVA, true),
                     BlockStateVariant.create()
                             .put(VariantSettings.MODEL, modelId2)
                             .put(VariantSettings.Y, rotation)

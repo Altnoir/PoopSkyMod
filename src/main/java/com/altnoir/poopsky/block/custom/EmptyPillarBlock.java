@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.block;
+package com.altnoir.poopsky.block.custom;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.AbstractBlock;
@@ -8,10 +8,8 @@ import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
-import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
-import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.math.BlockPos;

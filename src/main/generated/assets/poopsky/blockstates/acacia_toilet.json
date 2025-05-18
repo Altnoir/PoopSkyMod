@@ -1,23 +1,196 @@
 {
-  "variants": {
-    "facing=east": {
-      "model": "poopsky:block/acacia_toilet",
-      "uvlock": true,
-      "y": 90
+  "multipart": [
+    {
+      "apply": {
+        "model": "poopsky:block/acacia_toilet",
+        "uvlock": true,
+        "y": 0
+      },
+      "when": {
+        "backward": "false",
+        "facing": "north",
+        "forward": "false"
+      }
     },
-    "facing=north": {
-      "model": "poopsky:block/acacia_toilet",
-      "uvlock": true
+    {
+      "apply": {
+        "model": "poopsky:block/acacia_toilet_n",
+        "uvlock": true,
+        "y": 0
+      },
+      "when": {
+        "backward": "false",
+        "facing": "north",
+        "forward": "true"
+      }
     },
-    "facing=south": {
-      "model": "poopsky:block/acacia_toilet",
-      "uvlock": true,
-      "y": 180
+    {
+      "apply": {
+        "model": "poopsky:block/acacia_toilet_s",
+        "uvlock": true,
+        "y": 0
+      },
+      "when": {
+        "backward": "true",
+        "facing": "north",
+        "forward": "false"
+      }
     },
-    "facing=west": {
-      "model": "poopsky:block/acacia_toilet",
-      "uvlock": true,
-      "y": 270
+    {
+      "apply": {
+        "model": "poopsky:block/acacia_toilet_ns",
+        "uvlock": true,
+        "y": 0
+      },
+      "when": {
+        "backward": "true",
+        "facing": "north",
+        "forward": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/acacia_toilet",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "backward": "false",
+        "facing": "south",
+        "forward": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/acacia_toilet_n",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "backward": "false",
+        "facing": "south",
+        "forward": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/acacia_toilet_s",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "backward": "true",
+        "facing": "south",
+        "forward": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/acacia_toilet_ns",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "backward": "true",
+        "facing": "south",
+        "forward": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/acacia_toilet",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "backward": "false",
+        "facing": "west",
+        "forward": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/acacia_toilet_n",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "backward": "false",
+        "facing": "west",
+        "forward": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/acacia_toilet_s",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "backward": "true",
+        "facing": "west",
+        "forward": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/acacia_toilet_ns",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "backward": "true",
+        "facing": "west",
+        "forward": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/acacia_toilet",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "backward": "false",
+        "facing": "east",
+        "forward": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/acacia_toilet_n",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "backward": "false",
+        "facing": "east",
+        "forward": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/acacia_toilet_s",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "backward": "true",
+        "facing": "east",
+        "forward": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/acacia_toilet_ns",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "backward": "true",
+        "facing": "east",
+        "forward": "true"
+      }
     }
-  }
+  ]
 }

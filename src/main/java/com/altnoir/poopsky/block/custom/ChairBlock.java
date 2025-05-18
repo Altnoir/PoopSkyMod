@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.block;
+package com.altnoir.poopsky.block.custom;
 
 import com.altnoir.poopsky.entity.ChairEntity;
 import com.altnoir.poopsky.entity.PSEntities;
@@ -28,7 +28,7 @@ import java.util.List;
 public class ChairBlock extends HorizontalFacingBlock {
     public static final MapCodec<ChairBlock> CODEC = createCodec(ChairBlock::new);
     private static final VoxelShape SHAPE = createCuboidShape(4.0, 0.0, 4.0, 12.0, 8.0, 12.0);
-    protected ChairBlock(Settings settings) {
+    public ChairBlock(Settings settings) {
         super(settings);
     }
 

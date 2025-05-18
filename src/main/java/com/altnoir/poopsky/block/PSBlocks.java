@@ -1,10 +1,11 @@
 package com.altnoir.poopsky.block;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.block.custom.*;
 import com.altnoir.poopsky.component.PSFoodComponents;
 import com.altnoir.poopsky.item.PSItems;
-import com.altnoir.poopsky.lib.PoopBlockSetType;
-import com.altnoir.poopsky.lib.PoopWoodType;
+import com.altnoir.poopsky.block.type.PoopBlockSetType;
+import com.altnoir.poopsky.block.type.PoopWoodType;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.block.piston.PistonBehavior;

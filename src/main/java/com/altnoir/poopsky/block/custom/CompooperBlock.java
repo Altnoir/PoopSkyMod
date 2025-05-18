@@ -1,5 +1,6 @@
-package com.altnoir.poopsky.block;
+package com.altnoir.poopsky.block.custom;
 
+import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.tag.PSItemTags;
 import com.mojang.serialization.MapCodec;

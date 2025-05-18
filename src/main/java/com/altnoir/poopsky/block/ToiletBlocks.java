@@ -1,6 +1,8 @@
 package com.altnoir.poopsky.block;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.block.custom.ToiletBlock;
+import com.altnoir.poopsky.block.custom.ToiletLavaBlock;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -12,7 +14,6 @@ import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.PathUtil;
 import net.minecraft.util.Rarity;
 
 import java.util.function.ToIntFunction;
@@ -56,7 +57,7 @@ public class ToiletBlocks {
     public static final Block RAINBOW_TOILET = registerToilet("rainbow_toilet", DyeColor.WHITE);
 
     private static Block registerToilet(String name, MapColor color, BlockSoundGroup soundGroup) {
-        return registerBlock(name, new Toilet(AbstractBlock.Settings.create()
+        return registerBlock(name, new ToiletBlock(AbstractBlock.Settings.create()
                 .mapColor(color)
                 .instrument(NoteBlockInstrument.BASS)
                 .strength(2.0F, 100.0F)
@@ -65,7 +66,7 @@ public class ToiletBlocks {
         ));
     }
     private static Block registerToilet(String name, MapColor color) {
-        return registerBlock(name, new ToiletLava(AbstractBlock.Settings.create()
+        return registerBlock(name, new ToiletLavaBlock(AbstractBlock.Settings.create()
                 .mapColor(color)
                 .instrument(NoteBlockInstrument.BASEDRUM)
                 .luminance(createLightLevelFromLavaBlockState(15))
@@ -74,7 +75,7 @@ public class ToiletBlocks {
         ));
     }
     private static Block registerToilet(String name, DyeColor color) {
-        return registerBlock(name, new ToiletLava(AbstractBlock.Settings.create()
+        return registerBlock(name, new ToiletLavaBlock(AbstractBlock.Settings.create()
                 .mapColor(color)
                 .instrument(NoteBlockInstrument.BASEDRUM)
                 .luminance(createLightLevelFromLavaBlockState(15))
@@ -84,7 +85,7 @@ public class ToiletBlocks {
     }
 
     public static ToIntFunction<BlockState> createLightLevelFromLavaBlockState(int litLevel) {
-        return state -> state.get(ToiletLava.LAVA) ? litLevel : 0;
+        return state -> state.get(ToiletLavaBlock.LAVA) ? litLevel : 0;
     }
     private static Block registerBlock(String name, Block block) {
         registerBlockItem(name, block);

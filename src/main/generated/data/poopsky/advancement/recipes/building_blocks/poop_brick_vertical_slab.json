@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_poop_block": {
+    "has_poop_bricks": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:poop_block"
+            "items": "poopsky:poop_bricks"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_poop_block"
+      "has_poop_bricks"
     ]
   ],
   "rewards": {

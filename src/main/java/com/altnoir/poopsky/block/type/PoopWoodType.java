@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.lib;
+package com.altnoir.poopsky.block.type;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.mixin.WoodTypeMixin;

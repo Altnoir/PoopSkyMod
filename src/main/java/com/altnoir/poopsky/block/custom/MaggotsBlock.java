@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.block;
+package com.altnoir.poopsky.block.custom;
 
 import com.altnoir.poopsky.item.PSItems;
 import net.minecraft.block.Block;
