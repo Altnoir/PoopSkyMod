@@ -50,7 +50,8 @@ public class PSItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 .add(PSBlocks.POOP_SAPLING.asItem());
         getOrCreateTagBuilder(ItemTags.LEAVES)
                 .add(PSBlocks.POOP_LEAVES.asItem())
-                .add(PSBlocks.POOP_LEAVES_IRON.asItem());
+                .add(PSBlocks.POOP_LEAVES_IRON.asItem())
+                .add(PSBlocks.POOP_LEAVES_GOLD.asItem());
         getOrCreateTagBuilder(ItemTags.LOGS)
                 .add(PSBlocks.POOP_LOG.asItem())
                 .add(PSBlocks.POOP_EMPTY_LOG.asItem())

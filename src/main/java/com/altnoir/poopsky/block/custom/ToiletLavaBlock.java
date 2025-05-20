@@ -68,7 +68,7 @@ public class ToiletLavaBlock extends AbstractToilet {
                 if (!player.isCreative() || !player.getInventory().contains(Items.LAVA_BUCKET.getDefaultStack())) {
                     player.giveItemStack(new ItemStack(Items.LAVA_BUCKET));
                 }
-                world.setBlockState(pos, getDefaultState(), Block.NOTIFY_ALL);
+                world.setBlockState(pos, state.with(LAVA, false), Block.NOTIFY_ALL);
                 world.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL_LAVA, SoundCategory.BLOCKS, 1.0F, 1.0F);
                 return ActionResult.success(world.isClient);
             }

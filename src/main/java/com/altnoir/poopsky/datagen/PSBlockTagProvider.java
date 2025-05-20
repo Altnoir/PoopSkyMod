@@ -63,7 +63,8 @@ public class PSBlockTagProvider extends FabricTagProvider.BlockTagProvider {
                 .add(PSBlocks.POOP_SAPLING);
         getOrCreateTagBuilder(BlockTags.LEAVES)
                 .add(PSBlocks.POOP_LEAVES)
-                .add(PSBlocks.POOP_LEAVES_IRON);
+                .add(PSBlocks.POOP_LEAVES_IRON)
+                .add(PSBlocks.POOP_LEAVES_GOLD);
         getOrCreateTagBuilder(BlockTags.LOGS)
                 .add(PSBlocks.POOP_LOG)
                 .add(PSBlocks.POOP_EMPTY_LOG)
@@ -116,6 +117,8 @@ public class PSBlockTagProvider extends FabricTagProvider.BlockTagProvider {
     public static final Block[] POOP_BLOCKS = {
             PSBlocks.POOP_SAPLING,
             PSBlocks.POOP_LEAVES,
+            PSBlocks.POOP_LEAVES_IRON,
+            PSBlocks.POOP_LEAVES_GOLD,
             PSBlocks.POOP_PIECE,
             PSBlocks.POOP_BLOCK,
             PSBlocks.POOP_STAIRS,

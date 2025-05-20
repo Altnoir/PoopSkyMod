@@ -6,7 +6,6 @@ import com.altnoir.poopsky.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.particle.PSParticle;
 import com.altnoir.poopsky.sound.PSSoundEvents;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
@@ -65,7 +64,7 @@ public abstract class AbstractToilet extends BlockWithEntity implements Portal {
                 livingEntity.handleFallDamage(fallDistance, damageMultiplier, world.getDamageSources().fall());
             }
             if (entity instanceof FallingBlockEntity fallingBlock && fallingBlock.getBlockState().isOf(Blocks.ANVIL)) {
-                poopBoom(world,entity);
+                poopAnvil(world,entity);
             }
         }
     }
@@ -133,13 +132,13 @@ public abstract class AbstractToilet extends BlockWithEntity implements Portal {
                 8, 0.0, -0.1, 0.0, 3.0);
         world.spawnEntity(poop);
     }
-    private void poopBoom(World world, Entity entity) {
+    private void poopAnvil(World world, Entity entity) {
         ItemEntity poop = new ItemEntity(
                 world,
                 entity.getX(),
                 entity.getY() + 0.1,
                 entity.getZ(),
-                new ItemStack(PSItems.POOP,88)
+                new ItemStack(PSItems.POOP,8)
         );
         poop.setToDefaultPickupDelay();
         world.spawnEntity(poop);
