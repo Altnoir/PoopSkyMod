@@ -1,0 +1,36 @@
+{
+	"credit": "Made with ALTNOIR",
+	"parent": "block/block",
+	"textures": {
+		"particle": "#0"
+	},
+	"elements": [
+		{
+			"from": [4, 0, 4],
+			"to": [12, 8, 12],
+			"rotation": {"angle": 0, "axis": "y", "origin": [4, 0, 4]},
+			"faces": {
+				"north": {"uv": [4, 8, 12, 16], "texture": "#0", "cullface": "north"},
+				"east": {"uv": [4, 8, 12, 16], "texture": "#0", "cullface": "east"},
+				"south": {"uv": [4, 8, 12, 16], "texture": "#0", "cullface": "south"},
+				"west": {"uv": [4, 8, 12, 16], "texture": "#0", "cullface": "west"},
+				"up": {"uv": [4, 0, 12, 8], "texture": "#0"},
+				"down": {"uv": [4, 0, 12, 8], "texture": "#0", "cullface": "down"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_lefthand": {
+			"rotation": [75, -135, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"gui": {
+			"rotation": [30, 135, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"head": {
+			"translation": [0, 14, 0]
+		}
+	}
+}

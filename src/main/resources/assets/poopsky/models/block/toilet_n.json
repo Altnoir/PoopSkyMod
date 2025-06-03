@@ -1,0 +1,105 @@
+{
+	"credit": "Made with LLMION",
+	"parent": "block/block",
+	"textures": {
+		"liquid": "poopsky:block/poop_liquid",
+		"particle": "#toilet"
+	},
+	"elements": [
+		{
+			"name": "water",
+			"from": [5, 12, 0],
+			"to": [11, 14, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [5, 12, 0]},
+			"faces": {
+				"north": {"uv": [5, 0, 11, 2], "rotation": 180, "texture": "#liquid", "tintindex": 1},
+				"up": {"uv": [5, 1, 11, 16], "texture": "#liquid", "tintindex": 1}
+			}
+		},
+		{
+			"from": [0, 0, 0],
+			"to": [5, 16, 16],
+			"faces": {
+				"north": {"uv": [11, 0, 16, 16], "texture": "#toilet"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#toilet"},
+				"south": {"uv": [0, 0, 5, 16], "texture": "#toilet"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#toilet"},
+				"up": {"uv": [0, 0, 5, 16], "texture": "#toilet"},
+				"down": {"uv": [0, 0, 5, 16], "texture": "#toilet"}
+			}
+		},
+		{
+			"from": [11, 0, 0],
+			"to": [16, 16, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [11, 0, 0]},
+			"faces": {
+				"north": {"uv": [0, 0, 5, 16], "texture": "#toilet"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#toilet"},
+				"south": {"uv": [11, 0, 16, 16], "texture": "#toilet"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#toilet"},
+				"up": {"uv": [11, 0, 16, 16], "texture": "#toilet"},
+				"down": {"uv": [11, 0, 16, 16], "texture": "#toilet"}
+			}
+		},
+		{
+			"from": [5, 12, 15],
+			"to": [11, 16, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [5, 12, 15]},
+			"faces": {
+				"north": {"uv": [5, 0, 11, 4], "texture": "#toilet"},
+				"south": {"uv": [5, 0, 11, 4], "texture": "#toilet"},
+				"up": {"uv": [5, 15, 11, 16], "texture": "#toilet"}
+			}
+		},
+		{
+			"from": [5, 0, 0],
+			"to": [11, 12, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [5, 0, 0]},
+			"faces": {
+				"north": {"uv": [5, 4, 11, 16], "texture": "#toilet"},
+				"south": {"uv": [5, 4, 11, 16], "texture": "#toilet"},
+				"up": {"uv": [5, 0, 11, 16], "texture": "#toilet"},
+				"down": {"uv": [5, 0, 11, 16], "texture": "#toilet"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 225, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"fixed": {
+			"scale": [0.5, 0.5, 0.5]
+		}
+	},
+	"groups": [
+		{
+			"name": "toilet",
+			"origin": [11, 0, 0],
+			"color": 0,
+			"children": [0, 1, 2, 3, 4]
+		}
+	]
+}

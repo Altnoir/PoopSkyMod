@@ -1,0 +1,46 @@
+{
+  "variants": {
+    "type=bottom": [
+      {
+        "model": "poopsky:block/poop_slab",
+        "weight": 9
+      },
+      {
+        "model": "poopsky:block/poop_slab_maggots",
+        "weight": 1
+      },
+      {
+        "model": "poopsky:block/poop_slab_liquids",
+        "weight": 2
+      }
+    ],
+    "type=double": [
+      {
+        "model": "poopsky:block/poop_slab_double",
+        "weight": 9
+      },
+      {
+        "model": "poopsky:block/poop_slab_double_maggots",
+        "weight": 1
+      },
+      {
+        "model": "poopsky:block/poop_slab_double_liquids",
+        "weight": 2
+      }
+    ],
+    "type=top":[
+      {
+        "model": "poopsky:block/poop_slab_top",
+        "weight": 9
+      },
+      {
+        "model": "poopsky:block/poop_slab_top_maggots",
+        "weight": 1
+      },
+      {
+        "model": "poopsky:block/poop_slab_top_liquids",
+        "weight": 2
+      }
+    ]
+  }
+}

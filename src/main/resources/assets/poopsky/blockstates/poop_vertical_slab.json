@@ -1,0 +1,44 @@
+{
+  "variants": {
+    "facing=north": [
+      {
+        "model": "poopsky:block/poop_vertical_slab",
+        "weight": 9
+      },
+      {
+        "model": "poopsky:block/poop_vertical_slab_maggots",
+        "weight": 1
+      }
+    ],
+    "facing=east":  [
+      {
+        "model": "poopsky:block/poop_vertical_slab", "y": 90,
+        "weight": 9
+      },
+      {
+        "model": "poopsky:block/poop_vertical_slab_maggots", "y": 90,
+        "weight": 1
+      }
+    ],
+    "facing=south": [
+      {
+        "model": "poopsky:block/poop_vertical_slab", "y": 180,
+        "weight": 9
+      },
+      {
+        "model": "poopsky:block/poop_vertical_slab_maggots", "y": 180,
+        "weight": 1
+      }
+    ],
+    "facing=west":  [
+      {
+        "model": "poopsky:block/poop_vertical_slab", "y": 270,
+        "weight": 9
+      },
+      {
+        "model": "poopsky:block/poop_vertical_slab_maggots", "y": 270,
+        "weight": 1
+      }
+    ]
+  }
+}

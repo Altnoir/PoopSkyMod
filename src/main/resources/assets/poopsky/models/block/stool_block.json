@@ -1,0 +1,6 @@
+{
+	"parent": "poopsky:block/stool",
+	"textures": {
+		"0": "poopsky:block/poop_block"
+	}
+}

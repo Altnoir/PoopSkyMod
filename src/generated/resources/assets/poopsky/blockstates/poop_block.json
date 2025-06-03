@@ -1,0 +1,17 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "poopsky:block/poop_block1",
+        "weight": 9
+      },
+      {
+        "model": "poopsky:block/poop_block2"
+      },
+      {
+        "model": "poopsky:block/poop_block3",
+        "weight": 2
+      }
+    ]
+  }
+}

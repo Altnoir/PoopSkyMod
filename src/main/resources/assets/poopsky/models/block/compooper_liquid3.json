@@ -1,0 +1,14 @@
+{
+    "textures": {
+        "particle": "minecraft:block/water_still",
+        "inside": "minecraft:block/water_still"
+    },
+    "elements": [
+        {   "from": [ 2, 0, 2 ],
+            "to": [ 14, 15, 14 ],
+            "faces": {
+                "up": { "texture": "#inside", "tintindex": 1}
+            }
+        }
+    ]
+}

@@ -1,0 +1,24 @@
+{
+    "fart": {
+        "subtitle": "subtitle.poopsky.fart",
+        "sounds": [
+            "poopsky:fart_1",
+            "poopsky:fart_2"
+        ]
+    },
+    "entity.villager.work_toilet": {
+        "subtitle": "subtitle.poopsky.villager.work_toilet",
+        "sounds": [
+            "poopsky:fart_1",
+            "poopsky:fart_2"
+        ]
+    },
+    "lawrence": {
+    "sounds": [
+        {
+            "name":"poopsky:merry_christmas_mr_lawrence",
+            "stream": true
+        }
+    ]
+}
+}
