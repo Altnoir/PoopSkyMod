@@ -1,9 +1,8 @@
 package com.altnoir.poopsky.event;
 
 import com.altnoir.poopsky.item.PSItems;
-import com.altnoir.poopsky.network.Networking;
-import com.altnoir.poopsky.network.RidePack;
-import com.altnoir.poopsky.network.SummonBroomPack;
+import com.altnoir.poopsky.network.RidePacket;
+import com.altnoir.poopsky.network.SummonBroomPacket;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -17,6 +16,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import net.neoforged.neoforge.client.settings.KeyModifier;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.lwjgl.glfw.GLFW;
 
 @EventBusSubscriber(value = Dist.CLIENT)
@@ -63,9 +63,9 @@ public class KeyBoardInput {
             Player playerEntity = Minecraft.getInstance().player;
             if (playerEntity!=null){
                 if (playerEntity.isPassenger()){
-                    Networking.INSTANCE.sendToServer(new RidePack(playerEntity.getVehicle().getId(),false));
+                    PacketDistributor.sendToServer(new RidePacket(playerEntity.getVehicle().getId(), false));
                 }else {
-                    Networking.INSTANCE.sendToServer(new SummonBroomPack());
+                    PacketDistributor.sendToServer(new SummonBroomPacket());
                 }
                 for (ItemStack item:playerEntity.getInventory().items) {
                     if (item.is(PSItems.Toilet_Plug.get()) || playerEntity.isCreative()){

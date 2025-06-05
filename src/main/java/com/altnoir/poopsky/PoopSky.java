@@ -1,6 +1,7 @@
 package com.altnoir.poopsky;
 
 import com.altnoir.poopsky.block.PSBlocks;
+import com.altnoir.poopsky.component.PSComponents;
 import com.altnoir.poopsky.entity.PSEntities;
 import com.altnoir.poopsky.entity.renderer.PlugRenderer;
 import com.altnoir.poopsky.item.PSItems;
@@ -36,6 +37,8 @@ public class PoopSky {
 
         PSItemGroups.register(modEventBus);
         PSSoundEvents.register(modEventBus);
+
+        PSComponents.register(modEventBus);
 
         NeoForge.EVENT_BUS.register(this);
 
