@@ -17,7 +17,7 @@ public class PSEntities {
             EntityType.Builder.of(ToiletPlugEntity::new, MobCategory.MISC)
                     .fireImmune()
                     .clientTrackingRange(10)
-                    .sized(0.75F, 0.35F).build("plug"));
+                    .sized(0.75F, 0.35F).build("toilet_plug"));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);
