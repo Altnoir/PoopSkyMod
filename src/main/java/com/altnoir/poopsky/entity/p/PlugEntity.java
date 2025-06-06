@@ -85,7 +85,10 @@ public class PlugEntity extends Boat {
         }
 
         updateKeyStates(mc);
-        moveByInput();
+
+        if (isLogicalSideForUpdatingMovement()){
+            moveByInput();
+        }
 
         if (this.hasPassengers()) {
             spawnParticles();
@@ -98,7 +101,16 @@ public class PlugEntity extends Boat {
     }
 
     private boolean isLogicalSideForUpdatingMovement() {
-        return !this.level().isClientSide();
+        if (this.level().isClientSide) {
+            return isClientControllingThis();
+        }
+        return this.isEffectiveAi();
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    private boolean isClientControllingThis() {
+        var player = Minecraft.getInstance().player;
+        return player != null && player.isPassenger() && player.getVehicle() == this;
     }
 
     @OnlyIn(Dist.CLIENT)
