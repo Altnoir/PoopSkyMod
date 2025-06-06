@@ -3,6 +3,7 @@ package com.altnoir.poopsky.entity.p;
 import com.altnoir.poopsky.event.PSKeyBoardInput;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.sound.TPFlySoundWrapper;
+import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.tags.DamageTypeTags;
@@ -23,6 +24,7 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.Vector3f;
+
 
 public class PlugEntity extends Boat {
     public float floatingValue = 0;
@@ -98,6 +100,11 @@ public class PlugEntity extends Boat {
 
     public boolean hasPassengers() {
         return !this.getPassengers().isEmpty();
+    }
+
+    @Override
+    public boolean isVehicle() {
+        return false;
     }
 
     private boolean isLogicalSideForUpdatingMovement() {
@@ -244,16 +251,20 @@ public class PlugEntity extends Boat {
 
     @OnlyIn(Dist.CLIENT)
     private void spawnParticles() {
-        double speed = this.getDeltaMovement().length();
+        var speed = this.getDeltaMovement().length();
         if (speed > 0.1) {
-            float yawRad = (float) Math.toRadians(this.getYRot());
-            double offsetX = Math.sin(yawRad) * 0.55;
-            double offsetZ = -Math.cos(yawRad) * 0.55;
+            var yawRad = (float) Math.toRadians(this.getYRot());
+            var offsetX = Math.sin(yawRad) * 0.55;
+            var offsetZ = -Math.cos(yawRad) * 0.55;
+
+            var adjustedX = this.getX() + offsetX - this.getDeltaMovement().x;
+            var adjustedY = this.getY() + 0.3 + floatingValue - this.getDeltaMovement().y;
+            var adjustedZ = this.getZ() + offsetZ - this.getDeltaMovement().z;
 
             this.level().addParticle(new DustParticleOptions(new Vector3f(0.4f, 0.25f, 0f), 2.0f),
-                    this.getX() + offsetX,
-                    this.getY() + 0.3 + floatingValue,
-                    this.getZ() + offsetZ,
+                    adjustedX,
+                    adjustedY,
+                    adjustedZ,
                     this.getDeltaMovement().x * -0.1,
                     this.getDeltaMovement().y * 0.1,
                     this.getDeltaMovement().z * -0.1);
