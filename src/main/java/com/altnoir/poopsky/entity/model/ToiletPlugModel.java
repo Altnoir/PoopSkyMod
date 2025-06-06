@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.entity.model;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.entity.p.PlugEntity;
+import com.altnoir.poopsky.entity.p.ToiletPlugEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;
@@ -12,11 +12,11 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
-public class PlugModel<T extends PlugEntity> extends EntityModel<T> {
+public class ToiletPlugModel<T extends ToiletPlugEntity> extends EntityModel<T> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, "toilet_plug"), "main");
     private final ModelPart plug;
 
-    public PlugModel(ModelPart root) {
+    public ToiletPlugModel(ModelPart root) {
         this.plug = root.getChild("toilet_plug");
     }
 
@@ -43,7 +43,7 @@ public class PlugModel<T extends PlugEntity> extends EntityModel<T> {
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
     @Override
-    public void setupAnim(@NotNull PlugEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(@NotNull ToiletPlugEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
     }
 

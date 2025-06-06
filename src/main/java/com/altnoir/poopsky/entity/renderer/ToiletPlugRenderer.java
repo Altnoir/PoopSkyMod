@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.entity.renderer;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.entity.model.PlugModel;
-import com.altnoir.poopsky.entity.p.PlugEntity;
+import com.altnoir.poopsky.entity.model.ToiletPlugModel;
+import com.altnoir.poopsky.entity.p.ToiletPlugEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
@@ -13,21 +13,21 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 
-public class PlugRenderer extends EntityRenderer<PlugEntity> {
-    private final EntityModel<PlugEntity> plugModel;
+public class ToiletPlugRenderer extends EntityRenderer<ToiletPlugEntity> {
+    private final EntityModel<ToiletPlugEntity> plugModel;
 
-    public PlugRenderer(EntityRendererProvider.Context context) {
+    public ToiletPlugRenderer(EntityRendererProvider.Context context) {
         super(context);
-        this.plugModel = new PlugModel<>(context.bakeLayer(PlugModel.LAYER_LOCATION));
+        this.plugModel = new ToiletPlugModel<>(context.bakeLayer(ToiletPlugModel.LAYER_LOCATION));
     }
 
     @Override
-    public ResourceLocation getTextureLocation(PlugEntity entity) {
+    public ResourceLocation getTextureLocation(ToiletPlugEntity entity) {
         return ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, "textures/entity/toilet_plug.png");
     }
 
     @Override
-    public void render(PlugEntity entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+    public void render(ToiletPlugEntity entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
         poseStack.pushPose();
 
         var y = -entity.getViewYRot(partialTick);
