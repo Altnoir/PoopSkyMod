@@ -5,6 +5,7 @@ import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.sound.TPFlySoundWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -22,6 +23,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
 public class PlugEntity extends Boat {
@@ -151,7 +153,6 @@ public class PlugEntity extends Boat {
             float deltaYaw = Mth.wrapDegrees(targetYaw - this.getYRot());
             this.setYRot(this.getYRot() + deltaYaw * 0.3f);
         }
-
         this.setDeltaMovement(velocity.x, verVelocity, velocity.z);
         this.move(MoverType.SELF, this.getDeltaMovement());
     }
@@ -245,7 +246,8 @@ public class PlugEntity extends Boat {
             double offsetX = Math.sin(yawRad) * 0.55;
             double offsetZ = -Math.cos(yawRad) * 0.55;
 
-            this.level().addParticle(new DustParticleOptions(new Vector3f(0.4f, 0.25f, 0f), 2.0f),
+            this.level().addParticle(new DustParticleOptions(
+                    new Vector3f(0.4f, 0.25f, 0f), 2.0f),
                     this.getX() + offsetX,
                     this.getY() + 0.3 + floatingValue,
                     this.getZ() + offsetZ,
@@ -280,5 +282,10 @@ public class PlugEntity extends Boat {
     @Override
     public Item getDropItem() {
         return PSItems.Toilet_Plug.get();
+    }
+
+    @Override
+    protected @Nullable SoundEvent getPaddleSound() {
+        return null;
     }
 }
