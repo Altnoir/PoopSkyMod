@@ -44,6 +44,8 @@ neoForge {
     // These can be tweaked, removed, or duplicated as needed.
     runs {
         client {
+            programArgument '--username'
+            programArgument 'Player####'
             client()
 
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
