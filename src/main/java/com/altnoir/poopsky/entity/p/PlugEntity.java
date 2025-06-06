@@ -6,6 +6,7 @@ import com.altnoir.poopsky.sound.TPFlySoundWrapper;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -23,6 +24,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
 
@@ -158,7 +160,6 @@ public class PlugEntity extends Boat {
             float deltaYaw = Mth.wrapDegrees(targetYaw - this.getYRot());
             this.setYRot(this.getYRot() + deltaYaw * 0.3f);
         }
-
         this.setDeltaMovement(velocity.x, verVelocity, velocity.z);
         this.move(MoverType.SELF, this.getDeltaMovement());
     }
@@ -296,5 +297,10 @@ public class PlugEntity extends Boat {
     @Override
     public Item getDropItem() {
         return PSItems.Toilet_Plug.get();
+    }
+
+    @Override
+    protected @Nullable SoundEvent getPaddleSound() {
+        return null;
     }
 }
