@@ -163,6 +163,11 @@ public class PlugEntity extends Boat {
         }
     }
 
+    @Override
+    public boolean isNoGravity() {
+        return true;
+    }
+
     private void updateFloatingValue() {
         this.prevFloatingValue = this.floatingValue;
         this.floatingCounts += 0.05f;
