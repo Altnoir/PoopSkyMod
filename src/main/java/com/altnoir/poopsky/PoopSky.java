@@ -3,7 +3,7 @@ package com.altnoir.poopsky;
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.component.PSComponents;
 import com.altnoir.poopsky.entity.PSEntities;
-import com.altnoir.poopsky.entity.renderer.PlugRenderer;
+import com.altnoir.poopsky.entity.renderer.ToiletPlugRenderer;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.network.PSNetworking;
 import com.altnoir.poopsky.sound.PSSoundEvents;
@@ -64,7 +64,7 @@ public class PoopSky {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-            EntityRenderers.register(PSEntities.PLUG.get(), PlugRenderer::new);
+            EntityRenderers.register(PSEntities.TOILET_PLUG.get(), ToiletPlugRenderer::new);
         }
     }
 }

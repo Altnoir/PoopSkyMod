@@ -1,17 +1,17 @@
 package com.altnoir.poopsky.sound;
 
-import com.altnoir.poopsky.entity.p.PlugEntity;
+import com.altnoir.poopsky.entity.p.ToiletPlugEntity;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 
-public class TPFlySound extends AbstractTickableSoundInstance {
-    private final PlugEntity player;
+public class TPFlySoundInstance extends AbstractTickableSoundInstance {
+    private final ToiletPlugEntity player;
     private int tickCount;
 
-    public TPFlySound(PlugEntity player) {
+    public TPFlySoundInstance(ToiletPlugEntity player) {
         super(SoundEvents.ELYTRA_FLYING, SoundSource.PLAYERS, RandomSource.create());
         this.player = player;
         this.looping = true;
@@ -22,7 +22,7 @@ public class TPFlySound extends AbstractTickableSoundInstance {
     public void tick() {
         ++this.tickCount;
 
-        if (!this.player.isRemoved() && (this.tickCount <= 20 || this.player.hasPassengers())) {
+        if (!this.player.isRemoved() && (this.tickCount <= 20 || this.player.getControllingPassenger() != null)) {
             this.x = this.player.getX();
             this.y = this.player.getY();
             this.z = this.player.getZ();

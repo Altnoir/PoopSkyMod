@@ -2,7 +2,7 @@ package com.altnoir.poopsky.network;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.entity.PSEntities;
-import com.altnoir.poopsky.entity.p.PlugEntity;
+import com.altnoir.poopsky.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.item.PSItems;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -24,7 +24,7 @@ public record PlugActionPayload() implements CustomPacketPayload {
         context.enqueueWork(() -> {
             ServerPlayer player = (ServerPlayer) context.player();
 
-            if (player.getVehicle() instanceof PlugEntity plug) {
+            if (player.getVehicle() instanceof ToiletPlugEntity plug) {
                 removePlug(player, plug);
             } else if (player.isCreative() || hasItemInInventory(player)) {
                 spawnAndRidePlug(player);
@@ -35,7 +35,7 @@ public record PlugActionPayload() implements CustomPacketPayload {
 
     private static void spawnAndRidePlug(ServerPlayer player) {
         var level = player.level();
-        var entity = PSEntities.PLUG.get().create(level);
+        var entity = PSEntities.TOILET_PLUG.get().create(level);
         if (entity == null) return;
 
         entity.setPos(player.position());
@@ -46,7 +46,7 @@ public record PlugActionPayload() implements CustomPacketPayload {
         level.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.ITEM_FRAME_REMOVE_ITEM, SoundSource.PLAYERS, 0.5F, 1.0F);
     }
 
-    private static void removePlug(ServerPlayer player, PlugEntity plug) {
+    private static void removePlug(ServerPlayer player, ToiletPlugEntity plug) {
         plug.kill();
         Level level = player.level();
         level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.5F, 1.0F);

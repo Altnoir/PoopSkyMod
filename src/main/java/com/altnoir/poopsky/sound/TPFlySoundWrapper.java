@@ -1,17 +1,17 @@
 package com.altnoir.poopsky.sound;
 
-import com.altnoir.poopsky.entity.p.PlugEntity;
+import com.altnoir.poopsky.entity.p.ToiletPlugEntity;
 import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class TPFlySoundWrapper {
-    private final PlugEntity attachedInstance;
+    private final ToiletPlugEntity attachedInstance;
 
-    private TPFlySound sound;
+    private TPFlySoundInstance sound;
 
-    public TPFlySoundWrapper(PlugEntity attachedInstance) {
+    public TPFlySoundWrapper(ToiletPlugEntity attachedInstance) {
         this.attachedInstance = attachedInstance;
     }
 
@@ -42,7 +42,7 @@ public class TPFlySoundWrapper {
 
     private void play0() {
         if (sound == null) {
-            sound = new TPFlySound(attachedInstance);
+            sound = new TPFlySoundInstance(attachedInstance);
             Minecraft.getInstance().getSoundManager().play(sound);
         }
     }
