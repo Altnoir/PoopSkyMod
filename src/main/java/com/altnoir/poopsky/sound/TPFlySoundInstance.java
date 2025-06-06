@@ -7,11 +7,11 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 
-public class TPFlySound extends AbstractTickableSoundInstance {
+public class TPFlySoundInstance extends AbstractTickableSoundInstance {
     private final ToiletPlugEntity player;
     private int tickCount;
 
-    public TPFlySound(ToiletPlugEntity player) {
+    public TPFlySoundInstance(ToiletPlugEntity player) {
         super(SoundEvents.ELYTRA_FLYING, SoundSource.PLAYERS, RandomSource.create());
         this.player = player;
         this.looping = true;

@@ -2,6 +2,7 @@ package com.altnoir.poopsky.entity.p;
 
 import com.altnoir.poopsky.event.PSKeyBoardInput;
 import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.sound.TPFlySoundWrapper;
 import com.google.common.collect.Lists;
 import net.minecraft.BlockUtil;
 import net.minecraft.client.Minecraft;
@@ -17,6 +18,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.entity.vehicle.DismountHelper;
@@ -32,6 +34,7 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class ToiletPlugEntity extends VehicleEntity implements Leashable {
     private LeashData leashData;
@@ -55,9 +58,19 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
     private float verVelocity = 0;
     private static final float ACCELERATION = 0.1f;
 
+    private TPFlySoundWrapper TPFlySound;
+
 
     public ToiletPlugEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
+        if (level.isClientSide()){
+            ToiletPlugEntityClient();
+        }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public void ToiletPlugEntityClient(){
+        TPFlySound = new TPFlySoundWrapper(this);
     }
 
     @Override
@@ -145,12 +158,38 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
                 this.updateKeyStates();
                 this.moveByInput();
                 if (this.getControllingPassenger() != null) {
+                    TPFlySound.play();
                     spawnParticles();
+                }
+                else {
+                    TPFlySound.stop();
                 }
             }
             this.move(MoverType.SELF, this.getDeltaMovement());
         } else {
             this.setDeltaMovement(Vec3.ZERO);
+        }
+
+        this.checkInsideBlocks();
+        var list = this.level().getEntities(this, this.getBoundingBox().inflate(0.2F, -0.01F, 0.2F), EntitySelector.pushableBy(this));
+        if (!list.isEmpty()) {
+            boolean flag = !this.level().isClientSide && !(this.getControllingPassenger() instanceof Player);
+
+            for (Entity entity : list) {
+                if (!entity.hasPassenger(this)) {
+                    if (flag
+                            && this.getPassengers().size() < this.getMaxPassengers()
+                            && !entity.isPassenger()
+                            && this.hasEnoughSpaceFor(entity)
+                            && entity instanceof LivingEntity
+                            && !(entity instanceof WaterAnimal)
+                            && !(entity instanceof Player)) {
+                        entity.startRiding(this);
+                    } else {
+                        this.push(entity);
+                    }
+                }
+            }
         }
 
         this.updateFloatingValue();
@@ -205,6 +244,10 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
             this.setDeltaMovement(0, -0.05, 0);
             this.move(MoverType.SELF, this.getDeltaMovement());
         }
+    }
+
+    public boolean hasEnoughSpaceFor(Entity entity) {
+        return entity.getBbWidth() < this.getBbWidth();
     }
 
     @Override
