@@ -30,10 +30,11 @@ public class PlugRenderer extends EntityRenderer<PlugEntity> {
     public void render(PlugEntity entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
         poseStack.pushPose();
 
-        float y = -entity.getViewYRot(partialTick);
-        float x = entity.getViewXRot(partialTick);
+        var y = -entity.getViewYRot(partialTick);
+        var x = entity.getViewXRot(partialTick);
+        var z = entity.getFloatingValue(partialTick);
 
-        poseStack.translate(0.0D, -1.0D, 0.0D);
+        poseStack.translate(0.0D, z-1.0D, 0.0D);
         poseStack.mulPose(Axis.YP.rotationDegrees(y));
         poseStack.mulPose(Axis.XP.rotationDegrees(x));
 

@@ -1,9 +1,11 @@
 package com.altnoir.poopsky;
 
 import com.altnoir.poopsky.block.PSBlocks;
+import com.altnoir.poopsky.component.PSComponents;
 import com.altnoir.poopsky.entity.PSEntities;
 import com.altnoir.poopsky.entity.renderer.PlugRenderer;
 import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.network.PSNetworking;
 import com.altnoir.poopsky.sound.PSSoundEvents;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -29,6 +31,7 @@ public class PoopSky {
 
     public PoopSky(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(PSNetworking::register);
 
         PSBlocks.register(modEventBus);
         PSItems.register(modEventBus);
@@ -36,6 +39,8 @@ public class PoopSky {
 
         PSItemGroups.register(modEventBus);
         PSSoundEvents.register(modEventBus);
+
+        PSComponents.register(modEventBus);
 
         NeoForge.EVENT_BUS.register(this);
 
