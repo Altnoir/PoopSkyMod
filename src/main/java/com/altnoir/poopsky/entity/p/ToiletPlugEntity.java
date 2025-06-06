@@ -253,13 +253,22 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
     @Override
     protected void positionRider(Entity entity, MoveFunction moveFunction) {
         super.positionRider(entity, moveFunction);
-        if (this.getPassengers().indexOf(entity) == 1) {
+        var yOffset = 0.15 + floatingValue;
+        if (this.getPassengers().size() > 1) {
             var yawRad = (float) Math.toRadians(-this.getYRot());
-            var xOffset = Math.sin(yawRad) * 0.375;
-            var zOffset = Math.cos(yawRad) * 0.375;
-            entity.setPos(entity.getX() + xOffset, entity.getY() + 0.15 + floatingValue, entity.getZ() + zOffset);
-        } else {
-            entity.setPos(entity.getX(), entity.getY() + 0.15 + floatingValue, entity.getZ());
+            if (this.getPassengers().indexOf(entity) == 1) {
+                var xOffset = -Math.sin(yawRad) * 0.375;
+                var zOffset = -Math.cos(yawRad) * 0.375;
+                entity.setPos(entity.getX() + xOffset, entity.getY() + yOffset, entity.getZ() + zOffset);
+            }
+            if (this.getPassengers().indexOf(entity) == 0) {
+                var xOffset = Math.sin(yawRad) * 0.375;
+                var zOffset = Math.cos(yawRad) * 0.375;
+                entity.setPos(entity.getX() + xOffset, entity.getY() + yOffset, entity.getZ() + zOffset);
+            }
+        }
+        else {
+            entity.setPos(entity.getX(), entity.getY() + yOffset, entity.getZ());
         }
     }
 
