@@ -1,0 +1,6 @@
+{
+  "parent": "poopsky:block/toilet_n",
+  "textures": {
+    "toilet": "minecraft:block/birch_planks"
+  }
+}

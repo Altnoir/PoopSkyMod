@@ -1,0 +1,64 @@
+{
+  "variants": {
+    "backward=false,facing=east,forward=false": {
+      "model": "poopsky:block/bamboo_toilet",
+      "y": 90
+    },
+    "backward=false,facing=east,forward=true": {
+      "model": "poopsky:block/bamboo_toilet_n",
+      "y": 90
+    },
+    "backward=false,facing=north,forward=false": {
+      "model": "poopsky:block/bamboo_toilet"
+    },
+    "backward=false,facing=north,forward=true": {
+      "model": "poopsky:block/bamboo_toilet_n"
+    },
+    "backward=false,facing=south,forward=false": {
+      "model": "poopsky:block/bamboo_toilet",
+      "y": 180
+    },
+    "backward=false,facing=south,forward=true": {
+      "model": "poopsky:block/bamboo_toilet_n",
+      "y": 180
+    },
+    "backward=false,facing=west,forward=false": {
+      "model": "poopsky:block/bamboo_toilet",
+      "y": 270
+    },
+    "backward=false,facing=west,forward=true": {
+      "model": "poopsky:block/bamboo_toilet_n",
+      "y": 270
+    },
+    "backward=true,facing=east,forward=false": {
+      "model": "poopsky:block/bamboo_toilet_s",
+      "y": 90
+    },
+    "backward=true,facing=east,forward=true": {
+      "model": "poopsky:block/bamboo_toilet_ns",
+      "y": 90
+    },
+    "backward=true,facing=north,forward=false": {
+      "model": "poopsky:block/bamboo_toilet_s"
+    },
+    "backward=true,facing=north,forward=true": {
+      "model": "poopsky:block/bamboo_toilet_ns"
+    },
+    "backward=true,facing=south,forward=false": {
+      "model": "poopsky:block/bamboo_toilet_s",
+      "y": 180
+    },
+    "backward=true,facing=south,forward=true": {
+      "model": "poopsky:block/bamboo_toilet_ns",
+      "y": 180
+    },
+    "backward=true,facing=west,forward=false": {
+      "model": "poopsky:block/bamboo_toilet_s",
+      "y": 270
+    },
+    "backward=true,facing=west,forward=true": {
+      "model": "poopsky:block/bamboo_toilet_ns",
+      "y": 270
+    }
+  }
+}
