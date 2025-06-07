@@ -464,7 +464,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
 
     @Override
     public void onPassengerTurned(Entity entityToUpdate) {
-        this.clampRotation(entityToUpdate);
+        //this.clampRotation(entityToUpdate);
     }
 
     @Override
