@@ -233,7 +233,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
         if (mainPassenger != null) {
             float targetYaw = mainPassenger.getYRot();
             float deltaYaw = Mth.wrapDegrees(targetYaw - this.getYRot());
-            this.setYRot(this.getYRot() + deltaYaw * 0.3f);
+            this.setYRot(this.getYRot() + deltaYaw * 0.5f);
         }
         this.setDeltaMovement(velocity.x, verVelocity, velocity.z);
         this.move(MoverType.SELF, this.getDeltaMovement());
@@ -453,20 +453,9 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
         return super.getDismountLocationForPassenger(livingEntity);
     }
 
-    protected void clampRotation(Entity entityToUpdate) {
-        entityToUpdate.setYBodyRot(this.getYRot());
-        float f = Mth.wrapDegrees(entityToUpdate.getYRot() - this.getYRot());
-        float f1 = Mth.clamp(f, -105.0F, 105.0F);
-        entityToUpdate.yRotO += f1 - f;
-        entityToUpdate.setYRot(entityToUpdate.getYRot() + f1 - f);
-        entityToUpdate.setYHeadRot(entityToUpdate.getYRot());
-    }
-
     @Override
-    public void onPassengerTurned(Entity entityToUpdate) {
-        // Rotation clamping is disabled to allow passengers full freedom of movement. 
-        // Uncomment the following line if rotation clamping is required for specific scenarios.
-        //this.clampRotation(entityToUpdate);
+    public void onPassengerTurned(@NotNull Entity entityToUpdate) {
+        entityToUpdate.setYBodyRot(this.getYRot());
     }
 
     @Override
