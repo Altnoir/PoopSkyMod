@@ -1,11 +1,16 @@
 package com.altnoir.poopsky;
 
+import com.altnoir.poopsky.block.PSBlockEntities;
 import com.altnoir.poopsky.block.PSBlocks;
+import com.altnoir.poopsky.block.ToiletBlocks;
 import com.altnoir.poopsky.component.PSComponents;
+import com.altnoir.poopsky.effect.PSEffects;
 import com.altnoir.poopsky.entity.PSEntities;
 import com.altnoir.poopsky.entity.renderer.ToiletPlugRenderer;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.network.PSNetworking;
+import com.altnoir.poopsky.particle.PSParticles;
+import com.altnoir.poopsky.particle.PoopParticle;
 import com.altnoir.poopsky.sound.PSSoundEvents;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -18,6 +23,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
@@ -34,8 +40,13 @@ public class PoopSky {
         modEventBus.addListener(PSNetworking::register);
 
         PSBlocks.register(modEventBus);
+        ToiletBlocks.register(modEventBus);
+        PSBlockEntities.register(modEventBus);
         PSItems.register(modEventBus);
         PSEntities.register(modEventBus);
+
+        PSEffects.register(modEventBus);
+        PSParticles.register(modEventBus);
 
         PSItemGroups.register(modEventBus);
         PSSoundEvents.register(modEventBus);
@@ -65,6 +76,11 @@ public class PoopSky {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(PSEntities.TOILET_PLUG.get(), ToiletPlugRenderer::new);
+        }
+
+        @SubscribeEvent
+        public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
+            event.registerSpriteSet(PSParticles.POOP_PARTICLE.get(), PoopParticle.Provider::new);
         }
     }
 }

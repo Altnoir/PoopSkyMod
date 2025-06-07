@@ -48,7 +48,7 @@ public class PSBlocks {
     );
 
 
-    private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
+    public static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);
         return toReturn;
