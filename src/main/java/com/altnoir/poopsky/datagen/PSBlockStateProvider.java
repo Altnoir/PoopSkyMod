@@ -189,12 +189,18 @@ public class PSBlockStateProvider extends BlockStateProvider {
 
         getVariantBuilder(toilet).forAllStates(state -> {
             var lava = state.getValue(ToiletLavaBlock.LAVA);
-
+            var facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
             var chosenModel = lava ? modelLava : baseModel;
+            var yRot = switch (facing) {
+                case EAST -> 90;
+                case SOUTH -> 180;
+                case WEST -> 270;
+                default -> 0;
+            };
 
             return ConfiguredModel.builder()
                     .modelFile(chosenModel)
-                    .rotationY(0)
+                    .rotationY(yRot)
                     .build();
         });
         itemModels().getBuilder(BuiltInRegistries.BLOCK.getKey(toilet).getPath())

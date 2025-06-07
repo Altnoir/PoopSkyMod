@@ -1,10 +1,12 @@
 {
   "variants": {
     "facing=east,lava=false": {
-      "model": "poopsky:block/purple_concrete_toilet"
+      "model": "poopsky:block/purple_concrete_toilet",
+      "y": 90
     },
     "facing=east,lava=true": {
-      "model": "poopsky:block/purple_concrete_toilet_lava"
+      "model": "poopsky:block/purple_concrete_toilet_lava",
+      "y": 90
     },
     "facing=north,lava=false": {
       "model": "poopsky:block/purple_concrete_toilet"
@@ -13,16 +15,20 @@
       "model": "poopsky:block/purple_concrete_toilet_lava"
     },
     "facing=south,lava=false": {
-      "model": "poopsky:block/purple_concrete_toilet"
+      "model": "poopsky:block/purple_concrete_toilet",
+      "y": 180
     },
     "facing=south,lava=true": {
-      "model": "poopsky:block/purple_concrete_toilet_lava"
+      "model": "poopsky:block/purple_concrete_toilet_lava",
+      "y": 180
     },
     "facing=west,lava=false": {
-      "model": "poopsky:block/purple_concrete_toilet"
+      "model": "poopsky:block/purple_concrete_toilet",
+      "y": 270
     },
     "facing=west,lava=true": {
-      "model": "poopsky:block/purple_concrete_toilet_lava"
+      "model": "poopsky:block/purple_concrete_toilet_lava",
+      "y": 270
     }
   }
 }
