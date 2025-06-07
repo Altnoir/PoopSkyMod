@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.effect;
 
 import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.particle.PSParticles;
 import com.altnoir.poopsky.sound.PSSoundEvents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
@@ -46,13 +47,11 @@ public class FecalIncontinenceEffect extends MobEffect {
             poop.setDefaultPickUpDelay();
             world.addFreshEntity(poop);
 
-            /*
             world.sendParticles(
-                    PSParticle.POOP_PARTICLE.get(),
+                    PSParticles.POOP_PARTICLE.get(),
                     entity.getX(), entity.getY() + 0.1, entity.getZ(),
                     8, 0.0, -0.1, 0.0, 3.0
             );
-             */
 
             world.playSound(
                     null,
