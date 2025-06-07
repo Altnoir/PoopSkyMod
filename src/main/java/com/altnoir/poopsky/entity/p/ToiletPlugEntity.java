@@ -464,7 +464,9 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
 
     @Override
     public void onPassengerTurned(Entity entityToUpdate) {
-        this.clampRotation(entityToUpdate);
+        // Rotation clamping is disabled to allow passengers full freedom of movement. 
+        // Uncomment the following line if rotation clamping is required for specific scenarios.
+        //this.clampRotation(entityToUpdate);
     }
 
     @Override
