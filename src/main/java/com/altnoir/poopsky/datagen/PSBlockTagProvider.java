@@ -112,6 +112,9 @@ public class PSBlockTagProvider extends FabricTagProvider.BlockTagProvider {
 
         getOrCreateTagBuilder(BlockTags.HOE_MINEABLE)
                 .addTag(PSBlockTags.POOP_BLOCKS);
+
+        getOrCreateTagBuilder(BlockTags.SHOVEL_MINEABLE)
+                .add(PSBlocks.POOP_PIECE);
     }
 
     public static final Block[] POOP_BLOCKS = {

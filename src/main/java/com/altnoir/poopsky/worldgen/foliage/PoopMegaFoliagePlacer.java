@@ -32,15 +32,9 @@ public class PoopMegaFoliagePlacer extends FoliagePlacer {
 
     @Override
     protected void generate(
-            TestableWorld world,
-            BlockPlacer placer,
-            Random random,
-            TreeFeatureConfig config,
-            int trunkHeight,
-            TreeNode treeNode,
-            int foliageHeight,
-            int radius,
-            int offset
+            TestableWorld world, BlockPlacer placer, Random random, TreeFeatureConfig config,
+            int trunkHeight, TreeNode treeNode,
+            int foliageHeight, int radius, int offset
     ) {
         BlockPos blockPos = treeNode.getCenter();
         int halfHeight = foliageHeight / 2;

@@ -132,6 +132,7 @@ public class PSModelProvider extends FabricModelProvider {
         itemModelGenerator.register(PSItems.URINE_BOTTLE, Models.GENERATED);
         itemModelGenerator.register(PSItems.BAKED_MAGGOTS, Models.GENERATED);
         itemModelGenerator.register(PSItems.POOP_BREAD, Models.GENERATED);
+        itemModelGenerator.register(PSItems.POOP_DUMPLINGS, Models.GENERATED);
         itemModelGenerator.register(PSItems.POOP_SOUP, Models.GENERATED);
         itemModelGenerator.register(PSItems.DRAGON_BREATH_CHILI, Models.GENERATED);
     }

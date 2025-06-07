@@ -14,7 +14,7 @@ public class PSEntities {
     //普通实体
     public static final EntityType<ToiletPlugEntity> TOILET_PLUG_ENTITY = Registry.register(Registries.ENTITY_TYPE,
             Identifier.of(PoopSky.MOD_ID, "toilet_plug"),
-            EntityType.Builder.create( ToiletPlugEntity::new, SpawnGroup.MISC)
+            EntityType.Builder.create(ToiletPlugEntity::new, SpawnGroup.MISC)
                     .dimensions(0.75f, 0.35f).build()
     );
     public static final EntityType<ChairEntity> STOOL_ENTITY = Registry.register(Registries.ENTITY_TYPE,
@@ -68,8 +68,5 @@ public class PSEntities {
 
     public static void registerEntities() {
         PoopSky.LOGGER.info("Registering entities for " + PoopSky.MOD_ID);
-    }
-    public static void registerBlockEntities() {
-        PoopSky.LOGGER.info("Registering Block Entities for " + PoopSky.MOD_ID);
     }
 }

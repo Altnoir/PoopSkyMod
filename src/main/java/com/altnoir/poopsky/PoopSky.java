@@ -12,10 +12,12 @@ import com.altnoir.poopsky.potion.PSPotions;
 import com.altnoir.poopsky.sound.PSSoundEvents;
 import com.altnoir.poopsky.villager.PSVillagers;
 import com.altnoir.poopsky.villager.VillagerTrade;
-import com.altnoir.poopsky.worldgen.PSWorldGeneration;
 import com.altnoir.poopsky.worldgen.foliage.PSFoliagePlacerType;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.registry.*;
+import net.fabricmc.fabric.api.registry.FabricBrewingRecipeRegistryBuilder;
+import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
+import net.fabricmc.fabric.api.registry.FuelRegistry;
+import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.minecraft.item.Items;
 import net.minecraft.potion.Potions;
 import net.minecraft.registry.Registries;
@@ -44,11 +46,9 @@ public class PoopSky implements ModInitializer {
 
 		PSItemGroups.registerItemGroups();
 
-		PSEntities.registerBlockEntities();
 		PSEntities.registerEntities();
 		PSVillagers.registerVillagers();
 		PSFoliagePlacerType.registerFoliagePlacer();
-		PSWorldGeneration.generatePSWorldGen();
 		PlugActionPayload.registerServerReceiver();
 
 		Registry.register(Registries.CUSTOM_STAT, POOP_STAT, POOP_STAT);

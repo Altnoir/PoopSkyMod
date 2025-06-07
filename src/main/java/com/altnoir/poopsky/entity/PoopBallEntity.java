@@ -1,6 +1,5 @@
 package com.altnoir.poopsky.entity;
 
-import com.altnoir.poopsky.component.PSComponents;
 import com.altnoir.poopsky.item.PSItems;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -8,7 +7,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.SlimeEntity;
-import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.item.BoneMealItem;
 import net.minecraft.item.Item;
@@ -16,7 +14,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -94,25 +91,5 @@ public class PoopBallEntity extends ThrownItemEntity {
             this.getWorld().sendEntityStatus(this, (byte)3);
             this.discard();
         }
-    }
-    private void spawnExplosion() {
-        World.ExplosionSourceType explosionType = World.ExplosionSourceType.NONE; // 爆炸类型
-
-        this.getWorld().createExplosion(
-                this.getOwner(),
-                this.getX(), this.getY(), this.getZ(),
-                16.0F, // 爆炸威力
-                true, // 生成火焰
-                explosionType
-        );
-    }
-    private void spawnVillager() {
-        VillagerEntity villager = new VillagerEntity(EntityType.VILLAGER, this.getWorld());
-        villager.setPosition(this.getX(), this.getY(), this.getZ());
-        villager.setBaby(true);
-        this.getWorld().spawnEntity(villager);
-        this.getWorld().addParticle(ParticleTypes.HAPPY_VILLAGER, this.getX(), this.getY() + 1, this.getZ(), 0, 0, 0);
-        this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.ENTITY_CHICKEN_EGG, this.getSoundCategory(), 1.0F, 1.0F);
-
     }
 }

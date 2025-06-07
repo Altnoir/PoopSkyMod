@@ -11,13 +11,15 @@ import net.minecraft.block.Blocks;
 import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
-import net.minecraft.recipe.BlastingRecipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SmokingRecipe;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.registry.tag.ItemTags;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -52,6 +54,10 @@ public class PSRecipeProvider extends FabricRecipeProvider {
                 .input('P', PSItems.POOP)
                 .input('M', PSItems.MAGGOTS_SEEDS)
                 .criterion(hasItem(PSItems.MAGGOTS_SEEDS), conditionsFromItem(PSItems.MAGGOTS_SEEDS))
+                .offerTo(exporter);
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, PSItems.POOP_DUMPLINGS)
+                .input(PSItems.POOP_BALL).input(ItemTags.LEAVES)
+                .criterion(hasItem(PSItems.POOP_BALL), conditionsFromItem(PSItems.POOP_BALL))
                 .offerTo(exporter);
         ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, PSItems.POOP_SOUP)
                 .input(Items.BOWL).input(PSItems.POOP).input(PSItems.MAGGOTS_SEEDS).input(PSItems.URINE_BOTTLE)

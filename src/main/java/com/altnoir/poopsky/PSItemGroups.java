@@ -73,6 +73,7 @@ public class PSItemGroups {
                         entries.add(PSItems.MAGGOTS_SEEDS);
                         entries.add(PSItems.BAKED_MAGGOTS);
                         entries.add(PSItems.POOP_BREAD);
+                        entries.add(PSItems.POOP_DUMPLINGS);
                         entries.add(PSItems.POOP_SOUP);
                         entries.add(PSBlocks.POOP_CAKE);
                         entries.add(PSItems.URINE_BOTTLE);

@@ -40,6 +40,8 @@ public class PSItems {
             new Item(new Item.Settings().food(PSFoodComponents.BAKED_MAGGOTS).maxCount(88)));
     public static final Item POOP_BREAD = registerItem("poop_bread",
             new Item(new Item.Settings().food(PSFoodComponents.POOP_BREAD).maxCount(88)));
+    public static final Item POOP_DUMPLINGS = registerItem("poop_dumplings",
+            new Item(new Item.Settings().food(PSFoodComponents.POOP_DUMPLINGS).maxCount(88)));
     public static final Item POOP_SOUP = registerItem("poop_soup",
             new Item(new Item.Settings().food(PSFoodComponents.POOP_SOUP).maxCount(8)) {
                 @Override
