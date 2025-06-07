@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "facing=east,lava=false": {
+      "model": "poopsky:block/magenta_concrete_toilet"
+    },
+    "facing=east,lava=true": {
+      "model": "poopsky:block/magenta_concrete_toilet_lava"
+    },
+    "facing=north,lava=false": {
+      "model": "poopsky:block/magenta_concrete_toilet"
+    },
+    "facing=north,lava=true": {
+      "model": "poopsky:block/magenta_concrete_toilet_lava"
+    },
+    "facing=south,lava=false": {
+      "model": "poopsky:block/magenta_concrete_toilet"
+    },
+    "facing=south,lava=true": {
+      "model": "poopsky:block/magenta_concrete_toilet_lava"
+    },
+    "facing=west,lava=false": {
+      "model": "poopsky:block/magenta_concrete_toilet"
+    },
+    "facing=west,lava=true": {
+      "model": "poopsky:block/magenta_concrete_toilet_lava"
+    }
+  }
+}
