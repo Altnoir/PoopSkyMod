@@ -14,13 +14,13 @@ public class PSItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(PoopSky.MOD_ID);
 
     public static final DeferredItem<Item> POOP = ITEMS.register("poop", () ->
-            new Poop(new Item.Properties().food(PFoods.POOP).stacksTo(88)));
+            new PoopItem(new Item.Properties().food(PFoods.POOP).stacksTo(88)));
     public static final DeferredItem<Item> POOP_BALL = ITEMS.register("poop_ball", () ->
-            new PoopBall(new Item.Properties().stacksTo(88)));
+            new PoopBallItem(new Item.Properties().stacksTo(88)));
     public static final DeferredItem<Item> POOP_DUMPLINGS = ITEMS.register("poop_dumplings", () ->
             new Item(new Item.Properties().food(PFoods.POOP_DUMPLINGS).stacksTo(88)));
     public static final DeferredItem<Item> Toilet_Plug = ITEMS.register("toilet_plug", () ->
-            new Item(new Item.Properties().stacksTo(1)));
+            new ToiletPlugItem(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<Item> SPALL = ITEMS.register("spall", () ->
             new Item(new Item.Properties()));
 
