@@ -10,7 +10,7 @@
   "message.poopsky.toilet_linker.2": "Соединить Унитаз ②", 
   "message.poopsky.toilet_linker.3": "Соединено",
   "message.poopsky.toilet_linker.4": "Соединение снято",
-  "tooltip.poopsky.toilet_linker.info_0": "§7Удерживайте §6[Shift] §7для деталей",
+  "tooltip.poopsky.item.info_0": "§7Удерживайте §6[Shift] §7для деталей",
   "tooltip.poopsky.toilet_linker.info_1": "Унитаз① - ID измерения: %1$s, Координаты: %2$s, %3$s, %4$s",
   "tooltip.poopsky.toilet_linker.info_2": "Унитаз② - ID измерения: %1$s, Координаты: %2$s, %3$s, %4$s",
 

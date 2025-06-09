@@ -10,7 +10,7 @@
   "message.poopsky.toilet_linker.2": "Link Toilet ②", 
   "message.poopsky.toilet_linker.3": "Linked",
   "message.poopsky.toilet_linker.4": "Cleared",
-  "tooltip.poopsky.toilet_linker.info_0": "§7Hold §6[Shift] §7to show details",
+  "tooltip.poopsky.item.info_0": "§7Hold §6[Shift] §7to show details",
   "tooltip.poopsky.toilet_linker.info_1": "Toilet① - DimID: %1$s, Coordinates: %2$s, %3$s, %4$s",
   "tooltip.poopsky.toilet_linker.info_2": "Toilet② - DimID: %1$s, Coordinates: %2$s, %3$s, %4$s",
 

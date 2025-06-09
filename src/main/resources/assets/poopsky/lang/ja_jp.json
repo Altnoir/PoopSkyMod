@@ -10,7 +10,7 @@
   "message.poopsky.toilet_linker.2": "トイレ②を接続",
   "message.poopsky.toilet_linker.3": "接続済み",
   "message.poopsky.toilet_linker.4": "解除済み",
-  "tooltip.poopsky.toilet_linker.info_0": "§6[ Shift ] §7を押しながら詳細を表示",
+  "tooltip.poopsky.item.info_0": "§6[ Shift ] §7を押しながら詳細を表示",
   "tooltip.poopsky.toilet_linker.info_1": "トイレ①-ディメンションID：%1$s 座標：%2$s, %3$s, %4$s",
   "tooltip.poopsky.toilet_linker.info_2": "トイレ②-ディメンションID：%1$s 座標：%2$s, %3$s, %4$s",
   "tooltip.poopsky.poop_ball.info_1": "村人支援",

@@ -8,7 +8,7 @@
   "item.poopsky.toilet_linker": "Toilettenverbinder",
   "message.poopsky.toilet_linker.1": "Toilette ① verknüpfen",
   "message.poopsky.toilet_linker.2": "Toilette ② verknüpfen", 
-  "tooltip.poopsky.toilet_linker.info_0": "§7Halte §6[Umschalt] §7für Details",
+  "tooltip.poopsky.item.info_0": "§7Halte §6[Umschalt] §7für Details",
   "tooltip.poopsky.toilet_linker.info_1": "Toilette① - DimID: %1$s, Koordinaten: %2$s, %3$s, %4$s",
   "tooltip.poopsky.toilet_linker.info_2": "Toilette② - DimID: %1$s, Koordinaten: %2$s, %3$s, %4$s",
 

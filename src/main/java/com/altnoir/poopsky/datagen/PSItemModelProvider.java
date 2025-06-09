@@ -16,8 +16,9 @@ public class PSItemModelProvider extends ItemModelProvider {
         basicItem(PSItems.POOP.get());
         basicItem(PSItems.POOP_BALL.get());
         basicItem(PSItems.POOP_DUMPLINGS.get());
-        basicItem(PSItems.Toilet_Plug.get());
+        basicItem(PSItems.TOILET_PLUG.get());
         basicItem(PSItems.SPALL.get());
         basicItem(PSItems.LAWRENCE_MUSIC_DISC.get());
+        basicItem(PSItems.TOILET_LINKER.get());
     }
 }

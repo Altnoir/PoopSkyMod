@@ -15,8 +15,8 @@ import net.minecraft.world.item.ProjectileItem;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class PoopBall extends Item implements ProjectileItem {
-    public PoopBall(Properties properties) {
+public class PoopBallItem extends Item implements ProjectileItem {
+    public PoopBallItem(Properties properties) {
         super(properties);
     }
 

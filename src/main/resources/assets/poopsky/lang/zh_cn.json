@@ -10,7 +10,7 @@
   "message.poopsky.toilet_linker.2": "连接厕所②",
   "message.poopsky.toilet_linker.3": "已绑定",
   "message.poopsky.toilet_linker.4": "已清除",
-  "tooltip.poopsky.toilet_linker.info_0": "§7按住 §6[Shift] §7显示详细",
+  "tooltip.poopsky.item.info_0": "§7按住 §6[Shift] §7显示详细",
   "tooltip.poopsky.toilet_linker.info_1": "厕所①-维度ID：%1$s，坐标：%2$s, %3$s, %4$s",
   "tooltip.poopsky.toilet_linker.info_2": "厕所②-维度ID：%1$s，坐标：%2$s, %3$s, %4$s",
 
