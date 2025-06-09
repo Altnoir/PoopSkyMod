@@ -7,7 +7,13 @@ import com.altnoir.poopsky.particle.PSParticles;
 import com.altnoir.poopsky.sound.PSSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -19,6 +25,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -40,6 +47,17 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
     }
 
     @Override
+    public void onRemove(BlockState oldState, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (!oldState.is(newState.getBlock())) {
+            BlockEntity be = level.getBlockEntity(pos);
+            if (be instanceof ToiletBlockEntity toilet) {
+                toilet.clearLinkedBlock();
+            }
+        }
+        super.onRemove(oldState, level, pos, newState, isMoving);
+    }
+
+    @Override
     public void fallOn(Level level, BlockState blockState, BlockPos pos, Entity entity, float fallDistance) {
         if (!level.isClientSide) {
             if (fallDistance >= 1.0F && entity instanceof LivingEntity living) {
@@ -52,6 +70,12 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
                             falling.getBlockState().is(Blocks.CHIPPED_ANVIL) |
                             falling.getBlockState().is(Blocks.DAMAGED_ANVIL)) {
                 poopAnvil(level, entity);
+            }
+
+            if (fallDistance >= 1.0f && entity instanceof ServerPlayer player && isPlayerCentered(pos, player)) {
+                var be = (ToiletBlockEntity)level.getBlockEntity(pos);
+                if (be == null) return;
+                teleportPlayer(player, be, fallDistance);
             }
         }
     }
@@ -93,7 +117,7 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
                 new ItemStack(PSItems.POOP.get())
         );
         poop.setDefaultPickUpDelay();
-        float pitch = level.random.nextFloat() + 0.5F;
+        var pitch = level.random.nextFloat() + 0.5F;
         level.playSound(null, player.getX(), player.getY() + 0.1, player.getZ(), PSSoundEvents.FART.get(), SoundSource.PLAYERS, 1.0F, pitch);
         ((ServerLevel) level).sendParticles(
                 PSParticles.POOP_PARTICLE.get(),
@@ -107,6 +131,21 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
                 3.0
         );
         level.addFreshEntity(poop);
+    }
+
+    public void teleportPlayer(ServerPlayer player, ToiletBlockEntity blockEntity, float fallDistance) {
+        var server = player.server;
+        if (blockEntity.getLinkedDim() == null) return;
+        var targetWorld = server.getLevel(ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse(blockEntity.getLinkedDim())));
+        if (targetWorld == null) return;
+
+        var targetPos = blockEntity.getLinkedPos();
+        player.teleportTo(targetWorld, targetPos.getX() + 0.5, targetPos.getY() + 1, targetPos.getZ() + 0.5, player.getYRot(), player.getXRot());
+        var pitch = targetWorld.random.nextFloat() + 0.5F;
+        targetWorld.playSound(null, player.getX(), player.getY() + 0.1, player.getZ(), SoundEvents.PLAYER_TELEPORT, SoundSource.PLAYERS, 1.0F, pitch);
+        var bounce = Math.sqrt(2 * 0.08 * fallDistance) * 0.85;
+        player.setDeltaMovement(player.getDeltaMovement().x, bounce, player.getDeltaMovement().z);
+        player.hurtMarked = true;
     }
 
     @Override

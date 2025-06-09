@@ -34,7 +34,6 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 
 import javax.annotation.Nullable;
-import java.util.List;
 
 public class ToiletPlugEntity extends VehicleEntity implements Leashable {
     private LeashData leashData;
@@ -356,7 +355,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
 
     @Override
     protected Item getDropItem() {
-        return PSItems.Toilet_Plug.get();
+        return PSItems.TOILET_PLUG.get();
     }
 
     @Override
@@ -379,8 +378,8 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
         if (source.getEntity() instanceof Player player && player.isCrouching()) {
             this.kill();
             if (!player.getAbilities().instabuild) {
-                if (!player.getInventory().add(new ItemStack(PSItems.Toilet_Plug.get()))) {
-                    this.spawnAtLocation(PSItems.Toilet_Plug.get());
+                if (!player.getInventory().add(new ItemStack(PSItems.TOILET_PLUG.get()))) {
+                    this.spawnAtLocation(PSItems.TOILET_PLUG.get());
                 }
             }
             return true;

@@ -10,7 +10,7 @@
 "message.poopsky.toilet_linker.2": "변기② 연결",
 "message.poopsky.toilet_linker.3": "연결됨",
 "message.poopsky.toilet_linker.4": "연결 해제",
-"tooltip.poopsky.toilet_linker.info_0": "§7§6[Shift]§7를 눌러 상세 정보 표시",
+"tooltip.poopsky.item.info_0": "§7§6[Shift]§7를 눌러 상세 정보 표시",
 "tooltip.poopsky.toilet_linker.info_1": "변기①-차원 ID: %1$s 좌표: %2$s, %3$s, %4$s",
 "tooltip.poopsky.toilet_linker.info_2": "변기②-차원 ID: %1$s 좌표: %2$s, %3$s, %4$s",
 

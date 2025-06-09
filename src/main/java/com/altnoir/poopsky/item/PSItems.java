@@ -2,6 +2,8 @@ package com.altnoir.poopsky.item;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.component.PFoods;
+import com.altnoir.poopsky.component.PSComponents;
+import com.altnoir.poopsky.component.ToiletComponent;
 import com.altnoir.poopsky.sound.PSSoundEvents;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
@@ -19,10 +21,14 @@ public class PSItems {
             new PoopBallItem(new Item.Properties().stacksTo(88)));
     public static final DeferredItem<Item> POOP_DUMPLINGS = ITEMS.register("poop_dumplings", () ->
             new Item(new Item.Properties().food(PFoods.POOP_DUMPLINGS).stacksTo(88)));
-    public static final DeferredItem<Item> Toilet_Plug = ITEMS.register("toilet_plug", () ->
+    public static final DeferredItem<Item> TOILET_PLUG = ITEMS.register("toilet_plug", () ->
             new ToiletPlugItem(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<Item> SPALL = ITEMS.register("spall", () ->
             new Item(new Item.Properties()));
+    public static final DeferredItem<Item> TOILET_LINKER = ITEMS.register("toilet_linker", () ->
+            new ToiletLinkerItem(new Item.Properties()
+                    .component(PSComponents.TOILET_COMPONENT, ToiletComponent.EMPTY)
+                    .stacksTo(1)));
 
     public static final DeferredItem<Item> LAWRENCE_MUSIC_DISC = ITEMS.register("music_disc_lawrence", () ->
             new Item(new Item.Properties().jukeboxPlayable(PSSoundEvents.LAWRENCE_KEY).rarity(Rarity.RARE).stacksTo(1)));

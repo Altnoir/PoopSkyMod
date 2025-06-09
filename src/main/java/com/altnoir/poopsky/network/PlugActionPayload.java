@@ -51,7 +51,7 @@ public record PlugActionPayload() implements CustomPacketPayload {
         Level level = player.level();
         level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.5F, 1.0F);
         if (!player.isCreative()) {
-            giveOrDropItem(player, new ItemStack(PSItems.Toilet_Plug.get()));
+            giveOrDropItem(player, new ItemStack(PSItems.TOILET_PLUG.get()));
         }
     }
 
@@ -63,14 +63,14 @@ public record PlugActionPayload() implements CustomPacketPayload {
 
     private static boolean hasItemInInventory(ServerPlayer player) {
         Inventory inv = player.getInventory();
-        return inv.items.stream().anyMatch(stack -> stack.is(PSItems.Toilet_Plug.get()));
+        return inv.items.stream().anyMatch(stack -> stack.is(PSItems.TOILET_PLUG.get()));
     }
 
     private static void removeItem(ServerPlayer player) {
         Inventory inv = player.getInventory();
         for (int i = 0; i < inv.items.size(); ++i) {
             ItemStack stack = inv.items.get(i);
-            if (stack.is(PSItems.Toilet_Plug.get())) {
+            if (stack.is(PSItems.TOILET_PLUG.get())) {
                 stack.shrink(1);
                 break;
             }
