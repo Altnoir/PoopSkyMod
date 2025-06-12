@@ -23,5 +23,8 @@ public class PSBlockTagProvider extends BlockTagsProvider {
 
         tag(BlockTags.MINEABLE_WITH_SHOVEL)
                 .add(PSBlocks.POOP_PIECE.get());
+
+        tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                .add(PSBlocks.COMPOOPER.get());
     }
 }

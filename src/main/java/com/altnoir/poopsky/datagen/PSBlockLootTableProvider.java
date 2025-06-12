@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.block.PSBlocks;
+import com.altnoir.poopsky.block.ToiletBlocks;
 import com.altnoir.poopsky.block.p.PoopPiece;
 import com.altnoir.poopsky.item.PSItems;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
@@ -22,6 +23,7 @@ import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
@@ -34,7 +36,12 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
 
     @Override
     protected void generate() {
+        ToiletBlocks.BLOCKS.getEntries().stream()
+                        .map(DeferredHolder::get)
+                        .forEach(this::dropSelf);
+
         dropSelf(PSBlocks.POOP_BLOCK.get());
+        dropSelf(PSBlocks.COMPOOPER.get());
         add(PSBlocks.POOP_PIECE.get(), createPoopPieceDrop(PSBlocks.POOP_PIECE.get(), PSItems.POOP_BALL.get()));
     }
 

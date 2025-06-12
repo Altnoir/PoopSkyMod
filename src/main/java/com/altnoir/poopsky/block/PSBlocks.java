@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.block;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.block.p.CompooperBlock;
 import com.altnoir.poopsky.block.p.PoopBlock;
 import com.altnoir.poopsky.block.p.PoopPiece;
 import com.altnoir.poopsky.item.PSItems;
@@ -47,6 +48,15 @@ public class PSBlocks {
             )
     );
 
+    public static final DeferredBlock<Block> COMPOOPER = registerBlock("compooper",
+            () -> new CompooperBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .instrument(NoteBlockInstrument.BASS)
+                    .requiresCorrectToolForDrops()
+                    .strength(0.6F)
+                    .sound(SoundType.METAL)
+            )
+    );
 
     public static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);
