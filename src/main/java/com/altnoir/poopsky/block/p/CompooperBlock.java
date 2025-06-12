@@ -156,7 +156,7 @@ public class CompooperBlock extends Block implements WorldlyContainerHolder {
                 if (stack.getItem() == Items.WATER_BUCKET) {
                     return waterBucketUse(level, pos, player, hand);
                 }
-                if (stack.getItem() == PSItems.SPALL.get() && ( hasLiquid || i == MIN_LEVEL)) {
+                if (stack.getItem() == PSItems.URINE_BOTTLE.get() && ( hasLiquid || i == MIN_LEVEL)) {
                     return liquidItemUse(i, state, level, pos, player, hand);
                 }
                 if (!hasLiquid && getValue(stack) > 0) {
@@ -342,6 +342,9 @@ public class CompooperBlock extends Block implements WorldlyContainerHolder {
         if (!state.getValue(LIQUID) && state.getValue(LEVEL) == MIN_LEVEL) {
             var biome = level.getBiome(pos).value();
             var precipitation = biome.getPrecipitationAt(pos);
+            var isRaining = level.isRaining() && level.canSeeSky(pos);
+
+            if (!isRaining) return;
 
             boolean canFill = false;
             if (precipitation == Biome.Precipitation.RAIN) {
