@@ -36,5 +36,11 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                     tag(PSBlockTags.TOILET_BLOCKS)
                             .add(toilet);
                 });
+
+        tag(BlockTags.LOGS)
+                .add(PSBlocks.POOP_LOG.get())
+                .add(PSBlocks.POOP_EMPTY_LOG.get())
+                .add(PSBlocks.STRIPPED_POOP_LOG.get())
+                .add(PSBlocks.STRIPPED_POOP_EMPTY_LOG.get());
     }
 }

@@ -88,6 +88,10 @@ public class PSBlockStateProvider extends BlockStateProvider {
         simpleBlockItem(PSBlocks.POOP_BLOCK.get(), models().getExistingFile(modLoc("block/poop_block1")));
         simpleBlockItem(PSBlocks.POOP_PIECE.get(), models().getExistingFile(modLoc("block/poop_height2")));
 
+        simpleBlockWithItem(PSBlocks.POOP_LEAVES.get(), this.cubeAll(PSBlocks.POOP_LEAVES.get()));
+        simpleBlockWithItem(PSBlocks.POOP_LEAVES_GOLD.get(), this.cubeAll(PSBlocks.POOP_LEAVES_GOLD.get()));
+        simpleBlockWithItem(PSBlocks.POOP_LEAVES_IRON.get(), this.cubeAll(PSBlocks.POOP_LEAVES_GOLD.get()));
+
         registerToilet(ToiletBlocks.OAK_TOILET.get(), Blocks.OAK_PLANKS);
         registerToilet(ToiletBlocks.SPRUCE_TOILET.get(), Blocks.SPRUCE_PLANKS);
         registerToilet(ToiletBlocks.BIRCH_TOILET.get(), Blocks.BIRCH_PLANKS);

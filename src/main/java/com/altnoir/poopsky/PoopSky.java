@@ -13,8 +13,11 @@ import com.altnoir.poopsky.network.PSNetworking;
 import com.altnoir.poopsky.particle.PSParticles;
 import com.altnoir.poopsky.particle.PoopParticle;
 import com.altnoir.poopsky.sound.PSSoundEvents;
+import com.altnoir.poopsky.worldgen.foliage.PSFoliagePlacerTypes;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -47,6 +50,7 @@ public class PoopSky {
         PSBlockEntities.register(modEventBus);
         PSItems.register(modEventBus);
         PSEntities.register(modEventBus);
+        PSFoliagePlacerTypes.register(modEventBus);
 
         PSEffects.register(modEventBus);
         PSParticles.register(modEventBus);
@@ -78,6 +82,8 @@ public class PoopSky {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+            ItemBlockRenderTypes.setRenderLayer(PSBlocks.POOP_SAPLING.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(PSBlocks.POOP_EMPTY_LOG.get(), RenderType.cutout());
             EntityRenderers.register(PSEntities.TOILET_PLUG.get(), ToiletPlugRenderer::new);
             CompooperBlock.bootStrap();
         }
