@@ -1,14 +1,12 @@
 package com.altnoir.poopsky.block;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.p.PoopBlock;
-import com.altnoir.poopsky.block.p.PoopPiece;
+import com.altnoir.poopsky.block.p.*;
 import com.altnoir.poopsky.item.PSItems;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
@@ -47,6 +45,115 @@ public class PSBlocks {
             )
     );
 
+    public static final DeferredBlock<Block> COMPOOPER = registerBlock("compooper",
+            () -> new CompooperBlock(BlockBehaviour.Properties.of()
+                    .randomTicks()
+                    .noOcclusion()
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .instrument(NoteBlockInstrument.BASS)
+                    .requiresCorrectToolForDrops()
+                    .strength(0.6F)
+                    .sound(SoundType.METAL)
+            )
+    );
+
+    public static final DeferredBlock<Block> POOP_LOG = registerBlock("poop_log",
+            () -> new RotatedPillarBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .noOcclusion()
+                    .instrument(NoteBlockInstrument.BASS)
+                    .strength(LOG)
+                    .sound(SoundType.STONE)
+            )
+    );
+
+    public static final DeferredBlock<Block> POOP_EMPTY_LOG = registerBlock("poop_empty_log",
+            () -> new EmptyRotatedPillarBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .noOcclusion()
+                    .instrument(NoteBlockInstrument.BASS)
+                    .strength(LOG)
+                    .sound(SoundType.BAMBOO_WOOD)
+            )
+    );
+
+    public static final DeferredBlock<Block> STRIPPED_POOP_LOG = registerBlock("stripped_poop_log",
+            () -> new RotatedPillarBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .noOcclusion()
+                    .instrument(NoteBlockInstrument.BASS)
+                    .strength(LOG)
+                    .sound(SoundType.STONE)
+            )
+    );
+
+    public static final DeferredBlock<Block> STRIPPED_POOP_EMPTY_LOG = registerBlock("stripped_poop_empty_log",
+            () -> new EmptyRotatedPillarBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .noOcclusion()
+                    .instrument(NoteBlockInstrument.BASS)
+                    .strength(LOG)
+                    .sound(SoundType.BAMBOO_WOOD)
+            )
+    );
+
+    public static final DeferredBlock<Block> POOP_LEAVES = registerBlock("poop_leaves",
+            () -> new LeavesBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(0.2F)
+                    .randomTicks()
+                    .noOcclusion()
+                    .sound(SoundType.SCULK_SENSOR)
+                    .isValidSpawn(Blocks::ocelotOrParrot)
+                    .isSuffocating(PSBlockProperties::neverSuffocate)
+                    .isViewBlocking(PSBlockProperties::neverBlockVision)
+                    .ignitedByLava()
+                    .pushReaction(PushReaction.DESTROY)
+                    .isRedstoneConductor(PSBlockProperties::never)
+            )
+    );
+    public static final DeferredBlock<Block> POOP_LEAVES_IRON = registerBlock("poop_leaves_iron",
+            () -> new LeavesBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_WHITE)
+                    .strength(0.2F)
+                    .randomTicks()
+                    .noOcclusion()
+                    .sound(SoundType.SCULK_SENSOR)
+                    .isValidSpawn(Blocks::ocelotOrParrot)
+                    .isSuffocating(PSBlockProperties::neverSuffocate)
+                    .isViewBlocking(PSBlockProperties::neverBlockVision)
+                    .ignitedByLava()
+                    .pushReaction(PushReaction.DESTROY)
+                    .isRedstoneConductor(PSBlockProperties::never)
+            )
+    );
+    public static final DeferredBlock<Block> POOP_LEAVES_GOLD = registerBlock("poop_leaves_gold",
+            () -> new LeavesBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_YELLOW)
+                    .strength(0.2F)
+                    .randomTicks()
+                    .noOcclusion()
+                    .sound(SoundType.SCULK_SENSOR)
+                    .isValidSpawn(Blocks::ocelotOrParrot)
+                    .isSuffocating(PSBlockProperties::neverSuffocate)
+                    .isViewBlocking(PSBlockProperties::neverBlockVision)
+                    .ignitedByLava()
+                    .pushReaction(PushReaction.DESTROY)
+                    .isRedstoneConductor(PSBlockProperties::never)
+            )
+    );
+
+    public static final DeferredBlock<Block> POOP_SAPLING = registerBlock("poop_sapling",
+            () -> new PoopTreeBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .noCollission()
+                    .noOcclusion()
+                    .instabreak()
+                    .sound(SoundType.MUD)
+                    .offsetType(BlockBehaviour.OffsetType.XZ)
+                    .pushReaction(PushReaction.DESTROY)
+            )
+    );
 
     public static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);

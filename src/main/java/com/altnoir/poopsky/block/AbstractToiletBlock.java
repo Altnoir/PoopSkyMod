@@ -10,9 +10,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.TickTask;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -25,7 +24,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -36,6 +34,9 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.Set;
 
 public abstract class AbstractToiletBlock extends Block implements EntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
@@ -72,10 +73,10 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
                 poopAnvil(level, entity);
             }
 
-            if (fallDistance >= 1.0f && entity instanceof ServerPlayer player && isPlayerCentered(pos, player)) {
+            if (fallDistance >= 1.0f && isEntityCentered(pos, entity)) {
                 var be = (ToiletBlockEntity)level.getBlockEntity(pos);
                 if (be == null) return;
-                teleportPlayer(player, be, fallDistance);
+                teleportEntity(level, entity, be, fallDistance);
             }
         }
     }
@@ -93,7 +94,7 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
         if (!level.isClientSide && entity instanceof Player player) {
-            if (player.isShiftKeyDown() && isPlayerCentered(pos, player)) {
+            if (player.isShiftKeyDown() && isEntityCentered(pos, player)) {
                 if (player.hasEffect(PSEffects.FECAL_INCONTINENCE)) {
                     onPoop(level, player);
                     player.causeFoodExhaustion(0.05F);
@@ -105,9 +106,9 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
         }
     }
 
-    protected boolean isPlayerCentered(BlockPos blockPos, Player player) {
+    protected boolean isEntityCentered(BlockPos blockPos, Entity entity) {
         var blockAABB = new AABB(blockPos).inflate(0.2);
-        return blockAABB.contains(player.position());
+        return blockAABB.contains(entity.position());
     }
 
     protected void onPoop(Level level, Player player) {
@@ -133,19 +134,30 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
         level.addFreshEntity(poop);
     }
 
-    public void teleportPlayer(ServerPlayer player, ToiletBlockEntity blockEntity, float fallDistance) {
-        var server = player.server;
+    public void teleportEntity(Level level, Entity entity, ToiletBlockEntity blockEntity, float fallDistance) {
+        var server = level.getServer();
         if (blockEntity.getLinkedDim() == null) return;
         var targetWorld = server.getLevel(ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse(blockEntity.getLinkedDim())));
         if (targetWorld == null) return;
-
         var targetPos = blockEntity.getLinkedPos();
-        player.teleportTo(targetWorld, targetPos.getX() + 0.5, targetPos.getY() + 1, targetPos.getZ() + 0.5, player.getYRot(), player.getXRot());
+        targetWorld.getChunk(targetPos);
+
+        if (entity.isVehicle() && !entity.getPassengers().isEmpty()) {
+            entity.getControllingPassenger().teleportTo(targetWorld, targetPos.getX() + 0.5, targetPos.getY() + 1, targetPos.getZ() + 0.5, Set.of() , entity.getYRot(), entity.getXRot());
+            entity.teleportTo(targetWorld, targetPos.getX() + 0.5, targetPos.getY() + 1, targetPos.getZ() + 0.5, Set.of() , entity.getYRot(), entity.getXRot());
+        }
+        else {
+            entity.teleportTo(targetWorld, targetPos.getX() + 0.5, targetPos.getY() + 1, targetPos.getZ() + 0.5, Set.of() , entity.getYRot(), entity.getXRot());
+        }
+
         var pitch = targetWorld.random.nextFloat() + 0.1F;
-        targetWorld.playSound(null, player.getX(), player.getY() + 0.1, player.getZ(), SoundEvents.MUD_BREAK, SoundSource.PLAYERS, 1.0F, pitch);
+        targetWorld.playSound(null, entity.getX(), entity.getY() + 0.1, entity.getZ(), SoundEvents.MUD_BREAK, SoundSource.PLAYERS, 1.0F, pitch);
         var bounce = Math.sqrt(2 * 0.08 * fallDistance) * 0.85;
-        player.setDeltaMovement(player.getDeltaMovement().x, bounce, player.getDeltaMovement().z);
-        player.hurtMarked = true;
+        server.tell(new TickTask(server.getTickCount() + 1, () -> {
+            entity.setDeltaMovement(entity.getDeltaMovement().x, bounce, entity.getDeltaMovement().z);
+            entity.hurtMarked = true;
+            entity.hasImpulse = true;
+        }));
     }
 
     @Override

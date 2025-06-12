@@ -7,9 +7,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -47,7 +45,7 @@ public class ToiletLavaBlock extends AbstractToiletBlock {
 
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
-        if (!level.isClientSide && entity instanceof Player player && player.isShiftKeyDown() && isPlayerCentered(pos, player) && !state.getValue(LAVA)) {
+        if (!level.isClientSide && entity instanceof Player player && player.isShiftKeyDown() && isEntityCentered(pos, player) && !state.getValue(LAVA)) {
             if (player.hasEffect(PSEffects.FECAL_INCONTINENCE)) {
                 onPoop(level, player);
                 player.causeFoodExhaustion(0.05F);

@@ -20,5 +20,6 @@ public class PSItemModelProvider extends ItemModelProvider {
         basicItem(PSItems.SPALL.get());
         basicItem(PSItems.LAWRENCE_MUSIC_DISC.get());
         basicItem(PSItems.TOILET_LINKER.get());
+        basicItem(PSItems.URINE_BOTTLE.get());
     }
 }

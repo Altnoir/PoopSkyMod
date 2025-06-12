@@ -22,4 +22,6 @@ public class PFoods {
             .effect(new MobEffectInstance(MobEffects.BLINDNESS, 20, 0), 1.0F)
             .effect(new MobEffectInstance(MobEffects.DARKNESS, 60, 0), 1.0F)
             .build();
+
+    public static final FoodProperties URINE_BOTTLE = new FoodProperties.Builder().build();
 }

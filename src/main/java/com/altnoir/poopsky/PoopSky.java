@@ -3,6 +3,7 @@ package com.altnoir.poopsky;
 import com.altnoir.poopsky.block.PSBlockEntities;
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.block.ToiletBlocks;
+import com.altnoir.poopsky.block.p.CompooperBlock;
 import com.altnoir.poopsky.component.PSComponents;
 import com.altnoir.poopsky.effect.PSEffects;
 import com.altnoir.poopsky.entity.PSEntities;
@@ -12,7 +13,11 @@ import com.altnoir.poopsky.network.PSNetworking;
 import com.altnoir.poopsky.particle.PSParticles;
 import com.altnoir.poopsky.particle.PoopParticle;
 import com.altnoir.poopsky.sound.PSSoundEvents;
+import com.altnoir.poopsky.worldgen.foliage.PSFoliagePlacerTypes;
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -23,6 +28,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
@@ -44,6 +50,7 @@ public class PoopSky {
         PSBlockEntities.register(modEventBus);
         PSItems.register(modEventBus);
         PSEntities.register(modEventBus);
+        PSFoliagePlacerTypes.register(modEventBus);
 
         PSEffects.register(modEventBus);
         PSParticles.register(modEventBus);
@@ -75,12 +82,30 @@ public class PoopSky {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+            ItemBlockRenderTypes.setRenderLayer(PSBlocks.POOP_SAPLING.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(PSBlocks.POOP_EMPTY_LOG.get(), RenderType.cutout());
             EntityRenderers.register(PSEntities.TOILET_PLUG.get(), ToiletPlugRenderer::new);
+            CompooperBlock.bootStrap();
         }
 
         @SubscribeEvent
         public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
             event.registerSpriteSet(PSParticles.POOP_PARTICLE.get(), PoopParticle.Provider::new);
+        }
+
+        @SubscribeEvent
+        public static void onRegisterBlockColors(RegisterColorHandlersEvent.Block event) {
+            event.register((state, world, pos, tintIndex) -> {
+                if (tintIndex == 1) {
+                    if (state.getValue(CompooperBlock.LEVEL) == CompooperBlock.READY && state.getValue(CompooperBlock.LIQUID)) {
+                        return world != null && pos != null
+                                ? BiomeColors.getAverageWaterColor(world, pos)
+                                : 0x3F76E4;
+                    }
+                    return 0x47311A;
+                }
+                return -1;
+            }, PSBlocks.COMPOOPER.get());
         }
     }
 }

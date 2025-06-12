@@ -88,6 +88,10 @@ public class PSBlockStateProvider extends BlockStateProvider {
         simpleBlockItem(PSBlocks.POOP_BLOCK.get(), models().getExistingFile(modLoc("block/poop_block1")));
         simpleBlockItem(PSBlocks.POOP_PIECE.get(), models().getExistingFile(modLoc("block/poop_height2")));
 
+        blockWithItem(PSBlocks.POOP_LEAVES.get());
+        blockWithItem(PSBlocks.POOP_LEAVES_GOLD.get());
+        blockWithItem(PSBlocks.POOP_LEAVES_IRON.get());
+
         registerToilet(ToiletBlocks.OAK_TOILET.get(), Blocks.OAK_PLANKS);
         registerToilet(ToiletBlocks.SPRUCE_TOILET.get(), Blocks.SPRUCE_PLANKS);
         registerToilet(ToiletBlocks.BIRCH_TOILET.get(), Blocks.BIRCH_PLANKS);
@@ -205,5 +209,9 @@ public class PSBlockStateProvider extends BlockStateProvider {
         });
         itemModels().getBuilder(BuiltInRegistries.BLOCK.getKey(toilet).getPath())
                 .parent(baseModel);
+    }
+
+    private void blockWithItem(Block block) {
+        simpleBlockWithItem(block, cubeAll(block));
     }
 }

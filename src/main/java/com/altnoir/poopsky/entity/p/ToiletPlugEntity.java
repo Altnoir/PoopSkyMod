@@ -291,6 +291,11 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
     }
 
     @Override
+    public boolean isVehicle(){
+        return true;
+    }
+
+    @Override
     public void remove(Entity.RemovalReason reason) {
         if (!this.level().isClientSide && reason.shouldDestroy() && this.isLeashed()) {
             this.dropLeash(true, true);

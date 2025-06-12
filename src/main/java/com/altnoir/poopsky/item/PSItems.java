@@ -6,6 +6,7 @@ import com.altnoir.poopsky.component.PSComponents;
 import com.altnoir.poopsky.component.ToiletComponent;
 import com.altnoir.poopsky.sound.PSSoundEvents;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -29,6 +30,13 @@ public class PSItems {
             new ToiletLinkerItem(new Item.Properties()
                     .component(PSComponents.TOILET_COMPONENT, ToiletComponent.EMPTY)
                     .stacksTo(1)));
+    public static final DeferredItem<Item> URINE_BOTTLE = ITEMS.register("urine_bottle",
+            () -> new UrineBottleItem(new Item.Properties()
+                    .craftRemainder(Items.GLASS_BOTTLE)
+                    .food(PFoods.URINE_BOTTLE)
+                    .stacksTo(16)
+            )
+    );
 
     public static final DeferredItem<Item> LAWRENCE_MUSIC_DISC = ITEMS.register("music_disc_lawrence", () ->
             new Item(new Item.Properties().jukeboxPlayable(PSSoundEvents.LAWRENCE_KEY).rarity(Rarity.RARE).stacksTo(1)));
