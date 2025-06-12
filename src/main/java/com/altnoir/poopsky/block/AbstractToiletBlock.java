@@ -141,8 +141,8 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
 
         var targetPos = blockEntity.getLinkedPos();
         player.teleportTo(targetWorld, targetPos.getX() + 0.5, targetPos.getY() + 1, targetPos.getZ() + 0.5, player.getYRot(), player.getXRot());
-        var pitch = targetWorld.random.nextFloat() + 0.5F;
-        targetWorld.playSound(null, player.getX(), player.getY() + 0.1, player.getZ(), SoundEvents.PLAYER_TELEPORT, SoundSource.PLAYERS, 1.0F, pitch);
+        var pitch = targetWorld.random.nextFloat() + 0.1F;
+        targetWorld.playSound(null, player.getX(), player.getY() + 0.1, player.getZ(), SoundEvents.MUD_BREAK, SoundSource.PLAYERS, 1.0F, pitch);
         var bounce = Math.sqrt(2 * 0.08 * fallDistance) * 0.85;
         player.setDeltaMovement(player.getDeltaMovement().x, bounce, player.getDeltaMovement().z);
         player.hurtMarked = true;
