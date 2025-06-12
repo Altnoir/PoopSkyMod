@@ -50,6 +50,7 @@ public class PSBlocks {
 
     public static final DeferredBlock<Block> COMPOOPER = registerBlock("compooper",
             () -> new CompooperBlock(BlockBehaviour.Properties.of()
+                    .randomTicks()
                     .mapColor(MapColor.COLOR_BROWN)
                     .instrument(NoteBlockInstrument.BASS)
                     .requiresCorrectToolForDrops()

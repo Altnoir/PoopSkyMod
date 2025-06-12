@@ -27,7 +27,9 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class PSBlockLootTableProvider extends BlockLootSubProvider {
     protected PSBlockLootTableProvider(HolderLookup.Provider registries) {
@@ -79,6 +81,11 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
 
     @Override
     protected Iterable<Block> getKnownBlocks() {
-        return PSBlocks.BLOCKS.getEntries().stream().map(Holder::value)::iterator;
+        return Stream.concat(
+                        PSBlocks.BLOCKS.getEntries().stream(),
+                        ToiletBlocks.BLOCKS.getEntries().stream()
+                )
+                .map(Holder::value)
+                .collect(Collectors.toList());
     }
 }
