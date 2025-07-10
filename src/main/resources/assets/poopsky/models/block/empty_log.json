@@ -1,5 +1,6 @@
 {
 	"credit": "Made with ALTNOIR",
+	"render_type": "minecraft:cutout",
 	"textures": {
 		"particle": "#0"
 	},

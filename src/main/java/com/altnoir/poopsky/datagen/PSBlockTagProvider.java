@@ -42,5 +42,10 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(PSBlocks.POOP_EMPTY_LOG.get())
                 .add(PSBlocks.STRIPPED_POOP_LOG.get())
                 .add(PSBlocks.STRIPPED_POOP_EMPTY_LOG.get());
+
+        tag(BlockTags.LEAVES)
+                .add(PSBlocks.POOP_LEAVES.get())
+                .add(PSBlocks.POOP_LEAVES_IRON.get())
+                .add(PSBlocks.POOP_LEAVES_GOLD.get());
     }
 }
