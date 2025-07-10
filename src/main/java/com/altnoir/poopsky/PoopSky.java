@@ -13,6 +13,7 @@ import com.altnoir.poopsky.network.PSNetworking;
 import com.altnoir.poopsky.particle.PSParticles;
 import com.altnoir.poopsky.particle.PoopParticle;
 import com.altnoir.poopsky.sound.PSSoundEvents;
+import com.altnoir.poopsky.villager.PSVillagers;
 import com.altnoir.poopsky.worldgen.foliage.PSFoliagePlacerTypes;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.BiomeColors;
@@ -59,6 +60,7 @@ public class PoopSky {
         PSSoundEvents.register(modEventBus);
 
         PSComponents.register(modEventBus);
+        PSVillagers.register(modEventBus);
 
         NeoForge.EVENT_BUS.register(this);
 
