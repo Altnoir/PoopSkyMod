@@ -333,7 +333,7 @@ public class CompooperBlock extends Block implements InventoryProvider {
 
                     if (!world.isInBuildLimit(pos.up())) return;
                     if (!isReplaceable(targetState)) {
-                        System.out.println(targetState.getBlock().getName().getString() + " False");
+                        //System.out.println(targetState.getBlock().getName().getString() + " False");
                         break;
                     }
 
