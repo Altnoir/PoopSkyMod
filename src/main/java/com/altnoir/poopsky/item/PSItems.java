@@ -20,8 +20,26 @@ public class PSItems {
             new PoopItem(new Item.Properties().food(PFoods.POOP).stacksTo(88)));
     public static final DeferredItem<Item> POOP_BALL = ITEMS.register("poop_ball", () ->
             new PoopBallItem(new Item.Properties().stacksTo(88)));
+
+    public static final DeferredItem<Item> POOP_BREAD = ITEMS.register("poop_bread", () ->
+            new Item(new Item.Properties().food(PFoods.POOP_BREAD).stacksTo(88)));
     public static final DeferredItem<Item> POOP_DUMPLINGS = ITEMS.register("poop_dumplings", () ->
             new Item(new Item.Properties().food(PFoods.POOP_DUMPLINGS).stacksTo(88)));
+    public static final DeferredItem<Item> POOP_SOUP = ITEMS.register("poop_soup", () ->
+            new Item(new Item.Properties().food(PFoods.POOP_SOUP).stacksTo(88)));
+    public static final DeferredItem<Item> POOP_VEGETABLE_STICKS = ITEMS.register("poop_vegetable_sticks", () ->
+            new Item(new Item.Properties().food(PFoods.POOP_VEGETABLE_STICKS).stacksTo(88)));
+    public static final DeferredItem<Item> POOBURGER_MEAT = ITEMS.register("pooburger_meat", () ->
+            new Item(new Item.Properties().food(PFoods.POOBURGER_MEAT).stacksTo(88)));
+    public static final DeferredItem<Item> POOBURGER = ITEMS.register("pooburger", () ->
+            new Item(new Item.Properties().food(PFoods.POOBURGER).stacksTo(88)));
+    public static final DeferredItem<Item> POOP_PASTA = ITEMS.register("poop_pasta", () ->
+            new Item(new Item.Properties().food(PFoods.POOP_PASTA).stacksTo(88)));
+    public static final DeferredItem<Item> POODDING = ITEMS.register("poodding", () ->
+            new Item(new Item.Properties().food(PFoods.POODDING).stacksTo(88)));
+    public static final DeferredItem<Item> DRAGON_BREATH_CHILI = ITEMS.register("dragon_breath_chili", () ->
+            new Item(new Item.Properties().food(PFoods.DRAGON_BREATH_CHILI).stacksTo(88)));
+
     public static final DeferredItem<Item> TOILET_PLUG = ITEMS.register("toilet_plug", () ->
             new ToiletPlugItem(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<Item> SPALL = ITEMS.register("spall", () ->

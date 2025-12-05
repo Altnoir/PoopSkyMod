@@ -7,6 +7,7 @@ import com.altnoir.poopsky.tag.PSBlockTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -21,6 +22,9 @@ public class PSBlockTagProvider extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
+        tag(PSBlockTags.POOP_BLOCKS)
+                .add(POOP_BLOCKS);
+
         tag(BlockTags.MOSS_REPLACEABLE)
                 .add(PSBlocks.POOP_BLOCK.get());
 
@@ -29,6 +33,22 @@ public class PSBlockTagProvider extends BlockTagsProvider {
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(PSBlocks.COMPOOPER.get());
+
+        tag(BlockTags.MINEABLE_WITH_HOE)
+                .add(PSBlocks.POOP_BLOCK.get());
+
+        tag(BlockTags.DIRT)
+                .add(PSBlocks.POOP_BLOCK.get());
+        tag(BlockTags.MUSHROOM_GROW_BLOCK)
+                .add(PSBlocks.POOP_BLOCK.get())
+                .add(PSBlocks.POOP_LOG.get())
+                .add(PSBlocks.POOP_EMPTY_LOG.get())
+                .add(PSBlocks.STRIPPED_POOP_LOG.get())
+                .add(PSBlocks.STRIPPED_POOP_EMPTY_LOG.get());
+        tag(BlockTags.FLOWERS)
+                .addTag(PSBlockTags.TOILET_BLOCKS)
+                .add(PSBlocks.POOP_LEAVES.get())
+                .addTag(PSBlockTags.POOP_BLOCKS);
 
         ToiletBlocks.BLOCKS.getEntries().stream()
                 .map(DeferredHolder::get)
@@ -47,5 +67,16 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(PSBlocks.POOP_LEAVES.get())
                 .add(PSBlocks.POOP_LEAVES_IRON.get())
                 .add(PSBlocks.POOP_LEAVES_GOLD.get());
+
+
     }
+
+    public static final Block[] POOP_BLOCKS = {
+            PSBlocks.POOP_SAPLING.get(),
+            PSBlocks.POOP_LEAVES.get(),
+            PSBlocks.POOP_LEAVES_IRON.get(),
+            PSBlocks.POOP_LEAVES_GOLD.get(),
+            PSBlocks.POOP_PIECE.get(),
+            PSBlocks.POOP_BLOCK.get()
+    };
 }

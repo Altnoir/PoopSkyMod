@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:simple_block",
+  "config": {
+    "to_place": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "poopsky:poop_sapling",
+            "Properties": {
+              "stage": "0"
+            }
+          },
+          "weight": 25
+        },
+        {
+          "data": {
+            "Name": "poopsky:poop_piece",
+            "Properties": {
+              "layers": "1"
+            }
+          },
+          "weight": 60
+        },
+        {
+          "data": {
+            "Name": "minecraft:bamboo_sapling"
+          },
+          "weight": 15
+        }
+      ]
+    }
+  }
+}

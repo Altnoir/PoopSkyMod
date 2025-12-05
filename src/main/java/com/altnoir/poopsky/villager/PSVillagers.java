@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.villager;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.ToiletBlocks;
+import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.sound.PSSoundEvents;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.core.Holder;
@@ -24,40 +24,7 @@ public class PSVillagers {
     public static final ResourceKey<PoiType> TOILET_POI_KEY = registryPoiKey("toilet");
 
     public static final Holder<PoiType> TOILET_POI = registryPoi("toilet",
-            ToiletBlocks.OAK_TOILET::get,
-            ToiletBlocks.SPRUCE_TOILET::get,
-            ToiletBlocks.BIRCH_TOILET::get,
-            ToiletBlocks.JUNGLE_TOILET::get,
-            ToiletBlocks.ACACIA_TOILET::get,
-            ToiletBlocks.CHERRY_TOILET::get,
-            ToiletBlocks.DARK_OAK_TOILET::get,
-            ToiletBlocks.MANGROVE_TOILET::get,
-            ToiletBlocks.BAMBOO_TOILET::get,
-            ToiletBlocks.CRIMSON_TOILET::get,
-            ToiletBlocks.WARPED_TOILET::get,
-            ToiletBlocks.STONE_TOILET::get,
-            ToiletBlocks.COBBLESTONE_TOILET::get,
-            ToiletBlocks.MOSSY_COBBLESTONE_TOILET::get,
-            ToiletBlocks.SMOOTH_STONE_TOILET::get,
-            ToiletBlocks.STONE_BRICK_TOILET::get,
-            ToiletBlocks.MOSSY_STONE_BRICK_TOILET::get,
-            ToiletBlocks.WHITE_CONCRETE_TOILET::get,
-            ToiletBlocks.LIGHT_GRAY_CONCRETE_TOILET::get,
-            ToiletBlocks.GRAY_CONCRETE_TOILET::get,
-            ToiletBlocks.BLACK_CONCRETE_TOILET::get,
-            ToiletBlocks.BROWN_CONCRETE_TOILET::get,
-            ToiletBlocks.RED_CONCRETE_TOILET::get,
-            ToiletBlocks.ORANGE_CONCRETE_TOILET::get,
-            ToiletBlocks.YELLOW_CONCRETE_TOILET::get,
-            ToiletBlocks.LIME_CONCRETE_TOILET::get,
-            ToiletBlocks.GREEN_CONCRETE_TOILET::get,
-            ToiletBlocks.CYAN_CONCRETE_TOILET::get,
-            ToiletBlocks.LIGHT_BLUE_CONCRETE_TOILET::get,
-            ToiletBlocks.BLUE_CONCRETE_TOILET::get,
-            ToiletBlocks.PURPLE_CONCRETE_TOILET::get,
-            ToiletBlocks.MAGENTA_CONCRETE_TOILET::get,
-            ToiletBlocks.PINK_CONCRETE_TOILET::get,
-            ToiletBlocks.RAINBOW_TOILET::get
+            PSBlocks.COMPOOPER::get
     );
 
     public static final Holder<VillagerProfession> POOP_MAKER = VILLAGER_PROFESSIONS.register("poopmaker", () ->

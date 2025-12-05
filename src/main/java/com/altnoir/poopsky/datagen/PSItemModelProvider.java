@@ -15,7 +15,15 @@ public class PSItemModelProvider extends ItemModelProvider {
     protected void registerModels() {
         basicItem(PSItems.POOP.get());
         basicItem(PSItems.POOP_BALL.get());
+        basicItem(PSItems.POOP_BREAD.get());
         basicItem(PSItems.POOP_DUMPLINGS.get());
+        basicItem(PSItems.POOP_SOUP.get());
+        basicItem(PSItems.POOP_VEGETABLE_STICKS.get());
+        basicItem(PSItems.POOBURGER_MEAT.get());
+        basicItem(PSItems.POOBURGER.get());
+        basicItem(PSItems.POOP_PASTA.get());
+        basicItem(PSItems.POODDING.get());
+        basicItem(PSItems.DRAGON_BREATH_CHILI.get());
         basicItem(PSItems.TOILET_PLUG.get());
         basicItem(PSItems.SPALL.get());
         basicItem(PSItems.LAWRENCE_MUSIC_DISC.get());

@@ -27,6 +27,7 @@ public class PSBlocks {
             () -> new PoopBlock(BlockBehaviour.Properties.of()
                     .strength(POOP)
                     .mapColor(MapColor.COLOR_BROWN)
+                    .speedFactor(0.4F)
                     .isValidSpawn(Blocks::always)
                     .instrument(NoteBlockInstrument.COW_BELL)
                     .sound(SoundType.MUD)));
