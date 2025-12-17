@@ -25,15 +25,13 @@ public class ToiletLavaBlock extends AbstractToiletBlock {
 
     public ToiletLavaBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.defaultBlockState()
-                        .setValue(FACING, Direction.NORTH)
-                        .setValue(LAVA, false));
+        this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH)
+                .setValue(LAVA, false));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        super.createBlockStateDefinition(builder);
-        builder.add(LAVA);
+        builder.add(FACING, FORWARD, BACKWARD, LAVA);
     }
 
     @Override

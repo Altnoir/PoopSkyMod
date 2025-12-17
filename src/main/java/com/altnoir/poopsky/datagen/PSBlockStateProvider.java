@@ -30,6 +30,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
     public static final String THE_TEXTURE = "#texture";
     public static final String THE_SIDE = "#side";
     public static final String THE_UP = "#up";
+
     public PSBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
         super(output, PoopSky.MOD_ID, exFileHelper);
     }
@@ -47,7 +48,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
                 .allFaces((face, faceBuilder) -> faceBuilder.texture(THE_SIDE).uvs(0, 0, 16, 16))
                 .face(Direction.UP).texture(THE_UP).end();
 
-        for(int layers = 1; layers < 8; layers++) {
+        for (int layers = 1; layers < 8; layers++) {
             int height = layers * 2;
             int uvHeight = 16 - (layers * 2);
             String modelName = "poop_height" + height;
@@ -132,7 +133,6 @@ public class PSBlockStateProvider extends BlockStateProvider {
 
     private void registerToilet(Block toilet, Block textureBlock) {
         var texture = BuiltInRegistries.BLOCK.getKey(textureBlock);
-        if (texture == null) throw new IllegalArgumentException("textureBlock not registered yet!");
 
         var textureRL = ResourceLocation.fromNamespaceAndPath(texture.getNamespace(), "block/" + texture.getPath());
 
@@ -164,7 +164,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
             ModelFile chosenModel;
             if (!forward && !backward) chosenModel = baseModel;
             else if (forward && !backward) chosenModel = modelN;
-            else if (!forward && backward) chosenModel = modelS;
+            else if (!forward) chosenModel = modelS;
             else chosenModel = modelNS;
 
             return ConfiguredModel.builder()
@@ -183,18 +183,40 @@ public class PSBlockStateProvider extends BlockStateProvider {
         var baseTexture = texture instanceof Block ?
                 mcLoc("block/" + texturePath) : modLoc("block/" + texturePath);
 
+        // Base models
         var baseModel = models().withExistingParent(
                 BuiltInRegistries.BLOCK.getKey(toilet).toString(),
                 modLoc("block/toilet")).texture("toilet", baseTexture);
+        var modelN = models().withExistingParent(
+                BuiltInRegistries.BLOCK.getKey(toilet) + "_n",
+                modLoc("block/toilet_n")).texture("toilet", baseTexture);
+        var modelS = models().withExistingParent(
+                BuiltInRegistries.BLOCK.getKey(toilet) + "_s",
+                modLoc("block/toilet_s")).texture("toilet", baseTexture);
+        var modelNS = models().withExistingParent(
+                BuiltInRegistries.BLOCK.getKey(toilet) + "_ns",
+                modLoc("block/toilet_ns")).texture("toilet", baseTexture);
+
+        // Lava models
         var modelLava = models().withExistingParent(
                 BuiltInRegistries.BLOCK.getKey(toilet) + "_lava",
                 modLoc("block/toilet_lava")).texture("toilet", baseTexture);
-
+        var modelLavaN = models().withExistingParent(
+                BuiltInRegistries.BLOCK.getKey(toilet) + "_lava_n",
+                modLoc("block/toilet_lava_n")).texture("toilet", baseTexture);
+        var modelLavaS = models().withExistingParent(
+                BuiltInRegistries.BLOCK.getKey(toilet) + "_lava_s",
+                modLoc("block/toilet_lava_s")).texture("toilet", baseTexture);
+        var modelLavaNS = models().withExistingParent(
+                BuiltInRegistries.BLOCK.getKey(toilet) + "_lava_ns",
+                modLoc("block/toilet_lava_ns")).texture("toilet", baseTexture);
 
         getVariantBuilder(toilet).forAllStates(state -> {
             var lava = state.getValue(ToiletLavaBlock.LAVA);
             var facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
-            var chosenModel = lava ? modelLava : baseModel;
+            boolean forward = state.getValue(ToiletBlock.FORWARD);
+            var backward = state.getValue(ToiletBlock.BACKWARD);
+
             var yRot = switch (facing) {
                 case EAST -> 90;
                 case SOUTH -> 180;
@@ -202,11 +224,25 @@ public class PSBlockStateProvider extends BlockStateProvider {
                 default -> 0;
             };
 
+            ModelFile chosenModel;
+            if (!lava) {
+                if (!forward && !backward) chosenModel = baseModel;
+                else if (forward && !backward) chosenModel = modelN;
+                else if (!forward) chosenModel = modelS;
+                else chosenModel = modelNS;
+            } else {
+                if (!forward && !backward) chosenModel = modelLava;
+                else if (forward && !backward) chosenModel = modelLavaN;
+                else if (!forward) chosenModel = modelLavaS;
+                else chosenModel = modelLavaNS;
+            }
+
             return ConfiguredModel.builder()
                     .modelFile(chosenModel)
                     .rotationY(yRot)
                     .build();
         });
+
         itemModels().getBuilder(BuiltInRegistries.BLOCK.getKey(toilet).getPath())
                 .parent(baseModel);
     }

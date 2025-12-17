@@ -3,7 +3,6 @@ package com.altnoir.poopsky.block;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.p.*;
 import com.altnoir.poopsky.item.PSItems;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
@@ -56,6 +55,9 @@ public class PSBlocks {
                     .strength(0.6F)
                     .sound(SoundType.METAL)
             )
+    );
+    public static final DeferredBlock<Block> WATER_COMPOOPER = registerBlock("water_compooper",
+            () -> new CompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()))
     );
 
     public static final DeferredBlock<Block> POOP_LOG = registerBlock("poop_log",
@@ -161,9 +163,11 @@ public class PSBlocks {
         registerBlockItem(name, toReturn);
         return toReturn;
     }
+
     private static <T extends Block> void registerBlockItem(String name, DeferredBlock<T> block) {
         PSItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().stacksTo(88)));
     }
+
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
     }

@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.block.p;
 
+import com.altnoir.poopsky.block.AbstractCompooperBlock;
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.item.PSItems;
 import com.mojang.serialization.MapCodec;
@@ -46,11 +47,9 @@ import org.joml.Vector3f;
 
 import javax.annotation.Nullable;
 
-public class CompooperBlock extends Block implements WorldlyContainerHolder {
+public class CompooperBlock extends AbstractCompooperBlock implements WorldlyContainerHolder {
     public static final MapCodec<CompooperBlock> CODEC = simpleCodec(CompooperBlock::new);
     public static final int READY = 4;
-    public static final int MIN_LEVEL = 0;
-    public static final int MAX_LEVEL = 3;
     public static final IntegerProperty LEVEL = IntegerProperty.create("level", MIN_LEVEL, READY);
     public static final BooleanProperty LIQUID = BooleanProperty.create("liquid");
     public static final BooleanProperty POWERED = BooleanProperty.create("powered");
@@ -64,13 +63,12 @@ public class CompooperBlock extends Block implements WorldlyContainerHolder {
         shapes[READY] = shapes[MAX_LEVEL];
     });
 
-
     @Override
     public MapCodec<CompooperBlock> codec() {
         return CODEC;
     }
 
-    public static final Item[] SAPLINGS = new Item[] {
+    public static final Item[] SAPLINGS = new Item[]{
             Items.OAK_SAPLING,
             Items.SPRUCE_SAPLING,
             Items.BIRCH_SAPLING,
@@ -156,7 +154,7 @@ public class CompooperBlock extends Block implements WorldlyContainerHolder {
                 if (stack.getItem() == Items.WATER_BUCKET) {
                     return waterBucketUse(level, pos, player, hand);
                 }
-                if (stack.getItem() == PSItems.URINE_BOTTLE.get() && ( hasLiquid || i == MIN_LEVEL)) {
+                if (stack.getItem() == PSItems.URINE_BOTTLE.get() && (hasLiquid || i == MIN_LEVEL)) {
                     return liquidItemUse(i, state, level, pos, player, hand);
                 }
                 if (!hasLiquid && getValue(stack) > 0) {
@@ -238,8 +236,7 @@ public class CompooperBlock extends Block implements WorldlyContainerHolder {
         if (i == READY) {
             if (!state.getValue(LIQUID)) {
                 extractProduce(player, state, level, pos);
-            }
-            else {
+            } else {
                 var stack = player.getItemInHand(InteractionHand.MAIN_HAND);
                 if (stack.getItem() == Items.BUCKET) {
                     if (!player.isCreative()) stack.shrink(1);
@@ -293,7 +290,7 @@ public class CompooperBlock extends Block implements WorldlyContainerHolder {
     protected static BlockState addItem(@Nullable Entity entity, BlockState state, LevelAccessor level, BlockPos pos, ItemStack stack) {
         int i = state.getValue(LEVEL);
         var f = getValue(stack);
-        if ((i != MIN_LEVEL || !(f > 0.0F)) && !(level.getRandom().nextDouble() < (double)f)) {
+        if ((i != MIN_LEVEL || !(f > 0.0F)) && !(level.getRandom().nextDouble() < (double) f)) {
             return state;
         } else {
             var j = i + 1;
@@ -407,7 +404,7 @@ public class CompooperBlock extends Block implements WorldlyContainerHolder {
             }
         }
 
-        if (fromPos.equals(pos.below()) && state.getValue(LEVEL) == MAX_LEVEL && hasFire((ServerLevel)level, pos)) {
+        if (fromPos.equals(pos.below()) && state.getValue(LEVEL) == MAX_LEVEL && hasFire((ServerLevel) level, pos)) {
             level.scheduleTick(pos, this, 20);
         }
 

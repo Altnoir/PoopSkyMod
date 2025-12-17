@@ -25,26 +25,36 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
 
 public abstract class AbstractToiletBlock extends Block implements EntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+    public static final BooleanProperty FORWARD = BooleanProperty.create("forward");
+    public static final BooleanProperty BACKWARD = BooleanProperty.create("backward");
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
 
     public AbstractToiletBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH));
+        this.registerDefaultState(
+                this.defaultBlockState()
+                        .setValue(FACING, Direction.NORTH)
+                        .setValue(FORWARD, false)
+                        .setValue(BACKWARD, false)
+        );
     }
 
     @Override
@@ -173,14 +183,26 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
+        builder.add(FACING, FORWARD, BACKWARD);
     }
 
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        var level = ctx.getLevel();
+        var pos = ctx.getClickedPos();
         Direction facing = ctx.getHorizontalDirection().getOpposite();
-        return this.defaultBlockState().setValue(FACING, facing);
+
+        var forwardPos = pos.relative(facing);
+        var forwardConnected = isValidNeighbor(level, forwardPos, facing);
+
+        var backwardPos = pos.relative(facing.getOpposite());
+        var backwardConnected = isValidNeighbor(level, backwardPos, facing);
+
+        return this.defaultBlockState()
+                .setValue(FACING, facing)
+                .setValue(FORWARD, forwardConnected)
+                .setValue(BACKWARD, backwardConnected);
     }
 
     @Override
@@ -205,7 +227,7 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
     }
 
     @Override
-    public RenderShape getRenderShape(BlockState state) {
+    public @NotNull RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }
 
@@ -222,8 +244,11 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
     @Override
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean moved) {
         super.onPlace(state, level, pos, oldState, moved);
-        if (!level.isClientSide && hasHot((ServerLevel) level, pos)) {
-            level.scheduleTick(pos, this, 1);
+        if (!level.isClientSide) {
+            level.neighborChanged(pos, this, pos);
+            if (hasHot((ServerLevel) level, pos)) {
+                level.scheduleTick(pos, this, 1);
+            }
         }
     }
 
@@ -232,11 +257,24 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
         if (!level.isClientSide && neighborPos.equals(pos.above()) && hasHot((ServerLevel) level, pos)) {
             level.scheduleTick(pos, this, 1);
         }
+        var facing = state.getValue(FACING);
+        var forwardPos = pos.relative(facing);
+        var backwardPos = pos.relative(facing.getOpposite());
+
+        var forwardConnected = isValidNeighbor(level, forwardPos, facing);
+        var backwardConnected = isValidNeighbor(level, backwardPos, facing);
+
+        level.setBlock(pos, state.setValue(FORWARD, forwardConnected).setValue(BACKWARD, backwardConnected), 3);
     }
 
     private boolean hasHot(ServerLevel level, BlockPos pos) {
         var above = pos.above();
         if (!level.isInWorldBounds(above)) return false;
         return level.getBlockState(above).is(Blocks.FIRE);
+    }
+
+    private boolean isValidNeighbor(LevelReader level, BlockPos pos, Direction facing) {
+        var neighbor = level.getBlockState(pos);
+        return neighbor.getBlock() instanceof AbstractToiletBlock && neighbor.getValue(FACING) == facing;
     }
 }
