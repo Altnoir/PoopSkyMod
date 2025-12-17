@@ -24,7 +24,7 @@ public class PSVillagers {
     public static final ResourceKey<PoiType> TOILET_POI_KEY = registryPoiKey("toilet");
 
     public static final Holder<PoiType> TOILET_POI = registryPoi("toilet",
-            PSBlocks.COMPOOPER::get
+            PSBlocks.COMPOOPER
     );
 
     public static final Holder<VillagerProfession> POOP_MAKER = VILLAGER_PROFESSIONS.register("poopmaker", () ->
@@ -37,6 +37,7 @@ public class PSVillagers {
         VILLAGER_PROFESSIONS.register(eventBus);
     }
 
+    @SafeVarargs
     private static Holder<PoiType> registryPoi(String name, Supplier<Block>... blockSuppliers) {
         return POI_TYPES.register(name, () -> {
             ImmutableSet.Builder<BlockState> states = ImmutableSet.builder();

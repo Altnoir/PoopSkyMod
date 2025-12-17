@@ -21,6 +21,7 @@ import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -35,7 +36,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.Set;
 
 public abstract class AbstractToiletBlock extends Block implements EntityBlock {
@@ -67,14 +67,14 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
                 living.causeFallDamage(fallDistance, damageMultiplier, level.damageSources().fall());
             }
             if (entity instanceof FallingBlockEntity falling &&
-                            falling.getBlockState().is(Blocks.ANVIL) |
+                    falling.getBlockState().is(Blocks.ANVIL) |
                             falling.getBlockState().is(Blocks.CHIPPED_ANVIL) |
                             falling.getBlockState().is(Blocks.DAMAGED_ANVIL)) {
                 poopAnvil(level, entity);
             }
 
             if (fallDistance >= 1.0f && isEntityCentered(pos, entity)) {
-                var be = (ToiletBlockEntity)level.getBlockEntity(pos);
+                var be = (ToiletBlockEntity) level.getBlockEntity(pos);
                 if (be == null) return;
                 teleportEntity(level, entity, be, fallDistance);
             }
@@ -112,12 +112,25 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
     }
 
     protected void onPoop(Level level, Player player) {
-        var poop = new ItemEntity(
-                level,
-                player.getX(), player.getY() + 0.1, player.getZ(),
-                new ItemStack(PSItems.POOP.get())
-        );
-        poop.setDefaultPickUpDelay();
+        if (player.getFoodData().getFoodLevel() <= 0) {
+            player.hurt(level.damageSources().wither(), 1.0F);
+
+            var redStone = new ItemEntity(
+                    level,
+                    player.getX(), player.getY() + 0.1, player.getZ(),
+                    new ItemStack(Items.REDSTONE)
+            );
+            redStone.setDefaultPickUpDelay();
+            level.addFreshEntity(redStone);
+        } else {
+            var poop = new ItemEntity(
+                    level,
+                    player.getX(), player.getY() + 0.1, player.getZ(),
+                    new ItemStack(PSItems.POOP.get())
+            );
+            poop.setDefaultPickUpDelay();
+            level.addFreshEntity(poop);
+        }
         var pitch = level.random.nextFloat() + 0.5F;
         level.playSound(null, player.getX(), player.getY() + 0.1, player.getZ(), PSSoundEvents.FART.get(), SoundSource.PLAYERS, 1.0F, pitch);
         ((ServerLevel) level).sendParticles(
@@ -131,7 +144,6 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
                 0.0,
                 3.0
         );
-        level.addFreshEntity(poop);
     }
 
     public void teleportEntity(Level level, Entity entity, ToiletBlockEntity blockEntity, float fallDistance) {
@@ -143,11 +155,10 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
         targetWorld.getChunk(targetPos);
 
         if (entity.isVehicle() && !entity.getPassengers().isEmpty()) {
-            entity.getControllingPassenger().teleportTo(targetWorld, targetPos.getX() + 0.5, targetPos.getY() + 1, targetPos.getZ() + 0.5, Set.of() , entity.getYRot(), entity.getXRot());
-            entity.teleportTo(targetWorld, targetPos.getX() + 0.5, targetPos.getY() + 1, targetPos.getZ() + 0.5, Set.of() , entity.getYRot(), entity.getXRot());
-        }
-        else {
-            entity.teleportTo(targetWorld, targetPos.getX() + 0.5, targetPos.getY() + 1, targetPos.getZ() + 0.5, Set.of() , entity.getYRot(), entity.getXRot());
+            entity.getControllingPassenger().teleportTo(targetWorld, targetPos.getX() + 0.5, targetPos.getY() + 1, targetPos.getZ() + 0.5, Set.of(), entity.getYRot(), entity.getXRot());
+            entity.teleportTo(targetWorld, targetPos.getX() + 0.5, targetPos.getY() + 1, targetPos.getZ() + 0.5, Set.of(), entity.getYRot(), entity.getXRot());
+        } else {
+            entity.teleportTo(targetWorld, targetPos.getX() + 0.5, targetPos.getY() + 1, targetPos.getZ() + 0.5, Set.of(), entity.getYRot(), entity.getXRot());
         }
 
         var pitch = targetWorld.random.nextFloat() + 0.1F;
