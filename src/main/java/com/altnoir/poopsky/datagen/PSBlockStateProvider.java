@@ -132,8 +132,6 @@ public class PSBlockStateProvider extends BlockStateProvider {
                 .texture("still", modLoc("block/poop_liquid"))
                 .texture("flow", modLoc("block/poop_liquid"))
                 .renderType("translucent");
-        
-        simpleBlock(PSBlocks.POOP_LIQUID.get(), poopFluid);
 
         // 添加流体方块状态定义
         var fluidBuilder = getVariantBuilder(PSBlocks.POOP_LIQUID.get()).partialState();

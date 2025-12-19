@@ -1,12 +1,7 @@
 {
   "variants": {
-    "": [
-      {
-        "model": "poopsky:block/poop_liquid"
-      },
-      {
-        "model": "poopsky:block/poop_liquid"
-      }
-    ]
+    "": {
+      "model": "poopsky:block/poop_liquid"
+    }
   }
 }
