@@ -4,7 +4,9 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.component.PFoods;
 import com.altnoir.poopsky.component.PSComponents;
 import com.altnoir.poopsky.component.ToiletComponent;
+import com.altnoir.poopsky.fluid.PSFluids;
 import com.altnoir.poopsky.sound.PSSoundEvents;
+import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
@@ -18,6 +20,8 @@ public class PSItems {
 
     public static final DeferredItem<Item> POOP = ITEMS.register("poop", () ->
             new PoopItem(new Item.Properties().food(PFoods.POOP).stacksTo(88)));
+    public static final DeferredItem<BucketItem> POOP_BUCKET = ITEMS.register("poop_bucket",
+            () -> new BucketItem(PSFluids.POOP.get(), new Item.Properties().stacksTo(1)));
     public static final DeferredItem<Item> POOP_BALL = ITEMS.register("poop_ball", () ->
             new PoopBallItem(new Item.Properties().stacksTo(88)));
 

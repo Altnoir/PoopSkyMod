@@ -7,6 +7,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,6 +18,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -94,6 +96,16 @@ public class PoopBlock extends Block implements BonemealableBlock {
             if (!level.isClientSide && level.random.nextInt(5) == 0) {
                 level.broadcastEntityEvent(entity, (byte) 53);
             }
+        }
+    }
+
+    @Override
+    protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        BlockPos blockPos = pos.below();
+        BlockState blockState = level.getBlockState(blockPos);
+        if (blockState.isCollisionShapeFullBlock(level, blockPos) && level.getBlockState(blockPos.below()).is(Blocks.POINTED_DRIPSTONE)) {
+            level.setBlockAndUpdate(pos, Blocks.DIRT.defaultBlockState());
+            level.playSound(null, pos, SoundEvents.ROOTED_DIRT_PLACE, SoundSource.BLOCKS, 0.5F, 1.0F);
         }
     }
 

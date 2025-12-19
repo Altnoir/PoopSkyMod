@@ -8,18 +8,14 @@ import com.altnoir.poopsky.block.p.ToiletBlock;
 import com.altnoir.poopsky.block.p.ToiletLavaBlock;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.AbstractBannerBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.Property;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
-import net.neoforged.neoforge.client.model.generators.MultiPartBlockStateBuilder;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 public class PSBlockStateProvider extends BlockStateProvider {
@@ -129,6 +125,19 @@ public class PSBlockStateProvider extends BlockStateProvider {
         registerToiletLava(ToiletBlocks.MAGENTA_CONCRETE_TOILET.get(), Blocks.MAGENTA_CONCRETE);
         registerToiletLava(ToiletBlocks.PINK_CONCRETE_TOILET.get(), Blocks.PINK_CONCRETE);
         registerToiletLava(ToiletBlocks.RAINBOW_TOILET.get(), "rainbow_concrete");
+
+        // 添加流体纹理定义
+        var poopFluid = models().withExistingParent("poop_liquid", mcLoc("block/block"))
+                .texture("particle", modLoc("block/poop_liquid"))
+                .texture("still", modLoc("block/poop_liquid"))
+                .texture("flow", modLoc("block/poop_liquid"))
+                .renderType("translucent");
+        
+        simpleBlock(PSBlocks.POOP_LIQUID.get(), poopFluid);
+
+        // 添加流体方块状态定义
+        var fluidBuilder = getVariantBuilder(PSBlocks.POOP_LIQUID.get()).partialState();
+        fluidBuilder.addModels(new ConfiguredModel(poopFluid));
     }
 
     private void registerToilet(Block toilet, Block textureBlock) {

@@ -8,6 +8,8 @@ import com.altnoir.poopsky.component.PSComponents;
 import com.altnoir.poopsky.effect.PSEffects;
 import com.altnoir.poopsky.entity.PSEntities;
 import com.altnoir.poopsky.entity.renderer.ToiletPlugRenderer;
+import com.altnoir.poopsky.fluid.PSFluidTypes;
+import com.altnoir.poopsky.fluid.PSFluids;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.network.PSNetworking;
 import com.altnoir.poopsky.particle.PSParticles;
@@ -61,6 +63,10 @@ public class PoopSky {
 
         PSComponents.register(modEventBus);
         PSVillagers.register(modEventBus);
+        
+        // 注册液体和液体类型
+        PSFluids.FLUIDS.register(modEventBus);
+        PSFluidTypes.FLUID_TYPES.register(modEventBus);
 
         NeoForge.EVENT_BUS.register(this);
 
@@ -86,6 +92,10 @@ public class PoopSky {
         public static void onClientSetup(FMLClientSetupEvent event) {
             ItemBlockRenderTypes.setRenderLayer(PSBlocks.POOP_SAPLING.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(PSBlocks.POOP_EMPTY_LOG.get(), RenderType.cutout());
+
+            ItemBlockRenderTypes.setRenderLayer(PSFluids.POOP.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(PSFluids.FLOWING_POOP.get(), RenderType.translucent());
+
             EntityRenderers.register(PSEntities.TOILET_PLUG.get(), ToiletPlugRenderer::new);
             CompooperBlock.bootStrap();
         }
@@ -108,6 +118,11 @@ public class PoopSky {
                 }
                 return -1;
             }, PSBlocks.COMPOOPER.get());
+        }
+        
+        @SubscribeEvent
+        public static void onRegisterFluidRenderTypes(net.neoforged.neoforge.client.event.RegisterRenderBuffersEvent event) {
+            event.registerRenderBuffer(RenderType.translucent());
         }
     }
 }

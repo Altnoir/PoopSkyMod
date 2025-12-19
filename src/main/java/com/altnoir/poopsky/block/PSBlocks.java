@@ -2,6 +2,7 @@ package com.altnoir.poopsky.block;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.p.*;
+import com.altnoir.poopsky.fluid.PSFluids;
 import com.altnoir.poopsky.item.PSItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -24,6 +25,7 @@ public class PSBlocks {
 
     public static final DeferredBlock<Block> POOP_BLOCK = registerBlock("poop_block",
             () -> new PoopBlock(BlockBehaviour.Properties.of()
+                    .randomTicks()
                     .strength(POOP)
                     .mapColor(MapColor.COLOR_BROWN)
                     .speedFactor(0.4F)
@@ -56,9 +58,9 @@ public class PSBlocks {
                     .sound(SoundType.METAL)
             )
     );
-    public static final DeferredBlock<Block> WATER_COMPOOPER = registerBlock("water_compooper",
-            () -> new CompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()))
-    );
+//    public static final DeferredBlock<Block> WATER_COMPOOPER = registerBlock("water_compooper",
+//            () -> new CompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()))
+//    );
 
     public static final DeferredBlock<Block> POOP_LOG = registerBlock("poop_log",
             () -> new RotatedPillarBlock(BlockBehaviour.Properties.of()
@@ -155,6 +157,24 @@ public class PSBlocks {
                     .sound(SoundType.MUD)
                     .offsetType(BlockBehaviour.OffsetType.XZ)
                     .pushReaction(PushReaction.DESTROY)
+            )
+    );
+
+    // 添加液体方块
+    public static final DeferredBlock<LiquidBlock> POOP_LIQUID = registerBlock("poop_liquid",
+            () -> new LiquidBlock(
+                    PSFluids.POOP.get(),
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.COLOR_BROWN)
+                            .replaceable()
+                            .noCollission()
+                            .randomTicks()
+                            .strength(100.0F)
+                            .lightLevel(p_50755_ -> 1)
+                            .pushReaction(PushReaction.DESTROY)
+                            .noLootTable()
+                            .liquid()
+                            .sound(SoundType.EMPTY)
             )
     );
 

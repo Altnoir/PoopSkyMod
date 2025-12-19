@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "flow": "poopsky:block/poop_liquid",
+    "particle": "poopsky:block/poop_liquid",
+    "still": "poopsky:block/poop_liquid"
+  }
+}

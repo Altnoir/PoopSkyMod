@@ -3,6 +3,7 @@ package com.altnoir.poopsky.datagen;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.item.PSItems;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
@@ -29,5 +30,10 @@ public class PSItemModelProvider extends ItemModelProvider {
         basicItem(PSItems.LAWRENCE_MUSIC_DISC.get());
         basicItem(PSItems.TOILET_LINKER.get());
         basicItem(PSItems.URINE_BOTTLE.get());
+        basicItem(PSItems.POOP_BUCKET.get());
+        
+        // 添加液体桶的模型
+        withExistingParent("poop_bucket", mcLoc("item/generated"))
+                .texture("layer0", modLoc("item/poop_bucket"));
     }
 }
