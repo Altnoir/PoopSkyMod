@@ -22,6 +22,7 @@ import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -33,9 +34,12 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
+import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 @Mod(PoopSky.MOD_ID)
@@ -123,6 +127,26 @@ public class PoopSky {
         @SubscribeEvent
         public static void onRegisterFluidRenderTypes(net.neoforged.neoforge.client.event.RegisterRenderBuffersEvent event) {
             event.registerRenderBuffer(RenderType.translucent());
+        }
+
+        @SubscribeEvent
+        public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
+            event.registerFluidType(new IClientFluidTypeExtensions() {
+                @Override
+                public @NotNull ResourceLocation getStillTexture() {
+                    return PSFluidTypes.POOP_STILL_TEXTURE;
+                }
+
+                @Override
+                public @NotNull ResourceLocation getFlowingTexture() {
+                    return PSFluidTypes.POOP_FLOWING_TEXTURE;
+                }
+
+                @Override
+                public ResourceLocation getOverlayTexture() {
+                    return PSFluidTypes.POOP_OVERLAY_TEXTURE;
+                }
+            }, PSFluidTypes.POOP_FLUID_TYPE.get());
         }
     }
 }
