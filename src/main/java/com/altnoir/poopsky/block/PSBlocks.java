@@ -160,7 +160,6 @@ public class PSBlocks {
             )
     );
 
-    // 添加液体方块
     public static final DeferredBlock<LiquidBlock> POOP_LIQUID = registerBlock("poop_liquid",
             () -> new LiquidBlock(
                     PSFluids.POOP.get(),
@@ -170,7 +169,7 @@ public class PSBlocks {
                             .noCollission()
                             .randomTicks()
                             .strength(100.0F)
-                            .lightLevel(p_50755_ -> 1)
+                            .lightLevel(state -> 7)
                             .pushReaction(PushReaction.DESTROY)
                             .noLootTable()
                             .liquid()

@@ -67,7 +67,7 @@ public class PoopSky {
 
         PSComponents.register(modEventBus);
         PSVillagers.register(modEventBus);
-        
+
         // 注册液体和液体类型
         PSFluids.FLUIDS.register(modEventBus);
         PSFluidTypes.FLUID_TYPES.register(modEventBus);
@@ -97,9 +97,6 @@ public class PoopSky {
             ItemBlockRenderTypes.setRenderLayer(PSBlocks.POOP_SAPLING.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(PSBlocks.POOP_EMPTY_LOG.get(), RenderType.cutout());
 
-            ItemBlockRenderTypes.setRenderLayer(PSFluids.POOP.get(), RenderType.translucent());
-            ItemBlockRenderTypes.setRenderLayer(PSFluids.FLOWING_POOP.get(), RenderType.translucent());
-
             EntityRenderers.register(PSEntities.TOILET_PLUG.get(), ToiletPlugRenderer::new);
             CompooperBlock.bootStrap();
         }
@@ -123,7 +120,7 @@ public class PoopSky {
                 return -1;
             }, PSBlocks.COMPOOPER.get());
         }
-        
+
         @SubscribeEvent
         public static void onRegisterFluidRenderTypes(net.neoforged.neoforge.client.event.RegisterRenderBuffersEvent event) {
             event.registerRenderBuffer(RenderType.translucent());
@@ -144,7 +141,7 @@ public class PoopSky {
 
                 @Override
                 public ResourceLocation getOverlayTexture() {
-                    return PSFluidTypes.POOP_OVERLAY_TEXTURE;
+                    return null;
                 }
             }, PSFluidTypes.POOP_FLUID_TYPE.get());
         }

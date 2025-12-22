@@ -28,6 +28,6 @@ public class PSFluidTypes {
                     .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY_LAVA)
                     .density(3000)
                     .viscosity(6000)
-                    .lightLevel(1)
+                    .lightLevel(7)
             ));
 }
