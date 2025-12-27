@@ -3,7 +3,10 @@ package com.altnoir.poopsky.event;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.block.ToiletBlocks;
+import com.altnoir.poopsky.entity.PSEntities;
 import com.altnoir.poopsky.entity.model.ToiletPlugModel;
+import com.altnoir.poopsky.entity.p.PooplimeEntity;
+import com.altnoir.poopsky.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.villager.PSVillagers;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -15,6 +18,7 @@ import net.minecraft.world.item.trading.MerchantOffer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 
 import java.util.List;
@@ -26,4 +30,9 @@ public class PSEventBusEvents {
     public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(ToiletPlugModel.LAYER_LOCATION, ToiletPlugModel::createBodyLayer);
     }
+
+//    @SubscribeEvent
+//    public static void registerAttributes(EntityAttributeCreationEvent event) {
+//        event.put(PSEntities.POOPLIME.get(), PooplimeEntity.createLivingAttributes().build());
+//    }
 }

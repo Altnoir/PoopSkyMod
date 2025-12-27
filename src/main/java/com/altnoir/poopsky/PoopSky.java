@@ -7,6 +7,7 @@ import com.altnoir.poopsky.block.p.CompooperBlock;
 import com.altnoir.poopsky.component.PSComponents;
 import com.altnoir.poopsky.effect.PSEffects;
 import com.altnoir.poopsky.entity.PSEntities;
+import com.altnoir.poopsky.entity.renderer.PooplimeRenderer;
 import com.altnoir.poopsky.entity.renderer.ToiletPlugRenderer;
 import com.altnoir.poopsky.fluid.PSFluidTypes;
 import com.altnoir.poopsky.fluid.PSFluids;
@@ -98,6 +99,7 @@ public class PoopSky {
             ItemBlockRenderTypes.setRenderLayer(PSBlocks.POOP_EMPTY_LOG.get(), RenderType.cutout());
 
             EntityRenderers.register(PSEntities.TOILET_PLUG.get(), ToiletPlugRenderer::new);
+            EntityRenderers.register(PSEntities.POOPLIME.get(), PooplimeRenderer::new);
             CompooperBlock.bootStrap();
         }
 

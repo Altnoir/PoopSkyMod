@@ -4,6 +4,7 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.component.PFoods;
 import com.altnoir.poopsky.component.PSComponents;
 import com.altnoir.poopsky.component.ToiletComponent;
+import com.altnoir.poopsky.entity.PSEntities;
 import com.altnoir.poopsky.fluid.PSFluids;
 import com.altnoir.poopsky.sound.PSSoundEvents;
 import net.minecraft.world.item.BucketItem;
@@ -11,6 +12,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -59,6 +61,10 @@ public class PSItems {
                     .stacksTo(16)
             )
     );
+
+    public static final DeferredItem<Item> POOPLIME_SPAWN_EGG = ITEMS.register("pooplime_spawn_egg",
+            () -> new DeferredSpawnEggItem(PSEntities.POOPLIME, 0x040404, 0x5E4228,
+                    new Item.Properties()));
 
     public static final DeferredItem<Item> LAWRENCE_MUSIC_DISC = ITEMS.register("music_disc_lawrence", () ->
             new Item(new Item.Properties().jukeboxPlayable(PSSoundEvents.LAWRENCE_KEY).rarity(Rarity.RARE).stacksTo(1)));

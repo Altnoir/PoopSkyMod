@@ -35,5 +35,7 @@ public class PSItemModelProvider extends ItemModelProvider {
         // 添加液体桶的模型
         withExistingParent("poop_bucket", mcLoc("item/generated"))
                 .texture("layer0", modLoc("item/poop_bucket"));
+
+        withExistingParent(PSItems.POOPLIME_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
     }
 }

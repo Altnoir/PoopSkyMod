@@ -90,7 +90,6 @@ public class PSGameEvents {
                     Optional.of(new ItemCost(Items.BREEZE_ROD, 8)),
                     new ItemStack(PSItems.TOILET_PLUG.get(), 1), 1, 100, 1.0f)
             );
-
         }
     }
 }

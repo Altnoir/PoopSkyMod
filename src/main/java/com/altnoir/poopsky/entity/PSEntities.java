@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.entity;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.entity.p.PooplimeEntity;
 import com.altnoir.poopsky.entity.p.ToiletPlugEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
@@ -17,7 +18,15 @@ public class PSEntities {
             EntityType.Builder.of(ToiletPlugEntity::new, MobCategory.MISC)
                     .fireImmune()
                     .clientTrackingRange(10)
-                    .sized(0.75F, 0.35F).build("toilet_plug"));
+                    .sized(0.75F, 0.35F)
+                    .build("toilet_plug"));
+
+    public static Supplier<EntityType<PooplimeEntity>> POOPLIME = ENTITY_TYPES.register("pooplime", () ->
+            EntityType.Builder.of(PooplimeEntity::new, MobCategory.MONSTER)
+                    .sized(0.52F, 0.52F)
+                    .eyeHeight(0.325F)
+                    .clientTrackingRange(10)
+                    .build("pooplime"));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);
