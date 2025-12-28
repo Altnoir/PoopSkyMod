@@ -31,8 +31,8 @@ public class PSEventBusEvents {
         event.registerLayerDefinition(ToiletPlugModel.LAYER_LOCATION, ToiletPlugModel::createBodyLayer);
     }
 
-//    @SubscribeEvent
-//    public static void registerAttributes(EntityAttributeCreationEvent event) {
-//        event.put(PSEntities.POOPLIME.get(), PooplimeEntity.createLivingAttributes().build());
-//    }
+    @SubscribeEvent
+    public static void registerAttributes(EntityAttributeCreationEvent event) {
+        event.put(PSEntities.POOPLIME.get(), PooplimeEntity.createAttributes().build());
+    }
 }
