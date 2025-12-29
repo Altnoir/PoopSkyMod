@@ -25,6 +25,7 @@ public class PSEntities {
             EntityType.Builder.of(PooplimeEntity::new, MobCategory.MONSTER)
                     .sized(0.52F, 0.52F)
                     .eyeHeight(0.325F)
+                    .spawnDimensionsScale(4.0F)
                     .clientTrackingRange(10)
                     .build("pooplime"));
 

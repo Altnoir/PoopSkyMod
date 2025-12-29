@@ -63,7 +63,7 @@ public class PSItems {
     );
 
     public static final DeferredItem<Item> POOPLIME_SPAWN_EGG = ITEMS.register("pooplime_spawn_egg",
-            () -> new DeferredSpawnEggItem(PSEntities.POOPLIME, 0x040404, 0x5E4228,
+            () -> new DeferredSpawnEggItem(PSEntities.POOPLIME, 0x7D5F36, 0x5E4228,
                     new Item.Properties()));
 
     public static final DeferredItem<Item> LAWRENCE_MUSIC_DISC = ITEMS.register("music_disc_lawrence", () ->

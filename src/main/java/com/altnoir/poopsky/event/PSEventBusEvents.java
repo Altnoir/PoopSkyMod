@@ -4,6 +4,8 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.entity.PSEntities;
 import com.altnoir.poopsky.entity.model.ToiletPlugModel;
 import com.altnoir.poopsky.entity.p.PooplimeEntity;
+import com.altnoir.poopsky.particle.PSParticles;
+import net.minecraft.core.particles.ParticleOptions;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;

@@ -17,6 +17,7 @@
   "tooltip.poopsky.poop_ball.info_1": "Villager Support",
   "tooltip.poopsky.poop_ball.info_2": "500KG Poop",
 
+  "item.poopsky.pooplime_spawn_egg": "Pooplime Spawn Egg",
   "item.poopsky.music_disc_lawrence": "Music Disc",
   "item.poopsky.music_disc_lawrence.desc": "Ryuichi Sakamoto - Merry Christmas Mr. Lawrence",
 
@@ -141,6 +142,7 @@
   "entity.minecraft.villager.poopsky.poopmaker": "Poopmaker",
   "entity.poopsky.toilet_plug": "Toilet Plug",
   "entity.poopsky.stool_entity": "Stool",
+  "entity.poopsky.pooplime": "Pooplime",
 
   "key.poopsky.category": "POOPSKY",
   "key.poopsky.use_plug": "Summon Toilet Plug",
