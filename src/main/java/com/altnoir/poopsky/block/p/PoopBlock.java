@@ -1,5 +1,7 @@
 package com.altnoir.poopsky.block.p;
 
+import com.altnoir.poopsky.entity.PSEntities;
+import com.altnoir.poopsky.entity.p.PooplimeEntity;
 import com.altnoir.poopsky.worldgen.PSConfigureFeatures;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -11,6 +13,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.entity.vehicle.Boat;
@@ -106,6 +109,29 @@ public class PoopBlock extends Block implements BonemealableBlock {
         if (blockState.isCollisionShapeFullBlock(level, blockPos) && level.getBlockState(blockPos.below()).is(Blocks.POINTED_DRIPSTONE)) {
             level.setBlockAndUpdate(pos, Blocks.DIRT.defaultBlockState());
             level.playSound(null, pos, SoundEvents.ROOTED_DIRT_PLACE, SoundSource.BLOCKS, 0.5F, 1.0F);
+        }
+        PooplimeEntity pooplime = PSEntities.POOPLIME.get().create(level);
+        int count = 0;
+        if (pooplime != null) {
+            count = level.getEntitiesOfClass(PooplimeEntity.class, pooplime.getBoundingBox().inflate(64.0D)).size();
+        }
+
+        if (count < 40 && random.nextInt(5) == 0) {
+            BlockPos spawnPos = pos.above();
+            if (level.isEmptyBlock(spawnPos)) {
+
+                if (pooplime != null) {
+
+                    int size = random.nextInt(4) + 1;
+                    pooplime.setSize(size, true);
+
+                    pooplime.moveTo(spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5, 0, 0);
+
+                    if (pooplime.checkSpawnRules(level, MobSpawnType.NATURAL) && level.noCollision(pooplime, pooplime.getBoundingBox())) {
+                        level.addFreshEntity(pooplime);
+                    }
+                }
+            }
         }
     }
 
