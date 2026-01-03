@@ -2,10 +2,8 @@ package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.block.ToiletBlocks;
-import com.altnoir.poopsky.block.p.PoopPiece;
+import com.altnoir.poopsky.block.p.PoopPieceBlock;
 import com.altnoir.poopsky.item.PSItems;
-import net.minecraft.advancements.critereon.EnchantmentPredicate;
-import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
@@ -24,7 +22,8 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
-import net.minecraft.world.level.storage.loot.predicates.*;
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -43,8 +42,8 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
     @Override
     protected void generate() {
         ToiletBlocks.BLOCKS.getEntries().stream()
-                        .map(DeferredHolder::get)
-                        .forEach(this::dropSelf);
+                .map(DeferredHolder::get)
+                .forEach(this::dropSelf);
 
         this.add(PSBlocks.POOP_LOG.get(), this::createSpallOreDrops);
         this.add(PSBlocks.STRIPPED_POOP_LOG.get(), this::createSpallOreDrops);
@@ -55,6 +54,7 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(PSBlocks.POOP_EMPTY_LOG.get());
         dropSelf(PSBlocks.STRIPPED_POOP_EMPTY_LOG.get());
         dropSelf(PSBlocks.POOP_BLOCK.get());
+        dropSelf(PSBlocks.POOPLIME_BLOCK.get());
         dropSelf(PSBlocks.COMPOOPER.get());
         add(PSBlocks.POOP_PIECE.get(), createPoopPieceDrop(PSBlocks.POOP_PIECE.get(), PSItems.POOP_BALL.get()));
     }
@@ -63,32 +63,32 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
         HolderLookup.RegistryLookup<Enchantment> registrylookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
 
         LootPoolEntryContainer.Builder<?> nonSilkTouch = AlternativesEntry.alternatives(
-            IntStream.rangeClosed(1, 8)
-                .mapToObj(i -> LootItem.lootTableItem(item)
-                    .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
-                        .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(PoopPiece.LAYERS, i)))
-                    .apply(SetItemCountFunction.setCount(ConstantValue.exactly(i)))
-                    .apply(ApplyBonusCount.addOreBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE)))
-                ).toArray(LootPoolEntryContainer.Builder[]::new)
+                IntStream.rangeClosed(1, 8)
+                        .mapToObj(i -> LootItem.lootTableItem(item)
+                                .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                                        .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(PoopPieceBlock.LAYERS, i)))
+                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(i)))
+                                .apply(ApplyBonusCount.addOreBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE)))
+                        ).toArray(LootPoolEntryContainer.Builder[]::new)
         ).when(LootItemRandomChanceCondition.randomChance(1.0F).invert());
 
         LootPoolEntryContainer.Builder<?> silkTouch = AlternativesEntry.alternatives(
-            IntStream.rangeClosed(1, 8)
-                .mapToObj(i -> {
-                    if (i == 8) {
-                        return LootItem.lootTableItem(PSBlocks.POOP_BLOCK.get());
-                    }
-                    return LootItem.lootTableItem(block)
-                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
-                            .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(PoopPiece.LAYERS, i)))
-                        .apply(SetItemCountFunction.setCount(ConstantValue.exactly(i)));
-                }).toArray(LootPoolEntryContainer.Builder[]::new)
+                IntStream.rangeClosed(1, 8)
+                        .mapToObj(i -> {
+                            if (i == 8) {
+                                return LootItem.lootTableItem(PSBlocks.POOP_BLOCK.get());
+                            }
+                            return LootItem.lootTableItem(block)
+                                    .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                                            .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(PoopPieceBlock.LAYERS, i)))
+                                    .apply(SetItemCountFunction.setCount(ConstantValue.exactly(i)));
+                        }).toArray(LootPoolEntryContainer.Builder[]::new)
         ).when(hasSilkTouch());
 
         return LootTable.lootTable()
-            .withPool(LootPool.lootPool()
-                .add(AlternativesEntry.alternatives(nonSilkTouch, silkTouch))
-            );
+                .withPool(LootPool.lootPool()
+                        .add(AlternativesEntry.alternatives(nonSilkTouch, silkTouch))
+                );
     }
 
     protected LootTable.Builder createSpallOreDrops(Block block) {
@@ -98,8 +98,8 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
                         LootItem.lootTableItem(PSItems.SPALL)
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(4.0F, 5.0F)))
                                 .apply(ApplyBonusCount.addUniformBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE)))
-                    )
-                );
+                )
+        );
     }
 
     protected LootTable.Builder createIronLeavesDrops(Block block) {
@@ -136,7 +136,7 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
     }
 
     @Override
-    protected Iterable<Block> getKnownBlocks() {
+    protected @NotNull Iterable<Block> getKnownBlocks() {
         return Stream.concat(
                         PSBlocks.BLOCKS.getEntries().stream(),
                         ToiletBlocks.BLOCKS.getEntries().stream()

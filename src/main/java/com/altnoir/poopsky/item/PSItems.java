@@ -4,7 +4,7 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.component.PFoods;
 import com.altnoir.poopsky.component.PSComponents;
 import com.altnoir.poopsky.component.ToiletComponent;
-import com.altnoir.poopsky.entity.PSEntities;
+import com.altnoir.poopsky.entity.PSEntityType;
 import com.altnoir.poopsky.fluid.PSFluids;
 import com.altnoir.poopsky.sound.PSSoundEvents;
 import net.minecraft.world.item.BucketItem;
@@ -63,7 +63,7 @@ public class PSItems {
     );
 
     public static final DeferredItem<Item> POOPLIME_SPAWN_EGG = ITEMS.register("pooplime_spawn_egg",
-            () -> new DeferredSpawnEggItem(PSEntities.POOPLIME, 0x7D5F36, 0x5E4228,
+            () -> new DeferredSpawnEggItem(PSEntityType.POOPLIME, 0x7D5F36, 0x5E4228,
                     new Item.Properties()));
 
     public static final DeferredItem<Item> LAWRENCE_MUSIC_DISC = ITEMS.register("music_disc_lawrence", () ->

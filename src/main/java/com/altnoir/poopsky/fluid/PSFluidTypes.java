@@ -15,7 +15,6 @@ public class PSFluidTypes {
 
     public static final ResourceLocation POOP_STILL_TEXTURE = ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, "block/poop_liquid");
     public static final ResourceLocation POOP_FLOWING_TEXTURE = ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, "block/poop_liquid_flowing");
-    public static final ResourceLocation POOP_OVERLAY_TEXTURE = ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, "block/poop_liquid");
 
     public static final Supplier<FluidType> POOP_FLUID_TYPE = FLUID_TYPES.register("poop", 
             () -> new FluidType(FluidType.Properties.create()
@@ -26,8 +25,7 @@ public class PSFluidTypes {
                     .supportsBoating(true)
                     .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL_LAVA)
                     .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY_LAVA)
-                    .density(3000)
-                    .viscosity(6000)
+                    .canHydrate(true)
                     .lightLevel(7)
             ));
 }

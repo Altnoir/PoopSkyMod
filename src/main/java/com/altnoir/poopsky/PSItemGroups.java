@@ -8,10 +8,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.Set;
 import java.util.function.Supplier;
 
 public class PSItemGroups {
@@ -26,8 +28,10 @@ public class PSItemGroups {
                         .filter(item -> !(item instanceof BlockItem))
                         .forEach(output::accept);
 
+                Set<Block> skip = Set.of(PSBlocks.POOP_LIQUID.get());
                 PSBlocks.BLOCKS.getEntries().stream()
                         .map(DeferredHolder::get)
+                        .filter(block -> !skip.contains(block))
                         .forEach(output::accept);
 
                 ToiletBlocks.BLOCKS.getEntries().stream()
@@ -35,6 +39,7 @@ public class PSItemGroups {
                         .forEach(output::accept);
             })
             .build());
+
     public static void register(IEventBus eventBus) {
         CREATIVE_MODE_TAB.register(eventBus);
     }

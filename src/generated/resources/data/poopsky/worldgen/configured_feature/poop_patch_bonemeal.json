@@ -10,9 +10,9 @@
         "Name": "poopsky:poop_block"
       }
     },
-    "replaceable": "#minecraft:moss_replaceable",
+    "replaceable": "#poopsky:poop_block",
     "surface": "floor",
-    "vegetation_chance": 0.6,
+    "vegetation_chance": 0.25,
     "vegetation_feature": {
       "feature": "poopsky:poop_vegetation",
       "placement": []

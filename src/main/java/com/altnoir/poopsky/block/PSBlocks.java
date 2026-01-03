@@ -34,7 +34,7 @@ public class PSBlocks {
                     .sound(SoundType.MUD)));
 
     public static final DeferredBlock<Block> POOP_PIECE = registerBlock("poop_piece",
-            () -> new PoopPiece(BlockBehaviour.Properties.of()
+            () -> new PoopPieceBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_BROWN)
                     .replaceable()
                     .forceSolidOff()
@@ -42,8 +42,17 @@ public class PSBlocks {
                     .strength(0.1F)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.MUD)
-                    .isViewBlocking((state, getter, pos) -> state.getValue(PoopPiece.LAYERS) >= 8)
+                    .isViewBlocking((state, getter, pos) -> state.getValue(PoopPieceBlock.LAYERS) >= 8)
                     .pushReaction(PushReaction.DESTROY)
+            )
+    );
+
+    public static final DeferredBlock<Block> POOPLIME_BLOCK = registerBlock("pooplime_block",
+            () -> new PooplimeBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .friction(0.8F)
+                    .sound(SoundType.SLIME_BLOCK)
+                    .noOcclusion()
             )
     );
 

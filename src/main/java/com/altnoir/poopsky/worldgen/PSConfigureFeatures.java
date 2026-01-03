@@ -2,6 +2,7 @@ package com.altnoir.poopsky.worldgen;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.PSBlocks;
+import com.altnoir.poopsky.tag.PSBlockTags;
 import com.altnoir.poopsky.worldgen.foliage.PoopMegaFoliagePlacer;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
@@ -9,7 +10,6 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -76,22 +76,21 @@ public class PSConfigureFeatures {
                 new SimpleBlockConfiguration(
                         new WeightedStateProvider(
                                 SimpleWeightedRandomList.<BlockState>builder()
-                                        .add(PSBlocks.POOP_SAPLING.get().defaultBlockState(), 25)
-                                        .add(PSBlocks.POOP_PIECE.get().defaultBlockState(), 60)
-                                        .add(Blocks.BAMBOO_SAPLING.defaultBlockState(), 15)
+                                        .add(PSBlocks.POOP_SAPLING.get().defaultBlockState(), 7)
+                                        .add(PSBlocks.POOP_PIECE.get().defaultBlockState(), 3)
                         )
                 )
         );
         register(context, POOP_PATCH_BONEMEAL, Feature.VEGETATION_PATCH,
                 new VegetationPatchConfiguration(
-                        BlockTags.MOSS_REPLACEABLE,
+                        PSBlockTags.POOP_BLOCK,
                         BlockStateProvider.simple(PSBlocks.POOP_BLOCK.get()),
                         PlacementUtils.inlinePlaced(holdergetter.getOrThrow(POOP_VEGETATION)),
                         CaveSurface.FLOOR,
                         ConstantInt.of(1),
                         0.0F,
                         5,
-                        0.6F,
+                        0.25F,
                         UniformInt.of(1, 2),
                         0.75F
                 )

@@ -24,9 +24,6 @@ import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
 
 public class PoopBall extends ThrowableItemProjectile {
-    public PoopBall(EntityType<PoopBall> entityType, Level level) {
-        super(entityType, level);
-    }
 
     public PoopBall(Level level, LivingEntity shooter) {
         super(EntityType.SNOWBALL, shooter, level);

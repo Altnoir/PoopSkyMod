@@ -11,7 +11,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
-public class PSEntities {
+public class PSEntityType {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(Registries.ENTITY_TYPE, PoopSky.MOD_ID);
 
     public static Supplier<EntityType<ToiletPlugEntity>> TOILET_PLUG = ENTITY_TYPES.register("toilet_plug", () ->

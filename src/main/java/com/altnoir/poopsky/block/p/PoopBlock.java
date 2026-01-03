@@ -1,8 +1,10 @@
 package com.altnoir.poopsky.block.p;
 
-import com.altnoir.poopsky.entity.PSEntities;
+import com.altnoir.poopsky.entity.PSEntityType;
 import com.altnoir.poopsky.entity.p.PooplimeEntity;
+import com.altnoir.poopsky.particle.PSParticles;
 import com.altnoir.poopsky.worldgen.PSConfigureFeatures;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
@@ -24,22 +26,39 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
 public class PoopBlock extends Block implements BonemealableBlock {
-    protected static final VoxelShape SHAPE = Block.box(1.0, 0.0, 1.0, 15.0, 15.0, 15.0);
+    public static final MapCodec<PoopBlock> CODEC = simpleCodec(PoopBlock::new);
+    protected static final VoxelShape SHAPE = Block.box(1.0, 0.0, 1.0, 15.0, 14.0, 15.0);
 
     public PoopBlock(Properties properties) {
         super(properties);
     }
 
+    @Override
+    protected MapCodec<? extends Block> codec() {
+        return CODEC;
+    }
 
     @Override
-    protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    protected @NotNull VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;
+    }
+
+    @Override
+    protected @NotNull VoxelShape getBlockSupportShape(BlockState state, BlockGetter reader, BlockPos pos) {
+        return Shapes.block();
+    }
+
+    @Override
+    protected @NotNull VoxelShape getVisualShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext context) {
+        return Shapes.block();
     }
 
     private static boolean doesEntityDoPoopBlockSlideEffects(Entity entity) {
@@ -97,7 +116,13 @@ public class PoopBlock extends Block implements BonemealableBlock {
             }
 
             if (!level.isClientSide && level.random.nextInt(5) == 0) {
-                level.broadcastEntityEvent(entity, (byte) 53);
+                ((ServerLevel) level).sendParticles(
+                        PSParticles.POOP_PARTICLE.get(),
+                        entity.getX(), entity.getY() + 0.1, entity.getZ(),
+                        8,
+                        0.0, -0.1, 0.0,
+                        3.0
+                );
             }
         }
     }
@@ -110,15 +135,15 @@ public class PoopBlock extends Block implements BonemealableBlock {
             level.setBlockAndUpdate(pos, Blocks.DIRT.defaultBlockState());
             level.playSound(null, pos, SoundEvents.ROOTED_DIRT_PLACE, SoundSource.BLOCKS, 0.5F, 1.0F);
         }
-        PooplimeEntity pooplime = PSEntities.POOPLIME.get().create(level);
+        PooplimeEntity pooplime = PSEntityType.POOPLIME.get().create(level);
         int count = 0;
         if (pooplime != null) {
             count = level.getEntitiesOfClass(PooplimeEntity.class, pooplime.getBoundingBox().inflate(64.0D)).size();
         }
 
-        if (count < 40 && random.nextInt(5) == 0) {
+        if (count < 40 && random.nextInt(10) == 0) {
             BlockPos spawnPos = pos.above();
-            if (level.isEmptyBlock(spawnPos)) {
+            if (level.isEmptyBlock(spawnPos) && checkRange(level, pos)) {
 
                 if (pooplime != null) {
 
@@ -133,6 +158,22 @@ public class PoopBlock extends Block implements BonemealableBlock {
                 }
             }
         }
+    }
+
+    private boolean checkRange(Level level, BlockPos centerPos) {
+        for (int x = -1; x <= 1; x++) {
+            for (int z = -1; z <= 1; z++) {
+                if (x == 0 && z == 0) continue;
+
+                BlockPos checkPos = centerPos.offset(x, 0, z);
+                BlockState checkState = level.getBlockState(checkPos);
+
+                if (!checkState.is(this)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     @Override
@@ -156,5 +197,15 @@ public class PoopBlock extends Block implements BonemealableBlock {
     @Override
     public BonemealableBlock.@NotNull Type getType() {
         return BonemealableBlock.Type.NEIGHBOR_SPREADER;
+    }
+
+    @Override
+    protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
+        return false;
+    }
+
+    @Override
+    protected float getShadeBrightness(BlockState state, BlockGetter level, BlockPos pos) {
+        return 0.2F;
     }
 }

@@ -50,9 +50,7 @@ import javax.annotation.Nullable;
 public class CompooperBlock extends AbstractCompooperBlock implements WorldlyContainerHolder {
     public static final MapCodec<CompooperBlock> CODEC = simpleCodec(CompooperBlock::new);
     public static final int READY = 4;
-    public static final IntegerProperty LEVEL = IntegerProperty.create("level", MIN_LEVEL, READY);
     public static final BooleanProperty LIQUID = BooleanProperty.create("liquid");
-    public static final BooleanProperty POWERED = BooleanProperty.create("powered");
     public static final Object2FloatMap<ItemLike> COMPOSTABLES = new Object2FloatOpenHashMap<>();
     private static final VoxelShape OUTER_SHAPE = Shapes.block();
     private static final VoxelShape[] SHAPES = Util.make(new VoxelShape[9], shapes -> {
@@ -88,8 +86,8 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
         float f4 = 1.0F;
         add(0.1F, PSItems.POOP);
         add(0.1F, PSItems.POOP_BALL);
-        //add(0.2F, PSBlocks.POOP_SAPLING);
-        //add(0.2F, PSBlocks.POOP_LEAVES);
+        add(0.2F, PSBlocks.POOP_SAPLING);
+        add(0.2F, PSBlocks.POOP_LEAVES);
         add(0.1F, PSBlocks.POOP_PIECE);
         add(0.3F, PSBlocks.POOP_BLOCK);
         //add(0.3F, PSBlocks.POOP_STAIRS);
@@ -360,50 +358,6 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
 
     @Override
     public void neighborChanged(BlockState state, Level level, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
-        boolean hasPower = level.hasNeighborSignal(pos);
-        if (hasPower != state.getValue(POWERED)) {
-            level.setBlock(pos, state.setValue(POWERED, hasPower), Block.UPDATE_ALL);
-
-            if (hasPower && !level.isClientSide) {
-                var be = level.getBlockEntity(pos.below());
-
-                if (!(be instanceof Container container)) return;
-
-                for (int slot = 0; slot < container.getContainerSize(); slot++) {
-                    var stack = container.getItem(slot);
-                    if (stack.isEmpty()) continue;
-
-                    var block = Block.byItem(stack.getItem());
-                    if (block == null || block.defaultBlockState().isAir()) {
-                        if (stack.getItem() instanceof BlockItem bi) {
-                            block = bi.getBlock();
-                        }
-                    }
-
-                    if (block == null || block.defaultBlockState().isAir()) continue;
-
-                    var targetPos = pos.above();
-                    var targetState = level.getBlockState(targetPos);
-
-                    if (!level.isOutsideBuildHeight(targetPos) && isReplaceable(targetState)) {
-                        if (level.setBlock(targetPos, block.defaultBlockState(), Block.UPDATE_ALL)) {
-                            try {
-                                var placeSound = block.defaultBlockState().getSoundType().getPlaceSound();
-                                level.playSound(null, targetPos, placeSound, SoundSource.BLOCKS, 1.0F, 1.0F);
-                            } catch (Exception e) {
-                                level.playSound(null, targetPos, SoundEvents.GRASS_PLACE, SoundSource.BLOCKS, 1.0F, 1.0F);
-                            }
-                            container.removeItem(slot, 1);
-                            break;
-                        }
-                    } else {
-                        System.out.println(targetState.getBlock().getName().getString() + " False");
-                        break;
-                    }
-                }
-            }
-        }
-
         if (fromPos.equals(pos.below()) && state.getValue(LEVEL) == MAX_LEVEL && hasFire((ServerLevel) level, pos)) {
             level.scheduleTick(pos, this, 20);
         }
@@ -411,32 +365,10 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
         super.neighborChanged(state, level, pos, blockIn, fromPos, isMoving);
     }
 
-    private boolean isReplaceable(BlockState state) {
-        return state.isAir() ||
-                state.is(Blocks.WATER) ||
-                state.is(Blocks.LAVA);
-    }
-
-    @Override
-    protected boolean hasAnalogOutputSignal(BlockState state) {
-        return true;
-    }
-
-    @Override
-    protected int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
-        return blockState.getValue(LEVEL);
-    }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(LEVEL);
-        builder.add(LIQUID);
-        builder.add(POWERED);
-    }
-
-    @Override
-    protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
-        return false;
+        super.createBlockStateDefinition(builder.add(LIQUID));
     }
 
     private boolean hasFire(ServerLevel level, BlockPos pos) {

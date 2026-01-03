@@ -6,7 +6,7 @@ import com.altnoir.poopsky.block.ToiletBlocks;
 import com.altnoir.poopsky.block.p.CompooperBlock;
 import com.altnoir.poopsky.component.PSComponents;
 import com.altnoir.poopsky.effect.PSEffects;
-import com.altnoir.poopsky.entity.PSEntities;
+import com.altnoir.poopsky.entity.PSEntityType;
 import com.altnoir.poopsky.entity.renderer.PooplimeRenderer;
 import com.altnoir.poopsky.entity.renderer.ToiletPlugRenderer;
 import com.altnoir.poopsky.fluid.PSFluidTypes;
@@ -57,7 +57,7 @@ public class PoopSky {
         ToiletBlocks.register(modEventBus);
         PSBlockEntities.register(modEventBus);
         PSItems.register(modEventBus);
-        PSEntities.register(modEventBus);
+        PSEntityType.register(modEventBus);
         PSFoliagePlacerTypes.register(modEventBus);
 
         PSEffects.register(modEventBus);
@@ -98,8 +98,8 @@ public class PoopSky {
             ItemBlockRenderTypes.setRenderLayer(PSBlocks.POOP_SAPLING.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(PSBlocks.POOP_EMPTY_LOG.get(), RenderType.cutout());
 
-            EntityRenderers.register(PSEntities.TOILET_PLUG.get(), ToiletPlugRenderer::new);
-            EntityRenderers.register(PSEntities.POOPLIME.get(), PooplimeRenderer::new);
+            EntityRenderers.register(PSEntityType.TOILET_PLUG.get(), ToiletPlugRenderer::new);
+            EntityRenderers.register(PSEntityType.POOPLIME.get(), PooplimeRenderer::new);
             CompooperBlock.bootStrap();
         }
 

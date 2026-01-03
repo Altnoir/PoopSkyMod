@@ -11,7 +11,7 @@
               "stage": "0"
             }
           },
-          "weight": 25
+          "weight": 7
         },
         {
           "data": {
@@ -20,13 +20,7 @@
               "layers": "1"
             }
           },
-          "weight": 60
-        },
-        {
-          "data": {
-            "Name": "minecraft:bamboo_sapling"
-          },
-          "weight": 15
+          "weight": 3
         }
       ]
     }

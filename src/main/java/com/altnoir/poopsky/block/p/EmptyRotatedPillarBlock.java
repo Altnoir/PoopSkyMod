@@ -23,17 +23,17 @@ public class EmptyRotatedPillarBlock extends Block {
     private static final VoxelShape RAYCAST_SHAPE_3 = Block.box(0.0D, 2.0D, 2.0D, 16.0D, 14.0D, 14.0D);
     private static final VoxelShape RAYCAST_SHAPE = Shapes.block();
 
-    private static final VoxelShape OUTLINE_SHAPE_1 = Shapes.joinUnoptimized(
+    private static final VoxelShape OUTLINE_SHAPE_1 = Shapes.join(
             RAYCAST_SHAPE,
             RAYCAST_SHAPE_1,
             BooleanOp.ONLY_FIRST
     );
-    private static final VoxelShape OUTLINE_SHAPE_2 = Shapes.joinUnoptimized(
+    private static final VoxelShape OUTLINE_SHAPE_2 = Shapes.join(
             RAYCAST_SHAPE,
             RAYCAST_SHAPE_2,
             BooleanOp.ONLY_FIRST
     );
-    private static final VoxelShape OUTLINE_SHAPE_3 = Shapes.joinUnoptimized(
+    private static final VoxelShape OUTLINE_SHAPE_3 = Shapes.join(
             RAYCAST_SHAPE,
             RAYCAST_SHAPE_3,
             BooleanOp.ONLY_FIRST
@@ -66,7 +66,11 @@ public class EmptyRotatedPillarBlock extends Block {
 
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
-        return RAYCAST_SHAPE;
+        return switch (state.getValue(AXIS)) {
+            case X -> OUTLINE_SHAPE_3;
+            case Z -> OUTLINE_SHAPE_2;
+            default -> OUTLINE_SHAPE_1;
+        };
     }
 
     @Override
@@ -84,5 +88,10 @@ public class EmptyRotatedPillarBlock extends Block {
     @Override
     protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
         return false;
+    }
+
+    @Override
+    protected float getShadeBrightness(BlockState state, BlockGetter level, BlockPos pos) {
+        return 0.2F;
     }
 }

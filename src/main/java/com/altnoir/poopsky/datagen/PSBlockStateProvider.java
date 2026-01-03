@@ -3,7 +3,7 @@ package com.altnoir.poopsky.datagen;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.block.ToiletBlocks;
-import com.altnoir.poopsky.block.p.PoopPiece;
+import com.altnoir.poopsky.block.p.PoopPieceBlock;
 import com.altnoir.poopsky.block.p.ToiletBlock;
 import com.altnoir.poopsky.block.p.ToiletLavaBlock;
 import net.minecraft.core.Direction;
@@ -69,7 +69,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
 
         getVariantBuilder(PSBlocks.POOP_PIECE.get())
                 .forAllStates(state -> {
-                    int layers = state.getValue(PoopPiece.LAYERS);
+                    int layers = state.getValue(PoopPieceBlock.LAYERS);
                     if (layers == 8) {
                         return ConfiguredModel.builder()
                                 .modelFile(models().getExistingFile(modLoc("block/poop_block1")))
@@ -84,6 +84,8 @@ public class PSBlockStateProvider extends BlockStateProvider {
         //item models
         simpleBlockItem(PSBlocks.POOP_BLOCK.get(), models().getExistingFile(modLoc("block/poop_block1")));
         simpleBlockItem(PSBlocks.POOP_PIECE.get(), models().getExistingFile(modLoc("block/poop_height2")));
+
+        blockWithTranslucentRenderType(PSBlocks.POOPLIME_BLOCK.get());
 
         blockWithItem(PSBlocks.POOP_LEAVES.get());
         blockWithItem(PSBlocks.POOP_LEAVES_GOLD.get());
@@ -126,16 +128,32 @@ public class PSBlockStateProvider extends BlockStateProvider {
         registerToiletLava(ToiletBlocks.PINK_CONCRETE_TOILET.get(), Blocks.PINK_CONCRETE);
         registerToiletLava(ToiletBlocks.RAINBOW_TOILET.get(), "rainbow_concrete");
 
-        // 添加流体纹理定义
-        var poopFluid = models().withExistingParent("poop_liquid", mcLoc("block/block"))
-                .texture("particle", modLoc("block/poop_liquid"))
-                .texture("still", modLoc("block/poop_liquid"))
-                .texture("flow", modLoc("block/poop_liquid"))
+        fluidBlockWithItem(PSBlocks.POOP_LIQUID.get(), "block/poop_liquid");
+    }
+
+    private void fluidBlockWithItem(Block block, String texture) {
+        var blockModel = models()
+                .withExistingParent(BuiltInRegistries.BLOCK.getKey(block).getPath(), mcLoc("block/block"))
+                .texture("particle", modLoc(texture))
+                .texture("still", modLoc(texture))
+                .texture("flow", modLoc(texture))
                 .renderType("translucent");
 
-        // 添加流体方块状态定义
-        var fluidBuilder = getVariantBuilder(PSBlocks.POOP_LIQUID.get()).partialState();
-        fluidBuilder.addModels(new ConfiguredModel(poopFluid));
+        getVariantBuilder(block).partialState().addModels(new ConfiguredModel(blockModel));
+
+        itemModels()
+                .withExistingParent(BuiltInRegistries.BLOCK.getKey(block).getPath(), mcLoc("item/generated"))
+                .texture("layer0", modLoc(texture));
+    }
+
+    private void blockWithTranslucentRenderType(Block block) {
+        var model = models().cubeAll(
+                BuiltInRegistries.BLOCK.getKey(block).getPath(), modLoc("block/" + BuiltInRegistries.BLOCK.getKey(block).getPath())
+        ).renderType("translucent");
+
+        getVariantBuilder(block).partialState().addModels(new ConfiguredModel(model));
+
+        simpleBlockItem(block, model);
     }
 
     private void registerToilet(Block toilet, Block textureBlock) {

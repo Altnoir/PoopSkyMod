@@ -29,7 +29,10 @@ public class DataGenerators {
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
         generators.addProvider(event.includeServer(), new LootTableProvider(packOutput, Collections.emptySet(),
-                List.of(new LootTableProvider.SubProviderEntry(PSBlockLootTableProvider::new, LootContextParamSets.BLOCK)), lookupProvider));
+                List.of(
+                        new LootTableProvider.SubProviderEntry(PSBlockLootTableProvider::new, LootContextParamSets.BLOCK),
+                        new LootTableProvider.SubProviderEntry(PSEntityLootTableProvider::new, LootContextParamSets.ENTITY)
+                ), lookupProvider));
         generators.addProvider(event.includeServer(), new PSRecipeProvider(packOutput, lookupProvider));
 
         BlockTagsProvider blockTagsProvider = new PSBlockTagProvider(packOutput, lookupProvider, existingFileHelper);

@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.item;
 
+import com.altnoir.poopsky.entity.p.PoopBall;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
 import net.minecraft.sounds.SoundEvents;
@@ -34,7 +35,7 @@ public class PoopBallItem extends Item implements ProjectileItem {
                 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F)
         );
         if (!level.isClientSide) {
-            com.altnoir.poopsky.entity.p.PoopBall poopBall = new com.altnoir.poopsky.entity.p.PoopBall(level, player);
+            PoopBall poopBall = new PoopBall(level, player);
             poopBall.setItem(itemstack);
             poopBall.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 1.5F, 1.0F);
             level.addFreshEntity(poopBall);
@@ -47,7 +48,7 @@ public class PoopBallItem extends Item implements ProjectileItem {
 
     @Override
     public @NotNull Projectile asProjectile(Level level, Position pos, ItemStack stack, Direction direction) {
-        com.altnoir.poopsky.entity.p.PoopBall poopBall = new com.altnoir.poopsky.entity.p.PoopBall(level, pos.x(), pos.y(), pos.z());
+        PoopBall poopBall = new PoopBall(level, pos.x(), pos.y(), pos.z());
         poopBall.setItem(stack);
         return poopBall;
     }
