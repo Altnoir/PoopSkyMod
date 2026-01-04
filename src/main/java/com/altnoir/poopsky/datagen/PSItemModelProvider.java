@@ -7,6 +7,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.DeferredBlock;
 
 public class PSItemModelProvider extends ItemModelProvider {
     public PSItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
@@ -33,11 +34,18 @@ public class PSItemModelProvider extends ItemModelProvider {
         basicItem(PSItems.TOILET_LINKER.get());
         basicItem(PSItems.URINE_BOTTLE.get());
         basicItem(PSItems.POOP_BUCKET.get());
+
+        wallItem(PSBlocks.DRIED_POOP_BLOCK_WALL, PSBlocks.DRIED_POOP_BLOCK);
         
         // 添加液体桶的模型
         withExistingParent("poop_bucket", mcLoc("item/generated"))
                 .texture("layer0", modLoc("item/poop_bucket"));
 
         withExistingParent(PSItems.POOPLIME_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+    }
+
+    private void wallItem(DeferredBlock<?>block, DeferredBlock<?> baseBlock) {
+        this.withExistingParent(block.getId().getPath(), mcLoc("block/wall_inventory"))
+                .texture("wall", ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, "block/" + baseBlock.getId().getPath()));
     }
 }

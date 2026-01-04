@@ -11,10 +11,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FlowingFluid;
 
 public class PoopLiquidBlock extends LiquidBlock {
-    private static final Direction[] NEIGHBOR_DIRECTIONS = {
-            Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST, Direction.DOWN
-    };
-
     public PoopLiquidBlock(FlowingFluid fluid, Properties properties) {
         super(fluid, properties);
     }
@@ -55,7 +51,8 @@ public class PoopLiquidBlock extends LiquidBlock {
     }
 
     private BlockPos getLavaNeighborPos(Level level, BlockPos pos, Block liquid) {
-        for (Direction direction : NEIGHBOR_DIRECTIONS) {
+        for (Direction direction : Direction.values()) {
+            if (direction == Direction.UP) continue;
             if (lavaNeighbor(level, pos, direction, liquid)) {
                 return pos.relative(direction);
             }

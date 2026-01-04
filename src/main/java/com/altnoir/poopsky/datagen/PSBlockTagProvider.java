@@ -34,17 +34,11 @@ public class PSBlockTagProvider extends BlockTagsProvider {
         tag(BlockTags.MOSS_REPLACEABLE)
                 .add(PSBlocks.POOP_BLOCK.get());
 
-        tag(BlockTags.MINEABLE_WITH_SHOVEL)
-                .add(PSBlocks.POOP_PIECE.get());
-
-        tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(PSBlocks.COMPOOPER.get());
-
-        tag(BlockTags.MINEABLE_WITH_HOE)
-                .add(PSBlocks.POOP_BLOCK.get());
-
         tag(BlockTags.DIRT)
                 .add(PSBlocks.POOP_BLOCK.get());
+        tag(BlockTags.SAND)
+                .add(PSBlocks.DRIED_POOP_BLOCK.get());
+
         tag(BlockTags.MUSHROOM_GROW_BLOCK)
                 .add(PSBlocks.POOP_BLOCK.get())
                 .add(PSBlocks.POOP_LOG.get())
@@ -76,7 +70,9 @@ public class PSBlockTagProvider extends BlockTagsProvider {
 
         tag(BlockTags.FENCES).add(PSBlocks.POOP_FENCE.get());
         tag(BlockTags.FENCE_GATES).add(PSBlocks.POOP_FENCE_GATE.get());
-        tag(BlockTags.WALLS).add(PSBlocks.POOP_WALL.get());
+        tag(BlockTags.WALLS)
+                .add(PSBlocks.POOP_WALL.get())
+                .add(PSBlocks.DRIED_POOP_BLOCK_WALL.get());
 
         //工具标签
         tag(BlockTags.MINEABLE_WITH_AXE)

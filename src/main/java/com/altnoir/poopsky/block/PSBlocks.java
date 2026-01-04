@@ -127,7 +127,37 @@ public class PSBlocks {
                     .noOcclusion()
             )
     );
+    public static final DeferredBlock<Block> STOOL = registerBlock("stool",
+            () -> new ChairBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(POOP)
+                    .sound(SoundType.MUD)
+                    .pushReaction(PushReaction.DESTROY)
+                    .noOcclusion()
+            )
+    );
 
+    public static final DeferredBlock<Block> DRIED_POOP_BLOCK = registerBlock("dried_poop_block",
+            () -> new DriedPoopBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .requiresCorrectToolForDrops()
+                    .strength(HARDEN)
+                    .instrument(NoteBlockInstrument.COW_BELL)
+                    .sound(SoundType.TUFF)
+            )
+    );
+    public static final DeferredBlock<Block> DRIED_POOP_BLOCK_STAIRS = registerBlock("dried_poop_block_stairs",
+            () -> new StairBlock(DRIED_POOP_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(DRIED_POOP_BLOCK.get()))
+    );
+    public static final DeferredBlock<Block> DRIED_POOP_BLOCK_SLAB = registerBlock("dried_poop_block_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(DRIED_POOP_BLOCK.get()))
+    );
+    public static final DeferredBlock<Block> DRIED_POOP_BLOCK_VERTICAL_SLAB = registerBlock("dried_poop_block_vertical_slab",
+            () -> new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(DRIED_POOP_BLOCK.get()))
+    );
+    public static final DeferredBlock<Block> DRIED_POOP_BLOCK_WALL = registerBlock("dried_poop_block_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(DRIED_POOP_BLOCK.get()))
+    );
     public static final DeferredBlock<Block> COMPOOPER = registerBlock("compooper",
             () -> new CompooperBlock(BlockBehaviour.Properties.of()
                     .noOcclusion()

@@ -10,6 +10,7 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -34,6 +35,8 @@ public class PSConfigureFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> MEGA_POOP_TREE = resourceKey("mega_poop_tree");
     public static final ResourceKey<ConfiguredFeature<?, ?>> POOP_VEGETATION = resourceKey("poop_vegetation");
     public static final ResourceKey<ConfiguredFeature<?, ?>> POOP_PATCH_BONEMEAL = resourceKey("poop_patch_bonemeal");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> DRIED_POOP_VEGETATION = resourceKey("dried_poop_vegetation");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> DRIED_POOP_PATCH_BONEMEAL = resourceKey("dried_poop_patch_bonemeal");
 
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         HolderGetter<ConfiguredFeature<?, ?>> holdergetter = context.lookup(Registries.CONFIGURED_FEATURE);
@@ -93,6 +96,30 @@ public class PSConfigureFeatures {
                         0.25F,
                         UniformInt.of(1, 2),
                         0.75F
+                )
+        );
+
+        register(context, DRIED_POOP_VEGETATION, Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(
+                        new WeightedStateProvider(
+                                SimpleWeightedRandomList.<BlockState>builder()
+                                        .add(Blocks.SUGAR_CANE.defaultBlockState(), 50)
+                                        .add(Blocks.CACTUS.defaultBlockState(), 20)
+                                        .add(Blocks.DEAD_BUSH.defaultBlockState(), 30)
+                        ))
+        );
+        register(context, DRIED_POOP_PATCH_BONEMEAL, Feature.VEGETATION_PATCH,
+                new VegetationPatchConfiguration(
+                        BlockTags.MOSS_REPLACEABLE,
+                        BlockStateProvider.simple(PSBlocks.DRIED_POOP_BLOCK.get()),
+                        PlacementUtils.inlinePlaced(holdergetter.getOrThrow(DRIED_POOP_VEGETATION)),
+                        CaveSurface.FLOOR,
+                        ConstantInt.of(1),
+                        0.0F,
+                        3,
+                        0.6F,
+                        UniformInt.of(1, 2),
+                        0.5F
                 )
         );
     }

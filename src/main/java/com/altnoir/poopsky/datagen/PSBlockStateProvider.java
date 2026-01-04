@@ -10,10 +10,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.DoorBlock;
-import net.minecraft.world.level.block.TrapDoorBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
@@ -89,6 +86,13 @@ public class PSBlockStateProvider extends BlockStateProvider {
         simpleBlockItem(PSBlocks.POOP_PIECE.get(), models().getExistingFile(modLoc("block/poop_height2")));
 
         blockWithTranslucentRenderType(PSBlocks.POOPLIME_BLOCK.get());
+        blockWithItem(PSBlocks.DRIED_POOP_BLOCK.get());
+        stairsBlock((StairBlock) PSBlocks.DRIED_POOP_BLOCK_STAIRS.get(), blockTexture(PSBlocks.DRIED_POOP_BLOCK.get()));
+        slabBlock((SlabBlock) PSBlocks.DRIED_POOP_BLOCK_SLAB.get(), blockTexture(PSBlocks.DRIED_POOP_BLOCK.get()), blockTexture(PSBlocks.DRIED_POOP_BLOCK.get()));
+        wallBlock((WallBlock) PSBlocks.DRIED_POOP_BLOCK_WALL.get(), blockTexture(PSBlocks.DRIED_POOP_BLOCK.get()));
+
+        blockItem(PSBlocks.DRIED_POOP_BLOCK_STAIRS);
+        blockItem(PSBlocks.DRIED_POOP_BLOCK_SLAB);
 
         blockWithItem(PSBlocks.POOP_LEAVES.get());
         blockWithItem(PSBlocks.POOP_LEAVES_GOLD.get());
@@ -281,11 +285,11 @@ public class PSBlockStateProvider extends BlockStateProvider {
     }
 
     private void blockItem(DeferredBlock<?> block) {
-        simpleBlockWithItem(block.get(), new ModelFile.UncheckedModelFile(PoopSky.MOD_ID + ":block/" + block.getId().getPath()));
+        simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile(PoopSky.MOD_ID + ":block/" + block.getId().getPath()));
     }
 
     private void blockItem(DeferredBlock<?> block, String path) {
-        simpleBlockWithItem(block.get(), new ModelFile.UncheckedModelFile(PoopSky.MOD_ID + ":block/" + block.getId().getPath() + path));
+        simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile(PoopSky.MOD_ID + ":block/" + block.getId().getPath() + path));
     }
 
 }

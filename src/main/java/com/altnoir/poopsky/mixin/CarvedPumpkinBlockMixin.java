@@ -68,7 +68,8 @@ public class CarvedPumpkinBlockMixin {
             Villager villager = EntityType.VILLAGER.create(level);
             if (villager != null) {
                 villager.setBaby(true);
-                spawnGolemInWorld(level, patternMatch, villager, patternMatch.getBlock(0, 1, 0).getPos());
+                spawnGolemInWorld(level, patternMatch, villager,
+                        patternMatch.getBlock(0, 1, 0).getPos());
             }
         }
     }

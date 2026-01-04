@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.entity;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.entity.p.ChairEntity;
 import com.altnoir.poopsky.entity.p.PooplimeEntity;
 import com.altnoir.poopsky.entity.p.ToiletPlugEntity;
 import net.minecraft.core.registries.Registries;
@@ -28,6 +29,11 @@ public class PSEntityType {
                     .spawnDimensionsScale(4.0F)
                     .clientTrackingRange(10)
                     .build("pooplime"));
+
+    public static Supplier<EntityType<ChairEntity>> STOOL = ENTITY_TYPES.register("stool_entity", () ->
+            EntityType.Builder.of(ChairEntity::new, MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
+                    .build("stool_entity"));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);

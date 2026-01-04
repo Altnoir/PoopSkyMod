@@ -66,7 +66,14 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(PSBlocks.POOP_TRAPDOOR.get());
         add(PSBlocks.POOP_DOOR.get(), block -> createDoorTable(PSBlocks.POOP_DOOR.get()));
 
+        dropSelf(PSBlocks.DRIED_POOP_BLOCK.get());
+        dropSelf(PSBlocks.DRIED_POOP_BLOCK_STAIRS.get());
+        add(PSBlocks.DRIED_POOP_BLOCK_SLAB.get(), block -> createSlabItemTable(PSBlocks.DRIED_POOP_BLOCK_SLAB.get()));
+        dropSelf(PSBlocks.DRIED_POOP_BLOCK_VERTICAL_SLAB.get());
+        dropSelf(PSBlocks.DRIED_POOP_BLOCK_WALL.get());
+
         dropSelf(PSBlocks.POOPLIME_BLOCK.get());
+        dropSelf(PSBlocks.STOOL.get());
         dropSelf(PSBlocks.COMPOOPER.get());
         dropOther(PSBlocks.WATER_COMPOOPER.get(), PSBlocks.COMPOOPER.get());
         dropOther(PSBlocks.LAVA_COMPOOPER.get(), PSBlocks.COMPOOPER.get());
