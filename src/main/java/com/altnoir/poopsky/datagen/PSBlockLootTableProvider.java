@@ -53,9 +53,24 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(PSBlocks.POOP_SAPLING.get());
         dropSelf(PSBlocks.POOP_EMPTY_LOG.get());
         dropSelf(PSBlocks.STRIPPED_POOP_EMPTY_LOG.get());
+
         dropSelf(PSBlocks.POOP_BLOCK.get());
+        dropSelf(PSBlocks.POOP_STAIRS.get());
+        add(PSBlocks.POOP_SLAB.get(), block -> createSlabItemTable(PSBlocks.POOP_SLAB.get()));
+        dropSelf(PSBlocks.POOP_VERTICAL_SLAB.get());
+        dropSelf(PSBlocks.POOP_BUTTON.get());
+        dropSelf(PSBlocks.POOP_PRESSURE_PLATE.get());
+        dropSelf(PSBlocks.POOP_FENCE.get());
+        dropSelf(PSBlocks.POOP_FENCE_GATE.get());
+        dropSelf(PSBlocks.POOP_WALL.get());
+        dropSelf(PSBlocks.POOP_TRAPDOOR.get());
+        add(PSBlocks.POOP_DOOR.get(), block -> createDoorTable(PSBlocks.POOP_DOOR.get()));
+
         dropSelf(PSBlocks.POOPLIME_BLOCK.get());
         dropSelf(PSBlocks.COMPOOPER.get());
+        dropOther(PSBlocks.WATER_COMPOOPER.get(), PSBlocks.COMPOOPER.get());
+        dropOther(PSBlocks.LAVA_COMPOOPER.get(), PSBlocks.COMPOOPER.get());
+        dropOther(PSBlocks.URINE_COMPOOPER.get(), PSBlocks.COMPOOPER.get());
         add(PSBlocks.POOP_PIECE.get(), createPoopPieceDrop(PSBlocks.POOP_PIECE.get(), PSItems.POOP_BALL.get()));
     }
 

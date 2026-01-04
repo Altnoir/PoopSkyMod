@@ -23,6 +23,7 @@ public class PSItemTagProvider extends ItemTagsProvider {
     protected void addTags(HolderLookup.Provider provider) {
         tag(Tags.Items.FOODS)
                 .add(PSItems.POOP.get())
+                .add(PSItems.SAPING_BALL.get())
                 .add(PSItems.POOP_BREAD.get())
                 .add(PSItems.POOP_DUMPLINGS.get())
                 .add(PSItems.POOP_SOUP.get())

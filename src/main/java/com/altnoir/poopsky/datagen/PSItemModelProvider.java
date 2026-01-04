@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.item.PSItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -16,6 +17,7 @@ public class PSItemModelProvider extends ItemModelProvider {
     protected void registerModels() {
         basicItem(PSItems.POOP.get());
         basicItem(PSItems.POOP_BALL.get());
+        basicItem(PSItems.SAPING_BALL.get());
         basicItem(PSItems.POOP_BREAD.get());
         basicItem(PSItems.POOP_DUMPLINGS.get());
         basicItem(PSItems.POOP_SOUP.get());

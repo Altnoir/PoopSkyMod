@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.item;
+package com.altnoir.poopsky.item.p;
 
 import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.component.PSComponents;
@@ -7,7 +7,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;

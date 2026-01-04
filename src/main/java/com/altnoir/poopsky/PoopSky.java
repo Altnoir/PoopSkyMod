@@ -1,5 +1,6 @@
 package com.altnoir.poopsky;
 
+import com.altnoir.poopsky.block.AbstractCompooperBlock;
 import com.altnoir.poopsky.block.PSBlockEntities;
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.block.ToiletBlocks;
@@ -46,7 +47,7 @@ import org.slf4j.Logger;
 @Mod(PoopSky.MOD_ID)
 public class PoopSky {
     public static final String MOD_ID = "poopsky";
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
 
 
     public PoopSky(IEventBus modEventBus, ModContainer modContainer) {
@@ -112,7 +113,7 @@ public class PoopSky {
         public static void onRegisterBlockColors(RegisterColorHandlersEvent.Block event) {
             event.register((state, world, pos, tintIndex) -> {
                 if (tintIndex == 1) {
-                    if (state.getValue(CompooperBlock.LEVEL) == CompooperBlock.READY && state.getValue(CompooperBlock.LIQUID)) {
+                    if (state.getValue(AbstractCompooperBlock.LEVEL) != AbstractCompooperBlock.MIN_LEVEL) {
                         return world != null && pos != null
                                 ? BiomeColors.getAverageWaterColor(world, pos)
                                 : 0x3F76E4;
@@ -120,7 +121,7 @@ public class PoopSky {
                     return 0x47311A;
                 }
                 return -1;
-            }, PSBlocks.COMPOOPER.get());
+            }, PSBlocks.WATER_COMPOOPER.get());
         }
 
         @SubscribeEvent

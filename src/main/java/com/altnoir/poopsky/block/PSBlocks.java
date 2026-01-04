@@ -3,11 +3,15 @@ package com.altnoir.poopsky.block;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.p.*;
 import com.altnoir.poopsky.fluid.PSFluids;
+import com.altnoir.poopsky.fluid.PoopLiquidBlock;
 import com.altnoir.poopsky.item.PSItems;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
@@ -23,16 +27,6 @@ public class PSBlocks {
     private static final float LOG = 2.0F;
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(PoopSky.MOD_ID);
 
-    public static final DeferredBlock<Block> POOP_BLOCK = registerBlock("poop_block",
-            () -> new PoopBlock(BlockBehaviour.Properties.of()
-                    .randomTicks()
-                    .strength(POOP)
-                    .mapColor(MapColor.COLOR_BROWN)
-                    .speedFactor(0.4F)
-                    .isValidSpawn(Blocks::always)
-                    .instrument(NoteBlockInstrument.COW_BELL)
-                    .sound(SoundType.MUD)));
-
     public static final DeferredBlock<Block> POOP_PIECE = registerBlock("poop_piece",
             () -> new PoopPieceBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_BROWN)
@@ -46,6 +40,84 @@ public class PSBlocks {
                     .pushReaction(PushReaction.DESTROY)
             )
     );
+    public static final DeferredBlock<Block> POOP_BLOCK = registerBlock("poop_block",
+            () -> new PoopBlock(BlockBehaviour.Properties.of()
+                    .randomTicks()
+                    .strength(POOP)
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .speedFactor(0.4F)
+                    .isValidSpawn(Blocks::always)
+                    .instrument(NoteBlockInstrument.COW_BELL)
+                    .sound(SoundType.MUD))
+    );
+    public static final DeferredBlock<Block> POOP_STAIRS = registerBlock("poop_stairs",
+            () -> new StairBlock(POOP_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(POOP)
+                    .sound(SoundType.MUD))
+    );
+
+    public static final DeferredBlock<Block> POOP_SLAB = registerBlock("poop_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(POOP)
+                    .sound(SoundType.MUD))
+    );
+    public static final DeferredBlock<Block> POOP_VERTICAL_SLAB = registerBlock("poop_vertical_slab",
+            () -> new VerticalSlabBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(POOP)
+                    .sound(SoundType.MUD))
+    );
+    public static final DeferredBlock<Block> POOP_BUTTON = registerBlock("poop_button",
+            () -> new ButtonBlock(PSBlockSetType.POOP, 200, BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(POOP)
+                    .sound(SoundType.MUD)
+                    .noCollission())
+    );
+    public static final DeferredBlock<Block> POOP_PRESSURE_PLATE = registerBlock("poop_pressure_plate",
+            () -> new PressurePlateBlock(PSBlockSetType.POOP, BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(POOP)
+                    .sound(SoundType.MUD)
+                    .noCollission())
+    );
+    public static final DeferredBlock<Block> POOP_FENCE = registerBlock("poop_fence",
+            () -> new FenceBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(POOP)
+                    .sound(SoundType.MUD))
+    );
+    public static final DeferredBlock<Block> POOP_FENCE_GATE = registerBlock("poop_fence_gate",
+            () -> new FenceGateBlock(PSWoodType.POOP, BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(POOP)
+                    .sound(SoundType.MUD))
+    );
+    public static final DeferredBlock<Block> POOP_WALL = registerBlock("poop_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(POOP)
+                    .sound(SoundType.MUD))
+    );
+
+    public static final DeferredBlock<Block> POOP_DOOR = registerBlock("poop_door",
+            () -> new DoorBlock(PSBlockSetType.POOP, BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(POOP)
+                    .sound(SoundType.MUD)
+                    .noOcclusion()
+                    .pushReaction(PushReaction.DESTROY))
+    );
+    public static final DeferredBlock<Block> POOP_TRAPDOOR = registerBlock("poop_trapdoor",
+            () -> new TrapDoorBlock(PSBlockSetType.POOP, BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(POOP)
+                    .sound(SoundType.MUD)
+                    .noOcclusion()
+                    .isValidSpawn(Blocks::never))
+    );
 
     public static final DeferredBlock<Block> POOPLIME_BLOCK = registerBlock("pooplime_block",
             () -> new PooplimeBlock(BlockBehaviour.Properties.of()
@@ -58,7 +130,6 @@ public class PSBlocks {
 
     public static final DeferredBlock<Block> COMPOOPER = registerBlock("compooper",
             () -> new CompooperBlock(BlockBehaviour.Properties.of()
-                    .randomTicks()
                     .noOcclusion()
                     .mapColor(MapColor.COLOR_BROWN)
                     .instrument(NoteBlockInstrument.BASS)
@@ -67,9 +138,15 @@ public class PSBlocks {
                     .sound(SoundType.METAL)
             )
     );
-//    public static final DeferredBlock<Block> WATER_COMPOOPER = registerBlock("water_compooper",
-//            () -> new CompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()))
-//    );
+    public static final DeferredBlock<Block> WATER_COMPOOPER = registerBlock("water_compooper",
+            () -> new WaterCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()))
+    );
+    public static final DeferredBlock<Block> LAVA_COMPOOPER = registerBlock("lava_compooper",
+            () -> new LavaCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()).lightLevel(state -> 15))
+    );
+    public static final DeferredBlock<Block> URINE_COMPOOPER = registerBlock("urine_compooper",
+            () -> new UrineCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()))
+    );
 
     public static final DeferredBlock<Block> POOP_LOG = registerBlock("poop_log",
             () -> new RotatedPillarBlock(BlockBehaviour.Properties.of()
@@ -119,11 +196,11 @@ public class PSBlocks {
                     .noOcclusion()
                     .sound(SoundType.SCULK_SENSOR)
                     .isValidSpawn(Blocks::ocelotOrParrot)
-                    .isSuffocating(PSBlockProperties::neverSuffocate)
-                    .isViewBlocking(PSBlockProperties::neverBlockVision)
+                    .isSuffocating(PSBlocks::neverSuffocate)
+                    .isViewBlocking(PSBlocks::neverBlockVision)
                     .ignitedByLava()
                     .pushReaction(PushReaction.DESTROY)
-                    .isRedstoneConductor(PSBlockProperties::never)
+                    .isRedstoneConductor(PSBlocks::never)
             )
     );
     public static final DeferredBlock<Block> POOP_LEAVES_IRON = registerBlock("poop_leaves_iron",
@@ -134,11 +211,11 @@ public class PSBlocks {
                     .noOcclusion()
                     .sound(SoundType.SCULK_SENSOR)
                     .isValidSpawn(Blocks::ocelotOrParrot)
-                    .isSuffocating(PSBlockProperties::neverSuffocate)
-                    .isViewBlocking(PSBlockProperties::neverBlockVision)
+                    .isSuffocating(PSBlocks::neverSuffocate)
+                    .isViewBlocking(PSBlocks::neverBlockVision)
                     .ignitedByLava()
                     .pushReaction(PushReaction.DESTROY)
-                    .isRedstoneConductor(PSBlockProperties::never)
+                    .isRedstoneConductor(PSBlocks::never)
             )
     );
     public static final DeferredBlock<Block> POOP_LEAVES_GOLD = registerBlock("poop_leaves_gold",
@@ -149,11 +226,11 @@ public class PSBlocks {
                     .noOcclusion()
                     .sound(SoundType.SCULK_SENSOR)
                     .isValidSpawn(Blocks::ocelotOrParrot)
-                    .isSuffocating(PSBlockProperties::neverSuffocate)
-                    .isViewBlocking(PSBlockProperties::neverBlockVision)
+                    .isSuffocating(PSBlocks::neverSuffocate)
+                    .isViewBlocking(PSBlocks::neverBlockVision)
                     .ignitedByLava()
                     .pushReaction(PushReaction.DESTROY)
-                    .isRedstoneConductor(PSBlockProperties::never)
+                    .isRedstoneConductor(PSBlocks::never)
             )
     );
 
@@ -170,7 +247,7 @@ public class PSBlocks {
     );
 
     public static final DeferredBlock<LiquidBlock> POOP_LIQUID = registerBlock("poop_liquid",
-            () -> new LiquidBlock(
+            () -> new PoopLiquidBlock(
                     PSFluids.POOP.get(),
                     BlockBehaviour.Properties.of()
                             .mapColor(MapColor.COLOR_BROWN)
@@ -185,6 +262,18 @@ public class PSBlocks {
                             .sound(SoundType.EMPTY)
             )
     );
+
+    public static boolean neverSuffocate(BlockState state, BlockGetter world, BlockPos pos) {
+        return false;
+    }
+
+    public static boolean never(BlockState state, BlockGetter world, BlockPos pos) {
+        return false;
+    }
+
+    public static boolean neverBlockVision(BlockState state, BlockGetter world, BlockPos pos) {
+        return false;
+    }
 
     public static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);

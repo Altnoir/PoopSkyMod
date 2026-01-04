@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.item;
+package com.altnoir.poopsky.item.p;
 
 import net.minecraft.world.item.BoneMealItem;
 

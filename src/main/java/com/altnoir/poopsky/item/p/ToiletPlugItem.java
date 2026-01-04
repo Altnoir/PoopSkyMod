@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.item;
+package com.altnoir.poopsky.item.p;
 
 import com.altnoir.poopsky.entity.PSEntityType;
 import net.minecraft.core.Direction;

@@ -6,6 +6,7 @@ import com.altnoir.poopsky.component.PSComponents;
 import com.altnoir.poopsky.component.ToiletComponent;
 import com.altnoir.poopsky.entity.PSEntityType;
 import com.altnoir.poopsky.fluid.PSFluids;
+import com.altnoir.poopsky.item.p.*;
 import com.altnoir.poopsky.sound.PSSoundEvents;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
@@ -26,6 +27,8 @@ public class PSItems {
             () -> new BucketItem(PSFluids.POOP.get(), new Item.Properties().stacksTo(1)));
     public static final DeferredItem<Item> POOP_BALL = ITEMS.register("poop_ball", () ->
             new PoopBallItem(new Item.Properties().stacksTo(88)));
+    public static final DeferredItem<Item> SAPING_BALL = ITEMS.register("saping_ball", () ->
+            new SapingBallItem(new Item.Properties().food(PFoods.SAPING_BALL).stacksTo(88)));
 
     public static final DeferredItem<Item> POOP_BREAD = ITEMS.register("poop_bread", () ->
             new Item(new Item.Properties().food(PFoods.POOP_BREAD).stacksTo(88)));

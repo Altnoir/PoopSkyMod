@@ -1,6 +1,7 @@
 {
   "item.poopsky.poop": "粪便",
   "item.poopsky.poop_ball": "粪便球",
+  "item.poopsky.saping_ball": "树苗球",
   "item.poopsky.spall": "碎石",
   "item.poopsky.toilet_plug": "马桶搋子",
   "item.poopsky.urine_bottle": "尿瓶",
@@ -145,9 +146,10 @@
   "entity.poopsky.stool_entity": "粪便凳",
   "entity.poopsky.pooplime": "屎莱姆",
 
-  "key.poopsky.category": "空中厕所",
+  "key.category.poopsky": "空中厕所",
   "key.poopsky.use_plug": "召唤马桶搋子",
-  "key.poopsky.plug_down": "下降",
+  "key.poopsky.up": "上升",
+  "key.poopsky.down": "下降",
 
   "advancements.adventure.poop_block_slide.title": "踩屎大师",
   "advancements.adventure.poop_block_slide.description": "在粪便块上滑行",

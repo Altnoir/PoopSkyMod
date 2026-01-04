@@ -12,11 +12,14 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DoorBlock;
+import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.DeferredBlock;
 
 public class PSBlockStateProvider extends BlockStateProvider {
     public static final String PARTICLE = "particle";
@@ -130,6 +133,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
 
         fluidBlockWithItem(PSBlocks.POOP_LIQUID.get(), "block/poop_liquid");
     }
+
 
     private void fluidBlockWithItem(Block block, String texture) {
         var blockModel = models()
@@ -275,4 +279,13 @@ public class PSBlockStateProvider extends BlockStateProvider {
     private void blockWithItem(Block block) {
         simpleBlockWithItem(block, cubeAll(block));
     }
+
+    private void blockItem(DeferredBlock<?> block) {
+        simpleBlockWithItem(block.get(), new ModelFile.UncheckedModelFile(PoopSky.MOD_ID + ":block/" + block.getId().getPath()));
+    }
+
+    private void blockItem(DeferredBlock<?> block, String path) {
+        simpleBlockWithItem(block.get(), new ModelFile.UncheckedModelFile(PoopSky.MOD_ID + ":block/" + block.getId().getPath() + path));
+    }
+
 }

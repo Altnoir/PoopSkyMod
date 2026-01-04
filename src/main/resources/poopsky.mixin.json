@@ -4,6 +4,7 @@
   "package": "com.altnoir.poopsky.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "CarvedPumpkinBlockMixin"
   ],
   "client": [
   ],

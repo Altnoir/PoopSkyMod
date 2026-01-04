@@ -1,8 +1,6 @@
-package com.altnoir.poopsky.item;
+package com.altnoir.poopsky.item.p;
 
-import com.altnoir.poopsky.component.PSComponents;
 import com.mojang.blaze3d.platform.InputConstants;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;

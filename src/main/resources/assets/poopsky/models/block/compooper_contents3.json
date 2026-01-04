@@ -5,7 +5,7 @@
     },
     "elements": [
         {   "from": [ 2, 0, 2 ],
-            "to": [ 14, 15, 14 ],
+            "to": [ 14, 7, 14 ],
             "faces": {
                 "up": { "texture": "#inside" }
             }

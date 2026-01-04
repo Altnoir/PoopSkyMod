@@ -1,6 +1,7 @@
 {
   "item.poopsky.poop": "Poop",
   "item.poopsky.poop_ball": "Poop Ball",
+  "item.poopsky.saping_ball": "Saping Ball",
   "item.poopsky.spall": "Spall",
   "item.poopsky.toilet_plug": "Toilet Plug",
   "item.poopsky.urine_bottle": "Urine Bottle",
@@ -145,9 +146,10 @@
   "entity.poopsky.stool_entity": "Stool",
   "entity.poopsky.pooplime": "Pooplime",
 
-  "key.poopsky.category": "POOPSKY",
+  "key.category.poopsky": "POOPSKY",
   "key.poopsky.use_plug": "Summon Toilet Plug",
-  "key.poopsky.plug_down": "Descend",
+  "key.poopsky.up": "Up",
+  "key.poopsky.down": "Descend",
 
   "advancements.adventure.poop_block_slide.title": "Master of Poop Sliding",
   "advancements.adventure.poop_block_slide.description": "Slide on a poop block",

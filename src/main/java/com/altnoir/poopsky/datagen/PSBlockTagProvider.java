@@ -30,6 +30,7 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(WOODEN_TOILETS)
                 .add(HARD_TOILETS);
 
+        //基础标签
         tag(BlockTags.MOSS_REPLACEABLE)
                 .add(PSBlocks.POOP_BLOCK.get());
 
@@ -72,6 +73,10 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(PSBlocks.POOP_LEAVES.get())
                 .add(PSBlocks.POOP_LEAVES_IRON.get())
                 .add(PSBlocks.POOP_LEAVES_GOLD.get());
+
+        tag(BlockTags.FENCES).add(PSBlocks.POOP_FENCE.get());
+        tag(BlockTags.FENCE_GATES).add(PSBlocks.POOP_FENCE_GATE.get());
+        tag(BlockTags.WALLS).add(PSBlocks.POOP_WALL.get());
 
         //工具标签
         tag(BlockTags.MINEABLE_WITH_AXE)

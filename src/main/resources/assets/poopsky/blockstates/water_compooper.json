@@ -1,0 +1,33 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "poopsky:block/compooper"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/water_compooper1"
+      },
+      "when": {
+        "level": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/water_compooper2"
+      },
+      "when": {
+        "level": "2"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/water_compooper3"
+      },
+      "when": {
+        "level": "3"
+      }
+    }
+  ]
+}
