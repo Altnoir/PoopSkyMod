@@ -100,7 +100,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Bump
-        id: bump
+        id: bump_version
         run: |
           IFS='.' read -r MAJOR MINOR PATCH <<< "${{ needs.release.outputs.modversion }}"
           PATCH=$((PATCH + 1))
