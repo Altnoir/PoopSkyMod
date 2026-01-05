@@ -1,0 +1,60 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.altnoir.poopsky",
+    "module": "PoopSkyMod",
+    "version": "1.1.6",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.12.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "PoopSkyMod-1.1.6.jar",
+          "url": "PoopSkyMod-1.1.6.jar",
+          "size": 7417785,
+          "sha512": "c51c9ad2f3e1296d11c7cd46ab05a04f0e2205c11a62458c1c598ab15e9d93d80690b98be6861aab78a3b8e56b2e016c1516df21e3f5e10ca854a4d452397324",
+          "sha256": "80e5280522b36aa0460db604780077e97f1dc4df090df936765b1124eea52938",
+          "sha1": "a600ee9da95547ce25fad4a8e629cfde461398e9",
+          "md5": "be36ae2d78248d80443cebe12e2ae3b5"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "PoopSkyMod-1.1.6.jar",
+          "url": "PoopSkyMod-1.1.6.jar",
+          "size": 7417785,
+          "sha512": "c51c9ad2f3e1296d11c7cd46ab05a04f0e2205c11a62458c1c598ab15e9d93d80690b98be6861aab78a3b8e56b2e016c1516df21e3f5e10ca854a4d452397324",
+          "sha256": "80e5280522b36aa0460db604780077e97f1dc4df090df936765b1124eea52938",
+          "sha1": "a600ee9da95547ce25fad4a8e629cfde461398e9",
+          "md5": "be36ae2d78248d80443cebe12e2ae3b5"
+        }
+      ]
+    }
+  ]
+}
