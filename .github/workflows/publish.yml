@@ -8,7 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       modversion: ${{ steps.get_version.outputs.modversion }}
-      mcversion: ${{ steps.get_version.outputs.mcversion }}
 
     steps:
       - name: Checkout repository
@@ -37,14 +36,12 @@ jobs:
         run: |
           MOD_VERSION=$(grep '^mod_version=' gradle.properties | cut -d'=' -f2)
           echo "modversion=$MOD_VERSION" >> $GITHUB_OUTPUT
-          MC_VERSION=$(grep '^minecraft_version=' gradle.properties | cut -d'=' -f2)
-          echo "mcversion=$MC_VERSION" >> $GITHUB_OUTPUT
 
       - name: Create release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ steps.get_version.outputs.modversion }}
-          name: PoopSky-${{ steps.get_version.outputs.mcversion }}-${{ steps.get_version.outputs.modversion }}
+          tag_name: ${{ github.ref_name }}+${{ steps.get_version.outputs.modversion }}
+          name: PoopSky-${{ github.ref_name }}-${{ steps.get_version.outputs.modversion }}
           generate_release_notes: true
           files: |
             build/libs/*.jar
@@ -80,6 +77,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./repo
+          destination_dir: ./repo
 
   bump:
     needs: [release, maven]
