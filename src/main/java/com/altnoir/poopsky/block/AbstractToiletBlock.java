@@ -106,11 +106,18 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
         if (!level.isClientSide && entity instanceof Player player) {
             if (player.isShiftKeyDown() && isEntityCentered(pos, player)) {
                 if (player.hasEffect(PSEffects.FECAL_INCONTINENCE)) {
-                    onPoop(level, player);
+                    onPoop(level, player, player.hasEffect(PSEffects.INTESTINAL_SPASM));
                     player.causeFoodExhaustion(0.05F);
-                } else if (level.getGameTime() % 20 == 0) {
-                    onPoop(level, player);
-                    player.causeFoodExhaustion(1.0F);
+                } else {
+                    var playerData = player.getPersistentData();
+                    long poopTime = playerData.getLong("poopTime");
+                    long gameTime = level.getGameTime();
+
+                    if (poopTime == 0 || gameTime - poopTime >= 20) {
+                        onPoop(level, player, player.hasEffect(PSEffects.INTESTINAL_SPASM));
+                        player.causeFoodExhaustion(1.0F);
+                        playerData.putLong("poopTime", gameTime);
+                    }
                 }
             }
         }
@@ -121,7 +128,7 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
         return blockAABB.contains(entity.position());
     }
 
-    protected void onPoop(Level level, Player player) {
+    protected void onPoop(Level level, Player player, boolean isFire) {
         if (player.getFoodData().getFoodLevel() <= 0) {
             player.hurt(level.damageSources().wither(), 1.0F);
 
@@ -133,13 +140,13 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
             redStone.setDefaultPickUpDelay();
             level.addFreshEntity(redStone);
         } else {
-            var poop = new ItemEntity(
-                    level,
-                    player.getX(), player.getY() + 0.1, player.getZ(),
-                    new ItemStack(PSItems.POOP.get())
-            );
+            var poop = new ItemEntity(level, player.getX(), player.getY() + 0.1, player.getZ(), new ItemStack(PSItems.POOP.get()));
+            var chili_poop = new ItemEntity(level, player.getX(), player.getY() + 0.1, player.getZ(), new ItemStack(PSItems.CHILI_POOP.get()));
+
             poop.setDefaultPickUpDelay();
-            level.addFreshEntity(poop);
+            chili_poop.setDefaultPickUpDelay();
+
+            level.addFreshEntity(isFire ? chili_poop : poop);
         }
         var pitch = level.random.nextFloat() + 0.5F;
         level.playSound(null, player.getX(), player.getY() + 0.1, player.getZ(), PSSoundEvents.FART.get(), SoundSource.PLAYERS, 1.0F, pitch);

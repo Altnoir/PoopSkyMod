@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "minecraft:diorite"
+    },
+    {
+      "item": "poopsky:spall"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:calcite"
+  }
+}

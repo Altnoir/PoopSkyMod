@@ -42,7 +42,10 @@ public class DataGenerators {
 
         generators.addProvider(event.includeServer(), new PSDatapackProvider(packOutput, lookupProvider));
 
+        generators.addProvider(event.includeServer(), new PSDataMapProvider(packOutput, lookupProvider));
+
         generators.addProvider(event.includeClient(), new PSBlockStateProvider(packOutput, existingFileHelper));
         generators.addProvider(event.includeClient(), new PSItemModelProvider(packOutput, existingFileHelper));
+
     }
 }

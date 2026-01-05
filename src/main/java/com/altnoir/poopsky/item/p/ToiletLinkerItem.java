@@ -36,7 +36,7 @@ public class ToiletLinkerItem extends PSBaseItem {
             return super.use(level, player, usedHand);
 
         itemstack.set(PSComponents.TOILET_COMPONENT, ToiletComponent.EMPTY);
-        player.displayClientMessage(Component.translatable("message.poopsky.toilet_linker.3").withStyle(style -> style.withColor(0xAA0000)), true);
+        player.displayClientMessage(Component.translatable("message.poopsky.toilet_linker.4").withStyle(style -> style.withColor(0xAA0000)), true);
         return InteractionResultHolder.success(itemstack);
     }
 
@@ -73,7 +73,7 @@ public class ToiletLinkerItem extends PSBaseItem {
             }
         } else {
             stack.set(PSComponents.TOILET_COMPONENT.get(), ToiletComponent.EMPTY);
-            player.displayClientMessage(Component.translatable("message.poopsky.toilet_linker.4"), true);
+            player.displayClientMessage(Component.translatable("message.poopsky.toilet_linker.4").withStyle(style -> style.withColor(0xAA0000)), true);
         }
 
         return InteractionResult.SUCCESS;

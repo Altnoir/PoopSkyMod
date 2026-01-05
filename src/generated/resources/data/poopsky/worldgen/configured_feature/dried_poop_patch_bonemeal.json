@@ -10,7 +10,7 @@
         "Name": "poopsky:dried_poop_block"
       }
     },
-    "replaceable": "#minecraft:moss_replaceable",
+    "replaceable": "#poopsky:dried_poop_block",
     "surface": "floor",
     "vegetation_chance": 0.6,
     "vegetation_feature": {

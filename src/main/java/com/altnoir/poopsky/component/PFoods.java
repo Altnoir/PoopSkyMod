@@ -14,6 +14,14 @@ public class PFoods {
             .effect(new MobEffectInstance(MobEffects.CONFUSION, 300, 0), 0.5F)
             .effect(new MobEffectInstance(MobEffects.BLINDNESS, 20, 0), 1.0F)
             .build();
+    public static final FoodProperties POOP_BLOCK = new FoodProperties.Builder()
+            .nutrition(8)
+            .saturationModifier(0.2F)
+            .effect(new MobEffectInstance(MobEffects.POISON, 300, 0), 0.1F)
+            .effect(new MobEffectInstance(MobEffects.HUNGER, 1800, 0), 0.5F)
+            .effect(new MobEffectInstance(MobEffects.CONFUSION, 900, 0), 0.5F)
+            .effect(new MobEffectInstance(MobEffects.BLINDNESS, 60, 0), 1.0F)
+            .build();
     public static final FoodProperties SAPING_BALL = new FoodProperties.Builder()
             .nutrition(2)
             .saturationModifier(0.2F)

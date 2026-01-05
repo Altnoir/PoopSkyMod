@@ -65,6 +65,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
 
     public static void bootStrap() {
         COMPOSTABLES.defaultReturnValue(-1.0F);
+        float f01 = 0.1F;
         float f03 = 0.3F;
         float f05 = 0.5F;
         float f08 = 0.8F;
@@ -75,21 +76,27 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
         add(f05, PSBlocks.POOP_LEAVES);
         add(f03, PSBlocks.POOP_PIECE);
         add(f1, PSBlocks.POOP_BLOCK);
-        //add(0.3F, PSBlocks.POOP_STAIRS);
-        //add(0.15F, PSBlocks.POOP_SLAB);
-        //add(0.15F, PSBlocks.POOP_VERTICAL_SLAB);
-        //add(0.05F, PSBlocks.POOP_BUTTON);
-        //add(0.1F, PSBlocks.POOP_PRESSURE_PLATE);
-        //add(0.1F, PSBlocks.POOP_FENCE);
-        //add(0.1F, PSBlocks.POOP_FENCE_GATE);
-        //add(0.1F, PSBlocks.POOP_WALL);
-        //add(0.25F, PSBlocks.POOP_DOOR);
-        //add(0.15F, PSBlocks.POOP_TRAPDOOR);
-        //add(0.1F, PSBlocks.STOOL);
+        add(f08, PSBlocks.POOP_STAIRS);
+        add(f05, PSBlocks.POOP_SLAB);
+        add(f05, PSBlocks.POOP_VERTICAL_SLAB);
+        add(f01, PSBlocks.POOP_BUTTON);
+        add(f03, PSBlocks.POOP_PRESSURE_PLATE);
+        add(f03, PSBlocks.POOP_FENCE);
+        add(f05, PSBlocks.POOP_FENCE_GATE);
+        add(f05, PSBlocks.POOP_WALL);
+        add(f08, PSBlocks.POOP_DOOR);
+        add(f05, PSBlocks.POOP_TRAPDOOR);
+        add(f03, PSBlocks.STOOL);
         //add(0.2F, PSItems.BAKED_MAGGOTS);
-        //add(0.5F, PSItems.POOP_BREAD);
-        //add(0.1F, PSItems.MAGGOTS_SEEDS);
-        //add(1.0F, PSBlocks.POOP_CAKE);
+        add(f01, PSItems.MAGGOTS_SEEDS);
+        add(f08, PSItems.POOP_BREAD);
+        add(f08, PSItems.POOP_DUMPLINGS);
+        add(f08, PSItems.POOP_VEGETABLE_STICKS);
+        add(f08, PSItems.POOBURGER_MEAT);
+        add(f1, PSItems.POOBURGER);
+        add(f08, PSItems.POOP_PASTA);
+        add(f08, PSItems.POODDING);
+        add(f1, PSBlocks.POOP_CAKE);
     }
 
     private static void add(float chance, ItemLike item) {

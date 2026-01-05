@@ -15,14 +15,17 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.AlternativesEntry;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
+import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
@@ -66,12 +69,44 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(PSBlocks.POOP_TRAPDOOR.get());
         add(PSBlocks.POOP_DOOR.get(), block -> createDoorTable(PSBlocks.POOP_DOOR.get()));
 
+        dropSelf(PSBlocks.CHILI_POOP_BLOCK.get());
+        dropSelf(PSBlocks.CHILI_POOP_STAIRS.get());
+        add(PSBlocks.CHILI_POOP_SLAB.get(), block -> createSlabItemTable(PSBlocks.CHILI_POOP_SLAB.get()));
+        dropSelf(PSBlocks.CHILI_POOP_VERTICAL_SLAB.get());
+        dropSelf(PSBlocks.CHILI_POOP_WALL.get());
+
+        dropSelf(PSBlocks.POOP_BRICKS.get());
+        dropSelf(PSBlocks.CRACKED_POOP_BRICKS.get());
+        dropSelf(PSBlocks.POOP_BRICK_STAIRS.get());
+        add(PSBlocks.POOP_BRICK_SLAB.get(), block -> createSlabItemTable(PSBlocks.POOP_BRICK_SLAB.get()));
+        dropSelf(PSBlocks.POOP_BRICK_VERTICAL_SLAB.get());
+        dropSelf(PSBlocks.POOP_BRICK_WALL.get());
+
+        dropSelf(PSBlocks.MOSSY_POOP_BRICKS.get());
+        dropSelf(PSBlocks.MOSSY_POOP_BRICK_STAIRS.get());
+        add(PSBlocks.MOSSY_POOP_BRICK_SLAB.get(), block -> createSlabItemTable(PSBlocks.MOSSY_POOP_BRICK_SLAB.get()));
+        dropSelf(PSBlocks.MOSSY_POOP_BRICK_VERTICAL_SLAB.get());
+        dropSelf(PSBlocks.MOSSY_POOP_BRICK_WALL.get());
+
         dropSelf(PSBlocks.DRIED_POOP_BLOCK.get());
         dropSelf(PSBlocks.DRIED_POOP_BLOCK_STAIRS.get());
         add(PSBlocks.DRIED_POOP_BLOCK_SLAB.get(), block -> createSlabItemTable(PSBlocks.DRIED_POOP_BLOCK_SLAB.get()));
         dropSelf(PSBlocks.DRIED_POOP_BLOCK_VERTICAL_SLAB.get());
         dropSelf(PSBlocks.DRIED_POOP_BLOCK_WALL.get());
 
+        dropSelf(PSBlocks.SMOOTH_POOP_BLOCK.get());
+        dropSelf(PSBlocks.SMOOTH_POOP_BLOCK_STAIRS.get());
+        add(PSBlocks.SMOOTH_POOP_BLOCK_SLAB.get(), block -> createSlabItemTable(PSBlocks.SMOOTH_POOP_BLOCK_SLAB.get()));
+        dropSelf(PSBlocks.SMOOTH_POOP_BLOCK_VERTICAL_SLAB.get());
+        dropSelf(PSBlocks.SMOOTH_POOP_BLOCK_WALL.get());
+
+        dropSelf(PSBlocks.CUT_POOP_BLOCK.get());
+        dropSelf(PSBlocks.CUT_POOP_BLOCK_STAIRS.get());
+        add(PSBlocks.CUT_POOP_BLOCK_SLAB.get(), block -> createSlabItemTable(PSBlocks.CUT_POOP_BLOCK_SLAB.get()));
+        dropSelf(PSBlocks.CUT_POOP_BLOCK_VERTICAL_SLAB.get());
+        dropSelf(PSBlocks.CUT_POOP_BLOCK_WALL.get());
+
+        dropWhenSilkTouch(PSBlocks.POOP_CAKE.get());
         dropSelf(PSBlocks.POOPLIME_BLOCK.get());
         dropSelf(PSBlocks.STOOL.get());
         dropSelf(PSBlocks.COMPOOPER.get());
@@ -79,6 +114,10 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
         dropOther(PSBlocks.LAVA_COMPOOPER.get(), PSBlocks.COMPOOPER.get());
         dropOther(PSBlocks.URINE_COMPOOPER.get(), PSBlocks.COMPOOPER.get());
         add(PSBlocks.POOP_PIECE.get(), createPoopPieceDrop(PSBlocks.POOP_PIECE.get(), PSItems.POOP_BALL.get()));
+
+        LootItemCondition.Builder builder = LootItemBlockStatePropertyCondition.hasBlockStateProperties(PSBlocks.MAGGOTS.get())
+                .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, CropBlock.MAX_AGE));
+        add(PSBlocks.MAGGOTS.get(), maggotsCropDrops(PSBlocks.MAGGOTS.get(), PSItems.MAGGOTS_SEEDS.get(), builder));
     }
 
     protected LootTable.@NotNull Builder createPoopPieceDrop(Block block, Item item) {
@@ -111,6 +150,40 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
                 .withPool(LootPool.lootPool()
                         .add(AlternativesEntry.alternatives(nonSilkTouch, silkTouch))
                 );
+    }
+
+    protected LootTable.Builder maggotsCropDrops(Block crop, Item seeds) {
+        HolderLookup.RegistryLookup<Enchantment> impl = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
+        return this.createSilkTouchDispatchTable(crop,
+                this.applyExplosionDecay(crop, LootItem.lootTableItem(seeds)
+                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))
+                        .apply(ApplyBonusCount.addUniformBonusCount(impl.getOrThrow(Enchantments.FORTUNE))))
+        );
+    }
+
+    protected LootTable.Builder maggotsCropDrops(Block cropBlock, Item seedsItem, LootItemCondition.Builder dropGrownCropCondition) {
+        HolderLookup.RegistryLookup<Enchantment> registrylookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
+        return this.applyExplosionDecay(cropBlock,
+                LootTable.lootTable()
+                        .withPool(LootPool.lootPool()
+                                .add(LootItem.lootTableItem(Items.WHEAT_SEEDS).when(dropGrownCropCondition).otherwise(LootItem.lootTableItem(seedsItem)))
+                                .add(LootItem.lootTableItem(Items.COCOA_BEANS).when(dropGrownCropCondition).otherwise(LootItem.lootTableItem(seedsItem)))
+                                .add(LootItem.lootTableItem(Items.PUMPKIN_SEEDS).when(dropGrownCropCondition).otherwise(LootItem.lootTableItem(seedsItem)))
+                                .add(LootItem.lootTableItem(Items.MELON_SEEDS).when(dropGrownCropCondition).otherwise(LootItem.lootTableItem(seedsItem)))
+                                .add(LootItem.lootTableItem(Items.CARROT).when(dropGrownCropCondition).otherwise(LootItem.lootTableItem(seedsItem)))
+                                .add(LootItem.lootTableItem(Items.POTATO).when(dropGrownCropCondition).otherwise(LootItem.lootTableItem(seedsItem)))
+                                .add(LootItem.lootTableItem(Items.BEETROOT_SEEDS).when(dropGrownCropCondition).otherwise(LootItem.lootTableItem(seedsItem)))
+
+                        )
+                        .withPool(LootPool.lootPool()
+                                .when(dropGrownCropCondition)
+                                .add(
+                                        LootItem.lootTableItem(seedsItem)
+                                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))
+                                                .apply(ApplyBonusCount.addBonusBinomialDistributionCount(registrylookup.getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3))
+                                )
+                        )
+        );
     }
 
     protected LootTable.Builder createSpallOreDrops(Block block) {
@@ -150,11 +223,27 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
         var registrylookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
         return this.createSilkTouchDispatchTable(block,
                 this.applyExplosionDecay(block,
-                        LootItem.lootTableItem(PSItems.POOP)
-                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
+                        LootItem.lootTableItem(PSItems.POOP.get())
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
                                 .apply(ApplyBonusCount.addUniformBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE)))
                 )
+        ).withPool(
+                LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .when(this.doesNotHaveShearsOrSilkTouch())
+                        .add(((LootPoolSingletonContainer.Builder<?>)
+                                this.applyExplosionCondition(block, LootItem.lootTableItem(PSItems.MAGGOTS_SEEDS.get())))
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
+                                .apply(ApplyBonusCount.addUniformBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE))))
         );
+    }
+
+    private LootItemCondition.Builder doesNotHaveShearsOrSilkTouch() {
+        return this.hasShearsOrSilkTouch().invert();
+    }
+
+    private LootItemCondition.Builder hasShearsOrSilkTouch() {
+        return HAS_SHEARS.or(this.hasSilkTouch());
     }
 
     @Override

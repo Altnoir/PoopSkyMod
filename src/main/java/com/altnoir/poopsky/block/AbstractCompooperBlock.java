@@ -193,9 +193,4 @@ public abstract class AbstractCompooperBlock extends Block {
     protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
         return false;
     }
-
-    @Override
-    protected float getShadeBrightness(BlockState state, BlockGetter level, BlockPos pos) {
-        return 0.2F;
-    }
 }

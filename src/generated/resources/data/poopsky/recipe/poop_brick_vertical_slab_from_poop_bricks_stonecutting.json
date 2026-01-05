@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "poopsky:poop_bricks"
+  },
+  "result": {
+    "count": 2,
+    "id": "poopsky:poop_brick_vertical_slab"
+  }
+}

@@ -44,20 +44,19 @@ public class ToiletLavaBlock extends AbstractToiletBlock {
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
         if (!level.isClientSide && entity instanceof Player player && player.isShiftKeyDown() && isEntityCentered(pos, player) && !state.getValue(LAVA)) {
-            if (player.hasEffect(PSEffects.FECAL_INCONTINENCE)) {
-                onPoop(level, player);
-                player.causeFoodExhaustion(0.05F);
-            } else if (player.hasEffect(PSEffects.INTESTINAL_SPASM)) {
+            if (player.hasEffect(PSEffects.INTESTINAL_SPASM)) {
                 level.setBlock(pos, state.setValue(LAVA, true), 3);
                 level.playSound(null, pos, SoundEvents.BUCKET_EMPTY_LAVA, SoundSource.PLAYERS, 1.0F, 1.0F);
                 player.removeEffect(PSEffects.INTESTINAL_SPASM);
                 player.causeFoodExhaustion(1.0F);
+            } else if (player.hasEffect(PSEffects.FECAL_INCONTINENCE)) {
+                onPoop(level, player, true);
+                player.causeFoodExhaustion(0.05F);
             } else if (level.getGameTime() % 20 == 0) {
-                onPoop(level, player);
+                onPoop(level, player, false);
                 player.causeFoodExhaustion(1.0F);
             }
         }
-        super.stepOn(level, pos, state, entity);
     }
 
     @Override

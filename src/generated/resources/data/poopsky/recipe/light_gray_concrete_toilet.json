@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": {
+      "item": "minecraft:light_gray_concrete"
+    },
+    "P": {
+      "item": "poopsky:poop"
+    }
+  },
+  "pattern": [
+    "#P#",
+    "###",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "poopsky:light_gray_concrete_toilet"
+  }
+}

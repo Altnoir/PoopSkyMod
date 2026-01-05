@@ -24,7 +24,10 @@ public class PSVillagers {
     public static final ResourceKey<PoiType> TOILET_POI_KEY = registryPoiKey("toilet");
 
     public static final Holder<PoiType> TOILET_POI = registryPoi("toilet",
-            PSBlocks.COMPOOPER
+            PSBlocks.COMPOOPER,
+            PSBlocks.WATER_COMPOOPER,
+            PSBlocks.LAVA_COMPOOPER,
+            PSBlocks.URINE_COMPOOPER
     );
 
     public static final Holder<VillagerProfession> POOP_MAKER = VILLAGER_PROFESSIONS.register("poopmaker", () ->

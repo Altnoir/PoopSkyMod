@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:calcite_from_spall"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "spall": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:spall"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "spall"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "poopsky:calcite_from_spall"
+    ]
+  }
+}

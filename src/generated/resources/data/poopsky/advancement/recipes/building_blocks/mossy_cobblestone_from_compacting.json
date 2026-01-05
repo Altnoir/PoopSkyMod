@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:mossy_cobblestone_from_compacting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "spall": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:spall"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "spall"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "poopsky:mossy_cobblestone_from_compacting"
+    ]
+  }
+}

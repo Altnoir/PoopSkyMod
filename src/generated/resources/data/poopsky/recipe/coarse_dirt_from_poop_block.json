@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "G": {
+      "item": "minecraft:gravel"
+    },
+    "P": {
+      "item": "poopsky:poop_block"
+    }
+  },
+  "pattern": [
+    "PG",
+    "GP"
+  ],
+  "result": {
+    "count": 4,
+    "id": "minecraft:coarse_dirt"
+  }
+}

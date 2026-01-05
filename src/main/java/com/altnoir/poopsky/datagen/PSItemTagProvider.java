@@ -1,10 +1,12 @@
 package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.item.PSItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -23,6 +25,7 @@ public class PSItemTagProvider extends ItemTagsProvider {
     protected void addTags(HolderLookup.Provider provider) {
         tag(Tags.Items.FOODS)
                 .add(PSItems.POOP.get())
+                .add(PSItems.CHILI_POOP.get())
                 .add(PSItems.SAPING_BALL.get())
                 .add(PSItems.POOP_BREAD.get())
                 .add(PSItems.POOP_DUMPLINGS.get())
@@ -32,6 +35,10 @@ public class PSItemTagProvider extends ItemTagsProvider {
                 .add(PSItems.POOBURGER.get())
                 .add(PSItems.POOP_PASTA.get())
                 .add(PSItems.POODDING.get())
-                .add(PSItems.DRAGON_BREATH_CHILI.get());
+                .add(PSItems.DRAGON_BREATH_CHILI.get())
+                .add(PSBlocks.POOP_CAKE.get().asItem());
+
+        tag(ItemTags.VILLAGER_PLANTABLE_SEEDS)
+                .add(PSItems.MAGGOTS_SEEDS.get());
     }
 }

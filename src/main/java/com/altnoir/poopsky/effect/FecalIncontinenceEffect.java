@@ -37,11 +37,8 @@ public class FecalIncontinenceEffect extends MobEffect {
         if (!entity.level().isClientSide) {
             var world = (ServerLevel) entity.level();
 
-            var poop = new ItemEntity(
-                    world,
-                    entity.getX(),
-                    entity.getY() + 0.1,
-                    entity.getZ(),
+            var poop = new ItemEntity(world,
+                    entity.getX(), entity.getY() + 0.1, entity.getZ(),
                     new ItemStack(PSItems.POOP.get())
             );
             poop.setDefaultPickUpDelay();
@@ -62,5 +59,10 @@ public class FecalIncontinenceEffect extends MobEffect {
                     pitch
             );
         }
+    }
+
+    @Override
+    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
+        return true;
     }
 }

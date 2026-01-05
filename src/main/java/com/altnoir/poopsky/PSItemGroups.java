@@ -28,7 +28,13 @@ public class PSItemGroups {
                         .filter(item -> !(item instanceof BlockItem))
                         .forEach(output::accept);
 
-                Set<Block> skip = Set.of(PSBlocks.POOP_LIQUID.get());
+                Set<Block> skip = Set.of(
+                        PSBlocks.POOP_LIQUID.get(),
+                        PSBlocks.WATER_COMPOOPER.get(),
+                        PSBlocks.LAVA_COMPOOPER.get(),
+                        PSBlocks.URINE_COMPOOPER.get(),
+                        PSBlocks.MAGGOTS.get()
+                );
                 PSBlocks.BLOCKS.getEntries().stream()
                         .map(DeferredHolder::get)
                         .filter(block -> !skip.contains(block))

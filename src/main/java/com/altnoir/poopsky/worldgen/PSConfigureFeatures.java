@@ -4,13 +4,13 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.tag.PSBlockTags;
 import com.altnoir.poopsky.worldgen.foliage.PoopMegaFoliagePlacer;
+import com.google.common.collect.ImmutableList;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -26,6 +26,7 @@ import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSi
 import net.minecraft.world.level.levelgen.feature.foliageplacers.RandomSpreadFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
+import net.minecraft.world.level.levelgen.feature.treedecorators.AlterGroundDecorator;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.GiantTrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
 import net.minecraft.world.level.levelgen.placement.CaveSurface;
@@ -35,6 +36,8 @@ public class PSConfigureFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> MEGA_POOP_TREE = resourceKey("mega_poop_tree");
     public static final ResourceKey<ConfiguredFeature<?, ?>> POOP_VEGETATION = resourceKey("poop_vegetation");
     public static final ResourceKey<ConfiguredFeature<?, ?>> POOP_PATCH_BONEMEAL = resourceKey("poop_patch_bonemeal");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CHILI_POOP_VEGETATION = resourceKey("chili_poop_vegetation");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CHILI_POOP_PATCH_BONEMEAL = resourceKey("chili_poop_patch_bonemeal");
     public static final ResourceKey<ConfiguredFeature<?, ?>> DRIED_POOP_VEGETATION = resourceKey("dried_poop_vegetation");
     public static final ResourceKey<ConfiguredFeature<?, ?>> DRIED_POOP_PATCH_BONEMEAL = resourceKey("dried_poop_patch_bonemeal");
 
@@ -70,8 +73,7 @@ public class PSConfigureFeatures {
                         new PoopMegaFoliagePlacer(ConstantInt.of(0), ConstantInt.of(3), UniformInt.of(13, 17)),
                         new TwoLayersFeatureSize(1, 1, 2)
                 )
-                        .dirt(BlockStateProvider.simple(Blocks.MUD))
-                        .forceDirt()
+                        .decorators(ImmutableList.of(new AlterGroundDecorator(BlockStateProvider.simple(Blocks.MUD))))
                         .build()
         );
 
@@ -79,8 +81,10 @@ public class PSConfigureFeatures {
                 new SimpleBlockConfiguration(
                         new WeightedStateProvider(
                                 SimpleWeightedRandomList.<BlockState>builder()
-                                        .add(PSBlocks.POOP_SAPLING.get().defaultBlockState(), 7)
-                                        .add(PSBlocks.POOP_PIECE.get().defaultBlockState(), 3)
+                                        .add(PSBlocks.POOP_SAPLING.get().defaultBlockState(), 5)
+                                        .add(PSBlocks.POOP_PIECE.get().defaultBlockState(), 1)
+                                        .add(Blocks.BROWN_MUSHROOM.defaultBlockState(), 2)
+                                        .add(Blocks.RED_MUSHROOM.defaultBlockState(), 2)
                         )
                 )
         );
@@ -89,6 +93,32 @@ public class PSConfigureFeatures {
                         PSBlockTags.POOP_BLOCK,
                         BlockStateProvider.simple(PSBlocks.POOP_BLOCK.get()),
                         PlacementUtils.inlinePlaced(holdergetter.getOrThrow(POOP_VEGETATION)),
+                        CaveSurface.FLOOR,
+                        ConstantInt.of(1),
+                        0.0F,
+                        5,
+                        0.25F,
+                        UniformInt.of(1, 2),
+                        0.75F
+                )
+        );
+
+        register(context, CHILI_POOP_VEGETATION, Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(
+                        new WeightedStateProvider(
+                                SimpleWeightedRandomList.<BlockState>builder()
+                                        .add(Blocks.WARPED_FUNGUS.defaultBlockState(), 3)
+                                        .add(Blocks.CRIMSON_FUNGUS.defaultBlockState(), 3)
+                                        .add(Blocks.SWEET_BERRY_BUSH.defaultBlockState(), 2)
+                                        .add(Blocks.CRIMSON_ROOTS.defaultBlockState(), 2)
+                        )
+                )
+        );
+        register(context, CHILI_POOP_PATCH_BONEMEAL, Feature.VEGETATION_PATCH,
+                new VegetationPatchConfiguration(
+                        PSBlockTags.CHILI_POOP_BLOCK,
+                        BlockStateProvider.simple(PSBlocks.CHILI_POOP_BLOCK.get()),
+                        PlacementUtils.inlinePlaced(holdergetter.getOrThrow(CHILI_POOP_VEGETATION)),
                         CaveSurface.FLOOR,
                         ConstantInt.of(1),
                         0.0F,
@@ -110,7 +140,7 @@ public class PSConfigureFeatures {
         );
         register(context, DRIED_POOP_PATCH_BONEMEAL, Feature.VEGETATION_PATCH,
                 new VegetationPatchConfiguration(
-                        BlockTags.MOSS_REPLACEABLE,
+                        PSBlockTags.DRIED_POOP_BLOCK,
                         BlockStateProvider.simple(PSBlocks.DRIED_POOP_BLOCK.get()),
                         PlacementUtils.inlinePlaced(holdergetter.getOrThrow(DRIED_POOP_VEGETATION)),
                         CaveSurface.FLOOR,

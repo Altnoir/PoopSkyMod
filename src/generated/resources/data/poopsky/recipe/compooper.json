@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "S": {
+      "item": "minecraft:mossy_cobblestone_slab"
+    }
+  },
+  "pattern": [
+    "S S",
+    "S S",
+    "SSS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "poopsky:compooper"
+  }
+}

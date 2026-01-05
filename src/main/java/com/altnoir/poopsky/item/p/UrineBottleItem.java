@@ -55,6 +55,7 @@ public class UrineBottleItem extends Item {
             if (entity.isAlive() && entity instanceof Chicken chicken) {
                 var waterPotion = PotionContents.createItemStack(Items.POTION, Potions.WATER);
 
+                chicken.playSound(SoundEvents.CHICKEN_EGG);
                 chicken.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 1200, 1));
                 chicken.hurt(player.damageSources().playerAttack(player), 1.0F);
                 stack.shrink(1);

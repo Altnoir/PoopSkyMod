@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.item;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.component.PFoods;
 import com.altnoir.poopsky.component.PSComponents;
 import com.altnoir.poopsky.component.ToiletComponent;
@@ -8,10 +9,7 @@ import com.altnoir.poopsky.entity.PSEntityType;
 import com.altnoir.poopsky.fluid.PSFluids;
 import com.altnoir.poopsky.item.p.*;
 import com.altnoir.poopsky.sound.PSSoundEvents;
-import net.minecraft.world.item.BucketItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -23,8 +21,9 @@ public class PSItems {
 
     public static final DeferredItem<Item> POOP = ITEMS.register("poop", () ->
             new PoopItem(new Item.Properties().food(PFoods.POOP).stacksTo(88)));
-    public static final DeferredItem<BucketItem> POOP_BUCKET = ITEMS.register("poop_bucket",
-            () -> new BucketItem(PSFluids.POOP.get(), new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<Item> CHILI_POOP = ITEMS.register("chili_poop", () ->
+            new ChiliPoopItem(new Item.Properties().food(PFoods.POOP).stacksTo(88)));
+
     public static final DeferredItem<Item> POOP_BALL = ITEMS.register("poop_ball", () ->
             new PoopBallItem(new Item.Properties().stacksTo(88)));
     public static final DeferredItem<Item> SAPING_BALL = ITEMS.register("saping_ball", () ->
@@ -57,6 +56,10 @@ public class PSItems {
             new ToiletLinkerItem(new Item.Properties()
                     .component(PSComponents.TOILET_COMPONENT, ToiletComponent.EMPTY)
                     .stacksTo(1)));
+    public static final DeferredItem<Item> MAGGOTS_SEEDS = ITEMS.register("maggots_seeds", () ->
+            new ItemNameBlockItem(PSBlocks.MAGGOTS.get(), new Item.Properties().stacksTo(88)));
+
+
     public static final DeferredItem<Item> URINE_BOTTLE = ITEMS.register("urine_bottle",
             () -> new UrineBottleItem(new Item.Properties()
                     .craftRemainder(Items.GLASS_BOTTLE)
@@ -64,6 +67,8 @@ public class PSItems {
                     .stacksTo(16)
             )
     );
+    public static final DeferredItem<BucketItem> POOP_BUCKET = ITEMS.register("poop_bucket",
+            () -> new BucketItem(PSFluids.POOP.get(), new Item.Properties().stacksTo(1)));
 
     public static final DeferredItem<Item> POOPLIME_SPAWN_EGG = ITEMS.register("pooplime_spawn_egg",
             () -> new DeferredSpawnEggItem(PSEntityType.POOPLIME, 0x7D5F36, 0x5E4228,

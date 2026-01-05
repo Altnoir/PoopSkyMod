@@ -252,7 +252,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
     @Override
     protected void positionRider(Entity entity, MoveFunction moveFunction) {
         super.positionRider(entity, moveFunction);
-        var yOffset = 0.15 + floatingValue;
+        var yOffset = floatingValue;
         if (this.getPassengers().size() > 1) {
             var yawRad = (float) Math.toRadians(-this.getYRot());
             if (this.getPassengers().indexOf(entity) == 1) {

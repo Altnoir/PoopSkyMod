@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "poopsky:dried_poop_block"
+  },
+  "result": {
+    "count": 1,
+    "id": "poopsky:cut_poop_block_wall"
+  }
+}

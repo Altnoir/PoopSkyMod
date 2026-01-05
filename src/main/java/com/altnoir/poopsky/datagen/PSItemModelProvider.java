@@ -17,6 +17,7 @@ public class PSItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         basicItem(PSItems.POOP.get());
+        basicItem(PSItems.CHILI_POOP.get());
         basicItem(PSItems.POOP_BALL.get());
         basicItem(PSItems.SAPING_BALL.get());
         basicItem(PSItems.POOP_BREAD.get());
@@ -34,8 +35,14 @@ public class PSItemModelProvider extends ItemModelProvider {
         basicItem(PSItems.TOILET_LINKER.get());
         basicItem(PSItems.URINE_BOTTLE.get());
         basicItem(PSItems.POOP_BUCKET.get());
+        basicItem(PSItems.MAGGOTS_SEEDS.get());
 
+        wallItem(PSBlocks.CHILI_POOP_WALL, PSBlocks.CHILI_POOP_BLOCK);
+        wallItem(PSBlocks.POOP_BRICK_WALL,PSBlocks.POOP_BRICKS);
+        wallItem(PSBlocks.MOSSY_POOP_BRICK_WALL,PSBlocks.MOSSY_POOP_BRICKS);
         wallItem(PSBlocks.DRIED_POOP_BLOCK_WALL, PSBlocks.DRIED_POOP_BLOCK);
+        wallItem(PSBlocks.SMOOTH_POOP_BLOCK_WALL, PSBlocks.SMOOTH_POOP_BLOCK);
+        wallItem(PSBlocks.CUT_POOP_BLOCK_WALL, PSBlocks.CUT_POOP_BLOCK);
         
         // 添加液体桶的模型
         withExistingParent("poop_bucket", mcLoc("item/generated"))

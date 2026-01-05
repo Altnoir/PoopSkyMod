@@ -7,6 +7,7 @@ import com.altnoir.poopsky.block.ToiletBlocks;
 import com.altnoir.poopsky.block.p.CompooperBlock;
 import com.altnoir.poopsky.component.PSComponents;
 import com.altnoir.poopsky.effect.PSEffects;
+import com.altnoir.poopsky.effect.PSPotions;
 import com.altnoir.poopsky.entity.PSEntityType;
 import com.altnoir.poopsky.entity.renderer.ChairRenderer;
 import com.altnoir.poopsky.entity.renderer.PooplimeRenderer;
@@ -55,15 +56,16 @@ public class PoopSky {
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(PSNetworking::register);
 
+        PSEffects.register(modEventBus);
+        PSPotions.register(modEventBus);
+        PSParticles.register(modEventBus);
+
         PSBlocks.register(modEventBus);
         ToiletBlocks.register(modEventBus);
         PSBlockEntities.register(modEventBus);
         PSItems.register(modEventBus);
         PSEntityType.register(modEventBus);
         PSFoliagePlacerTypes.register(modEventBus);
-
-        PSEffects.register(modEventBus);
-        PSParticles.register(modEventBus);
 
         PSItemGroups.register(modEventBus);
         PSSoundEvents.register(modEventBus);

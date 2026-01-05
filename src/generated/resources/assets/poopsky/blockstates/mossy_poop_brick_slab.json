@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "poopsky:block/mossy_poop_brick_slab"
+    },
+    "type=double": {
+      "model": "poopsky:block/mossy_poop_bricks"
+    },
+    "type=top": {
+      "model": "poopsky:block/mossy_poop_brick_slab_top"
+    }
+  }
+}

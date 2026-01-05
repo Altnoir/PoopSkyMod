@@ -27,6 +27,14 @@ public class PSBlocks {
     private static final float LOG = 2.0F;
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(PoopSky.MOD_ID);
 
+    public static final DeferredBlock<Block> POOP_CAKE = registerBlock("poop_cake",
+            () -> new PoopCakeBlock(BlockBehaviour.Properties.of()
+                    .forceSolidOn()
+                    .strength(0.5F)
+                    .sound(SoundType.WOOL)
+                    .pushReaction(PushReaction.DESTROY))
+    );
+
     public static final DeferredBlock<Block> POOP_PIECE = registerBlock("poop_piece",
             () -> new PoopPieceBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_BROWN)
@@ -119,14 +127,6 @@ public class PSBlocks {
                     .isValidSpawn(Blocks::never))
     );
 
-    public static final DeferredBlock<Block> POOPLIME_BLOCK = registerBlock("pooplime_block",
-            () -> new PooplimeBlock(BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.COLOR_BROWN)
-                    .friction(0.8F)
-                    .sound(SoundType.SLIME_BLOCK)
-                    .noOcclusion()
-            )
-    );
     public static final DeferredBlock<Block> STOOL = registerBlock("stool",
             () -> new ChairBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_BROWN)
@@ -136,15 +136,91 @@ public class PSBlocks {
                     .noOcclusion()
             )
     );
+    public static final DeferredBlock<Block> POOPLIME_BLOCK = registerBlock("pooplime_block",
+            () -> new PooplimeBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .friction(0.8F)
+                    .sound(SoundType.SLIME_BLOCK)
+                    .noOcclusion()
+            )
+    );
 
-    public static final DeferredBlock<Block> DRIED_POOP_BLOCK = registerBlock("dried_poop_block",
-            () -> new DriedPoopBlock(BlockBehaviour.Properties.of()
+    public static final DeferredBlock<Block> POOP_BRICKS = registerBlock("poop_bricks",
+            () -> new Block(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_BROWN)
                     .requiresCorrectToolForDrops()
                     .strength(HARDEN)
-                    .instrument(NoteBlockInstrument.COW_BELL)
-                    .sound(SoundType.TUFF)
+                    .sound(SoundType.FROGLIGHT)
             )
+    );
+    public static final DeferredBlock<Block> CRACKED_POOP_BRICKS = registerBlock("cracked_poop_bricks",
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(POOP_BRICKS.get()))
+    );
+    public static final DeferredBlock<Block> POOP_BRICK_STAIRS = registerBlock("poop_brick_stairs",
+            () -> new StairBlock(POOP_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(POOP_BRICKS.get()))
+    );
+    public static final DeferredBlock<Block> POOP_BRICK_SLAB = registerBlock("poop_brick_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(POOP_BRICKS.get()))
+    );
+    public static final DeferredBlock<Block> POOP_BRICK_VERTICAL_SLAB = registerBlock("poop_brick_vertical_slab",
+            () -> new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(POOP_BRICKS.get()))
+    );
+    public static final DeferredBlock<Block> POOP_BRICK_WALL = registerBlock("poop_brick_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(POOP_BRICKS.get()))
+    );
+
+    public static final DeferredBlock<Block> MOSSY_POOP_BRICKS = registerBlock("mossy_poop_bricks",
+            () -> new Block(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_GREEN)
+                    .requiresCorrectToolForDrops()
+                    .strength(HARDEN)
+                    .sound(SoundType.FROGLIGHT)
+            )
+    );
+    public static final DeferredBlock<Block> MOSSY_POOP_BRICK_STAIRS = registerBlock("mossy_poop_brick_stairs",
+            () -> new StairBlock(MOSSY_POOP_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(MOSSY_POOP_BRICKS.get()))
+    );
+    public static final DeferredBlock<Block> MOSSY_POOP_BRICK_SLAB = registerBlock("mossy_poop_brick_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(MOSSY_POOP_BRICKS.get()))
+    );
+    public static final DeferredBlock<Block> MOSSY_POOP_BRICK_VERTICAL_SLAB = registerBlock("mossy_poop_brick_vertical_slab",
+            () -> new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(MOSSY_POOP_BRICKS.get()))
+    );
+    public static final DeferredBlock<Block> MOSSY_POOP_BRICK_WALL = registerBlock("mossy_poop_brick_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(MOSSY_POOP_BRICKS.get()))
+    );
+
+    public static final DeferredBlock<Block> CHILI_POOP_BLOCK = registerBlock("chili_poop_block",
+            () -> new ChiliPoopBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .requiresCorrectToolForDrops()
+                    .strength(POOP)
+                    .speedFactor(0.4F)
+                    .isValidSpawn(Blocks::always)
+                    .instrument(NoteBlockInstrument.COW_BELL)
+                    .sound(SoundType.MUD)
+            )
+    );
+    public static final DeferredBlock<Block> CHILI_POOP_STAIRS = registerBlock("chili_poop_stairs",
+            () -> new StairBlock(CHILI_POOP_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(CHILI_POOP_BLOCK.get()))
+    );
+    public static final DeferredBlock<Block> CHILI_POOP_SLAB = registerBlock("chili_poop_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(CHILI_POOP_BLOCK.get()))
+    );
+    public static final DeferredBlock<Block> CHILI_POOP_VERTICAL_SLAB = registerBlock("chili_poop_vertical_slab",
+            () -> new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(CHILI_POOP_BLOCK.get()))
+    );
+    public static final DeferredBlock<Block> CHILI_POOP_WALL = registerBlock("chili_poop_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(CHILI_POOP_BLOCK.get()))
+    );
+
+    public static final DeferredBlock<Block> DRIED_POOP_BLOCK = registerBlock("dried_poop_block",
+            () -> new DriedPoopBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_ORANGE)
+                    .requiresCorrectToolForDrops()
+                    .strength(HARDEN)
+                    .instrument(NoteBlockInstrument.COW_BELL)
+                    .sound(SoundType.TUFF))
     );
     public static final DeferredBlock<Block> DRIED_POOP_BLOCK_STAIRS = registerBlock("dried_poop_block_stairs",
             () -> new StairBlock(DRIED_POOP_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(DRIED_POOP_BLOCK.get()))
@@ -158,6 +234,48 @@ public class PSBlocks {
     public static final DeferredBlock<Block> DRIED_POOP_BLOCK_WALL = registerBlock("dried_poop_block_wall",
             () -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(DRIED_POOP_BLOCK.get()))
     );
+
+    public static final DeferredBlock<Block> SMOOTH_POOP_BLOCK = registerBlock("smooth_poop_block",
+            () -> new Block(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_ORANGE)
+                    .requiresCorrectToolForDrops()
+                    .strength(HARDEN)
+                    .sound(SoundType.CALCITE))
+    );
+    public static final DeferredBlock<Block> SMOOTH_POOP_BLOCK_STAIRS = registerBlock("smooth_poop_block_stairs",
+            () -> new StairBlock(SMOOTH_POOP_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(SMOOTH_POOP_BLOCK.get()))
+    );
+    public static final DeferredBlock<Block> SMOOTH_POOP_BLOCK_SLAB = registerBlock("smooth_poop_block_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(SMOOTH_POOP_BLOCK.get()))
+    );
+    public static final DeferredBlock<Block> SMOOTH_POOP_BLOCK_VERTICAL_SLAB = registerBlock("smooth_poop_block_vertical_slab",
+            () -> new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(SMOOTH_POOP_BLOCK.get()))
+    );
+    public static final DeferredBlock<Block> SMOOTH_POOP_BLOCK_WALL = registerBlock("smooth_poop_block_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(SMOOTH_POOP_BLOCK.get()))
+    );
+
+    public static final DeferredBlock<Block> CUT_POOP_BLOCK = registerBlock("cut_poop_block",
+            () -> new Block(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_ORANGE)
+                    .requiresCorrectToolForDrops()
+                    .strength(HARDEN)
+                    .sound(SoundType.POLISHED_TUFF))
+    );
+    public static final DeferredBlock<Block> CUT_POOP_BLOCK_STAIRS = registerBlock("cut_poop_block_stairs",
+            () -> new StairBlock(CUT_POOP_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(CUT_POOP_BLOCK.get()))
+    );
+    public static final DeferredBlock<Block> CUT_POOP_BLOCK_SLAB = registerBlock("cut_poop_block_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(CUT_POOP_BLOCK.get()))
+    );
+    public static final DeferredBlock<Block> CUT_POOP_BLOCK_VERTICAL_SLAB = registerBlock("cut_poop_block_vertical_slab",
+            () -> new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(CUT_POOP_BLOCK.get()))
+    );
+    public static final DeferredBlock<Block> CUT_POOP_BLOCK_WALL = registerBlock("cut_poop_block_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(CUT_POOP_BLOCK.get()))
+    );
+
+
     public static final DeferredBlock<Block> COMPOOPER = registerBlock("compooper",
             () -> new CompooperBlock(BlockBehaviour.Properties.of()
                     .noOcclusion()
@@ -184,7 +302,7 @@ public class PSBlocks {
                     .noOcclusion()
                     .instrument(NoteBlockInstrument.BASS)
                     .strength(LOG)
-                    .sound(SoundType.STONE)
+                    .sound(SoundType.STEM)
             )
     );
 
@@ -204,7 +322,7 @@ public class PSBlocks {
                     .noOcclusion()
                     .instrument(NoteBlockInstrument.BASS)
                     .strength(LOG)
-                    .sound(SoundType.STONE)
+                    .sound(SoundType.STEM)
             )
     );
 
@@ -290,6 +408,17 @@ public class PSBlocks {
                             .noLootTable()
                             .liquid()
                             .sound(SoundType.EMPTY)
+            )
+    );
+
+    public static final DeferredBlock<Block> MAGGOTS = BLOCKS.register("maggots",
+            () -> new MaggotsBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_YELLOW)
+                    .noCollission()
+                    .randomTicks()
+                    .instabreak()
+                    .sound(SoundType.CROP)
+                    .pushReaction(PushReaction.DESTROY)
             )
     );
 

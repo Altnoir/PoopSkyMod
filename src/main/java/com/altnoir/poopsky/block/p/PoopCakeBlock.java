@@ -1,0 +1,79 @@
+package com.altnoir.poopsky.block.p;
+
+import com.altnoir.poopsky.particle.PSParticles;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.CakeBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.BlockHitResult;
+
+public class PoopCakeBlock extends CakeBlock {
+    public PoopCakeBlock(Properties properties) {
+        super(properties);
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        if (level.isClientSide) {
+            if (eat(level, pos, state, player).consumesAction()) {
+                return InteractionResult.SUCCESS;
+            }
+
+            if (player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
+                return InteractionResult.CONSUME;
+            }
+        }
+
+        return eat(level, pos, state, player);
+    }
+
+    protected static InteractionResult eat(LevelAccessor level, BlockPos pos, BlockState state, Player player) {
+        if (!player.canEat(false)) {
+            return InteractionResult.PASS;
+        } else {
+            player.awardStat(Stats.EAT_CAKE_SLICE);
+            player.getFoodData().eat(2, 0.1F);
+            player.playSound(SoundEvents.GENERIC_EAT);
+            if (!level.isClientSide() && level instanceof ServerLevel serverLevel) {
+                serverLevel.sendParticles(PSParticles.POOP_PARTICLE.get(),
+                        pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+                        8,
+                        0.0, -0.1, 0.0,
+                        3.0
+                );
+            }
+            player.addEffect(new MobEffectInstance(MobEffects.LUCK, 1800, 1), player);
+            player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 100, 0), player);
+            player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20, 0), player);
+            player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 60, 0), player);
+
+            int i = state.getValue(BITES);
+            level.gameEvent(player, GameEvent.EAT, pos);
+            if (i < 6) {
+                level.setBlock(pos, state.setValue(BITES, Integer.valueOf(i + 1)), 3);
+            } else {
+                level.removeBlock(pos, false);
+                level.gameEvent(player, GameEvent.BLOCK_DESTROY, pos);
+            }
+
+            return InteractionResult.SUCCESS;
+        }
+    }
+}
