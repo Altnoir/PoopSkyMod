@@ -28,6 +28,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         List<ItemLike> POOP_LIST = List.of(PSBlocks.POOP_BLOCK);
         List<ItemLike> POOP_BRICK_LIST = List.of(PSBlocks.POOP_BRICKS);
         List<ItemLike> SMOOTH_POOP_LIST = List.of(PSBlocks.DRIED_POOP_BLOCK);
+        List<ItemLike> MAGGOTS_LIST = List.of(PSItems.MAGGOTS_SEEDS);
 
         shapeless1x1Recipe(recipeOutput, Blocks.CRIMSON_NYLIUM, Blocks.CRIMSON_FUNGUS, Blocks.NETHERRACK);
         shapeless1x1Recipe(recipeOutput, Blocks.WARPED_NYLIUM, Blocks.WARPED_FUNGUS, Blocks.NETHERRACK);
@@ -42,21 +43,65 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         oreBlasting(recipeOutput, SMOOTH_POOP_LIST, RecipeCategory.BUILDING_BLOCKS, PSBlocks.SMOOTH_POOP_BLOCK, 0.1F, 100, "smooth_poop_block");
 
         // 食物
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PSItems.POOP_DUMPLINGS.get(), 1)
+        oreSmelting(recipeOutput, MAGGOTS_LIST, RecipeCategory.BUILDING_BLOCKS, PSItems.BAKED_MAGGOTS, 0.35F, 200, "maggots_seeds");
+        oreCooking(recipeOutput, RecipeSerializer.SMOKING_RECIPE, SmokingRecipe::new, MAGGOTS_LIST, RecipeCategory.BUILDING_BLOCKS, PSItems.BAKED_MAGGOTS, 0.35F, 100, "maggots_seeds", "_from_smoking");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PSItems.POOP_BREAD)
+                .pattern("PMP")
+                .define('P', PSItems.POOP)
+                .define('M', PSItems.MAGGOTS_SEEDS)
+                .unlockedBy(getItemName(PSItems.MAGGOTS_SEEDS), has(PSItems.MAGGOTS_SEEDS))
+                .save(recipeOutput);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PSItems.POOP_DUMPLINGS)
                 .requires(PSItems.POOP_BALL.get())
                 .requires(ItemTags.LEAVES)
-                .unlockedBy("has_poop_ball", has(PSItems.POOP_BALL.get()))
+                .unlockedBy(getItemName(PSItems.POOP_BALL.get()), has(PSItems.POOP_BALL.get()))
+                .save(recipeOutput);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PSItems.POOP_SOUP)
+                .requires(Items.BOWL)
+                .requires(PSItems.POOP)
+                .requires(PSItems.MAGGOTS_SEEDS)
+                .requires(PSItems.URINE_BOTTLE)
+                .unlockedBy(getItemName(PSItems.MAGGOTS_SEEDS), has(PSItems.MAGGOTS_SEEDS))
                 .save(recipeOutput);
 
-//        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOP_CAKE)
-//                .pattern("MMM")
-//                .pattern("SES")
-//                .pattern("PPP")
-//                .define('M', PSItems.MAGGOTS_SEEDS)
-//                .define('S', Items.SUGAR).define('E', Items.EGG)
-//                .define('P', PSItems.POOP)
-//                .criterion(hasItem(PSItems.MAGGOTS_SEEDS), conditionsFromItem(PSItems.MAGGOTS_SEEDS))
-//                .offerTo(exporter);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PSItems.POOBURGER_MEAT.get())
+                .requires(PSItems.POOP, 3)
+                .requires(Items.EGG)
+                .unlockedBy(getItemName(PSItems.POOP), has(PSItems.POOP))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PSItems.POOBURGER.get())
+                .pattern("P")
+                .pattern("M")
+                .pattern("P")
+                .define('P', Items.BREAD)
+                .define('M', PSItems.POOBURGER_MEAT)
+                .unlockedBy(getItemName(PSItems.POOBURGER_MEAT), has(PSItems.POOBURGER_MEAT))
+                .save(recipeOutput);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PSItems.POODDING.get())
+                .requires(PSItems.POOP_BALL)
+                .requires(Items.EGG).requires(Items.SUGAR)
+                .unlockedBy(getItemName(PSItems.POOP_BALL), has(PSItems.POOP_BALL))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PSBlocks.POOP_CAKE.get())
+                .pattern("MMM")
+                .pattern("SES")
+                .pattern("PPP")
+                .define('M', PSItems.MAGGOTS_SEEDS)
+                .define('S', Items.SUGAR).define('E', Items.EGG)
+                .define('P', PSItems.POOP)
+                .unlockedBy(getItemName(PSItems.MAGGOTS_SEEDS), has(PSItems.MAGGOTS_SEEDS))
+                .save(recipeOutput);
+
+        // 杂
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, Items.COBWEB)
+                .pattern("P P")
+                .pattern(" P ")
+                .pattern("P P")
+                .define('P', PSItems.POOP_BALL)
+                .unlockedBy(getItemName(PSItems.POOP_BALL), has(PSItems.POOP_BALL))
+                .save(recipeOutput);
 
         // 建筑
         offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOP_BLOCK, PSItems.POOP, 1);

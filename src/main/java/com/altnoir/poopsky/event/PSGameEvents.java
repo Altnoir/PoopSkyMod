@@ -7,10 +7,14 @@ import com.altnoir.poopsky.effect.PSPotions;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.villager.PSVillagers;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionBrewing;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
@@ -62,26 +66,34 @@ public class PSGameEvents {
             );
             trades.get(2).add((entity, random) -> new MerchantOffer(
                     new ItemCost(PSBlocks.STRIPPED_POOP_EMPTY_LOG, 1),
-                    new ItemStack(Items.EMERALD, 3), 44, 10, 0.1f)
+                    new ItemStack(Items.EMERALD, 5), 44, 10, 0.1f)
             );
             trades.get(2).add((entity, random) -> new MerchantOffer(
                     new ItemCost(PSItems.POOP_BREAD.get(), 2),
                     new ItemStack(Items.RAW_COPPER, 1), 18, 10, 0.1f)
             );
+            trades.get(2).add((entity, random) -> new MerchantOffer(
+                    new ItemCost(PSItems.POOP.get(), 88),
+                    new ItemStack(PSItems.LAWRENCE_MUSIC_DISC.get(), 1), 2, 15, 0.1f)
+            );
 
 
             trades.get(3).add((entity, random) -> new MerchantOffer(
-                    new ItemCost(Items.EMERALD, 12),
-                    new ItemStack(PSItems.LAWRENCE_MUSIC_DISC.get(), 1), 4, 15, 0.1f)
+                    new ItemCost(PSItems.POOP.get(), 88),
+                    new ItemStack(PSItems.LIGHT_DANCE_MUSIC_DISC.get(), 1), 2, 30, 0.1f)
             );
-//            trades.get(3).add((entity, random) -> new MerchantOffer(
-//                    new ItemCost(Items.EMERALD, 8),
-//                    new ItemStack(PSBlocks.STOOL, 1), 16, 15, 0.1f)
-//            );
-//            trades.get(3).add((entity, random) -> new MerchantOffer(
-//                    new ItemCost(PSItems.URINE_BOTTLE, 1),
-//                    PotionContentsComponent.createStack(Items.POTION, Potions.WATER), 3, 15, 0.1f)
-//            );
+            trades.get(3).add((entity, random) -> new MerchantOffer(
+                    new ItemCost(PSItems.POOP.get(), 88),
+                    new ItemStack(PSItems.MOON_BOWL_MUSIC_DISC.get(), 1), 2, 30, 0.1f)
+            );
+            trades.get(3).add((entity, random) -> new MerchantOffer(
+                    new ItemCost(Items.EMERALD, 8),
+                    new ItemStack(PSBlocks.STOOL, 1), 16, 15, 0.1f)
+            );
+            trades.get(3).add((entity, random) -> new MerchantOffer(
+                    new ItemCost(PSItems.URINE_BOTTLE, 1),
+                    potion(Potions.WATER), 3, 15, 0.1f)
+            );
 
 
             trades.get(4).add((entity, random) -> new MerchantOffer(
@@ -95,7 +107,7 @@ public class PSGameEvents {
 
 
             trades.get(5).add((entity, random) -> new MerchantOffer(
-                    new ItemCost(Items.EMERALD, 37),
+                    new ItemCost(Items.EMERALD, 24),
                     new ItemStack(PSItems.TOILET_LINKER.get(), 1), 4, 50, 0.5f)
             );
             trades.get(5).add((entity, random) -> new MerchantOffer(
@@ -104,5 +116,13 @@ public class PSGameEvents {
                     new ItemStack(PSItems.TOILET_PLUG.get(), 1), 1, 100, 1.0f)
             );
         }
+    }
+
+    private static ItemStack potion(Holder<Potion> potion) {
+        return PotionContents.createItemStack(Items.POTION, potion);
+    }
+
+    private static ItemCost potionCost(Holder<Potion> potion) {
+        return new ItemCost(Items.POTION).withComponents(p_330063_ -> p_330063_.expect(DataComponents.POTION_CONTENTS, new PotionContents(potion)));
     }
 }

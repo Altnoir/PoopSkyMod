@@ -14,14 +14,13 @@ public class PFoods {
             .effect(new MobEffectInstance(MobEffects.CONFUSION, 300, 0), 0.5F)
             .effect(new MobEffectInstance(MobEffects.BLINDNESS, 20, 0), 1.0F)
             .build();
-    public static final FoodProperties POOP_BLOCK = new FoodProperties.Builder()
-            .nutrition(8)
-            .saturationModifier(0.2F)
-            .effect(new MobEffectInstance(MobEffects.POISON, 300, 0), 0.1F)
-            .effect(new MobEffectInstance(MobEffects.HUNGER, 1800, 0), 0.5F)
-            .effect(new MobEffectInstance(MobEffects.CONFUSION, 900, 0), 0.5F)
-            .effect(new MobEffectInstance(MobEffects.BLINDNESS, 60, 0), 1.0F)
+
+    public static final FoodProperties MAGGOTS_SEEDS = new FoodProperties.Builder()
+            .nutrition(1).saturationModifier(0.1F).fast()
+            .effect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0), 0.5F)
             .build();
+    public static final FoodProperties BAKED_MAGGOTS = new FoodProperties.Builder()
+            .nutrition(1).saturationModifier(0.4F).fast().build();
     public static final FoodProperties SAPING_BALL = new FoodProperties.Builder()
             .nutrition(2)
             .saturationModifier(0.2F)
@@ -65,7 +64,7 @@ public class PFoods {
             .build();
 
     public static final FoodProperties POOBURGER_MEAT = new FoodProperties.Builder()
-            .nutrition(8).saturationModifier(0.8F)
+            .nutrition(6).saturationModifier(0.8F)
             .effect(new MobEffectInstance(MobEffects.POISON, 200, 0), 0.1F)
             .effect(new MobEffectInstance(MobEffects.CONFUSION, 1200, 0), 0.75F)
             .effect(new MobEffectInstance(MobEffects.BLINDNESS, 40, 0), 1.0F)
@@ -73,7 +72,7 @@ public class PFoods {
             .build();
 
     public static final FoodProperties POOBURGER = new FoodProperties.Builder()
-            .nutrition(10).saturationModifier(0.8F)
+            .nutrition(18).saturationModifier(0.8F)
             .effect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 600, 0), 1.0F)
             .effect(new MobEffectInstance(MobEffects.BLINDNESS, 40, 0), 1.0F)
             .effect(new MobEffectInstance(MobEffects.DARKNESS, 120, 0), 1.0F)

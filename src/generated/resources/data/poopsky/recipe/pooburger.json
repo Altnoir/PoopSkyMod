@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "M": {
+      "item": "poopsky:pooburger_meat"
+    },
+    "P": {
+      "item": "minecraft:bread"
+    }
+  },
+  "pattern": [
+    "P",
+    "M",
+    "P"
+  ],
+  "result": {
+    "count": 1,
+    "id": "poopsky:pooburger"
+  }
+}

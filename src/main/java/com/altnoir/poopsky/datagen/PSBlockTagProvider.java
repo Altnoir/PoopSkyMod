@@ -84,6 +84,13 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(PSBlocks.SMOOTH_POOP_BLOCK_WALL.get())
                 .add(PSBlocks.CUT_POOP_BLOCK_WALL.get());
 
+        tag(BlockTags.MOB_INTERACTABLE_DOORS)
+                .add(PSBlocks.POOP_DOOR.get());
+        tag(BlockTags.DOORS)
+                .add(PSBlocks.POOP_DOOR.get());
+        tag(BlockTags.TRAPDOORS)
+                .add(PSBlocks.POOP_TRAPDOOR.get());
+
         tag(BlockTags.CROPS)
                 .add(PSBlocks.MAGGOTS.get());
         tag(BlockTags.MAINTAINS_FARMLAND)

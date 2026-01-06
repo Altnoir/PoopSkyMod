@@ -17,8 +17,13 @@ public class PSSoundEvents {
 
     public static final Supplier<SoundEvent> FART = registerSoundEvent("fart");
     public static final Supplier<SoundEvent> ENTITY_VILLAGER_WORK_TOILET = registerSoundEvent("entity.villager.work_toilet");
+
     public static final Supplier<SoundEvent> LAWRENCE = registerSoundEvent("lawrence");
     public static final ResourceKey<JukeboxSong> LAWRENCE_KEY = registerJukeboxSong("lawrence");
+    public static final Supplier<SoundEvent> LIGHT_DANCE = registerSoundEvent("light_dance");
+    public static final ResourceKey<JukeboxSong> LIGHT_DANCE_KEY = registerJukeboxSong("light_dance");
+    public static final Supplier<SoundEvent> MOON_BOWL = registerSoundEvent("moon_bowl");
+    public static final ResourceKey<JukeboxSong> MOON_BOWL_KEY = registerJukeboxSong("moon_bowl");
 
     public static ResourceKey<JukeboxSong> registerJukeboxSong(String name) {
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, name);

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:bowl"
+    },
+    {
+      "item": "poopsky:poop"
+    },
+    {
+      "item": "poopsky:maggots_seeds"
+    },
+    {
+      "item": "poopsky:urine_bottle"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "poopsky:poop_soup"
+  }
+}

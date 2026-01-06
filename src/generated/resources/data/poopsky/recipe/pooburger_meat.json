@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "poopsky:poop"
+    },
+    {
+      "item": "poopsky:poop"
+    },
+    {
+      "item": "poopsky:poop"
+    },
+    {
+      "item": "minecraft:egg"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "poopsky:pooburger_meat"
+  }
+}

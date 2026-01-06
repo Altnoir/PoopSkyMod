@@ -1,0 +1,17 @@
+{
+  "type": "farmersdelight:cooking",
+  "cookingtime": 100,
+  "experience": 0.35,
+  "ingredients": [
+    {
+      "tag": "c:crops/cabbage"
+    },
+    {
+      "item": "poopsky:poop"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "poopsky:poop_vegetable_sticks"
+  }
+}

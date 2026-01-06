@@ -29,6 +29,9 @@ public class PSItems {
     public static final DeferredItem<Item> SAPING_BALL = ITEMS.register("saping_ball", () ->
             new SapingBallItem(new Item.Properties().food(PFoods.SAPING_BALL).stacksTo(88)));
 
+
+    public static final DeferredItem<Item> BAKED_MAGGOTS = ITEMS.register("baked_maggots", () ->
+            new Item(new Item.Properties().food(PFoods.BAKED_MAGGOTS).stacksTo(88)));
     public static final DeferredItem<Item> POOP_BREAD = ITEMS.register("poop_bread", () ->
             new Item(new Item.Properties().food(PFoods.POOP_BREAD).stacksTo(88)));
     public static final DeferredItem<Item> POOP_DUMPLINGS = ITEMS.register("poop_dumplings", () ->
@@ -57,7 +60,7 @@ public class PSItems {
                     .component(PSComponents.TOILET_COMPONENT, ToiletComponent.EMPTY)
                     .stacksTo(1)));
     public static final DeferredItem<Item> MAGGOTS_SEEDS = ITEMS.register("maggots_seeds", () ->
-            new ItemNameBlockItem(PSBlocks.MAGGOTS.get(), new Item.Properties().stacksTo(88)));
+            new ItemNameBlockItem(PSBlocks.MAGGOTS.get(), new Item.Properties().food(PFoods.MAGGOTS_SEEDS).stacksTo(88)));
 
 
     public static final DeferredItem<Item> URINE_BOTTLE = ITEMS.register("urine_bottle",
@@ -76,6 +79,11 @@ public class PSItems {
 
     public static final DeferredItem<Item> LAWRENCE_MUSIC_DISC = ITEMS.register("music_disc_lawrence", () ->
             new Item(new Item.Properties().jukeboxPlayable(PSSoundEvents.LAWRENCE_KEY).rarity(Rarity.RARE).stacksTo(1)));
+    public static final DeferredItem<Item> LIGHT_DANCE_MUSIC_DISC = ITEMS.register("music_disc_light_dance", () ->
+            new Item(new Item.Properties().jukeboxPlayable(PSSoundEvents.LIGHT_DANCE_KEY).rarity(Rarity.RARE).stacksTo(1)));
+    public static final DeferredItem<Item> MOON_BOWL_MUSIC_DISC = ITEMS.register("music_disc_moon_bowl", () ->
+            new Item(new Item.Properties().jukeboxPlayable(PSSoundEvents.MOON_BOWL_KEY).rarity(Rarity.RARE).stacksTo(1)));
+
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

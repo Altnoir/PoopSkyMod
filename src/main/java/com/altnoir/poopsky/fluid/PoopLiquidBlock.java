@@ -34,7 +34,7 @@ public class PoopLiquidBlock extends LiquidBlock {
     }
 
     private void hasBlockNeighbor(Level level, BlockPos pos, Block block, Block blockDown, Block liquid) {
-        if (lavaNeighbor(level, pos, Direction.UP, liquid)) {
+        if (liquidNeighbor(level, pos, Direction.UP, liquid)) {
             level.levelEvent(1501, pos, 0);
             level.setBlockAndUpdate(pos, blockDown.defaultBlockState());
         } else {
@@ -43,26 +43,36 @@ public class PoopLiquidBlock extends LiquidBlock {
     }
 
     private void hasBlockNeighbor(Level level, BlockPos pos, Block block, Block liquid) {
-        BlockPos neighborPos = getLavaNeighborPos(level, pos, liquid);
+        BlockPos neighborPos = getLiquidNeighborPos(level, pos, liquid);
         if (neighborPos != null) {
             level.levelEvent(1501, pos, 0);
             level.setBlockAndUpdate(neighborPos, block.defaultBlockState());
         }
     }
 
-    private BlockPos getLavaNeighborPos(Level level, BlockPos pos, Block liquid) {
+    private BlockPos getLiquidNeighborPos(Level level, BlockPos pos, Block liquid) {
         for (Direction direction : Direction.values()) {
             if (direction == Direction.UP) continue;
-            if (lavaNeighbor(level, pos, direction, liquid)) {
+            if (liquidNeighbor(level, pos, direction, liquid)) {
                 return pos.relative(direction);
             }
         }
         return null;
     }
 
-    private boolean lavaNeighbor(Level level, BlockPos pos, Direction direction, Block liquid) {
+    private boolean liquidNeighbor(Level level, BlockPos pos, Direction direction, Block liquid) {
         BlockPos neighborPos = pos.relative(direction);
         BlockState neighborState = level.getBlockState(neighborPos);
         return neighborState.getBlock() == liquid;
+    }
+
+    private boolean liquidIsSource(Level level, BlockPos pos, Direction direction, Block liquidSource) {
+        BlockPos neighborPos = pos.relative(direction);
+        BlockState neighborState = level.getBlockState(neighborPos);
+        if (neighborState.getFluidState().isSource()) {
+            return neighborState.getBlock() == liquidSource;
+        } else {
+            return false;
+        }
     }
 }

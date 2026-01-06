@@ -1,24 +1,40 @@
 {
-    "fart": {
-        "subtitle": "subtitle.poopsky.fart",
-        "sounds": [
-            "poopsky:fart_1",
-            "poopsky:fart_2"
-        ]
-    },
-    "entity.villager.work_toilet": {
-        "subtitle": "subtitle.poopsky.villager.work_toilet",
-        "sounds": [
-            "poopsky:fart_1",
-            "poopsky:fart_2"
-        ]
-    },
-    "lawrence": {
+  "fart": {
+    "subtitle": "subtitle.poopsky.fart",
     "sounds": [
-        {
-            "name":"poopsky:merry_christmas_mr_lawrence",
-            "stream": true
-        }
+      "poopsky:fart_1",
+      "poopsky:fart_2"
     ]
-}
+  },
+  "entity.villager.work_toilet": {
+    "subtitle": "subtitle.poopsky.villager.work_toilet",
+    "sounds": [
+      "poopsky:fart_1",
+      "poopsky:fart_2"
+    ]
+  },
+  "lawrence": {
+    "sounds": [
+      {
+        "name": "poopsky:merry_christmas_mr_lawrence",
+        "stream": true
+      }
+    ]
+  },
+  "light_dance": {
+    "sounds": [
+      {
+        "name": "poopsky:light_dance",
+        "stream": true
+      }
+    ]
+  },
+  "moon_bowl": {
+    "sounds": [
+      {
+        "name": "poopsky:moon_bowl",
+        "stream": true
+      }
+    ]
+  }
 }

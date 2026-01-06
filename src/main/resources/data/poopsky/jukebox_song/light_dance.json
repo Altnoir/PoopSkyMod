@@ -1,0 +1,8 @@
+{
+  "comparator_output": 8,
+  "description": {
+    "translate": "item.poopsky.music_disc_light_dance.desc"
+  },
+  "length_in_seconds": 212.0,
+  "sound_event": "poopsky:light_dance"
+}
