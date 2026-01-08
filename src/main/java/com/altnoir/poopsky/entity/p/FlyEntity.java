@@ -27,6 +27,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class FlyEntity extends Animal implements FlyingAnimal {
@@ -168,5 +169,11 @@ public class FlyEntity extends Animal implements FlyingAnimal {
 
     public static boolean checkFlySpawnRules(EntityType<FlyEntity> fly, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
         return MobSpawnType.ignoresLightRequirements(spawnType);
+    }
+
+    @Override
+    protected void defineSynchedData(SynchedEntityData.@NotNull Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_FLAGS_ID, (byte) 0);
     }
 }
