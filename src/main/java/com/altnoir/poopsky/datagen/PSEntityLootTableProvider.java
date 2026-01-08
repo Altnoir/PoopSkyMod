@@ -7,14 +7,9 @@ import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.advancements.critereon.SlimePredicate;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.EntityLootSubProvider;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.flag.FeatureFlags;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -36,7 +31,7 @@ public class PSEntityLootTableProvider extends EntityLootSubProvider {
     @Override
     public void generate() {
         this.add(
-                PSEntityType.POOPLIME.get(),
+                PSEntityType.POOLIME.get(),
                 LootTable.lootTable()
                         .withPool(
                                 LootPool.lootPool()
@@ -60,7 +55,20 @@ public class PSEntityLootTableProvider extends EntityLootSubProvider {
                                         )
                         )
         );
+        this.add(
+                PSEntityType.FLY.get(),
+                LootTable.lootTable()
+                        .withPool(
+                                LootPool.lootPool()
+                                        .setRolls(ConstantValue.exactly(1.0F))
+                                        .add(
+                                                LootItem.lootTableItem(PSItems.MAGGOTS_SEEDS.get())
+                                                        .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))
+                                        )
+                        )
+        );
     }
+
     @Override
     protected @NotNull Stream<EntityType<?>> getKnownEntityTypes() {
         return PSEntityType.ENTITY_TYPES.getEntries().stream().map(Holder::value);

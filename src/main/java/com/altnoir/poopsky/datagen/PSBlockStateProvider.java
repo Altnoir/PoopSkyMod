@@ -88,7 +88,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
         simpleBlockItem(PSBlocks.POOP_BLOCK.get(), models().getExistingFile(modLoc("block/poop_block1")));
         simpleBlockItem(PSBlocks.POOP_PIECE.get(), models().getExistingFile(modLoc("block/poop_height2")));
 
-        blockWithTranslucentRenderType(PSBlocks.POOPLIME_BLOCK.get());
+        blockWithTranslucentRenderType(PSBlocks.POOLIME_BLOCK.get());
         blockWithItem(PSBlocks.CHILI_POOP_BLOCK.get());
         stairsBlock((StairBlock) PSBlocks.CHILI_POOP_STAIRS.get(), blockTexture(PSBlocks.CHILI_POOP_BLOCK.get()));
         slabBlock((SlabBlock) PSBlocks.CHILI_POOP_SLAB.get(), blockTexture(PSBlocks.CHILI_POOP_BLOCK.get()), blockTexture(PSBlocks.CHILI_POOP_BLOCK.get()));

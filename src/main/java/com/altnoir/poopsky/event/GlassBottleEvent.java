@@ -1,9 +1,10 @@
 package com.altnoir.poopsky.event;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.block.AbstractToiletBlock;
+import com.altnoir.poopsky.block.p.ToiletLavaBlock;
 import com.altnoir.poopsky.fluid.PSFluids;
 import com.altnoir.poopsky.item.PSItems;
-import com.altnoir.poopsky.tag.PSBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -33,14 +34,13 @@ public class GlassBottleEvent {
         var heldItem = player.getItemInHand(hand);
 
         if (!(heldItem.getItem() instanceof BottleItem)) return;
-        if (!level.getBlockState(pos).is(PSBlockTags.TOILET_BLOCKS)) return;
+        if (!level.isClientSide && level.getBlockState(pos).getBlock() instanceof AbstractToiletBlock abstractToiletBlock) {
+            if (abstractToiletBlock instanceof ToiletLavaBlock && level.getBlockState(pos).getValue(ToiletLavaBlock.LAVA)) return;
 
-        if (!level.isClientSide) {
             level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.PLAYERS, 1.0F, 1.0F);
             level.gameEvent(player, GameEvent.FLUID_PICKUP, pos);
 
-            var urineBottle = new ItemStack(PSItems.URINE_BOTTLE.get());
-            var result = ItemUtils.createFilledResult(heldItem, player, urineBottle);
+            var result = ItemUtils.createFilledResult(heldItem, player, new ItemStack(PSItems.URINE_BOTTLE.get()));
 
             player.setItemInHand(hand, result);
         }

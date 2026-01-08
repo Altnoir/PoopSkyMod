@@ -14,19 +14,20 @@
   "message.poopsky.toilet_linker.3": "Linked",
   "message.poopsky.toilet_linker.4": "Cleared",
   "tooltip.poopsky.item.info_0": "§7Hold §6[Shift] §7to show details",
+  "tooltip.poopsky.item.info_1": "§7Right-click two different toilet blocks to link",
   "tooltip.poopsky.toilet_linker.info_1": "Toilet① - DimID: %1$s, Coordinates: %2$s, %3$s, %4$s",
   "tooltip.poopsky.toilet_linker.info_2": "Toilet② - DimID: %1$s, Coordinates: %2$s, %3$s, %4$s",
 
   "tooltip.poopsky.poop_ball.info_1": "Villager Support",
   "tooltip.poopsky.poop_ball.info_2": "500KG Poop",
 
-  "item.poopsky.pooplime_spawn_egg": "Pooplime Spawn Egg",
+  "item.poopsky.poolime_spawn_egg": "Poolime Spawn Egg",
   "item.poopsky.music_disc_lawrence": "Music Disc",
   "item.poopsky.music_disc_lawrence.desc": "Ryuichi Sakamoto - Merry Christmas Mr. Lawrence",
   "item.poopsky.music_disc_light_dance": "Music Disc",
-  "item.poopsky.music_disc_light_dance.desc": "Light Dance - Sakanaction",
+  "item.poopsky.music_disc_light_dance.desc": "Sakanaction - Light Dance",
   "item.poopsky.music_disc_moon_bowl": "Music Disc",
-  "item.poopsky.music_disc_moon_bowl.desc": "Moon Bowl - Sakanaction",
+  "item.poopsky.music_disc_moon_bowl.desc": "Sakanaction - Moon Bowl",
 
   "item.minecraft.potion.effect.fecal_incontinence_potion": "Potion of Fecal Incontinence",
   "item.minecraft.splash_potion.effect.fecal_incontinence_potion": "Splash Potion of Fecal Incontinence",
@@ -95,7 +96,7 @@
   "block.poopsky.stripped_poop_log": "Stripped Poop Log",
   "block.poopsky.stripped_poop_empty_log": "Stripped Hollow Poop Log",
   "block.poopsky.stool": "Stool",
-  "block.poopsky.pooplime_block": "Pooplime Block",
+  "block.poopsky.poolime_block": "Poolime Block",
   "block.poopsky.compooper": "Compooper",
 
   "item.poopsky.dragon_breath_chili": "Dragon Breath Chili",
@@ -155,7 +156,7 @@
   "entity.minecraft.villager.poopsky.poopmaker": "Poopmaker",
   "entity.poopsky.toilet_plug": "Toilet Plug",
   "entity.poopsky.stool_entity": "Stool",
-  "entity.poopsky.pooplime": "Pooplime",
+  "entity.poopsky.poolime": "Poolime",
 
   "key.category.poopsky": "POOPSKY",
   "key.poopsky.use_plug": "Summon Toilet Plug",

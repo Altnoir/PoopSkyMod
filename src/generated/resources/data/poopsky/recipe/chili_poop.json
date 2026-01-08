@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "poopsky:chili_poop_block"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "poopsky:chili_poop"
+  }
+}

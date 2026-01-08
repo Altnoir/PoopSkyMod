@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.block;
 
 import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
+import com.altnoir.poopsky.block.p.ToiletLavaBlock;
 import com.altnoir.poopsky.effect.PSEffects;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.particle.PSParticles;
@@ -274,14 +275,23 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
         level.setBlock(pos, state.setValue(FORWARD, forwardConnected).setValue(BACKWARD, backwardConnected), 3);
     }
 
-    private boolean hasHot(ServerLevel level, BlockPos pos) {
+    protected boolean hasHot(ServerLevel level, BlockPos pos) {
         var above = pos.above();
         if (!level.isInWorldBounds(above)) return false;
         return level.getBlockState(above).is(Blocks.FIRE);
     }
 
-    private boolean isValidNeighbor(LevelReader level, BlockPos pos, Direction facing) {
+    protected boolean isValidNeighbor(LevelReader level, BlockPos pos, Direction facing) {
         var neighbor = level.getBlockState(pos);
-        return neighbor.getBlock() instanceof AbstractToiletBlock && neighbor.getValue(FACING) == facing;
+
+        if (neighbor.getBlock() instanceof AbstractToiletBlock) {
+            if (!(neighbor.getBlock() instanceof ToiletLavaBlock)) {
+                return neighbor.getValue(FACING) == facing || neighbor.getValue(FACING) == facing.getOpposite();
+            } else if (this instanceof ToiletLavaBlock) {
+                return neighbor.getValue(ToiletLavaBlock.LAVA) == this.defaultBlockState().getValue(ToiletLavaBlock.LAVA) &&
+                        (neighbor.getValue(FACING) == facing || neighbor.getValue(FACING) == facing.getOpposite());
+            }
+        }
+        return false;
     }
 }

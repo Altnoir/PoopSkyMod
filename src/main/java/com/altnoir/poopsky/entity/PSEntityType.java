@@ -2,7 +2,8 @@ package com.altnoir.poopsky.entity;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.entity.p.ChairEntity;
-import com.altnoir.poopsky.entity.p.PooplimeEntity;
+import com.altnoir.poopsky.entity.p.FlyEntity;
+import com.altnoir.poopsky.entity.p.PoolimeEntity;
 import com.altnoir.poopsky.entity.p.ToiletPlugEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
@@ -22,13 +23,20 @@ public class PSEntityType {
                     .sized(0.75F, 0.35F)
                     .build("toilet_plug"));
 
-    public static Supplier<EntityType<PooplimeEntity>> POOPLIME = ENTITY_TYPES.register("pooplime", () ->
-            EntityType.Builder.of(PooplimeEntity::new, MobCategory.MONSTER)
+    public static Supplier<EntityType<PoolimeEntity>> POOLIME = ENTITY_TYPES.register("poolime", () ->
+            EntityType.Builder.of(PoolimeEntity::new, MobCategory.MONSTER)
                     .sized(0.52F, 0.52F)
                     .eyeHeight(0.325F)
                     .spawnDimensionsScale(4.0F)
                     .clientTrackingRange(10)
                     .build("pooplime"));
+
+    public static Supplier<EntityType<FlyEntity>> FLY = ENTITY_TYPES.register("fly", () ->
+            EntityType.Builder.of(FlyEntity::new, MobCategory.MONSTER)
+                    .sized(0.7F, 0.6F)
+                    .eyeHeight(0.3F)
+                    .clientTrackingRange(8)
+                    .build("fly"));
 
     public static Supplier<EntityType<ChairEntity>> STOOL = ENTITY_TYPES.register("stool_entity", () ->
             EntityType.Builder.of(ChairEntity::new, MobCategory.MISC)

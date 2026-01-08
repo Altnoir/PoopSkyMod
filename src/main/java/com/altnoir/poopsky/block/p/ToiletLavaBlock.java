@@ -2,6 +2,7 @@ package com.altnoir.poopsky.block.p;
 
 import com.altnoir.poopsky.block.AbstractToiletBlock;
 import com.altnoir.poopsky.effect.PSEffects;
+import com.altnoir.poopsky.item.PSItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -11,6 +12,7 @@ import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
@@ -63,14 +65,12 @@ public class ToiletLavaBlock extends AbstractToiletBlock {
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (state.getValue(LAVA)) {
             if (stack.is(Items.BUCKET)) {
-                if (!player.isCreative()) {
-                    stack.shrink(1);
-                }
-                if (!player.getInventory().contains(new ItemStack(Items.LAVA_BUCKET))) {
-                    player.addItem(new ItemStack(Items.LAVA_BUCKET));
-                }
-                level.setBlock(pos, state.setValue(LAVA, false), 3);
                 level.playSound(null, pos, SoundEvents.BUCKET_FILL_LAVA, SoundSource.BLOCKS, 1.0F, 1.0F);
+                level.setBlock(pos, state.setValue(LAVA, false), 3);
+
+                ItemStack itemStack = ItemUtils.createFilledResult(stack, player, new ItemStack(Items.LAVA_BUCKET));
+                player.setItemInHand(hand, itemStack);
+
                 return ItemInteractionResult.sidedSuccess(level.isClientSide);
             }
         }

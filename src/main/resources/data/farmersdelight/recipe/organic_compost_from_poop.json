@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "group": "fd_organic_compost",
+  "ingredients": [
+    {
+      "tag": "minecraft:dirt"
+    },
+    {
+      "item": "poopsky:poop"
+    },
+    {
+      "item": "poopsky:poop"
+    },
+    {
+      "item": "poopsky:poop"
+    },
+    {
+      "item": "poopsky:poop"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "farmersdelight:organic_compost"
+  }
+}

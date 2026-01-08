@@ -2,6 +2,6 @@
   "parent": "minecraft:block/cube_all",
   "render_type": "minecraft:translucent",
   "textures": {
-    "all": "poopsky:block/pooplime_block"
+    "all": "poopsky:block/poolime_block"
   }
 }

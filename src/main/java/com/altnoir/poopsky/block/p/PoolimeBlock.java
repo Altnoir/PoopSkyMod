@@ -10,8 +10,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.extensions.IBlockExtension;
 
-public class PooplimeBlock extends HalfTransparentBlock implements IBlockExtension {
-    public PooplimeBlock(Properties properties) {
+public class PoolimeBlock extends HalfTransparentBlock implements IBlockExtension {
+    public PoolimeBlock(Properties properties) {
         super(properties);
     }
 

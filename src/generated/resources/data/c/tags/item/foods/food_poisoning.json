@@ -1,6 +1,8 @@
 {
   "values": [
     "poopsky:poop",
+    "poopsky:chili_poop",
+    "poopsky:saping_ball",
     "poopsky:poop_bread",
     "poopsky:poop_dumplings",
     "poopsky:poop_soup",
@@ -9,6 +11,7 @@
     "poopsky:pooburger",
     "poopsky:poop_pasta",
     "poopsky:poodding",
+    "poopsky:urine_bottle",
     "poopsky:poop_cake"
   ]
 }

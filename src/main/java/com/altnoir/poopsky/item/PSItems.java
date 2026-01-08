@@ -73,8 +73,8 @@ public class PSItems {
     public static final DeferredItem<BucketItem> POOP_BUCKET = ITEMS.register("poop_bucket",
             () -> new BucketItem(PSFluids.POOP.get(), new Item.Properties().stacksTo(1)));
 
-    public static final DeferredItem<Item> POOPLIME_SPAWN_EGG = ITEMS.register("pooplime_spawn_egg",
-            () -> new DeferredSpawnEggItem(PSEntityType.POOPLIME, 0x7D5F36, 0x5E4228,
+    public static final DeferredItem<Item> POOLIME_SPAWN_EGG = ITEMS.register("poolime_spawn_egg",
+            () -> new DeferredSpawnEggItem(PSEntityType.POOLIME, 0x7D5F36, 0x5E4228,
                     new Item.Properties()));
 
     public static final DeferredItem<Item> LAWRENCE_MUSIC_DISC = ITEMS.register("music_disc_lawrence", () ->

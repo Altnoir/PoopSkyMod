@@ -3,15 +3,15 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:cobweb"
+        "recipe": "poopsky:poolime_block_from_compacting"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "maggots_seeds": {
+    "poop_ball": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:maggots_seeds"
+            "items": "poopsky:poop_ball"
           }
         ]
       },
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "maggots_seeds"
+      "poop_ball"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:cobweb"
+      "poopsky:poolime_block_from_compacting"
     ]
   }
 }

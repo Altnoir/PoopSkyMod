@@ -136,8 +136,8 @@ public class PSBlocks {
                     .noOcclusion()
             )
     );
-    public static final DeferredBlock<Block> POOPLIME_BLOCK = registerBlock("pooplime_block",
-            () -> new PooplimeBlock(BlockBehaviour.Properties.of()
+    public static final DeferredBlock<Block> POOLIME_BLOCK = registerBlock("poolime_block",
+            () -> new PoolimeBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_BROWN)
                     .friction(0.8F)
                     .sound(SoundType.SLIME_BLOCK)

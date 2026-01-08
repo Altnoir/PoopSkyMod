@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -38,5 +39,16 @@ public class LavaCompooperBlock extends AbstractCompooperBlock {
             return BucketUse(stack, level, pos, player, hand, SoundEvents.BUCKET_FILL, Items.LAVA_BUCKET.getDefaultInstance());
         }
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    }
+
+    @Override
+    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        if (this.isEntityInsideContent(pos, entity)) {
+            entity.lavaHurt();
+        }
+    }
+
+    protected boolean isEntityInsideContent(BlockPos pos, Entity entity) {
+        return entity.getY() < (double) pos.getY() + 0.9375 && entity.getBoundingBox().maxY > (double) pos.getY() + 0.25;
     }
 }

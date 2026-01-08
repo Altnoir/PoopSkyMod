@@ -6,6 +6,7 @@ import com.altnoir.poopsky.item.PSItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
@@ -38,10 +39,13 @@ public class PSItemTagProvider extends ItemTagsProvider {
                 .add(PSItems.POOP_PASTA.get())
                 .add(PSItems.POODDING.get())
                 .add(PSItems.DRAGON_BREATH_CHILI.get())
+                .add(PSItems.URINE_BOTTLE.get())
                 .add(PSBlocks.POOP_CAKE.get().asItem());
 
         tag(Tags.Items.FOODS_FOOD_POISONING)
                 .add(PSItems.POOP.get())
+                .add(PSItems.CHILI_POOP.get())
+                .add(PSItems.SAPING_BALL.get())
                 .add(PSItems.POOP_BREAD.get())
                 .add(PSItems.POOP_DUMPLINGS.get())
                 .add(PSItems.POOP_SOUP.get())
@@ -50,6 +54,7 @@ public class PSItemTagProvider extends ItemTagsProvider {
                 .add(PSItems.POOBURGER.get())
                 .add(PSItems.POOP_PASTA.get())
                 .add(PSItems.POODDING.get())
+                .add(PSItems.URINE_BOTTLE.get())
                 .add(PSBlocks.POOP_CAKE.asItem());
         tag(ItemTags.MEAT)
                 .add(PSItems.MAGGOTS_SEEDS.get())
@@ -67,6 +72,10 @@ public class PSItemTagProvider extends ItemTagsProvider {
                 .add(PSItems.MOON_BOWL_MUSIC_DISC.get());
 
         //方块物品标签
+        tag(ItemTags.DIRT)
+                .add(PSBlocks.POOP_BLOCK.asItem())
+                .add(PSBlocks.CHILI_POOP_BLOCK.asItem());
+
         tag(ItemTags.VILLAGER_PLANTABLE_SEEDS)
                 .add(PSItems.MAGGOTS_SEEDS.get());
         tag(ItemTags.SAPLINGS)

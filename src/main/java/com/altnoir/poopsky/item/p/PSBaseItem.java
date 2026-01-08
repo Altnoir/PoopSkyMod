@@ -14,21 +14,27 @@ public class PSBaseItem extends Item {
         super(properties);
     }
 
-    public boolean isShiftDown(){
-        return InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), InputConstants.KEY_LSHIFT)
-                || InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), InputConstants.KEY_RSHIFT);
+    public boolean isDisplay(ItemStack stack) {
+        return false;
+    }
+
+    public void appendShiftTooltip(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+    }
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
     }
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        if (!isShiftDown())
+        appendTooltip(stack, context, tooltipComponents, tooltipFlag);
+        if (!isShiftDown() && isDisplay(stack))
             tooltipComponents.add(Component.translatable("tooltip.poopsky.item.info_0"));
         else {
-            appendTooltip(stack, context, tooltipComponents, tooltipFlag);
+            appendShiftTooltip(stack, context, tooltipComponents, tooltipFlag);
         }
     }
 
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-
+    private boolean isShiftDown() {
+        return InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), InputConstants.KEY_LSHIFT)
+                || InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), InputConstants.KEY_RSHIFT);
     }
 }

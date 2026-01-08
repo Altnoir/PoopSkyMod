@@ -88,9 +88,11 @@ public class ToiletLinkerItem extends PSBaseItem {
         if (comp == null) return;
 
         var level1 = server.getLevel(Level.OVERWORLD);
-        if (!comp.level1().isEmpty()) level1 = server.getLevel(ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse(comp.level1())));
+        if (!comp.level1().isEmpty())
+            level1 = server.getLevel(ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse(comp.level1())));
         var level2 = server.getLevel(Level.OVERWORLD);
-        if (!comp.level2().isEmpty()) level2 = server.getLevel(ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse(comp.level2())));
+        if (!comp.level2().isEmpty())
+            level2 = server.getLevel(ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse(comp.level2())));
 
         if (level1 == null || level2 == null) return;
 
@@ -119,13 +121,17 @@ public class ToiletLinkerItem extends PSBaseItem {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+    public boolean isDisplay(ItemStack stack) {
+        var comp = stack.get(PSComponents.TOILET_COMPONENT);
+        return comp != null && (!comp.level1().isEmpty() || !comp.level2().isEmpty());
+    }
+
+    @Override
+    public void appendShiftTooltip(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         var comp = stack.get(PSComponents.TOILET_COMPONENT);
         if (comp == null) return;
         var dim1 = comp.level1();
         var dim2 = comp.level2();
-
-        if (dim1 == null || dim2 == null) return;
 
         if (dim1.isEmpty()) return;
         int x1 = comp.x1(), y1 = comp.y1(), z1 = comp.z1();
@@ -134,5 +140,10 @@ public class ToiletLinkerItem extends PSBaseItem {
         if (dim2.isEmpty()) return;
         int x2 = comp.x2(), y2 = comp.y2(), z2 = comp.z2();
         tooltipComponents.add(Component.translatable("tooltip.poopsky.toilet_linker.info_2", dim2, x2, y2, z2).withStyle(style -> style.withColor(ChatFormatting.GRAY)));
+    }
+
+    @Override
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+        tooltipComponents.add(Component.translatable("tooltip.poopsky.item.info_1"));
     }
 }

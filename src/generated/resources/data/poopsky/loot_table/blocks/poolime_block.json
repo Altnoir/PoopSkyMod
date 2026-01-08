@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "poopsky:pooplime_block"
+          "name": "poopsky:poolime_block"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "poopsky:blocks/pooplime_block"
+  "random_sequence": "poopsky:blocks/poolime_block"
 }

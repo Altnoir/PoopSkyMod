@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.block.p;
 
 import com.altnoir.poopsky.entity.PSEntityType;
-import com.altnoir.poopsky.entity.p.PooplimeEntity;
+import com.altnoir.poopsky.entity.p.PoolimeEntity;
 import com.altnoir.poopsky.particle.PSParticles;
 import com.altnoir.poopsky.worldgen.PSConfigureFeatures;
 import com.mojang.serialization.MapCodec;
@@ -16,7 +16,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -80,14 +79,14 @@ public class PoopBlock extends Block implements BonemealableBlock {
 
         if (potioncontents.is(Potions.WATER)) {
             if (!level.isClientSide) {
-                ServerLevel serverlevel = (ServerLevel)level;
+                ServerLevel serverlevel = (ServerLevel) level;
 
                 for (int i = 0; i < 5; i++) {
                     serverlevel.sendParticles(
                             ParticleTypes.SPLASH,
-                            (double)pos.getX() + level.random.nextDouble(),
-                            (double)(pos.getY() + 1),
-                            (double)pos.getZ() + level.random.nextDouble(),
+                            (double) pos.getX() + level.random.nextDouble(),
+                            (double) (pos.getY() + 1),
+                            (double) pos.getZ() + level.random.nextDouble(),
                             1,
                             0.0,
                             0.0,
@@ -183,29 +182,29 @@ public class PoopBlock extends Block implements BonemealableBlock {
             level.setBlockAndUpdate(pos, Blocks.DIRT.defaultBlockState());
             level.playSound(null, pos, SoundEvents.ROOTED_DIRT_PLACE, SoundSource.BLOCKS, 0.5F, 1.0F);
         }
-        PooplimeEntity pooplime = PSEntityType.POOPLIME.get().create(level);
-        int count = 0;
-        if (pooplime != null) {
-            count = level.getEntitiesOfClass(PooplimeEntity.class, pooplime.getBoundingBox().inflate(64.0D)).size();
-        }
 
-        if (count < 40 && random.nextInt(10) == 0) {
-            BlockPos spawnPos = pos.above();
-            if (level.isEmptyBlock(spawnPos) && checkRange(level, pos)) {
+        PoolimeEntity poolime = PSEntityType.POOLIME.get().create(level);
 
-                if (pooplime != null) {
+        if (poolime != null) {
+            int count = level.getEntitiesOfClass(PoolimeEntity.class, poolime.getBoundingBox().inflate(64.0D)).size();
+
+            if (count < 40 && random.nextInt(10) == 0) {
+                BlockPos spawnPos = pos.above();
+                if (level.getBlockState(spawnPos).canBeReplaced() && checkRange(level, pos)) {
 
                     int size = random.nextInt(4) + 1;
-                    pooplime.setSize(size, true);
+                    poolime.setSize(size, true);
 
-                    pooplime.moveTo(spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5, 0, 0);
+                    poolime.moveTo(spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5, 0, 0);
 
-                    if (pooplime.checkSpawnRules(level, MobSpawnType.NATURAL) && level.noCollision(pooplime, pooplime.getBoundingBox())) {
-                        level.addFreshEntity(pooplime);
+                    if (poolime.checkSpawnRules(level, MobSpawnType.NATURAL) && level.noCollision(poolime, poolime.getBoundingBox())) {
+                        level.addFreshEntity(poolime);
                     }
+
                 }
             }
         }
+
     }
 
     private boolean checkRange(Level level, BlockPos centerPos) {

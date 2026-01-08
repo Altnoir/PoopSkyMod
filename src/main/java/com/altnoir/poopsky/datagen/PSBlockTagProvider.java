@@ -37,7 +37,12 @@ public class PSBlockTagProvider extends BlockTagsProvider {
 
         //基础标签
         tag(BlockTags.MOSS_REPLACEABLE)
-                .add(PSBlocks.POOP_BLOCK.get());
+                .add(PSBlocks.POOP_BLOCK.get())
+                .add(PSBlocks.CHILI_POOP_BLOCK.get());
+        tag(BlockTags.BEACON_BASE_BLOCKS)
+                .add(PSBlocks.POOP_BLOCK.get())
+                .add(PSBlocks.CHILI_POOP_BLOCK.get())
+                .add(PSBlocks.DRIED_POOP_BLOCK.get());
 
         tag(BlockTags.DIRT)
                 .add(PSBlocks.POOP_BLOCK.get())

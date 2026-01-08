@@ -78,7 +78,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('M', PSItems.POOBURGER_MEAT)
                 .unlockedBy(getItemName(PSItems.POOBURGER_MEAT), has(PSItems.POOBURGER_MEAT))
                 .save(recipeOutput);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PSItems.POODDING.get())
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PSItems.POODDING.get(), 2)
                 .requires(PSItems.POOP_BALL)
                 .requires(Items.EGG).requires(Items.SUGAR)
                 .unlockedBy(getItemName(PSItems.POOP_BALL), has(PSItems.POOP_BALL))
@@ -96,11 +96,12 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
 
         // 杂
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, Items.COBWEB)
-                .pattern("P P")
+                .pattern("S S")
                 .pattern(" P ")
-                .pattern("P P")
+                .pattern("S S")
                 .define('P', PSItems.POOP_BALL)
-                .unlockedBy(getItemName(PSItems.POOP_BALL), has(PSItems.POOP_BALL))
+                .define('S', PSItems.MAGGOTS_SEEDS)
+                .unlockedBy(getItemName(PSItems.MAGGOTS_SEEDS), has(PSItems.MAGGOTS_SEEDS))
                 .save(recipeOutput);
 
         // 建筑
@@ -121,6 +122,11 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         slabRecipe(recipeOutput, PSBlocks.POOP_SLAB, PSBlocks.POOP_BLOCK);
         verticalSlabRecipe(recipeOutput, PSBlocks.POOP_VERTICAL_SLAB, PSBlocks.POOP_BLOCK);
         wallRecipe(recipeOutput, PSBlocks.POOP_WALL, PSBlocks.POOP_BLOCK);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PSItems.CHILI_POOP, 4)
+                .requires(PSBlocks.CHILI_POOP_BLOCK)
+                .unlockedBy(getItemName(PSBlocks.CHILI_POOP_BLOCK), has(PSBlocks.CHILI_POOP_BLOCK))
+                .save(recipeOutput);
 
         stairsRecipe(recipeOutput, PSBlocks.CHILI_POOP_STAIRS, PSBlocks.CHILI_POOP_BLOCK);
         slabRecipe(recipeOutput, PSBlocks.CHILI_POOP_SLAB, PSBlocks.CHILI_POOP_BLOCK);
@@ -237,7 +243,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy(getItemName(Blocks.MOSSY_COBBLESTONE_SLAB), has(Blocks.MOSSY_COBBLESTONE_SLAB))
                 .save(recipeOutput);
 
-        offerCompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOPLIME_BLOCK.get(), PSItems.POOP_BALL.get());
+        offerCompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOLIME_BLOCK.get(), PSItems.POOP_BALL.get());
 
         //原版物品配方
         offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, Blocks.CRAFTING_TABLE, PSItems.SPALL, 1);

@@ -51,7 +51,7 @@ public class PSGameEvents {
                     new ItemStack(Items.EMERALD, 1), 88, 5, 0.1f)
             );
             trades.get(1).add((entity, random) -> new MerchantOffer(
-                    new ItemCost(Items.EMERALD, 16),
+                    new ItemCost(Items.EMERALD, 10),
                     new ItemStack(PSItems.DRAGON_BREATH_CHILI.get(), 1), 10, 5, 0.15f)
             );
             trades.get(1).add((entity, random) -> new MerchantOffer(
@@ -65,7 +65,11 @@ public class PSGameEvents {
                     new ItemStack(PSItems.POOP_SOUP.get(), 1), 16, 10, 0.07f)
             );
             trades.get(2).add((entity, random) -> new MerchantOffer(
-                    new ItemCost(PSBlocks.STRIPPED_POOP_EMPTY_LOG, 1),
+                    new ItemCost(Items.EMERALD, 3),
+                    new ItemStack(PSItems.POOP_PASTA.get(), 1), 32, 10, 0.07f)
+            );
+            trades.get(2).add((entity, random) -> new MerchantOffer(
+                    new ItemCost(PSBlocks.POOLIME_BLOCK, 1),
                     new ItemStack(Items.EMERALD, 5), 44, 10, 0.1f)
             );
             trades.get(2).add((entity, random) -> new MerchantOffer(
@@ -94,6 +98,14 @@ public class PSGameEvents {
                     new ItemCost(PSItems.URINE_BOTTLE, 1),
                     potion(Potions.WATER), 3, 15, 0.1f)
             );
+            trades.get(3).add((entity, random) -> new MerchantOffer(
+                    new ItemCost(Items.EMERALD, 8),
+                    new ItemStack(PSItems.POOP_VEGETABLE_STICKS.get(), 2), 32, 15, 0.1f)
+            );
+            trades.get(3).add((entity, random) -> new MerchantOffer(
+                    new ItemCost(Items.EMERALD, 8),
+                    new ItemStack(PSItems.POODDING.get(), 3), 32, 15, 0.1f)
+            );
 
 
             trades.get(4).add((entity, random) -> new MerchantOffer(
@@ -102,7 +114,11 @@ public class PSGameEvents {
             );
             trades.get(4).add((entity, random) -> new MerchantOffer(
                     new ItemCost(Items.EMERALD, 18),
-                    new ItemStack(PSBlocks.POOP_CAKE, 1), 1, 25, 0.25f)
+                    new ItemStack(PSItems.POOBURGER.get(), 1), 8, 25, 0.25f)
+            );
+            trades.get(4).add((entity, random) -> new MerchantOffer(
+                    new ItemCost(Items.EMERALD, 18),
+                    new ItemStack(PSBlocks.POOP_CAKE, 1), 4, 25, 0.25f)
             );
 
 

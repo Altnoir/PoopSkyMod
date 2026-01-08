@@ -51,7 +51,7 @@ public class PSItemModelProvider extends ItemModelProvider {
         withExistingParent("poop_bucket", mcLoc("item/generated"))
                 .texture("layer0", modLoc("item/poop_bucket"));
 
-        withExistingParent(PSItems.POOPLIME_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(PSItems.POOLIME_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
     }
 
     private void wallItem(DeferredBlock<?>block, DeferredBlock<?> baseBlock) {
