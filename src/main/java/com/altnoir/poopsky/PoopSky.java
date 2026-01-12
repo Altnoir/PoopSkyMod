@@ -19,6 +19,7 @@ import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.network.PSNetworking;
 import com.altnoir.poopsky.particle.PSParticles;
 import com.altnoir.poopsky.particle.PoopParticle;
+import com.altnoir.poopsky.recipe.PSRecipes;
 import com.altnoir.poopsky.sound.PSSoundEvents;
 import com.altnoir.poopsky.villager.PSVillagers;
 import com.altnoir.poopsky.worldgen.foliage.PSFoliagePlacerTypes;
@@ -73,6 +74,7 @@ public class PoopSky {
 
         PSComponents.register(modEventBus);
         PSVillagers.register(modEventBus);
+        PSRecipes.register(modEventBus);
 
         // 注册液体和液体类型
         PSFluids.FLUIDS.register(modEventBus);
@@ -96,7 +98,7 @@ public class PoopSky {
 
     }
 
-    @EventBusSubscriber(modid = MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    @EventBusSubscriber(modid = MOD_ID, value = Dist.CLIENT)
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {

@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "": [
+      {
+      "model": "poopsky:block/roundworm_vines"
+    },
+    {
+      "model": "poopsky:block/roundworm_vines_m"
+    }
+  ]
+  }
+}

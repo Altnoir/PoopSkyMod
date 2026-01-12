@@ -3,10 +3,10 @@ package com.altnoir.poopsky.datagen;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.tag.PSItemTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
@@ -24,12 +24,18 @@ public class PSItemTagProvider extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
+        tag(PSItemTags.POOPS)
+                .add(PSItems.POOP.get())
+                .add(PSItems.CHILI_POOP.get());
+
+        // 原版Tags
         tag(Tags.Items.FOODS)
                 .add(PSItems.POOP.get())
                 .add(PSItems.CHILI_POOP.get())
                 .add(PSItems.SAPING_BALL.get())
                 .add(PSItems.BAKED_MAGGOTS.get())
                 .add(PSItems.MAGGOTS_SEEDS.get())
+                .add(PSItems.ROUNDWORM.get())
                 .add(PSItems.POOP_BREAD.get())
                 .add(PSItems.POOP_DUMPLINGS.get())
                 .add(PSItems.POOP_SOUP.get())
@@ -58,10 +64,12 @@ public class PSItemTagProvider extends ItemTagsProvider {
                 .add(PSBlocks.POOP_CAKE.asItem());
         tag(ItemTags.MEAT)
                 .add(PSItems.MAGGOTS_SEEDS.get())
+                .add(PSItems.ROUNDWORM.get())
                 .add(PSItems.BAKED_MAGGOTS.get())
                 .add(PSItems.POOBURGER_MEAT.get());
         tag(Tags.Items.FOODS_RAW_MEAT)
-                .add(PSItems.MAGGOTS_SEEDS.get());
+                .add(PSItems.MAGGOTS_SEEDS.get())
+                .add(PSItems.ROUNDWORM.get());
         tag(Tags.Items.FOODS_COOKED_MEAT)
                 .add(PSItems.BAKED_MAGGOTS.get());
 

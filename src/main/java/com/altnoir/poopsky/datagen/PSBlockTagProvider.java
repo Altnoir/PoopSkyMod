@@ -44,6 +44,14 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(PSBlocks.CHILI_POOP_BLOCK.get())
                 .add(PSBlocks.DRIED_POOP_BLOCK.get());
 
+        tag(BlockTags.CLIMBABLE)
+                .add(PSBlocks.ROUNDWORM_VINES.get())
+                .add(PSBlocks.ROUNDWORM_VINES_PLANT.get());
+        tag(BlockTags.FALL_DAMAGE_RESETTING)
+                .add(PSBlocks.ROUNDWORM_VINES.get())
+                .add(PSBlocks.ROUNDWORM_VINES_PLANT.get());
+
+
         tag(BlockTags.DIRT)
                 .add(PSBlocks.POOP_BLOCK.get())
                 .add(PSBlocks.CHILI_POOP_BLOCK.get());

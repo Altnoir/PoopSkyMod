@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.block;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.block.entity.RearingChamberEntity;
 import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
-import com.altnoir.poopsky.block.p.ToiletBlock;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -16,14 +16,19 @@ public class PSBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES =
             DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, PoopSky.MOD_ID);
 
-    public static final Supplier<BlockEntityType<ToiletBlockEntity>> TOILET_BLOCK_ENTITY = BLOCK_ENTITY_TYPES.register(
-            "toilet_block_entity",
+    public static final Supplier<BlockEntityType<ToiletBlockEntity>> TOILET_BLOCK_ENTITY = BLOCK_ENTITY_TYPES.register("toilet_block_entity",
             () -> {
                 var blocks = ToiletBlocks.BLOCKS.getEntries().stream()
                         .map(DeferredHolder::get)
                         .toArray(Block[]::new);
                 return BlockEntityType.Builder.of(ToiletBlockEntity::new, blocks).build(null);
             }
+    );
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RearingChamberEntity>> REARING_CHAMBER = BLOCK_ENTITY_TYPES.register("rearing_chamber",
+            () -> BlockEntityType.Builder.of(
+                    RearingChamberEntity::new,
+                    PSBlocks.REARING_CHAMBER_BLOCK.get()
+            ).build(null)
     );
 
     public static void register(IEventBus eventBus) {

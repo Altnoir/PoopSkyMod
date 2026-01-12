@@ -3,6 +3,7 @@ package com.altnoir.poopsky.datagen;
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.block.ToiletBlocks;
 import com.altnoir.poopsky.block.p.PoopPieceBlock;
+import com.altnoir.poopsky.block.p.RoundwormVinesPlantBlock;
 import com.altnoir.poopsky.item.PSItems;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.Holder;
@@ -118,6 +119,12 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
         LootItemCondition.Builder builder = LootItemBlockStatePropertyCondition.hasBlockStateProperties(PSBlocks.MAGGOTS.get())
                 .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, CropBlock.MAX_AGE));
         add(PSBlocks.MAGGOTS.get(), maggotsCropDrops(PSBlocks.MAGGOTS.get(), PSItems.MAGGOTS_SEEDS.get(), builder));
+
+        LootItemCondition.Builder builder2 = LootItemBlockStatePropertyCondition.hasBlockStateProperties(PSBlocks.ROUNDWORM_VINES_PLANT.get())
+                .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(RoundwormVinesPlantBlock.SEEDS, true));
+        add(PSBlocks.ROUNDWORM_VINES_PLANT.get(), createRoundwormVinesDrop(PSItems.ROUNDWORM.get(), builder2));
+        dropOther(PSBlocks.ROUNDWORM_VINES.get(), PSItems.ROUNDWORM.get());
+        dropSelf(PSBlocks.REARING_CHAMBER_BLOCK.get());
     }
 
     protected LootTable.@NotNull Builder createPoopPieceDrop(Block block, Item item) {
@@ -184,6 +191,25 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
                                 )
                         )
         );
+    }
+
+    protected LootTable.Builder createRoundwormVinesDrop(Item seedsItem, LootItemCondition.Builder dropGrownCropCondition) {
+        HolderLookup.RegistryLookup<Enchantment> registrylookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
+        return LootTable.lootTable()
+                .withPool(
+                        LootPool.lootPool()
+                                .add(LootItem.lootTableItem(Items.PUMPKIN_SEEDS).when(dropGrownCropCondition).otherwise(LootItem.lootTableItem(seedsItem)))
+                                .add(LootItem.lootTableItem(Items.MELON_SEEDS).when(dropGrownCropCondition).otherwise(LootItem.lootTableItem(seedsItem)))
+                                .add(LootItem.lootTableItem(Items.FROGSPAWN).when(dropGrownCropCondition).otherwise(LootItem.lootTableItem(seedsItem)))
+                )
+                .withPool(LootPool.lootPool()
+                        .when(dropGrownCropCondition)
+                        .add(
+                                LootItem.lootTableItem(seedsItem)
+                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))
+                                        .apply(ApplyBonusCount.addBonusBinomialDistributionCount(registrylookup.getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3))
+                        )
+                );
     }
 
     protected LootTable.Builder createSpallOreDrops(Block block) {

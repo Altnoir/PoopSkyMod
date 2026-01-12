@@ -1,0 +1,11 @@
+{
+  "type": "poopsky:rearing_chamber",
+  "ingredient": {
+    "item": "minecraft:coal"
+  },
+  "result": {
+    "item": "minecraft:diamond",
+    "count": 1
+  },
+  "processingTime": 200
+}

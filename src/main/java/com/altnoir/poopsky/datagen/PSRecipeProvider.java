@@ -275,6 +275,14 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy(getItemName(Items.FLINT), has(Items.FLINT))
                 .save(recipeOutput, getConversionRecipeName(Blocks.GRAVEL) + "_from_flint_x4");
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.TORCH, 4)
+                .pattern("P")
+                .pattern("S")
+                .define('P', PSItems.POOP_BALL)
+                .define('S', Items.STICK)
+                .unlockedBy(getItemName(PSItems.POOP_BALL), has(PSItems.POOP_BALL))
+                .save(recipeOutput, getConversionRecipeName(Items.TORCH) + "_from_poop_ball");
+
         offerCompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, Blocks.MOSSY_COBBLESTONE, PSItems.SPALL);
         create1x2ShapelessFrom(recipeOutput, Blocks.GRASS_BLOCK, Blocks.DIRT, Blocks.MOSS_BLOCK);
 

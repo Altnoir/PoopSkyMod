@@ -422,6 +422,36 @@ public class PSBlocks {
             )
     );
 
+    public static final DeferredBlock<Block> ROUNDWORM_VINES = BLOCKS.register("roundworm_vines",
+            () -> new RoundwormVinesBlock(
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.TERRACOTTA_WHITE)
+                            .randomTicks()
+                            .noCollission()
+                            .instabreak()
+                            .sound(SoundType.TWISTING_VINES)
+                            .pushReaction(PushReaction.DESTROY)
+            )
+    );
+    public static final DeferredBlock<Block> ROUNDWORM_VINES_PLANT = BLOCKS.register("roundworm_vines_plant",
+            () -> new RoundwormVinesPlantBlock(
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.TERRACOTTA_WHITE)
+                            .noCollission()
+                            .instabreak()
+                            .sound(SoundType.TWISTING_VINES)
+                            .pushReaction(PushReaction.DESTROY)
+            )
+    );
+
+    public static final DeferredBlock<Block> REARING_CHAMBER_BLOCK = registerBlock("rearing_chamber_block",
+            () -> new RearingChamberBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(2.0f)
+                    .sound(SoundType.CROP)
+            )
+    );
+
     public static boolean neverSuffocate(BlockState state, BlockGetter world, BlockPos pos) {
         return false;
     }

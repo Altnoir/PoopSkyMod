@@ -26,7 +26,7 @@ import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 import java.util.List;
 import java.util.Optional;
 
-@EventBusSubscriber(modid = PoopSky.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
+@EventBusSubscriber(modid = PoopSky.MOD_ID)
 public class PSGameEvents {
     @SubscribeEvent
     public static void onBrewingRecipeRegistry(RegisterBrewingRecipesEvent event) {

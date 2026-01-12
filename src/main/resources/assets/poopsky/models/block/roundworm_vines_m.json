@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cross",
+  "render_type": "cutout",
+  "textures": {
+    "cross": "poopsky:block/roundworm_vines_m"
+  }
+}

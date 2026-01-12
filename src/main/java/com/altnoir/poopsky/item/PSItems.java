@@ -59,8 +59,11 @@ public class PSItems {
             new ToiletLinkerItem(new Item.Properties()
                     .component(PSComponents.TOILET_COMPONENT, ToiletComponent.EMPTY)
                     .stacksTo(1)));
+
     public static final DeferredItem<Item> MAGGOTS_SEEDS = ITEMS.register("maggots_seeds", () ->
             new ItemNameBlockItem(PSBlocks.MAGGOTS.get(), new Item.Properties().food(PFoods.MAGGOTS_SEEDS).stacksTo(88)));
+    public static final DeferredItem<Item> ROUNDWORM = ITEMS.register("roundworm", () ->
+            new ItemNameBlockItem(PSBlocks.ROUNDWORM_VINES.get(), new Item.Properties().food(PFoods.ROUNDWORM).stacksTo(88)));
 
 
     public static final DeferredItem<Item> URINE_BOTTLE = ITEMS.register("urine_bottle",

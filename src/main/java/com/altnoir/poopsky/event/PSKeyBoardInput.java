@@ -11,7 +11,7 @@ import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import net.neoforged.neoforge.client.settings.KeyModifier;
 import org.lwjgl.glfw.GLFW;
 
-@EventBusSubscriber(modid = PoopSky.MOD_ID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = PoopSky.MOD_ID, value = Dist.CLIENT)
 public class PSKeyBoardInput {
     public static final KeyMapping UP_KEY = new KeyMapping("key.poopsky.up",
             KeyConflictContext.IN_GAME,

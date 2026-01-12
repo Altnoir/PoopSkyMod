@@ -38,6 +38,7 @@ public class PSItemModelProvider extends ItemModelProvider {
         basicItem(PSItems.URINE_BOTTLE.get());
         basicItem(PSItems.POOP_BUCKET.get());
         basicItem(PSItems.MAGGOTS_SEEDS.get());
+        basicItem(PSItems.ROUNDWORM.get());
         basicItem(PSItems.BAKED_MAGGOTS.get());
 
         wallItem(PSBlocks.CHILI_POOP_WALL, PSBlocks.CHILI_POOP_BLOCK);

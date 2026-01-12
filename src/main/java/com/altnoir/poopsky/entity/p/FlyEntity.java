@@ -2,6 +2,7 @@ package com.altnoir.poopsky.entity.p;
 
 import com.altnoir.poopsky.entity.PSEntityType;
 import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.tag.PSItemTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -19,8 +20,12 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.FlyingAnimal;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -39,7 +44,6 @@ public class FlyEntity extends Animal implements FlyingAnimal {
     public float oFlapSpeed;
     public float oFlap;
     public float flapping = 1.0F;
-    private float nextFlap = 1.0F;
     public int eggTime = this.random.nextInt(6000) + 6000;
 
     private float rollAmount;
@@ -52,6 +56,23 @@ public class FlyEntity extends Animal implements FlyingAnimal {
     @Override
     protected void registerGoals() {
         super.registerGoals();
+        this.goalSelector.addGoal(0, new FloatGoal(this)); // 防止溺水
+        this.goalSelector.addGoal(1, new PanicGoal(this, 1.4)); // 受到伤害时逃跑
+        this.goalSelector.addGoal(2, new BreedGoal(this, 1.0)); // 繁殖行为
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, itemStack -> itemStack.is(PSItemTags.POOPS), false));// 被便便引诱
+        this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25)); // 跟随父母
+        this.goalSelector.addGoal(5, new WaterAvoidingRandomFlyingGoal(this, 1.0)); // 随机飞行，避开水面
+        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F)); // 看向附近的玩家
+        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this)); // 随机环顾四周
+    }
+
+    @Override
+    protected PathNavigation createNavigation(Level level) {
+        FlyingPathNavigation flyingPathNavigation = new FlyingPathNavigation(this, level);
+        flyingPathNavigation.setCanOpenDoors(false);
+        flyingPathNavigation.setCanFloat(true);
+        flyingPathNavigation.setCanPassDoors(true);
+        return flyingPathNavigation;
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -66,19 +87,26 @@ public class FlyEntity extends Animal implements FlyingAnimal {
         super.aiStep();
         this.oFlap = this.flap;
         this.oFlapSpeed = this.flapSpeed;
-        this.flapSpeed = this.flapSpeed + (this.onGround() ? -1.0F : 4.0F) * 0.3F;
-        this.flapSpeed = Mth.clamp(this.flapSpeed, 0.0F, 1.0F);
-        if (!this.onGround() && this.flapping < 1.0F) {
-            this.flapping = 1.0F;
+        
+        // 根据是否在飞行调整翅膀扇动速度
+        if (this.isFlying()) {
+            this.flapSpeed = Mth.clamp(this.flapSpeed + 0.2F, 0.0F, 1.0F);
+            if (this.flapping < 1.0F) {
+                this.flapping = 1.0F;
+            }
+        } else {
+            this.flapSpeed = Mth.clamp(this.flapSpeed - 0.2F, 0.0F, 1.0F);
+            this.flapping *= 0.9F;
         }
-
-        this.flapping *= 0.9F;
+        
+        // 减缓下落速度
         Vec3 vec3 = this.getDeltaMovement();
         if (!this.onGround() && vec3.y < 0.0) {
-            this.setDeltaMovement(vec3.multiply(1.0, 0.6, 1.0));
+            this.setDeltaMovement(vec3.x, vec3.y * 0.6, vec3.z);
         }
-
         this.flap = this.flap + this.flapping * 2.0F;
+        
+        // 产卵逻辑
         if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.eggTime <= 0) {
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
             this.spawnAtLocation(PSItems.MAGGOTS_SEEDS.get());
@@ -93,18 +121,13 @@ public class FlyEntity extends Animal implements FlyingAnimal {
     }
 
     @Override
-    protected void onFlap() {
-        this.nextFlap = this.flyDist + this.flapSpeed / 2.0F;
-    }
-
-    @Override
     public boolean isFlying() {
         return !this.onGround();
     }
 
     @Override
     public boolean isFood(ItemStack stack) {
-        return stack.is(PSItems.POOP.get());
+        return stack.is(PSItemTags.POOPS);
     }
 
     @Override
@@ -132,7 +155,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return null;
+        return SoundEvents.BEE_LOOP_AGGRESSIVE;
     }
 
     @Override
@@ -153,6 +176,11 @@ public class FlyEntity extends Animal implements FlyingAnimal {
 
     @Override
     protected void checkFallDamage(double y, boolean onGround, BlockState state, BlockPos pos) {
+    }
+
+    @Override
+    public boolean causeFallDamage(float fallDistance, float multiplier, DamageSource damageSource) {
+        return false;
     }
 
     public float getRollAmount(float partialTick) {

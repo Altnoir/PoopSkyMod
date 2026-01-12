@@ -16,11 +16,15 @@ public class PFoods {
             .build();
 
     public static final FoodProperties MAGGOTS_SEEDS = new FoodProperties.Builder()
-            .nutrition(1).saturationModifier(0.1F).fast()
+            .nutrition(1).saturationModifier(0.4F).fast()
+            .effect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0), 0.5F)
+            .build();
+    public static final FoodProperties ROUNDWORM = new FoodProperties.Builder()
+            .nutrition(1).saturationModifier(0.8F).fast()
             .effect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0), 0.5F)
             .build();
     public static final FoodProperties BAKED_MAGGOTS = new FoodProperties.Builder()
-            .nutrition(1).saturationModifier(0.4F).fast().build();
+            .nutrition(1).saturationModifier(0.8F).fast().build();
     public static final FoodProperties SAPING_BALL = new FoodProperties.Builder()
             .nutrition(2)
             .saturationModifier(0.2F)
