@@ -42,6 +42,8 @@ public class ToiletBlocks {
     public static final DeferredBlock<Block> STONE_BRICK_TOILET = registerLavaToilet("stone_brick_toilet", MapColor.STONE);
     public static final DeferredBlock<Block> MOSSY_STONE_BRICK_TOILET = registerLavaToilet("mossy_stone_brick_toilet", MapColor.STONE);
 
+    public static final DeferredBlock<Block> TILE_TOILET = registerColorToilet("tile_toilet", DyeColor.LIGHT_BLUE);
+
     public static final DeferredBlock<Block> WHITE_CONCRETE_TOILET = registerColorToilet("white_concrete_toilet", DyeColor.WHITE);
     public static final DeferredBlock<Block> LIGHT_GRAY_CONCRETE_TOILET = registerColorToilet("light_gray_concrete_toilet", DyeColor.LIGHT_GRAY);
     public static final DeferredBlock<Block> GRAY_CONCRETE_TOILET = registerColorToilet("gray_concrete_toilet", DyeColor.GRAY);
@@ -93,9 +95,11 @@ public class ToiletBlocks {
         registerBlockItem(name, toReturn);
         return toReturn;
     }
+
     private static <T extends Block> void registerBlockItem(String name, DeferredBlock<T> block) {
         PSItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().stacksTo(88)));
     }
+
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
     }

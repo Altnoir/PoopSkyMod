@@ -4,6 +4,7 @@
     "poopsky:chili_poop_wall",
     "poopsky:dried_poop_block_wall",
     "poopsky:smooth_poop_block_wall",
-    "poopsky:cut_poop_block_wall"
+    "poopsky:cut_poop_block_wall",
+    "poopsky:tile_block_wall"
   ]
 }

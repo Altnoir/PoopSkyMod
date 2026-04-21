@@ -95,7 +95,8 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(PSBlocks.CHILI_POOP_WALL.get())
                 .add(PSBlocks.DRIED_POOP_BLOCK_WALL.get())
                 .add(PSBlocks.SMOOTH_POOP_BLOCK_WALL.get())
-                .add(PSBlocks.CUT_POOP_BLOCK_WALL.get());
+                .add(PSBlocks.CUT_POOP_BLOCK_WALL.get())
+                .add(PSBlocks.TILE_BLOCK_WALL.get());
 
         tag(BlockTags.MOB_INTERACTABLE_DOORS)
                 .add(PSBlocks.POOP_DOOR.get());
@@ -198,6 +199,7 @@ public class PSBlockTagProvider extends BlockTagsProvider {
             ToiletBlocks.SMOOTH_STONE_TOILET.get(),
             ToiletBlocks.STONE_BRICK_TOILET.get(),
             ToiletBlocks.MOSSY_STONE_BRICK_TOILET.get(),
+            ToiletBlocks.TILE_TOILET.get(),
             //混凝土
             ToiletBlocks.WHITE_CONCRETE_TOILET.get(),
             ToiletBlocks.ORANGE_CONCRETE_TOILET.get(),

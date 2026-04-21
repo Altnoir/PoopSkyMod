@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "poopsky:rearing_chamber_block"
+          "name": "poopsky:tile_block_vertical_slab"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "poopsky:blocks/rearing_chamber_block"
+  "random_sequence": "poopsky:blocks/tile_block_vertical_slab"
 }

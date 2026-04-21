@@ -9,10 +9,7 @@ import com.altnoir.poopsky.component.PSComponents;
 import com.altnoir.poopsky.effect.PSEffects;
 import com.altnoir.poopsky.effect.PSPotions;
 import com.altnoir.poopsky.entity.PSEntityType;
-import com.altnoir.poopsky.entity.renderer.ChairRenderer;
-import com.altnoir.poopsky.entity.renderer.FlyRenderer;
-import com.altnoir.poopsky.entity.renderer.PoolimeRenderer;
-import com.altnoir.poopsky.entity.renderer.ToiletPlugRenderer;
+import com.altnoir.poopsky.entity.renderer.*;
 import com.altnoir.poopsky.fluid.PSFluidTypes;
 import com.altnoir.poopsky.fluid.PSFluids;
 import com.altnoir.poopsky.item.PSItems;
@@ -109,6 +106,7 @@ public class PoopSky {
             EntityRenderers.register(PSEntityType.POOLIME.get(), PoolimeRenderer::new);
             EntityRenderers.register(PSEntityType.FLY.get(), FlyRenderer::new);
             EntityRenderers.register(PSEntityType.STOOL.get(), ChairRenderer::new);
+            EntityRenderers.register(PSEntityType.TOILET.get(), ToiletRenderer::new);
             CompooperBlock.bootStrap();
         }
 

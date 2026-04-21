@@ -1,10 +1,7 @@
 package com.altnoir.poopsky.entity;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.entity.p.ChairEntity;
-import com.altnoir.poopsky.entity.p.FlyEntity;
-import com.altnoir.poopsky.entity.p.PoolimeEntity;
-import com.altnoir.poopsky.entity.p.ToiletPlugEntity;
+import com.altnoir.poopsky.entity.p.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -42,6 +39,11 @@ public class PSEntityType {
             EntityType.Builder.of(ChairEntity::new, MobCategory.MISC)
                     .sized(0.5F, 0.5F)
                     .build("stool_entity"));
+
+    public static Supplier<EntityType<ToiletEntity>> TOILET = ENTITY_TYPES.register("toilet_entity", () ->
+            EntityType.Builder.of(ToiletEntity::new, MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
+                    .build("toilet_entity"));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);

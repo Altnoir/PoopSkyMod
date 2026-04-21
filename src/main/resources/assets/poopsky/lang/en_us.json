@@ -7,6 +7,7 @@
   "item.poopsky.toilet_plug": "Toilet Plug",
   "item.poopsky.urine_bottle": "Urine Bottle",
   "item.poopsky.poop_bucket": "Poop Bucket",
+  "block.poopsky.poop_liquid": "Poop Liquid",
 
   "item.poopsky.toilet_linker": "Toilet Linker",
   "message.poopsky.toilet_linker.1": "Link Toilet ①",
@@ -86,6 +87,11 @@
   "block.poopsky.cut_poop_block_slab": "Cut Poop Block Slab",
   "block.poopsky.cut_poop_block_vertical_slab": "Cut Poop Block Vertical Slab",
   "block.poopsky.cut_poop_block_wall": "Cut Poop Block Wall",
+  "block.poopsky.tile_block": "Tile Block",
+  "block.poopsky.tile_block_stairs": "Tile Block Stairs",
+  "block.poopsky.tile_block_slab": "Tile Block Slab",
+  "block.poopsky.tile_block_vertical_slab": "Tile Block Vertical Slab",
+  "block.poopsky.tile_block_wall": "Tile Block Wall",
 
   "block.poopsky.poop_sapling": "Poop Sapling",
   "block.poopsky.poop_leaves": "Poop Leaves",
@@ -100,6 +106,7 @@
   "block.poopsky.compooper": "Compooper",
 
   "item.poopsky.dragon_breath_chili": "Dragon Breath Chili",
+  "item.poopsky.roundworm": "Roundworm",
   "item.poopsky.maggots_seeds": "Maggots",
   "block.poopsky.maggots": "Maggots",
   "item.poopsky.baked_maggots": "Baked Maggots",
@@ -133,6 +140,7 @@
   "block.poopsky.smooth_stone_toilet": "Smooth Stone Toilet",
   "block.poopsky.stone_brick_toilet": "Stone Brick Toilet",
   "block.poopsky.mossy_stone_brick_toilet": "Mossy Stone Brick Toilet",
+  "block.poopsky.tile_toilet": "Tile Toilet",
 
   "block.poopsky.white_concrete_toilet": "White Concrete Toilet",
   "block.poopsky.orange_concrete_toilet": "Orange Concrete Toilet",

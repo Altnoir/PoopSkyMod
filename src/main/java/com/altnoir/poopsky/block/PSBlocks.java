@@ -275,6 +275,25 @@ public class PSBlocks {
             () -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(CUT_POOP_BLOCK.get()))
     );
 
+    public static final DeferredBlock<Block> TILE_BLOCK = registerBlock("tile_block",
+            () -> new Block(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_LIGHT_BLUE)
+                    .requiresCorrectToolForDrops()
+                    .strength(HARDEN)
+                    .sound(SoundType.STONE))
+    );
+    public static final DeferredBlock<Block> TILE_BLOCK_STAIRS = registerBlock("tile_block_stairs",
+            () -> new StairBlock(TILE_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(TILE_BLOCK.get()))
+    );
+    public static final DeferredBlock<Block> TILE_BLOCK_SLAB = registerBlock("tile_block_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(TILE_BLOCK.get()))
+    );
+    public static final DeferredBlock<Block> TILE_BLOCK_VERTICAL_SLAB = registerBlock("tile_block_vertical_slab",
+            () -> new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(TILE_BLOCK.get()))
+    );
+    public static final DeferredBlock<Block> TILE_BLOCK_WALL = registerBlock("tile_block_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(TILE_BLOCK.get()))
+    );
 
     public static final DeferredBlock<Block> COMPOOPER = registerBlock("compooper",
             () -> new CompooperBlock(BlockBehaviour.Properties.of()
@@ -441,14 +460,6 @@ public class PSBlocks {
                             .instabreak()
                             .sound(SoundType.TWISTING_VINES)
                             .pushReaction(PushReaction.DESTROY)
-            )
-    );
-
-    public static final DeferredBlock<Block> REARING_CHAMBER_BLOCK = registerBlock("rearing_chamber_block",
-            () -> new RearingChamberBlock(BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.COLOR_BROWN)
-                    .strength(2.0f)
-                    .sound(SoundType.CROP)
             )
     );
 

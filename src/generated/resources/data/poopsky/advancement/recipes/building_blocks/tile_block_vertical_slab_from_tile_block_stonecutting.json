@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:tile_block_vertical_slab_from_tile_block_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_tile_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:tile_block"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_tile_block"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "poopsky:tile_block_vertical_slab_from_tile_block_stonecutting"
+    ]
+  }
+}

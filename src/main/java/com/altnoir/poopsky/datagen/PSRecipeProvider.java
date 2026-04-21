@@ -28,6 +28,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         List<ItemLike> POOP_LIST = List.of(PSBlocks.POOP_BLOCK);
         List<ItemLike> POOP_BRICK_LIST = List.of(PSBlocks.POOP_BRICKS);
         List<ItemLike> SMOOTH_POOP_LIST = List.of(PSBlocks.DRIED_POOP_BLOCK);
+        List<ItemLike> TILE_BLOCK_LIST = List.of(PSBlocks.CHILI_POOP_BLOCK);
         List<ItemLike> MAGGOTS_LIST = List.of(PSItems.MAGGOTS_SEEDS);
 
         shapeless1x1Recipe(recipeOutput, Blocks.CRIMSON_NYLIUM, Blocks.CRIMSON_FUNGUS, Blocks.NETHERRACK);
@@ -41,6 +42,9 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
 
         oreSmelting(recipeOutput, SMOOTH_POOP_LIST, RecipeCategory.BUILDING_BLOCKS, PSBlocks.SMOOTH_POOP_BLOCK, 0.1F, 200, "smooth_poop_block");
         oreBlasting(recipeOutput, SMOOTH_POOP_LIST, RecipeCategory.BUILDING_BLOCKS, PSBlocks.SMOOTH_POOP_BLOCK, 0.1F, 100, "smooth_poop_block");
+
+        oreSmelting(recipeOutput, TILE_BLOCK_LIST, RecipeCategory.BUILDING_BLOCKS, PSBlocks.TILE_BLOCK, 0.1F, 200, "tile_block");
+        oreBlasting(recipeOutput, TILE_BLOCK_LIST, RecipeCategory.BUILDING_BLOCKS, PSBlocks.TILE_BLOCK, 0.1F, 100, "tile_block");
 
         // 食物
         oreSmelting(recipeOutput, MAGGOTS_LIST, RecipeCategory.BUILDING_BLOCKS, PSItems.BAKED_MAGGOTS, 0.35F, 200, "maggots_seeds");
@@ -161,6 +165,11 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         slabRecipe(recipeOutput, PSBlocks.MOSSY_POOP_BRICK_SLAB, PSBlocks.MOSSY_POOP_BRICKS);
         verticalSlabRecipe(recipeOutput, PSBlocks.MOSSY_POOP_BRICK_VERTICAL_SLAB, PSBlocks.MOSSY_POOP_BRICKS);
         wallRecipe(recipeOutput, PSBlocks.MOSSY_POOP_BRICK_WALL, PSBlocks.MOSSY_POOP_BRICKS);
+
+        stairsRecipe(recipeOutput, PSBlocks.TILE_BLOCK_STAIRS, PSBlocks.TILE_BLOCK);
+        slabRecipe(recipeOutput, PSBlocks.TILE_BLOCK_SLAB, PSBlocks.TILE_BLOCK);
+        verticalSlabRecipe(recipeOutput, PSBlocks.TILE_BLOCK_VERTICAL_SLAB, PSBlocks.TILE_BLOCK);
+        wallRecipe(recipeOutput, PSBlocks.TILE_BLOCK_WALL, PSBlocks.TILE_BLOCK);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOP_BLOCK)
                 .pattern("P")
@@ -293,7 +302,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         create1x2ShapelessFrom(recipeOutput, Blocks.CALCITE, Blocks.DIORITE, PSItems.SPALL);
 
         //切石配方
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.STOOL, PSBlocks.DRIED_POOP_BLOCK);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.STOOL, PSBlocks.DRIED_POOP_BLOCK,2);
 
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOP_PIECE, PSBlocks.POOP_BLOCK, 8);
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOP_STAIRS, PSBlocks.POOP_BLOCK);
@@ -354,6 +363,11 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOP_BLOCK, PSBlocks.POOP_EMPTY_LOG, 4);
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOP_BLOCK, PSBlocks.STRIPPED_POOP_EMPTY_LOG, 4);
 
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.TILE_BLOCK_STAIRS, PSBlocks.TILE_BLOCK);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.TILE_BLOCK_SLAB, PSBlocks.TILE_BLOCK, 2);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.TILE_BLOCK_VERTICAL_SLAB, PSBlocks.TILE_BLOCK, 2);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.TILE_BLOCK_WALL, PSBlocks.TILE_BLOCK);
+
         //厕所配方
         toiletRecipes(recipeOutput, ToiletBlocks.OAK_TOILET, Blocks.OAK_PLANKS);
         toiletRecipes(recipeOutput, ToiletBlocks.SPRUCE_TOILET, Blocks.SPRUCE_PLANKS);
@@ -373,6 +387,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         toiletRecipes(recipeOutput, ToiletBlocks.SMOOTH_STONE_TOILET, Blocks.SMOOTH_STONE);
         toiletRecipes(recipeOutput, ToiletBlocks.STONE_BRICK_TOILET, Blocks.STONE_BRICKS);
         toiletRecipes(recipeOutput, ToiletBlocks.MOSSY_STONE_BRICK_TOILET, Blocks.MOSSY_STONE_BRICKS);
+        toiletRecipes(recipeOutput, ToiletBlocks.TILE_TOILET, PSBlocks.TILE_BLOCK);
 
         toiletRecipes(recipeOutput, ToiletBlocks.WHITE_CONCRETE_TOILET, Blocks.WHITE_CONCRETE);
         toiletRecipes(recipeOutput, ToiletBlocks.LIGHT_GRAY_CONCRETE_TOILET, Blocks.LIGHT_GRAY_CONCRETE);

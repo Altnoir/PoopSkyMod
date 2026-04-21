@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:blasting",
+  "category": "blocks",
+  "cookingtime": 100,
+  "experience": 0.1,
+  "group": "tile_block",
+  "ingredient": {
+    "item": "poopsky:chili_poop_block"
+  },
+  "result": {
+    "count": 1,
+    "id": "poopsky:tile_block"
+  }
+}

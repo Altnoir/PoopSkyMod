@@ -107,7 +107,13 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(PSBlocks.CUT_POOP_BLOCK_VERTICAL_SLAB.get());
         dropSelf(PSBlocks.CUT_POOP_BLOCK_WALL.get());
 
-        dropWhenSilkTouch(PSBlocks.POOP_CAKE.get());
+        dropSelf(PSBlocks.TILE_BLOCK.get());
+        dropSelf(PSBlocks.TILE_BLOCK_STAIRS.get());
+        add(PSBlocks.TILE_BLOCK_SLAB.get(), block -> createSlabItemTable(PSBlocks.TILE_BLOCK_SLAB.get()));
+        dropSelf(PSBlocks.TILE_BLOCK_VERTICAL_SLAB.get());
+        dropSelf(PSBlocks.TILE_BLOCK_WALL.get());
+
+        dropSelf(PSBlocks.POOP_CAKE.get());
         dropSelf(PSBlocks.POOLIME_BLOCK.get());
         dropSelf(PSBlocks.STOOL.get());
         dropSelf(PSBlocks.COMPOOPER.get());
@@ -124,7 +130,6 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
                 .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(RoundwormVinesPlantBlock.SEEDS, true));
         add(PSBlocks.ROUNDWORM_VINES_PLANT.get(), createRoundwormVinesDrop(PSItems.ROUNDWORM.get(), builder2));
         dropOther(PSBlocks.ROUNDWORM_VINES.get(), PSItems.ROUNDWORM.get());
-        dropSelf(PSBlocks.REARING_CHAMBER_BLOCK.get());
     }
 
     protected LootTable.@NotNull Builder createPoopPieceDrop(Block block, Item item) {
@@ -259,7 +264,11 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
                         .when(this.doesNotHaveShearsOrSilkTouch())
                         .add(((LootPoolSingletonContainer.Builder<?>)
                                 this.applyExplosionCondition(block, LootItem.lootTableItem(PSItems.MAGGOTS_SEEDS.get())))
-                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
+                                .apply(ApplyBonusCount.addUniformBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE))))
+                        .add(((LootPoolSingletonContainer.Builder<?>)
+                                this.applyExplosionCondition(block, LootItem.lootTableItem(PSItems.ROUNDWORM.get())))
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
                                 .apply(ApplyBonusCount.addUniformBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE))))
         );
     }

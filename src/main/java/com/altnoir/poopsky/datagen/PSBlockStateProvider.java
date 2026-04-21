@@ -120,6 +120,11 @@ public class PSBlockStateProvider extends BlockStateProvider {
         slabBlock((SlabBlock) PSBlocks.CUT_POOP_BLOCK_SLAB.get(), blockTexture(PSBlocks.CUT_POOP_BLOCK.get()), blockTexture(PSBlocks.CUT_POOP_BLOCK.get()));
         wallBlock((WallBlock) PSBlocks.CUT_POOP_BLOCK_WALL.get(), blockTexture(PSBlocks.CUT_POOP_BLOCK.get()));
 
+        blockWithItem(PSBlocks.TILE_BLOCK.get());
+        stairsBlock((StairBlock) PSBlocks.TILE_BLOCK_STAIRS.get(), blockTexture(PSBlocks.TILE_BLOCK.get()));
+        slabBlock((SlabBlock) PSBlocks.TILE_BLOCK_SLAB.get(), blockTexture(PSBlocks.TILE_BLOCK.get()), blockTexture(PSBlocks.TILE_BLOCK.get()));
+        wallBlock((WallBlock) PSBlocks.TILE_BLOCK_WALL.get(), blockTexture(PSBlocks.TILE_BLOCK.get()));
+
         blockItem(PSBlocks.CHILI_POOP_STAIRS);
         blockItem(PSBlocks.CHILI_POOP_SLAB);
         blockItem(PSBlocks.POOP_BRICK_STAIRS);
@@ -132,6 +137,8 @@ public class PSBlockStateProvider extends BlockStateProvider {
         blockItem(PSBlocks.SMOOTH_POOP_BLOCK_SLAB);
         blockItem(PSBlocks.CUT_POOP_BLOCK_STAIRS);
         blockItem(PSBlocks.CUT_POOP_BLOCK_SLAB);
+        blockItem(PSBlocks.TILE_BLOCK_STAIRS);
+        blockItem(PSBlocks.TILE_BLOCK_SLAB);
 
         blockWithItem(PSBlocks.POOP_LEAVES.get());
         blockWithItem(PSBlocks.POOP_LEAVES_GOLD.get());
@@ -155,6 +162,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
         registerToiletLava(ToiletBlocks.SMOOTH_STONE_TOILET.get(), Blocks.SMOOTH_STONE);
         registerToiletLava(ToiletBlocks.STONE_BRICK_TOILET.get(), Blocks.STONE_BRICKS);
         registerToiletLava(ToiletBlocks.MOSSY_STONE_BRICK_TOILET.get(), Blocks.MOSSY_STONE_BRICKS);
+        registerToiletLava(ToiletBlocks.TILE_TOILET.get(), "tile_block");
 
         registerToiletLava(ToiletBlocks.WHITE_CONCRETE_TOILET.get(), Blocks.WHITE_CONCRETE);
         registerToiletLava(ToiletBlocks.LIGHT_GRAY_CONCRETE_TOILET.get(), Blocks.LIGHT_GRAY_CONCRETE);
@@ -255,6 +263,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
             return ConfiguredModel.builder()
                     .modelFile(chosenModel)
                     .rotationY(yRot)
+                    .uvLock(true)
                     .build();
         });
         itemModels().getBuilder(BuiltInRegistries.BLOCK.getKey(toilet).getPath())
@@ -325,6 +334,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
             return ConfiguredModel.builder()
                     .modelFile(chosenModel)
                     .rotationY(yRot)
+                    .uvLock(true)
                     .build();
         });
 

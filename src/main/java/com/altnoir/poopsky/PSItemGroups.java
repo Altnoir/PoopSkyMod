@@ -33,8 +33,7 @@ public class PSItemGroups {
                         PSBlocks.WATER_COMPOOPER.get(),
                         PSBlocks.LAVA_COMPOOPER.get(),
                         PSBlocks.URINE_COMPOOPER.get(),
-                        PSBlocks.ROUNDWORM_VINES_PLANT.get(),
-                        PSBlocks.REARING_CHAMBER_BLOCK.get()
+                        PSBlocks.ROUNDWORM_VINES_PLANT.get()
                 );
                 PSBlocks.BLOCKS.getEntries().stream()
                         .map(DeferredHolder::get)

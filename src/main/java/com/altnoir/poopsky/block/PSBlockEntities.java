@@ -1,7 +1,6 @@
 package com.altnoir.poopsky.block;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.entity.RearingChamberEntity;
 import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;
@@ -23,12 +22,6 @@ public class PSBlockEntities {
                         .toArray(Block[]::new);
                 return BlockEntityType.Builder.of(ToiletBlockEntity::new, blocks).build(null);
             }
-    );
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RearingChamberEntity>> REARING_CHAMBER = BLOCK_ENTITY_TYPES.register("rearing_chamber",
-            () -> BlockEntityType.Builder.of(
-                    RearingChamberEntity::new,
-                    PSBlocks.REARING_CHAMBER_BLOCK.get()
-            ).build(null)
     );
 
     public static void register(IEventBus eventBus) {

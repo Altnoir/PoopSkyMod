@@ -3,9 +3,12 @@ package com.altnoir.poopsky.block;
 import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.block.p.ToiletLavaBlock;
 import com.altnoir.poopsky.effect.PSEffects;
+import com.altnoir.poopsky.entity.PSEntityType;
+import com.altnoir.poopsky.entity.p.ToiletEntity;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.particle.PSParticles;
 import com.altnoir.poopsky.sound.PSSoundEvents;
+import com.altnoir.poopsky.tag.PSItemTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
@@ -16,8 +19,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -35,11 +41,13 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Set;
 
 public abstract class AbstractToiletBlock extends Block implements EntityBlock {
@@ -56,6 +64,22 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
                         .setValue(FORWARD, false)
                         .setValue(BACKWARD, false)
         );
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        if (!level.isClientSide && player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
+                Entity entity;
+                List<ToiletEntity> entities = level.getEntities(PSEntityType.TOILET.get(), new AABB(pos), toiletEntity -> true);
+
+                if (entities.isEmpty()) {
+                    entity = PSEntityType.TOILET.get().spawn((ServerLevel) level, pos, MobSpawnType.TRIGGERED);
+                } else {
+                    entity = entities.getFirst();
+                }
+                player.startRiding(entity);
+        }
+        return InteractionResult.PASS;
     }
 
     @Override

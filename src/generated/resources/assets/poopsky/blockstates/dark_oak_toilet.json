@@ -2,62 +2,78 @@
   "variants": {
     "backward=false,facing=east,forward=false": {
       "model": "poopsky:block/dark_oak_toilet",
+      "uvlock": true,
       "y": 90
     },
     "backward=false,facing=east,forward=true": {
       "model": "poopsky:block/dark_oak_toilet_n",
+      "uvlock": true,
       "y": 90
     },
     "backward=false,facing=north,forward=false": {
-      "model": "poopsky:block/dark_oak_toilet"
+      "model": "poopsky:block/dark_oak_toilet",
+      "uvlock": true
     },
     "backward=false,facing=north,forward=true": {
-      "model": "poopsky:block/dark_oak_toilet_n"
+      "model": "poopsky:block/dark_oak_toilet_n",
+      "uvlock": true
     },
     "backward=false,facing=south,forward=false": {
       "model": "poopsky:block/dark_oak_toilet",
+      "uvlock": true,
       "y": 180
     },
     "backward=false,facing=south,forward=true": {
       "model": "poopsky:block/dark_oak_toilet_n",
+      "uvlock": true,
       "y": 180
     },
     "backward=false,facing=west,forward=false": {
       "model": "poopsky:block/dark_oak_toilet",
+      "uvlock": true,
       "y": 270
     },
     "backward=false,facing=west,forward=true": {
       "model": "poopsky:block/dark_oak_toilet_n",
+      "uvlock": true,
       "y": 270
     },
     "backward=true,facing=east,forward=false": {
       "model": "poopsky:block/dark_oak_toilet_s",
+      "uvlock": true,
       "y": 90
     },
     "backward=true,facing=east,forward=true": {
       "model": "poopsky:block/dark_oak_toilet_ns",
+      "uvlock": true,
       "y": 90
     },
     "backward=true,facing=north,forward=false": {
-      "model": "poopsky:block/dark_oak_toilet_s"
+      "model": "poopsky:block/dark_oak_toilet_s",
+      "uvlock": true
     },
     "backward=true,facing=north,forward=true": {
-      "model": "poopsky:block/dark_oak_toilet_ns"
+      "model": "poopsky:block/dark_oak_toilet_ns",
+      "uvlock": true
     },
     "backward=true,facing=south,forward=false": {
       "model": "poopsky:block/dark_oak_toilet_s",
+      "uvlock": true,
       "y": 180
     },
     "backward=true,facing=south,forward=true": {
       "model": "poopsky:block/dark_oak_toilet_ns",
+      "uvlock": true,
       "y": 180
     },
     "backward=true,facing=west,forward=false": {
       "model": "poopsky:block/dark_oak_toilet_s",
+      "uvlock": true,
       "y": 270
     },
     "backward=true,facing=west,forward=true": {
       "model": "poopsky:block/dark_oak_toilet_ns",
+      "uvlock": true,
       "y": 270
     }
   }

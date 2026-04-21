@@ -1,7 +1,7 @@
 {
     "render_type": "minecraft:translucent",
     "textures": {
-        "1": "poopsky:block/pooplime_block"
+        "1": "poopsky:block/poolime_block"
     },
     "elements": [
         {

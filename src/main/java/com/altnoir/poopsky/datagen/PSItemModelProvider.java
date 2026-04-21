@@ -47,6 +47,7 @@ public class PSItemModelProvider extends ItemModelProvider {
         wallItem(PSBlocks.DRIED_POOP_BLOCK_WALL, PSBlocks.DRIED_POOP_BLOCK);
         wallItem(PSBlocks.SMOOTH_POOP_BLOCK_WALL, PSBlocks.SMOOTH_POOP_BLOCK);
         wallItem(PSBlocks.CUT_POOP_BLOCK_WALL, PSBlocks.CUT_POOP_BLOCK);
+        wallItem(PSBlocks.TILE_BLOCK_WALL, PSBlocks.TILE_BLOCK);
         
         // 添加液体桶的模型
         withExistingParent("poop_bucket", mcLoc("item/generated"))

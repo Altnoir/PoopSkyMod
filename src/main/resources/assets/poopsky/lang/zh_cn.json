@@ -7,6 +7,7 @@
   "item.poopsky.toilet_plug": "马桶搋子",
   "item.poopsky.urine_bottle": "尿瓶",
   "item.poopsky.poop_bucket": "粪桶",
+  "block.poopsky.poop_liquid": "粪液",
 
   "item.poopsky.toilet_linker": "厕所连接器",
   "message.poopsky.toilet_linker.1": "连接厕所①",
@@ -86,6 +87,11 @@
   "block.poopsky.cut_poop_block_slab": "切制粪便块台阶",
   "block.poopsky.cut_poop_block_vertical_slab": "切制粪便块竖台阶",
   "block.poopsky.cut_poop_block_wall": "切制粪便块砖墙",
+  "block.poopsky.tile_block": "瓷砖块",
+  "block.poopsky.tile_block_stairs": "瓷砖块楼梯",
+  "block.poopsky.tile_block_slab": "瓷砖块台阶",
+  "block.poopsky.tile_block_vertical_slab": "瓷砖块竖台阶",
+  "block.poopsky.tile_block_wall": "瓷砖块墙",
 
   "block.poopsky.poop_sapling": "粪便树苗",
   "block.poopsky.poop_leaves": "粪便树叶",
@@ -100,6 +106,7 @@
   "block.poopsky.compooper": "堆粪桶",
 
   "item.poopsky.dragon_breath_chili": "龙息辣椒",
+  "item.poopsky.roundworm": "蛔虫",
   "item.poopsky.maggots_seeds": "蛆",
   "block.poopsky.maggots": "蛆",
   "item.poopsky.baked_maggots": "烤蛆",
@@ -133,6 +140,7 @@
   "block.poopsky.smooth_stone_toilet": "平滑石头厕所",
   "block.poopsky.stone_brick_toilet": "石砖厕所",
   "block.poopsky.mossy_stone_brick_toilet": "苔石砖厕所",
+  "block.poopsky.tile_toilet": "瓷砖厕所",
 
   "block.poopsky.white_concrete_toilet": "白色混凝土厕所",
   "block.poopsky.orange_concrete_toilet": "橙色混凝土厕所",
