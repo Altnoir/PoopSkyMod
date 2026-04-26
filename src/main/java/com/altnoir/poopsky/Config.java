@@ -15,13 +15,21 @@ import java.util.stream.Collectors;
 // An example config class. This is not required, but it's a good idea to have one to keep your config organized.
 // Demonstrates how to use Neo's config APIs
 @EventBusSubscriber(modid = PoopSky.MOD_ID)
-public class Config
-{
+public class Config {
+    public static boolean logDirtBlock;
+    public static boolean lavaFluid;
+    public static int magicNumber;
+    public static String magicNumberIntroduction;
+    public static Set<Item> items;
+
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
     private static final ModConfigSpec.BooleanValue LOG_DIRT_BLOCK = BUILDER
             .comment("Whether to log the dirt block on common setup")
             .define("logDirtBlock", true);
+    private static final ModConfigSpec.BooleanValue LAVA_FLUID_BLOCK = BUILDER
+            .comment("Whether to Disable the underground lava lake")
+            .define("lavaFluid", true);
 
     private static final ModConfigSpec.IntValue MAGIC_NUMBER = BUILDER
             .comment("A magic number")
@@ -38,20 +46,14 @@ public class Config
 
     static final ModConfigSpec SPEC = BUILDER.build();
 
-    public static boolean logDirtBlock;
-    public static int magicNumber;
-    public static String magicNumberIntroduction;
-    public static Set<Item> items;
-
-    private static boolean validateItemName(final Object obj)
-    {
+    private static boolean validateItemName(final Object obj) {
         return obj instanceof String itemName && BuiltInRegistries.ITEM.containsKey(ResourceLocation.parse(itemName));
     }
 
     @SubscribeEvent
-    static void onLoad(final ModConfigEvent event)
-    {
+    static void onLoad(final ModConfigEvent event) {
         logDirtBlock = LOG_DIRT_BLOCK.get();
+        lavaFluid = LAVA_FLUID_BLOCK.get();
         magicNumber = MAGIC_NUMBER.get();
         magicNumberIntroduction = MAGIC_NUMBER_INTRODUCTION.get();
 

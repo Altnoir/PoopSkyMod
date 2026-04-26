@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:wither_poop_ball"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "wither_rose": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:wither_rose"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "wither_rose"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "poopsky:wither_poop_ball"
+    ]
+  }
+}

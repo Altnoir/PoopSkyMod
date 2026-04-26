@@ -20,6 +20,7 @@ public class PSItemModelProvider extends ItemModelProvider {
         basicItem(PSItems.CHILI_POOP.get());
         basicItem(PSItems.POOP_BALL.get());
         basicItem(PSItems.SAPING_BALL.get());
+        basicItem(PSItems.WITHER_POOP_BALL.get());
         basicItem(PSItems.POOP_BREAD.get());
         basicItem(PSItems.POOP_DUMPLINGS.get());
         basicItem(PSItems.POOP_SOUP.get());

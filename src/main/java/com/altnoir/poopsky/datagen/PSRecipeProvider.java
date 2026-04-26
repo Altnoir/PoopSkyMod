@@ -107,6 +107,14 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('S', PSItems.MAGGOTS_SEEDS)
                 .unlockedBy(getItemName(PSItems.MAGGOTS_SEEDS), has(PSItems.MAGGOTS_SEEDS))
                 .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PSItems.WITHER_POOP_BALL.get(), 8)
+                .pattern("PPP")
+                .pattern("PSP")
+                .pattern("PPP")
+                .define('P', PSItems.POOP_BALL)
+                .define('S', Items.WITHER_ROSE)
+                .unlockedBy(getItemName(Items.WITHER_ROSE), has(Items.WITHER_ROSE))
+                .save(recipeOutput);
 
         // 建筑
         offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOP_BLOCK, PSItems.POOP, 1);
@@ -302,7 +310,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         create1x2ShapelessFrom(recipeOutput, Blocks.CALCITE, Blocks.DIORITE, PSItems.SPALL);
 
         //切石配方
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.STOOL, PSBlocks.DRIED_POOP_BLOCK,2);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.STOOL, PSBlocks.DRIED_POOP_BLOCK, 2);
 
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOP_PIECE, PSBlocks.POOP_BLOCK, 8);
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOP_STAIRS, PSBlocks.POOP_BLOCK);

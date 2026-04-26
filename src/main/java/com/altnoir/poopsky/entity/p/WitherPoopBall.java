@@ -23,19 +23,18 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
 
-public class PoopBall extends ThrowableItemProjectile {
-
-    public PoopBall(Level level, LivingEntity shooter) {
+public class WitherPoopBall extends ThrowableItemProjectile {
+    public WitherPoopBall(Level level, LivingEntity shooter) {
         super(EntityType.SNOWBALL, shooter, level);
     }
 
-    public PoopBall(Level level, double x, double y, double z) {
+    public WitherPoopBall(Level level, double x, double y, double z) {
         super(EntityType.SNOWBALL, x, y, z, level);
     }
 
     @Override
     protected @NotNull Item getDefaultItem() {
-        return PSItems.POOP_BALL.get();
+        return PSItems.WITHER_POOP_BALL.get();
     }
 
     private ParticleOptions getParticle() {
@@ -68,41 +67,8 @@ public class PoopBall extends ThrowableItemProjectile {
         entity.hurt(this.damageSources().thrown(this, this.getOwner()), (float) i);
 
         if (entity instanceof LivingEntity livingEntity) {
-            livingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 100, 0), this.getOwner());
-            livingEntity.addEffect(new MobEffectInstance(MobEffects.POISON, 200, 0), this.getOwner());
-        }
-    }
-
-    /**
-     * Called when this EntityFireball hits a block or entity.
-     */
-    @Override
-    protected void onHit(@NotNull HitResult result) {
-        super.onHit(result);
-        if (!this.level().isClientSide) {
-            if (result.getType() == HitResult.Type.BLOCK) {
-                BlockHitResult blockHitResult = (BlockHitResult) result;
-                BlockPos originPos = blockHitResult.getBlockPos();
-                Level level = this.level();
-                ItemStack stack = this.getItem();
-
-                BlockPos.betweenClosedStream(originPos.offset(-3, -1, -3), originPos.offset(3, 1, 3))
-                        .forEach(targetPos -> {
-                            boolean applied = BoneMealItem.applyBonemeal(stack, level, targetPos, null)
-                                    || BoneMealItem.growWaterPlant(stack, level, targetPos, null);
-
-                            if (applied) {
-                                BoneMealItem.addGrowthParticles(level, targetPos, 15);
-                            }
-                        });
-
-                level.levelEvent(1505, originPos, 15);
-                if (this.getOwner() instanceof ServerPlayer player) {
-                    player.gameEvent(GameEvent.ITEM_INTERACT_FINISH);
-                }
-            }
-            this.level().broadcastEntityEvent(this, (byte) 3);
-            this.discard();
+            livingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0), this.getOwner());
+            livingEntity.addEffect(new MobEffectInstance(MobEffects.WITHER, 200, 0), this.getOwner());
         }
     }
 }
