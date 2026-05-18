@@ -105,6 +105,9 @@
   "block.poopsky.stool": "Stool",
   "block.poopsky.poolime_block": "Poolime Block",
   "block.poopsky.compooper": "Compooper",
+  "block.poopsky.water_compooper": "Water Compooper",
+  "block.poopsky.lava_compooper": "Lava Compooper",
+  "block.poopsky.urine_compooper": "Urine Compooper",
 
   "item.poopsky.dragon_breath_chili": "Dragon Breath Chili",
   "item.poopsky.roundworm": "Roundworm",
@@ -163,6 +166,7 @@
 
   "block.customportalapi.customportalblock": "Poop Portal",
   "entity.minecraft.villager.poopsky.poopmaker": "Poopmaker",
+  "entity.minecraft.villager.poopsky.gastronome": "Gastronome",
   "entity.poopsky.toilet_plug": "Toilet Plug",
   "entity.poopsky.stool_entity": "Stool",
   "entity.poopsky.poolime": "Poolime",
@@ -176,7 +180,8 @@
   "advancements.adventure.poop_block_slide.description": "Slide on a poop block",
 
   "subtitle.poopsky.fart": "Fart Sound",
-  "subtitle.poopsky.villager.work_toilet": "Poopmaker: Working",
+  "subtitle.poopsky.villager.work_compooper": "Poopmaker: Working",
+  "subtitle.poopsky.villager.work_toilet": "Gastronome: Eating",
 
   "tag.item.poopsky.compooper_saplings": "Compooper Saplings",
 

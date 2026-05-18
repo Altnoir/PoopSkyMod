@@ -1,154 +1,154 @@
 {
   "variants": {
-    "backward=false,facing=east,forward=false,lava=false": {
-      "model": "poopsky:block/light_blue_concrete_toilet",
-      "uvlock": true,
-      "y": 90
-    },
-    "backward=false,facing=east,forward=false,lava=true": {
-      "model": "poopsky:block/light_blue_concrete_toilet_lava",
-      "uvlock": true,
-      "y": 90
-    },
-    "backward=false,facing=east,forward=true,lava=false": {
-      "model": "poopsky:block/light_blue_concrete_toilet_n",
-      "uvlock": true,
-      "y": 90
-    },
-    "backward=false,facing=east,forward=true,lava=true": {
-      "model": "poopsky:block/light_blue_concrete_toilet_lava_n",
-      "uvlock": true,
-      "y": 90
-    },
-    "backward=false,facing=north,forward=false,lava=false": {
-      "model": "poopsky:block/light_blue_concrete_toilet",
-      "uvlock": true
-    },
-    "backward=false,facing=north,forward=false,lava=true": {
-      "model": "poopsky:block/light_blue_concrete_toilet_lava",
-      "uvlock": true
-    },
-    "backward=false,facing=north,forward=true,lava=false": {
-      "model": "poopsky:block/light_blue_concrete_toilet_n",
-      "uvlock": true
-    },
-    "backward=false,facing=north,forward=true,lava=true": {
-      "model": "poopsky:block/light_blue_concrete_toilet_lava_n",
-      "uvlock": true
-    },
-    "backward=false,facing=south,forward=false,lava=false": {
-      "model": "poopsky:block/light_blue_concrete_toilet",
-      "uvlock": true,
-      "y": 180
-    },
-    "backward=false,facing=south,forward=false,lava=true": {
-      "model": "poopsky:block/light_blue_concrete_toilet_lava",
-      "uvlock": true,
-      "y": 180
-    },
-    "backward=false,facing=south,forward=true,lava=false": {
-      "model": "poopsky:block/light_blue_concrete_toilet_n",
-      "uvlock": true,
-      "y": 180
-    },
-    "backward=false,facing=south,forward=true,lava=true": {
-      "model": "poopsky:block/light_blue_concrete_toilet_lava_n",
-      "uvlock": true,
-      "y": 180
-    },
-    "backward=false,facing=west,forward=false,lava=false": {
-      "model": "poopsky:block/light_blue_concrete_toilet",
-      "uvlock": true,
-      "y": 270
-    },
-    "backward=false,facing=west,forward=false,lava=true": {
-      "model": "poopsky:block/light_blue_concrete_toilet_lava",
-      "uvlock": true,
-      "y": 270
-    },
-    "backward=false,facing=west,forward=true,lava=false": {
-      "model": "poopsky:block/light_blue_concrete_toilet_n",
-      "uvlock": true,
-      "y": 270
-    },
-    "backward=false,facing=west,forward=true,lava=true": {
-      "model": "poopsky:block/light_blue_concrete_toilet_lava_n",
-      "uvlock": true,
-      "y": 270
-    },
-    "backward=true,facing=east,forward=false,lava=false": {
+    "connection=back,facing=east,lava=false": {
       "model": "poopsky:block/light_blue_concrete_toilet_s",
       "uvlock": true,
       "y": 90
     },
-    "backward=true,facing=east,forward=false,lava=true": {
+    "connection=back,facing=east,lava=true": {
       "model": "poopsky:block/light_blue_concrete_toilet_lava_s",
       "uvlock": true,
       "y": 90
     },
-    "backward=true,facing=east,forward=true,lava=false": {
+    "connection=back,facing=north,lava=false": {
+      "model": "poopsky:block/light_blue_concrete_toilet_s",
+      "uvlock": true
+    },
+    "connection=back,facing=north,lava=true": {
+      "model": "poopsky:block/light_blue_concrete_toilet_lava_s",
+      "uvlock": true
+    },
+    "connection=back,facing=south,lava=false": {
+      "model": "poopsky:block/light_blue_concrete_toilet_s",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=back,facing=south,lava=true": {
+      "model": "poopsky:block/light_blue_concrete_toilet_lava_s",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=back,facing=west,lava=false": {
+      "model": "poopsky:block/light_blue_concrete_toilet_s",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=back,facing=west,lava=true": {
+      "model": "poopsky:block/light_blue_concrete_toilet_lava_s",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=both,facing=east,lava=false": {
       "model": "poopsky:block/light_blue_concrete_toilet_ns",
       "uvlock": true,
       "y": 90
     },
-    "backward=true,facing=east,forward=true,lava=true": {
+    "connection=both,facing=east,lava=true": {
       "model": "poopsky:block/light_blue_concrete_toilet_lava_ns",
       "uvlock": true,
       "y": 90
     },
-    "backward=true,facing=north,forward=false,lava=false": {
-      "model": "poopsky:block/light_blue_concrete_toilet_s",
-      "uvlock": true
-    },
-    "backward=true,facing=north,forward=false,lava=true": {
-      "model": "poopsky:block/light_blue_concrete_toilet_lava_s",
-      "uvlock": true
-    },
-    "backward=true,facing=north,forward=true,lava=false": {
+    "connection=both,facing=north,lava=false": {
       "model": "poopsky:block/light_blue_concrete_toilet_ns",
       "uvlock": true
     },
-    "backward=true,facing=north,forward=true,lava=true": {
+    "connection=both,facing=north,lava=true": {
       "model": "poopsky:block/light_blue_concrete_toilet_lava_ns",
       "uvlock": true
     },
-    "backward=true,facing=south,forward=false,lava=false": {
-      "model": "poopsky:block/light_blue_concrete_toilet_s",
-      "uvlock": true,
-      "y": 180
-    },
-    "backward=true,facing=south,forward=false,lava=true": {
-      "model": "poopsky:block/light_blue_concrete_toilet_lava_s",
-      "uvlock": true,
-      "y": 180
-    },
-    "backward=true,facing=south,forward=true,lava=false": {
+    "connection=both,facing=south,lava=false": {
       "model": "poopsky:block/light_blue_concrete_toilet_ns",
       "uvlock": true,
       "y": 180
     },
-    "backward=true,facing=south,forward=true,lava=true": {
+    "connection=both,facing=south,lava=true": {
       "model": "poopsky:block/light_blue_concrete_toilet_lava_ns",
       "uvlock": true,
       "y": 180
     },
-    "backward=true,facing=west,forward=false,lava=false": {
-      "model": "poopsky:block/light_blue_concrete_toilet_s",
-      "uvlock": true,
-      "y": 270
-    },
-    "backward=true,facing=west,forward=false,lava=true": {
-      "model": "poopsky:block/light_blue_concrete_toilet_lava_s",
-      "uvlock": true,
-      "y": 270
-    },
-    "backward=true,facing=west,forward=true,lava=false": {
+    "connection=both,facing=west,lava=false": {
       "model": "poopsky:block/light_blue_concrete_toilet_ns",
       "uvlock": true,
       "y": 270
     },
-    "backward=true,facing=west,forward=true,lava=true": {
+    "connection=both,facing=west,lava=true": {
       "model": "poopsky:block/light_blue_concrete_toilet_lava_ns",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=default,facing=east,lava=false": {
+      "model": "poopsky:block/light_blue_concrete_toilet",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=default,facing=east,lava=true": {
+      "model": "poopsky:block/light_blue_concrete_toilet_lava",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=default,facing=north,lava=false": {
+      "model": "poopsky:block/light_blue_concrete_toilet",
+      "uvlock": true
+    },
+    "connection=default,facing=north,lava=true": {
+      "model": "poopsky:block/light_blue_concrete_toilet_lava",
+      "uvlock": true
+    },
+    "connection=default,facing=south,lava=false": {
+      "model": "poopsky:block/light_blue_concrete_toilet",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=default,facing=south,lava=true": {
+      "model": "poopsky:block/light_blue_concrete_toilet_lava",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=default,facing=west,lava=false": {
+      "model": "poopsky:block/light_blue_concrete_toilet",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=default,facing=west,lava=true": {
+      "model": "poopsky:block/light_blue_concrete_toilet_lava",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=front,facing=east,lava=false": {
+      "model": "poopsky:block/light_blue_concrete_toilet_n",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=front,facing=east,lava=true": {
+      "model": "poopsky:block/light_blue_concrete_toilet_lava_n",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=front,facing=north,lava=false": {
+      "model": "poopsky:block/light_blue_concrete_toilet_n",
+      "uvlock": true
+    },
+    "connection=front,facing=north,lava=true": {
+      "model": "poopsky:block/light_blue_concrete_toilet_lava_n",
+      "uvlock": true
+    },
+    "connection=front,facing=south,lava=false": {
+      "model": "poopsky:block/light_blue_concrete_toilet_n",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=front,facing=south,lava=true": {
+      "model": "poopsky:block/light_blue_concrete_toilet_lava_n",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=front,facing=west,lava=false": {
+      "model": "poopsky:block/light_blue_concrete_toilet_n",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=front,facing=west,lava=true": {
+      "model": "poopsky:block/light_blue_concrete_toilet_lava_n",
       "uvlock": true,
       "y": 270
     }

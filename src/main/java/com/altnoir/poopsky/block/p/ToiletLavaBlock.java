@@ -33,7 +33,7 @@ public class ToiletLavaBlock extends AbstractToiletBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, FORWARD, BACKWARD, LAVA);
+        builder.add(FACING, CONNECTION, LAVA);
     }
 
     @Override

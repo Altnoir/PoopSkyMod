@@ -25,7 +25,17 @@ import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.dispenser.BlockSource;
+import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.ai.village.poi.PoiTypes;
+import net.minecraft.world.item.BoneMealItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -84,7 +94,6 @@ public class PoopSky {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
@@ -108,6 +117,23 @@ public class PoopSky {
             EntityRenderers.register(PSEntityType.STOOL.get(), ChairRenderer::new);
             EntityRenderers.register(PSEntityType.TOILET.get(), ToiletRenderer::new);
             CompooperBlock.bootStrap();
+
+            DispenserBlock.registerProjectileBehavior(PSItems.POOP_BALL);
+            DispenserBlock.registerProjectileBehavior(PSItems.WITHER_POOP_BALL);
+            DispenserBlock.registerBehavior(PSItems.POOP.get(), new OptionalDispenseItemBehavior() {
+                @Override
+                protected ItemStack execute(BlockSource blockSource, ItemStack itemStack) {
+                    this.setSuccess(true);
+                    Level level = blockSource.level();
+                    BlockPos blockpos = blockSource.pos().relative(blockSource.state().getValue(DispenserBlock.FACING));
+                    if (!BoneMealItem.growCrop(itemStack, level, blockpos) && !BoneMealItem.growWaterPlant(itemStack, level, blockpos, null)) {
+                        this.setSuccess(false);
+                    } else if (!level.isClientSide) {
+                        level.levelEvent(1505, blockpos, 15);
+                    }
+                    return itemStack;
+                }
+            });
         }
 
         @SubscribeEvent

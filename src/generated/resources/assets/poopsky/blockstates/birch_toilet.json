@@ -1,78 +1,78 @@
 {
   "variants": {
-    "backward=false,facing=east,forward=false": {
-      "model": "poopsky:block/birch_toilet",
-      "uvlock": true,
-      "y": 90
-    },
-    "backward=false,facing=east,forward=true": {
-      "model": "poopsky:block/birch_toilet_n",
-      "uvlock": true,
-      "y": 90
-    },
-    "backward=false,facing=north,forward=false": {
-      "model": "poopsky:block/birch_toilet",
-      "uvlock": true
-    },
-    "backward=false,facing=north,forward=true": {
-      "model": "poopsky:block/birch_toilet_n",
-      "uvlock": true
-    },
-    "backward=false,facing=south,forward=false": {
-      "model": "poopsky:block/birch_toilet",
-      "uvlock": true,
-      "y": 180
-    },
-    "backward=false,facing=south,forward=true": {
-      "model": "poopsky:block/birch_toilet_n",
-      "uvlock": true,
-      "y": 180
-    },
-    "backward=false,facing=west,forward=false": {
-      "model": "poopsky:block/birch_toilet",
-      "uvlock": true,
-      "y": 270
-    },
-    "backward=false,facing=west,forward=true": {
-      "model": "poopsky:block/birch_toilet_n",
-      "uvlock": true,
-      "y": 270
-    },
-    "backward=true,facing=east,forward=false": {
+    "connection=back,facing=east": {
       "model": "poopsky:block/birch_toilet_s",
       "uvlock": true,
       "y": 90
     },
-    "backward=true,facing=east,forward=true": {
-      "model": "poopsky:block/birch_toilet_ns",
-      "uvlock": true,
-      "y": 90
-    },
-    "backward=true,facing=north,forward=false": {
+    "connection=back,facing=north": {
       "model": "poopsky:block/birch_toilet_s",
       "uvlock": true
     },
-    "backward=true,facing=north,forward=true": {
-      "model": "poopsky:block/birch_toilet_ns",
-      "uvlock": true
-    },
-    "backward=true,facing=south,forward=false": {
+    "connection=back,facing=south": {
       "model": "poopsky:block/birch_toilet_s",
       "uvlock": true,
       "y": 180
     },
-    "backward=true,facing=south,forward=true": {
-      "model": "poopsky:block/birch_toilet_ns",
-      "uvlock": true,
-      "y": 180
-    },
-    "backward=true,facing=west,forward=false": {
+    "connection=back,facing=west": {
       "model": "poopsky:block/birch_toilet_s",
       "uvlock": true,
       "y": 270
     },
-    "backward=true,facing=west,forward=true": {
+    "connection=both,facing=east": {
       "model": "poopsky:block/birch_toilet_ns",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=both,facing=north": {
+      "model": "poopsky:block/birch_toilet_ns",
+      "uvlock": true
+    },
+    "connection=both,facing=south": {
+      "model": "poopsky:block/birch_toilet_ns",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=both,facing=west": {
+      "model": "poopsky:block/birch_toilet_ns",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=default,facing=east": {
+      "model": "poopsky:block/birch_toilet",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=default,facing=north": {
+      "model": "poopsky:block/birch_toilet",
+      "uvlock": true
+    },
+    "connection=default,facing=south": {
+      "model": "poopsky:block/birch_toilet",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=default,facing=west": {
+      "model": "poopsky:block/birch_toilet",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=front,facing=east": {
+      "model": "poopsky:block/birch_toilet_n",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=front,facing=north": {
+      "model": "poopsky:block/birch_toilet_n",
+      "uvlock": true
+    },
+    "connection=front,facing=south": {
+      "model": "poopsky:block/birch_toilet_n",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=front,facing=west": {
+      "model": "poopsky:block/birch_toilet_n",
       "uvlock": true,
       "y": 270
     }

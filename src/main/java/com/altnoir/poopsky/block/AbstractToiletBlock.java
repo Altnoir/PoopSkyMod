@@ -8,7 +8,6 @@ import com.altnoir.poopsky.entity.p.ToiletEntity;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.particle.PSParticles;
 import com.altnoir.poopsky.sound.PSSoundEvents;
-import com.altnoir.poopsky.tag.PSItemTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
@@ -19,6 +18,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -40,6 +40,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -52,32 +53,52 @@ import java.util.Set;
 
 public abstract class AbstractToiletBlock extends Block implements EntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-    public static final BooleanProperty FORWARD = BooleanProperty.create("forward");
-    public static final BooleanProperty BACKWARD = BooleanProperty.create("backward");
+    public static final EnumProperty<ToiletState> CONNECTION = EnumProperty.create("connection", ToiletState.class);
+
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
+
+    public enum ToiletState implements StringRepresentable {
+        DEFAULT("default"),
+        FRONT("front"),
+        BACK("back"),
+        BOTH("both");
+
+        private final String name;
+
+        ToiletState(String name) {
+            this.name = name;
+        }
+
+        public String toString() {
+            return this.name;
+        }
+
+        public String getSerializedName() {
+            return this.name;
+        }
+    }
 
     public AbstractToiletBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(
                 this.defaultBlockState()
                         .setValue(FACING, Direction.NORTH)
-                        .setValue(FORWARD, false)
-                        .setValue(BACKWARD, false)
+                        .setValue(CONNECTION, ToiletState.DEFAULT)
         );
     }
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (!level.isClientSide && player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
-                Entity entity;
-                List<ToiletEntity> entities = level.getEntities(PSEntityType.TOILET.get(), new AABB(pos), toiletEntity -> true);
+            Entity entity;
+            List<ToiletEntity> entities = level.getEntities(PSEntityType.TOILET.get(), new AABB(pos), toiletEntity -> true);
 
-                if (entities.isEmpty()) {
-                    entity = PSEntityType.TOILET.get().spawn((ServerLevel) level, pos, MobSpawnType.TRIGGERED);
-                } else {
-                    entity = entities.getFirst();
-                }
-                player.startRiding(entity);
+            if (entities.isEmpty()) {
+                entity = PSEntityType.TOILET.get().spawn((ServerLevel) level, pos, MobSpawnType.TRIGGERED);
+            } else {
+                entity = entities.getFirst();
+            }
+            player.startRiding(entity);
         }
         return InteractionResult.PASS;
     }
@@ -215,7 +236,7 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, FORWARD, BACKWARD);
+        builder.add(FACING, CONNECTION);
     }
 
     @Nullable
@@ -231,10 +252,20 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
         var backwardPos = pos.relative(facing.getOpposite());
         var backwardConnected = isValidNeighbor(level, backwardPos, facing);
 
+        ToiletState connection;
+        if (forwardConnected && backwardConnected) {
+            connection = ToiletState.BOTH;
+        } else if (forwardConnected) {
+            connection = ToiletState.FRONT;
+        } else if (backwardConnected) {
+            connection = ToiletState.BACK;
+        } else {
+            connection = ToiletState.DEFAULT;
+        }
+
         return this.defaultBlockState()
                 .setValue(FACING, facing)
-                .setValue(FORWARD, forwardConnected)
-                .setValue(BACKWARD, backwardConnected);
+                .setValue(CONNECTION, connection);
     }
 
     @Override
@@ -295,8 +326,17 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
 
         var forwardConnected = isValidNeighbor(level, forwardPos, facing);
         var backwardConnected = isValidNeighbor(level, backwardPos, facing);
-
-        level.setBlock(pos, state.setValue(FORWARD, forwardConnected).setValue(BACKWARD, backwardConnected), 3);
+        ToiletState connection;
+        if (forwardConnected && backwardConnected) {
+            connection = ToiletState.BOTH;
+        } else if (forwardConnected) {
+            connection = ToiletState.FRONT;
+        } else if (backwardConnected) {
+            connection = ToiletState.BACK;
+        } else {
+            connection = ToiletState.DEFAULT;
+        }
+        level.setBlockAndUpdate(pos, state.setValue(CONNECTION, connection));
     }
 
     protected boolean hasHot(ServerLevel level, BlockPos pos) {

@@ -2,6 +2,10 @@
   "replace": false,
   "values": [
     {
+      "id": "poopsky:compooper",
+      "required": false
+    },
+    {
       "id": "poopsky:toilet",
       "required": false
     }

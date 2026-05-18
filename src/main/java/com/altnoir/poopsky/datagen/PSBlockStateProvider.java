@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.block.AbstractToiletBlock;
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.block.ToiletBlocks;
 import com.altnoir.poopsky.block.p.PoopPieceBlock;
@@ -245,8 +246,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
 
         getVariantBuilder(toilet).forAllStates(state -> {
             var facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
-            var forward = state.getValue(ToiletBlock.FORWARD);
-            var backward = state.getValue(ToiletBlock.BACKWARD);
+            var connection = state.getValue(AbstractToiletBlock.CONNECTION);
             var yRot = switch (facing) {
                 case EAST -> 90;
                 case SOUTH -> 180;
@@ -254,11 +254,12 @@ public class PSBlockStateProvider extends BlockStateProvider {
                 default -> 0;
             };
 
-            ModelFile chosenModel;
-            if (!forward && !backward) chosenModel = baseModel;
-            else if (forward && !backward) chosenModel = modelN;
-            else if (!forward) chosenModel = modelS;
-            else chosenModel = modelNS;
+            ModelFile chosenModel = switch (connection) {
+                case DEFAULT -> baseModel;
+                case FRONT -> modelN;
+                case BACK -> modelS;
+                case BOTH -> modelNS;
+            };
 
             return ConfiguredModel.builder()
                     .modelFile(chosenModel)
@@ -308,8 +309,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
         getVariantBuilder(toilet).forAllStates(state -> {
             var lava = state.getValue(ToiletLavaBlock.LAVA);
             var facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
-            boolean forward = state.getValue(ToiletBlock.FORWARD);
-            var backward = state.getValue(ToiletBlock.BACKWARD);
+            var connection = state.getValue(AbstractToiletBlock.CONNECTION);
 
             var yRot = switch (facing) {
                 case EAST -> 90;
@@ -320,15 +320,19 @@ public class PSBlockStateProvider extends BlockStateProvider {
 
             ModelFile chosenModel;
             if (!lava) {
-                if (!forward && !backward) chosenModel = baseModel;
-                else if (forward && !backward) chosenModel = modelN;
-                else if (!forward) chosenModel = modelS;
-                else chosenModel = modelNS;
+                chosenModel = switch (connection) {
+                    case DEFAULT -> baseModel;
+                    case FRONT -> modelN;
+                    case BACK -> modelS;
+                    case BOTH -> modelNS;
+                };
             } else {
-                if (!forward && !backward) chosenModel = modelLava;
-                else if (forward && !backward) chosenModel = modelLavaN;
-                else if (!forward) chosenModel = modelLavaS;
-                else chosenModel = modelLavaNS;
+                chosenModel = switch (connection) {
+                    case DEFAULT -> modelLava;
+                    case FRONT -> modelLavaN;
+                    case BACK -> modelLavaS;
+                    case BOTH -> modelLavaNS;
+                };
             }
 
             return ConfiguredModel.builder()

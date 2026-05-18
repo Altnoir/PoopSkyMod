@@ -105,6 +105,9 @@
   "block.poopsky.stool": "粪便凳",
   "block.poopsky.poolime_block": "粘屎块",
   "block.poopsky.compooper": "堆粪桶",
+  "block.poopsky.water_compooper": "装有水的堆粪桶",
+  "block.poopsky.lava_compooper": "装有岩浆的堆粪桶",
+  "block.poopsky.urine_compooper": "装有粪的堆粪桶",
 
   "item.poopsky.dragon_breath_chili": "龙息辣椒",
   "item.poopsky.roundworm": "蛔虫",
@@ -163,6 +166,7 @@
 
   "block.customportalapi.customportalblock": "粪便传送门",
   "entity.minecraft.villager.poopsky.poopmaker": "养粪人",
+  "entity.minecraft.villager.poopsky.gastronome": "美食家",
   "entity.poopsky.toilet_plug": "马桶搋子",
   "entity.poopsky.stool_entity": "粪便凳",
   "entity.poopsky.poolime": "屎莱姆",
@@ -176,7 +180,8 @@
   "advancements.adventure.poop_block_slide.description": "在粪便块上滑行",
 
   "subtitle.poopsky.fart": "屁声",
-  "subtitle.poopsky.villager.work_toilet": "养粪人：工作",
+  "subtitle.poopsky.villager.work_compooper": "养粪人：工作",
+  "subtitle.poopsky.villager.work_toilet": "美食家：进食",
 
   "tag.item.poopsky.compooper_saplings": "堆粪桶可产出树苗",
 
