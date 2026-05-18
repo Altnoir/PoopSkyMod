@@ -49,7 +49,6 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         // 食物
         oreSmelting(recipeOutput, MAGGOTS_LIST, RecipeCategory.BUILDING_BLOCKS, PSItems.BAKED_MAGGOTS, 0.35F, 200, "maggots_seeds");
         oreCooking(recipeOutput, RecipeSerializer.SMOKING_RECIPE, SmokingRecipe::new, MAGGOTS_LIST, RecipeCategory.BUILDING_BLOCKS, PSItems.BAKED_MAGGOTS, 0.35F, 100, "maggots_seeds", "_from_smoking");
-
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PSItems.POOP_BREAD)
                 .pattern("PMP")
                 .define('P', PSItems.POOP)
@@ -261,6 +260,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(recipeOutput);
 
         offerCompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOLIME_BLOCK.get(), PSItems.POOP_BALL.get());
+        offerCompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOPLIME_POOP_BLOCK.get(), PSBlocks.POOP_BLOCK.get());
 
         //原版物品配方
         offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, Blocks.CRAFTING_TABLE, PSItems.SPALL, 1);

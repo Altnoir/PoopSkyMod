@@ -115,6 +115,7 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
 
         dropSelf(PSBlocks.POOP_CAKE.get());
         dropSelf(PSBlocks.POOLIME_BLOCK.get());
+        dropSelf(PSBlocks.POOPLIME_POOP_BLOCK.get());
         dropSelf(PSBlocks.STOOL.get());
         dropSelf(PSBlocks.COMPOOPER.get());
         dropOther(PSBlocks.WATER_COMPOOPER.get(), PSBlocks.COMPOOPER.get());

@@ -1,7 +1,5 @@
 package com.altnoir.poopsky.block.p;
 
-import com.altnoir.poopsky.entity.PSEntityType;
-import com.altnoir.poopsky.entity.p.PoolimeEntity;
 import com.altnoir.poopsky.particle.PSParticles;
 import com.altnoir.poopsky.worldgen.PSConfigureFeatures;
 import com.mojang.serialization.MapCodec;
@@ -19,7 +17,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
@@ -182,45 +179,6 @@ public class PoopBlock extends Block implements BonemealableBlock {
             level.setBlockAndUpdate(pos, Blocks.DIRT.defaultBlockState());
             level.playSound(null, pos, SoundEvents.ROOTED_DIRT_PLACE, SoundSource.BLOCKS, 0.5F, 1.0F);
         }
-
-        PoolimeEntity poolime = PSEntityType.POOLIME.get().create(level);
-
-        if (poolime != null) {
-            int count = level.getEntitiesOfClass(PoolimeEntity.class, poolime.getBoundingBox().inflate(64.0D)).size();
-
-            if (count < 40 && random.nextInt(10) == 0) {
-                BlockPos spawnPos = pos.above();
-                if (level.getBlockState(spawnPos).canBeReplaced() && checkRange(level, pos)) {
-
-                    int size = random.nextInt(4) + 1;
-                    poolime.setSize(size, true);
-
-                    poolime.moveTo(spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5, 0, 0);
-
-                    if (poolime.checkSpawnRules(level, MobSpawnType.NATURAL) && level.noCollision(poolime, poolime.getBoundingBox())) {
-                        level.addFreshEntity(poolime);
-                    }
-
-                }
-            }
-        }
-
-    }
-
-    private boolean checkRange(Level level, BlockPos centerPos) {
-        for (int x = -1; x <= 1; x++) {
-            for (int z = -1; z <= 1; z++) {
-                if (x == 0 && z == 0) continue;
-
-                BlockPos checkPos = centerPos.offset(x, 0, z);
-                BlockState checkState = level.getBlockState(checkPos);
-
-                if (!checkState.is(this)) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 
     @Override

@@ -58,6 +58,16 @@ public class PSBlocks {
                     .instrument(NoteBlockInstrument.COW_BELL)
                     .sound(SoundType.MUD))
     );
+    public static final DeferredBlock<Block> POOPLIME_POOP_BLOCK = registerBlock("poolime_poop_block",
+            () -> new PooplimePoopBlock(BlockBehaviour.Properties.of()
+                    .randomTicks()
+                    .strength(POOP)
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .speedFactor(0.4F)
+                    .isValidSpawn(Blocks::always)
+                    .instrument(NoteBlockInstrument.COW_BELL)
+                    .sound(SoundType.MUD))
+    );
     public static final DeferredBlock<Block> POOP_STAIRS = registerBlock("poop_stairs",
             () -> new StairBlock(POOP_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_BROWN)

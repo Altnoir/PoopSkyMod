@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.entity.p;
 
+import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.particle.PSParticles;
-import com.altnoir.poopsky.tag.PSBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.util.RandomSource;
@@ -10,7 +10,8 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Slime;
-import net.minecraft.world.level.*;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import org.jetbrains.annotations.NotNull;
 
 public class PoolimeEntity extends Slime {
@@ -31,6 +32,6 @@ public class PoolimeEntity extends Slime {
             EntityType<PoolimeEntity> poolime, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random
     ) {
         boolean flag = MobSpawnType.ignoresLightRequirements(spawnType);
-        return level.getBlockState(pos.below()).is(PSBlockTags.POOP_BLOCKS) && flag;
+        return level.getBlockState(pos.below()).is(PSBlocks.POOPLIME_POOP_BLOCK.get()) && flag;
     }
 }

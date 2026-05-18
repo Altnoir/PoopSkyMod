@@ -28,7 +28,7 @@ public class PSKeyBoardInput {
     public static final KeyMapping USE_PLUG_KEY = new KeyMapping("key.poopsky.use_plug",
             KeyConflictContext.IN_GAME,
             InputConstants.Type.KEYSYM,
-            GLFW.GLFW_KEY_R,
+            GLFW.GLFW_KEY_V,
             "key.category.poopsky");
 
     @SubscribeEvent
