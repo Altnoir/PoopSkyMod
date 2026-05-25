@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.entity.p;
 
+import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.effect.PSEffects;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.particle.PSParticles;
@@ -58,7 +59,7 @@ public class ToiletEntity extends Entity {
 
     @Override
     protected void removePassenger(Entity passenger) {
-        passenger.setPos(passenger.getX(), this.getY() + 1.5, passenger.getZ());
+        passenger.setPos(passenger.getX(), passenger.getY() + 1.5, passenger.getZ());
         super.removePassenger(passenger);
         this.kill();
     }
