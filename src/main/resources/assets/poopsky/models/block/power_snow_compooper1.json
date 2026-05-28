@@ -1,0 +1,14 @@
+{
+    "textures": {
+        "particle": "minecraft:block/powder_snow",
+        "inside": "minecraft:block/powder_snow"
+    },
+    "elements": [
+        {   "from": [ 2, 0, 2 ],
+            "to": [ 14, 5, 14 ],
+            "faces": {
+                "up": { "texture": "#inside", "tintindex": 1}
+            }
+        }
+    ]
+}

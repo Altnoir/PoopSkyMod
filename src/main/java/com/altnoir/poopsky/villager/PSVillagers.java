@@ -31,6 +31,7 @@ public class PSVillagers {
                     PSBlocks.COMPOOPER.get(),
                     PSBlocks.WATER_COMPOOPER.get(),
                     PSBlocks.LAVA_COMPOOPER.get(),
+                    PSBlocks.POWER_SNOW_COMPOOPER.get(),
                     PSBlocks.URINE_COMPOOPER.get()
             ).stream()
             .flatMap(block -> block.getStateDefinition().getPossibleStates().stream())

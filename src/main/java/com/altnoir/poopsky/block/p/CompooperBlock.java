@@ -76,6 +76,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
         add(f05, PSBlocks.POOP_LEAVES);
         add(f03, PSBlocks.POOP_PIECE);
         add(f1, PSBlocks.POOP_BLOCK);
+        add(f1, PSBlocks.POOLIME_POOP_BLOCK);
         add(f08, PSBlocks.POOP_STAIRS);
         add(f05, PSBlocks.POOP_SLAB);
         add(f05, PSBlocks.POOP_VERTICAL_SLAB);
@@ -145,6 +146,8 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
                 return liquidUse(stack, level, pos, player, hand, SoundEvents.BUCKET_EMPTY, PSBlocks.WATER_COMPOOPER.get(), true);
             } else if (stack.getItem() == Items.LAVA_BUCKET) {
                 return liquidUse(stack, level, pos, player, hand, SoundEvents.BUCKET_EMPTY_LAVA, PSBlocks.LAVA_COMPOOPER.get(), true);
+            } else if (stack.getItem() == Items.POWDER_SNOW_BUCKET) {
+                return liquidUse(stack, level, pos, player, hand, SoundEvents.BUCKET_EMPTY_POWDER_SNOW, PSBlocks.POWER_SNOW_COMPOOPER.get(), true);
             } else if (stack.getItem() == PSItems.URINE_BOTTLE.get()) {
                 return liquidUse(stack, level, pos, player, hand, SoundEvents.BOTTLE_EMPTY, PSBlocks.URINE_COMPOOPER.get(), false);
             } else if (potioncontents.is(Potions.WATER)) {
@@ -244,7 +247,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
         if (precipitation == Biome.Precipitation.RAIN) {
             return level.getRandom().nextFloat() < 0.05F;
         } else {
-            return precipitation == Biome.Precipitation.SNOW && level.getRandom().nextFloat() < 0.1F;
+            return precipitation == Biome.Precipitation.SNOW ? level.getRandom().nextFloat() < 0.1F : false;
         }
     }
 
@@ -253,6 +256,9 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
         if (shouldHandlePrecipitation(level, precipitation)) {
             if (precipitation == Biome.Precipitation.RAIN) {
                 level.setBlockAndUpdate(pos, PSBlocks.WATER_COMPOOPER.get().defaultBlockState());
+                level.gameEvent(null, GameEvent.BLOCK_CHANGE, pos);
+            } else if (precipitation == Biome.Precipitation.SNOW) {
+                level.setBlockAndUpdate(pos, PSBlocks.POWER_SNOW_COMPOOPER.get().defaultBlockState());
                 level.gameEvent(null, GameEvent.BLOCK_CHANGE, pos);
             }
         }

@@ -5,7 +5,6 @@ import com.altnoir.poopsky.block.AbstractToiletBlock;
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.block.ToiletBlocks;
 import com.altnoir.poopsky.block.p.PoopPieceBlock;
-import com.altnoir.poopsky.block.p.ToiletBlock;
 import com.altnoir.poopsky.block.p.ToiletLavaBlock;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -90,7 +89,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
         simpleBlockItem(PSBlocks.POOP_PIECE.get(), models().getExistingFile(modLoc("block/poop_height2")));
         //
         blockWithTranslucentRenderType(PSBlocks.POOLIME_BLOCK.get());
-        blockWithItem(PSBlocks.POOPLIME_POOP_BLOCK.get());
+        blockWithItem(PSBlocks.POOLIME_POOP_BLOCK.get());
         blockWithItem(PSBlocks.CHILI_POOP_BLOCK.get());
         stairsBlock((StairBlock) PSBlocks.CHILI_POOP_STAIRS.get(), blockTexture(PSBlocks.CHILI_POOP_BLOCK.get()));
         slabBlock((SlabBlock) PSBlocks.CHILI_POOP_SLAB.get(), blockTexture(PSBlocks.CHILI_POOP_BLOCK.get()), blockTexture(PSBlocks.CHILI_POOP_BLOCK.get()));

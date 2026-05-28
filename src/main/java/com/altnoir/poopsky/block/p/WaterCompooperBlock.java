@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.block.p;
 
 import com.altnoir.poopsky.block.AbstractCompooperBlock;
+import com.altnoir.poopsky.block.PSBlocks;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
@@ -13,9 +14,11 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 
 public class WaterCompooperBlock extends AbstractCompooperBlock {
     public static final MapCodec<WaterCompooperBlock> CODEC = simpleCodec(WaterCompooperBlock::new);
@@ -31,6 +34,11 @@ public class WaterCompooperBlock extends AbstractCompooperBlock {
     @Override
     protected MapCodec<? extends Block> codec() {
         return CODEC;
+    }
+
+    @Override
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
+        return new ItemStack(PSBlocks.COMPOOPER.get());
     }
 
     @Override

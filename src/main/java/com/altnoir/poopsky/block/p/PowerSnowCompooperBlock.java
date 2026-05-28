@@ -20,12 +20,11 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
 
-public class LavaCompooperBlock extends AbstractCompooperBlock {
-    public static final MapCodec<LavaCompooperBlock> CODEC = simpleCodec(LavaCompooperBlock::new);
+public class PowerSnowCompooperBlock extends AbstractCompooperBlock {
+    public static final MapCodec<PowerSnowCompooperBlock> CODEC = simpleCodec(PowerSnowCompooperBlock::new);
 
-    public LavaCompooperBlock(Properties properties) {
+    public PowerSnowCompooperBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(
                 this.stateDefinition.any()
@@ -48,7 +47,7 @@ public class LavaCompooperBlock extends AbstractCompooperBlock {
         int i = state.getValue(LEVEL);
 
         if (i == MAX_LEVEL && stack.getItem() == Items.BUCKET) {
-            return BucketUse(stack, level, pos, player, hand, SoundEvents.BUCKET_FILL, Items.LAVA_BUCKET.getDefaultInstance());
+            return BucketUse(stack, level, pos, player, hand, SoundEvents.BUCKET_FILL_POWDER_SNOW, Items.POWDER_SNOW_BUCKET.getDefaultInstance());
         }
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
@@ -60,20 +59,16 @@ public class LavaCompooperBlock extends AbstractCompooperBlock {
                 ItemStack stack = itemEntity.getItem();
                 if (stack.is(Items.STICK)) {
                     int count = stack.getCount();
-                    itemEntity.setItem(new ItemStack(Items.BLAZE_ROD, count));
+                    itemEntity.setItem(new ItemStack(Items.BREEZE_ROD, count));
 
                     level.playSound(null, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), SoundEvents.FIREWORK_ROCKET_BLAST, SoundSource.BLOCKS, 1.0F, 1.0F);
                     for (int i = 0; i < 10; i++) {
                         level.addParticle(ParticleTypes.FIREWORK, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(),
                                 level.random.nextDouble() * 0.4 - 0.2, level.random.nextDouble() * 0.2, level.random.nextDouble() * 0.4 - 0.2);
                     }
-                } else if (stack.is(Items.BLAZE_ROD)) {
+                } else if (stack.is(Items.BREEZE_ROD)) {
                     entity.setDeltaMovement(entity.getDeltaMovement().x, entity.getGravity() + 0.1, entity.getDeltaMovement().z);
-                } else {
-                    entity.lavaHurt();
                 }
-            } else {
-                entity.lavaHurt();
             }
         }
     }

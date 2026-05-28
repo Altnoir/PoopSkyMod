@@ -17,10 +17,12 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import org.joml.Vector3f;
 
 public class UrineCompooperBlock extends AbstractCompooperBlock {
@@ -37,6 +39,11 @@ public class UrineCompooperBlock extends AbstractCompooperBlock {
     @Override
     protected MapCodec<? extends Block> codec() {
         return CODEC;
+    }
+
+    @Override
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
+        return new ItemStack(PSBlocks.COMPOOPER.get());
     }
 
     @Override

@@ -79,6 +79,9 @@ public class PSItemTagProvider extends ItemTagsProvider {
                 .add(PSItems.ROUNDWORM.get());
         tag(Tags.Items.FOODS_COOKED_MEAT)
                 .add(PSItems.BAKED_MAGGOTS.get());
+        tag(PSItemTags.PASTA)
+                .add(PSItems.ROUNDWORM.get())
+                .add(PSItems.POOP_PASTA.get());
 
 
         tag(Tags.Items.MUSIC_DISCS)

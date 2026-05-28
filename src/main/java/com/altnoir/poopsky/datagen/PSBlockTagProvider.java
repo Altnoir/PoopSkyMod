@@ -8,6 +8,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
@@ -38,7 +39,7 @@ public class PSBlockTagProvider extends BlockTagsProvider {
         //基础标签
         tag(BlockTags.MOSS_REPLACEABLE)
                 .add(PSBlocks.POOP_BLOCK.get())
-                .add(PSBlocks.POOPLIME_POOP_BLOCK.get())
+                .add(PSBlocks.POOLIME_POOP_BLOCK.get())
                 .add(PSBlocks.CHILI_POOP_BLOCK.get());
         tag(BlockTags.BEACON_BASE_BLOCKS)
                 .add(PSBlocks.POOP_BLOCK.get())
@@ -128,6 +129,15 @@ public class PSBlockTagProvider extends BlockTagsProvider {
 
         tag(BlockTags.MINEABLE_WITH_SHOVEL)
                 .add(PSBlocks.POOP_PIECE.get());
+
+        tag(Tags.Blocks.VILLAGER_JOB_SITES)
+                .add(PSBlocks.COMPOOPER.get())
+                .add(PSBlocks.WATER_COMPOOPER.get())
+                .add(PSBlocks.LAVA_COMPOOPER.get())
+                .add(PSBlocks.POWER_SNOW_COMPOOPER.get())
+                .add(PSBlocks.URINE_COMPOOPER.get())
+                .add(WOODEN_TOILETS)
+                .add(HARD_TOILETS);
     }
 
     public static final Block[] POOP_BLOCKS = {

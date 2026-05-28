@@ -58,7 +58,7 @@ public class PSBlocks {
                     .instrument(NoteBlockInstrument.COW_BELL)
                     .sound(SoundType.MUD))
     );
-    public static final DeferredBlock<Block> POOPLIME_POOP_BLOCK = registerBlock("poolime_poop_block",
+    public static final DeferredBlock<Block> POOLIME_POOP_BLOCK = registerBlock("poolime_poop_block",
             () -> new PooplimePoopBlock(BlockBehaviour.Properties.of()
                     .randomTicks()
                     .strength(POOP)
@@ -321,14 +321,18 @@ public class PSBlocks {
     public static final DeferredBlock<Block> LAVA_COMPOOPER = registerBlock("lava_compooper",
             () -> new LavaCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()).lightLevel(state -> 15))
     );
+    public static final DeferredBlock<Block> POWER_SNOW_COMPOOPER = registerBlock("power_snow_compooper",
+            () -> new PowerSnowCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()))
+    );
     public static final DeferredBlock<Block> URINE_COMPOOPER = registerBlock("urine_compooper",
             () -> new UrineCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()))
     );
 
     public static final DeferredBlock<Block> POOP_LOG = registerBlock("poop_log",
-            () -> new RotatedPillarBlock(BlockBehaviour.Properties.of()
+            () -> new PoopLogBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_BROWN)
                     .noOcclusion()
+                    .randomTicks()
                     .instrument(NoteBlockInstrument.BASS)
                     .strength(LOG)
                     .sound(SoundType.STEM)
@@ -346,9 +350,10 @@ public class PSBlocks {
     );
 
     public static final DeferredBlock<Block> STRIPPED_POOP_LOG = registerBlock("stripped_poop_log",
-            () -> new RotatedPillarBlock(BlockBehaviour.Properties.of()
+            () -> new PoopLogBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_BROWN)
                     .noOcclusion()
+                    .randomTicks()
                     .instrument(NoteBlockInstrument.BASS)
                     .strength(LOG)
                     .sound(SoundType.STEM)

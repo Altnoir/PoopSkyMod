@@ -32,6 +32,6 @@ public class PoolimeEntity extends Slime {
             EntityType<PoolimeEntity> poolime, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random
     ) {
         boolean flag = MobSpawnType.ignoresLightRequirements(spawnType);
-        return level.getBlockState(pos.below()).is(PSBlocks.POOPLIME_POOP_BLOCK.get()) && flag;
+        return level.getBlockState(pos.below()).is(PSBlocks.POOLIME_POOP_BLOCK.get()) && flag;
     }
 }
