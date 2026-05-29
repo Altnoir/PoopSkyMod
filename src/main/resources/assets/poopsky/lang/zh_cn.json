@@ -5,7 +5,8 @@
   "item.poopsky.saping_ball": "树苗球",
   "item.poopsky.wither_poop_ball": "凋灵粪便球",
   "item.poopsky.spall": "碎石",
-  "item.poopsky.toilet_plug": "马桶塞子",
+  "item.poopsky.toilet_plug": "马桶搋子",
+  "item.poopsky.time_bell": "屎溅之铃",
   "item.poopsky.urine_bottle": "尿瓶",
   "item.poopsky.poop_bucket": "粪桶",
   "block.poopsky.poop_liquid": "粪液",
@@ -175,6 +176,7 @@
 
   "key.category.poopsky": "空中厕所",
   "key.poopsky.use_plug": "召唤马桶搋子",
+  "key.poopsky.dismount_plug": "下马桶搋子",
   "key.poopsky.up": "上升",
   "key.poopsky.down": "下降",
 
@@ -186,6 +188,7 @@
   "subtitle.poopsky.villager.work_toilet": "美食家：进食",
 
   "tag.item.poopsky.compooper_saplings": "堆粪桶可产出树苗",
+  "jei.category.poopsky.compooper": "堆粪桶",
 
   "stat.poopsky.poop_stat": "拉屎数",
   "itemgroup.poopsky": "空中厕所"

@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.component;
 
 import com.altnoir.poopsky.PoopSky;
+import com.mojang.serialization.Codec;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.neoforged.bus.api.IEventBus;

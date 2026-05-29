@@ -19,5 +19,13 @@ public class PSNetworking {
                         PlugActionPayload::handle
                 )
         );
+        registrar.playBidirectional(
+                PlugDismountPayload.TYPE,
+                PlugDismountPayload.CODEC,
+                new DirectionalPayloadHandler<>(
+                        PlugDismountPayload::handle,
+                        PlugDismountPayload::handle
+                )
+        );
     }
 }

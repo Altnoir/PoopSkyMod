@@ -1,6 +1,5 @@
 package com.altnoir.poopsky.entity.p;
 
-import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.effect.PSEffects;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.particle.PSParticles;

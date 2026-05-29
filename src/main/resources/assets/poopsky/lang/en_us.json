@@ -6,6 +6,7 @@
   "item.poopsky.wither_poop_ball": "Wither Poop Ball",
   "item.poopsky.spall": "Spall",
   "item.poopsky.toilet_plug": "Toilet Plug",
+  "item.poopsky.time_bell": "Time Bell",
   "item.poopsky.urine_bottle": "Urine Bottle",
   "item.poopsky.poop_bucket": "Poop Bucket",
   "block.poopsky.poop_liquid": "Poop Liquid",
@@ -175,6 +176,7 @@
 
   "key.category.poopsky": "POOPSKY",
   "key.poopsky.use_plug": "Summon Toilet Plug",
+  "key.poopsky.dismount_plug": "Dismount Toilet Plug",
   "key.poopsky.up": "Up",
   "key.poopsky.down": "Descend",
 
@@ -186,6 +188,7 @@
   "subtitle.poopsky.villager.work_toilet": "Gastronome: Eating",
 
   "tag.item.poopsky.compooper_saplings": "Compooper Saplings",
+  "jei.category.poopsky.compooper": "Compooper",
 
   "stat.poopsky.poop_stat": "Poop Stat",
   "itemgroup.poopsky": "POOPSKY"

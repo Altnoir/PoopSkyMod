@@ -69,7 +69,7 @@ public class UrineCompooperBlock extends AbstractCompooperBlock {
     @Override
     protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
         if (neighborPos.equals(pos.below()) && state.getValue(LEVEL) == MAX_LEVEL && isHot((ServerLevel) level, pos)) {
-            level.scheduleTick(pos, this, 20);
+            level.scheduleTick(pos, this, 80);
         }
         super.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston);
     }

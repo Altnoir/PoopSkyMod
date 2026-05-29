@@ -13,28 +13,21 @@ import org.lwjgl.glfw.GLFW;
 
 @EventBusSubscriber(modid = PoopSky.MOD_ID, value = Dist.CLIENT)
 public class PSKeyBoardInput {
-    public static final KeyMapping UP_KEY = new KeyMapping("key.poopsky.up",
-            KeyConflictContext.IN_GAME,
-            InputConstants.Type.KEYSYM,
-            GLFW.GLFW_KEY_SPACE,
-            "key.category.poopsky");
-
-    public static final KeyMapping DOWN_KEY = new KeyMapping("key.poopsky.down",
-            KeyConflictContext.IN_GAME,
-            InputConstants.Type.KEYSYM,
-            GLFW.GLFW_KEY_LEFT_CONTROL,
-            "key.category.poopsky");
-
     public static final KeyMapping USE_PLUG_KEY = new KeyMapping("key.poopsky.use_plug",
             KeyConflictContext.IN_GAME,
             InputConstants.Type.KEYSYM,
             GLFW.GLFW_KEY_V,
             "key.category.poopsky");
 
+    public static final KeyMapping DISMOUNT_PLUG_KEY = new KeyMapping("key.poopsky.dismount_plug",
+            KeyConflictContext.IN_GAME,
+            InputConstants.Type.KEYSYM,
+            GLFW.GLFW_KEY_LEFT_CONTROL,
+            "key.category.poopsky");
+
     @SubscribeEvent
     public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
-        event.register(UP_KEY);
-        event.register(DOWN_KEY);
         event.register(USE_PLUG_KEY);
+        event.register(DISMOUNT_PLUG_KEY);
     }
 }

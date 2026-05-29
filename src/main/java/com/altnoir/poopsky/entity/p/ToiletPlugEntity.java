@@ -158,6 +158,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
                 this.moveByInput();
                 if (this.getControllingPassenger() != null) {
                     TPFlySound.play();
+                    TPFlySound.tick();
                     spawnParticles();
                 }
                 else {
@@ -214,6 +215,9 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
 
     private void moveByInput() {
         var MAX_SPEED = inputFast ? 0.7f : 0.35f;
+        if (this.isUnderWater()){
+            MAX_SPEED *= 0.35f;
+        }
         var FBSpeed = inputForward ? MAX_SPEED : inputBackward ? -MAX_SPEED : 0f;
         var LRSpeed = inputLeft ? MAX_SPEED : inputRight ? -MAX_SPEED : 0f;
         var DAMPING = 0.975f;
@@ -336,8 +340,8 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
                 mc.options.keyDown.isDown(),
                 mc.options.keyLeft.isDown(),
                 mc.options.keyRight.isDown(),
-                PSKeyBoardInput.UP_KEY.isDown(),
-                PSKeyBoardInput.DOWN_KEY.isDown());
+                mc.options.keyJump.isDown(),
+                mc.options.keyShift.isDown());
 
         boolean isSprintingNow = mc.options.keySprint.isDown();
         if (isSprintingNow) inputFast = true;

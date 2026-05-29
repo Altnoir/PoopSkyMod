@@ -1,7 +1,9 @@
 package com.altnoir.poopsky.event;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.network.PlugActionPayload;
+import com.altnoir.poopsky.network.PlugDismountPayload;
 import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -18,6 +20,9 @@ public class PSKeyBoardEvent {
 
         while (PSKeyBoardInput.USE_PLUG_KEY.consumeClick()) {
             PacketDistributor.sendToServer(new PlugActionPayload());
+        }
+        if (mc.player.getVehicle() instanceof ToiletPlugEntity && PSKeyBoardInput.DISMOUNT_PLUG_KEY.consumeClick()) {
+            PacketDistributor.sendToServer(new PlugDismountPayload());
         }
     }
 }
