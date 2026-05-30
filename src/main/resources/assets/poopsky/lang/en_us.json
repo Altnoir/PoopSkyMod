@@ -6,10 +6,13 @@
   "item.poopsky.wither_poop_ball": "Wither Poop Ball",
   "item.poopsky.spall": "Spall",
   "item.poopsky.toilet_plug": "Toilet Plug",
-  "item.poopsky.time_bell": "Time Bell",
   "item.poopsky.urine_bottle": "Urine Bottle",
   "item.poopsky.poop_bucket": "Poop Bucket",
   "block.poopsky.poop_liquid": "Poop Liquid",
+
+  "item.poopsky.time_bell": "Time Bell",
+  "message.poopsky.time_bell.frozen": "Game time frozen",
+  "message.poopsky.time_bell.unfrozen": "Game time unfrozen",
 
   "item.poopsky.toilet_linker": "Toilet Linker",
   "message.poopsky.toilet_linker.1": "Link Toilet ①",
@@ -184,8 +187,8 @@
   "advancements.adventure.poop_block_slide.description": "Slide on a poop block",
 
   "subtitle.poopsky.fart": "Fart Sound",
-  "subtitle.poopsky.villager.work_compooper": "Poopmaker: Working",
-  "subtitle.poopsky.villager.work_toilet": "Gastronome: Eating",
+  "subtitle.poopsky.villager.work_compooper": "Poopmaker works",
+  "subtitle.poopsky.villager.work_toilet": "Gastronome eats",
 
   "tag.item.poopsky.compooper_saplings": "Compooper Saplings",
   "jei.category.poopsky.compooper": "Compooper",
