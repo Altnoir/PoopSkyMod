@@ -6,10 +6,13 @@
   "item.poopsky.wither_poop_ball": "凋灵粪便球",
   "item.poopsky.spall": "碎石",
   "item.poopsky.toilet_plug": "马桶搋子",
-  "item.poopsky.time_bell": "屎溅之铃",
   "item.poopsky.urine_bottle": "尿瓶",
   "item.poopsky.poop_bucket": "粪桶",
   "block.poopsky.poop_liquid": "粪液",
+
+  "item.poopsky.time_bell": "屎溅之铃",
+  "message.poopsky.time_bell.frozen": "已冻结游戏时间",
+  "message.poopsky.time_bell.unfrozen": "已解冻游戏时间",
 
   "item.poopsky.toilet_linker": "厕所连接器",
   "message.poopsky.toilet_linker.1": "连接厕所①",
@@ -108,7 +111,7 @@
   "block.poopsky.poolime_poop_block": "屎莱姆蛆块",
   "block.poopsky.compooper": "堆粪桶",
   "block.poopsky.water_compooper": "装有水的堆粪桶",
-  "block.poopsky.lava_compooper": "装有岩浆的堆粪桶",
+  "block.poopsky.lava_compooper": "装有熔岩的堆粪桶",
   "block.poopsky.power_snow_compooper": "装有细雪的堆粪桶",
   "block.poopsky.urine_compooper": "装有粪的堆粪桶",
 

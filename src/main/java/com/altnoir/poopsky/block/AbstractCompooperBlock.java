@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.block;
 
+import com.altnoir.poopsky.PoopSky;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -115,7 +116,8 @@ public abstract class AbstractCompooperBlock extends Block {
                             break;
                         }
                     } else {
-                        System.out.println(targetState.getBlock().getName().getString() + " False");
+                        PoopSky.LOGGER.debug("Unable to place compooper block because target block {} cannot be replaced",
+                                targetState.getBlock().getName().getString());
                         break;
                     }
                 }
