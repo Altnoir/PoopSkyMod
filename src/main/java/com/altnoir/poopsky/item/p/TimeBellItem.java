@@ -29,9 +29,9 @@ public class TimeBellItem extends Item {
                         newState? SoundEvents.BELL_BLOCK : SoundEvents.BELL_RESONATE,
                         SoundSource.PLAYERS, 1.0F, 1.0F);
 
-                // 发送反馈消息
-                String message = newState ? "已冻结游戏时间" : "已解冻游戏时间";
-                player.sendSystemMessage(Component.literal(message));
+                player.sendSystemMessage(Component.translatable(newState
+                        ? "message.poopsky.time_bell.frozen"
+                        : "message.poopsky.time_bell.unfrozen"));
 
                 return InteractionResultHolder.success(new ItemStack(this));
             }

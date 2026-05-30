@@ -1,9 +1,7 @@
 package com.altnoir.poopsky.block;
 
-import com.altnoir.poopsky.Config;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -11,15 +9,12 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -30,7 +25,6 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.PathComputationType;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -180,7 +174,7 @@ public abstract class AbstractCompooperBlock extends Block {
         level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, state));
     }
 
-    protected void setBlock(BlockState state, Level level, BlockPos pos, Player player, SoundEvent sound) {
+    private void setBlock(BlockState state, Level level, BlockPos pos, Player player, SoundEvent sound) {
         level.playSound(null, pos, sound, SoundSource.BLOCKS, 1.0F, 1.0F);
         BlockState compooperBlock = PSBlocks.COMPOOPER.get().defaultBlockState();
         level.setBlockAndUpdate(pos, compooperBlock);
@@ -193,56 +187,6 @@ public abstract class AbstractCompooperBlock extends Block {
                 || state.is(Blocks.MAGMA_BLOCK)
                 || (state.is(Blocks.CAMPFIRE) && state.getValue(CampfireBlock.LIT))
                 || (state.is(Blocks.SOUL_CAMPFIRE) && state.getValue(CampfireBlock.LIT));
-    }
-
-    protected boolean isEntityInsideContent(BlockPos pos, BlockState state, Entity entity) {
-        double height = getLiquidHeight(state);
-        return entity.getY() < (double) pos.getY() + height && entity.getBoundingBox().maxY > (double) pos.getY() + 0.125;
-    }
-
-    protected void catalyst(ItemEntity itemEntity, BlockState state, Level level, BlockPos pos, int count, ItemLike item) {
-        if (Config.stickyCrafting) {
-            itemEntity.setItem(new ItemStack(item, count));
-        } else {
-            double height = getLiquidHeight(state);
-
-            var vec3 = Vec3.atLowerCornerWithOffset(pos, 0.5, 0.0725 + height, 0.5).offsetRandom(level.random, 0.7F);
-            int newLevel = state.getValue(LEVEL) - 1;
-            int newCount = count - 1;
-
-            if (newCount > 0) {
-                itemEntity.setItem(new ItemStack(Items.STICK, newCount));
-                ItemEntity newItemEntity = new ItemEntity(level, vec3.x(), vec3.y(), vec3.z(), new ItemStack(item));
-                newItemEntity.setDefaultPickUpDelay();
-                level.addFreshEntity(newItemEntity);
-            } else {
-                itemEntity.setItem(new ItemStack(item));
-            }
-
-            if (level.random.nextBoolean()) {
-                if (newLevel > MIN_LEVEL) {
-                    level.setBlockAndUpdate(pos, state.setValue(LEVEL, newLevel));
-                } else {
-                    BlockState compooperBlock = PSBlocks.COMPOOPER.get().defaultBlockState();
-                    level.setBlockAndUpdate(pos, compooperBlock);
-                    level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(itemEntity, compooperBlock));
-                }
-            }
-        }
-        for (int i = 0; i < 8; i++) {
-            level.addParticle(ParticleTypes.FIREWORK, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(),
-                    level.random.nextDouble() * 0.2 - 0.1, level.random.nextDouble() * 0.2, level.random.nextDouble() * 0.2 - 0.1);
-        }
-    }
-
-    private double getLiquidHeight(BlockState state) {
-        int i = state.getValue(LEVEL);
-        return switch (i) {
-            case 3 -> 0.9375;
-            case 2 -> 0.625;
-            case 1 -> 0.3125;
-            default -> 0;
-        };
     }
 
     @Override
