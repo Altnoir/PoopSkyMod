@@ -122,7 +122,11 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(PSBlocks.POOP_LOG.get())
                 .add(PSBlocks.STRIPPED_POOP_LOG.get())
                 .add(HARDEN_POOP)
-                .add(PSBlocks.COMPOOPER.get());
+                .add(PSBlocks.COMPOOPER.get())
+                .add(PSBlocks.WATER_COMPOOPER.get())
+                .add(PSBlocks.LAVA_COMPOOPER.get())
+                .add(PSBlocks.POWER_SNOW_COMPOOPER.get())
+                .add(PSBlocks.URINE_COMPOOPER.get());
 
         tag(BlockTags.MINEABLE_WITH_HOE)
                 .addTag(PSBlockTags.POOP_BLOCKS);

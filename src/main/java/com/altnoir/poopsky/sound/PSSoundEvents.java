@@ -16,6 +16,7 @@ public class PSSoundEvents {
     public static final DeferredRegister<SoundEvent> SOUND_EVENT = DeferredRegister.create(BuiltInRegistries.SOUND_EVENT, PoopSky.MOD_ID);
 
     public static final Supplier<SoundEvent> FART = registerSoundEvent("fart");
+    public static final Supplier<SoundEvent> BLOCK_COMPPOOPER_MAGGOTS = registerSoundEvent("block.compooer.maggots");
     public static final Supplier<SoundEvent> ENTITY_VILLAGER_WORK_COMPOOPER = registerSoundEvent("entity.villager.work_compooper");
     public static final Supplier<SoundEvent> ENTITY_VILLAGER_WORK_TOILET = registerSoundEvent("entity.villager.work_toilet");
 

@@ -67,50 +67,6 @@
                   }
                 }
               ],
-              "name": "minecraft:pumpkin_seeds"
-            },
-            {
-              "type": "minecraft:item",
-              "name": "poopsky:maggots_seeds"
-            }
-          ]
-        },
-        {
-          "type": "minecraft:alternatives",
-          "children": [
-            {
-              "type": "minecraft:item",
-              "conditions": [
-                {
-                  "block": "poopsky:maggots",
-                  "condition": "minecraft:block_state_property",
-                  "properties": {
-                    "age": "7"
-                  }
-                }
-              ],
-              "name": "minecraft:melon_seeds"
-            },
-            {
-              "type": "minecraft:item",
-              "name": "poopsky:maggots_seeds"
-            }
-          ]
-        },
-        {
-          "type": "minecraft:alternatives",
-          "children": [
-            {
-              "type": "minecraft:item",
-              "conditions": [
-                {
-                  "block": "poopsky:maggots",
-                  "condition": "minecraft:block_state_property",
-                  "properties": {
-                    "age": "7"
-                  }
-                }
-              ],
               "name": "minecraft:carrot"
             },
             {
@@ -134,28 +90,6 @@
                 }
               ],
               "name": "minecraft:potato"
-            },
-            {
-              "type": "minecraft:item",
-              "name": "poopsky:maggots_seeds"
-            }
-          ]
-        },
-        {
-          "type": "minecraft:alternatives",
-          "children": [
-            {
-              "type": "minecraft:item",
-              "conditions": [
-                {
-                  "block": "poopsky:maggots",
-                  "condition": "minecraft:block_state_property",
-                  "properties": {
-                    "age": "7"
-                  }
-                }
-              ],
-              "name": "minecraft:beetroot_seeds"
             },
             {
               "type": "minecraft:item",

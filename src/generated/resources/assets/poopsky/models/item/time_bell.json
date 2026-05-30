@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "poopsky:item/toilet_linker"
+    "layer0": "poopsky:item/time_bell"
   }
 }

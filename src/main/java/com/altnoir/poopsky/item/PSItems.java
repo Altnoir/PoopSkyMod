@@ -54,14 +54,14 @@ public class PSItems {
 
     public static final DeferredItem<Item> TOILET_PLUG = ITEMS.register("toilet_plug", () ->
             new ToiletPlugItem(new Item.Properties().stacksTo(1)));
-    public static final DeferredItem<Item> SPALL = ITEMS.register("spall", () ->
-            new Item(new Item.Properties()));
-    public static final DeferredItem<Item> TOILET_LINKER = ITEMS.register("toilet_linker", () ->
+    public static final DeferredItem<Item> TOILET_PLUG_WAND = ITEMS.register("toilet_plug_wand", () ->
             new ToiletLinkerItem(new Item.Properties()
                     .component(PSComponents.TOILET_COMPONENT, ToiletComponent.EMPTY)
                     .stacksTo(1)));
     public static final DeferredItem<Item> TIME_BELL = ITEMS.register("time_bell", () ->
             new TimeBellItem(new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<Item> SPALL = ITEMS.register("spall", () ->
+            new Item(new Item.Properties()));
 
     public static final DeferredItem<Item> MAGGOTS_SEEDS = ITEMS.register("maggots_seeds", () ->
             new ItemNameBlockItem(PSBlocks.MAGGOTS.get(), new Item.Properties().food(PFoods.MAGGOTS_SEEDS).stacksTo(88)));

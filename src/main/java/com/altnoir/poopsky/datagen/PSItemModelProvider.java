@@ -35,12 +35,14 @@ public class PSItemModelProvider extends ItemModelProvider {
         basicItem(PSItems.LAWRENCE_MUSIC_DISC.get());
         basicItem(PSItems.LIGHT_DANCE_MUSIC_DISC.get());
         basicItem(PSItems.MOON_BOWL_MUSIC_DISC.get());
-        basicItem(PSItems.TOILET_LINKER.get());
+        basicItem(PSItems.TOILET_PLUG_WAND.get());
         basicItem(PSItems.URINE_BOTTLE.get());
         basicItem(PSItems.POOP_BUCKET.get());
         basicItem(PSItems.MAGGOTS_SEEDS.get());
         basicItem(PSItems.ROUNDWORM.get());
         basicItem(PSItems.BAKED_MAGGOTS.get());
+
+        basicItem(PSItems.TIME_BELL.get());
 
         wallItem(PSBlocks.CHILI_POOP_WALL, PSBlocks.CHILI_POOP_BLOCK);
         wallItem(PSBlocks.POOP_BRICK_WALL,PSBlocks.POOP_BRICKS);

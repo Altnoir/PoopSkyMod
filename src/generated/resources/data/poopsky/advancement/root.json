@@ -1,0 +1,33 @@
+{
+  "criteria": {
+    "join_skyblock_world": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:poop"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "background": "poopsky:textures/block/poop_block.png",
+    "description": {
+      "translate": "advancements.poopsky.root.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "poopsky:oak_toilet"
+    },
+    "title": {
+      "translate": "advancements.poopsky.root.title"
+    }
+  },
+  "requirements": [
+    [
+      "join_skyblock_world"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

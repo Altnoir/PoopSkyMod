@@ -28,6 +28,15 @@
       "when": {
         "level": "3"
       }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/urine_compooper_maggots"
+      },
+      "when": {
+        "level": "3",
+        "maggots": true
+      }
     }
   ]
 }

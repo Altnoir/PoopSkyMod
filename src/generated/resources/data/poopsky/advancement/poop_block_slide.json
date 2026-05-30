@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:adventure/root",
+  "parent": "poopsky:root",
   "criteria": {
     "poop_block_slide": {
       "conditions": {
@@ -10,14 +10,14 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.adventure.poop_block_slide.description"
+      "translate": "advancements.poopsky.poop_block_slide.description"
     },
     "icon": {
       "count": 1,
       "id": "poopsky:poop_block"
     },
     "title": {
-      "translate": "advancements.adventure.poop_block_slide.title"
+      "translate": "advancements.poopsky.poop_block_slide.title"
     }
   },
   "requirements": [

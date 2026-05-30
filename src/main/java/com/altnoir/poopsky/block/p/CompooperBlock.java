@@ -187,6 +187,14 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
     }
 
     @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        super.onRemove(state, level, pos, newState, movedByPiston);
+        if (!state.is(newState.getBlock())) {
+            level.invalidateCapabilities(pos);
+        }
+    }
+
+    @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         int i = state.getValue(POOP_LEVEL);
         if (i == READY) {
@@ -197,7 +205,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
         }
     }
 
-    public static BlockState extractProduce(Entity entity, BlockState state, Level level, BlockPos pos) {
+    public static void extractProduce(Entity entity, BlockState state, Level level, BlockPos pos) {
         if (!level.isClientSide) {
             var vec3 = Vec3.atLowerCornerWithOffset(pos, 0.5, 1.01, 0.5).offsetRandom(level.random, 0.7F);
             var itementity = new ItemEntity(level, vec3.x(), vec3.y(), vec3.z(), new ItemStack(PSItems.SAPING_BALL.get()));
@@ -205,9 +213,8 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
             level.addFreshEntity(itementity);
         }
 
-        var blockstate = empty(entity, state, level, pos);
+        empty(entity, state, level, pos);
         level.playSound(null, pos, SoundEvents.COMPOSTER_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
-        return blockstate;
     }
 
     protected static BlockState empty(@Nullable Entity entity, BlockState state, LevelAccessor level, BlockPos pos) {

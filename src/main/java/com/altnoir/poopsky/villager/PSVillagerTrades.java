@@ -80,7 +80,7 @@ public class PSVillagerTrades {
             );
             trades.get(5).add((entity, random) -> new MerchantOffer(
                     new ItemCost(Items.EMERALD, 24),
-                    new ItemStack(PSItems.TOILET_LINKER.get(), 1), 4, 50, 0.5f)
+                    new ItemStack(PSItems.TOILET_PLUG_WAND.get(), 1), 4, 50, 0.5f)
             );
             trades.get(5).add((entity, random) -> new MerchantOffer(
                     new ItemCost(Items.EMERALD, 64),

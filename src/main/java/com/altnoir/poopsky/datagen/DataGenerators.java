@@ -49,6 +49,7 @@ public class DataGenerators {
 
         generators.addProvider(event.includeClient(), new PSBlockStateProvider(packOutput, existingFileHelper));
         generators.addProvider(event.includeClient(), new PSItemModelProvider(packOutput, existingFileHelper));
+        generators.addProvider(event.includeServer(), new PSAdvancementPorvider(packOutput, lookupProvider, existingFileHelper));
 
     }
 }

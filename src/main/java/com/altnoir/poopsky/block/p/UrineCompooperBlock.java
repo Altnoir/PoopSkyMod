@@ -3,37 +3,49 @@ package com.altnoir.poopsky.block.p;
 import com.altnoir.poopsky.block.AbstractCompooperBlock;
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.particle.PSParticles;
+import com.altnoir.poopsky.sound.PSSoundEvents;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustColorTransitionOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
 
-public class UrineCompooperBlock extends AbstractCompooperBlock {
+import javax.annotation.Nullable;
+
+public class UrineCompooperBlock extends AbstractCompooperBlock implements WorldlyContainerHolder {
     public static final MapCodec<UrineCompooperBlock> CODEC = simpleCodec(UrineCompooperBlock::new);
+    public static final BooleanProperty MAGGOTS = BooleanProperty.create("maggots");
 
     public UrineCompooperBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(
                 this.stateDefinition.any()
                         .setValue(LEVEL, 3)
-                        .setValue(POWERED, false));
+                        .setValue(POWERED, false)
+                        .setValue(MAGGOTS, false));
     }
 
     @Override
@@ -64,6 +76,32 @@ public class UrineCompooperBlock extends AbstractCompooperBlock {
             return glassBottleUse(stack, state, level, pos, player, hand, SoundEvents.BOTTLE_FILL, bottle.getDefaultInstance());
         }
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        if (state.getValue(MAGGOTS)) {
+            extractProduce(player, state, level, pos);
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        } else {
+            return InteractionResult.PASS;
+        }
+    }
+
+    public static void extractProduce(Entity entity, BlockState state, Level level, BlockPos pos) {
+        if (!level.isClientSide) {
+            var vec3 = Vec3.atLowerCornerWithOffset(pos, 0.5, 1.01, 0.5).offsetRandom(level.random, 0.7F);
+            var itementity = new ItemEntity(level, vec3.x(), vec3.y(), vec3.z(), new ItemStack(PSItems.MAGGOTS_SEEDS.get()));
+            itementity.setDefaultPickUpDelay();
+            level.addFreshEntity(itementity);
+        }
+
+        empty(entity, state, level, pos);
+        for (int i = 0; i < 8; i++) {
+            level.addParticle(PSParticles.POOP_PARTICLE.get(), pos.getX() + 0.5, pos.getY() + 0.9375, pos.getZ() + 0.5,
+                    level.random.nextFloat() - 0.5, 0.2, level.random.nextFloat() - 0.5);
+        }
+        level.playSound(null, pos, SoundEvents.PLAYER_SPLASH, SoundSource.BLOCKS, 0.5F, 1.0F);
     }
 
     @Override
@@ -98,5 +136,112 @@ public class UrineCompooperBlock extends AbstractCompooperBlock {
             level.setBlockAndUpdate(pos, compooperBlock);
         }
         level.scheduleTick(pos, this, 20);
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(LEVEL, POWERED, MAGGOTS);
+    }
+
+    @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        super.onRemove(state, level, pos, newState, movedByPiston);
+        if (!state.is(newState.getBlock())) {
+            level.invalidateCapabilities(pos);
+        }
+    }
+
+    @Override
+    protected int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
+        return blockState.getValue(MAGGOTS) ? 1 : 0;
+    }
+
+    @Override
+    protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        if (!state.getValue(MAGGOTS) && state.getValue(LEVEL) == 3) {
+            level.setBlockAndUpdate(pos, state.setValue(MAGGOTS, true));
+            level.playSound(null, pos, PSSoundEvents.BLOCK_COMPPOOPER_MAGGOTS.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
+        }
+        super.randomTick(state, level, pos, random);
+    }
+
+    @Override
+    public WorldlyContainer getContainer(BlockState blockState, LevelAccessor levelAccessor, BlockPos blockPos) {
+        if (blockState.getValue(MAGGOTS)) {
+            return new UrineCompooperBlock.OutputContainer(blockState, levelAccessor, blockPos, new ItemStack(PSItems.MAGGOTS_SEEDS.get()));
+        } else {
+            return new UrineCompooperBlock.EmptyContainer();
+        }
+    }
+
+    static class EmptyContainer extends SimpleContainer implements WorldlyContainer {
+        public EmptyContainer() {
+            super(0);
+        }
+
+        public int[] getSlotsForFace(Direction side) {
+            return new int[0];
+        }
+
+        public boolean canPlaceItemThroughFace(int index, ItemStack itemStack, @Nullable Direction direction) {
+            return false;
+        }
+
+        public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
+            return false;
+        }
+    }
+
+    static class OutputContainer extends SimpleContainer implements WorldlyContainer {
+        private final BlockState state;
+        private final LevelAccessor level;
+        private final BlockPos pos;
+        private boolean changed;
+
+        public OutputContainer(BlockState state, LevelAccessor level, BlockPos pos, ItemStack stack) {
+            super(stack);
+            this.state = state;
+            this.level = level;
+            this.pos = pos;
+        }
+
+        @Override
+        public int getMaxStackSize() {
+            return 1;
+        }
+
+        @Override
+        public int[] getSlotsForFace(Direction side) {
+            return side == Direction.DOWN ? new int[]{0} : new int[0];
+        }
+
+        /**
+         * Returns {@code true} if automation can insert the given item in the given slot from the given side.
+         */
+        @Override
+        public boolean canPlaceItemThroughFace(int index, ItemStack itemStack, @Nullable Direction direction) {
+            return false;
+        }
+
+        /**
+         * Returns {@code true} if automation can extract the given item in the given slot from the given side.
+         */
+        @Override
+        public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
+            return !this.changed && direction == Direction.DOWN && stack.is(PSItems.MAGGOTS_SEEDS.get());
+        }
+
+        @Override
+        public void setChanged() {
+            UrineCompooperBlock.empty(null, this.state, this.level, this.pos);
+            this.changed = true;
+        }
+    }
+
+    protected static BlockState empty(@Nullable Entity entity, BlockState state, LevelAccessor level, BlockPos pos) {
+        var blockstate = state.setValue(MAGGOTS, false);
+        level.setBlock(pos, blockstate, 3);
+        level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(entity, blockstate));
+        return blockstate;
     }
 }

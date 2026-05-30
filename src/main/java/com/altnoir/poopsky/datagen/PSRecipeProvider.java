@@ -117,10 +117,17 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
 
         // 建筑
         offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOP_BLOCK, PSItems.POOP, 1);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PSItems.TOILET_LINKER)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PSItems.TOILET_PLUG_WAND)
+                .requires(PSItems.TOILET_PLUG.get())
                 .requires(PSItems.POOP.get())
                 .requires(Items.ENDER_EYE)
                 .unlockedBy(getItemName(Items.ENDER_EYE), has(Items.ENDER_EYE))
+                .save(recipeOutput);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PSItems.TIME_BELL)
+                .requires(Items.BELL)
+                .requires(PSItems.POOP.get())
+                .requires(Items.DRAGON_EGG)
+                .unlockedBy(getItemName(Items.DRAGON_EGG), has(Items.DRAGON_EGG))
                 .save(recipeOutput);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PSItems.POOP, 4)

@@ -2,8 +2,10 @@ package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.block.ToiletBlocks;
+import com.altnoir.poopsky.block.p.CompooperBlock;
 import com.altnoir.poopsky.block.p.PoopPieceBlock;
 import com.altnoir.poopsky.block.p.RoundwormVinesPlantBlock;
+import com.altnoir.poopsky.block.p.UrineCompooperBlock;
 import com.altnoir.poopsky.item.PSItems;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.Holder;
@@ -117,11 +119,11 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(PSBlocks.POOLIME_BLOCK.get());
         dropSelf(PSBlocks.POOLIME_POOP_BLOCK.get());
         dropSelf(PSBlocks.STOOL.get());
-        dropSelf(PSBlocks.COMPOOPER.get());
+        this.add(PSBlocks.COMPOOPER.get(), this::createCompoomerDrops);
         dropOther(PSBlocks.WATER_COMPOOPER.get(), PSBlocks.COMPOOPER.get());
         dropOther(PSBlocks.LAVA_COMPOOPER.get(), PSBlocks.COMPOOPER.get());
         dropOther(PSBlocks.POWER_SNOW_COMPOOPER.get(), PSBlocks.COMPOOPER.get());
-        dropOther(PSBlocks.URINE_COMPOOPER.get(), PSBlocks.COMPOOPER.get());
+        this.add(PSBlocks.URINE_COMPOOPER.get(), this::createUrineCompoomerDrops);
         add(PSBlocks.POOP_PIECE.get(), createPoopPieceDrop(PSBlocks.POOP_PIECE.get(), PSItems.POOP_BALL.get()));
 
         LootItemCondition.Builder builder = LootItemBlockStatePropertyCondition.hasBlockStateProperties(PSBlocks.MAGGOTS.get())
@@ -145,7 +147,7 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
                                 .apply(SetItemCountFunction.setCount(ConstantValue.exactly(i)))
                                 .apply(ApplyBonusCount.addOreBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE)))
                         ).toArray(LootPoolEntryContainer.Builder[]::new)
-        ).when(LootItemRandomChanceCondition.randomChance(1.0F).invert());
+        ).when(hasSilkTouch().invert());
 
         LootPoolEntryContainer.Builder<?> silkTouch = AlternativesEntry.alternatives(
                 IntStream.rangeClosed(1, 8)
@@ -182,12 +184,8 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
                         .withPool(LootPool.lootPool()
                                 .add(LootItem.lootTableItem(Items.WHEAT_SEEDS).when(dropGrownCropCondition).otherwise(LootItem.lootTableItem(seedsItem)))
                                 .add(LootItem.lootTableItem(Items.COCOA_BEANS).when(dropGrownCropCondition).otherwise(LootItem.lootTableItem(seedsItem)))
-                                .add(LootItem.lootTableItem(Items.PUMPKIN_SEEDS).when(dropGrownCropCondition).otherwise(LootItem.lootTableItem(seedsItem)))
-                                .add(LootItem.lootTableItem(Items.MELON_SEEDS).when(dropGrownCropCondition).otherwise(LootItem.lootTableItem(seedsItem)))
                                 .add(LootItem.lootTableItem(Items.CARROT).when(dropGrownCropCondition).otherwise(LootItem.lootTableItem(seedsItem)))
                                 .add(LootItem.lootTableItem(Items.POTATO).when(dropGrownCropCondition).otherwise(LootItem.lootTableItem(seedsItem)))
-                                .add(LootItem.lootTableItem(Items.BEETROOT_SEEDS).when(dropGrownCropCondition).otherwise(LootItem.lootTableItem(seedsItem)))
-
                         )
                         .withPool(LootPool.lootPool()
                                 .when(dropGrownCropCondition)
@@ -208,6 +206,7 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
                                 .add(LootItem.lootTableItem(Items.PUMPKIN_SEEDS).when(dropGrownCropCondition).otherwise(LootItem.lootTableItem(seedsItem)))
                                 .add(LootItem.lootTableItem(Items.MELON_SEEDS).when(dropGrownCropCondition).otherwise(LootItem.lootTableItem(seedsItem)))
                                 .add(LootItem.lootTableItem(Items.FROGSPAWN).when(dropGrownCropCondition).otherwise(LootItem.lootTableItem(seedsItem)))
+                                .add(LootItem.lootTableItem(Items.BEETROOT_SEEDS).when(dropGrownCropCondition).otherwise(LootItem.lootTableItem(seedsItem)))
                 )
                 .withPool(LootPool.lootPool()
                         .when(dropGrownCropCondition)
@@ -265,14 +264,44 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
                         .setRolls(ConstantValue.exactly(1.0F))
                         .when(this.doesNotHaveShearsOrSilkTouch())
                         .add(((LootPoolSingletonContainer.Builder<?>)
-                                this.applyExplosionCondition(block, LootItem.lootTableItem(PSItems.MAGGOTS_SEEDS.get())))
-                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
-                                .apply(ApplyBonusCount.addUniformBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE))))
-                        .add(((LootPoolSingletonContainer.Builder<?>)
                                 this.applyExplosionCondition(block, LootItem.lootTableItem(PSItems.ROUNDWORM.get())))
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
                                 .apply(ApplyBonusCount.addUniformBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE))))
         );
+    }
+
+    protected LootTable.Builder createCompoomerDrops(Block block) {
+        return LootTable.lootTable()
+                .withPool(
+                        LootPool.lootPool()
+                                .add(this.applyExplosionDecay(block, LootItem.lootTableItem(PSBlocks.COMPOOPER.get())))
+                )
+                .withPool(
+                        LootPool.lootPool()
+                                .add(LootItem.lootTableItem(PSItems.SAPING_BALL.get()))
+                                .when(
+                                        LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                                                .setProperties(StatePropertiesPredicate.Builder.properties()
+                                                        .hasProperty(CompooperBlock.POOP_LEVEL, CompooperBlock.READY))
+                                )
+                );
+    }
+
+    protected LootTable.Builder createUrineCompoomerDrops(Block block) {
+        return LootTable.lootTable()
+                .withPool(
+                        LootPool.lootPool()
+                                .add(this.applyExplosionDecay(block, LootItem.lootTableItem(PSBlocks.COMPOOPER.get())))
+                )
+                .withPool(
+                        LootPool.lootPool()
+                                .add(LootItem.lootTableItem(PSItems.MAGGOTS_SEEDS.get()))
+                                .when(
+                                        LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                                                .setProperties(StatePropertiesPredicate.Builder.properties()
+                                                        .hasProperty(UrineCompooperBlock.MAGGOTS, true))
+                                )
+                );
     }
 
     private LootItemCondition.Builder doesNotHaveShearsOrSilkTouch() {

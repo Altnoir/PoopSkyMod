@@ -69,6 +69,28 @@
               "name": "poopsky:roundworm"
             }
           ]
+        },
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "block": "poopsky:roundworm_vines_plant",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "seeds": "true"
+                  }
+                }
+              ],
+              "name": "minecraft:beetroot_seeds"
+            },
+            {
+              "type": "minecraft:item",
+              "name": "poopsky:roundworm"
+            }
+          ]
         }
       ],
       "rolls": 1.0

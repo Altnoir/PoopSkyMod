@@ -325,7 +325,7 @@ public class PSBlocks {
             () -> new PowerSnowCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()))
     );
     public static final DeferredBlock<Block> URINE_COMPOOPER = registerBlock("urine_compooper",
-            () -> new UrineCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()))
+            () -> new UrineCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()).randomTicks())
     );
 
     public static final DeferredBlock<Block> POOP_LOG = registerBlock("poop_log",

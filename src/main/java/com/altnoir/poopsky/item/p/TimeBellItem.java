@@ -26,12 +26,14 @@ public class TimeBellItem extends Item {
                 boolean newState = !tickRateManager.isFrozen();
                 tickRateManager.setFrozen(newState);
                 level.playSound(null, player.getOnPos(),
-                        SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 1.0F, 1.0F);
+                        newState? SoundEvents.BELL_BLOCK : SoundEvents.BELL_RESONATE,
+                        SoundSource.PLAYERS, 1.0F, 1.0F);
 
                 // 发送反馈消息
                 String message = newState ? "已冻结游戏时间" : "已解冻游戏时间";
                 player.sendSystemMessage(Component.literal(message));
 
+                return InteractionResultHolder.success(new ItemStack(this));
             }
         }
         return super.use(level, player, usedHand);

@@ -3,15 +3,34 @@
   "pools": [
     {
       "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:explosion_decay"
+            }
+          ],
+          "name": "poopsky:compooper"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
       "conditions": [
         {
-          "condition": "minecraft:survives_explosion"
+          "block": "poopsky:urine_compooper",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "maggots": "true"
+          }
         }
       ],
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "poopsky:compooper"
+          "name": "poopsky:maggots_seeds"
         }
       ],
       "rolls": 1.0

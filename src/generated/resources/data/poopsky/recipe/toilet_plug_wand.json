@@ -3,6 +3,9 @@
   "category": "misc",
   "ingredients": [
     {
+      "item": "poopsky:toilet_plug"
+    },
+    {
       "item": "poopsky:poop"
     },
     {
@@ -11,6 +14,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "poopsky:toilet_linker"
+    "id": "poopsky:toilet_plug_wand"
   }
 }

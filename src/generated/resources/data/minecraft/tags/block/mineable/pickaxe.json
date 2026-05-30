@@ -52,6 +52,10 @@
     "poopsky:cut_poop_block_slab",
     "poopsky:cut_poop_block_vertical_slab",
     "poopsky:cut_poop_block_wall",
-    "poopsky:compooper"
+    "poopsky:compooper",
+    "poopsky:water_compooper",
+    "poopsky:lava_compooper",
+    "poopsky:power_snow_compooper",
+    "poopsky:urine_compooper"
   ]
 }

@@ -6,11 +6,32 @@
       "poopsky:fart_2"
     ]
   },
+  "block.compooer.maggots": {
+    "subtitle": "subtitle.poopsky.compooer.maggots",
+    "sounds": [
+      "block/pointed_dripstone/drip_water_cauldron1",
+      "block/pointed_dripstone/drip_water_cauldron2",
+      "block/pointed_dripstone/drip_water_cauldron3",
+      "block/pointed_dripstone/drip_water_cauldron4",
+      "block/pointed_dripstone/drip_water_cauldron5",
+      "block/pointed_dripstone/drip_water_cauldron6",
+      "block/pointed_dripstone/drip_water_cauldron7",
+      "block/pointed_dripstone/drip_water_cauldron8"
+    ]
+  },
   "entity.villager.work_compooper": {
     "subtitle": "subtitle.poopsky.villager.work_compooper",
     "sounds": [
       "poopsky:fart_1",
-      "poopsky:fart_2"
+      "poopsky:fart_2",
+      {
+        "name": "poopsky:fart_1",
+        "pitch": 0.6
+      },
+      {
+        "name": "poopsky:fart_2",
+        "pitch": 1.4
+      }
     ]
   },
   "entity.villager.work_toilet": {
