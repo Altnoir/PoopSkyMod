@@ -1,6 +1,7 @@
 {
   "item.poopsky.poop": "Poop",
   "item.poopsky.chili_poop": "Chili Poop",
+  "item.poopsky.golden_poop": "Golden Poop",
   "item.poopsky.poop_ball": "Poop Ball",
   "item.poopsky.saping_ball": "Saping Ball",
   "item.poopsky.wither_poop_ball": "Wither Poop Ball",
@@ -14,7 +15,7 @@
   "message.poopsky.time_bell.frozen": "Game time frozen",
   "message.poopsky.time_bell.unfrozen": "Game time unfrozen",
 
-  "item.poopsky.toilet_linker": "Toilet Linker",
+  "item.poopsky.toilet_plug_wand": "Toilet Plug Wand",
   "message.poopsky.toilet_linker.1": "Link Toilet ①",
   "message.poopsky.toilet_linker.2": "Link Toilet ②", 
   "message.poopsky.toilet_linker.3": "Linked",
@@ -183,10 +184,17 @@
   "key.poopsky.up": "Up",
   "key.poopsky.down": "Descend",
 
-  "advancements.adventure.poop_block_slide.title": "Master of Poop Sliding",
-  "advancements.adventure.poop_block_slide.description": "Slide on a poop block",
+  "advancements.poopsky.root.title": "POOPSKY",
+  "advancements.poopsky.root.description": "POOPSKY is a mod that adds a new dimension to Minecraft.",
+  "advancements.poopsky.poop_block_slide.title": "Master of Poop Sliding",
+  "advancements.poopsky.poop_block_slide.description": "Slide on a poop block",
+  "advancements.poopsky.sapling.title": "Poop Sapling",
+  "advancements.poopsky.sapling.description": "Grow a poop sapling",
+  "advancements.poopsky.compooer.title": "Compooper",
+  "advancements.poopsky.compooer.description": "Destroy a poop log to create a compooper block",
 
   "subtitle.poopsky.fart": "Fart Sound",
+  "subtitle.poopsky.compooer.maggots": "Compooper maggots",
   "subtitle.poopsky.villager.work_compooper": "Poopmaker works",
   "subtitle.poopsky.villager.work_toilet": "Gastronome eats",
 

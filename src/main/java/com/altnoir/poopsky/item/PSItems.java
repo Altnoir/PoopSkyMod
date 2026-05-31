@@ -23,6 +23,10 @@ public class PSItems {
             new PoopItem(new Item.Properties().food(PFoods.POOP).stacksTo(88)));
     public static final DeferredItem<Item> CHILI_POOP = ITEMS.register("chili_poop", () ->
             new ChiliPoopItem(new Item.Properties().food(PFoods.POOP).stacksTo(88)));
+    public static final DeferredItem<Item> GOLDEN_POOP = ITEMS.register("golden_poop", () ->
+            new PoopItem(new Item.Properties().food(PFoods.GOLDEN_POOP).stacksTo(88)));
+    public static final DeferredItem<Item> FOLIUM_SENNAE = ITEMS.register("folium_sennae", () ->
+            new Item(new Item.Properties()));
 
     public static final DeferredItem<Item> POOP_BALL = ITEMS.register("poop_ball", () ->
             new PoopBallItem(new Item.Properties().stacksTo(88)));

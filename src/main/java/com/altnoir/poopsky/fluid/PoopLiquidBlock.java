@@ -1,8 +1,12 @@
 package com.altnoir.poopsky.fluid;
 
-import com.altnoir.poopsky.block.PSBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -31,6 +35,23 @@ public class PoopLiquidBlock extends LiquidBlock {
     protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
         super.onPlace(state, level, pos, oldState, isMoving);
         check(level, pos);
+    }
+
+    @Override
+    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        super.entityInside(state, level, pos, entity);
+        if (entity instanceof LivingEntity livingEntity) {
+            if (!livingEntity.hasEffect(MobEffects.POISON)) {
+                livingEntity.addEffect(new MobEffectInstance(MobEffects.POISON, 60));
+            }
+            if (livingEntity instanceof ServerPlayer) {
+                MobEffectInstance confusionEffect = livingEntity.getEffect(MobEffects.CONFUSION);
+
+                if (!livingEntity.hasEffect(MobEffects.CONFUSION) | (confusionEffect != null && confusionEffect.getDuration() <= 100)) {
+                    livingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200));
+                }
+            }
+        }
     }
 
     private void hasBlockNeighbor(Level level, BlockPos pos, Block block, Block blockDown, Block liquid) {

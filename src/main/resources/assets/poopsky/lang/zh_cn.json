@@ -1,6 +1,7 @@
 {
   "item.poopsky.poop": "粪便",
   "item.poopsky.chili_poop": "辣味粪便",
+  "item.poopsky.golden_poop": "金粪便",
   "item.poopsky.poop_ball": "粪便球",
   "item.poopsky.saping_ball": "树苗球",
   "item.poopsky.wither_poop_ball": "凋灵粪便球",
@@ -14,7 +15,7 @@
   "message.poopsky.time_bell.frozen": "已冻结游戏时间",
   "message.poopsky.time_bell.unfrozen": "已解冻游戏时间",
 
-  "item.poopsky.toilet_linker": "厕所连接器",
+  "item.poopsky.toilet_plug_wand": "马桶制杖",
   "message.poopsky.toilet_linker.1": "连接厕所①",
   "message.poopsky.toilet_linker.2": "连接厕所②",
   "message.poopsky.toilet_linker.3": "已绑定",
@@ -183,10 +184,17 @@
   "key.poopsky.up": "上升",
   "key.poopsky.down": "下降",
 
-  "advancements.adventure.poop_block_slide.title": "踩屎大师",
-  "advancements.adventure.poop_block_slide.description": "在粪便块上滑行",
+  "advancements.poopsky.root.title": "空中厕所",
+  "advancements.poopsky.root.description": "开启你的粪便帝国！",
+  "advancements.poopsky.poop_block_slide.title": "踩屎大师",
+  "advancements.poopsky.poop_block_slide.description": "在粪便块上滑行",
+  "advancements.poopsky.sapling.title": "粪便树苗",
+  "advancements.poopsky.sapling.description": "对粪便块催熟，获得粪便树苗",
+  "advancements.poopsky.compooer.title": "堆粪桶",
+  "advancements.poopsky.compooer.description": "破坏粪便木，合成出堆粪桶",
 
   "subtitle.poopsky.fart": "屁声",
+  "subtitle.poopsky.compooer.maggots": "堆粪桶：产蛆",
   "subtitle.poopsky.villager.work_compooper": "养粪人：工作",
   "subtitle.poopsky.villager.work_toilet": "美食家：进食",
 

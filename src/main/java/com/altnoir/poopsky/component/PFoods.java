@@ -14,6 +14,14 @@ public class PFoods {
             .effect(new MobEffectInstance(MobEffects.CONFUSION, 300, 0), 0.5F)
             .effect(new MobEffectInstance(MobEffects.BLINDNESS, 20, 0), 1.0F)
             .build();
+    public static final FoodProperties GOLDEN_POOP = new FoodProperties.Builder()
+            .nutrition(2)
+            .saturationModifier(0.2F)
+            .effect(new MobEffectInstance(MobEffects.POISON, 100, 0), 0.1F)
+            .effect(new MobEffectInstance(MobEffects.HUNGER, 600, 0), 0.5F)
+            .effect(new MobEffectInstance(MobEffects.CONFUSION, 300, 0), 0.5F)
+            .effect(new MobEffectInstance(MobEffects.BLINDNESS, 20, 0), 1.0F)
+            .build();
 
     public static final FoodProperties MAGGOTS_SEEDS = new FoodProperties.Builder()
             .nutrition(1).saturationModifier(0.4F).fast()

@@ -1,14 +1,12 @@
 package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
-import com.mojang.serialization.Codec;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.server.packs.PackType;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -32,7 +30,8 @@ public class DataGenerators {
         generators.addProvider(event.includeServer(), new LootTableProvider(packOutput, Collections.emptySet(),
                 List.of(
                         new LootTableProvider.SubProviderEntry(PSBlockLootTableProvider::new, LootContextParamSets.BLOCK),
-                        new LootTableProvider.SubProviderEntry(PSEntityLootTableProvider::new, LootContextParamSets.ENTITY)
+                        new LootTableProvider.SubProviderEntry(PSEntityLootTableProvider::new, LootContextParamSets.ENTITY),
+                        new LootTableProvider.SubProviderEntry(PSFishingLootProvider::new, LootContextParamSets.FISHING)
                 ), lookupProvider));
         generators.addProvider(event.includeServer(), new PSRecipeProvider(packOutput, lookupProvider));
 
@@ -44,12 +43,11 @@ public class DataGenerators {
         generators.addProvider(event.includeServer(), entityTagsProvider);
 
         generators.addProvider(event.includeServer(), new PSDatapackProvider(packOutput, lookupProvider));
-
         generators.addProvider(event.includeServer(), new PSDataMapProvider(packOutput, lookupProvider));
+        generators.addProvider(event.includeServer(), new PSAdvancementPorvider(packOutput, lookupProvider, existingFileHelper));
+        generators.addProvider(event.includeServer(), new PSGlobalLootModifierProvider(packOutput, lookupProvider));
 
         generators.addProvider(event.includeClient(), new PSBlockStateProvider(packOutput, existingFileHelper));
         generators.addProvider(event.includeClient(), new PSItemModelProvider(packOutput, existingFileHelper));
-        generators.addProvider(event.includeServer(), new PSAdvancementPorvider(packOutput, lookupProvider, existingFileHelper));
-
     }
 }

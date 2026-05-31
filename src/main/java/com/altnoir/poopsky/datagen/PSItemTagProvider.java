@@ -4,14 +4,12 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.block.ToiletBlocks;
 import com.altnoir.poopsky.item.PSItems;
-import com.altnoir.poopsky.tag.PSBlockTags;
 import com.altnoir.poopsky.tag.PSItemTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -30,7 +28,8 @@ public class PSItemTagProvider extends ItemTagsProvider {
     protected void addTags(HolderLookup.Provider provider) {
         tag(PSItemTags.POOPS)
                 .add(PSItems.POOP.get())
-                .add(PSItems.CHILI_POOP.get());
+                .add(PSItems.CHILI_POOP.get())
+                .add(PSItems.GOLDEN_POOP.get());
         tag(PSItemTags.TOILET_BLOCKS)
                 .add(WOODEN_TOILETS)
                 .add(HARD_TOILETS);
@@ -39,6 +38,7 @@ public class PSItemTagProvider extends ItemTagsProvider {
         tag(Tags.Items.FOODS)
                 .add(PSItems.POOP.get())
                 .add(PSItems.CHILI_POOP.get())
+                .add(PSItems.GOLDEN_POOP.get())
                 .add(PSItems.SAPING_BALL.get())
                 .add(PSItems.BAKED_MAGGOTS.get())
                 .add(PSItems.MAGGOTS_SEEDS.get())
@@ -58,6 +58,7 @@ public class PSItemTagProvider extends ItemTagsProvider {
         tag(Tags.Items.FOODS_FOOD_POISONING)
                 .add(PSItems.POOP.get())
                 .add(PSItems.CHILI_POOP.get())
+                .add(PSItems.GOLDEN_POOP.get())
                 .add(PSItems.SAPING_BALL.get())
                 .add(PSItems.POOP_BREAD.get())
                 .add(PSItems.POOP_DUMPLINGS.get())
@@ -149,6 +150,7 @@ public class PSItemTagProvider extends ItemTagsProvider {
             ToiletBlocks.MANGROVE_TOILET.get().asItem(),
             ToiletBlocks.BAMBOO_TOILET.get().asItem()
     };
+
     public static final Item[] HARD_TOILETS = {
             //石制
             ToiletBlocks.STONE_TOILET.get().asItem(),
