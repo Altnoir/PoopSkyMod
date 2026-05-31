@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.block;
 
 import com.altnoir.poopsky.Config;
+import com.altnoir.poopsky.PoopSky;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
