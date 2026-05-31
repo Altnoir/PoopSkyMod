@@ -94,6 +94,26 @@ public class PoopSky {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
+        event.enqueueWork(() -> {
+            CompooperBlock.bootStrap();
+
+            DispenserBlock.registerProjectileBehavior(PSItems.POOP_BALL);
+            DispenserBlock.registerProjectileBehavior(PSItems.WITHER_POOP_BALL);
+            DispenserBlock.registerBehavior(PSItems.POOP.get(), new OptionalDispenseItemBehavior() {
+                @Override
+                protected ItemStack execute(BlockSource blockSource, ItemStack itemStack) {
+                    this.setSuccess(true);
+                    Level level = blockSource.level();
+                    BlockPos blockpos = blockSource.pos().relative(blockSource.state().getValue(DispenserBlock.FACING));
+                    if (!BoneMealItem.growCrop(itemStack, level, blockpos) && !BoneMealItem.growWaterPlant(itemStack, level, blockpos, null)) {
+                        this.setSuccess(false);
+                    } else if (!level.isClientSide) {
+                        level.levelEvent(1505, blockpos, 15);
+                    }
+                    return itemStack;
+                }
+            });
+        });
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
@@ -116,24 +136,6 @@ public class PoopSky {
             EntityRenderers.register(PSEntityType.FLY.get(), FlyRenderer::new);
             EntityRenderers.register(PSEntityType.STOOL.get(), ChairRenderer::new);
             EntityRenderers.register(PSEntityType.TOILET.get(), ToiletRenderer::new);
-            CompooperBlock.bootStrap();
-
-            DispenserBlock.registerProjectileBehavior(PSItems.POOP_BALL);
-            DispenserBlock.registerProjectileBehavior(PSItems.WITHER_POOP_BALL);
-            DispenserBlock.registerBehavior(PSItems.POOP.get(), new OptionalDispenseItemBehavior() {
-                @Override
-                protected ItemStack execute(BlockSource blockSource, ItemStack itemStack) {
-                    this.setSuccess(true);
-                    Level level = blockSource.level();
-                    BlockPos blockpos = blockSource.pos().relative(blockSource.state().getValue(DispenserBlock.FACING));
-                    if (!BoneMealItem.growCrop(itemStack, level, blockpos) && !BoneMealItem.growWaterPlant(itemStack, level, blockpos, null)) {
-                        this.setSuccess(false);
-                    } else if (!level.isClientSide) {
-                        level.levelEvent(1505, blockpos, 15);
-                    }
-                    return itemStack;
-                }
-            });
         }
 
         @SubscribeEvent

@@ -34,9 +34,10 @@ public class GlassBottleEvent {
         var heldItem = player.getItemInHand(hand);
 
         if (!(heldItem.getItem() instanceof BottleItem)) return;
-        if (!level.isClientSide && level.getBlockState(pos).getBlock() instanceof AbstractToiletBlock abstractToiletBlock) {
-            if (abstractToiletBlock instanceof ToiletLavaBlock && level.getBlockState(pos).getValue(ToiletLavaBlock.LAVA)) return;
+        if (!(level.getBlockState(pos).getBlock() instanceof AbstractToiletBlock abstractToiletBlock)) return;
+        if (abstractToiletBlock instanceof ToiletLavaBlock && level.getBlockState(pos).getValue(ToiletLavaBlock.LAVA)) return;
 
+        if (!level.isClientSide) {
             level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.PLAYERS, 1.0F, 1.0F);
             level.gameEvent(player, GameEvent.FLUID_PICKUP, pos);
 
