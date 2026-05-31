@@ -29,7 +29,6 @@ import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -78,6 +77,12 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(PSBlocks.CHILI_POOP_VERTICAL_SLAB.get());
         dropSelf(PSBlocks.CHILI_POOP_WALL.get());
 
+        dropSelf(PSBlocks.GOLDEN_POOP_BLOCK.get());
+        dropSelf(PSBlocks.GOLDEN_POOP_STAIRS.get());
+        add(PSBlocks.GOLDEN_POOP_SLAB.get(), block -> createSlabItemTable(PSBlocks.GOLDEN_POOP_SLAB.get()));
+        dropSelf(PSBlocks.GOLDEN_POOP_VERTICAL_SLAB.get());
+        dropSelf(PSBlocks.GOLDEN_POOP_WALL.get());
+
         dropSelf(PSBlocks.POOP_BRICKS.get());
         dropSelf(PSBlocks.CRACKED_POOP_BRICKS.get());
         dropSelf(PSBlocks.POOP_BRICK_STAIRS.get());
@@ -114,6 +119,10 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
         add(PSBlocks.TILE_BLOCK_SLAB.get(), block -> createSlabItemTable(PSBlocks.TILE_BLOCK_SLAB.get()));
         dropSelf(PSBlocks.TILE_BLOCK_VERTICAL_SLAB.get());
         dropSelf(PSBlocks.TILE_BLOCK_WALL.get());
+
+        dropSelf(PSBlocks.RAW_POOP_BLOCK.get());
+        dropSelf(PSBlocks.RAW_SAPING_POOP_BLOCK.get());
+        dropSelf(PSBlocks.RAW_WITHER_POOP_BLOCK.get());
 
         dropSelf(PSBlocks.POOP_CAKE.get());
         dropSelf(PSBlocks.POOLIME_BLOCK.get());
@@ -278,7 +287,7 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
                 )
                 .withPool(
                         LootPool.lootPool()
-                                .add(LootItem.lootTableItem(PSItems.SAPING_BALL.get()))
+                                .add(LootItem.lootTableItem(PSItems.SAPING_POOP_BALL.get()))
                                 .when(
                                         LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
                                                 .setProperties(StatePropertiesPredicate.Builder.properties()

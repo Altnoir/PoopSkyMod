@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 public class DriedPoopBlock extends Block implements BonemealableBlock {
     public DriedPoopBlock(Properties properties) {
@@ -34,8 +35,13 @@ public class DriedPoopBlock extends Block implements BonemealableBlock {
     public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
         level.registryAccess()
                 .registry(Registries.CONFIGURED_FEATURE)
-                .flatMap(holder -> holder.getHolder(PSConfigureFeatures.DRIED_POOP_PATCH_BONEMEAL))
+                .flatMap(holder -> holder.getHolder(PSConfigureFeatures.DRIED_POOP_PATCH))
                 .ifPresent(reference -> reference.value().place(level, level.getChunkSource().getGenerator(), random, pos.above()));
+    }
+
+    @Override
+    public @NotNull Type getType() {
+        return BonemealableBlock.Type.NEIGHBOR_SPREADER;
     }
 
     @Override

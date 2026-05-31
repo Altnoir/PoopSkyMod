@@ -99,8 +99,11 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
                 entity = entities.getFirst();
             }
             player.startRiding(entity);
+
+            return InteractionResult.SUCCESS_NO_ITEM_USED;
+        }else {
+            return InteractionResult.PASS;
         }
-        return InteractionResult.PASS;
     }
 
     @Override

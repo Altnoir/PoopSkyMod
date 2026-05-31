@@ -2,6 +2,9 @@
   "values": [
     "poopsky:poop_block",
     "poopsky:poolime_poop_block",
-    "poopsky:chili_poop_block"
+    "poopsky:chili_poop_block",
+    "poopsky:raw_poop_block",
+    "poopsky:raw_saping_poop_block",
+    "poopsky:raw_wither_poop_block"
   ]
 }

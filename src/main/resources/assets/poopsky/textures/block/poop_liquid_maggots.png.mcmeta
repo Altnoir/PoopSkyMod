@@ -3,10 +3,6 @@
   {
     "height": 16,
     "width": 16,
-    "frametime": 4,
-    "frames":
-    [
-      0,1,2,3,4,5,6
-    ]
+    "frametime": 4
   }
 }

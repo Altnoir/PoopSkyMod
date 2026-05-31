@@ -30,7 +30,7 @@ public class PSItems {
 
     public static final DeferredItem<Item> POOP_BALL = ITEMS.register("poop_ball", () ->
             new PoopBallItem(new Item.Properties().stacksTo(88)));
-    public static final DeferredItem<Item> SAPING_BALL = ITEMS.register("saping_ball", () ->
+    public static final DeferredItem<Item> SAPING_POOP_BALL = ITEMS.register("saping_poop_ball", () ->
             new SapingBallItem(new Item.Properties().food(PFoods.SAPING_BALL).stacksTo(88)));
     public static final DeferredItem<Item> WITHER_POOP_BALL = ITEMS.register("wither_poop_ball", () ->
             new WitherPoopBallItem(new Item.Properties().stacksTo(88)));
@@ -77,7 +77,7 @@ public class PSItems {
             () -> new UrineBottleItem(new Item.Properties()
                     .craftRemainder(Items.GLASS_BOTTLE)
                     .food(PFoods.URINE_BOTTLE)
-                    .stacksTo(16)
+                    .stacksTo(18)
             )
     );
     public static final DeferredItem<BucketItem> POOP_BUCKET = ITEMS.register("poop_bucket",

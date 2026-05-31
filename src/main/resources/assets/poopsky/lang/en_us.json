@@ -4,7 +4,7 @@
   "item.poopsky.golden_poop": "Golden Poop",
   "item.poopsky.folium_sennae": "Foliium Sennae",
   "item.poopsky.poop_ball": "Poop Ball",
-  "item.poopsky.saping_ball": "Saping Ball",
+  "item.poopsky.saping_poop_ball": "Saping Poop Ball",
   "item.poopsky.wither_poop_ball": "Wither Poop Ball",
   "item.poopsky.spall": "Spall",
   "item.poopsky.toilet_plug": "Toilet Plug",
@@ -102,6 +102,10 @@
   "block.poopsky.tile_block_slab": "Tile Block Slab",
   "block.poopsky.tile_block_vertical_slab": "Tile Block Vertical Slab",
   "block.poopsky.tile_block_wall": "Tile Block Wall",
+
+  "block.poopsky.raw_poop_block": "raw Poop Block",
+  "block.poopsky.raw_saping_poop_block": "raw Saping Poop Block",
+  "block.poopsky.raw_wither_poop_block": "raw Wither Poop Block",
 
   "block.poopsky.poop_sapling": "Poop Sapling",
   "block.poopsky.poop_leaves": "Poop Leaves",

@@ -20,6 +20,11 @@
     "poopsky:chili_poop_stairs",
     "poopsky:chili_poop_slab",
     "poopsky:chili_poop_vertical_slab",
-    "poopsky:chili_poop_wall"
+    "poopsky:chili_poop_wall",
+    "poopsky:golden_poop_block",
+    "poopsky:golden_poop_stairs",
+    "poopsky:golden_poop_slab",
+    "poopsky:golden_poop_vertical_slab",
+    "poopsky:golden_poop_wall"
   ]
 }

@@ -90,10 +90,15 @@ public class PSBlockStateProvider extends BlockStateProvider {
         //
         blockWithTranslucentRenderType(PSBlocks.POOLIME_BLOCK.get());
         blockWithItem(PSBlocks.POOLIME_POOP_BLOCK.get());
+
         blockWithItem(PSBlocks.CHILI_POOP_BLOCK.get());
         stairsBlock((StairBlock) PSBlocks.CHILI_POOP_STAIRS.get(), blockTexture(PSBlocks.CHILI_POOP_BLOCK.get()));
         slabBlock((SlabBlock) PSBlocks.CHILI_POOP_SLAB.get(), blockTexture(PSBlocks.CHILI_POOP_BLOCK.get()), blockTexture(PSBlocks.CHILI_POOP_BLOCK.get()));
         wallBlock((WallBlock) PSBlocks.CHILI_POOP_WALL.get(), blockTexture(PSBlocks.CHILI_POOP_BLOCK.get()));
+        blockWithItem(PSBlocks.GOLDEN_POOP_BLOCK.get());
+        stairsBlock((StairBlock) PSBlocks.GOLDEN_POOP_STAIRS.get(), blockTexture(PSBlocks.GOLDEN_POOP_BLOCK.get()));
+        slabBlock((SlabBlock) PSBlocks.GOLDEN_POOP_SLAB.get(), blockTexture(PSBlocks.GOLDEN_POOP_BLOCK.get()), blockTexture(PSBlocks.GOLDEN_POOP_BLOCK.get()));
+        wallBlock((WallBlock) PSBlocks.GOLDEN_POOP_WALL.get(), blockTexture(PSBlocks.GOLDEN_POOP_BLOCK.get()));
 
         blockWithItem(PSBlocks.POOP_BRICKS.get());
         blockWithItem(PSBlocks.CRACKED_POOP_BRICKS.get());
@@ -126,8 +131,14 @@ public class PSBlockStateProvider extends BlockStateProvider {
         slabBlock((SlabBlock) PSBlocks.TILE_BLOCK_SLAB.get(), blockTexture(PSBlocks.TILE_BLOCK.get()), blockTexture(PSBlocks.TILE_BLOCK.get()));
         wallBlock((WallBlock) PSBlocks.TILE_BLOCK_WALL.get(), blockTexture(PSBlocks.TILE_BLOCK.get()));
 
+        blockWithItem(PSBlocks.RAW_POOP_BLOCK.get());
+        blockWithItem(PSBlocks.RAW_SAPING_POOP_BLOCK.get());
+        blockWithItem(PSBlocks.RAW_WITHER_POOP_BLOCK.get());
+
         blockItem(PSBlocks.CHILI_POOP_STAIRS);
         blockItem(PSBlocks.CHILI_POOP_SLAB);
+        blockItem(PSBlocks.GOLDEN_POOP_STAIRS);
+        blockItem(PSBlocks.GOLDEN_POOP_SLAB);
         blockItem(PSBlocks.POOP_BRICK_STAIRS);
         blockItem(PSBlocks.POOP_BRICK_SLAB);
         blockItem(PSBlocks.MOSSY_POOP_BRICK_STAIRS);
