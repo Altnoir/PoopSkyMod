@@ -4,10 +4,10 @@ import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.PoopSky;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
@@ -19,6 +19,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
@@ -31,6 +32,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -96,29 +98,19 @@ public abstract class AbstractCompooperBlock extends Block {
 
                 for (int slot = 0; slot < container.getContainerSize(); slot++) {
                     var stack = container.getItem(slot);
-                    if (stack.isEmpty()) continue;
-
-                    var block = Block.byItem(stack.getItem());
-                    if (block.defaultBlockState().isAir()) {
-                        if (stack.getItem() instanceof BlockItem bi) {
-                            block = bi.getBlock();
-                        }
-                    }
-
-                    if (block.defaultBlockState().isAir()) continue;
+                    if (stack.isEmpty() || !(stack.getItem() instanceof BlockItem blockItem)) continue;
 
                     var targetPos = pos.above();
                     var targetState = level.getBlockState(targetPos);
 
                     if (!level.isOutsideBuildHeight(targetPos) && targetState.canBeReplaced()) {
-                        if (level.setBlock(targetPos, block.defaultBlockState(), Block.UPDATE_ALL)) {
-                            try {
-                                var placeSound = block.defaultBlockState().getSoundType().getPlaceSound();
-                                level.playSound(null, targetPos, placeSound, SoundSource.BLOCKS, 1.0F, 1.0F);
-                            } catch (Exception e) {
-                                level.playSound(null, targetPos, SoundEvents.GRASS_PLACE, SoundSource.BLOCKS, 1.0F, 1.0F);
-                            }
-                            container.removeItem(slot, 1);
+                        var hitResult = new BlockHitResult(Vec3.atCenterOf(targetPos), Direction.UP, targetPos, false);
+                        var placeContext = new BlockPlaceContext(level, null, InteractionHand.MAIN_HAND, stack, hitResult);
+                        var placeResult = blockItem.place(placeContext);
+
+                        if (placeResult.consumesAction()) {
+                            container.setChanged();
+                            playPlacedBlockSound(level, targetPos);
                             break;
                         }
                     } else {
@@ -130,6 +122,19 @@ public abstract class AbstractCompooperBlock extends Block {
             }
         }
         super.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston);
+    }
+
+    private void playPlacedBlockSound(Level level, BlockPos pos) {
+        var placedState = level.getBlockState(pos);
+        var soundType = placedState.getSoundType();
+        level.playSound(
+                null,
+                pos,
+                soundType.getPlaceSound(),
+                SoundSource.BLOCKS,
+                (soundType.getVolume() + 1.0F) / 2.0F,
+                soundType.getPitch() * 0.8F
+        );
     }
 
     protected ItemInteractionResult BucketUse(ItemStack stack, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, ItemStack item) {
