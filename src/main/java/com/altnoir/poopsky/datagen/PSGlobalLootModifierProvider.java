@@ -44,7 +44,7 @@ public class PSGlobalLootModifierProvider extends GlobalLootModifierProvider {
                                         EntityPredicate.Builder.entity()
                                                 .subPredicate(FishingHookPredicate.inOpenWater(true))
                                 ).build(),
-                                LootItemRandomChanceCondition.randomChance(0.1f).build()
+                                LootItemRandomChanceCondition.randomChance(0.125f).build()
                         },
                         PSFishingLootProvider.FISHING_SENNAE
                 ));

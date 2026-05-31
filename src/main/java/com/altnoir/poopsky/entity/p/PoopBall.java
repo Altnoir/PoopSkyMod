@@ -95,7 +95,6 @@ public class PoopBall extends ThrowableItemProjectile {
                                 BoneMealItem.addGrowthParticles(level, targetPos, 15);
                             }
                         });
-
                 level.levelEvent(1505, originPos, 15);
                 if (this.getOwner() instanceof ServerPlayer player) {
                     player.gameEvent(GameEvent.ITEM_INTERACT_FINISH);

@@ -2,6 +2,7 @@
   "item.poopsky.poop": "Poop",
   "item.poopsky.chili_poop": "Chili Poop",
   "item.poopsky.golden_poop": "Golden Poop",
+  "item.poopsky.folium_sennae": "Foliium Sennae",
   "item.poopsky.poop_ball": "Poop Ball",
   "item.poopsky.saping_ball": "Saping Ball",
   "item.poopsky.wither_poop_ball": "Wither Poop Ball",
@@ -45,6 +46,9 @@
   "item.minecraft.potion.effect.strong_fecal_incontinence_potion": "Potion of Strong Fecal Incontinence",
   "item.minecraft.splash_potion.effect.strong_fecal_incontinence_potion": "Splash Potion of Strong Fecal Incontinence",
   "item.minecraft.lingering_potion.effect.strong_fecal_incontinence_potion": "Lingering Potion of Strong Fecal Incontinence",
+  "item.minecraft.potion.effect.super_fecal_incontinence_potion": "Potion of Super Fecal Incontinence Potion",
+  "item.minecraft.splash_potion.effect.super_fecal_incontinence_potion": "Splash Potion of Super Fecal Incontinence Potion",
+  "item.minecraft.lingering_potion.effect.super_fecal_incontinence_potion": "Lingering Potion of Super Fecal Incontinence Potion",
 
   "effect.poopsky.fecal_incontinence": "Fecal Incontinence",
   "effect.poopsky.intestinal_spasm": "Intestinal Spasm",

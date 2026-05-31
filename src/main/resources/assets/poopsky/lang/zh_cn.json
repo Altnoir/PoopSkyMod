@@ -2,6 +2,7 @@
   "item.poopsky.poop": "粪便",
   "item.poopsky.chili_poop": "辣味粪便",
   "item.poopsky.golden_poop": "金粪便",
+  "item.poopsky.folium_sennae": "番泻叶",
   "item.poopsky.poop_ball": "粪便球",
   "item.poopsky.saping_ball": "树苗球",
   "item.poopsky.wither_poop_ball": "凋灵粪便球",
@@ -45,6 +46,9 @@
   "item.minecraft.potion.effect.strong_fecal_incontinence_potion": "大便失禁药水",
   "item.minecraft.splash_potion.effect.strong_fecal_incontinence_potion": "喷溅型大便失禁药水",
   "item.minecraft.lingering_potion.effect.strong_fecal_incontinence_potion": "滞留型大便失禁药水",
+  "item.minecraft.potion.effect.super_fecal_incontinence_potion": "大便失禁药水",
+  "item.minecraft.splash_potion.effect.super_fecal_incontinence_potion": "喷溅型大便失禁药水",
+  "item.minecraft.lingering_potion.effect.super_fecal_incontinence_potion": "滞留型大便失禁药水",
 
   "effect.poopsky.fecal_incontinence": "大便失禁",
   "effect.poopsky.intestinal_spasm": "肠道痉挛",
