@@ -22,7 +22,7 @@ public class PSKeyBoardInput {
     public static final KeyMapping DISMOUNT_PLUG_KEY = new KeyMapping("key.poopsky.dismount_plug",
             KeyConflictContext.IN_GAME,
             InputConstants.Type.KEYSYM,
-            GLFW.GLFW_KEY_LEFT_CONTROL,
+            GLFW.GLFW_KEY_G,
             "key.category.poopsky");
 
     @SubscribeEvent

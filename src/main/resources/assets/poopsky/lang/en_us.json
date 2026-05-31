@@ -1,6 +1,7 @@
 {
   "item.poopsky.poop": "Poop",
   "item.poopsky.chili_poop": "Chili Poop",
+  "item.poopsky.golden_poop": "Golden Poop",
   "item.poopsky.poop_ball": "Poop Ball",
   "item.poopsky.saping_ball": "Saping Ball",
   "item.poopsky.wither_poop_ball": "Wither Poop Ball",
@@ -184,7 +185,7 @@
   "key.poopsky.down": "Descend",
 
   "advancements.poopsky.root.title": "POOPSKY",
-  "advancements.poopsky.root.description": "Build your poop empire!",
+  "advancements.poopsky.root.description": "POOPSKY is a mod that adds a new dimension to Minecraft.",
   "advancements.poopsky.poop_block_slide.title": "Master of Poop Sliding",
   "advancements.poopsky.poop_block_slide.description": "Slide on a poop block",
   "advancements.poopsky.sapling.title": "Poop Sapling",
