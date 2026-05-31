@@ -25,7 +25,6 @@ public class UrineBottleItem extends Item {
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
-        var result = super.finishUsingItem(stack, level, entity);
 
         if (entity instanceof ServerPlayer player) {
             player.awardStat(Stats.ITEM_USED.get(this));
