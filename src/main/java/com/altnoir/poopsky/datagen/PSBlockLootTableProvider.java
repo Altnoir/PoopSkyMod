@@ -192,7 +192,7 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()
                                 .add(LootItem.lootTableItem(Items.WHEAT_SEEDS).when(dropGrownCropCondition).otherwise(LootItem.lootTableItem(seedsItem)))
-                                .add(LootItem.lootTableItem(Items.COCOA_BEANS).when(dropGrownCropCondition).otherwise(LootItem.lootTableItem(seedsItem)))
+                                .add(LootItem.lootTableItem(Items.SWEET_BERRIES).when(dropGrownCropCondition).otherwise(LootItem.lootTableItem(seedsItem)))
                                 .add(LootItem.lootTableItem(Items.CARROT).when(dropGrownCropCondition).otherwise(LootItem.lootTableItem(seedsItem)))
                                 .add(LootItem.lootTableItem(Items.POTATO).when(dropGrownCropCondition).otherwise(LootItem.lootTableItem(seedsItem)))
                         )

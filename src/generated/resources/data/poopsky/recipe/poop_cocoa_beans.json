@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "category": "food",
+  "cookingtime": 600,
+  "experience": 0.35,
+  "group": "cocoa_beans",
+  "ingredient": {
+    "item": "poopsky:poop"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:cocoa_beans"
+  }
+}

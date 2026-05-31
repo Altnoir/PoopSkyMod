@@ -308,23 +308,23 @@ public class PSBlocks {
             () -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(CUT_POOP_BLOCK.get()))
     );
 
-    public static final DeferredBlock<Block> TILE_BLOCK = registerBlock("tile_block",
+    public static final DeferredBlock<Block> TILE_BLOCK = registerDefaultBlock("tile_block",
             () -> new Block(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_LIGHT_BLUE)
                     .requiresCorrectToolForDrops()
                     .strength(HARDEN)
                     .sound(SoundType.STONE))
     );
-    public static final DeferredBlock<Block> TILE_BLOCK_STAIRS = registerBlock("tile_block_stairs",
+    public static final DeferredBlock<Block> TILE_BLOCK_STAIRS = registerDefaultBlock("tile_block_stairs",
             () -> new StairBlock(TILE_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(TILE_BLOCK.get()))
     );
-    public static final DeferredBlock<Block> TILE_BLOCK_SLAB = registerBlock("tile_block_slab",
+    public static final DeferredBlock<Block> TILE_BLOCK_SLAB = registerDefaultBlock("tile_block_slab",
             () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(TILE_BLOCK.get()))
     );
-    public static final DeferredBlock<Block> TILE_BLOCK_VERTICAL_SLAB = registerBlock("tile_block_vertical_slab",
+    public static final DeferredBlock<Block> TILE_BLOCK_VERTICAL_SLAB = registerDefaultBlock("tile_block_vertical_slab",
             () -> new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(TILE_BLOCK.get()))
     );
-    public static final DeferredBlock<Block> TILE_BLOCK_WALL = registerBlock("tile_block_wall",
+    public static final DeferredBlock<Block> TILE_BLOCK_WALL = registerDefaultBlock("tile_block_wall",
             () -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(TILE_BLOCK.get()))
     );
 
@@ -526,14 +526,22 @@ public class PSBlocks {
         return false;
     }
 
-    public static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
+    public static <T extends Block> DeferredBlock<T> registerDefaultBlock(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);
         return toReturn;
     }
+    public static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
+        DeferredBlock<T> toReturn = BLOCKS.register(name, block);
+        registerBlockItem(name, toReturn,88);
+        return toReturn;
+    }
 
     private static <T extends Block> void registerBlockItem(String name, DeferredBlock<T> block) {
-        PSItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().stacksTo(88)));
+        PSItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
+    }
+    private static <T extends Block> void registerBlockItem(String name, DeferredBlock<T> block, int stacksTo) {
+        PSItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().stacksTo(stacksTo)));
     }
 
     public static void register(IEventBus eventBus) {

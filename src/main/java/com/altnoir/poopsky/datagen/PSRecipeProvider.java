@@ -28,7 +28,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         List<ItemLike> POOP_LIST = List.of(PSBlocks.POOP_BLOCK);
         List<ItemLike> POOP_BRICK_LIST = List.of(PSBlocks.POOP_BRICKS);
         List<ItemLike> SMOOTH_POOP_LIST = List.of(PSBlocks.DRIED_POOP_BLOCK);
-        List<ItemLike> TILE_BLOCK_LIST = List.of(PSBlocks.CHILI_POOP_BLOCK);
+        List<ItemLike> TILE_BLOCK_LIST = List.of(PSBlocks.RAW_POOP_BLOCK);
         List<ItemLike> MAGGOTS_LIST = List.of(PSItems.MAGGOTS_SEEDS);
 
         shapeless1x1Recipe(recipeOutput, Blocks.CRIMSON_NYLIUM, Blocks.CRIMSON_FUNGUS, Blocks.NETHERRACK);
@@ -46,6 +46,10 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         oreSmelting(recipeOutput, TILE_BLOCK_LIST, RecipeCategory.BUILDING_BLOCKS, PSBlocks.TILE_BLOCK, 0.1F, 200, "tile_block");
         oreBlasting(recipeOutput, TILE_BLOCK_LIST, RecipeCategory.BUILDING_BLOCKS, PSBlocks.TILE_BLOCK, 0.1F, 100, "tile_block");
 
+        SimpleCookingRecipeBuilder.campfireCooking(Ingredient.of(PSItems.POOP.get()), RecipeCategory.MISC, Items.COCOA_BEANS, 0.35F, 600)
+                .group("cocoa_beans")
+                .unlockedBy(getHasName(PSItems.POOP.get()), has(PSItems.POOP.get()))
+                .save(recipeOutput, PoopSky.MOD_ID + ":" + getItemName(PSItems.POOP.get()) + "_" + getItemName(Items.COCOA_BEANS));
         // 食物
         oreSmelting(recipeOutput, MAGGOTS_LIST, RecipeCategory.BUILDING_BLOCKS, PSItems.BAKED_MAGGOTS, 0.35F, 200, "maggots_seeds");
         oreCooking(recipeOutput, RecipeSerializer.SMOKING_RECIPE, SmokingRecipe::new, MAGGOTS_LIST, RecipeCategory.BUILDING_BLOCKS, PSItems.BAKED_MAGGOTS, 0.35F, 100, "maggots_seeds", "_from_smoking");
@@ -113,6 +117,14 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('P', PSItems.POOP_BALL)
                 .define('S', Items.WITHER_ROSE)
                 .unlockedBy(getItemName(Items.WITHER_ROSE), has(Items.WITHER_ROSE))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PSItems.GOLDEN_POOP.get())
+                .pattern("PPP")
+                .pattern("PSP")
+                .pattern("PPP")
+                .define('P', Items.GOLD_NUGGET)
+                .define('S', PSItems.POOP)
+                .unlockedBy(getItemName(Items.GOLD_NUGGET), has(Items.GOLD_NUGGET))
                 .save(recipeOutput);
 
         // 建筑
@@ -191,9 +203,9 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         verticalSlabRecipe(recipeOutput, PSBlocks.TILE_BLOCK_VERTICAL_SLAB, PSBlocks.TILE_BLOCK);
         wallRecipe(recipeOutput, PSBlocks.TILE_BLOCK_WALL, PSBlocks.TILE_BLOCK);
 
-        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC,  PSItems.POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PSBlocks.RAW_POOP_BLOCK);
-        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC,  PSItems.SAPING_POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PSBlocks.RAW_SAPING_POOP_BLOCK);
-        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC,  PSItems.WITHER_POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PSBlocks.RAW_WITHER_POOP_BLOCK);
+        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PSItems.POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PSBlocks.RAW_POOP_BLOCK);
+        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PSItems.SAPING_POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PSBlocks.RAW_SAPING_POOP_BLOCK);
+        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PSItems.WITHER_POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PSBlocks.RAW_WITHER_POOP_BLOCK);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOP_BLOCK)
                 .pattern("P")
@@ -436,7 +448,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         toiletRecipes(recipeOutput, ToiletBlocks.MAGENTA_CONCRETE_TOILET, Blocks.MAGENTA_CONCRETE);
         toiletRecipes(recipeOutput, ToiletBlocks.PINK_CONCRETE_TOILET, Blocks.PINK_CONCRETE);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ToiletBlocks.RAINBOW_TOILET)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ToiletBlocks.RAINBOW_TOILET, 3)
                 .requires(ToiletBlocks.RED_CONCRETE_TOILET)
                 .requires(ToiletBlocks.GREEN_CONCRETE_TOILET)
                 .requires(ToiletBlocks.BLUE_CONCRETE_TOILET)
@@ -446,9 +458,8 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
 
     private void toiletRecipes(RecipeOutput recipeOutput, ItemLike toilet, ItemLike block) {
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, toilet)
-                .pattern("#P#")
-                .pattern("###")
-                .pattern("###")
+                .pattern("P")
+                .pattern("#")
                 .define('P', PSItems.POOP.get())
                 .define('#', block)
                 .unlockedBy(getItemName(PSItems.POOP), has(PSItems.POOP.get()))
