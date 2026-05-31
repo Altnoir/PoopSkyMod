@@ -26,9 +26,14 @@ public record PlugActionPayload() implements CustomPacketPayload {
 
             if (player.getVehicle() instanceof ToiletPlugEntity plug) {
                 removePlug(player, plug);
-            } else if (player.isCreative() || hasItemInInventory(player)) {
-                spawnAndRidePlug(player);
-                if (!player.isCreative()) removeItem(player);
+            } else {
+                ItemStack plugStack = findToiletPlug(player);
+                if (player.isCreative() || !plugStack.isEmpty()) {
+                    spawnAndRidePlug(player);
+                    if (!player.isCreative()) {
+                        plugStack.shrink(1);
+                    }
+                }
             }
         });
     }
@@ -61,20 +66,22 @@ public record PlugActionPayload() implements CustomPacketPayload {
         }
     }
 
-    private static boolean hasItemInInventory(ServerPlayer player) {
+    private static ItemStack findToiletPlug(ServerPlayer player) {
         Inventory inv = player.getInventory();
-        return inv.items.stream().anyMatch(stack -> stack.is(PSItems.TOILET_PLUG.get()));
-    }
 
-    private static void removeItem(ServerPlayer player) {
-        Inventory inv = player.getInventory();
-        for (int i = 0; i < inv.items.size(); ++i) {
-            ItemStack stack = inv.items.get(i);
+        for (ItemStack stack : inv.items) {
             if (stack.is(PSItems.TOILET_PLUG.get())) {
-                stack.shrink(1);
-                break;
+                return stack;
             }
         }
+
+        for (ItemStack stack : inv.offhand) {
+            if (stack.is(PSItems.TOILET_PLUG.get())) {
+                return stack;
+            }
+        }
+
+        return ItemStack.EMPTY;
     }
 
     @Override
