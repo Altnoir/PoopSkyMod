@@ -1,10 +1,10 @@
 package com.altnoir.poopsky.entity.renderer;
 
-import com.altnoir.poopsky.entity.p.ChairEntity;
 import com.altnoir.poopsky.entity.p.ToiletEntity;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 
 public class ToiletRenderer extends EntityRenderer<ToiletEntity> {
@@ -14,7 +14,7 @@ public class ToiletRenderer extends EntityRenderer<ToiletEntity> {
 
     @Override
     public ResourceLocation getTextureLocation(ToiletEntity toiletEntity) {
-        return null;
+        return MissingTextureAtlasSprite.getLocation();
     }
 
     @Override

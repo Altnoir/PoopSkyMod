@@ -94,13 +94,23 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
             var itementity = new ItemEntity(level, vec3.x(), vec3.y(), vec3.z(), new ItemStack(PSItems.MAGGOTS_SEEDS.get()));
             itementity.setDefaultPickUpDelay();
             level.addFreshEntity(itementity);
+
+            if (level instanceof ServerLevel serverLevel) {
+                serverLevel.sendParticles(
+                        PSParticles.POOP_PARTICLE.get(),
+                        pos.getX() + 0.5,
+                        pos.getY() + 0.9375,
+                        pos.getZ() + 0.5,
+                        8,
+                        0.5,
+                        0.2,
+                        0.5,
+                        0.1
+                );
+            }
         }
 
         empty(entity, state, level, pos);
-        for (int i = 0; i < 8; i++) {
-            level.addParticle(PSParticles.POOP_PARTICLE.get(), pos.getX() + 0.5, pos.getY() + 0.9375, pos.getZ() + 0.5,
-                    level.random.nextFloat() - 0.5, 0.2, level.random.nextFloat() - 0.5);
-        }
         level.playSound(null, pos, SoundEvents.PLAYER_SPLASH, SoundSource.BLOCKS, 0.5F, 1.0F);
     }
 
@@ -114,28 +124,29 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
 
     @Override
     protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (state.getValue(LEVEL) == MAX_LEVEL && isHot(level, pos)) {
-            level.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1.0F, 1.0F);
-
-            var waterColor = level.getBiome(pos).value().getWaterColor();
-            var red = (waterColor >> 16 & 0xFF) / 255.0F;
-            var green = (waterColor >> 8 & 0xFF) / 255.0F;
-            var blue = (waterColor & 0xFF) / 255.0F;
-
-            var color = new Vector3f(red, green, blue);
-
-            level.sendParticles(
-                    new DustColorTransitionOptions(color, color, 1.0F),
-                    pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5,
-                    15,
-                    0.3, 0.1, 0.3,
-                    0.02
-            );
-
-            BlockState compooperBlock = PSBlocks.WATER_COMPOOPER.get().defaultBlockState().setValue(LEVEL, MAX_LEVEL);
-            level.setBlockAndUpdate(pos, compooperBlock);
+        if (state.getValue(LEVEL) != MAX_LEVEL || !isHot(level, pos)) {
+            return;
         }
-        level.scheduleTick(pos, this, 20);
+
+        level.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1.0F, 1.0F);
+
+        var waterColor = level.getBiome(pos).value().getWaterColor();
+        var red = (waterColor >> 16 & 0xFF) / 255.0F;
+        var green = (waterColor >> 8 & 0xFF) / 255.0F;
+        var blue = (waterColor & 0xFF) / 255.0F;
+
+        var color = new Vector3f(red, green, blue);
+
+        level.sendParticles(
+                new DustColorTransitionOptions(color, color, 1.0F),
+                pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5,
+                15,
+                0.3, 0.1, 0.3,
+                0.02
+        );
+
+        BlockState compooperBlock = PSBlocks.WATER_COMPOOPER.get().defaultBlockState().setValue(LEVEL, MAX_LEVEL);
+        level.setBlockAndUpdate(pos, compooperBlock);
     }
 
     @Override
@@ -158,7 +169,7 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
 
     @Override
     protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (!state.getValue(MAGGOTS) && state.getValue(LEVEL) == 3) {
+        if (!state.getValue(MAGGOTS) && state.getValue(LEVEL) == MAX_LEVEL) {
             level.setBlockAndUpdate(pos, state.setValue(MAGGOTS, true));
             level.playSound(null, pos, PSSoundEvents.BLOCK_COMPPOOPER_MAGGOTS.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
         }

@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.entity.p;
 
-import com.altnoir.poopsky.event.PSKeyBoardInput;
 import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.network.PlugInputPayload;
 import com.altnoir.poopsky.sound.TPFlySoundWrapper;
 import com.google.common.collect.Lists;
 import net.minecraft.BlockUtil;
@@ -30,6 +30,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 
@@ -152,10 +153,11 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
         super.tick();
         this.tickLerp();
 
-        if (this.isControlledByLocalInstance()) {
+        boolean shouldProcessInput = this.isControlledByLocalInstance()
+                || (!this.level().isClientSide && this.getControllingPassenger() != null);
+        if (shouldProcessInput) {
             if (this.level().isClientSide) {
                 this.updateKeyStates();
-                this.moveByInput();
                 if (this.getControllingPassenger() != null) {
                     TPFlySound.play();
                     TPFlySound.tick();
@@ -165,6 +167,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
                     TPFlySound.stop();
                 }
             }
+            this.moveByInput();
             this.move(MoverType.SELF, this.getDeltaMovement());
         } else {
             this.setDeltaMovement(Vec3.ZERO);
@@ -194,6 +197,18 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
 
         this.updateFloatingValue();
         this.autoFall();
+        this.resetFlightFallDistance();
+    }
+
+    private void resetFlightFallDistance() {
+        if (!this.isVehicle()) {
+            return;
+        }
+
+        this.resetFallDistance();
+        for (Entity passenger : this.getPassengers()) {
+            passenger.resetFallDistance();
+        }
     }
 
     private void tickLerp() {
@@ -239,7 +254,6 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
             this.setYRot(this.getYRot() + deltaYaw * 0.5f);
         }
         this.setDeltaMovement(velocity.x, verVelocity, velocity.z);
-        this.move(MoverType.SELF, this.getDeltaMovement());
     }
 
     private void autoFall() {
@@ -324,12 +338,17 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
     }
 
     public void setInput(boolean inputForward, boolean inputBackward, boolean inputLeft, boolean inputRight, boolean inputUp, boolean inputDown) {
+        setInput(inputForward, inputBackward, inputLeft, inputRight, inputUp, inputDown, this.inputFast);
+    }
+
+    public void setInput(boolean inputForward, boolean inputBackward, boolean inputLeft, boolean inputRight, boolean inputUp, boolean inputDown, boolean inputFast) {
         this.inputForward = inputForward;
         this.inputBackward = inputBackward;
         this.inputLeft = inputLeft;
         this.inputRight = inputRight;
         this.inputUp = inputUp;
         this.inputDown = inputDown;
+        this.inputFast = inputFast;
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -346,6 +365,16 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
         boolean isSprintingNow = mc.options.keySprint.isDown();
         if (isSprintingNow) inputFast = true;
         if (!isMoving()) inputFast = false;
+
+        PacketDistributor.sendToServer(new PlugInputPayload(
+                inputForward,
+                inputBackward,
+                inputLeft,
+                inputRight,
+                inputUp,
+                inputDown,
+                inputFast
+        ));
     }
 
     private boolean isMoving() {

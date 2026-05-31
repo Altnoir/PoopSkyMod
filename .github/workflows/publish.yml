@@ -11,13 +11,13 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           fetch-tags: true
 
       - name: Setup JDK 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: '21'
           distribution: 'temurin'
@@ -26,7 +26,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v5
 
       - name: Build with Gradle
         run: ./gradlew build
@@ -38,7 +38,7 @@ jobs:
           echo "modversion=$MOD_VERSION" >> $GITHUB_OUTPUT
 
       - name: Create release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ github.ref_name }}+${{ steps.get_version.outputs.modversion }}
           name: PoopSky-${{ github.ref_name }}-${{ steps.get_version.outputs.modversion }}
@@ -55,13 +55,13 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           fetch-tags: true
 
       - name: Setup JDK 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: '21'
           distribution: 'temurin'
@@ -88,7 +88,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           
@@ -102,7 +102,7 @@ jobs:
           sed -i "s/^mod_version=.*/mod_version=$NEW_VERSION/" gradle.properties
           
       - name: Get bot token
-        uses: actions/create-github-app-token@v2
+        uses: actions/create-github-app-token@v3
         id: app_token
         with:
           app-id: ${{ secrets.CI_BOT_APP_ID }}

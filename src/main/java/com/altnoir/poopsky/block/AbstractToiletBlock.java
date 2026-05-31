@@ -215,10 +215,15 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
 
     public void teleportEntity(Level level, Entity entity, ToiletBlockEntity blockEntity, float fallDistance) {
         var server = level.getServer();
-        if (blockEntity.getLinkedDim() == null) return;
-        var targetWorld = server.getLevel(ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse(blockEntity.getLinkedDim())));
-        if (targetWorld == null) return;
+        var linkedDim = blockEntity.getLinkedDim();
         var targetPos = blockEntity.getLinkedPos();
+        if (linkedDim == null || linkedDim.isBlank() || targetPos == null) return;
+
+        var targetDimension = ResourceLocation.tryParse(linkedDim);
+        if (targetDimension == null) return;
+
+        var targetWorld = server.getLevel(ResourceKey.create(Registries.DIMENSION, targetDimension));
+        if (targetWorld == null) return;
         targetWorld.getChunk(targetPos);
 
         if (entity.isVehicle() && !entity.getPassengers().isEmpty()) {

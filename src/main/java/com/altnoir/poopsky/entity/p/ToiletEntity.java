@@ -10,7 +10,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -40,19 +39,20 @@ public class ToiletEntity extends Entity {
     @Override
     public void tick() {
         super.tick();
-        if (!this.level().isClientSide && !this.getPassengers().isEmpty()) {
-            LivingEntity livingEntity = (LivingEntity) this.getPassengers().get(0);
+        if (this.level().isClientSide || this.getPassengers().isEmpty()) {
+            return;
+        }
 
-            if (livingEntity instanceof Player player) {
-                if (player.hasEffect(PSEffects.FECAL_INCONTINENCE)) {
-                    onPoop(level(), player, player.hasEffect(PSEffects.INTESTINAL_SPASM));
-                    player.causeFoodExhaustion(0.05F);
+        if (!(this.getPassengers().getFirst() instanceof Player player)) {
+            return;
+        }
 
-                } else if (level().getGameTime() % 20 == 0) {
-                    onPoop(level(), (Player) livingEntity, livingEntity.hasEffect(PSEffects.INTESTINAL_SPASM));
-                    player.causeFoodExhaustion(1.0F);
-                }
-            }
+        if (player.hasEffect(PSEffects.FECAL_INCONTINENCE)) {
+            onPoop(level(), player, player.hasEffect(PSEffects.INTESTINAL_SPASM));
+            player.causeFoodExhaustion(0.05F);
+        } else if (level().getGameTime() % 20 == 0) {
+            onPoop(level(), player, player.hasEffect(PSEffects.INTESTINAL_SPASM));
+            player.causeFoodExhaustion(1.0F);
         }
     }
 

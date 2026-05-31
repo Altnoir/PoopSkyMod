@@ -39,17 +39,20 @@ public class ToiletBlockEntity extends BlockEntity {
 
     public void clearLinkedBlock() {
         if (level == null || level.isClientSide()) return;
-        if (linkedPos == null || linkedDim == null) return;
+        if (linkedPos == null || linkedDim == null || linkedDim.isBlank()) return;
+
+        var targetDimension = ResourceLocation.tryParse(linkedDim);
+        if (targetDimension == null) return;
 
         var server = ((ServerLevel) level).getServer();
-        var targetWorld = server.getLevel(ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse(this.getLinkedDim())));
+        var targetWorld = server.getLevel(ResourceKey.create(Registries.DIMENSION, targetDimension));
         if (targetWorld == null) return;
 
         var chunkPos = new ChunkPos(this.getLinkedPos());
 
-        level.getChunkSource().getChunk(chunkPos.x, chunkPos.z, ChunkStatus.FULL, true);
+        targetWorld.getChunkSource().getChunk(chunkPos.x, chunkPos.z, ChunkStatus.FULL, true);
 
-        var be = (ToiletBlockEntity)targetWorld.getBlockEntity(linkedPos);
+        var be = (ToiletBlockEntity) targetWorld.getBlockEntity(linkedPos);
         if (be == null) return;
         be.setLinkedPos(BlockPos.ZERO, "");
     }
