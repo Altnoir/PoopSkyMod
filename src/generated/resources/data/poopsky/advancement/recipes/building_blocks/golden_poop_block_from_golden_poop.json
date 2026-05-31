@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "golden_poop": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:golden_poop"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:golden_poop_block_from_golden_poop"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "golden_poop"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "poopsky:golden_poop_block_from_golden_poop"
+    ]
+  }
+}

@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.block;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.block.p.GoldgenToiletBlock;
 import com.altnoir.poopsky.block.p.ToiletBlock;
 import com.altnoir.poopsky.block.p.ToiletLavaBlock;
 import com.altnoir.poopsky.item.PSItems;
@@ -60,7 +61,15 @@ public class ToiletBlocks {
     public static final DeferredBlock<Block> PURPLE_CONCRETE_TOILET = registerColorToilet("purple_concrete_toilet", DyeColor.PURPLE);
     public static final DeferredBlock<Block> MAGENTA_CONCRETE_TOILET = registerColorToilet("magenta_concrete_toilet", DyeColor.MAGENTA);
     public static final DeferredBlock<Block> PINK_CONCRETE_TOILET = registerColorToilet("pink_concrete_toilet", DyeColor.PINK);
-    public static final DeferredBlock<Block> RAINBOW_TOILET = registerColorToilet("rainbow_toilet", DyeColor.WHITE);
+    public static final DeferredBlock<Block> RAINBOW_TOILET = registerBlock("rainbow_toilet", () ->
+            new GoldgenToiletBlock(BlockBehaviour.Properties.of()
+                    .mapColor(DyeColor.WHITE)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .lightLevel(createLightLevelFromLavaBlockState(15))
+                    .strength(2.0F, 100.0F)
+                    .requiresCorrectToolForDrops()
+            )
+    );
 
     private static DeferredBlock<Block> registerToilet(String name, MapColor color, SoundType sound) {
         return registerBlock(name, () -> new ToiletBlock(BlockBehaviour.Properties.of()

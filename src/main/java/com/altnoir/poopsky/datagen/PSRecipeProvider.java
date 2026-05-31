@@ -151,7 +151,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         verticalSlabRecipe(recipeOutput, PSBlocks.CHILI_POOP_VERTICAL_SLAB, PSBlocks.CHILI_POOP_BLOCK);
         wallRecipe(recipeOutput, PSBlocks.CHILI_POOP_WALL, PSBlocks.CHILI_POOP_BLOCK);
 
-        offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.GOLDEN_POOP_BLOCK, PSItems.GOLDEN_POOP,1);
+        offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.GOLDEN_POOP_BLOCK, PSItems.GOLDEN_POOP, 1);
         stairsRecipe(recipeOutput, PSBlocks.GOLDEN_POOP_STAIRS, PSBlocks.GOLDEN_POOP_BLOCK);
         slabRecipe(recipeOutput, PSBlocks.GOLDEN_POOP_SLAB, PSBlocks.GOLDEN_POOP_BLOCK);
         verticalSlabRecipe(recipeOutput, PSBlocks.GOLDEN_POOP_VERTICAL_SLAB, PSBlocks.GOLDEN_POOP_BLOCK);
@@ -191,9 +191,9 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         verticalSlabRecipe(recipeOutput, PSBlocks.TILE_BLOCK_VERTICAL_SLAB, PSBlocks.TILE_BLOCK);
         wallRecipe(recipeOutput, PSBlocks.TILE_BLOCK_WALL, PSBlocks.TILE_BLOCK);
 
-        offerCompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.RAW_POOP_BLOCK, PSItems.POOP_BALL);
-        offerCompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.RAW_SAPING_POOP_BLOCK, PSItems.SAPING_POOP_BALL);
-        offerCompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.RAW_WITHER_POOP_BLOCK, PSItems.WITHER_POOP_BALL);
+        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC,  PSItems.POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PSBlocks.RAW_POOP_BLOCK);
+        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC,  PSItems.SAPING_POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PSBlocks.RAW_SAPING_POOP_BLOCK);
+        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC,  PSItems.WITHER_POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PSBlocks.RAW_WITHER_POOP_BLOCK);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOP_BLOCK)
                 .pattern("P")
@@ -276,7 +276,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy(getItemName(Blocks.MOSSY_COBBLESTONE_SLAB), has(Blocks.MOSSY_COBBLESTONE_SLAB))
                 .save(recipeOutput);
 
-        offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOLIME_BLOCK.get(), PSItems.POOP_BALL.get(),1);
+        offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOLIME_BLOCK.get(), PSItems.POOP_BALL.get(), 1);
         offerCompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOLIME_POOP_BLOCK.get(), PSBlocks.POOP_BLOCK.get());
 
         //原版物品配方

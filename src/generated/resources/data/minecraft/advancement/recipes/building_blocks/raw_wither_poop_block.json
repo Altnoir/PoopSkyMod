@@ -3,11 +3,11 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "poopsky:raw_wither_poop_block_from_compacting"
+        "recipe": "minecraft:raw_wither_poop_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "wither_poop_ball": {
+    "has_wither_poop_ball": {
       "conditions": {
         "items": [
           {
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "wither_poop_ball"
+      "has_wither_poop_ball"
     ]
   ],
   "rewards": {
     "recipes": [
-      "poopsky:raw_wither_poop_block_from_compacting"
+      "minecraft:raw_wither_poop_block"
     ]
   }
 }
