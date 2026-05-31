@@ -31,7 +31,7 @@ public class Config {
             .comment("Whether to Disable the consumption of liquid when sticks crafting")
             .define("stickyCrafting", false);
     private static final ModConfigSpec.BooleanValue DESPERATE_WORLD = BUILDER
-            .comment("Whether to Disable the Desperate World (Enabling it will cause the device to lag)")
+            .comment("Whether to Enable the Desperate World (Enabling it will cause the device to lag)")
             .define("desperateWorld", false);
 
 //    private static final ModConfigSpec.IntValue MAGIC_NUMBER = BUILDER
