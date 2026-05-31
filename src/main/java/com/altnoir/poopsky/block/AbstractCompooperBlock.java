@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.block;
 
 import com.altnoir.poopsky.Config;
+import com.altnoir.poopsky.PoopSky;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -98,13 +99,13 @@ public abstract class AbstractCompooperBlock extends Block {
                     if (stack.isEmpty()) continue;
 
                     var block = Block.byItem(stack.getItem());
-                    if (block == null || block.defaultBlockState().isAir()) {
+                    if (block.defaultBlockState().isAir()) {
                         if (stack.getItem() instanceof BlockItem bi) {
                             block = bi.getBlock();
                         }
                     }
 
-                    if (block == null || block.defaultBlockState().isAir()) continue;
+                    if (block.defaultBlockState().isAir()) continue;
 
                     var targetPos = pos.above();
                     var targetState = level.getBlockState(targetPos);
@@ -121,7 +122,8 @@ public abstract class AbstractCompooperBlock extends Block {
                             break;
                         }
                     } else {
-                        System.out.println(targetState.getBlock().getName().getString() + " False");
+                        PoopSky.LOGGER.info("Unable to place compooper block because target block {} cannot be replaced",
+                                targetState.getBlock().getName().getString());
                         break;
                     }
                 }
