@@ -1,17 +1,24 @@
 package com.altnoir.poopsky.effect;
 
+import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.particle.PSParticles;
 import com.altnoir.poopsky.sound.PSSoundEvents;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BoneMealItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 
 public class FecalIncontinenceEffect extends MobEffect {
 
@@ -21,19 +28,22 @@ public class FecalIncontinenceEffect extends MobEffect {
 
     @Override
     public boolean applyEffectTick(LivingEntity entity, int amplifier) {
-        int chance = entity.getRandom().nextInt(Math.max(1, 20 - amplifier * 4));
-        if (chance == 0) {
+        int chance = entity.getRandom().nextInt(Math.max(1, 20 - amplifier * 5));
+        if (amplifier >= 3 && entity instanceof Player player && player.isShiftKeyDown()) {
+            player.causeFoodExhaustion(0.1F * (amplifier + 2));
+            fecalIncontinence(player, amplifier);
+        } else if (chance == 0) {
             if (entity instanceof Player player && !player.isSpectator()) {
                 player.causeFoodExhaustion(0.1F * (amplifier + 2));
-                fecalIncontinence(player);
+                fecalIncontinence(player, amplifier);
             } else {
-                fecalIncontinence(entity);
+                fecalIncontinence(entity, amplifier);
             }
         }
         return true;
     }
 
-    private void fecalIncontinence(LivingEntity entity) {
+    private void fecalIncontinence(LivingEntity entity, int amplifier) {
         float pitch = entity.getRandom().nextFloat() + 0.5F;
 
         if (!entity.level().isClientSide) {
@@ -48,14 +58,19 @@ public class FecalIncontinenceEffect extends MobEffect {
 
                         if (applied) {
                             BoneMealItem.addGrowthParticles(level, targetPos, 15);
+                            level.levelEvent(1505, entityPos, 15);
                         }
                         return applied;
                     });
-            level.levelEvent(1505, entityPos, 15);
 
             if (!dropPoop) {
                 var poop = new ItemEntity(level, entity.getX(), entity.getY() + 0.1, entity.getZ(), stack);
 
+                if (amplifier > 1) {
+                    entity.setDeltaMovement(entity.getDeltaMovement().add(new Vec3(0, 0.125, 0)));
+                    entity.fallDistance = 0;
+                    entity.hurtMarked = true;
+                }
                 poop.setDefaultPickUpDelay();
                 level.addFreshEntity(poop);
 
@@ -65,13 +80,10 @@ public class FecalIncontinenceEffect extends MobEffect {
                         8, 0.0, -0.1, 0.0, 3.0
                 );
 
-                level.playSound(
-                        null,
+                level.playSound(null,
                         entity.getX(), entity.getY() + 0.1, entity.getZ(),
-                        PSSoundEvents.FART.get(),
-                        entity.getSoundSource(),
-                        1.0F,
-                        pitch
+                        PSSoundEvents.FART.get(), entity.getSoundSource(),
+                        1.0F, pitch
                 );
             }
         }
