@@ -51,16 +51,19 @@ public class UrineBottleItem extends Item {
 
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity entity, InteractionHand hand) {
-        if (!player.level().isClientSide) {
-            if (entity.isAlive() && entity instanceof Chicken chicken) {
+        if (entity.isAlive() && entity instanceof Chicken chicken) {
+            if (!player.level().isClientSide) {
                 var waterPotion = PotionContents.createItemStack(Items.POTION, Potions.WATER);
 
                 chicken.playSound(SoundEvents.CHICKEN_EGG);
                 chicken.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 1200, 1));
                 chicken.hurt(player.damageSources().playerAttack(player), 1.0F);
-                stack.shrink(1);
+                if (!player.getAbilities().instabuild) {
+                    stack.shrink(1);
+                }
                 entity.spawnAtLocation(waterPotion);
             }
+            return InteractionResult.sidedSuccess(player.level().isClientSide);
         }
         return super.interactLivingEntity(stack, player, entity, hand);
     }
