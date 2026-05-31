@@ -21,7 +21,7 @@ public class PSItemModelProvider extends ItemModelProvider {
         basicItem(PSItems.GOLDEN_POOP.get());
         basicItem(PSItems.FOLIUM_SENNAE.get());
         basicItem(PSItems.POOP_BALL.get());
-        basicItem(PSItems.SAPING_BALL.get());
+        basicItem(PSItems.SAPING_POOP_BALL.get());
         basicItem(PSItems.WITHER_POOP_BALL.get());
         basicItem(PSItems.POOP_BREAD.get());
         basicItem(PSItems.POOP_DUMPLINGS.get());
@@ -47,6 +47,7 @@ public class PSItemModelProvider extends ItemModelProvider {
         basicItem(PSItems.TIME_BELL.get());
 
         wallItem(PSBlocks.CHILI_POOP_WALL, PSBlocks.CHILI_POOP_BLOCK);
+        wallItem(PSBlocks.GOLDEN_POOP_WALL, PSBlocks.GOLDEN_POOP_BLOCK);
         wallItem(PSBlocks.POOP_BRICK_WALL,PSBlocks.POOP_BRICKS);
         wallItem(PSBlocks.MOSSY_POOP_BRICK_WALL,PSBlocks.MOSSY_POOP_BRICKS);
         wallItem(PSBlocks.DRIED_POOP_BLOCK_WALL, PSBlocks.DRIED_POOP_BLOCK);

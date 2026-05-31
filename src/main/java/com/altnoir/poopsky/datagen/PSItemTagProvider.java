@@ -39,7 +39,7 @@ public class PSItemTagProvider extends ItemTagsProvider {
                 .add(PSItems.POOP.get())
                 .add(PSItems.CHILI_POOP.get())
                 .add(PSItems.GOLDEN_POOP.get())
-                .add(PSItems.SAPING_BALL.get())
+                .add(PSItems.SAPING_POOP_BALL.get())
                 .add(PSItems.BAKED_MAGGOTS.get())
                 .add(PSItems.MAGGOTS_SEEDS.get())
                 .add(PSItems.ROUNDWORM.get())
@@ -59,7 +59,7 @@ public class PSItemTagProvider extends ItemTagsProvider {
                 .add(PSItems.POOP.get())
                 .add(PSItems.CHILI_POOP.get())
                 .add(PSItems.GOLDEN_POOP.get())
-                .add(PSItems.SAPING_BALL.get())
+                .add(PSItems.SAPING_POOP_BALL.get())
                 .add(PSItems.POOP_BREAD.get())
                 .add(PSItems.POOP_DUMPLINGS.get())
                 .add(PSItems.POOP_SOUP.get())
@@ -93,7 +93,8 @@ public class PSItemTagProvider extends ItemTagsProvider {
         //方块物品标签
         tag(ItemTags.DIRT)
                 .add(PSBlocks.POOP_BLOCK.asItem())
-                .add(PSBlocks.CHILI_POOP_BLOCK.asItem());
+                .add(PSBlocks.CHILI_POOP_BLOCK.asItem())
+                .add(PSBlocks.GOLDEN_POOP_BLOCK.asItem());
 
         tag(ItemTags.VILLAGER_PLANTABLE_SEEDS)
                 .add(PSItems.MAGGOTS_SEEDS.get());
@@ -111,6 +112,7 @@ public class PSItemTagProvider extends ItemTagsProvider {
         tag(ItemTags.STAIRS)
                 .add(PSBlocks.POOP_STAIRS.asItem())
                 .add(PSBlocks.CHILI_POOP_STAIRS.asItem())
+                .add(PSBlocks.GOLDEN_POOP_STAIRS.asItem())
                 .add(PSBlocks.POOP_BRICK_STAIRS.asItem())
                 .add(PSBlocks.MOSSY_POOP_BRICK_STAIRS.asItem())
                 .add(PSBlocks.DRIED_POOP_BLOCK_STAIRS.asItem())
@@ -119,6 +121,7 @@ public class PSItemTagProvider extends ItemTagsProvider {
         tag(ItemTags.SLABS)
                 .add(PSBlocks.POOP_SLAB.asItem())
                 .add(PSBlocks.CHILI_POOP_SLAB.asItem())
+                .add(PSBlocks.GOLDEN_POOP_SLAB.asItem())
                 .add(PSBlocks.POOP_BRICK_SLAB.asItem())
                 .add(PSBlocks.MOSSY_POOP_BRICK_SLAB.asItem())
                 .add(PSBlocks.DRIED_POOP_BLOCK_SLAB.asItem())
@@ -127,6 +130,7 @@ public class PSItemTagProvider extends ItemTagsProvider {
         tag(ItemTags.WALLS)
                 .add(PSBlocks.POOP_WALL.asItem())
                 .add(PSBlocks.CHILI_POOP_BLOCK.asItem())
+                .add(PSBlocks.GOLDEN_POOP_BLOCK.asItem())
                 .add(PSBlocks.POOP_BRICK_WALL.asItem())
                 .add(PSBlocks.MOSSY_POOP_BRICK_WALL.asItem())
                 .add(PSBlocks.DRIED_POOP_BLOCK_WALL.asItem())

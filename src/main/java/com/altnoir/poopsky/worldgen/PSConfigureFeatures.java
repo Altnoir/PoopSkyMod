@@ -5,16 +5,21 @@ import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.tag.PSBlockTags;
 import com.altnoir.poopsky.worldgen.foliage.PoopMegaFoliagePlacer;
 import com.google.common.collect.ImmutableList;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.PinkPetalsBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -38,8 +43,12 @@ public class PSConfigureFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> POOP_PATCH_BONEMEAL = resourceKey("poop_patch_bonemeal");
     public static final ResourceKey<ConfiguredFeature<?, ?>> CHILI_POOP_VEGETATION = resourceKey("chili_poop_vegetation");
     public static final ResourceKey<ConfiguredFeature<?, ?>> CHILI_POOP_PATCH_BONEMEAL = resourceKey("chili_poop_patch_bonemeal");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> DRIED_POOP_VEGETATION = resourceKey("dried_poop_vegetation");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> DRIED_POOP_PATCH_BONEMEAL = resourceKey("dried_poop_patch_bonemeal");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> DRIED_POOP_PATCH = resourceKey("dried_poop_patch");
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> RAW_SAPING_POOP_VEGETATION = resourceKey("raw_saping_poop_vegetation");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> RAW_SAPING_POOP_PATCH_BONEMEAL = resourceKey("raw_saping_poop_patch_bonemeal");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> RAW_WITHER_POOP_VEGETATION = resourceKey("raw_wither_poop_vegetation");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> RAW_WITHER_POOP_PATCH_BONEMEAL = resourceKey("raw_wither_poop_patch_bonemeal");
 
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         HolderGetter<ConfiguredFeature<?, ?>> holdergetter = context.lookup(Registries.CONFIGURED_FEATURE);
@@ -89,18 +98,7 @@ public class PSConfigureFeatures {
                 )
         );
         register(context, POOP_PATCH_BONEMEAL, Feature.VEGETATION_PATCH,
-                new VegetationPatchConfiguration(
-                        PSBlockTags.POOP_BLOCK,
-                        BlockStateProvider.simple(PSBlocks.POOP_BLOCK.get()),
-                        PlacementUtils.inlinePlaced(holdergetter.getOrThrow(POOP_VEGETATION)),
-                        CaveSurface.FLOOR,
-                        ConstantInt.of(1),
-                        0.0F,
-                        5,
-                        0.25F,
-                        UniformInt.of(1, 2),
-                        0.75F
-                )
+                vegetationPatch(PSBlockTags.POOP_BLOCK, PSBlocks.POOP_BLOCK.get(), holdergetter.getOrThrow(POOP_VEGETATION))
         );
 
         register(context, CHILI_POOP_VEGETATION, Feature.SIMPLE_BLOCK,
@@ -115,42 +113,65 @@ public class PSConfigureFeatures {
                 )
         );
         register(context, CHILI_POOP_PATCH_BONEMEAL, Feature.VEGETATION_PATCH,
-                new VegetationPatchConfiguration(
-                        PSBlockTags.CHILI_POOP_BLOCK,
-                        BlockStateProvider.simple(PSBlocks.CHILI_POOP_BLOCK.get()),
-                        PlacementUtils.inlinePlaced(holdergetter.getOrThrow(CHILI_POOP_VEGETATION)),
-                        CaveSurface.FLOOR,
-                        ConstantInt.of(1),
-                        0.0F,
-                        5,
-                        0.25F,
-                        UniformInt.of(1, 2),
-                        0.75F
-                )
+                vegetationPatch(PSBlockTags.CHILI_POOP_BLOCK, PSBlocks.CHILI_POOP_BLOCK.get(), holdergetter.getOrThrow(CHILI_POOP_VEGETATION))
         );
 
-        register(context, DRIED_POOP_VEGETATION, Feature.SIMPLE_BLOCK,
+        register(context, DRIED_POOP_PATCH, Feature.RANDOM_PATCH,
+                FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK,
+                        new SimpleBlockConfiguration(
+                                new WeightedStateProvider(
+                                        SimpleWeightedRandomList.<BlockState>builder()
+                                                .add(Blocks.SUGAR_CANE.defaultBlockState(), 50)
+                                                .add(Blocks.CACTUS.defaultBlockState(), 20)
+                                                .add(Blocks.DEAD_BUSH.defaultBlockState(), 30)
+                                )))
+        );
+
+        register(context, RAW_SAPING_POOP_VEGETATION, Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(
                         new WeightedStateProvider(
                                 SimpleWeightedRandomList.<BlockState>builder()
-                                        .add(Blocks.SUGAR_CANE.defaultBlockState(), 50)
-                                        .add(Blocks.CACTUS.defaultBlockState(), 20)
-                                        .add(Blocks.DEAD_BUSH.defaultBlockState(), 30)
+                                        .add(Blocks.DANDELION.defaultBlockState())
+                                        .add(Blocks.POPPY.defaultBlockState())
+                                        .add(Blocks.BLUE_ORCHID.defaultBlockState())
+                                        .add(Blocks.ALLIUM.defaultBlockState())
+                                        .add(Blocks.AZURE_BLUET.defaultBlockState())
+                                        .add(Blocks.RED_TULIP.defaultBlockState())
+                                        .add(Blocks.ORANGE_TULIP.defaultBlockState())
+                                        .add(Blocks.WHITE_TULIP.defaultBlockState())
+                                        .add(Blocks.PINK_TULIP.defaultBlockState())
+                                        .add(Blocks.OXEYE_DAISY.defaultBlockState())
+                                        .add(Blocks.CORNFLOWER.defaultBlockState())
+                                        .add(Blocks.LILY_OF_THE_VALLEY.defaultBlockState())
+                                        .add(Blocks.PINK_PETALS.defaultBlockState().setValue(PinkPetalsBlock.AMOUNT, PinkPetalsBlock.MAX_FLOWERS))
                         ))
         );
-        register(context, DRIED_POOP_PATCH_BONEMEAL, Feature.VEGETATION_PATCH,
-                new VegetationPatchConfiguration(
-                        PSBlockTags.DRIED_POOP_BLOCK,
-                        BlockStateProvider.simple(PSBlocks.DRIED_POOP_BLOCK.get()),
-                        PlacementUtils.inlinePlaced(holdergetter.getOrThrow(DRIED_POOP_VEGETATION)),
-                        CaveSurface.FLOOR,
-                        ConstantInt.of(1),
-                        0.0F,
-                        3,
-                        0.6F,
-                        UniformInt.of(1, 2),
-                        0.5F
-                )
+        register(context, RAW_SAPING_POOP_PATCH_BONEMEAL, Feature.VEGETATION_PATCH,
+                vegetationPatch(PSBlockTags.RAW_SAPING_POOP_BLOCK, PSBlocks.RAW_SAPING_POOP_BLOCK.get(),
+                        holdergetter.getOrThrow(RAW_SAPING_POOP_VEGETATION), 0.3F, 0.25F)
+        );
+
+        register(context, RAW_WITHER_POOP_VEGETATION, Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.WITHER_ROSE))
+        );
+        register(context, RAW_WITHER_POOP_PATCH_BONEMEAL, Feature.VEGETATION_PATCH,
+                vegetationPatch(PSBlockTags.RAW_WITHER_POOP_BLOCK, PSBlocks.RAW_WITHER_POOP_BLOCK.get(),
+                        holdergetter.getOrThrow(RAW_WITHER_POOP_VEGETATION), 0.1F, 0.125F)
+        );
+    }
+
+    private static VegetationPatchConfiguration vegetationPatch(TagKey<Block> replaceable, Block ground, Holder<ConfiguredFeature<?, ?>> feature) {
+        return vegetationPatch(replaceable, ground, feature, 0.25F, 0.0F);
+    }
+
+    private static VegetationPatchConfiguration vegetationPatch(TagKey<Block> replaceable, Block ground, Holder<ConfiguredFeature<?, ?>> feature, float chance1, float chance2) {
+        return new VegetationPatchConfiguration(
+                replaceable,
+                BlockStateProvider.simple(ground),
+                PlacementUtils.inlinePlaced(feature),
+                CaveSurface.FLOOR,
+                ConstantInt.of(1), 0.0F, 5,
+                chance1, UniformInt.of(1, 2), chance2
         );
     }
 

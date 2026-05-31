@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "poopsky:item/saping_ball"
+    "layer0": "poopsky:item/saping_poop_ball"
   }
 }

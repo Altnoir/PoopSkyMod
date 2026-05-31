@@ -223,6 +223,29 @@ public class PSBlocks {
     public static final DeferredBlock<Block> CHILI_POOP_WALL = registerBlock("chili_poop_wall",
             () -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(CHILI_POOP_BLOCK.get()))
     );
+    public static final DeferredBlock<Block> GOLDEN_POOP_BLOCK = registerBlock("golden_poop_block",
+            () -> new Block(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.GOLD)
+                    .requiresCorrectToolForDrops()
+                    .strength(0.65F)
+                    .speedFactor(0.4F)
+                    .isValidSpawn(Blocks::always)
+                    .instrument(NoteBlockInstrument.BELL)
+                    .sound(SoundType.MUD)
+            )
+    );
+    public static final DeferredBlock<Block> GOLDEN_POOP_STAIRS = registerBlock("golden_poop_stairs",
+            () -> new StairBlock(GOLDEN_POOP_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(GOLDEN_POOP_BLOCK.get()))
+    );
+    public static final DeferredBlock<Block> GOLDEN_POOP_SLAB = registerBlock("golden_poop_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(GOLDEN_POOP_BLOCK.get()))
+    );
+    public static final DeferredBlock<Block> GOLDEN_POOP_VERTICAL_SLAB = registerBlock("golden_poop_vertical_slab",
+            () -> new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(GOLDEN_POOP_BLOCK.get()))
+    );
+    public static final DeferredBlock<Block> GOLDEN_POOP_WALL = registerBlock("golden_poop_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(GOLDEN_POOP_BLOCK.get()))
+    );
 
     public static final DeferredBlock<Block> DRIED_POOP_BLOCK = registerBlock("dried_poop_block",
             () -> new DriedPoopBlock(BlockBehaviour.Properties.of()
@@ -328,6 +351,22 @@ public class PSBlocks {
             () -> new UrineCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()).randomTicks())
     );
 
+    public static final DeferredBlock<Block> RAW_POOP_BLOCK = registerBlock("raw_poop_block",
+            () -> new Block(BlockBehaviour.Properties.of()
+                    .randomTicks()
+                    .strength(0.65F)
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .isValidSpawn(Blocks::always)
+                    .instrument(NoteBlockInstrument.COW_BELL)
+                    .sound(SoundType.MUD))
+    );
+    public static final DeferredBlock<Block> RAW_SAPING_POOP_BLOCK = registerBlock("raw_saping_poop_block",
+            () -> new RawSapingBlock(BlockBehaviour.Properties.ofFullCopy(RAW_POOP_BLOCK.get()).sound(SoundType.ROOTED_DIRT))
+    );
+    public static final DeferredBlock<Block> RAW_WITHER_POOP_BLOCK = registerBlock("raw_wither_poop_block",
+            () -> new RawWitherBlock(BlockBehaviour.Properties.ofFullCopy(RAW_POOP_BLOCK.get()).sound(SoundType.ROOTED_DIRT))
+    );
+
     public static final DeferredBlock<Block> POOP_LOG = registerBlock("poop_log",
             () -> new PoopLogBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_BROWN)
@@ -338,7 +377,6 @@ public class PSBlocks {
                     .sound(SoundType.STEM)
             )
     );
-
     public static final DeferredBlock<Block> POOP_EMPTY_LOG = registerBlock("poop_empty_log",
             () -> new EmptyRotatedPillarBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_BROWN)
@@ -348,7 +386,6 @@ public class PSBlocks {
                     .sound(SoundType.BAMBOO_WOOD)
             )
     );
-
     public static final DeferredBlock<Block> STRIPPED_POOP_LOG = registerBlock("stripped_poop_log",
             () -> new PoopLogBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_BROWN)
@@ -359,7 +396,6 @@ public class PSBlocks {
                     .sound(SoundType.STEM)
             )
     );
-
     public static final DeferredBlock<Block> STRIPPED_POOP_EMPTY_LOG = registerBlock("stripped_poop_empty_log",
             () -> new EmptyRotatedPillarBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_BROWN)

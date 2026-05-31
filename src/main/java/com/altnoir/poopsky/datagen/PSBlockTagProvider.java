@@ -26,11 +26,14 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(PSBlocks.POOP_BLOCK.get());
         tag(PSBlockTags.CHILI_POOP_BLOCK)
                 .add(PSBlocks.CHILI_POOP_BLOCK.get());
-        tag(PSBlockTags.DRIED_POOP_BLOCK)
-                .add(PSBlocks.DRIED_POOP_BLOCK.get());
+        tag(PSBlockTags.RAW_SAPING_POOP_BLOCK)
+                .add(PSBlocks.RAW_POOP_BLOCK.get())
+                .add(PSBlocks.RAW_SAPING_POOP_BLOCK.get());
+        tag(PSBlockTags.RAW_WITHER_POOP_BLOCK)
+                .add(PSBlocks.RAW_POOP_BLOCK.get())
+                .add(PSBlocks.RAW_WITHER_POOP_BLOCK.get());
 
-        tag(PSBlockTags.POOP_BLOCKS)
-                .add(POOP_BLOCKS);
+        tag(PSBlockTags.POOP_BLOCKS).add(POOP_BLOCKS);
 
         tag(PSBlockTags.TOILET_BLOCKS)
                 .add(WOODEN_TOILETS)
@@ -40,7 +43,10 @@ public class PSBlockTagProvider extends BlockTagsProvider {
         tag(BlockTags.MOSS_REPLACEABLE)
                 .add(PSBlocks.POOP_BLOCK.get())
                 .add(PSBlocks.POOLIME_POOP_BLOCK.get())
-                .add(PSBlocks.CHILI_POOP_BLOCK.get());
+                .add(PSBlocks.CHILI_POOP_BLOCK.get())
+                .add(PSBlocks.RAW_POOP_BLOCK.get())
+                .add(PSBlocks.RAW_SAPING_POOP_BLOCK.get())
+                .add(PSBlocks.RAW_WITHER_POOP_BLOCK.get());
         tag(BlockTags.BEACON_BASE_BLOCKS)
                 .add(PSBlocks.POOP_BLOCK.get())
                 .add(PSBlocks.CHILI_POOP_BLOCK.get())
@@ -53,20 +59,34 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(PSBlocks.ROUNDWORM_VINES.get())
                 .add(PSBlocks.ROUNDWORM_VINES_PLANT.get());
 
-
         tag(BlockTags.DIRT)
                 .add(PSBlocks.POOP_BLOCK.get())
-                .add(PSBlocks.CHILI_POOP_BLOCK.get());
+                .add(PSBlocks.CHILI_POOP_BLOCK.get())
+                .add(PSBlocks.RAW_POOP_BLOCK.get())
+                .add(PSBlocks.RAW_SAPING_POOP_BLOCK.get())
+                .add(PSBlocks.RAW_WITHER_POOP_BLOCK.get());
         tag(BlockTags.SAND)
                 .add(PSBlocks.DRIED_POOP_BLOCK.get());
 
         tag(BlockTags.MUSHROOM_GROW_BLOCK)
                 .add(PSBlocks.POOP_BLOCK.get())
                 .add(PSBlocks.CHILI_POOP_BLOCK.get())
+                .add(PSBlocks.RAW_POOP_BLOCK.get())
+                .add(PSBlocks.RAW_SAPING_POOP_BLOCK.get())
+                .add(PSBlocks.RAW_WITHER_POOP_BLOCK.get())
                 .add(PSBlocks.POOP_LOG.get())
                 .add(PSBlocks.POOP_EMPTY_LOG.get())
                 .add(PSBlocks.STRIPPED_POOP_LOG.get())
                 .add(PSBlocks.STRIPPED_POOP_EMPTY_LOG.get());
+
+        tag(BlockTags.WALLS)
+                .add(PSBlocks.POOP_WALL.get())
+                .add(PSBlocks.CHILI_POOP_WALL.get())
+                .add(PSBlocks.GOLDEN_POOP_WALL.get())
+                .add(PSBlocks.DRIED_POOP_BLOCK_WALL.get())
+                .add(PSBlocks.SMOOTH_POOP_BLOCK_WALL.get())
+                .add(PSBlocks.CUT_POOP_BLOCK_WALL.get())
+                .add(PSBlocks.TILE_BLOCK_WALL.get());
         tag(BlockTags.FLOWERS)
                 .addTag(PSBlockTags.TOILET_BLOCKS)
                 .add(PSBlocks.POOP_LEAVES.get())
@@ -92,13 +112,6 @@ public class PSBlockTagProvider extends BlockTagsProvider {
 
         tag(BlockTags.FENCES).add(PSBlocks.POOP_FENCE.get());
         tag(BlockTags.FENCE_GATES).add(PSBlocks.POOP_FENCE_GATE.get());
-        tag(BlockTags.WALLS)
-                .add(PSBlocks.POOP_WALL.get())
-                .add(PSBlocks.CHILI_POOP_WALL.get())
-                .add(PSBlocks.DRIED_POOP_BLOCK_WALL.get())
-                .add(PSBlocks.SMOOTH_POOP_BLOCK_WALL.get())
-                .add(PSBlocks.CUT_POOP_BLOCK_WALL.get())
-                .add(PSBlocks.TILE_BLOCK_WALL.get());
 
         tag(BlockTags.MOB_INTERACTABLE_DOORS)
                 .add(PSBlocks.POOP_DOOR.get());
@@ -165,7 +178,12 @@ public class PSBlockTagProvider extends BlockTagsProvider {
             PSBlocks.CHILI_POOP_STAIRS.get(),
             PSBlocks.CHILI_POOP_SLAB.get(),
             PSBlocks.CHILI_POOP_VERTICAL_SLAB.get(),
-            PSBlocks.CHILI_POOP_WALL.get()
+            PSBlocks.CHILI_POOP_WALL.get(),
+            PSBlocks.GOLDEN_POOP_BLOCK.get(),
+            PSBlocks.GOLDEN_POOP_STAIRS.get(),
+            PSBlocks.GOLDEN_POOP_SLAB.get(),
+            PSBlocks.GOLDEN_POOP_VERTICAL_SLAB.get(),
+            PSBlocks.GOLDEN_POOP_WALL.get()
     };
     public static final Block[] HARDEN_POOP = {
             PSBlocks.POOP_BRICKS.get(),

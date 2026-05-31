@@ -4,10 +4,6 @@
     {
       "condition": "neoforge:loot_table_id",
       "loot_table_id": "minecraft:gameplay/fishing"
-    },
-    {
-      "chance": 0.5,
-      "condition": "minecraft:random_chance"
     }
   ],
   "table": "poopsky:fishing/seenae"
