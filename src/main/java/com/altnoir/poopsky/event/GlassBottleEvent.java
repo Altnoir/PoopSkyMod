@@ -62,11 +62,13 @@ public class GlassBottleEvent {
             BlockPos blockpos = blockhitresult.getBlockPos();
 
             if (blockhitresult.getType() == HitResult.Type.BLOCK && level.mayInteract(player, blockpos) && level.getFluidState(blockpos).is(PSFluids.POOP.get())) {
-                level.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
-                level.gameEvent(player, GameEvent.FLUID_PICKUP, blockpos);
+                if (!level.isClientSide) {
+                    level.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
+                    level.gameEvent(player, GameEvent.FLUID_PICKUP, blockpos);
 
-                ItemStack itemStack = ItemUtils.createFilledResult(stack, player, new ItemStack(PSItems.URINE_BOTTLE.get()));
-                player.setItemInHand(event.getHand(), itemStack);
+                    ItemStack itemStack = ItemUtils.createFilledResult(stack, player, new ItemStack(PSItems.URINE_BOTTLE.get()));
+                    player.setItemInHand(event.getHand(), itemStack);
+                }
 
                 event.setCancellationResult(InteractionResult.SUCCESS);
                 event.setCanceled(true);

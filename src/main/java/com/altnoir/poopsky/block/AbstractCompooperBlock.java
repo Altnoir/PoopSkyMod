@@ -184,8 +184,7 @@ public abstract class AbstractCompooperBlock extends Block {
 
     protected void setBlock(BlockState state, Level level, BlockPos pos, Player player, SoundEvent sound) {
         level.playSound(null, pos, sound, SoundSource.BLOCKS, 1.0F, 1.0F);
-        BlockState compooperBlock = PSBlocks.COMPOOPER.get().defaultBlockState();
-        level.setBlockAndUpdate(pos, compooperBlock);
+        level.setBlockAndUpdate(pos, state);
         level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, state));
     }
 

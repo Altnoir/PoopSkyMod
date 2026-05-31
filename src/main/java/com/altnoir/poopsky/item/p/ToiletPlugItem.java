@@ -17,11 +17,16 @@ public class ToiletPlugItem extends Item {
 
     @Override
     public @NotNull InteractionResult useOn(UseOnContext context) {
-        if (context.getLevel().isClientSide() || context.getPlayer() == null)
-            return super.useOn(context);
-
         var level = context.getLevel();
         var player = context.getPlayer();
+
+        if (player == null) {
+            return InteractionResult.PASS;
+        }
+
+        if (level.isClientSide()) {
+            return InteractionResult.SUCCESS;
+        }
         var pos = context.getClickedPos();
         var face = context.getClickedFace();
         var stack = context.getItemInHand();
@@ -51,6 +56,6 @@ public class ToiletPlugItem extends Item {
 
         if (!player.isCreative()) stack.shrink(1);
 
-        return super.useOn(context);
+        return InteractionResult.SUCCESS;
     }
 }
