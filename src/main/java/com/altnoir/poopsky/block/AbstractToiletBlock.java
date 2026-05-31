@@ -89,7 +89,11 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (!level.isClientSide && player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
+        if (!player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
+            return InteractionResult.PASS;
+        }
+
+        if (!level.isClientSide) {
             Entity entity;
             List<ToiletEntity> entities = level.getEntities(PSEntityType.TOILET.get(), new AABB(pos), toiletEntity -> true);
 
@@ -99,11 +103,8 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
                 entity = entities.getFirst();
             }
             player.startRiding(entity);
-
-            return InteractionResult.SUCCESS_NO_ITEM_USED;
-        }else {
-            return InteractionResult.PASS;
         }
+        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
     @Override
@@ -339,7 +340,9 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
         } else {
             connection = ToiletState.DEFAULT;
         }
-        level.setBlockAndUpdate(pos, state.setValue(CONNECTION, connection));
+        if (connection != state.getValue(CONNECTION)) {
+            level.setBlockAndUpdate(pos, state.setValue(CONNECTION, connection));
+        }
     }
 
     protected boolean hasHot(ServerLevel level, BlockPos pos) {

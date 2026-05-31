@@ -32,12 +32,13 @@ public class ToiletLinkerItem extends PSBaseItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
         var itemstack = player.getItemInHand(usedHand);
-        if (level.isClientSide && !player.isShiftKeyDown())
-            return super.use(level, player, usedHand);
+        if (!player.isShiftKeyDown()) {
+            return InteractionResultHolder.pass(itemstack);
+        }
 
         itemstack.set(PSComponents.TOILET_COMPONENT, ToiletComponent.EMPTY);
         player.displayClientMessage(Component.translatable("message.poopsky.toilet_linker.4").withStyle(style -> style.withColor(0xAA0000)), true);
-        return InteractionResultHolder.success(itemstack);
+        return InteractionResultHolder.sidedSuccess(itemstack, level.isClientSide);
     }
 
     @Override
@@ -107,8 +108,8 @@ public class ToiletLinkerItem extends PSBaseItem {
             toilet1.setChanged();
             toilet2.setChanged();
 
-            level1.getChunkSource().addRegionTicket(TicketType.PORTAL, new ChunkPos(pos2), 1, pos2);
-            level2.getChunkSource().addRegionTicket(TicketType.PORTAL, new ChunkPos(pos1), 1, pos1);
+            level1.getChunkSource().addRegionTicket(TicketType.PORTAL, new ChunkPos(pos1), 1, pos1);
+            level2.getChunkSource().addRegionTicket(TicketType.PORTAL, new ChunkPos(pos2), 1, pos2);
 
             var s1 = level1.getBlockState(pos1);
             var s2 = level2.getBlockState(pos2);
