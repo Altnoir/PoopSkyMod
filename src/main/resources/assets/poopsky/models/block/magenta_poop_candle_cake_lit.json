@@ -1,0 +1,10 @@
+{
+  "parent": "minecraft:block/template_cake_with_candle",
+  "textures": {
+    "bottom": "poopsky:block/poop_cake_bottom",
+    "candle": "minecraft:block/magenta_candle_lit",
+    "particle": "poopsky:block/poop_cake_side",
+    "side": "poopsky:block/poop_cake_side",
+    "top": "poopsky:block/poop_cake_top"
+  }
+}
