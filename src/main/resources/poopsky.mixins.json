@@ -10,6 +10,7 @@
     "VillagerMixin"
   ],
   "client": [
+    "GuiMixin"
   ],
   "injectors": {
     "defaultRequire": 1
