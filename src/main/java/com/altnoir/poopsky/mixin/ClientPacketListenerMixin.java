@@ -3,34 +3,24 @@ package com.altnoir.poopsky.mixin;
 import com.altnoir.poopsky.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.event.PSKeyBoardInput;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.network.chat.Component;
-import org.spongepowered.asm.mixin.Final;
+import net.minecraft.network.protocol.game.ClientboundSetPassengersPacket;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = ClientPacketListener.class)
 public class ClientPacketListenerMixin {
-    @Shadow
-    @Final
-    private Minecraft minecraft;
-
-    @Redirect(
-            method = "handleSetEntityPassengersPacket",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Gui;setOverlayMessage(Lnet/minecraft/network/chat/Component;Z)V")
-    )
-    private void poopsky$replaceToiletPlugDismountMessage(Gui gui, Component message, boolean animate) {
-        if (this.minecraft.player != null && this.minecraft.player.getVehicle() instanceof ToiletPlugEntity) {
-            gui.setOverlayMessage(Component.translatable(
+    @Inject(method = "handleSetEntityPassengersPacket", at = @At("TAIL"))
+    private void poopsky$replaceToiletPlugDismountMessage(ClientboundSetPassengersPacket packet, CallbackInfo ci) {
+        var minecraft = Minecraft.getInstance();
+        if (minecraft.player != null && minecraft.player.getVehicle() instanceof ToiletPlugEntity) {
+            minecraft.gui.setOverlayMessage(Component.translatable(
                     "message.poopsky.toilet_plug.dismount",
                     PSKeyBoardInput.DISMOUNT_PLUG_KEY.getTranslatedKeyMessage()
-            ), animate);
-            return;
+            ), false);
         }
-
-        gui.setOverlayMessage(message, animate);
     }
 }
