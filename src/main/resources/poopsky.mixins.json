@@ -10,7 +10,7 @@
     "VillagerMixin"
   ],
   "client": [
-    "GuiMixin"
+    "ClientPacketListenerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
