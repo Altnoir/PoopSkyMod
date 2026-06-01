@@ -19,6 +19,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.Map;
 import java.util.function.Supplier;
 
 public class PSBlocks {
@@ -28,11 +29,27 @@ public class PSBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(PoopSky.MOD_ID);
 
     public static final DeferredBlock<Block> POOP_CAKE = registerBlock("poop_cake",
-            () -> new PoopCakeBlock(BlockBehaviour.Properties.of()
-                    .forceSolidOn()
-                    .strength(0.5F)
-                    .sound(SoundType.WOOL)
-                    .pushReaction(PushReaction.DESTROY))
+            () -> new PoopCakeBlock(poopCakeProperties())
+    );
+
+    private static final Map<Block, DeferredBlock<Block>> POOP_CANDLE_CAKES = Map.ofEntries(
+            registerPoopCandleCake("poop_candle_cake", Blocks.CANDLE),
+            registerPoopCandleCake("white_poop_candle_cake", Blocks.WHITE_CANDLE),
+            registerPoopCandleCake("orange_poop_candle_cake", Blocks.ORANGE_CANDLE),
+            registerPoopCandleCake("magenta_poop_candle_cake", Blocks.MAGENTA_CANDLE),
+            registerPoopCandleCake("light_blue_poop_candle_cake", Blocks.LIGHT_BLUE_CANDLE),
+            registerPoopCandleCake("yellow_poop_candle_cake", Blocks.YELLOW_CANDLE),
+            registerPoopCandleCake("lime_poop_candle_cake", Blocks.LIME_CANDLE),
+            registerPoopCandleCake("pink_poop_candle_cake", Blocks.PINK_CANDLE),
+            registerPoopCandleCake("gray_poop_candle_cake", Blocks.GRAY_CANDLE),
+            registerPoopCandleCake("light_gray_poop_candle_cake", Blocks.LIGHT_GRAY_CANDLE),
+            registerPoopCandleCake("cyan_poop_candle_cake", Blocks.CYAN_CANDLE),
+            registerPoopCandleCake("purple_poop_candle_cake", Blocks.PURPLE_CANDLE),
+            registerPoopCandleCake("blue_poop_candle_cake", Blocks.BLUE_CANDLE),
+            registerPoopCandleCake("brown_poop_candle_cake", Blocks.BROWN_CANDLE),
+            registerPoopCandleCake("green_poop_candle_cake", Blocks.GREEN_CANDLE),
+            registerPoopCandleCake("red_poop_candle_cake", Blocks.RED_CANDLE),
+            registerPoopCandleCake("black_poop_candle_cake", Blocks.BLACK_CANDLE)
     );
 
     public static final DeferredBlock<Block> POOP_PIECE = registerBlock("poop_piece",
@@ -513,6 +530,31 @@ public class PSBlocks {
                             .pushReaction(PushReaction.DESTROY)
             )
     );
+
+    private static BlockBehaviour.Properties poopCakeProperties() {
+        return BlockBehaviour.Properties.of()
+                .forceSolidOn()
+                .strength(0.5F)
+                .sound(SoundType.WOOL)
+                .pushReaction(PushReaction.DESTROY);
+    }
+
+    private static Map.Entry<Block, DeferredBlock<Block>> registerPoopCandleCake(String name, Block candle) {
+        if (!(candle instanceof CandleBlock)) {
+            throw new IllegalArgumentException("Expected candle block: " + candle);
+        }
+
+        DeferredBlock<Block> candleCake = BLOCKS.register(name,
+                () -> new PoopCandleCakeBlock(candle, poopCakeProperties()
+                        .lightLevel(state -> state.getValue(PoopCandleCakeBlock.LIT) ? 3 : 0)));
+
+        return Map.entry(candle, candleCake);
+    }
+
+    public static BlockState getPoopCandleCake(CandleBlock candle) {
+        DeferredBlock<Block> candleCake = POOP_CANDLE_CAKES.get(candle);
+        return candleCake == null ? null : candleCake.get().defaultBlockState();
+    }
 
     public static boolean neverSuffocate(BlockState state, BlockGetter world, BlockPos pos) {
         return false;

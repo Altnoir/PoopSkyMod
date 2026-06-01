@@ -8,6 +8,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -38,6 +39,7 @@ public class PSItemGroups {
                 );
                 PSBlocks.BLOCKS.getEntries().stream()
                         .map(DeferredHolder::get)
+                        .filter(block -> block.asItem() != Items.AIR)
                         .filter(block -> !skip.contains(block))
                         .forEach(output::accept);
 
