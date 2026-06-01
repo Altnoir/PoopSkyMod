@@ -559,6 +559,10 @@ public class PSBlocks {
         return Map.entry(candle, candleCake);
     }
 
+    public static Map<Block, DeferredBlock<Block>> getPoopCandleCakes() {
+        return POOP_CANDLE_CAKES;
+    }
+
     public static BlockState getPoopCandleCake(CandleBlock candle) {
         DeferredBlock<Block> candleCake = POOP_CANDLE_CAKES.get(candle);
         return candleCake == null ? null : candleCake.get().defaultBlockState();

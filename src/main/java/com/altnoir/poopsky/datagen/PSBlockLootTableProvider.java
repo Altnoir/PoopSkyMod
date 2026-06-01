@@ -18,6 +18,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -125,6 +126,8 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(PSBlocks.RAW_WITHER_POOP_BLOCK.get());
 
         dropSelf(PSBlocks.POOP_CAKE.get());
+        PSBlocks.getPoopCandleCakes().forEach((candle, candleCake) ->
+                this.add(candleCake.get(), createCandleCakeDrops(candle)));
         dropSelf(PSBlocks.POOLIME_BLOCK.get());
         dropSelf(PSBlocks.POOLIME_POOP_BLOCK.get());
         dropSelf(PSBlocks.STOOL.get());

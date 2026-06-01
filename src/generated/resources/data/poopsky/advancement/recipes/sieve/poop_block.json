@@ -3,15 +3,15 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "poopsky:sieve/sand_to_gems"
+        "recipe": "poopsky:sieve/poop_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "sand": {
+    "sieve_block": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:sand"
+            "items": "poopsky:sieve_block"
           }
         ]
       },
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "sand"
+      "sieve_block"
     ]
   ],
   "rewards": {
     "recipes": [
-      "poopsky:sieve/sand_to_gems"
+      "poopsky:sieve/poop_block"
     ]
   }
 }

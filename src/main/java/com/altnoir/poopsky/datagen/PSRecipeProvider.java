@@ -460,15 +460,15 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
     }
 
     private void buildSieveRecipes(RecipeOutput recipeOutput) {
-        SieveRecipeBuilder.sieve(Items.SAND, 200)
+        SieveRecipeBuilder.sieve(PSBlocks.POOP_BLOCK.asItem(), 200)
+                .addOutput(Items.IRON_NUGGET, 5)
+                .addOutput(Items.GOLD_NUGGET, 2, 0.9F)
                 .addOutput(Items.LAPIS_LAZULI, 1, 0.55F)
                 .addOutput(Items.REDSTONE, 2, 0.50F)
                 .addOutput(Items.EMERALD, 1, 0.15F)
                 .addOutput(Items.DIAMOND, 1, 0.12F)
-                .addOutput(Items.IRON_NUGGET, 3)
-                .addOutput(Items.GOLD_NUGGET, 2, 0.9F)
-                .unlockedBy(getItemName(Items.SAND), has(Items.SAND))
-                .save(recipeOutput, "sand_to_gems");
+                .unlockedBy(getItemName(PSBlocks.SIEVE_BLOCK.get()), has(PSBlocks.SIEVE_BLOCK.get()))
+                .save(recipeOutput, "poop_block");
     }
 
     private void toiletRecipes(RecipeOutput recipeOutput, ItemLike toilet, ItemLike block) {

@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "poopsky:poop_cake"
+          "name": "minecraft:light_blue_candle"
         }
       ],
       "rolls": 1.0

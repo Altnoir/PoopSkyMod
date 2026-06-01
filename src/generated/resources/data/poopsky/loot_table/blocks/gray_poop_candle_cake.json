@@ -6,11 +6,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "poopsky:poop_cake"
+          "name": "minecraft:gray_candle"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "poopsky:blocks/blue_poop_candle_cake"
+  "random_sequence": "poopsky:blocks/gray_poop_candle_cake"
 }
