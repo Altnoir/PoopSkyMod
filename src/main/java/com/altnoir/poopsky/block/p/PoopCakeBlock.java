@@ -3,6 +3,7 @@ package com.altnoir.poopsky.block.p;
 import com.altnoir.poopsky.particle.PSParticles;
 import com.altnoir.poopsky.block.PSBlocks;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -10,6 +11,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
@@ -84,15 +86,16 @@ public class PoopCakeBlock extends CakeBlock {
                         3.0
                 );
             }
-            player.addEffect(new MobEffectInstance(MobEffects.LUCK, 1800, 1), player);
-            player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 100, 0), player);
-            player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20, 0), player);
-            player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 60, 0), player);
+
+            addOrExtendEffect(player, MobEffects.LUCK, 1800, 1);
+            addOrExtendEffect(player, MobEffects.CONFUSION, 100, 0);
+            addOrExtendEffect(player, MobEffects.BLINDNESS, 20, 0);
+            addOrExtendEffect(player, MobEffects.DARKNESS, 60, 0);
 
             int i = state.getValue(BITES);
             level.gameEvent(player, GameEvent.EAT, pos);
             if (i < 6) {
-                level.setBlock(pos, state.setValue(BITES, Integer.valueOf(i + 1)), 3);
+                level.setBlock(pos, state.setValue(BITES, i + 1), 3);
             } else {
                 level.removeBlock(pos, false);
                 level.gameEvent(player, GameEvent.BLOCK_DESTROY, pos);
@@ -100,5 +103,23 @@ public class PoopCakeBlock extends CakeBlock {
 
             return InteractionResult.SUCCESS;
         }
+    }
+
+    private static void addOrExtendEffect(Player player, Holder<MobEffect> effect, int duration, int amplifier) {
+    MobEffectInstance current = player.getEffect(effect);
+
+        if (current == null) {
+            player.addEffect(new MobEffectInstance(effect, duration, amplifier), player);
+            return;
+        }
+
+        player.addEffect(new MobEffectInstance(
+                effect,
+                current.getDuration() + duration,
+                Math.max(current.getAmplifier(), amplifier),
+                current.isAmbient(),
+                current.isVisible(),
+                current.showIcon()
+        ), player);
     }
 }

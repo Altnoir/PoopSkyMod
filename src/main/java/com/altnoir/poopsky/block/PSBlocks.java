@@ -31,6 +31,7 @@ public class PSBlocks {
     public static final DeferredBlock<Block> POOP_CAKE = registerBlock("poop_cake",
             () -> new PoopCakeBlock(poopCakeProperties())
     );
+
     private static final Map<Block, DeferredBlock<Block>> POOP_CANDLE_CAKES = Map.ofEntries(
             registerPoopCandleCake("poop_candle_cake", Blocks.CANDLE),
             registerPoopCandleCake("white_poop_candle_cake", Blocks.WHITE_CANDLE),
@@ -539,8 +540,14 @@ public class PSBlocks {
     }
 
     private static Map.Entry<Block, DeferredBlock<Block>> registerPoopCandleCake(String name, Block candle) {
-        DeferredBlock<Block> candleCake = BLOCKS.register(name, () -> new PoopCandleCakeBlock(candle, poopCakeProperties()
-                .lightLevel(state -> state.getValue(PoopCandleCakeBlock.LIT) ? 3 : 0)));
+        if (!(candle instanceof CandleBlock)) {
+            throw new IllegalArgumentException("Expected candle block: " + candle);
+        }
+
+        DeferredBlock<Block> candleCake = BLOCKS.register(name,
+                () -> new PoopCandleCakeBlock(candle, poopCakeProperties()
+                        .lightLevel(state -> state.getValue(PoopCandleCakeBlock.LIT) ? 3 : 0)));
+
         return Map.entry(candle, candleCake);
     }
 
