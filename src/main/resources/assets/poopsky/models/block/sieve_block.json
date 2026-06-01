@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/scaffolding_stable",
+  "render_type": "cutout",
+  "textures": {
+    "top": "poopsky:block/sieve_top",
+    "side": "poopsky:block/sieve_side",
+    "bottom": "poopsky:block/sieve_bottom"
+  }
+}

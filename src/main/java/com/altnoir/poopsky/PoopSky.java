@@ -183,4 +183,8 @@ public class PoopSky {
             }, PSFluidTypes.POOP_FLUID_TYPE.get());
         }
     }
+
+    public static ResourceLocation loc(String path) {
+        return ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, path);
+    }
 }

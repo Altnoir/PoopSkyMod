@@ -18,7 +18,7 @@ public class PSPlacedFeatures {
     }
 
     private static ResourceKey<PlacedFeature> resourceKey(String name) {
-        return ResourceKey.create(Registries.PLACED_FEATURE, ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, name));
+        return ResourceKey.create(Registries.PLACED_FEATURE, PoopSky.loc(name));
     }
     private static void register(BootstrapContext<PlacedFeature> context, ResourceKey<PlacedFeature> key, Holder<ConfiguredFeature<?, ?>> configuration, List<PlacementModifier> modifiers) {
         context.register(key, new PlacedFeature(configuration, List.copyOf(modifiers)));

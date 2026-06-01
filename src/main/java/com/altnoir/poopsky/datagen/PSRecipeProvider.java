@@ -4,6 +4,7 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.block.ToiletBlocks;
 import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.recipe.SieveRecipeBuilder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
@@ -454,6 +455,20 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .requires(ToiletBlocks.BLUE_CONCRETE_TOILET)
                 .unlockedBy(getItemName(PSItems.POOP), has(PSItems.POOP.get()))
                 .save(recipeOutput);
+
+        buildSieveRecipes(recipeOutput);
+    }
+
+    private void buildSieveRecipes(RecipeOutput recipeOutput) {
+        SieveRecipeBuilder.sieve(Items.SAND, 200)
+                .addOutput(Items.LAPIS_LAZULI, 1, 0.55F)
+                .addOutput(Items.REDSTONE, 2, 0.50F)
+                .addOutput(Items.EMERALD, 1, 0.15F)
+                .addOutput(Items.DIAMOND, 1, 0.12F)
+                .addOutput(Items.IRON_NUGGET, 3)
+                .addOutput(Items.GOLD_NUGGET, 2, 0.9F)
+                .unlockedBy(getItemName(Items.SAND), has(Items.SAND))
+                .save(recipeOutput, "sand_to_gems");
     }
 
     private void toiletRecipes(RecipeOutput recipeOutput, ItemLike toilet, ItemLike block) {

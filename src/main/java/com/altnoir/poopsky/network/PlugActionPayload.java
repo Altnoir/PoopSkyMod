@@ -17,7 +17,7 @@ import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record PlugActionPayload() implements CustomPacketPayload {
-    public static final CustomPacketPayload.Type<PlugActionPayload> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, "use_plug"));
+    public static final CustomPacketPayload.Type<PlugActionPayload> TYPE = new CustomPacketPayload.Type<>(PoopSky.loc("use_plug"));
     public static final StreamCodec<FriendlyByteBuf, PlugActionPayload> CODEC = StreamCodec.unit(new PlugActionPayload());
 
     public static void handle(final PlugActionPayload payload, final IPayloadContext context) {

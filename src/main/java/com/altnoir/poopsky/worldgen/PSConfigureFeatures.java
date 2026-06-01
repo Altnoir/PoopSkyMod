@@ -176,7 +176,7 @@ public class PSConfigureFeatures {
     }
 
     public static ResourceKey<ConfiguredFeature<?, ?>> resourceKey(String name) {
-        return ResourceKey.create(Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, name));
+        return ResourceKey.create(Registries.CONFIGURED_FEATURE, PoopSky.loc(name));
     }
 
     private static <FC extends FeatureConfiguration, F extends Feature<FC>> void register(BootstrapContext<ConfiguredFeature<?, ?>> context, ResourceKey<ConfiguredFeature<?, ?>> key, F feature, FC configuration) {

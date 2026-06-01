@@ -28,11 +28,11 @@ public class PSSoundEvents {
     public static final ResourceKey<JukeboxSong> MOON_BOWL_KEY = registerJukeboxSong("moon_bowl");
 
     public static ResourceKey<JukeboxSong> registerJukeboxSong(String name) {
-        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, name);
+        ResourceLocation id = PoopSky.loc(name);
         return ResourceKey.create(Registries.JUKEBOX_SONG, id);
     }
     public static Supplier<SoundEvent> registerSoundEvent(String name) {
-        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, name);
+        ResourceLocation id = PoopSky.loc(name);
         return SOUND_EVENT.register(name, () -> SoundEvent.createVariableRangeEvent(id));
     }
     public static void register(IEventBus eventBus) {

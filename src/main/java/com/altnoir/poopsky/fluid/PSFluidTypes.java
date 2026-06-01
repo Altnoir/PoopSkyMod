@@ -22,8 +22,8 @@ import java.util.function.Supplier;
 public class PSFluidTypes {
     public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, PoopSky.MOD_ID);
 
-    public static final ResourceLocation POOP_STILL_TEXTURE = ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, "block/poop_liquid");
-    public static final ResourceLocation POOP_FLOWING_TEXTURE = ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, "block/poop_liquid_flowing");
+    public static final ResourceLocation POOP_STILL_TEXTURE = PoopSky.loc("block/poop_liquid");
+    public static final ResourceLocation POOP_FLOWING_TEXTURE = PoopSky.loc("block/poop_liquid_flowing");
 
     public static final Supplier<FluidType> POOP_FLUID_TYPE = FLUID_TYPES.register("poop",
             () -> new FluidType(FluidType.Properties.create()

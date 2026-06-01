@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class FlyModel<T extends FlyEntity> extends AgeableListModel<T> {
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, "fly"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(PoopSky.loc("fly"), "main");
 
     private static final float BEE_Y_BASE = 19.0F;
     private static final String BONE = "bone";

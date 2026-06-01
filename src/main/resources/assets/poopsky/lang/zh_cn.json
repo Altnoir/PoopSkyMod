@@ -123,6 +123,7 @@
   "block.poopsky.lava_compooper": "装有熔岩的堆粪桶",
   "block.poopsky.power_snow_compooper": "装有细雪的堆粪桶",
   "block.poopsky.urine_compooper": "装有粪的堆粪桶",
+  "block.poopsky.sieve_block": "筛架",
 
   "item.poopsky.dragon_breath_chili": "龙息辣椒",
   "item.poopsky.roundworm": "蛔虫",
@@ -208,6 +209,7 @@
 
   "tag.item.poopsky.compooper_saplings": "堆粪桶可产出树苗",
   "jei.category.poopsky.compooper": "堆粪桶",
+  "jei.category.poopsky.sieve": "筛架",
 
   "stat.poopsky.poop_stat": "拉屎数",
   "itemgroup.poopsky": "空中厕所"

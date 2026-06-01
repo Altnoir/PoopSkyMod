@@ -19,7 +19,7 @@ public record PlugInputPayload(
         boolean fast
 ) implements CustomPacketPayload {
     public static final CustomPacketPayload.Type<PlugInputPayload> TYPE = new CustomPacketPayload.Type<>(
-            ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, "plug_input")
+            PoopSky.loc("plug_input")
     );
     public static final StreamCodec<FriendlyByteBuf, PlugInputPayload> CODEC = StreamCodec.of(
             PlugInputPayload::encode,

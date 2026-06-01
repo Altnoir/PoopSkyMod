@@ -16,6 +16,6 @@ public class PSBlockTags {
     public static final TagKey<Block> CONVERTABLE_TO_MOSS = create("convertable_to_moss");
 
     private static TagKey<Block> create(String name) {
-        return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, name));
+        return TagKey.create(Registries.BLOCK, PoopSky.loc(name));
     }
 }

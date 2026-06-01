@@ -16,7 +16,7 @@ import java.util.function.BiConsumer;
 
 public class PSFishingLootProvider implements LootTableSubProvider {
     public static final ResourceKey<LootTable> FISHING_SENNAE = ResourceKey.create(Registries.LOOT_TABLE,
-            ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, "fishing/seenae"));
+            PoopSky.loc("fishing/seenae"));
     private final HolderLookup.Provider registries;
 
     public PSFishingLootProvider(HolderLookup.Provider registries) {

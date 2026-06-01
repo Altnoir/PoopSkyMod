@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class ToiletPlugModel<T extends ToiletPlugEntity> extends EntityModel<T> {
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, "toilet_plug"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(PoopSky.loc("toilet_plug"), "main");
     private final ModelPart plug;
 
     public ToiletPlugModel(ModelPart root) {

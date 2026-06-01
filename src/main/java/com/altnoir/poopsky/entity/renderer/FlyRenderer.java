@@ -17,6 +17,6 @@ public class FlyRenderer extends MobRenderer<FlyEntity, FlyModel<FlyEntity>> {
 
     @Override
     public ResourceLocation getTextureLocation(FlyEntity entity) {
-        return ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, "textures/entity/fly.png");
+        return PoopSky.loc("textures/entity/fly.png");
     }
 }

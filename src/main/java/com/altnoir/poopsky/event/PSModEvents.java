@@ -1,6 +1,8 @@
 package com.altnoir.poopsky.event;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.block.PSBlockEntities;
+import com.altnoir.poopsky.block.entity.renderer.SieveBlockEntityRenderer;
 import com.altnoir.poopsky.entity.PSEntityType;
 import com.altnoir.poopsky.entity.model.FlyModel;
 import com.altnoir.poopsky.entity.model.ToiletPlugModel;
@@ -12,6 +14,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.EntityMountEvent;
@@ -23,6 +27,11 @@ public class PSModEvents {
     public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(ToiletPlugModel.LAYER_LOCATION, ToiletPlugModel::createBodyLayer);
         event.registerLayerDefinition(FlyModel.LAYER_LOCATION, FlyModel::createBodyLayer);
+    }
+
+    @SubscribeEvent
+    public static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerBlockEntityRenderer(PSBlockEntities.SIEVE_BLOCK_ENTITY.get(), SieveBlockEntityRenderer::new);
     }
 
     @SubscribeEvent
@@ -45,5 +54,19 @@ public class PSModEvents {
                 event.getEntity() instanceof Player player && player.isShiftKeyDown()) {
             event.setCanceled(true);
         }
+    }
+
+    @SubscribeEvent
+    public static void register(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                PSBlockEntities.SIEVE_BLOCK_ENTITY.get(),
+                (blockEntity, direction) -> {
+                    if (direction == null || direction == net.minecraft.core.Direction.DOWN) {
+                        return blockEntity.getBottomHandler();
+                    }
+                    return blockEntity.getTopSideHandler();
+                }
+        );
     }
 }

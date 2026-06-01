@@ -207,7 +207,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
     private ConfiguredModel[] states(BlockState state, CropBlock cropBlock, String model, String texture) {
         ConfiguredModel[] models = new ConfiguredModel[1];
         models[0] = new ConfiguredModel(models().crop(model + state.getValue(CropBlock.AGE),
-                ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, "block/" + texture + state.getValue(CropBlock.AGE))).renderType("cutout"));
+                PoopSky.loc("block/" + texture + state.getValue(CropBlock.AGE))).renderType("cutout"));
         return models;
     }
 

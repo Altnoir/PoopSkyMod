@@ -328,7 +328,7 @@ public class PSBlocks {
             () -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(TILE_BLOCK.get()))
     );
 
-    public static final DeferredBlock<Block> COMPOOPER = registerBlock("compooper",
+    public static final DeferredBlock<Block> COMPOOPER = registerDefaultBlock("compooper",
             () -> new CompooperBlock(BlockBehaviour.Properties.of()
                     .noOcclusion()
                     .mapColor(MapColor.COLOR_BROWN)
@@ -338,18 +338,26 @@ public class PSBlocks {
                     .sound(SoundType.METAL)
             )
     );
-    public static final DeferredBlock<Block> WATER_COMPOOPER = registerBlock("water_compooper",
+    public static final DeferredBlock<Block> WATER_COMPOOPER = registerDefaultBlock("water_compooper",
             () -> new WaterCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()))
     );
-    public static final DeferredBlock<Block> LAVA_COMPOOPER = registerBlock("lava_compooper",
+    public static final DeferredBlock<Block> LAVA_COMPOOPER = registerDefaultBlock("lava_compooper",
             () -> new LavaCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()).lightLevel(state -> 15))
     );
-    public static final DeferredBlock<Block> POWER_SNOW_COMPOOPER = registerBlock("power_snow_compooper",
+    public static final DeferredBlock<Block> POWER_SNOW_COMPOOPER = registerDefaultBlock("power_snow_compooper",
             () -> new PowerSnowCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()))
     );
-    public static final DeferredBlock<Block> URINE_COMPOOPER = registerBlock("urine_compooper",
+    public static final DeferredBlock<Block> URINE_COMPOOPER = registerDefaultBlock("urine_compooper",
             () -> new UrineCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()).randomTicks())
     );
+
+    public static final DeferredBlock<SieveBlock> SIEVE_BLOCK = registerDefaultBlock("sieve_block",
+            () -> new SieveBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.SAND)
+                    .strength(1.5f, 3.0f)
+                    .sound(SoundType.SCAFFOLDING)
+                    .isValidSpawn(Blocks::never)
+                    .noOcclusion()));
 
     public static final DeferredBlock<Block> RAW_POOP_BLOCK = registerBlock("raw_poop_block",
             () -> new Block(BlockBehaviour.Properties.of()

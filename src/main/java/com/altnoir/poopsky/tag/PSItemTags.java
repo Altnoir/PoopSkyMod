@@ -14,7 +14,7 @@ public class PSItemTags {
     public static final TagKey<Item> PASTA = tag("foods/pasta");
 
     private static TagKey<Item> create(String name) {
-        return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, name));
+        return TagKey.create(Registries.ITEM, PoopSky.loc(name));
     }
     private static TagKey<Item> tag(String name) {
         return ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", name));

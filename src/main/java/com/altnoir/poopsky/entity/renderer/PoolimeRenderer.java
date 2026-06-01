@@ -21,7 +21,7 @@ public class PoolimeRenderer extends MobRenderer<PoolimeEntity, SlimeModel<Pooli
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(@NotNull PoolimeEntity entity) {
-        return ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, "textures/entity/poolime.png");
+        return PoopSky.loc("textures/entity/poolime.png");
     }
 
     @Override

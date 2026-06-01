@@ -23,7 +23,7 @@ public class ToiletPlugRenderer extends EntityRenderer<ToiletPlugEntity> {
 
     @Override
     public ResourceLocation getTextureLocation(ToiletPlugEntity entity) {
-        return ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, "textures/entity/toilet_plug.png");
+        return PoopSky.loc("textures/entity/toilet_plug.png");
     }
 
     @Override

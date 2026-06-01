@@ -64,6 +64,6 @@ public class PSItemModelProvider extends ItemModelProvider {
 
     private void wallItem(DeferredBlock<?>block, DeferredBlock<?> baseBlock) {
         this.withExistingParent(block.getId().getPath(), mcLoc("block/wall_inventory"))
-                .texture("wall", ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, "block/" + baseBlock.getId().getPath()));
+                .texture("wall", PoopSky.loc("block/" + baseBlock.getId().getPath()));
     }
 }

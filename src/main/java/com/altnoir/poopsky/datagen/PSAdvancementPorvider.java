@@ -35,7 +35,7 @@ public class PSAdvancementPorvider extends AdvancementProvider {
                             ToiletBlocks.OAK_TOILET.get(),
                             Component.translatable("advancements.poopsky.root.title"),
                             Component.translatable("advancements.poopsky.root.description"),
-                            ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, "textures/block/poop_block.png"),
+                            PoopSky.loc("textures/block/poop_block.png"),
                             AdvancementType.TASK,
                             true,
                             true,
@@ -92,7 +92,7 @@ public class PSAdvancementPorvider extends AdvancementProvider {
         }
 
         private ResourceLocation modId(String path) {
-            return ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, path);
+            return PoopSky.loc(path);
         }
     }
 }

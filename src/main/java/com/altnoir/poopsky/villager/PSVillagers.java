@@ -100,6 +100,6 @@ public class PSVillagers {
     }
 
     private static ResourceKey<PoiType> registryPoiKey(String name) {
-        return ResourceKey.create(BuiltInRegistries.POINT_OF_INTEREST_TYPE.key(), ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, name));
+        return ResourceKey.create(BuiltInRegistries.POINT_OF_INTEREST_TYPE.key(), PoopSky.loc(name));
     }
 }

@@ -123,6 +123,7 @@
   "block.poopsky.lava_compooper": "Lava Compooper",
   "block.poopsky.power_snow_compooper": "Power Snow Compooper",
   "block.poopsky.urine_compooper": "Urine Compooper",
+  "block.poopsky.sieve_block": "Sieve Block",
 
   "item.poopsky.dragon_breath_chili": "Dragon Breath Chili",
   "item.poopsky.roundworm": "Roundworm",
@@ -208,6 +209,7 @@
 
   "tag.item.poopsky.compooper_saplings": "Compooper Saplings",
   "jei.category.poopsky.compooper": "Compooper",
+  "jei.category.poopsky.sieve": "Sieve",
 
   "stat.poopsky.poop_stat": "Poop Stat",
   "itemgroup.poopsky": "POOPSKY"
