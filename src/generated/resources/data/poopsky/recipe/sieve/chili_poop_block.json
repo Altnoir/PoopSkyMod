@@ -21,7 +21,7 @@
     {
       "chance": 0.75,
       "item": {
-        "count": 1,
+        "count": 2,
         "id": "minecraft:nether_wart"
       }
     },

@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "poopsky:sieve_block"
+          "name": "poopsky:sieve_stable"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "poopsky:blocks/sieve_block"
+  "random_sequence": "poopsky:blocks/sieve_stable"
 }

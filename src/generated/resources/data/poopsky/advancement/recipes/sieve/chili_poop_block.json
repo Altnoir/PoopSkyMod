@@ -7,11 +7,11 @@
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "sieve_block": {
+    "sieve_stable": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:sieve_block"
+            "items": "poopsky:sieve_stable"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "sieve_block"
+      "sieve_stable"
     ]
   ],
   "rewards": {

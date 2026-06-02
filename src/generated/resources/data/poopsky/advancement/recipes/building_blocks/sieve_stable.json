@@ -3,15 +3,15 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "poopsky:sieve/raw_wither_poop_block"
+        "recipe": "poopsky:sieve_stable"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "sieve_stable": {
+    "mossy_cobblestone_wall": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:sieve_stable"
+            "items": "minecraft:mossy_cobblestone_wall"
           }
         ]
       },
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "sieve_stable"
+      "mossy_cobblestone_wall"
     ]
   ],
   "rewards": {
     "recipes": [
-      "poopsky:sieve/raw_wither_poop_block"
+      "poopsky:sieve_stable"
     ]
   }
 }
