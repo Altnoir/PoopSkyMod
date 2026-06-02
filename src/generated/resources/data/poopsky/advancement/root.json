@@ -1,6 +1,6 @@
 {
   "criteria": {
-    "join_skyblock_world": {
+    "join_poopsky": {
       "conditions": {
         "items": [
           {
@@ -26,7 +26,7 @@
   },
   "requirements": [
     [
-      "join_skyblock_world"
+      "join_poopsky"
     ]
   ],
   "sends_telemetry_event": true

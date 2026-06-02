@@ -5,16 +5,22 @@ import com.altnoir.poopsky.recipe.PSRecipes;
 import com.altnoir.poopsky.recipe.SieveRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Containers;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
@@ -92,6 +98,7 @@ public class SieveBlockEntity extends BlockEntity {
         ItemStack toInsert = stack.copyWithCount(1);
         ItemStack remainder = itemHandler.insertItem(INPUT_SLOT, toInsert, false);
         if (remainder.isEmpty()) {
+            playInsertEffects(toInsert);
             resetProgress();
             return true;
         }
@@ -100,6 +107,8 @@ public class SieveBlockEntity extends BlockEntity {
 
     public void progressManually(Player player) {
         if (level == null || level.isClientSide) return;
+
+        playManualProgressSound();
         advanceProgress(MANUAL_PROGRESS_PER_CLICK, false);
     }
 
@@ -123,6 +132,7 @@ public class SieveBlockEntity extends BlockEntity {
         if (recipeOpt.isEmpty()) return;
 
         SieveRecipe recipe = recipeOpt.get();
+        playCompletionEffects(input);
         consumeInputForRecipe();
 
         for (ItemStack output : recipe.rollOutputs(level.random)) {
@@ -165,6 +175,63 @@ public class SieveBlockEntity extends BlockEntity {
 
     private boolean hasRecipe(ItemStack stack) {
         return findRecipe(stack).isPresent();
+    }
+
+    private void playInsertEffects(ItemStack stack) {
+        BlockState blockState = getInputBlockState(stack);
+        if (blockState == null || level == null) {
+            return;
+        }
+
+        SoundType soundType = blockState.getSoundType(level, worldPosition, null);
+        level.playSound(null, worldPosition, soundType.getPlaceSound(), SoundSource.BLOCKS, 1.0F, soundType.getPitch());
+    }
+
+    private void playManualProgressSound() {
+        if (level == null) {
+            return;
+        }
+
+        BlockState blockState = getInputBlockState(itemHandler.getStackInSlot(INPUT_SLOT));
+        if (blockState == null) {
+            return;
+        }
+
+        SoundType soundType = blockState.getSoundType(level, worldPosition, null);
+        level.playSound(null, worldPosition, soundType.getHitSound(), SoundSource.BLOCKS, 0.5F, soundType.getPitch());
+    }
+
+    private void playCompletionEffects(ItemStack stack) {
+        BlockState blockState = getInputBlockState(stack);
+        if (blockState == null || level == null) {
+            return;
+        }
+
+        SoundType soundType = blockState.getSoundType(level, worldPosition, null);
+        level.playSound(null, worldPosition, soundType.getBreakSound(), SoundSource.BLOCKS, 1.0F, soundType.getPitch());
+
+        if (level instanceof ServerLevel serverLevel) {
+            serverLevel.sendParticles(
+                    new BlockParticleOption(ParticleTypes.BLOCK, blockState),
+                    worldPosition.getX() + 0.5D,
+                    worldPosition.getY() + 0.75D,
+                    worldPosition.getZ() + 0.5D,
+                    12,
+                    0.2D,
+                    0.2D,
+                    0.2D,
+                    0.05D
+            );
+        }
+    }
+
+    @Nullable
+    private BlockState getInputBlockState(ItemStack stack) {
+        if (!(stack.getItem() instanceof BlockItem blockItem)) {
+            return null;
+        }
+
+        return blockItem.getBlock().defaultBlockState();
     }
 
     private Optional<SieveRecipe> findRecipe(ItemStack stack) {

@@ -1,32 +1,32 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_poop": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:sieve/raw_poop_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "sieve_block": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:poop"
+            "items": "poopsky:sieve_block"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
-    },
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "poopsky:poop_cocoa_beans"
-      },
-      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
       "has_the_recipe",
-      "has_poop"
+      "sieve_block"
     ]
   ],
   "rewards": {
     "recipes": [
-      "poopsky:poop_cocoa_beans"
+      "poopsky:sieve/raw_poop_block"
     ]
   }
 }

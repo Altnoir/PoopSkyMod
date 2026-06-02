@@ -1,0 +1,51 @@
+{
+  "type": "poopsky:sieve",
+  "input": {
+    "item": "poopsky:raw_saping_poop_block"
+  },
+  "outputs": [
+    {
+      "chance": 1.0,
+      "item": {
+        "count": 1,
+        "id": "minecraft:sunflower"
+      }
+    },
+    {
+      "chance": 1.0,
+      "item": {
+        "count": 1,
+        "id": "minecraft:lilac"
+      }
+    },
+    {
+      "chance": 1.0,
+      "item": {
+        "count": 1,
+        "id": "minecraft:rose_bush"
+      }
+    },
+    {
+      "chance": 1.0,
+      "item": {
+        "count": 1,
+        "id": "minecraft:peony"
+      }
+    },
+    {
+      "chance": 0.5,
+      "item": {
+        "count": 1,
+        "id": "minecraft:small_dripleaf"
+      }
+    },
+    {
+      "chance": 0.1,
+      "item": {
+        "count": 1,
+        "id": "minecraft:sniffer_egg"
+      }
+    }
+  ],
+  "processingTime": 100
+}

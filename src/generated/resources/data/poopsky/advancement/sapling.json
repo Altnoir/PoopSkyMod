@@ -1,11 +1,11 @@
 {
-  "parent": "poopsky:root",
+  "parent": "poopsky:compooer",
   "criteria": {
-    "poop_sapling": {
+    "sapling": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:poop_sapling"
+            "items": "poopsky:saping_poop_ball"
           }
         ]
       },
@@ -18,7 +18,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "poopsky:poop_sapling"
+      "id": "poopsky:saping_poop_ball"
     },
     "title": {
       "translate": "advancements.poopsky.sapling.title"
@@ -26,7 +26,7 @@
   },
   "requirements": [
     [
-      "poop_sapling"
+      "sapling"
     ]
   ],
   "sends_telemetry_event": true

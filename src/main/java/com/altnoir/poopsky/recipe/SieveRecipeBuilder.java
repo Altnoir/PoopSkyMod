@@ -43,15 +43,20 @@ public final class SieveRecipeBuilder implements RecipeBuilder {
         return new SieveRecipeBuilder(input, processingTime);
     }
 
-    public SieveRecipeBuilder addOutput(ItemLike item, int count) {
-        return addOutput(new ItemStack(item, count), 1.0F);
-    }
-    public SieveRecipeBuilder addOutput(ItemLike item, int count, float chance) {
-        return addOutput(new ItemStack(item, count), chance);
+    public SieveRecipeBuilder addOutput(ItemLike item) {
+        return addOutput(item, 1);
     }
 
-    public SieveRecipeBuilder addOutput(ItemStack stack, float chance) {
-        this.outputs.add(new SieveRecipe.ChanceItemStack(stack.copy(), chance));
+    public SieveRecipeBuilder addOutput(ItemLike item, float chance) {
+        return addOutput(item,1, chance);
+    }
+
+    public SieveRecipeBuilder addOutput(ItemLike item, int count) {
+        return addOutput(item, count,1.0F);
+    }
+
+    public SieveRecipeBuilder addOutput(ItemLike item,int count, float chance) {
+        this.outputs.add(new SieveRecipe.ChanceItemStack(new ItemStack(item, count), chance));
         return this;
     }
 

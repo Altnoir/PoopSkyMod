@@ -1,36 +1,30 @@
 {
   "type": "poopsky:sieve",
   "input": {
-    "item": "poopsky:poop_block"
+    "item": "poopsky:golden_poop_block"
   },
   "outputs": [
     {
       "chance": 1.0,
       "item": {
         "count": 8,
-        "id": "minecraft:iron_nugget"
+        "id": "minecraft:gold_nugget"
       }
     },
     {
       "chance": 0.75,
       "item": {
         "count": 8,
-        "id": "minecraft:iron_nugget"
-      }
-    },
-    {
-      "chance": 0.5,
-      "item": {
-        "count": 8,
-        "id": "minecraft:iron_nugget"
+        "id": "minecraft:gold_nugget"
       }
     },
     {
       "chance": 0.5,
       "item": {
         "count": 1,
-        "id": "minecraft:raw_iron"
+        "id": "minecraft:raw_gold"
       }
     }
-  ]
+  ],
+  "processingTime": 300
 }
