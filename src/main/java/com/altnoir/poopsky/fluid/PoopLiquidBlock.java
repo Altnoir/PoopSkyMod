@@ -67,7 +67,11 @@ public class PoopLiquidBlock extends LiquidBlock {
         BlockPos neighborPos = getLiquidNeighborPos(level, pos, liquid);
         if (neighborPos != null) {
             level.levelEvent(1501, pos, 0);
-            level.setBlockAndUpdate(neighborPos, block.defaultBlockState());
+            BlockState neighborState = level.getBlockState(neighborPos);
+            Block resultBlock = liquid == Blocks.LAVA && neighborState.getFluidState().isSource()
+                    ? Blocks.OBSIDIAN
+                    : block;
+            level.setBlockAndUpdate(neighborPos, resultBlock.defaultBlockState());
         }
     }
 
@@ -87,13 +91,4 @@ public class PoopLiquidBlock extends LiquidBlock {
         return neighborState.getBlock() == liquid;
     }
 
-    private boolean liquidIsSource(Level level, BlockPos pos, Direction direction, Block liquidSource) {
-        BlockPos neighborPos = pos.relative(direction);
-        BlockState neighborState = level.getBlockState(neighborPos);
-        if (neighborState.getFluidState().isSource()) {
-            return neighborState.getBlock() == liquidSource;
-        } else {
-            return false;
-        }
-    }
 }

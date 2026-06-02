@@ -3,15 +3,15 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "poopsky:tuff_from_spall"
+        "recipe": "poopsky:dirt_from_poop"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "spall": {
+    "poop": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:spall"
+            "items": "poopsky:poop"
           }
         ]
       },
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "spall"
+      "poop"
     ]
   ],
   "rewards": {
     "recipes": [
-      "poopsky:tuff_from_spall"
+      "poopsky:dirt_from_poop"
     ]
   }
 }

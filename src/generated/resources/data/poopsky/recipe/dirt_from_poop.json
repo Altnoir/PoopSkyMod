@@ -3,14 +3,14 @@
   "category": "building",
   "ingredients": [
     {
-      "item": "minecraft:diorite"
+      "item": "minecraft:mud"
     },
     {
-      "item": "poopsky:spall"
+      "item": "poopsky:poop"
     }
   ],
   "result": {
     "count": 1,
-    "id": "minecraft:calcite"
+    "id": "minecraft:dirt"
   }
 }
