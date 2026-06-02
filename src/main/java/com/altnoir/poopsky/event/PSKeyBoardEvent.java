@@ -18,10 +18,12 @@ public class PSKeyBoardEvent {
         var mc = Minecraft.getInstance();
         if (mc.player == null || mc.level == null) return;
 
+        boolean isRidingPlug = mc.player.getVehicle() instanceof ToiletPlugEntity;
+
         while (PSKeyBoardInput.USE_PLUG_KEY.consumeClick()) {
             PacketDistributor.sendToServer(new PlugActionPayload());
         }
-        if (mc.player.getVehicle() instanceof ToiletPlugEntity && PSKeyBoardInput.DISMOUNT_PLUG_KEY.consumeClick()) {
+        if (isRidingPlug && PSKeyBoardInput.DISMOUNT_PLUG_KEY.consumeClick()) {
             PacketDistributor.sendToServer(new PlugDismountPayload());
         }
     }

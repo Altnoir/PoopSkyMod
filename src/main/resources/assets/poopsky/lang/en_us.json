@@ -197,6 +197,7 @@
   "key.poopsky.dismount_plug": "Dismount Toilet Plug",
   "key.poopsky.up": "Up",
   "key.poopsky.down": "Descend",
+  "message.poopsky.toilet_plug.dismount": "Press %s to dismount Toilet Plug",
 
   "advancements.poopsky.root.title": "POOPSKY",
   "advancements.poopsky.root.description": "Start your poop empire!",

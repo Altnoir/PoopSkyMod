@@ -197,6 +197,7 @@
   "key.poopsky.dismount_plug": "下马桶搋子",
   "key.poopsky.up": "上升",
   "key.poopsky.down": "下降",
+  "message.poopsky.toilet_plug.dismount": "按%s下马桶搋子",
 
   "advancements.poopsky.root.title": "空中厕所",
   "advancements.poopsky.root.description": "开启你的粪便帝国！",

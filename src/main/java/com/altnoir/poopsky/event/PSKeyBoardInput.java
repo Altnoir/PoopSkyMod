@@ -3,12 +3,12 @@ package com.altnoir.poopsky.event;
 import com.altnoir.poopsky.PoopSky;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
+import net.minecraft.network.chat.Component;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.settings.KeyConflictContext;
-import net.neoforged.neoforge.client.settings.KeyModifier;
 import org.lwjgl.glfw.GLFW;
 
 @EventBusSubscriber(modid = PoopSky.MOD_ID, value = Dist.CLIENT)
@@ -24,6 +24,10 @@ public class PSKeyBoardInput {
             InputConstants.Type.KEYSYM,
             GLFW.GLFW_KEY_G,
             "key.category.poopsky");
+
+    public static Component getLocalizedKeyMessage(KeyMapping keyMapping) {
+        return Component.translatableWithFallback(keyMapping.saveString(), keyMapping.getTranslatedKeyMessage().getString());
+    }
 
     @SubscribeEvent
     public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
