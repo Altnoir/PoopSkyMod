@@ -70,10 +70,10 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
                 return BucketUse(stack, level, pos, player, hand, SoundEvents.BUCKET_FILL, bucket.getDefaultInstance());
             }
         } else if (stack.getItem() == bottle) {
-            return liquidBottleUse(stack, state, level, pos, player, hand, SoundEvents.BOTTLE_EMPTY);
+            return liquidBottleUse(stack, state, level, pos, player, hand, SoundEvents.BOTTLE_EMPTY,0.6F);
         }
         if (i > MIN_LEVEL && stack.getItem() == Items.GLASS_BOTTLE) {
-            return glassBottleUse(stack, state, level, pos, player, hand, SoundEvents.BOTTLE_FILL, bottle.getDefaultInstance());
+            return glassBottleUse(stack, state, level, pos, player, hand, SoundEvents.BOTTLE_FILL,0.6F, bottle.getDefaultInstance());
         }
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }

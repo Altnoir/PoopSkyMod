@@ -139,7 +139,7 @@ public abstract class AbstractCompooperBlock extends Block {
 
     protected ItemInteractionResult BucketUse(ItemStack stack, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, ItemStack item) {
         var newState = defaultBlockState().setValue(LEVEL, MIN_LEVEL);
-        setBlock(newState, level, pos, player, sound);
+        setBlock(newState, level, pos, player, sound, 1.0F);
         //if (!player.getAbilities().instabuild) // 检测玩家是否有无限的方块
         ItemStack itemStack = ItemUtils.createFilledResult(stack, player, item);
         player.setItemInHand(hand, itemStack);
@@ -148,11 +148,15 @@ public abstract class AbstractCompooperBlock extends Block {
     }
 
     protected ItemInteractionResult liquidBottleUse(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound) {
+        return liquidBottleUse(stack, state, level, pos, player, hand, sound, 1.0F);
+    }
+
+    protected ItemInteractionResult liquidBottleUse(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, float pitch) {
         int currentLevel = state.getValue(LEVEL);
         int newLevel = currentLevel + 1;
 
         BlockState newState = state.setValue(LEVEL, newLevel);
-        useItemUtils(newState, level, pos, player, sound);
+        setBlock(newState, level, pos, player, sound, pitch);
 
         ItemStack itemStack = ItemUtils.createFilledResult(stack, player, Items.GLASS_BOTTLE.getDefaultInstance());
         player.setItemInHand(hand, itemStack);
@@ -165,15 +169,15 @@ public abstract class AbstractCompooperBlock extends Block {
     }
 
     protected ItemInteractionResult glassBottleUse(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, ItemStack item) {
+        return glassBottleUse(stack, state, level, pos, player, hand, sound, 1.0F, item);
+    }
+
+    protected ItemInteractionResult glassBottleUse(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, float pitch, ItemStack item) {
         int currentLevel = state.getValue(LEVEL);
         int newLevel = currentLevel - 1;
 
         BlockState newState = state.setValue(LEVEL, newLevel);
-        if (newLevel == MIN_LEVEL) {
-            setBlock(newState, level, pos, player, sound);
-        } else {
-            useItemUtils(newState, level, pos, player, sound);
-        }
+        setBlock(newState, level, pos, player, sound, pitch);
 
         ItemStack itemStack = ItemUtils.createFilledResult(stack, player, item);
         player.setItemInHand(hand, itemStack);
@@ -181,16 +185,11 @@ public abstract class AbstractCompooperBlock extends Block {
         return ItemInteractionResult.sidedSuccess(level.isClientSide);
     }
 
-    private void useItemUtils(BlockState state, Level level, BlockPos pos, Player player, SoundEvent sound) {
-        level.playSound(null, pos, sound, SoundSource.BLOCKS, 1.0F, 1.0F);
-        level.setBlockAndUpdate(pos, state);
-        level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, state));
-    }
-
-    protected void setBlock(BlockState state, Level level, BlockPos pos, Player player, SoundEvent sound) {
-        level.playSound(null, pos, sound, SoundSource.BLOCKS, 1.0F, 1.0F);
-        level.setBlockAndUpdate(pos, state);
-        level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, state));
+    protected void setBlock(BlockState state, Level level, BlockPos pos, Player player, SoundEvent sound, float pitch) {
+        level.playSound(null, pos, sound, SoundSource.BLOCKS, 1.0F, pitch);
+        var newState = state.getValue(LEVEL) == MIN_LEVEL ? PSBlocks.COMPOOPER.get().defaultBlockState() : state;
+        level.setBlockAndUpdate(pos, newState);
+        level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, newState));
     }
 
     protected boolean isHot(ServerLevel level, BlockPos pos) {

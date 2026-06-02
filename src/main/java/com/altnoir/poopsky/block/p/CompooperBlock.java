@@ -149,7 +149,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
             } else if (stack.getItem() == Items.POWDER_SNOW_BUCKET) {
                 return liquidUse(stack, level, pos, player, hand, SoundEvents.BUCKET_EMPTY_POWDER_SNOW, PSBlocks.POWER_SNOW_COMPOOPER.get(), true);
             } else if (stack.getItem() == PSItems.URINE_BOTTLE.get()) {
-                return liquidUse(stack, level, pos, player, hand, SoundEvents.BOTTLE_EMPTY, PSBlocks.URINE_COMPOOPER.get(), false);
+                return liquidUse(stack, level, pos, player, hand, SoundEvents.BOTTLE_EMPTY, 0.6F, PSBlocks.URINE_COMPOOPER.get(), false);
             } else if (potioncontents.is(Potions.WATER)) {
                 return liquidUse(stack, level, pos, player, hand, SoundEvents.BOTTLE_EMPTY, PSBlocks.WATER_COMPOOPER.get(), false);
             }
@@ -166,9 +166,13 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
     }
 
     private ItemInteractionResult liquidUse(ItemStack stack, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, Block newBlock, boolean bucket) {
+        return liquidUse(stack, level, pos, player, hand, sound, 1.0F, newBlock, bucket);
+    }
+
+    private ItemInteractionResult liquidUse(ItemStack stack, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, float pitch, Block newBlock, boolean bucket) {
         var newState = newBlock.defaultBlockState().setValue(AbstractCompooperBlock.LEVEL, bucket ? MAX_LEVEL : MIN_LEVEL + 1);
 
-        level.playSound(null, pos, sound, SoundSource.BLOCKS, 1.0F, 1.0F);
+        level.playSound(null, pos, sound, SoundSource.BLOCKS, 1.0F, pitch);
         level.setBlockAndUpdate(pos, newState);
         level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, newState));
 
@@ -260,7 +264,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
 
     @Override
     public void handlePrecipitation(BlockState state, Level level, BlockPos pos, Biome.Precipitation precipitation) {
-        if (shouldHandlePrecipitation(level, precipitation)) {
+        if (shouldHandlePrecipitation(level, precipitation) && state.getValue(POOP_LEVEL) == MIN_LEVEL) {
             if (precipitation == Biome.Precipitation.RAIN) {
                 level.setBlockAndUpdate(pos, PSBlocks.WATER_COMPOOPER.get().defaultBlockState());
                 level.gameEvent(null, GameEvent.BLOCK_CHANGE, pos);
