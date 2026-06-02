@@ -1,0 +1,34 @@
+{
+  "parent": "poopsky:summon_villager",
+  "criteria": {
+    "rainbow_toilet": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:rainbow_toilet"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.poopsky.rainbow_toilet.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "poopsky:rainbow_toilet"
+    },
+    "title": {
+      "translate": "advancements.poopsky.rainbow_toilet.title"
+    }
+  },
+  "requirements": [
+    [
+      "rainbow_toilet"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,30 @@
+{
+  "parent": "poopsky:root",
+  "criteria": {
+    "pooolime_poop_block": {
+      "conditions": {
+        "block": "poopsky:poolime_poop_block"
+      },
+      "trigger": "minecraft:slide_down_block"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.poopsky.pooolime_poop_block.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "poopsky:poolime_poop_block"
+    },
+    "title": {
+      "translate": "advancements.poopsky.pooolime_poop_block.title"
+    }
+  },
+  "requirements": [
+    [
+      "pooolime_poop_block"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -17,6 +17,9 @@ public class Config {
     public static boolean lavaFluid;
     public static boolean stickyCrafting;
     public static boolean desperateWorld;
+    public static boolean setPoopSkyDefault;
+    public static boolean voidNetherGeneration;
+    public static boolean voidEndGeneration;
 
     public static int magicNumber;
     public static String magicNumberIntroduction;
@@ -33,6 +36,15 @@ public class Config {
     private static final ModConfigSpec.BooleanValue DESPERATE_WORLD = BUILDER
             .comment("Whether to Enable the Desperate World (Enabling it will cause the device to lag)")
             .define("desperateWorld", false);
+    private static final ModConfigSpec.BooleanValue SET_POOPSKY_DEFAULT = BUILDER
+            .comment("Whether the dedicated server level-type default should be set to poopsky")
+            .define("setPoopskyDefault", true);
+    private static final ModConfigSpec.BooleanValue VOID_NETHER_GENERATION = BUILDER
+            .comment("Whether the custom void generator should also keep the nether empty")
+            .define("voidNetherGeneration", true);
+    private static final ModConfigSpec.BooleanValue VOID_END_GENERATION = BUILDER
+            .comment("Whether the custom void generator should also keep the end empty")
+            .define("voidEndGeneration", true);
 
 //    private static final ModConfigSpec.IntValue MAGIC_NUMBER = BUILDER
 //            .comment("A magic number")
@@ -58,6 +70,9 @@ public class Config {
         lavaFluid = LAVA_FLUID_BLOCK.get();
         stickyCrafting = STICK_CREAFTING.get();
         desperateWorld = DESPERATE_WORLD.get();
+        setPoopSkyDefault = SET_POOPSKY_DEFAULT.get();
+        voidNetherGeneration = VOID_NETHER_GENERATION.get();
+        voidEndGeneration = VOID_END_GENERATION.get();
 
 //        magicNumber = MAGIC_NUMBER.get();
 //        magicNumberIntroduction = MAGIC_NUMBER_INTRODUCTION.get();

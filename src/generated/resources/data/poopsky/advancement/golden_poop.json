@@ -1,0 +1,33 @@
+{
+  "parent": "poopsky:rainbow_toilet",
+  "criteria": {
+    "golden_poop": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:golden_poop"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.poopsky.golden_poop.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "poopsky:golden_poop"
+    },
+    "title": {
+      "translate": "advancements.poopsky.golden_poop.title"
+    }
+  },
+  "requirements": [
+    [
+      "golden_poop"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
