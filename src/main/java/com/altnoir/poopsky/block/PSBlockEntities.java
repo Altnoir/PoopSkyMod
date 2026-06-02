@@ -26,7 +26,7 @@ public class PSBlockEntities {
     );
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SieveBlockEntity>> SIEVE_BLOCK_ENTITY =
             BLOCK_ENTITY_TYPES.register("sieve_block_entity", () ->
-                    BlockEntityType.Builder.of(SieveBlockEntity::new, PSBlocks.SIEVE_BLOCK.get()).build(null));
+                    BlockEntityType.Builder.of(SieveBlockEntity::new, PSBlocks.SIEVE.get()).build(null));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITY_TYPES.register(eventBus);

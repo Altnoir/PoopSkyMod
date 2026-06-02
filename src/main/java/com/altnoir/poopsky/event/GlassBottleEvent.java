@@ -6,6 +6,7 @@ import com.altnoir.poopsky.block.p.ToiletLavaBlock;
 import com.altnoir.poopsky.fluid.PSFluids;
 import com.altnoir.poopsky.item.PSItems;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
@@ -21,6 +22,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 @EventBusSubscriber(modid = PoopSky.MOD_ID)
@@ -33,15 +35,25 @@ public class GlassBottleEvent {
         var hand = event.getHand();
         var heldItem = player.getItemInHand(hand);
 
-        if (!(heldItem.getItem() instanceof BottleItem)) return;
+        if (!(heldItem.getItem() instanceof BottleItem) && !heldItem.is(Tags.Items.BUCKETS_EMPTY)) return;
         if (!(level.getBlockState(pos).getBlock() instanceof AbstractToiletBlock abstractToiletBlock)) return;
-        if (abstractToiletBlock instanceof ToiletLavaBlock && level.getBlockState(pos).getValue(ToiletLavaBlock.LAVA)) return;
+        if (abstractToiletBlock instanceof ToiletLavaBlock && level.getBlockState(pos).getValue(ToiletLavaBlock.LAVA))
+            return;
 
         if (!level.isClientSide) {
-            level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.PLAYERS, 1.0F, 1.0F);
+            SoundEvent sound;
+            Item item;
+            if (heldItem.is(Tags.Items.BUCKETS_EMPTY)) {
+                sound = SoundEvents.BUCKET_FILL;
+                item = PSItems.POOP_BUCKET.get();
+            } else {
+                sound = SoundEvents.BOTTLE_FILL;
+                item = PSItems.URINE_BOTTLE.get();
+            }
+            level.playSound(null, pos, sound, SoundSource.PLAYERS, 1.0F, 0.6F);
             level.gameEvent(player, GameEvent.FLUID_PICKUP, pos);
 
-            var result = ItemUtils.createFilledResult(heldItem, player, new ItemStack(PSItems.URINE_BOTTLE.get()));
+            var result = ItemUtils.createFilledResult(heldItem, player, new ItemStack(item));
 
             player.setItemInHand(hand, result);
         }
@@ -57,13 +69,12 @@ public class GlassBottleEvent {
         Level level = event.getLevel();
 
         if (!stack.isEmpty() && stack.getItem() instanceof BottleItem) {
-
             BlockHitResult blockhitresult = Item.getPlayerPOVHitResult(level, player, ClipContext.Fluid.SOURCE_ONLY);
             BlockPos blockpos = blockhitresult.getBlockPos();
 
             if (blockhitresult.getType() == HitResult.Type.BLOCK && level.mayInteract(player, blockpos) && level.getFluidState(blockpos).is(PSFluids.POOP.get())) {
                 if (!level.isClientSide) {
-                    level.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
+                    level.playSound(null, blockpos, SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 0.6F);
                     level.gameEvent(player, GameEvent.FLUID_PICKUP, blockpos);
 
                     ItemStack itemStack = ItemUtils.createFilledResult(stack, player, new ItemStack(PSItems.URINE_BOTTLE.get()));

@@ -4,6 +4,6 @@
   "textures": {
     "top": "poopsky:block/sieve_top",
     "side": "poopsky:block/sieve_side",
-    "bottom": "poopsky:block/sieve_bottom"
+    "bottom": "poopsky:block/compooper_top"
   }
 }

@@ -18,7 +18,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -136,7 +135,7 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
         dropOther(PSBlocks.LAVA_COMPOOPER.get(), PSBlocks.COMPOOPER.get());
         dropOther(PSBlocks.POWER_SNOW_COMPOOPER.get(), PSBlocks.COMPOOPER.get());
         this.add(PSBlocks.URINE_COMPOOPER.get(), this::createUrineCompoomerDrops);
-        dropSelf(PSBlocks.SIEVE_BLOCK.get());
+        dropSelf(PSBlocks.SIEVE.get());
         add(PSBlocks.POOP_PIECE.get(), createPoopPieceDrop(PSBlocks.POOP_PIECE.get(), PSItems.POOP_BALL.get()));
 
         LootItemCondition.Builder builder = LootItemBlockStatePropertyCondition.hasBlockStateProperties(PSBlocks.MAGGOTS.get())

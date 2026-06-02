@@ -27,6 +27,7 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -38,7 +39,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.AABB;
@@ -126,11 +126,8 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
                 var damageMultiplier = 1.0F / (1.0F + factor);
                 living.causeFallDamage(fallDistance, damageMultiplier, level.damageSources().fall());
             }
-            if (entity instanceof FallingBlockEntity falling &&
-                    falling.getBlockState().is(Blocks.ANVIL) |
-                            falling.getBlockState().is(Blocks.CHIPPED_ANVIL) |
-                            falling.getBlockState().is(Blocks.DAMAGED_ANVIL)) {
-                poopAnvil(level, entity);
+            if (entity instanceof FallingBlockEntity falling && isAnvil(falling.getBlockState())) {
+                poopAnvil(level, blockState, entity);
             }
 
             if (fallDistance >= 1.0f && isEntityCentered(pos, entity)) {
@@ -141,12 +138,18 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
         }
     }
 
-    private void poopAnvil(Level level, Entity entity) {
-        var poop = new ItemEntity(
-                level,
-                entity.getX(), entity.getY() + 0.1, entity.getZ(),
-                new ItemStack(PSItems.POOP.get(), 8)
-        );
+    protected boolean isAnvil(BlockState state) {
+        return state.is(Blocks.ANVIL) || state.is(Blocks.CHIPPED_ANVIL) || state.is(Blocks.DAMAGED_ANVIL);
+    }
+
+    private void poopAnvil(Level level, BlockState blockState, Entity entity) {
+        Item poopItem;
+        if (blockState.is(ToiletBlocks.RAINBOW_TOILET)) {
+            poopItem = PSItems.GOLDEN_POOP.get();
+        } else {
+            poopItem = PSItems.POOP.get();
+        }
+        var poop = new ItemEntity(level, entity.getX(), entity.getY() + 0.1, entity.getZ(), new ItemStack(poopItem, 8));
         poop.setDefaultPickUpDelay();
         level.addFreshEntity(poop);
     }
@@ -190,13 +193,15 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
             redStone.setDefaultPickUpDelay();
             level.addFreshEntity(redStone);
         } else {
-            var poop = new ItemEntity(level, player.getX(), player.getY() + 0.1, player.getZ(), new ItemStack(PSItems.POOP.get()));
-            var chili_poop = new ItemEntity(level, player.getX(), player.getY() + 0.1, player.getZ(), new ItemStack(PSItems.CHILI_POOP.get()));
-
+            Item poopItem;
+            if (isFire) {
+                poopItem = PSItems.CHILI_POOP.get();
+            } else {
+                poopItem = PSItems.POOP.get();
+            }
+            var poop = new ItemEntity(level, player.getX(), player.getY() + 0.1, player.getZ(), new ItemStack(poopItem));
             poop.setDefaultPickUpDelay();
-            chili_poop.setDefaultPickUpDelay();
-
-            level.addFreshEntity(isFire ? chili_poop : poop);
+            level.addFreshEntity(poop);
         }
         var pitch = level.random.nextFloat() + 0.5F;
         level.playSound(null, player.getX(), player.getY() + 0.1, player.getZ(), PSSoundEvents.FART.get(), SoundSource.PLAYERS, 1.0F, pitch);

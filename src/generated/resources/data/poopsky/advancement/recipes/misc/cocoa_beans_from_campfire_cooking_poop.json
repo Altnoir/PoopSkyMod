@@ -1,32 +1,32 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "poopsky:calcite_from_spall"
-      },
-      "trigger": "minecraft:recipe_unlocked"
-    },
-    "spall": {
+    "has_poop": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:spall"
+            "items": "poopsky:poop"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:cocoa_beans_from_campfire_cooking_poop"
+      },
+      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
       "has_the_recipe",
-      "spall"
+      "has_poop"
     ]
   ],
   "rewards": {
     "recipes": [
-      "poopsky:calcite_from_spall"
+      "poopsky:cocoa_beans_from_campfire_cooking_poop"
     ]
   }
 }

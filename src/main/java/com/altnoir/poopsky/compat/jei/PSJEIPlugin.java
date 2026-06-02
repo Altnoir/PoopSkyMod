@@ -59,6 +59,6 @@ public class PSJEIPlugin implements IModPlugin {
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(new ItemStack(PSBlocks.COMPOOPER.get()), CompooperRecipeCategory.TYPE);
-        registration.addRecipeCatalyst(new ItemStack(PSBlocks.SIEVE_BLOCK.get()), SieveRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(PSBlocks.SIEVE.get()), SieveRecipeCategory.TYPE);
     }
 }

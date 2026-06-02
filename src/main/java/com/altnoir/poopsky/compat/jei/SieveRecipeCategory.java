@@ -19,14 +19,14 @@ import net.minecraft.world.item.ItemStack;
 public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
     public static final RecipeType<SieveRecipe> TYPE = RecipeType.create(PoopSky.MOD_ID, "sieve", SieveRecipe.class);
 
-    private static final int WIDTH = 166;
-    private static final int HEIGHT = 54;
-    private static final int INPUT_X = 6;
-    private static final int INPUT_Y = 19;
-    private static final int ARROW_X = 30;
-    private static final int ARROW_Y = 20;
-    private static final int OUTPUT_START_X = 64;
-    private static final int OUTPUT_START_Y = 10;
+    private static final int WIDTH = 145;
+    private static final int HEIGHT = 36;
+    private static final int INPUT_X = 1;
+    private static final int INPUT_Y = 9;
+    private static final int ARROW_X = INPUT_X + 24;
+    private static final int ARROW_Y = INPUT_Y + 1;
+    private static final int OUTPUT_START_X = ARROW_X + 31;
+    private static final int OUTPUT_START_Y = 1;
     private static final int OUTPUT_COLUMNS = 5;
     private static final int OUTPUT_ROWS = 2;
     private static final int SLOT_SPACING = 18;
@@ -38,7 +38,7 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
 
     public SieveRecipeCategory(IJeiHelpers helpers, IDrawable arrow) {
         var guiHelper = helpers.getGuiHelper();
-        this.icon = guiHelper.createDrawableItemStack(new ItemStack(PSBlocks.SIEVE_BLOCK.get()));
+        this.icon = guiHelper.createDrawableItemStack(new ItemStack(PSBlocks.SIEVE.get()));
         this.title = Component.translatable("jei.category." + PoopSky.MOD_ID + ".sieve");
         this.arrow = arrow;
         this.slot = guiHelper.getSlotDrawable();

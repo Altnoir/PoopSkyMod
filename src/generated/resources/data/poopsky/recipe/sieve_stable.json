@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "A": {
+      "item": "minecraft:string"
+    },
+    "S": {
+      "item": "minecraft:mossy_cobblestone_wall"
+    }
+  },
+  "pattern": [
+    "SAS",
+    "S S",
+    "S S"
+  ],
+  "result": {
+    "count": 1,
+    "id": "poopsky:sieve_stable"
+  }
+}

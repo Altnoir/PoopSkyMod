@@ -128,7 +128,6 @@ public class PSBlockTagProvider extends BlockTagsProvider {
         //工具标签
         tag(BlockTags.MINEABLE_WITH_AXE)
                 .add(WOODEN_TOILETS)
-                .add(PSBlocks.SIEVE_BLOCK.get())
                 .add(PSBlocks.MAGGOTS.get());
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
@@ -136,6 +135,7 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(PSBlocks.POOP_LOG.get())
                 .add(PSBlocks.STRIPPED_POOP_LOG.get())
                 .add(HARDEN_POOP)
+                .add(PSBlocks.SIEVE.get())
                 .add(PSBlocks.COMPOOPER.get())
                 .add(PSBlocks.WATER_COMPOOPER.get())
                 .add(PSBlocks.LAVA_COMPOOPER.get())

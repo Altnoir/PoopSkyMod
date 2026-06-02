@@ -1,11 +1,11 @@
 {
   "parent": "poopsky:poop_sapling",
   "criteria": {
-    "compooer": {
+    "coal_block": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:compooper"
+            "items": "minecraft:coal_block"
           }
         ]
       },
@@ -14,19 +14,19 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.poopsky.compooer.description"
+      "translate": "advancements.poopsky.coal_block.description"
     },
     "icon": {
       "count": 1,
-      "id": "poopsky:compooper"
+      "id": "minecraft:coal_block"
     },
     "title": {
-      "translate": "advancements.poopsky.compooer.title"
+      "translate": "advancements.poopsky.coal_block.title"
     }
   },
   "requirements": [
     [
-      "compooer"
+      "coal_block"
     ]
   ],
   "sends_telemetry_event": true

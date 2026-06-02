@@ -1,0 +1,37 @@
+{
+  "type": "poopsky:sieve",
+  "input": {
+    "item": "poopsky:raw_poop_block"
+  },
+  "outputs": [
+    {
+      "chance": 1.0,
+      "item": {
+        "count": 1,
+        "id": "minecraft:raw_copper"
+      }
+    },
+    {
+      "chance": 0.8,
+      "item": {
+        "count": 1,
+        "id": "minecraft:lapis_lazuli"
+      }
+    },
+    {
+      "chance": 0.75,
+      "item": {
+        "count": 1,
+        "id": "minecraft:redstone"
+      }
+    },
+    {
+      "chance": 0.15,
+      "item": {
+        "count": 1,
+        "id": "minecraft:diamond"
+      }
+    }
+  ],
+  "processingTime": 100
+}

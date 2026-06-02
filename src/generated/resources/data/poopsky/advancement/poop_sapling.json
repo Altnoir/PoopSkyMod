@@ -1,11 +1,11 @@
 {
-  "parent": "poopsky:poop_sapling",
+  "parent": "poopsky:root",
   "criteria": {
-    "compooer": {
+    "poop_sapling": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:compooper"
+            "items": "poopsky:poop_sapling"
           }
         ]
       },
@@ -14,19 +14,19 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.poopsky.compooer.description"
+      "translate": "advancements.poopsky.poop_sapling.description"
     },
     "icon": {
       "count": 1,
-      "id": "poopsky:compooper"
+      "id": "poopsky:poop_sapling"
     },
     "title": {
-      "translate": "advancements.poopsky.compooer.title"
+      "translate": "advancements.poopsky.poop_sapling.title"
     }
   },
   "requirements": [
     [
-      "compooer"
+      "poop_sapling"
     ]
   ],
   "sends_telemetry_event": true

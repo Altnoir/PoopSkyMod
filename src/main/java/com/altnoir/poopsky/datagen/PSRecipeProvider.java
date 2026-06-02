@@ -31,6 +31,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         List<ItemLike> SMOOTH_POOP_LIST = List.of(PSBlocks.DRIED_POOP_BLOCK);
         List<ItemLike> TILE_BLOCK_LIST = List.of(PSBlocks.RAW_POOP_BLOCK);
         List<ItemLike> MAGGOTS_LIST = List.of(PSItems.MAGGOTS_SEEDS);
+        List<ItemLike> ROUNDWORM_LIST = List.of(PSItems.ROUNDWORM);
 
         shapeless1x1Recipe(recipeOutput, Blocks.CRIMSON_NYLIUM, Blocks.CRIMSON_FUNGUS, Blocks.NETHERRACK);
         shapeless1x1Recipe(recipeOutput, Blocks.WARPED_NYLIUM, Blocks.WARPED_FUNGUS, Blocks.NETHERRACK);
@@ -47,10 +48,9 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         oreSmelting(recipeOutput, TILE_BLOCK_LIST, RecipeCategory.BUILDING_BLOCKS, PSBlocks.TILE_BLOCK, 0.1F, 200, "tile_block");
         oreBlasting(recipeOutput, TILE_BLOCK_LIST, RecipeCategory.BUILDING_BLOCKS, PSBlocks.TILE_BLOCK, 0.1F, 100, "tile_block");
 
-        SimpleCookingRecipeBuilder.campfireCooking(Ingredient.of(PSItems.POOP.get()), RecipeCategory.MISC, Items.COCOA_BEANS, 0.35F, 600)
-                .group("cocoa_beans")
-                .unlockedBy(getHasName(PSItems.POOP.get()), has(PSItems.POOP.get()))
-                .save(recipeOutput, PoopSky.MOD_ID + ":" + getItemName(PSItems.POOP.get()) + "_" + getItemName(Items.COCOA_BEANS));
+        oreCooking(recipeOutput, List.of(PSItems.POOP.get()), RecipeCategory.MISC, Items.COCOA_BEANS, 0.35F, 600, "cocoa_beans");
+        oreSmelting(recipeOutput, ROUNDWORM_LIST, RecipeCategory.MISC, Items.STRING, 0.35F, 200, "roundworm");
+        oreCooking(recipeOutput, ROUNDWORM_LIST, RecipeCategory.MISC, Items.STRING, 0.35F, 200, "roundworm");
         // 食物
         oreSmelting(recipeOutput, MAGGOTS_LIST, RecipeCategory.BUILDING_BLOCKS, PSItems.BAKED_MAGGOTS, 0.35F, 200, "maggots_seeds");
         oreCooking(recipeOutput, RecipeSerializer.SMOKING_RECIPE, SmokingRecipe::new, MAGGOTS_LIST, RecipeCategory.BUILDING_BLOCKS, PSItems.BAKED_MAGGOTS, 0.35F, 100, "maggots_seeds", "_from_smoking");
@@ -288,6 +288,14 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('S', Blocks.MOSSY_COBBLESTONE_SLAB)
                 .unlockedBy(getItemName(Blocks.MOSSY_COBBLESTONE_SLAB), has(Blocks.MOSSY_COBBLESTONE_SLAB))
                 .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PSBlocks.SIEVE)
+                .pattern("SAS")
+                .pattern("S S")
+                .pattern("S S")
+                .define('S', Blocks.MOSSY_COBBLESTONE_WALL)
+                .define('A', Items.STRING)
+                .unlockedBy(getItemName(Blocks.MOSSY_COBBLESTONE_WALL), has(Blocks.MOSSY_COBBLESTONE_WALL))
+                .save(recipeOutput);
 
         offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOLIME_BLOCK.get(), PSItems.POOP_BALL.get(), 1);
         offerCompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOLIME_POOP_BLOCK.get(), PSBlocks.POOP_BLOCK.get());
@@ -336,8 +344,9 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         create1x2ShapelessFrom(recipeOutput, Blocks.DIORITE, Blocks.COBBLESTONE, Blocks.CLAY, 2);
         create1x2ShapelessFrom(recipeOutput, Blocks.GRANITE, Blocks.COBBLESTONE, Blocks.DRIPSTONE_BLOCK, 2);
         create1x2ShapelessFrom(recipeOutput, Blocks.COBBLED_DEEPSLATE, Blocks.COBBLESTONE, Blocks.MUD, 2);
-        create1x2ShapelessFrom(recipeOutput, Blocks.TUFF, Blocks.ANDESITE, PSItems.SPALL);
-        create1x2ShapelessFrom(recipeOutput, Blocks.CALCITE, Blocks.DIORITE, PSItems.SPALL);
+        create1x2ShapelessFrom(recipeOutput, Blocks.DIRT, Blocks.MUD, PSItems.POOP.get());
+        //create1x2ShapelessFrom(recipeOutput, Blocks.TUFF, Blocks.ANDESITE, PSItems.SPALL);
+        //create1x2ShapelessFrom(recipeOutput, Blocks.CALCITE, Blocks.DIORITE, PSItems.SPALL);
 
         //切石配方
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.STOOL, PSBlocks.DRIED_POOP_BLOCK, 2);
@@ -460,15 +469,53 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
     }
 
     private void buildSieveRecipes(RecipeOutput recipeOutput) {
-        SieveRecipeBuilder.sieve(PSBlocks.POOP_BLOCK.asItem(), 200)
-                .addOutput(Items.IRON_NUGGET, 5)
-                .addOutput(Items.GOLD_NUGGET, 2, 0.9F)
-                .addOutput(Items.LAPIS_LAZULI, 1, 0.55F)
-                .addOutput(Items.REDSTONE, 2, 0.50F)
-                .addOutput(Items.EMERALD, 1, 0.15F)
-                .addOutput(Items.DIAMOND, 1, 0.12F)
-                .unlockedBy(getItemName(PSBlocks.SIEVE_BLOCK.get()), has(PSBlocks.SIEVE_BLOCK.get()))
+        SieveRecipeBuilder.sieve(PSBlocks.POOP_BLOCK, 200)
+                .addOutput(Items.IRON_NUGGET, 8)
+                .addOutput(Items.IRON_NUGGET, 8, 0.75F)
+                .addOutput(Items.IRON_NUGGET, 8, 0.5F)
+                .addOutput(Items.RAW_IRON, 0.5F)
+                .unlockedBy(getItemName(PSBlocks.SIEVE.get()), has(PSBlocks.SIEVE.get()))
                 .save(recipeOutput, "poop_block");
+
+        SieveRecipeBuilder.sieve(PSBlocks.CHILI_POOP_BLOCK, 300)
+                .addOutput(Items.QUARTZ, 4)
+                .addOutput(Items.QUARTZ, 4, 0.5F)
+                .addOutput(Items.NETHER_WART, 2, 0.75F)
+                .addOutput(Items.MAGMA_CREAM, 0.5F)
+                .addOutput(Items.GHAST_TEAR, 0.2F)
+                .unlockedBy(getItemName(PSBlocks.SIEVE.get()), has(PSBlocks.SIEVE.get()))
+                .save(recipeOutput, "chili_poop_block");
+
+        SieveRecipeBuilder.sieve(PSBlocks.GOLDEN_POOP_BLOCK, 300)
+                .addOutput(Items.GOLD_NUGGET, 8)
+                .addOutput(Items.GOLD_NUGGET, 8, 0.75F)
+                .addOutput(Items.RAW_GOLD, 0.5F)
+                .unlockedBy(getItemName(PSBlocks.SIEVE.get()), has(PSBlocks.SIEVE.get()))
+                .save(recipeOutput, "golden_poop_block");
+
+        SieveRecipeBuilder.sieve(PSBlocks.RAW_POOP_BLOCK, 100)
+                .addOutput(Items.RAW_COPPER)
+                .addOutput(Items.LAPIS_LAZULI, 0.8F)
+                .addOutput(Items.REDSTONE, 0.75F)
+                .addOutput(Items.DIAMOND, 0.15F)
+                .unlockedBy(getItemName(PSBlocks.SIEVE.get()), has(PSBlocks.SIEVE.get()))
+                .save(recipeOutput, "raw_poop_block");
+
+        SieveRecipeBuilder.sieve(PSBlocks.RAW_SAPING_POOP_BLOCK, 100)
+                .addOutput(Items.SUNFLOWER).addOutput(Items.LILAC)
+                .addOutput(Items.ROSE_BUSH).addOutput(Items.PEONY)
+                .addOutput(Items.VINE, 0.75F)
+                .addOutput(Items.SMALL_DRIPLEAF, 0.5F)
+                .addOutput(Items.SNIFFER_EGG, 0.05F)
+                .unlockedBy(getItemName(PSBlocks.SIEVE.get()), has(PSBlocks.SIEVE.get()))
+                .save(recipeOutput, "raw_saping_poop_block");
+
+        SieveRecipeBuilder.sieve(PSBlocks.RAW_WITHER_POOP_BLOCK, 100)
+                .addOutput(Items.COAL)
+                .addOutput(Items.NETHERITE_SCRAP, 0.1F)
+                .addOutput(Items.WITHER_SKELETON_SKULL, 0.01F)
+                .unlockedBy(getItemName(PSBlocks.SIEVE.get()), has(PSBlocks.SIEVE.get()))
+                .save(recipeOutput, "raw_wither_poop_block");
     }
 
     private void toiletRecipes(RecipeOutput recipeOutput, ItemLike toilet, ItemLike block) {
@@ -585,6 +632,21 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 cookingTime,
                 group,
                 "_from_blasting"
+        );
+    }
+
+    protected static void oreCooking(RecipeOutput recipeOutput, List<ItemLike> ingredients, RecipeCategory category, ItemLike result, float experience, int cookingTime, String group) {
+        oreCooking(
+                recipeOutput,
+                RecipeSerializer.CAMPFIRE_COOKING_RECIPE,
+                CampfireCookingRecipe::new,
+                ingredients,
+                category,
+                result,
+                experience,
+                cookingTime,
+                group,
+                "_from_campfire_cooking"
         );
     }
 

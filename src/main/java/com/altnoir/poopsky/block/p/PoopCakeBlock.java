@@ -25,6 +25,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.NotNull;
 
 public class PoopCakeBlock extends CakeBlock {
     public PoopCakeBlock(Properties properties) {
@@ -71,7 +72,7 @@ public class PoopCakeBlock extends CakeBlock {
         return eat(level, pos, state, player);
     }
 
-    protected static InteractionResult eat(LevelAccessor level, BlockPos pos, BlockState state, Player player) {
+    protected static @NotNull InteractionResult eat(LevelAccessor level, BlockPos pos, BlockState state, Player player) {
         if (!player.canEat(false)) {
             return InteractionResult.PASS;
         } else {
@@ -90,7 +91,7 @@ public class PoopCakeBlock extends CakeBlock {
             addOrExtendEffect(player, MobEffects.LUCK, 1800, 1);
             addOrExtendEffect(player, MobEffects.CONFUSION, 100, 0);
             addOrExtendEffect(player, MobEffects.BLINDNESS, 20, 0);
-            addOrExtendEffect(player, MobEffects.DARKNESS, 60, 0);
+            player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 60, 0));
 
             int i = state.getValue(BITES);
             level.gameEvent(player, GameEvent.EAT, pos);

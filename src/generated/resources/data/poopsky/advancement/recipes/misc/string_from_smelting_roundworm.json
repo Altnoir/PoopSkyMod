@@ -1,32 +1,32 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "poopsky:sieve/poop_block"
-      },
-      "trigger": "minecraft:recipe_unlocked"
-    },
-    "sieve_stable": {
+    "has_roundworm": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:sieve_stable"
+            "items": "poopsky:roundworm"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:string_from_smelting_roundworm"
+      },
+      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
       "has_the_recipe",
-      "sieve_stable"
+      "has_roundworm"
     ]
   ],
   "rewards": {
     "recipes": [
-      "poopsky:sieve/poop_block"
+      "poopsky:string_from_smelting_roundworm"
     ]
   }
 }

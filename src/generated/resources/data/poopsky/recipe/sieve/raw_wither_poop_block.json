@@ -1,0 +1,30 @@
+{
+  "type": "poopsky:sieve",
+  "input": {
+    "item": "poopsky:raw_wither_poop_block"
+  },
+  "outputs": [
+    {
+      "chance": 1.0,
+      "item": {
+        "count": 1,
+        "id": "minecraft:coal"
+      }
+    },
+    {
+      "chance": 0.1,
+      "item": {
+        "count": 1,
+        "id": "minecraft:netherite_scrap"
+      }
+    },
+    {
+      "chance": 0.01,
+      "item": {
+        "count": 1,
+        "id": "minecraft:wither_skeleton_skull"
+      }
+    }
+  ],
+  "processingTime": 100
+}

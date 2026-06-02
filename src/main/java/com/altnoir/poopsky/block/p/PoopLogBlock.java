@@ -3,6 +3,7 @@ package com.altnoir.poopsky.block.p;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RotatedPillarBlock;
@@ -22,7 +23,7 @@ public class PoopLogBlock extends RotatedPillarBlock {
             BlockPos neighborPos = pos.relative(direction);
             BlockState neighborState = level.getBlockState(neighborPos);
 
-            if (!neighborState.isCollisionShapeFullBlock(level, neighborPos)) {
+            if (!neighborState.isCollisionShapeFullBlock(level, neighborPos) || neighborState.is(BlockTags.LEAVES)) {
                 allSolid = false;
                 break;
             }

@@ -44,17 +44,6 @@
         },
         {
           "data": {
-            "Name": "poopsky:poop_leaves_iron",
-            "Properties": {
-              "distance": "7",
-              "persistent": "false",
-              "waterlogged": "false"
-            }
-          },
-          "weight": 3
-        },
-        {
-          "data": {
             "Name": "poopsky:poop_leaves_gold",
             "Properties": {
               "distance": "7",

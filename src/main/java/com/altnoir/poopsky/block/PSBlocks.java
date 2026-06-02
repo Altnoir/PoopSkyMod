@@ -368,7 +368,7 @@ public class PSBlocks {
             () -> new UrineCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()).randomTicks())
     );
 
-    public static final DeferredBlock<SieveBlock> SIEVE_BLOCK = registerDefaultBlock("sieve_block",
+    public static final DeferredBlock<SieveBlock> SIEVE = registerDefaultBlock("sieve_stable",
             () -> new SieveBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.SAND)
                     .strength(1.5f, 3.0f)

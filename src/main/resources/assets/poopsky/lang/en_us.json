@@ -128,7 +128,7 @@
   "block.poopsky.lava_compooper": "Lava Compooper",
   "block.poopsky.power_snow_compooper": "Power Snow Compooper",
   "block.poopsky.urine_compooper": "Urine Compooper",
-  "block.poopsky.sieve_block": "Sieve Block",
+  "block.poopsky.sieve_stable": "Sieve",
 
   "item.poopsky.dragon_breath_chili": "Dragon Breath Chili",
   "item.poopsky.roundworm": "Roundworm",
@@ -203,10 +203,12 @@
   "advancements.poopsky.root.description": "Start your poop empire!",
   "advancements.poopsky.poop_block_slide.title": "Master of Poop Sliding",
   "advancements.poopsky.poop_block_slide.description": "Slide on a poop block",
-  "advancements.poopsky.sapling.title": "Poop Sapling",
-  "advancements.poopsky.sapling.description": "Grow a poop sapling",
+  "advancements.poopsky.poop_sapling.title": "Poop Sapling",
+  "advancements.poopsky.poop_sapling.description": "Grow a poop sapling",
   "advancements.poopsky.compooer.title": "Compooper",
   "advancements.poopsky.compooer.description": "Destroy a poop log to create a compooper block",
+  "advancements.poopsky.sapling.title": "Sapling",
+  "advancements.poopsky.sapling.description": "Use sapling balls",
 
   "subtitle.poopsky.fart": "Fart Sound",
   "subtitle.poopsky.compooer.maggots": "Compooper maggots",
