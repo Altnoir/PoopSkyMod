@@ -1,0 +1,33 @@
+{
+  "parent": "poopsky:coal_block",
+  "criteria": {
+    "cocoa": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:cocoa_beans"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.poopsky.cocoa.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:cocoa_beans"
+    },
+    "title": {
+      "translate": "advancements.poopsky.cocoa.title"
+    }
+  },
+  "requirements": [
+    [
+      "cocoa"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
