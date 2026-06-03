@@ -56,11 +56,7 @@ public class PSConfigureFeatures {
         register(context, POOP_TREE, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
                         BlockStateProvider.simple(PSBlocks.POOP_LOG.get()),
                         new StraightTrunkPlacer(3, 1, 1),
-                        new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
-                                .add(PSBlocks.POOP_LEAVES.get().defaultBlockState(), 88)
-                                .add(PSBlocks.POOP_LEAVES_IRON.get().defaultBlockState(), 10)
-                                .add(PSBlocks.POOP_LEAVES_GOLD.get().defaultBlockState(), 2)
-                                .build()),
+                        BlockStateProvider.simple(PSBlocks.POOP_LEAVES.get()),
                         new RandomSpreadFoliagePlacer(ConstantInt.of(3), ConstantInt.of(0), ConstantInt.of(2), 114),
                         new TwoLayersFeatureSize(2, 0, 2)
                 )
@@ -75,6 +71,7 @@ public class PSConfigureFeatures {
 
                         new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
                                 .add(PSBlocks.POOP_LEAVES.get().defaultBlockState(), 11)
+                                .add(PSBlocks.POOP_LEAVES_IRON.get().defaultBlockState(), 1)
                                 .add(PSBlocks.POOP_LEAVES_GOLD.get().defaultBlockState(), 1)
                                 .build()),
 

@@ -37,7 +37,7 @@ public class Config {
             .define("desperateWorld", false);
     private static final ModConfigSpec.BooleanValue SET_POOPSKY_DEFAULT = BUILDER
             .comment("Whether the dedicated server level-type default should be set to poopsky")
-            .define("setPoopskyDefault", true);
+            .define("setPoopskyDefault", false);
     private static final ModConfigSpec.BooleanValue VOID_NETHER_GENERATION = BUILDER
             .comment("Whether the custom void generator should also keep the nether empty")
             .define("voidNetherGeneration", true);

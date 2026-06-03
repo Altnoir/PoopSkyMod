@@ -5,6 +5,7 @@ import com.altnoir.poopsky.block.p.*;
 import com.altnoir.poopsky.fluid.PSFluids;
 import com.altnoir.poopsky.fluid.PoopLiquidBlock;
 import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.item.p.CompooperBlockItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -345,7 +346,7 @@ public class PSBlocks {
             () -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(TILE_BLOCK.get()))
     );
 
-    public static final DeferredBlock<Block> COMPOOPER = registerDefaultBlock("compooper",
+    public static final DeferredBlock<Block> COMPOOPER = registerCompooperBlock("compooper",
             () -> new CompooperBlock(BlockBehaviour.Properties.of()
                     .noOcclusion()
                     .mapColor(MapColor.COLOR_BROWN)
@@ -585,15 +586,27 @@ public class PSBlocks {
         registerBlockItem(name, toReturn);
         return toReturn;
     }
+
+    public static <T extends Block> DeferredBlock<T> registerCompooperBlock(String name, Supplier<T> block) {
+        DeferredBlock<T> toReturn = BLOCKS.register(name, block);
+        registerCompooperBlockItem(name, toReturn);
+        return toReturn;
+    }
+
     public static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);
-        registerBlockItem(name, toReturn,88);
+        registerBlockItem(name, toReturn, 88);
         return toReturn;
     }
 
     private static <T extends Block> void registerBlockItem(String name, DeferredBlock<T> block) {
         PSItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
     }
+
+    private static <T extends Block> void registerCompooperBlockItem(String name, DeferredBlock<T> block) {
+        PSItems.ITEMS.register(name, () -> new CompooperBlockItem(block.get(), new Item.Properties()));
+    }
+
     private static <T extends Block> void registerBlockItem(String name, DeferredBlock<T> block, int stacksTo) {
         PSItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().stacksTo(stacksTo)));
     }

@@ -1,11 +1,11 @@
 {
-  "parent": "poopsky:rainbow_toilet",
+  "parent": "poopsky:compooer",
   "criteria": {
-    "golden_poop": {
+    "urine_compooer": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:golden_poop"
+            "items": "poopsky:urine_compooper"
           }
         ]
       },
@@ -14,19 +14,19 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.poopsky.golden_poop.description"
+      "translate": "advancements.poopsky.urine_compooer.description"
     },
     "icon": {
       "count": 1,
-      "id": "poopsky:golden_poop"
+      "id": "poopsky:urine_compooper"
     },
     "title": {
-      "translate": "advancements.poopsky.golden_poop.title"
+      "translate": "advancements.poopsky.urine_compooer.title"
     }
   },
   "requirements": [
     [
-      "golden_poop"
+      "urine_compooer"
     ]
   ],
   "sends_telemetry_event": true

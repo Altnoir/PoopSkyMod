@@ -1,19 +1,13 @@
 package com.altnoir.poopsky.effect;
 
-import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.particle.PSParticles;
 import com.altnoir.poopsky.sound.PSSoundEvents;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BoneMealItem;
@@ -51,10 +45,14 @@ public class FecalIncontinenceEffect extends MobEffect {
             BlockPos entityPos = entity.blockPosition();
 
             ItemStack stack = new ItemStack(PSItems.POOP.get());
+            if (entity.hasEffect(PSEffects.INTESTINAL_SPASM)) {
+                stack = new ItemStack(PSItems.CHILI_POOP.get());
+            }
+            ItemStack finalStack = stack;
             boolean dropPoop = BlockPos.betweenClosedStream(entityPos.offset(0, -1, 0), entityPos.offset(0, 1, 0))
                     .anyMatch(targetPos -> {
-                        boolean applied = BoneMealItem.applyBonemeal(stack, level, targetPos, null)
-                                || BoneMealItem.growWaterPlant(stack, level, targetPos, null);
+                        boolean applied = BoneMealItem.applyBonemeal(finalStack, level, targetPos, null)
+                                || BoneMealItem.growWaterPlant(finalStack, level, targetPos, null);
 
                         if (applied) {
                             BoneMealItem.addGrowthParticles(level, targetPos, 15);

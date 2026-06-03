@@ -16,6 +16,7 @@
     "description": {
       "translate": "advancements.poopsky.sieve.description"
     },
+    "frame": "goal",
     "icon": {
       "count": 1,
       "id": "poopsky:sieve_stable"

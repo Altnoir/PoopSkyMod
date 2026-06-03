@@ -134,6 +134,20 @@ public class PSAdvancementPorvider extends AdvancementProvider {
                     )
                     .addCriterion("compooer", InventoryChangeTrigger.TriggerInstance.hasItems(PSBlocks.COMPOOPER.get()))
                     .save(saver, modId("compooer"), existingFileHelper);
+            Advancement.Builder.advancement()
+                    .parent(compooper)
+                    .display(
+                            PSBlocks.URINE_COMPOOPER.get(),
+                            Component.translatable("advancements.poopsky.urine_compooer.title"),
+                            Component.translatable("advancements.poopsky.urine_compooer.description"),
+                            null,
+                            AdvancementType.TASK,
+                            true,
+                            true,
+                            false
+                    )
+                    .addCriterion("urine_compooer", InventoryChangeTrigger.TriggerInstance.hasItems(PSBlocks.URINE_COMPOOPER.get()))
+                    .save(saver, modId("urine_compooer"), existingFileHelper);
 
             Advancement.Builder.advancement()
                     .parent(compooper)
@@ -213,7 +227,7 @@ public class PSAdvancementPorvider extends AdvancementProvider {
                             Component.translatable("advancements.poopsky.sieve.title"),
                             Component.translatable("advancements.poopsky.sieve.description"),
                             null,
-                            AdvancementType.TASK,
+                            AdvancementType.GOAL,
                             true,
                             true,
                             false
@@ -295,21 +309,6 @@ public class PSAdvancementPorvider extends AdvancementProvider {
                     )
                     .addCriterion("chili_poop", InventoryChangeTrigger.TriggerInstance.hasItems(PSItems.CHILI_POOP.get()))
                     .save(saver, modId("chili_poop"), existingFileHelper);
-
-            Advancement.Builder.advancement()
-                    .parent(rainbow_toilet)
-                    .display(
-                            PSItems.GOLDEN_POOP,
-                            Component.translatable("advancements.poopsky.golden_poop.title"),
-                            Component.translatable("advancements.poopsky.golden_poop.description"),
-                            null,
-                            AdvancementType.TASK,
-                            true,
-                            true,
-                            false
-                    )
-                    .addCriterion("golden_poop", InventoryChangeTrigger.TriggerInstance.hasItems(PSItems.GOLDEN_POOP.get()))
-                    .save(saver, modId("golden_poop"), existingFileHelper);
         }
 
         private ResourceLocation modId(String path) {
