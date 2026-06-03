@@ -19,7 +19,6 @@ public class Config {
     public static boolean desperateWorld;
     public static boolean setPoopSkyDefault;
     public static boolean voidNetherGeneration;
-    public static boolean voidEndGeneration;
 
     public static int magicNumber;
     public static String magicNumberIntroduction;
@@ -42,9 +41,6 @@ public class Config {
     private static final ModConfigSpec.BooleanValue VOID_NETHER_GENERATION = BUILDER
             .comment("Whether the custom void generator should also keep the nether empty")
             .define("voidNetherGeneration", true);
-    private static final ModConfigSpec.BooleanValue VOID_END_GENERATION = BUILDER
-            .comment("Whether the custom void generator should also keep the end empty")
-            .define("voidEndGeneration", true);
 
 //    private static final ModConfigSpec.IntValue MAGIC_NUMBER = BUILDER
 //            .comment("A magic number")
@@ -72,7 +68,6 @@ public class Config {
         desperateWorld = DESPERATE_WORLD.get();
         setPoopSkyDefault = SET_POOPSKY_DEFAULT.get();
         voidNetherGeneration = VOID_NETHER_GENERATION.get();
-        voidEndGeneration = VOID_END_GENERATION.get();
 
 //        magicNumber = MAGIC_NUMBER.get();
 //        magicNumberIntroduction = MAGIC_NUMBER_INTRODUCTION.get();

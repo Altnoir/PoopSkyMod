@@ -15,12 +15,11 @@
     "minecraft:the_end": {
       "type": "minecraft:the_end",
       "generator": {
-        "type": "poopsky:void",
+        "type": "minecraft:noise",
         "biome_source": {
           "type": "minecraft:the_end"
         },
-        "settings": "minecraft:end",
-        "allowed_structure_sets": "poopsky:the_end_void_structure_sets"
+        "settings": "minecraft:end"
       }
     },
     "minecraft:the_nether": {

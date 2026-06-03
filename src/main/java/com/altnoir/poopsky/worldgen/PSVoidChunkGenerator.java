@@ -45,8 +45,7 @@ public class PSVoidChunkGenerator extends NoiseBasedChunkGenerator {
         super(biomeSource, settings);
         this.settings = settings;
         this.allowedStructureSets = allowedStructureSets;
-        this.generateNormal = (settings.is(ResourceLocation.parse("minecraft:end")) && !Config.voidEndGeneration)
-                || (settings.is(ResourceLocation.parse("minecraft:nether")) && !Config.voidNetherGeneration);
+        this.generateNormal = (settings.is(ResourceLocation.parse("minecraft:nether")) && !Config.voidNetherGeneration);
         this.allowBiomeDecoration = !settings.is(ResourceLocation.parse("minecraft:overworld"));
     }
 
