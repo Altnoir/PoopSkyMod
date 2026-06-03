@@ -396,7 +396,6 @@ public class PSBlocks {
     public static final DeferredBlock<Block> POOP_LOG = registerBlock("poop_log",
             () -> new PoopLogBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_BROWN)
-                    .noOcclusion()
                     .randomTicks()
                     .instrument(NoteBlockInstrument.BASS)
                     .strength(LOG)
@@ -415,7 +414,6 @@ public class PSBlocks {
     public static final DeferredBlock<Block> STRIPPED_POOP_LOG = registerBlock("stripped_poop_log",
             () -> new PoopLogBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_BROWN)
-                    .noOcclusion()
                     .randomTicks()
                     .instrument(NoteBlockInstrument.BASS)
                     .strength(LOG)
