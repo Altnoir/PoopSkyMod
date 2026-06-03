@@ -1,6 +1,5 @@
 package com.altnoir.poopsky.component;
 
-import com.altnoir.poopsky.block.ToiletBlocks;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;

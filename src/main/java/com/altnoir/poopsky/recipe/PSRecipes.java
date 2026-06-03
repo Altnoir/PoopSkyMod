@@ -2,7 +2,6 @@ package com.altnoir.poopsky.recipe;
 
 import com.altnoir.poopsky.PoopSky;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.neoforged.bus.api.IEventBus;

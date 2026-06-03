@@ -222,7 +222,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
     }
 
     protected static BlockState empty(@Nullable Entity entity, BlockState state, LevelAccessor level, BlockPos pos) {
-        var blockstate = state.setValue(POOP_LEVEL, Integer.valueOf(MIN_LEVEL));
+        var blockstate = state.setValue(POOP_LEVEL, MIN_LEVEL);
         level.setBlock(pos, blockstate, 3);
         level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(entity, blockstate));
         return blockstate;
@@ -235,7 +235,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
             return state;
         } else {
             var j = i + 1;
-            var blockstate = state.setValue(POOP_LEVEL, Integer.valueOf(j));
+            var blockstate = state.setValue(POOP_LEVEL, j);
             level.setBlock(pos, blockstate, 3);
             level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(entity, blockstate));
             if (j == READY - 1) {
@@ -258,7 +258,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
         if (precipitation == Biome.Precipitation.RAIN) {
             return level.getRandom().nextFloat() < 0.05F;
         } else {
-            return precipitation == Biome.Precipitation.SNOW ? level.getRandom().nextFloat() < 0.1F : false;
+            return precipitation == Biome.Precipitation.SNOW && level.getRandom().nextFloat() < 0.1F;
         }
     }
 

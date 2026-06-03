@@ -55,7 +55,7 @@ public class DriedPoopBlock extends Block implements BonemealableBlock {
     @Override
     protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
         super.onPlace(state, level, pos, oldState, movedByPiston);
-        if (hasHot((ServerLevel) level, pos)) {
+        if (hasHot(level, pos)) {
             level.scheduleTick(pos, this, 100);
         }
     }
@@ -63,7 +63,7 @@ public class DriedPoopBlock extends Block implements BonemealableBlock {
     @Override
     protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
         super.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston);
-        if (neighborPos.equals(pos.above()) && hasHot((ServerLevel) level, pos)) {
+        if (neighborPos.equals(pos.above()) && hasHot(level, pos)) {
             level.scheduleTick(pos, this, 100);
         }
     }

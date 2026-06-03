@@ -18,7 +18,7 @@ public class TimeBellItem extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
-        if (!level.isClientSide && player != null) {
+        if (!level.isClientSide) {
             if (level.getServer() != null) {
                 ServerTickRateManager tickRateManager = level.getServer().tickRateManager();
 

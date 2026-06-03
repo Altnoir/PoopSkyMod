@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class PoopPieceBlock extends SnowLayerBlock {
     public PoopPieceBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(LAYERS, Integer.valueOf(1)));
+        this.registerDefaultState(this.stateDefinition.any().setValue(LAYERS, 1));
     }
 
     @Override
