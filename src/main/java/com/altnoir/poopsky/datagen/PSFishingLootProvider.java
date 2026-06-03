@@ -6,7 +6,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
@@ -17,10 +16,8 @@ import java.util.function.BiConsumer;
 public class PSFishingLootProvider implements LootTableSubProvider {
     public static final ResourceKey<LootTable> FISHING_SENNAE = ResourceKey.create(Registries.LOOT_TABLE,
             PoopSky.loc("fishing/seenae"));
-    private final HolderLookup.Provider registries;
 
     public PSFishingLootProvider(HolderLookup.Provider registries) {
-        this.registries = registries;
     }
 
     @Override

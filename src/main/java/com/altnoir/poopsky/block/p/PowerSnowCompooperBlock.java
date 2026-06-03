@@ -19,7 +19,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
 
 public class PowerSnowCompooperBlock extends AbstractCompooperBlock {
     public static final MapCodec<PowerSnowCompooperBlock> CODEC = simpleCodec(PowerSnowCompooperBlock::new);

@@ -82,7 +82,7 @@ public class PoopBlock extends Block implements BonemealableBlock {
                     serverlevel.sendParticles(
                             ParticleTypes.SPLASH,
                             (double) pos.getX() + level.random.nextDouble(),
-                            (double) (pos.getY() + 1),
+                            pos.getY() + 1,
                             (double) pos.getZ() + level.random.nextDouble(),
                             1,
                             0.0,

@@ -5,8 +5,6 @@ import com.altnoir.poopsky.tag.PSBlockTags;
 import com.altnoir.poopsky.worldgen.PSConfigureFeatures;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;

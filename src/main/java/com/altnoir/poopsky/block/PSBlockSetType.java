@@ -3,7 +3,6 @@ package com.altnoir.poopsky.block;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
-import net.minecraft.world.level.block.state.properties.WoodType;
 
 public class PSBlockSetType {
     public static final BlockSetType POOP = BlockSetType.register(

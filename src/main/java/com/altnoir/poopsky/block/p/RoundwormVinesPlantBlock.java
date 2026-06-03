@@ -34,7 +34,7 @@ public class RoundwormVinesPlantBlock extends GrowingPlantBodyBlock implements B
 
     public RoundwormVinesPlantBlock(Properties properties) {
         super(properties, Direction.UP, SHAPE, false);
-        this.registerDefaultState(this.stateDefinition.any().setValue(SEEDS, Boolean.valueOf(false)));
+        this.registerDefaultState(this.stateDefinition.any().setValue(SEEDS, Boolean.FALSE));
     }
 
     @Override
@@ -64,7 +64,7 @@ public class RoundwormVinesPlantBlock extends GrowingPlantBodyBlock implements B
             Block.popResource(level, pos, dropItem);
             float f = Mth.randomBetween(level.random, 0.8F, 1.2F);
             level.playSound(null, pos, SoundEvents.CAVE_VINES_PICK_BERRIES, SoundSource.BLOCKS, 1.0F, f);
-            BlockState blockstate = state.setValue(SEEDS, Boolean.valueOf(false));
+            BlockState blockstate = state.setValue(SEEDS, Boolean.FALSE);
             level.setBlock(pos, blockstate, 2);
             level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, blockstate));
             return InteractionResult.sidedSuccess(level.isClientSide);
@@ -90,6 +90,6 @@ public class RoundwormVinesPlantBlock extends GrowingPlantBodyBlock implements B
 
     @Override
     public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
-        level.setBlock(pos, state.setValue(SEEDS, Boolean.valueOf(true)), 2);
+        level.setBlock(pos, state.setValue(SEEDS, Boolean.TRUE), 2);
     }
 }
