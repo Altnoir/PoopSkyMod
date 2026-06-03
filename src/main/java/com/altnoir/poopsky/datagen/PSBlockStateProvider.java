@@ -47,6 +47,15 @@ public class PSBlockStateProvider extends BlockStateProvider {
                 .allFaces((face, faceBuilder) -> faceBuilder.texture(THE_SIDE).uvs(0, 0, 16, 16))
                 .face(Direction.UP).texture(THE_UP).end();
 
+        models().withExistingParent("poolime_poop_block", mcLoc("block/cube"))
+                .texture("south", modLoc("block/poop_block"))
+                .texture("west", modLoc("block/poop_block"))
+                .texture("north", modLoc("block/poop_block"))
+                .texture("east", modLoc("block/poop_block"))
+                .texture("down", modLoc("block/poop_block"))
+                .texture("up", modLoc("block/poolime_poop_block"))
+                .texture(PARTICLE, modLoc("block/poop_block"));
+
         for (int layers = 1; layers < 8; layers++) {
             int height = layers * 2;
             int uvHeight = 16 - (layers * 2);
@@ -89,7 +98,8 @@ public class PSBlockStateProvider extends BlockStateProvider {
         simpleBlockItem(PSBlocks.POOP_PIECE.get(), models().getExistingFile(modLoc("block/poop_height2")));
         //
         blockWithTranslucentRenderType(PSBlocks.POOLIME_BLOCK.get());
-        blockWithItem(PSBlocks.POOLIME_POOP_BLOCK.get());
+        getVariantBuilder(PSBlocks.POOLIME_POOP_BLOCK.get()).partialState().addModels(new ConfiguredModel(models().getExistingFile(modLoc("block/poolime_poop_block"))));
+        simpleBlockItem(PSBlocks.POOLIME_POOP_BLOCK.get(), models().getExistingFile(modLoc("block/poolime_poop_block")));
 
         blockWithItem(PSBlocks.CHILI_POOP_BLOCK.get());
         stairsBlock((StairBlock) PSBlocks.CHILI_POOP_STAIRS.get(), blockTexture(PSBlocks.CHILI_POOP_BLOCK.get()));

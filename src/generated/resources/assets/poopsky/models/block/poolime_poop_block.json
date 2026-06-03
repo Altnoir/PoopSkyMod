@@ -1,6 +1,12 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/cube",
   "textures": {
-    "all": "poopsky:block/poolime_poop_block"
+    "down": "poopsky:block/poop_block",
+    "east": "poopsky:block/poop_block",
+    "north": "poopsky:block/poop_block",
+    "particle": "poopsky:block/poop_block",
+    "south": "poopsky:block/poop_block",
+    "up": "poopsky:block/poolime_poop_block",
+    "west": "poopsky:block/poop_block"
   }
 }

@@ -21,7 +21,7 @@ public class PoopLiquidBlock extends LiquidBlock {
 
     protected void check(Level level, BlockPos pos) {
         hasBlockNeighbor(level, pos, Blocks.NETHERRACK, Blocks.MAGMA_BLOCK, Blocks.LAVA);
-        hasBlockNeighbor(level, pos, Blocks.CLAY, Blocks.CLAY, Blocks.WATER);
+        //hasBlockNeighbor(level, pos, Blocks.CLAY, Blocks.CLAY, Blocks.WATER);
         hasBlockNeighbor(level, pos, Blocks.SOUL_SAND, Blocks.SAND);
     }
 
@@ -66,7 +66,7 @@ public class PoopLiquidBlock extends LiquidBlock {
     private void hasBlockNeighbor(Level level, BlockPos pos, Block block, Block liquid) {
         BlockPos neighborPos = getLiquidNeighborPos(level, pos, liquid);
         if (neighborPos != null) {
-            level.levelEvent(1501, pos, 0);
+            level.levelEvent(1501, neighborPos, 0);
             BlockState neighborState = level.getBlockState(neighborPos);
             Block resultBlock = liquid == Blocks.LAVA && neighborState.getFluidState().isSource()
                     ? Blocks.OBSIDIAN
