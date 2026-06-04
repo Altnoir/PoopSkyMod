@@ -100,6 +100,7 @@ public class PoopSky {
             CompooperBlock.bootStrap();
 
             DispenserBlock.registerProjectileBehavior(PSItems.POOP_BALL);
+            DispenserBlock.registerProjectileBehavior(PSItems.SEA_POOP_BALL);
             DispenserBlock.registerProjectileBehavior(PSItems.WITHER_POOP_BALL);
             DispenserBlock.registerBehavior(PSItems.POOP.get(), new OptionalDispenseItemBehavior() {
                 @Override
