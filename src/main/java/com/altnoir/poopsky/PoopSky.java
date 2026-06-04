@@ -1,9 +1,9 @@
 package com.altnoir.poopsky;
 
-import com.altnoir.poopsky.block.AbstractCompooperBlock;
+import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.PSBlockEntities;
 import com.altnoir.poopsky.block.PSBlocks;
-import com.altnoir.poopsky.block.ToiletBlocks;
+import com.altnoir.poopsky.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.block.p.CompooperBlock;
 import com.altnoir.poopsky.component.PSComponents;
 import com.altnoir.poopsky.effect.PSEffects;
@@ -53,7 +53,6 @@ import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.fluids.FluidInteractionRegistry;
-import net.neoforged.neoforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
@@ -72,7 +71,7 @@ public class PoopSky {
         PSParticles.register(modEventBus);
 
         PSBlocks.register(modEventBus);
-        ToiletBlocks.register(modEventBus);
+        AllToiletBlocks.register(modEventBus);
         PSBlockEntities.register(modEventBus);
         PSItems.register(modEventBus);
         PSEntityType.register(modEventBus);
