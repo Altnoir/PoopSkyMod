@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.block.AllToiletBlocks;
+import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.effect.PSEffects;
 import com.altnoir.poopsky.item.PSItems;
 import net.minecraft.advancements.Advancement;
@@ -74,7 +74,7 @@ public class PSAdvancementPorvider extends AdvancementProvider {
                             true,
                             false
                     )
-                    .addCriterion("pooolime_poop_block", SlideDownBlockTrigger.TriggerInstance.slidesDownBlock(PSBlocks.POOLIME_POOP_BLOCK.get()))
+                    .addCriterion("pooolime_poop_block", InventoryChangeTrigger.TriggerInstance.hasItems(PSBlocks.POOLIME_POOP_BLOCK.get()))
                     .save(saver, modId("pooolime_poop_block"), existingFileHelper);
             AdvancementHolder poop_ball = Advancement.Builder.advancement()
                     .parent(poolime_poop_block)
