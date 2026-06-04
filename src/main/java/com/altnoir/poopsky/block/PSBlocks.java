@@ -389,6 +389,9 @@ public class PSBlocks {
     public static final DeferredBlock<Block> RAW_SAPING_POOP_BLOCK = registerBlock("raw_saping_poop_block",
             () -> new RawSapingBlock(BlockBehaviour.Properties.ofFullCopy(RAW_POOP_BLOCK.get()).sound(SoundType.ROOTED_DIRT))
     );
+    public static final DeferredBlock<Block> RAW_SEA_POOP_BLOCK = registerBlock("raw_sea_poop_block",
+            () -> new RawSeaBlock(BlockBehaviour.Properties.ofFullCopy(RAW_POOP_BLOCK.get()).sound(SoundType.ROOTED_DIRT))
+    );
     public static final DeferredBlock<Block> RAW_WITHER_POOP_BLOCK = registerBlock("raw_wither_poop_block",
             () -> new RawWitherBlock(BlockBehaviour.Properties.ofFullCopy(RAW_POOP_BLOCK.get()).sound(SoundType.ROOTED_DIRT))
     );

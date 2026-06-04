@@ -6,7 +6,8 @@ import net.neoforged.fml.loading.LoadingModList;
 import java.util.Locale;
 
 public enum PSMods {
-    SABLE;
+    SABLE,
+    SKYBLOCKBUILDER;
 
     private final String id;
     private final boolean isLoaded;

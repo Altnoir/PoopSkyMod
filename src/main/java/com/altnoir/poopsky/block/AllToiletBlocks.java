@@ -21,7 +21,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.function.Supplier;
 import java.util.function.ToIntFunction;
 
-public class ToiletBlocks {
+public class AllToiletBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(PoopSky.MOD_ID);
 
     public static final DeferredBlock<Block> OAK_TOILET = registerToilet("oak_toilet", MapColor.WOOD, SoundType.WOOD);

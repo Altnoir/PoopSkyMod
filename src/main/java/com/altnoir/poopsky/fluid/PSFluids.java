@@ -31,10 +31,9 @@ public class PSFluids {
                 }
             });
 
-    private static final BaseFlowingFluid.Properties POOP_FLUID_PROPERTIES = new BaseFlowingFluid.Properties(
-            PSFluidTypes.POOP_FLUID_TYPE,
-            POOP,
-            FLOWING_POOP
-    ).slopeFindDistance(2).levelDecreasePerBlock(1).block(PSBlocks.POOP_LIQUID)
+    private static final BaseFlowingFluid.Properties POOP_FLUID_PROPERTIES = new BaseFlowingFluid.Properties(PSFluidTypes.POOP_FLUID_TYPE, POOP, FLOWING_POOP)
+            .slopeFindDistance(2)
+            .levelDecreasePerBlock(1)
+            .block(PSBlocks.POOP_LIQUID)
             .bucket(PSItems.POOP_BUCKET);
 }

@@ -1,0 +1,52 @@
+{
+  "type": "minecraft:fishing",
+  "pools": [
+    {
+      "bonus_rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "poopsky:sea_poop_ball",
+          "weight": 100
+        },
+        {
+          "type": "minecraft:item",
+          "name": "poopsky:poop_dumplings",
+          "weight": 20
+        },
+        {
+          "type": "minecraft:item",
+          "name": "poopsky:pooburger_meat",
+          "weight": 20
+        },
+        {
+          "type": "minecraft:item",
+          "name": "poopsky:poop_pasta",
+          "weight": 20
+        },
+        {
+          "type": "minecraft:item",
+          "name": "poopsky:roundworm",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:bamboo",
+          "weight": 20
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:tropical_fish",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:pufferfish",
+          "weight": 10
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "poopsky:gameplay/fishing/poop_fluid"
+}

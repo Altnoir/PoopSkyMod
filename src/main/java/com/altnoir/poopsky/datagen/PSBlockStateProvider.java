@@ -1,9 +1,9 @@
 package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.AbstractToiletBlock;
+import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.block.PSBlocks;
-import com.altnoir.poopsky.block.ToiletBlocks;
+import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.p.PoopPieceBlock;
 import com.altnoir.poopsky.block.p.ToiletLavaBlock;
 import net.minecraft.core.Direction;
@@ -143,6 +143,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
 
         blockWithItem(PSBlocks.RAW_POOP_BLOCK.get());
         blockWithItem(PSBlocks.RAW_SAPING_POOP_BLOCK.get());
+        blockWithItem(PSBlocks.RAW_SEA_POOP_BLOCK.get());
         blockWithItem(PSBlocks.RAW_WITHER_POOP_BLOCK.get());
 
         blockItem(PSBlocks.CHILI_POOP_STAIRS);
@@ -166,43 +167,43 @@ public class PSBlockStateProvider extends BlockStateProvider {
         blockWithItem(PSBlocks.POOP_LEAVES_GOLD.get());
         blockWithItem(PSBlocks.POOP_LEAVES_IRON.get());
 
-        registerToilet(ToiletBlocks.OAK_TOILET.get(), Blocks.OAK_PLANKS);
-        registerToilet(ToiletBlocks.SPRUCE_TOILET.get(), Blocks.SPRUCE_PLANKS);
-        registerToilet(ToiletBlocks.BIRCH_TOILET.get(), Blocks.BIRCH_PLANKS);
-        registerToilet(ToiletBlocks.JUNGLE_TOILET.get(), Blocks.JUNGLE_PLANKS);
-        registerToilet(ToiletBlocks.ACACIA_TOILET.get(), Blocks.ACACIA_PLANKS);
-        registerToilet(ToiletBlocks.DARK_OAK_TOILET.get(), Blocks.DARK_OAK_PLANKS);
-        registerToilet(ToiletBlocks.MANGROVE_TOILET.get(), Blocks.MANGROVE_PLANKS);
-        registerToilet(ToiletBlocks.CHERRY_TOILET.get(), Blocks.CHERRY_PLANKS);
-        registerToilet(ToiletBlocks.BAMBOO_TOILET.get(), Blocks.BAMBOO_PLANKS);
-        registerToilet(ToiletBlocks.CRIMSON_TOILET.get(), Blocks.CRIMSON_PLANKS);
-        registerToilet(ToiletBlocks.WARPED_TOILET.get(), Blocks.WARPED_PLANKS);
+        registerToilet(AllToiletBlocks.OAK_TOILET.get(), Blocks.OAK_PLANKS);
+        registerToilet(AllToiletBlocks.SPRUCE_TOILET.get(), Blocks.SPRUCE_PLANKS);
+        registerToilet(AllToiletBlocks.BIRCH_TOILET.get(), Blocks.BIRCH_PLANKS);
+        registerToilet(AllToiletBlocks.JUNGLE_TOILET.get(), Blocks.JUNGLE_PLANKS);
+        registerToilet(AllToiletBlocks.ACACIA_TOILET.get(), Blocks.ACACIA_PLANKS);
+        registerToilet(AllToiletBlocks.DARK_OAK_TOILET.get(), Blocks.DARK_OAK_PLANKS);
+        registerToilet(AllToiletBlocks.MANGROVE_TOILET.get(), Blocks.MANGROVE_PLANKS);
+        registerToilet(AllToiletBlocks.CHERRY_TOILET.get(), Blocks.CHERRY_PLANKS);
+        registerToilet(AllToiletBlocks.BAMBOO_TOILET.get(), Blocks.BAMBOO_PLANKS);
+        registerToilet(AllToiletBlocks.CRIMSON_TOILET.get(), Blocks.CRIMSON_PLANKS);
+        registerToilet(AllToiletBlocks.WARPED_TOILET.get(), Blocks.WARPED_PLANKS);
 
-        registerToiletLava(ToiletBlocks.STONE_TOILET.get(), Blocks.STONE);
-        registerToiletLava(ToiletBlocks.COBBLESTONE_TOILET.get(), Blocks.COBBLESTONE);
-        registerToiletLava(ToiletBlocks.MOSSY_COBBLESTONE_TOILET.get(), Blocks.MOSSY_COBBLESTONE);
-        registerToiletLava(ToiletBlocks.SMOOTH_STONE_TOILET.get(), Blocks.SMOOTH_STONE);
-        registerToiletLava(ToiletBlocks.STONE_BRICK_TOILET.get(), Blocks.STONE_BRICKS);
-        registerToiletLava(ToiletBlocks.MOSSY_STONE_BRICK_TOILET.get(), Blocks.MOSSY_STONE_BRICKS);
-        registerToiletLava(ToiletBlocks.TILE_TOILET.get(), "tile_block");
+        registerToiletLava(AllToiletBlocks.STONE_TOILET.get(), Blocks.STONE);
+        registerToiletLava(AllToiletBlocks.COBBLESTONE_TOILET.get(), Blocks.COBBLESTONE);
+        registerToiletLava(AllToiletBlocks.MOSSY_COBBLESTONE_TOILET.get(), Blocks.MOSSY_COBBLESTONE);
+        registerToiletLava(AllToiletBlocks.SMOOTH_STONE_TOILET.get(), Blocks.SMOOTH_STONE);
+        registerToiletLava(AllToiletBlocks.STONE_BRICK_TOILET.get(), Blocks.STONE_BRICKS);
+        registerToiletLava(AllToiletBlocks.MOSSY_STONE_BRICK_TOILET.get(), Blocks.MOSSY_STONE_BRICKS);
+        registerToiletLava(AllToiletBlocks.TILE_TOILET.get(), "tile_block");
 
-        registerToiletLava(ToiletBlocks.WHITE_CONCRETE_TOILET.get(), Blocks.WHITE_CONCRETE);
-        registerToiletLava(ToiletBlocks.LIGHT_GRAY_CONCRETE_TOILET.get(), Blocks.LIGHT_GRAY_CONCRETE);
-        registerToiletLava(ToiletBlocks.GRAY_CONCRETE_TOILET.get(), Blocks.GRAY_CONCRETE);
-        registerToiletLava(ToiletBlocks.BLACK_CONCRETE_TOILET.get(), Blocks.BLACK_CONCRETE);
-        registerToiletLava(ToiletBlocks.BROWN_CONCRETE_TOILET.get(), Blocks.BROWN_CONCRETE);
-        registerToiletLava(ToiletBlocks.RED_CONCRETE_TOILET.get(), Blocks.RED_CONCRETE);
-        registerToiletLava(ToiletBlocks.ORANGE_CONCRETE_TOILET.get(), Blocks.ORANGE_CONCRETE);
-        registerToiletLava(ToiletBlocks.YELLOW_CONCRETE_TOILET.get(), Blocks.YELLOW_CONCRETE);
-        registerToiletLava(ToiletBlocks.LIME_CONCRETE_TOILET.get(), Blocks.LIME_CONCRETE);
-        registerToiletLava(ToiletBlocks.GREEN_CONCRETE_TOILET.get(), Blocks.GREEN_CONCRETE);
-        registerToiletLava(ToiletBlocks.CYAN_CONCRETE_TOILET.get(), Blocks.CYAN_CONCRETE);
-        registerToiletLava(ToiletBlocks.LIGHT_BLUE_CONCRETE_TOILET.get(), Blocks.LIGHT_BLUE_CONCRETE);
-        registerToiletLava(ToiletBlocks.BLUE_CONCRETE_TOILET.get(), Blocks.BLUE_CONCRETE);
-        registerToiletLava(ToiletBlocks.PURPLE_CONCRETE_TOILET.get(), Blocks.PURPLE_CONCRETE);
-        registerToiletLava(ToiletBlocks.MAGENTA_CONCRETE_TOILET.get(), Blocks.MAGENTA_CONCRETE);
-        registerToiletLava(ToiletBlocks.PINK_CONCRETE_TOILET.get(), Blocks.PINK_CONCRETE);
-        registerToiletLava(ToiletBlocks.RAINBOW_TOILET.get(), "rainbow_concrete");
+        registerToiletLava(AllToiletBlocks.WHITE_CONCRETE_TOILET.get(), Blocks.WHITE_CONCRETE);
+        registerToiletLava(AllToiletBlocks.LIGHT_GRAY_CONCRETE_TOILET.get(), Blocks.LIGHT_GRAY_CONCRETE);
+        registerToiletLava(AllToiletBlocks.GRAY_CONCRETE_TOILET.get(), Blocks.GRAY_CONCRETE);
+        registerToiletLava(AllToiletBlocks.BLACK_CONCRETE_TOILET.get(), Blocks.BLACK_CONCRETE);
+        registerToiletLava(AllToiletBlocks.BROWN_CONCRETE_TOILET.get(), Blocks.BROWN_CONCRETE);
+        registerToiletLava(AllToiletBlocks.RED_CONCRETE_TOILET.get(), Blocks.RED_CONCRETE);
+        registerToiletLava(AllToiletBlocks.ORANGE_CONCRETE_TOILET.get(), Blocks.ORANGE_CONCRETE);
+        registerToiletLava(AllToiletBlocks.YELLOW_CONCRETE_TOILET.get(), Blocks.YELLOW_CONCRETE);
+        registerToiletLava(AllToiletBlocks.LIME_CONCRETE_TOILET.get(), Blocks.LIME_CONCRETE);
+        registerToiletLava(AllToiletBlocks.GREEN_CONCRETE_TOILET.get(), Blocks.GREEN_CONCRETE);
+        registerToiletLava(AllToiletBlocks.CYAN_CONCRETE_TOILET.get(), Blocks.CYAN_CONCRETE);
+        registerToiletLava(AllToiletBlocks.LIGHT_BLUE_CONCRETE_TOILET.get(), Blocks.LIGHT_BLUE_CONCRETE);
+        registerToiletLava(AllToiletBlocks.BLUE_CONCRETE_TOILET.get(), Blocks.BLUE_CONCRETE);
+        registerToiletLava(AllToiletBlocks.PURPLE_CONCRETE_TOILET.get(), Blocks.PURPLE_CONCRETE);
+        registerToiletLava(AllToiletBlocks.MAGENTA_CONCRETE_TOILET.get(), Blocks.MAGENTA_CONCRETE);
+        registerToiletLava(AllToiletBlocks.PINK_CONCRETE_TOILET.get(), Blocks.PINK_CONCRETE);
+        registerToiletLava(AllToiletBlocks.RAINBOW_TOILET.get(), "rainbow_concrete");
 
         fluidBlockWithItem(PSBlocks.POOP_LIQUID.get(), "block/poop_liquid");
         makeCropBlock((CropBlock) PSBlocks.MAGGOTS.get(), "maggots_stage", "maggots_stage");

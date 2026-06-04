@@ -1,9 +1,9 @@
 package com.altnoir.poopsky;
 
-import com.altnoir.poopsky.block.AbstractCompooperBlock;
+import com.altnoir.poopsky.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.block.PSBlockEntities;
 import com.altnoir.poopsky.block.PSBlocks;
-import com.altnoir.poopsky.block.ToiletBlocks;
+import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.p.CompooperBlock;
 import com.altnoir.poopsky.component.PSComponents;
 import com.altnoir.poopsky.effect.PSEffects;
@@ -53,7 +53,6 @@ import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.fluids.FluidInteractionRegistry;
-import net.neoforged.neoforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
@@ -72,7 +71,7 @@ public class PoopSky {
         PSParticles.register(modEventBus);
 
         PSBlocks.register(modEventBus);
-        ToiletBlocks.register(modEventBus);
+        AllToiletBlocks.register(modEventBus);
         PSBlockEntities.register(modEventBus);
         PSItems.register(modEventBus);
         PSEntityType.register(modEventBus);
@@ -101,6 +100,7 @@ public class PoopSky {
             CompooperBlock.bootStrap();
 
             DispenserBlock.registerProjectileBehavior(PSItems.POOP_BALL);
+            DispenserBlock.registerProjectileBehavior(PSItems.SEA_POOP_BALL);
             DispenserBlock.registerProjectileBehavior(PSItems.WITHER_POOP_BALL);
             DispenserBlock.registerBehavior(PSItems.POOP.get(), new OptionalDispenseItemBehavior() {
                 @Override
@@ -137,8 +137,10 @@ public class PoopSky {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-            ItemBlockRenderTypes.setRenderLayer(PSBlocks.POOP_SAPLING.get(), RenderType.cutout());
-            ItemBlockRenderTypes.setRenderLayer(PSBlocks.POOP_EMPTY_LOG.get(), RenderType.cutout());
+            event.enqueueWork(() -> {
+                ItemBlockRenderTypes.setRenderLayer(PSBlocks.POOP_SAPLING.get(), RenderType.cutout());
+                ItemBlockRenderTypes.setRenderLayer(PSBlocks.POOP_EMPTY_LOG.get(), RenderType.cutout());
+            });
 
             EntityRenderers.register(PSEntityType.TOILET_PLUG.get(), ToiletPlugRenderer::new);
             EntityRenderers.register(PSEntityType.POOLIME.get(), PoolimeRenderer::new);

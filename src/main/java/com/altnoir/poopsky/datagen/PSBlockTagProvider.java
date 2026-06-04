@@ -1,13 +1,14 @@
 package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.PSBlocks;
-import com.altnoir.poopsky.block.ToiletBlocks;
 import com.altnoir.poopsky.tag.PSBlockTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -29,9 +30,15 @@ public class PSBlockTagProvider extends BlockTagsProvider {
         tag(PSBlockTags.RAW_SAPING_POOP_BLOCK)
                 .add(PSBlocks.RAW_POOP_BLOCK.get())
                 .add(PSBlocks.RAW_SAPING_POOP_BLOCK.get());
+        tag(PSBlockTags.RAW_SEA_POOP_BLOCK)
+                .add(PSBlocks.RAW_POOP_BLOCK.get())
+                .add(PSBlocks.RAW_SEA_POOP_BLOCK.get());
         tag(PSBlockTags.RAW_WITHER_POOP_BLOCK)
                 .add(PSBlocks.RAW_POOP_BLOCK.get())
                 .add(PSBlocks.RAW_WITHER_POOP_BLOCK.get());
+        tag(PSBlockTags.RAW_SEA_POOP_BLOCK)
+                .add(PSBlocks.RAW_SEA_POOP_BLOCK.get())
+                .add(Blocks.CRYING_OBSIDIAN);
 
         tag(PSBlockTags.POOP_BLOCKS).add(POOP_BLOCKS);
 
@@ -46,6 +53,7 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(PSBlocks.CHILI_POOP_BLOCK.get())
                 .add(PSBlocks.RAW_POOP_BLOCK.get())
                 .add(PSBlocks.RAW_SAPING_POOP_BLOCK.get())
+                .add(PSBlocks.RAW_SEA_POOP_BLOCK.get())
                 .add(PSBlocks.RAW_WITHER_POOP_BLOCK.get());
         tag(BlockTags.BEACON_BASE_BLOCKS)
                 .add(PSBlocks.POOP_BLOCK.get())
@@ -64,6 +72,7 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(PSBlocks.CHILI_POOP_BLOCK.get())
                 .add(PSBlocks.RAW_POOP_BLOCK.get())
                 .add(PSBlocks.RAW_SAPING_POOP_BLOCK.get())
+                .add(PSBlocks.RAW_SEA_POOP_BLOCK.get())
                 .add(PSBlocks.RAW_WITHER_POOP_BLOCK.get());
         tag(BlockTags.SAND)
                 .add(PSBlocks.DRIED_POOP_BLOCK.get());
@@ -73,6 +82,7 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(PSBlocks.CHILI_POOP_BLOCK.get())
                 .add(PSBlocks.RAW_POOP_BLOCK.get())
                 .add(PSBlocks.RAW_SAPING_POOP_BLOCK.get())
+                .add(PSBlocks.RAW_SEA_POOP_BLOCK.get())
                 .add(PSBlocks.RAW_WITHER_POOP_BLOCK.get())
                 .add(PSBlocks.POOP_LOG.get())
                 .add(PSBlocks.POOP_EMPTY_LOG.get())
@@ -215,42 +225,42 @@ public class PSBlockTagProvider extends BlockTagsProvider {
             PSBlocks.CUT_POOP_BLOCK_WALL.get()
     };
     public static final Block[] WOODEN_TOILETS = {
-            ToiletBlocks.OAK_TOILET.get(),
-            ToiletBlocks.SPRUCE_TOILET.get(),
-            ToiletBlocks.BIRCH_TOILET.get(),
-            ToiletBlocks.JUNGLE_TOILET.get(),
-            ToiletBlocks.ACACIA_TOILET.get(),
-            ToiletBlocks.CHERRY_TOILET.get(),
-            ToiletBlocks.DARK_OAK_TOILET.get(),
-            ToiletBlocks.MANGROVE_TOILET.get(),
-            ToiletBlocks.BAMBOO_TOILET.get()
+            AllToiletBlocks.OAK_TOILET.get(),
+            AllToiletBlocks.SPRUCE_TOILET.get(),
+            AllToiletBlocks.BIRCH_TOILET.get(),
+            AllToiletBlocks.JUNGLE_TOILET.get(),
+            AllToiletBlocks.ACACIA_TOILET.get(),
+            AllToiletBlocks.CHERRY_TOILET.get(),
+            AllToiletBlocks.DARK_OAK_TOILET.get(),
+            AllToiletBlocks.MANGROVE_TOILET.get(),
+            AllToiletBlocks.BAMBOO_TOILET.get()
     };
     public static final Block[] HARD_TOILETS = {
             //石制
-            ToiletBlocks.STONE_TOILET.get(),
-            ToiletBlocks.COBBLESTONE_TOILET.get(),
-            ToiletBlocks.MOSSY_COBBLESTONE_TOILET.get(),
-            ToiletBlocks.SMOOTH_STONE_TOILET.get(),
-            ToiletBlocks.STONE_BRICK_TOILET.get(),
-            ToiletBlocks.MOSSY_STONE_BRICK_TOILET.get(),
-            ToiletBlocks.TILE_TOILET.get(),
+            AllToiletBlocks.STONE_TOILET.get(),
+            AllToiletBlocks.COBBLESTONE_TOILET.get(),
+            AllToiletBlocks.MOSSY_COBBLESTONE_TOILET.get(),
+            AllToiletBlocks.SMOOTH_STONE_TOILET.get(),
+            AllToiletBlocks.STONE_BRICK_TOILET.get(),
+            AllToiletBlocks.MOSSY_STONE_BRICK_TOILET.get(),
+            AllToiletBlocks.TILE_TOILET.get(),
             //混凝土
-            ToiletBlocks.WHITE_CONCRETE_TOILET.get(),
-            ToiletBlocks.ORANGE_CONCRETE_TOILET.get(),
-            ToiletBlocks.MAGENTA_CONCRETE_TOILET.get(),
-            ToiletBlocks.LIGHT_BLUE_CONCRETE_TOILET.get(),
-            ToiletBlocks.YELLOW_CONCRETE_TOILET.get(),
-            ToiletBlocks.LIME_CONCRETE_TOILET.get(),
-            ToiletBlocks.PINK_CONCRETE_TOILET.get(),
-            ToiletBlocks.GRAY_CONCRETE_TOILET.get(),
-            ToiletBlocks.LIGHT_GRAY_CONCRETE_TOILET.get(),
-            ToiletBlocks.CYAN_CONCRETE_TOILET.get(),
-            ToiletBlocks.PURPLE_CONCRETE_TOILET.get(),
-            ToiletBlocks.BLUE_CONCRETE_TOILET.get(),
-            ToiletBlocks.BROWN_CONCRETE_TOILET.get(),
-            ToiletBlocks.GREEN_CONCRETE_TOILET.get(),
-            ToiletBlocks.RED_CONCRETE_TOILET.get(),
-            ToiletBlocks.BLACK_CONCRETE_TOILET.get(),
-            ToiletBlocks.RAINBOW_TOILET.get()
+            AllToiletBlocks.WHITE_CONCRETE_TOILET.get(),
+            AllToiletBlocks.ORANGE_CONCRETE_TOILET.get(),
+            AllToiletBlocks.MAGENTA_CONCRETE_TOILET.get(),
+            AllToiletBlocks.LIGHT_BLUE_CONCRETE_TOILET.get(),
+            AllToiletBlocks.YELLOW_CONCRETE_TOILET.get(),
+            AllToiletBlocks.LIME_CONCRETE_TOILET.get(),
+            AllToiletBlocks.PINK_CONCRETE_TOILET.get(),
+            AllToiletBlocks.GRAY_CONCRETE_TOILET.get(),
+            AllToiletBlocks.LIGHT_GRAY_CONCRETE_TOILET.get(),
+            AllToiletBlocks.CYAN_CONCRETE_TOILET.get(),
+            AllToiletBlocks.PURPLE_CONCRETE_TOILET.get(),
+            AllToiletBlocks.BLUE_CONCRETE_TOILET.get(),
+            AllToiletBlocks.BROWN_CONCRETE_TOILET.get(),
+            AllToiletBlocks.GREEN_CONCRETE_TOILET.get(),
+            AllToiletBlocks.RED_CONCRETE_TOILET.get(),
+            AllToiletBlocks.BLACK_CONCRETE_TOILET.get(),
+            AllToiletBlocks.RAINBOW_TOILET.get()
     };
 }

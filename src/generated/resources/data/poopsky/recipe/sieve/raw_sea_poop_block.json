@@ -1,0 +1,72 @@
+{
+  "type": "poopsky:sieve",
+  "input": {
+    "item": "poopsky:raw_sea_poop_block"
+  },
+  "outputs": [
+    {
+      "chance": 1.0,
+      "item": {
+        "count": 2,
+        "id": "minecraft:seagrass"
+      }
+    },
+    {
+      "chance": 0.75,
+      "item": {
+        "count": 1,
+        "id": "minecraft:seagrass"
+      }
+    },
+    {
+      "chance": 1.0,
+      "item": {
+        "count": 1,
+        "id": "minecraft:lily_pad"
+      }
+    },
+    {
+      "chance": 0.5,
+      "item": {
+        "count": 1,
+        "id": "minecraft:sea_pickle"
+      }
+    },
+    {
+      "chance": 0.5,
+      "item": {
+        "count": 1,
+        "id": "minecraft:kelp"
+      }
+    },
+    {
+      "chance": 0.25,
+      "item": {
+        "count": 1,
+        "id": "minecraft:prismarine_shard"
+      }
+    },
+    {
+      "chance": 0.2,
+      "item": {
+        "count": 1,
+        "id": "minecraft:prismarine_crystals"
+      }
+    },
+    {
+      "chance": 0.09,
+      "item": {
+        "count": 1,
+        "id": "minecraft:nautilus_shell"
+      }
+    },
+    {
+      "chance": 0.01,
+      "item": {
+        "count": 1,
+        "id": "minecraft:heart_of_the_sea"
+      }
+    }
+  ],
+  "processingTime": 100
+}

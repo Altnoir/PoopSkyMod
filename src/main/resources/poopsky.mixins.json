@@ -4,7 +4,9 @@
   "package": "com.altnoir.poopsky.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "BaseCoralPlantTypeBlockMixin",
     "CarvedPumpkinBlockMixin",
+    "FishingHookMixin",
     "NoiseBasedChunkGeneratorMixin",
     "TradeWithVillagerMixin",
     "VillagerMixin"

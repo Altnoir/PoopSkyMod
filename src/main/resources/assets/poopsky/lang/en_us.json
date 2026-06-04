@@ -5,6 +5,7 @@
   "item.poopsky.folium_sennae": "Foliium Sennae",
   "item.poopsky.poop_ball": "Poop Ball",
   "item.poopsky.saping_poop_ball": "Saping Poop Ball",
+  "item.poopsky.sea_poop_ball": "Sea Poop Ball",
   "item.poopsky.wither_poop_ball": "Wither Poop Ball",
   "item.poopsky.spall": "Spall",
   "item.poopsky.toilet_plug": "Toilet Plug",
@@ -110,6 +111,7 @@
 
   "block.poopsky.raw_poop_block": "raw Poop Block",
   "block.poopsky.raw_saping_poop_block": "raw Saping Poop Block",
+  "block.poopsky.raw_sea_poop_block": "raw Sea Poop Block",
   "block.poopsky.raw_wither_poop_block": "raw Wither Poop Block",
 
   "block.poopsky.poop_sapling": "Poop Sapling",
@@ -220,6 +222,7 @@
   "tag.item.poopsky.compooper_saplings": "Compooper Saplings",
   "jei.category.poopsky.compooper": "Compooper",
   "jei.category.poopsky.sieve": "Sieve",
+  "jei.poopsky.sieve_chance": "Chance: %.2f%%",
 
   "stat.poopsky.poop_stat": "Poop Stat",
   "itemgroup.poopsky": "POOPSKY"

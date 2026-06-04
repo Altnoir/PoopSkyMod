@@ -19,7 +19,7 @@
       }
     },
     {
-      "chance": 0.01,
+      "chance": 0.005,
       "item": {
         "count": 1,
         "id": "minecraft:wither_skeleton_skull"

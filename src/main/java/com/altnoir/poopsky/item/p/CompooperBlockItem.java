@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.item.p;
 
-import com.altnoir.poopsky.block.AbstractToiletBlock;
+import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.block.p.ToiletLavaBlock;
 import net.minecraft.core.BlockPos;

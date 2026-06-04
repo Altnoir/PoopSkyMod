@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.block.p;
 
-import com.altnoir.poopsky.block.AbstractToiletBlock;
+import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.effect.PSEffects;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

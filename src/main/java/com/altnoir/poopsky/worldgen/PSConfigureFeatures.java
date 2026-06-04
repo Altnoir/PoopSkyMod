@@ -16,6 +16,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.level.block.BaseCoralPlantTypeBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.PinkPetalsBlock;
@@ -46,6 +47,8 @@ public class PSConfigureFeatures {
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> RAW_SAPING_POOP_VEGETATION = resourceKey("raw_saping_poop_vegetation");
     public static final ResourceKey<ConfiguredFeature<?, ?>> RAW_SAPING_POOP_PATCH_BONEMEAL = resourceKey("raw_saping_poop_patch_bonemeal");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> RAW_SEA_POOP_VEGETATION = resourceKey("raw_sea_poop_vegetation");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> RAW_SEA_POOP_PATCH_BONEMEAL = resourceKey("raw_sea_poop_patch_bonemeal");
     public static final ResourceKey<ConfiguredFeature<?, ?>> RAW_WITHER_POOP_VEGETATION = resourceKey("raw_wither_poop_vegetation");
     public static final ResourceKey<ConfiguredFeature<?, ?>> RAW_WITHER_POOP_PATCH_BONEMEAL = resourceKey("raw_wither_poop_patch_bonemeal");
 
@@ -145,6 +148,26 @@ public class PSConfigureFeatures {
                 vegetationPatch(PSBlockTags.RAW_SAPING_POOP_BLOCK, PSBlocks.RAW_SAPING_POOP_BLOCK.get(),
                         holdergetter.getOrThrow(RAW_SAPING_POOP_VEGETATION), 0.3F, 0.25F)
         );
+        register(context, RAW_SEA_POOP_VEGETATION, Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(
+                        new WeightedStateProvider(
+                                SimpleWeightedRandomList.<BlockState>builder()
+                                        .add(Blocks.TUBE_CORAL.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false))
+                                        .add(Blocks.TUBE_CORAL_FAN.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false))
+                                        .add(Blocks.BRAIN_CORAL.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false))
+                                        .add(Blocks.BRAIN_CORAL_FAN.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false))
+                                        .add(Blocks.BUBBLE_CORAL.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false))
+                                        .add(Blocks.BUBBLE_CORAL_FAN.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false))
+                                        .add(Blocks.FIRE_CORAL.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false))
+                                        .add(Blocks.FIRE_CORAL_FAN.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false))
+                                        .add(Blocks.HORN_CORAL.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false))
+                                        .add(Blocks.HORN_CORAL_FAN.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false))
+                        ))
+        );
+        register(context, RAW_SEA_POOP_PATCH_BONEMEAL, Feature.VEGETATION_PATCH,
+                vegetationPatch(PSBlockTags.RAW_SEA_POOP_BLOCK, PSBlocks.RAW_SEA_POOP_BLOCK.get(),
+                        holdergetter.getOrThrow(RAW_SEA_POOP_VEGETATION), 0.3F, 0.25F)
+        );
 
         register(context, RAW_WITHER_POOP_VEGETATION, Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.WITHER_ROSE))
@@ -159,14 +182,14 @@ public class PSConfigureFeatures {
         return vegetationPatch(replaceable, ground, feature, 0.25F, 0.0F);
     }
 
-    private static VegetationPatchConfiguration vegetationPatch(TagKey<Block> replaceable, Block ground, Holder<ConfiguredFeature<?, ?>> feature, float chance1, float chance2) {
+    private static VegetationPatchConfiguration vegetationPatch(TagKey<Block> replaceable, Block ground, Holder<ConfiguredFeature<?, ?>> feature, float grow, float infection) {
         return new VegetationPatchConfiguration(
                 replaceable,
                 BlockStateProvider.simple(ground),
                 PlacementUtils.inlinePlaced(feature),
                 CaveSurface.FLOOR,
                 ConstantInt.of(1), 0.0F, 5,
-                chance1, UniformInt.of(1, 2), chance2
+                grow, UniformInt.of(1, 2), infection
         );
     }
 

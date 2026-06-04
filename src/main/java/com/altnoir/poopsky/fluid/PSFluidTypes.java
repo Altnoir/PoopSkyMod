@@ -31,6 +31,8 @@ public class PSFluidTypes {
                     .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL_LAVA)
                     .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY_LAVA)
                     .canHydrate(true)
+                    .canDrown(true)
+                    .canPushEntity(true)
                     .lightLevel(7)
                     .density(3000)
                     .viscosity(6000)

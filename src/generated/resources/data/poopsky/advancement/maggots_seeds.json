@@ -1,0 +1,33 @@
+{
+  "parent": "poopsky:urine_compooer",
+  "criteria": {
+    "maggots_seeds": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:maggots_seeds"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.poopsky.maggots_seeds.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "poopsky:maggots_seeds"
+    },
+    "title": {
+      "translate": "advancements.poopsky.maggots_seeds.title"
+    }
+  },
+  "requirements": [
+    [
+      "maggots_seeds"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

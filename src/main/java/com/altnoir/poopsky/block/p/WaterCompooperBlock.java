@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.block.p;
 
-import com.altnoir.poopsky.block.AbstractCompooperBlock;
+import com.altnoir.poopsky.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.block.PSBlocks;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;

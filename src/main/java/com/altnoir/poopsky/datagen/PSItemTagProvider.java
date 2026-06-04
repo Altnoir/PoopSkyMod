@@ -2,7 +2,7 @@ package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.PSBlocks;
-import com.altnoir.poopsky.block.ToiletBlocks;
+import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.tag.PSItemTags;
 import net.minecraft.core.HolderLookup;
@@ -144,43 +144,43 @@ public class PSItemTagProvider extends ItemTagsProvider {
     }
 
     public static final Item[] WOODEN_TOILETS = {
-            ToiletBlocks.OAK_TOILET.get().asItem(),
-            ToiletBlocks.SPRUCE_TOILET.get().asItem(),
-            ToiletBlocks.BIRCH_TOILET.get().asItem(),
-            ToiletBlocks.JUNGLE_TOILET.get().asItem(),
-            ToiletBlocks.ACACIA_TOILET.get().asItem(),
-            ToiletBlocks.CHERRY_TOILET.get().asItem(),
-            ToiletBlocks.DARK_OAK_TOILET.get().asItem(),
-            ToiletBlocks.MANGROVE_TOILET.get().asItem(),
-            ToiletBlocks.BAMBOO_TOILET.get().asItem()
+            AllToiletBlocks.OAK_TOILET.get().asItem(),
+            AllToiletBlocks.SPRUCE_TOILET.get().asItem(),
+            AllToiletBlocks.BIRCH_TOILET.get().asItem(),
+            AllToiletBlocks.JUNGLE_TOILET.get().asItem(),
+            AllToiletBlocks.ACACIA_TOILET.get().asItem(),
+            AllToiletBlocks.CHERRY_TOILET.get().asItem(),
+            AllToiletBlocks.DARK_OAK_TOILET.get().asItem(),
+            AllToiletBlocks.MANGROVE_TOILET.get().asItem(),
+            AllToiletBlocks.BAMBOO_TOILET.get().asItem()
     };
 
     public static final Item[] HARD_TOILETS = {
             //石制
-            ToiletBlocks.STONE_TOILET.get().asItem(),
-            ToiletBlocks.COBBLESTONE_TOILET.get().asItem(),
-            ToiletBlocks.MOSSY_COBBLESTONE_TOILET.get().asItem(),
-            ToiletBlocks.SMOOTH_STONE_TOILET.get().asItem(),
-            ToiletBlocks.STONE_BRICK_TOILET.get().asItem(),
-            ToiletBlocks.MOSSY_STONE_BRICK_TOILET.get().asItem(),
-            ToiletBlocks.TILE_TOILET.get().asItem(),
+            AllToiletBlocks.STONE_TOILET.get().asItem(),
+            AllToiletBlocks.COBBLESTONE_TOILET.get().asItem(),
+            AllToiletBlocks.MOSSY_COBBLESTONE_TOILET.get().asItem(),
+            AllToiletBlocks.SMOOTH_STONE_TOILET.get().asItem(),
+            AllToiletBlocks.STONE_BRICK_TOILET.get().asItem(),
+            AllToiletBlocks.MOSSY_STONE_BRICK_TOILET.get().asItem(),
+            AllToiletBlocks.TILE_TOILET.get().asItem(),
             //混凝土
-            ToiletBlocks.WHITE_CONCRETE_TOILET.get().asItem(),
-            ToiletBlocks.ORANGE_CONCRETE_TOILET.get().asItem(),
-            ToiletBlocks.MAGENTA_CONCRETE_TOILET.get().asItem(),
-            ToiletBlocks.LIGHT_BLUE_CONCRETE_TOILET.get().asItem(),
-            ToiletBlocks.YELLOW_CONCRETE_TOILET.get().asItem(),
-            ToiletBlocks.LIME_CONCRETE_TOILET.get().asItem(),
-            ToiletBlocks.PINK_CONCRETE_TOILET.get().asItem(),
-            ToiletBlocks.GRAY_CONCRETE_TOILET.get().asItem(),
-            ToiletBlocks.LIGHT_GRAY_CONCRETE_TOILET.get().asItem(),
-            ToiletBlocks.CYAN_CONCRETE_TOILET.get().asItem(),
-            ToiletBlocks.PURPLE_CONCRETE_TOILET.get().asItem(),
-            ToiletBlocks.BLUE_CONCRETE_TOILET.get().asItem(),
-            ToiletBlocks.BROWN_CONCRETE_TOILET.get().asItem(),
-            ToiletBlocks.GREEN_CONCRETE_TOILET.get().asItem(),
-            ToiletBlocks.RED_CONCRETE_TOILET.get().asItem(),
-            ToiletBlocks.BLACK_CONCRETE_TOILET.get().asItem(),
-            ToiletBlocks.RAINBOW_TOILET.get().asItem()
+            AllToiletBlocks.WHITE_CONCRETE_TOILET.get().asItem(),
+            AllToiletBlocks.ORANGE_CONCRETE_TOILET.get().asItem(),
+            AllToiletBlocks.MAGENTA_CONCRETE_TOILET.get().asItem(),
+            AllToiletBlocks.LIGHT_BLUE_CONCRETE_TOILET.get().asItem(),
+            AllToiletBlocks.YELLOW_CONCRETE_TOILET.get().asItem(),
+            AllToiletBlocks.LIME_CONCRETE_TOILET.get().asItem(),
+            AllToiletBlocks.PINK_CONCRETE_TOILET.get().asItem(),
+            AllToiletBlocks.GRAY_CONCRETE_TOILET.get().asItem(),
+            AllToiletBlocks.LIGHT_GRAY_CONCRETE_TOILET.get().asItem(),
+            AllToiletBlocks.CYAN_CONCRETE_TOILET.get().asItem(),
+            AllToiletBlocks.PURPLE_CONCRETE_TOILET.get().asItem(),
+            AllToiletBlocks.BLUE_CONCRETE_TOILET.get().asItem(),
+            AllToiletBlocks.BROWN_CONCRETE_TOILET.get().asItem(),
+            AllToiletBlocks.GREEN_CONCRETE_TOILET.get().asItem(),
+            AllToiletBlocks.RED_CONCRETE_TOILET.get().asItem(),
+            AllToiletBlocks.BLACK_CONCRETE_TOILET.get().asItem(),
+            AllToiletBlocks.RAINBOW_TOILET.get().asItem()
     };
 }

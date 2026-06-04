@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "poopsky:raw_sea_poop_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "poopsky:sea_poop_ball"
+  }
+}

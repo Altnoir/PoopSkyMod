@@ -21,6 +21,7 @@ public class PSItemModelProvider extends ItemModelProvider {
         basicItem(PSItems.FOLIUM_SENNAE.get());
         basicItem(PSItems.POOP_BALL.get());
         basicItem(PSItems.SAPING_POOP_BALL.get());
+        basicItem(PSItems.SEA_POOP_BALL.get());
         basicItem(PSItems.WITHER_POOP_BALL.get());
         basicItem(PSItems.POOP_BREAD.get());
         basicItem(PSItems.POOP_DUMPLINGS.get());

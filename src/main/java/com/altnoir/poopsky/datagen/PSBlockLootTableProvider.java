@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.block.PSBlocks;
-import com.altnoir.poopsky.block.ToiletBlocks;
+import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.p.CompooperBlock;
 import com.altnoir.poopsky.block.p.PoopPieceBlock;
 import com.altnoir.poopsky.block.p.RoundwormVinesPlantBlock;
@@ -46,7 +46,7 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
 
     @Override
     protected void generate() {
-        ToiletBlocks.BLOCKS.getEntries().stream()
+        AllToiletBlocks.BLOCKS.getEntries().stream()
                 .map(DeferredHolder::get)
                 .forEach(this::dropSelf);
 
@@ -122,6 +122,7 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
 
         dropSelf(PSBlocks.RAW_POOP_BLOCK.get());
         dropSelf(PSBlocks.RAW_SAPING_POOP_BLOCK.get());
+        dropSelf(PSBlocks.RAW_SEA_POOP_BLOCK.get());
         dropSelf(PSBlocks.RAW_WITHER_POOP_BLOCK.get());
 
         dropSelf(PSBlocks.POOP_CAKE.get());
@@ -328,7 +329,7 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
     protected @NotNull Iterable<Block> getKnownBlocks() {
         return Stream.concat(
                         PSBlocks.BLOCKS.getEntries().stream(),
-                        ToiletBlocks.BLOCKS.getEntries().stream()
+                        AllToiletBlocks.BLOCKS.getEntries().stream()
                 )
                 .map(Holder::value)
                 .collect(Collectors.toList());

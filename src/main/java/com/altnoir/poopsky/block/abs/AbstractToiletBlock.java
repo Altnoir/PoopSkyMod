@@ -1,5 +1,6 @@
-package com.altnoir.poopsky.block;
+package com.altnoir.poopsky.block.abs;
 
+import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.block.p.ToiletLavaBlock;
 import com.altnoir.poopsky.effect.PSEffects;
@@ -144,7 +145,7 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
 
     private void poopAnvil(Level level, BlockState blockState, Entity entity) {
         Item poopItem;
-        if (blockState.is(ToiletBlocks.RAINBOW_TOILET)) {
+        if (blockState.is(AllToiletBlocks.RAINBOW_TOILET)) {
             poopItem = PSItems.GOLDEN_POOP.get();
         } else {
             poopItem = PSItems.POOP.get();

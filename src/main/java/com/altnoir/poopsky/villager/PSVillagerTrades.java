@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.villager;
 
 import com.altnoir.poopsky.block.PSBlocks;
-import com.altnoir.poopsky.block.ToiletBlocks;
+import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.item.PSItems;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.core.Holder;
@@ -76,7 +76,7 @@ public class PSVillagerTrades {
 
             trades.get(5).add((entity, random) -> new MerchantOffer(
                     new ItemCost(Items.EMERALD, 12),
-                    new ItemStack(ToiletBlocks.RAINBOW_TOILET, 1), 8, 25, 0.5f)
+                    new ItemStack(AllToiletBlocks.RAINBOW_TOILET, 1), 8, 25, 0.5f)
             );
             trades.get(5).add((entity, random) -> new MerchantOffer(
                     new ItemCost(Items.EMERALD, 24),

@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.block.p;
 
-import com.altnoir.poopsky.block.AbstractCompooperBlock;
+import com.altnoir.poopsky.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.particle.PSParticles;

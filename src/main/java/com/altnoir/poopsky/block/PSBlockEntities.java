@@ -18,7 +18,7 @@ public class PSBlockEntities {
 
     public static final Supplier<BlockEntityType<ToiletBlockEntity>> TOILET_BLOCK_ENTITY = BLOCK_ENTITY_TYPES.register("toilet_block_entity",
             () -> {
-                var blocks = ToiletBlocks.BLOCKS.getEntries().stream()
+                var blocks = AllToiletBlocks.BLOCKS.getEntries().stream()
                         .map(DeferredHolder::get)
                         .toArray(Block[]::new);
                 return BlockEntityType.Builder.of(ToiletBlockEntity::new, blocks).build(null);

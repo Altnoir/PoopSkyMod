@@ -1,7 +1,7 @@
 package com.altnoir.poopsky;
 
 import com.altnoir.poopsky.block.PSBlocks;
-import com.altnoir.poopsky.block.ToiletBlocks;
+import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.item.PSItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -43,7 +43,7 @@ public class PSItemGroups {
                         .filter(block -> !skip.contains(block))
                         .forEach(output::accept);
 
-                ToiletBlocks.BLOCKS.getEntries().stream()
+                AllToiletBlocks.BLOCKS.getEntries().stream()
                         .map(DeferredHolder::get)
                         .forEach(output::accept);
             })

@@ -1,7 +1,8 @@
-package com.altnoir.poopsky.block;
+package com.altnoir.poopsky.block.abs;
 
 import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.block.PSBlocks;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -224,15 +225,14 @@ public abstract class AbstractCompooperBlock extends Block {
                 itemEntity.setItem(new ItemStack(item));
             }
 
-            if (level.random.nextBoolean()) {
-                if (newLevel > MIN_LEVEL) {
-                    level.setBlockAndUpdate(pos, state.setValue(LEVEL, newLevel));
-                } else {
-                    BlockState compooperBlock = PSBlocks.COMPOOPER.get().defaultBlockState();
-                    level.setBlockAndUpdate(pos, compooperBlock);
-                    level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(itemEntity, compooperBlock));
-                }
+            if (newLevel > MIN_LEVEL) {
+                level.setBlockAndUpdate(pos, state.setValue(LEVEL, newLevel));
+            } else {
+                BlockState compooperBlock = PSBlocks.COMPOOPER.get().defaultBlockState();
+                level.setBlockAndUpdate(pos, compooperBlock);
+                level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(itemEntity, compooperBlock));
             }
+
         }
         for (int i = 0; i < 8; i++) {
             level.addParticle(ParticleTypes.FIREWORK, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(),
