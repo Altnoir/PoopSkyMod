@@ -1,9 +1,9 @@
 package com.altnoir.poopsky;
 
-import com.altnoir.poopsky.block.abs.AbstractCompooperBlock;
+import com.altnoir.poopsky.block.AbstractCompooperBlock;
 import com.altnoir.poopsky.block.PSBlockEntities;
 import com.altnoir.poopsky.block.PSBlocks;
-import com.altnoir.poopsky.block.AllToiletBlocks;
+import com.altnoir.poopsky.block.ToiletBlocks;
 import com.altnoir.poopsky.block.p.CompooperBlock;
 import com.altnoir.poopsky.component.PSComponents;
 import com.altnoir.poopsky.effect.PSEffects;
@@ -53,6 +53,7 @@ import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.fluids.FluidInteractionRegistry;
+import net.neoforged.neoforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
@@ -71,7 +72,7 @@ public class PoopSky {
         PSParticles.register(modEventBus);
 
         PSBlocks.register(modEventBus);
-        AllToiletBlocks.register(modEventBus);
+        ToiletBlocks.register(modEventBus);
         PSBlockEntities.register(modEventBus);
         PSItems.register(modEventBus);
         PSEntityType.register(modEventBus);
@@ -100,7 +101,6 @@ public class PoopSky {
             CompooperBlock.bootStrap();
 
             DispenserBlock.registerProjectileBehavior(PSItems.POOP_BALL);
-            DispenserBlock.registerProjectileBehavior(PSItems.SEA_POOP_BALL);
             DispenserBlock.registerProjectileBehavior(PSItems.WITHER_POOP_BALL);
             DispenserBlock.registerBehavior(PSItems.POOP.get(), new OptionalDispenseItemBehavior() {
                 @Override
