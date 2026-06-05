@@ -49,9 +49,9 @@ public class ToiletBlockEntity extends BlockEntity {
 
         targetWorld.getChunkSource().getChunk(chunkPos.x, chunkPos.z, ChunkStatus.FULL, true);
 
-        var be = (ToiletBlockEntity) targetWorld.getBlockEntity(linkedPos);
-        if (be == null) return;
-        be.setLinkedPos(BlockPos.ZERO, "");
+        if (targetWorld.getBlockEntity(linkedPos) instanceof ToiletBlockEntity be) {
+            be.setLinkedPos(BlockPos.ZERO, "");
+        }
     }
 
     public void setLinkedPos(BlockPos pos, String dim) {

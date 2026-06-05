@@ -109,10 +109,10 @@
   "block.poopsky.tile_block_vertical_slab": "Tile Block Vertical Slab",
   "block.poopsky.tile_block_wall": "Tile Block Wall",
 
-  "block.poopsky.raw_poop_block": "raw Poop Block",
-  "block.poopsky.raw_saping_poop_block": "raw Saping Poop Block",
-  "block.poopsky.raw_sea_poop_block": "raw Sea Poop Block",
-  "block.poopsky.raw_wither_poop_block": "raw Wither Poop Block",
+  "block.poopsky.raw_poop_block": "Raw Poop Block",
+  "block.poopsky.raw_saping_poop_block": "Raw Saping Poop Block",
+  "block.poopsky.raw_sea_poop_block": "Raw Sea Poop Block",
+  "block.poopsky.raw_wither_poop_block": "Raw Wither Poop Block",
 
   "block.poopsky.poop_sapling": "Poop Sapling",
   "block.poopsky.poop_leaves": "Poop Leaves",
@@ -144,7 +144,7 @@
   "item.poopsky.pooburger_meat": "Pooburger Meat",
   "item.poopsky.pooburger": "Pooburger",
   "item.poopsky.poop_pasta": "Poop Pasta",
-  "item.poopsky.poodding": "Poodding",
+  "item.poopsky.poodding": "\"Poodding\"",
   "block.poopsky.poop_cake": "Poop Cake",
 
   "block.poopsky.urine": "Urine",
@@ -202,11 +202,11 @@
   "message.poopsky.toilet_plug.dismount": "Press %s to dismount Toilet Plug",
 
   "advancements.poopsky.root.title": "POOPSKY",
-  "advancements.poopsky.root.description": "Start your poop empire!",
+  "advancements.poopsky.root.description": "It all began with a piece of poop",
   "advancements.poopsky.poop_block_slide.title": "Master of Poop Sliding",
   "advancements.poopsky.poop_block_slide.description": "Slide on a poop block",
-  "advancements.poopsky.pooolime_poop_block.title": "pooplime poop block",
-  "advancements.poopsky.pooolime_poop_block.description": "create a pooplime poop block",
+  "advancements.poopsky.pooolime_poop_block.title": "Pooplime Poop Block",
+  "advancements.poopsky.pooolime_poop_block.description": "Use Poop Block to craft a Pooplime Poop Block",
   "advancements.poopsky.poop_sapling.title": "Poop Sapling",
   "advancements.poopsky.poop_sapling.description": "Grow a poop sapling",
   "advancements.poopsky.compooer.title": "Compooper",
