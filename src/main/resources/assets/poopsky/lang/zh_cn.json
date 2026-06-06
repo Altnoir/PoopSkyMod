@@ -256,5 +256,17 @@
 
   "generator.poopsky.poopsky": "空中厕所",
   "stat.poopsky.poop_stat": "拉屎数",
-  "itemgroup.poopsky": "空中厕所"
+  "itemgroup.poopsky": "空中厕所",
+
+  "poopsky.configuration.title": "%s 配置",
+  "poopsky.configuration.lavaFluid": "禁用地下熔岩湖",
+  "poopsky.configuration.lavaFluid.tooltip": "在空中厕所世界生成中禁用地下熔岩湖",
+  "poopsky.configuration.stickyCrafting": "合成木棍时保留液体",
+  "poopsky.configuration.stickyCrafting.tooltip": "使用堆粪桶合成木棍时不消耗桶内液体",
+  "poopsky.configuration.desperateWorld": "绝望世界",
+  "poopsky.configuration.desperateWorld.tooltip": "启用绝望世界生成。开启后可能造成卡顿",
+  "poopsky.configuration.setPoopskyDefault": "专用服务器默认世界类型",
+  "poopsky.configuration.setPoopskyDefault.tooltip": "让专用服务器默认使用空中厕所世界预设",
+  "poopsky.configuration.voidNetherGeneration": "虚空下界生成",
+  "poopsky.configuration.voidNetherGeneration.tooltip": "使用空中厕所自定义虚空生成器时，让下界也保持空旷"
 }
