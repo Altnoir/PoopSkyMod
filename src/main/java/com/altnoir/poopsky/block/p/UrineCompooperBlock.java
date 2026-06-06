@@ -63,7 +63,7 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
         int i = state.getValue(LEVEL);
 
         Item bottle = PSItems.URINE_BOTTLE.get();
-        Item bucket = PSItems.POOP_BUCKET.get();
+        Item bucket = PSItems.URINE_BUCKET.get();
 
         if (i >= MAX_LEVEL) {
             if (stack.getItem() == Items.BUCKET) {

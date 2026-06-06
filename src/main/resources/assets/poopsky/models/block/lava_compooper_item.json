@@ -1,6 +1,6 @@
 {
 	"parent": "poopsky:block/compooper_item",
 	"textures": {
-		"inside": "poopsky:block/poop_liquid"
+		"inside": "minecraft:block/lava_still"
 	}
 }

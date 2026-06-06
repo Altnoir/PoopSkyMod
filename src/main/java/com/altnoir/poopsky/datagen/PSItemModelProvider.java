@@ -39,7 +39,7 @@ public class PSItemModelProvider extends ItemModelProvider {
         basicItem(PSItems.MOON_BOWL_MUSIC_DISC.get());
         basicItem(PSItems.TOILET_PLUG_WAND.get());
         basicItem(PSItems.URINE_BOTTLE.get());
-        basicItem(PSItems.POOP_BUCKET.get());
+        basicItem(PSItems.URINE_BUCKET.get());
         basicItem(PSItems.MAGGOTS_SEEDS.get());
         basicItem(PSItems.ROUNDWORM.get());
         basicItem(PSItems.BAKED_MAGGOTS.get());
@@ -56,8 +56,7 @@ public class PSItemModelProvider extends ItemModelProvider {
         wallItem(PSBlocks.TILE_BLOCK_WALL, PSBlocks.TILE_BLOCK);
         
         // 添加液体桶的模型
-        withExistingParent("poop_bucket", mcLoc("item/generated"))
-                .texture("layer0", modLoc("item/poop_bucket"));
+        //withExistingParent("urine_bucket", mcLoc("item/generated")).texture("layer0", modLoc("item/urine_bucket"));
 
         withExistingParent(PSItems.POOLIME_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
     }

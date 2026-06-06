@@ -140,7 +140,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
         PotionContents potioncontents = stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
 
         if (i == MIN_LEVEL) {
-            if (stack.getItem() == PSItems.POOP_BUCKET.get()) {
+            if (stack.getItem() == PSItems.URINE_BUCKET.get()) {
                 return liquidUse(stack, level, pos, player, hand, SoundEvents.BUCKET_EMPTY_LAVA, PSBlocks.URINE_COMPOOPER.get(), true);
             } else if (stack.getItem() == Items.WATER_BUCKET) {
                 return liquidUse(stack, level, pos, player, hand, SoundEvents.BUCKET_EMPTY, PSBlocks.WATER_COMPOOPER.get(), true);

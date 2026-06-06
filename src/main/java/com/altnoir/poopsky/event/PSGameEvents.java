@@ -12,7 +12,6 @@ import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.villager.PSVillagerTrades;
 import com.altnoir.poopsky.worldgen.PSVoidChunkGenerator;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -30,7 +29,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
-import net.minecraft.world.level.levelgen.presets.WorldPreset;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -72,7 +70,7 @@ public class PSGameEvents {
             Item item;
             if (heldItem.is(Tags.Items.BUCKETS_EMPTY)) {
                 sound = SoundEvents.BUCKET_FILL;
-                item = PSItems.POOP_BUCKET.get();
+                item = PSItems.URINE_BUCKET.get();
             } else {
                 sound = SoundEvents.BOTTLE_FILL;
                 item = PSItems.URINE_BOTTLE.get();

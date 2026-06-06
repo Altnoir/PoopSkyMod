@@ -82,7 +82,7 @@ public class PSItems {
                     .stacksTo(18)
             )
     );
-    public static final DeferredItem<BucketItem> POOP_BUCKET = ITEMS.register("poop_bucket",
+    public static final DeferredItem<BucketItem> URINE_BUCKET = ITEMS.register("urine_bucket",
             () -> new BucketItem(PSFluids.POOP.get(), new Item.Properties().stacksTo(1)));
 
     public static final DeferredItem<Item> POOLIME_SPAWN_EGG = ITEMS.register("poolime_spawn_egg",

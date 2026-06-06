@@ -71,7 +71,7 @@ public class PSVillagerTrades {
             );
             trades.get(4).add((entity, random) -> new MerchantOffer(
                     new ItemCost(Items.EMERALD, 20),
-                    new ItemStack(PSItems.POOP_BUCKET.get(), 1), 4, 25, 0.25f)
+                    new ItemStack(PSItems.URINE_BUCKET.get(), 1), 4, 25, 0.25f)
             );
 
             trades.get(5).add((entity, random) -> new MerchantOffer(

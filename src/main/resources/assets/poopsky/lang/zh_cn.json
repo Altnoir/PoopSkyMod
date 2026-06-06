@@ -10,7 +10,7 @@
   "item.poopsky.spall": "碎石",
   "item.poopsky.toilet_plug": "马桶搋子",
   "item.poopsky.urine_bottle": "尿瓶",
-  "item.poopsky.poop_bucket": "粪桶",
+  "item.poopsky.urine_bucket": "粪桶",
   "block.poopsky.poop_liquid": "粪液",
 
   "item.poopsky.time_bell": "屎溅之铃",
@@ -213,7 +213,7 @@
   "advancements.poopsky.wither_poop_ball.description": "使用粪便球和凋灵玫瑰合成出凋灵粪便球",
   "advancements.poopsky.poop_sapling.title": "粪结石",
   "advancements.poopsky.poop_sapling.description": "催熟粪便块，获取粪便树苗",
-  "advancements.poopsky.compooer.title": "堆粪桶",
+  "advancements.poopsky.compooer.title": "粪桶",
   "advancements.poopsky.compooer.description": "破坏粪便木，合成出堆粪桶\n堆粪桶也可以接取雨水和雪",
   "advancements.poopsky.urine_compooer.title": "挑粪匠",
   "advancements.poopsky.urine_compooer.description": "使用堆粪桶向厕所舀取液体粪便",

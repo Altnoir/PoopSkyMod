@@ -35,5 +35,5 @@ public class PSFluids {
             .slopeFindDistance(2)
             .levelDecreasePerBlock(1)
             .block(PSBlocks.POOP_LIQUID)
-            .bucket(PSItems.POOP_BUCKET);
+            .bucket(PSItems.URINE_BUCKET);
 }
