@@ -19,11 +19,8 @@ group = mod_group_id
 
 repositories {
     mavenLocal()
-    maven { url = "https://maven.firstdark.dev/snapshots" } // LDLib2
     maven { url = "https://maven.ryanhcode.dev/releases" } // Sable
-    maven { url = "https://maven.blamejared.com" } // Veil
     maven { url = "https://maven.tterrag.com/" } // JEI
-    maven { url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/" } // Forge Config Api
 }
 
 base {

@@ -23,9 +23,7 @@ import com.altnoir.poopsky.worldgen.PSChunkGenerators;
 import com.altnoir.poopsky.worldgen.foliage.PSFoliagePlacerTypes;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.BiomeColors;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
@@ -42,16 +40,17 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+import net.neoforged.neoforge.client.event.RegisterNamedRenderTypesEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
+import net.neoforged.neoforge.client.gui.ConfigurationScreen;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.NeoForgeMod;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
-import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.fluids.FluidInteractionRegistry;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -85,14 +84,11 @@ public class PoopSky {
         PSVillagers.register(modEventBus);
         PSRecipes.register(modEventBus);
 
-        // 注册液体和液体类型
         PSFluids.FLUIDS.register(modEventBus);
         PSFluidTypes.FLUID_TYPES.register(modEventBus);
 
-        NeoForge.EVENT_BUS.register(this);
-
-        modEventBus.addListener(this::addCreative);
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+        modContainer.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
@@ -125,28 +121,21 @@ public class PoopSky {
         });
     }
 
-    private void addCreative(BuildCreativeModeTabContentsEvent event) {
-    }
-
-    @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event) {
-
-    }
-
     @EventBusSubscriber(modid = MOD_ID, value = Dist.CLIENT)
     public static class ClientModEvents {
         @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event) {
-            event.enqueueWork(() -> {
-                ItemBlockRenderTypes.setRenderLayer(PSBlocks.POOP_SAPLING.get(), RenderType.cutout());
-                ItemBlockRenderTypes.setRenderLayer(PSBlocks.POOP_EMPTY_LOG.get(), RenderType.cutout());
-            });
+        public static void registerRenderTypes(RegisterNamedRenderTypesEvent event) {
+            event.register(PoopSky.loc("poop_sapling"), RenderType.cutout(), RenderType.entityCutout(PSBlocks.POOP_SAPLING.getId()));
+            event.register(PoopSky.loc("poop_empty_log"), RenderType.cutout(), RenderType.entityCutout(PSBlocks.POOP_EMPTY_LOG.getId()));
+        }
 
-            EntityRenderers.register(PSEntityType.TOILET_PLUG.get(), ToiletPlugRenderer::new);
-            EntityRenderers.register(PSEntityType.POOLIME.get(), PoolimeRenderer::new);
-            EntityRenderers.register(PSEntityType.FLY.get(), FlyRenderer::new);
-            EntityRenderers.register(PSEntityType.STOOL.get(), ChairRenderer::new);
-            EntityRenderers.register(PSEntityType.TOILET.get(), ToiletRenderer::new);
+        @SubscribeEvent
+        public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+            event.registerEntityRenderer(PSEntityType.TOILET_PLUG.get(), ToiletPlugRenderer::new);
+            event.registerEntityRenderer(PSEntityType.POOLIME.get(), PoolimeRenderer::new);
+            event.registerEntityRenderer(PSEntityType.FLY.get(), FlyRenderer::new);
+            event.registerEntityRenderer(PSEntityType.STOOL.get(), ChairRenderer::new);
+            event.registerEntityRenderer(PSEntityType.TOILET.get(), ToiletRenderer::new);
         }
 
         @SubscribeEvent

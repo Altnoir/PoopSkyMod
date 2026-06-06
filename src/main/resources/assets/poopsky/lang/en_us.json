@@ -225,5 +225,17 @@
   "jei.poopsky.sieve_chance": "Chance: %.2f%%",
 
   "stat.poopsky.poop_stat": "Poop Stat",
-  "itemgroup.poopsky": "POOPSKY"
+  "itemgroup.poopsky": "POOPSKY",
+
+  "poopsky.configuration.title": "%s Options",
+  "poopsky.configuration.lavaFluid": "Disable Underground Lava Lakes",
+  "poopsky.configuration.lavaFluid.tooltip": "Disables underground lava lakes during PoopSky world generation",
+  "poopsky.configuration.stickyCrafting": "Keep Liquid When Crafting Sticks",
+  "poopsky.configuration.stickyCrafting.tooltip": "Prevents liquid in the compooper from being consumed when crafting sticks",
+  "poopsky.configuration.desperateWorld": "Desperate World",
+  "poopsky.configuration.desperateWorld.tooltip": "Enables Desperate World generation. This can cause lag",
+  "poopsky.configuration.setPoopskyDefault": "Default Dedicated Server World Type",
+  "poopsky.configuration.setPoopskyDefault.tooltip": "Makes dedicated servers use the PoopSky world preset by default",
+  "poopsky.configuration.voidNetherGeneration": "Void Nether Generation",
+  "poopsky.configuration.voidNetherGeneration.tooltip": "Keeps the Nether empty when PoopSky's custom void generator is active"
 }

@@ -16,19 +16,19 @@ public class Config {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
     private static final ModConfigSpec.BooleanValue LAVA_FLUID_BLOCK = BUILDER
-            .comment("Whether to Disable the underground lava lake")
+            .translation("poopsky.configuration.lavaFluid")
             .define("lavaFluid", true);
     private static final ModConfigSpec.BooleanValue STICK_CREAFTING = BUILDER
-            .comment("Whether to Disable the consumption of liquid when sticks crafting")
+            .translation("poopsky.configuration.stickyCrafting")
             .define("stickyCrafting", false);
     private static final ModConfigSpec.BooleanValue DESPERATE_WORLD = BUILDER
-            .comment("Whether to Enable the Desperate World (Enabling it will cause the device to lag)")
+            .translation("poopsky.configuration.desperateWorld")
             .define("desperateWorld", false);
     private static final ModConfigSpec.BooleanValue SET_POOPSKY_DEFAULT = BUILDER
-            .comment("Whether the dedicated server level-type default should be set to poopsky")
+            .translation("poopsky.configuration.setPoopskyDefault")
             .define("setPoopskyDefault", false);
     private static final ModConfigSpec.BooleanValue VOID_NETHER_GENERATION = BUILDER
-            .comment("Whether the custom void generator should also keep the nether empty")
+            .translation("poopsky.configuration.voidNetherGeneration")
             .define("voidNetherGeneration", true);
     static final ModConfigSpec SPEC = BUILDER.build();
 
