@@ -24,17 +24,6 @@ import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 @EventBusSubscriber(modid = PoopSky.MOD_ID)
 public class PSModEvents {
     @SubscribeEvent
-    public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(ToiletPlugModel.LAYER_LOCATION, ToiletPlugModel::createBodyLayer);
-        event.registerLayerDefinition(FlyModel.LAYER_LOCATION, FlyModel::createBodyLayer);
-    }
-
-    @SubscribeEvent
-    public static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(PSBlockEntities.SIEVE_BLOCK_ENTITY.get(), SieveBlockEntityRenderer::new);
-    }
-
-    @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(PSEntityType.POOLIME.get(), PoolimeEntity.createAttributes().build());
         event.put(PSEntityType.FLY.get(), FlyEntity.createAttributes().build());
