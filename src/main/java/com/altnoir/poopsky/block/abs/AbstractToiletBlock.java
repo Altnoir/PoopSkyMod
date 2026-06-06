@@ -262,10 +262,10 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
         Direction facing = ctx.getHorizontalDirection().getOpposite();
 
         var forwardPos = pos.relative(facing);
-        var forwardConnected = isValidNeighbor(level, forwardPos, facing);
+        var forwardConnected = isValidNeighbor(level, forwardPos, pos, facing);
 
         var backwardPos = pos.relative(facing.getOpposite());
-        var backwardConnected = isValidNeighbor(level, backwardPos, facing);
+        var backwardConnected = isValidNeighbor(level, backwardPos, pos, facing);
 
         ToiletState connection;
         if (forwardConnected && backwardConnected) {
@@ -332,27 +332,30 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
 
     @Override
     public void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean moved) {
-        if (!level.isClientSide && neighborPos.equals(pos.above()) && hasHot((ServerLevel) level, pos)) {
-            level.scheduleTick(pos, this, 1);
-        }
-        var facing = state.getValue(FACING);
-        var forwardPos = pos.relative(facing);
-        var backwardPos = pos.relative(facing.getOpposite());
+        if (!level.isClientSide) {
+            if (neighborPos.equals(pos.above()) && hasHot((ServerLevel) level, pos)) {
+                level.scheduleTick(pos, this, 1);
+            }
 
-        var forwardConnected = isValidNeighbor(level, forwardPos, facing);
-        var backwardConnected = isValidNeighbor(level, backwardPos, facing);
-        ToiletState connection;
-        if (forwardConnected && backwardConnected) {
-            connection = ToiletState.BOTH;
-        } else if (forwardConnected) {
-            connection = ToiletState.FRONT;
-        } else if (backwardConnected) {
-            connection = ToiletState.BACK;
-        } else {
-            connection = ToiletState.DEFAULT;
-        }
-        if (connection != state.getValue(CONNECTION)) {
-            level.setBlockAndUpdate(pos, state.setValue(CONNECTION, connection));
+            var facing = state.getValue(FACING);
+            var forwardPos = pos.relative(facing);
+            var backwardPos = pos.relative(facing.getOpposite());
+
+            var forwardConnected = isValidNeighbor(level, forwardPos, pos, facing);
+            var backwardConnected = isValidNeighbor(level, backwardPos, pos, facing);
+            ToiletState connection;
+            if (forwardConnected && backwardConnected) {
+                connection = ToiletState.BOTH;
+            } else if (forwardConnected) {
+                connection = ToiletState.FRONT;
+            } else if (backwardConnected) {
+                connection = ToiletState.BACK;
+            } else {
+                connection = ToiletState.DEFAULT;
+            }
+            if (connection != state.getValue(CONNECTION)) {
+                level.setBlockAndUpdate(pos, state.setValue(CONNECTION, connection));
+            }
         }
     }
 
@@ -362,17 +365,25 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
         return level.getBlockState(above).is(Blocks.FIRE);
     }
 
-    protected boolean isValidNeighbor(LevelReader level, BlockPos pos, Direction facing) {
-        var neighbor = level.getBlockState(pos);
+    protected boolean isValidNeighbor(LevelReader level, BlockPos neighborPos, BlockPos pos, Direction facing) {
+        var neighbor = level.getBlockState(neighborPos);
+        var state = level.getBlockState(pos);
 
         if (neighbor.getBlock() instanceof AbstractToiletBlock) {
-            if (!(neighbor.getBlock() instanceof ToiletLavaBlock)) {
-                return neighbor.getValue(FACING) == facing || neighbor.getValue(FACING) == facing.getOpposite();
-            } else if (this instanceof ToiletLavaBlock) {
-                return neighbor.getValue(ToiletLavaBlock.LAVA) == this.defaultBlockState().getValue(ToiletLavaBlock.LAVA) &&
-                        (neighbor.getValue(FACING) == facing || neighbor.getValue(FACING) == facing.getOpposite());
+            if (this instanceof ToiletLavaBlock) {
+                if (neighbor.getBlock() instanceof ToiletLavaBlock) {
+                    return neighbor.getValue(ToiletLavaBlock.LAVA) == state.getValue(ToiletLavaBlock.LAVA) && isFaceConnected(neighbor, facing);
+                }
+            } else {
+                if (!(neighbor.getBlock() instanceof ToiletLavaBlock)) {
+                    return isFaceConnected(neighbor, facing);
+                }
             }
         }
         return false;
+    }
+
+    private boolean isFaceConnected(BlockState state, Direction facing) {
+        return state.getValue(FACING) == facing || state.getValue(FACING) == facing.getOpposite();
     }
 }

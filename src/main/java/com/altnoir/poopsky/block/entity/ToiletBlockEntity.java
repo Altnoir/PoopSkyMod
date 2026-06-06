@@ -87,6 +87,10 @@ public class ToiletBlockEntity extends BlockEntity {
     @Override
     public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider registries) {
         super.handleUpdateTag(tag, registries);
+        if (tag.contains("LinkedPos")) {
+            this.linkedPos = BlockPos.of(tag.getLong("LinkedPos"));
+            this.linkedDim = tag.getString("LinkedDim");
+        }
     }
 
     @Nullable
