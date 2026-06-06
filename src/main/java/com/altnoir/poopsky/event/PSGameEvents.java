@@ -7,16 +7,12 @@ import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.p.ToiletLavaBlock;
 import com.altnoir.poopsky.effect.PSEffects;
 import com.altnoir.poopsky.effect.PSPotions;
-import com.altnoir.poopsky.event.asm.ASMHooks;
 import com.altnoir.poopsky.fluid.PSFluids;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.villager.PSVillagerTrades;
 import com.altnoir.poopsky.worldgen.PSVoidChunkGenerator;
-import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
-import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -39,7 +35,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.ScreenEvent;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
@@ -49,8 +44,6 @@ import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 
 @EventBusSubscriber(modid = PoopSky.MOD_ID)
 public class PSGameEvents {
-    public static Holder<WorldPreset> originalDefaultWorldPreset;
-
     @SubscribeEvent
     public static void onBrewingRecipeRegistry(RegisterBrewingRecipesEvent event) {
         PotionBrewing.Builder builder = event.getBuilder();
@@ -133,24 +126,6 @@ public class PSGameEvents {
 
         if (mob.hasEffect(PSEffects.FECAL_INCONTINENCE)) return;
         mob.addEffect(new MobEffectInstance(PSEffects.FECAL_INCONTINENCE, MobEffectInstance.INFINITE_DURATION, 3));
-    }
-
-    @SubscribeEvent
-    public static void onScreenOpen(ScreenEvent.Opening event) {
-        if (event.getNewScreen() instanceof CreateWorldScreen screen) {
-            var uiState = screen.getUiState();
-            var originalPreset = uiState.getWorldType().preset();
-
-            if (originalPreset != null) {
-                if (originalDefaultWorldPreset == null) {
-                    originalDefaultWorldPreset = originalPreset;
-                }
-                if (originalDefaultWorldPreset.unwrapKey().equals(originalPreset.unwrapKey())) {
-                    var voidWorldPreset = uiState.getSettings().worldgenLoadContext().registryOrThrow(Registries.WORLD_PRESET).getHolder(ASMHooks.overrideDefaultWorldPreset()).orElse(null);
-                    uiState.setWorldType(new WorldCreationUiState.WorldTypeEntry(voidWorldPreset));
-                }
-            }
-        }
     }
 
     @SubscribeEvent
