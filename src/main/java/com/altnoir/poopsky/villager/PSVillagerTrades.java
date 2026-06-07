@@ -79,11 +79,7 @@ public class PSVillagerTrades {
                     new ItemStack(AllToiletBlocks.RAINBOW_TOILET, 1), 8, 25, 0.5f)
             );
             trades.get(5).add((entity, random) -> new MerchantOffer(
-                    new ItemCost(Items.EMERALD, 24),
-                    new ItemStack(PSItems.TOILET_PLUG_WAND.get(), 1), 4, 50, 0.5f)
-            );
-            trades.get(5).add((entity, random) -> new MerchantOffer(
-                    new ItemCost(Items.EMERALD, 64),
+                    new ItemCost(Items.EMERALD, 42),
                     Optional.of(new ItemCost(Items.BREEZE_ROD, 8)),
                     new ItemStack(PSItems.TOILET_PLUG.get(), 1), 1, 100, 1.0f)
             );

@@ -23,7 +23,6 @@ import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -122,19 +121,20 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
     @Override
     public void fallOn(Level level, BlockState blockState, BlockPos pos, Entity entity, float fallDistance) {
         if (!level.isClientSide) {
-            if (fallDistance >= 1.0F && entity instanceof LivingEntity living) {
-                var factor = Math.max(fallDistance / 10.0F, 0.0F);
-                var damageMultiplier = 1.0F / (1.0F + factor);
-                living.causeFallDamage(fallDistance, damageMultiplier, level.damageSources().fall());
-            }
-            if (entity instanceof FallingBlockEntity falling && isAnvil(falling.getBlockState())) {
-                poopAnvil(level, blockState, entity);
-            }
+            ToiletBlockEntity be = null;
 
             if (fallDistance >= 1.0f && isEntityCentered(pos, entity)) {
-                var be = (ToiletBlockEntity) level.getBlockEntity(pos);
-                if (be == null) return;
+                be = (ToiletBlockEntity) level.getBlockEntity(pos);
+            }
+
+            if (be != null && be.getLinkedPos() != null && be.getLinkedDim() != null && !be.getLinkedDim().isBlank()) {
                 teleportEntity(level, entity, be, fallDistance);
+            } else {
+                super.fallOn(level, blockState, pos, entity, fallDistance);
+            }
+
+            if (entity instanceof FallingBlockEntity falling && isAnvil(falling.getBlockState())) {
+                poopAnvil(level, blockState, entity);
             }
         }
     }
@@ -223,7 +223,6 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
         var server = level.getServer();
         var linkedDim = blockEntity.getLinkedDim();
         var targetPos = blockEntity.getLinkedPos();
-        if (linkedDim == null || linkedDim.isBlank() || targetPos == null) return;
 
         var targetDimension = ResourceLocation.tryParse(linkedDim);
         if (targetDimension == null) return;
