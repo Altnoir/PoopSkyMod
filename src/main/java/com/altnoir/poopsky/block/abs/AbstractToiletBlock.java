@@ -102,6 +102,9 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
             } else {
                 entity = entities.getFirst();
             }
+            if (entity instanceof ToiletEntity toiletEntity) {
+                toiletEntity.setGoldenPoop(state.is(AllToiletBlocks.RAINBOW_TOILET));
+            }
             player.startRiding(entity);
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
@@ -294,7 +297,7 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
 
     @Override
     public BlockState mirror(BlockState state, Mirror mirror) {
-        return state.rotate(mirror.getRotation(state.getValue(FACING)));
+        return rotate(state, mirror.getRotation(state.getValue(FACING)));
     }
 
     @Nullable
