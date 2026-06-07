@@ -6,6 +6,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
@@ -44,6 +45,15 @@ public class PSEntityType {
             EntityType.Builder.of(ToiletEntity::new, MobCategory.MISC)
                     .sized(0.5F, 0.5F)
                     .build("toilet_entity"));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<PoopTntEntity>> POOP_TNT = ENTITY_TYPES.register("poop_tnt", () ->
+            EntityType.Builder.<PoopTntEntity>of(PoopTntEntity::new, MobCategory.MISC)
+                    .sized(0.75F, 0.75F)
+                    .eyeHeight(0.15F)
+                    .clientTrackingRange(10)
+                    .updateInterval(10)
+                    .fireImmune()
+                    .build("poop_tnt"));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);

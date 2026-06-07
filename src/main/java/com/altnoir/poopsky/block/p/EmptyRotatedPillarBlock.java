@@ -8,6 +8,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.BooleanOp;
@@ -16,7 +17,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class EmptyRotatedPillarBlock extends Block {
-    public static final EnumProperty<Direction.Axis> AXIS = EnumProperty.create("axis", Direction.Axis.class);
+    public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.AXIS;
 
     private static final VoxelShape RAYCAST_SHAPE_1 = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
     private static final VoxelShape RAYCAST_SHAPE_2 = Block.box(2.0D, 2.0D, 0.0D, 14.0D, 14.0D, 16.0D);
@@ -62,6 +63,11 @@ public class EmptyRotatedPillarBlock extends Block {
             case Z -> OUTLINE_SHAPE_2;
             default -> OUTLINE_SHAPE_1;
         };
+    }
+
+    @Override
+    protected VoxelShape getInteractionShape(BlockState state, BlockGetter level, BlockPos pos) {
+        return Shapes.block();
     }
 
     @Override

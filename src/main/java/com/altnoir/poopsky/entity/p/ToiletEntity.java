@@ -12,6 +12,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -81,13 +82,16 @@ public class ToiletEntity extends Entity {
             redStone.setDefaultPickUpDelay();
             level.addFreshEntity(redStone);
         } else {
-            var poop = new ItemEntity(level, player.getX(), player.getY() + 0.1, player.getZ(), new ItemStack(PSItems.POOP.get()));
-            var chili_poop = new ItemEntity(level, player.getX(), player.getY() + 0.1, player.getZ(), new ItemStack(PSItems.CHILI_POOP.get()));
+            Item poopItem;
+            if (isFire) {
+                poopItem = PSItems.CHILI_POOP.get();
+            } else {
+                poopItem = PSItems.POOP.get();
+            }
+            var poop = new ItemEntity(level, player.getX(), player.getY() + 0.1, player.getZ(), new ItemStack(poopItem));
 
             poop.setDefaultPickUpDelay();
-            chili_poop.setDefaultPickUpDelay();
-
-            level.addFreshEntity(isFire ? chili_poop : poop);
+            level.addFreshEntity(poop);
         }
         var pitch = level.random.nextFloat() + 0.5F;
         level.playSound(null, player.getX(), player.getY() + 0.1, player.getZ(), PSSoundEvents.FART.get(), SoundSource.PLAYERS, 1.0F, pitch);
