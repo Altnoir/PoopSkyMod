@@ -41,6 +41,9 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(Blocks.CRYING_OBSIDIAN);
 
         tag(PSBlockTags.POOP_BLOCKS).add(POOP_BLOCKS);
+        tag(PSBlockTags.EMPTY_LOGS)
+                .add(PSBlocks.POOP_EMPTY_LOG.get())
+                .add(PSBlocks.STRIPPED_POOP_EMPTY_LOG.get());
 
         tag(PSBlockTags.TOILET_BLOCKS)
                 .add(WOODEN_TOILETS)

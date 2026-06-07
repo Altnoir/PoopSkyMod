@@ -8,6 +8,7 @@ import net.minecraft.world.level.block.Block;
 public class PSBlockTags {
     public static final TagKey<Block> TOILET_BLOCKS = create("toilet_blocks");
     public static final TagKey<Block> POOP_BLOCKS = create("poop_blocks");
+    public static final TagKey<Block> EMPTY_LOGS = create("empty_logs");
     public static final TagKey<Block> POOP_BLOCK = create("poop_block");
     public static final TagKey<Block> CHILI_POOP_BLOCK = create("chili_poop_block");
     public static final TagKey<Block> RAW_SAPLING_POOP_BLOCK = create("raw_saping_poop_block");

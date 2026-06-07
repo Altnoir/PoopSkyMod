@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "poopsky:block/poop_tnt_bottom",
+    "side": "poopsky:block/poop_tnt_side",
+    "top": "poopsky:block/poop_tnt_top"
+  }
+}

@@ -242,7 +242,7 @@ public class PSBlocks {
             () -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(CHILI_POOP_BLOCK.get()))
     );
     public static final DeferredBlock<Block> GOLDEN_POOP_BLOCK = registerBlock("golden_poop_block",
-            () -> new Block(BlockBehaviour.Properties.of()
+            () -> new GoldenPoopBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.GOLD)
                     .requiresCorrectToolForDrops()
                     .strength(0.65F)
@@ -376,6 +376,14 @@ public class PSBlocks {
                     .sound(SoundType.SCAFFOLDING)
                     .isValidSpawn(Blocks::never)
                     .noOcclusion()));
+
+    public static final DeferredBlock<Block> POOP_TNT = registerBlock("poop_tnt",
+            () -> new PoopTntBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.FIRE)
+                    .strength(0.0F)
+                    .sound(SoundType.GRASS)
+                    .ignitedByLava()
+                    .pushReaction(PushReaction.DESTROY)));
 
     public static final DeferredBlock<Block> RAW_POOP_BLOCK = registerBlock("raw_poop_block",
             () -> new Block(BlockBehaviour.Properties.of()

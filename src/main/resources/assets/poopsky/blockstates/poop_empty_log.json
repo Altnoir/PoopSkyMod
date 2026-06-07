@@ -1,7 +1,30 @@
 {
   "variants": {
-    "axis=y": {"model": "poopsky:block/poop_empty_log"},
-    "axis=z": {"model": "poopsky:block/poop_empty_log_horizontal"},
-    "axis=x": {"model": "poopsky:block/poop_empty_log_horizontal", "y":  90}
+    "facing=down": {
+      "model": "poopsky:block/poop_empty_log",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "poopsky:block/poop_empty_log",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "poopsky:block/poop_empty_log",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "poopsky:block/poop_empty_log",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "poopsky:block/poop_empty_log"
+    },
+    "facing=west": {
+      "model": "poopsky:block/poop_empty_log",
+      "x": 90,
+      "y": 270
+    }
   }
 }
