@@ -205,7 +205,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         wallRecipe(recipeOutput, PSBlocks.TILE_BLOCK_WALL, PSBlocks.TILE_BLOCK);
 
         nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PSItems.POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PSBlocks.RAW_POOP_BLOCK);
-        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PSItems.SAPING_POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PSBlocks.RAW_SAPING_POOP_BLOCK);
+        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PSItems.SAPLING_POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PSBlocks.RAW_SAPLING_POOP_BLOCK);
         nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PSItems.SEA_POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PSBlocks.RAW_SEA_POOP_BLOCK);
         nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PSItems.WITHER_POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PSBlocks.RAW_WITHER_POOP_BLOCK);
 
@@ -501,7 +501,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy(getItemName(PSBlocks.SIEVE.get()), has(PSBlocks.SIEVE.get()))
                 .save(recipeOutput, "raw_poop_block");
 
-        SieveRecipeBuilder.sieve(PSBlocks.RAW_SAPING_POOP_BLOCK, 100)
+        SieveRecipeBuilder.sieve(PSBlocks.RAW_SAPLING_POOP_BLOCK, 100)
                 .addOutput(Items.SUNFLOWER).addOutput(Items.LILAC)
                 .addOutput(Items.ROSE_BUSH).addOutput(Items.PEONY)
                 .addOutput(Items.VINE, 0.75F)

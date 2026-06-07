@@ -27,9 +27,9 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(PSBlocks.POOP_BLOCK.get());
         tag(PSBlockTags.CHILI_POOP_BLOCK)
                 .add(PSBlocks.CHILI_POOP_BLOCK.get());
-        tag(PSBlockTags.RAW_SAPING_POOP_BLOCK)
+        tag(PSBlockTags.RAW_SAPLING_POOP_BLOCK)
                 .add(PSBlocks.RAW_POOP_BLOCK.get())
-                .add(PSBlocks.RAW_SAPING_POOP_BLOCK.get());
+                .add(PSBlocks.RAW_SAPLING_POOP_BLOCK.get());
         tag(PSBlockTags.RAW_SEA_POOP_BLOCK)
                 .add(PSBlocks.RAW_POOP_BLOCK.get())
                 .add(PSBlocks.RAW_SEA_POOP_BLOCK.get());
@@ -52,7 +52,7 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(PSBlocks.POOLIME_POOP_BLOCK.get())
                 .add(PSBlocks.CHILI_POOP_BLOCK.get())
                 .add(PSBlocks.RAW_POOP_BLOCK.get())
-                .add(PSBlocks.RAW_SAPING_POOP_BLOCK.get())
+                .add(PSBlocks.RAW_SAPLING_POOP_BLOCK.get())
                 .add(PSBlocks.RAW_SEA_POOP_BLOCK.get())
                 .add(PSBlocks.RAW_WITHER_POOP_BLOCK.get());
         tag(BlockTags.BEACON_BASE_BLOCKS)
@@ -71,7 +71,7 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(PSBlocks.POOP_BLOCK.get())
                 .add(PSBlocks.CHILI_POOP_BLOCK.get())
                 .add(PSBlocks.RAW_POOP_BLOCK.get())
-                .add(PSBlocks.RAW_SAPING_POOP_BLOCK.get())
+                .add(PSBlocks.RAW_SAPLING_POOP_BLOCK.get())
                 .add(PSBlocks.RAW_SEA_POOP_BLOCK.get())
                 .add(PSBlocks.RAW_WITHER_POOP_BLOCK.get());
         tag(BlockTags.SAND)
@@ -81,7 +81,7 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(PSBlocks.POOP_BLOCK.get())
                 .add(PSBlocks.CHILI_POOP_BLOCK.get())
                 .add(PSBlocks.RAW_POOP_BLOCK.get())
-                .add(PSBlocks.RAW_SAPING_POOP_BLOCK.get())
+                .add(PSBlocks.RAW_SAPLING_POOP_BLOCK.get())
                 .add(PSBlocks.RAW_SEA_POOP_BLOCK.get())
                 .add(PSBlocks.RAW_WITHER_POOP_BLOCK.get())
                 .add(PSBlocks.POOP_LOG.get())

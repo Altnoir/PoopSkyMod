@@ -212,7 +212,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
     public static void extractProduce(Entity entity, BlockState state, Level level, BlockPos pos) {
         if (!level.isClientSide) {
             var vec3 = Vec3.atLowerCornerWithOffset(pos, 0.5, 1.01, 0.5).offsetRandom(level.random, 0.7F);
-            var itementity = new ItemEntity(level, vec3.x(), vec3.y(), vec3.z(), new ItemStack(PSItems.SAPING_POOP_BALL.get()));
+            var itementity = new ItemEntity(level, vec3.x(), vec3.y(), vec3.z(), new ItemStack(PSItems.SAPLING_POOP_BALL.get()));
             itementity.setDefaultPickUpDelay();
             level.addFreshEntity(itementity);
         }
@@ -284,7 +284,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
     public WorldlyContainer getContainer(BlockState state, LevelAccessor level, BlockPos pos) {
         int i = state.getValue(POOP_LEVEL);
         if (i == READY) {
-            return new OutputContainer(state, level, pos, new ItemStack(PSItems.SAPING_POOP_BALL.get()));
+            return new OutputContainer(state, level, pos, new ItemStack(PSItems.SAPLING_POOP_BALL.get()));
         } else {
             return i < READY - 1 ? new InputContainer(state, level, pos) : new EmptyContainer();
         }
@@ -404,7 +404,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
          */
         @Override
         public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-            return !this.changed && direction == Direction.DOWN && stack.is(PSItems.SAPING_POOP_BALL.get());
+            return !this.changed && direction == Direction.DOWN && stack.is(PSItems.SAPLING_POOP_BALL.get());
         }
 
         @Override

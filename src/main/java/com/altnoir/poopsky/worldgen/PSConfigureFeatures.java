@@ -45,8 +45,8 @@ public class PSConfigureFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> CHILI_POOP_PATCH_BONEMEAL = resourceKey("chili_poop_patch_bonemeal");
     public static final ResourceKey<ConfiguredFeature<?, ?>> DRIED_POOP_PATCH = resourceKey("dried_poop_patch");
 
-    public static final ResourceKey<ConfiguredFeature<?, ?>> RAW_SAPING_POOP_VEGETATION = resourceKey("raw_saping_poop_vegetation");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> RAW_SAPING_POOP_PATCH_BONEMEAL = resourceKey("raw_saping_poop_patch_bonemeal");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> RAW_SAPLING_POOP_VEGETATION = resourceKey("raw_saping_poop_vegetation");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> RAW_SAPLING_POOP_PATCH_BONEMEAL = resourceKey("raw_saping_poop_patch_bonemeal");
     public static final ResourceKey<ConfiguredFeature<?, ?>> RAW_SEA_POOP_VEGETATION = resourceKey("raw_sea_poop_vegetation");
     public static final ResourceKey<ConfiguredFeature<?, ?>> RAW_SEA_POOP_PATCH_BONEMEAL = resourceKey("raw_sea_poop_patch_bonemeal");
     public static final ResourceKey<ConfiguredFeature<?, ?>> RAW_WITHER_POOP_VEGETATION = resourceKey("raw_wither_poop_vegetation");
@@ -125,7 +125,7 @@ public class PSConfigureFeatures {
                                 )))
         );
 
-        register(context, RAW_SAPING_POOP_VEGETATION, Feature.SIMPLE_BLOCK,
+        register(context, RAW_SAPLING_POOP_VEGETATION, Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(
                         new WeightedStateProvider(
                                 SimpleWeightedRandomList.<BlockState>builder()
@@ -144,9 +144,9 @@ public class PSConfigureFeatures {
                                         .add(Blocks.PINK_PETALS.defaultBlockState().setValue(PinkPetalsBlock.AMOUNT, PinkPetalsBlock.MAX_FLOWERS))
                         ))
         );
-        register(context, RAW_SAPING_POOP_PATCH_BONEMEAL, Feature.VEGETATION_PATCH,
-                vegetationPatch(PSBlockTags.RAW_SAPING_POOP_BLOCK, PSBlocks.RAW_SAPING_POOP_BLOCK.get(),
-                        holdergetter.getOrThrow(RAW_SAPING_POOP_VEGETATION), 0.3F, 0.25F)
+        register(context, RAW_SAPLING_POOP_PATCH_BONEMEAL, Feature.VEGETATION_PATCH,
+                vegetationPatch(PSBlockTags.RAW_SAPLING_POOP_BLOCK, PSBlocks.RAW_SAPLING_POOP_BLOCK.get(),
+                        holdergetter.getOrThrow(RAW_SAPLING_POOP_VEGETATION), 0.3F, 0.25F)
         );
         register(context, RAW_SEA_POOP_VEGETATION, Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(

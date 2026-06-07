@@ -121,7 +121,7 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(PSBlocks.TILE_BLOCK_WALL.get());
 
         dropSelf(PSBlocks.RAW_POOP_BLOCK.get());
-        dropSelf(PSBlocks.RAW_SAPING_POOP_BLOCK.get());
+        dropSelf(PSBlocks.RAW_SAPLING_POOP_BLOCK.get());
         dropSelf(PSBlocks.RAW_SEA_POOP_BLOCK.get());
         dropSelf(PSBlocks.RAW_WITHER_POOP_BLOCK.get());
 
@@ -291,7 +291,7 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
                 )
                 .withPool(
                         LootPool.lootPool()
-                                .add(LootItem.lootTableItem(PSItems.SAPING_POOP_BALL.get()))
+                                .add(LootItem.lootTableItem(PSItems.SAPLING_POOP_BALL.get()))
                                 .when(
                                         LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
                                                 .setProperties(StatePropertiesPredicate.Builder.properties()

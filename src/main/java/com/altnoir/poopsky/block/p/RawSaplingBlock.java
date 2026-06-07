@@ -8,8 +8,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class RawSapingBlock extends AbstractRawBlock {
-    public RawSapingBlock(Properties properties) {
+public class RawSaplingBlock extends AbstractRawBlock {
+    public RawSaplingBlock(Properties properties) {
         super(properties);
     }
 
@@ -17,7 +17,7 @@ public class RawSapingBlock extends AbstractRawBlock {
     public void performBonemeal(ServerLevel serverLevel, RandomSource randomSource, BlockPos blockPos, BlockState blockState) {
         serverLevel.registryAccess()
                 .registry(Registries.CONFIGURED_FEATURE)
-                .flatMap(holder -> holder.getHolder(PSConfigureFeatures.RAW_SAPING_POOP_PATCH_BONEMEAL))
+                .flatMap(holder -> holder.getHolder(PSConfigureFeatures.RAW_SAPLING_POOP_PATCH_BONEMEAL))
                 .ifPresent(reference -> reference.value().place(serverLevel, serverLevel.getChunkSource().getGenerator(), randomSource, blockPos.above()));
     }
 }

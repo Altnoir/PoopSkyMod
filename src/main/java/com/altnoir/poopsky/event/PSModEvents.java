@@ -32,7 +32,7 @@ public class PSModEvents {
     @SubscribeEvent
     public static void registerSpawnPlacements(RegisterSpawnPlacementsEvent event) {
         event.register(PSEntityType.POOLIME.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                PoolimeEntity::checkPooplimeSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
+                PoolimeEntity::checkPoolimeSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
         event.register(PSEntityType.FLY.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 FlyEntity::checkFlySpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
     }

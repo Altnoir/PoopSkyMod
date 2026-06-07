@@ -142,7 +142,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
         wallBlock((WallBlock) PSBlocks.TILE_BLOCK_WALL.get(), blockTexture(PSBlocks.TILE_BLOCK.get()));
 
         blockWithItem(PSBlocks.RAW_POOP_BLOCK.get());
-        blockWithItem(PSBlocks.RAW_SAPING_POOP_BLOCK.get());
+        blockWithItem(PSBlocks.RAW_SAPLING_POOP_BLOCK.get());
         blockWithItem(PSBlocks.RAW_SEA_POOP_BLOCK.get());
         blockWithItem(PSBlocks.RAW_WITHER_POOP_BLOCK.get());
 
