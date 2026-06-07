@@ -26,11 +26,11 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class PooplimePoopBlock extends Block {
-    public static final MapCodec<PooplimePoopBlock> CODEC = simpleCodec(PooplimePoopBlock::new);
+public class PoolimePoopBlock extends Block {
+    public static final MapCodec<PoolimePoopBlock> CODEC = simpleCodec(PoolimePoopBlock::new);
     protected static final VoxelShape SHAPE = Block.box(1.0, 0.0, 1.0, 15.0, 14.0, 15.0);
 
-    public PooplimePoopBlock(Properties properties) {
+    public PoolimePoopBlock(Properties properties) {
         super(properties);
     }
 

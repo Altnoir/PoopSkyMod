@@ -171,7 +171,7 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
     protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (!state.getValue(MAGGOTS) && state.getValue(LEVEL) == MAX_LEVEL) {
             level.setBlockAndUpdate(pos, state.setValue(MAGGOTS, true));
-            level.playSound(null, pos, PSSoundEvents.BLOCK_COMPPOOPER_MAGGOTS.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
+            level.playSound(null, pos, PSSoundEvents.BLOCK_COMPOOPER_MAGGOTS.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
         }
         super.randomTick(state, level, pos, random);
     }

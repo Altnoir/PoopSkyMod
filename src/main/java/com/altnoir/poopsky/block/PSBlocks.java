@@ -77,7 +77,7 @@ public class PSBlocks {
                     .sound(SoundType.MUD))
     );
     public static final DeferredBlock<Block> POOLIME_POOP_BLOCK = registerBlock("poolime_poop_block",
-            () -> new PooplimePoopBlock(BlockBehaviour.Properties.of()
+            () -> new PoolimePoopBlock(BlockBehaviour.Properties.of()
                     .randomTicks()
                     .strength(POOP)
                     .mapColor(MapColor.COLOR_BROWN)
