@@ -18,6 +18,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
 public class ToiletEntity extends Entity {
+    private boolean goldenPoop;
+
     public ToiletEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
     }
@@ -25,6 +27,14 @@ public class ToiletEntity extends Entity {
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
 
+    }
+
+    public void setGoldenPoop(boolean goldenPoop) {
+        this.goldenPoop = goldenPoop;
+    }
+
+    public boolean isGoldenPoop() {
+        return this.goldenPoop;
     }
 
     @Override
