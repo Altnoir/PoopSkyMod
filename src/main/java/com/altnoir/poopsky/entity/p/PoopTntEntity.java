@@ -2,7 +2,9 @@ package com.altnoir.poopsky.entity.p;
 
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.entity.PSEntityType;
+import com.altnoir.poopsky.tag.PSBlockTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -17,24 +19,23 @@ import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.Map;
 
 public class PoopTntEntity extends Entity implements TraceableEntity {
-    private static final EntityDataAccessor<Integer> DATA_FUSE_ID =
-            SynchedEntityData.defineId(PoopTntEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> DATA_FUSE_ID = SynchedEntityData.defineId(PoopTntEntity.class, EntityDataSerializers.INT);
 
     private static final int DEFAULT_FUSE_TIME = 80;
     private static final double MOMENTUM_PER_TICK = 1.25;
-    private static final double MAX_VELOCITY_FOR_FULL_BLAST = 25.0;
     private static final int MIN_EXPLOSION_RADIUS = 1;
-    private static final int MAX_EXPLOSION_RADIUS = 4;
-    private static final double INSTANT_EXPLOSION_THRESHOLD = 0.1;
+    private static final int MAX_EXPLOSION_RADIUS = 5;
+    private static final double INSTANT_EXPLOSION_THRESHOLD = 0.25;
 
     private static final Map<Block, ItemStack> EXPLOSION_RECIPES = Map.of(
             Blocks.COBBLESTONE, new ItemStack(Items.GRAVEL),
@@ -89,13 +90,15 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
         double impactSpeed = movement.length();
         this.move(MoverType.SELF, movement);
 
-        if (!this.level().isClientSide
-                && impactSpeed > INSTANT_EXPLOSION_THRESHOLD
-                && (this.horizontalCollision || this.verticalCollision)) {
-            this.setDeltaMovement(movement);
-            this.discard();
-            this.explode();
-            return;
+        if (!this.level().isClientSide) {
+            var state = this.level().getBlockState(this.getOnPos());
+
+            if (impactSpeed > INSTANT_EXPLOSION_THRESHOLD && !state.is(PSBlockTags.EMPTY_LOGS) && (this.horizontalCollision || this.verticalCollision)) {
+                this.setDeltaMovement(movement);
+                this.discard();
+                this.explode();
+                return;
+            }
         }
 
         this.setDeltaMovement(this.getDeltaMovement().scale(0.98));
@@ -125,22 +128,28 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
 
         double midY = this.getY() + this.getBbHeight() / 2.0;
         Vec3 midPos = new Vec3(this.getX(), midY, this.getZ());
+        BlockPos checkPos = BlockPos.containing(midPos.x, midPos.y, midPos.z);
+        BlockState state = this.level().getBlockState(checkPos);
 
-        for (int dy = -1; dy <= 1; dy++) {
-            BlockPos checkPos = BlockPos.containing(midPos.x, midPos.y + dy, midPos.z);
-            BlockState state = this.level().getBlockState(checkPos);
-            if (state.is(PSBlocks.POOP_EMPTY_LOG) && state.hasProperty(BlockStateProperties.AXIS)) {
-                var axis = state.getValue(BlockStateProperties.AXIS);
-                Vec3 motion = this.getDeltaMovement();
-                switch (axis) {
-                    case X -> motion = motion.add(MOMENTUM_PER_TICK, 0.0, 0.0);
-                    case Y -> motion = motion.add(0.0, MOMENTUM_PER_TICK, 0.0);
-                    case Z -> motion = motion.add(0.0, 0.0, MOMENTUM_PER_TICK);
-                }
-                this.setDeltaMovement(motion);
-                break;
-            }
+        if (state.is(PSBlockTags.EMPTY_LOGS) && state.hasProperty(DirectionalBlock.FACING)) {
+            var direction = state.getValue(DirectionalBlock.FACING);
+            Vec3 motion = getMotion(direction);
+            this.setDeltaMovement(motion);
         }
+
+    }
+
+    private @NotNull Vec3 getMotion(Direction axis) {
+        Vec3 motion = this.getDeltaMovement();
+        switch (axis) {
+            case NORTH -> motion = motion.add(0.0, 0.0, -MOMENTUM_PER_TICK);
+            case SOUTH -> motion = motion.add(0.0, 0.0, MOMENTUM_PER_TICK);
+            case WEST -> motion = motion.add(-MOMENTUM_PER_TICK, 0.0, 0.0);
+            case EAST -> motion = motion.add(MOMENTUM_PER_TICK, 0.0, 0.0);
+            case UP -> motion = motion.add(0.0, MOMENTUM_PER_TICK, 0.0);
+            case DOWN -> motion = motion.add(0.0, -MOMENTUM_PER_TICK, 0.0);
+        }
+        return motion;
     }
 
     protected void explode() {
@@ -160,15 +169,17 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
                 for (int z = -radius; z <= radius; z++) {
                     BlockPos pos = center.offset(x, y, z);
                     BlockState state = level.getBlockState(pos);
-                    if (!state.isAir() && state.getBlock() != Blocks.BEDROCK) {
-                        ItemStack recipeOutput = EXPLOSION_RECIPES.get(state.getBlock());
-                        if (recipeOutput != null) {
-                            level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
-                            Block.popResource(level, pos, recipeOutput.copy());
-                        } else {
-                            level.destroyBlock(pos, true);
-                        }
+
+                    if (state.isAir() || state.getBlock() == Blocks.BEDROCK) continue;
+
+                    ItemStack recipeOutput = EXPLOSION_RECIPES.get(state.getBlock());
+                    if (recipeOutput != null) {
+                        level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+                        Block.popResource(level, pos, recipeOutput.copy());
+                    } else {
+                        level.destroyBlock(pos, true);
                     }
+                    spawnPoopPieces(level, center, radius);
                 }
             }
         }
@@ -188,10 +199,32 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
         }
     }
 
+    private void spawnPoopPieces(Level level, BlockPos center, int radius) {
+        int minY = center.getY() - radius;
+
+        for (int i = 0; i < radius * 2; i++) {
+            int x = center.getX() + level.random.nextInt(radius * 2 + 1) - radius;
+            int z = center.getZ() + level.random.nextInt(radius * 2 + 1) - radius;
+
+            BlockPos groundPos = new BlockPos(x, minY, z);
+            while (groundPos.getY() < center.getY() + radius) {
+                BlockState state = level.getBlockState(groundPos);
+
+                if (state.isCollisionShapeFullBlock(level, groundPos)) {
+                    BlockPos placePos = groundPos.above();
+                    if (level.getBlockState(placePos).canBeReplaced()) {
+                        level.setBlock(placePos, PSBlocks.POOP_PIECE.get().defaultBlockState(), 3);
+                    }
+                    break;
+                }
+                groundPos = groundPos.below();
+            }
+        }
+    }
+
     private static int calculateExplosionRadius(double velocity) {
-        double t = Math.min(velocity / MAX_VELOCITY_FOR_FULL_BLAST, 1.0);
-        return Mth.clamp((int) Math.round(MIN_EXPLOSION_RADIUS + t * (MAX_EXPLOSION_RADIUS - MIN_EXPLOSION_RADIUS)),
-                MIN_EXPLOSION_RADIUS, MAX_EXPLOSION_RADIUS);
+        int radius = MIN_EXPLOSION_RADIUS + (int) (velocity / 0.5);
+        return Mth.clamp(radius, MIN_EXPLOSION_RADIUS, MAX_EXPLOSION_RADIUS);
     }
 
     public void setFuse(int fuse) {
