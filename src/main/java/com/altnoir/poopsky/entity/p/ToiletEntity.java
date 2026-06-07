@@ -17,6 +17,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
 public class ToiletEntity extends Entity {
+    private boolean goldenPoop;
+
     public ToiletEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
     }
@@ -28,12 +30,16 @@ public class ToiletEntity extends Entity {
 
     @Override
     protected void readAdditionalSaveData(CompoundTag compoundTag) {
-
+        this.goldenPoop = compoundTag.getBoolean("GoldenPoop");
     }
 
     @Override
     protected void addAdditionalSaveData(CompoundTag compoundTag) {
+        compoundTag.putBoolean("GoldenPoop", this.goldenPoop);
+    }
 
+    public void setGoldenPoop(boolean goldenPoop) {
+        this.goldenPoop = goldenPoop;
     }
 
     @Override
@@ -81,13 +87,14 @@ public class ToiletEntity extends Entity {
             redStone.setDefaultPickUpDelay();
             level.addFreshEntity(redStone);
         } else {
-            var poop = new ItemEntity(level, player.getX(), player.getY() + 0.1, player.getZ(), new ItemStack(PSItems.POOP.get()));
+            var poopItem = this.goldenPoop ? PSItems.GOLDEN_POOP.get() : PSItems.POOP.get();
+            var poop = new ItemEntity(level, player.getX(), player.getY() + 0.1, player.getZ(), new ItemStack(poopItem));
             var chili_poop = new ItemEntity(level, player.getX(), player.getY() + 0.1, player.getZ(), new ItemStack(PSItems.CHILI_POOP.get()));
 
             poop.setDefaultPickUpDelay();
             chili_poop.setDefaultPickUpDelay();
 
-            level.addFreshEntity(isFire ? chili_poop : poop);
+            level.addFreshEntity(isFire && !this.goldenPoop ? chili_poop : poop);
         }
         var pitch = level.random.nextFloat() + 0.5F;
         level.playSound(null, player.getX(), player.getY() + 0.1, player.getZ(), PSSoundEvents.FART.get(), SoundSource.PLAYERS, 1.0F, pitch);
