@@ -394,7 +394,7 @@ public class PSBlocks {
                     .instrument(NoteBlockInstrument.COW_BELL)
                     .sound(SoundType.MUD))
     );
-    public static final DeferredBlock<Block> RAW_SAPING_POOP_BLOCK = registerBlock("raw_saping_poop_block",
+    public static final DeferredBlock<Block> RAW_SAPLING_POOP_BLOCK = registerBlock("raw_sapling_poop_block",
             () -> new RawSapingBlock(BlockBehaviour.Properties.ofFullCopy(RAW_POOP_BLOCK.get()).sound(SoundType.ROOTED_DIRT))
     );
     public static final DeferredBlock<Block> RAW_SEA_POOP_BLOCK = registerBlock("raw_sea_poop_block",
