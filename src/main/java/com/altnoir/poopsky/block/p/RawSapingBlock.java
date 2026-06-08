@@ -17,7 +17,7 @@ public class RawSapingBlock extends AbstractRawBlock {
     public void performBonemeal(ServerLevel serverLevel, RandomSource randomSource, BlockPos blockPos, BlockState blockState) {
         serverLevel.registryAccess()
                 .registry(Registries.CONFIGURED_FEATURE)
-                .flatMap(holder -> holder.getHolder(PSConfigureFeatures.RAW_SAPING_POOP_PATCH_BONEMEAL))
+                .flatMap(holder -> holder.getHolder(PSConfigureFeatures.RAW_SAPLING_POOP_PATCH_BONEMEAL))
                 .ifPresent(reference -> reference.value().place(serverLevel, serverLevel.getChunkSource().getGenerator(), randomSource, blockPos.above()));
     }
 }

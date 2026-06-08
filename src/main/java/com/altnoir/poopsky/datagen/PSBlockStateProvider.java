@@ -1,9 +1,9 @@
 package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
-import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.block.AllToiletBlocks;
+import com.altnoir.poopsky.block.PSBlocks;
+import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.block.p.PoopPieceBlock;
 import com.altnoir.poopsky.block.p.ToiletLavaBlock;
 import net.minecraft.core.Direction;
@@ -142,7 +142,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
         wallBlock((WallBlock) PSBlocks.TILE_BLOCK_WALL.get(), blockTexture(PSBlocks.TILE_BLOCK.get()));
 
         blockWithItem(PSBlocks.RAW_POOP_BLOCK.get());
-        blockWithItem(PSBlocks.RAW_SAPING_POOP_BLOCK.get());
+        blockWithItem(PSBlocks.RAW_SAPLING_POOP_BLOCK.get());
         blockWithItem(PSBlocks.RAW_SEA_POOP_BLOCK.get());
         blockWithItem(PSBlocks.RAW_WITHER_POOP_BLOCK.get());
 
@@ -166,6 +166,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
         blockWithItem(PSBlocks.POOP_LEAVES.get());
         blockWithItem(PSBlocks.POOP_LEAVES_GOLD.get());
         blockWithItem(PSBlocks.POOP_LEAVES_IRON.get());
+        cubeBottomTop(PSBlocks.POOP_TNT.get());
 
         registerToilet(AllToiletBlocks.OAK_TOILET.get(), Blocks.OAK_PLANKS);
         registerToilet(AllToiletBlocks.SPRUCE_TOILET.get(), Blocks.SPRUCE_PLANKS);
@@ -224,7 +225,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
 
     private void fluidBlockWithItem(Block block, String texture) {
         var blockModel = models()
-                .withExistingParent(BuiltInRegistries.BLOCK.getKey(block).getPath(), mcLoc("block/block"))
+                .withExistingParent(getBlockPath(block), mcLoc("block/block"))
                 .texture("particle", modLoc(texture))
                 .texture("still", modLoc(texture))
                 .texture("flow", modLoc(texture))
@@ -233,13 +234,13 @@ public class PSBlockStateProvider extends BlockStateProvider {
         getVariantBuilder(block).partialState().addModels(new ConfiguredModel(blockModel));
 
         itemModels()
-                .withExistingParent(BuiltInRegistries.BLOCK.getKey(block).getPath(), mcLoc("item/generated"))
+                .withExistingParent(getBlockPath(block), mcLoc("item/generated"))
                 .texture("layer0", modLoc(texture));
     }
 
     private void blockWithTranslucentRenderType(Block block) {
         var model = models().cubeAll(
-                BuiltInRegistries.BLOCK.getKey(block).getPath(), modLoc("block/" + BuiltInRegistries.BLOCK.getKey(block).getPath())
+                getBlockPath(block), modLoc("block/" + getBlockPath(block))
         ).renderType("translucent");
 
         getVariantBuilder(block).partialState().addModels(new ConfiguredModel(model));
@@ -247,22 +248,29 @@ public class PSBlockStateProvider extends BlockStateProvider {
         simpleBlockItem(block, model);
     }
 
+    private void cubeBottomTop(Block block) {
+        var model = models().withExistingParent(getBlockPath(block), mcLoc("block/cube_bottom_top"))
+                .texture("top", modLoc("block/" + getBlockPath(block) + "_top"))
+                .texture("side", modLoc("block/" + getBlockPath(block) + "_side"))
+                .texture("bottom", modLoc("block/" + getBlockPath(block) + "_bottom"));
+
+        getVariantBuilder(block).partialState().addModels(new ConfiguredModel(model));
+
+        simpleBlockItem(block, model);
+    }
+
     private void registerToilet(Block toilet, Block textureBlock) {
-        var texture = BuiltInRegistries.BLOCK.getKey(textureBlock);
+        var texture = getBlockKey(textureBlock);
 
         var textureRL = ResourceLocation.fromNamespaceAndPath(texture.getNamespace(), "block/" + texture.getPath());
 
-        var baseModel = models().withExistingParent(
-                BuiltInRegistries.BLOCK.getKey(toilet).toString(),
+        var baseModel = models().withExistingParent(getBlockKey(toilet).toString(),
                 modLoc("block/toilet")).texture("toilet", textureRL);
-        var modelN = models().withExistingParent(
-                BuiltInRegistries.BLOCK.getKey(toilet) + "_n",
+        var modelN = models().withExistingParent(getBlockKey(toilet) + "_n",
                 modLoc("block/toilet_n")).texture("toilet", textureRL);
-        var modelS = models().withExistingParent(
-                BuiltInRegistries.BLOCK.getKey(toilet) + "_s",
+        var modelS = models().withExistingParent(getBlockKey(toilet) + "_s",
                 modLoc("block/toilet_s")).texture("toilet", textureRL);
-        var modelNS = models().withExistingParent(
-                BuiltInRegistries.BLOCK.getKey(toilet) + "_ns",
+        var modelNS = models().withExistingParent(getBlockKey(toilet) + "_ns",
                 modLoc("block/toilet_ns")).texture("toilet", textureRL);
 
 
@@ -289,43 +297,35 @@ public class PSBlockStateProvider extends BlockStateProvider {
                     .uvLock(true)
                     .build();
         });
-        itemModels().getBuilder(BuiltInRegistries.BLOCK.getKey(toilet).getPath())
+        itemModels().getBuilder(getBlockPath(toilet))
                 .parent(baseModel);
     }
 
     private void registerToiletLava(Block toilet, Object texture) {
         var texturePath = texture instanceof Block ?
-                BuiltInRegistries.BLOCK.getKey((Block) texture).getPath() : texture.toString();
+                getBlockKey((Block) texture).getPath() : texture.toString();
 
         var baseTexture = texture instanceof Block ?
                 mcLoc("block/" + texturePath) : modLoc("block/" + texturePath);
 
         // Base models
-        var baseModel = models().withExistingParent(
-                BuiltInRegistries.BLOCK.getKey(toilet).toString(),
+        var baseModel = models().withExistingParent(getBlockKey(toilet).toString(),
                 modLoc("block/toilet")).texture("toilet", baseTexture);
-        var modelN = models().withExistingParent(
-                BuiltInRegistries.BLOCK.getKey(toilet) + "_n",
+        var modelN = models().withExistingParent(getBlockKey(toilet) + "_n",
                 modLoc("block/toilet_n")).texture("toilet", baseTexture);
-        var modelS = models().withExistingParent(
-                BuiltInRegistries.BLOCK.getKey(toilet) + "_s",
+        var modelS = models().withExistingParent(getBlockKey(toilet) + "_s",
                 modLoc("block/toilet_s")).texture("toilet", baseTexture);
-        var modelNS = models().withExistingParent(
-                BuiltInRegistries.BLOCK.getKey(toilet) + "_ns",
+        var modelNS = models().withExistingParent(getBlockKey(toilet) + "_ns",
                 modLoc("block/toilet_ns")).texture("toilet", baseTexture);
 
         // Lava models
-        var modelLava = models().withExistingParent(
-                BuiltInRegistries.BLOCK.getKey(toilet) + "_lava",
+        var modelLava = models().withExistingParent(getBlockKey(toilet) + "_lava",
                 modLoc("block/toilet_lava")).texture("toilet", baseTexture);
-        var modelLavaN = models().withExistingParent(
-                BuiltInRegistries.BLOCK.getKey(toilet) + "_lava_n",
+        var modelLavaN = models().withExistingParent(getBlockKey(toilet) + "_lava_n",
                 modLoc("block/toilet_lava_n")).texture("toilet", baseTexture);
-        var modelLavaS = models().withExistingParent(
-                BuiltInRegistries.BLOCK.getKey(toilet) + "_lava_s",
+        var modelLavaS = models().withExistingParent(getBlockKey(toilet) + "_lava_s",
                 modLoc("block/toilet_lava_s")).texture("toilet", baseTexture);
-        var modelLavaNS = models().withExistingParent(
-                BuiltInRegistries.BLOCK.getKey(toilet) + "_lava_ns",
+        var modelLavaNS = models().withExistingParent(getBlockKey(toilet) + "_lava_ns",
                 modLoc("block/toilet_lava_ns")).texture("toilet", baseTexture);
 
         getVariantBuilder(toilet).forAllStates(state -> {
@@ -364,8 +364,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
                     .build();
         });
 
-        itemModels().getBuilder(BuiltInRegistries.BLOCK.getKey(toilet).getPath())
-                .parent(baseModel);
+        itemModels().getBuilder(getBlockPath(toilet)).parent(baseModel);
     }
 
     private void blockWithItem(Block block) {
@@ -380,4 +379,12 @@ public class PSBlockStateProvider extends BlockStateProvider {
         simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile(PoopSky.MOD_ID + ":block/" + block.getId().getPath() + path));
     }
 
+
+    private String getBlockPath(Block block) {
+        return getBlockKey(block).getPath();
+    }
+
+    private ResourceLocation getBlockKey(Block block) {
+        return BuiltInRegistries.BLOCK.getKey(block);
+    }
 }

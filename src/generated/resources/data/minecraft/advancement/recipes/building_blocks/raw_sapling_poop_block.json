@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:raw_saping_poop_block"
+        "recipe": "minecraft:raw_sapling_poop_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:raw_saping_poop_block"
+      "minecraft:raw_sapling_poop_block"
     ]
   }
 }

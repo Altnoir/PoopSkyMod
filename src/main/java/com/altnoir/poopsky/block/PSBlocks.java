@@ -77,7 +77,7 @@ public class PSBlocks {
                     .sound(SoundType.MUD))
     );
     public static final DeferredBlock<Block> POOLIME_POOP_BLOCK = registerBlock("poolime_poop_block",
-            () -> new PooplimePoopBlock(BlockBehaviour.Properties.of()
+            () -> new PoolimePoopBlock(BlockBehaviour.Properties.of()
                     .randomTicks()
                     .strength(POOP)
                     .mapColor(MapColor.COLOR_BROWN)
@@ -242,7 +242,7 @@ public class PSBlocks {
             () -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(CHILI_POOP_BLOCK.get()))
     );
     public static final DeferredBlock<Block> GOLDEN_POOP_BLOCK = registerBlock("golden_poop_block",
-            () -> new Block(BlockBehaviour.Properties.of()
+            () -> new GoldenPoopBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.GOLD)
                     .requiresCorrectToolForDrops()
                     .strength(0.65F)
@@ -377,6 +377,14 @@ public class PSBlocks {
                     .isValidSpawn(Blocks::never)
                     .noOcclusion()));
 
+    public static final DeferredBlock<Block> POOP_TNT = registerBlock("poop_tnt",
+            () -> new PoopTntBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.FIRE)
+                    .strength(0.0F)
+                    .sound(SoundType.GRASS)
+                    .ignitedByLava()
+                    .pushReaction(PushReaction.DESTROY)));
+
     public static final DeferredBlock<Block> RAW_POOP_BLOCK = registerBlock("raw_poop_block",
             () -> new Block(BlockBehaviour.Properties.of()
                     .randomTicks()
@@ -386,7 +394,7 @@ public class PSBlocks {
                     .instrument(NoteBlockInstrument.COW_BELL)
                     .sound(SoundType.MUD))
     );
-    public static final DeferredBlock<Block> RAW_SAPING_POOP_BLOCK = registerBlock("raw_saping_poop_block",
+    public static final DeferredBlock<Block> RAW_SAPLING_POOP_BLOCK = registerBlock("raw_sapling_poop_block",
             () -> new RawSapingBlock(BlockBehaviour.Properties.ofFullCopy(RAW_POOP_BLOCK.get()).sound(SoundType.ROOTED_DIRT))
     );
     public static final DeferredBlock<Block> RAW_SEA_POOP_BLOCK = registerBlock("raw_sea_poop_block",

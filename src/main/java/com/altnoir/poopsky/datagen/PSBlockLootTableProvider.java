@@ -121,7 +121,7 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(PSBlocks.TILE_BLOCK_WALL.get());
 
         dropSelf(PSBlocks.RAW_POOP_BLOCK.get());
-        dropSelf(PSBlocks.RAW_SAPING_POOP_BLOCK.get());
+        dropSelf(PSBlocks.RAW_SAPLING_POOP_BLOCK.get());
         dropSelf(PSBlocks.RAW_SEA_POOP_BLOCK.get());
         dropSelf(PSBlocks.RAW_WITHER_POOP_BLOCK.get());
 
@@ -137,6 +137,7 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
         dropOther(PSBlocks.POWER_SNOW_COMPOOPER.get(), PSBlocks.COMPOOPER.get());
         this.add(PSBlocks.URINE_COMPOOPER.get(), this::createUrineCompoomerDrops);
         dropSelf(PSBlocks.SIEVE.get());
+        dropSelf(PSBlocks.POOP_TNT.get());
         add(PSBlocks.POOP_PIECE.get(), createPoopPieceDrop(PSBlocks.POOP_PIECE.get(), PSItems.POOP_BALL.get()));
 
         LootItemCondition.Builder builder = LootItemBlockStatePropertyCondition.hasBlockStateProperties(PSBlocks.MAGGOTS.get())

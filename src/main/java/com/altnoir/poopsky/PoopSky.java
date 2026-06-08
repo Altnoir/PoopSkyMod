@@ -9,6 +9,7 @@ import com.altnoir.poopsky.component.PSComponents;
 import com.altnoir.poopsky.effect.PSEffects;
 import com.altnoir.poopsky.effect.PSPotions;
 import com.altnoir.poopsky.entity.PSEntityType;
+import com.altnoir.poopsky.entity.p.PoopTntEntity;
 import com.altnoir.poopsky.entity.renderer.*;
 import com.altnoir.poopsky.fluid.PSFluidTypes;
 import com.altnoir.poopsky.fluid.PSFluids;
@@ -25,9 +26,13 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.dispenser.BlockSource;
+import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.BoneMealItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -101,16 +106,33 @@ public class PoopSky {
             DispenserBlock.registerProjectileBehavior(PSItems.WITHER_POOP_BALL);
             DispenserBlock.registerBehavior(PSItems.POOP.get(), new OptionalDispenseItemBehavior() {
                 @Override
-                protected ItemStack execute(BlockSource blockSource, ItemStack itemStack) {
+                protected ItemStack execute(BlockSource blockSource, ItemStack item) {
                     this.setSuccess(true);
                     Level level = blockSource.level();
                     BlockPos blockpos = blockSource.pos().relative(blockSource.state().getValue(DispenserBlock.FACING));
-                    if (!BoneMealItem.growCrop(itemStack, level, blockpos) && !BoneMealItem.growWaterPlant(itemStack, level, blockpos, null)) {
+
+                    if (!BoneMealItem.growCrop(item, level, blockpos) && !BoneMealItem.growWaterPlant(item, level, blockpos, null)) {
                         this.setSuccess(false);
                     } else if (!level.isClientSide) {
                         level.levelEvent(1505, blockpos, 15);
                     }
-                    return itemStack;
+                    return item;
+                }
+            });
+            DispenserBlock.registerBehavior(PSBlocks.POOP_TNT.asItem(), new DefaultDispenseItemBehavior() {
+                @Override
+                protected ItemStack execute(BlockSource blockSource, ItemStack item) {
+                    Level level = blockSource.level();
+                    Direction facing = blockSource.state().getValue(DispenserBlock.FACING);
+                    BlockPos pos = blockSource.pos().relative(facing);
+
+                    PoopTntEntity tnt = new PoopTntEntity(level,
+                            pos.getX() + 0.5, pos.getY() + 0.25, pos.getZ() + 0.5, null);
+                    level.addFreshEntity(tnt);
+                    level.playSound(null, tnt.getX(), tnt.getY(), tnt.getZ(),
+                            SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1.0F, 1.0F);
+                    item.shrink(1);
+                    return item;
                 }
             });
 
@@ -137,6 +159,7 @@ public class PoopSky {
             event.registerEntityRenderer(PSEntityType.FLY.get(), FlyRenderer::new);
             event.registerEntityRenderer(PSEntityType.STOOL.get(), ChairRenderer::new);
             event.registerEntityRenderer(PSEntityType.TOILET.get(), ToiletRenderer::new);
+            event.registerEntityRenderer(PSEntityType.POOP_TNT.get(), PoopTntRenderer::new);
         }
 
         @SubscribeEvent

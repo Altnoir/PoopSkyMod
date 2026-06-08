@@ -24,8 +24,8 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
-public class PSAdvancementPorvider extends AdvancementProvider {
-    public PSAdvancementPorvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries, ExistingFileHelper existingFileHelper) {
+public class PSAdvancementProvider extends AdvancementProvider {
+    public PSAdvancementProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries, ExistingFileHelper existingFileHelper) {
         super(output, registries, existingFileHelper, List.of(new AdventureAdvancements()));
     }
 
@@ -66,16 +66,16 @@ public class PSAdvancementPorvider extends AdvancementProvider {
                     .parent(root)
                     .display(
                             PSBlocks.POOLIME_POOP_BLOCK.get(),
-                            Component.translatable("advancements.poopsky.pooolime_poop_block.title"),
-                            Component.translatable("advancements.poopsky.pooolime_poop_block.description"),
+                            Component.translatable("advancements.poopsky.poolime_poop_block.title"),
+                            Component.translatable("advancements.poopsky.poolime_poop_block.description"),
                             null,
                             AdvancementType.GOAL,
                             true,
                             true,
                             false
                     )
-                    .addCriterion("pooolime_poop_block", InventoryChangeTrigger.TriggerInstance.hasItems(PSBlocks.POOLIME_POOP_BLOCK.get()))
-                    .save(saver, modId("pooolime_poop_block"), existingFileHelper);
+                    .addCriterion("poolime_poop_block", InventoryChangeTrigger.TriggerInstance.hasItems(PSBlocks.POOLIME_POOP_BLOCK.get()))
+                    .save(saver, modId("poolime_poop_block"), existingFileHelper);
             AdvancementHolder poop_ball = Advancement.Builder.advancement()
                     .parent(poolime_poop_block)
                     .display(
@@ -105,7 +105,7 @@ public class PSAdvancementPorvider extends AdvancementProvider {
                     .addCriterion("wither_poop_ball", InventoryChangeTrigger.TriggerInstance.hasItems(PSItems.WITHER_POOP_BALL.get()))
                     .save(saver, modId("wither_poop_ball"), existingFileHelper);
 
-            AdvancementHolder poop_saping = Advancement.Builder.advancement()
+            AdvancementHolder poop_sapling = Advancement.Builder.advancement()
                     .parent(root)
                     .display(
                             PSBlocks.POOP_SAPLING.get(),
@@ -121,35 +121,35 @@ public class PSAdvancementPorvider extends AdvancementProvider {
                     .save(saver, modId("poop_sapling"), existingFileHelper);
 
             AdvancementHolder compooper = Advancement.Builder.advancement()
-                    .parent(poop_saping)
+                    .parent(poop_sapling)
                     .display(
                             PSBlocks.COMPOOPER.get(),
-                            Component.translatable("advancements.poopsky.compooer.title"),
-                            Component.translatable("advancements.poopsky.compooer.description"),
+                            Component.translatable("advancements.poopsky.compooper.title"),
+                            Component.translatable("advancements.poopsky.compooper.description"),
                             null,
                             AdvancementType.TASK,
                             true,
                             true,
                             false
                     )
-                    .addCriterion("compooer", InventoryChangeTrigger.TriggerInstance.hasItems(PSBlocks.COMPOOPER.get()))
-                    .save(saver, modId("compooer"), existingFileHelper);
-            AdvancementHolder urine_compoooper = Advancement.Builder.advancement()
+                    .addCriterion("compooper", InventoryChangeTrigger.TriggerInstance.hasItems(PSBlocks.COMPOOPER.get()))
+                    .save(saver, modId("compooper"), existingFileHelper);
+            AdvancementHolder urine_compooper = Advancement.Builder.advancement()
                     .parent(compooper)
                     .display(
                             PSBlocks.URINE_COMPOOPER.get(),
-                            Component.translatable("advancements.poopsky.urine_compooer.title"),
-                            Component.translatable("advancements.poopsky.urine_compooer.description"),
+                            Component.translatable("advancements.poopsky.urine_compooper.title"),
+                            Component.translatable("advancements.poopsky.urine_compooper.description"),
                             null,
                             AdvancementType.TASK,
                             true,
                             true,
                             false
                     )
-                    .addCriterion("urine_compooer", InventoryChangeTrigger.TriggerInstance.hasItems(PSBlocks.URINE_COMPOOPER.get()))
-                    .save(saver, modId("urine_compooer"), existingFileHelper);
+                    .addCriterion("urine_compooper", InventoryChangeTrigger.TriggerInstance.hasItems(PSBlocks.URINE_COMPOOPER.get()))
+                    .save(saver, modId("urine_compooper"), existingFileHelper);
             Advancement.Builder.advancement()
-                    .parent(urine_compoooper)
+                    .parent(urine_compooper)
                     .display(
                             PSItems.MAGGOTS_SEEDS.get(),
                             Component.translatable("advancements.poopsky.maggots_seeds.title"),
@@ -179,7 +179,7 @@ public class PSAdvancementPorvider extends AdvancementProvider {
                     .save(saver, modId("sapling"), existingFileHelper);
 
             AdvancementHolder coal_block = Advancement.Builder.advancement()
-                    .parent(poop_saping)
+                    .parent(poop_sapling)
                     .display(
                             Blocks.COAL_BLOCK,
                             Component.translatable("advancements.poopsky.coal_block.title"),
@@ -264,7 +264,7 @@ public class PSAdvancementPorvider extends AdvancementProvider {
                     .save(saver, modId("sieve"), existingFileHelper);
 
             AdvancementHolder roundworm = Advancement.Builder.advancement()
-                    .parent(poop_saping)
+                    .parent(poop_sapling)
                     .display(
                             PSItems.ROUNDWORM.get(),
                             Component.translatable("advancements.poopsky.roundworm.title"),

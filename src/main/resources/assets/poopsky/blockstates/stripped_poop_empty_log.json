@@ -1,6 +1,58 @@
 {
   "variants": {
-    "axis=y": [
+    "facing=down": [
+      {
+        "model": "poopsky:block/stripped_poop_empty_log",
+        "weight": 4,
+        "x": 180
+      },
+      {
+        "model": "poopsky:block/stripped_poop_empty_log2",
+        "weight": 1,
+        "x": 180
+      }
+    ],
+    "facing=east": [
+      {
+        "model": "poopsky:block/stripped_poop_empty_log",
+        "weight": 4,
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "poopsky:block/stripped_poop_empty_log2",
+        "weight": 1,
+        "x": 90,
+        "y": 90
+      }
+    ],
+    "facing=north": [
+      {
+        "model": "poopsky:block/stripped_poop_empty_log",
+        "weight": 4,
+        "x": 90
+      },
+      {
+        "model": "poopsky:block/stripped_poop_empty_log2",
+        "weight": 1,
+        "x": 90
+      }
+    ],
+    "facing=south": [
+      {
+        "model": "poopsky:block/stripped_poop_empty_log",
+        "weight": 4,
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "poopsky:block/stripped_poop_empty_log2",
+        "weight": 1,
+        "x": 90,
+        "y": 180
+      }
+    ],
+    "facing=up": [
       {
         "model": "poopsky:block/stripped_poop_empty_log",
         "weight": 4
@@ -10,24 +62,18 @@
         "weight": 1
       }
     ],
-    "axis=z": [
+    "facing=west": [
       {
-        "model": "poopsky:block/stripped_poop_empty_log", "x": 90,
-        "weight": 4
+        "model": "poopsky:block/stripped_poop_empty_log",
+        "weight": 4,
+        "x": 90,
+        "y": 270
       },
       {
-        "model": "poopsky:block/stripped_poop_empty_log2", "x": 90,
-        "weight": 1
-      }
-    ],
-    "axis=x": [
-      {
-        "model": "poopsky:block/stripped_poop_empty_log", "x": 90, "y":  90,
-        "weight": 4
-      },
-      {
-        "model": "poopsky:block/stripped_poop_empty_log2", "x": 90, "y":  90,
-        "weight": 1
+        "model": "poopsky:block/stripped_poop_empty_log2",
+        "weight": 1,
+        "x": 90,
+        "y": 270
       }
     ]
   }
