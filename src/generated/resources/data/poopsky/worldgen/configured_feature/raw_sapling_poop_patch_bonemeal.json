@@ -7,14 +7,14 @@
     "ground_state": {
       "type": "minecraft:simple_state_provider",
       "state": {
-        "Name": "poopsky:raw_saping_poop_block"
+        "Name": "poopsky:raw_sapling_poop_block"
       }
     },
     "replaceable": "#poopsky:raw_saping_poop_block",
     "surface": "floor",
     "vegetation_chance": 0.3,
     "vegetation_feature": {
-      "feature": "poopsky:raw_saping_poop_vegetation",
+      "feature": "poopsky:raw_sapling_poop_vegetation",
       "placement": []
     },
     "vertical_range": 5,

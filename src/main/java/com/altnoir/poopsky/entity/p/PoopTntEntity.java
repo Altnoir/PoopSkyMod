@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.entity.p;
 
-import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.entity.PSEntityType;
+import com.altnoir.poopsky.particle.PSParticles;
 import com.altnoir.poopsky.tag.PSBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -10,6 +10,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -154,8 +155,8 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
 
     protected void explode() {
         Level level = this.level();
-        if (level.isClientSide) return;
 
+        if (level.isClientSide) return;
         double velocity = this.getDeltaMovement().length();
         int radius = calculateExplosionRadius(velocity);
 
@@ -179,7 +180,6 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
                     } else {
                         level.destroyBlock(pos, true);
                     }
-                    spawnPoopPieces(level, center, radius);
                 }
             }
         }
@@ -197,29 +197,15 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
                 }
             }
         }
+
+        spawnPoopParticle((ServerLevel) level, this.getX(), this.getY(), this.getZ(), radius);
     }
 
-    private void spawnPoopPieces(Level level, BlockPos center, int radius) {
-        int minY = center.getY() - radius;
-
-        for (int i = 0; i < radius * 2; i++) {
-            int x = center.getX() + level.random.nextInt(radius * 2 + 1) - radius;
-            int z = center.getZ() + level.random.nextInt(radius * 2 + 1) - radius;
-
-            BlockPos groundPos = new BlockPos(x, minY, z);
-            while (groundPos.getY() < center.getY() + radius) {
-                BlockState state = level.getBlockState(groundPos);
-
-                if (state.isCollisionShapeFullBlock(level, groundPos)) {
-                    BlockPos placePos = groundPos.above();
-                    if (level.getBlockState(placePos).canBeReplaced()) {
-                        level.setBlock(placePos, PSBlocks.POOP_PIECE.get().defaultBlockState(), 3);
-                    }
-                    break;
-                }
-                groundPos = groundPos.below();
-            }
-        }
+    private void spawnPoopParticle(ServerLevel level, double x, double y, double z, int radius) {
+        int particleCount = radius * 30;
+        double offset = radius * 0.5;
+        double speed = 0.4 + level.random.nextDouble() * 0.4;
+        level.sendParticles(PSParticles.POOP_PARTICLE.get(), x, y, z, particleCount, offset, offset, offset, speed);
     }
 
     private static int calculateExplosionRadius(double velocity) {

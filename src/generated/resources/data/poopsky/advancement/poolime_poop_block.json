@@ -1,7 +1,7 @@
 {
   "parent": "poopsky:root",
   "criteria": {
-    "pooolime_poop_block": {
+    "poolime_poop_block": {
       "conditions": {
         "items": [
           {
@@ -14,7 +14,7 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.poopsky.pooolime_poop_block.description"
+      "translate": "advancements.poopsky.poolime_poop_block.description"
     },
     "frame": "goal",
     "icon": {
@@ -22,12 +22,12 @@
       "id": "poopsky:poolime_poop_block"
     },
     "title": {
-      "translate": "advancements.poopsky.pooolime_poop_block.title"
+      "translate": "advancements.poopsky.poolime_poop_block.title"
     }
   },
   "requirements": [
     [
-      "pooolime_poop_block"
+      "poolime_poop_block"
     ]
   ],
   "sends_telemetry_event": true

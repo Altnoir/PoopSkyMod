@@ -1,11 +1,11 @@
 {
-  "parent": "poopsky:poop_sapling",
+  "parent": "poopsky:compooper",
   "criteria": {
-    "compooer": {
+    "urine_compooper": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:compooper"
+            "items": "poopsky:urine_compooper"
           }
         ]
       },
@@ -14,19 +14,19 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.poopsky.compooer.description"
+      "translate": "advancements.poopsky.urine_compooper.description"
     },
     "icon": {
       "count": 1,
-      "id": "poopsky:compooper"
+      "id": "poopsky:urine_compooper"
     },
     "title": {
-      "translate": "advancements.poopsky.compooer.title"
+      "translate": "advancements.poopsky.urine_compooper.title"
     }
   },
   "requirements": [
     [
-      "compooer"
+      "urine_compooper"
     ]
   ],
   "sends_telemetry_event": true
