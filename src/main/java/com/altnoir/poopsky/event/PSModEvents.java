@@ -2,13 +2,11 @@ package com.altnoir.poopsky.event;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.PSBlockEntities;
-import com.altnoir.poopsky.block.entity.renderer.SieveBlockEntityRenderer;
 import com.altnoir.poopsky.entity.PSEntityType;
-import com.altnoir.poopsky.entity.model.FlyModel;
-import com.altnoir.poopsky.entity.model.ToiletPlugModel;
 import com.altnoir.poopsky.entity.p.FlyEntity;
 import com.altnoir.poopsky.entity.p.PoolimeEntity;
 import com.altnoir.poopsky.entity.p.ToiletPlugEntity;
+import net.minecraft.core.Direction;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -16,7 +14,6 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
@@ -51,7 +48,7 @@ public class PSModEvents {
                 Capabilities.ItemHandler.BLOCK,
                 PSBlockEntities.SIEVE_BLOCK_ENTITY.get(),
                 (blockEntity, direction) -> {
-                    if (direction == null || direction == net.minecraft.core.Direction.DOWN) {
+                    if (direction == null || direction == Direction.DOWN) {
                         return blockEntity.getBottomHandler();
                     }
                     return blockEntity.getTopSideHandler();
