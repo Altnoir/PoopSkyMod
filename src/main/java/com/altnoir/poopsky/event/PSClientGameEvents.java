@@ -1,12 +1,18 @@
 package com.altnoir.poopsky.event;
 
+import com.altnoir.poopsky.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.event.asm.ASMHooks;
+import com.altnoir.poopsky.network.PlugActionPayload;
+import com.altnoir.poopsky.network.PlugDismountPayload;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
 import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.presets.WorldPreset;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.ScreenEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class PSClientGameEvents {
     public static Holder<WorldPreset> originalDefaultWorldPreset;
@@ -25,6 +31,20 @@ public class PSClientGameEvents {
                     uiState.setWorldType(new WorldCreationUiState.WorldTypeEntry(voidWorldPreset));
                 }
             }
+        }
+    }
+
+    public static void onClientTick(ClientTickEvent.Pre event) {
+        var mc = Minecraft.getInstance();
+        if (mc.player == null || mc.level == null) return;
+
+        boolean isRidingPlug = mc.player.getVehicle() instanceof ToiletPlugEntity;
+
+        while (PSKeyBoardInput.USE_PLUG_KEY.consumeClick()) {
+            PacketDistributor.sendToServer(new PlugActionPayload());
+        }
+        if (isRidingPlug && PSKeyBoardInput.DISMOUNT_PLUG_KEY.consumeClick()) {
+            PacketDistributor.sendToServer(new PlugDismountPayload());
         }
     }
 }

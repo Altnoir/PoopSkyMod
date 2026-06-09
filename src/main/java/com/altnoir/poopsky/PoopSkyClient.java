@@ -6,7 +6,6 @@ import com.altnoir.poopsky.entity.PSEntityType;
 import com.altnoir.poopsky.entity.renderer.*;
 import com.altnoir.poopsky.event.PSClientGameEvents;
 import com.altnoir.poopsky.event.PSClientModEvents;
-import com.altnoir.poopsky.event.PSKeyBoardEvent;
 import com.altnoir.poopsky.event.PSKeyBoardInput;
 import com.altnoir.poopsky.fluid.PSFluidTypes;
 import com.altnoir.poopsky.particle.PSParticles;
@@ -33,19 +32,22 @@ import org.jetbrains.annotations.NotNull;
 public class PoopSkyClient {
     public PoopSkyClient(IEventBus modEventBus, ModContainer modContainer) {
         ClientModEvents.register(modEventBus);
-        PoopSkyClient.register(modEventBus);
         PSKeyBoardInput.register(modEventBus);
         modContainer.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
 
-        // Game
-        NeoForge.EVENT_BUS.addListener(PSClientGameEvents::onScreenOpen);
-        NeoForge.EVENT_BUS.addListener(PSKeyBoardEvent::onClientTick);
+        var gameEventBus = NeoForge.EVENT_BUS;
+        PoopSkyClient.registerMod(modEventBus);
+        PoopSkyClient.registerGame(gameEventBus);
     }
 
-    public static void register(IEventBus modEventBus) {
-        // Mod
+    public static void registerMod(IEventBus modEventBus) {
         modEventBus.addListener(PSClientModEvents::registerLayers);
         modEventBus.addListener(PSClientModEvents::registerBlockEntityRenderers);
+    }
+
+    public static void registerGame(IEventBus modEventBus) {
+        modEventBus.addListener(PSClientGameEvents::onScreenOpen);
+        modEventBus.addListener(PSClientGameEvents::onClientTick);
     }
 
     public static class ClientModEvents {
