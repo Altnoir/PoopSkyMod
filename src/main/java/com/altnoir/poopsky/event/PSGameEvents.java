@@ -5,8 +5,8 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.p.ToiletLavaBlock;
-import com.altnoir.poopsky.effect.PSEffects;
-import com.altnoir.poopsky.effect.PSPotions;
+import com.altnoir.poopsky.init.PEffects;
+import com.altnoir.poopsky.init.PPotions;
 import com.altnoir.poopsky.init.PFluids;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.villager.PSVillagerTrades;
@@ -46,10 +46,10 @@ public class PSGameEvents {
     public static void onBrewingRecipeRegistry(RegisterBrewingRecipesEvent event) {
         PotionBrewing.Builder builder = event.getBuilder();
 
-        builder.addMix(Potions.AWKWARD, PSItems.FOLIUM_SENNAE.get(), PSPotions.FECAL_INCONTINENCE_POTION);
-        builder.addMix(PSPotions.FECAL_INCONTINENCE_POTION, Items.REDSTONE, PSPotions.LONG_FECAL_INCONTINENCE_POTION);
-        builder.addMix(PSPotions.FECAL_INCONTINENCE_POTION, Items.GLOWSTONE_DUST, PSPotions.STRONG_FECAL_INCONTINENCE_POTION);
-        builder.addMix(PSPotions.FECAL_INCONTINENCE_POTION, Items.GLOWSTONE, PSPotions.SUPER_FECAL_INCONTINENCE_POTION);
+        builder.addMix(Potions.AWKWARD, PSItems.FOLIUM_SENNAE.get(), PPotions.FECAL_INCONTINENCE_POTION);
+        builder.addMix(PPotions.FECAL_INCONTINENCE_POTION, Items.REDSTONE, PPotions.LONG_FECAL_INCONTINENCE_POTION);
+        builder.addMix(PPotions.FECAL_INCONTINENCE_POTION, Items.GLOWSTONE_DUST, PPotions.STRONG_FECAL_INCONTINENCE_POTION);
+        builder.addMix(PPotions.FECAL_INCONTINENCE_POTION, Items.GLOWSTONE, PPotions.SUPER_FECAL_INCONTINENCE_POTION);
     }
 
     @SubscribeEvent
@@ -122,8 +122,8 @@ public class PSGameEvents {
         if (event.getLevel().isClientSide() || !Config.desperateWorld) return;
         Mob mob = event.getEntity();
 
-        if (mob.hasEffect(PSEffects.FECAL_INCONTINENCE)) return;
-        mob.addEffect(new MobEffectInstance(PSEffects.FECAL_INCONTINENCE, MobEffectInstance.INFINITE_DURATION, 3));
+        if (mob.hasEffect(PEffects.FECAL_INCONTINENCE)) return;
+        mob.addEffect(new MobEffectInstance(PEffects.FECAL_INCONTINENCE, MobEffectInstance.INFINITE_DURATION, 3));
     }
 
     @SubscribeEvent

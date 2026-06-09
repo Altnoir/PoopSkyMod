@@ -48,6 +48,8 @@ public class PSBlockTagProvider extends BlockTagsProvider {
         tag(PSBlockTags.TOILET_BLOCKS)
                 .add(WOODEN_TOILETS)
                 .add(HARD_TOILETS);
+        tag(PSBlockTags.GOLDEN_TOILET_BLOCKS)
+                .add(AllToiletBlocks.RAINBOW_TOILET.get());
 
         //基础标签
         tag(BlockTags.MOSS_REPLACEABLE)

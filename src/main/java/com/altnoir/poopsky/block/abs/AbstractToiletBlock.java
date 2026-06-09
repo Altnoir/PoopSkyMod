@@ -1,15 +1,11 @@
 package com.altnoir.poopsky.block.abs;
 
-import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.block.p.ToiletLavaBlock;
-import com.altnoir.poopsky.effect.PSEffects;
-import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.entity.p.ToiletEntity;
-import com.altnoir.poopsky.init.PStats;
+import com.altnoir.poopsky.init.*;
 import com.altnoir.poopsky.item.PSItems;
-import com.altnoir.poopsky.init.PParticles;
-import com.altnoir.poopsky.init.PSoundEvents;
+import com.altnoir.poopsky.tag.PSBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
@@ -104,7 +100,7 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
                 entity = entities.getFirst();
             }
             if (entity instanceof ToiletEntity toiletEntity) {
-                toiletEntity.setGoldenPoop(state.is(AllToiletBlocks.RAINBOW_TOILET));
+                toiletEntity.setGoldenPoop(state.is(PSBlockTags.GOLDEN_TOILET_BLOCKS));
             }
             player.startRiding(entity);
         }
@@ -149,7 +145,7 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
 
     private void poopAnvil(Level level, BlockState blockState, Entity entity) {
         Item poopItem;
-        if (blockState.is(AllToiletBlocks.RAINBOW_TOILET)) {
+        if (blockState.is(PSBlockTags.GOLDEN_TOILET_BLOCKS)) {
             poopItem = PSItems.GOLDEN_POOP.get();
         } else {
             poopItem = PSItems.POOP.get();
@@ -163,8 +159,8 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
         if (!level.isClientSide && entity instanceof Player player) {
             if (player.isShiftKeyDown() && isEntityCentered(pos, player)) {
-                if (player.hasEffect(PSEffects.FECAL_INCONTINENCE)) {
-                    onPoop(level, player, player.hasEffect(PSEffects.INTESTINAL_SPASM));
+                if (player.hasEffect(PEffects.FECAL_INCONTINENCE)) {
+                    onPoop(level, player, player.hasEffect(PEffects.INTESTINAL_SPASM));
                     player.causeFoodExhaustion(0.05F);
                 } else {
                     var playerData = player.getPersistentData();
@@ -172,7 +168,7 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
                     long gameTime = level.getGameTime();
 
                     if (poopTime == 0 || gameTime - poopTime >= 20) {
-                        onPoop(level, player, player.hasEffect(PSEffects.INTESTINAL_SPASM));
+                        onPoop(level, player, player.hasEffect(PEffects.INTESTINAL_SPASM));
                         player.causeFoodExhaustion(1.0F);
                         playerData.putLong("poopTime", gameTime);
                     }

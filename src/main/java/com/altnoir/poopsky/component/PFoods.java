@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.component;
 
-import com.altnoir.poopsky.effect.PSEffects;
+import com.altnoir.poopsky.init.PEffects;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
@@ -111,7 +111,7 @@ public class PFoods {
 
     public static final FoodProperties DRAGON_BREATH_CHILI = new FoodProperties.Builder()
             .nutrition(2).saturationModifier(0.1F).alwaysEdible()
-            .effect(new MobEffectInstance(PSEffects.INTESTINAL_SPASM, 9600, 0), 1.0F)
+            .effect(new MobEffectInstance(PEffects.INTESTINAL_SPASM, 9600, 0), 1.0F)
             .effect(new MobEffectInstance(MobEffects.GLOWING, 200, 0), 1.0F)
             .build();
 

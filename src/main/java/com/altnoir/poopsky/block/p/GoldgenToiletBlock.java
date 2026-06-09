@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.block.p;
 
-import com.altnoir.poopsky.effect.PSEffects;
+import com.altnoir.poopsky.init.PEffects;
 import com.altnoir.poopsky.init.PStats;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.init.PParticles;
@@ -25,12 +25,12 @@ public class GoldgenToiletBlock extends ToiletLavaBlock {
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
         if (!level.isClientSide && entity instanceof Player player && player.isShiftKeyDown() && isEntityCentered(pos, player) && !state.getValue(LAVA)) {
-            if (player.hasEffect(PSEffects.INTESTINAL_SPASM)) {
+            if (player.hasEffect(PEffects.INTESTINAL_SPASM)) {
                 level.setBlock(pos, state.setValue(LAVA, true), 3);
                 level.playSound(null, pos, SoundEvents.BUCKET_EMPTY_LAVA, SoundSource.PLAYERS, 1.0F, 1.0F);
-                player.removeEffect(PSEffects.INTESTINAL_SPASM);
+                player.removeEffect(PEffects.INTESTINAL_SPASM);
                 player.causeFoodExhaustion(1.0F);
-            } else if (player.hasEffect(PSEffects.FECAL_INCONTINENCE)) {
+            } else if (player.hasEffect(PEffects.FECAL_INCONTINENCE)) {
                 onPoopGolden(level, player);
                 player.causeFoodExhaustion(0.05F);
             } else if (level.getGameTime() % 20 == 0) {

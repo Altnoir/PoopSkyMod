@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.entity.p;
 
-import com.altnoir.poopsky.effect.PSEffects;
+import com.altnoir.poopsky.init.PEffects;
 import com.altnoir.poopsky.init.PStats;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.init.PParticles;
@@ -55,11 +55,11 @@ public class ToiletEntity extends Entity {
             return;
         }
 
-        if (player.hasEffect(PSEffects.FECAL_INCONTINENCE)) {
-            onPoop(level(), player, player.hasEffect(PSEffects.INTESTINAL_SPASM));
+        if (player.hasEffect(PEffects.FECAL_INCONTINENCE)) {
+            onPoop(level(), player, player.hasEffect(PEffects.INTESTINAL_SPASM));
             player.causeFoodExhaustion(0.05F);
         } else if (level().getGameTime() % 20 == 0) {
-            onPoop(level(), player, player.hasEffect(PSEffects.INTESTINAL_SPASM));
+            onPoop(level(), player, player.hasEffect(PEffects.INTESTINAL_SPASM));
             player.causeFoodExhaustion(1.0F);
         }
     }
@@ -116,9 +116,5 @@ public class ToiletEntity extends Entity {
                 3.0
         );
         player.awardStat(PStats.POOP_STATS.get());
-    }
-
-    public boolean isGoldenPoop() {
-        return goldenPoop;
     }
 }

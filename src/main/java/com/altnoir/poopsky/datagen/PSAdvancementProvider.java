@@ -3,8 +3,7 @@ package com.altnoir.poopsky.datagen;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.PSBlocks;
-import com.altnoir.poopsky.effect.PSEffects;
-import com.altnoir.poopsky.init.PStats;
+import com.altnoir.poopsky.init.PEffects;
 import com.altnoir.poopsky.item.PSItems;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
@@ -306,7 +305,7 @@ public class PSAdvancementProvider extends AdvancementProvider {
                             true,
                             false
                     )
-                    .addCriterion("chili", EffectsChangedTrigger.TriggerInstance.hasEffects(MobEffectsPredicate.Builder.effects().and(PSEffects.INTESTINAL_SPASM)))
+                    .addCriterion("chili", EffectsChangedTrigger.TriggerInstance.hasEffects(MobEffectsPredicate.Builder.effects().and(PEffects.INTESTINAL_SPASM)))
                     .save(saver, modId("chili"), existingFileHelper);
 
             AdvancementHolder rainbow_toilet = Advancement.Builder.advancement()

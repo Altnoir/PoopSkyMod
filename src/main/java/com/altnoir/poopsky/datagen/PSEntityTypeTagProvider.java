@@ -19,8 +19,10 @@ public class PSEntityTypeTagProvider extends EntityTypeTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         tag(PSSableTags.RETAIN_IN_SUB_LEVEL)
+                .add(PEntityType.STOOL.get())
                 .add(PEntityType.TOILET.get());
         tag(PSSableTags.DESTROY_WITH_SUB_LEVEL)
+                .add(PEntityType.STOOL.get())
                 .add(PEntityType.TOILET.get());
     }
 }

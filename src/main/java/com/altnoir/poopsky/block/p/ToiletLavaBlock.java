@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.block.p;
 
 import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
-import com.altnoir.poopsky.effect.PSEffects;
+import com.altnoir.poopsky.init.PEffects;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -45,12 +45,12 @@ public class ToiletLavaBlock extends AbstractToiletBlock {
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
         if (!level.isClientSide && entity instanceof Player player && player.isShiftKeyDown() && isEntityCentered(pos, player) && !state.getValue(LAVA)) {
-            if (player.hasEffect(PSEffects.INTESTINAL_SPASM)) {
+            if (player.hasEffect(PEffects.INTESTINAL_SPASM)) {
                 level.setBlock(pos, state.setValue(LAVA, true), 3);
                 level.playSound(null, pos, SoundEvents.BUCKET_EMPTY_LAVA, SoundSource.PLAYERS, 1.0F, 1.0F);
-                player.removeEffect(PSEffects.INTESTINAL_SPASM);
+                player.removeEffect(PEffects.INTESTINAL_SPASM);
                 player.causeFoodExhaustion(1.0F);
-            } else if (player.hasEffect(PSEffects.FECAL_INCONTINENCE)) {
+            } else if (player.hasEffect(PEffects.FECAL_INCONTINENCE)) {
                 onPoop(level, player, true);
                 player.causeFoodExhaustion(0.05F);
             } else if (level.getGameTime() % 20 == 0) {

@@ -1,8 +1,10 @@
 package com.altnoir.poopsky.effect;
 
-import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.init.PEffects;
 import com.altnoir.poopsky.init.PParticles;
 import com.altnoir.poopsky.init.PSoundEvents;
+import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.tag.PSBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
@@ -11,6 +13,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BoneMealItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
@@ -44,15 +47,12 @@ public class FecalIncontinenceEffect extends MobEffect {
             var level = (ServerLevel) entity.level();
             BlockPos entityPos = entity.blockPosition();
 
-            ItemStack stack = new ItemStack(PSItems.POOP.get());
-            if (entity.hasEffect(PSEffects.INTESTINAL_SPASM)) {
-                stack = new ItemStack(PSItems.CHILI_POOP.get());
-            }
-            ItemStack finalStack = stack;
+            Item stack = PSItems.POOP.get();
+
             boolean dropPoop = BlockPos.betweenClosedStream(entityPos.offset(0, -1, 0), entityPos.offset(0, 1, 0))
                     .anyMatch(targetPos -> {
-                        boolean applied = BoneMealItem.applyBonemeal(finalStack, level, targetPos, null)
-                                || BoneMealItem.growWaterPlant(finalStack, level, targetPos, null);
+                        boolean applied = BoneMealItem.applyBonemeal(new ItemStack(PSItems.POOP.get()), level, targetPos, null)
+                                || BoneMealItem.growWaterPlant(new ItemStack(PSItems.POOP.get()), level, targetPos, null);
 
                         if (applied) {
                             BoneMealItem.addGrowthParticles(level, targetPos, 15);
@@ -61,8 +61,15 @@ public class FecalIncontinenceEffect extends MobEffect {
                         return applied;
                     });
 
+            if (entity.hasEffect(PEffects.INTESTINAL_SPASM)) {
+                stack = PSItems.CHILI_POOP.get();
+            } else if (level.getBlockState(entityPos.below()).is(PSBlockTags.GOLDEN_TOILET_BLOCKS)) {
+                stack = PSItems.GOLDEN_POOP.get();
+            }
+
+            ItemStack finalStack = new ItemStack(stack);
             if (!dropPoop) {
-                var poop = new ItemEntity(level, entity.getX(), entity.getY() + 0.1, entity.getZ(), stack);
+                var poop = new ItemEntity(level, entity.getX(), entity.getY() + 0.1, entity.getZ(), finalStack);
 
                 if (amplifier > 1) {
                     entity.setDeltaMovement(entity.getDeltaMovement().add(new Vec3(0, 0.125, 0)));

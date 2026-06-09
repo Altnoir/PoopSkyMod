@@ -5,8 +5,8 @@ import com.altnoir.poopsky.init.PBlockEntityType;
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.block.p.CompooperBlock;
 import com.altnoir.poopsky.init.PComponents;
-import com.altnoir.poopsky.effect.PSEffects;
-import com.altnoir.poopsky.effect.PSPotions;
+import com.altnoir.poopsky.init.PEffects;
+import com.altnoir.poopsky.init.PPotions;
 import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.entity.p.PoopTntEntity;
 import com.altnoir.poopsky.init.PFluidTypes;
@@ -52,8 +52,8 @@ public class PoopSky {
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(PSNetworking::register);
 
-        PSEffects.register(modEventBus);
-        PSPotions.register(modEventBus);
+        PEffects.register(modEventBus);
+        PPotions.register(modEventBus);
         PParticles.register(modEventBus);
 
         PSBlocks.register(modEventBus);
