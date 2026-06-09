@@ -11,6 +11,7 @@ import com.altnoir.poopsky.effect.PSPotions;
 import com.altnoir.poopsky.entity.PSEntityType;
 import com.altnoir.poopsky.entity.p.PoopTntEntity;
 import com.altnoir.poopsky.entity.renderer.*;
+import com.altnoir.poopsky.event.PSKeyBoardInput;
 import com.altnoir.poopsky.fluid.PSFluidTypes;
 import com.altnoir.poopsky.fluid.PSFluids;
 import com.altnoir.poopsky.item.PSItems;
@@ -92,9 +93,6 @@ public class PoopSky {
         PSFluidTypes.FLUID_TYPES.register(modEventBus);
 
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
-        if (FMLEnvironment.dist.isClient()) {
-            modContainer.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
-        }
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
@@ -142,71 +140,6 @@ public class PoopSky {
                     (level, currentPos, relativePos, currentState) -> level.getBlockState(currentPos.below()).is(PSBlocks.POOP_BLOCK.get()) && level.getBlockState(relativePos).is(Blocks.BLUE_ICE),
                     Blocks.DEEPSLATE.defaultBlockState()));
         });
-    }
-
-    @EventBusSubscriber(modid = MOD_ID, value = Dist.CLIENT)
-    public static class ClientModEvents {
-        //TODO 目前已知：装有水的堆粪桶和粪便凳的透明渲染完全不正常渲染
-        @SubscribeEvent
-        public static void registerRenderTypes(RegisterNamedRenderTypesEvent event) {
-            event.register(PoopSky.loc("poop_sapling"), RenderType.cutout(), RenderType.entityCutout(PSBlocks.POOP_SAPLING.getId()));
-            event.register(PoopSky.loc("poop_empty_log"), RenderType.cutout(), RenderType.entityCutout(PSBlocks.POOP_EMPTY_LOG.getId()));
-        }
-
-        @SubscribeEvent
-        public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-            event.registerEntityRenderer(PSEntityType.TOILET_PLUG.get(), ToiletPlugRenderer::new);
-            event.registerEntityRenderer(PSEntityType.POOLIME.get(), PoolimeRenderer::new);
-            event.registerEntityRenderer(PSEntityType.FLY.get(), FlyRenderer::new);
-            event.registerEntityRenderer(PSEntityType.STOOL.get(), ChairRenderer::new);
-            event.registerEntityRenderer(PSEntityType.TOILET.get(), ToiletRenderer::new);
-            event.registerEntityRenderer(PSEntityType.POOP_TNT.get(), PoopTntRenderer::new);
-        }
-
-        @SubscribeEvent
-        public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
-            event.registerSpriteSet(PSParticles.POOP_PARTICLE.get(), PoopParticle.Provider::new);
-        }
-
-        @SubscribeEvent
-        public static void onRegisterBlockColors(RegisterColorHandlersEvent.Block event) {
-            event.register((state, world, pos, tintIndex) -> {
-                if (tintIndex == 1) {
-                    if (state.getValue(AbstractCompooperBlock.LEVEL) != AbstractCompooperBlock.MIN_LEVEL) {
-                        return world != null && pos != null
-                                ? BiomeColors.getAverageWaterColor(world, pos)
-                                : 0x3F76E4;
-                    }
-                    return 0x47311A;
-                }
-                return -1;
-            }, PSBlocks.WATER_COMPOOPER.get());
-        }
-
-        @SubscribeEvent
-        public static void onRegisterFluidRenderTypes(net.neoforged.neoforge.client.event.RegisterRenderBuffersEvent event) {
-            event.registerRenderBuffer(RenderType.translucent());
-        }
-
-        @SubscribeEvent
-        public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
-            event.registerFluidType(new IClientFluidTypeExtensions() {
-                @Override
-                public @NotNull ResourceLocation getStillTexture() {
-                    return PSFluidTypes.POOP_STILL_TEXTURE;
-                }
-
-                @Override
-                public @NotNull ResourceLocation getFlowingTexture() {
-                    return PSFluidTypes.POOP_FLOWING_TEXTURE;
-                }
-
-                @Override
-                public ResourceLocation getOverlayTexture() {
-                    return null;
-                }
-            }, PSFluidTypes.POOP_FLUID_TYPE.get());
-        }
     }
 
     public static ResourceLocation loc(String path) {
