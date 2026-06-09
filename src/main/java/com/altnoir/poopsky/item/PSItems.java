@@ -96,7 +96,6 @@ public class PSItems {
     public static final DeferredItem<Item> MOON_BOWL_MUSIC_DISC = ITEMS.register("music_disc_moon_bowl", () ->
             new Item(new Item.Properties().jukeboxPlayable(PSoundEvents.MOON_BOWL_KEY).rarity(Rarity.RARE).stacksTo(1)));
 
-
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }
