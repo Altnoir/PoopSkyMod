@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable_vertical",
+  "textures": {
+    "front": "poopsky:block/placer_front_vertical",
+    "particle": "poopsky:block/placer_side",
+    "side": "poopsky:block/placer_top"
+  }
+}

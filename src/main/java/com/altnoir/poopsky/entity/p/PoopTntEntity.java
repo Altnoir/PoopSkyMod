@@ -15,7 +15,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -38,9 +37,9 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
     private static final int MAX_EXPLOSION_RADIUS = 5;
     private static final double INSTANT_EXPLOSION_THRESHOLD = 0.25;
 
-    private static final Map<Block, ItemStack> EXPLOSION_RECIPES = Map.of(
-            Blocks.COBBLESTONE, new ItemStack(Items.GRAVEL),
-            Blocks.GRAVEL, new ItemStack(Items.SAND)
+    private static final Map<Block, Block> EXPLOSION_RECIPES = Map.of(
+            Blocks.COBBLESTONE, Blocks.GRAVEL,
+            Blocks.GRAVEL, Blocks.SAND
     );
 
     @javax.annotation.Nullable
@@ -153,7 +152,7 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
         return motion;
     }
 
-    //TODO 需要修复爆炸破坏方块不掉落问题
+    //TODO 暂时把爆炸改为替换方块，后续解决破坏方块不掉落物品再改回去
     protected void explode() {
         Level level = this.level();
 
@@ -173,17 +172,17 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
 
                     if (state.isAir() || state.getBlock() == Blocks.BEDROCK) continue;
 
-                    ItemStack recipeOutput = EXPLOSION_RECIPES.get(state.getBlock());
-                    if (recipeOutput == null) {
-                        level.destroyBlock(pos, true, null);
+                    Block recipeOutput = EXPLOSION_RECIPES.get(state.getBlock());
+                    if (recipeOutput != null) {
+                        level.setBlockAndUpdate(pos, recipeOutput.defaultBlockState());
+                        //Block.popResource(level, pos, recipeOutput.copy());
                     } else {
-                        level.destroyBlock(pos, false);
-                        Block.popResource(level, pos, recipeOutput.copy());
+                        //level.destroyBlock(pos, true, null);
                     }
                 }
             }
         }
-
+/*
         AABB damageBox = new AABB(center).inflate(radius);
         for (Entity entity : level.getEntities(this, damageBox)) {
             if (entity.isAlive() && entity != this && !entity.isSpectator()) {
@@ -197,6 +196,7 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
                 }
             }
         }
+*/
 
         spawnPoopParticle((ServerLevel) level, this.getX(), this.getY(), this.getZ(), radius);
     }

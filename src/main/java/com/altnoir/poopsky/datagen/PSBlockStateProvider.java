@@ -260,21 +260,28 @@ public class PSBlockStateProvider extends BlockStateProvider {
                 .texture("side", modLoc("block/" + getBlockPath(block) + "_side"))
                 .texture("front", modLoc("block/" + getBlockPath(block) + "_front"))
                 .texture(PARTICLE, modLoc("block/" + getBlockPath(block) + "_side"));
+        var modelV = models().withExistingParent(getBlockPath(block) + "_vertical", mcLoc("block/orientable_vertical"))
+                .texture("side", modLoc("block/" + getBlockPath(block) + "_top"))
+                .texture("front", modLoc("block/" + getBlockPath(block) + "_front_vertical"))
+                .texture(PARTICLE, modLoc("block/" + getBlockPath(block) + "_side"));
 
         getVariantBuilder(block).forAllStates(state -> {
             var facing = state.getValue(BlockStateProperties.FACING);
-            int xRot = switch (facing) {
-                case UP -> 270;
-                case DOWN -> 90;
-                default -> 0;
-            };
+
+            if (facing == Direction.UP || facing == Direction.DOWN) {
+                int xRot = switch (facing) {
+                    case DOWN -> 90;
+                    default -> 0;
+                };
+                return ConfiguredModel.builder().modelFile(modelV).rotationX(xRot).build();
+            }
             int yRot = switch (facing) {
-                case UP, EAST -> 90;
-                case SOUTH, DOWN -> 180;
+                case EAST -> 90;
+                case SOUTH -> 180;
                 case WEST -> 270;
                 default -> 0;
             };
-            return ConfiguredModel.builder().modelFile(model).rotationX(xRot).rotationY(yRot).build();
+            return ConfiguredModel.builder().modelFile(model).rotationY(yRot).build();
         });
 
         simpleBlockItem(block, model);

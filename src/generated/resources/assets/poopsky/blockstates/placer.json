@@ -1,14 +1,12 @@
 {
   "variants": {
     "facing=down,triggered=false": {
-      "model": "poopsky:block/placer",
-      "x": 90,
-      "y": 180
+      "model": "poopsky:block/placer_vertical",
+      "x": 90
     },
     "facing=down,triggered=true": {
-      "model": "poopsky:block/placer",
-      "x": 90,
-      "y": 180
+      "model": "poopsky:block/placer_vertical",
+      "x": 90
     },
     "facing=east,triggered=false": {
       "model": "poopsky:block/placer",
@@ -33,14 +31,10 @@
       "y": 180
     },
     "facing=up,triggered=false": {
-      "model": "poopsky:block/placer",
-      "x": 270,
-      "y": 90
+      "model": "poopsky:block/placer_vertical"
     },
     "facing=up,triggered=true": {
-      "model": "poopsky:block/placer",
-      "x": 270,
-      "y": 90
+      "model": "poopsky:block/placer_vertical"
     },
     "facing=west,triggered=false": {
       "model": "poopsky:block/placer",
