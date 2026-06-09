@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.sound;
+package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -12,7 +12,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
-public class PSSoundEvents {
+public class PSoundEvents {
     public static final DeferredRegister<SoundEvent> SOUND_EVENT = DeferredRegister.create(BuiltInRegistries.SOUND_EVENT, PoopSky.MOD_ID);
 
     public static final Supplier<SoundEvent> FART = registerSoundEvent("fart");

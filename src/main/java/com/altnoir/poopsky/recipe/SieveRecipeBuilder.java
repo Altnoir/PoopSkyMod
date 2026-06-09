@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.recipe;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.init.PRecipes;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
@@ -23,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 public final class SieveRecipeBuilder implements RecipeBuilder {
-    private static final String RECIPE_TYPE = PSRecipes.SIEVE_RECIPE_FOLDER;
+    private static final String RECIPE_TYPE = PRecipes.SIEVE_RECIPE_FOLDER;
 
     private final Ingredient input;
     private final int processingTime;

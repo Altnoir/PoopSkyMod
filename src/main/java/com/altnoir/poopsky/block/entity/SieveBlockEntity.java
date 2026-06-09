@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.block.entity;
 
-import com.altnoir.poopsky.block.PSBlockEntities;
-import com.altnoir.poopsky.recipe.PSRecipes;
+import com.altnoir.poopsky.init.PBlockEntityType;
+import com.altnoir.poopsky.init.PRecipes;
 import com.altnoir.poopsky.recipe.SieveRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -88,7 +88,7 @@ public class SieveBlockEntity extends BlockEntity {
     };
 
     public SieveBlockEntity(BlockPos pos, BlockState blockState) {
-        super(PSBlockEntities.SIEVE_BLOCK_ENTITY.get(), pos, blockState);
+        super(PBlockEntityType.SIEVE_BLOCK_ENTITY.get(), pos, blockState);
     }
     public boolean tryInsertInput(ItemStack stack) {
         if (level == null || level.isClientSide) return false;
@@ -237,7 +237,7 @@ public class SieveBlockEntity extends BlockEntity {
     private Optional<SieveRecipe> findRecipe(ItemStack stack) {
         if (level == null || stack.isEmpty()) return Optional.empty();
         return level.getRecipeManager()
-                .getRecipeFor(PSRecipes.SIEVE_TYPE.get(), new SingleRecipeInput(stack), level)
+                .getRecipeFor(PRecipes.SIEVE_TYPE.get(), new SingleRecipeInput(stack), level)
                 .map(RecipeHolder::value);
     }
 

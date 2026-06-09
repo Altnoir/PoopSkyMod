@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.entity.p;
 
-import com.altnoir.poopsky.entity.PSEntityType;
-import com.altnoir.poopsky.particle.PSParticles;
+import com.altnoir.poopsky.init.PEntityType;
+import com.altnoir.poopsky.init.PParticles;
 import com.altnoir.poopsky.tag.PSBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -52,7 +52,7 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
     }
 
     public PoopTntEntity(Level level, double x, double y, double z, @javax.annotation.Nullable LivingEntity owner) {
-        this(PSEntityType.POOP_TNT.get(), level);
+        this(PEntityType.POOP_TNT.get(), level);
         this.setPos(x, y, z);
         this.setDeltaMovement(0, 0, 0);
         this.setFuse(DEFAULT_FUSE_TIME);
@@ -205,7 +205,7 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
         int particleCount = radius * 30;
         double offset = radius * 0.5;
         double speed = 0.4 + level.random.nextDouble() * 0.4;
-        level.sendParticles(PSParticles.POOP_PARTICLE.get(), x, y, z, particleCount, offset, offset, offset, speed);
+        level.sendParticles(PParticles.POOP_PARTICLE.get(), x, y, z, particleCount, offset, offset, offset, speed);
     }
 
     private static int calculateExplosionRadius(double velocity) {

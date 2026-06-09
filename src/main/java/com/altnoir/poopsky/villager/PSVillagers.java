@@ -4,7 +4,7 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.block.AllToiletBlocks;
-import com.altnoir.poopsky.sound.PSSoundEvents;
+import com.altnoir.poopsky.init.PSoundEvents;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.core.Holder;
@@ -84,14 +84,14 @@ public class PSVillagers {
                     poiTypeHolder -> poiTypeHolder.is(COMPOOPER_POI_KEY),
                     ImmutableSet.of(),
                     ImmutableSet.of(),
-                    PSSoundEvents.ENTITY_VILLAGER_WORK_COMPOOPER.get()));
+                    PSoundEvents.ENTITY_VILLAGER_WORK_COMPOOPER.get()));
 
     public static final Holder<VillagerProfession> GASTRONOME = VILLAGER_PROFESSIONS.register("gastronome", () ->
             new VillagerProfession("gastronome", holder -> holder.is(TOILET_POI_KEY),
                     poiTypeHolder -> poiTypeHolder.is(TOILET_POI_KEY),
                     ImmutableSet.of(),
                     ImmutableSet.of(),
-                    PSSoundEvents.ENTITY_VILLAGER_WORK_TOILET.get()));
+                    PSoundEvents.ENTITY_VILLAGER_WORK_TOILET.get()));
 
     public static void register(IEventBus eventBus) {
         POI_TYPES.register(eventBus);

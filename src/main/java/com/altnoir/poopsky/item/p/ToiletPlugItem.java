@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.item.p;
 
-import com.altnoir.poopsky.entity.PSEntityType;
+import com.altnoir.poopsky.init.PEntityType;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -31,7 +31,7 @@ public class ToiletPlugItem extends Item {
         var face = context.getClickedFace();
         var stack = context.getItemInHand();
 
-        var plug = PSEntityType.TOILET_PLUG.get().create(level);
+        var plug = PEntityType.TOILET_PLUG.get().create(level);
 
         if (plug == null)
             return InteractionResult.FAIL;

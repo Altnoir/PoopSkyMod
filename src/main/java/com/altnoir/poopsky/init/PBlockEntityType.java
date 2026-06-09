@@ -1,6 +1,8 @@
-package com.altnoir.poopsky.block;
+package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.block.AllToiletBlocks;
+import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.block.entity.PlacerBlockEntity;
 import com.altnoir.poopsky.block.entity.SieveBlockEntity;
 import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
@@ -13,7 +15,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
-public class PSBlockEntities {
+public class PBlockEntityType {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES =
             DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, PoopSky.MOD_ID);
 

@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.block.entity;
 
-import com.altnoir.poopsky.block.PSBlockEntities;
+import com.altnoir.poopsky.init.PBlockEntityType;
 import com.altnoir.poopsky.inventory.PlacerMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -26,7 +26,7 @@ public class PlacerBlockEntity extends DispenserBlockEntity {
     }
 
     public PlacerBlockEntity(BlockPos pos, BlockState blockState) {
-        this(PSBlockEntities.PLACER_BLOCK_ENTITY.get(), pos, blockState);
+        this(PBlockEntityType.PLACER_BLOCK_ENTITY.get(), pos, blockState);
     }
 
     public int getContainerSize() {

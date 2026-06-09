@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.event;
 
-import com.altnoir.poopsky.block.PSBlockEntities;
+import com.altnoir.poopsky.init.PBlockEntityType;
 import com.altnoir.poopsky.block.entity.renderer.SieveBlockEntityRenderer;
 import com.altnoir.poopsky.entity.model.FlyModel;
 import com.altnoir.poopsky.entity.model.ToiletPlugModel;
@@ -13,6 +13,6 @@ public class PSClientModEvents {
     }
 
     public static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(PSBlockEntities.SIEVE_BLOCK_ENTITY.get(), SieveBlockEntityRenderer::new);
+        event.registerBlockEntityRenderer(PBlockEntityType.SIEVE_BLOCK_ENTITY.get(), SieveBlockEntityRenderer::new);
     }
 }

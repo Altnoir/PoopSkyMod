@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.block.p;
 
-import com.altnoir.poopsky.entity.PSEntityType;
+import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.entity.p.ChairEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -43,9 +43,9 @@ public class ChairBlock extends Block {
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (!level.isClientSide) {
             Entity entity;
-            List<ChairEntity> entities = level.getEntities(PSEntityType.STOOL.get(), new AABB(pos), chairEntity -> true);
+            List<ChairEntity> entities = level.getEntities(PEntityType.STOOL.get(), new AABB(pos), chairEntity -> true);
             if (entities.isEmpty()) {
-                entity = PSEntityType.STOOL.get().spawn((ServerLevel) level, pos, MobSpawnType.TRIGGERED);
+                entity = PEntityType.STOOL.get().spawn((ServerLevel) level, pos, MobSpawnType.TRIGGERED);
             } else {
                 entity = entities.getFirst();
             }

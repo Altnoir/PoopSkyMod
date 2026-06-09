@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.entity.p;
 
 import com.altnoir.poopsky.block.PSBlocks;
-import com.altnoir.poopsky.particle.PSParticles;
+import com.altnoir.poopsky.init.PParticles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.util.RandomSource;
@@ -25,7 +25,7 @@ public class PoolimeEntity extends Slime {
 
     @Override
     protected @NotNull ParticleOptions getParticleType() {
-        return PSParticles.POOP_PARTICLE.get();
+        return PParticles.POOP_PARTICLE.get();
     }
 
     public static boolean checkPooplimeSpawnRules(

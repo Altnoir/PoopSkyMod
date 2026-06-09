@@ -1,7 +1,8 @@
 package com.altnoir.poopsky.block.p;
 
-import com.altnoir.poopsky.block.PSBlockEntities;
+import com.altnoir.poopsky.init.PBlockEntityType;
 import com.altnoir.poopsky.block.entity.PlacerBlockEntity;
+import com.altnoir.poopsky.init.PStats;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.MapCodec;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
@@ -13,7 +14,6 @@ import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.Containers;
@@ -71,7 +71,7 @@ public class PlacerBlock extends BaseEntityBlock {
             BlockEntity blockentity = level.getBlockEntity(pos);
             if (blockentity instanceof PlacerBlockEntity) {
                 player.openMenu((PlacerBlockEntity) blockentity);
-                player.awardStat(Stats.INSPECT_DISPENSER);
+                player.awardStat(PStats.INSPECT_PLACER.get());
             }
 
             return InteractionResult.CONSUME;
@@ -79,7 +79,7 @@ public class PlacerBlock extends BaseEntityBlock {
     }
 
     protected void dispenseFrom(ServerLevel level, BlockState state, BlockPos pos) {
-        PlacerBlockEntity blockEntity = level.getBlockEntity(pos, PSBlockEntities.PLACER_BLOCK_ENTITY.get()).orElse(null);
+        PlacerBlockEntity blockEntity = level.getBlockEntity(pos, PBlockEntityType.PLACER_BLOCK_ENTITY.get()).orElse(null);
         if (blockEntity == null) {
             LOGGER.warn("Ignoring dispensing attempt for Placer without matching block entity at {}", pos);
             return;

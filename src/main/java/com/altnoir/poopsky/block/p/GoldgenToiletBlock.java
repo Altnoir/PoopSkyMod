@@ -1,9 +1,10 @@
 package com.altnoir.poopsky.block.p;
 
 import com.altnoir.poopsky.effect.PSEffects;
+import com.altnoir.poopsky.init.PStats;
 import com.altnoir.poopsky.item.PSItems;
-import com.altnoir.poopsky.particle.PSParticles;
-import com.altnoir.poopsky.sound.PSSoundEvents;
+import com.altnoir.poopsky.init.PParticles;
+import com.altnoir.poopsky.init.PSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -57,9 +58,9 @@ public class GoldgenToiletBlock extends ToiletLavaBlock {
             level.addFreshEntity(poop);
         }
         var pitch = level.random.nextFloat() - 0.5F;
-        level.playSound(null, player.getX(), player.getY() + 0.1, player.getZ(), PSSoundEvents.FART.get(), SoundSource.PLAYERS, 1.0F, pitch);
+        level.playSound(null, player.getX(), player.getY() + 0.1, player.getZ(), PSoundEvents.FART.get(), SoundSource.PLAYERS, 1.0F, pitch);
         ((ServerLevel) level).sendParticles(
-                PSParticles.POOP_PARTICLE.get(),
+                PParticles.POOP_PARTICLE.get(),
                 player.getX(),
                 player.getY() + 0.1,
                 player.getZ(),
@@ -69,5 +70,6 @@ public class GoldgenToiletBlock extends ToiletLavaBlock {
                 0.0,
                 3.0
         );
+        player.awardStat(PStats.POOP_STATS.get());
     }
 }

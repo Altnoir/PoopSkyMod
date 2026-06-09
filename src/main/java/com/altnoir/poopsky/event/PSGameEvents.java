@@ -7,7 +7,7 @@ import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.p.ToiletLavaBlock;
 import com.altnoir.poopsky.effect.PSEffects;
 import com.altnoir.poopsky.effect.PSPotions;
-import com.altnoir.poopsky.fluid.PSFluids;
+import com.altnoir.poopsky.init.PFluids;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.villager.PSVillagerTrades;
 import com.altnoir.poopsky.worldgen.PSVoidChunkGenerator;
@@ -97,7 +97,7 @@ public class PSGameEvents {
             BlockHitResult blockhitresult = Item.getPlayerPOVHitResult(level, player, ClipContext.Fluid.SOURCE_ONLY);
             BlockPos blockpos = blockhitresult.getBlockPos();
 
-            if (blockhitresult.getType() == HitResult.Type.BLOCK && level.mayInteract(player, blockpos) && level.getFluidState(blockpos).is(PSFluids.POOP.get())) {
+            if (blockhitresult.getType() == HitResult.Type.BLOCK && level.mayInteract(player, blockpos) && level.getFluidState(blockpos).is(PFluids.POOP.get())) {
                 if (!level.isClientSide) {
                     level.playSound(null, blockpos, SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 0.6F);
                     level.gameEvent(player, GameEvent.FLUID_PICKUP, blockpos);

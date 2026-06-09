@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.block.p;
 
-import com.altnoir.poopsky.particle.PSParticles;
+import com.altnoir.poopsky.init.PParticles;
 import com.altnoir.poopsky.worldgen.PSConfigureFeatures;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -161,7 +161,7 @@ public class PoopBlock extends Block implements BonemealableBlock {
 
             if (!level.isClientSide && level.random.nextInt(5) == 0) {
                 ((ServerLevel) level).sendParticles(
-                        PSParticles.POOP_PARTICLE.get(),
+                        PParticles.POOP_PARTICLE.get(),
                         entity.getX(), entity.getY() + 0.1, entity.getZ(),
                         8,
                         0.0, -0.1, 0.0,

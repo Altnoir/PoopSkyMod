@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.datagen;
 
-import com.altnoir.poopsky.entity.PSEntityType;
+import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.item.PSItems;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.MinMaxBounds;
@@ -31,7 +31,7 @@ public class PSEntityLootTableProvider extends EntityLootSubProvider {
     @Override
     public void generate() {
         this.add(
-                PSEntityType.POOLIME.get(),
+                PEntityType.POOLIME.get(),
                 LootTable.lootTable()
                         .withPool(
                                 LootPool.lootPool()
@@ -56,7 +56,7 @@ public class PSEntityLootTableProvider extends EntityLootSubProvider {
                         )
         );
         this.add(
-                PSEntityType.FLY.get(),
+                PEntityType.FLY.get(),
                 LootTable.lootTable()
                         .withPool(
                                 LootPool.lootPool()
@@ -71,6 +71,6 @@ public class PSEntityLootTableProvider extends EntityLootSubProvider {
 
     @Override
     protected @NotNull Stream<EntityType<?>> getKnownEntityTypes() {
-        return PSEntityType.ENTITY_TYPES.getEntries().stream().map(Holder::value);
+        return PEntityType.ENTITY_TYPES.getEntries().stream().map(Holder::value);
     }
 }

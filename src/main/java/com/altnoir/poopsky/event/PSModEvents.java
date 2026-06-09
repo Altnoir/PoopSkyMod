@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.event;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.PSBlockEntities;
-import com.altnoir.poopsky.entity.PSEntityType;
+import com.altnoir.poopsky.init.PBlockEntityType;
+import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.entity.p.FlyEntity;
 import com.altnoir.poopsky.entity.p.PoolimeEntity;
 import com.altnoir.poopsky.entity.p.ToiletPlugEntity;
@@ -22,15 +22,15 @@ import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 public class PSModEvents {
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event) {
-        event.put(PSEntityType.POOLIME.get(), PoolimeEntity.createAttributes().build());
-        event.put(PSEntityType.FLY.get(), FlyEntity.createAttributes().build());
+        event.put(PEntityType.POOLIME.get(), PoolimeEntity.createAttributes().build());
+        event.put(PEntityType.FLY.get(), FlyEntity.createAttributes().build());
     }
 
     @SubscribeEvent
     public static void registerSpawnPlacements(RegisterSpawnPlacementsEvent event) {
-        event.register(PSEntityType.POOLIME.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+        event.register(PEntityType.POOLIME.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 PoolimeEntity::checkPooplimeSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
-        event.register(PSEntityType.FLY.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+        event.register(PEntityType.FLY.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 FlyEntity::checkFlySpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
     }
 
@@ -46,7 +46,7 @@ public class PSModEvents {
     public static void register(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
-                PSBlockEntities.SIEVE_BLOCK_ENTITY.get(),
+                PBlockEntityType.SIEVE_BLOCK_ENTITY.get(),
                 (blockEntity, direction) -> {
                     if (direction == null || direction == Direction.DOWN) {
                         return blockEntity.getBottomHandler();

@@ -3,8 +3,8 @@ package com.altnoir.poopsky.block.p;
 import com.altnoir.poopsky.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.item.PSItems;
-import com.altnoir.poopsky.particle.PSParticles;
-import com.altnoir.poopsky.sound.PSSoundEvents;
+import com.altnoir.poopsky.init.PParticles;
+import com.altnoir.poopsky.init.PSoundEvents;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -97,7 +97,7 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
 
             if (level instanceof ServerLevel serverLevel) {
                 serverLevel.sendParticles(
-                        PSParticles.POOP_PARTICLE.get(),
+                        PParticles.POOP_PARTICLE.get(),
                         pos.getX() + 0.5,
                         pos.getY() + 0.9375,
                         pos.getZ() + 0.5,
@@ -171,7 +171,7 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
     protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (!state.getValue(MAGGOTS) && state.getValue(LEVEL) == MAX_LEVEL) {
             level.setBlockAndUpdate(pos, state.setValue(MAGGOTS, true));
-            level.playSound(null, pos, PSSoundEvents.BLOCK_COMPOOPER_MAGGOTS.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
+            level.playSound(null, pos, PSoundEvents.BLOCK_COMPOOPER_MAGGOTS.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
         }
         super.randomTick(state, level, pos, random);
     }

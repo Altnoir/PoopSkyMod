@@ -3,12 +3,12 @@ package com.altnoir.poopsky.item;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.component.PFoods;
-import com.altnoir.poopsky.component.PSComponents;
+import com.altnoir.poopsky.init.PComponents;
 import com.altnoir.poopsky.component.ToiletComponent;
-import com.altnoir.poopsky.entity.PSEntityType;
-import com.altnoir.poopsky.fluid.PSFluids;
+import com.altnoir.poopsky.init.PEntityType;
+import com.altnoir.poopsky.init.PFluids;
 import com.altnoir.poopsky.item.p.*;
-import com.altnoir.poopsky.sound.PSSoundEvents;
+import com.altnoir.poopsky.init.PSoundEvents;
 import net.minecraft.world.item.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
@@ -62,7 +62,7 @@ public class PSItems {
             new ToiletPlugItem(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<Item> TOILET_PLUG_WAND = ITEMS.register("toilet_plug_wand", () ->
             new ToiletLinkerItem(new Item.Properties()
-                    .component(PSComponents.TOILET_COMPONENT, ToiletComponent.EMPTY)
+                    .component(PComponents.TOILET_COMPONENT, ToiletComponent.EMPTY)
                     .stacksTo(1)));
     public static final DeferredItem<Item> TIME_BELL = ITEMS.register("time_bell", () ->
             new TimeBellItem(new Item.Properties().stacksTo(1)));
@@ -83,18 +83,18 @@ public class PSItems {
             )
     );
     public static final DeferredItem<BucketItem> URINE_BUCKET = ITEMS.register("urine_bucket",
-            () -> new BucketItem(PSFluids.POOP.get(), new Item.Properties().stacksTo(1)));
+            () -> new BucketItem(PFluids.POOP.get(), new Item.Properties().stacksTo(1)));
 
     public static final DeferredItem<Item> POOLIME_SPAWN_EGG = ITEMS.register("poolime_spawn_egg",
-            () -> new DeferredSpawnEggItem(PSEntityType.POOLIME, 0x7D5F36, 0x5E4228,
+            () -> new DeferredSpawnEggItem(PEntityType.POOLIME, 0x7D5F36, 0x5E4228,
                     new Item.Properties()));
 
     public static final DeferredItem<Item> LAWRENCE_MUSIC_DISC = ITEMS.register("music_disc_lawrence", () ->
-            new Item(new Item.Properties().jukeboxPlayable(PSSoundEvents.LAWRENCE_KEY).rarity(Rarity.RARE).stacksTo(1)));
+            new Item(new Item.Properties().jukeboxPlayable(PSoundEvents.LAWRENCE_KEY).rarity(Rarity.RARE).stacksTo(1)));
     public static final DeferredItem<Item> LIGHT_DANCE_MUSIC_DISC = ITEMS.register("music_disc_light_dance", () ->
-            new Item(new Item.Properties().jukeboxPlayable(PSSoundEvents.LIGHT_DANCE_KEY).rarity(Rarity.RARE).stacksTo(1)));
+            new Item(new Item.Properties().jukeboxPlayable(PSoundEvents.LIGHT_DANCE_KEY).rarity(Rarity.RARE).stacksTo(1)));
     public static final DeferredItem<Item> MOON_BOWL_MUSIC_DISC = ITEMS.register("music_disc_moon_bowl", () ->
-            new Item(new Item.Properties().jukeboxPlayable(PSSoundEvents.MOON_BOWL_KEY).rarity(Rarity.RARE).stacksTo(1)));
+            new Item(new Item.Properties().jukeboxPlayable(PSoundEvents.MOON_BOWL_KEY).rarity(Rarity.RARE).stacksTo(1)));
 
 
     public static void register(IEventBus eventBus) {

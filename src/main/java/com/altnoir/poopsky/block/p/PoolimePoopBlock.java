@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.block.p;
 
-import com.altnoir.poopsky.entity.PSEntityType;
+import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.entity.p.PoolimeEntity;
-import com.altnoir.poopsky.particle.PSParticles;
+import com.altnoir.poopsky.init.PParticles;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -106,7 +106,7 @@ public class PoolimePoopBlock extends Block {
 
             if (!level.isClientSide && level.random.nextInt(5) == 0) {
                 ((ServerLevel) level).sendParticles(
-                        PSParticles.POOP_PARTICLE.get(),
+                        PParticles.POOP_PARTICLE.get(),
                         entity.getX(), entity.getY() + 0.1, entity.getZ(),
                         8,
                         0.0, -0.1, 0.0,
@@ -123,7 +123,7 @@ public class PoolimePoopBlock extends Block {
     @Override
     protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         super.randomTick(state, level, pos, random);
-        PoolimeEntity poolime = PSEntityType.POOLIME.get().create(level);
+        PoolimeEntity poolime = PEntityType.POOLIME.get().create(level);
 
         if (poolime != null) {
             int count = level.getEntitiesOfClass(PoolimeEntity.class, poolime.getBoundingBox().inflate(64.0D)).size();

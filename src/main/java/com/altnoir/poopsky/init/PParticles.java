@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.particle;
+package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
 import net.minecraft.core.particles.ParticleType;
@@ -9,7 +9,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
-public class PSParticles {
+public class PParticles {
     public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES =
             DeferredRegister.create(BuiltInRegistries.PARTICLE_TYPE, PoopSky.MOD_ID);
 

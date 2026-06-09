@@ -2,8 +2,10 @@ package com.altnoir.poopsky.block;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.p.*;
-import com.altnoir.poopsky.fluid.PSFluids;
+import com.altnoir.poopsky.init.PFluids;
 import com.altnoir.poopsky.fluid.PoopLiquidBlock;
+import com.altnoir.poopsky.init.PBlockSetType;
+import com.altnoir.poopsky.init.PWoodType;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.item.p.CompooperBlockItem;
 import net.minecraft.core.BlockPos;
@@ -106,14 +108,14 @@ public class PSBlocks {
                     .sound(SoundType.MUD))
     );
     public static final DeferredBlock<Block> POOP_BUTTON = registerBlock("poop_button",
-            () -> new ButtonBlock(PSBlockSetType.POOP, 200, BlockBehaviour.Properties.of()
+            () -> new ButtonBlock(PBlockSetType.POOP, 200, BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_BROWN)
                     .strength(POOP)
                     .sound(SoundType.MUD)
                     .noCollission())
     );
     public static final DeferredBlock<Block> POOP_PRESSURE_PLATE = registerBlock("poop_pressure_plate",
-            () -> new PressurePlateBlock(PSBlockSetType.POOP, BlockBehaviour.Properties.of()
+            () -> new PressurePlateBlock(PBlockSetType.POOP, BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_BROWN)
                     .strength(POOP)
                     .sound(SoundType.MUD)
@@ -126,7 +128,7 @@ public class PSBlocks {
                     .sound(SoundType.MUD))
     );
     public static final DeferredBlock<Block> POOP_FENCE_GATE = registerBlock("poop_fence_gate",
-            () -> new FenceGateBlock(PSWoodType.POOP, BlockBehaviour.Properties.of()
+            () -> new FenceGateBlock(PWoodType.POOP, BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_BROWN)
                     .strength(POOP)
                     .sound(SoundType.MUD))
@@ -139,7 +141,7 @@ public class PSBlocks {
     );
 
     public static final DeferredBlock<Block> POOP_DOOR = registerBlock("poop_door",
-            () -> new DoorBlock(PSBlockSetType.POOP, BlockBehaviour.Properties.of()
+            () -> new DoorBlock(PBlockSetType.POOP, BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_BROWN)
                     .strength(POOP)
                     .sound(SoundType.MUD)
@@ -147,7 +149,7 @@ public class PSBlocks {
                     .pushReaction(PushReaction.DESTROY))
     );
     public static final DeferredBlock<Block> POOP_TRAPDOOR = registerBlock("poop_trapdoor",
-            () -> new TrapDoorBlock(PSBlockSetType.POOP, BlockBehaviour.Properties.of()
+            () -> new TrapDoorBlock(PBlockSetType.POOP, BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_BROWN)
                     .strength(POOP)
                     .sound(SoundType.MUD)
@@ -508,7 +510,7 @@ public class PSBlocks {
 
     public static final DeferredBlock<LiquidBlock> POOP_LIQUID = registerBlock("poop_liquid",
             () -> new PoopLiquidBlock(
-                    PSFluids.POOP.get(),
+                    PFluids.POOP.get(),
                     BlockBehaviour.Properties.of()
                             .mapColor(MapColor.COLOR_BROWN)
                             .replaceable()

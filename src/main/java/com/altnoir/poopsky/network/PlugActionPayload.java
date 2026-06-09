@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.network;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.entity.PSEntityType;
+import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.item.PSItems;
 import net.minecraft.network.FriendlyByteBuf;
@@ -39,7 +39,7 @@ public record PlugActionPayload() implements CustomPacketPayload {
 
     private static void spawnAndRidePlug(ServerPlayer player) {
         var level = player.level();
-        var entity = PSEntityType.TOILET_PLUG.get().create(level);
+        var entity = PEntityType.TOILET_PLUG.get().create(level);
         if (entity == null) return;
 
         entity.setPos(player.position());

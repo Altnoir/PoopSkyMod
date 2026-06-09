@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.block.entity;
 
-import com.altnoir.poopsky.block.PSBlockEntities;
+import com.altnoir.poopsky.init.PBlockEntityType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -23,7 +23,7 @@ public class ToiletBlockEntity extends BlockEntity {
     private String linkedDim;
 
     public ToiletBlockEntity(BlockPos pos, BlockState state) {
-        super(PSBlockEntities.TOILET_BLOCK_ENTITY.get(), pos, state);
+        super(PBlockEntityType.TOILET_BLOCK_ENTITY.get(), pos, state);
     }
 
     public String getLinkedDim() {

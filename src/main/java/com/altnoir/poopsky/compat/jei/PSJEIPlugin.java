@@ -3,7 +3,7 @@ package com.altnoir.poopsky.compat.jei;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.item.PSItems;
-import com.altnoir.poopsky.recipe.PSRecipes;
+import com.altnoir.poopsky.init.PRecipes;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
@@ -50,7 +50,7 @@ public class PSJEIPlugin implements IModPlugin {
         var level = net.minecraft.client.Minecraft.getInstance().level;
         if (level != null) {
             registration.addRecipes(SieveRecipeCategory.TYPE,
-                    level.getRecipeManager().getAllRecipesFor(PSRecipes.SIEVE_TYPE.get()).stream()
+                    level.getRecipeManager().getAllRecipesFor(PRecipes.SIEVE_TYPE.get()).stream()
                             .map(net.minecraft.world.item.crafting.RecipeHolder::value)
                             .toList());
         }

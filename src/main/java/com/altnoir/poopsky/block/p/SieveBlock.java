@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.block.p;
 
-import com.altnoir.poopsky.block.PSBlockEntities;
+import com.altnoir.poopsky.init.PBlockEntityType;
 import com.altnoir.poopsky.block.entity.SieveBlockEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -61,7 +61,7 @@ public class SieveBlock extends BaseEntityBlock {
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return createTickerHelper(blockEntityType, PSBlockEntities.SIEVE_BLOCK_ENTITY.get(),
+        return createTickerHelper(blockEntityType, PBlockEntityType.SIEVE_BLOCK_ENTITY.get(),
                 SieveBlockEntity::tick);
     }
 

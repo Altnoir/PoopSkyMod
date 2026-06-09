@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.block.p;
 
 import com.altnoir.poopsky.block.PSBlocks;
-import com.altnoir.poopsky.particle.PSParticles;
+import com.altnoir.poopsky.init.PParticles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
@@ -80,7 +80,7 @@ public class PoopCakeBlock extends CakeBlock {
             player.getFoodData().eat(2, 0.1F);
             player.playSound(SoundEvents.GENERIC_EAT);
             if (!level.isClientSide() && level instanceof ServerLevel serverLevel) {
-                serverLevel.sendParticles(PSParticles.POOP_PARTICLE.get(),
+                serverLevel.sendParticles(PParticles.POOP_PARTICLE.get(),
                         pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
                         8,
                         0.0, -0.1, 0.0,

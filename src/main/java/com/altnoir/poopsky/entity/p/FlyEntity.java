@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.entity.p;
 
-import com.altnoir.poopsky.entity.PSEntityType;
+import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.tag.PSItemTags;
 import net.minecraft.core.BlockPos;
@@ -171,7 +171,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
 
     @Override
     public @Nullable FlyEntity getBreedOffspring(ServerLevel level, AgeableMob otherParent) {
-        return PSEntityType.FLY.get().create(level);
+        return PEntityType.FLY.get().create(level);
     }
 
     @Override

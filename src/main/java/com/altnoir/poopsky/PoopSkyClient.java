@@ -2,13 +2,13 @@ package com.altnoir.poopsky;
 
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.block.abs.AbstractCompooperBlock;
-import com.altnoir.poopsky.entity.PSEntityType;
+import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.entity.renderer.*;
 import com.altnoir.poopsky.event.PSClientGameEvents;
 import com.altnoir.poopsky.event.PSClientModEvents;
 import com.altnoir.poopsky.event.PSKeyBoardInput;
-import com.altnoir.poopsky.fluid.PSFluidTypes;
-import com.altnoir.poopsky.particle.PSParticles;
+import com.altnoir.poopsky.init.PFluidTypes;
+import com.altnoir.poopsky.init.PParticles;
 import com.altnoir.poopsky.particle.PoopParticle;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.RenderType;
@@ -64,16 +64,16 @@ public class PoopSkyClient {
         }
 
         public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-            event.registerEntityRenderer(PSEntityType.TOILET_PLUG.get(), ToiletPlugRenderer::new);
-            event.registerEntityRenderer(PSEntityType.POOLIME.get(), PoolimeRenderer::new);
-            event.registerEntityRenderer(PSEntityType.FLY.get(), FlyRenderer::new);
-            event.registerEntityRenderer(PSEntityType.STOOL.get(), ChairRenderer::new);
-            event.registerEntityRenderer(PSEntityType.TOILET.get(), ToiletRenderer::new);
-            event.registerEntityRenderer(PSEntityType.POOP_TNT.get(), PoopTntRenderer::new);
+            event.registerEntityRenderer(PEntityType.TOILET_PLUG.get(), ToiletPlugRenderer::new);
+            event.registerEntityRenderer(PEntityType.POOLIME.get(), PoolimeRenderer::new);
+            event.registerEntityRenderer(PEntityType.FLY.get(), FlyRenderer::new);
+            event.registerEntityRenderer(PEntityType.STOOL.get(), ChairRenderer::new);
+            event.registerEntityRenderer(PEntityType.TOILET.get(), ToiletRenderer::new);
+            event.registerEntityRenderer(PEntityType.POOP_TNT.get(), PoopTntRenderer::new);
         }
 
         public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
-            event.registerSpriteSet(PSParticles.POOP_PARTICLE.get(), PoopParticle.Provider::new);
+            event.registerSpriteSet(PParticles.POOP_PARTICLE.get(), PoopParticle.Provider::new);
         }
 
         public static void onRegisterBlockColors(RegisterColorHandlersEvent.Block event) {
@@ -98,19 +98,19 @@ public class PoopSkyClient {
             event.registerFluidType(new IClientFluidTypeExtensions() {
                 @Override
                 public @NotNull ResourceLocation getStillTexture() {
-                    return PSFluidTypes.POOP_STILL_TEXTURE;
+                    return PFluidTypes.POOP_STILL_TEXTURE;
                 }
 
                 @Override
                 public @NotNull ResourceLocation getFlowingTexture() {
-                    return PSFluidTypes.POOP_FLOWING_TEXTURE;
+                    return PFluidTypes.POOP_FLOWING_TEXTURE;
                 }
 
                 @Override
                 public ResourceLocation getOverlayTexture() {
                     return null;
                 }
-            }, PSFluidTypes.POOP_FLUID_TYPE.get());
+            }, PFluidTypes.POOP_FLUID_TYPE.get());
         }
     }
 }

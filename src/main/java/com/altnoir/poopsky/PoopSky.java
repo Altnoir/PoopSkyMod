@@ -1,31 +1,26 @@
 package com.altnoir.poopsky;
 
 import com.altnoir.poopsky.block.AllToiletBlocks;
-import com.altnoir.poopsky.block.PSBlockEntities;
+import com.altnoir.poopsky.init.PBlockEntityType;
 import com.altnoir.poopsky.block.PSBlocks;
-import com.altnoir.poopsky.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.block.p.CompooperBlock;
-import com.altnoir.poopsky.component.PSComponents;
+import com.altnoir.poopsky.init.PComponents;
 import com.altnoir.poopsky.effect.PSEffects;
 import com.altnoir.poopsky.effect.PSPotions;
-import com.altnoir.poopsky.entity.PSEntityType;
+import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.entity.p.PoopTntEntity;
-import com.altnoir.poopsky.entity.renderer.*;
-import com.altnoir.poopsky.event.PSKeyBoardInput;
-import com.altnoir.poopsky.fluid.PSFluidTypes;
-import com.altnoir.poopsky.fluid.PSFluids;
+import com.altnoir.poopsky.init.PFluidTypes;
+import com.altnoir.poopsky.init.PFluids;
+import com.altnoir.poopsky.init.PStats;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.network.PSNetworking;
-import com.altnoir.poopsky.particle.PSParticles;
-import com.altnoir.poopsky.particle.PoopParticle;
-import com.altnoir.poopsky.recipe.PSRecipes;
-import com.altnoir.poopsky.sound.PSSoundEvents;
+import com.altnoir.poopsky.init.PParticles;
+import com.altnoir.poopsky.init.PRecipes;
+import com.altnoir.poopsky.init.PSoundEvents;
 import com.altnoir.poopsky.villager.PSVillagers;
 import com.altnoir.poopsky.worldgen.PSChunkGenerators;
 import com.altnoir.poopsky.worldgen.foliage.PSFoliagePlacerTypes;
 import com.mojang.logging.LogUtils;
-import net.minecraft.client.renderer.BiomeColors;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.dispenser.BlockSource;
@@ -39,26 +34,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
-import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.loading.FMLEnvironment;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
-import net.neoforged.neoforge.client.event.RegisterNamedRenderTypesEvent;
-import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
-import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
-import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
-import net.neoforged.neoforge.client.gui.ConfigurationScreen;
-import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.fluids.FluidInteractionRegistry;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 @Mod(PoopSky.MOD_ID)
@@ -72,25 +54,26 @@ public class PoopSky {
 
         PSEffects.register(modEventBus);
         PSPotions.register(modEventBus);
-        PSParticles.register(modEventBus);
+        PParticles.register(modEventBus);
 
         PSBlocks.register(modEventBus);
         AllToiletBlocks.register(modEventBus);
-        PSBlockEntities.register(modEventBus);
+        PBlockEntityType.register(modEventBus);
         PSItems.register(modEventBus);
-        PSEntityType.register(modEventBus);
+        PEntityType.register(modEventBus);
         PSFoliagePlacerTypes.register(modEventBus);
         PSChunkGenerators.register(modEventBus);
 
         PSItemGroups.register(modEventBus);
-        PSSoundEvents.register(modEventBus);
+        PSoundEvents.register(modEventBus);
+        PStats.register(modEventBus);
 
-        PSComponents.register(modEventBus);
+        PComponents.register(modEventBus);
         PSVillagers.register(modEventBus);
-        PSRecipes.register(modEventBus);
+        PRecipes.register(modEventBus);
 
-        PSFluids.FLUIDS.register(modEventBus);
-        PSFluidTypes.FLUID_TYPES.register(modEventBus);
+        PFluids.FLUIDS.register(modEventBus);
+        PFluidTypes.FLUID_TYPES.register(modEventBus);
 
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
@@ -134,12 +117,14 @@ public class PoopSky {
                 }
             });
 
-            FluidInteractionRegistry.addInteraction(PSFluidTypes.POOP_FLUID_TYPE.get(), new FluidInteractionRegistry.InteractionInformation(
+            FluidInteractionRegistry.addInteraction(PFluidTypes.POOP_FLUID_TYPE.get(), new FluidInteractionRegistry.InteractionInformation(
                     NeoForgeMod.WATER_TYPE.value(), (fluidState) -> fluidState.isSource() ? Blocks.COARSE_DIRT.defaultBlockState() : Blocks.CLAY.defaultBlockState()));
             FluidInteractionRegistry.addInteraction(NeoForgeMod.LAVA_TYPE.value(), new FluidInteractionRegistry.InteractionInformation(
                     (level, currentPos, relativePos, currentState) -> level.getBlockState(currentPos.below()).is(PSBlocks.POOP_BLOCK.get()) && level.getBlockState(relativePos).is(Blocks.BLUE_ICE),
                     Blocks.DEEPSLATE.defaultBlockState()));
         });
+
+        PStats.init();
     }
 
     public static ResourceLocation loc(String path) {

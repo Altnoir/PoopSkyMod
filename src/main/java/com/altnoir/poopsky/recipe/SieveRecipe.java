@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.recipe;
 
+import com.altnoir.poopsky.init.PRecipes;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -47,12 +48,12 @@ public record SieveRecipe(Ingredient input, List<ChanceItemStack> outputs, int p
 
     @Override
     public RecipeType<?> getType() {
-        return PSRecipes.SIEVE_TYPE.get();
+        return PRecipes.SIEVE_TYPE.get();
     }
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return PSRecipes.SIEVE_SERIALIZER.get();
+        return PRecipes.SIEVE_SERIALIZER.get();
     }
 
     public List<ItemStack> rollOutputs(RandomSource random) {

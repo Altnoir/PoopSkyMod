@@ -4,11 +4,12 @@ import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.block.p.ToiletLavaBlock;
 import com.altnoir.poopsky.effect.PSEffects;
-import com.altnoir.poopsky.entity.PSEntityType;
+import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.entity.p.ToiletEntity;
+import com.altnoir.poopsky.init.PStats;
 import com.altnoir.poopsky.item.PSItems;
-import com.altnoir.poopsky.particle.PSParticles;
-import com.altnoir.poopsky.sound.PSSoundEvents;
+import com.altnoir.poopsky.init.PParticles;
+import com.altnoir.poopsky.init.PSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
@@ -95,10 +96,10 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
 
         if (!level.isClientSide) {
             Entity entity;
-            List<ToiletEntity> entities = level.getEntities(PSEntityType.TOILET.get(), new AABB(pos), toiletEntity -> true);
+            List<ToiletEntity> entities = level.getEntities(PEntityType.TOILET.get(), new AABB(pos), toiletEntity -> true);
 
             if (entities.isEmpty()) {
-                entity = PSEntityType.TOILET.get().spawn((ServerLevel) level, pos, MobSpawnType.TRIGGERED);
+                entity = PEntityType.TOILET.get().spawn((ServerLevel) level, pos, MobSpawnType.TRIGGERED);
             } else {
                 entity = entities.getFirst();
             }
@@ -204,9 +205,9 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
             level.addFreshEntity(poop);
         }
         var pitch = level.random.nextFloat() + 0.5F;
-        level.playSound(null, player.getX(), player.getY() + 0.1, player.getZ(), PSSoundEvents.FART.get(), SoundSource.PLAYERS, 1.0F, pitch);
+        level.playSound(null, player.getX(), player.getY() + 0.1, player.getZ(), PSoundEvents.FART.get(), SoundSource.PLAYERS, 1.0F, pitch);
         ((ServerLevel) level).sendParticles(
-                PSParticles.POOP_PARTICLE.get(),
+                PParticles.POOP_PARTICLE.get(),
                 player.getX(),
                 player.getY() + 0.1,
                 player.getZ(),
@@ -216,6 +217,7 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
                 0.0,
                 3.0
         );
+        player.awardStat(PStats.POOP_STATS.get());
     }
 
     public void teleportEntity(Level level, Entity entity, ToiletBlockEntity blockEntity, float fallDistance) {

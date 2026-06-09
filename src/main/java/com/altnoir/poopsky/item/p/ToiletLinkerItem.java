@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.item.p;
 
 import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
-import com.altnoir.poopsky.component.PSComponents;
+import com.altnoir.poopsky.init.PComponents;
 import com.altnoir.poopsky.component.ToiletComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -36,7 +36,7 @@ public class ToiletLinkerItem extends PSBaseItem {
             return InteractionResultHolder.pass(itemstack);
         }
 
-        itemstack.set(PSComponents.TOILET_COMPONENT, ToiletComponent.EMPTY);
+        itemstack.set(PComponents.TOILET_COMPONENT, ToiletComponent.EMPTY);
         player.displayClientMessage(Component.translatable("message.poopsky.toilet_linker.4").withStyle(style -> style.withColor(0xAA0000)), true);
         return InteractionResultHolder.sidedSuccess(itemstack, level.isClientSide);
     }
@@ -52,19 +52,19 @@ public class ToiletLinkerItem extends PSBaseItem {
             return InteractionResult.PASS;
         }
 
-        var comp = stack.getOrDefault(PSComponents.TOILET_COMPONENT.get(), ToiletComponent.EMPTY);
+        var comp = stack.getOrDefault(PComponents.TOILET_COMPONENT.get(), ToiletComponent.EMPTY);
         var dimKey = level.dimension().location().toString();
 
         if (player != null && !player.isShiftKeyDown()) {
             if (comp.level1().isEmpty()) {
-                stack.set(PSComponents.TOILET_COMPONENT.get(), new ToiletComponent(
+                stack.set(PComponents.TOILET_COMPONENT.get(), new ToiletComponent(
                         dimKey, comp.level2(),
                         pos.getX(), pos.getY(), pos.getZ(),
                         comp.x2(), comp.y2(), comp.z2()
                 ));
                 player.displayClientMessage(Component.translatable("message.poopsky.toilet_linker.1"), true);
             } else if (comp.level2().isEmpty()) {
-                stack.set(PSComponents.TOILET_COMPONENT.get(), new ToiletComponent(
+                stack.set(PComponents.TOILET_COMPONENT.get(), new ToiletComponent(
                         comp.level1(), dimKey,
                         comp.x1(), comp.y1(), comp.z1(),
                         pos.getX(), pos.getY(), pos.getZ()
@@ -73,7 +73,7 @@ public class ToiletLinkerItem extends PSBaseItem {
                 linkToilets(stack, level, player);
             }
         } else {
-            stack.set(PSComponents.TOILET_COMPONENT.get(), ToiletComponent.EMPTY);
+            stack.set(PComponents.TOILET_COMPONENT.get(), ToiletComponent.EMPTY);
             player.displayClientMessage(Component.translatable("message.poopsky.toilet_linker.4").withStyle(style -> style.withColor(0xAA0000)), true);
         }
 
@@ -83,7 +83,7 @@ public class ToiletLinkerItem extends PSBaseItem {
     private void linkToilets(ItemStack stack, Level level, Player player) {
         if (!(level instanceof ServerLevel serverLevel)) return;
 
-        var comp = stack.get(PSComponents.TOILET_COMPONENT.get());
+        var comp = stack.get(PComponents.TOILET_COMPONENT.get());
         var server = serverLevel.getServer();
 
         if (comp == null) return;
@@ -117,19 +117,19 @@ public class ToiletLinkerItem extends PSBaseItem {
             level2.sendBlockUpdated(pos2, s2, s2, Block.UPDATE_ALL);
 
             player.displayClientMessage(Component.translatable("message.poopsky.toilet_linker.3").withStyle(style -> style.withColor(0x00AA00)), true);
-            stack.set(PSComponents.TOILET_COMPONENT.get(), ToiletComponent.EMPTY);
+            stack.set(PComponents.TOILET_COMPONENT.get(), ToiletComponent.EMPTY);
         }
     }
 
     @Override
     public boolean isDisplay(ItemStack stack) {
-        var comp = stack.get(PSComponents.TOILET_COMPONENT);
+        var comp = stack.get(PComponents.TOILET_COMPONENT);
         return comp != null && (!comp.level1().isEmpty() || !comp.level2().isEmpty());
     }
 
     @Override
     public void appendShiftTooltip(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        var comp = stack.get(PSComponents.TOILET_COMPONENT);
+        var comp = stack.get(PComponents.TOILET_COMPONENT);
         if (comp == null) return;
         var dim1 = comp.level1();
         var dim2 = comp.level2();
