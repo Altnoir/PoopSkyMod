@@ -189,11 +189,7 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
         if (player.getFoodData().getFoodLevel() <= 0) {
             player.hurt(level.damageSources().wither(), 1.0F);
 
-            var redStone = new ItemEntity(
-                    level,
-                    player.getX(), player.getY() + 0.1, player.getZ(),
-                    new ItemStack(Items.REDSTONE)
-            );
+            var redStone = new ItemEntity(level, player.getX(), player.getY() + 0.1, player.getZ(), new ItemStack(Items.REDSTONE));
             redStone.setDefaultPickUpDelay();
             level.addFreshEntity(redStone);
         } else {

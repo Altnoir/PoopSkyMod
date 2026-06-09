@@ -73,7 +73,7 @@ public class PlacerBlockEntity extends DispenserBlockEntity {
     }
 
     protected Component getDefaultName() {
-        return Component.translatable("container.dispenser");
+        return Component.translatable("container.placer");
     }
 
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
@@ -82,7 +82,6 @@ public class PlacerBlockEntity extends DispenserBlockEntity {
         if (!this.tryLoadLootTable(tag)) {
             ContainerHelper.loadAllItems(tag, this.items, registries);
         }
-
     }
 
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
@@ -90,7 +89,6 @@ public class PlacerBlockEntity extends DispenserBlockEntity {
         if (!this.trySaveLootTable(tag)) {
             ContainerHelper.saveAllItems(tag, this.items, registries);
         }
-
     }
 
     protected NonNullList<ItemStack> getItems() {

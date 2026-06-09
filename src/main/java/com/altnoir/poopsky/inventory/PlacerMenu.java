@@ -9,7 +9,6 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
-//TODO 需要更改GUI内部的命名
 public class PlacerMenu extends AbstractContainerMenu {
     private static final int SLOT_COUNT = 9;
     private static final int INV_SLOT_START = 9;

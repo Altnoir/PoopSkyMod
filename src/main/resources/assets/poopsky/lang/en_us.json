@@ -226,6 +226,8 @@
   "jei.category.poopsky.sieve": "Sieve",
   "jei.poopsky.sieve_chance": "Chance: %.2f%%",
 
+  "container.placer": "Placer",
+  "generator.poopsky.poopsky": "PoopSky",
   "stat.poopsky.poop_stat": "Poop Stat",
   "itemgroup.poopsky": "POOPSKY",
 

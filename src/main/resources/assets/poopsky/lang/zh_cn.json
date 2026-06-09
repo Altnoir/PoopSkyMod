@@ -256,6 +256,7 @@
   "jei.category.poopsky.sieve": "筛架",
   "jei.poopsky.sieve_chance": "产出概率: %.2f%%",
 
+  "container.placer": "放置器",
   "generator.poopsky.poopsky": "空中厕所",
   "stat.poopsky.poop_stat": "排便数",
   "itemgroup.poopsky": "空中厕所",
