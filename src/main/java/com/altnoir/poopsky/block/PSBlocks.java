@@ -368,12 +368,19 @@ public class PSBlocks {
     public static final DeferredBlock<Block> URINE_COMPOOPER = registerDefaultBlock("urine_compooper",
             () -> new UrineCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()).randomTicks())
     );
-
+    public static final DeferredBlock<Block> PLACER = registerDefaultBlock("placer",
+            () -> new PlacerBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.STONE)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops().strength(3.5F)
+            )
+    );
     public static final DeferredBlock<SieveBlock> SIEVE = registerDefaultBlock("sieve_stable",
             () -> new SieveBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.SAND)
                     .strength(1.5f, 3.0f)
                     .sound(SoundType.SCAFFOLDING)
+                    .requiresCorrectToolForDrops()
                     .isValidSpawn(Blocks::never)
                     .noOcclusion()));
 

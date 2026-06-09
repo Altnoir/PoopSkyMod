@@ -23,12 +23,6 @@ import java.util.function.Function;
 
 public class PSBlockStateProvider extends BlockStateProvider {
     public static final String PARTICLE = "particle";
-    public static final String TEXTURE = "texture";
-    public static final String SIDE = "side";
-    public static final String UP = "up";
-    public static final String THE_TEXTURE = "#texture";
-    public static final String THE_SIDE = "#side";
-    public static final String THE_UP = "#up";
 
     public PSBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
         super(output, PoopSky.MOD_ID, exFileHelper);
@@ -40,12 +34,12 @@ public class PSBlockStateProvider extends BlockStateProvider {
         models().cubeAll("poop_block1", modLoc("block/poop_block"));
         models().cubeAll("poop_block2", modLoc("block/poop_block_maggots")).texture(PARTICLE, modLoc("block/poop_block"));
         models().withExistingParent("poop_block3", mcLoc("block/block"))
-                .texture(SIDE, modLoc("block/poop_block"))
-                .texture(UP, modLoc("block/poop_block_liquids"))
+                .texture("side", modLoc("block/poop_block"))
+                .texture("up", modLoc("block/poop_block_liquids"))
                 .texture(PARTICLE, modLoc("block/poop_block"))
                 .element().from(0, 0, 0).to(16, 16, 16)
-                .allFaces((face, faceBuilder) -> faceBuilder.texture(THE_SIDE).uvs(0, 0, 16, 16))
-                .face(Direction.UP).texture(THE_UP).end();
+                .allFaces((face, faceBuilder) -> faceBuilder.texture("#side").uvs(0, 0, 16, 16))
+                .face(Direction.UP).texture("#up").end();
 
         models().withExistingParent("poolime_poop_block", mcLoc("block/cube"))
                 .texture("south", modLoc("block/poop_block"))
@@ -62,11 +56,11 @@ public class PSBlockStateProvider extends BlockStateProvider {
             String modelName = "poop_height" + height;
 
             models().withExistingParent(modelName, mcLoc("block/thin_block"))
-                    .texture(TEXTURE, modLoc("block/poop_block"))
+                    .texture("texture", modLoc("block/poop_block"))
                     .texture(PARTICLE, modLoc("block/poop_block"))
                     .element().from(0, 0, 0).to(16, height, 16)
                     .allFaces((face, faceBuilder) -> {
-                        faceBuilder.texture(THE_TEXTURE);
+                        faceBuilder.texture("#texture");
                         if (face != Direction.UP) faceBuilder.cullface(face);
                     });
         }
@@ -167,6 +161,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
         blockWithItem(PSBlocks.POOP_LEAVES_GOLD.get());
         blockWithItem(PSBlocks.POOP_LEAVES_IRON.get());
         cubeBottomTop(PSBlocks.POOP_TNT.get());
+        orientable(PSBlocks.PLACER.get());
 
         registerToilet(AllToiletBlocks.OAK_TOILET.get(), Blocks.OAK_PLANKS);
         registerToilet(AllToiletBlocks.SPRUCE_TOILET.get(), Blocks.SPRUCE_PLANKS);
@@ -259,6 +254,32 @@ public class PSBlockStateProvider extends BlockStateProvider {
         simpleBlockItem(block, model);
     }
 
+    private void orientable(Block block) {
+        var model = models().withExistingParent(getBlockPath(block), mcLoc("block/orientable"))
+                .texture("top", modLoc("block/" + getBlockPath(block) + "_top"))
+                .texture("side", modLoc("block/" + getBlockPath(block) + "_side"))
+                .texture("front", modLoc("block/" + getBlockPath(block) + "_front"))
+                .texture(PARTICLE, modLoc("block/" + getBlockPath(block) + "_side"));
+
+        getVariantBuilder(block).forAllStates(state -> {
+            var facing = state.getValue(BlockStateProperties.FACING);
+            int xRot = switch (facing) {
+                case UP -> 270;
+                case DOWN -> 90;
+                default -> 0;
+            };
+            int yRot = switch (facing) {
+                case UP, EAST -> 90;
+                case SOUTH, DOWN -> 180;
+                case WEST -> 270;
+                default -> 0;
+            };
+            return ConfiguredModel.builder().modelFile(model).rotationX(xRot).rotationY(yRot).build();
+        });
+
+        simpleBlockItem(block, model);
+    }
+
     private void registerToilet(Block toilet, Block textureBlock) {
         var texture = getBlockKey(textureBlock);
 
@@ -272,7 +293,6 @@ public class PSBlockStateProvider extends BlockStateProvider {
                 modLoc("block/toilet_s")).texture("toilet", textureRL);
         var modelNS = models().withExistingParent(getBlockKey(toilet) + "_ns",
                 modLoc("block/toilet_ns")).texture("toilet", textureRL);
-
 
         getVariantBuilder(toilet).forAllStates(state -> {
             var facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);

@@ -16,6 +16,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
+// TODO 无法显示配方ID
 public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
     public static final RecipeType<SieveRecipe> TYPE = RecipeType.create(PoopSky.MOD_ID, "sieve", SieveRecipe.class);
 

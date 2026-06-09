@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:placer"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "toilet_plug": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:toilet_plug"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "toilet_plug"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "poopsky:placer"
+    ]
+  }
+}

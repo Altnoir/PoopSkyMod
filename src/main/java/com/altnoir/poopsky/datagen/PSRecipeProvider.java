@@ -35,6 +35,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
 
         shapeless1x1Recipe(recipeOutput, Blocks.CRIMSON_NYLIUM, Blocks.CRIMSON_FUNGUS, Blocks.NETHERRACK);
         shapeless1x1Recipe(recipeOutput, Blocks.WARPED_NYLIUM, Blocks.WARPED_FUNGUS, Blocks.NETHERRACK);
+        shapeless1x1Recipe(recipeOutput, Blocks.SLIME_BLOCK, Items.LIME_DYE, PSBlocks.POOLIME_BLOCK);
 
         oreSmelting(recipeOutput, POOP_LIST, RecipeCategory.BUILDING_BLOCKS, PSBlocks.DRIED_POOP_BLOCK, 0.1F, 200, "dried_poop_block");
         oreBlasting(recipeOutput, POOP_LIST, RecipeCategory.BUILDING_BLOCKS, PSBlocks.DRIED_POOP_BLOCK, 0.1F, 100, "dried_poop_block");
@@ -288,6 +289,15 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .pattern("SSS")
                 .define('S', Blocks.MOSSY_COBBLESTONE_SLAB)
                 .unlockedBy(getItemName(Blocks.MOSSY_COBBLESTONE_SLAB), has(Blocks.MOSSY_COBBLESTONE_SLAB))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PSBlocks.PLACER)
+                .pattern("SSS")
+                .pattern("SPS")
+                .pattern("SAS")
+                .define('S', Blocks.MOSSY_COBBLESTONE)
+                .define('A', Items.REDSTONE)
+                .define('P', PSItems.TOILET_PLUG)
+                .unlockedBy(getItemName(PSItems.TOILET_PLUG), has(PSItems.TOILET_PLUG))
                 .save(recipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PSBlocks.SIEVE)
                 .pattern("SAS")
@@ -618,48 +628,15 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
     }
 
     protected static void oreSmelting(RecipeOutput recipeOutput, List<ItemLike> ingredients, RecipeCategory category, ItemLike result, float experience, int cookingTime, String group) {
-        oreCooking(
-                recipeOutput,
-                RecipeSerializer.SMELTING_RECIPE,
-                SmeltingRecipe::new,
-                ingredients,
-                category,
-                result,
-                experience,
-                cookingTime,
-                group,
-                "_from_smelting"
-        );
+        oreCooking(recipeOutput, RecipeSerializer.SMELTING_RECIPE, SmeltingRecipe::new, ingredients, category, result, experience, cookingTime, group, "_from_smelting");
     }
 
     protected static void oreBlasting(RecipeOutput recipeOutput, List<ItemLike> ingredients, RecipeCategory category, ItemLike result, float experience, int cookingTime, String group) {
-        oreCooking(
-                recipeOutput,
-                RecipeSerializer.BLASTING_RECIPE,
-                BlastingRecipe::new,
-                ingredients,
-                category,
-                result,
-                experience,
-                cookingTime,
-                group,
-                "_from_blasting"
-        );
+        oreCooking(recipeOutput, RecipeSerializer.BLASTING_RECIPE, BlastingRecipe::new, ingredients, category, result, experience, cookingTime, group, "_from_blasting");
     }
 
     protected static void oreCooking(RecipeOutput recipeOutput, List<ItemLike> ingredients, RecipeCategory category, ItemLike result, float experience, int cookingTime, String group) {
-        oreCooking(
-                recipeOutput,
-                RecipeSerializer.CAMPFIRE_COOKING_RECIPE,
-                CampfireCookingRecipe::new,
-                ingredients,
-                category,
-                result,
-                experience,
-                cookingTime,
-                group,
-                "_from_campfire_cooking"
-        );
+        oreCooking(recipeOutput, RecipeSerializer.CAMPFIRE_COOKING_RECIPE, CampfireCookingRecipe::new, ingredients, category, result, experience, cookingTime, group, "_from_campfire_cooking");
     }
 
     protected static <T extends AbstractCookingRecipe> void oreCooking(RecipeOutput recipeOutput, RecipeSerializer<T> serializer, AbstractCookingRecipe.Factory<T> recipeFactory, List<ItemLike> ingredients, RecipeCategory category, ItemLike result, float experience, int cookingTime, String group, String suffix) {

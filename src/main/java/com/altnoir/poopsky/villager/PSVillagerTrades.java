@@ -1,7 +1,8 @@
 package com.altnoir.poopsky.villager;
 
-import com.altnoir.poopsky.block.PSBlocks;
+import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.block.AllToiletBlocks;
+import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.item.PSItems;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.core.Holder;
@@ -27,7 +28,7 @@ public class PSVillagerTrades {
                     new ItemStack(PSItems.POOP.get(), 4), 44, 3, 0.05f)
             );
             trades.get(1).add((entity, random) -> new MerchantOffer(
-                    new ItemCost(Items.EMERALD, 10),
+                    new ItemCost(Items.EMERALD, 8),
                     new ItemStack(PSItems.DRAGON_BREATH_CHILI.get(), 1), 10, 5, 0.15f)
             );
             trades.get(1).add((entity, random) -> new MerchantOffer(
@@ -75,14 +76,20 @@ public class PSVillagerTrades {
             );
 
             trades.get(5).add((entity, random) -> new MerchantOffer(
+                    new ItemCost(Items.EMERALD, 1),
+                    new ItemStack(PSBlocks.TILE_BLOCK, 4), 128, 10, 0.25f)
+            );
+            trades.get(5).add((entity, random) -> new MerchantOffer(
                     new ItemCost(Items.EMERALD, 12),
                     new ItemStack(AllToiletBlocks.RAINBOW_TOILET, 1), 8, 25, 0.5f)
             );
-            trades.get(5).add((entity, random) -> new MerchantOffer(
-                    new ItemCost(Items.EMERALD, 42),
-                    Optional.of(new ItemCost(Items.BREEZE_ROD, 8)),
-                    new ItemStack(PSItems.TOILET_PLUG.get(), 1), 1, 100, 1.0f)
-            );
+            if (!Config.plugTrades) {
+                trades.get(5).add((entity, random) -> new MerchantOffer(
+                        new ItemCost(Items.EMERALD, 42),
+                        Optional.of(new ItemCost(Items.BREEZE_ROD, 8)),
+                        new ItemStack(PSItems.TOILET_PLUG.get(), 1), 1, 100, 1.0f)
+                );
+            }
         }
 
         if (type == PSVillagers.GASTRONOME.value()) {

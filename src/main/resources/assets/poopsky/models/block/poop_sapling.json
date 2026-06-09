@@ -1,6 +1,7 @@
 {
 	"credit": "Made with Blockbench",
 	"parent": "minecraft:block/block",
+	"render_type": "cutout",
 	"texture_size": [64, 64],
 	"textures": {
 		"1": "poopsky:block/poop_sapling",

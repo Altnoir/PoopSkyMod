@@ -12,6 +12,7 @@ public class Config {
     public static boolean desperateWorld;
     public static boolean stickyCrafting;
     public static boolean lavaFluid;
+    public static boolean plugTrades;
 
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
@@ -35,6 +36,10 @@ public class Config {
             .comment("Whether to Disable the underground lava lake")
             .translation("poopsky.configuration.lavaFluid")
             .define("lavaFluid", true);
+    private static final ModConfigSpec.BooleanValue PLUG_TRADES = BUILDER
+            .comment("Whether to Disable the plug trades")
+            .translation("poopsky.configuration.plugTrades")
+            .define("plugTrades", false);
 
     static final ModConfigSpec SPEC = BUILDER.build();
 
@@ -45,5 +50,6 @@ public class Config {
         desperateWorld = DESPERATE_WORLD.get();
         stickyCrafting = STICK_CRAFTING.get();
         lavaFluid = LAVA_FLUID_BLOCK.get();
+        plugTrades = PLUG_TRADES.get();
     }
 }

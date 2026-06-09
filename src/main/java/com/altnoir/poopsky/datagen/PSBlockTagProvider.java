@@ -149,6 +149,7 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(PSBlocks.STRIPPED_POOP_LOG.get())
                 .add(HARDEN_POOP)
                 .add(PSBlocks.SIEVE.get())
+                .add(PSBlocks.PLACER.get())
                 .add(PSBlocks.COMPOOPER.get())
                 .add(PSBlocks.WATER_COMPOOPER.get())
                 .add(PSBlocks.LAVA_COMPOOPER.get())

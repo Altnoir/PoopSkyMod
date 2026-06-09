@@ -152,7 +152,7 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
         }
         return motion;
     }
-
+    //TODO 需要修复爆炸破坏方块不掉落问题
     protected void explode() {
         Level level = this.level();
 
