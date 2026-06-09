@@ -25,10 +25,6 @@ public class PSKeyBoardInput {
         return Component.translatableWithFallback(keyMapping.saveString(), keyMapping.getTranslatedKeyMessage().getString());
     }
 
-    public static void register(IEventBus modEventBus) {
-        modEventBus.addListener(PSKeyBoardInput::onRegisterKeyMappings);
-    }
-
     public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
         event.register(USE_PLUG_KEY);
         event.register(DISMOUNT_PLUG_KEY);

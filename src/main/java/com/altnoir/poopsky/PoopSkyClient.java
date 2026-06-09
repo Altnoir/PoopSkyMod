@@ -31,8 +31,6 @@ import org.jetbrains.annotations.NotNull;
 @Mod(value = PoopSky.MOD_ID, dist = Dist.CLIENT)
 public class PoopSkyClient {
     public PoopSkyClient(IEventBus modEventBus, ModContainer modContainer) {
-        ClientModEvents.register(modEventBus);
-        PSKeyBoardInput.register(modEventBus);
         modContainer.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
 
         var gameEventBus = NeoForge.EVENT_BUS;
@@ -43,6 +41,13 @@ public class PoopSkyClient {
     public static void registerMod(IEventBus modEventBus) {
         modEventBus.addListener(PSClientModEvents::registerLayers);
         modEventBus.addListener(PSClientModEvents::registerBlockEntityRenderers);
+        modEventBus.addListener(PSKeyBoardInput::onRegisterKeyMappings);
+        modEventBus.addListener(ClientModEvents::registerRenderTypes);
+        modEventBus.addListener(ClientModEvents::registerEntityRenderers);
+        modEventBus.addListener(ClientModEvents::registerParticleProviders);
+        modEventBus.addListener(ClientModEvents::onRegisterBlockColors);
+        modEventBus.addListener(ClientModEvents::onRegisterBlockRenderBuffers);
+        modEventBus.addListener(ClientModEvents::registerClientExtensions);
     }
 
     public static void registerGame(IEventBus modEventBus) {
@@ -50,16 +55,8 @@ public class PoopSkyClient {
         modEventBus.addListener(PSClientGameEvents::onClientTick);
     }
 
-    public static class ClientModEvents {
-        public static void register(IEventBus modEventBus) {
-            modEventBus.addListener(ClientModEvents::registerRenderTypes);
-            modEventBus.addListener(ClientModEvents::registerEntityRenderers);
-            modEventBus.addListener(ClientModEvents::registerParticleProviders);
-            modEventBus.addListener(ClientModEvents::onRegisterBlockColors);
-            modEventBus.addListener(ClientModEvents::onRegisterBlockRenderBuffers);
-            modEventBus.addListener(ClientModEvents::registerClientExtensions);
-        }
 
+    public static class ClientModEvents {
         //TODO 目前已知：装有水的堆粪桶和粪便凳的透明渲染完全不正常渲染
         public static void registerRenderTypes(RegisterNamedRenderTypesEvent event) {
             event.register(PoopSky.loc("poop_sapling"), RenderType.cutout(), RenderType.entityCutout(PSBlocks.POOP_SAPLING.getId()));
