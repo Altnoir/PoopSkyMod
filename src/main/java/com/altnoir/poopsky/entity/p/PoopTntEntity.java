@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.entity.p;
 
+import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.init.PParticles;
 import com.altnoir.poopsky.tag.PSBlockTags;
@@ -11,17 +12,16 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
@@ -177,7 +177,11 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
                         level.setBlockAndUpdate(pos, recipeOutput.defaultBlockState());
                         //Block.popResource(level, pos, recipeOutput.copy());
                     } else {
-                        //level.destroyBlock(pos, true, null);
+                        if (state.canBeReplaced()) {
+                            level.destroyBlock(pos, true, null);
+                        } else if (state.is(BlockTags.MOSS_REPLACEABLE)){
+                            level.setBlockAndUpdate(pos, PSBlocks.POOP_BLOCK.get().defaultBlockState());
+                        }
                     }
                 }
             }
