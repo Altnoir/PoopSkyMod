@@ -1,8 +1,9 @@
 package com.altnoir.poopsky.block.p;
 
-import com.altnoir.poopsky.init.PBlockEntityType;
 import com.altnoir.poopsky.block.entity.PlacerBlockEntity;
+import com.altnoir.poopsky.init.PBlockEntityType;
 import com.altnoir.poopsky.init.PStats;
+import com.mojang.authlib.GameProfile;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.MapCodec;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
@@ -17,6 +18,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -33,12 +35,14 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.common.util.FakePlayer;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 import java.util.Map;
+import java.util.UUID;
 
 public class PlacerBlock extends BaseEntityBlock {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -109,14 +113,21 @@ public class PlacerBlock extends BaseEntityBlock {
                     BlockState targetState = level.getBlockState(targetPos);
 
                     if (!level.isOutsideBuildHeight(targetPos) && targetState.canBeReplaced()) {
-                        Block blockToPlace = blockItem.getBlock();
-                        BlockState placedState = blockToPlace.defaultBlockState();
+                        FakePlayer fakePlayer = new FakePlayer(level, new GameProfile(UUID.randomUUID(), "Placer"));
 
-                        if (level.setBlock(targetPos, placedState, Block.UPDATE_ALL)) {
+                        fakePlayer.setPos(Vec3.atCenterOf(pos));
+                        fakePlayer.setYRot(direction.toYRot());
+                        fakePlayer.setXRot(direction == Direction.UP ? -90.0F : direction == Direction.DOWN ? 90.0F : 0.0F);
+
+                        var hitResult = new BlockHitResult(Vec3.atCenterOf(targetPos), direction.getOpposite(), targetPos, false);
+                        var placeContext = new BlockPlaceContext(level, fakePlayer, InteractionHand.MAIN_HAND, itemstack, hitResult);
+                        var placeResult = blockItem.place(placeContext);
+
+                        if (placeResult.consumesAction()) {
                             blockEntity.removeItem(i, 1);
                             blockEntity.setChanged();
                             playPlacedBlockSound(level, targetPos);
-                            level.gameEvent(GameEvent.BLOCK_PLACE, targetPos, GameEvent.Context.of(state));
+                            //level.gameEvent(GameEvent.BLOCK_PLACE, targetPos, GameEvent.Context.of(state));
                         }
                     }
                 } else {
