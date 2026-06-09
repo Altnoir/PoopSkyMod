@@ -152,6 +152,7 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
         }
         return motion;
     }
+
     //TODO 需要修复爆炸破坏方块不掉落问题
     protected void explode() {
         Level level = this.level();
@@ -161,8 +162,7 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
         int radius = calculateExplosionRadius(velocity);
 
         level.explode(this, Explosion.getDefaultDamageSource(level, this), null,
-                this.getX(), this.getY() + 0.0625, this.getZ(),
-                0.0F, false, Level.ExplosionInteraction.NONE);
+                this.getX(), this.getY() + 0.0625, this.getZ(), 0.0F, false, Level.ExplosionInteraction.NONE);
 
         BlockPos center = this.blockPosition();
         for (int x = -radius; x <= radius; x++) {
@@ -174,11 +174,11 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
                     if (state.isAir() || state.getBlock() == Blocks.BEDROCK) continue;
 
                     ItemStack recipeOutput = EXPLOSION_RECIPES.get(state.getBlock());
-                    if (recipeOutput != null) {
-                        level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
-                        Block.popResource(level, pos, recipeOutput.copy());
+                    if (recipeOutput == null) {
+                        level.destroyBlock(pos, true, null);
                     } else {
-                        level.destroyBlock(pos, true);
+                        level.destroyBlock(pos, false);
+                        Block.popResource(level, pos, recipeOutput.copy());
                     }
                 }
             }
