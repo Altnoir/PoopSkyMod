@@ -44,6 +44,24 @@
       "random/burp"
     ]
   },
+  "entity.fly.ambient": {
+    "subtitle": "subtitle.poopsky.fly.ambient",
+    "sounds": [
+      "minecraft:entity/bee/loop_aggressive"
+    ]
+  },
+  "entity.fly.hurt": {
+    "subtitle": "subtitle.poopsky.fly.hurt",
+    "sounds": [
+      "minecraft:entity/bee/hurt"
+    ]
+  },
+  "entity.fly.death": {
+    "subtitle": "subtitle.poopsky.fly.death",
+    "sounds": [
+      "minecraft:entity/bee/death"
+    ]
+  },
   "lawrence": {
     "sounds": [
       {

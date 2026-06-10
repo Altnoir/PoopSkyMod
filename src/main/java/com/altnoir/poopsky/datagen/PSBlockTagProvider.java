@@ -103,7 +103,6 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(PSBlocks.CUT_POOP_BLOCK_WALL.get())
                 .add(PSBlocks.TILE_BLOCK_WALL.get());
         tag(BlockTags.FLOWERS)
-                .addTag(PSBlockTags.TOILET_BLOCKS)
                 .add(PSBlocks.POOP_LEAVES.get())
                 .addTag(PSBlockTags.POOP_BLOCKS);
 

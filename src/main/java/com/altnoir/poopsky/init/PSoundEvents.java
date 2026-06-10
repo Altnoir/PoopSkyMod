@@ -20,6 +20,10 @@ public class PSoundEvents {
     public static final Supplier<SoundEvent> ENTITY_VILLAGER_WORK_COMPOOPER = registerSoundEvent("entity.villager.work_compooper");
     public static final Supplier<SoundEvent> ENTITY_VILLAGER_WORK_TOILET = registerSoundEvent("entity.villager.work_toilet");
 
+    public static final Supplier<SoundEvent> ENTITY_FLY_AMBIENT = registerSoundEvent("entity.fly.ambient");
+    public static final Supplier<SoundEvent> ENTITY_FLY_HURT = registerSoundEvent("entity.fly.hurt");
+    public static final Supplier<SoundEvent> ENTITY_FLY_DEATH = registerSoundEvent("entity.fly.death");
+
     public static final Supplier<SoundEvent> LAWRENCE = registerSoundEvent("lawrence");
     public static final ResourceKey<JukeboxSong> LAWRENCE_KEY = registerJukeboxSong("lawrence");
     public static final Supplier<SoundEvent> LIGHT_DANCE = registerSoundEvent("light_dance");

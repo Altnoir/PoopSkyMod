@@ -195,6 +195,11 @@
   "entity.poopsky.toilet_plug": "Toilet Plug",
   "entity.poopsky.stool_entity": "Stool",
   "entity.poopsky.poolime": "Poolime",
+  "entity.poopsky.fly": "Fly",
+
+  "subtitle.poopsky.fly.ambient": "Fly buzzing",
+  "subtitle.poopsky.fly.hurt": "Fly hurt",
+  "subtitle.poopsky.fly.death": "Fly died",
 
   "key.category.poopsky": "POOPSKY",
   "key.poopsky.use_plug": "Summon Toilet Plug",
