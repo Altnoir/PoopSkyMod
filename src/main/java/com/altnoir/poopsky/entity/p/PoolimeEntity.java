@@ -28,7 +28,7 @@ public class PoolimeEntity extends Slime {
         return PParticles.POOP_PARTICLE.get();
     }
 
-    public static boolean checkPooplimeSpawnRules(
+    public static boolean checkPoolimeSpawnRules(
             EntityType<PoolimeEntity> poolime, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random
     ) {
         boolean flag = MobSpawnType.ignoresLightRequirements(spawnType);

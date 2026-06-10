@@ -364,8 +364,8 @@ public class PSBlocks {
     public static final DeferredBlock<Block> LAVA_COMPOOPER = registerDefaultBlock("lava_compooper",
             () -> new LavaCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()).lightLevel(state -> 15))
     );
-    public static final DeferredBlock<Block> POWER_SNOW_COMPOOPER = registerDefaultBlock("power_snow_compooper",
-            () -> new PowerSnowCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()))
+    public static final DeferredBlock<Block> POWDER_SNOW_COMPOOPER = registerDefaultBlock("power_snow_compooper",
+            () -> new PowderSnowCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()))
     );
     public static final DeferredBlock<Block> URINE_COMPOOPER = registerDefaultBlock("urine_compooper",
             () -> new UrineCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()).randomTicks())
@@ -404,7 +404,7 @@ public class PSBlocks {
                     .sound(SoundType.MUD))
     );
     public static final DeferredBlock<Block> RAW_SAPLING_POOP_BLOCK = registerBlock("raw_sapling_poop_block",
-            () -> new RawSapingBlock(BlockBehaviour.Properties.ofFullCopy(RAW_POOP_BLOCK.get()).sound(SoundType.ROOTED_DIRT))
+            () -> new RawSaplingBlock(BlockBehaviour.Properties.ofFullCopy(RAW_POOP_BLOCK.get()).sound(SoundType.ROOTED_DIRT))
     );
     public static final DeferredBlock<Block> RAW_SEA_POOP_BLOCK = registerBlock("raw_sea_poop_block",
             () -> new RawSeaBlock(BlockBehaviour.Properties.ofFullCopy(RAW_POOP_BLOCK.get()).sound(SoundType.ROOTED_DIRT))

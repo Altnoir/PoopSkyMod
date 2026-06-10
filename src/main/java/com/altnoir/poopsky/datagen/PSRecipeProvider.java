@@ -206,7 +206,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         wallRecipe(recipeOutput, PSBlocks.TILE_BLOCK_WALL, PSBlocks.TILE_BLOCK);
 
         nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PSItems.POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PSBlocks.RAW_POOP_BLOCK);
-        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PSItems.SAPING_POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PSBlocks.RAW_SAPLING_POOP_BLOCK);
+        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PSItems.SAPLING_POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PSBlocks.RAW_SAPLING_POOP_BLOCK);
         nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PSItems.SEA_POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PSBlocks.RAW_SEA_POOP_BLOCK);
         nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PSItems.WITHER_POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PSBlocks.RAW_WITHER_POOP_BLOCK);
 

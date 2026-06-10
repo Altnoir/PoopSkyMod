@@ -134,7 +134,7 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
         this.add(PSBlocks.COMPOOPER.get(), this::createCompoomerDrops);
         dropOther(PSBlocks.WATER_COMPOOPER.get(), PSBlocks.COMPOOPER.get());
         dropOther(PSBlocks.LAVA_COMPOOPER.get(), PSBlocks.COMPOOPER.get());
-        dropOther(PSBlocks.POWER_SNOW_COMPOOPER.get(), PSBlocks.COMPOOPER.get());
+        dropOther(PSBlocks.POWDER_SNOW_COMPOOPER.get(), PSBlocks.COMPOOPER.get());
         this.add(PSBlocks.URINE_COMPOOPER.get(), this::createUrineCompoomerDrops);
         dropSelf(PSBlocks.PLACER.get());
         dropSelf(PSBlocks.SIEVE.get());
@@ -293,7 +293,7 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
                 )
                 .withPool(
                         LootPool.lootPool()
-                                .add(LootItem.lootTableItem(PSItems.SAPING_POOP_BALL.get()))
+                                .add(LootItem.lootTableItem(PSItems.SAPLING_POOP_BALL.get()))
                                 .when(
                                         LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
                                                 .setProperties(StatePropertiesPredicate.Builder.properties()

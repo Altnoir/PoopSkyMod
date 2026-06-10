@@ -12,8 +12,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
-public class SapingBallItem extends Item {
-    public SapingBallItem(Properties properties) {
+public class SaplingBallItem extends Item {
+    public SaplingBallItem(Properties properties) {
         super(properties);
     }
 

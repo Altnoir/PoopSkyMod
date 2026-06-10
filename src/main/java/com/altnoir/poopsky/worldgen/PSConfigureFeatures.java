@@ -145,7 +145,7 @@ public class PSConfigureFeatures {
                         ))
         );
         register(context, RAW_SAPLING_POOP_PATCH_BONEMEAL, Feature.VEGETATION_PATCH,
-                vegetationPatch(PSBlockTags.RAW_SAPING_POOP_BLOCK, PSBlocks.RAW_SAPLING_POOP_BLOCK.get(),
+                vegetationPatch(PSBlockTags.RAW_SAPLING_POOP_BLOCK, PSBlocks.RAW_SAPLING_POOP_BLOCK.get(),
                         holdergetter.getOrThrow(RAW_SAPLING_POOP_VEGETATION), 0.3F, 0.25F)
         );
         register(context, RAW_SEA_POOP_VEGETATION, Feature.SIMPLE_BLOCK,

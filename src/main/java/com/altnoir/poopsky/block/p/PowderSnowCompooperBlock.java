@@ -20,10 +20,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
-public class PowerSnowCompooperBlock extends AbstractCompooperBlock {
-    public static final MapCodec<PowerSnowCompooperBlock> CODEC = simpleCodec(PowerSnowCompooperBlock::new);
+public class PowderSnowCompooperBlock extends AbstractCompooperBlock {
+    public static final MapCodec<PowderSnowCompooperBlock> CODEC = simpleCodec(PowderSnowCompooperBlock::new);
 
-    public PowerSnowCompooperBlock(Properties properties) {
+    public PowderSnowCompooperBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(
                 this.stateDefinition.any()

@@ -31,7 +31,7 @@ public class PFoods {
             .build();
     public static final FoodProperties BAKED_MAGGOTS = new FoodProperties.Builder()
             .nutrition(1).saturationModifier(0.8F).fast().build();
-    public static final FoodProperties SAPING_BALL = new FoodProperties.Builder()
+    public static final FoodProperties SAPLING_BALL = new FoodProperties.Builder()
             .nutrition(2)
             .saturationModifier(0.2F)
             .alwaysEdible()
