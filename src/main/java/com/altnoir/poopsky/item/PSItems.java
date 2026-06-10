@@ -88,6 +88,9 @@ public class PSItems {
     public static final DeferredItem<Item> POOLIME_SPAWN_EGG = ITEMS.register("poolime_spawn_egg",
             () -> new DeferredSpawnEggItem(PEntityType.POOLIME, 0x7D5F36, 0x5E4228,
                     new Item.Properties()));
+    public static final DeferredItem<Item> FLY_SPAWN_EGG = ITEMS.register("fly_spawn_egg",
+            () -> new DeferredSpawnEggItem(PEntityType.FLY, 0x3B4346, 0x475050,
+                    new Item.Properties()));
 
     public static final DeferredItem<Item> LAWRENCE_MUSIC_DISC = ITEMS.register("music_disc_lawrence", () ->
             new Item(new Item.Properties().jukeboxPlayable(PSoundEvents.LAWRENCE_KEY).rarity(Rarity.RARE).stacksTo(1)));
