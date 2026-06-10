@@ -102,9 +102,6 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(PSBlocks.SMOOTH_POOP_BLOCK_WALL.get())
                 .add(PSBlocks.CUT_POOP_BLOCK_WALL.get())
                 .add(PSBlocks.TILE_BLOCK_WALL.get());
-        tag(BlockTags.FLOWERS)
-                .add(PSBlocks.POOP_LEAVES.get())
-                .addTag(PSBlockTags.POOP_BLOCKS);
 
 //        ToiletBlocks.BLOCKS.getEntries().stream()
 //                .map(DeferredHolder::get)

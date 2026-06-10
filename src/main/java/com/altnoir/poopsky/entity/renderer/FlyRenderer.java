@@ -3,16 +3,20 @@ package com.altnoir.poopsky.entity.renderer;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.entity.model.FlyModel;
 import com.altnoir.poopsky.entity.p.FlyEntity;
-import net.minecraft.client.model.geom.ModelLayers;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
 public class FlyRenderer extends MobRenderer<FlyEntity, FlyModel<FlyEntity>> {
 
-
     public FlyRenderer(EntityRendererProvider.Context context) {
-        super(context, new FlyModel<>(context.bakeLayer(ModelLayers.BEE)), 0.4F);
+        super(context, new FlyModel<>(context.bakeLayer(FlyModel.LAYER_LOCATION)), 0.25F);
+    }
+
+    @Override
+    protected void scale(FlyEntity entity, PoseStack poseStack, float partialTick) {
+        poseStack.scale(0.85F, 0.85F, 0.85F);
     }
 
     @Override
