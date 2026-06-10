@@ -59,7 +59,6 @@ public class PoopSkyClient {
     public static class ClientModEvents {
         //TODO 目前已知：装有水的堆粪桶和粪便凳的透明渲染完全不正常渲染
         public static void registerRenderTypes(RegisterNamedRenderTypesEvent event) {
-            event.register(PoopSky.loc("poop_sapling"), RenderType.cutout(), RenderType.entityCutout(PSBlocks.POOP_SAPLING.getId()));
             event.register(PoopSky.loc("poop_empty_log"), RenderType.cutout(), RenderType.entityCutout(PSBlocks.POOP_EMPTY_LOG.getId()));
         }
 
