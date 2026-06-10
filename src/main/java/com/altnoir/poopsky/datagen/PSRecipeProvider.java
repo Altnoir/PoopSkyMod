@@ -518,7 +518,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .addOutput(Items.SMALL_DRIPLEAF, 0.5F)
                 .addOutput(Items.SNIFFER_EGG, 0.05F)
                 .unlockedBy(getItemName(PSBlocks.SIEVE.get()), has(PSBlocks.SIEVE.get()))
-                .save(recipeOutput, "raw_saping_poop_block");
+                .save(recipeOutput, "raw_sapling_poop_block");
 
         SieveRecipeBuilder.sieve(PSBlocks.RAW_SEA_POOP_BLOCK, 100)
                 .addOutput(Items.SEAGRASS, 2).addOutput(Items.SEAGRASS, 0.75F)
