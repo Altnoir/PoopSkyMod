@@ -1,9 +1,8 @@
 package com.altnoir.poopsky.entity.p;
 
-import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.init.PEntityType;
-import com.altnoir.poopsky.init.PParticles;
 import com.altnoir.poopsky.tag.PSBlockTags;
+import com.altnoir.poopsky.util.PoopTntUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -11,22 +10,16 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
-import java.util.Map;
 
 public class PoopTntEntity extends Entity implements TraceableEntity {
     private static final EntityDataAccessor<Integer> DATA_FUSE_ID = SynchedEntityData.defineId(PoopTntEntity.class, EntityDataSerializers.INT);
@@ -36,11 +29,6 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
     private static final int MIN_EXPLOSION_RADIUS = 1;
     private static final int MAX_EXPLOSION_RADIUS = 5;
     private static final double INSTANT_EXPLOSION_THRESHOLD = 0.25;
-
-    private static final Map<Block, Block> EXPLOSION_RECIPES = Map.of(
-            Blocks.COBBLESTONE, Blocks.GRAVEL,
-            Blocks.GRAVEL, Blocks.SAND
-    );
 
     @javax.annotation.Nullable
     private LivingEntity owner;
@@ -89,6 +77,7 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
         Vec3 movement = this.getDeltaMovement();
         double impactSpeed = movement.length();
         this.move(MoverType.SELF, movement);
+        int radius = calculateExplosionRadius(impactSpeed);
 
         if (!this.level().isClientSide) {
             var state = this.level().getBlockState(this.getOnPos());
@@ -96,7 +85,7 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
             if (impactSpeed > INSTANT_EXPLOSION_THRESHOLD && !state.is(PSBlockTags.EMPTY_LOGS) && (this.horizontalCollision || this.verticalCollision)) {
                 this.setDeltaMovement(movement);
                 this.discard();
-                this.explode();
+                PoopTntUtil.triggerExplosion(this, radius);
                 return;
             }
         }
@@ -111,7 +100,7 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
         if (fuse <= 0) {
             this.discard();
             if (!this.level().isClientSide) {
-                this.explode();
+                PoopTntUtil.triggerExplosion(this, radius);
             }
         } else {
             this.updateInWaterStateAndDoFluidPushing();
@@ -150,66 +139,6 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
             case DOWN -> motion = motion.add(0.0, -MOMENTUM_PER_TICK, 0.0);
         }
         return motion;
-    }
-
-    //TODO 暂时把爆炸改为替换方块，后续解决破坏方块不掉落物品再改回去
-    protected void explode() {
-        Level level = this.level();
-
-        if (level.isClientSide) return;
-        double velocity = this.getDeltaMovement().length();
-        int radius = calculateExplosionRadius(velocity);
-
-        level.explode(this, Explosion.getDefaultDamageSource(level, this), null,
-                this.getX(), this.getY() + 0.0625, this.getZ(), 0.0F, false, Level.ExplosionInteraction.NONE);
-
-        BlockPos center = this.blockPosition();
-        for (int x = -radius; x <= radius; x++) {
-            for (int y = -radius; y <= radius; y++) {
-                for (int z = -radius; z <= radius; z++) {
-                    BlockPos pos = center.offset(x, y, z);
-                    BlockState state = level.getBlockState(pos);
-
-                    if (state.isAir() || state.getBlock() == Blocks.BEDROCK) continue;
-
-                    Block recipeOutput = EXPLOSION_RECIPES.get(state.getBlock());
-                    if (recipeOutput != null) {
-                        level.setBlockAndUpdate(pos, recipeOutput.defaultBlockState());
-                        //Block.popResource(level, pos, recipeOutput.copy());
-                    } else {
-                        if (state.canBeReplaced()) {
-                            level.destroyBlock(pos, true, null);
-                        } else if (state.is(BlockTags.MOSS_REPLACEABLE)){
-                            level.setBlockAndUpdate(pos, PSBlocks.POOP_BLOCK.get().defaultBlockState());
-                        }
-                    }
-                }
-            }
-        }
-/*
-        AABB damageBox = new AABB(center).inflate(radius);
-        for (Entity entity : level.getEntities(this, damageBox)) {
-            if (entity.isAlive() && entity != this && !entity.isSpectator()) {
-                BlockPos ePos = entity.blockPosition();
-                if (Math.abs(ePos.getX() - center.getX()) <= radius
-                        && Math.abs(ePos.getY() - center.getY()) <= radius
-                        && Math.abs(ePos.getZ() - center.getZ()) <= radius) {
-                    double dist = entity.distanceTo(this);
-                    float damage = Math.max(1.0F, (float) ((radius * 2 + 1 - dist) * 2.0));
-                    entity.hurt(level.damageSources().explosion(null, this.getOwner()), damage);
-                }
-            }
-        }
-*/
-
-        spawnPoopParticle((ServerLevel) level, this.getX(), this.getY(), this.getZ(), radius);
-    }
-
-    private void spawnPoopParticle(ServerLevel level, double x, double y, double z, int radius) {
-        int particleCount = radius * 30;
-        double offset = radius * 0.5;
-        double speed = 0.4 + level.random.nextDouble() * 0.4;
-        level.sendParticles(PParticles.POOP_PARTICLE.get(), x, y, z, particleCount, offset, offset, offset, speed);
     }
 
     private static int calculateExplosionRadius(double velocity) {

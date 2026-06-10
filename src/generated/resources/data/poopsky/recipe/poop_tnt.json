@@ -3,19 +3,19 @@
   "category": "redstone",
   "key": {
     "A": {
-      "item": "minecraft:string"
+      "item": "poopsky:poop_block"
     },
     "S": {
-      "item": "minecraft:mossy_cobblestone_wall"
+      "tag": "c:gunpowders"
     }
   },
   "pattern": [
     "SAS",
-    "S S",
-    "S S"
+    "ASA",
+    "SAS"
   ],
   "result": {
     "count": 1,
-    "id": "poopsky:sieve_stable"
+    "id": "poopsky:poop_tnt"
   }
 }

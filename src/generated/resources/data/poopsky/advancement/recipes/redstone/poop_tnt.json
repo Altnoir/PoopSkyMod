@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:poop_tnt"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "king_of_dragon_fruit": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:king_of_dragon_fruit"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "king_of_dragon_fruit"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "poopsky:poop_tnt"
+    ]
+  }
+}

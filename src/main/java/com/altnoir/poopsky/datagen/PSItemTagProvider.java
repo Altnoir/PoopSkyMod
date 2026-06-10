@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.block.AllToiletBlocks;
+import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.tag.PSItemTags;
 import net.minecraft.core.HolderLookup;
@@ -52,6 +52,7 @@ public class PSItemTagProvider extends ItemTagsProvider {
                 .add(PSItems.POOP_PASTA.get())
                 .add(PSItems.POODDING.get())
                 .add(PSItems.DRAGON_BREATH_CHILI.get())
+                .add(PSItems.KING_OF_DRAGON_FRUIT.get())
                 .add(PSItems.URINE_BOTTLE.get())
                 .add(PSBlocks.POOP_CAKE.get().asItem());
 
@@ -84,6 +85,8 @@ public class PSItemTagProvider extends ItemTagsProvider {
                 .add(PSItems.ROUNDWORM.get())
                 .add(PSItems.POOP_PASTA.get());
 
+        tag(Tags.Items.GUNPOWDERS)
+                .add(PSItems.KING_OF_DRAGON_FRUIT.get());
 
         tag(Tags.Items.MUSIC_DISCS)
                 .add(PSItems.LAWRENCE_MUSIC_DISC.get())

@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.utill;
+package com.altnoir.poopsky.util;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;

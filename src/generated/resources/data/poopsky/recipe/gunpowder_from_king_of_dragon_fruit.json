@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "poopsky:king_of_dragon_fruit"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:gunpowder"
+  }
+}

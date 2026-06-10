@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.event;
 
 import com.altnoir.poopsky.entity.p.ToiletPlugEntity;
-import com.altnoir.poopsky.event.asm.ASMHooks;
+import com.altnoir.poopsky.util.asm.ASMHooks;
 import com.altnoir.poopsky.network.PlugActionPayload;
 import com.altnoir.poopsky.network.PlugDismountPayload;
 import net.minecraft.client.Minecraft;

@@ -56,14 +56,14 @@ public class PSItems {
     public static final DeferredItem<Item> POODDING = ITEMS.register("poodding", () ->
             new Item(new Item.Properties().food(PFoods.POODDING).stacksTo(88)));
     public static final DeferredItem<Item> DRAGON_BREATH_CHILI = ITEMS.register("dragon_breath_chili", () ->
-            new Item(new Item.Properties().food(PFoods.DRAGON_BREATH_CHILI).stacksTo(88)));
+            new Item(new Item.Properties().food(PFoods.DRAGON_BREATH_CHILI)));
+    public static final DeferredItem<Item> KING_OF_DRAGON_FRUIT = ITEMS.register("king_of_dragon_fruit", () ->
+            new Item(new Item.Properties().food(PFoods.KING_OF_DRAGON_FRUIT)));
 
     public static final DeferredItem<Item> TOILET_PLUG = ITEMS.register("toilet_plug", () ->
             new ToiletPlugItem(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<Item> TOILET_PLUG_WAND = ITEMS.register("toilet_plug_wand", () ->
-            new ToiletLinkerItem(new Item.Properties()
-                    .component(PComponents.TOILET_COMPONENT, ToiletComponent.EMPTY)
-                    .stacksTo(1)));
+            new ToiletLinkerItem(new Item.Properties().component(PComponents.TOILET_COMPONENT, ToiletComponent.EMPTY).stacksTo(1)));
     public static final DeferredItem<Item> TIME_BELL = ITEMS.register("time_bell", () ->
             new TimeBellItem(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<Item> SPALL = ITEMS.register("spall", () ->
@@ -73,7 +73,6 @@ public class PSItems {
             new ItemNameBlockItem(PSBlocks.MAGGOTS.get(), new Item.Properties().food(PFoods.MAGGOTS_SEEDS).stacksTo(88)));
     public static final DeferredItem<Item> ROUNDWORM = ITEMS.register("roundworm", () ->
             new ItemNameBlockItem(PSBlocks.ROUNDWORM_VINES.get(), new Item.Properties().food(PFoods.ROUNDWORM).stacksTo(88)));
-
 
     public static final DeferredItem<Item> URINE_BOTTLE = ITEMS.register("urine_bottle",
             () -> new UrineBottleItem(new Item.Properties()

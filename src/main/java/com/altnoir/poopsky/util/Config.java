@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.utill;
+package com.altnoir.poopsky.util;
 
 import net.neoforged.neoforge.common.ModConfigSpec;
 

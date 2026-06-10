@@ -53,6 +53,7 @@
 
   "effect.poopsky.fecal_incontinence": "Fecal Incontinence",
   "effect.poopsky.intestinal_spasm": "Intestinal Spasm",
+  "effect.poopsky.on_the_verge": "On the Verge",
 
   "block.poopsky.poop_piece": "Poop Piece",
   "block.poopsky.poop_block": "Poop Block",
@@ -128,13 +129,14 @@
   "block.poopsky.compooper": "Compooper",
   "block.poopsky.water_compooper": "Water Compooper",
   "block.poopsky.lava_compooper": "Lava Compooper",
-  "block.poopsky.power_snow_compooper": "Powder Snow Compooper",
+  "block.poopsky.powder_snow_compooper": "Powder Snow Compooper",
   "block.poopsky.urine_compooper": "Urine Compooper",
   "block.poopsky.placer": "Placer",
   "block.poopsky.sieve_stable": "Sieve",
   "block.poopsky.poop_tnt": "POP",
 
   "item.poopsky.dragon_breath_chili": "Dragon Breath Chili",
+  "item.poopsky.king_of_dragon_fruit": "King of Dragon Fruit",
   "item.poopsky.roundworm": "Roundworm",
   "item.poopsky.maggots_seeds": "Maggots",
   "block.poopsky.maggots": "Maggots",

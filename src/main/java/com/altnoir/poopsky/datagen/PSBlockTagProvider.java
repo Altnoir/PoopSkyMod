@@ -51,6 +51,11 @@ public class PSBlockTagProvider extends BlockTagsProvider {
         tag(PSBlockTags.GOLDEN_TOILET_BLOCKS)
                 .add(AllToiletBlocks.RAINBOW_TOILET.get());
 
+        tag(PSBlockTags.POOP_TNT_DESTROY)
+                .addTags(BlockTags.LEAVES);
+        tag(PSBlockTags.POOP_TNT_REPLACEABLE)
+                .addTags(BlockTags.MOSS_REPLACEABLE);
+
         //基础标签
         tag(BlockTags.MOSS_REPLACEABLE)
                 .add(PSBlocks.POOP_BLOCK.get())

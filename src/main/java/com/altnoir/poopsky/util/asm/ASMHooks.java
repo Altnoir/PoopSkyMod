@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.event.asm;
+package com.altnoir.poopsky.util.asm;
 
 import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.PoopSky;

@@ -290,7 +290,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('S', Blocks.MOSSY_COBBLESTONE_SLAB)
                 .unlockedBy(getItemName(Blocks.MOSSY_COBBLESTONE_SLAB), has(Blocks.MOSSY_COBBLESTONE_SLAB))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PSBlocks.PLACER)
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PSBlocks.PLACER)
                 .pattern("SSS")
                 .pattern("SPS")
                 .pattern("SAS")
@@ -299,7 +299,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('P', PSItems.TOILET_PLUG)
                 .unlockedBy(getItemName(PSItems.TOILET_PLUG), has(PSItems.TOILET_PLUG))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PSBlocks.SIEVE)
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PSBlocks.SIEVE)
                 .pattern("SAS")
                 .pattern("S S")
                 .pattern("S S")
@@ -308,11 +308,24 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy(getItemName(Blocks.MOSSY_COBBLESTONE_WALL), has(Blocks.MOSSY_COBBLESTONE_WALL))
                 .save(recipeOutput);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PSBlocks.POOP_TNT)
+                .pattern("SAS")
+                .pattern("ASA")
+                .pattern("SAS")
+                .define('S', Tags.Items.GUNPOWDERS)
+                .define('A', PSBlocks.POOP_BLOCK)
+                .unlockedBy(getItemName(PSItems.KING_OF_DRAGON_FRUIT), has(PSItems.KING_OF_DRAGON_FRUIT))
+                .save(recipeOutput);
+
         offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOLIME_BLOCK.get(), PSItems.POOP_BALL.get(), 1);
         offerCompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOLIME_POOP_BLOCK.get(), PSBlocks.POOP_BLOCK.get());
 
         //原版物品配方
         offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, Blocks.CRAFTING_TABLE, PSItems.SPALL, 1);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.GUNPOWDER)
+                .requires(PSItems.KING_OF_DRAGON_FRUIT)
+                .unlockedBy(getItemName(PSItems.KING_OF_DRAGON_FRUIT), has(PSItems.KING_OF_DRAGON_FRUIT))
+                .save(recipeOutput, getConversionRecipeName(Items.GUNPOWDER) + "_from_" + getItemName(PSItems.KING_OF_DRAGON_FRUIT));
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, Blocks.COARSE_DIRT, 4)
                 .pattern("PG")
                 .pattern("GP")
@@ -538,6 +551,11 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .addOutput(Items.WITHER_SKELETON_SKULL, 0.005F)
                 .unlockedBy(getItemName(PSBlocks.SIEVE.get()), has(PSBlocks.SIEVE.get()))
                 .save(recipeOutput, "raw_wither_poop_block");
+        SieveRecipeBuilder.sieve(Blocks.CACTUS, 100)
+                .addOutput(PSItems.KING_OF_DRAGON_FRUIT.get())
+                .addOutput(PSItems.KING_OF_DRAGON_FRUIT.get(), 0.5F)
+                .unlockedBy(getItemName(PSBlocks.SIEVE.get()), has(PSBlocks.SIEVE.get()))
+                .save(recipeOutput, "cactus");
     }
 
     private void toiletRecipes(RecipeOutput recipeOutput, ItemLike toilet, ItemLike block) {
