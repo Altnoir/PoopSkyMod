@@ -197,10 +197,6 @@
   "entity.poopsky.poolime": "屎莱姆",
   "entity.poopsky.fly": "苍蝇",
 
-  "subtitle.poopsky.fly.ambient": "苍蝇：愤怒地嗡嗡叫",
-  "subtitle.poopsky.fly.hurt": "苍蝇：受伤",
-  "subtitle.poopsky.fly.death": "苍蝇：死亡",
-
   "key.category.poopsky": "空中厕所",
   "key.poopsky.use_plug": "召唤马桶搋子",
   "key.poopsky.dismount_plug": "脱离马桶搋子",
@@ -252,6 +248,9 @@
   "advancements.poopsky.chili_poop.description": "在拥有肠道痉挛效果时，可拉出辣味粪便\n合成出的粪便块可催熟",
 
   "subtitle.poopsky.fart": "屁声",
+  "subtitle.poopsky.fly.ambient": "苍蝇：愤怒地嗡嗡叫",
+  "subtitle.poopsky.fly.hurt": "苍蝇：受伤",
+  "subtitle.poopsky.fly.death": "苍蝇：死亡",
   "subtitle.poopsky.compooper.maggots": "堆粪桶：产蛆",
   "subtitle.poopsky.villager.work_compooper": "养粪人：工作",
   "subtitle.poopsky.villager.work_toilet": "美食家：进食",

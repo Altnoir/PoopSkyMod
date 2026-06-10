@@ -197,10 +197,6 @@
   "entity.poopsky.poolime": "Poolime",
   "entity.poopsky.fly": "Fly",
 
-  "subtitle.poopsky.fly.ambient": "Fly buzzing",
-  "subtitle.poopsky.fly.hurt": "Fly hurt",
-  "subtitle.poopsky.fly.death": "Fly died",
-
   "key.category.poopsky": "POOPSKY",
   "key.poopsky.use_plug": "Summon Toilet Plug",
   "key.poopsky.dismount_plug": "Dismount Toilet Plug",
@@ -222,6 +218,9 @@
   "advancements.poopsky.sapling.description": "Use sapling balls",
 
   "subtitle.poopsky.fart": "Fart Sound",
+  "subtitle.poopsky.fly.ambient": "Fly buzzing",
+  "subtitle.poopsky.fly.hurt": "Fly hurt",
+  "subtitle.poopsky.fly.death": "Fly died",
   "subtitle.poopsky.compooper.maggots": "Compooper maggots",
   "subtitle.poopsky.villager.work_compooper": "Poopmaker works",
   "subtitle.poopsky.villager.work_toilet": "Gastronome eats",
