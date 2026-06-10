@@ -7,7 +7,7 @@
     },
     {
       "apply": {
-        "model": "poopsky:block/power_snow_compooper1"
+        "model": "poopsky:block/powder_snow_compooper1"
       },
       "when": {
         "level": "1"
@@ -15,7 +15,7 @@
     },
     {
       "apply": {
-        "model": "poopsky:block/power_snow_compooper2"
+        "model": "poopsky:block/powder_snow_compooper2"
       },
       "when": {
         "level": "2"
@@ -23,7 +23,7 @@
     },
     {
       "apply": {
-        "model": "poopsky:block/power_snow_compooper3"
+        "model": "poopsky:block/powder_snow_compooper3"
       },
       "when": {
         "level": "3"

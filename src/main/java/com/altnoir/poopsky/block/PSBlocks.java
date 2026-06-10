@@ -364,7 +364,7 @@ public class PSBlocks {
     public static final DeferredBlock<Block> LAVA_COMPOOPER = registerDefaultBlock("lava_compooper",
             () -> new LavaCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()).lightLevel(state -> 15))
     );
-    public static final DeferredBlock<Block> POWDER_SNOW_COMPOOPER = registerDefaultBlock("power_snow_compooper",
+    public static final DeferredBlock<Block> POWDER_SNOW_COMPOOPER = registerDefaultBlock("powder_snow_compooper",
             () -> new PowderSnowCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()))
     );
     public static final DeferredBlock<Block> URINE_COMPOOPER = registerDefaultBlock("urine_compooper",
