@@ -27,7 +27,7 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(PSBlocks.POOP_BLOCK.get());
         tag(PSBlockTags.CHILI_POOP_BLOCK)
                 .add(PSBlocks.CHILI_POOP_BLOCK.get());
-        tag(PSBlockTags.RAW_SAPING_POOP_BLOCK)
+        tag(PSBlockTags.RAW_SAPLING_POOP_BLOCK)
                 .add(PSBlocks.RAW_POOP_BLOCK.get())
                 .add(PSBlocks.RAW_SAPLING_POOP_BLOCK.get());
         tag(PSBlockTags.RAW_SEA_POOP_BLOCK)
@@ -155,7 +155,7 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(PSBlocks.COMPOOPER.get())
                 .add(PSBlocks.WATER_COMPOOPER.get())
                 .add(PSBlocks.LAVA_COMPOOPER.get())
-                .add(PSBlocks.POWER_SNOW_COMPOOPER.get())
+                .add(PSBlocks.POWDER_SNOW_COMPOOPER.get())
                 .add(PSBlocks.URINE_COMPOOPER.get());
 
         tag(BlockTags.MINEABLE_WITH_HOE)
@@ -168,7 +168,7 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(PSBlocks.COMPOOPER.get())
                 .add(PSBlocks.WATER_COMPOOPER.get())
                 .add(PSBlocks.LAVA_COMPOOPER.get())
-                .add(PSBlocks.POWER_SNOW_COMPOOPER.get())
+                .add(PSBlocks.POWDER_SNOW_COMPOOPER.get())
                 .add(PSBlocks.URINE_COMPOOPER.get())
                 .add(WOODEN_TOILETS)
                 .add(HARD_TOILETS);

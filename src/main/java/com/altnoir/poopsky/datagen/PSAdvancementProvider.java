@@ -166,7 +166,7 @@ public class PSAdvancementProvider extends AdvancementProvider {
             Advancement.Builder.advancement()
                     .parent(compooper)
                     .display(
-                            PSItems.SAPING_POOP_BALL.get(),
+                            PSItems.SAPLING_POOP_BALL.get(),
                             Component.translatable("advancements.poopsky.sapling.title"),
                             Component.translatable("advancements.poopsky.sapling.description"),
                             null,
@@ -175,7 +175,7 @@ public class PSAdvancementProvider extends AdvancementProvider {
                             true,
                             false
                     )
-                    .addCriterion("sapling", InventoryChangeTrigger.TriggerInstance.hasItems(PSItems.SAPING_POOP_BALL.get()))
+                    .addCriterion("sapling", InventoryChangeTrigger.TriggerInstance.hasItems(PSItems.SAPLING_POOP_BALL.get()))
                     .save(saver, modId("sapling"), existingFileHelper);
 
             AdvancementHolder coal_block = Advancement.Builder.advancement()

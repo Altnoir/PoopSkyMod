@@ -30,8 +30,8 @@ public class PSItems {
 
     public static final DeferredItem<Item> POOP_BALL = ITEMS.register("poop_ball", () ->
             new PoopBallItem(new Item.Properties().stacksTo(88)));
-    public static final DeferredItem<Item> SAPING_POOP_BALL = ITEMS.register("saping_poop_ball", () ->
-            new SapingBallItem(new Item.Properties().food(PFoods.SAPING_BALL).stacksTo(88)));
+    public static final DeferredItem<Item> SAPLING_POOP_BALL = ITEMS.register("saping_poop_ball", () ->
+            new SaplingBallItem(new Item.Properties().food(PFoods.SAPLING_BALL).stacksTo(88)));
     public static final DeferredItem<Item> SEA_POOP_BALL = ITEMS.register("sea_poop_ball", () ->
             new SeaPoopBallItem(new Item.Properties().stacksTo(88)));
     public static final DeferredItem<Item> WITHER_POOP_BALL = ITEMS.register("wither_poop_ball", () ->

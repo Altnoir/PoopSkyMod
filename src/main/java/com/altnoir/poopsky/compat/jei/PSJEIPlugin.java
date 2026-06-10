@@ -45,7 +45,7 @@ public class PSJEIPlugin implements IModPlugin {
                 new CompooperRecipe(
                         Ingredient.of(Items.STICK), new ItemStack(Items.BLAZE_ROD), PSBlocks.LAVA_COMPOOPER.get().defaultBlockState()),
                 new CompooperRecipe(
-                        Ingredient.of(Items.STICK), new ItemStack(Items.BREEZE_ROD), PSBlocks.POWER_SNOW_COMPOOPER.get().defaultBlockState())
+                        Ingredient.of(Items.STICK), new ItemStack(Items.BREEZE_ROD), PSBlocks.POWDER_SNOW_COMPOOPER.get().defaultBlockState())
         ));
         var level = net.minecraft.client.Minecraft.getInstance().level;
         if (level != null) {

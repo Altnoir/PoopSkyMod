@@ -8,8 +8,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class RawSapingBlock extends AbstractRawBlock {
-    public RawSapingBlock(Properties properties) {
+public class RawSaplingBlock extends AbstractRawBlock {
+    public RawSaplingBlock(Properties properties) {
         super(properties);
     }
 
