@@ -90,14 +90,6 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (level.getBlockEntity(pos) instanceof ToiletBlockEntity blockEntity && !level.isClientSide()) {
-            FluidUtil.interactWithFluidHandler(player, hand, blockEntity.fluidTank);
-        }
-        return ItemInteractionResult.sidedSuccess(level.isClientSide());
-    }
-
-    @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (!player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
             return InteractionResult.PASS;

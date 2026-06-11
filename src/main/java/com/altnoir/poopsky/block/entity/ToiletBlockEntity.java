@@ -120,7 +120,8 @@ public class ToiletBlockEntity extends BlockEntity {
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         CompoundTag tag = new CompoundTag();
         saveAdditional(tag, registries);
-        return saveCustomAndMetadata(registries);
+        saveCustomAndMetadata(registries);
+        return tag;
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, ToiletBlockEntity blockEntity) {
