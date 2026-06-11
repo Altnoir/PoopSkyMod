@@ -130,6 +130,7 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
                 this.add(candleCake.get(), createCandleCakeDrops(candle)));
         dropSelf(PSBlocks.POOLIME_BLOCK.get());
         dropSelf(PSBlocks.POOLIME_POOP_BLOCK.get());
+        dropSelf(PSBlocks.FLY_NEST.get());
         dropSelf(PSBlocks.STOOL.get());
         this.add(PSBlocks.COMPOOPER.get(), this::createCompoomerDrops);
         dropOther(PSBlocks.WATER_COMPOOPER.get(), PSBlocks.COMPOOPER.get());

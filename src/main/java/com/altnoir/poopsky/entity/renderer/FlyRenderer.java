@@ -9,6 +9,10 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
 public class FlyRenderer extends MobRenderer<FlyEntity, FlyModel<FlyEntity>> {
+    private static final ResourceLocation FLY_LOCATION = PoopSky.loc("textures/entity/fly/fly.png");
+    private static final ResourceLocation FLY_ANGRY_LOCATION = PoopSky.loc("textures/entity/fly/fly_angry.png");
+    private static final ResourceLocation FLY_NECTAR_LOCATION = PoopSky.loc("textures/entity/fly/fly_nectar.png");
+    private static final ResourceLocation FLY_ANGRY_NECTAR_LOCATION = PoopSky.loc("textures/entity/fly/fly_angry_nectar.png");
 
     public FlyRenderer(EntityRendererProvider.Context context) {
         super(context, new FlyModel<>(context.bakeLayer(FlyModel.LAYER_LOCATION)), 0.25F);
@@ -21,6 +25,9 @@ public class FlyRenderer extends MobRenderer<FlyEntity, FlyModel<FlyEntity>> {
 
     @Override
     public ResourceLocation getTextureLocation(FlyEntity entity) {
-        return PoopSky.loc("textures/entity/fly.png");
+        if (entity.isAngry()) {
+            return entity.hasNectar() ? FLY_ANGRY_NECTAR_LOCATION : FLY_ANGRY_LOCATION;
+        }
+        return entity.hasNectar() ? FLY_NECTAR_LOCATION : FLY_LOCATION;
     }
 }

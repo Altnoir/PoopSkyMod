@@ -73,6 +73,8 @@ public class PSItems {
             new ItemNameBlockItem(PSBlocks.MAGGOTS.get(), new Item.Properties().food(PFoods.MAGGOTS_SEEDS).stacksTo(88)));
     public static final DeferredItem<Item> ROUNDWORM = ITEMS.register("roundworm", () ->
             new ItemNameBlockItem(PSBlocks.ROUNDWORM_VINES.get(), new Item.Properties().food(PFoods.ROUNDWORM).stacksTo(88)));
+    public static final DeferredItem<Item> FLY_EGG = ITEMS.register("fly_egg", () ->
+            new Item(new Item.Properties().stacksTo(64)));
 
 
     public static final DeferredItem<Item> URINE_BOTTLE = ITEMS.register("urine_bottle",

@@ -43,20 +43,8 @@ public class FlyEntity extends Bee {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.removeAllGoals(this::isInheritedFlowerOrHiveGoal);
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, itemStack -> itemStack.is(PSItemTags.POOPS), false));
         this.goalSelector.addGoal(4, new FlyGoToToiletGoal());
-    }
-
-    private boolean isInheritedFlowerOrHiveGoal(Goal goal) {
-        String goalName = goal.getClass().getSimpleName();
-        return goal instanceof TemptGoal
-                || goalName.equals("BeeEnterHiveGoal")
-                || goalName.equals("BeeLocateHiveGoal")
-                || goalName.equals("BeeGoToHiveGoal")
-                || goalName.equals("BeeGoToKnownFlowerGoal")
-                || goalName.equals("BeePollinateGoal")
-                || goalName.equals("BeeGrowCropGoal");
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -88,7 +76,6 @@ public class FlyEntity extends Bee {
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        this.clearInheritedBeeHomeData();
         if (compound.contains("EggLayTime")) {
             this.eggTime = compound.getInt("EggLayTime");
         }
@@ -97,21 +84,7 @@ public class FlyEntity extends Bee {
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
-        compound.remove(TAG_HIVE_POS);
-        compound.remove(TAG_FLOWER_POS);
-        compound.remove(TAG_HAS_NECTAR);
-        compound.remove(TAG_CROPS_GROWN_SINCE_POLLINATION);
-        compound.remove(TAG_CANNOT_ENTER_HIVE_TICKS);
-        compound.remove(TAG_TICKS_SINCE_POLLINATION);
         compound.putInt("EggLayTime", this.eggTime);
-    }
-
-    private void clearInheritedBeeHomeData() {
-        this.setHivePos(null);
-        this.setSavedFlowerPos(null);
-        this.dropOffNectar();
-        this.setStayOutOfHiveCountdown(0);
-        this.resetTicksWithoutNectarSinceExitingHive();
     }
 
     @Override

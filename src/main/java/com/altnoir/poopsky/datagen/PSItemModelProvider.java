@@ -43,6 +43,8 @@ public class PSItemModelProvider extends ItemModelProvider {
         basicItem(PSItems.MAGGOTS_SEEDS.get());
         basicItem(PSItems.ROUNDWORM.get());
         basicItem(PSItems.BAKED_MAGGOTS.get());
+        withExistingParent(PSItems.FLY_EGG.getId().getPath(), mcLoc("item/generated"))
+                .texture("layer0", modLoc("item/flyegg"));
 
         basicItem(PSItems.TIME_BELL.get());
 

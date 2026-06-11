@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.event;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.init.PBlockEntityType;
 import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.entity.p.FlyEntity;
@@ -9,11 +10,13 @@ import com.altnoir.poopsky.entity.p.ToiletPlugEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
@@ -54,5 +57,10 @@ public class PSModEvents {
                     return blockEntity.getTopSideHandler();
                 }
         );
+    }
+
+    @SubscribeEvent
+    public static void addBlockEntityValidBlocks(BlockEntityTypeAddBlocksEvent event) {
+        event.modify(BlockEntityType.BEEHIVE, PSBlocks.FLY_NEST.get());
     }
 }

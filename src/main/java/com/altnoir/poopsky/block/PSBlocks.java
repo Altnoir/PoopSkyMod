@@ -495,6 +495,9 @@ public class PSBlocks {
                     .isRedstoneConductor(PSBlocks::never)
             )
     );
+    public static final DeferredBlock<Block> FLY_NEST = registerBlock("fly_nest",
+            () -> new FlyNestBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEE_NEST))
+    );
 
     public static final DeferredBlock<Block> POOP_SAPLING = registerBlock("poop_sapling",
             () -> new PoopTreeBlock(BlockBehaviour.Properties.of()

@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "poopsky:block/fly_nest_bottom",
+    "up": "poopsky:block/fly_nest_top",
+    "north": "poopsky:block/fly_nest_front",
+    "east": "poopsky:block/fly_nest_side",
+    "south": "poopsky:block/fly_nest_side",
+    "west": "poopsky:block/fly_nest_side",
+    "particle": "poopsky:block/fly_nest_side"
+  }
+}
