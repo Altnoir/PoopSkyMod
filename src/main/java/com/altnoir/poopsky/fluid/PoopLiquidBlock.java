@@ -20,7 +20,7 @@ public class PoopLiquidBlock extends LiquidBlock {
     }
 
     protected void check(Level level, BlockPos pos) {
-        hasBlockNeighbor(level, pos, Blocks.NETHERRACK, Blocks.MAGMA_BLOCK, Blocks.LAVA);
+        //hasBlockNeighbor(level, pos, Blocks.NETHERRACK, Blocks.MAGMA_BLOCK, Blocks.LAVA);
         //hasBlockNeighbor(level, pos, Blocks.CLAY, Blocks.CLAY, Blocks.WATER);
         hasBlockNeighbor(level, pos, Blocks.SOUL_SAND, Blocks.SAND);
     }

@@ -27,7 +27,7 @@ import javax.annotation.Nullable;
 public class ToiletBlockEntity extends BlockEntity {
     private BlockPos linkedPos;
     private String linkedDim;
-    public FluidTank fluidTank = new FluidTank(Integer.MAX_VALUE) {
+    public FluidTank fluidTank = new FluidTank(88880) {
         @Override
         protected void onContentsChanged() {
             setChanged();
