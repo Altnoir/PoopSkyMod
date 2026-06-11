@@ -41,7 +41,8 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
     public PoopTntEntity(Level level, double x, double y, double z, @javax.annotation.Nullable LivingEntity owner) {
         this(PEntityType.POOP_TNT.get(), level);
         this.setPos(x, y, z);
-        this.setDeltaMovement(0, 0, 0);
+        double d = level.random.nextDouble() * (double)((float)Math.PI * 2F);
+        this.setDeltaMovement(-Math.sin(d) * 0.02, 0.2F, -Math.cos(d) * 0.02);
         this.setFuse(DEFAULT_FUSE_TIME);
         this.xo = x;
         this.yo = y;
