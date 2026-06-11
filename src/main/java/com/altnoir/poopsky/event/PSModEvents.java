@@ -1,11 +1,11 @@
 package com.altnoir.poopsky.event;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.init.PBlockEntityType;
-import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.entity.p.FlyEntity;
 import com.altnoir.poopsky.entity.p.PoolimeEntity;
 import com.altnoir.poopsky.entity.p.ToiletPlugEntity;
+import com.altnoir.poopsky.init.PBlockEntityType;
+import com.altnoir.poopsky.init.PEntityType;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.player.Player;
@@ -43,7 +43,7 @@ public class PSModEvents {
     }
 
     @SubscribeEvent
-    public static void register(RegisterCapabilitiesEvent event) {
+    public static void CapabilitiesRegister(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
                 PBlockEntityType.SIEVE_BLOCK_ENTITY.get(),
@@ -53,6 +53,11 @@ public class PSModEvents {
                     }
                     return blockEntity.getTopSideHandler();
                 }
+        );
+        event.registerBlockEntity(
+                Capabilities.FluidHandler.BLOCK,
+                PBlockEntityType.TOILET_BLOCK_ENTITY.get(),
+                (blockEntity, side) -> blockEntity.fluidTank
         );
     }
 }

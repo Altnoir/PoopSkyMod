@@ -2,12 +2,12 @@ package com.altnoir.poopsky.event;
 
 import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.block.AllToiletBlocks;
+import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.block.p.ToiletLavaBlock;
 import com.altnoir.poopsky.init.PEffects;
-import com.altnoir.poopsky.init.PPotions;
 import com.altnoir.poopsky.init.PFluids;
+import com.altnoir.poopsky.init.PPotions;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.villager.PSVillagerTrades;
 import com.altnoir.poopsky.worldgen.PSVoidChunkGenerator;

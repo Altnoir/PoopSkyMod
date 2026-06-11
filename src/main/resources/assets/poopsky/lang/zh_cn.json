@@ -51,6 +51,11 @@
   "item.minecraft.splash_potion.effect.super_fecal_incontinence_potion": "喷溅型大便失禁药水",
   "item.minecraft.lingering_potion.effect.super_fecal_incontinence_potion": "滞留型大便失禁药水",
 
+  "item.minecraft.tipped_arrow.effect.fecal_incontinence_potion": "大便失禁之箭",
+  "item.minecraft.tipped_arrow.effect.long_fecal_incontinence_potion": "大便失禁之箭",
+  "item.minecraft.tipped_arrow.effect.strong_fecal_incontinence_potion": "大便失禁之箭",
+  "item.minecraft.tipped_arrow.effect.super_fecal_incontinence_potion": "大便失禁之箭",
+
   "effect.poopsky.fecal_incontinence": "大便失禁",
   "effect.poopsky.intestinal_spasm": "肠道痉挛",
   "effect.poopsky.on_the_verge": "一触即发",

@@ -43,7 +43,6 @@ public class PlacerBlockEntity extends DispenserBlockEntity {
                 i = k;
             }
         }
-
         return i;
     }
 

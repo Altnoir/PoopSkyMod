@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.block.entity;
 
 import com.altnoir.poopsky.init.PBlockEntityType;
+import com.altnoir.poopsky.init.PFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -12,15 +13,29 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.status.ChunkStatus;
+import net.minecraft.world.level.material.Fluids;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nullable;
 
 public class ToiletBlockEntity extends BlockEntity {
     private BlockPos linkedPos;
     private String linkedDim;
+    public FluidTank fluidTank = new FluidTank(Integer.MAX_VALUE) {
+        @Override
+        protected void onContentsChanged() {
+            setChanged();
+            if (level instanceof ServerLevel serverLevel) {
+                serverLevel.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+            }
+        }
+    };
 
     public ToiletBlockEntity(BlockPos pos, BlockState state) {
         super(PBlockEntityType.TOILET_BLOCK_ENTITY.get(), pos, state);
@@ -69,6 +84,7 @@ public class ToiletBlockEntity extends BlockEntity {
     @Override
     public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
+        this.fluidTank.readFromNBT(registries, tag);
         if (tag.contains("LinkedPos")) {
             this.linkedPos = BlockPos.of(tag.getLong("LinkedPos"));
             this.linkedDim = tag.getString("LinkedDim");
@@ -78,6 +94,7 @@ public class ToiletBlockEntity extends BlockEntity {
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
+        this.fluidTank.writeToNBT(registries, tag);
         if (linkedPos != null && linkedDim != null) {
             tag.putLong("LinkedPos", linkedPos.asLong());
             tag.putString("LinkedDim", linkedDim);
@@ -103,6 +120,10 @@ public class ToiletBlockEntity extends BlockEntity {
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         CompoundTag tag = new CompoundTag();
         saveAdditional(tag, registries);
-        return tag;
+        return saveCustomAndMetadata(registries);
+    }
+
+    public static void tick(Level level, BlockPos pos, BlockState state, ToiletBlockEntity blockEntity) {
+        blockEntity.fluidTank.fill(new FluidStack(PFluids.POOP.get(), Integer.MAX_VALUE), IFluidHandler.FluidAction.EXECUTE);
     }
 }

@@ -1,17 +1,26 @@
 package com.altnoir.poopsky.block.p;
 
 import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 public class ToiletBlock extends AbstractToiletBlock {
+    public static final MapCodec<ToiletBlock> CODEC = simpleCodec(ToiletBlock::new);
+
     public ToiletBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 
     @Override

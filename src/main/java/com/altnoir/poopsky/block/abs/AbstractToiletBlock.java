@@ -19,6 +19,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.item.FallingBlockEntity;
@@ -33,6 +34,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -42,13 +45,15 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.fluids.FluidUtil;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Set;
 
-public abstract class AbstractToiletBlock extends Block implements EntityBlock {
+public abstract class AbstractToiletBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final EnumProperty<ToiletState> CONNECTION = EnumProperty.create("connection", ToiletState.class);
 
@@ -82,6 +87,14 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
                         .setValue(FACING, Direction.NORTH)
                         .setValue(CONNECTION, ToiletState.DEFAULT)
         );
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (level.getBlockEntity(pos) instanceof ToiletBlockEntity blockEntity && !level.isClientSide()) {
+            FluidUtil.interactWithFluidHandler(player, hand, blockEntity.fluidTank);
+        }
+        return ItemInteractionResult.sidedSuccess(level.isClientSide());
     }
 
     @Override
@@ -381,5 +394,10 @@ public abstract class AbstractToiletBlock extends Block implements EntityBlock {
 
     private boolean isFaceConnected(BlockState state, Direction facing) {
         return state.getValue(FACING) == facing || state.getValue(FACING) == facing.getOpposite();
+    }
+
+    @Override
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
+        return level.isClientSide() ? null : createTickerHelper(blockEntityType, PBlockEntityType.TOILET_BLOCK_ENTITY.get(), ToiletBlockEntity::tick);
     }
 }
