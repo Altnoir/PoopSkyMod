@@ -20,9 +20,15 @@ public class PSoundEvents {
     public static final Supplier<SoundEvent> ENTITY_VILLAGER_WORK_COMPOOPER = registerSoundEvent("entity.villager.work_compooper");
     public static final Supplier<SoundEvent> ENTITY_VILLAGER_WORK_TOILET = registerSoundEvent("entity.villager.work_toilet");
 
-    public static final Supplier<SoundEvent> ENTITY_FLY_AMBIENT = registerSoundEvent("entity.fly.ambient");
+    public static final Supplier<SoundEvent> ENTITY_FLY_LOOP = registerSoundEvent("entity.fly.loop");
+    public static final Supplier<SoundEvent> ENTITY_FLY_LOOP_AGGRESSIVE = registerSoundEvent("entity.fly.loop_aggressive");
     public static final Supplier<SoundEvent> ENTITY_FLY_HURT = registerSoundEvent("entity.fly.hurt");
     public static final Supplier<SoundEvent> ENTITY_FLY_DEATH = registerSoundEvent("entity.fly.death");
+    public static final Supplier<SoundEvent> ENTITY_FLY_STING = registerSoundEvent("entity.fly.sting");
+    public static final Supplier<SoundEvent> ENTITY_FLY_POLLINATE = registerSoundEvent("entity.fly.pollinate");
+    public static final Supplier<SoundEvent> BLOCK_FLY_NEST_SHEAR = registerSoundEvent("block.fly_nest.shear");
+    public static final Supplier<SoundEvent> BLOCK_FLY_NEST_ENTER = registerSoundEvent("block.fly_nest.enter");
+    public static final Supplier<SoundEvent> BLOCK_FLY_NEST_EXIT = registerSoundEvent("block.fly_nest.exit");
 
     public static final Supplier<SoundEvent> LAWRENCE = registerSoundEvent("lawrence");
     public static final ResourceKey<JukeboxSong> LAWRENCE_KEY = registerJukeboxSong("lawrence");

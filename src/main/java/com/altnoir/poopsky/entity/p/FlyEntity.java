@@ -93,7 +93,7 @@ public class FlyEntity extends Bee {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return PSoundEvents.ENTITY_FLY_AMBIENT.get();
+        return null;
     }
 
     @Override
@@ -104,6 +104,17 @@ public class FlyEntity extends Bee {
     @Override
     protected SoundEvent getDeathSound() {
         return PSoundEvents.ENTITY_FLY_DEATH.get();
+    }
+
+    @Override
+    public void playSound(SoundEvent sound, float volume, float pitch) {
+        if (sound == SoundEvents.BEE_STING) {
+            super.playSound(PSoundEvents.ENTITY_FLY_STING.get(), volume, pitch);
+        } else if (sound == SoundEvents.BEE_POLLINATE) {
+            super.playSound(PSoundEvents.ENTITY_FLY_POLLINATE.get(), volume, pitch);
+        } else {
+            super.playSound(sound, volume, pitch);
+        }
     }
 
     @Override

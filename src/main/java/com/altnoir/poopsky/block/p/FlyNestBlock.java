@@ -1,10 +1,10 @@
 package com.altnoir.poopsky.block.p;
 
 import com.altnoir.poopsky.block.entity.FlyNestBlockEntity;
+import com.altnoir.poopsky.init.PSoundEvents;
 import com.altnoir.poopsky.item.PSItems;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -24,6 +24,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
+import net.neoforged.neoforge.common.ItemAbilities;
 
 import java.util.List;
 
@@ -46,12 +47,12 @@ public class FlyNestBlock extends BeehiveBlock {
             ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult
     ) {
         if (state.getValue(HONEY_LEVEL) < MAX_HONEY_LEVELS
-                || !stack.canPerformAction(net.neoforged.neoforge.common.ItemAbilities.SHEARS_HARVEST)) {
+                || !stack.canPerformAction(ItemAbilities.SHEARS_HARVEST)) {
             return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
         }
 
         Item item = stack.getItem();
-        level.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BEEHIVE_SHEAR, SoundSource.BLOCKS, 1.0F, 1.0F);
+        level.playSound(player, player.getX(), player.getY(), player.getZ(), PSoundEvents.BLOCK_FLY_NEST_SHEAR.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
         dropFlyEggs(level, pos);
         stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
         level.gameEvent(player, GameEvent.SHEAR, pos);

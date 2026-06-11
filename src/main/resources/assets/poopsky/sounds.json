@@ -44,22 +44,70 @@
       "random/burp"
     ]
   },
-  "entity.fly.ambient": {
-    "subtitle": "subtitle.poopsky.fly.ambient",
+  "entity.fly.loop": {
+    "subtitle": "subtitle.poopsky.fly.loop",
     "sounds": [
-      "minecraft:entity/bee/loop_aggressive"
+      "mob/bee/loop1",
+      "mob/bee/loop2",
+      "mob/bee/loop3",
+      "mob/bee/loop4",
+      "mob/bee/loop5"
+    ]
+  },
+  "entity.fly.loop_aggressive": {
+    "subtitle": "subtitle.poopsky.fly.loop_aggressive",
+    "sounds": [
+      "mob/bee/aggressive1",
+      "mob/bee/aggressive2",
+      "mob/bee/aggressive3"
     ]
   },
   "entity.fly.hurt": {
     "subtitle": "subtitle.poopsky.fly.hurt",
     "sounds": [
-      "minecraft:entity/bee/hurt"
+      "mob/bee/hurt1",
+      "mob/bee/hurt2",
+      "mob/bee/hurt3"
     ]
   },
   "entity.fly.death": {
     "subtitle": "subtitle.poopsky.fly.death",
     "sounds": [
-      "minecraft:entity/bee/death"
+      "mob/bee/death1",
+      "mob/bee/death2"
+    ]
+  },
+  "entity.fly.sting": {
+    "subtitle": "subtitle.poopsky.fly.sting",
+    "sounds": [
+      "mob/bee/sting"
+    ]
+  },
+  "entity.fly.pollinate": {
+    "subtitle": "subtitle.poopsky.fly.pollinate",
+    "sounds": [
+      "mob/bee/pollinate1",
+      "mob/bee/pollinate2",
+      "mob/bee/pollinate3",
+      "mob/bee/pollinate4"
+    ]
+  },
+  "block.fly_nest.shear": {
+    "subtitle": "subtitles.block.beehive.shear",
+    "sounds": [
+      "block/beehive/shear"
+    ]
+  },
+  "block.fly_nest.enter": {
+    "subtitle": "subtitle.poopsky.fly_nest.enter",
+    "sounds": [
+      "block/beehive/enter"
+    ]
+  },
+  "block.fly_nest.exit": {
+    "subtitle": "subtitle.poopsky.fly_nest.exit",
+    "sounds": [
+      "block/beehive/exit"
     ]
   },
   "lawrence": {
