@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.util;
 
 import com.altnoir.poopsky.block.PSBlocks;
+import com.altnoir.poopsky.block.p.PoopTntBlock;
 import com.altnoir.poopsky.init.PParticles;
 import com.altnoir.poopsky.tag.PSBlockTags;
 import net.minecraft.core.BlockPos;
@@ -25,7 +26,7 @@ public class PoopTntUtil {
         Level level = entity.level();
         BlockPos center = entity.blockPosition();
 
-        level.explode(entity, Explosion.getDefaultDamageSource(level, entity), null,
+        Explosion explosion = level.explode(entity, Explosion.getDefaultDamageSource(level, entity), null,
                 entity.getX(), entity.getY() + 0.0625, entity.getZ(), 1.0F, false, Level.ExplosionInteraction.NONE);
 
         for (int x = -radius; x <= radius; x++) {
@@ -35,6 +36,11 @@ public class PoopTntUtil {
                     BlockState state = level.getBlockState(pos);
 
                     if (state.isAir() || state.getBlock() == Blocks.BEDROCK) continue;
+                    if (state.getBlock() instanceof PoopTntBlock poopTntBlock) {
+                        level.removeBlock(pos, false);
+                        poopTntBlock.wasExploded(level, pos, explosion);
+                        continue;
+                    }
 
                     Block recipeOutput = EXPLOSION_RECIPES.get(state.getBlock());
                     if (recipeOutput != null) {
