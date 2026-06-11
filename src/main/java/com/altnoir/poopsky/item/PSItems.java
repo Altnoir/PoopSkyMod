@@ -2,12 +2,12 @@ package com.altnoir.poopsky.item;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.PSBlocks;
-import com.altnoir.poopsky.init.PComponents;
 import com.altnoir.poopsky.block.ToiletComponent;
+import com.altnoir.poopsky.init.PComponents;
 import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.init.PFluids;
-import com.altnoir.poopsky.item.p.*;
 import com.altnoir.poopsky.init.PSoundEvents;
+import com.altnoir.poopsky.item.p.*;
 import net.minecraft.world.item.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
@@ -72,6 +72,23 @@ public class PSItems {
             new ItemNameBlockItem(PSBlocks.MAGGOTS.get(), new Item.Properties().food(PFoods.MAGGOTS_SEEDS).stacksTo(88)));
     public static final DeferredItem<Item> ROUNDWORM = ITEMS.register("roundworm", () ->
             new ItemNameBlockItem(PSBlocks.ROUNDWORM_VINES.get(), new Item.Properties().food(PFoods.ROUNDWORM).stacksTo(88)));
+
+    public static final DeferredItem<ArmorItem> OMEN_HELMET = ITEMS.register("omen_helmet", () ->
+            new ArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.HELMET,
+                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(24))));
+    public static final DeferredItem<ArmorItem> OMEN_CHESTPLATE = ITEMS.register("omen_chestplate", () ->
+            new ArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE,
+                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(24))));
+    public static final DeferredItem<ArmorItem> OMEN_LEGGINGS = ITEMS.register("omen_leggings", () ->
+            new ArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS,
+                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(24))));
+    public static final DeferredItem<ArmorItem> OMEN_BOOTS = ITEMS.register("omen_boots", () ->
+            new ArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
+                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(24))));
+
+    public static final DeferredItem<SwordItem> MILOS_SWORD = ITEMS.register("milos_sword", () ->
+            new SwordItem(PToolTiers.MILOS,
+                    new Item.Properties().attributes(SwordItem.createAttributes(PToolTiers.MILOS, 1, -3.4F))));
 
     public static final DeferredItem<Item> URINE_BOTTLE = ITEMS.register("urine_bottle",
             () -> new UrineBottleItem(new Item.Properties()

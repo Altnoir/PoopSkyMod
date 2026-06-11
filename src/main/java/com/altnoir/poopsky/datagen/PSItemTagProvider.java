@@ -88,10 +88,19 @@ public class PSItemTagProvider extends ItemTagsProvider {
         tag(Tags.Items.GUNPOWDERS)
                 .add(PSItems.KING_OF_DRAGON_FRUIT.get());
 
+        tag(ItemTags.TRIMMABLE_ARMOR)
+                .add(PSItems.OMEN_HELMET.get())
+                .add(PSItems.OMEN_CHESTPLATE.get())
+                .add(PSItems.OMEN_LEGGINGS.get())
+                .add(PSItems.OMEN_BOOTS.get());
+
+        tag(ItemTags.SWORDS).add(PSItems.MILOS_SWORD.get());
+
         tag(Tags.Items.MUSIC_DISCS)
                 .add(PSItems.LAWRENCE_MUSIC_DISC.get())
                 .add(PSItems.LIGHT_DANCE_MUSIC_DISC.get())
                 .add(PSItems.MOON_BOWL_MUSIC_DISC.get());
+
 
         //方块物品标签
         tag(ItemTags.DIRT)

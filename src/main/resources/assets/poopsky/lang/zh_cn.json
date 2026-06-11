@@ -13,6 +13,12 @@
   "item.poopsky.urine_bucket": "粪桶",
   "block.poopsky.poop_liquid": "粪液",
 
+  "item.poopsky.omen_helmet": "食粪者头盔",
+  "item.poopsky.omen_chestplate": "食粪者胸甲",
+  "item.poopsky.omen_leggings": "食粪者护腿",
+  "item.poopsky.omen_boots": "食粪者靴子",
+  "item.poopsky.milos_sword": "灭洛斯剑",
+
   "item.poopsky.time_bell": "屎溅之铃",
   "message.poopsky.time_bell.frozen": "已冻结游戏时间",
   "message.poopsky.time_bell.unfrozen": "已解冻游戏时间",
