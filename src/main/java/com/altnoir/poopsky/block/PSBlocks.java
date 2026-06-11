@@ -3,7 +3,7 @@ package com.altnoir.poopsky.block;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.p.*;
 import com.altnoir.poopsky.init.PFluids;
-import com.altnoir.poopsky.fluid.PoopLiquidBlock;
+import com.altnoir.poopsky.block.fluid.PoopLiquidBlock;
 import com.altnoir.poopsky.init.PBlockSetType;
 import com.altnoir.poopsky.init.PWoodType;
 import com.altnoir.poopsky.item.PSItems;

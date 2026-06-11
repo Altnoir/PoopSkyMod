@@ -2,7 +2,7 @@ package com.altnoir.poopsky.item.p;
 
 import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.init.PComponents;
-import com.altnoir.poopsky.component.ToiletComponent;
+import com.altnoir.poopsky.block.ToiletComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;

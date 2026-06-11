@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.component;
+package com.altnoir.poopsky.block;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

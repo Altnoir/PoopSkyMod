@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.fluid;
+package com.altnoir.poopsky.block.fluid;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

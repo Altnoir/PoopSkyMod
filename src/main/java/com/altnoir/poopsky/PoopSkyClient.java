@@ -9,7 +9,7 @@ import com.altnoir.poopsky.event.PSClientModEvents;
 import com.altnoir.poopsky.event.PSKeyBoardInput;
 import com.altnoir.poopsky.init.PFluidTypes;
 import com.altnoir.poopsky.init.PParticles;
-import com.altnoir.poopsky.particle.PoopParticle;
+import com.altnoir.poopsky.misc.particle.PoopParticle;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;

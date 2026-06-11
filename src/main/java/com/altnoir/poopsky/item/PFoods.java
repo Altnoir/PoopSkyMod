@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.component;
+package com.altnoir.poopsky.item;
 
 import com.altnoir.poopsky.init.PEffects;
 import net.minecraft.world.effect.MobEffectInstance;

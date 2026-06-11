@@ -2,7 +2,7 @@ package com.altnoir.poopsky.entity.p;
 
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.network.PlugInputPayload;
-import com.altnoir.poopsky.sound.TPFlySoundWrapper;
+import com.altnoir.poopsky.misc.sound.TPFlySoundWrapper;
 import com.google.common.collect.Lists;
 import net.minecraft.BlockUtil;
 import net.minecraft.client.Minecraft;
@@ -229,13 +229,13 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
     }
 
     private void moveByInput() {
-        var MAX_SPEED = inputFast ? 0.7f : 0.35f;
+        float MAX_SPEED = inputFast ? 0.7f : 0.35f;
         if (this.isUnderWater()){
             MAX_SPEED *= 0.35f;
         }
-        var FBSpeed = inputForward ? MAX_SPEED : inputBackward ? -MAX_SPEED : 0f;
-        var LRSpeed = inputLeft ? MAX_SPEED : inputRight ? -MAX_SPEED : 0f;
-        var DAMPING = 0.975f;
+        float FBSpeed = inputForward ? MAX_SPEED : inputBackward ? -MAX_SPEED : 0f;
+        float LRSpeed = inputLeft ? MAX_SPEED : inputRight ? -MAX_SPEED : 0f;
+        float DAMPING = 0.975f;
 
         var yawRad = (float) Math.toRadians(-this.getYRot());
         var forward = new Vec3(Math.sin(yawRad), 0, Math.cos(yawRad));

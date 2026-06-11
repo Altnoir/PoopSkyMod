@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.sound;
+package com.altnoir.poopsky.misc.sound;
 
 import com.altnoir.poopsky.entity.p.ToiletPlugEntity;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;

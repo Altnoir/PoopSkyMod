@@ -2,9 +2,8 @@ package com.altnoir.poopsky.item;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.PSBlocks;
-import com.altnoir.poopsky.component.PFoods;
 import com.altnoir.poopsky.init.PComponents;
-import com.altnoir.poopsky.component.ToiletComponent;
+import com.altnoir.poopsky.block.ToiletComponent;
 import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.init.PFluids;
 import com.altnoir.poopsky.item.p.*;

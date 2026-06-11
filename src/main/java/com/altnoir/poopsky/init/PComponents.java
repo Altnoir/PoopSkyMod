@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.component.ToiletComponent;
+import com.altnoir.poopsky.block.ToiletComponent;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.neoforged.bus.api.IEventBus;

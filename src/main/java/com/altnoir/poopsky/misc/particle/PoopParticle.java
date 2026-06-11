@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.particle;
+package com.altnoir.poopsky.misc.particle;
 
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
