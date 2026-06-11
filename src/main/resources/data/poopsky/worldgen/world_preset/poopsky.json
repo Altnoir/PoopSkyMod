@@ -8,8 +8,7 @@
           "type": "minecraft:multi_noise",
           "preset": "minecraft:overworld"
         },
-        "settings": "minecraft:overworld",
-        "allowed_structure_sets": "poopsky:overworld_void_structure_sets"
+        "settings": "minecraft:overworld"
       }
     },
     "minecraft:the_end": {
@@ -30,8 +29,7 @@
           "type": "minecraft:multi_noise",
           "preset": "minecraft:nether"
         },
-        "settings": "minecraft:nether",
-        "allowed_structure_sets": "poopsky:the_nether_void_structure_sets"
+        "settings": "minecraft:nether"
       }
     }
   }
