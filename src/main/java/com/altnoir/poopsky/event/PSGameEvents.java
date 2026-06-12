@@ -9,6 +9,7 @@ import com.altnoir.poopsky.init.PEffects;
 import com.altnoir.poopsky.init.PFluids;
 import com.altnoir.poopsky.init.PPotions;
 import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.villager.PSVillagerBehaviors;
 import com.altnoir.poopsky.villager.PSVillagerTrades;
 import com.altnoir.poopsky.worldgen.PSVoidChunkGenerator;
 import net.minecraft.core.BlockPos;
@@ -18,7 +19,9 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.PotionBrewing;
@@ -38,6 +41,7 @@ import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 
 @EventBusSubscriber(modid = PoopSky.MOD_ID)
@@ -115,6 +119,14 @@ public class PSGameEvents {
     @SubscribeEvent
     public static void registerTrades(VillagerTradesEvent event) {
         PSVillagerTrades.registerTrades(event.getType(), event.getTrades());
+    }
+
+    @SubscribeEvent
+    public static void onEntityTick(EntityTickEvent.Pre event) {
+        Entity entity = event.getEntity();
+        if (!(entity instanceof Villager villager) || entity.level().isClientSide || entity.tickCount % 10 != 0) return;
+
+        PSVillagerBehaviors.tickPoopTemptation(villager);
     }
 
     @SubscribeEvent
