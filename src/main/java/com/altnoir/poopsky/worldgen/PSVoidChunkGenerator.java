@@ -3,14 +3,20 @@ package com.altnoir.poopsky.worldgen;
 import com.altnoir.poopsky.Config;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.CrashReport;
+import net.minecraft.ReportedException;
+import net.minecraft.SharedConstants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.Registry;
+import net.minecraft.core.SectionPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.NoiseColumn;
 import net.minecraft.world.level.StructureManager;
@@ -27,13 +33,22 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import net.minecraft.world.level.levelgen.RandomState;
+import net.minecraft.world.level.levelgen.RandomSupport;
+import net.minecraft.world.level.levelgen.WorldgenRandom;
+import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
 import net.minecraft.world.level.levelgen.blending.Blender;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureSet;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class PSVoidChunkGenerator extends NoiseBasedChunkGenerator {
     public static final MapCodec<PSVoidChunkGenerator> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
@@ -210,9 +225,6 @@ public class PSVoidChunkGenerator extends NoiseBasedChunkGenerator {
     /*
      * 这个不能关。
      * 结构真正把方块放进区块，需要这里执行。
-     *
-     * 虽然它也会跑普通 placed feature，但因为区块里没有真实地表，
-     * 大多数树、花、矿石等普通特征不会成功放置。
      */
     @Override
     public void applyBiomeDecoration(
@@ -220,7 +232,12 @@ public class PSVoidChunkGenerator extends NoiseBasedChunkGenerator {
             ChunkAccess chunk,
             StructureManager structureManager
     ) {
-        super.applyBiomeDecoration(level, chunk, structureManager);
+        if (this.generateNormal) {
+            super.applyBiomeDecoration(level, chunk, structureManager);
+            return;
+        }
+
+        placeStructuresOnly(level, chunk, structureManager);
     }
 
     @Override
@@ -277,5 +294,77 @@ public class PSVoidChunkGenerator extends NoiseBasedChunkGenerator {
         }
 
         return VIRTUAL_SURFACE_Y;
+    }
+
+    private void placeStructuresOnly(
+            WorldGenLevel level,
+            ChunkAccess chunk,
+            StructureManager structureManager
+    ) {
+        ChunkPos chunkPos = chunk.getPos();
+        if (SharedConstants.debugVoidTerrain(chunkPos)) {
+            return;
+        }
+
+        SectionPos sectionPos = SectionPos.of(chunkPos, level.getMinSection());
+        BlockPos origin = sectionPos.origin();
+        Registry<Structure> registry = level.registryAccess().registryOrThrow(Registries.STRUCTURE);
+        Map<Integer, List<Structure>> structuresByStep = registry.stream()
+                .collect(Collectors.groupingBy(structure -> structure.step().ordinal()));
+        WorldgenRandom random = new WorldgenRandom(new XoroshiroRandomSource(RandomSupport.generateUniqueSeed()));
+        long decorationSeed = random.setDecorationSeed(level.getSeed(), origin.getX(), origin.getZ());
+
+        try {
+            for (int step = 0; step < GenerationStep.Decoration.values().length; step++) {
+                int structureIndex = 0;
+                if (structureManager.shouldGenerateStructures()) {
+                    for (Structure structure : structuresByStep.getOrDefault(step, Collections.emptyList())) {
+                        random.setFeatureSeed(decorationSeed, structureIndex, step);
+                        Supplier<String> name = () -> registry.getResourceKey(structure)
+                                .map(Object::toString)
+                                .orElseGet(structure::toString);
+
+                        try {
+                            level.setCurrentlyGenerating(name);
+                            structureManager.startsForStructure(sectionPos, structure)
+                                    .forEach(start -> start.placeInChunk(
+                                            level,
+                                            structureManager,
+                                            this,
+                                            random,
+                                            getWritableArea(chunk),
+                                            chunkPos
+                                    ));
+                        } catch (Exception exception) {
+                            CrashReport report = CrashReport.forThrowable(exception, "Structure placement");
+                            report.addCategory("Structure").setDetail("Description", name::get);
+                            throw new ReportedException(report);
+                        }
+
+                        structureIndex++;
+                    }
+                }
+            }
+        } catch (Exception exception) {
+            CrashReport report = CrashReport.forThrowable(exception, "Biome decoration");
+            report.addCategory("Generation")
+                    .setDetail("CenterX", chunkPos.x)
+                    .setDetail("CenterZ", chunkPos.z)
+                    .setDetail("Decoration Seed", decorationSeed);
+            throw new ReportedException(report);
+        } finally {
+            level.setCurrentlyGenerating(null);
+        }
+    }
+
+    private static BoundingBox getWritableArea(ChunkAccess chunk) {
+        ChunkPos chunkPos = chunk.getPos();
+        int minX = chunkPos.getMinBlockX();
+        int minZ = chunkPos.getMinBlockZ();
+        LevelHeightAccessor height = chunk.getHeightAccessorForGeneration();
+        int minY = height.getMinBuildHeight() + 1;
+        int maxY = height.getMaxBuildHeight() - 1;
+
+        return new BoundingBox(minX, minY, minZ, minX + 15, maxY, minZ + 15);
     }
 }
