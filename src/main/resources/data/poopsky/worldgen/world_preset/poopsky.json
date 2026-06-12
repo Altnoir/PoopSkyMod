@@ -8,7 +8,11 @@
           "type": "minecraft:multi_noise",
           "preset": "minecraft:overworld"
         },
-        "settings": "minecraft:overworld"
+        "settings": "minecraft:overworld",
+        "allowed_structure_sets": [
+          "minecraft:villages",
+          "minecraft:strongholds"
+        ]
       }
     },
     "minecraft:the_end": {
