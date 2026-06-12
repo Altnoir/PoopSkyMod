@@ -1,10 +1,12 @@
 package com.altnoir.poopsky.util;
 
+import com.altnoir.poopsky.util.asm.ASMHooks;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -24,6 +26,8 @@ import net.neoforged.neoforge.client.model.data.ModelData;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4fStack;
 import org.joml.Vector3f;
+
+import java.util.Optional;
 
 public class ClientUtil {
     private static final FluidState EMPTY = Fluids.EMPTY.defaultFluidState();
@@ -142,5 +146,16 @@ public class ClientUtil {
         public int getMinBuildHeight() {
             return 0;
         }
+    }
+
+    public static boolean isPoopSkyWorldType(WorldCreationUiState uiState) {
+        return isPoopSkyWorldType(uiState.getWorldType());
+    }
+
+    public static boolean isPoopSkyWorldType(WorldCreationUiState.WorldTypeEntry worldType) {
+        return Optional.ofNullable(worldType.preset())
+                .flatMap(holder -> holder.unwrapKey())
+                .filter(ASMHooks.POOPSKY::equals)
+                .isPresent();
     }
 }

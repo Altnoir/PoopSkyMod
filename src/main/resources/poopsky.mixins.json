@@ -12,7 +12,9 @@
     "VillagerMixin"
   ],
   "client": [
-    "ClientPacketListenerMixin"
+    "ClientPacketListenerMixin",
+    "CreateWorldScreenWorldTabMixin",
+    "WorldCreationUiStateMixin"
   ],
   "injectors": {
     "defaultRequire": 1
