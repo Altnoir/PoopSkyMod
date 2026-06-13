@@ -3,10 +3,12 @@ package com.altnoir.poopsky.worldgen;
 import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.worldgen.structure.PoopIslandStructure;
+import com.mojang.datafixers.util.Pair;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.CrashReport;
 import net.minecraft.ReportedException;
 import net.minecraft.SharedConstants;
@@ -62,6 +64,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import javax.annotation.Nullable;
 
 public class PSVoidChunkGenerator extends NoiseBasedChunkGenerator {
     private static final int VIRTUAL_SURFACE_Y = 64;
@@ -225,6 +228,25 @@ public class PSVoidChunkGenerator extends NoiseBasedChunkGenerator {
         if (!generateNormal && settings.is(ResourceLocation.parse("minecraft:overworld")) && isStructureAllowed(registries, PoopSky.loc("poop_island"))) {
             PoopIslandStructure.addGuaranteedSpawnStart(registries, chunk, structureManager, templateManager, structureState.getLevelSeed());
         }
+    }
+
+    @Override
+    @Nullable
+    public Pair<BlockPos, Holder<Structure>> findNearestMapStructure(ServerLevel level, HolderSet<Structure> structures, BlockPos pos, int searchRadius, boolean skipKnownStructures) {
+        if (generateNormal || allowedStructureSets.isEmpty()) {
+            return super.findNearestMapStructure(level, structures, pos, searchRadius, skipKnownStructures);
+        }
+
+        Set<Structure> allowedStructures = resolveAllowedStructures(level.registryAccess());
+        List<Holder<Structure>> searchableStructures = structures.stream()
+                .filter(structure -> allowedStructures.contains(structure.value()))
+                .toList();
+
+        if (searchableStructures.isEmpty()) {
+            return null;
+        }
+
+        return super.findNearestMapStructure(level, HolderSet.direct(searchableStructures), pos, searchRadius, skipKnownStructures);
     }
 
     @Override
