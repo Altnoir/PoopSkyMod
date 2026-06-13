@@ -9,6 +9,7 @@ import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.network.PSNetworking;
 import com.altnoir.poopsky.villager.PSVillagers;
 import com.altnoir.poopsky.worldgen.PSChunkGenerators;
+import com.altnoir.poopsky.worldgen.PSStructures;
 import com.altnoir.poopsky.worldgen.foliage.PSFoliagePlacerTypes;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
@@ -52,6 +53,7 @@ public class PoopSky {
         PSItems.register(modEventBus);
         PEntityType.register(modEventBus);
         PSFoliagePlacerTypes.register(modEventBus);
+        PSStructures.register(modEventBus);
         PSChunkGenerators.register(modEventBus);
 
         PSItemGroups.register(modEventBus);

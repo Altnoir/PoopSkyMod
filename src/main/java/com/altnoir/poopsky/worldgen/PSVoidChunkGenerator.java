@@ -1,6 +1,8 @@
 package com.altnoir.poopsky.worldgen;
 
 import com.altnoir.poopsky.Config;
+import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.worldgen.structure.PoopIslandStructure;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -10,6 +12,7 @@ import net.minecraft.ReportedException;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.SectionPos;
@@ -23,6 +26,7 @@ import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.NoiseColumn;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeManager;
 import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.block.Blocks;
@@ -32,6 +36,7 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.chunk.ChunkGeneratorStructureState;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import net.minecraft.world.level.levelgen.RandomState;
@@ -42,16 +47,19 @@ import net.minecraft.world.level.levelgen.blending.Blender;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureSet;
+import net.minecraft.world.level.levelgen.structure.StructureSet.StructureSelectionEntry;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
+import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -126,7 +134,19 @@ public class PSVoidChunkGenerator extends NoiseBasedChunkGenerator {
 
         private boolean contains(Holder<StructureSet> holder) {
             return tag.map(holder::is)
-                    .orElseGet(() -> holder.unwrapKey().filter(keys::contains).isPresent());
+                    .orElseGet(() -> {
+                        Set<ResourceLocation> allowedLocations = keys.stream()
+                                .map(ResourceKey::location)
+                                .collect(Collectors.toUnmodifiableSet());
+
+                        return holder.unwrapKey()
+                                .map(key -> allowedLocations.contains(key.location()))
+                                .orElse(false)
+                                || holder.value().structures().stream()
+                                .map(StructureSelectionEntry::structure)
+                                .map(Holder::unwrapKey)
+                                .anyMatch(key -> key.map(ResourceKey::location).filter(allowedLocations::contains).isPresent());
+                    });
         }
     }
 
@@ -196,22 +216,15 @@ public class PSVoidChunkGenerator extends NoiseBasedChunkGenerator {
             ChunkAccess chunk,
             StructureTemplateManager templateManager
     ) {
-        super.createStructures(registries, structureState, structureManager, chunk, templateManager);
-
-        if (allowedStructureSets.isEmpty()) {
-            return;
+        if (generateNormal || allowedStructureSets.isEmpty()) {
+            super.createStructures(registries, structureState, structureManager, chunk, templateManager);
+        } else {
+            createAllowedStructures(registries, structureState, structureManager, chunk, templateManager);
         }
 
-        Set<Structure> allowedStructures = resolveAllowedStructures(registries);
-        Map<Structure, StructureStart> filteredStarts = new HashMap<>();
-
-        chunk.getAllStarts().forEach((structure, start) -> {
-            if (allowedStructures.contains(structure)) {
-                filteredStarts.put(structure, start);
-            }
-        });
-
-        chunk.setAllStarts(filteredStarts);
+        if (!generateNormal && settings.is(ResourceLocation.parse("minecraft:overworld")) && isStructureAllowed(registries, PoopSky.loc("poop_island"))) {
+            PoopIslandStructure.addGuaranteedSpawnStart(registries, chunk, structureManager, templateManager, structureState.getLevelSeed());
+        }
     }
 
     @Override
@@ -249,9 +262,105 @@ public class PSVoidChunkGenerator extends NoiseBasedChunkGenerator {
         return registry.holders()
                 .filter(allowed::contains)
                 .flatMap(holder -> holder.value().structures().stream())
-                .map(StructureSet.StructureSelectionEntry::structure)
+                .map(StructureSelectionEntry::structure)
                 .map(Holder::value)
                 .collect(Collectors.toUnmodifiableSet());
+    }
+
+    private boolean isStructureAllowed(RegistryAccess registries, ResourceLocation structureId) {
+        if (allowedStructureSets.isEmpty()) {
+            return true;
+        }
+
+        Registry<Structure> structureRegistry = registries.registryOrThrow(Registries.STRUCTURE);
+        Structure structure = structureRegistry.get(structureId);
+        return structure != null && resolveAllowedStructures(registries).contains(structure);
+    }
+
+    private void createAllowedStructures(RegistryAccess registries, ChunkGeneratorStructureState structureState, StructureManager structureManager, ChunkAccess chunk, StructureTemplateManager templateManager) {
+        ChunkPos chunkPos = chunk.getPos();
+        SectionPos sectionPos = SectionPos.bottomOf(chunk);
+        RandomState randomState = structureState.randomState();
+        AllowedStructureSets allowed = allowedStructureSets.orElseThrow();
+
+        for (Holder<StructureSet> structureSetHolder : structureState.possibleStructureSets()) {
+            if (!allowed.contains(structureSetHolder)) {
+                continue;
+            }
+
+            StructureSet structureSet = structureSetHolder.value();
+            StructurePlacement placement = structureSet.placement();
+            List<StructureSelectionEntry> entries = structureSet.structures();
+
+            boolean hasExistingStart = false;
+            for (StructureSelectionEntry entry : entries) {
+                StructureStart start = structureManager.getStartForStructure(sectionPos, entry.structure().value(), chunk);
+                if (start != null && start.isValid()) {
+                    hasExistingStart = true;
+                    break;
+                }
+            }
+
+            if (hasExistingStart || !placement.isStructureChunk(structureState, chunkPos.x, chunkPos.z)) {
+                continue;
+            }
+
+            if (entries.size() == 1) {
+                tryGenerateStructure(entries.getFirst(), structureManager, registries, randomState, templateManager, structureState.getLevelSeed(), chunk, chunkPos, sectionPos);
+                continue;
+            }
+
+            ArrayList<StructureSelectionEntry> shuffledEntries = new ArrayList<>(entries);
+            WorldgenRandom random = new WorldgenRandom(new LegacyRandomSource(0L));
+            random.setLargeFeatureSeed(structureState.getLevelSeed(), chunkPos.x, chunkPos.z);
+            int totalWeight = 0;
+
+            for (StructureSelectionEntry entry : shuffledEntries) {
+                totalWeight += entry.weight();
+            }
+
+            while (!shuffledEntries.isEmpty()) {
+                int targetWeight = random.nextInt(totalWeight);
+                int index = 0;
+
+                for (StructureSelectionEntry entry : shuffledEntries) {
+                    targetWeight -= entry.weight();
+                    if (targetWeight < 0) {
+                        break;
+                    }
+
+                    index++;
+                }
+
+                StructureSelectionEntry entry = shuffledEntries.get(index);
+                if (tryGenerateStructure(entry, structureManager, registries, randomState, templateManager, structureState.getLevelSeed(), chunk, chunkPos, sectionPos)) {
+                    break;
+                }
+
+                shuffledEntries.remove(index);
+                totalWeight -= entry.weight();
+            }
+        }
+    }
+
+    private boolean tryGenerateStructure(StructureSelectionEntry structureSelectionEntry, StructureManager structureManager,
+        RegistryAccess registries, RandomState randomState,
+        StructureTemplateManager templateManager, long seed,
+        ChunkAccess chunk, ChunkPos chunkPos, SectionPos sectionPos
+    ) {
+        Structure structure = structureSelectionEntry.structure().value();
+        StructureStart existingStart = structureManager.getStartForStructure(sectionPos, structure, chunk);
+        int references = existingStart != null ? existingStart.getReferences() : 0;
+        HolderSet<Biome> biomes = structure.biomes();
+        Predicate<Holder<Biome>> biomePredicate = biomes::contains;
+        StructureStart start = structure.generate(registries, this, this.biomeSource, randomState, templateManager, seed, chunkPos, references, chunk, biomePredicate);
+
+        if (start.isValid()) {
+            structureManager.setStartForStructure(sectionPos, structure, start, chunk);
+            return true;
+        }
+
+        return false;
     }
 
     private void placeStructuresOnly( WorldGenLevel level, ChunkAccess chunk, StructureManager structureManager) {
@@ -265,14 +374,11 @@ public class PSVoidChunkGenerator extends NoiseBasedChunkGenerator {
         BlockPos origin = sectionPos.origin();
         RegistryAccess registries = level.registryAccess();
         Registry<Structure> structureRegistry = registries.registryOrThrow(Registries.STRUCTURE);
-
-        Set<Structure> allowedStructures = allowedStructureSets.isPresent()
-                ? resolveAllowedStructures(registries)
-                : null;
+        Set<Structure> allowedStructures = resolveAllowedStructures(registries);
 
         Map<Integer, List<Structure>> structuresByStep =
                 structureRegistry.stream()
-                        .filter(structure -> allowedStructures == null || allowedStructures.contains(structure))
+                        .filter(structure -> allowedStructureSets.isEmpty() || allowedStructures.contains(structure))
                         .collect(Collectors.groupingBy(structure -> structure.step().ordinal()));
 
         WorldgenRandom random = new WorldgenRandom(new XoroshiroRandomSource(RandomSupport.generateUniqueSeed()));
