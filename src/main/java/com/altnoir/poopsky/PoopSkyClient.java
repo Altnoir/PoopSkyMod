@@ -46,6 +46,7 @@ public class PoopSkyClient {
         modEventBus.addListener(ClientModEvents::registerEntityRenderers);
         modEventBus.addListener(ClientModEvents::registerParticleProviders);
         modEventBus.addListener(ClientModEvents::onRegisterBlockColors);
+        modEventBus.addListener(ClientModEvents::onRegisterItemColors);
         modEventBus.addListener(ClientModEvents::onRegisterBlockRenderBuffers);
         modEventBus.addListener(ClientModEvents::registerClientExtensions);
     }
@@ -86,6 +87,10 @@ public class PoopSkyClient {
                 }
                 return -1;
             }, PSBlocks.WATER_COMPOOPER.get());
+        }
+
+        public static void onRegisterItemColors(RegisterColorHandlersEvent.Item event) {
+            event.register((stack, tintIndex) -> tintIndex == 1 ? 0x3F76E4 : -1, PSBlocks.WATER_COMPOOPER.get());
         }
 
         public static void onRegisterBlockRenderBuffers(net.neoforged.neoforge.client.event.RegisterRenderBuffersEvent event) {

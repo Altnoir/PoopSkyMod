@@ -10,8 +10,8 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 import java.util.function.BooleanSupplier;
 
-@Mixin(targets = "net.minecraft.client.gui.screens.worldselection.CreateWorldScreen$WorldTab")
-public class CreateWorldScreenWorldTabMixin {
+@Mixin(CreateWorldScreen.WorldTab.class)
+public abstract class CreateWorldScreenWorldTabMixin {
     @Shadow
     @Final
     private CreateWorldScreen this$0;

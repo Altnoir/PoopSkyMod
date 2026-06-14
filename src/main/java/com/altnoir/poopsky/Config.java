@@ -19,7 +19,7 @@ public class Config {
     private static final ModConfigSpec.BooleanValue SET_POOPSKY_DEFAULT = BUILDER
             .comment("Whether the dedicated server level-type default should be set to poopsky")
             .translation("poopsky.configuration.setPoopskyDefault")
-            .define("setPoopskyDefault", false);
+            .define("setPoopskyDefault", true);
     private static final ModConfigSpec.BooleanValue VOID_NETHER_GENERATION = BUILDER
             .comment("Whether the custom void generator should also keep the nether empty")
             .translation("poopsky.configuration.voidNetherGeneration")
