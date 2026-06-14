@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.block.p;
 
 import com.altnoir.poopsky.init.PParticles;
+import com.altnoir.poopsky.init.PSoundEvents;
 import com.altnoir.poopsky.worldgen.PSConfigureFeatures;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -156,7 +157,7 @@ public class PoopBlock extends Block implements BonemealableBlock {
     private void maybeDoSlideEffects(Level level, Entity entity) {
         if (doesEntityDoPoopBlockSlideEffects(entity)) {
             if (level.random.nextInt(5) == 0) {
-                entity.playSound(SoundEvents.HONEY_BLOCK_SLIDE, 1.0F, 1.0F);
+                entity.playSound(PSoundEvents.BLOCK_POOP_BLOCK_SLIDE.get(), 1.0F, 1.0F);
             }
 
             if (!level.isClientSide && level.random.nextInt(5) == 0) {
