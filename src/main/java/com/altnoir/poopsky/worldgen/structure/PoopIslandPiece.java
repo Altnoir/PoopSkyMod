@@ -25,6 +25,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PoopIslandPiece extends TemplateStructurePiece {
@@ -87,22 +88,19 @@ public class PoopIslandPiece extends TemplateStructurePiece {
     }
 
     public static void spawnRandomPoolimes(WorldGenLevel level, RandomSource random, StructureTemplate template, BlockPos origin, StructurePlaceSettings settings, BoundingBox box) {
-        List<StructureTemplate.StructureBlockInfo> poolimeBlocks = template.filterBlocks(origin, settings, PSBlocks.POOLIME_BLOCK.get())
+        List<StructureTemplate.StructureBlockInfo> poolimeBlocks = new ArrayList<>(template.filterBlocks(origin, settings, PSBlocks.POOLIME_BLOCK.get())
                 .stream()
+                .filter(blockInfo -> box.isInside(blockInfo.pos().above()))
                 .filter(blockInfo -> level.getBlockState(blockInfo.pos().above()).canBeReplaced())
-                .toList();
+                .toList());
 
-        if (poolimeBlocks.isEmpty() || random.nextFloat() >= 0.65F) {
+        if (poolimeBlocks.isEmpty()) {
             return;
         }
 
-        int spawnCount = Math.min(poolimeBlocks.size(), random.nextInt(2) + 1);
+        int spawnCount = Math.min(poolimeBlocks.size(), random.nextIntBetweenInclusive(1, 3));
         for (int index = 0; index < spawnCount; index++) {
-            BlockPos pos = poolimeBlocks.get(random.nextInt(poolimeBlocks.size())).pos().above();
-            if (!box.isInside(pos)) {
-                continue;
-            }
-
+            BlockPos pos = poolimeBlocks.remove(random.nextInt(poolimeBlocks.size())).pos().above();
             PoolimeEntity poolime = PEntityType.POOLIME.get().create(level.getLevel());
             if (poolime == null) {
                 continue;

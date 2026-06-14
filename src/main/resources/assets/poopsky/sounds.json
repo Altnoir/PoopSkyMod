@@ -44,6 +44,87 @@
       "random/burp"
     ]
   },
+  "entity.poolime.attack": {
+    "subtitle": "subtitle.poopsky.poolime.attack",
+    "sounds": [
+      {
+        "name": "minecraft:entity.slime.attack",
+        "type": "event"
+      }
+    ]
+  },
+  "entity.poolime.death": {
+    "subtitle": "subtitle.poopsky.poolime.death",
+    "sounds": [
+      {
+        "name": "minecraft:entity.slime.death",
+        "type": "event"
+      }
+    ]
+  },
+  "entity.poolime.death_small": {
+    "subtitle": "subtitle.poopsky.poolime.death",
+    "sounds": [
+      {
+        "name": "minecraft:entity.slime.death_small",
+        "type": "event"
+      }
+    ]
+  },
+  "entity.poolime.hurt": {
+    "subtitle": "subtitle.poopsky.poolime.hurt",
+    "sounds": [
+      {
+        "name": "minecraft:entity.slime.hurt",
+        "type": "event"
+      }
+    ]
+  },
+  "entity.poolime.hurt_small": {
+    "subtitle": "subtitle.poopsky.poolime.hurt",
+    "sounds": [
+      {
+        "name": "minecraft:entity.slime.hurt_small",
+        "type": "event"
+      }
+    ]
+  },
+  "entity.poolime.jump": {
+    "subtitle": "subtitle.poopsky.poolime.squish",
+    "sounds": [
+      {
+        "name": "minecraft:entity.slime.jump",
+        "type": "event"
+      }
+    ]
+  },
+  "entity.poolime.jump_small": {
+    "subtitle": "subtitle.poopsky.poolime.squish",
+    "sounds": [
+      {
+        "name": "minecraft:entity.slime.jump_small",
+        "type": "event"
+      }
+    ]
+  },
+  "entity.poolime.squish": {
+    "subtitle": "subtitle.poopsky.poolime.squish",
+    "sounds": [
+      {
+        "name": "minecraft:entity.slime.squish",
+        "type": "event"
+      }
+    ]
+  },
+  "entity.poolime.squish_small": {
+    "subtitle": "subtitle.poopsky.poolime.squish",
+    "sounds": [
+      {
+        "name": "minecraft:entity.slime.squish_small",
+        "type": "event"
+      }
+    ]
+  },
   "lawrence": {
     "sounds": [
       {

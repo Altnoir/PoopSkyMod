@@ -1,7 +1,19 @@
 {
   "type": "poopsky:poop_island",
   "biomes": "#minecraft:is_overworld",
-  "spawn_overrides": {},
+  "spawn_overrides": {
+    "monster": {
+      "bounding_box": "full",
+      "spawns": [
+        {
+          "type": "poopsky:poolime",
+          "weight": 100,
+          "minCount": 1,
+          "maxCount": 3
+        }
+      ]
+    }
+  },
   "step": "surface_structures",
   "terrain_adaptation": "none"
 }
