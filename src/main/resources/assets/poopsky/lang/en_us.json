@@ -277,8 +277,6 @@
   "itemgroup.poopsky": "POOPSKY",
 
   "poopsky.configuration.title": "%s Options",
-  "poopsky.configuration.lavaFluid": "Disable Underground Lava Lakes",
-  "poopsky.configuration.lavaFluid.tooltip": "Disables underground lava lakes during PoopSky world generation",
   "poopsky.configuration.stickyCrafting": "Keep Liquid When Crafting Sticks",
   "poopsky.configuration.stickyCrafting.tooltip": "Prevents liquid in the compooper from being consumed when crafting sticks",
   "poopsky.configuration.desperateWorld": "Desperate World",
