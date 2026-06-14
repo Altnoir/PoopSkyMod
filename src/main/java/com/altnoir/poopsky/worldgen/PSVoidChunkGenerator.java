@@ -233,8 +233,9 @@ public class PSVoidChunkGenerator extends NoiseBasedChunkGenerator {
     @Override
     @Nullable
     public Pair<BlockPos, Holder<Structure>> findNearestMapStructure(ServerLevel level, HolderSet<Structure> structures, BlockPos pos, int searchRadius, boolean skipKnownStructures) {
+        Pair<BlockPos, Holder<Structure>> guaranteedSpawnIsland = findGuaranteedSpawnIsland(level, structures, pos, searchRadius, skipKnownStructures);
         if (generateNormal || allowedStructureSets.isEmpty()) {
-            return super.findNearestMapStructure(level, structures, pos, searchRadius, skipKnownStructures);
+            return nearestStructure(pos, super.findNearestMapStructure(level, structures, pos, searchRadius, skipKnownStructures), guaranteedSpawnIsland);
         }
 
         Set<Structure> allowedStructures = resolveAllowedStructures(level.registryAccess());
@@ -243,10 +244,10 @@ public class PSVoidChunkGenerator extends NoiseBasedChunkGenerator {
                 .toList();
 
         if (searchableStructures.isEmpty()) {
-            return null;
+            return guaranteedSpawnIsland;
         }
 
-        return super.findNearestMapStructure(level, HolderSet.direct(searchableStructures), pos, searchRadius, skipKnownStructures);
+        return nearestStructure(pos, super.findNearestMapStructure(level, HolderSet.direct(searchableStructures), pos, searchRadius, skipKnownStructures), guaranteedSpawnIsland);
     }
 
     @Override
@@ -297,6 +298,42 @@ public class PSVoidChunkGenerator extends NoiseBasedChunkGenerator {
         Registry<Structure> structureRegistry = registries.registryOrThrow(Registries.STRUCTURE);
         Structure structure = structureRegistry.get(structureId);
         return structure != null && resolveAllowedStructures(registries).contains(structure);
+    }
+
+    @Nullable
+    private Pair<BlockPos, Holder<Structure>> findGuaranteedSpawnIsland(ServerLevel level, HolderSet<Structure> structures, BlockPos pos, int searchRadius, boolean skipKnownStructures) {
+        if (skipKnownStructures || generateNormal || !settings.is(ResourceLocation.parse("minecraft:overworld")) || !isStructureAllowed(level.registryAccess(), PoopSky.loc("poop_island"))) {
+            return null;
+        }
+
+        Holder<Structure> poopIsland = structures.stream()
+                .filter(structure -> structure.unwrapKey()
+                        .map(key -> key.location().equals(PoopSky.loc("poop_island")))
+                        .orElse(false))
+                .findFirst()
+                .orElse(null);
+        if (poopIsland == null) {
+            return null;
+        }
+
+        BlockPos center = PoopIslandStructure.getGuaranteedSpawnIslandCenter(level);
+        int chunkDistance = Math.max(
+                Math.abs(SectionPos.blockToSectionCoord(pos.getX()) - SectionPos.blockToSectionCoord(center.getX())),
+                Math.abs(SectionPos.blockToSectionCoord(pos.getZ()) - SectionPos.blockToSectionCoord(center.getZ()))
+        );
+        return chunkDistance <= searchRadius ? Pair.of(center, poopIsland) : null;
+    }
+
+    @Nullable
+    private static Pair<BlockPos, Holder<Structure>> nearestStructure(BlockPos pos, @Nullable Pair<BlockPos, Holder<Structure>> first, @Nullable Pair<BlockPos, Holder<Structure>> second) {
+        if (first == null) {
+            return second;
+        }
+        if (second == null) {
+            return first;
+        }
+
+        return pos.distSqr(second.getFirst()) < pos.distSqr(first.getFirst()) ? second : first;
     }
 
     private void createAllowedStructures(RegistryAccess registries, ChunkGeneratorStructureState structureState, StructureManager structureManager, ChunkAccess chunk, StructureTemplateManager templateManager) {

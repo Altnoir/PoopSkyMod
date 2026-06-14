@@ -10,6 +10,7 @@ import net.minecraft.core.SectionPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
@@ -27,7 +28,9 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class PoopIslandStructure extends Structure {
     public static final MapCodec<PoopIslandStructure> CODEC = simpleCodec(PoopIslandStructure::new);
@@ -43,6 +46,7 @@ public class PoopIslandStructure extends Structure {
     private static final int VOID_ISLAND_Y = 128;
     private static final int SPAWN_ISLAND_MIN_DISTANCE = 100;
     private static final int SPAWN_ISLAND_MAX_DISTANCE = 200;
+    private static final Map<Long, BlockPos> GUARANTEED_SPAWNS = new ConcurrentHashMap<>();
 
     public PoopIslandStructure(StructureSettings settings) {
         super(settings);
@@ -83,7 +87,8 @@ public class PoopIslandStructure extends Structure {
             StructureTemplateManager templateManager,
             long seed
     ) {
-        BlockPos center = getGuaranteedSpawnIslandCenter(seed);
+        BlockPos registeredSpawn = GUARANTEED_SPAWNS.get(seed);
+        BlockPos center = registeredSpawn != null ? getGuaranteedSpawnIslandCenter(seed, registeredSpawn) : getGuaranteedSpawnIslandCenter(seed);
         if (!chunk.getPos().equals(new ChunkPos(center))) {
             return;
         }
@@ -118,13 +123,11 @@ public class PoopIslandStructure extends Structure {
         structureManager.setStartForStructure(sectionPos, structure, new StructureStart(structure, chunk.getPos(), 0, builder.build()), chunk);
     }
 
-    private static BlockPos getGuaranteedSpawnIslandCenter(long seed) {
-        RandomSource spawnRandom = new XoroshiroRandomSource(seed);
-        BlockPos spawn = new BlockPos(
-                spawnRandom.nextIntBetweenInclusive(-200, 200),
-                87,
-                spawnRandom.nextIntBetweenInclusive(-200, 200)
-        );
+    public static void registerGuaranteedSpawn(long seed, BlockPos spawn) {
+        GUARANTEED_SPAWNS.put(seed, spawn.immutable());
+    }
+
+    public static BlockPos getGuaranteedSpawnIslandCenter(long seed, BlockPos spawn) {
         RandomSource random = RandomSource.create(seed ^ Mth.getSeed(spawn));
         int distance = random.nextIntBetweenInclusive(SPAWN_ISLAND_MIN_DISTANCE, SPAWN_ISLAND_MAX_DISTANCE);
         double angle = random.nextDouble() * Math.TAU;
@@ -134,6 +137,25 @@ public class PoopIslandStructure extends Structure {
                 0,
                 spawn.getZ() + (int) Math.round(Math.sin(angle) * distance)
         );
+    }
+
+    private static BlockPos getGuaranteedSpawnIslandCenter(long seed) {
+        RandomSource spawnRandom = new XoroshiroRandomSource(seed);
+        return getGuaranteedSpawnIslandCenter(seed, new BlockPos(
+                spawnRandom.nextIntBetweenInclusive(-200, 200),
+                87,
+                spawnRandom.nextIntBetweenInclusive(-200, 200)
+        ));
+    }
+
+    public static BlockPos getGuaranteedSpawnIslandCenter(ServerLevel level) {
+        BlockPos registeredSpawn = GUARANTEED_SPAWNS.get(level.getSeed());
+
+        if (registeredSpawn != null) {
+            return getGuaranteedSpawnIslandCenter(level.getSeed(), registeredSpawn);
+        }
+
+        return getGuaranteedSpawnIslandCenter(level.getSeed(), level.getSharedSpawnPos());
     }
 
     private static ResourceLocation randomTemplate(RandomSource random) {
