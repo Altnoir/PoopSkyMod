@@ -3,12 +3,12 @@ package com.altnoir.poopsky.block.p;
 import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.entity.p.PoolimeEntity;
 import com.altnoir.poopsky.init.PParticles;
+import com.altnoir.poopsky.init.PSoundEvents;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -101,7 +101,7 @@ public class PoolimePoopBlock extends Block {
     private void maybeDoSlideEffects(Level level, Entity entity) {
         if (doesEntityDoPoopBlockSlideEffects(entity)) {
             if (level.random.nextInt(5) == 0) {
-                entity.playSound(SoundEvents.HONEY_BLOCK_SLIDE, 1.0F, 1.0F);
+                entity.playSound(PSoundEvents.BLOCK_POOLIME_POOP_BLOCK_SLIDE.get(), 1.0F, 1.0F);
             }
 
             if (!level.isClientSide && level.random.nextInt(5) == 0) {

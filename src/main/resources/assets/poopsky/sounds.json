@@ -6,6 +6,24 @@
       "poopsky:fart_2"
     ]
   },
+  "block.poop_block.slide": {
+    "subtitle": "subtitle.poopsky.block.poop_block.slide",
+    "sounds": [
+      {
+        "name": "minecraft:block.honey_block.slide",
+        "type": "event"
+      }
+    ]
+  },
+  "block.poolime_poop_block.slide": {
+    "subtitle": "subtitle.poopsky.block.poolime_poop_block.slide",
+    "sounds": [
+      {
+        "name": "minecraft:block.honey_block.slide",
+        "type": "event"
+      }
+    ]
+  },
   "block.compooer.maggots": {
     "subtitle": "subtitle.poopsky.compooer.maggots",
     "sounds": [
