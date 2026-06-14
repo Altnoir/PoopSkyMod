@@ -19,6 +19,15 @@ public class PSoundEvents {
     public static final Supplier<SoundEvent> BLOCK_COMPOOPER_MAGGOTS = registerSoundEvent("block.compooper.maggots");
     public static final Supplier<SoundEvent> ENTITY_VILLAGER_WORK_COMPOOPER = registerSoundEvent("entity.villager.work_compooper");
     public static final Supplier<SoundEvent> ENTITY_VILLAGER_WORK_TOILET = registerSoundEvent("entity.villager.work_toilet");
+    public static final Supplier<SoundEvent> ENTITY_POOLIME_ATTACK = registerSoundEvent("entity.poolime.attack");
+    public static final Supplier<SoundEvent> ENTITY_POOLIME_DEATH = registerSoundEvent("entity.poolime.death");
+    public static final Supplier<SoundEvent> ENTITY_POOLIME_DEATH_SMALL = registerSoundEvent("entity.poolime.death_small");
+    public static final Supplier<SoundEvent> ENTITY_POOLIME_HURT = registerSoundEvent("entity.poolime.hurt");
+    public static final Supplier<SoundEvent> ENTITY_POOLIME_HURT_SMALL = registerSoundEvent("entity.poolime.hurt_small");
+    public static final Supplier<SoundEvent> ENTITY_POOLIME_JUMP = registerSoundEvent("entity.poolime.jump");
+    public static final Supplier<SoundEvent> ENTITY_POOLIME_JUMP_SMALL = registerSoundEvent("entity.poolime.jump_small");
+    public static final Supplier<SoundEvent> ENTITY_POOLIME_SQUISH = registerSoundEvent("entity.poolime.squish");
+    public static final Supplier<SoundEvent> ENTITY_POOLIME_SQUISH_SMALL = registerSoundEvent("entity.poolime.squish_small");
 
     public static final Supplier<SoundEvent> LAWRENCE = registerSoundEvent("lawrence");
     public static final ResourceKey<JukeboxSong> LAWRENCE_KEY = registerJukeboxSong("lawrence");

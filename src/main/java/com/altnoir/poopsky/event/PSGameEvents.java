@@ -12,6 +12,7 @@ import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.villager.PSVillagerBehaviors;
 import com.altnoir.poopsky.villager.PSVillagerTrades;
 import com.altnoir.poopsky.worldgen.PSVoidChunkGenerator;
+import com.altnoir.poopsky.worldgen.structure.PoopIslandStructure;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -26,6 +27,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
@@ -147,8 +149,14 @@ public class PSGameEvents {
             level.setBlock(pos, AllToiletBlocks.OAK_TOILET.get().defaultBlockState(), 2);
 
             event.setCanceled(true);
-            event.getSettings().setSpawn(level.getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, pos), 90.0F);
+            BlockPos spawn = level.getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, pos);
+            event.getSettings().setSpawn(spawn, 90.0F);
             level.getGameRules().getRule(GameRules.RULE_SPAWN_RADIUS).set(0, level.getServer());
+
+            PoopIslandStructure.registerGuaranteedSpawn(level.getSeed(), spawn);
+            BlockPos islandCenter = PoopIslandStructure.getGuaranteedSpawnIslandCenter(level.getSeed(), spawn);
+            ChunkPos islandChunk = new ChunkPos(islandCenter);
+            level.getChunk(islandChunk.x, islandChunk.z);
         }
     }
 }

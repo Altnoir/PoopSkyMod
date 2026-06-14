@@ -10,8 +10,11 @@
         },
         "settings": "minecraft:overworld",
         "allowed_structure_sets": [
-          "minecraft:villages",
-          "minecraft:strongholds"
+          "minecraft:pillager_outpost",
+          "minecraft:swamp_hut",
+          "minecraft:monument",
+          "minecraft:strongholds",
+          "poopsky:poop_island"
         ]
       }
     },
