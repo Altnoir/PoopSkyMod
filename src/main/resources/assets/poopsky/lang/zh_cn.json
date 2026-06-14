@@ -18,6 +18,8 @@
   "item.poopsky.omen_leggings": "食粪者护腿",
   "item.poopsky.omen_boots": "食粪者靴子",
   "item.poopsky.milos_sword": "灭洛斯剑",
+  "item.poopsky.ominous_filthy_ingot": "恶兆污秽锭",
+  "item.poopsky.omen_upgrade_smithing_template": "锻造模板",
 
   "item.poopsky.time_bell": "屎溅之铃",
   "message.poopsky.time_bell.frozen": "已冻结游戏时间",
@@ -154,6 +156,9 @@
   "item.poopsky.baked_maggots": "烤蛆",
   "item.poopsky.poop_bread": "粪便面包",
   "item.poopsky.poop_dumplings": "粪便粽",
+  "item.poopsky.poop_mooncake": "粪便月饼",
+  "item.poopsky.chili_poop_mooncake": " 辣味粪便月饼",
+  "item.poopsky.golden_poop_mooncake": " 金粪便月饼",
   "item.poopsky.poop_soup": "粪便汤",
   "item.poopsky.poop_vegetable_sticks": "粪酱蔬菜棒",
   "item.poopsky.pooburger_meat": "粪堡肉",
@@ -216,6 +221,10 @@
   "key.poopsky.up": "上升",
   "key.poopsky.down": "下降",
   "message.poopsky.toilet_plug.dismount": "按下%s来脱离马桶搋子",
+
+  "upgrade.poopsky.omen_upgrade":"忌讳升级",
+  "item.poopsky.smithing_template.omen_upgrade.applies_to":"金装备",
+  "item.poopsky.smithing_template.omen_upgrade.ingredients":"恶兆污秽锭",
 
   "advancements.poopsky.root.title": "空中厕所",
   "advancements.poopsky.root.description": "一切屎于脚下",

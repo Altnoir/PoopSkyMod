@@ -42,6 +42,12 @@ public class PSItems {
             new Item(new Item.Properties().food(PFoods.POOP_BREAD).stacksTo(88)));
     public static final DeferredItem<Item> POOP_DUMPLINGS = ITEMS.register("poop_dumplings", () ->
             new Item(new Item.Properties().food(PFoods.POOP_DUMPLINGS).stacksTo(88)));
+    public static final DeferredItem<Item> POOP_MOONCAKE = ITEMS.register("poop_mooncake", () ->
+            new Item(new Item.Properties().food(PFoods.POOP_MOONCAKE).stacksTo(88)));
+    public static final DeferredItem<Item> CHILI_POOP_MOONCAKE = ITEMS.register("chili_poop_mooncake", () ->
+            new Item(new Item.Properties().food(PFoods.CHILI_POOP_MOONCAKE).stacksTo(88)));
+    public static final DeferredItem<Item> GOLDEN_POOP_MOONCAKE = ITEMS.register("golden_poop_mooncake", () ->
+            new Item(new Item.Properties().food(PFoods.GOLDEN_POOP_MOONCAKE).stacksTo(88)));
     public static final DeferredItem<Item> POOP_SOUP = ITEMS.register("poop_soup", () ->
             new Item(new Item.Properties().food(PFoods.POOP_SOUP).stacksTo(88)));
     public static final DeferredItem<Item> POOP_VEGETABLE_STICKS = ITEMS.register("poop_vegetable_sticks", () ->
@@ -63,15 +69,17 @@ public class PSItems {
             new ToiletPlugItem(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<Item> TOILET_PLUG_WAND = ITEMS.register("toilet_plug_wand", () ->
             new ToiletLinkerItem(new Item.Properties().component(PComponents.TOILET_COMPONENT, ToiletComponent.EMPTY).stacksTo(1)));
-    public static final DeferredItem<Item> TIME_BELL = ITEMS.register("time_bell", () ->
-            new TimeBellItem(new Item.Properties().stacksTo(1)));
-    public static final DeferredItem<Item> SPALL = ITEMS.register("spall", () ->
-            new Item(new Item.Properties()));
 
     public static final DeferredItem<Item> MAGGOTS_SEEDS = ITEMS.register("maggots_seeds", () ->
             new ItemNameBlockItem(PSBlocks.MAGGOTS.get(), new Item.Properties().food(PFoods.MAGGOTS_SEEDS).stacksTo(88)));
     public static final DeferredItem<Item> ROUNDWORM = ITEMS.register("roundworm", () ->
             new ItemNameBlockItem(PSBlocks.ROUNDWORM_VINES.get(), new Item.Properties().food(PFoods.ROUNDWORM).stacksTo(88)));
+
+    public static final DeferredItem<Item> OMINOUS_FILTHY_INGOT = ITEMS.register("ominous_filthy_ingot", () ->
+            new Item(new Item.Properties()));
+    public static final DeferredItem<SwordItem> MILOS_SWORD = ITEMS.register("milos_sword", () ->
+            new SwordItem(PToolTiers.MILOS,
+                    new Item.Properties().attributes(SwordItem.createAttributes(PToolTiers.MILOS, 1, -3.4F))));
 
     public static final DeferredItem<ArmorItem> OMEN_HELMET = ITEMS.register("omen_helmet", () ->
             new ArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.HELMET,
@@ -86,10 +94,14 @@ public class PSItems {
             new ArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
                     new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(24))));
 
-    public static final DeferredItem<SwordItem> MILOS_SWORD = ITEMS.register("milos_sword", () ->
-            new SwordItem(PToolTiers.MILOS,
-                    new Item.Properties().attributes(SwordItem.createAttributes(PToolTiers.MILOS, 1, -3.4F))));
+    public static final DeferredItem<Item> OMEN_UPGRADE_SMITHING_TEMPLATE = ITEMS.register("omen_upgrade_smithing_template",
+            OmenSmithingTemplateItem::createOmenUpgradeTemplate
+    );
 
+    public static final DeferredItem<Item> TIME_BELL = ITEMS.register("time_bell", () ->
+            new TimeBellItem(new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<Item> SPALL = ITEMS.register("spall", () ->
+            new Item(new Item.Properties()));
     public static final DeferredItem<Item> URINE_BOTTLE = ITEMS.register("urine_bottle",
             () -> new UrineBottleItem(new Item.Properties()
                     .craftRemainder(Items.GLASS_BOTTLE)

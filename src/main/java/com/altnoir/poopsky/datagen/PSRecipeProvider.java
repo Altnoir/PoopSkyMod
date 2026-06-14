@@ -9,6 +9,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
@@ -60,6 +61,24 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('P', PSItems.POOP)
                 .define('M', PSItems.MAGGOTS_SEEDS)
                 .unlockedBy(getItemName(PSItems.MAGGOTS_SEEDS), has(PSItems.MAGGOTS_SEEDS))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PSItems.POOP_MOONCAKE,2)
+                .pattern("WPW")
+                .define('W', Items.WHEAT)
+                .define('P', PSItems.POOP)
+                .unlockedBy(getItemName(Items.WHEAT), has(Items.WHEAT))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PSItems.CHILI_POOP_MOONCAKE,2)
+                .pattern("WPW")
+                .define('W', Items.WHEAT)
+                .define('P', PSItems.CHILI_POOP)
+                .unlockedBy(getItemName(Items.WHEAT), has(Items.WHEAT))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PSItems.GOLDEN_POOP_MOONCAKE,2)
+                .pattern("WPW")
+                .define('W', Items.WHEAT)
+                .define('P', PSItems.GOLDEN_POOP)
+                .unlockedBy(getItemName(Items.WHEAT), has(Items.WHEAT))
                 .save(recipeOutput);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PSItems.POOP_DUMPLINGS)
                 .requires(PSItems.POOP_BALL.get())
@@ -128,6 +147,11 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('S', PSItems.POOP)
                 .unlockedBy(getItemName(Items.GOLD_NUGGET), has(Items.GOLD_NUGGET))
                 .save(recipeOutput);
+        //盔甲
+        omenSmithing(recipeOutput, Items.GOLDEN_CHESTPLATE, RecipeCategory.COMBAT, PSItems.OMEN_CHESTPLATE.get());
+        omenSmithing(recipeOutput, Items.GOLDEN_LEGGINGS, RecipeCategory.COMBAT, PSItems.OMEN_LEGGINGS.get());
+        omenSmithing(recipeOutput, Items.GOLDEN_HELMET, RecipeCategory.COMBAT, PSItems.OMEN_HELMET.get());
+        omenSmithing(recipeOutput, Items.GOLDEN_BOOTS, RecipeCategory.COMBAT, PSItems.OMEN_BOOTS.get());
 
         // 建筑
         offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PSBlocks.POOP_BLOCK, PSItems.POOP, 1);
@@ -643,6 +667,14 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .requires(input1).requires(input)
                 .unlockedBy(getItemName(input), has(input))
                 .save(recipeOutput, getConversionRecipeName(result));
+    }
+
+    protected static void omenSmithing(RecipeOutput recipeOutput, Item ingredientItem, RecipeCategory category, Item resultItem) {
+        SmithingTransformRecipeBuilder.smithing(
+                        Ingredient.of(PSItems.OMEN_UPGRADE_SMITHING_TEMPLATE), Ingredient.of(ingredientItem), Ingredient.of(PSItems.OMINOUS_FILTHY_INGOT), category, resultItem
+                )
+                .unlocks("has_ominous_filthy_ingot", has(PSItems.OMINOUS_FILTHY_INGOT))
+                .save(recipeOutput, getItemName(resultItem) + "_smithing");
     }
 
     protected static void oreSmelting(RecipeOutput recipeOutput, List<ItemLike> ingredients, RecipeCategory category, ItemLike result, float experience, int cookingTime, String group) {

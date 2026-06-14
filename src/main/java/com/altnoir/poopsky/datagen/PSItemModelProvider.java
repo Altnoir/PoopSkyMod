@@ -50,6 +50,9 @@ public class PSItemModelProvider extends ItemModelProvider {
         basicItem(PSItems.WITHER_POOP_BALL.get());
         basicItem(PSItems.POOP_BREAD.get());
         basicItem(PSItems.POOP_DUMPLINGS.get());
+        basicItem(PSItems.POOP_MOONCAKE.get());
+        basicItem(PSItems.CHILI_POOP_MOONCAKE.get());
+        basicItem(PSItems.GOLDEN_POOP_MOONCAKE.get());
         basicItem(PSItems.POOP_SOUP.get());
         basicItem(PSItems.POOP_VEGETABLE_STICKS.get());
         basicItem(PSItems.POOBURGER_MEAT.get());
@@ -86,6 +89,8 @@ public class PSItemModelProvider extends ItemModelProvider {
 
         withExistingParent(PSItems.POOLIME_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
 
+        basicItem(PSItems.OMINOUS_FILTHY_INGOT.get());
+        basicItem(PSItems.OMEN_UPGRADE_SMITHING_TEMPLATE.get());
         handheldItem(PSItems.MILOS_SWORD.get());
         trimmedArmorItem(PSItems.OMEN_HELMET);
         trimmedArmorItem(PSItems.OMEN_CHESTPLATE);

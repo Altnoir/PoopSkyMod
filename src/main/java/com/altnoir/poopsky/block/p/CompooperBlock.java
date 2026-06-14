@@ -92,6 +92,9 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
         add(f01, PSItems.MAGGOTS_SEEDS);
         add(f08, PSItems.POOP_BREAD);
         add(f08, PSItems.POOP_DUMPLINGS);
+        add(f08, PSItems.POOP_MOONCAKE);
+        add(f08, PSItems.CHILI_POOP_MOONCAKE);
+        add(f08, PSItems.GOLDEN_POOP_MOONCAKE);
         add(f08, PSItems.POOP_VEGETABLE_STICKS);
         add(f08, PSItems.POOBURGER_MEAT);
         add(f1, PSItems.POOBURGER);

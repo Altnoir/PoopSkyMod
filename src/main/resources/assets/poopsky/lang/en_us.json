@@ -18,6 +18,8 @@
   "item.poopsky.omen_leggings": "Dung Eater Leggings",
   "item.poopsky.omen_boots": "Dung Eater Boots",
   "item.poopsky.milos_sword": "Sword of Milos",
+  "item.poopsky.ominous_filthy_ingot": "Ominous Filthy Ingot",
+  "item.poopsky.omen_upgrade_smithing_template": "Smithing Template",
 
   "item.poopsky.time_bell": "Time Bell",
   "message.poopsky.time_bell.frozen": "Game time frozen",
@@ -154,6 +156,9 @@
   "item.poopsky.baked_maggots": "Baked Maggots",
   "item.poopsky.poop_bread": "Poop Bread",
   "item.poopsky.poop_dumplings": "Poop Dumplings",
+  "item.poopsky.poop_mooncake": "Poop Mooncake",
+  "item.poopsky.chili_poop_mooncake": "Chili Poop Mooncake",
+  "item.poopsky.golden_poop_mooncake": "Golden Poop Mooncake",
   "item.poopsky.poop_soup": "Poop Soup",
   "item.poopsky.poop_vegetable_sticks": "Poop Vegetable Sticks",
   "item.poopsky.pooburger_meat": "Pooburger Meat",
@@ -216,6 +221,10 @@
   "key.poopsky.up": "Up",
   "key.poopsky.down": "Descend",
   "message.poopsky.toilet_plug.dismount": "Press %s to dismount Toilet Plug",
+
+  "upgrade.poopsky.omen_upgrade":"Omen Upgrade",
+  "item.poopsky.smithing_template.omen_upgrade.applies_to":"Golden Equipment",
+  "item.poopsky.smithing_template.omen_upgrade.ingredients":"Golden Ingot",
 
   "advancements.poopsky.root.title": "POOPSKY",
   "advancements.poopsky.root.description": "It all began with a pile of poop",

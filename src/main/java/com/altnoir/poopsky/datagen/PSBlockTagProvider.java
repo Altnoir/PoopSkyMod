@@ -39,6 +39,8 @@ public class PSBlockTagProvider extends BlockTagsProvider {
         tag(PSBlockTags.RAW_SEA_POOP_BLOCK)
                 .add(PSBlocks.RAW_SEA_POOP_BLOCK.get())
                 .add(Blocks.CRYING_OBSIDIAN);
+        tag(PSBlockTags.WATER_BLOCK)
+                .add(PSBlocks.RAW_SEA_POOP_BLOCK.get());
 
         tag(PSBlockTags.POOP_BLOCKS).add(POOP_BLOCKS);
         tag(PSBlockTags.EMPTY_LOGS)
@@ -52,6 +54,7 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(AllToiletBlocks.RAINBOW_TOILET.get());
 
         tag(PSBlockTags.POOP_TNT_DESTROY)
+                .addTags(BlockTags.FLOWERS)
                 .addTags(BlockTags.LEAVES);
         tag(PSBlockTags.POOP_TNT_REPLACEABLE)
                 .addTags(BlockTags.MOSS_REPLACEABLE);

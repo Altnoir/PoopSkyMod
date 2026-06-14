@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_ominous_filthy_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:ominous_filthy_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:omen_chestplate_smithing"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_ominous_filthy_ingot"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:omen_chestplate_smithing"
+    ]
+  }
+}
