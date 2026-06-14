@@ -32,6 +32,10 @@ public class Config {
             .comment("Whether to Disable the consumption of liquid when sticks crafting")
             .translation("poopsky.configuration.stickyCrafting")
             .define("stickyCrafting", false);
+    private static final ModConfigSpec.BooleanValue LAVA_FLUID_BLOCK = BUILDER
+            .comment("Whether to Disable the underground lava lake")
+            .translation("poopsky.configuration.lavaFluid")
+            .define("lavaFluid", true);
     private static final ModConfigSpec.BooleanValue PLUG_TRADES = BUILDER
             .comment("Whether to Disable the plug trades")
             .translation("poopsky.configuration.plugTrades")
@@ -45,6 +49,7 @@ public class Config {
         voidNetherGeneration = VOID_NETHER_GENERATION.get();
         desperateWorld = DESPERATE_WORLD.get();
         stickyCrafting = STICK_CRAFTING.get();
+        lavaFluid = LAVA_FLUID_BLOCK.get();
         plugTrades = PLUG_TRADES.get();
     }
 }
