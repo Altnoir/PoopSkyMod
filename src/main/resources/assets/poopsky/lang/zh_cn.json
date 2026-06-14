@@ -292,6 +292,6 @@
   "poopsky.configuration.setPoopskyDefault.tooltip": "让服务器默认使用空中厕所世界预设",
   "poopsky.configuration.voidNetherGeneration": "虚空下界生成",
   "poopsky.configuration.voidNetherGeneration.tooltip": "使用空中厕所自定义虚空生成器时，让下界也保持空旷",
-  "poopsky.configuration.plugTrades": "马桶搋子交易",
-  "poopsky.configuration.plugTrades.tooltip": "禁用马桶搋子交易"
+  "poopsky.configuration.plugTrades": "禁用马桶搋子交易",
+  "poopsky.configuration.plugTrades.tooltip": "是否禁用马桶搋子交易"
 }

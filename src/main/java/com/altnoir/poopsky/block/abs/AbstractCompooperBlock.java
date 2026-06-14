@@ -1,26 +1,21 @@
 package com.altnoir.poopsky.block.abs;
 
 import com.altnoir.poopsky.Config;
-import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.PSBlocks;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
@@ -33,7 +28,6 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.PathComputationType;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -91,51 +85,8 @@ public abstract class AbstractCompooperBlock extends Block {
         boolean hasPower = level.hasNeighborSignal(pos);
         if (hasPower != state.getValue(POWERED)) {
             level.setBlock(pos, state.setValue(POWERED, hasPower), Block.UPDATE_ALL);
-
-            if (hasPower && !level.isClientSide) {
-                var be = level.getBlockEntity(pos.below());
-
-                if (!(be instanceof Container container)) return;
-
-                for (int slot = 0; slot < container.getContainerSize(); slot++) {
-                    var stack = container.getItem(slot);
-                    if (stack.isEmpty() || !(stack.getItem() instanceof BlockItem blockItem)) continue;
-
-                    var targetPos = pos.above();
-                    var targetState = level.getBlockState(targetPos);
-
-                    if (!level.isOutsideBuildHeight(targetPos) && targetState.canBeReplaced()) {
-                        var hitResult = new BlockHitResult(Vec3.atCenterOf(targetPos), Direction.UP, targetPos, false);
-                        var placeContext = new BlockPlaceContext(level, null, InteractionHand.MAIN_HAND, stack, hitResult);
-                        var placeResult = blockItem.place(placeContext);
-
-                        if (placeResult.consumesAction()) {
-                            container.setChanged();
-                            playPlacedBlockSound(level, targetPos);
-                            break;
-                        }
-                    } else {
-                        PoopSky.LOGGER.info("Unable to place compooper block because target block {} cannot be replaced",
-                                targetState.getBlock().getName().getString());
-                        break;
-                    }
-                }
-            }
         }
         super.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston);
-    }
-
-    private void playPlacedBlockSound(Level level, BlockPos pos) {
-        var placedState = level.getBlockState(pos);
-        var soundType = placedState.getSoundType();
-        level.playSound(
-                null,
-                pos,
-                soundType.getPlaceSound(),
-                SoundSource.BLOCKS,
-                (soundType.getVolume() + 1.0F) / 2.0F,
-                soundType.getPitch() * 0.8F
-        );
     }
 
     protected ItemInteractionResult BucketUse(ItemStack stack, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, ItemStack item) {

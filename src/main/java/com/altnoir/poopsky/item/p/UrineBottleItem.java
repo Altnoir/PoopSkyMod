@@ -25,10 +25,10 @@ public class UrineBottleItem extends Item {
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
-
+        super.finishUsingItem(stack, level, entity);
         if (entity instanceof ServerPlayer player) {
-            player.awardStat(Stats.ITEM_USED.get(this));
             CriteriaTriggers.CONSUME_ITEM.trigger(player, stack);
+            player.awardStat(Stats.ITEM_USED.get(this));
         }
 
         if (!level.isClientSide) {
@@ -38,10 +38,14 @@ public class UrineBottleItem extends Item {
         if (stack.isEmpty()) {
             return new ItemStack(Items.GLASS_BOTTLE);
         } else {
-            if (entity instanceof Player player && !player.getAbilities().instabuild) {
-                ItemStack glassBottle = new ItemStack(Items.GLASS_BOTTLE);
-                if (!player.getInventory().add(glassBottle)) {
-                    player.drop(glassBottle, false);
+            if (entity instanceof Player) {
+                Player player = (Player)entity;
+
+                if (!player.hasInfiniteMaterials()) {
+                    ItemStack itemstack = new ItemStack(Items.GLASS_BOTTLE);
+                    if (!player.getInventory().add(itemstack)) {
+                        player.drop(itemstack, false);
+                    }
                 }
             }
             return stack;
