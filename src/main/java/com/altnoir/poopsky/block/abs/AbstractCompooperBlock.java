@@ -139,8 +139,12 @@ public abstract class AbstractCompooperBlock extends Block {
     }
 
     protected ItemInteractionResult BucketUse(ItemStack stack, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, ItemStack item) {
+        return BucketUse(stack, level, pos, player, hand, sound, 1.0F, item);
+    }
+
+    protected ItemInteractionResult BucketUse(ItemStack stack, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, float pitch, ItemStack item) {
         var newState = defaultBlockState().setValue(LEVEL, MIN_LEVEL);
-        setBlock(newState, level, pos, player, sound, 1.0F);
+        setBlock(newState, level, pos, player, sound, pitch);
         //if (!player.getAbilities().instabuild) // 检测玩家是否有无限的方块
         ItemStack itemStack = ItemUtils.createFilledResult(stack, player, item);
         player.setItemInHand(hand, itemStack);

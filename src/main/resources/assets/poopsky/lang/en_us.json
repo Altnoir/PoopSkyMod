@@ -208,6 +208,7 @@
   "entity.poopsky.toilet_plug": "Toilet Plug",
   "entity.poopsky.stool_entity": "Stool",
   "entity.poopsky.poolime": "Poolime",
+  "entity.poopsky.poop_tnt": "POP",
 
   "key.category.poopsky": "POOPSKY",
   "key.poopsky.use_plug": "Summon Toilet Plug",
