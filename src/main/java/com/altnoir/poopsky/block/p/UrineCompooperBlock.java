@@ -1,10 +1,10 @@
 package com.altnoir.poopsky.block.p;
 
-import com.altnoir.poopsky.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.block.PSBlocks;
-import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.init.PParticles;
 import com.altnoir.poopsky.init.PSoundEvents;
+import com.altnoir.poopsky.item.PSItems;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -67,13 +67,13 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
 
         if (i >= MAX_LEVEL) {
             if (stack.getItem() == Items.BUCKET) {
-                return BucketUse(stack, level, pos, player, hand, SoundEvents.BUCKET_FILL, bucket.getDefaultInstance());
+                return BucketUse(stack, level, pos, player, hand, SoundEvents.BUCKET_FILL, 0.6F, bucket.getDefaultInstance());
             }
         } else if (stack.getItem() == bottle) {
-            return liquidBottleUse(stack, state, level, pos, player, hand, SoundEvents.BOTTLE_EMPTY,0.6F);
+            return liquidBottleUse(stack, state, level, pos, player, hand, SoundEvents.BOTTLE_EMPTY, 0.6F);
         }
         if (i > MIN_LEVEL && stack.getItem() == Items.GLASS_BOTTLE) {
-            return glassBottleUse(stack, state, level, pos, player, hand, SoundEvents.BOTTLE_FILL,0.6F, bottle.getDefaultInstance());
+            return glassBottleUse(stack, state, level, pos, player, hand, SoundEvents.BOTTLE_FILL, 0.6F, bottle.getDefaultInstance());
         }
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
@@ -112,6 +112,14 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
 
         empty(entity, state, level, pos);
         level.playSound(null, pos, SoundEvents.PLAYER_SPLASH, SoundSource.BLOCKS, 0.5F, 1.0F);
+    }
+
+    @Override
+    protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
+        if (!level.isClientSide && state.getValue(LEVEL) == MAX_LEVEL && isHot((ServerLevel) level, pos)) {
+            level.scheduleTick(pos, this, 80);
+        }
+        super.onPlace(state, level, pos, oldState, movedByPiston);
     }
 
     @Override

@@ -208,6 +208,7 @@
   "entity.poopsky.toilet_plug": "马桶搋子",
   "entity.poopsky.stool_entity": "粪便凳",
   "entity.poopsky.poolime": "屎莱姆",
+  "entity.poopsky.poop_tnt": "POP",
 
   "key.category.poopsky": "空中厕所",
   "key.poopsky.use_plug": "召唤马桶搋子",
@@ -217,7 +218,7 @@
   "message.poopsky.toilet_plug.dismount": "按下%s来脱离马桶搋子",
 
   "advancements.poopsky.root.title": "空中厕所",
-  "advancements.poopsky.root.description": "一切始于一坨大便",
+  "advancements.poopsky.root.description": "一切屎于脚下",
   "advancements.poopsky.poop_block_slide.title": "踩屎大师",
   "advancements.poopsky.poop_block_slide.description": "在粪便块上滑行",
   "advancements.poopsky.poolime_poop_block.title": "屎莱姆蛆块",

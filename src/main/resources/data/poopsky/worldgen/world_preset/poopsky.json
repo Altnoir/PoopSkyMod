@@ -10,7 +10,7 @@
         },
         "settings": "minecraft:overworld",
         "allowed_structure_sets": [
-          "minecraft:villages",
+          "minecraft:monument",
           "minecraft:strongholds"
         ]
       }

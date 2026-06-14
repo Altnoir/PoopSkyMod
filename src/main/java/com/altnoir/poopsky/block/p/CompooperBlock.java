@@ -141,7 +141,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
 
         if (i == MIN_LEVEL) {
             if (stack.getItem() == PSItems.URINE_BUCKET.get()) {
-                return liquidUse(stack, level, pos, player, hand, SoundEvents.BUCKET_EMPTY_LAVA, PSBlocks.URINE_COMPOOPER.get(), true);
+                return liquidUse(stack, level, pos, player, hand, SoundEvents.BOTTLE_EMPTY, 0.6F, PSBlocks.URINE_COMPOOPER.get(), true);
             } else if (stack.getItem() == Items.WATER_BUCKET) {
                 return liquidUse(stack, level, pos, player, hand, SoundEvents.BUCKET_EMPTY, PSBlocks.WATER_COMPOOPER.get(), true);
             } else if (stack.getItem() == Items.LAVA_BUCKET) {
