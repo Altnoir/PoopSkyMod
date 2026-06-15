@@ -13,6 +13,7 @@ public class Config {
     public static boolean stickyCrafting;
     public static boolean lavaFluid;
     public static boolean plugTrades;
+    public static boolean upgradeTemplate;
 
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
@@ -40,6 +41,10 @@ public class Config {
             .comment("Whether to Disable the plug trades")
             .translation("poopsky.configuration.plugTrades")
             .define("plugTrades", false);
+    private static final ModConfigSpec.BooleanValue UPGRADE_TEMPLATE = BUILDER
+            .comment("Whether to Disable the upgrade template trades")
+            .translation("poopsky.configuration.upgradeTemplate")
+            .define("upgradeTemplate", false);
 
     static final ModConfigSpec SPEC = BUILDER.build();
 
@@ -51,5 +56,6 @@ public class Config {
         stickyCrafting = STICK_CRAFTING.get();
         lavaFluid = LAVA_FLUID_BLOCK.get();
         plugTrades = PLUG_TRADES.get();
+        upgradeTemplate = UPGRADE_TEMPLATE.get();
     }
 }
