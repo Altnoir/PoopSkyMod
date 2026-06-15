@@ -24,17 +24,13 @@
       }
     ]
   },
-  "block.compooer.maggots": {
-    "subtitle": "subtitle.poopsky.compooer.maggots",
+  "block.compooper.maggots": {
+    "subtitle": "subtitle.poopsky.compooper.maggots",
     "sounds": [
-      "block/pointed_dripstone/drip_water_cauldron1",
-      "block/pointed_dripstone/drip_water_cauldron2",
-      "block/pointed_dripstone/drip_water_cauldron3",
-      "block/pointed_dripstone/drip_water_cauldron4",
-      "block/pointed_dripstone/drip_water_cauldron5",
-      "block/pointed_dripstone/drip_water_cauldron6",
-      "block/pointed_dripstone/drip_water_cauldron7",
-      "block/pointed_dripstone/drip_water_cauldron8"
+      {
+        "name": "minecraft:block.pointed_dripstone.drip_water_into_cauldron",
+        "type": "event"
+      }
     ]
   },
   "entity.villager.work_compooper": {
@@ -55,11 +51,18 @@
   "entity.villager.work_toilet": {
     "subtitle": "subtitle.poopsky.villager.work_toilet",
     "sounds": [
-      "random/eat1",
-      "random/eat2",
-      "random/eat3",
-      "random/drink",
-      "random/burp"
+      {
+        "name": "minecraft:entity.generic.eat",
+        "type": "event"
+      },
+      {
+        "name": "minecraft:entity.generic.drink",
+        "type": "event"
+      },
+      {
+        "name": "minecraft:entity.player.burp",
+        "type": "event"
+      }
     ]
   },
   "entity.poolime.attack": {

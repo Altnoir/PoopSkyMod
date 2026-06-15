@@ -9,9 +9,11 @@ import com.altnoir.poopsky.event.PSClientModEvents;
 import com.altnoir.poopsky.event.PSKeyBoardInput;
 import com.altnoir.poopsky.init.PFluidTypes;
 import com.altnoir.poopsky.init.PParticles;
+import com.altnoir.poopsky.init.PRecipes;
 import com.altnoir.poopsky.misc.particle.PoopParticle;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.RecipeBookCategories;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -21,6 +23,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterNamedRenderTypesEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
+import net.neoforged.neoforge.client.event.RegisterRecipeBookCategoriesEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
@@ -45,6 +48,7 @@ public class PoopSkyClient {
         modEventBus.addListener(ClientModEvents::registerRenderTypes);
         modEventBus.addListener(ClientModEvents::registerEntityRenderers);
         modEventBus.addListener(ClientModEvents::registerParticleProviders);
+        modEventBus.addListener(ClientModEvents::registerRecipeBookCategories);
         modEventBus.addListener(ClientModEvents::onRegisterBlockColors);
         modEventBus.addListener(ClientModEvents::onRegisterItemColors);
         modEventBus.addListener(ClientModEvents::onRegisterBlockRenderBuffers);
@@ -68,6 +72,10 @@ public class PoopSkyClient {
             event.registerEntityRenderer(PEntityType.STOOL.get(), ChairRenderer::new);
             event.registerEntityRenderer(PEntityType.TOILET.get(), ToiletRenderer::new);
             event.registerEntityRenderer(PEntityType.POOP_TNT.get(), PoopTntRenderer::new);
+        }
+
+        public static void registerRecipeBookCategories(RegisterRecipeBookCategoriesEvent event) {
+            event.registerRecipeCategoryFinder(PRecipes.SIEVE_TYPE.get(), recipe -> RecipeBookCategories.UNKNOWN);
         }
 
         public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
