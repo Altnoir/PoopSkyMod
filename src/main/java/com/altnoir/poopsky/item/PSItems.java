@@ -24,6 +24,8 @@ public class PSItems {
             new ChiliPoopItem(new Item.Properties().food(PFoods.POOP).stacksTo(88)));
     public static final DeferredItem<Item> GOLDEN_POOP = ITEMS.register("golden_poop", () ->
             new PoopItem(new Item.Properties().food(PFoods.GOLDEN_POOP).stacksTo(88)));
+    public static final DeferredItem<Item> SEEDBED_CURSE = ITEMS.register("seedbed_curse", () ->
+            new Item(new Item.Properties()));
     public static final DeferredItem<Item> FOLIUM_SENNAE = ITEMS.register("folium_sennae", () ->
             new Item(new Item.Properties()));
 
@@ -36,18 +38,18 @@ public class PSItems {
     public static final DeferredItem<Item> WITHER_POOP_BALL = ITEMS.register("wither_poop_ball", () ->
             new WitherPoopBallItem(new Item.Properties().stacksTo(88)));
 
-    public static final DeferredItem<Item> BAKED_MAGGOTS = ITEMS.register("baked_maggots", () ->
-            new Item(new Item.Properties().food(PFoods.BAKED_MAGGOTS).stacksTo(88)));
-    public static final DeferredItem<Item> POOP_BREAD = ITEMS.register("poop_bread", () ->
-            new Item(new Item.Properties().food(PFoods.POOP_BREAD).stacksTo(88)));
-    public static final DeferredItem<Item> POOP_DUMPLINGS = ITEMS.register("poop_dumplings", () ->
-            new Item(new Item.Properties().food(PFoods.POOP_DUMPLINGS).stacksTo(88)));
     public static final DeferredItem<Item> POOP_MOONCAKE = ITEMS.register("poop_mooncake", () ->
             new Item(new Item.Properties().food(PFoods.POOP_MOONCAKE).stacksTo(88)));
     public static final DeferredItem<Item> CHILI_POOP_MOONCAKE = ITEMS.register("chili_poop_mooncake", () ->
             new Item(new Item.Properties().food(PFoods.CHILI_POOP_MOONCAKE).stacksTo(88)));
     public static final DeferredItem<Item> GOLDEN_POOP_MOONCAKE = ITEMS.register("golden_poop_mooncake", () ->
             new Item(new Item.Properties().food(PFoods.GOLDEN_POOP_MOONCAKE).stacksTo(88)));
+    public static final DeferredItem<Item> BAKED_MAGGOTS = ITEMS.register("baked_maggots", () ->
+            new Item(new Item.Properties().food(PFoods.BAKED_MAGGOTS).stacksTo(88)));
+    public static final DeferredItem<Item> POOP_BREAD = ITEMS.register("poop_bread", () ->
+            new Item(new Item.Properties().food(PFoods.POOP_BREAD).stacksTo(88)));
+    public static final DeferredItem<Item> POOP_DUMPLINGS = ITEMS.register("poop_dumplings", () ->
+            new Item(new Item.Properties().food(PFoods.POOP_DUMPLINGS).stacksTo(88)));
     public static final DeferredItem<Item> POOP_SOUP = ITEMS.register("poop_soup", () ->
             new Item(new Item.Properties().food(PFoods.POOP_SOUP).stacksTo(88)));
     public static final DeferredItem<Item> POOP_VEGETABLE_STICKS = ITEMS.register("poop_vegetable_sticks", () ->
