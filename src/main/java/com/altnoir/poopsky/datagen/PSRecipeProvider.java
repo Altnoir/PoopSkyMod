@@ -5,7 +5,6 @@ import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.recipe.SieveRecipeBuilder;
-import com.altnoir.poopsky.tag.PSItemTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
@@ -150,7 +149,8 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(recipeOutput);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PSItems.SEEDBED_CURSE.get())
                 .requires(Items.ROTTEN_FLESH, 4)
-                .requires(Ingredient.of(PSItemTags.POOPS), 4)
+                .requires(PSItems.POOP_BALL)
+                .requires(PSItems.POOP, 4)
                 .unlockedBy(getItemName(Items.ROTTEN_FLESH), has(Items.ROTTEN_FLESH))
                 .save(recipeOutput);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PSItems.OMINOUS_FILTHY_INGOT.get())

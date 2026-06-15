@@ -3,18 +3,6 @@
   "category": "misc",
   "ingredients": [
     {
-      "tag": "poopsky:poops"
-    },
-    {
-      "tag": "poopsky:poops"
-    },
-    {
-      "tag": "poopsky:poops"
-    },
-    {
-      "tag": "poopsky:poops"
-    },
-    {
       "item": "minecraft:rotten_flesh"
     },
     {
@@ -25,6 +13,21 @@
     },
     {
       "item": "minecraft:rotten_flesh"
+    },
+    {
+      "item": "poopsky:poop_ball"
+    },
+    {
+      "item": "poopsky:poop"
+    },
+    {
+      "item": "poopsky:poop"
+    },
+    {
+      "item": "poopsky:poop"
+    },
+    {
+      "item": "poopsky:poop"
     }
   ],
   "result": {
