@@ -123,6 +123,14 @@ public class PSItems {
     public static final DeferredItem<Item> MOON_BOWL_MUSIC_DISC = ITEMS.register("music_disc_moon_bowl", () ->
             new Item(new Item.Properties().jukeboxPlayable(PSoundEvents.MOON_BOWL_KEY).rarity(Rarity.RARE).stacksTo(1)));
 
+    // ——— 苍蝇系统 ———
+    public static final DeferredItem<Item> FLY = ITEMS.register("fly",
+            () -> new FlyItem(new Item.Properties().stacksTo(88)));
+    public static final DeferredItem<Item> FLY_NET = ITEMS.register("fly_net",
+            () -> new FlyNetItem(new Item.Properties().stacksTo(1).durability(64)));
+    public static final DeferredItem<Item> FLY_SPAWN_EGG = ITEMS.register("fly_spawn_egg",
+            () -> new DeferredSpawnEggItem(PEntityType.FLY, 0xC8C800, 0x8B4513,
+                    new Item.Properties()));
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

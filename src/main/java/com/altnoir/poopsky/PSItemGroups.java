@@ -3,6 +3,8 @@ package com.altnoir.poopsky;
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.init.PComponents;
+import com.altnoir.poopsky.init.PFlyTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;

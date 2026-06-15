@@ -59,5 +59,25 @@ public class PSModEvents {
                 PBlockEntityType.TOILET_BLOCK_ENTITY.get(),
                 (blockEntity, side) -> blockEntity.fluidTank
         );
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                PBlockEntityType.FLY_NEST.get(),
+                (blockEntity, direction) -> {
+                    if (direction == null || direction == Direction.DOWN) {
+                        return blockEntity.getBottomHandler();
+                    }
+                    return blockEntity.getTopSideHandler();
+                }
+        );
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                PBlockEntityType.BREEDING_BOX.get(),
+                (blockEntity, direction) -> {
+                    if (direction == null || direction == Direction.DOWN) {
+                        return blockEntity.getBottomHandler();
+                    }
+                    return blockEntity.getTopSideHandler();
+                }
+        );
     }
 }

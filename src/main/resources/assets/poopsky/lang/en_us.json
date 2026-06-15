@@ -292,6 +292,40 @@
   "stat.poopsky.poop_stat": "Poop Stat",
   "itemgroup.poopsky": "POOPSKY",
 
+  "fly_type.poopsky.normal": "Normal Fly",
+  "fly_type.poopsky.white": "White Fly",
+  "fly_type.poopsky.black": "Black Fly",
+  "fly_type.poopsky.green": "Green Fly",
+  "fly_type.poopsky.yellow": "Yellow Fly",
+  "fly_type.poopsky.blue": "Blue Fly",
+  "fly_type.poopsky.red": "Red Fly",
+  "fly_type.poopsky.brown": "Brown Fly",
+  "fly_type.poopsky.gray": "Gray Fly",
+  "fly_type.poopsky.light_gray": "Light Gray Fly",
+  "fly_type.poopsky.light_blue": "Light Blue Fly",
+  "fly_type.poopsky.lime": "Lime Fly",
+  "fly_type.poopsky.magenta": "Magenta Fly",
+  "fly_type.poopsky.cyan": "Cyan Fly",
+  "fly_type.poopsky.pink": "Pink Fly",
+  "fly_type.poopsky.orange": "Orange Fly",
+  "fly_type.poopsky.purple": "Purple Fly",
+
+  "item.poopsky.fly": "Fly",
+  "item.poopsky.fly_net": "Fly Net",
+  "block.poopsky.fly_nest": "Fly Nest",
+  "block.poopsky.breeding_box": "Breeding Box",
+  "container.poopsky.fly_nest": "Fly Nest",
+  "container.poopsky.breeding_box": "Breeding Box",
+  "tooltip.poopsky.fly_type": "Type",
+
+  "item.poopsky.fly_spawn_egg": "Fly Spawn Egg",
+  "jei.category.poopsky.fly_nest": "Fly Nest",
+  "jei.category.poopsky.breeding_box": "Breeding Box",
+  "jei.poopsky.breeding_box_chance": "Hybridization Chance: %.0f%%",
+
+
+
+
   "poopsky.configuration.title": "%s Options",
   "poopsky.configuration.lavaFluid": "Disable Underground Lava Lakes",
   "poopsky.configuration.lavaFluid.tooltip": "Disables underground lava lakes during PoopSky world generation",
@@ -306,3 +340,8 @@
   "poopsky.configuration.plugTrades": "Disable Toilet Plug Trades",
   "poopsky.configuration.plugTrades.tooltip": "Disables Toilet Plug trades"
 }
+
+
+
+
+

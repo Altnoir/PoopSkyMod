@@ -3,9 +3,13 @@ package com.altnoir.poopsky.init;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.PSBlocks;
+import com.altnoir.poopsky.block.p.BreedingBoxBlock;
+import com.altnoir.poopsky.block.p.FlyNestBlock;
 import com.altnoir.poopsky.block.entity.PlacerBlockEntity;
 import com.altnoir.poopsky.block.entity.SieveBlockEntity;
 import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
+import com.altnoir.poopsky.block.entity.FlyNestBlockEntity;
+import com.altnoir.poopsky.block.entity.BreedingBoxBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -33,6 +37,14 @@ public class PBlockEntityType {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<PlacerBlockEntity>> PLACER_BLOCK_ENTITY =
             BLOCK_ENTITY_TYPES.register("placer_entity", () ->
                     BlockEntityType.Builder.of(PlacerBlockEntity::new, PSBlocks.PLACER.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FlyNestBlockEntity>> FLY_NEST =
+            BLOCK_ENTITY_TYPES.register("fly_nest", () ->
+                    BlockEntityType.Builder.of(FlyNestBlockEntity::new, PSBlocks.FLY_NEST.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BreedingBoxBlockEntity>> BREEDING_BOX =
+            BLOCK_ENTITY_TYPES.register("breeding_box", () ->
+                    BlockEntityType.Builder.of(BreedingBoxBlockEntity::new, PSBlocks.BREEDING_BOX.get()).build(null));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITY_TYPES.register(eventBus);

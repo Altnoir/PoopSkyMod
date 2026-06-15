@@ -9,11 +9,15 @@ import com.altnoir.poopsky.event.PSClientModEvents;
 import com.altnoir.poopsky.event.PSKeyBoardInput;
 import com.altnoir.poopsky.init.PFluidTypes;
 import com.altnoir.poopsky.init.PParticles;
+import com.altnoir.poopsky.init.PComponents;
+import com.altnoir.poopsky.init.PFlyTypes;
 import com.altnoir.poopsky.init.PRecipes;
+import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.misc.particle.PoopParticle;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.RecipeBookCategories;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -23,6 +27,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterNamedRenderTypesEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.RegisterRecipeBookCategoriesEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
@@ -30,7 +35,6 @@ import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.common.NeoForge;
 import org.jetbrains.annotations.NotNull;
-
 @Mod(value = PoopSky.MOD_ID, dist = Dist.CLIENT)
 public class PoopSkyClient {
     public PoopSkyClient(IEventBus modEventBus, ModContainer modContainer) {
@@ -43,6 +47,7 @@ public class PoopSkyClient {
 
     public static void registerMod(IEventBus modEventBus) {
         modEventBus.addListener(PSClientModEvents::registerLayers);
+        modEventBus.addListener(ClientModEvents::registerItemProperties);
         modEventBus.addListener(PSClientModEvents::registerBlockEntityRenderers);
         modEventBus.addListener(PSKeyBoardInput::onRegisterKeyMappings);
         modEventBus.addListener(ClientModEvents::registerRenderTypes);
@@ -53,6 +58,7 @@ public class PoopSkyClient {
         modEventBus.addListener(ClientModEvents::onRegisterItemColors);
         modEventBus.addListener(ClientModEvents::onRegisterBlockRenderBuffers);
         modEventBus.addListener(ClientModEvents::registerClientExtensions);
+        modEventBus.addListener(ClientModEvents::registerMenuScreens);
     }
 
     public static void registerGame(IEventBus modEventBus) {
@@ -61,6 +67,13 @@ public class PoopSkyClient {
     }
 
     public static class ClientModEvents {
+        public static void registerItemProperties(net.neoforged.fml.event.lifecycle.FMLClientSetupEvent event) {
+            event.enqueueWork(() -> {
+                ItemProperties.register(PSItems.FLY.get(), PoopSky.loc("fly_type"),
+                    (stack, level, entity, seed) -> (float) PFlyTypes.getIndex(PFlyTypes.byId(stack.get(PComponents.FLY_TYPE.get()))));
+            });
+        }
+
         public static void registerRenderTypes(RegisterNamedRenderTypesEvent event) {
             event.register(PoopSky.loc("poop_empty_log"), RenderType.cutout(), RenderType.entityCutout(PSBlocks.POOP_EMPTY_LOG.getId()));
         }
@@ -74,8 +87,15 @@ public class PoopSkyClient {
             event.registerEntityRenderer(PEntityType.POOP_TNT.get(), PoopTntRenderer::new);
         }
 
+        public static void registerMenuScreens(RegisterMenuScreensEvent event) {
+            event.register(com.altnoir.poopsky.init.PMenuTypes.FLY_NEST.get(), com.altnoir.poopsky.inventory.FlyNestScreen::new);
+            event.register(com.altnoir.poopsky.init.PMenuTypes.BREEDING_BOX.get(), com.altnoir.poopsky.inventory.BreedingBoxScreen::new);
+        }
+
         public static void registerRecipeBookCategories(RegisterRecipeBookCategoriesEvent event) {
             event.registerRecipeCategoryFinder(PRecipes.SIEVE_TYPE.get(), recipe -> RecipeBookCategories.UNKNOWN);
+        event.registerRecipeCategoryFinder(PRecipes.FLY_NEST_TYPE.get(), recipe -> RecipeBookCategories.UNKNOWN);
+        event.registerRecipeCategoryFinder(PRecipes.BREEDING_BOX_TYPE.get(), recipe -> RecipeBookCategories.UNKNOWN);
         }
 
         public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
@@ -124,3 +144,8 @@ public class PoopSkyClient {
         }
     }
 }
+
+
+
+
+

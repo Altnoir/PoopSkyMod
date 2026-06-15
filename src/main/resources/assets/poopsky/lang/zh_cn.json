@@ -292,6 +292,40 @@
   "stat.poopsky.poop_stat": "排便数",
   "itemgroup.poopsky": "空中厕所",
 
+  "fly_type.poopsky.normal": "普通苍蝇",
+  "fly_type.poopsky.white": "白苍蝇",
+  "fly_type.poopsky.black": "黑苍蝇",
+  "fly_type.poopsky.green": "绿苍蝇",
+  "fly_type.poopsky.yellow": "黄苍蝇",
+  "fly_type.poopsky.blue": "蓝苍蝇",
+  "fly_type.poopsky.red": "红苍蝇",
+  "fly_type.poopsky.brown": "棕苍蝇",
+  "fly_type.poopsky.gray": "灰苍蝇",
+  "fly_type.poopsky.light_gray": "浅灰苍蝇",
+  "fly_type.poopsky.light_blue": "淡蓝苍蝇",
+  "fly_type.poopsky.lime": "黄绿苍蝇",
+  "fly_type.poopsky.magenta": "品红苍蝇",
+  "fly_type.poopsky.cyan": "青苍蝇",
+  "fly_type.poopsky.pink": "粉苍蝇",
+  "fly_type.poopsky.orange": "橙苍蝇",
+  "fly_type.poopsky.purple": "紫苍蝇",
+
+  "item.poopsky.fly": "苍蝇",
+  "item.poopsky.fly_net": "捕蝇网",
+  "block.poopsky.fly_nest": "苍蝇窝",
+  "block.poopsky.breeding_box": "繁育箱",
+  "container.poopsky.fly_nest": "苍蝇窝",
+  "container.poopsky.breeding_box": "繁育箱",
+  "tooltip.poopsky.fly_type": "品种",
+
+  "item.poopsky.fly_spawn_egg": "苍蝇刷怪蛋",
+  "jei.category.poopsky.fly_nest": "苍蝇窝",
+  "jei.category.poopsky.breeding_box": "繁育箱",
+  "jei.poopsky.breeding_box_chance": "杂交概率: %.0f%%",
+
+
+
+
   "poopsky.configuration.title": "%s 配置",
   "poopsky.configuration.lavaFluid": "禁用地下熔岩湖",
   "poopsky.configuration.lavaFluid.tooltip": "在空中厕所世界生成中禁用地下熔岩湖",
@@ -306,3 +340,8 @@
   "poopsky.configuration.plugTrades": "禁用马桶搋子交易",
   "poopsky.configuration.plugTrades.tooltip": "是否禁用马桶搋子交易"
 }
+
+
+
+
+
