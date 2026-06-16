@@ -105,6 +105,6 @@
     }
   ],
   "textures": {
-    "layer0": "minecraft:item/egg"
+    "layer0": "minecraft:item/bone_meal"
   }
 }

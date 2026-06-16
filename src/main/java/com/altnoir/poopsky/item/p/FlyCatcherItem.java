@@ -10,13 +10,12 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 
 /**
  * 捕蝇网：右击苍蝇实体将其变为物品形式。
  */
-public class FlyNetItem extends Item {
-    public FlyNetItem(Properties properties) {
+public class FlyCatcherItem extends Item {
+    public FlyCatcherItem(Properties properties) {
         super(properties);
     }
 

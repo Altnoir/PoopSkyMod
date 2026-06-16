@@ -111,7 +111,7 @@ public class PSItemModelProvider extends ItemModelProvider {
         for (var entry : PFlyTypes.getAll().entrySet()) {
             String id = entry.getKey();
             String texture = id.equals("normal")
-                    ? "minecraft:item/egg"
+                    ? "minecraft:item/bone_meal"
                     : "minecraft:item/" + id + "_dye";
             getBuilder("fly_" + id)
                     .parent(new ModelFile.UncheckedModelFile("item/generated"))
@@ -120,7 +120,7 @@ public class PSItemModelProvider extends ItemModelProvider {
 
         var flyBuilder = getBuilder("fly")
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))
-                .texture("layer0", mcLoc("item/egg"));
+                .texture("layer0", mcLoc("item/bone_meal"));
         for (var entry : PFlyTypes.getAll().entrySet()) {
             flyBuilder.override()
                     .predicate(PoopSky.loc("fly_type"), PFlyTypes.getIndex(entry.getValue()))

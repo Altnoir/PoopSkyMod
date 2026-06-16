@@ -1,6 +1,5 @@
 package com.altnoir.poopsky.datagen;
 
-import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.recipe.BreedingBoxRecipe;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
@@ -19,8 +18,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public final class BreedingBoxRecipeBuilder implements RecipeBuilder {
-    private static final String RECIPE_FOLDER = "breeding_box";
-
     private final String parent1;
     private final String parent2;
     private final String result;

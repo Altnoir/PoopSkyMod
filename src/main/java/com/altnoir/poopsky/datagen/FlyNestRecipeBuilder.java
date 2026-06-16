@@ -1,6 +1,5 @@
 package com.altnoir.poopsky.datagen;
 
-import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.recipe.FlyNestRecipe;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
@@ -20,8 +19,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public final class FlyNestRecipeBuilder implements RecipeBuilder {
-    private static final String RECIPE_FOLDER = "fly_nest";
-
     private final String flyTypeId;
     private final ItemStack result;
     private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();

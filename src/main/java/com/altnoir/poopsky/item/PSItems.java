@@ -127,7 +127,7 @@ public class PSItems {
     public static final DeferredItem<Item> FLY = ITEMS.register("fly",
             () -> new FlyItem(new Item.Properties().stacksTo(88)));
     public static final DeferredItem<Item> FLY_CATCHER = ITEMS.register("fly_catcher",
-            () -> new FlyNetItem(new Item.Properties().stacksTo(1).durability(64)));
+            () -> new FlyCatcherItem(new Item.Properties().stacksTo(1).durability(64)));
     public static final DeferredItem<Item> FLY_SPAWN_EGG = ITEMS.register("fly_spawn_egg",
             () -> new DeferredSpawnEggItem(PEntityType.FLY, 0xC8C800, 0x8B4513,
                     new Item.Properties()));
