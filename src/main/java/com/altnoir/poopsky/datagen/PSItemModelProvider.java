@@ -3,13 +3,16 @@ package com.altnoir.poopsky.datagen;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.item.PItems;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.armortrim.TrimMaterials;
+import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -92,11 +95,16 @@ public class PSItemModelProvider extends ItemModelProvider {
 
         basicItem(PItems.OMINOUS_FILTHY_INGOT.get());
         basicItem(PItems.OMEN_UPGRADE_SMITHING_TEMPLATE.get());
-        handheldItem(PItems.MILOS_SWORD.get());
+        bigSowordItem(PItems.MILOS_SWORD.get());
         trimmedArmorItem(PItems.OMEN_HELMET);
         trimmedArmorItem(PItems.OMEN_CHESTPLATE);
         trimmedArmorItem(PItems.OMEN_LEGGINGS);
         trimmedArmorItem(PItems.OMEN_BOOTS);
+    }
+
+    private ItemModelBuilder bigSowordItem(Item item) {
+        return this.withExistingParent(getItemPath(item), modLoc("item/big_sword"))
+                .texture("layer0", PoopSky.loc("item/" + getItemPath(item)));
     }
 
     private void wallItem(DeferredBlock<?> block, DeferredBlock<?> baseBlock) {
@@ -140,5 +148,13 @@ public class PSItemModelProvider extends ItemModelProvider {
                                 PoopSky.loc("item/" + itemDeferredItem.getId().getPath()));
             });
         }
+    }
+
+    private String getItemPath(Item item) {
+        return getItemKey(item).getPath();
+    }
+
+    private ResourceLocation getItemKey(Item item) {
+        return BuiltInRegistries.ITEM.getKey(item);
     }
 }

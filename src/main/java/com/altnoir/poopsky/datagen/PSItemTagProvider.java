@@ -101,6 +101,10 @@ public class PSItemTagProvider extends ItemTagsProvider {
                 .add(PItems.OMEN_BOOTS.get());
 
         tag(ItemTags.SWORDS).add(PItems.MILOS_SWORD.get());
+        tag(ItemTags.FOOT_ARMOR).add(PItems.OMEN_BOOTS.get());
+        tag(ItemTags.LEG_ARMOR).add(PItems.OMEN_LEGGINGS.get());
+        tag(ItemTags.CHEST_ARMOR).add(PItems.OMEN_CHESTPLATE.get());
+        tag(ItemTags.HEAD_ARMOR).add(PItems.OMEN_HELMET.get());
 
         tag(Tags.Items.MUSIC_DISCS)
                 .add(PItems.LAWRENCE_MUSIC_DISC.get())

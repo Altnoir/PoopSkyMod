@@ -8,11 +8,13 @@ import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.init.PFluids;
 import com.altnoir.poopsky.init.PSoundEvents;
 import com.altnoir.poopsky.item.p.*;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import org.jetbrains.annotations.Nullable;
 
 
 public class PItems {
@@ -80,14 +82,16 @@ public class PItems {
     public static final DeferredItem<Item> OMINOUS_FILTHY_INGOT = ITEMS.register("ominous_filthy_ingot", () ->
             new Item(new Item.Properties()));
     public static final DeferredItem<SwordItem> MILOS_SWORD = ITEMS.register("milos_sword", () ->
-            new SwordItem(PToolTiers.MILOS,
-                    new Item.Properties().attributes(SwordItem.createAttributes(PToolTiers.MILOS, 1, -3.4F))));
+            new MilosSwordItem(PToolTiers.MILOS,
+                    new Item.Properties().attributes(MilosSwordItem.createAttributes(PToolTiers.MILOS, 2, 1, -3.4F))
+            ));
 
     public static final DeferredItem<ArmorItem> OMEN_HELMET = ITEMS.register("omen_helmet", () ->
-            new ArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.HELMET,
-                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(24))));
+            new OmenArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.HELMET,
+                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(24))){
+            });
     public static final DeferredItem<ArmorItem> OMEN_CHESTPLATE = ITEMS.register("omen_chestplate", () ->
-            new OmenArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE,
+            new ArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE,
                     new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(24))));
     public static final DeferredItem<ArmorItem> OMEN_LEGGINGS = ITEMS.register("omen_leggings", () ->
             new ArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS,

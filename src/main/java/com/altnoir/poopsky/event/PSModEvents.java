@@ -23,6 +23,7 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 
 import java.util.Set;
@@ -89,4 +90,16 @@ public class PSModEvents {
             MobEffects.WITHER,
             MobEffects.CONFUSION
     );
+
+    @SubscribeEvent
+    public static void onLivingHurt(LivingDamageEvent.Pre event) {
+        LivingEntity entity = event.getEntity();
+
+        if (entity.hasEffect(PEffects.BLEEDING)) {
+            float originalDamage = event.getOriginalDamage();
+            float amplifier = (entity.getEffect(PEffects.BLEEDING).getAmplifier() + 1) * 0.1F;
+            float bleedingDamage = originalDamage * (1 + amplifier);
+            event.setNewDamage(bleedingDamage);
+        }
+    }
 }
