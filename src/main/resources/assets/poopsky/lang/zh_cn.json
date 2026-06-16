@@ -323,7 +323,6 @@
   "jei.category.poopsky.fly_nest": "苍蝇窝",
   "jei.category.poopsky.breeding_box": "繁育箱",
   "jei.poopsky.breeding_box_chance": "变异概率: %.0f%%",
-  "jei.poopsky.breeding_box_fallback": "变异失败（随机亲本）",
 
   "poopsky.configuration.title": "%s 配置",
   "poopsky.configuration.lavaFluid": "禁用地下熔岩湖",

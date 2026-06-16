@@ -94,10 +94,7 @@ public class PSJEIPlugin implements IModPlugin {
                             return new BreedingBoxJeiRecipe(
                                     parentFly1,
                                     parentFly2,
-                                    new ItemStack(PSItems.POOP.get()),
                                     resultFly,
-                                    parentFly1,
-                                    parentFly2,
                                     recipe.chance()
                             );
                         })

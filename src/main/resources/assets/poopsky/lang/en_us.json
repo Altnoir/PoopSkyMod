@@ -323,7 +323,6 @@
   "jei.category.poopsky.fly_nest": "Fly Nest",
   "jei.category.poopsky.breeding_box": "Breeding Box",
   "jei.poopsky.breeding_box_chance": "Mutation Chance: %.0f%%",
-  "jei.poopsky.breeding_box_fallback": "Mutation Failed (Random Parent)",
 
   "poopsky.configuration.title": "%s Options",
   "poopsky.configuration.lavaFluid": "Disable Underground Lava Lakes",
