@@ -29,6 +29,11 @@ public class MilosSwordItem extends SwordItem {
                 int duration = target.getEffect(PEffects.BLEEDING).getDuration() + 200;
                 int amplifier = target.getEffect(PEffects.BLEEDING).getAmplifier() + 1;
                 target.addEffect(new MobEffectInstance(PEffects.BLEEDING, duration, amplifier));
+
+                if (amplifier % 5 == 0) {
+                    float damage = target.getMaxHealth() * 0.2F;
+                    target.hurt(target.damageSources().mobAttack(attacker), damage);
+                }
             }
         }
         return super.hurtEnemy(stack, target, attacker);

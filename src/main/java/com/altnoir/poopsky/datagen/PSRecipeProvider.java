@@ -123,6 +123,18 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(recipeOutput);
 
         // 杂
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PItems.TOILET_PLUG_WAND)
+                .requires(PItems.TOILET_PLUG.get())
+                .requires(PItems.POOP.get())
+                .requires(Items.ENDER_EYE)
+                .unlockedBy(getItemName(Items.ENDER_EYE), has(Items.ENDER_EYE))
+                .save(recipeOutput);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PItems.TIME_BELL)
+                .requires(Items.BELL)
+                .requires(PItems.POOP.get())
+                .requires(Items.DRAGON_EGG)
+                .unlockedBy(getItemName(Items.DRAGON_EGG), has(Items.DRAGON_EGG))
+                .save(recipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, Items.COBWEB)
                 .pattern("S S")
                 .pattern(" P ")
@@ -159,6 +171,15 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy(getItemName(PItems.SEEDBED_CURSE), has(PItems.SEEDBED_CURSE))
                 .save(recipeOutput);
         copySmithingTemplate(recipeOutput, PItems.OMEN_UPGRADE_SMITHING_TEMPLATE, PBlocks.POOP_BLOCK, PItems.SEEDBED_CURSE);
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PItems.MILOS_SWORD)
+                .pattern("BOB")
+                .pattern(" O ")
+                .pattern(" P ")
+                .define('B', Items.BONE)
+                .define('O', PItems.OMINOUS_FILTHY_INGOT)
+                .define('P', PItems.TOILET_PLUG)
+                .unlockedBy(getItemName(PItems.OMINOUS_FILTHY_INGOT), has(PItems.OMINOUS_FILTHY_INGOT))
+                .save(recipeOutput);
         //盔甲
         omenSmithing(recipeOutput, Items.GOLDEN_CHESTPLATE, RecipeCategory.COMBAT, PItems.OMEN_CHESTPLATE.get());
         omenSmithing(recipeOutput, Items.GOLDEN_LEGGINGS, RecipeCategory.COMBAT, PItems.OMEN_LEGGINGS.get());
@@ -166,42 +187,19 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         omenSmithing(recipeOutput, Items.GOLDEN_BOOTS, RecipeCategory.COMBAT, PItems.OMEN_BOOTS.get());
 
         // 建筑
-        offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_BLOCK, PItems.POOP, 1);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PItems.TOILET_PLUG_WAND)
-                .requires(PItems.TOILET_PLUG.get())
-                .requires(PItems.POOP.get())
-                .requires(Items.ENDER_EYE)
-                .unlockedBy(getItemName(Items.ENDER_EYE), has(Items.ENDER_EYE))
-                .save(recipeOutput);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PItems.TIME_BELL)
-                .requires(Items.BELL)
-                .requires(PItems.POOP.get())
-                .requires(Items.DRAGON_EGG)
-                .unlockedBy(getItemName(Items.DRAGON_EGG), has(Items.DRAGON_EGG))
-                .save(recipeOutput);
-
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PItems.POOP, 4)
-                .requires(PBlocks.POOP_BLOCK)
-                .unlockedBy(getItemName(PBlocks.POOP_BLOCK), has(PBlocks.POOP_BLOCK))
-                .save(recipeOutput);
-
-        offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.CHILI_POOP_BLOCK, PItems.CHILI_POOP, 1);
+        offer2x2CompactingRecipe(recipeOutput, PBlocks.POOP_BLOCK, PItems.POOP);
         stairsRecipe(recipeOutput, PBlocks.POOP_STAIRS, PBlocks.POOP_BLOCK);
         slabRecipe(recipeOutput, PBlocks.POOP_SLAB, PBlocks.POOP_BLOCK);
         verticalSlabRecipe(recipeOutput, PBlocks.POOP_VERTICAL_SLAB, PBlocks.POOP_BLOCK);
         wallRecipe(recipeOutput, PBlocks.POOP_WALL, PBlocks.POOP_BLOCK);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PItems.CHILI_POOP, 4)
-                .requires(PBlocks.CHILI_POOP_BLOCK)
-                .unlockedBy(getItemName(PBlocks.CHILI_POOP_BLOCK), has(PBlocks.CHILI_POOP_BLOCK))
-                .save(recipeOutput);
-
+        offer2x2CompactingRecipe(recipeOutput, PBlocks.CHILI_POOP_BLOCK, PItems.CHILI_POOP);
         stairsRecipe(recipeOutput, PBlocks.CHILI_POOP_STAIRS, PBlocks.CHILI_POOP_BLOCK);
         slabRecipe(recipeOutput, PBlocks.CHILI_POOP_SLAB, PBlocks.CHILI_POOP_BLOCK);
         verticalSlabRecipe(recipeOutput, PBlocks.CHILI_POOP_VERTICAL_SLAB, PBlocks.CHILI_POOP_BLOCK);
         wallRecipe(recipeOutput, PBlocks.CHILI_POOP_WALL, PBlocks.CHILI_POOP_BLOCK);
 
-        offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.GOLDEN_POOP_BLOCK, PItems.GOLDEN_POOP, 1);
+        offer2x2CompactingRecipe(recipeOutput, PBlocks.GOLDEN_POOP_BLOCK, PItems.GOLDEN_POOP);
         stairsRecipe(recipeOutput, PBlocks.GOLDEN_POOP_STAIRS, PBlocks.GOLDEN_POOP_BLOCK);
         slabRecipe(recipeOutput, PBlocks.GOLDEN_POOP_SLAB, PBlocks.GOLDEN_POOP_BLOCK);
         verticalSlabRecipe(recipeOutput, PBlocks.GOLDEN_POOP_VERTICAL_SLAB, PBlocks.GOLDEN_POOP_BLOCK);
@@ -353,7 +351,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy(getItemName(PItems.KING_OF_DRAGON_FRUIT), has(PItems.KING_OF_DRAGON_FRUIT))
                 .save(recipeOutput);
 
-        offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOLIME_BLOCK.get(), PItems.POOP_BALL.get(), 1);
+        offer2x2CompactingRecipe(recipeOutput, PBlocks.POOLIME_BLOCK.get(), PItems.POOP_BALL.get());
         offerCompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOLIME_POOP_BLOCK.get(), PBlocks.POOP_BLOCK.get());
 
         //原版物品配方
@@ -397,6 +395,31 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('S', Items.STICK)
                 .unlockedBy(getItemName(PItems.POOP_BALL), has(PItems.POOP_BALL))
                 .save(recipeOutput, getConversionRecipeName(Items.TORCH) + "_from_poop_ball");
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Blocks.TUBE_CORAL_BLOCK)
+                .requires(PBlocks.POOP_BLOCK)
+                .requires(Blocks.TUBE_CORAL).requires(Blocks.TUBE_CORAL_FAN)
+                .unlockedBy(getItemName(Blocks.TUBE_CORAL), has(Blocks.TUBE_CORAL))
+                .save(recipeOutput);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Blocks.BRAIN_CORAL_BLOCK)
+                .requires(PBlocks.POOP_BLOCK)
+                .requires(Blocks.BRAIN_CORAL).requires(Blocks.BRAIN_CORAL_FAN)
+                .unlockedBy(getItemName(Blocks.BRAIN_CORAL), has(Blocks.BRAIN_CORAL))
+                .save(recipeOutput);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Blocks.BUBBLE_CORAL_BLOCK)
+                .requires(PBlocks.POOP_BLOCK)
+                .requires(Blocks.BUBBLE_CORAL).requires(Blocks.BUBBLE_CORAL_FAN)
+                .unlockedBy(getItemName(Blocks.BUBBLE_CORAL), has(Blocks.BUBBLE_CORAL))
+                .save(recipeOutput);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Blocks.FIRE_CORAL_BLOCK)
+                .requires(PBlocks.POOP_BLOCK)
+                .requires(Blocks.FIRE_CORAL).requires(Blocks.FIRE_CORAL_FAN)
+                .unlockedBy(getItemName(Blocks.FIRE_CORAL), has(Blocks.FIRE_CORAL))
+                .save(recipeOutput);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Blocks.HORN_CORAL_BLOCK)
+                .requires(PBlocks.POOP_BLOCK)
+                .requires(Blocks.HORN_CORAL).requires(Blocks.HORN_CORAL_FAN)
+                .unlockedBy(getItemName(Blocks.HORN_CORAL), has(Blocks.HORN_CORAL))
+                .save(recipeOutput);
 
         offerCompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, Blocks.MOSSY_COBBLESTONE, PItems.SPALL);
         create1x2ShapelessFrom(recipeOutput, Blocks.GRASS_BLOCK, Blocks.DIRT, Blocks.MOSS_BLOCK);
@@ -649,6 +672,23 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .pattern("###")
                 .unlockedBy(getItemName(input), has(input))
                 .save(recipeOutput, getConversionRecipeName(output) + "_from_compacting");
+    }
+
+    public static void offer2x2CompactingRecipe(RecipeOutput recipeOutput, ItemLike output, ItemLike input) {
+        offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, RecipeCategory.MISC, output, input, 1, 4);
+    }
+
+    public static void offer2x2CompactingRecipe(RecipeOutput recipeOutput, RecipeCategory category, RecipeCategory category2, ItemLike output, ItemLike input, int count, int count2) {
+        ShapedRecipeBuilder.shaped(category, output, count)
+                .define('#', input)
+                .pattern("##")
+                .pattern("##")
+                .unlockedBy(getItemName(input), has(input))
+                .save(recipeOutput, getConversionRecipeName(output, input));
+        ShapelessRecipeBuilder.shapeless(category2, input, count2)
+                .requires(output)
+                .unlockedBy(getItemName(output), has(output))
+                .save(recipeOutput, getConversionRecipeName(input, output));
     }
 
     public static void offer2x2CompactingRecipe(RecipeOutput recipeOutput, RecipeCategory category, ItemLike output, ItemLike input, int count) {

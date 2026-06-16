@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:tube_coral_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "tube_coral": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:tube_coral"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "tube_coral"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:tube_coral_block"
+    ]
+  }
+}

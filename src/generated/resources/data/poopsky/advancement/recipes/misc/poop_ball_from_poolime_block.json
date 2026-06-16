@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:poop_ball_from_poolime_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "poolime_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:poolime_block"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "poolime_block"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "poopsky:poop_ball_from_poolime_block"
+    ]
+  }
+}
