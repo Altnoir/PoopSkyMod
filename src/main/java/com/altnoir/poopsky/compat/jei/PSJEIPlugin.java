@@ -88,11 +88,16 @@ public class PSJEIPlugin implements IModPlugin {
                 recipeManager.getAllRecipesFor(PRecipes.BREEDING_BOX_TYPE.get()).stream()
                         .map(holder -> {
                             BreedingBoxRecipe recipe = holder.value();
+                            ItemStack resultFly = FlyItem.withType(PFlyTypes.byId(recipe.result()));
+                            ItemStack parentFly1 = FlyItem.withType(PFlyTypes.byId(recipe.parent1()));
+                            ItemStack parentFly2 = FlyItem.withType(PFlyTypes.byId(recipe.parent2()));
                             return new BreedingBoxJeiRecipe(
-                                    FlyItem.withType(PFlyTypes.byId(recipe.parent1())),
-                                    FlyItem.withType(PFlyTypes.byId(recipe.parent2())),
+                                    parentFly1,
+                                    parentFly2,
                                     new ItemStack(PSItems.POOP.get()),
-                                    FlyItem.withType(PFlyTypes.byId(recipe.result())),
+                                    resultFly,
+                                    parentFly1,
+                                    parentFly2,
                                     recipe.chance()
                             );
                         })

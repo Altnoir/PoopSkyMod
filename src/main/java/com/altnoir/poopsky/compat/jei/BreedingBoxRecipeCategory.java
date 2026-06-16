@@ -19,7 +19,7 @@ import net.minecraft.world.item.ItemStack;
 public class BreedingBoxRecipeCategory implements IRecipeCategory<BreedingBoxJeiRecipe> {
     public static final RecipeType<BreedingBoxJeiRecipe> TYPE = RecipeType.create(PoopSky.MOD_ID, "breeding_box", BreedingBoxJeiRecipe.class);
 
-    private static final int WIDTH = 100;
+    private static final int WIDTH = 112;
     private static final int HEIGHT = 54;
 
     private final IDrawable icon;
@@ -47,12 +47,24 @@ public class BreedingBoxRecipeCategory implements IRecipeCategory<BreedingBoxJei
         builder.addSlot(RecipeIngredientRole.INPUT, 1, 19).addItemStack(recipe.flyInput2());
         builder.addSlot(RecipeIngredientRole.INPUT, 1, 37).addItemStack(recipe.fecesInput());
 
+        // 杂交成功产物
         builder.addSlot(RecipeIngredientRole.OUTPUT, 56, 10)
                 .addItemStack(recipe.resultFly())
                 .addRichTooltipCallback((view, tooltip) -> {
                     float chance = recipe.chance();
                     tooltip.add(Component.translatable("jei.poopsky.breeding_box_chance",
                             String.format("%.0f", chance * 100)).withStyle(ChatFormatting.GRAY));
+                });
+        // 杂交失败可能产物（亲本品种）
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 74, 10)
+                .addItemStack(recipe.fallbackFly1())
+                .addRichTooltipCallback((view, tooltip) -> {
+                    tooltip.add(Component.translatable("jei.poopsky.breeding_box_fallback").withStyle(ChatFormatting.GRAY));
+                });
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 92, 10)
+                .addItemStack(recipe.fallbackFly2())
+                .addRichTooltipCallback((view, tooltip) -> {
+                    tooltip.add(Component.translatable("jei.poopsky.breeding_box_fallback").withStyle(ChatFormatting.GRAY));
                 });
     }
 
@@ -61,7 +73,9 @@ public class BreedingBoxRecipeCategory implements IRecipeCategory<BreedingBoxJei
         this.slot.draw(graphics, 0, 0);
         this.slot.draw(graphics, 0, 18);
         this.slot.draw(graphics, 0, 36);
-        this.arrow.draw(graphics, 24, 12);
+        this.arrow.draw(graphics, 32, 8);
         this.slot.draw(graphics, 55, 9);
+        this.slot.draw(graphics, 73, 9);
+        this.slot.draw(graphics, 91, 9);
     }
 }

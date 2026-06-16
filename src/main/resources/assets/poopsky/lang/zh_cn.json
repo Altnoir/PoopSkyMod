@@ -302,12 +302,12 @@
   "fly_type.poopsky.red": "红苍蝇",
   "fly_type.poopsky.brown": "棕苍蝇",
   "fly_type.poopsky.gray": "灰苍蝇",
-  "fly_type.poopsky.light_gray": "浅灰苍蝇",
+  "fly_type.poopsky.light_gray": "淡灰苍蝇",
   "fly_type.poopsky.light_blue": "淡蓝苍蝇",
   "fly_type.poopsky.lime": "黄绿苍蝇",
   "fly_type.poopsky.magenta": "品红苍蝇",
   "fly_type.poopsky.cyan": "青苍蝇",
-  "fly_type.poopsky.pink": "粉苍蝇",
+  "fly_type.poopsky.pink": "粉红苍蝇",
   "fly_type.poopsky.orange": "橙苍蝇",
   "fly_type.poopsky.purple": "紫苍蝇",
 
@@ -323,7 +323,7 @@
   "jei.category.poopsky.fly_nest": "苍蝇窝",
   "jei.category.poopsky.breeding_box": "繁育箱",
   "jei.poopsky.breeding_box_chance": "杂交概率: %.0f%%",
-
+  "jei.poopsky.breeding_box_fallback": "杂交失败（随机亲本）",
 
 
 
