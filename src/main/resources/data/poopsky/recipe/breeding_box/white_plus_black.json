@@ -1,8 +1,0 @@
-{
-  "type": "poopsky:breeding_box",
-  "parent1": "white",
-  "parent2": "black",
-  "result": "gray",
-  "chance": 0.2
-}
-

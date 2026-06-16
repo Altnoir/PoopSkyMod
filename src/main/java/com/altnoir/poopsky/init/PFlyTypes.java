@@ -23,7 +23,7 @@ public class PFlyTypes {
     public static final FlyType RED = register("red");
     public static final FlyType BROWN = register("brown");
 
-    // ——— 只能杂交获得 ———
+    // ——— 只能变异获得 ———
     public static final FlyType GRAY = register("gray");
     public static final FlyType LIGHT_GRAY = register("light_gray");
     public static final FlyType LIGHT_BLUE = register("light_blue");

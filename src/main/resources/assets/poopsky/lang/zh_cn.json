@@ -312,7 +312,7 @@
   "fly_type.poopsky.purple": "紫苍蝇",
 
   "item.poopsky.fly": "苍蝇",
-  "item.poopsky.fly_net": "捕蝇网",
+  "item.poopsky.fly_catcher": "捕蝇网",
   "block.poopsky.fly_nest": "苍蝇窝",
   "block.poopsky.breeding_box": "繁育箱",
   "container.poopsky.fly_nest": "苍蝇窝",
@@ -322,8 +322,8 @@
   "item.poopsky.fly_spawn_egg": "苍蝇刷怪蛋",
   "jei.category.poopsky.fly_nest": "苍蝇窝",
   "jei.category.poopsky.breeding_box": "繁育箱",
-  "jei.poopsky.breeding_box_chance": "杂交概率: %.0f%%",
-  "jei.poopsky.breeding_box_fallback": "杂交失败（随机亲本）",
+ "jei.poopsky.breeding_box_chance": "变异概率: %.0f%%",
+ "jei.poopsky.breeding_box_fallback": "变异失败（随机亲本）",
 
 
 

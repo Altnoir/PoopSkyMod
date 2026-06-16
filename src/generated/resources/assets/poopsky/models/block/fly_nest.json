@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "texture": "minecraft:block/beehive_side"
+  }
+}

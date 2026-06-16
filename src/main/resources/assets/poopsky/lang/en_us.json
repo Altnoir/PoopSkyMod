@@ -312,7 +312,7 @@
   "fly_type.poopsky.purple": "Purple Fly",
 
   "item.poopsky.fly": "Fly",
-  "item.poopsky.fly_net": "Fly Net",
+  "item.poopsky.fly_catcher": "Fly Catcher",
   "block.poopsky.fly_nest": "Fly Nest",
   "block.poopsky.breeding_box": "Breeding Box",
   "container.poopsky.fly_nest": "Fly Nest",
@@ -322,8 +322,8 @@
   "item.poopsky.fly_spawn_egg": "Fly Spawn Egg",
   "jei.category.poopsky.fly_nest": "Fly Nest",
   "jei.category.poopsky.breeding_box": "Breeding Box",
-  "jei.poopsky.breeding_box_chance": "Hybridization Chance: %.0f%%",
-  "jei.poopsky.breeding_box_fallback": "Hybridization Failed (Random Parent)",
+ "jei.poopsky.breeding_box_chance": "Mutation Chance: %.0f%%",
+ "jei.poopsky.breeding_box_fallback": "Mutation Failed (Random Parent)",
 
 
 

@@ -13,12 +13,12 @@ import java.util.Optional;
 import java.util.Random;
 
 /**
- * 苍蝇杂交与产物查询工具类。
+ * 苍蝇变异与产物查询工具类。
  * 所有数据从 RecipeManager 中读取 JSON 配方，不硬编码。
  */
 public class PFlyRecipes {
 
-    public record JeiHybridRecipe(PFlyTypes.FlyType parent1, PFlyTypes.FlyType parent2, PFlyTypes.FlyType result, float chance) {}
+    public record JeiMutationRecipe(PFlyTypes.FlyType parent1, PFlyTypes.FlyType parent2, PFlyTypes.FlyType result, float chance) {}
 
     /**
      * 获取苍蝇品种对应的产物 ItemStack。
@@ -35,13 +35,13 @@ public class PFlyRecipes {
     }
 
     /**
-     * 杂交判定：查找配方；找到配方且概率通过 -> 返回新品种；
+     * 变异判定：查找配方；找到配方且概率通过 -> 返回新品种；
      * 找不到配方 -> 两个不同品种随机选一个返回，相同品种返回自身。
      */
-    public static HybridResult tryHybrid(Level level, PFlyTypes.FlyType parent1, PFlyTypes.FlyType parent2) {
+    public static MutationResult tryMutate(Level level, PFlyTypes.FlyType parent1, PFlyTypes.FlyType parent2) {
         if (level == null) return fallbackResult(parent1, parent2);
 
-        // 查找匹配的杂交配方
+        // 查找匹配的变异配方
         List<RecipeHolder<BreedingBoxRecipe>> recipes = level.getRecipeManager()
                 .getAllRecipesFor(PRecipes.BREEDING_BOX_TYPE.get());
 
@@ -50,10 +50,10 @@ public class PFlyRecipes {
             BreedingBoxRecipe recipe = holder.value();
             if (recipe.matches(parent1.getSerializedName(), parent2.getSerializedName())) {
                 if (random.nextFloat() < recipe.chance()) {
-                    return new HybridResult(PFlyTypes.byId(recipe.result()), true);
+                return new MutationResult(PFlyTypes.byId(recipe.result()), true);
                 }
-                // 杂交失败 -> 返回父母中随机一个
-                return new HybridResult(random.nextBoolean() ? parent1 : parent2, false);
+                // 变异失败 -> 返回父母中随机一个
+                return new MutationResult(random.nextBoolean() ? parent1 : parent2, false);
             }
         }
 
@@ -61,13 +61,13 @@ public class PFlyRecipes {
         return fallbackResult(parent1, parent2);
     }
 
-    private static HybridResult fallbackResult(PFlyTypes.FlyType parent1, PFlyTypes.FlyType parent2) {
+    private static MutationResult fallbackResult(PFlyTypes.FlyType parent1, PFlyTypes.FlyType parent2) {
         if (parent1.equals(parent2)) {
-            return new HybridResult(parent1, false);
+            return new MutationResult(parent1, false);
         }
-        return new HybridResult(new Random().nextBoolean() ? parent1 : parent2, false);
+        return new MutationResult(new Random().nextBoolean() ? parent1 : parent2, false);
     }
 
-    public record HybridResult(PFlyTypes.FlyType result, boolean isHybrid) {}
+    public record MutationResult(PFlyTypes.FlyType result, boolean isMutation) {}
 }
 

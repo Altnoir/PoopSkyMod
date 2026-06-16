@@ -47,7 +47,7 @@ public class BreedingBoxRecipeCategory implements IRecipeCategory<BreedingBoxJei
         builder.addSlot(RecipeIngredientRole.INPUT, 1, 19).addItemStack(recipe.flyInput2());
         builder.addSlot(RecipeIngredientRole.INPUT, 1, 37).addItemStack(recipe.fecesInput());
 
-        // 杂交成功产物
+        // 变异成功产物
         builder.addSlot(RecipeIngredientRole.OUTPUT, 56, 10)
                 .addItemStack(recipe.resultFly())
                 .addRichTooltipCallback((view, tooltip) -> {
@@ -55,7 +55,7 @@ public class BreedingBoxRecipeCategory implements IRecipeCategory<BreedingBoxJei
                     tooltip.add(Component.translatable("jei.poopsky.breeding_box_chance",
                             String.format("%.0f", chance * 100)).withStyle(ChatFormatting.GRAY));
                 });
-        // 杂交失败可能产物（亲本品种）
+        // 变异失败可能产物（亲本品种）
         builder.addSlot(RecipeIngredientRole.OUTPUT, 74, 10)
                 .addItemStack(recipe.fallbackFly1())
                 .addRichTooltipCallback((view, tooltip) -> {

@@ -33,6 +33,7 @@ import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.common.NeoForge;
 import org.jetbrains.annotations.NotNull;
+
 @Mod(value = PoopSky.MOD_ID, dist = Dist.CLIENT)
 public class PoopSkyClient {
     public PoopSkyClient(IEventBus modEventBus, ModContainer modContainer) {

@@ -159,8 +159,8 @@ public class BreedingBoxBlockEntity extends BlockEntity implements MenuProvider 
         PFlyTypes.FlyType type1 = FlyItem.getFlyType(fly1);
         PFlyTypes.FlyType type2 = FlyItem.getFlyType(fly2);
 
-        // 杂交判定
-        PFlyRecipes.HybridResult result = PFlyRecipes.tryHybrid(level, type1, type2);
+        // 变异判定
+        PFlyRecipes.MutationResult result = PFlyRecipes.tryMutate(level, type1, type2);
 
         // 产卵数量：基础1个 + 环境加成
         int envBonus = getEnvironmentBonus(level, worldPosition);

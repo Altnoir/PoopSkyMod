@@ -25,12 +25,9 @@ public class BreedingBoxMenu extends AbstractContainerMenu {
     private static final int FLY_SLOT_2 = 2;
     // 输出槽
     private static final int OUTPUT_SLOT_1 = 3;
-    private static final int OUTPUT_SLOT_2 = 4;
-    private static final int OUTPUT_SLOT_3 = 5;
 
     private static final int SLOT_COUNT = 6;
     private static final int INV_SLOT_START = 6;
-    private static final int INV_SLOT_END = 33;
     private static final int HOTBAR_SLOT_START = 33;
     private static final int HOTBAR_SLOT_END = 42;
 

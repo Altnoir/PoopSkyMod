@@ -15,7 +15,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
 /**
- * 繁育箱杂交配方：两个父本苍蝇品种 -> 子代品种 + 概率
+ * 繁育箱变异配方：两个父本苍蝇品种 -> 子代品种 + 概率
  */
 public record BreedingBoxRecipe(String parent1, String parent2, String result, float chance) implements Recipe<RecipeInput> {
 
