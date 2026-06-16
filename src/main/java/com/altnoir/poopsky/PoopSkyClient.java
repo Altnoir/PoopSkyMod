@@ -1,6 +1,6 @@
 package com.altnoir.poopsky;
 
-import com.altnoir.poopsky.block.PSBlocks;
+import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.entity.renderer.*;
@@ -62,7 +62,7 @@ public class PoopSkyClient {
 
     public static class ClientModEvents {
         public static void registerRenderTypes(RegisterNamedRenderTypesEvent event) {
-            event.register(PoopSky.loc("poop_empty_log"), RenderType.cutout(), RenderType.entityCutout(PSBlocks.POOP_EMPTY_LOG.getId()));
+            event.register(PoopSky.loc("poop_empty_log"), RenderType.cutout(), RenderType.entityCutout(PBlocks.POOP_EMPTY_LOG.getId()));
         }
 
         public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
@@ -93,11 +93,11 @@ public class PoopSkyClient {
                     return 0x47311A;
                 }
                 return -1;
-            }, PSBlocks.WATER_COMPOOPER.get());
+            }, PBlocks.WATER_COMPOOPER.get());
         }
 
         public static void onRegisterItemColors(RegisterColorHandlersEvent.Item event) {
-            event.register((stack, tintIndex) -> tintIndex == 1 ? 0x3F76E4 : -1, PSBlocks.WATER_COMPOOPER.get());
+            event.register((stack, tintIndex) -> tintIndex == 1 ? 0x3F76E4 : -1, PBlocks.WATER_COMPOOPER.get());
         }
 
         public static void onRegisterBlockRenderBuffers(net.neoforged.neoforge.client.event.RegisterRenderBuffersEvent event) {

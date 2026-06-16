@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.mixin;
 
-import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.item.PItems;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.Item;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,7 +17,7 @@ public class VillagerMixin {
             at = @At(value = "INVOKE", target = "Ljava/util/Map;get(Ljava/lang/Object;)Ljava/lang/Object;", remap = false, ordinal = 0)
     )
     public Object redirectFoodPointsGet(Map<Item, Integer> map, Object item) {
-        if (map == Villager.FOOD_POINTS && item == PSItems.POOP.get()) return 1;
+        if (map == Villager.FOOD_POINTS && item == PItems.POOP.get()) return 1;
         return map.get(item);
     }
 
@@ -28,7 +28,7 @@ public class VillagerMixin {
     public Set<Map.Entry<Item, Integer>> redirectEntrySet(Map<Item, Integer> item) {
         if (item == Villager.FOOD_POINTS) {
             Map<Item, Integer> FoodPoints = new java.util.HashMap<>(item);
-            FoodPoints.put(PSItems.POOP.get(), 1);
+            FoodPoints.put(PItems.POOP.get(), 1);
             return FoodPoints.entrySet();
         }
         return item.entrySet();
@@ -39,6 +39,6 @@ public class VillagerMixin {
             at = @At(value = "INVOKE", target = "Ljava/util/Set;contains(Ljava/lang/Object;)Z", remap = false, ordinal = 0)
     )
     public boolean wantsToPickUp(Set<Item> set, Object item) {
-        return set.contains(item) || item == PSItems.POOP.get() || item == PSItems.MAGGOTS_SEEDS.get();
+        return set.contains(item) || item == PItems.POOP.get() || item == PItems.MAGGOTS_SEEDS.get();
     }
 }

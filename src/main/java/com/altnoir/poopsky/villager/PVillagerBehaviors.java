@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.villager;
 
-import com.altnoir.poopsky.tag.PSItemTags;
+import com.altnoir.poopsky.tag.PItemTags;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.behavior.EntityTracker;
@@ -11,7 +11,7 @@ import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.player.Player;
 
-public class PSVillagerBehaviors {
+public class PVillagerBehaviors {
     private static final double POOP_TEMPT_RANGE = 10.0;
     private static final float POOP_TEMPT_SPEED = 0.5F;
     private static final int POOP_TEMPT_CLOSE_ENOUGH = 2;
@@ -39,10 +39,10 @@ public class PSVillagerBehaviors {
         }
 
         VillagerProfession profession = villager.getVillagerData().getProfession();
-        return profession == PSVillagers.POOP_MAKER.value() || profession == PSVillagers.GASTRONOME.value();
+        return profession == PVillagers.POOP_MAKER.value() || profession == PVillagers.GASTRONOME.value();
     }
 
     private static boolean isHoldingPoop(Player player) {
-        return player.getMainHandItem().is(PSItemTags.POOPS) || player.getOffhandItem().is(PSItemTags.POOPS);
+        return player.getMainHandItem().is(PItemTags.POOPS) || player.getOffhandItem().is(PItemTags.POOPS);
     }
 }

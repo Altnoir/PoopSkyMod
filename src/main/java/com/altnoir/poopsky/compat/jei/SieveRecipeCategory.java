@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.compat.jei;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.PSBlocks;
+import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.recipe.SieveRecipe;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -39,7 +39,7 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
 
     public SieveRecipeCategory(IJeiHelpers helpers, IDrawable arrow) {
         var guiHelper = helpers.getGuiHelper();
-        this.icon = guiHelper.createDrawableItemStack(new ItemStack(PSBlocks.SIEVE.get()));
+        this.icon = guiHelper.createDrawableItemStack(new ItemStack(PBlocks.SIEVE.get()));
         this.title = Component.translatable("jei.category." + PoopSky.MOD_ID + ".sieve");
         this.arrow = arrow;
         this.slot = guiHelper.getSlotDrawable();

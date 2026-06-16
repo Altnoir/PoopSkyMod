@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.mixin;
 
-import com.altnoir.poopsky.block.PSBlocks;
+import com.altnoir.poopsky.block.PBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -44,7 +44,7 @@ public class CarvedPumpkinBlockMixin {
             this.poopsky$villager = BlockPatternBuilder.start()
                     .aisle("^", "#")
                     .where('^', BlockInWorld.hasState(PUMPKINS_PREDICATE))
-                    .where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(PSBlocks.POOP_BLOCK.get())))
+                    .where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(PBlocks.POOP_BLOCK.get())))
                     .build();
         }
         return this.poopsky$villager;
@@ -55,7 +55,7 @@ public class CarvedPumpkinBlockMixin {
         if (this.poopsky$villagerDispenser == null) {
             this.poopsky$villagerDispenser = BlockPatternBuilder.start()
                     .aisle(" ", "#")
-                    .where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(PSBlocks.POOP_BLOCK.get())))
+                    .where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(PBlocks.POOP_BLOCK.get())))
                     .build();
         }
         return this.poopsky$villagerDispenser;

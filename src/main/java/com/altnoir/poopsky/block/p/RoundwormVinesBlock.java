@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.block.p;
 
-import com.altnoir.poopsky.block.PSBlocks;
-import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.block.PBlocks;
+import com.altnoir.poopsky.item.PItems;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -31,7 +31,7 @@ public class RoundwormVinesBlock extends GrowingPlantHeadBlock {
 
     @Override
     protected Block getBodyBlock() {
-        return PSBlocks.ROUNDWORM_VINES_PLANT.get();
+        return PBlocks.ROUNDWORM_VINES_PLANT.get();
     }
 
     @Override
@@ -46,6 +46,6 @@ public class RoundwormVinesBlock extends GrowingPlantHeadBlock {
 
     @Override
     public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
-        return new ItemStack(PSItems.ROUNDWORM.get());
+        return new ItemStack(PItems.ROUNDWORM.get());
     }
 }

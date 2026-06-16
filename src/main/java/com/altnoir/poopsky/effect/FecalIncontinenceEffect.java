@@ -3,8 +3,8 @@ package com.altnoir.poopsky.effect;
 import com.altnoir.poopsky.init.PEffects;
 import com.altnoir.poopsky.init.PParticles;
 import com.altnoir.poopsky.init.PSoundEvents;
-import com.altnoir.poopsky.item.PSItems;
-import com.altnoir.poopsky.tag.PSBlockTags;
+import com.altnoir.poopsky.item.PItems;
+import com.altnoir.poopsky.tag.PBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
@@ -47,12 +47,12 @@ public class FecalIncontinenceEffect extends MobEffect {
             var level = (ServerLevel) entity.level();
             BlockPos entityPos = entity.blockPosition();
 
-            Item stack = PSItems.POOP.get();
+            Item stack = PItems.POOP.get();
 
             boolean dropPoop = BlockPos.betweenClosedStream(entityPos.offset(0, -1, 0), entityPos.offset(0, 1, 0))
                     .anyMatch(targetPos -> {
-                        boolean applied = BoneMealItem.applyBonemeal(new ItemStack(PSItems.POOP.get()), level, targetPos, null)
-                                || BoneMealItem.growWaterPlant(new ItemStack(PSItems.POOP.get()), level, targetPos, null);
+                        boolean applied = BoneMealItem.applyBonemeal(new ItemStack(PItems.POOP.get()), level, targetPos, null)
+                                || BoneMealItem.growWaterPlant(new ItemStack(PItems.POOP.get()), level, targetPos, null);
 
                         if (applied) {
                             BoneMealItem.addGrowthParticles(level, targetPos, 15);
@@ -62,9 +62,9 @@ public class FecalIncontinenceEffect extends MobEffect {
                     });
 
             if (entity.hasEffect(PEffects.INTESTINAL_SPASM)) {
-                stack = PSItems.CHILI_POOP.get();
-            } else if (level.getBlockState(entityPos.below()).is(PSBlockTags.GOLDEN_TOILET_BLOCKS)) {
-                stack = PSItems.GOLDEN_POOP.get();
+                stack = PItems.CHILI_POOP.get();
+            } else if (level.getBlockState(entityPos.below()).is(PBlockTags.GOLDEN_TOILET_BLOCKS)) {
+                stack = PItems.GOLDEN_POOP.get();
             }
 
             ItemStack finalStack = new ItemStack(stack);

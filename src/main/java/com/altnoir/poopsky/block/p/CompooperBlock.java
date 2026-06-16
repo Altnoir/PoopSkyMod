@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.block.p;
 
 import com.altnoir.poopsky.block.abs.AbstractCompooperBlock;
-import com.altnoir.poopsky.block.PSBlocks;
-import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.block.PBlocks;
+import com.altnoir.poopsky.item.PItems;
 import com.mojang.serialization.MapCodec;
 import it.unimi.dsi.fastutil.objects.Object2FloatMap;
 import it.unimi.dsi.fastutil.objects.Object2FloatOpenHashMap;
@@ -70,37 +70,37 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
         float f05 = 0.5F;
         float f08 = 0.8F;
         float f1 = 1.0F;
-        add(f03, PSItems.POOP);
-        add(f03, PSItems.POOP_BALL);
-        add(f05, PSBlocks.POOP_SAPLING);
-        add(f05, PSBlocks.POOP_LEAVES);
-        add(f03, PSBlocks.POOP_PIECE);
-        add(f1, PSBlocks.POOP_BLOCK);
-        add(f1, PSBlocks.POOLIME_POOP_BLOCK);
-        add(f08, PSBlocks.POOP_STAIRS);
-        add(f05, PSBlocks.POOP_SLAB);
-        add(f05, PSBlocks.POOP_VERTICAL_SLAB);
-        add(f01, PSBlocks.POOP_BUTTON);
-        add(f03, PSBlocks.POOP_PRESSURE_PLATE);
-        add(f03, PSBlocks.POOP_FENCE);
-        add(f05, PSBlocks.POOP_FENCE_GATE);
-        add(f05, PSBlocks.POOP_WALL);
-        add(f08, PSBlocks.POOP_DOOR);
-        add(f05, PSBlocks.POOP_TRAPDOOR);
-        add(f03, PSBlocks.STOOL);
+        add(f03, PItems.POOP);
+        add(f03, PItems.POOP_BALL);
+        add(f05, PBlocks.POOP_SAPLING);
+        add(f05, PBlocks.POOP_LEAVES);
+        add(f03, PBlocks.POOP_PIECE);
+        add(f1, PBlocks.POOP_BLOCK);
+        add(f1, PBlocks.POOLIME_POOP_BLOCK);
+        add(f08, PBlocks.POOP_STAIRS);
+        add(f05, PBlocks.POOP_SLAB);
+        add(f05, PBlocks.POOP_VERTICAL_SLAB);
+        add(f01, PBlocks.POOP_BUTTON);
+        add(f03, PBlocks.POOP_PRESSURE_PLATE);
+        add(f03, PBlocks.POOP_FENCE);
+        add(f05, PBlocks.POOP_FENCE_GATE);
+        add(f05, PBlocks.POOP_WALL);
+        add(f08, PBlocks.POOP_DOOR);
+        add(f05, PBlocks.POOP_TRAPDOOR);
+        add(f03, PBlocks.STOOL);
         //add(0.2F, PSItems.BAKED_MAGGOTS);
-        add(f01, PSItems.MAGGOTS_SEEDS);
-        add(f08, PSItems.POOP_BREAD);
-        add(f08, PSItems.POOP_DUMPLINGS);
-        add(f08, PSItems.POOP_MOONCAKE);
-        add(f08, PSItems.CHILI_POOP_MOONCAKE);
-        add(f08, PSItems.GOLDEN_POOP_MOONCAKE);
-        add(f08, PSItems.POOP_VEGETABLE_STICKS);
-        add(f08, PSItems.POOBURGER_MEAT);
-        add(f1, PSItems.POOBURGER);
-        add(f08, PSItems.POOP_PASTA);
-        add(f08, PSItems.POODDING);
-        add(f1, PSBlocks.POOP_CAKE);
+        add(f01, PItems.MAGGOTS_SEEDS);
+        add(f08, PItems.POOP_BREAD);
+        add(f08, PItems.POOP_DUMPLINGS);
+        add(f08, PItems.POOP_MOONCAKE);
+        add(f08, PItems.CHILI_POOP_MOONCAKE);
+        add(f08, PItems.GOLDEN_POOP_MOONCAKE);
+        add(f08, PItems.POOP_VEGETABLE_STICKS);
+        add(f08, PItems.POOBURGER_MEAT);
+        add(f1, PItems.POOBURGER);
+        add(f08, PItems.POOP_PASTA);
+        add(f08, PItems.POODDING);
+        add(f1, PBlocks.POOP_CAKE);
     }
 
     private static void add(float chance, ItemLike item) {
@@ -143,18 +143,18 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
         PotionContents potioncontents = stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
 
         if (i == MIN_LEVEL) {
-            if (stack.getItem() == PSItems.URINE_BUCKET.get()) {
-                return liquidUse(stack, level, pos, player, hand, SoundEvents.BUCKET_EMPTY, 0.6F, PSBlocks.URINE_COMPOOPER.get(), true);
+            if (stack.getItem() == PItems.URINE_BUCKET.get()) {
+                return liquidUse(stack, level, pos, player, hand, SoundEvents.BUCKET_EMPTY, 0.6F, PBlocks.URINE_COMPOOPER.get(), true);
             } else if (stack.getItem() == Items.WATER_BUCKET) {
-                return liquidUse(stack, level, pos, player, hand, SoundEvents.BUCKET_EMPTY, PSBlocks.WATER_COMPOOPER.get(), true);
+                return liquidUse(stack, level, pos, player, hand, SoundEvents.BUCKET_EMPTY, PBlocks.WATER_COMPOOPER.get(), true);
             } else if (stack.getItem() == Items.LAVA_BUCKET) {
-                return liquidUse(stack, level, pos, player, hand, SoundEvents.BUCKET_EMPTY_LAVA, PSBlocks.LAVA_COMPOOPER.get(), true);
+                return liquidUse(stack, level, pos, player, hand, SoundEvents.BUCKET_EMPTY_LAVA, PBlocks.LAVA_COMPOOPER.get(), true);
             } else if (stack.getItem() == Items.POWDER_SNOW_BUCKET) {
-                return liquidUse(stack, level, pos, player, hand, SoundEvents.BUCKET_EMPTY_POWDER_SNOW, PSBlocks.POWDER_SNOW_COMPOOPER.get(), true);
-            } else if (stack.getItem() == PSItems.URINE_BOTTLE.get()) {
-                return liquidUse(stack, level, pos, player, hand, SoundEvents.BOTTLE_EMPTY, 0.6F, PSBlocks.URINE_COMPOOPER.get(), false);
+                return liquidUse(stack, level, pos, player, hand, SoundEvents.BUCKET_EMPTY_POWDER_SNOW, PBlocks.POWDER_SNOW_COMPOOPER.get(), true);
+            } else if (stack.getItem() == PItems.URINE_BOTTLE.get()) {
+                return liquidUse(stack, level, pos, player, hand, SoundEvents.BOTTLE_EMPTY, 0.6F, PBlocks.URINE_COMPOOPER.get(), false);
             } else if (potioncontents.is(Potions.WATER)) {
-                return liquidUse(stack, level, pos, player, hand, SoundEvents.BOTTLE_EMPTY, PSBlocks.WATER_COMPOOPER.get(), false);
+                return liquidUse(stack, level, pos, player, hand, SoundEvents.BOTTLE_EMPTY, PBlocks.WATER_COMPOOPER.get(), false);
             }
         }
         if (i < READY && getValue(stack) > 0) {
@@ -215,7 +215,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
     public static void extractProduce(Entity entity, BlockState state, Level level, BlockPos pos) {
         if (!level.isClientSide) {
             var vec3 = Vec3.atLowerCornerWithOffset(pos, 0.5, 1.01, 0.5).offsetRandom(level.random, 0.7F);
-            var itementity = new ItemEntity(level, vec3.x(), vec3.y(), vec3.z(), new ItemStack(PSItems.SAPLING_POOP_BALL.get()));
+            var itementity = new ItemEntity(level, vec3.x(), vec3.y(), vec3.z(), new ItemStack(PItems.SAPLING_POOP_BALL.get()));
             itementity.setDefaultPickUpDelay();
             level.addFreshEntity(itementity);
         }
@@ -269,10 +269,10 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
     public void handlePrecipitation(BlockState state, Level level, BlockPos pos, Biome.Precipitation precipitation) {
         if (shouldHandlePrecipitation(level, precipitation) && state.getValue(POOP_LEVEL) == MIN_LEVEL) {
             if (precipitation == Biome.Precipitation.RAIN) {
-                level.setBlockAndUpdate(pos, PSBlocks.WATER_COMPOOPER.get().defaultBlockState());
+                level.setBlockAndUpdate(pos, PBlocks.WATER_COMPOOPER.get().defaultBlockState());
                 level.gameEvent(null, GameEvent.BLOCK_CHANGE, pos);
             } else if (precipitation == Biome.Precipitation.SNOW) {
-                level.setBlockAndUpdate(pos, PSBlocks.POWDER_SNOW_COMPOOPER.get().defaultBlockState());
+                level.setBlockAndUpdate(pos, PBlocks.POWDER_SNOW_COMPOOPER.get().defaultBlockState());
                 level.gameEvent(null, GameEvent.BLOCK_CHANGE, pos);
             }
         }
@@ -287,7 +287,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
     public WorldlyContainer getContainer(BlockState state, LevelAccessor level, BlockPos pos) {
         int i = state.getValue(POOP_LEVEL);
         if (i == READY) {
-            return new OutputContainer(state, level, pos, new ItemStack(PSItems.SAPLING_POOP_BALL.get()));
+            return new OutputContainer(state, level, pos, new ItemStack(PItems.SAPLING_POOP_BALL.get()));
         } else {
             return i < READY - 1 ? new InputContainer(state, level, pos) : new EmptyContainer();
         }
@@ -407,7 +407,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
          */
         @Override
         public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-            return !this.changed && direction == Direction.DOWN && stack.is(PSItems.SAPLING_POOP_BALL.get());
+            return !this.changed && direction == Direction.DOWN && stack.is(PItems.SAPLING_POOP_BALL.get());
         }
 
         @Override

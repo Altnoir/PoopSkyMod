@@ -6,7 +6,7 @@ import com.altnoir.poopsky.init.PFluids;
 import com.altnoir.poopsky.block.fluid.PoopLiquidBlock;
 import com.altnoir.poopsky.init.PBlockSetType;
 import com.altnoir.poopsky.init.PWoodType;
-import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.item.PItems;
 import com.altnoir.poopsky.item.p.CompooperBlockItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.BlockItem;
@@ -25,7 +25,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class PSBlocks {
+public class PBlocks {
     private static final float POOP = 0.5F;
     private static final float HARDEN = 1.5F;
     private static final float LOG = 2.0F;
@@ -458,11 +458,11 @@ public class PSBlocks {
                     .noOcclusion()
                     .sound(SoundType.SCULK_SENSOR)
                     .isValidSpawn(Blocks::ocelotOrParrot)
-                    .isSuffocating(PSBlocks::neverSuffocate)
-                    .isViewBlocking(PSBlocks::neverBlockVision)
+                    .isSuffocating(PBlocks::neverSuffocate)
+                    .isViewBlocking(PBlocks::neverBlockVision)
                     .ignitedByLava()
                     .pushReaction(PushReaction.DESTROY)
-                    .isRedstoneConductor(PSBlocks::never)
+                    .isRedstoneConductor(PBlocks::never)
             )
     );
     public static final DeferredBlock<Block> POOP_LEAVES_IRON = registerBlock("poop_leaves_iron",
@@ -473,11 +473,11 @@ public class PSBlocks {
                     .noOcclusion()
                     .sound(SoundType.SCULK_SENSOR)
                     .isValidSpawn(Blocks::ocelotOrParrot)
-                    .isSuffocating(PSBlocks::neverSuffocate)
-                    .isViewBlocking(PSBlocks::neverBlockVision)
+                    .isSuffocating(PBlocks::neverSuffocate)
+                    .isViewBlocking(PBlocks::neverBlockVision)
                     .ignitedByLava()
                     .pushReaction(PushReaction.DESTROY)
-                    .isRedstoneConductor(PSBlocks::never)
+                    .isRedstoneConductor(PBlocks::never)
             )
     );
     public static final DeferredBlock<Block> POOP_LEAVES_GOLD = registerBlock("poop_leaves_gold",
@@ -488,11 +488,11 @@ public class PSBlocks {
                     .noOcclusion()
                     .sound(SoundType.SCULK_SENSOR)
                     .isValidSpawn(Blocks::ocelotOrParrot)
-                    .isSuffocating(PSBlocks::neverSuffocate)
-                    .isViewBlocking(PSBlocks::neverBlockVision)
+                    .isSuffocating(PBlocks::neverSuffocate)
+                    .isViewBlocking(PBlocks::neverBlockVision)
                     .ignitedByLava()
                     .pushReaction(PushReaction.DESTROY)
-                    .isRedstoneConductor(PSBlocks::never)
+                    .isRedstoneConductor(PBlocks::never)
             )
     );
 
@@ -618,15 +618,15 @@ public class PSBlocks {
     }
 
     private static <T extends Block> void registerBlockItem(String name, DeferredBlock<T> block) {
-        PSItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
+        PItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
     }
 
     private static <T extends Block> void registerCompooperBlockItem(String name, DeferredBlock<T> block) {
-        PSItems.ITEMS.register(name, () -> new CompooperBlockItem(block.get(), new Item.Properties()));
+        PItems.ITEMS.register(name, () -> new CompooperBlockItem(block.get(), new Item.Properties()));
     }
 
     private static <T extends Block> void registerBlockItem(String name, DeferredBlock<T> block, int stacksTo) {
-        PSItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().stacksTo(stacksTo)));
+        PItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().stacksTo(stacksTo)));
     }
 
     public static void register(IEventBus eventBus) {

@@ -3,7 +3,7 @@ package com.altnoir.poopsky.network;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.entity.p.ToiletPlugEntity;
-import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.item.PItems;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -55,7 +55,7 @@ public record PlugActionPayload() implements CustomPacketPayload {
         Level level = player.level();
         level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.5F, 1.0F);
         if (!player.isCreative()) {
-            giveOrDropItem(player, new ItemStack(PSItems.TOILET_PLUG.get()));
+            giveOrDropItem(player, new ItemStack(PItems.TOILET_PLUG.get()));
         }
     }
 
@@ -69,13 +69,13 @@ public record PlugActionPayload() implements CustomPacketPayload {
         Inventory inv = player.getInventory();
 
         for (ItemStack stack : inv.items) {
-            if (stack.is(PSItems.TOILET_PLUG.get())) {
+            if (stack.is(PItems.TOILET_PLUG.get())) {
                 return stack;
             }
         }
 
         for (ItemStack stack : inv.offhand) {
-            if (stack.is(PSItems.TOILET_PLUG.get())) {
+            if (stack.is(PItems.TOILET_PLUG.get())) {
                 return stack;
             }
         }

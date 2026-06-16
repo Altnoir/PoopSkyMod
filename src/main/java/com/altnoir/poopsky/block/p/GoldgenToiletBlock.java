@@ -2,7 +2,7 @@ package com.altnoir.poopsky.block.p;
 
 import com.altnoir.poopsky.init.PEffects;
 import com.altnoir.poopsky.init.PStats;
-import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.item.PItems;
 import com.altnoir.poopsky.init.PParticles;
 import com.altnoir.poopsky.init.PSoundEvents;
 import net.minecraft.core.BlockPos;
@@ -52,7 +52,7 @@ public class GoldgenToiletBlock extends ToiletLavaBlock {
             redStone.setDefaultPickUpDelay();
             level.addFreshEntity(redStone);
         } else {
-            var poop = new ItemEntity(level, player.getX(), player.getY() + 0.1, player.getZ(), new ItemStack(PSItems.GOLDEN_POOP.get()));
+            var poop = new ItemEntity(level, player.getX(), player.getY() + 0.1, player.getZ(), new ItemStack(PItems.GOLDEN_POOP.get()));
 
             poop.setDefaultPickUpDelay();
             level.addFreshEntity(poop);

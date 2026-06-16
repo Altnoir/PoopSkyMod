@@ -2,7 +2,7 @@ package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.AllToiletBlocks;
-import com.altnoir.poopsky.block.PSBlocks;
+import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.block.entity.PlacerBlockEntity;
 import com.altnoir.poopsky.block.entity.SieveBlockEntity;
 import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
@@ -29,10 +29,10 @@ public class PBlockEntityType {
     );
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SieveBlockEntity>> SIEVE_BLOCK_ENTITY =
             BLOCK_ENTITY_TYPES.register("sieve_block_entity", () ->
-                    BlockEntityType.Builder.of(SieveBlockEntity::new, PSBlocks.SIEVE.get()).build(null));
+                    BlockEntityType.Builder.of(SieveBlockEntity::new, PBlocks.SIEVE.get()).build(null));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<PlacerBlockEntity>> PLACER_BLOCK_ENTITY =
             BLOCK_ENTITY_TYPES.register("placer_entity", () ->
-                    BlockEntityType.Builder.of(PlacerBlockEntity::new, PSBlocks.PLACER.get()).build(null));
+                    BlockEntityType.Builder.of(PlacerBlockEntity::new, PBlocks.PLACER.get()).build(null));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITY_TYPES.register(eventBus);

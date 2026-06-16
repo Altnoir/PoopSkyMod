@@ -31,7 +31,7 @@ public class PArmorMaterials {
                                                   int enchantability, float toughness, float knockbackResistance) {
         ResourceLocation location = PoopSky.loc(name);
         Holder<SoundEvent> equipSound = SoundEvents.ARMOR_EQUIP_NETHERITE;
-        Supplier<Ingredient> ingredient = () -> Ingredient.of(((Supplier<Item>) PSItems.OMINOUS_FILTHY_INGOT).get());
+        Supplier<Ingredient> ingredient = () -> Ingredient.of(((Supplier<Item>) PItems.OMINOUS_FILTHY_INGOT).get());
         List<ArmorMaterial.Layer> layers = List.of(new ArmorMaterial.Layer(location));
 
         EnumMap<ArmorItem.Type, Integer> typeMap = new EnumMap<>(ArmorItem.Type.class);

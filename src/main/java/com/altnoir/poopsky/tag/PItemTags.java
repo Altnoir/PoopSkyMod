@@ -7,7 +7,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 
-public class PSItemTags {
+public class PItemTags {
     public static final TagKey<Item> POOPS = create("poops");
     public static final TagKey<Item> TOILET_BLOCKS = create("toilet_blocks");
 

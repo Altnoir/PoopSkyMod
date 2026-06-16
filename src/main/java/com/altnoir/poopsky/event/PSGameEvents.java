@@ -8,9 +8,9 @@ import com.altnoir.poopsky.block.p.ToiletLavaBlock;
 import com.altnoir.poopsky.init.PEffects;
 import com.altnoir.poopsky.init.PFluids;
 import com.altnoir.poopsky.init.PPotions;
-import com.altnoir.poopsky.item.PSItems;
-import com.altnoir.poopsky.villager.PSVillagerBehaviors;
-import com.altnoir.poopsky.villager.PSVillagerTrades;
+import com.altnoir.poopsky.item.PItems;
+import com.altnoir.poopsky.villager.PVillagerBehaviors;
+import com.altnoir.poopsky.villager.PVillagerTrades;
 import com.altnoir.poopsky.worldgen.PSVoidChunkGenerator;
 import com.altnoir.poopsky.worldgen.structure.PoopIslandStructure;
 import net.minecraft.core.BlockPos;
@@ -52,7 +52,7 @@ public class PSGameEvents {
     public static void onBrewingRecipeRegistry(RegisterBrewingRecipesEvent event) {
         PotionBrewing.Builder builder = event.getBuilder();
 
-        builder.addMix(Potions.AWKWARD, PSItems.FOLIUM_SENNAE.get(), PPotions.FECAL_INCONTINENCE_POTION);
+        builder.addMix(Potions.AWKWARD, PItems.FOLIUM_SENNAE.get(), PPotions.FECAL_INCONTINENCE_POTION);
         builder.addMix(PPotions.FECAL_INCONTINENCE_POTION, Items.REDSTONE, PPotions.LONG_FECAL_INCONTINENCE_POTION);
         builder.addMix(PPotions.FECAL_INCONTINENCE_POTION, Items.GLOWSTONE_DUST, PPotions.STRONG_FECAL_INCONTINENCE_POTION);
         builder.addMix(PPotions.FECAL_INCONTINENCE_POTION, Items.GLOWSTONE, PPotions.SUPER_FECAL_INCONTINENCE_POTION);
@@ -76,10 +76,10 @@ public class PSGameEvents {
             Item item;
             if (heldItem.is(Tags.Items.BUCKETS_EMPTY)) {
                 sound = SoundEvents.BUCKET_FILL;
-                item = PSItems.URINE_BUCKET.get();
+                item = PItems.URINE_BUCKET.get();
             } else {
                 sound = SoundEvents.BOTTLE_FILL;
-                item = PSItems.URINE_BOTTLE.get();
+                item = PItems.URINE_BOTTLE.get();
             }
             level.playSound(null, pos, sound, SoundSource.PLAYERS, 1.0F, 0.6F);
             level.gameEvent(player, GameEvent.FLUID_PICKUP, pos);
@@ -108,7 +108,7 @@ public class PSGameEvents {
                     level.playSound(null, blockpos, SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 0.6F);
                     level.gameEvent(player, GameEvent.FLUID_PICKUP, blockpos);
 
-                    ItemStack itemStack = ItemUtils.createFilledResult(stack, player, new ItemStack(PSItems.URINE_BOTTLE.get()));
+                    ItemStack itemStack = ItemUtils.createFilledResult(stack, player, new ItemStack(PItems.URINE_BOTTLE.get()));
                     player.setItemInHand(event.getHand(), itemStack);
                 }
 
@@ -120,7 +120,7 @@ public class PSGameEvents {
 
     @SubscribeEvent
     public static void registerTrades(VillagerTradesEvent event) {
-        PSVillagerTrades.registerTrades(event.getType(), event.getTrades());
+        PVillagerTrades.registerTrades(event.getType(), event.getTrades());
     }
 
     @SubscribeEvent
@@ -128,7 +128,7 @@ public class PSGameEvents {
         Entity entity = event.getEntity();
         if (!(entity instanceof Villager villager) || entity.level().isClientSide || entity.tickCount % 10 != 0) return;
 
-        PSVillagerBehaviors.tickPoopTemptation(villager);
+        PVillagerBehaviors.tickPoopTemptation(villager);
     }
 
     @SubscribeEvent

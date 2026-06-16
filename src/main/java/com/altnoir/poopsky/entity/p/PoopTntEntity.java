@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.entity.p;
 
 import com.altnoir.poopsky.init.PEntityType;
-import com.altnoir.poopsky.tag.PSBlockTags;
+import com.altnoir.poopsky.tag.PBlockTags;
 import com.altnoir.poopsky.util.PoopTntUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -83,7 +83,7 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
         if (!this.level().isClientSide) {
             var state = this.level().getBlockState(this.getOnPos());
 
-            if (impactSpeed > INSTANT_EXPLOSION_THRESHOLD && !state.is(PSBlockTags.EMPTY_LOGS) && (this.horizontalCollision || this.verticalCollision)) {
+            if (impactSpeed > INSTANT_EXPLOSION_THRESHOLD && !state.is(PBlockTags.EMPTY_LOGS) && (this.horizontalCollision || this.verticalCollision)) {
                 this.setDeltaMovement(movement);
                 this.discard();
                 PoopTntUtil.triggerExplosion(this, radius);
@@ -121,7 +121,7 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
         BlockPos checkPos = BlockPos.containing(midPos.x, midPos.y, midPos.z);
         BlockState state = this.level().getBlockState(checkPos);
 
-        if (state.is(PSBlockTags.EMPTY_LOGS) && state.hasProperty(DirectionalBlock.FACING)) {
+        if (state.is(PBlockTags.EMPTY_LOGS) && state.hasProperty(DirectionalBlock.FACING)) {
             var direction = state.getValue(DirectionalBlock.FACING);
             Vec3 motion = getMotion(direction);
             this.setDeltaMovement(motion);

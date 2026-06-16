@@ -1,12 +1,12 @@
 package com.altnoir.poopsky.datagen;
 
-import com.altnoir.poopsky.block.PSBlocks;
+import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.p.CompooperBlock;
 import com.altnoir.poopsky.block.p.PoopPieceBlock;
 import com.altnoir.poopsky.block.p.RoundwormVinesPlantBlock;
 import com.altnoir.poopsky.block.p.UrineCompooperBlock;
-import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.item.PItems;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
@@ -50,105 +50,105 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
                 .map(DeferredHolder::get)
                 .forEach(this::dropSelf);
 
-        this.add(PSBlocks.POOP_LOG.get(), this::createSpallOreDrops);
-        this.add(PSBlocks.STRIPPED_POOP_LOG.get(), this::createSpallOreDrops);
-        this.add(PSBlocks.POOP_LEAVES_IRON.get(), this::createIronLeavesDrops);
-        this.add(PSBlocks.POOP_LEAVES_GOLD.get(), this::createGoldLeavesDrops);
-        this.add(PSBlocks.POOP_LEAVES.get(), this::createLeavesDrops);
-        dropSelf(PSBlocks.POOP_SAPLING.get());
-        dropSelf(PSBlocks.POOP_EMPTY_LOG.get());
-        dropSelf(PSBlocks.STRIPPED_POOP_EMPTY_LOG.get());
+        this.add(PBlocks.POOP_LOG.get(), this::createSpallOreDrops);
+        this.add(PBlocks.STRIPPED_POOP_LOG.get(), this::createSpallOreDrops);
+        this.add(PBlocks.POOP_LEAVES_IRON.get(), this::createIronLeavesDrops);
+        this.add(PBlocks.POOP_LEAVES_GOLD.get(), this::createGoldLeavesDrops);
+        this.add(PBlocks.POOP_LEAVES.get(), this::createLeavesDrops);
+        dropSelf(PBlocks.POOP_SAPLING.get());
+        dropSelf(PBlocks.POOP_EMPTY_LOG.get());
+        dropSelf(PBlocks.STRIPPED_POOP_EMPTY_LOG.get());
 
-        dropSelf(PSBlocks.POOP_BLOCK.get());
-        dropSelf(PSBlocks.POOP_STAIRS.get());
-        add(PSBlocks.POOP_SLAB.get(), block -> createSlabItemTable(PSBlocks.POOP_SLAB.get()));
-        dropSelf(PSBlocks.POOP_VERTICAL_SLAB.get());
-        dropSelf(PSBlocks.POOP_BUTTON.get());
-        dropSelf(PSBlocks.POOP_PRESSURE_PLATE.get());
-        dropSelf(PSBlocks.POOP_FENCE.get());
-        dropSelf(PSBlocks.POOP_FENCE_GATE.get());
-        dropSelf(PSBlocks.POOP_WALL.get());
-        dropSelf(PSBlocks.POOP_TRAPDOOR.get());
-        add(PSBlocks.POOP_DOOR.get(), block -> createDoorTable(PSBlocks.POOP_DOOR.get()));
+        dropSelf(PBlocks.POOP_BLOCK.get());
+        dropSelf(PBlocks.POOP_STAIRS.get());
+        add(PBlocks.POOP_SLAB.get(), block -> createSlabItemTable(PBlocks.POOP_SLAB.get()));
+        dropSelf(PBlocks.POOP_VERTICAL_SLAB.get());
+        dropSelf(PBlocks.POOP_BUTTON.get());
+        dropSelf(PBlocks.POOP_PRESSURE_PLATE.get());
+        dropSelf(PBlocks.POOP_FENCE.get());
+        dropSelf(PBlocks.POOP_FENCE_GATE.get());
+        dropSelf(PBlocks.POOP_WALL.get());
+        dropSelf(PBlocks.POOP_TRAPDOOR.get());
+        add(PBlocks.POOP_DOOR.get(), block -> createDoorTable(PBlocks.POOP_DOOR.get()));
 
-        dropSelf(PSBlocks.CHILI_POOP_BLOCK.get());
-        dropSelf(PSBlocks.CHILI_POOP_STAIRS.get());
-        add(PSBlocks.CHILI_POOP_SLAB.get(), block -> createSlabItemTable(PSBlocks.CHILI_POOP_SLAB.get()));
-        dropSelf(PSBlocks.CHILI_POOP_VERTICAL_SLAB.get());
-        dropSelf(PSBlocks.CHILI_POOP_WALL.get());
+        dropSelf(PBlocks.CHILI_POOP_BLOCK.get());
+        dropSelf(PBlocks.CHILI_POOP_STAIRS.get());
+        add(PBlocks.CHILI_POOP_SLAB.get(), block -> createSlabItemTable(PBlocks.CHILI_POOP_SLAB.get()));
+        dropSelf(PBlocks.CHILI_POOP_VERTICAL_SLAB.get());
+        dropSelf(PBlocks.CHILI_POOP_WALL.get());
 
-        dropSelf(PSBlocks.GOLDEN_POOP_BLOCK.get());
-        dropSelf(PSBlocks.GOLDEN_POOP_STAIRS.get());
-        add(PSBlocks.GOLDEN_POOP_SLAB.get(), block -> createSlabItemTable(PSBlocks.GOLDEN_POOP_SLAB.get()));
-        dropSelf(PSBlocks.GOLDEN_POOP_VERTICAL_SLAB.get());
-        dropSelf(PSBlocks.GOLDEN_POOP_WALL.get());
+        dropSelf(PBlocks.GOLDEN_POOP_BLOCK.get());
+        dropSelf(PBlocks.GOLDEN_POOP_STAIRS.get());
+        add(PBlocks.GOLDEN_POOP_SLAB.get(), block -> createSlabItemTable(PBlocks.GOLDEN_POOP_SLAB.get()));
+        dropSelf(PBlocks.GOLDEN_POOP_VERTICAL_SLAB.get());
+        dropSelf(PBlocks.GOLDEN_POOP_WALL.get());
 
-        dropSelf(PSBlocks.POOP_BRICKS.get());
-        dropSelf(PSBlocks.CRACKED_POOP_BRICKS.get());
-        dropSelf(PSBlocks.POOP_BRICK_STAIRS.get());
-        add(PSBlocks.POOP_BRICK_SLAB.get(), block -> createSlabItemTable(PSBlocks.POOP_BRICK_SLAB.get()));
-        dropSelf(PSBlocks.POOP_BRICK_VERTICAL_SLAB.get());
-        dropSelf(PSBlocks.POOP_BRICK_WALL.get());
+        dropSelf(PBlocks.POOP_BRICKS.get());
+        dropSelf(PBlocks.CRACKED_POOP_BRICKS.get());
+        dropSelf(PBlocks.POOP_BRICK_STAIRS.get());
+        add(PBlocks.POOP_BRICK_SLAB.get(), block -> createSlabItemTable(PBlocks.POOP_BRICK_SLAB.get()));
+        dropSelf(PBlocks.POOP_BRICK_VERTICAL_SLAB.get());
+        dropSelf(PBlocks.POOP_BRICK_WALL.get());
 
-        dropSelf(PSBlocks.MOSSY_POOP_BRICKS.get());
-        dropSelf(PSBlocks.MOSSY_POOP_BRICK_STAIRS.get());
-        add(PSBlocks.MOSSY_POOP_BRICK_SLAB.get(), block -> createSlabItemTable(PSBlocks.MOSSY_POOP_BRICK_SLAB.get()));
-        dropSelf(PSBlocks.MOSSY_POOP_BRICK_VERTICAL_SLAB.get());
-        dropSelf(PSBlocks.MOSSY_POOP_BRICK_WALL.get());
+        dropSelf(PBlocks.MOSSY_POOP_BRICKS.get());
+        dropSelf(PBlocks.MOSSY_POOP_BRICK_STAIRS.get());
+        add(PBlocks.MOSSY_POOP_BRICK_SLAB.get(), block -> createSlabItemTable(PBlocks.MOSSY_POOP_BRICK_SLAB.get()));
+        dropSelf(PBlocks.MOSSY_POOP_BRICK_VERTICAL_SLAB.get());
+        dropSelf(PBlocks.MOSSY_POOP_BRICK_WALL.get());
 
-        dropSelf(PSBlocks.DRIED_POOP_BLOCK.get());
-        dropSelf(PSBlocks.DRIED_POOP_BLOCK_STAIRS.get());
-        add(PSBlocks.DRIED_POOP_BLOCK_SLAB.get(), block -> createSlabItemTable(PSBlocks.DRIED_POOP_BLOCK_SLAB.get()));
-        dropSelf(PSBlocks.DRIED_POOP_BLOCK_VERTICAL_SLAB.get());
-        dropSelf(PSBlocks.DRIED_POOP_BLOCK_WALL.get());
+        dropSelf(PBlocks.DRIED_POOP_BLOCK.get());
+        dropSelf(PBlocks.DRIED_POOP_BLOCK_STAIRS.get());
+        add(PBlocks.DRIED_POOP_BLOCK_SLAB.get(), block -> createSlabItemTable(PBlocks.DRIED_POOP_BLOCK_SLAB.get()));
+        dropSelf(PBlocks.DRIED_POOP_BLOCK_VERTICAL_SLAB.get());
+        dropSelf(PBlocks.DRIED_POOP_BLOCK_WALL.get());
 
-        dropSelf(PSBlocks.SMOOTH_POOP_BLOCK.get());
-        dropSelf(PSBlocks.SMOOTH_POOP_BLOCK_STAIRS.get());
-        add(PSBlocks.SMOOTH_POOP_BLOCK_SLAB.get(), block -> createSlabItemTable(PSBlocks.SMOOTH_POOP_BLOCK_SLAB.get()));
-        dropSelf(PSBlocks.SMOOTH_POOP_BLOCK_VERTICAL_SLAB.get());
-        dropSelf(PSBlocks.SMOOTH_POOP_BLOCK_WALL.get());
+        dropSelf(PBlocks.SMOOTH_POOP_BLOCK.get());
+        dropSelf(PBlocks.SMOOTH_POOP_BLOCK_STAIRS.get());
+        add(PBlocks.SMOOTH_POOP_BLOCK_SLAB.get(), block -> createSlabItemTable(PBlocks.SMOOTH_POOP_BLOCK_SLAB.get()));
+        dropSelf(PBlocks.SMOOTH_POOP_BLOCK_VERTICAL_SLAB.get());
+        dropSelf(PBlocks.SMOOTH_POOP_BLOCK_WALL.get());
 
-        dropSelf(PSBlocks.CUT_POOP_BLOCK.get());
-        dropSelf(PSBlocks.CUT_POOP_BLOCK_STAIRS.get());
-        add(PSBlocks.CUT_POOP_BLOCK_SLAB.get(), block -> createSlabItemTable(PSBlocks.CUT_POOP_BLOCK_SLAB.get()));
-        dropSelf(PSBlocks.CUT_POOP_BLOCK_VERTICAL_SLAB.get());
-        dropSelf(PSBlocks.CUT_POOP_BLOCK_WALL.get());
+        dropSelf(PBlocks.CUT_POOP_BLOCK.get());
+        dropSelf(PBlocks.CUT_POOP_BLOCK_STAIRS.get());
+        add(PBlocks.CUT_POOP_BLOCK_SLAB.get(), block -> createSlabItemTable(PBlocks.CUT_POOP_BLOCK_SLAB.get()));
+        dropSelf(PBlocks.CUT_POOP_BLOCK_VERTICAL_SLAB.get());
+        dropSelf(PBlocks.CUT_POOP_BLOCK_WALL.get());
 
-        dropSelf(PSBlocks.TILE_BLOCK.get());
-        dropSelf(PSBlocks.TILE_BLOCK_STAIRS.get());
-        add(PSBlocks.TILE_BLOCK_SLAB.get(), block -> createSlabItemTable(PSBlocks.TILE_BLOCK_SLAB.get()));
-        dropSelf(PSBlocks.TILE_BLOCK_VERTICAL_SLAB.get());
-        dropSelf(PSBlocks.TILE_BLOCK_WALL.get());
+        dropSelf(PBlocks.TILE_BLOCK.get());
+        dropSelf(PBlocks.TILE_BLOCK_STAIRS.get());
+        add(PBlocks.TILE_BLOCK_SLAB.get(), block -> createSlabItemTable(PBlocks.TILE_BLOCK_SLAB.get()));
+        dropSelf(PBlocks.TILE_BLOCK_VERTICAL_SLAB.get());
+        dropSelf(PBlocks.TILE_BLOCK_WALL.get());
 
-        dropSelf(PSBlocks.RAW_POOP_BLOCK.get());
-        dropSelf(PSBlocks.RAW_SAPLING_POOP_BLOCK.get());
-        dropSelf(PSBlocks.RAW_SEA_POOP_BLOCK.get());
-        dropSelf(PSBlocks.RAW_WITHER_POOP_BLOCK.get());
+        dropSelf(PBlocks.RAW_POOP_BLOCK.get());
+        dropSelf(PBlocks.RAW_SAPLING_POOP_BLOCK.get());
+        dropSelf(PBlocks.RAW_SEA_POOP_BLOCK.get());
+        dropSelf(PBlocks.RAW_WITHER_POOP_BLOCK.get());
 
-        dropSelf(PSBlocks.POOP_CAKE.get());
-        PSBlocks.getPoopCandleCakes().forEach((candle, candleCake) ->
+        dropSelf(PBlocks.POOP_CAKE.get());
+        PBlocks.getPoopCandleCakes().forEach((candle, candleCake) ->
                 this.add(candleCake.get(), createCandleCakeDrops(candle)));
-        dropSelf(PSBlocks.POOLIME_BLOCK.get());
-        dropSelf(PSBlocks.POOLIME_POOP_BLOCK.get());
-        dropSelf(PSBlocks.STOOL.get());
-        this.add(PSBlocks.COMPOOPER.get(), this::createCompoomerDrops);
-        dropOther(PSBlocks.WATER_COMPOOPER.get(), PSBlocks.COMPOOPER.get());
-        dropOther(PSBlocks.LAVA_COMPOOPER.get(), PSBlocks.COMPOOPER.get());
-        dropOther(PSBlocks.POWDER_SNOW_COMPOOPER.get(), PSBlocks.COMPOOPER.get());
-        this.add(PSBlocks.URINE_COMPOOPER.get(), this::createUrineCompoomerDrops);
-        dropSelf(PSBlocks.PLACER.get());
-        dropSelf(PSBlocks.SIEVE.get());
-        dropSelf(PSBlocks.POOP_TNT.get());
-        add(PSBlocks.POOP_PIECE.get(), createPoopPieceDrop(PSBlocks.POOP_PIECE.get(), PSItems.POOP_BALL.get()));
+        dropSelf(PBlocks.POOLIME_BLOCK.get());
+        dropSelf(PBlocks.POOLIME_POOP_BLOCK.get());
+        dropSelf(PBlocks.STOOL.get());
+        this.add(PBlocks.COMPOOPER.get(), this::createCompoomerDrops);
+        dropOther(PBlocks.WATER_COMPOOPER.get(), PBlocks.COMPOOPER.get());
+        dropOther(PBlocks.LAVA_COMPOOPER.get(), PBlocks.COMPOOPER.get());
+        dropOther(PBlocks.POWDER_SNOW_COMPOOPER.get(), PBlocks.COMPOOPER.get());
+        this.add(PBlocks.URINE_COMPOOPER.get(), this::createUrineCompoomerDrops);
+        dropSelf(PBlocks.PLACER.get());
+        dropSelf(PBlocks.SIEVE.get());
+        dropSelf(PBlocks.POOP_TNT.get());
+        add(PBlocks.POOP_PIECE.get(), createPoopPieceDrop(PBlocks.POOP_PIECE.get(), PItems.POOP_BALL.get()));
 
-        LootItemCondition.Builder builder = LootItemBlockStatePropertyCondition.hasBlockStateProperties(PSBlocks.MAGGOTS.get())
+        LootItemCondition.Builder builder = LootItemBlockStatePropertyCondition.hasBlockStateProperties(PBlocks.MAGGOTS.get())
                 .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, CropBlock.MAX_AGE));
-        add(PSBlocks.MAGGOTS.get(), maggotsCropDrops(PSBlocks.MAGGOTS.get(), PSItems.MAGGOTS_SEEDS.get(), builder));
+        add(PBlocks.MAGGOTS.get(), maggotsCropDrops(PBlocks.MAGGOTS.get(), PItems.MAGGOTS_SEEDS.get(), builder));
 
-        LootItemCondition.Builder builder2 = LootItemBlockStatePropertyCondition.hasBlockStateProperties(PSBlocks.ROUNDWORM_VINES_PLANT.get())
+        LootItemCondition.Builder builder2 = LootItemBlockStatePropertyCondition.hasBlockStateProperties(PBlocks.ROUNDWORM_VINES_PLANT.get())
                 .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(RoundwormVinesPlantBlock.SEEDS, true));
-        add(PSBlocks.ROUNDWORM_VINES_PLANT.get(), createRoundwormVinesDrop(PSItems.ROUNDWORM.get(), builder2));
-        dropOther(PSBlocks.ROUNDWORM_VINES.get(), PSItems.ROUNDWORM.get());
+        add(PBlocks.ROUNDWORM_VINES_PLANT.get(), createRoundwormVinesDrop(PItems.ROUNDWORM.get(), builder2));
+        dropOther(PBlocks.ROUNDWORM_VINES.get(), PItems.ROUNDWORM.get());
     }
 
     protected LootTable.@NotNull Builder createPoopPieceDrop(Block block, Item item) {
@@ -168,7 +168,7 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
                 IntStream.rangeClosed(1, 8)
                         .mapToObj(i -> {
                             if (i == 8) {
-                                return LootItem.lootTableItem(PSBlocks.POOP_BLOCK.get());
+                                return LootItem.lootTableItem(PBlocks.POOP_BLOCK.get());
                             }
                             return LootItem.lootTableItem(block)
                                     .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
@@ -237,7 +237,7 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
         var registrylookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
         return this.createSilkTouchDispatchTable(block,
                 this.applyExplosionDecay(block,
-                        LootItem.lootTableItem(PSItems.SPALL)
+                        LootItem.lootTableItem(PItems.SPALL)
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(4.0F, 5.0F)))
                                 .apply(ApplyBonusCount.addUniformBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE)))
                 )
@@ -270,7 +270,7 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
         var registrylookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
         return this.createSilkTouchDispatchTable(block,
                 this.applyExplosionDecay(block,
-                        LootItem.lootTableItem(PSItems.POOP.get())
+                        LootItem.lootTableItem(PItems.POOP.get())
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
                                 .apply(ApplyBonusCount.addUniformBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE)))
                 )
@@ -279,7 +279,7 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
                         .setRolls(ConstantValue.exactly(1.0F))
                         .when(this.doesNotHaveShearsOrSilkTouch())
                         .add(((LootPoolSingletonContainer.Builder<?>)
-                                this.applyExplosionCondition(block, LootItem.lootTableItem(PSItems.ROUNDWORM.get())))
+                                this.applyExplosionCondition(block, LootItem.lootTableItem(PItems.ROUNDWORM.get())))
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
                                 .apply(ApplyBonusCount.addUniformBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE))))
         );
@@ -289,11 +289,11 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
         return LootTable.lootTable()
                 .withPool(
                         LootPool.lootPool()
-                                .add(this.applyExplosionDecay(block, LootItem.lootTableItem(PSBlocks.COMPOOPER.get())))
+                                .add(this.applyExplosionDecay(block, LootItem.lootTableItem(PBlocks.COMPOOPER.get())))
                 )
                 .withPool(
                         LootPool.lootPool()
-                                .add(LootItem.lootTableItem(PSItems.SAPLING_POOP_BALL.get()))
+                                .add(LootItem.lootTableItem(PItems.SAPLING_POOP_BALL.get()))
                                 .when(
                                         LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
                                                 .setProperties(StatePropertiesPredicate.Builder.properties()
@@ -306,11 +306,11 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
         return LootTable.lootTable()
                 .withPool(
                         LootPool.lootPool()
-                                .add(this.applyExplosionDecay(block, LootItem.lootTableItem(PSBlocks.COMPOOPER.get())))
+                                .add(this.applyExplosionDecay(block, LootItem.lootTableItem(PBlocks.COMPOOPER.get())))
                 )
                 .withPool(
                         LootPool.lootPool()
-                                .add(LootItem.lootTableItem(PSItems.MAGGOTS_SEEDS.get()))
+                                .add(LootItem.lootTableItem(PItems.MAGGOTS_SEEDS.get()))
                                 .when(
                                         LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
                                                 .setProperties(StatePropertiesPredicate.Builder.properties()
@@ -330,7 +330,7 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
     @Override
     protected @NotNull Iterable<Block> getKnownBlocks() {
         return Stream.concat(
-                        PSBlocks.BLOCKS.getEntries().stream(),
+                        PBlocks.BLOCKS.getEntries().stream(),
                         AllToiletBlocks.BLOCKS.getEntries().stream()
                 )
                 .map(Holder::value)

@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.compat.jei;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.PSBlocks;
+import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.util.ClientUtil;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.ITooltipBuilder;
@@ -36,7 +36,7 @@ public class CompooperRecipeCategory implements IRecipeCategory<CompooperRecipe>
     public CompooperRecipeCategory(IJeiHelpers helpers, IDrawable arrow) {
         var helper = helpers.getGuiHelper();
 
-        this.icon = helper.createDrawableItemStack(new ItemStack(PSBlocks.COMPOOPER.get()));
+        this.icon = helper.createDrawableItemStack(new ItemStack(PBlocks.COMPOOPER.get()));
         this.title = Component.translatable("jei.category." + PoopSky.MOD_ID + ".compooper");
         this.arrow = arrow;
         this.slot = helper.getSlotDrawable();

@@ -2,8 +2,8 @@ package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.AllToiletBlocks;
-import com.altnoir.poopsky.block.PSBlocks;
-import com.altnoir.poopsky.tag.PSBlockTags;
+import com.altnoir.poopsky.block.PBlocks;
+import com.altnoir.poopsky.tag.PBlockTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
@@ -23,97 +23,97 @@ public class PSBlockTagProvider extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        tag(PSBlockTags.POOP_BLOCK)
-                .add(PSBlocks.POOP_BLOCK.get());
-        tag(PSBlockTags.CHILI_POOP_BLOCK)
-                .add(PSBlocks.CHILI_POOP_BLOCK.get());
-        tag(PSBlockTags.RAW_SAPLING_POOP_BLOCK)
-                .add(PSBlocks.RAW_POOP_BLOCK.get())
-                .add(PSBlocks.RAW_SAPLING_POOP_BLOCK.get());
-        tag(PSBlockTags.RAW_SEA_POOP_BLOCK)
-                .add(PSBlocks.RAW_POOP_BLOCK.get())
-                .add(PSBlocks.RAW_SEA_POOP_BLOCK.get());
-        tag(PSBlockTags.RAW_WITHER_POOP_BLOCK)
-                .add(PSBlocks.RAW_POOP_BLOCK.get())
-                .add(PSBlocks.RAW_WITHER_POOP_BLOCK.get());
-        tag(PSBlockTags.RAW_SEA_POOP_BLOCK)
-                .add(PSBlocks.RAW_SEA_POOP_BLOCK.get())
+        tag(PBlockTags.POOP_BLOCK)
+                .add(PBlocks.POOP_BLOCK.get());
+        tag(PBlockTags.CHILI_POOP_BLOCK)
+                .add(PBlocks.CHILI_POOP_BLOCK.get());
+        tag(PBlockTags.RAW_SAPLING_POOP_BLOCK)
+                .add(PBlocks.RAW_POOP_BLOCK.get())
+                .add(PBlocks.RAW_SAPLING_POOP_BLOCK.get());
+        tag(PBlockTags.RAW_SEA_POOP_BLOCK)
+                .add(PBlocks.RAW_POOP_BLOCK.get())
+                .add(PBlocks.RAW_SEA_POOP_BLOCK.get());
+        tag(PBlockTags.RAW_WITHER_POOP_BLOCK)
+                .add(PBlocks.RAW_POOP_BLOCK.get())
+                .add(PBlocks.RAW_WITHER_POOP_BLOCK.get());
+        tag(PBlockTags.RAW_SEA_POOP_BLOCK)
+                .add(PBlocks.RAW_SEA_POOP_BLOCK.get())
                 .add(Blocks.CRYING_OBSIDIAN);
-        tag(PSBlockTags.WATER_BLOCK)
-                .add(PSBlocks.RAW_SEA_POOP_BLOCK.get());
+        tag(PBlockTags.WATER_BLOCK)
+                .add(PBlocks.RAW_SEA_POOP_BLOCK.get());
 
-        tag(PSBlockTags.POOP_BLOCKS).add(POOP_BLOCKS);
-        tag(PSBlockTags.EMPTY_LOGS)
-                .add(PSBlocks.POOP_EMPTY_LOG.get())
-                .add(PSBlocks.STRIPPED_POOP_EMPTY_LOG.get());
+        tag(PBlockTags.POOP_BLOCKS).add(POOP_BLOCKS);
+        tag(PBlockTags.EMPTY_LOGS)
+                .add(PBlocks.POOP_EMPTY_LOG.get())
+                .add(PBlocks.STRIPPED_POOP_EMPTY_LOG.get());
 
-        tag(PSBlockTags.TOILET_BLOCKS)
+        tag(PBlockTags.TOILET_BLOCKS)
                 .add(WOODEN_TOILETS)
                 .add(HARD_TOILETS);
-        tag(PSBlockTags.GOLDEN_TOILET_BLOCKS)
+        tag(PBlockTags.GOLDEN_TOILET_BLOCKS)
                 .add(AllToiletBlocks.RAINBOW_TOILET.get());
 
-        tag(PSBlockTags.POOP_TNT_DESTROY)
+        tag(PBlockTags.POOP_TNT_DESTROY)
                 .addTags(BlockTags.FLOWERS)
                 .addTags(BlockTags.LEAVES);
-        tag(PSBlockTags.POOP_TNT_REPLACEABLE)
+        tag(PBlockTags.POOP_TNT_REPLACEABLE)
                 .addTags(BlockTags.MOSS_REPLACEABLE);
 
         //基础标签
         tag(BlockTags.MOSS_REPLACEABLE)
-                .add(PSBlocks.POOP_BLOCK.get())
-                .add(PSBlocks.POOLIME_POOP_BLOCK.get())
-                .add(PSBlocks.CHILI_POOP_BLOCK.get())
-                .add(PSBlocks.RAW_POOP_BLOCK.get())
-                .add(PSBlocks.RAW_SAPLING_POOP_BLOCK.get())
-                .add(PSBlocks.RAW_SEA_POOP_BLOCK.get())
-                .add(PSBlocks.RAW_WITHER_POOP_BLOCK.get());
+                .add(PBlocks.POOP_BLOCK.get())
+                .add(PBlocks.POOLIME_POOP_BLOCK.get())
+                .add(PBlocks.CHILI_POOP_BLOCK.get())
+                .add(PBlocks.RAW_POOP_BLOCK.get())
+                .add(PBlocks.RAW_SAPLING_POOP_BLOCK.get())
+                .add(PBlocks.RAW_SEA_POOP_BLOCK.get())
+                .add(PBlocks.RAW_WITHER_POOP_BLOCK.get());
         tag(BlockTags.BEACON_BASE_BLOCKS)
-                .add(PSBlocks.POOP_BLOCK.get())
-                .add(PSBlocks.CHILI_POOP_BLOCK.get())
-                .add(PSBlocks.DRIED_POOP_BLOCK.get());
+                .add(PBlocks.POOP_BLOCK.get())
+                .add(PBlocks.CHILI_POOP_BLOCK.get())
+                .add(PBlocks.DRIED_POOP_BLOCK.get());
 
         tag(BlockTags.CLIMBABLE)
-                .add(PSBlocks.ROUNDWORM_VINES.get())
-                .add(PSBlocks.ROUNDWORM_VINES_PLANT.get());
+                .add(PBlocks.ROUNDWORM_VINES.get())
+                .add(PBlocks.ROUNDWORM_VINES_PLANT.get());
         tag(BlockTags.FALL_DAMAGE_RESETTING)
-                .add(PSBlocks.ROUNDWORM_VINES.get())
-                .add(PSBlocks.ROUNDWORM_VINES_PLANT.get());
+                .add(PBlocks.ROUNDWORM_VINES.get())
+                .add(PBlocks.ROUNDWORM_VINES_PLANT.get());
 
         tag(BlockTags.DIRT)
-                .add(PSBlocks.POOP_BLOCK.get())
-                .add(PSBlocks.CHILI_POOP_BLOCK.get())
-                .add(PSBlocks.RAW_POOP_BLOCK.get())
-                .add(PSBlocks.RAW_SAPLING_POOP_BLOCK.get())
-                .add(PSBlocks.RAW_SEA_POOP_BLOCK.get())
-                .add(PSBlocks.RAW_WITHER_POOP_BLOCK.get());
+                .add(PBlocks.POOP_BLOCK.get())
+                .add(PBlocks.CHILI_POOP_BLOCK.get())
+                .add(PBlocks.RAW_POOP_BLOCK.get())
+                .add(PBlocks.RAW_SAPLING_POOP_BLOCK.get())
+                .add(PBlocks.RAW_SEA_POOP_BLOCK.get())
+                .add(PBlocks.RAW_WITHER_POOP_BLOCK.get());
         tag(BlockTags.SAND)
-                .add(PSBlocks.DRIED_POOP_BLOCK.get());
+                .add(PBlocks.DRIED_POOP_BLOCK.get());
 
         tag(BlockTags.MUSHROOM_GROW_BLOCK)
-                .add(PSBlocks.POOP_BLOCK.get())
-                .add(PSBlocks.CHILI_POOP_BLOCK.get())
-                .add(PSBlocks.RAW_POOP_BLOCK.get())
-                .add(PSBlocks.RAW_SAPLING_POOP_BLOCK.get())
-                .add(PSBlocks.RAW_SEA_POOP_BLOCK.get())
-                .add(PSBlocks.RAW_WITHER_POOP_BLOCK.get())
-                .add(PSBlocks.POOP_LOG.get())
-                .add(PSBlocks.POOP_EMPTY_LOG.get())
-                .add(PSBlocks.STRIPPED_POOP_LOG.get())
-                .add(PSBlocks.STRIPPED_POOP_EMPTY_LOG.get());
+                .add(PBlocks.POOP_BLOCK.get())
+                .add(PBlocks.CHILI_POOP_BLOCK.get())
+                .add(PBlocks.RAW_POOP_BLOCK.get())
+                .add(PBlocks.RAW_SAPLING_POOP_BLOCK.get())
+                .add(PBlocks.RAW_SEA_POOP_BLOCK.get())
+                .add(PBlocks.RAW_WITHER_POOP_BLOCK.get())
+                .add(PBlocks.POOP_LOG.get())
+                .add(PBlocks.POOP_EMPTY_LOG.get())
+                .add(PBlocks.STRIPPED_POOP_LOG.get())
+                .add(PBlocks.STRIPPED_POOP_EMPTY_LOG.get());
 
         tag(BlockTags.WALLS)
-                .add(PSBlocks.POOP_WALL.get())
-                .add(PSBlocks.CHILI_POOP_WALL.get())
-                .add(PSBlocks.GOLDEN_POOP_WALL.get())
-                .add(PSBlocks.DRIED_POOP_BLOCK_WALL.get())
-                .add(PSBlocks.SMOOTH_POOP_BLOCK_WALL.get())
-                .add(PSBlocks.CUT_POOP_BLOCK_WALL.get())
-                .add(PSBlocks.TILE_BLOCK_WALL.get());
+                .add(PBlocks.POOP_WALL.get())
+                .add(PBlocks.CHILI_POOP_WALL.get())
+                .add(PBlocks.GOLDEN_POOP_WALL.get())
+                .add(PBlocks.DRIED_POOP_BLOCK_WALL.get())
+                .add(PBlocks.SMOOTH_POOP_BLOCK_WALL.get())
+                .add(PBlocks.CUT_POOP_BLOCK_WALL.get())
+                .add(PBlocks.TILE_BLOCK_WALL.get());
         tag(BlockTags.FLOWERS)
-                .addTag(PSBlockTags.TOILET_BLOCKS)
-                .add(PSBlocks.POOP_LEAVES.get())
-                .addTag(PSBlockTags.POOP_BLOCKS);
+                .addTag(PBlockTags.TOILET_BLOCKS)
+                .add(PBlocks.POOP_LEAVES.get())
+                .addTag(PBlockTags.POOP_BLOCKS);
 
 //        ToiletBlocks.BLOCKS.getEntries().stream()
 //                .map(DeferredHolder::get)
@@ -123,125 +123,125 @@ public class PSBlockTagProvider extends BlockTagsProvider {
 //                });
 
         tag(BlockTags.LOGS)
-                .add(PSBlocks.POOP_LOG.get())
-                .add(PSBlocks.POOP_EMPTY_LOG.get())
-                .add(PSBlocks.STRIPPED_POOP_LOG.get())
-                .add(PSBlocks.STRIPPED_POOP_EMPTY_LOG.get());
+                .add(PBlocks.POOP_LOG.get())
+                .add(PBlocks.POOP_EMPTY_LOG.get())
+                .add(PBlocks.STRIPPED_POOP_LOG.get())
+                .add(PBlocks.STRIPPED_POOP_EMPTY_LOG.get());
 
         tag(BlockTags.LEAVES)
-                .add(PSBlocks.POOP_LEAVES.get())
-                .add(PSBlocks.POOP_LEAVES_IRON.get())
-                .add(PSBlocks.POOP_LEAVES_GOLD.get());
+                .add(PBlocks.POOP_LEAVES.get())
+                .add(PBlocks.POOP_LEAVES_IRON.get())
+                .add(PBlocks.POOP_LEAVES_GOLD.get());
 
-        tag(BlockTags.FENCES).add(PSBlocks.POOP_FENCE.get());
-        tag(BlockTags.FENCE_GATES).add(PSBlocks.POOP_FENCE_GATE.get());
+        tag(BlockTags.FENCES).add(PBlocks.POOP_FENCE.get());
+        tag(BlockTags.FENCE_GATES).add(PBlocks.POOP_FENCE_GATE.get());
 
         tag(BlockTags.MOB_INTERACTABLE_DOORS)
-                .add(PSBlocks.POOP_DOOR.get());
+                .add(PBlocks.POOP_DOOR.get());
         tag(BlockTags.DOORS)
-                .add(PSBlocks.POOP_DOOR.get());
+                .add(PBlocks.POOP_DOOR.get());
         tag(BlockTags.TRAPDOORS)
-                .add(PSBlocks.POOP_TRAPDOOR.get());
+                .add(PBlocks.POOP_TRAPDOOR.get());
 
         tag(BlockTags.CROPS)
-                .add(PSBlocks.MAGGOTS.get());
+                .add(PBlocks.MAGGOTS.get());
         tag(BlockTags.MAINTAINS_FARMLAND)
-                .add(PSBlocks.MAGGOTS.get());
+                .add(PBlocks.MAGGOTS.get());
 
         //工具标签
         tag(BlockTags.MINEABLE_WITH_AXE)
                 .add(WOODEN_TOILETS)
-                .add(PSBlocks.MAGGOTS.get());
+                .add(PBlocks.MAGGOTS.get());
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(HARD_TOILETS)
-                .add(PSBlocks.POOP_LOG.get())
-                .add(PSBlocks.STRIPPED_POOP_LOG.get())
+                .add(PBlocks.POOP_LOG.get())
+                .add(PBlocks.STRIPPED_POOP_LOG.get())
                 .add(HARDEN_POOP)
-                .add(PSBlocks.TILE_BLOCK.get())
-                .add(PSBlocks.TILE_BLOCK_STAIRS.get())
-                .add(PSBlocks.TILE_BLOCK_SLAB.get())
-                .add(PSBlocks.TILE_BLOCK_VERTICAL_SLAB.get())
-                .add(PSBlocks.TILE_BLOCK_WALL.get())
-                .add(PSBlocks.SIEVE.get())
-                .add(PSBlocks.PLACER.get())
-                .add(PSBlocks.COMPOOPER.get())
-                .add(PSBlocks.WATER_COMPOOPER.get())
-                .add(PSBlocks.LAVA_COMPOOPER.get())
-                .add(PSBlocks.POWDER_SNOW_COMPOOPER.get())
-                .add(PSBlocks.URINE_COMPOOPER.get());
+                .add(PBlocks.TILE_BLOCK.get())
+                .add(PBlocks.TILE_BLOCK_STAIRS.get())
+                .add(PBlocks.TILE_BLOCK_SLAB.get())
+                .add(PBlocks.TILE_BLOCK_VERTICAL_SLAB.get())
+                .add(PBlocks.TILE_BLOCK_WALL.get())
+                .add(PBlocks.SIEVE.get())
+                .add(PBlocks.PLACER.get())
+                .add(PBlocks.COMPOOPER.get())
+                .add(PBlocks.WATER_COMPOOPER.get())
+                .add(PBlocks.LAVA_COMPOOPER.get())
+                .add(PBlocks.POWDER_SNOW_COMPOOPER.get())
+                .add(PBlocks.URINE_COMPOOPER.get());
 
         tag(BlockTags.MINEABLE_WITH_HOE)
-                .addTag(PSBlockTags.POOP_BLOCKS);
+                .addTag(PBlockTags.POOP_BLOCKS);
 
         tag(BlockTags.MINEABLE_WITH_SHOVEL)
-                .add(PSBlocks.POOP_PIECE.get());
+                .add(PBlocks.POOP_PIECE.get());
 
         tag(Tags.Blocks.VILLAGER_JOB_SITES)
-                .add(PSBlocks.COMPOOPER.get())
-                .add(PSBlocks.WATER_COMPOOPER.get())
-                .add(PSBlocks.LAVA_COMPOOPER.get())
-                .add(PSBlocks.POWDER_SNOW_COMPOOPER.get())
-                .add(PSBlocks.URINE_COMPOOPER.get())
+                .add(PBlocks.COMPOOPER.get())
+                .add(PBlocks.WATER_COMPOOPER.get())
+                .add(PBlocks.LAVA_COMPOOPER.get())
+                .add(PBlocks.POWDER_SNOW_COMPOOPER.get())
+                .add(PBlocks.URINE_COMPOOPER.get())
                 .add(WOODEN_TOILETS)
                 .add(HARD_TOILETS);
     }
 
     public static final Block[] POOP_BLOCKS = {
-            PSBlocks.POOP_SAPLING.get(),
-            PSBlocks.POOP_LEAVES.get(),
-            PSBlocks.POOP_LEAVES_IRON.get(),
-            PSBlocks.POOP_LEAVES_GOLD.get(),
-            PSBlocks.POOP_PIECE.get(),
-            PSBlocks.POOP_BLOCK.get(),
-            PSBlocks.POOP_STAIRS.get(),
-            PSBlocks.POOP_SLAB.get(),
-            PSBlocks.POOP_VERTICAL_SLAB.get(),
-            PSBlocks.POOP_BUTTON.get(),
-            PSBlocks.POOP_PRESSURE_PLATE.get(),
-            PSBlocks.POOP_FENCE.get(),
-            PSBlocks.POOP_FENCE_GATE.get(),
-            PSBlocks.POOP_WALL.get(),
-            PSBlocks.POOP_DOOR.get(),
-            PSBlocks.POOP_TRAPDOOR.get(),
-            PSBlocks.CHILI_POOP_BLOCK.get(),
-            PSBlocks.CHILI_POOP_STAIRS.get(),
-            PSBlocks.CHILI_POOP_SLAB.get(),
-            PSBlocks.CHILI_POOP_VERTICAL_SLAB.get(),
-            PSBlocks.CHILI_POOP_WALL.get(),
-            PSBlocks.GOLDEN_POOP_BLOCK.get(),
-            PSBlocks.GOLDEN_POOP_STAIRS.get(),
-            PSBlocks.GOLDEN_POOP_SLAB.get(),
-            PSBlocks.GOLDEN_POOP_VERTICAL_SLAB.get(),
-            PSBlocks.GOLDEN_POOP_WALL.get()
+            PBlocks.POOP_SAPLING.get(),
+            PBlocks.POOP_LEAVES.get(),
+            PBlocks.POOP_LEAVES_IRON.get(),
+            PBlocks.POOP_LEAVES_GOLD.get(),
+            PBlocks.POOP_PIECE.get(),
+            PBlocks.POOP_BLOCK.get(),
+            PBlocks.POOP_STAIRS.get(),
+            PBlocks.POOP_SLAB.get(),
+            PBlocks.POOP_VERTICAL_SLAB.get(),
+            PBlocks.POOP_BUTTON.get(),
+            PBlocks.POOP_PRESSURE_PLATE.get(),
+            PBlocks.POOP_FENCE.get(),
+            PBlocks.POOP_FENCE_GATE.get(),
+            PBlocks.POOP_WALL.get(),
+            PBlocks.POOP_DOOR.get(),
+            PBlocks.POOP_TRAPDOOR.get(),
+            PBlocks.CHILI_POOP_BLOCK.get(),
+            PBlocks.CHILI_POOP_STAIRS.get(),
+            PBlocks.CHILI_POOP_SLAB.get(),
+            PBlocks.CHILI_POOP_VERTICAL_SLAB.get(),
+            PBlocks.CHILI_POOP_WALL.get(),
+            PBlocks.GOLDEN_POOP_BLOCK.get(),
+            PBlocks.GOLDEN_POOP_STAIRS.get(),
+            PBlocks.GOLDEN_POOP_SLAB.get(),
+            PBlocks.GOLDEN_POOP_VERTICAL_SLAB.get(),
+            PBlocks.GOLDEN_POOP_WALL.get()
     };
     public static final Block[] HARDEN_POOP = {
-            PSBlocks.POOP_BRICKS.get(),
-            PSBlocks.CRACKED_POOP_BRICKS.get(),
-            PSBlocks.POOP_BRICK_STAIRS.get(),
-            PSBlocks.POOP_BRICK_SLAB.get(),
-            PSBlocks.POOP_BRICK_VERTICAL_SLAB.get(),
-            PSBlocks.POOP_BRICK_WALL.get(),
-            PSBlocks.MOSSY_POOP_BRICKS.get(),
-            PSBlocks.MOSSY_POOP_BRICK_STAIRS.get(),
-            PSBlocks.MOSSY_POOP_BRICK_SLAB.get(),
-            PSBlocks.MOSSY_POOP_BRICK_VERTICAL_SLAB.get(),
-            PSBlocks.MOSSY_POOP_BRICK_WALL.get(),
-            PSBlocks.DRIED_POOP_BLOCK.get(),
-            PSBlocks.DRIED_POOP_BLOCK_STAIRS.get(),
-            PSBlocks.DRIED_POOP_BLOCK_SLAB.get(),
-            PSBlocks.DRIED_POOP_BLOCK_VERTICAL_SLAB.get(),
-            PSBlocks.DRIED_POOP_BLOCK_WALL.get(),
-            PSBlocks.SMOOTH_POOP_BLOCK.get(),
-            PSBlocks.SMOOTH_POOP_BLOCK_STAIRS.get(),
-            PSBlocks.SMOOTH_POOP_BLOCK_SLAB.get(),
-            PSBlocks.SMOOTH_POOP_BLOCK_VERTICAL_SLAB.get(),
-            PSBlocks.SMOOTH_POOP_BLOCK_WALL.get(),
-            PSBlocks.CUT_POOP_BLOCK.get(),
-            PSBlocks.CUT_POOP_BLOCK_STAIRS.get(),
-            PSBlocks.CUT_POOP_BLOCK_SLAB.get(),
-            PSBlocks.CUT_POOP_BLOCK_VERTICAL_SLAB.get(),
-            PSBlocks.CUT_POOP_BLOCK_WALL.get()
+            PBlocks.POOP_BRICKS.get(),
+            PBlocks.CRACKED_POOP_BRICKS.get(),
+            PBlocks.POOP_BRICK_STAIRS.get(),
+            PBlocks.POOP_BRICK_SLAB.get(),
+            PBlocks.POOP_BRICK_VERTICAL_SLAB.get(),
+            PBlocks.POOP_BRICK_WALL.get(),
+            PBlocks.MOSSY_POOP_BRICKS.get(),
+            PBlocks.MOSSY_POOP_BRICK_STAIRS.get(),
+            PBlocks.MOSSY_POOP_BRICK_SLAB.get(),
+            PBlocks.MOSSY_POOP_BRICK_VERTICAL_SLAB.get(),
+            PBlocks.MOSSY_POOP_BRICK_WALL.get(),
+            PBlocks.DRIED_POOP_BLOCK.get(),
+            PBlocks.DRIED_POOP_BLOCK_STAIRS.get(),
+            PBlocks.DRIED_POOP_BLOCK_SLAB.get(),
+            PBlocks.DRIED_POOP_BLOCK_VERTICAL_SLAB.get(),
+            PBlocks.DRIED_POOP_BLOCK_WALL.get(),
+            PBlocks.SMOOTH_POOP_BLOCK.get(),
+            PBlocks.SMOOTH_POOP_BLOCK_STAIRS.get(),
+            PBlocks.SMOOTH_POOP_BLOCK_SLAB.get(),
+            PBlocks.SMOOTH_POOP_BLOCK_VERTICAL_SLAB.get(),
+            PBlocks.SMOOTH_POOP_BLOCK_WALL.get(),
+            PBlocks.CUT_POOP_BLOCK.get(),
+            PBlocks.CUT_POOP_BLOCK_STAIRS.get(),
+            PBlocks.CUT_POOP_BLOCK_SLAB.get(),
+            PBlocks.CUT_POOP_BLOCK_VERTICAL_SLAB.get(),
+            PBlocks.CUT_POOP_BLOCK_WALL.get()
     };
     public static final Block[] WOODEN_TOILETS = {
             AllToiletBlocks.OAK_TOILET.get(),

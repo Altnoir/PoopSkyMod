@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.block.p;
 
-import com.altnoir.poopsky.block.PSBlocks;
+import com.altnoir.poopsky.block.PBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -74,7 +74,7 @@ public class PoopCandleCakeBlock extends CandleCakeBlock {
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
 
-        return PoopCakeBlock.eat(level, pos, PSBlocks.POOP_CAKE.get().defaultBlockState(), player);
+        return PoopCakeBlock.eat(level, pos, PBlocks.POOP_CAKE.get().defaultBlockState(), player);
     }
 
     private static boolean isHittingCandle(BlockHitResult hitResult, BlockPos pos) {
@@ -96,6 +96,6 @@ public class PoopCandleCakeBlock extends CandleCakeBlock {
 
     @Override
     public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
-        return PSBlocks.POOP_CAKE.get().asItem().getDefaultInstance();
+        return PBlocks.POOP_CAKE.get().asItem().getDefaultInstance();
     }
 }

@@ -4,8 +4,8 @@ import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.block.p.ToiletLavaBlock;
 import com.altnoir.poopsky.entity.p.ToiletEntity;
 import com.altnoir.poopsky.init.*;
-import com.altnoir.poopsky.item.PSItems;
-import com.altnoir.poopsky.tag.PSBlockTags;
+import com.altnoir.poopsky.item.PItems;
+import com.altnoir.poopsky.tag.PBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
@@ -19,7 +19,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.item.FallingBlockEntity;
@@ -45,8 +44,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.fluids.FluidUtil;
-import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -105,7 +102,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
                 entity = entities.getFirst();
             }
             if (entity instanceof ToiletEntity toiletEntity) {
-                toiletEntity.setGoldenPoop(state.is(PSBlockTags.GOLDEN_TOILET_BLOCKS));
+                toiletEntity.setGoldenPoop(state.is(PBlockTags.GOLDEN_TOILET_BLOCKS));
             }
             player.startRiding(entity);
         }
@@ -150,10 +147,10 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
 
     private void poopAnvil(Level level, BlockState blockState, Entity entity) {
         Item poopItem;
-        if (blockState.is(PSBlockTags.GOLDEN_TOILET_BLOCKS)) {
-            poopItem = PSItems.GOLDEN_POOP.get();
+        if (blockState.is(PBlockTags.GOLDEN_TOILET_BLOCKS)) {
+            poopItem = PItems.GOLDEN_POOP.get();
         } else {
-            poopItem = PSItems.POOP.get();
+            poopItem = PItems.POOP.get();
         }
         var poop = new ItemEntity(level, entity.getX(), entity.getY() + 0.1, entity.getZ(), new ItemStack(poopItem, 8));
         poop.setDefaultPickUpDelay();
@@ -197,9 +194,9 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
         } else {
             Item poopItem;
             if (isFire) {
-                poopItem = PSItems.CHILI_POOP.get();
+                poopItem = PItems.CHILI_POOP.get();
             } else {
-                poopItem = PSItems.POOP.get();
+                poopItem = PItems.POOP.get();
             }
             var poop = new ItemEntity(level, player.getX(), player.getY() + 0.1, player.getZ(), new ItemStack(poopItem));
             poop.setDefaultPickUpDelay();
@@ -315,7 +312,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
         if (hasHot(level, pos)) {
             level.explode(null, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, 4.0F, Level.ExplosionInteraction.BLOCK);
             level.setBlock(pos.above(), Blocks.AIR.defaultBlockState(), 3);
-            var poop = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, new ItemStack(PSItems.POOP.get(), 88));
+            var poop = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, new ItemStack(PItems.POOP.get(), 88));
             level.addFreshEntity(poop);
         }
     }

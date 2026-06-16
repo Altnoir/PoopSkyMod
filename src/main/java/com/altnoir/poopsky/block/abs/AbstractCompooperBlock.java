@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.block.abs;
 
 import com.altnoir.poopsky.Config;
-import com.altnoir.poopsky.block.PSBlocks;
+import com.altnoir.poopsky.block.PBlocks;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -143,7 +143,7 @@ public abstract class AbstractCompooperBlock extends Block {
 
     protected void setBlock(BlockState state, Level level, BlockPos pos, Player player, SoundEvent sound, float pitch) {
         level.playSound(null, pos, sound, SoundSource.BLOCKS, 1.0F, pitch);
-        var newState = state.getValue(LEVEL) == MIN_LEVEL ? PSBlocks.COMPOOPER.get().defaultBlockState() : state;
+        var newState = state.getValue(LEVEL) == MIN_LEVEL ? PBlocks.COMPOOPER.get().defaultBlockState() : state;
         level.setBlockAndUpdate(pos, newState);
         level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, newState));
     }
@@ -183,7 +183,7 @@ public abstract class AbstractCompooperBlock extends Block {
             if (newLevel > MIN_LEVEL) {
                 level.setBlockAndUpdate(pos, state.setValue(LEVEL, newLevel));
             } else {
-                BlockState compooperBlock = PSBlocks.COMPOOPER.get().defaultBlockState();
+                BlockState compooperBlock = PBlocks.COMPOOPER.get().defaultBlockState();
                 level.setBlockAndUpdate(pos, compooperBlock);
                 level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(itemEntity, compooperBlock));
             }

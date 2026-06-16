@@ -1,8 +1,8 @@
 package com.altnoir.poopsky;
 
-import com.altnoir.poopsky.block.PSBlocks;
+import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.block.AllToiletBlocks;
-import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.item.PItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
@@ -22,22 +22,22 @@ public class PSItemGroups {
 
     public static final Supplier<CreativeModeTab> POOPSKY_TAB = CREATIVE_MODE_TAB.register("poopsky_tab", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemgroup.poopsky"))
-            .icon(() -> new ItemStack(PSItems.POOP.get()))
+            .icon(() -> new ItemStack(PItems.POOP.get()))
             .displayItems((parameters, output) -> {
-                PSItems.ITEMS.getEntries().stream()
+                PItems.ITEMS.getEntries().stream()
                         .map(DeferredHolder::get)
                         .filter(item -> !(item instanceof BlockItem))
                         .forEach(output::accept);
 
                 Set<Block> skip = Set.of(
-                        PSBlocks.POOP_LIQUID.get(),
-                        PSBlocks.WATER_COMPOOPER.get(),
-                        PSBlocks.LAVA_COMPOOPER.get(),
-                        PSBlocks.POWDER_SNOW_COMPOOPER.get(),
-                        PSBlocks.URINE_COMPOOPER.get(),
-                        PSBlocks.ROUNDWORM_VINES_PLANT.get()
+                        PBlocks.POOP_LIQUID.get(),
+                        PBlocks.WATER_COMPOOPER.get(),
+                        PBlocks.LAVA_COMPOOPER.get(),
+                        PBlocks.POWDER_SNOW_COMPOOPER.get(),
+                        PBlocks.URINE_COMPOOPER.get(),
+                        PBlocks.ROUNDWORM_VINES_PLANT.get()
                 );
-                PSBlocks.BLOCKS.getEntries().stream()
+                PBlocks.BLOCKS.getEntries().stream()
                         .map(DeferredHolder::get)
                         .filter(block -> block.asItem() != Items.AIR)
                         .filter(block -> !skip.contains(block))

@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.compat.jei;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.PSBlocks;
-import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.block.PBlocks;
+import com.altnoir.poopsky.item.PItems;
 import com.altnoir.poopsky.init.PRecipes;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -41,11 +41,11 @@ public class PSJEIPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         registration.addRecipes(CompooperRecipeCategory.TYPE, List.of(
                 new CompooperRecipe(
-                        Ingredient.of(Stream.empty()), new ItemStack(PSItems.MAGGOTS_SEEDS.get()), PSBlocks.URINE_COMPOOPER.get().defaultBlockState()),
+                        Ingredient.of(Stream.empty()), new ItemStack(PItems.MAGGOTS_SEEDS.get()), PBlocks.URINE_COMPOOPER.get().defaultBlockState()),
                 new CompooperRecipe(
-                        Ingredient.of(Items.STICK), new ItemStack(Items.BLAZE_ROD), PSBlocks.LAVA_COMPOOPER.get().defaultBlockState()),
+                        Ingredient.of(Items.STICK), new ItemStack(Items.BLAZE_ROD), PBlocks.LAVA_COMPOOPER.get().defaultBlockState()),
                 new CompooperRecipe(
-                        Ingredient.of(Items.STICK), new ItemStack(Items.BREEZE_ROD), PSBlocks.POWDER_SNOW_COMPOOPER.get().defaultBlockState())
+                        Ingredient.of(Items.STICK), new ItemStack(Items.BREEZE_ROD), PBlocks.POWDER_SNOW_COMPOOPER.get().defaultBlockState())
         ));
         var level = net.minecraft.client.Minecraft.getInstance().level;
         if (level != null) {
@@ -58,7 +58,7 @@ public class PSJEIPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        registration.addRecipeCatalyst(new ItemStack(PSBlocks.COMPOOPER.get()), CompooperRecipeCategory.TYPE);
-        registration.addRecipeCatalyst(new ItemStack(PSBlocks.SIEVE.get()), SieveRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(PBlocks.COMPOOPER.get()), CompooperRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(PBlocks.SIEVE.get()), SieveRecipeCategory.TYPE);
     }
 }

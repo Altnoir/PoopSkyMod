@@ -1,10 +1,10 @@
 package com.altnoir.poopsky.block.p;
 
-import com.altnoir.poopsky.block.PSBlocks;
+import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.init.PParticles;
 import com.altnoir.poopsky.init.PSoundEvents;
-import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.item.PItems;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -55,15 +55,15 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
 
     @Override
     public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
-        return new ItemStack(PSBlocks.COMPOOPER.get());
+        return new ItemStack(PBlocks.COMPOOPER.get());
     }
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         int i = state.getValue(LEVEL);
 
-        Item bottle = PSItems.URINE_BOTTLE.get();
-        Item bucket = PSItems.URINE_BUCKET.get();
+        Item bottle = PItems.URINE_BOTTLE.get();
+        Item bucket = PItems.URINE_BUCKET.get();
 
         if (i >= MAX_LEVEL) {
             if (stack.getItem() == Items.BUCKET) {
@@ -91,7 +91,7 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
     public static void extractProduce(Entity entity, BlockState state, Level level, BlockPos pos) {
         if (!level.isClientSide) {
             var vec3 = Vec3.atLowerCornerWithOffset(pos, 0.5, 1.01, 0.5).offsetRandom(level.random, 0.7F);
-            var itementity = new ItemEntity(level, vec3.x(), vec3.y(), vec3.z(), new ItemStack(PSItems.MAGGOTS_SEEDS.get()));
+            var itementity = new ItemEntity(level, vec3.x(), vec3.y(), vec3.z(), new ItemStack(PItems.MAGGOTS_SEEDS.get()));
             itementity.setDefaultPickUpDelay();
             level.addFreshEntity(itementity);
 
@@ -153,7 +153,7 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
                 0.02
         );
 
-        BlockState compooperBlock = PSBlocks.WATER_COMPOOPER.get().defaultBlockState().setValue(LEVEL, MAX_LEVEL);
+        BlockState compooperBlock = PBlocks.WATER_COMPOOPER.get().defaultBlockState().setValue(LEVEL, MAX_LEVEL);
         level.setBlockAndUpdate(pos, compooperBlock);
     }
 
@@ -187,7 +187,7 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
     @Override
     public WorldlyContainer getContainer(BlockState blockState, LevelAccessor levelAccessor, BlockPos blockPos) {
         if (blockState.getValue(MAGGOTS)) {
-            return new UrineCompooperBlock.OutputContainer(blockState, levelAccessor, blockPos, new ItemStack(PSItems.MAGGOTS_SEEDS.get()));
+            return new UrineCompooperBlock.OutputContainer(blockState, levelAccessor, blockPos, new ItemStack(PItems.MAGGOTS_SEEDS.get()));
         } else {
             return new UrineCompooperBlock.EmptyContainer();
         }
@@ -247,7 +247,7 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
          */
         @Override
         public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-            return !this.changed && direction == Direction.DOWN && stack.is(PSItems.MAGGOTS_SEEDS.get());
+            return !this.changed && direction == Direction.DOWN && stack.is(PItems.MAGGOTS_SEEDS.get());
         }
 
         @Override

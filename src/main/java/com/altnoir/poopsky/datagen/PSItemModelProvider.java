@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.PSBlocks;
-import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.block.PBlocks;
+import com.altnoir.poopsky.item.PItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -40,63 +40,63 @@ public class PSItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        basicItem(PSItems.POOP.get());
-        basicItem(PSItems.CHILI_POOP.get());
-        basicItem(PSItems.GOLDEN_POOP.get());
-        basicItem(PSItems.SEEDBED_CURSE.get());
-        basicItem(PSItems.FOLIUM_SENNAE.get());
-        basicItem(PSItems.POOP_BALL.get());
-        basicItem(PSItems.SAPLING_POOP_BALL.get());
-        basicItem(PSItems.SEA_POOP_BALL.get());
-        basicItem(PSItems.WITHER_POOP_BALL.get());
-        basicItem(PSItems.POOP_BREAD.get());
-        basicItem(PSItems.POOP_DUMPLINGS.get());
-        basicItem(PSItems.POOP_MOONCAKE.get());
-        basicItem(PSItems.CHILI_POOP_MOONCAKE.get());
-        basicItem(PSItems.GOLDEN_POOP_MOONCAKE.get());
-        basicItem(PSItems.POOP_SOUP.get());
-        basicItem(PSItems.POOP_VEGETABLE_STICKS.get());
-        basicItem(PSItems.POOBURGER_MEAT.get());
-        basicItem(PSItems.POOBURGER.get());
-        basicItem(PSItems.POOP_PASTA.get());
-        basicItem(PSItems.POODDING.get());
-        basicItem(PSItems.DRAGON_BREATH_CHILI.get());
-        basicItem(PSItems.KING_OF_DRAGON_FRUIT.get());
-        basicItem(PSItems.TOILET_PLUG.get());
-        basicItem(PSItems.SPALL.get());
-        basicItem(PSItems.LAWRENCE_MUSIC_DISC.get());
-        basicItem(PSItems.LIGHT_DANCE_MUSIC_DISC.get());
-        basicItem(PSItems.MOON_BOWL_MUSIC_DISC.get());
-        basicItem(PSItems.TOILET_PLUG_WAND.get());
-        basicItem(PSItems.URINE_BOTTLE.get());
-        basicItem(PSItems.URINE_BUCKET.get());
-        basicItem(PSItems.MAGGOTS_SEEDS.get());
-        basicItem(PSItems.ROUNDWORM.get());
-        basicItem(PSItems.BAKED_MAGGOTS.get());
+        basicItem(PItems.POOP.get());
+        basicItem(PItems.CHILI_POOP.get());
+        basicItem(PItems.GOLDEN_POOP.get());
+        basicItem(PItems.SEEDBED_CURSE.get());
+        basicItem(PItems.FOLIUM_SENNAE.get());
+        basicItem(PItems.POOP_BALL.get());
+        basicItem(PItems.SAPLING_POOP_BALL.get());
+        basicItem(PItems.SEA_POOP_BALL.get());
+        basicItem(PItems.WITHER_POOP_BALL.get());
+        basicItem(PItems.POOP_BREAD.get());
+        basicItem(PItems.POOP_DUMPLINGS.get());
+        basicItem(PItems.POOP_MOONCAKE.get());
+        basicItem(PItems.CHILI_POOP_MOONCAKE.get());
+        basicItem(PItems.GOLDEN_POOP_MOONCAKE.get());
+        basicItem(PItems.POOP_SOUP.get());
+        basicItem(PItems.POOP_VEGETABLE_STICKS.get());
+        basicItem(PItems.POOBURGER_MEAT.get());
+        basicItem(PItems.POOBURGER.get());
+        basicItem(PItems.POOP_PASTA.get());
+        basicItem(PItems.POODDING.get());
+        basicItem(PItems.DRAGON_BREATH_CHILI.get());
+        basicItem(PItems.KING_OF_DRAGON_FRUIT.get());
+        basicItem(PItems.TOILET_PLUG.get());
+        basicItem(PItems.SPALL.get());
+        basicItem(PItems.LAWRENCE_MUSIC_DISC.get());
+        basicItem(PItems.LIGHT_DANCE_MUSIC_DISC.get());
+        basicItem(PItems.MOON_BOWL_MUSIC_DISC.get());
+        basicItem(PItems.TOILET_PLUG_WAND.get());
+        basicItem(PItems.URINE_BOTTLE.get());
+        basicItem(PItems.URINE_BUCKET.get());
+        basicItem(PItems.MAGGOTS_SEEDS.get());
+        basicItem(PItems.ROUNDWORM.get());
+        basicItem(PItems.BAKED_MAGGOTS.get());
 
-        basicItem(PSItems.TIME_BELL.get());
+        basicItem(PItems.TIME_BELL.get());
 
-        wallItem(PSBlocks.CHILI_POOP_WALL, PSBlocks.CHILI_POOP_BLOCK);
-        wallItem(PSBlocks.GOLDEN_POOP_WALL, PSBlocks.GOLDEN_POOP_BLOCK);
-        wallItem(PSBlocks.POOP_BRICK_WALL, PSBlocks.POOP_BRICKS);
-        wallItem(PSBlocks.MOSSY_POOP_BRICK_WALL, PSBlocks.MOSSY_POOP_BRICKS);
-        wallItem(PSBlocks.DRIED_POOP_BLOCK_WALL, PSBlocks.DRIED_POOP_BLOCK);
-        wallItem(PSBlocks.SMOOTH_POOP_BLOCK_WALL, PSBlocks.SMOOTH_POOP_BLOCK);
-        wallItem(PSBlocks.CUT_POOP_BLOCK_WALL, PSBlocks.CUT_POOP_BLOCK);
-        wallItem(PSBlocks.TILE_BLOCK_WALL, PSBlocks.TILE_BLOCK);
+        wallItem(PBlocks.CHILI_POOP_WALL, PBlocks.CHILI_POOP_BLOCK);
+        wallItem(PBlocks.GOLDEN_POOP_WALL, PBlocks.GOLDEN_POOP_BLOCK);
+        wallItem(PBlocks.POOP_BRICK_WALL, PBlocks.POOP_BRICKS);
+        wallItem(PBlocks.MOSSY_POOP_BRICK_WALL, PBlocks.MOSSY_POOP_BRICKS);
+        wallItem(PBlocks.DRIED_POOP_BLOCK_WALL, PBlocks.DRIED_POOP_BLOCK);
+        wallItem(PBlocks.SMOOTH_POOP_BLOCK_WALL, PBlocks.SMOOTH_POOP_BLOCK);
+        wallItem(PBlocks.CUT_POOP_BLOCK_WALL, PBlocks.CUT_POOP_BLOCK);
+        wallItem(PBlocks.TILE_BLOCK_WALL, PBlocks.TILE_BLOCK);
 
         // 添加液体桶的模型
         //withExistingParent("urine_bucket", mcLoc("item/generated")).texture("layer0", modLoc("item/urine_bucket"));
 
-        withExistingParent(PSItems.POOLIME_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(PItems.POOLIME_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
 
-        basicItem(PSItems.OMINOUS_FILTHY_INGOT.get());
-        basicItem(PSItems.OMEN_UPGRADE_SMITHING_TEMPLATE.get());
-        handheldItem(PSItems.MILOS_SWORD.get());
-        trimmedArmorItem(PSItems.OMEN_HELMET);
-        trimmedArmorItem(PSItems.OMEN_CHESTPLATE);
-        trimmedArmorItem(PSItems.OMEN_LEGGINGS);
-        trimmedArmorItem(PSItems.OMEN_BOOTS);
+        basicItem(PItems.OMINOUS_FILTHY_INGOT.get());
+        basicItem(PItems.OMEN_UPGRADE_SMITHING_TEMPLATE.get());
+        handheldItem(PItems.MILOS_SWORD.get());
+        trimmedArmorItem(PItems.OMEN_HELMET);
+        trimmedArmorItem(PItems.OMEN_CHESTPLATE);
+        trimmedArmorItem(PItems.OMEN_LEGGINGS);
+        trimmedArmorItem(PItems.OMEN_BOOTS);
     }
 
     private void wallItem(DeferredBlock<?> block, DeferredBlock<?> baseBlock) {

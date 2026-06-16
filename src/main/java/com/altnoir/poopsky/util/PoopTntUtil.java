@@ -1,9 +1,9 @@
 package com.altnoir.poopsky.util;
 
-import com.altnoir.poopsky.block.PSBlocks;
+import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.block.p.PoopTntBlock;
 import com.altnoir.poopsky.init.PParticles;
-import com.altnoir.poopsky.tag.PSBlockTags;
+import com.altnoir.poopsky.tag.PBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -47,10 +47,10 @@ public class PoopTntUtil {
                         level.setBlockAndUpdate(pos, recipeOutput.defaultBlockState());
                         //Block.popResource(level, pos, recipeOutput.copy());
                     } else {
-                        if (state.canBeReplaced() || state.is(PSBlockTags.POOP_TNT_DESTROY)) {
+                        if (state.canBeReplaced() || state.is(PBlockTags.POOP_TNT_DESTROY)) {
                             level.destroyBlock(pos, true, null);
-                        } else if (state.is(PSBlockTags.POOP_TNT_REPLACEABLE)) {
-                            level.setBlockAndUpdate(pos, PSBlocks.POOP_BLOCK.get().defaultBlockState());
+                        } else if (state.is(PBlockTags.POOP_TNT_REPLACEABLE)) {
+                            level.setBlockAndUpdate(pos, PBlocks.POOP_BLOCK.get().defaultBlockState());
                         }
                     }
                 }
