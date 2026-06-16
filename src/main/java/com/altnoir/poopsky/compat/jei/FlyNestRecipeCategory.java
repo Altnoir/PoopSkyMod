@@ -6,6 +6,7 @@ import com.altnoir.poopsky.init.PFlyTypes;
 import com.altnoir.poopsky.item.p.FlyItem;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IJeiHelpers;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
@@ -47,7 +48,7 @@ public class FlyNestRecipeCategory implements IRecipeCategory<FlyNestJeiRecipe> 
     }
 
     @Override
-    public void draw(FlyNestJeiRecipe recipe, mezz.jei.api.gui.ingredient.IRecipeSlotsView slotsView, GuiGraphics graphics, double mouseX, double mouseY) {
+    public void draw(FlyNestJeiRecipe recipe, IRecipeSlotsView slotsView, GuiGraphics graphics, double mouseX, double mouseY) {
         this.slot.draw(graphics, 0, 8);
         this.arrow.draw(graphics, 24, 10);
         this.slot.draw(graphics, 56, 8);

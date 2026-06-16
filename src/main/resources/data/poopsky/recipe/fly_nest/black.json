@@ -2,7 +2,7 @@
   "type": "poopsky:fly_nest",
   "fly_type": "black",
   "result": {
-    "item": "minecraft:coal"
+    "id": "minecraft:coal"
   }
 }
 

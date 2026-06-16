@@ -2,7 +2,7 @@
   "type": "poopsky:fly_nest",
   "fly_type": "white",
   "result": {
-    "item": "minecraft:bone_meal"
+    "id": "minecraft:bone_meal"
   }
 }
 

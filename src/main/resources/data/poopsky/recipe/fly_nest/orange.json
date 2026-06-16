@@ -2,7 +2,7 @@
   "type": "poopsky:fly_nest",
   "fly_type": "orange",
   "result": {
-    "item": "minecraft:orange_dye"
+    "id": "minecraft:orange_dye"
   }
 }
 

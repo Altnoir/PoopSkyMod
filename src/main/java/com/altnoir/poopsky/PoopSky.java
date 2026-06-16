@@ -136,5 +136,3 @@ public class PoopSky {
         return ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, path);
     }
 }
-
-

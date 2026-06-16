@@ -4,8 +4,10 @@ import com.altnoir.poopsky.block.entity.FlyNestBlockEntity;
 import com.altnoir.poopsky.init.PBlockEntityType;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.RenderShape;
@@ -59,8 +61,7 @@ public class FlyNestBlock extends BaseEntityBlock {
             if (level.getBlockEntity(pos) instanceof FlyNestBlockEntity be) {
                 // 掉落所有物品
                 for (int i = 0; i < FlyNestBlockEntity.TOTAL_SLOTS; i++) {
-                    net.minecraft.world.Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(),
-                            be.getItemHandler().getStackInSlot(i));
+                    Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), be.getItemHandler().getStackInSlot(i));
                 }
             }
         }
@@ -74,6 +75,6 @@ public class FlyNestBlock extends BaseEntityBlock {
 
     @Override
     protected int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
-        return net.minecraft.world.inventory.AbstractContainerMenu.getRedstoneSignalFromBlockEntity(level.getBlockEntity(pos));
+        return AbstractContainerMenu.getRedstoneSignalFromBlockEntity(level.getBlockEntity(pos));
     }
 }

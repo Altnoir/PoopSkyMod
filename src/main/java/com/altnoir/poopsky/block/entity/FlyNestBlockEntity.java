@@ -171,7 +171,6 @@ public class FlyNestBlockEntity extends BlockEntity implements MenuProvider {
         return stack;
     }
 
-    // ——— MenuProvider ———
     @Override
     public Component getDisplayName() {
         return Component.translatable("container.poopsky.fly_nest");
@@ -236,7 +235,6 @@ public class FlyNestBlockEntity extends BlockEntity implements MenuProvider {
         };
     }
 
-    // ——— Capability Exports ———
     public IItemHandler getItemHandler() {
         return itemHandler;
     }
@@ -249,7 +247,6 @@ public class FlyNestBlockEntity extends BlockEntity implements MenuProvider {
         return bottomHandler;
     }
 
-    // ——— NBT ———
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);

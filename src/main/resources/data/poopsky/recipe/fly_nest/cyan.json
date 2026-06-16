@@ -2,7 +2,7 @@
   "type": "poopsky:fly_nest",
   "fly_type": "cyan",
   "result": {
-    "item": "minecraft:prismarine_crystals"
+    "id": "minecraft:prismarine_crystals"
   }
 }
 

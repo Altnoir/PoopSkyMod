@@ -4,8 +4,10 @@ import com.altnoir.poopsky.block.entity.BreedingBoxBlockEntity;
 import com.altnoir.poopsky.init.PBlockEntityType;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.RenderShape;
@@ -58,8 +60,7 @@ public class BreedingBoxBlock extends BaseEntityBlock {
         if (!state.is(newState.getBlock())) {
             if (level.getBlockEntity(pos) instanceof BreedingBoxBlockEntity be) {
                 for (int i = 0; i < BreedingBoxBlockEntity.TOTAL_SLOTS; i++) {
-                    net.minecraft.world.Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(),
-                            be.getItemHandler().getStackInSlot(i));
+                    Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), be.getItemHandler().getStackInSlot(i));
                 }
             }
         }
@@ -73,6 +74,6 @@ public class BreedingBoxBlock extends BaseEntityBlock {
 
     @Override
     protected int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
-        return net.minecraft.world.inventory.AbstractContainerMenu.getRedstoneSignalFromBlockEntity(level.getBlockEntity(pos));
+        return AbstractContainerMenu.getRedstoneSignalFromBlockEntity(level.getBlockEntity(pos));
     }
 }

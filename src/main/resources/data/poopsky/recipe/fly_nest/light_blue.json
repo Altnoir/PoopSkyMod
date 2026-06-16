@@ -2,7 +2,7 @@
   "type": "poopsky:fly_nest",
   "fly_type": "light_blue",
   "result": {
-    "item": "minecraft:light_blue_dye"
+    "id": "minecraft:light_blue_dye"
   }
 }
 

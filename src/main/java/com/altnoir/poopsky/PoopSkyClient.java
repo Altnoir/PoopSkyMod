@@ -2,16 +2,13 @@ package com.altnoir.poopsky;
 
 import com.altnoir.poopsky.block.PSBlocks;
 import com.altnoir.poopsky.block.abs.AbstractCompooperBlock;
-import com.altnoir.poopsky.init.PEntityType;
+import com.altnoir.poopsky.init.*;
 import com.altnoir.poopsky.entity.renderer.*;
 import com.altnoir.poopsky.event.PSClientGameEvents;
 import com.altnoir.poopsky.event.PSClientModEvents;
 import com.altnoir.poopsky.event.PSKeyBoardInput;
-import com.altnoir.poopsky.init.PFluidTypes;
-import com.altnoir.poopsky.init.PParticles;
-import com.altnoir.poopsky.init.PComponents;
-import com.altnoir.poopsky.init.PFlyTypes;
-import com.altnoir.poopsky.init.PRecipes;
+import com.altnoir.poopsky.inventory.BreedingBoxScreen;
+import com.altnoir.poopsky.inventory.FlyNestScreen;
 import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.misc.particle.PoopParticle;
 import net.minecraft.client.renderer.BiomeColors;
@@ -23,6 +20,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterNamedRenderTypesEvent;
@@ -67,7 +65,7 @@ public class PoopSkyClient {
     }
 
     public static class ClientModEvents {
-        public static void registerItemProperties(net.neoforged.fml.event.lifecycle.FMLClientSetupEvent event) {
+        public static void registerItemProperties(FMLClientSetupEvent event) {
             event.enqueueWork(() -> {
                 ItemProperties.register(PSItems.FLY.get(), PoopSky.loc("fly_type"),
                     (stack, level, entity, seed) -> (float) PFlyTypes.getIndex(PFlyTypes.byId(stack.get(PComponents.FLY_TYPE.get()))));
@@ -88,8 +86,8 @@ public class PoopSkyClient {
         }
 
         public static void registerMenuScreens(RegisterMenuScreensEvent event) {
-            event.register(com.altnoir.poopsky.init.PMenuTypes.FLY_NEST.get(), com.altnoir.poopsky.inventory.FlyNestScreen::new);
-            event.register(com.altnoir.poopsky.init.PMenuTypes.BREEDING_BOX.get(), com.altnoir.poopsky.inventory.BreedingBoxScreen::new);
+            event.register(PMenuTypes.FLY_NEST.get(), FlyNestScreen::new);
+            event.register(PMenuTypes.BREEDING_BOX.get(), BreedingBoxScreen::new);
         }
 
         public static void registerRecipeBookCategories(RegisterRecipeBookCategoriesEvent event) {
@@ -144,8 +142,3 @@ public class PoopSkyClient {
         }
     }
 }
-
-
-
-
-

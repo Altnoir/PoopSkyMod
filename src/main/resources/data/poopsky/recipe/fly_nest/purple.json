@@ -2,7 +2,7 @@
   "type": "poopsky:fly_nest",
   "fly_type": "purple",
   "result": {
-    "item": "minecraft:amethyst_shard"
+    "id": "minecraft:amethyst_shard"
   }
 }
 

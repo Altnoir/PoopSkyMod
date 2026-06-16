@@ -47,7 +47,7 @@ public class PSJEIPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        // 硬编码的堆粪桶配方（不需要level）
+        // 1. 注册不需要 level 的硬编码配方
         registration.addRecipes(CompooperRecipeCategory.TYPE, List.of(
                 new CompooperRecipe(
                         Ingredient.of(Stream.empty()), new ItemStack(PSItems.MAGGOTS_SEEDS.get()), PSBlocks.URINE_COMPOOPER.get().defaultBlockState()),
@@ -56,21 +56,25 @@ public class PSJEIPlugin implements IModPlugin {
                 new CompooperRecipe(
                         Ingredient.of(Items.STICK), new ItemStack(Items.BREEZE_ROD), PSBlocks.POWDER_SNOW_COMPOOPER.get().defaultBlockState())
         ));
-    }
 
-    @Override
-    public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
-        // 延迟注册需要level的配方（此时世界已加载）
+        // 2. 获取 level 并进行非空判断
         var level = Minecraft.getInstance().level;
-        if (level == null) return;
+        if (level == null) {
+            // 如果玩家还在主界面，直接返回。
+            // 不用担心，当玩家进入游戏时，JEI 会自动重载配方并再次调用这个方法！
+            return;
+        }
 
-        jeiRuntime.getRecipeManager().addRecipes(SieveRecipeCategory.TYPE,
-                level.getRecipeManager().getAllRecipesFor(PRecipes.SIEVE_TYPE.get()).stream()
+        var recipeManager = level.getRecipeManager();
+
+        // 3. 注册需要 level 读取的数据包配方
+        registration.addRecipes(SieveRecipeCategory.TYPE,
+                recipeManager.getAllRecipesFor(PRecipes.SIEVE_TYPE.get()).stream()
                         .map(RecipeHolder::value)
                         .toList());
 
-        jeiRuntime.getRecipeManager().addRecipes(FlyNestRecipeCategory.TYPE,
-                level.getRecipeManager().getAllRecipesFor(PRecipes.FLY_NEST_TYPE.get()).stream()
+        registration.addRecipes(FlyNestRecipeCategory.TYPE,
+                recipeManager.getAllRecipesFor(PRecipes.FLY_NEST_TYPE.get()).stream()
                         .map(holder -> {
                             FlyNestRecipe recipe = holder.value();
                             return new FlyNestJeiRecipe(
@@ -80,8 +84,8 @@ public class PSJEIPlugin implements IModPlugin {
                         })
                         .toList());
 
-        jeiRuntime.getRecipeManager().addRecipes(BreedingBoxRecipeCategory.TYPE,
-                level.getRecipeManager().getAllRecipesFor(PRecipes.BREEDING_BOX_TYPE.get()).stream()
+        registration.addRecipes(BreedingBoxRecipeCategory.TYPE,
+                recipeManager.getAllRecipesFor(PRecipes.BREEDING_BOX_TYPE.get()).stream()
                         .map(holder -> {
                             BreedingBoxRecipe recipe = holder.value();
                             return new BreedingBoxJeiRecipe(
@@ -93,6 +97,12 @@ public class PSJEIPlugin implements IModPlugin {
                             );
                         })
                         .toList());
+    }
+
+    @Override
+    public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
+        // 现在的 onRuntimeAvailable 可以保持为空。
+        // 这个方法主要是让你拿到 IJeiRuntime 实例，用来在代码里动态控制 JEI 侧边栏（比如动态隐藏某些物品），而不是用来注册配方的。
     }
 
     @Override

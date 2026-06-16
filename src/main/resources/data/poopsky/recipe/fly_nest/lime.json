@@ -2,7 +2,7 @@
   "type": "poopsky:fly_nest",
   "fly_type": "lime",
   "result": {
-    "item": "minecraft:sea_pickle"
+    "id": "minecraft:sea_pickle"
   }
 }
 
