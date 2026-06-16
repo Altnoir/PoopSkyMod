@@ -66,7 +66,7 @@ public class AllToiletBlocks {
                     .mapColor(DyeColor.WHITE)
                     .instrument(NoteBlockInstrument.BASEDRUM)
                     .lightLevel(createLightLevelFromLavaBlockState(15))
-                    .strength(2.0F, 100.0F)
+                    .strength(4.0F, 100.0F)
                     .requiresCorrectToolForDrops()
             )
     );
@@ -86,7 +86,7 @@ public class AllToiletBlocks {
                 .mapColor(color)
                 .instrument(NoteBlockInstrument.BASEDRUM)
                 .lightLevel(createLightLevelFromLavaBlockState(15))
-                .strength(2.0F, 100.0F)
+                .strength(4.0F, 100.0F)
                 .requiresCorrectToolForDrops()
         ));
     }

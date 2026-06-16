@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "poopsky:seedbed_curse"
+    },
+    "C": {
+      "item": "poopsky:poop_block"
+    },
+    "S": {
+      "item": "poopsky:omen_upgrade_smithing_template"
+    }
+  },
+  "pattern": [
+    "#S#",
+    "#C#",
+    "###"
+  ],
+  "result": {
+    "count": 2,
+    "id": "poopsky:omen_upgrade_smithing_template"
+  }
+}

@@ -3,6 +3,7 @@ package com.altnoir.poopsky.init;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.effect.FecalIncontinenceEffect;
 import com.altnoir.poopsky.effect.IntestinalSpasmEffect;
+import com.altnoir.poopsky.effect.OmenerEffect;
 import com.altnoir.poopsky.effect.OnTheVergeEffect;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -32,6 +33,9 @@ public class PEffects {
     );
     public static final Holder<MobEffect> ON_THE_VERGE = MOB_EFFECTS.register("on_the_verge", () ->
             new OnTheVergeEffect(MobEffectCategory.BENEFICIAL, 0x8B0000)
+    );
+    public static final Holder<MobEffect> OMENER = MOB_EFFECTS.register("omener", () ->
+            new OmenerEffect(MobEffectCategory.BENEFICIAL, 0x47311A)
     );
 
     public static void register(IEventBus eventBus) {

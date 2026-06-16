@@ -158,6 +158,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .requires(Items.IRON_INGOT, 4)
                 .unlockedBy(getItemName(PSItems.SEEDBED_CURSE), has(PSItems.SEEDBED_CURSE))
                 .save(recipeOutput);
+        copySmithingTemplate(recipeOutput, PSItems.OMEN_UPGRADE_SMITHING_TEMPLATE, PSBlocks.POOP_BLOCK, PSItems.SEEDBED_CURSE);
         //盔甲
         omenSmithing(recipeOutput, Items.GOLDEN_CHESTPLATE, RecipeCategory.COMBAT, PSItems.OMEN_CHESTPLATE.get());
         omenSmithing(recipeOutput, Items.GOLDEN_LEGGINGS, RecipeCategory.COMBAT, PSItems.OMEN_LEGGINGS.get());
@@ -717,6 +718,10 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), category, result, resultCount)
                 .unlockedBy(getHasName(material), has(material))
                 .save(recipeOutput, getConversionRecipeName(result, material) + "_stonecutting");
+    }
+
+    protected static void copySmithingTemplate(RecipeOutput recipeOutput, ItemLike template, ItemLike baseItem, ItemLike item) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, template, 2).define('#', item).define('C', baseItem).define('S', template).pattern("#S#").pattern("#C#").pattern("###").unlockedBy(getHasName(template), has(template)).save(recipeOutput);
     }
 
     protected static String getConversionRecipeName(ItemLike result) {

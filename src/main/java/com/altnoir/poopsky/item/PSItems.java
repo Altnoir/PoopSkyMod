@@ -87,7 +87,7 @@ public class PSItems {
             new ArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.HELMET,
                     new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(24))));
     public static final DeferredItem<ArmorItem> OMEN_CHESTPLATE = ITEMS.register("omen_chestplate", () ->
-            new ArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE,
+            new OmenArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE,
                     new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(24))));
     public static final DeferredItem<ArmorItem> OMEN_LEGGINGS = ITEMS.register("omen_leggings", () ->
             new ArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS,
@@ -97,8 +97,7 @@ public class PSItems {
                     new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(24))));
 
     public static final DeferredItem<Item> OMEN_UPGRADE_SMITHING_TEMPLATE = ITEMS.register("omen_upgrade_smithing_template",
-            OmenSmithingTemplateItem::createOmenUpgradeTemplate
-    );
+            OmenSmithingTemplateItem::createOmenUpgradeTemplate);
 
     public static final DeferredItem<Item> TIME_BELL = ITEMS.register("time_bell", () ->
             new TimeBellItem(new Item.Properties().stacksTo(1)));
