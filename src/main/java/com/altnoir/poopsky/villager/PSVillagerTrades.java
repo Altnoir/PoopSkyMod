@@ -61,11 +61,6 @@ public class PSVillagerTrades {
                     new ItemCost(Items.EMERALD, 8),
                     new ItemStack(PSItems.POOP_VEGETABLE_STICKS.get(), 2), 32, 15, 0.1f)
             );
-
-            trades.get(4).add((entity, random) -> new MerchantOffer(
-                    new ItemCost(Items.EMERALD, 17),
-                    new ItemStack(PSItems.POOBURGER.get(), 1), 8, 25, 0.25f)
-            );
             trades.get(4).add((entity, random) -> new MerchantOffer(
                     new ItemCost(Items.EMERALD, 18),
                     new ItemStack(PSBlocks.POOP_CAKE, 1), 4, 25, 0.25f)
@@ -74,6 +69,12 @@ public class PSVillagerTrades {
                     new ItemCost(Items.EMERALD, 20),
                     new ItemStack(PSItems.URINE_BUCKET.get(), 1), 4, 25, 0.25f)
             );
+            if (!Config.upgradeTemplate) {
+                trades.get(4).add((entity, random) -> new MerchantOffer(
+                        new ItemCost(Items.EMERALD, 24),
+                        new ItemStack(PSItems.OMEN_UPGRADE_SMITHING_TEMPLATE.get(), 1), 1, 25, 0.25f)
+                );
+            }
 
             trades.get(5).add((entity, random) -> new MerchantOffer(
                     new ItemCost(Items.EMERALD, 1),

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:seedbed_curse"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "rotten_flesh": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:rotten_flesh"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "rotten_flesh"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "poopsky:seedbed_curse"
+    ]
+  }
+}

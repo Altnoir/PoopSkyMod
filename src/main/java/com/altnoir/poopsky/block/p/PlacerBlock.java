@@ -117,14 +117,14 @@ public class PlacerBlock extends BaseEntityBlock {
 
                         fakePlayer.setPos(Vec3.atCenterOf(pos));
                         fakePlayer.setYRot(direction.toYRot());
-                        fakePlayer.setXRot(direction == Direction.UP ? -90.0F : direction == Direction.DOWN ? 90.0F : 0.0F);
+                        var down = direction == Direction.DOWN ? 90.0F : 0.0F;
+                        fakePlayer.setXRot(direction == Direction.UP ? -90.0F : down);
 
                         var hitResult = new BlockHitResult(Vec3.atCenterOf(targetPos), direction.getOpposite(), targetPos, false);
                         var placeContext = new BlockPlaceContext(level, fakePlayer, InteractionHand.MAIN_HAND, itemstack, hitResult);
                         var placeResult = blockItem.place(placeContext);
 
                         if (placeResult.consumesAction()) {
-                            blockEntity.removeItem(i, 1);
                             blockEntity.setChanged();
                             playPlacedBlockSound(level, targetPos);
                             //level.gameEvent(GameEvent.BLOCK_PLACE, targetPos, GameEvent.Context.of(state));

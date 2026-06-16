@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "poopsky:seedbed_curse"
+    },
+    {
+      "item": "poopsky:seedbed_curse"
+    },
+    {
+      "item": "poopsky:seedbed_curse"
+    },
+    {
+      "item": "poopsky:seedbed_curse"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "poopsky:ominous_filthy_ingot"
+  }
+}

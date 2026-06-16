@@ -62,19 +62,19 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('M', PSItems.MAGGOTS_SEEDS)
                 .unlockedBy(getItemName(PSItems.MAGGOTS_SEEDS), has(PSItems.MAGGOTS_SEEDS))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PSItems.POOP_MOONCAKE,2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PSItems.POOP_MOONCAKE, 2)
                 .pattern("WPW")
                 .define('W', Items.WHEAT)
                 .define('P', PSItems.POOP)
                 .unlockedBy(getItemName(Items.WHEAT), has(Items.WHEAT))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PSItems.CHILI_POOP_MOONCAKE,2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PSItems.CHILI_POOP_MOONCAKE, 2)
                 .pattern("WPW")
                 .define('W', Items.WHEAT)
                 .define('P', PSItems.CHILI_POOP)
                 .unlockedBy(getItemName(Items.WHEAT), has(Items.WHEAT))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PSItems.GOLDEN_POOP_MOONCAKE,2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PSItems.GOLDEN_POOP_MOONCAKE, 2)
                 .pattern("WPW")
                 .define('W', Items.WHEAT)
                 .define('P', PSItems.GOLDEN_POOP)
@@ -146,6 +146,17 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('P', Items.GOLD_NUGGET)
                 .define('S', PSItems.POOP)
                 .unlockedBy(getItemName(Items.GOLD_NUGGET), has(Items.GOLD_NUGGET))
+                .save(recipeOutput);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PSItems.SEEDBED_CURSE.get())
+                .requires(Items.ROTTEN_FLESH, 4)
+                .requires(PSItems.POOP_BALL)
+                .requires(PSItems.POOP, 4)
+                .unlockedBy(getItemName(Items.ROTTEN_FLESH), has(Items.ROTTEN_FLESH))
+                .save(recipeOutput);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PSItems.OMINOUS_FILTHY_INGOT.get())
+                .requires(PSItems.SEEDBED_CURSE, 4)
+                .requires(Items.IRON_INGOT, 4)
+                .unlockedBy(getItemName(PSItems.SEEDBED_CURSE), has(PSItems.SEEDBED_CURSE))
                 .save(recipeOutput);
         //盔甲
         omenSmithing(recipeOutput, Items.GOLDEN_CHESTPLATE, RecipeCategory.COMBAT, PSItems.OMEN_CHESTPLATE.get());
