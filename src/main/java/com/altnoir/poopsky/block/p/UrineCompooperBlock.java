@@ -44,7 +44,6 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
         this.registerDefaultState(
                 this.stateDefinition.any()
                         .setValue(LEVEL, 3)
-                        .setValue(POWERED, false)
                         .setValue(MAGGOTS, false));
     }
 
@@ -159,7 +158,7 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(LEVEL, POWERED, MAGGOTS);
+        builder.add(LEVEL, MAGGOTS);
     }
 
     @Override
