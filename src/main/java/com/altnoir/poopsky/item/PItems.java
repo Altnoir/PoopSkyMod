@@ -105,19 +105,14 @@ public class PItems {
             new TimeBellItem(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<Item> SPALL = ITEMS.register("spall", () ->
             new Item(new Item.Properties()));
-    public static final DeferredItem<Item> URINE_BOTTLE = ITEMS.register("urine_bottle",
-            () -> new UrineBottleItem(new Item.Properties()
+    public static final DeferredItem<Item> URINE_BOTTLE = ITEMS.register("urine_bottle", () ->
+            new UrineBottleItem(new Item.Properties()
                     .craftRemainder(Items.GLASS_BOTTLE)
                     .food(PFoods.URINE_BOTTLE)
                     .stacksTo(18)
-            )
-    );
+            ));
     public static final DeferredItem<BucketItem> URINE_BUCKET = ITEMS.register("urine_bucket",
             () -> new BucketItem(PFluids.URINE.get(), new Item.Properties().stacksTo(1)));
-
-    public static final DeferredItem<Item> POOLIME_SPAWN_EGG = ITEMS.register("poolime_spawn_egg",
-            () -> new DeferredSpawnEggItem(PEntityType.POOLIME, 0x7D5F36, 0x5E4228,
-                    new Item.Properties()));
 
     public static final DeferredItem<Item> LAWRENCE_MUSIC_DISC = ITEMS.register("music_disc_lawrence", () ->
             new Item(new Item.Properties().jukeboxPlayable(PSoundEvents.LAWRENCE_KEY).rarity(Rarity.RARE).stacksTo(1)));
@@ -125,6 +120,10 @@ public class PItems {
             new Item(new Item.Properties().jukeboxPlayable(PSoundEvents.LIGHT_DANCE_KEY).rarity(Rarity.RARE).stacksTo(1)));
     public static final DeferredItem<Item> MOON_BOWL_MUSIC_DISC = ITEMS.register("music_disc_moon_bowl", () ->
             new Item(new Item.Properties().jukeboxPlayable(PSoundEvents.MOON_BOWL_KEY).rarity(Rarity.RARE).stacksTo(1)));
+
+    public static final DeferredItem<Item> POOLIME_SPAWN_EGG = ITEMS.register("poolime_spawn_egg",
+            () -> new DeferredSpawnEggItem(PEntityType.POOLIME, 0x7D5F36, 0x5E4228,
+                    new Item.Properties()));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
