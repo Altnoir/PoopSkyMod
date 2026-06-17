@@ -221,16 +221,16 @@ public class PSBlockStateProvider extends BlockStateProvider {
     private void fluidBlockWithItem(Block block) {
         var blockModel = models()
                 .withExistingParent(getBlockPath(block), mcLoc("block/block"))
-                .texture("particle", modLoc(getBlockPath(block)))
-                .texture("still", modLoc(getBlockPath(block)))
-                .texture("flow", modLoc(getBlockPath(block)))
+                .texture("particle", modLoc("block/" + getBlockPath(block)))
+                .texture("still", modLoc("block/" + getBlockPath(block)))
+                .texture("flow", modLoc("block/" + getBlockPath(block)))
                 .renderType("translucent");
 
         getVariantBuilder(block).partialState().addModels(new ConfiguredModel(blockModel));
 
         itemModels()
                 .withExistingParent(getBlockPath(block), mcLoc("item/generated"))
-                .texture("layer0", modLoc(getBlockPath(block)));
+                .texture("layer0", modLoc("block/" + getBlockPath(block)));
     }
 
     private void blockWithTranslucentRenderType(Block block) {
