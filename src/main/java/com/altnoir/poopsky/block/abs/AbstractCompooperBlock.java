@@ -151,7 +151,7 @@ public abstract class AbstractCompooperBlock extends Block {
     }
 
     protected void catalyst(ItemEntity itemEntity, BlockState state, Level level, BlockPos pos, int count, ItemLike item) {
-        if (Config.stickyCrafting) {
+        if (Config.compooperCrafting) {
             itemEntity.setItem(new ItemStack(item, count));
         } else {
             double height = getLiquidHeight(state);
