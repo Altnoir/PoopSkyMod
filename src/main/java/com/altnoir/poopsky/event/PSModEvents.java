@@ -92,7 +92,7 @@ public class PSModEvents {
     );
 
     @SubscribeEvent
-    public static void onLivingHurt(LivingDamageEvent.Pre event) {
+    public static void onLivingDamage(LivingDamageEvent.Pre event) {
         LivingEntity entity = event.getEntity();
 
         if (entity.hasEffect(PEffects.BLEEDING)) {

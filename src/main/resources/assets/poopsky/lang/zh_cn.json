@@ -317,5 +317,7 @@
   "poopsky.configuration.voidNetherGeneration": "虚空下界生成",
   "poopsky.configuration.voidNetherGeneration.tooltip": "使用空中厕所自定义虚空生成器时，让下界也保持空旷",
   "poopsky.configuration.plugTrades": "禁用马桶搋子交易",
-  "poopsky.configuration.plugTrades.tooltip": "是否禁用马桶搋子交易"
+  "poopsky.configuration.plugTrades.tooltip": "是否禁用马桶搋子交易",
+  "poopsky.configuration.upgradeTemplate": "禁用升级模板交易",
+  "poopsky.configuration.upgradeTemplate.tooltip": "是否禁用升级模板交易"
 }
