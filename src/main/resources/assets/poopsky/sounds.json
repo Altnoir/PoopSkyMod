@@ -169,5 +169,17 @@
         "stream": true
       }
     ]
+  },
+  "item.toilet_linker.boop": {
+    "subtitle": "subtitles.poopsky.item.toilet_linker.boop",
+    "sounds": [
+      "minecraft:random/orb"
+    ]
+  },
+  "item.toilet_linker.success": {
+    "subtitle": "subtitles.poopsky.item.toilet_linker.success",
+    "sounds": [
+      "minecraft:random/levelup"
+    ]
   }
 }
