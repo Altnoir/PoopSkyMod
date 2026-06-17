@@ -1,20 +1,23 @@
 package com.altnoir.poopsky.item;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.PSBlocks;
+import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.block.ToiletComponent;
 import com.altnoir.poopsky.init.PComponents;
 import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.init.PFluids;
 import com.altnoir.poopsky.init.PSoundEvents;
 import com.altnoir.poopsky.item.p.*;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import org.jetbrains.annotations.Nullable;
 
-public class PSItems {
+
+public class PItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(PoopSky.MOD_ID);
 
     public static final DeferredItem<Item> POOP = ITEMS.register("poop", () ->
@@ -72,19 +75,21 @@ public class PSItems {
             new ToiletLinkerItem(new Item.Properties().component(PComponents.TOILET_COMPONENT, ToiletComponent.EMPTY).stacksTo(1)));
 
     public static final DeferredItem<Item> MAGGOTS_SEEDS = ITEMS.register("maggots_seeds", () ->
-            new ItemNameBlockItem(PSBlocks.MAGGOTS.get(), new Item.Properties().food(PFoods.MAGGOTS_SEEDS).stacksTo(88)));
+            new ItemNameBlockItem(PBlocks.MAGGOTS.get(), new Item.Properties().food(PFoods.MAGGOTS_SEEDS).stacksTo(88)));
     public static final DeferredItem<Item> ROUNDWORM = ITEMS.register("roundworm", () ->
-            new ItemNameBlockItem(PSBlocks.ROUNDWORM_VINES.get(), new Item.Properties().food(PFoods.ROUNDWORM).stacksTo(88)));
+            new ItemNameBlockItem(PBlocks.ROUNDWORM_VINES.get(), new Item.Properties().food(PFoods.ROUNDWORM).stacksTo(88)));
 
     public static final DeferredItem<Item> OMINOUS_FILTHY_INGOT = ITEMS.register("ominous_filthy_ingot", () ->
             new Item(new Item.Properties()));
     public static final DeferredItem<SwordItem> MILOS_SWORD = ITEMS.register("milos_sword", () ->
-            new SwordItem(PToolTiers.MILOS,
-                    new Item.Properties().attributes(SwordItem.createAttributes(PToolTiers.MILOS, 1, -3.4F))));
+            new MilosSwordItem(PToolTiers.MILOS,
+                    new Item.Properties().attributes(MilosSwordItem.createAttributes(PToolTiers.MILOS, 2, 1, -3.4F))
+            ));
 
     public static final DeferredItem<ArmorItem> OMEN_HELMET = ITEMS.register("omen_helmet", () ->
-            new ArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.HELMET,
-                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(24))));
+            new OmenArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.HELMET,
+                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(24))){
+            });
     public static final DeferredItem<ArmorItem> OMEN_CHESTPLATE = ITEMS.register("omen_chestplate", () ->
             new ArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE,
                     new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(24))));
@@ -96,8 +101,7 @@ public class PSItems {
                     new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(24))));
 
     public static final DeferredItem<Item> OMEN_UPGRADE_SMITHING_TEMPLATE = ITEMS.register("omen_upgrade_smithing_template",
-            OmenSmithingTemplateItem::createOmenUpgradeTemplate
-    );
+            OmenSmithingTemplateItem::createOmenUpgradeTemplate);
 
     public static final DeferredItem<Item> TIME_BELL = ITEMS.register("time_bell", () ->
             new TimeBellItem(new Item.Properties().stacksTo(1)));
@@ -124,13 +128,6 @@ public class PSItems {
     public static final DeferredItem<Item> MOON_BOWL_MUSIC_DISC = ITEMS.register("music_disc_moon_bowl", () ->
             new Item(new Item.Properties().jukeboxPlayable(PSoundEvents.MOON_BOWL_KEY).rarity(Rarity.RARE).stacksTo(1)));
 
-    public static final DeferredItem<Item> FLY = ITEMS.register("fly",
-            () -> new FlyItem(new Item.Properties().stacksTo(88)));
-    public static final DeferredItem<Item> FLY_CATCHER = ITEMS.register("fly_catcher",
-            () -> new FlyCatcherItem(new Item.Properties().stacksTo(1).durability(64)));
-    public static final DeferredItem<Item> FLY_SPAWN_EGG = ITEMS.register("fly_spawn_egg",
-            () -> new DeferredSpawnEggItem(PEntityType.FLY, 0xC8C800, 0x8B4513,
-                    new Item.Properties()));
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

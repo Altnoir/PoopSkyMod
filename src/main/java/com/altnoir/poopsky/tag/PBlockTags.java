@@ -5,7 +5,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 
-public class PSBlockTags {
+public class PBlockTags {
     public static final TagKey<Block> TOILET_BLOCKS = create("toilet_blocks");
     public static final TagKey<Block> GOLDEN_TOILET_BLOCKS = create("golden_toilet_blocks");
     public static final TagKey<Block> POOP_BLOCKS = create("poop_blocks");

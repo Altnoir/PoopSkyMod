@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "poopsky:poop_block"
+    },
+    {
+      "item": "minecraft:bubble_coral"
+    },
+    {
+      "item": "minecraft:bubble_coral_fan"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:bubble_coral_block"
+  }
+}

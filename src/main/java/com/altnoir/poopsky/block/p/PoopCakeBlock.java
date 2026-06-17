@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.block.p;
 
-import com.altnoir.poopsky.block.PSBlocks;
+import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.init.PParticles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -54,7 +54,7 @@ public class PoopCakeBlock extends CakeBlock {
         }
 
         Block candle = blockItem.getBlock();
-        return candle instanceof CandleBlock candleBlock ? PSBlocks.getPoopCandleCake(candleBlock) : null;
+        return candle instanceof CandleBlock candleBlock ? PBlocks.getPoopCandleCake(candleBlock) : null;
     }
 
     @Override

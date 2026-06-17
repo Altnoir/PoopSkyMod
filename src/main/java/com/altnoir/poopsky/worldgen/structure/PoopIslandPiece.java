@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.worldgen.structure;
 
-import com.altnoir.poopsky.block.PSBlocks;
+import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.entity.p.PoolimeEntity;
 import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.worldgen.PSStructures;
@@ -88,7 +88,7 @@ public class PoopIslandPiece extends TemplateStructurePiece {
     }
 
     public static void spawnRandomPoolimes(WorldGenLevel level, RandomSource random, StructureTemplate template, BlockPos origin, StructurePlaceSettings settings, BoundingBox box) {
-        List<StructureTemplate.StructureBlockInfo> poolimeBlocks = new ArrayList<>(template.filterBlocks(origin, settings, PSBlocks.POOLIME_BLOCK.get())
+        List<StructureTemplate.StructureBlockInfo> poolimeBlocks = new ArrayList<>(template.filterBlocks(origin, settings, PBlocks.POOLIME_BLOCK.get())
                 .stream()
                 .filter(blockInfo -> box.isInside(blockInfo.pos().above()))
                 .filter(blockInfo -> level.getBlockState(blockInfo.pos().above()).canBeReplaced())
@@ -117,7 +117,7 @@ public class PoopIslandPiece extends TemplateStructurePiece {
     private static void placePoopTree(WorldGenLevel level, RandomSource random, BlockPos basePos) {
         int trunkHeight = random.nextIntBetweenInclusive(4, 5);
         for (int y = 0; y < trunkHeight; y++) {
-            placeTreeBlock(level, basePos.above(y), PSBlocks.POOP_LOG.get().defaultBlockState());
+            placeTreeBlock(level, basePos.above(y), PBlocks.POOP_LOG.get().defaultBlockState());
         }
 
         BlockPos crown = basePos.above(trunkHeight);
@@ -129,7 +129,7 @@ public class PoopIslandPiece extends TemplateStructurePiece {
                         continue;
                     }
 
-                    placeTreeBlock(level, crown.offset(x, y, z), PSBlocks.POOP_LEAVES.get().defaultBlockState());
+                    placeTreeBlock(level, crown.offset(x, y, z), PBlocks.POOP_LEAVES.get().defaultBlockState());
                 }
             }
         }

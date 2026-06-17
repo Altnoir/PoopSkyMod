@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.entity.p;
 
-import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.item.PItems;
 import com.altnoir.poopsky.network.PlugInputPayload;
 import com.altnoir.poopsky.misc.sound.TPFlySoundWrapper;
 import com.google.common.collect.Lists;
@@ -393,7 +393,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
 
     @Override
     protected Item getDropItem() {
-        return PSItems.TOILET_PLUG.get();
+        return PItems.TOILET_PLUG.get();
     }
 
     @Override
@@ -416,8 +416,8 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
         if (source.getEntity() instanceof Player player && player.isCrouching()) {
             this.kill();
             if (!player.getAbilities().instabuild) {
-                if (!player.getInventory().add(new ItemStack(PSItems.TOILET_PLUG.get()))) {
-                    this.spawnAtLocation(PSItems.TOILET_PLUG.get());
+                if (!player.getInventory().add(new ItemStack(PItems.TOILET_PLUG.get()))) {
+                    this.spawnAtLocation(PItems.TOILET_PLUG.get());
                 }
             }
             return true;

@@ -3,15 +3,15 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "poopsky:poop"
+        "recipe": "poopsky:milos_sword"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "poop_block": {
+    "ominous_filthy_ingot": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:poop_block"
+            "items": "poopsky:ominous_filthy_ingot"
           }
         ]
       },
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "poop_block"
+      "ominous_filthy_ingot"
     ]
   ],
   "rewards": {
     "recipes": [
-      "poopsky:poop"
+      "poopsky:milos_sword"
     ]
   }
 }

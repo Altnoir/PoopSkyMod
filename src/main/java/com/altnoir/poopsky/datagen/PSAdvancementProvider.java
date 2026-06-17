@@ -2,9 +2,9 @@ package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.AllToiletBlocks;
-import com.altnoir.poopsky.block.PSBlocks;
+import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.init.PEffects;
-import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.item.PItems;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRequirements;
@@ -43,14 +43,14 @@ public class PSAdvancementProvider extends AdvancementProvider {
                             true,
                             false
                     )
-                    .addCriterion("join_poopsky", InventoryChangeTrigger.TriggerInstance.hasItems(PSItems.POOP.get()))
+                    .addCriterion("join_poopsky", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.POOP.get()))
                     .requirements(AdvancementRequirements.Strategy.OR)
                     .save(saver, modId("root"), existingFileHelper);
 
             Advancement.Builder.advancement()
                     .parent(root)
                     .display(
-                            PSBlocks.POOP_BLOCK.get(),
+                            PBlocks.POOP_BLOCK.get(),
                             Component.translatable("advancements.poopsky.poop_block_slide.title"),
                             Component.translatable("advancements.poopsky.poop_block_slide.description"),
                             null,
@@ -59,13 +59,13 @@ public class PSAdvancementProvider extends AdvancementProvider {
                             true,
                             false
                     )
-                    .addCriterion("poop_block_slide", SlideDownBlockTrigger.TriggerInstance.slidesDownBlock(PSBlocks.POOP_BLOCK.get()))
+                    .addCriterion("poop_block_slide", SlideDownBlockTrigger.TriggerInstance.slidesDownBlock(PBlocks.POOP_BLOCK.get()))
                     .save(saver, modId("poop_block_slide"), existingFileHelper);
 
             AdvancementHolder poolime_poop_block = Advancement.Builder.advancement()
                     .parent(root)
                     .display(
-                            PSBlocks.POOLIME_POOP_BLOCK.get(),
+                            PBlocks.POOLIME_POOP_BLOCK.get(),
                             Component.translatable("advancements.poopsky.poolime_poop_block.title"),
                             Component.translatable("advancements.poopsky.poolime_poop_block.description"),
                             null,
@@ -74,12 +74,12 @@ public class PSAdvancementProvider extends AdvancementProvider {
                             true,
                             false
                     )
-                    .addCriterion("poolime_poop_block", InventoryChangeTrigger.TriggerInstance.hasItems(PSBlocks.POOLIME_POOP_BLOCK.get()))
+                    .addCriterion("poolime_poop_block", InventoryChangeTrigger.TriggerInstance.hasItems(PBlocks.POOLIME_POOP_BLOCK.get()))
                     .save(saver, modId("poolime_poop_block"), existingFileHelper);
             AdvancementHolder poop_ball = Advancement.Builder.advancement()
                     .parent(poolime_poop_block)
                     .display(
-                            PSItems.POOP_BALL.get(),
+                            PItems.POOP_BALL.get(),
                             Component.translatable("advancements.poopsky.poop_ball.title"),
                             Component.translatable("advancements.poopsky.poop_ball.description"),
                             null,
@@ -88,12 +88,12 @@ public class PSAdvancementProvider extends AdvancementProvider {
                             true,
                             false
                     )
-                    .addCriterion("poop_ball", InventoryChangeTrigger.TriggerInstance.hasItems(PSItems.POOP_BALL.get()))
+                    .addCriterion("poop_ball", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.POOP_BALL.get()))
                     .save(saver, modId("poop_ball"), existingFileHelper);
             Advancement.Builder.advancement()
                     .parent(poop_ball)
                     .display(
-                            PSItems.WITHER_POOP_BALL.get(),
+                            PItems.WITHER_POOP_BALL.get(),
                             Component.translatable("advancements.poopsky.wither_poop_ball.title"),
                             Component.translatable("advancements.poopsky.wither_poop_ball.description"),
                             null,
@@ -102,13 +102,13 @@ public class PSAdvancementProvider extends AdvancementProvider {
                             true,
                             false
                     )
-                    .addCriterion("wither_poop_ball", InventoryChangeTrigger.TriggerInstance.hasItems(PSItems.WITHER_POOP_BALL.get()))
+                    .addCriterion("wither_poop_ball", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.WITHER_POOP_BALL.get()))
                     .save(saver, modId("wither_poop_ball"), existingFileHelper);
 
             AdvancementHolder poop_sapling = Advancement.Builder.advancement()
                     .parent(root)
                     .display(
-                            PSBlocks.POOP_SAPLING.get(),
+                            PBlocks.POOP_SAPLING.get(),
                             Component.translatable("advancements.poopsky.poop_sapling.title"),
                             Component.translatable("advancements.poopsky.poop_sapling.description"),
                             null,
@@ -117,13 +117,13 @@ public class PSAdvancementProvider extends AdvancementProvider {
                             true,
                             false
                     )
-                    .addCriterion("poop_sapling", InventoryChangeTrigger.TriggerInstance.hasItems(PSBlocks.POOP_SAPLING.get()))
+                    .addCriterion("poop_sapling", InventoryChangeTrigger.TriggerInstance.hasItems(PBlocks.POOP_SAPLING.get()))
                     .save(saver, modId("poop_sapling"), existingFileHelper);
 
             AdvancementHolder compooper = Advancement.Builder.advancement()
                     .parent(poop_sapling)
                     .display(
-                            PSBlocks.COMPOOPER.get(),
+                            PBlocks.COMPOOPER.get(),
                             Component.translatable("advancements.poopsky.compooper.title"),
                             Component.translatable("advancements.poopsky.compooper.description"),
                             null,
@@ -132,12 +132,12 @@ public class PSAdvancementProvider extends AdvancementProvider {
                             true,
                             false
                     )
-                    .addCriterion("compooper", InventoryChangeTrigger.TriggerInstance.hasItems(PSBlocks.COMPOOPER.get()))
+                    .addCriterion("compooper", InventoryChangeTrigger.TriggerInstance.hasItems(PBlocks.COMPOOPER.get()))
                     .save(saver, modId("compooper"), existingFileHelper);
             AdvancementHolder urine_compooper = Advancement.Builder.advancement()
                     .parent(compooper)
                     .display(
-                            PSBlocks.URINE_COMPOOPER.get(),
+                            PBlocks.URINE_COMPOOPER.get(),
                             Component.translatable("advancements.poopsky.urine_compooper.title"),
                             Component.translatable("advancements.poopsky.urine_compooper.description"),
                             null,
@@ -146,12 +146,12 @@ public class PSAdvancementProvider extends AdvancementProvider {
                             true,
                             false
                     )
-                    .addCriterion("urine_compooper", InventoryChangeTrigger.TriggerInstance.hasItems(PSBlocks.URINE_COMPOOPER.get()))
+                    .addCriterion("urine_compooper", InventoryChangeTrigger.TriggerInstance.hasItems(PBlocks.URINE_COMPOOPER.get()))
                     .save(saver, modId("urine_compooper"), existingFileHelper);
             Advancement.Builder.advancement()
                     .parent(urine_compooper)
                     .display(
-                            PSItems.MAGGOTS_SEEDS.get(),
+                            PItems.MAGGOTS_SEEDS.get(),
                             Component.translatable("advancements.poopsky.maggots_seeds.title"),
                             Component.translatable("advancements.poopsky.maggots_seeds.description"),
                             null,
@@ -160,13 +160,13 @@ public class PSAdvancementProvider extends AdvancementProvider {
                             true,
                             false
                     )
-                    .addCriterion("maggots_seeds", InventoryChangeTrigger.TriggerInstance.hasItems(PSItems.MAGGOTS_SEEDS.get()))
+                    .addCriterion("maggots_seeds", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.MAGGOTS_SEEDS.get()))
                     .save(saver, modId("maggots_seeds"), existingFileHelper);
 
             Advancement.Builder.advancement()
                     .parent(compooper)
                     .display(
-                            PSItems.SAPLING_POOP_BALL.get(),
+                            PItems.SAPLING_POOP_BALL.get(),
                             Component.translatable("advancements.poopsky.sapling.title"),
                             Component.translatable("advancements.poopsky.sapling.description"),
                             null,
@@ -175,7 +175,7 @@ public class PSAdvancementProvider extends AdvancementProvider {
                             true,
                             false
                     )
-                    .addCriterion("sapling", InventoryChangeTrigger.TriggerInstance.hasItems(PSItems.SAPLING_POOP_BALL.get()))
+                    .addCriterion("sapling", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.SAPLING_POOP_BALL.get()))
                     .save(saver, modId("sapling"), existingFileHelper);
 
             AdvancementHolder coal_block = Advancement.Builder.advancement()
@@ -223,7 +223,7 @@ public class PSAdvancementProvider extends AdvancementProvider {
             Advancement.Builder.advancement()
                     .parent(string)
                     .display(
-                            PSItems.SEA_POOP_BALL.get(),
+                            PItems.SEA_POOP_BALL.get(),
                             Component.translatable("advancements.poopsky.sea_poop_ball.title"),
                             Component.translatable("advancements.poopsky.sea_poop_ball.description"),
                             null,
@@ -232,12 +232,12 @@ public class PSAdvancementProvider extends AdvancementProvider {
                             true,
                             false
                     )
-                    .addCriterion("sea_poop_ball", InventoryChangeTrigger.TriggerInstance.hasItems(PSItems.SEA_POOP_BALL.get()))
+                    .addCriterion("sea_poop_ball", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.SEA_POOP_BALL.get()))
                     .save(saver, modId("sea_poop_ball"), existingFileHelper);
             Advancement.Builder.advancement()
                     .parent(string)
                     .display(
-                            PSItems.FOLIUM_SENNAE,
+                            PItems.FOLIUM_SENNAE,
                             Component.translatable("advancements.poopsky.foliium_senna.title"),
                             Component.translatable("advancements.poopsky.foliium_senna.description"),
                             null,
@@ -246,12 +246,12 @@ public class PSAdvancementProvider extends AdvancementProvider {
                             true,
                             false
                     )
-                    .addCriterion("foliium_senna", InventoryChangeTrigger.TriggerInstance.hasItems(PSItems.FOLIUM_SENNAE))
+                    .addCriterion("foliium_senna", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.FOLIUM_SENNAE.get()))
                     .save(saver, modId("foliium_senna"), existingFileHelper);
-            Advancement.Builder.advancement()
+            AdvancementHolder sieve = Advancement.Builder.advancement()
                     .parent(string)
                     .display(
-                            PSBlocks.SIEVE,
+                            PBlocks.SIEVE,
                             Component.translatable("advancements.poopsky.sieve.title"),
                             Component.translatable("advancements.poopsky.sieve.description"),
                             null,
@@ -260,13 +260,42 @@ public class PSAdvancementProvider extends AdvancementProvider {
                             true,
                             false
                     )
-                    .addCriterion("sieve", InventoryChangeTrigger.TriggerInstance.hasItems(PSBlocks.SIEVE.get()))
+                    .addCriterion("sieve", InventoryChangeTrigger.TriggerInstance.hasItems(PBlocks.SIEVE.get()))
                     .save(saver, modId("sieve"), existingFileHelper);
+
+            AdvancementHolder king_of_dragon_fruit = Advancement.Builder.advancement()
+                    .parent(sieve)
+                    .display(
+                            PItems.KING_OF_DRAGON_FRUIT,
+                            Component.translatable("advancements.poopsky.king_of_dragon_fruit.title"),
+                            Component.translatable("advancements.poopsky.king_of_dragon_fruit.description"),
+                            null,
+                            AdvancementType.GOAL,
+                            true,
+                            true,
+                            false
+                    )
+                    .addCriterion("king_of_dragon_fruit", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.KING_OF_DRAGON_FRUIT.get()))
+                    .save(saver, modId("king_of_dragon_fruit"), existingFileHelper);
+            Advancement.Builder.advancement()
+                    .parent(king_of_dragon_fruit)
+                    .display(
+                            PBlocks.POOP_TNT,
+                            Component.translatable("advancements.poopsky.pooop_tnt.title"),
+                            Component.translatable("advancements.poopsky.pooop_tnt.description"),
+                            null,
+                            AdvancementType.GOAL,
+                            true,
+                            true,
+                            false
+                    )
+                    .addCriterion("pooop_tnt", InventoryChangeTrigger.TriggerInstance.hasItems(PBlocks.POOP_TNT.get()))
+                    .save(saver, modId("pooop_tnt"), existingFileHelper);
 
             AdvancementHolder roundworm = Advancement.Builder.advancement()
                     .parent(poop_sapling)
                     .display(
-                            PSItems.ROUNDWORM.get(),
+                            PItems.ROUNDWORM,
                             Component.translatable("advancements.poopsky.roundworm.title"),
                             Component.translatable("advancements.poopsky.roundworm.description"),
                             null,
@@ -275,7 +304,7 @@ public class PSAdvancementProvider extends AdvancementProvider {
                             true,
                             false
                     )
-                    .addCriterion("roundworm", InventoryChangeTrigger.TriggerInstance.hasItems(PSItems.ROUNDWORM.get()))
+                    .addCriterion("roundworm", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.ROUNDWORM.get()))
                     .save(saver, modId("roundworm"), existingFileHelper);
 
             AdvancementHolder summon_villager = Advancement.Builder.advancement()
@@ -292,11 +321,57 @@ public class PSAdvancementProvider extends AdvancementProvider {
                     )
                     .addCriterion("summon_villager", SummonedEntityTrigger.TriggerInstance.summonedEntity(EntityPredicate.Builder.entity().of(EntityType.VILLAGER)))
                     .save(saver, modId("summon_villager"), existingFileHelper);
+            AdvancementHolder toilet_plug = Advancement.Builder.advancement()
+                    .parent(summon_villager)
+                    .display(
+                            PItems.TOILET_PLUG,
+                            Component.translatable("advancements.poopsky.toilet_plug.title"),
+                            Component.translatable("advancements.poopsky.toilet_plug.description"),
+                            null,
+                            AdvancementType.TASK,
+                            true,
+                            true,
+                            false
+                    )
+                    .addCriterion("toilet_plug", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.TOILET_PLUG.get()))
+                    .save(saver, modId("toilet_plug"), existingFileHelper);
+            Advancement.Builder.advancement()
+                    .parent(toilet_plug)
+                    .display(
+                            PBlocks.PLACER,
+                            Component.translatable("advancements.poopsky.placer.title"),
+                            Component.translatable("advancements.poopsky.placer.description"),
+                            null,
+                            AdvancementType.TASK,
+                            true,
+                            true,
+                            false
+                    )
+                    .addCriterion("placer", InventoryChangeTrigger.TriggerInstance.hasItems(PBlocks.PLACER.get()))
+                    .save(saver, modId("placer"), existingFileHelper);
+            Advancement.Builder.advancement()
+                    .parent(summon_villager)
+                    .display(
+                            PItems.OMEN_CHESTPLATE,
+                            Component.translatable("advancements.poopsky.omen_armor.title"),
+                            Component.translatable("advancements.poopsky.omen_armor.description"),
+                            null,
+                            AdvancementType.CHALLENGE,
+                            true,
+                            true,
+                            false
+                    )
+                    .requirements(AdvancementRequirements.Strategy.OR)
+                    .addCriterion("omen_helmet", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.OMEN_HELMET))
+                    .addCriterion("omen_chestplate", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.OMEN_CHESTPLATE))
+                    .addCriterion("omen_leggings", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.OMEN_LEGGINGS))
+                    .addCriterion("omen_boots", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.OMEN_BOOTS))
+                    .save(saver, modId("omen_armor"), existingFileHelper);
 
             AdvancementHolder chili = Advancement.Builder.advancement()
                     .parent(summon_villager)
                     .display(
-                            PSItems.DRAGON_BREATH_CHILI,
+                            PItems.DRAGON_BREATH_CHILI,
                             Component.translatable("advancements.poopsky.chili.title"),
                             Component.translatable("advancements.poopsky.chili.description"),
                             null,
@@ -308,7 +383,7 @@ public class PSAdvancementProvider extends AdvancementProvider {
                     .addCriterion("chili", EffectsChangedTrigger.TriggerInstance.hasEffects(MobEffectsPredicate.Builder.effects().and(PEffects.INTESTINAL_SPASM)))
                     .save(saver, modId("chili"), existingFileHelper);
 
-            AdvancementHolder rainbow_toilet = Advancement.Builder.advancement()
+            Advancement.Builder.advancement()
                     .parent(summon_villager)
                     .display(
                             AllToiletBlocks.RAINBOW_TOILET.get(),
@@ -326,7 +401,7 @@ public class PSAdvancementProvider extends AdvancementProvider {
             Advancement.Builder.advancement()
                     .parent(chili)
                     .display(
-                            PSItems.CHILI_POOP,
+                            PItems.CHILI_POOP,
                             Component.translatable("advancements.poopsky.chili_poop.title"),
                             Component.translatable("advancements.poopsky.chili_poop.description"),
                             null,
@@ -335,7 +410,7 @@ public class PSAdvancementProvider extends AdvancementProvider {
                             true,
                             false
                     )
-                    .addCriterion("chili_poop", InventoryChangeTrigger.TriggerInstance.hasItems(PSItems.CHILI_POOP.get()))
+                    .addCriterion("chili_poop", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.CHILI_POOP.get()))
                     .save(saver, modId("chili_poop"), existingFileHelper);
         }
 

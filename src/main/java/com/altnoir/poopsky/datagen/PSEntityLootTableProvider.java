@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.init.PEntityType;
-import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.item.PItems;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.advancements.critereon.SlimePredicate;
@@ -37,13 +37,13 @@ public class PSEntityLootTableProvider extends EntityLootSubProvider {
                                 LootPool.lootPool()
                                         .setRolls(ConstantValue.exactly(1.0F))
                                         .add(
-                                                LootItem.lootTableItem(PSItems.POOP_BALL.get())
+                                                LootItem.lootTableItem(PItems.POOP_BALL.get())
                                                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))
                                                         .apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.registries, UniformGenerator.between(0.0F, 1.0F)))
                                                         .when(this.killedByFrog().invert())
                                         )
                                         .add(
-                                                LootItem.lootTableItem(PSItems.POOP_BALL.get())
+                                                LootItem.lootTableItem(PItems.POOP_BALL.get())
                                                         .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))
                                                         .when(this.killedByFrog())
                                         )
@@ -62,7 +62,7 @@ public class PSEntityLootTableProvider extends EntityLootSubProvider {
                                 LootPool.lootPool()
                                         .setRolls(ConstantValue.exactly(1.0F))
                                         .add(
-                                                LootItem.lootTableItem(PSItems.MAGGOTS_SEEDS.get())
+                                                LootItem.lootTableItem(PItems.MAGGOTS_SEEDS.get())
                                                         .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))
                                         )
                         )

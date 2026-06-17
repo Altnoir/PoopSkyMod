@@ -4,7 +4,7 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.p.GoldgenToiletBlock;
 import com.altnoir.poopsky.block.p.ToiletBlock;
 import com.altnoir.poopsky.block.p.ToiletLavaBlock;
-import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.item.PItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
@@ -66,7 +66,7 @@ public class AllToiletBlocks {
                     .mapColor(DyeColor.WHITE)
                     .instrument(NoteBlockInstrument.BASEDRUM)
                     .lightLevel(createLightLevelFromLavaBlockState(15))
-                    .strength(2.0F, 100.0F)
+                    .strength(4.0F, 100.0F)
                     .requiresCorrectToolForDrops()
             )
     );
@@ -86,7 +86,7 @@ public class AllToiletBlocks {
                 .mapColor(color)
                 .instrument(NoteBlockInstrument.BASEDRUM)
                 .lightLevel(createLightLevelFromLavaBlockState(15))
-                .strength(2.0F, 100.0F)
+                .strength(4.0F, 100.0F)
                 .requiresCorrectToolForDrops()
         ));
     }
@@ -106,7 +106,7 @@ public class AllToiletBlocks {
     }
 
     private static <T extends Block> void registerBlockItem(String name, DeferredBlock<T> block) {
-        PSItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().stacksTo(88)));
+        PItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().stacksTo(88)));
     }
 
     public static void register(IEventBus eventBus) {

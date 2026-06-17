@@ -2,7 +2,7 @@ package com.altnoir.poopsky.entity.p;
 
 import com.altnoir.poopsky.init.PEffects;
 import com.altnoir.poopsky.init.PStats;
-import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.item.PItems;
 import com.altnoir.poopsky.init.PParticles;
 import com.altnoir.poopsky.init.PSoundEvents;
 import net.minecraft.nbt.CompoundTag;
@@ -91,11 +91,11 @@ public class ToiletEntity extends Entity {
         } else {
             Item poopItem;
             if (isFire) {
-                poopItem = PSItems.CHILI_POOP.get();
+                poopItem = PItems.CHILI_POOP.get();
             } else if (goldenPoop) {
-                poopItem = PSItems.GOLDEN_POOP.get();
+                poopItem = PItems.GOLDEN_POOP.get();
             } else {
-                poopItem = PSItems.POOP.get();
+                poopItem = PItems.POOP.get();
             }
             var poop = new ItemEntity(level, player.getX(), player.getY() + 0.1, player.getZ(), new ItemStack(poopItem));
 

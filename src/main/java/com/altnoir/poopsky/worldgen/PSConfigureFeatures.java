@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.worldgen;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.PSBlocks;
-import com.altnoir.poopsky.tag.PSBlockTags;
+import com.altnoir.poopsky.block.PBlocks;
+import com.altnoir.poopsky.tag.PBlockTags;
 import com.altnoir.poopsky.worldgen.foliage.PoopMegaFoliagePlacer;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.Holder;
@@ -56,9 +56,9 @@ public class PSConfigureFeatures {
         HolderGetter<ConfiguredFeature<?, ?>> holdergetter = context.lookup(Registries.CONFIGURED_FEATURE);
 
         register(context, POOP_TREE, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
-                        BlockStateProvider.simple(PSBlocks.POOP_LOG.get()),
+                        BlockStateProvider.simple(PBlocks.POOP_LOG.get()),
                         new StraightTrunkPlacer(3, 1, 1),
-                        BlockStateProvider.simple(PSBlocks.POOP_LEAVES.get()),
+                        BlockStateProvider.simple(PBlocks.POOP_LEAVES.get()),
                         new RandomSpreadFoliagePlacer(ConstantInt.of(3), ConstantInt.of(0), ConstantInt.of(2), 114),
                         new TwoLayersFeatureSize(2, 0, 2)
                 )
@@ -68,13 +68,13 @@ public class PSConfigureFeatures {
         );
 
         register(context, MEGA_POOP_TREE, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
-                        BlockStateProvider.simple(PSBlocks.POOP_LOG.get()),
+                        BlockStateProvider.simple(PBlocks.POOP_LOG.get()),
                         new GiantTrunkPlacer(12, 2, 14),
 
                         new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
-                                .add(PSBlocks.POOP_LEAVES.get().defaultBlockState(), 11)
-                                .add(PSBlocks.POOP_LEAVES_IRON.get().defaultBlockState(), 1)
-                                .add(PSBlocks.POOP_LEAVES_GOLD.get().defaultBlockState(), 1)
+                                .add(PBlocks.POOP_LEAVES.get().defaultBlockState(), 11)
+                                .add(PBlocks.POOP_LEAVES_IRON.get().defaultBlockState(), 1)
+                                .add(PBlocks.POOP_LEAVES_GOLD.get().defaultBlockState(), 1)
                                 .build()),
 
                         new PoopMegaFoliagePlacer(ConstantInt.of(0), ConstantInt.of(3), UniformInt.of(13, 17)),
@@ -88,15 +88,15 @@ public class PSConfigureFeatures {
                 new SimpleBlockConfiguration(
                         new WeightedStateProvider(
                                 SimpleWeightedRandomList.<BlockState>builder()
-                                        .add(PSBlocks.POOP_SAPLING.get().defaultBlockState(), 5)
-                                        .add(PSBlocks.POOP_PIECE.get().defaultBlockState(), 1)
+                                        .add(PBlocks.POOP_SAPLING.get().defaultBlockState(), 5)
+                                        .add(PBlocks.POOP_PIECE.get().defaultBlockState(), 1)
                                         .add(Blocks.BROWN_MUSHROOM.defaultBlockState(), 2)
                                         .add(Blocks.RED_MUSHROOM.defaultBlockState(), 2)
                         )
                 )
         );
         register(context, POOP_PATCH_BONEMEAL, Feature.VEGETATION_PATCH,
-                vegetationPatch(PSBlockTags.POOP_BLOCK, PSBlocks.POOP_BLOCK.get(), holdergetter.getOrThrow(POOP_VEGETATION))
+                vegetationPatch(PBlockTags.POOP_BLOCK, PBlocks.POOP_BLOCK.get(), holdergetter.getOrThrow(POOP_VEGETATION))
         );
 
         register(context, CHILI_POOP_VEGETATION, Feature.SIMPLE_BLOCK,
@@ -111,7 +111,7 @@ public class PSConfigureFeatures {
                 )
         );
         register(context, CHILI_POOP_PATCH_BONEMEAL, Feature.VEGETATION_PATCH,
-                vegetationPatch(PSBlockTags.CHILI_POOP_BLOCK, PSBlocks.CHILI_POOP_BLOCK.get(), holdergetter.getOrThrow(CHILI_POOP_VEGETATION))
+                vegetationPatch(PBlockTags.CHILI_POOP_BLOCK, PBlocks.CHILI_POOP_BLOCK.get(), holdergetter.getOrThrow(CHILI_POOP_VEGETATION))
         );
 
         register(context, DRIED_POOP_PATCH, Feature.RANDOM_PATCH,
@@ -145,7 +145,7 @@ public class PSConfigureFeatures {
                         ))
         );
         register(context, RAW_SAPLING_POOP_PATCH_BONEMEAL, Feature.VEGETATION_PATCH,
-                vegetationPatch(PSBlockTags.RAW_SAPLING_POOP_BLOCK, PSBlocks.RAW_SAPLING_POOP_BLOCK.get(),
+                vegetationPatch(PBlockTags.RAW_SAPLING_POOP_BLOCK, PBlocks.RAW_SAPLING_POOP_BLOCK.get(),
                         holdergetter.getOrThrow(RAW_SAPLING_POOP_VEGETATION), 0.3F, 0.25F)
         );
         register(context, RAW_SEA_POOP_VEGETATION, Feature.SIMPLE_BLOCK,
@@ -165,7 +165,7 @@ public class PSConfigureFeatures {
                         ))
         );
         register(context, RAW_SEA_POOP_PATCH_BONEMEAL, Feature.VEGETATION_PATCH,
-                vegetationPatch(PSBlockTags.RAW_SEA_POOP_BLOCK, PSBlocks.RAW_SEA_POOP_BLOCK.get(),
+                vegetationPatch(PBlockTags.RAW_SEA_POOP_BLOCK, PBlocks.RAW_SEA_POOP_BLOCK.get(),
                         holdergetter.getOrThrow(RAW_SEA_POOP_VEGETATION), 0.3F, 0.25F)
         );
 
@@ -173,7 +173,7 @@ public class PSConfigureFeatures {
                 new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.WITHER_ROSE))
         );
         register(context, RAW_WITHER_POOP_PATCH_BONEMEAL, Feature.VEGETATION_PATCH,
-                vegetationPatch(PSBlockTags.RAW_WITHER_POOP_BLOCK, PSBlocks.RAW_WITHER_POOP_BLOCK.get(),
+                vegetationPatch(PBlockTags.RAW_WITHER_POOP_BLOCK, PBlocks.RAW_WITHER_POOP_BLOCK.get(),
                         holdergetter.getOrThrow(RAW_WITHER_POOP_VEGETATION), 0.1F, 0.125F)
         );
     }

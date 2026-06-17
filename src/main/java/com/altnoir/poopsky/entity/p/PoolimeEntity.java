@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.entity.p;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.PSBlocks;
+import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.init.PParticles;
 import com.altnoir.poopsky.init.PSoundEvents;
 import net.minecraft.core.registries.Registries;
@@ -81,7 +81,7 @@ public class PoolimeEntity extends Slime {
             return true;
         }
 
-        return level.getBlockState(pos.below()).is(PSBlocks.POOLIME_POOP_BLOCK.get()) || isInPoopIsland(level, pos);
+        return level.getBlockState(pos.below()).is(PBlocks.POOLIME_POOP_BLOCK.get()) || isInPoopIsland(level, pos);
     }
 
     private static boolean isInPoopIsland(LevelAccessor level, BlockPos pos) {

@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.entity.renderer;
 
-import com.altnoir.poopsky.block.PSBlocks;
+import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.entity.p.PoopTntEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -13,7 +13,6 @@ import net.minecraft.client.renderer.entity.TntMinecartRenderer;
 import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.level.block.Blocks;
 
 public class PoopTntRenderer extends EntityRenderer<PoopTntEntity> {
     private final BlockRenderDispatcher blockRenderer;
@@ -41,7 +40,7 @@ public class PoopTntRenderer extends EntityRenderer<PoopTntEntity> {
         poseStack.translate(-0.5F, -0.5F, 0.5F);
         poseStack.mulPose(Axis.YP.rotationDegrees(90.0F));
         TntMinecartRenderer.renderWhiteSolidBlock(this.blockRenderer,
-                PSBlocks.POOP_TNT.get().defaultBlockState(), poseStack, bufferSource, packedLight, fuse / 5 % 2 == 0);
+                PBlocks.POOP_TNT.get().defaultBlockState(), poseStack, bufferSource, packedLight, fuse / 5 % 2 == 0);
         poseStack.popPose();
         super.render(p_entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }

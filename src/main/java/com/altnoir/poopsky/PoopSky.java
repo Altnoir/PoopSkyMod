@@ -1,13 +1,13 @@
 package com.altnoir.poopsky;
 
 import com.altnoir.poopsky.block.AllToiletBlocks;
-import com.altnoir.poopsky.block.PSBlocks;
+import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.block.p.CompooperBlock;
 import com.altnoir.poopsky.entity.p.PoopTntEntity;
 import com.altnoir.poopsky.init.*;
-import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.item.PItems;
 import com.altnoir.poopsky.network.PSNetworking;
-import com.altnoir.poopsky.villager.PSVillagers;
+import com.altnoir.poopsky.villager.PVillagers;
 import com.altnoir.poopsky.worldgen.PSChunkGenerators;
 import com.altnoir.poopsky.worldgen.PSStructures;
 import com.altnoir.poopsky.worldgen.foliage.PSFoliagePlacerTypes;
@@ -47,10 +47,10 @@ public class PoopSky {
         PPotions.register(modEventBus);
         PParticles.register(modEventBus);
 
-        PSBlocks.register(modEventBus);
+        PBlocks.register(modEventBus);
         AllToiletBlocks.register(modEventBus);
         PBlockEntityType.register(modEventBus);
-        PSItems.register(modEventBus);
+        PItems.register(modEventBus);
         PEntityType.register(modEventBus);
         PSFoliagePlacerTypes.register(modEventBus);
         PSStructures.register(modEventBus);
@@ -61,7 +61,7 @@ public class PoopSky {
         PStats.register(modEventBus);
 
         PComponents.register(modEventBus);
-        PSVillagers.register(modEventBus);
+        PVillagers.register(modEventBus);
         PRecipes.register(modEventBus);
 
         PFluids.FLUIDS.register(modEventBus);
@@ -77,10 +77,10 @@ public class PoopSky {
         event.enqueueWork(() -> {
             CompooperBlock.bootStrap();
 
-            DispenserBlock.registerProjectileBehavior(PSItems.POOP_BALL);
-            DispenserBlock.registerProjectileBehavior(PSItems.SEA_POOP_BALL);
-            DispenserBlock.registerProjectileBehavior(PSItems.WITHER_POOP_BALL);
-            DispenserBlock.registerBehavior(PSItems.POOP.get(), new OptionalDispenseItemBehavior() {
+            DispenserBlock.registerProjectileBehavior(PItems.POOP_BALL);
+            DispenserBlock.registerProjectileBehavior(PItems.SEA_POOP_BALL);
+            DispenserBlock.registerProjectileBehavior(PItems.WITHER_POOP_BALL);
+            DispenserBlock.registerBehavior(PItems.POOP.get(), new OptionalDispenseItemBehavior() {
                 @Override
                 protected ItemStack execute(BlockSource blockSource, ItemStack item) {
                     this.setSuccess(true);
@@ -95,7 +95,7 @@ public class PoopSky {
                     return item;
                 }
             });
-            DispenserBlock.registerBehavior(PSBlocks.POOP_TNT.asItem(), new DefaultDispenseItemBehavior() {
+            DispenserBlock.registerBehavior(PBlocks.POOP_TNT.asItem(), new DefaultDispenseItemBehavior() {
                 @Override
                 protected ItemStack execute(BlockSource blockSource, ItemStack item) {
                     Level level = blockSource.level();
@@ -123,7 +123,7 @@ public class PoopSky {
                     PFluidTypes.POOP_FLUID_TYPE.get(), (fluidState) -> fluidState.isSource() ? Blocks.OBSIDIAN.defaultBlockState() : Blocks.MAGMA_BLOCK.defaultBlockState()));
 
             FluidInteractionRegistry.addInteraction(NeoForgeMod.LAVA_TYPE.value(), new FluidInteractionRegistry.InteractionInformation(
-                    (level, currentPos, relativePos, currentState) -> level.getBlockState(currentPos.below()).is(PSBlocks.POOP_BLOCK.get()) && level.getBlockState(relativePos).is(Blocks.BLUE_ICE),
+                    (level, currentPos, relativePos, currentState) -> level.getBlockState(currentPos.below()).is(PBlocks.POOP_BLOCK.get()) && level.getBlockState(relativePos).is(Blocks.BLUE_ICE),
                     Blocks.DEEPSLATE.defaultBlockState()));
         });
 

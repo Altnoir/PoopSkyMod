@@ -2,7 +2,7 @@ package com.altnoir.poopsky.villager;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
-import com.altnoir.poopsky.block.PSBlocks;
+import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.init.PSoundEvents;
 import com.google.common.collect.ImmutableList;
@@ -19,7 +19,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.Set;
 import java.util.function.Supplier;
 
-public class PSVillagers {
+public class PVillagers {
     public static final DeferredRegister<PoiType> POI_TYPES = DeferredRegister.create(BuiltInRegistries.POINT_OF_INTEREST_TYPE, PoopSky.MOD_ID);
     public static final DeferredRegister<VillagerProfession> VILLAGER_PROFESSIONS = DeferredRegister.create(BuiltInRegistries.VILLAGER_PROFESSION, PoopSky.MOD_ID);
 
@@ -27,11 +27,11 @@ public class PSVillagers {
     public static final ResourceKey<PoiType> TOILET_POI_KEY = registryPoiKey("toilet");
 
     public static final Supplier<Set<BlockState>> COMPOOPER_POI = () -> ImmutableList.of(
-                    PSBlocks.COMPOOPER.get(),
-                    PSBlocks.WATER_COMPOOPER.get(),
-                    PSBlocks.LAVA_COMPOOPER.get(),
-                    PSBlocks.POWDER_SNOW_COMPOOPER.get(),
-                    PSBlocks.URINE_COMPOOPER.get()
+                    PBlocks.COMPOOPER.get(),
+                    PBlocks.WATER_COMPOOPER.get(),
+                    PBlocks.LAVA_COMPOOPER.get(),
+                    PBlocks.POWDER_SNOW_COMPOOPER.get(),
+                    PBlocks.URINE_COMPOOPER.get()
             ).stream()
             .flatMap(block -> block.getStateDefinition().getPossibleStates().stream())
             .collect(ImmutableSet.toImmutableSet());

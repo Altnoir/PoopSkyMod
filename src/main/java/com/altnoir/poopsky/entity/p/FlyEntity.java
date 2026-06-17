@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.entity.p;
 
 import com.altnoir.poopsky.init.PEntityType;
-import com.altnoir.poopsky.item.PSItems;
-import com.altnoir.poopsky.tag.PSItemTags;
+import com.altnoir.poopsky.item.PItems;
+import com.altnoir.poopsky.tag.PItemTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -59,7 +59,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
         this.goalSelector.addGoal(0, new FloatGoal(this)); // 防止溺水
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.4)); // 受到伤害时逃跑
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0)); // 繁殖行为
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, itemStack -> itemStack.is(PSItemTags.POOPS), false));// 被便便引诱
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, itemStack -> itemStack.is(PItemTags.POOPS), false));// 被便便引诱
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25)); // 跟随父母
         this.goalSelector.addGoal(5, new WaterAvoidingRandomFlyingGoal(this, 1.0)); // 随机飞行，避开水面
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F)); // 看向附近的玩家
@@ -109,7 +109,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
         // 产卵逻辑
         if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.eggTime <= 0) {
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-            this.spawnAtLocation(PSItems.MAGGOTS_SEEDS.get());
+            this.spawnAtLocation(PItems.MAGGOTS_SEEDS.get());
             this.gameEvent(GameEvent.ENTITY_PLACE);
             this.eggTime = this.random.nextInt(6000) + 6000;
         }
@@ -127,7 +127,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
 
     @Override
     public boolean isFood(ItemStack stack) {
-        return stack.is(PSItemTags.POOPS);
+        return stack.is(PItemTags.POOPS);
     }
 
     @Override
