@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.compat.jei;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.PSBlocks;
+import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.init.PFlyTypes;
 import com.altnoir.poopsky.item.p.FlyItem;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -29,7 +29,7 @@ public class FlyNestRecipeCategory implements IRecipeCategory<FlyNestJeiRecipe> 
 
     public FlyNestRecipeCategory(IJeiHelpers helpers, IDrawable arrow) {
         var guiHelper = helpers.getGuiHelper();
-        this.icon = guiHelper.createDrawableItemStack(new ItemStack(PSBlocks.FLY_NEST.get()));
+        this.icon = guiHelper.createDrawableItemStack(new ItemStack(PBlocks.FLY_NEST.get()));
         this.title = Component.translatable("jei.category." + PoopSky.MOD_ID + ".fly_nest");
         this.arrow = arrow;
         this.slot = guiHelper.getSlotDrawable();

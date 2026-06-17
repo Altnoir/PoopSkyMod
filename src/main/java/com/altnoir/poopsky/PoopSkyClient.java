@@ -9,7 +9,7 @@ import com.altnoir.poopsky.event.PSClientModEvents;
 import com.altnoir.poopsky.event.PSKeyBoardInput;
 import com.altnoir.poopsky.inventory.BreedingBoxScreen;
 import com.altnoir.poopsky.inventory.FlyNestScreen;
-import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.item.PItems;
 import com.altnoir.poopsky.misc.particle.PoopParticle;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.RenderType;
@@ -68,7 +68,7 @@ public class PoopSkyClient {
     public static class ClientModEvents {
         public static void registerItemProperties(FMLClientSetupEvent event) {
             event.enqueueWork(() -> {
-                ItemProperties.register(PSItems.FLY.get(), PoopSky.loc("fly_type"),
+                ItemProperties.register(PItems.FLY.get(), PoopSky.loc("fly_type"),
                     (stack, level, entity, seed) -> (float) PFlyTypes.getIndex(PFlyTypes.byId(stack.get(PComponents.FLY_TYPE.get()))));
             });
         }

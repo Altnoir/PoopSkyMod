@@ -1,6 +1,5 @@
 package com.altnoir.poopsky.init;
 
-import com.altnoir.poopsky.item.PSItems;
 import com.altnoir.poopsky.recipe.BreedingBoxRecipe;
 import com.altnoir.poopsky.recipe.FlyNestRecipe;
 import net.minecraft.server.level.ServerLevel;

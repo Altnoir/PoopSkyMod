@@ -779,7 +779,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
 
     private void buildFlyNestRecipes(RecipeOutput recipeOutput) {
         var flyNestMap = new java.util.LinkedHashMap<String, ItemLike>();
-        flyNestMap.put("normal", PSItems.MAGGOTS_SEEDS);
+        flyNestMap.put("normal", PItems.MAGGOTS_SEEDS);
         flyNestMap.put("white", Items.BONE_MEAL);
         flyNestMap.put("black", Items.COAL);
         flyNestMap.put("green", Items.CACTUS);
@@ -799,7 +799,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
 
         flyNestMap.forEach((typeId, result) -> {
             FlyNestRecipeBuilder.flyNest(typeId, result)
-                    .unlockedBy(getHasName(PSBlocks.FLY_NEST), has(PSBlocks.FLY_NEST))
+                    .unlockedBy(getHasName(PBlocks.FLY_NEST), has(PBlocks.FLY_NEST))
                     .save(recipeOutput, PoopSky.loc(PRecipes.FLY_NEST_FOLDER + "/" + typeId));
         });
     }
@@ -821,7 +821,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         for (var recipe : breedingRecipes) {
             String id = recipe.p1 + "_plus_" + recipe.p2;
             BreedingBoxRecipeBuilder.breedingBox(recipe.p1, recipe.p2, recipe.result, recipe.chance)
-                    .unlockedBy(getHasName(PSBlocks.FLY_NEST), has(PSBlocks.FLY_NEST))
+                    .unlockedBy(getHasName(PBlocks.FLY_NEST), has(PBlocks.FLY_NEST))
                     .save(recipeOutput, PoopSky.loc(PRecipes.BREEDING_BOX_FOLDER + "/" + id));
         }
     }

@@ -3,6 +3,8 @@ package com.altnoir.poopsky;
 import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.item.PItems;
+import com.altnoir.poopsky.item.p.FlyItem;
+import com.altnoir.poopsky.init.PFlyTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
@@ -27,6 +29,7 @@ public class PSItemGroups {
                 PItems.ITEMS.getEntries().stream()
                         .map(DeferredHolder::get)
                         .filter(item -> !(item instanceof BlockItem))
+                        .filter(item -> !(item instanceof FlyItem))
                         .forEach(output::accept);
 
                 Set<Block> skip = Set.of(
@@ -42,6 +45,10 @@ public class PSItemGroups {
                         .filter(block -> block.asItem() != Items.AIR)
                         .filter(block -> !skip.contains(block))
                         .forEach(output::accept);
+
+                for (var type : PFlyTypes.getAll().values()) {
+                    output.accept(FlyItem.withType(type));
+                }
 
                 AllToiletBlocks.BLOCKS.getEntries().stream()
                         .map(DeferredHolder::get)

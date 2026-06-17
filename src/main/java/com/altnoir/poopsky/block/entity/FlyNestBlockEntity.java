@@ -3,7 +3,7 @@ package com.altnoir.poopsky.block.entity;
 import com.altnoir.poopsky.init.PFlyRecipes;
 import com.altnoir.poopsky.init.PFlyTypes;
 import com.altnoir.poopsky.init.PBlockEntityType;
-import com.altnoir.poopsky.tag.PSBlockTags;
+import com.altnoir.poopsky.tag.PBlockTags;
 import com.altnoir.poopsky.item.p.FlyItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -121,7 +121,7 @@ public class FlyNestBlockEntity extends BlockEntity implements MenuProvider {
         for (BlockPos checkPos : BlockPos.betweenClosed(pos.offset(-1, -1, -1), pos.offset(1, 1, 1))) {
             if (checkPos.equals(pos)) continue;
             BlockState state = level.getBlockState(checkPos);
-            if (state.is(PSBlockTags.POOP_BLOCKS)) {
+            if (state.is(PBlockTags.POOP_BLOCKS)) {
                 bonus++;
                 if (bonus >= MAX_ENVIRONMENT_BONUS) return bonus;
             }

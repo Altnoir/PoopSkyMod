@@ -558,7 +558,6 @@ public class PBlocks {
             )
     );
 
-    // ——— 苍蝇系统 ———
     public static final DeferredBlock<Block> FLY_NEST = registerDefaultBlock("fly_nest",
             () -> new FlyNestBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_BROWN)
@@ -576,7 +575,6 @@ public class PBlocks {
                     .noOcclusion()
             )
     );
-
 
     private static BlockBehaviour.Properties poopCakeProperties() {
         return BlockBehaviour.Properties.of()

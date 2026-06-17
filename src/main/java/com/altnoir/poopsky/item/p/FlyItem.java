@@ -2,7 +2,7 @@ package com.altnoir.poopsky.item.p;
 
 import com.altnoir.poopsky.init.PComponents;
 import com.altnoir.poopsky.init.PFlyTypes;
-import com.altnoir.poopsky.item.PSItems;
+import com.altnoir.poopsky.item.PItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
@@ -24,18 +24,16 @@ public class FlyItem extends Item {
      * 用指定品种创建苍蝇。
      */
     public static ItemStack withType(PFlyTypes.FlyType type) {
-        var stack = new ItemStack(PSItems.FLY.get());
+        var stack = new ItemStack(PItems.FLY.get());
         stack.set(PComponents.FLY_TYPE.get(), type.getSerializedName());
         return stack;
     }
 
-    // 获取苍蝇品种
     public static PFlyTypes.FlyType getFlyType(ItemStack stack) {
         String typeId = stack.get(PComponents.FLY_TYPE.get());
         return typeId != null ? PFlyTypes.byId(typeId) : PFlyTypes.NORMAL;
     }
 
-    // 判断物品栈是否为苍蝇（有FLY_TYPE组件）
     public static boolean isFlyItem(ItemStack stack) {
         return stack.has(PComponents.FLY_TYPE.get());
     }
