@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.item.p;
 
+import com.altnoir.poopsky.block.ToiletComponent;
 import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.init.PComponents;
-import com.altnoir.poopsky.block.ToiletComponent;
 import com.altnoir.poopsky.init.PSoundEvents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -12,7 +12,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.TicketType;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -87,8 +86,9 @@ public class ToiletLinkerItem extends PSBaseItem {
                     pos.getX(), pos.getY(), pos.getZ(),
                     comp.x2(), comp.y2(), comp.z2()
             ));
+            var pitch = level.random.nextFloat() + 0.1F;
             player.displayClientMessage(Component.translatable("message.poopsky.toilet_linker.1"), true);
-            level.playSound(null, pos, PSoundEvents.ITEM_TOILET_LINKER_BOOP.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
+            level.playSound(null, pos, PSoundEvents.ITEM_TOILET_LINKER_BOOP.get(), SoundSource.PLAYERS, 1.0F, pitch);
         } else if (comp.level2().isEmpty()) {
             // 暂存第二端的数据
             ToiletComponent fullComp = new ToiletComponent(
@@ -126,7 +126,8 @@ public class ToiletLinkerItem extends PSBaseItem {
             player.displayClientMessage(Component.translatable("message.poopsky.toilet_linker.3").withStyle(ChatFormatting.GREEN), true);
             stack.set(PComponents.TOILET_COMPONENT.get(), ToiletComponent.EMPTY);
 
-            level2.playSound(null, pos2, PSoundEvents.ITEM_TOILET_LINKER_SUCCESS.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
+            var pitch = level2.random.nextFloat() + 0.3F;
+            level2.playSound(null, pos2, PSoundEvents.ITEM_TOILET_LINKER_SUCCESS.get(), SoundSource.BLOCKS, 1.0F, pitch);
         }
     }
 
