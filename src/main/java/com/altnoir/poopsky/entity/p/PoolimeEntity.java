@@ -4,14 +4,16 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.init.PParticles;
 import com.altnoir.poopsky.init.PSoundEvents;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -64,6 +66,7 @@ public class PoolimeEntity extends Slime {
         if (this.isAlive() && this.isWithinMeleeAttackRange(livingEntity) && this.hasLineOfSight(livingEntity)) {
             DamageSource damageSource = this.damageSources().mobAttack(this);
             if (livingEntity.hurt(damageSource, this.getAttackDamage())) {
+                livingEntity.addEffect(new MobEffectInstance(MobEffects.POISON, 120, 0));
                 this.playSound(PSoundEvents.ENTITY_POOLIME_ATTACK.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
                 if (this.level() instanceof ServerLevel serverLevel) {
                     EnchantmentHelper.doPostAttackEffects(serverLevel, livingEntity, damageSource);
