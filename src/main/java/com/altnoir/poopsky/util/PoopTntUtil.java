@@ -5,6 +5,7 @@ import com.altnoir.poopsky.block.p.PoopTntBlock;
 import com.altnoir.poopsky.init.PParticles;
 import com.altnoir.poopsky.tag.PBlockTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Explosion;
@@ -21,13 +22,11 @@ public class PoopTntUtil {
             Blocks.GRAVEL, Blocks.SAND
     );
 
-    //TODO 暂时把爆炸改为替换方块，后续解决破坏方块不掉落物品再改回去
     public static void triggerExplosion(Entity entity, int radius) {
         Level level = entity.level();
+        ServerLevel serverLevel = (ServerLevel) level;
         BlockPos center = entity.blockPosition();
-
-        Explosion explosion = level.explode(entity, Explosion.getDefaultDamageSource(level, entity), null,
-                entity.getX(), entity.getY() + 0.0625, entity.getZ(), 1.0F, false, Level.ExplosionInteraction.NONE);
+        Explosion explosion = serverLevel.explode(entity, entity.getX(), entity.getY(), entity.getZ(), radius, Level.ExplosionInteraction.NONE);
 
         for (int x = -radius; x <= radius; x++) {
             for (int y = -radius; y <= radius; y++) {
@@ -79,5 +78,10 @@ public class PoopTntUtil {
         double offset = radius * 0.5;
         double speed = 0.4 + level.random.nextDouble() * 0.4;
         level.sendParticles(PParticles.POOP_PARTICLE.get(), x, y, z, particleCount, offset, offset, offset, speed);
+        if (radius < 2) {
+            level.sendParticles(ParticleTypes.EXPLOSION, x, y, z, radius, offset, offset, offset, speed);
+        } else {
+            level.sendParticles(ParticleTypes.EXPLOSION_EMITTER, x, y, z, radius, offset, offset, offset, speed);
+        }
     }
 }
