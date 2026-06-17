@@ -37,17 +37,15 @@ public class PVillagerTrades {
             );
 
             trades.get(2).add((entity, random) -> new MerchantOffer(
-                    new ItemCost(Items.EMERALD, 3),
-                    new ItemStack(PItems.POOP_PASTA.get(), 1), 32, 10, 0.07f)
-            );
-            trades.get(2).add((entity, random) -> new MerchantOffer(
                     new ItemCost(PBlocks.POOLIME_BLOCK, 1),
                     new ItemStack(Items.EMERALD, 5), 44, 10, 0.1f)
             );
-            trades.get(2).add((entity, random) -> new MerchantOffer(
-                    new ItemCost(PItems.POOP_BREAD.get(), 2),
-                    new ItemStack(Items.RAW_COPPER, 1), 18, 10, 0.1f)
-            );
+            if (!Config.upgradeTemplate) {
+                trades.get(2).add((entity, random) -> new MerchantOffer(
+                        new ItemCost(Items.EMERALD, 24),
+                        new ItemStack(PItems.OMEN_UPGRADE_SMITHING_TEMPLATE.get(), 1), 1, 40, 0.3f)
+                );
+            }
 
             trades.get(3).add((entity, random) -> new MerchantOffer(
                     new ItemCost(Items.EMERALD, 8),
@@ -61,6 +59,7 @@ public class PVillagerTrades {
                     new ItemCost(Items.EMERALD, 8),
                     new ItemStack(PItems.POOP_VEGETABLE_STICKS.get(), 2), 32, 15, 0.1f)
             );
+
             trades.get(4).add((entity, random) -> new MerchantOffer(
                     new ItemCost(Items.EMERALD, 18),
                     new ItemStack(PBlocks.POOP_CAKE, 1), 4, 25, 0.25f)
@@ -69,12 +68,10 @@ public class PVillagerTrades {
                     new ItemCost(Items.EMERALD, 20),
                     new ItemStack(PItems.URINE_BUCKET.get(), 1), 4, 25, 0.25f)
             );
-            if (!Config.upgradeTemplate) {
-                trades.get(4).add((entity, random) -> new MerchantOffer(
-                        new ItemCost(Items.EMERALD, 24),
-                        new ItemStack(PItems.OMEN_UPGRADE_SMITHING_TEMPLATE.get(), 1), 1, 25, 0.25f)
-                );
-            }
+            trades.get(4).add((entity, random) -> new MerchantOffer(
+                    new ItemCost(Items.EMERALD, 3),
+                    new ItemStack(PItems.POOP_PASTA.get(), 1), 32, 10, 0.25f)
+            );
 
             trades.get(5).add((entity, random) -> new MerchantOffer(
                     new ItemCost(Items.EMERALD, 1),
@@ -88,7 +85,7 @@ public class PVillagerTrades {
                 trades.get(5).add((entity, random) -> new MerchantOffer(
                         new ItemCost(Items.EMERALD, 42),
                         Optional.of(new ItemCost(Items.BREEZE_ROD, 8)),
-                        new ItemStack(PItems.TOILET_PLUG.get(), 1), 1, 100, 1.0f)
+                        new ItemStack(PItems.TOILET_PLUG.get(), 1), 2, 100, 1.0f)
                 );
             }
         }
