@@ -110,14 +110,14 @@ public class PoopSky {
             });
 
             FluidInteractionRegistry.addInteraction(NeoForgeMod.WATER_TYPE.value(), new FluidInteractionRegistry.InteractionInformation(
-                    PFluidTypes.POOP_FLUID_TYPE.get(), (fluidState) -> Blocks.CLAY.defaultBlockState()));
-            FluidInteractionRegistry.addInteraction(PFluidTypes.POOP_FLUID_TYPE.get(), new FluidInteractionRegistry.InteractionInformation(
+                    PFluidTypes.URINE_FLUID_TYPE.get(), (fluidState) -> Blocks.CLAY.defaultBlockState()));
+            FluidInteractionRegistry.addInteraction(PFluidTypes.URINE_FLUID_TYPE.get(), new FluidInteractionRegistry.InteractionInformation(
                     NeoForgeMod.WATER_TYPE.value(), (fluidState) -> fluidState.isSource() ? Blocks.COARSE_DIRT.defaultBlockState() : Blocks.CLAY.defaultBlockState()));
 
-            FluidInteractionRegistry.addInteraction(PFluidTypes.POOP_FLUID_TYPE.get(), new FluidInteractionRegistry.InteractionInformation(
+            FluidInteractionRegistry.addInteraction(PFluidTypes.URINE_FLUID_TYPE.get(), new FluidInteractionRegistry.InteractionInformation(
                     NeoForgeMod.LAVA_TYPE.value(), (fluidState) -> Blocks.NETHERRACK.defaultBlockState()));
             FluidInteractionRegistry.addInteraction(NeoForgeMod.LAVA_TYPE.value(), new FluidInteractionRegistry.InteractionInformation(
-                    PFluidTypes.POOP_FLUID_TYPE.get(), (fluidState) -> fluidState.isSource() ? Blocks.OBSIDIAN.defaultBlockState() : Blocks.MAGMA_BLOCK.defaultBlockState()));
+                    PFluidTypes.URINE_FLUID_TYPE.get(), (fluidState) -> fluidState.isSource() ? Blocks.OBSIDIAN.defaultBlockState() : Blocks.MAGMA_BLOCK.defaultBlockState()));
 
             FluidInteractionRegistry.addInteraction(NeoForgeMod.LAVA_TYPE.value(), new FluidInteractionRegistry.InteractionInformation(
                     (level, currentPos, relativePos, currentState) -> level.getBlockState(currentPos.below()).is(PBlocks.POOP_BLOCK.get()) && level.getBlockState(relativePos).is(Blocks.BLUE_ICE),

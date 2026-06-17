@@ -8,13 +8,11 @@ import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.init.PFluids;
 import com.altnoir.poopsky.init.PSoundEvents;
 import com.altnoir.poopsky.item.p.*;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import org.jetbrains.annotations.Nullable;
 
 
 public class PItems {
@@ -115,7 +113,7 @@ public class PItems {
             )
     );
     public static final DeferredItem<BucketItem> URINE_BUCKET = ITEMS.register("urine_bucket",
-            () -> new BucketItem(PFluids.POOP.get(), new Item.Properties().stacksTo(1)));
+            () -> new BucketItem(PFluids.URINE.get(), new Item.Properties().stacksTo(1)));
 
     public static final DeferredItem<Item> POOLIME_SPAWN_EGG = ITEMS.register("poolime_spawn_egg",
             () -> new DeferredSpawnEggItem(PEntityType.POOLIME, 0x7D5F36, 0x5E4228,

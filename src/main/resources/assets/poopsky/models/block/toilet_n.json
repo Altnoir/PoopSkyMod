@@ -2,7 +2,7 @@
 	"credit": "Made with LLMION",
 	"parent": "block/block",
 	"textures": {
-		"liquid": "poopsky:block/poop_liquid",
+		"liquid": "poopsky:block/urine_liquid",
 		"particle": "#toilet"
 	},
 	"elements": [

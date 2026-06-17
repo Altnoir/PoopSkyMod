@@ -30,7 +30,7 @@ public class PSItemGroups {
                         .forEach(output::accept);
 
                 Set<Block> skip = Set.of(
-                        PBlocks.POOP_LIQUID.get(),
+                        PBlocks.URINE_LIQUID.get(),
                         PBlocks.WATER_COMPOOPER.get(),
                         PBlocks.LAVA_COMPOOPER.get(),
                         PBlocks.POWDER_SNOW_COMPOOPER.get(),

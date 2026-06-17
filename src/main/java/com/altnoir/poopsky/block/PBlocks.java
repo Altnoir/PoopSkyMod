@@ -3,7 +3,7 @@ package com.altnoir.poopsky.block;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.p.*;
 import com.altnoir.poopsky.init.PFluids;
-import com.altnoir.poopsky.block.fluid.PoopLiquidBlock;
+import com.altnoir.poopsky.block.fluid.UrineLiquidBlock;
 import com.altnoir.poopsky.init.PBlockSetType;
 import com.altnoir.poopsky.init.PWoodType;
 import com.altnoir.poopsky.item.PItems;
@@ -379,9 +379,8 @@ public class PBlocks {
     );
     public static final DeferredBlock<SieveBlock> SIEVE = registerDefaultBlock("sieve_stable",
             () -> new SieveBlock(BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.SAND)
+                    .mapColor(MapColor.STONE)
                     .strength(1.5f, 3.0f)
-                    .sound(SoundType.SCAFFOLDING)
                     .requiresCorrectToolForDrops()
                     .isValidSpawn(Blocks::never)
                     .noOcclusion()));
@@ -508,9 +507,9 @@ public class PBlocks {
             )
     );
 
-    public static final DeferredBlock<LiquidBlock> POOP_LIQUID = registerBlock("poop_liquid",
-            () -> new PoopLiquidBlock(
-                    PFluids.POOP.get(),
+    public static final DeferredBlock<LiquidBlock> URINE_LIQUID = registerBlock("urine_liquid",
+            () -> new UrineLiquidBlock(
+                    PFluids.URINE.get(),
                     BlockBehaviour.Properties.of()
                             .mapColor(MapColor.COLOR_BROWN)
                             .replaceable()

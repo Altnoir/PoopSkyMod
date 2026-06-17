@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "poopsky:block/poop_liquid"
+    "layer0": "poopsky:block/urine_liquid"
   }
 }

@@ -108,19 +108,19 @@ public class PoopSkyClient {
             event.registerFluidType(new IClientFluidTypeExtensions() {
                 @Override
                 public @NotNull ResourceLocation getStillTexture() {
-                    return PFluidTypes.POOP_STILL_TEXTURE;
+                    return PFluidTypes.URINE_STILL_TEXTURE;
                 }
 
                 @Override
                 public @NotNull ResourceLocation getFlowingTexture() {
-                    return PFluidTypes.POOP_FLOWING_TEXTURE;
+                    return PFluidTypes.URINE_FLOWING_TEXTURE;
                 }
 
                 @Override
                 public ResourceLocation getOverlayTexture() {
                     return null;
                 }
-            }, PFluidTypes.POOP_FLUID_TYPE.get());
+            }, PFluidTypes.URINE_FLUID_TYPE.get());
         }
     }
 }

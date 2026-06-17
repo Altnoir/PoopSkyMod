@@ -201,7 +201,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
         registerToiletLava(AllToiletBlocks.PINK_CONCRETE_TOILET.get(), Blocks.PINK_CONCRETE);
         registerToiletLava(AllToiletBlocks.RAINBOW_TOILET.get(), "rainbow_concrete");
 
-        fluidBlockWithItem(PBlocks.POOP_LIQUID.get(), "block/poop_liquid");
+        fluidBlockWithItem(PBlocks.URINE_LIQUID.get());
         makeCropBlock((CropBlock) PBlocks.MAGGOTS.get(), "maggots_stage", "maggots_stage");
     }
 
@@ -218,19 +218,19 @@ public class PSBlockStateProvider extends BlockStateProvider {
         return models;
     }
 
-    private void fluidBlockWithItem(Block block, String texture) {
+    private void fluidBlockWithItem(Block block) {
         var blockModel = models()
                 .withExistingParent(getBlockPath(block), mcLoc("block/block"))
-                .texture("particle", modLoc(texture))
-                .texture("still", modLoc(texture))
-                .texture("flow", modLoc(texture))
+                .texture("particle", modLoc(getBlockPath(block)))
+                .texture("still", modLoc(getBlockPath(block)))
+                .texture("flow", modLoc(getBlockPath(block)))
                 .renderType("translucent");
 
         getVariantBuilder(block).partialState().addModels(new ConfiguredModel(blockModel));
 
         itemModels()
                 .withExistingParent(getBlockPath(block), mcLoc("item/generated"))
-                .texture("layer0", modLoc(texture));
+                .texture("layer0", modLoc(getBlockPath(block)));
     }
 
     private void blockWithTranslucentRenderType(Block block) {

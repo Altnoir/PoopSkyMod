@@ -19,7 +19,7 @@ public class PSFluidTagsProvider extends FluidTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         tag(FluidTags.WATER)
-                .add(PFluids.POOP.get())
-                .add(PFluids.FLOWING_POOP.get());
+                .add(PFluids.URINE.get())
+                .add(PFluids.FLOWING_URINE.get());
     }
 }
