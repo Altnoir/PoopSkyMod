@@ -38,6 +38,9 @@ public class PSoundEvents {
     public static final Supplier<SoundEvent> MOON_BOWL = registerSoundEvent("moon_bowl");
     public static final ResourceKey<JukeboxSong> MOON_BOWL_KEY = registerJukeboxSong("moon_bowl");
 
+    public static final Supplier<SoundEvent> ITEM_TOILET_LINKER_BOOP = registerSoundEvent("item.toilet_linker.boop");
+    public static final Supplier<SoundEvent> ITEM_TOILET_LINKER_SUCCESS = registerSoundEvent("item.toilet_linker.success");
+
     public static ResourceKey<JukeboxSong> registerJukeboxSong(String name) {
         ResourceLocation id = PoopSky.loc(name);
         return ResourceKey.create(Registries.JUKEBOX_SONG, id);

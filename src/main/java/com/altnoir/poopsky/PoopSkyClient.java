@@ -11,6 +11,7 @@ import com.altnoir.poopsky.init.PFluidTypes;
 import com.altnoir.poopsky.init.PParticles;
 import com.altnoir.poopsky.init.PRecipes;
 import com.altnoir.poopsky.misc.particle.PoopParticle;
+import com.altnoir.poopsky.misc.ToiletHighlightRenderer;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.RecipeBookCategories;
@@ -58,6 +59,7 @@ public class PoopSkyClient {
     public static void registerGame(IEventBus modEventBus) {
         modEventBus.addListener(PSClientGameEvents::onScreenOpen);
         modEventBus.addListener(PSClientGameEvents::onClientTick);
+        modEventBus.addListener(ToiletHighlightRenderer::onRenderLevel);
     }
 
     public static class ClientModEvents {
