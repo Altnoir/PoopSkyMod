@@ -25,6 +25,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -99,11 +100,10 @@ public class PoopSky {
                     Direction facing = blockSource.state().getValue(DispenserBlock.FACING);
                     BlockPos pos = blockSource.pos().relative(facing);
 
-                    PoopTntEntity tnt = new PoopTntEntity(level,
-                            pos.getX() + 0.5, pos.getY() + 0.25, pos.getZ() + 0.5, null);
+                    PoopTntEntity tnt = new PoopTntEntity(level, pos.getX() + 0.5, pos.getY() + 0.25, pos.getZ() + 0.5, null);
                     level.addFreshEntity(tnt);
-                    level.playSound(null, tnt.getX(), tnt.getY(), tnt.getZ(),
-                            SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1.0F, 1.0F);
+                    level.playSound(null, tnt.getX(), tnt.getY(), tnt.getZ(), SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1.0F, 1.0F);
+                    level.gameEvent(null, GameEvent.ENTITY_PLACE, pos);
                     item.shrink(1);
                     return item;
                 }
