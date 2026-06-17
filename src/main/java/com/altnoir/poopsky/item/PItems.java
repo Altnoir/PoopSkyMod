@@ -25,7 +25,7 @@ public class PItems {
     public static final DeferredItem<Item> GOLDEN_POOP = ITEMS.register("golden_poop", () ->
             new PoopItem(new Item.Properties().food(PFoods.GOLDEN_POOP).stacksTo(88)));
     public static final DeferredItem<Item> SEEDBED_CURSE = ITEMS.register("seedbed_curse", () ->
-            new Item(new Item.Properties()));
+            new Item(new Item.Properties().stacksTo(88)));
     public static final DeferredItem<Item> FOLIUM_SENNAE = ITEMS.register("folium_sennae", () ->
             new Item(new Item.Properties()));
 
@@ -86,7 +86,7 @@ public class PItems {
 
     public static final DeferredItem<ArmorItem> OMEN_HELMET = ITEMS.register("omen_helmet", () ->
             new OmenArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.HELMET,
-                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(24))){
+                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(24))) {
             });
     public static final DeferredItem<ArmorItem> OMEN_CHESTPLATE = ITEMS.register("omen_chestplate", () ->
             new ArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE,
