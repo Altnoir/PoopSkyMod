@@ -32,8 +32,8 @@ public class PDamageTypeTagsProvider extends TagsProvider<DamageType> {
                         DamageTypeTags.BYPASSES_ENCHANTMENTS
                 )
                 .add(
-                        DamageTypes.MAGIC
-                        , DamageTypes.WITHER,
+                        DamageTypes.MAGIC,
+                        DamageTypes.WITHER,
                         DamageTypes.DRAGON_BREATH
                 );
     }
