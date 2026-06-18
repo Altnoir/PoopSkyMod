@@ -90,16 +90,4 @@ public class PSModEvents {
             MobEffects.WITHER,
             MobEffects.CONFUSION
     );
-
-    @SubscribeEvent
-    public static void onLivingDamage(LivingDamageEvent.Pre event) {
-        LivingEntity entity = event.getEntity();
-
-        if (entity.hasEffect(PEffects.BLEEDING)) {
-            float originalDamage = event.getOriginalDamage();
-            float amplifier = (entity.getEffect(PEffects.BLEEDING).getAmplifier() + 1) * 0.1F;
-            float bleedingDamage = originalDamage * (1 + amplifier);
-            event.setNewDamage(bleedingDamage);
-        }
-    }
 }
