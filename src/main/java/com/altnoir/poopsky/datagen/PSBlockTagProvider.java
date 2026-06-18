@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
@@ -22,7 +23,7 @@ public class PSBlockTagProvider extends BlockTagsProvider {
     }
 
     @Override
-    protected void addTags(HolderLookup.Provider provider) {
+    protected void addTags(HolderLookup.@NotNull Provider provider) {
         tag(PBlockTags.POOP_BLOCK)
                 .add(PBlocks.POOP_BLOCK.get());
         tag(PBlockTags.CHILI_POOP_BLOCK)
@@ -54,10 +55,10 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(AllToiletBlocks.RAINBOW_TOILET.get());
 
         tag(PBlockTags.POOP_TNT_DESTROY)
-                .addTags(BlockTags.FLOWERS)
-                .addTags(BlockTags.LEAVES);
+                .addTag(BlockTags.FLOWERS)
+                .addTag(BlockTags.LEAVES);
         tag(PBlockTags.POOP_TNT_REPLACEABLE)
-                .addTags(BlockTags.MOSS_REPLACEABLE);
+                .addTag(BlockTags.MOSS_REPLACEABLE);
 
         //基础标签
         tag(BlockTags.MOSS_REPLACEABLE)

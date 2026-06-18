@@ -39,10 +39,12 @@ public class DataGenerators {
         ItemTagsProvider itemTagsProvider = new PSItemTagProvider(packOutput, lookupProvider, blockTagsProvider.contentsGetter(), existingFileHelper);
         EntityTypeTagsProvider entityTagsProvider = new PSEntityTypeTagsProvider(packOutput, lookupProvider, existingFileHelper);
         PSFluidTagsProvider fluidTagProvider = new PSFluidTagsProvider(packOutput, lookupProvider, existingFileHelper);
+        PDamageTypeTagsProvider damageTypeTagsProvider = new PDamageTypeTagsProvider(packOutput, lookupProvider, existingFileHelper);
         generators.addProvider(event.includeServer(), blockTagsProvider);
         generators.addProvider(event.includeServer(), itemTagsProvider);
         generators.addProvider(event.includeServer(), entityTagsProvider);
         generators.addProvider(event.includeServer(), fluidTagProvider);
+        generators.addProvider(event.includeServer(), damageTypeTagsProvider);
 
         generators.addProvider(event.includeServer(), new PSDatapackProvider(packOutput, lookupProvider));
         generators.addProvider(event.includeServer(), new PSDataMapProvider(packOutput, lookupProvider));
