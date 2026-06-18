@@ -21,7 +21,6 @@ public class PSEntityTypeTagsProvider extends EntityTypeTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         tag(PEntityTypeTags.IGNORES_BLEEDING)
-                .addTag(EntityTypeTags.UNDEAD)
                 .add(EntityType.IRON_GOLEM, EntityType.SNOW_GOLEM);
 
         tag(PEntityTypeTags.RETAIN_IN_SUB_LEVEL)

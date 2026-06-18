@@ -103,11 +103,11 @@ public class ToiletEntity extends Entity {
             level.addFreshEntity(poop);
         }
         var pitch = level.random.nextFloat() + 0.5F;
-        level.playSound(null, player.getX(), player.getY() + 0.1, player.getZ(), PSoundEvents.FART.get(), SoundSource.PLAYERS, 1.0F, pitch);
+        level.playSound(null, player.getX(), player.getY() + 0.6, player.getZ(), PSoundEvents.FART.get(), SoundSource.PLAYERS, 1.0F, pitch);
         ((ServerLevel) level).sendParticles(
                 PParticles.POOP_PARTICLE.get(),
                 player.getX(),
-                player.getY() + 0.1,
+                player.getY() + 0.6,
                 player.getZ(),
                 8,
                 0.0,
