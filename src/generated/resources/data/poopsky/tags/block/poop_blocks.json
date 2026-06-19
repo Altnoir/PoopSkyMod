@@ -1,30 +1,7 @@
 {
   "values": [
-    "poopsky:poop_sapling",
-    "poopsky:poop_leaves",
-    "poopsky:poop_leaves_iron",
-    "poopsky:poop_leaves_gold",
-    "poopsky:poop_piece",
     "poopsky:poop_block",
-    "poopsky:poop_stairs",
-    "poopsky:poop_slab",
-    "poopsky:poop_vertical_slab",
-    "poopsky:poop_button",
-    "poopsky:poop_pressure_plate",
-    "poopsky:poop_fence",
-    "poopsky:poop_fence_gate",
-    "poopsky:poop_wall",
-    "poopsky:poop_door",
-    "poopsky:poop_trapdoor",
     "poopsky:chili_poop_block",
-    "poopsky:chili_poop_stairs",
-    "poopsky:chili_poop_slab",
-    "poopsky:chili_poop_vertical_slab",
-    "poopsky:chili_poop_wall",
-    "poopsky:golden_poop_block",
-    "poopsky:golden_poop_stairs",
-    "poopsky:golden_poop_slab",
-    "poopsky:golden_poop_vertical_slab",
-    "poopsky:golden_poop_wall"
+    "poopsky:golden_poop_block"
   ]
 }

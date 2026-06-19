@@ -78,7 +78,7 @@ public class PoopTntUtil {
         double offset = radius * 0.5;
         double speed = 0.4 + level.random.nextDouble() * 0.4;
         level.sendParticles(PParticles.POOP_PARTICLE.get(), x, y, z, particleCount, offset, offset, offset, speed);
-        if (radius < 2) {
+        if (radius <= 2) {
             level.sendParticles(ParticleTypes.EXPLOSION, x, y, z, radius, offset, offset, offset, speed);
         } else {
             level.sendParticles(ParticleTypes.EXPLOSION_EMITTER, x, y, z, radius, offset, offset, offset, speed);

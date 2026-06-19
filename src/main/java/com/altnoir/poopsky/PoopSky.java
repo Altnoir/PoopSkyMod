@@ -3,6 +3,8 @@ package com.altnoir.poopsky;
 import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.block.p.CompooperBlock;
+import com.altnoir.poopsky.compat.PSMods;
+import com.altnoir.poopsky.compat.maid.MaidPlugin;
 import com.altnoir.poopsky.entity.p.PoopTntEntity;
 import com.altnoir.poopsky.init.*;
 import com.altnoir.poopsky.item.PItems;
@@ -28,6 +30,7 @@ import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -68,6 +71,9 @@ public class PoopSky {
         PFluids.FLUIDS.register(modEventBus);
         PFluidTypes.FLUID_TYPES.register(modEventBus);
 
+        if (ModList.get().isLoaded(PSMods.TOUHOU_LITTLE_MAID.id())) {
+            MaidPlugin.registry(modEventBus);
+        }
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 

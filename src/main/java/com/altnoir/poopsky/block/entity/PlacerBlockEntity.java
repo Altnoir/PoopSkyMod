@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.block.entity;
 
 import com.altnoir.poopsky.init.PBlockEntityType;
-import com.altnoir.poopsky.inventory.PlacerMenu;
+import com.altnoir.poopsky.misc.inventory.PlacerMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;

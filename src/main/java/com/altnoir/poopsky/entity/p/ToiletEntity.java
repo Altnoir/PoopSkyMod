@@ -1,16 +1,18 @@
 package com.altnoir.poopsky.entity.p;
 
 import com.altnoir.poopsky.init.PEffects;
-import com.altnoir.poopsky.init.PStats;
-import com.altnoir.poopsky.item.PItems;
 import com.altnoir.poopsky.init.PParticles;
 import com.altnoir.poopsky.init.PSoundEvents;
+import com.altnoir.poopsky.init.PStats;
+import com.altnoir.poopsky.item.PItems;
+import com.altnoir.poopsky.tag.PBlockTags;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -23,6 +25,8 @@ public class ToiletEntity extends Entity {
 
     public ToiletEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
+        this.setNoGravity(true);
+        this.noPhysics = true;
     }
 
     @Override
@@ -36,59 +40,86 @@ public class ToiletEntity extends Entity {
 
     @Override
     protected void readAdditionalSaveData(CompoundTag compoundTag) {
-
+        this.goldenPoop = compoundTag.getBoolean("goldenPoop");
     }
 
     @Override
     protected void addAdditionalSaveData(CompoundTag compoundTag) {
-
+        compoundTag.putBoolean("goldenPoop", this.goldenPoop);
     }
 
     @Override
     public void tick() {
         super.tick();
-        if (this.level().isClientSide || this.getPassengers().isEmpty()) {
+        if (this.level().isClientSide) {
             return;
         }
-
-        if (!(this.getPassengers().getFirst() instanceof Player player)) {
+        if (!this.level().getBlockState(this.blockPosition()).is(PBlockTags.TOILET_BLOCKS)) {
+            this.kill();
             return;
         }
-
-        if (player.hasEffect(PEffects.FECAL_INCONTINENCE)) {
-            onPoop(level(), player, player.hasEffect(PEffects.INTESTINAL_SPASM));
-            player.causeFoodExhaustion(0.05F);
-        } else if (level().getGameTime() % 20 == 0) {
-            onPoop(level(), player, player.hasEffect(PEffects.INTESTINAL_SPASM));
-            player.causeFoodExhaustion(1.0F);
+        if (this.getPassengers().isEmpty()) {
+            this.kill();
+            return;
+        }
+        Entity firstPassenger = this.getPassengers().getFirst();
+        if (firstPassenger instanceof Player player) {
+            if (player.hasEffect(PEffects.FECAL_INCONTINENCE)) {
+                onPoop(level(), player, player.hasEffect(PEffects.INTESTINAL_SPASM));
+                player.causeFoodExhaustion(0.05F);
+            } else if (level().getGameTime() % 20 == 0) {
+                onPoop(level(), player, player.hasEffect(PEffects.INTESTINAL_SPASM));
+                player.causeFoodExhaustion(1.0F);
+            }
+        } else if (firstPassenger instanceof LivingEntity livingEntity) {
+            if (livingEntity.hasEffect(PEffects.FECAL_INCONTINENCE)) {
+                onPoop(level(), livingEntity, livingEntity.hasEffect(PEffects.INTESTINAL_SPASM));
+            } else if (level().getGameTime() % 20 == 0) {
+                onPoop(level(), livingEntity, livingEntity.hasEffect(PEffects.INTESTINAL_SPASM));
+            }
         }
     }
 
     @Override
     protected void removePassenger(Entity passenger) {
-        passenger.setPos(passenger.getX(), passenger.getY() + 1.5, passenger.getZ());
+        float y = passenger instanceof Player ? 1.05F : 0.05F;
+        passenger.setPos(passenger.getX(), passenger.getY() + y, passenger.getZ());
         super.removePassenger(passenger);
-        this.kill();
+        if (!this.isRemoved()) {
+            this.kill();
+        }
     }
 
     @Override
     protected void positionRider(Entity passenger, MoveFunction callback) {
         super.positionRider(passenger, callback);
-        passenger.setPos(this.getX(), this.getY() + 0.5, this.getZ());
+        if (passenger instanceof Player player) {
+            player.setPos(this.getX(), this.getY() + 0.5, this.getZ());
+        } else {
+            passenger.setPos(this.getX(), this.getY() + 0.8, this.getZ());
+        }
     }
 
-    protected void onPoop(Level level, Player player, boolean isFire) {
-        if (player.getFoodData().getFoodLevel() <= 0) {
-            player.hurt(level.damageSources().wither(), 1.0F);
+    protected void onPoop(Level level, LivingEntity livingEntity, boolean isFire) {
+        boolean ass = true;
+        float y = livingEntity instanceof Player ? 0.55F : 0.05F;
 
-            var redStone = new ItemEntity(
-                    level,
-                    player.getX(), player.getY() + 0.1, player.getZ(),
-                    new ItemStack(Items.REDSTONE)
-            );
-            redStone.setDefaultPickUpDelay();
-            level.addFreshEntity(redStone);
-        } else {
+        if (livingEntity instanceof Player player) {
+            if (player.getFoodData().getFoodLevel() <= 0) {
+                ass = false;
+                player.hurt(level.damageSources().wither(), 1.0F);
+
+                var redStone = new ItemEntity(
+                        level,
+                        player.getX(), player.getY() + 0.1, player.getZ(),
+                        new ItemStack(Items.REDSTONE)
+                );
+                redStone.setDefaultPickUpDelay();
+                level.addFreshEntity(redStone);
+            }
+            player.awardStat(PStats.POOP_STATS.get());
+        }
+        if (ass) {
             Item poopItem;
             if (isFire) {
                 poopItem = PItems.CHILI_POOP.get();
@@ -97,24 +128,21 @@ public class ToiletEntity extends Entity {
             } else {
                 poopItem = PItems.POOP.get();
             }
-            var poop = new ItemEntity(level, player.getX(), player.getY() + 0.1, player.getZ(), new ItemStack(poopItem));
+            var poop = new ItemEntity(level, livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), new ItemStack(poopItem));
 
             poop.setDefaultPickUpDelay();
             level.addFreshEntity(poop);
         }
         var pitch = level.random.nextFloat() + 0.5F;
-        level.playSound(null, player.getX(), player.getY() + 0.6, player.getZ(), PSoundEvents.FART.get(), SoundSource.PLAYERS, 1.0F, pitch);
+        level.playSound(null, livingEntity.getX(), livingEntity.getY() + y, livingEntity.getZ(), PSoundEvents.FART.get(), SoundSource.PLAYERS, 1.0F, pitch);
         ((ServerLevel) level).sendParticles(
                 PParticles.POOP_PARTICLE.get(),
-                player.getX(),
-                player.getY() + 0.6,
-                player.getZ(),
+                livingEntity.getX(),
+                livingEntity.getY() + y,
+                livingEntity.getZ(),
                 8,
-                0.0,
-                -0.1,
-                0.0,
+                0.0, -0.1, 0.0,
                 3.0
         );
-        player.awardStat(PStats.POOP_STATS.get());
     }
 }

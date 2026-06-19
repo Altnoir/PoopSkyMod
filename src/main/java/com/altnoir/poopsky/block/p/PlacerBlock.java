@@ -126,7 +126,7 @@ public class PlacerBlock extends BaseEntityBlock {
 
                         if (placeResult.consumesAction()) {
                             blockEntity.setChanged();
-                            playPlacedBlockSound(level, targetPos);
+                            //playPlacedBlockSound(level, targetPos);
                             //level.gameEvent(GameEvent.BLOCK_PLACE, targetPos, GameEvent.Context.of(state));
                         }
                     }

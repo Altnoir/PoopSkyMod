@@ -56,6 +56,10 @@ public class PSGameEvents {
         builder.addMix(PPotions.FECAL_INCONTINENCE_POTION, Items.REDSTONE, PPotions.LONG_FECAL_INCONTINENCE_POTION);
         builder.addMix(PPotions.FECAL_INCONTINENCE_POTION, Items.GLOWSTONE_DUST, PPotions.STRONG_FECAL_INCONTINENCE_POTION);
         builder.addMix(PPotions.FECAL_INCONTINENCE_POTION, Items.GLOWSTONE, PPotions.SUPER_FECAL_INCONTINENCE_POTION);
+
+        builder.addMix(Potions.AWKWARD, PItems.KING_OF_DRAGON_FRUIT.get(), PPotions.ON_THE_VGE_POTION);
+        builder.addMix(PPotions.ON_THE_VGE_POTION, Items.REDSTONE, PPotions.LONG_ON_THE_VGE_POTION);
+        builder.addMix(PPotions.ON_THE_VGE_POTION, Items.GLOWSTONE_DUST, PPotions.STRONG_ON_THE_VGE_POTION);
     }
 
     @SubscribeEvent

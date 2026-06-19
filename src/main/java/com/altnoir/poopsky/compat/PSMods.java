@@ -7,7 +7,8 @@ import java.util.Locale;
 
 public enum PSMods {
     SABLE,
-    SKYBLOCKBUILDER;
+    SKYBLOCKBUILDER,
+    TOUHOU_LITTLE_MAID;
 
     private final String id;
     private final boolean isLoaded;

@@ -27,6 +27,16 @@ public class PPotions {
                     new MobEffectInstance(MobEffects.WEAKNESS, 1800, 1))
     );
 
+    public static final Holder<Potion> ON_THE_VGE_POTION = POTIONS.register("on_the_verge_potion",
+            () -> new Potion(new MobEffectInstance(PEffects.ON_THE_VERGE, 3600, 0))
+    );
+    public static final Holder<Potion> LONG_ON_THE_VGE_POTION = POTIONS.register("long_on_the_verge_potion",
+            () -> new Potion(new MobEffectInstance(PEffects.ON_THE_VERGE, 9600, 0))
+    );
+    public static final Holder<Potion> STRONG_ON_THE_VGE_POTION = POTIONS.register("strong_on_the_verge_potion",
+            () -> new Potion(new MobEffectInstance(PEffects.ON_THE_VERGE, 1800, 1))
+    );
+
     public static void register(IEventBus eventBus) {
         POTIONS.register(eventBus);
     }

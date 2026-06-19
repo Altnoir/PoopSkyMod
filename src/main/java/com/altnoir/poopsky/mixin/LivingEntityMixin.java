@@ -1,12 +1,11 @@
 package com.altnoir.poopsky.mixin;
 
+import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.init.PEffects;
 import com.altnoir.poopsky.tag.PDamageTypeTags;
-import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 

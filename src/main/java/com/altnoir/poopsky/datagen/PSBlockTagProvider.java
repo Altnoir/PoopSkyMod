@@ -24,10 +24,9 @@ public class PSBlockTagProvider extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.@NotNull Provider provider) {
-        tag(PBlockTags.POOP_BLOCK)
-                .add(PBlocks.POOP_BLOCK.get());
-        tag(PBlockTags.CHILI_POOP_BLOCK)
-                .add(PBlocks.CHILI_POOP_BLOCK.get());
+        tag(PBlockTags.POOP_BLOCK).add(PBlocks.POOP_BLOCK.get());
+        tag(PBlockTags.CHILI_POOP_BLOCK).add(PBlocks.CHILI_POOP_BLOCK.get());
+
         tag(PBlockTags.RAW_SAPLING_POOP_BLOCK)
                 .add(PBlocks.RAW_POOP_BLOCK.get())
                 .add(PBlocks.RAW_SAPLING_POOP_BLOCK.get());
@@ -43,7 +42,11 @@ public class PSBlockTagProvider extends BlockTagsProvider {
         tag(PBlockTags.WATER_BLOCK)
                 .add(PBlocks.RAW_SEA_POOP_BLOCK.get());
 
-        tag(PBlockTags.POOP_BLOCKS).add(POOP_BLOCKS);
+        tag(PBlockTags.POOP_BLOCKS)
+                .add(PBlocks.POOP_BLOCK.get())
+                .add(PBlocks.CHILI_POOP_BLOCK.get())
+                .add(PBlocks.GOLDEN_POOP_BLOCK.get());
+        tag(PBlockTags.POOP_BUILDING_BLOCKS).add(POOP_BUILDING_BLOCKS);
         tag(PBlockTags.EMPTY_LOGS)
                 .add(PBlocks.POOP_EMPTY_LOG.get())
                 .add(PBlocks.STRIPPED_POOP_EMPTY_LOG.get());
@@ -57,8 +60,7 @@ public class PSBlockTagProvider extends BlockTagsProvider {
         tag(PBlockTags.POOP_TNT_DESTROY)
                 .addTag(BlockTags.FLOWERS)
                 .addTag(BlockTags.LEAVES);
-        tag(PBlockTags.POOP_TNT_REPLACEABLE)
-                .addTag(BlockTags.MOSS_REPLACEABLE);
+        tag(PBlockTags.POOP_TNT_REPLACEABLE).addTag(BlockTags.MOSS_REPLACEABLE);
 
         //基础标签
         tag(BlockTags.MOSS_REPLACEABLE)
@@ -69,11 +71,9 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(PBlocks.RAW_SAPLING_POOP_BLOCK.get())
                 .add(PBlocks.RAW_SEA_POOP_BLOCK.get())
                 .add(PBlocks.RAW_WITHER_POOP_BLOCK.get());
-        tag(BlockTags.BEACON_BASE_BLOCKS)
-                .add(PBlocks.POOP_BLOCK.get())
-                .add(PBlocks.CHILI_POOP_BLOCK.get())
-                .add(PBlocks.DRIED_POOP_BLOCK.get());
+        tag(BlockTags.BEACON_BASE_BLOCKS).addTag(PBlockTags.POOP_BLOCKS);
 
+        tag(BlockTags.SNOW_LAYER_CAN_SURVIVE_ON).addTag(PBlockTags.POOP_BLOCKS);
         tag(BlockTags.CLIMBABLE)
                 .add(PBlocks.ROUNDWORM_VINES.get())
                 .add(PBlocks.ROUNDWORM_VINES_PLANT.get());
@@ -82,9 +82,7 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(PBlocks.ROUNDWORM_VINES_PLANT.get());
 
         tag(BlockTags.DIRT)
-                .add(PBlocks.POOP_BLOCK.get())
-                .add(PBlocks.CHILI_POOP_BLOCK.get())
-                .add(PBlocks.GOLDEN_POOP_BLOCK.get())
+                .addTag(PBlockTags.POOP_BLOCKS)
                 .add(PBlocks.RAW_POOP_BLOCK.get())
                 .add(PBlocks.RAW_SAPLING_POOP_BLOCK.get())
                 .add(PBlocks.RAW_SEA_POOP_BLOCK.get())
@@ -93,9 +91,7 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(PBlocks.DRIED_POOP_BLOCK.get());
 
         tag(BlockTags.MUSHROOM_GROW_BLOCK)
-                .add(PBlocks.POOP_BLOCK.get())
-                .add(PBlocks.CHILI_POOP_BLOCK.get())
-                .add(PBlocks.GOLDEN_POOP_BLOCK.get())
+                .addTag(PBlockTags.POOP_BLOCKS)
                 .add(PBlocks.RAW_POOP_BLOCK.get())
                 .add(PBlocks.RAW_SAPLING_POOP_BLOCK.get())
                 .add(PBlocks.RAW_SEA_POOP_BLOCK.get())
@@ -116,7 +112,7 @@ public class PSBlockTagProvider extends BlockTagsProvider {
         tag(BlockTags.FLOWERS)
                 .addTag(PBlockTags.TOILET_BLOCKS)
                 .add(PBlocks.POOP_LEAVES.get())
-                .addTag(PBlockTags.POOP_BLOCKS);
+                .addTag(PBlockTags.POOP_BUILDING_BLOCKS);
 
 //        ToiletBlocks.BLOCKS.getEntries().stream()
 //                .map(DeferredHolder::get)
@@ -175,7 +171,7 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(PBlocks.URINE_COMPOOPER.get());
 
         tag(BlockTags.MINEABLE_WITH_HOE)
-                .addTag(PBlockTags.POOP_BLOCKS);
+                .addTag(PBlockTags.POOP_BUILDING_BLOCKS);
 
         tag(BlockTags.MINEABLE_WITH_SHOVEL)
                 .add(PBlocks.POOP_PIECE.get());
@@ -190,12 +186,13 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(HARD_TOILETS);
     }
 
-    public static final Block[] POOP_BLOCKS = {
+    public static final Block[] POOP_BUILDING_BLOCKS = {
             PBlocks.POOP_SAPLING.get(),
             PBlocks.POOP_LEAVES.get(),
             PBlocks.POOP_LEAVES_IRON.get(),
             PBlocks.POOP_LEAVES_GOLD.get(),
             PBlocks.POOP_PIECE.get(),
+
             PBlocks.POOP_BLOCK.get(),
             PBlocks.POOP_STAIRS.get(),
             PBlocks.POOP_SLAB.get(),
@@ -207,11 +204,13 @@ public class PSBlockTagProvider extends BlockTagsProvider {
             PBlocks.POOP_WALL.get(),
             PBlocks.POOP_DOOR.get(),
             PBlocks.POOP_TRAPDOOR.get(),
+
             PBlocks.CHILI_POOP_BLOCK.get(),
             PBlocks.CHILI_POOP_STAIRS.get(),
             PBlocks.CHILI_POOP_SLAB.get(),
             PBlocks.CHILI_POOP_VERTICAL_SLAB.get(),
             PBlocks.CHILI_POOP_WALL.get(),
+
             PBlocks.GOLDEN_POOP_BLOCK.get(),
             PBlocks.GOLDEN_POOP_STAIRS.get(),
             PBlocks.GOLDEN_POOP_SLAB.get(),

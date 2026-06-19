@@ -7,6 +7,8 @@
     "#minecraft:is_fall",
     "#minecraft:bypasses_invulnerability",
     "#minecraft:bypasses_enchantments",
+    "neoforge:poison",
+    "minecraft:indirect_magic",
     "minecraft:magic",
     "minecraft:wither",
     "minecraft:dragon_breath"

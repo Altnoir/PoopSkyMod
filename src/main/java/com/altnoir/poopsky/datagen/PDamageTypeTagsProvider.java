@@ -9,6 +9,7 @@ import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.damagesource.DamageTypes;
+import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,6 +33,8 @@ public class PDamageTypeTagsProvider extends TagsProvider<DamageType> {
                         DamageTypeTags.BYPASSES_ENCHANTMENTS
                 )
                 .add(
+                        NeoForgeMod.POISON_DAMAGE,
+                        DamageTypes.INDIRECT_MAGIC,
                         DamageTypes.MAGIC,
                         DamageTypes.WITHER,
                         DamageTypes.DRAGON_BREATH
