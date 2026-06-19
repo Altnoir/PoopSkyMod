@@ -6,6 +6,7 @@ import com.altnoir.poopsky.init.PSoundEvents;
 import com.altnoir.poopsky.init.PStats;
 import com.altnoir.poopsky.item.PItems;
 import com.altnoir.poopsky.tag.PBlockTags;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
@@ -25,8 +26,6 @@ public class ToiletEntity extends Entity {
 
     public ToiletEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
-        this.setNoGravity(true);
-        this.noPhysics = true;
     }
 
     @Override
@@ -82,8 +81,7 @@ public class ToiletEntity extends Entity {
 
     @Override
     protected void removePassenger(Entity passenger) {
-        float y = passenger instanceof Player ? 1.05F : 0.05F;
-        passenger.setPos(passenger.getX(), passenger.getY() + y, passenger.getZ());
+        passenger.setPos(this.getX(), this.getY() + 1.05F, this.getZ());
         super.removePassenger(passenger);
         if (!this.isRemoved()) {
             this.kill();
@@ -94,9 +92,9 @@ public class ToiletEntity extends Entity {
     protected void positionRider(Entity passenger, MoveFunction callback) {
         super.positionRider(passenger, callback);
         if (passenger instanceof Player player) {
-            player.setPos(this.getX(), this.getY() + 0.5, this.getZ());
+            player.setPos(this.getX(), this.getY() + 0.45, this.getZ());
         } else {
-            passenger.setPos(this.getX(), this.getY() + 0.8, this.getZ());
+            passenger.setPos(this.getX(), this.getY() + 0.95, this.getZ());
         }
     }
 
