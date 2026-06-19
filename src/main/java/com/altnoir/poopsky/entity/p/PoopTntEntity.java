@@ -25,10 +25,10 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
     private static final EntityDataAccessor<Integer> DATA_FUSE_ID = SynchedEntityData.defineId(PoopTntEntity.class, EntityDataSerializers.INT);
 
     private static final int DEFAULT_FUSE_TIME = 80;
-    private static final double MOMENTUM_PER_TICK = 1.25;
+    private static final double MOMENTUM_PER_TICK = 2.0;
     private static final int MIN_EXPLOSION_RADIUS = 1;
-    private static final int MAX_EXPLOSION_RADIUS = 5;
-    private static final double INSTANT_EXPLOSION_THRESHOLD = 0.25;
+    private static final int MAX_EXPLOSION_RADIUS = 9;
+    private static final double INSTANT_EXPLOSION_THRESHOLD = 0.5;
 
     @javax.annotation.Nullable
     private LivingEntity owner;
@@ -41,7 +41,7 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
     public PoopTntEntity(Level level, double x, double y, double z, @javax.annotation.Nullable LivingEntity owner) {
         this(PEntityType.POOP_TNT.get(), level);
         this.setPos(x, y, z);
-        double d = level.random.nextDouble() * (double)((float)Math.PI * 2F);
+        double d = level.random.nextDouble() * (double) ((float) Math.PI * 2F);
         this.setDeltaMovement(-Math.sin(d) * 0.02, 0.2F, -Math.cos(d) * 0.02);
         this.setFuse(DEFAULT_FUSE_TIME);
         this.xo = x;
@@ -86,7 +86,7 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
             if (impactSpeed > INSTANT_EXPLOSION_THRESHOLD && !state.is(PBlockTags.EMPTY_LOGS) && (this.horizontalCollision || this.verticalCollision)) {
                 this.setDeltaMovement(movement);
                 this.discard();
-                PoopTntUtil.triggerExplosion(this, radius);
+                PoopTntUtil.triggerExplosion(this, radius + 1);
                 return;
             }
         }
@@ -101,7 +101,7 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
         if (fuse <= 0) {
             this.discard();
             if (!this.level().isClientSide) {
-                PoopTntUtil.triggerExplosion(this, radius);
+                PoopTntUtil.triggerExplosion(this, radius + 1);
             }
         } else {
             this.updateInWaterStateAndDoFluidPushing();

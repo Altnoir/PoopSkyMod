@@ -6,7 +6,6 @@ import com.altnoir.poopsky.init.PSoundEvents;
 import com.altnoir.poopsky.init.PStats;
 import com.altnoir.poopsky.item.PItems;
 import com.altnoir.poopsky.tag.PBlockTags;
-import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
@@ -23,6 +22,7 @@ import net.minecraft.world.level.Level;
 
 public class ToiletEntity extends Entity {
     private boolean goldenPoop;
+    private long poopTime;
 
     public ToiletEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
@@ -40,11 +40,13 @@ public class ToiletEntity extends Entity {
     @Override
     protected void readAdditionalSaveData(CompoundTag compoundTag) {
         this.goldenPoop = compoundTag.getBoolean("goldenPoop");
+        this.poopTime = compoundTag.getLong("poopTime");
     }
 
     @Override
     protected void addAdditionalSaveData(CompoundTag compoundTag) {
         compoundTag.putBoolean("goldenPoop", this.goldenPoop);
+        compoundTag.putLong("poopTime", this.poopTime);
     }
 
     @Override
@@ -61,20 +63,24 @@ public class ToiletEntity extends Entity {
             this.kill();
             return;
         }
+        long gameTime = level().getGameTime();
+
         Entity firstPassenger = this.getPassengers().getFirst();
         if (firstPassenger instanceof Player player) {
             if (player.hasEffect(PEffects.FECAL_INCONTINENCE)) {
                 onPoop(level(), player, player.hasEffect(PEffects.INTESTINAL_SPASM));
                 player.causeFoodExhaustion(0.05F);
-            } else if (level().getGameTime() % 20 == 0) {
+            } else if (poopTime == 0 || gameTime - poopTime >= 20) {
                 onPoop(level(), player, player.hasEffect(PEffects.INTESTINAL_SPASM));
                 player.causeFoodExhaustion(1.0F);
+                this.poopTime = gameTime;
             }
         } else if (firstPassenger instanceof LivingEntity livingEntity) {
             if (livingEntity.hasEffect(PEffects.FECAL_INCONTINENCE)) {
                 onPoop(level(), livingEntity, livingEntity.hasEffect(PEffects.INTESTINAL_SPASM));
-            } else if (level().getGameTime() % 20 == 0) {
+            } else if (poopTime == 0 || gameTime - poopTime >= 20) {
                 onPoop(level(), livingEntity, livingEntity.hasEffect(PEffects.INTESTINAL_SPASM));
+                this.poopTime = gameTime;
             }
         }
     }

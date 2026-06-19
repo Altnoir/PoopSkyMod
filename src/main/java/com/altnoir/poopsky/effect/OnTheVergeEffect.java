@@ -35,7 +35,8 @@ public class OnTheVergeEffect extends MobEffect {
 
             if (openTheDoor) {
                 livingEntity.setDeltaMovement(vec3);
-                PoopTntUtil.triggerExplosion(livingEntity, amplifier + 1);
+                int radius = Math.min(18, amplifier + 2);
+                PoopTntUtil.triggerExplosion(livingEntity, radius);
             }
         }
 

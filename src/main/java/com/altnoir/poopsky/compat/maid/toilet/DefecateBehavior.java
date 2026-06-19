@@ -12,6 +12,7 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.behavior.Behavior;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.WalkTarget;
+import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
 
@@ -43,7 +44,7 @@ public class DefecateBehavior extends Behavior<EntityMaid> {
         }
 
         if (maid.getVehicle() instanceof ToiletEntity toiletEntity) {
-            if (!level.getBlockState(toiletEntity.blockPosition()).is(PBlockTags.TOILET_BLOCKS)) {
+            if (toiletEntity.isRemoved() && !level.getBlockState(toiletEntity.blockPosition()).is(PBlockTags.TOILET_BLOCKS)) {
                 maid.stopRiding();
                 maid.getBrain().eraseMemory(MaidPlugin.TOILET_MEMORY.get());
             }
