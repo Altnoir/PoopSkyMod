@@ -85,7 +85,7 @@ public class PoopSky {
                     Level level = blockSource.level();
                     BlockPos blockpos = blockSource.pos().relative(blockSource.state().getValue(DispenserBlock.FACING));
 
-                    if (!BoneMealItem.growCrop(item, level, blockpos) && !BoneMealItem.growWaterPlant(item, level, blockpos, null)) {
+                    if (!BoneMealItem.applyBonemeal(item, level, blockpos, null) && !BoneMealItem.growWaterPlant(item, level, blockpos, null)) {
                         this.setSuccess(false);
                     } else if (!level.isClientSide) {
                         level.levelEvent(1505, blockpos, 15);

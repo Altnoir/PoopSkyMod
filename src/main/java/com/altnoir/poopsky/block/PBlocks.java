@@ -59,7 +59,6 @@ public class PBlocks {
             () -> new PoopPieceBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_BROWN)
                     .replaceable()
-                    .forceSolidOff()
                     .randomTicks()
                     .strength(0.1F)
                     .requiresCorrectToolForDrops()

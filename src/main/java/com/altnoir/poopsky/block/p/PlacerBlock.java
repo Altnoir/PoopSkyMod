@@ -140,7 +140,8 @@ public class PlacerBlock extends BaseEntityBlock {
 
     private void playPlacedBlockSound(Level level, BlockPos pos) {
         BlockState placedState = level.getBlockState(pos);
-        SoundType soundType = placedState.getSoundType();
+        SoundType soundType = placedState.getSoundType(level, pos, null);
+
         level.playSound(null, pos, soundType.getPlaceSound(), SoundSource.BLOCKS,
                 (soundType.getVolume() + 1.0F) / 2.0F,
                 soundType.getPitch() * 0.8F
@@ -213,7 +214,7 @@ public class PlacerBlock extends BaseEntityBlock {
      */
     @Override
     protected BlockState mirror(BlockState state, Mirror mirror) {
-        return state.rotate(mirror.getRotation(state.getValue(FACING)));
+        return state.setValue(FACING, mirror.mirror(state.getValue(FACING)));
     }
 
     @Override

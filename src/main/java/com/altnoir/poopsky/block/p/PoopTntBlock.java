@@ -16,6 +16,7 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -27,7 +28,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class PoopTntBlock extends Block {
     public static final MapCodec<PoopTntBlock> CODEC = simpleCodec(PoopTntBlock::new);
@@ -123,7 +124,7 @@ public class PoopTntBlock extends Block {
     }
 
     @Override
-    public boolean dropFromExplosion(Explosion explosion) {
+    public boolean canDropFromExplosion(BlockState state, BlockGetter level, BlockPos pos, Explosion explosion) {
         return true;
     }
 
