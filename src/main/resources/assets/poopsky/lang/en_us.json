@@ -311,8 +311,8 @@
   "jei.category.poopsky.compooper": "Compooper",
   "jei.category.poopsky.sieve": "Sieve",
   "jei.poopsky.sieve_chance": "Chance: %.2f%%",
-  "task.poopsky.use_toilet": "Use a toilet",
-  "task.poopsky.use_toilet.desc": "Maid will search for toilets around",
+  "task.poopsky.defecate": "Defecate",
+  "task.poopsky.defecate.desc": "Maid will search for toilets around",
 
   "stat.poopsky.poop_stats": "Poop Stats",
   "stat.poopsky.inspect_placer": "Inspect Placer Stats",

@@ -14,8 +14,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class UseToiletTask implements IMaidTask {
-    public static final ResourceLocation UID = PoopSky.loc("use_toilet");
+public class DefecateTask implements IMaidTask {
+    public static final ResourceLocation UID = PoopSky.loc("defecate");
 
     @Override
     public ResourceLocation getUid() {
@@ -34,6 +34,6 @@ public class UseToiletTask implements IMaidTask {
 
     @Override
     public List<Pair<Integer, BehaviorControl<? super EntityMaid>>> createBrainTasks(EntityMaid entityMaid) {
-        return Lists.newArrayList(new Pair<>(0, new UseToiletBehavior()));
+        return Lists.newArrayList(new Pair<>(0, new DefecateBehavior()));
     }
 }

@@ -135,10 +135,7 @@ public class PFoods {
             .effect(() -> new MobEffectInstance(MobEffects.GLOWING, 200), 1.0F)
             .build();
     public static final FoodProperties KING_OF_DRAGON_FRUIT = new FoodProperties.Builder()
-            .nutrition(4).saturationModifier(0.3F).alwaysEdible()
-            .effect(() -> new MobEffectInstance(PEffects.ON_THE_VERGE, 200), 1.0F)
-            .effect(() -> new MobEffectInstance(MobEffects.GLOWING, 200), 1.0F)
-            .build();
+            .nutrition(4).saturationModifier(0.3F).alwaysEdible().build();
 
     public static final FoodProperties URINE_BOTTLE = new FoodProperties.Builder().build();
 }

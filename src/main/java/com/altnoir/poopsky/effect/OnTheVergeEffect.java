@@ -29,7 +29,7 @@ public class OnTheVergeEffect extends MobEffect {
             if ((livingEntity instanceof Player player && player.isShiftKeyDown()) || duration <= 2) {
                 openTheDoor = true;
                 result = true;
-            } else if (amplifier >= 1) {
+            } else if (amplifier >= 1 && duration > 200) {
                 openTheDoor = true;
             }
 

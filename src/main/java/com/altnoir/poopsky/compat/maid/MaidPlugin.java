@@ -2,7 +2,7 @@ package com.altnoir.poopsky.compat.maid;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.compat.maid.toilet.ToiletSensor;
-import com.altnoir.poopsky.compat.maid.toilet.UseToiletTask;
+import com.altnoir.poopsky.compat.maid.toilet.DefecateTask;
 import com.github.tartaricacid.touhoulittlemaid.api.ILittleMaid;
 import com.github.tartaricacid.touhoulittlemaid.api.LittleMaidExtension;
 import com.github.tartaricacid.touhoulittlemaid.entity.ai.brain.ExtraMaidBrainManager;
@@ -39,6 +39,6 @@ public class MaidPlugin implements ILittleMaid {
 
     @Override
     public void addMaidTask(TaskManager manager) {
-        manager.add(new UseToiletTask());
+        manager.add(new DefecateTask());
     }
 }

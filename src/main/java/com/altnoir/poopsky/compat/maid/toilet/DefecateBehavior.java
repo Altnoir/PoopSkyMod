@@ -18,14 +18,14 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Map;
 
-public class UseToiletBehavior extends Behavior<EntityMaid> {
-    public UseToiletBehavior() {
+public class DefecateBehavior extends Behavior<EntityMaid> {
+    public DefecateBehavior() {
         super(Map.of());
     }
 
     @Override
     protected boolean canStillUse(@NotNull ServerLevel level, EntityMaid entity, long gameTime) {
-        return entity.getTask() instanceof UseToiletTask;
+        return entity.getTask() instanceof DefecateTask;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class UseToiletBehavior extends Behavior<EntityMaid> {
     @Override
     protected void tick(@NotNull ServerLevel level, @NotNull EntityMaid maid, long gameTime) {
         super.tick(level, maid, gameTime);
-        if (!(maid.getTask() instanceof UseToiletTask)) {
+        if (!(maid.getTask() instanceof DefecateTask)) {
             stop(level, maid, gameTime);
             return;
         }
@@ -45,6 +45,7 @@ public class UseToiletBehavior extends Behavior<EntityMaid> {
         if (maid.getVehicle() instanceof ToiletEntity toiletEntity) {
             if (!level.getBlockState(toiletEntity.blockPosition()).is(PBlockTags.TOILET_BLOCKS)) {
                 maid.stopRiding();
+                maid.getBrain().eraseMemory(MaidPlugin.TOILET_MEMORY.get());
             }
             return;
         }
@@ -53,6 +54,10 @@ public class UseToiletBehavior extends Behavior<EntityMaid> {
         if (p.isPresent()) {
             var pos = p.get();
             if (!pos.closerThan(maid.blockPosition(), 30)) {
+                return;
+            }
+            if (!level.getBlockState(pos).is(PBlockTags.TOILET_BLOCKS)) {
+                maid.getBrain().eraseMemory(MaidPlugin.TOILET_MEMORY.get());
                 return;
             }
             maid.restrictTo(maid.getOnPos(), 50);

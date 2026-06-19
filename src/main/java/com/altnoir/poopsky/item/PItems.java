@@ -65,7 +65,7 @@ public class PItems {
     public static final DeferredItem<Item> DRAGON_BREATH_CHILI = ITEMS.register("dragon_breath_chili", () ->
             new Item(new Item.Properties().food(PFoods.DRAGON_BREATH_CHILI)));
     public static final DeferredItem<Item> KING_OF_DRAGON_FRUIT = ITEMS.register("king_of_dragon_fruit", () ->
-            new Item(new Item.Properties().food(PFoods.KING_OF_DRAGON_FRUIT)));
+            new DragonFruitRItem(new Item.Properties().food(PFoods.KING_OF_DRAGON_FRUIT)));
 
     public static final DeferredItem<Item> TOILET_PLUG = ITEMS.register("toilet_plug", () ->
             new ToiletPlugItem(new Item.Properties().stacksTo(1)));
