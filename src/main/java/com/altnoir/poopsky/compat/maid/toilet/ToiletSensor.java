@@ -46,9 +46,7 @@ public class ToiletSensor extends Sensor<EntityMaid> {
             for (int dx = -distance; dx <= distance; dx++) {
                 for (int dy = -distance; dy <= distance; dy++) {
                     for (int dz = -distance; dz <= distance; dz++) {
-                        if (Math.abs(dx) != distance &&
-                                Math.abs(dy) != distance &&
-                                Math.abs(dz) != distance) {
+                        if (Math.abs(dx) != distance && Math.abs(dy) != distance && Math.abs(dz) != distance) {
                             continue;
                         }
 
