@@ -164,6 +164,15 @@
       }
     ]
   },
+  "entity.pop.primed": {
+    "subtitle": "subtitles.poopsky.pop.primed",
+    "sounds": [
+      {
+        "name": "minecraft:entity.tnt.primed",
+        "type": "event"
+      }
+    ]
+  },
   "lawrence": {
     "sounds": [
       {
