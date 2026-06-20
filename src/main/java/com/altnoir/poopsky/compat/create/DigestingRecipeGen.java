@@ -6,6 +6,8 @@ import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import net.createmod.catnip.registry.RegisteredObjectsHelper;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 
@@ -16,6 +18,10 @@ public abstract class DigestingRecipeGen extends StandardProcessingRecipeGen<Dig
 
     public GeneratedRecipe convert(ItemLike input, ItemLike result) {
         return convert(() -> Ingredient.of(input), () -> result);
+    }
+
+    public GeneratedRecipe convert(TagKey<Item> tag, ItemLike result) {
+        return convert(() -> Ingredient.of(tag), () -> result);
     }
 
     public GeneratedRecipe convert(Supplier<Ingredient> input, Supplier<ItemLike> result) {

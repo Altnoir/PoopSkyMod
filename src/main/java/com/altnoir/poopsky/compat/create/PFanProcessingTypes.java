@@ -2,11 +2,9 @@ package com.altnoir.poopsky.compat.create;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.compat.create.content.kinetics.fan.processing.DigestingFanProcessingType;
-import com.altnoir.poopsky.compat.create.content.kinetics.fan.processing.DigestingRecipe;
 import com.altnoir.poopsky.compat.create.content.logistics.PSItemAttributes;
 import com.simibubi.create.api.registry.CreateRegistries;
 import com.simibubi.create.content.kinetics.fan.processing.FanProcessingType;
-import com.simibubi.create.content.processing.recipe.StandardProcessingRecipe;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;

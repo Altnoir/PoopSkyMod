@@ -3,9 +3,9 @@ package com.altnoir.poopsky.compat.jei;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.compat.PSMods;
-import com.altnoir.poopsky.compat.create.jei.FanDigestingCategory;
-import com.altnoir.poopsky.item.PItems;
+import com.altnoir.poopsky.compat.jei.create.FanDigestingCategory;
 import com.altnoir.poopsky.init.PRecipes;
+import com.altnoir.poopsky.item.PItems;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -60,10 +60,7 @@ public class PSJEIPlugin implements IModPlugin {
         ));
         var level = net.minecraft.client.Minecraft.getInstance().level;
         if (level != null) {
-            registration.addRecipes(SieveRecipeCategory.TYPE,
-                    level.getRecipeManager().getAllRecipesFor(PRecipes.SIEVE_TYPE.get()).stream()
-                            .map(net.minecraft.world.item.crafting.RecipeHolder::value)
-                            .toList());
+            registration.addRecipes(SieveRecipeCategory.TYPE, level.getRecipeManager().getAllRecipesFor(PRecipes.SIEVE_TYPE.get()));
         }
 
         if (PSMods.CREATE.isLoaded()) {

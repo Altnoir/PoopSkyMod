@@ -2,12 +2,12 @@
   "type": "poopsky:digesting",
   "ingredients": [
     {
-      "item": "minecraft:snowball"
+      "tag": "minecraft:leaves"
     }
   ],
   "results": [
     {
-      "id": "poopsky:poop_ball"
+      "id": "poopsky:folium_sennae"
     }
   ]
 }

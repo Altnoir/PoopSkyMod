@@ -56,9 +56,9 @@ public class DataGenerators {
         generators.addProvider(event.includeClient(), new PSBlockStateProvider(packOutput, existingFileHelper));
         generators.addProvider(event.includeClient(), new PSItemModelProvider(packOutput, existingFileHelper));
 
-        // COMPAT: Create
+        // Compat
         if (ModList.get().isLoaded(PSMods.CREATE.id())) {
-            generators.addProvider(event.includeServer(), new PSDigestingRecipeGen(packOutput, lookupProvider));
+            generators.addProvider(event.includeServer(), new PSDigestingRecipeProvider(packOutput, lookupProvider));
         }
     }
 }

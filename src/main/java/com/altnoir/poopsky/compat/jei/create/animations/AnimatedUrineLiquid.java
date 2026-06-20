@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.compat.create.jei.animations;
+package com.altnoir.poopsky.compat.jei.create.animations;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.compat.jei.category.animations.AnimatedKinetics;
@@ -20,7 +20,7 @@ public class AnimatedUrineLiquid extends AnimatedKinetics {
         int scale = 24;
 
         blockElement(com.altnoir.poopsky.block.PBlocks.URINE_LIQUID.get().defaultBlockState())
-                .atLocal(0, getLiquidHeight(), 2)
+                .atLocal(0, 0, 2)
                 .scale(scale)
                 .render(graphics);
 

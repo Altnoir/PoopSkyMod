@@ -10,6 +10,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -87,8 +89,8 @@ public class DigestingFanProcessingType implements FanProcessingType {
             return;
         }
         if (entity instanceof Player player) {
-            player.addEffect(new net.minecraft.world.effect.MobEffectInstance(
-                    net.minecraft.world.effect.MobEffects.HUNGER, 200, 0, true, true));
+            player.addEffect(new MobEffectInstance(MobEffects.POISON, 200, 0, true, true));
+            player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0, true, true));
         }
     }
 }

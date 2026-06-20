@@ -2,12 +2,12 @@
   "type": "poopsky:digesting",
   "ingredients": [
     {
-      "item": "poopsky:poop"
+      "item": "minecraft:bread"
     }
   ],
   "results": [
     {
-      "id": "minecraft:sponge"
+      "id": "poopsky:poop_bread"
     }
   ]
 }

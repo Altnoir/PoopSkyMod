@@ -2,12 +2,12 @@
   "type": "poopsky:digesting",
   "ingredients": [
     {
-      "item": "minecraft:snowball"
+      "item": "minecraft:poppy"
     }
   ],
   "results": [
     {
-      "id": "poopsky:poop_ball"
+      "id": "minecraft:wither_rose"
     }
   ]
 }

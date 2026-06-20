@@ -314,9 +314,10 @@
   "jei.category.poopsky.compooper": "Compooper",
   "jei.category.poopsky.sieve": "Sieve",
   "jei.category.poopsky.digesting": "Digesting",
-  "jei.category.poopsky.digesting.fan": "Digesting Fan",
+  "jei.category.poopsky.digesting.fan": "Place Digesting Fan After Urine Liquid",
   "jei.poopsky.sieve_chance": "Chance: %.2f%%",
   "jei.poopsky.digesting_chance": "Chance: %.2f%%",
+  "create.item_attributes.can_be_digested": "Can be digested",
   "task.poopsky.defecate": "Defecate",
   "task.poopsky.defecate.desc": "Maid will search for toilets around",
 

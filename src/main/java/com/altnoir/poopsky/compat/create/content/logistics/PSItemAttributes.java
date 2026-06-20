@@ -17,14 +17,11 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.function.BiPredicate;
 
 public class PSItemAttributes {
+    public static final DeferredRegister<ItemAttributeType> ITEM_ATTRIBUTE_TYPES = DeferredRegister.create(CreateBuiltInRegistries.ITEM_ATTRIBUTE_TYPE, PoopSky.MOD_ID);
 
-    public static final DeferredRegister<ItemAttributeType> ITEM_ATTRIBUTE_TYPES =
-            DeferredRegister.create(CreateBuiltInRegistries.ITEM_ATTRIBUTE_TYPE, PoopSky.MOD_ID);
-
-    public static final DeferredHolder<ItemAttributeType, ItemAttributeType> CAN_BE_DIGESTED =
-            ITEM_ATTRIBUTE_TYPES.register("can_be_digested",
-                    () -> singleton("can_be_digested", (s, w) -> testRecipe(s, w, PSRecipeTypes.DIGESTING.getType()))
-            );
+    public static final DeferredHolder<ItemAttributeType, ItemAttributeType> CAN_BE_DIGESTED = ITEM_ATTRIBUTE_TYPES.register("can_be_digested", () ->
+            singleton("can_be_digested", (s, w) -> testRecipe(s, w, PSRecipeTypes.DIGESTING.getType()))
+    );
 
     private static <T extends Recipe<SingleRecipeInput>> boolean testRecipe(ItemStack s, Level w, RecipeType<T> type) {
         return w.getRecipeManager()

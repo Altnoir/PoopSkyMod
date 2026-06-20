@@ -314,9 +314,10 @@
   "jei.category.poopsky.compooper": "堆粪桶",
   "jei.category.poopsky.sieve": "筛架",
   "jei.category.poopsky.digesting": "批量化粪",
-  "jei.category.poopsky.digesting.fan": "化粪鼓风机",
+  "jei.category.poopsky.digesting.fan": "在粪水后放置鼓风机",
   "jei.poopsky.sieve_chance": "产出概率: %.2f%%",
   "jei.poopsky.digesting_chance": "产出概率: %.2f%%",
+  "create.item_attributes.can_be_digested": "可被化粪",
   "task.poopsky.defecate": "如厕",
   "task.poopsky.defecate.desc": "女仆会寻找周围的厕所",
 

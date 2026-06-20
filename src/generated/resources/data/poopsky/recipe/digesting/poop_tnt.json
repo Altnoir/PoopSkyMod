@@ -2,12 +2,12 @@
   "type": "poopsky:digesting",
   "ingredients": [
     {
-      "item": "minecraft:snowball"
+      "item": "minecraft:tnt"
     }
   ],
   "results": [
     {
-      "id": "poopsky:poop_ball"
+      "id": "poopsky:poop_tnt"
     }
   ]
 }
