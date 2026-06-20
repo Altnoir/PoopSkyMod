@@ -10,7 +10,7 @@ public class Config {
     public static boolean setPoopSkyDefault;
     public static boolean voidNetherGeneration;
     public static boolean desperateWorld;
-    public static boolean stickyCrafting;
+    public static boolean compooperCrafting;
     public static boolean lavaFluid;
     public static boolean plugTrades;
     public static boolean upgradeTemplate;
@@ -29,10 +29,10 @@ public class Config {
             .comment("Whether to Enable the Desperate World (Enabling it will cause the device to lag)")
             .translation("poopsky.configuration.desperateWorld")
             .define("desperateWorld", false);
-    private static final ModConfigSpec.BooleanValue STICK_CRAFTING = BUILDER
+    private static final ModConfigSpec.BooleanValue COMPOOPER_CRAFTING = BUILDER
             .comment("Whether to Disable the consumption of liquid when sticks crafting")
-            .translation("poopsky.configuration.stickyCrafting")
-            .define("stickyCrafting", false);
+            .translation("poopsky.configuration.compooperCrafting")
+            .define("compooperCrafting", false);
     private static final ModConfigSpec.BooleanValue LAVA_FLUID_BLOCK = BUILDER
             .comment("Whether to Disable the underground lava lake")
             .translation("poopsky.configuration.lavaFluid")
@@ -53,7 +53,7 @@ public class Config {
         setPoopSkyDefault = SET_POOPSKY_DEFAULT.get();
         voidNetherGeneration = VOID_NETHER_GENERATION.get();
         desperateWorld = DESPERATE_WORLD.get();
-        stickyCrafting = STICK_CRAFTING.get();
+        compooperCrafting = COMPOOPER_CRAFTING.get();
         lavaFluid = LAVA_FLUID_BLOCK.get();
         plugTrades = PLUG_TRADES.get();
         upgradeTemplate = UPGRADE_TEMPLATE.get();

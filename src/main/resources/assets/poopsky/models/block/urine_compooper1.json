@@ -1,7 +1,7 @@
 {
     "textures": {
-        "particle": "poopsky:block/poop_liquid",
-        "inside": "poopsky:block/poop_liquid"
+        "particle": "poopsky:block/urine_liquid",
+        "inside": "poopsky:block/urine_liquid"
     },
     "elements": [
         {   "from": [ 2, 0, 2 ],

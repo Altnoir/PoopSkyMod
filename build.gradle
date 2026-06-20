@@ -21,6 +21,7 @@ repositories {
     mavenLocal()
     maven { url = "https://maven.ryanhcode.dev/releases" } // Sable
     maven { url = "https://maven.blamejared.com" } // JEI
+    maven {url "https://cursemaven.com"}
 }
 
 base {
@@ -119,6 +120,9 @@ dependencies {
     compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
     compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
     localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+    // Touhou Little Maid
+    implementation "curse.maven:touhou-little-maid-355044:7307724"
+    compileOnly files("libs/touhou_little_mad-0.1.2-alpha.jar")
 
     jarJar(api("dev.ryanhcode.sable-companion:sable-companion-common-${minecraft_version}:[${sable_companion_version},)")) {
         version {

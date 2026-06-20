@@ -5,7 +5,9 @@ import com.altnoir.poopsky.block.p.PoopTntBlock;
 import com.altnoir.poopsky.init.PParticles;
 import com.altnoir.poopsky.tag.PBlockTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
@@ -21,17 +23,33 @@ public class PoopTntUtil {
             Blocks.GRAVEL, Blocks.SAND
     );
 
-    //TODO 暂时把爆炸改为替换方块，后续解决破坏方块不掉落物品再改回去
     public static void triggerExplosion(Entity entity, int radius) {
         Level level = entity.level();
+        ServerLevel serverLevel = (ServerLevel) level;
         BlockPos center = entity.blockPosition();
+        RandomSource random = level.getRandom();
+        Explosion explosion = serverLevel.explode(entity, entity.getX(), entity.getY(0.0625), entity.getZ(), radius, Level.ExplosionInteraction.NONE);
 
-        Explosion explosion = level.explode(entity, Explosion.getDefaultDamageSource(level, entity), null,
-                entity.getX(), entity.getY() + 0.0625, entity.getZ(), 1.0F, false, Level.ExplosionInteraction.NONE);
+        double radiusSq = (double) radius * radius;
+        double innerRadiusSq = radiusSq * 0.64;
+        double edgeMinSq = radiusSq * 0.64;
 
         for (int x = -radius; x <= radius; x++) {
+            double xSq = (double) x * x;
+            if (xSq > radiusSq) continue;
+
             for (int y = -radius; y <= radius; y++) {
+                double xySq = xSq + (double) y * y;
+                if (xySq > radiusSq) continue;
+
                 for (int z = -radius; z <= radius; z++) {
+                    double distSq = xySq + (double) z * z;
+
+                    if (distSq > radiusSq) continue;
+                    if (distSq > edgeMinSq && distSq <= radiusSq) {
+                        double edgeFactor = (distSq - edgeMinSq) / (radiusSq - edgeMinSq);
+                        if (random.nextDouble() < edgeFactor * 0.6) continue;
+                    }
                     BlockPos pos = center.offset(x, y, z);
                     BlockState state = level.getBlockState(pos);
 
@@ -46,11 +64,17 @@ public class PoopTntUtil {
                     if (recipeOutput != null) {
                         level.setBlockAndUpdate(pos, recipeOutput.defaultBlockState());
                         //Block.popResource(level, pos, recipeOutput.copy());
-                    } else {
+                    } else if (distSq <= innerRadiusSq) {
                         if (state.canBeReplaced() || state.is(PBlockTags.POOP_TNT_DESTROY)) {
                             level.destroyBlock(pos, true, null);
                         } else if (state.is(PBlockTags.POOP_TNT_REPLACEABLE)) {
                             level.setBlockAndUpdate(pos, PBlocks.POOP_BLOCK.get().defaultBlockState());
+                        }
+                    } else {
+                        if (state.is(PBlockTags.POOP_TNT_REPLACEABLE)) {
+                            level.setBlockAndUpdate(pos, PBlocks.POOP_BLOCK.get().defaultBlockState());
+                        } else if (state.canBeReplaced()) {
+                            level.destroyBlock(pos, true, null);
                         }
                     }
                 }
@@ -79,5 +103,10 @@ public class PoopTntUtil {
         double offset = radius * 0.5;
         double speed = 0.4 + level.random.nextDouble() * 0.4;
         level.sendParticles(PParticles.POOP_PARTICLE.get(), x, y, z, particleCount, offset, offset, offset, speed);
+        if (radius <= 2) {
+            level.sendParticles(ParticleTypes.EXPLOSION, x, y, z, radius, offset, offset, offset, speed);
+        } else {
+            level.sendParticles(ParticleTypes.EXPLOSION_EMITTER, x, y, z, radius, offset, offset, offset, speed);
+        }
     }
 }

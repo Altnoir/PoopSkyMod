@@ -116,6 +116,9 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
             if (be instanceof ToiletBlockEntity toilet) {
                 toilet.clearLinkedBlock();
             }
+            for (ToiletEntity toiletEntity : level.getEntities(PEntityType.TOILET.get(), new AABB(pos), e -> true)) {
+                toiletEntity.kill();
+            }
         }
         super.onRemove(oldState, level, pos, newState, isMoving);
     }

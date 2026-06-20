@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.inventory;
+package com.altnoir.poopsky.misc.inventory;
 
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;

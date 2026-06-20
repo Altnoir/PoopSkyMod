@@ -56,6 +56,10 @@ public class PSGameEvents {
         builder.addMix(PPotions.FECAL_INCONTINENCE_POTION, Items.REDSTONE, PPotions.LONG_FECAL_INCONTINENCE_POTION);
         builder.addMix(PPotions.FECAL_INCONTINENCE_POTION, Items.GLOWSTONE_DUST, PPotions.STRONG_FECAL_INCONTINENCE_POTION);
         builder.addMix(PPotions.FECAL_INCONTINENCE_POTION, Items.GLOWSTONE, PPotions.SUPER_FECAL_INCONTINENCE_POTION);
+
+        builder.addMix(Potions.AWKWARD, PItems.KING_OF_DRAGON_FRUIT.get(), PPotions.ON_THE_VGE_POTION);
+        builder.addMix(PPotions.ON_THE_VGE_POTION, Items.REDSTONE, PPotions.LONG_ON_THE_VGE_POTION);
+        builder.addMix(PPotions.ON_THE_VGE_POTION, Items.GLOWSTONE_DUST, PPotions.STRONG_ON_THE_VGE_POTION);
     }
 
     @SubscribeEvent
@@ -103,7 +107,7 @@ public class PSGameEvents {
             BlockHitResult blockhitresult = Item.getPlayerPOVHitResult(level, player, ClipContext.Fluid.SOURCE_ONLY);
             BlockPos blockpos = blockhitresult.getBlockPos();
 
-            if (blockhitresult.getType() == HitResult.Type.BLOCK && level.mayInteract(player, blockpos) && level.getFluidState(blockpos).is(PFluids.POOP.get())) {
+            if (blockhitresult.getType() == HitResult.Type.BLOCK && level.mayInteract(player, blockpos) && level.getFluidState(blockpos).is(PFluids.URINE.get())) {
                 if (!level.isClientSide) {
                     level.playSound(null, blockpos, SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 0.6F);
                     level.gameEvent(player, GameEvent.FLUID_PICKUP, blockpos);

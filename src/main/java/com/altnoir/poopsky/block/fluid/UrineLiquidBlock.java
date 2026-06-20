@@ -14,8 +14,8 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FlowingFluid;
 
-public class PoopLiquidBlock extends LiquidBlock {
-    public PoopLiquidBlock(FlowingFluid fluid, Properties properties) {
+public class UrineLiquidBlock extends LiquidBlock {
+    public UrineLiquidBlock(FlowingFluid fluid, Properties properties) {
         super(fluid, properties);
     }
 

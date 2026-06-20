@@ -15,25 +15,25 @@ import java.util.function.Supplier;
 public class PFluids {
     public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(BuiltInRegistries.FLUID, PoopSky.MOD_ID);
 
-    public static final Supplier<FlowingFluid> POOP = FLUIDS.register("poop",
-            () -> new BaseFlowingFluid.Source(PFluids.POOP_FLUID_PROPERTIES) {
+    public static final Supplier<FlowingFluid> URINE = FLUIDS.register("urine",
+            () -> new BaseFlowingFluid.Source(PFluids.URINE_FLUID_PROPERTIES) {
                 @Override
                 public int getTickDelay(LevelReader level) {
                     return 10;
                 }
             });
 
-    public static final Supplier<FlowingFluid> FLOWING_POOP = FLUIDS.register("flowing_poop",
-            () -> new BaseFlowingFluid.Flowing(PFluids.POOP_FLUID_PROPERTIES) {
+    public static final Supplier<FlowingFluid> FLOWING_URINE = FLUIDS.register("flowing_urine",
+            () -> new BaseFlowingFluid.Flowing(PFluids.URINE_FLUID_PROPERTIES) {
                 @Override
                 public int getTickDelay(LevelReader level) {
                     return 10;
                 }
             });
 
-    private static final BaseFlowingFluid.Properties POOP_FLUID_PROPERTIES = new BaseFlowingFluid.Properties(PFluidTypes.POOP_FLUID_TYPE, POOP, FLOWING_POOP)
+    private static final BaseFlowingFluid.Properties URINE_FLUID_PROPERTIES = new BaseFlowingFluid.Properties(PFluidTypes.URINE_FLUID_TYPE, URINE, FLOWING_URINE)
             .slopeFindDistance(2)
             .levelDecreasePerBlock(1)
-            .block(PBlocks.POOP_LIQUID)
+            .block(PBlocks.URINE_LIQUID)
             .bucket(PItems.URINE_BUCKET);
 }

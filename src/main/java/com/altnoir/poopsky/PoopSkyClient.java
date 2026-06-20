@@ -11,6 +11,7 @@ import com.altnoir.poopsky.inventory.BreedingBoxScreen;
 import com.altnoir.poopsky.inventory.FlyNestScreen;
 import com.altnoir.poopsky.item.PItems;
 import com.altnoir.poopsky.misc.particle.PoopParticle;
+import com.altnoir.poopsky.misc.ToiletHighlightRenderer;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.RecipeBookCategories;
@@ -63,6 +64,7 @@ public class PoopSkyClient {
     public static void registerGame(IEventBus modEventBus) {
         modEventBus.addListener(PSClientGameEvents::onScreenOpen);
         modEventBus.addListener(PSClientGameEvents::onClientTick);
+        modEventBus.addListener(ToiletHighlightRenderer::onRenderLevel);
     }
 
     public static class ClientModEvents {
@@ -127,19 +129,19 @@ public class PoopSkyClient {
             event.registerFluidType(new IClientFluidTypeExtensions() {
                 @Override
                 public @NotNull ResourceLocation getStillTexture() {
-                    return PFluidTypes.POOP_STILL_TEXTURE;
+                    return PFluidTypes.URINE_STILL_TEXTURE;
                 }
 
                 @Override
                 public @NotNull ResourceLocation getFlowingTexture() {
-                    return PFluidTypes.POOP_FLOWING_TEXTURE;
+                    return PFluidTypes.URINE_FLOWING_TEXTURE;
                 }
 
                 @Override
                 public ResourceLocation getOverlayTexture() {
                     return null;
                 }
-            }, PFluidTypes.POOP_FLUID_TYPE.get());
+            }, PFluidTypes.URINE_FLUID_TYPE.get());
         }
     }
 }

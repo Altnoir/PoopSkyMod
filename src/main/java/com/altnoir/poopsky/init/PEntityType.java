@@ -43,7 +43,7 @@ public class PEntityType {
 
     public static Supplier<EntityType<ToiletEntity>> TOILET = ENTITY_TYPES.register("toilet_entity", () ->
             EntityType.Builder.of(ToiletEntity::new, MobCategory.MISC)
-                    .sized(0.5F, 0.5F)
+                    .sized(0.75F, 1.0F)
                     .build("toilet_entity"));
 
     public static final DeferredHolder<EntityType<?>, EntityType<PoopTntEntity>> POOP_TNT = ENTITY_TYPES.register("poop_tnt", () ->

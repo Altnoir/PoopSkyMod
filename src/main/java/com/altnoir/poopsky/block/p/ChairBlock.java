@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.block.p;
 
-import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.entity.p.ChairEntity;
+import com.altnoir.poopsky.init.PEntityType;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -57,6 +57,11 @@ public class ChairBlock extends Block {
 
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        if (!state.is(newState.getBlock())) {
+            for (ChairEntity chairEntity : level.getEntities(PEntityType.STOOL.get(), new AABB(pos), e -> true)) {
+                chairEntity.kill();
+            }
+        }
         super.onRemove(state, level, pos, newState, movedByPiston);
     }
 

@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.item.p;
 
 import com.altnoir.poopsky.init.PEffects;
+import com.altnoir.poopsky.tag.PEntityTypeTags;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlotGroup;
@@ -22,17 +23,20 @@ public class MilosSwordItem extends SwordItem {
 
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (attacker instanceof Player player && player.getAttackStrengthScale(0.0F) >= 1.0F) {
-            if (!target.hasEffect(PEffects.BLEEDING)) {
-                target.addEffect(new MobEffectInstance(PEffects.BLEEDING, 200));
-            } else {
-                int duration = target.getEffect(PEffects.BLEEDING).getDuration() + 200;
-                int amplifier = target.getEffect(PEffects.BLEEDING).getAmplifier() + 1;
-                target.addEffect(new MobEffectInstance(PEffects.BLEEDING, duration, amplifier));
+        if (!target.getType().is(PEntityTypeTags.IGNORES_BLEEDING)) {
+            if (attacker instanceof Player player && player.getAttackStrengthScale(0.0F) >= 1.0F) {
+                if (!target.hasEffect(PEffects.BLEEDING)) {
+                    target.addEffect(new MobEffectInstance(PEffects.BLEEDING, 200));
+                } else {
+                    int duration = target.getEffect(PEffects.BLEEDING).getDuration() + 200;
+                    int amplifier = target.getEffect(PEffects.BLEEDING).getAmplifier() + 1;
 
-                if (amplifier % 5 == 0) {
-                    float damage = target.getMaxHealth() * 0.2F;
-                    target.hurt(target.damageSources().mobAttack(attacker), damage);
+                    if (amplifier % 5 == 0) {
+                        float baseDamage = (0.1F + 0.1F * (amplifier / 5.0F)) / (1.0F + 0.1F * amplifier);
+                        float damage = target.getMaxHealth() * baseDamage;
+                        target.hurt(target.damageSources().mobAttack(attacker), damage);
+                    }
+                    target.addEffect(new MobEffectInstance(PEffects.BLEEDING, duration, amplifier));
                 }
             }
         }

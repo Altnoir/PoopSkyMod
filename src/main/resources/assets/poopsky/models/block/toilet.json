@@ -3,7 +3,7 @@
 	"parent": "block/block",
 	"textures": {
 		"particle": "#toilet",
-		"liquid": "poopsky:block/poop_liquid"
+		"liquid": "poopsky:block/urine_liquid"
 	},
 	"elements": [
 		{

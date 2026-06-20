@@ -7,7 +7,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 
 public class ChairEntity extends Entity {
-
     public ChairEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
     }
@@ -29,7 +28,10 @@ public class ChairEntity extends Entity {
 
     @Override
     protected void removePassenger(Entity passenger) {
+        passenger.setPos(this.getX(), this.getY() + 1.0, this.getZ());
         super.removePassenger(passenger);
-        this.kill();
+        if (!this.isRemoved()) {
+            this.kill();
+        }
     }
 }

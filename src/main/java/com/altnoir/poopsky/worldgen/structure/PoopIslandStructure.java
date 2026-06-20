@@ -107,7 +107,7 @@ public class PoopIslandStructure extends Structure {
         }
 
         int islandY = clampIslandY(chunk.getHeightAccessorForGeneration(), VOID_ISLAND_Y);
-        RandomSource random = RandomSource.create(seed ^ Mth.getSeed(center));
+        RandomSource random = RandomSource.create(seed ^ BlockPos.asLong(center.getX(), center.getY(), center.getZ()));
         ResourceLocation templateId = randomTemplate(random);
         StructureTemplate template = templateManager.get(templateId).orElse(null);
         if (template == null) {
@@ -128,7 +128,7 @@ public class PoopIslandStructure extends Structure {
     }
 
     public static BlockPos getGuaranteedSpawnIslandCenter(long seed, BlockPos spawn) {
-        RandomSource random = RandomSource.create(seed ^ Mth.getSeed(spawn));
+        RandomSource random = RandomSource.create(seed ^ BlockPos.asLong(spawn.getX(), spawn.getY(), spawn.getZ()));
         int distance = random.nextIntBetweenInclusive(SPAWN_ISLAND_MIN_DISTANCE, SPAWN_ISLAND_MAX_DISTANCE);
         double angle = random.nextDouble() * Math.TAU;
 

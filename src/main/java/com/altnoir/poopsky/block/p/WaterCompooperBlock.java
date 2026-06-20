@@ -25,10 +25,7 @@ public class WaterCompooperBlock extends AbstractCompooperBlock {
 
     public WaterCompooperBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(
-                this.stateDefinition.any()
-                        .setValue(LEVEL, 3)
-                        .setValue(POWERED, false));
+        this.registerDefaultState(this.stateDefinition.any().setValue(LEVEL, 3));
     }
 
     @Override

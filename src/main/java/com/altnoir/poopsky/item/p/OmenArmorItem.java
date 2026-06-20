@@ -21,12 +21,12 @@ public class OmenArmorItem extends ArmorItem {
     private static final Map<Holder<ArmorMaterial>, List<MobEffectInstance>> ARMOR_EFFECT =
             (new ImmutableMap.Builder<Holder<ArmorMaterial>, List<MobEffectInstance>>())
                     .put(PArmorMaterials.OMEN_ARMOR_MATERIAL, List.of(
-                            new MobEffectInstance(PEffects.OMENER, 160, 0, false, false),
-                            new MobEffectInstance(MobEffects.HUNGER, 160, 1, false, false)
+                                    new MobEffectInstance(PEffects.OMENER, 160, 0, false, false),
+                                    new MobEffectInstance(MobEffects.HUNGER, 160, 1, false, false)
                             )
                     ).build();
     private static final List<Holder<MobEffect>> REMOVE_EFFECT = List.of(
-            MobEffects.POISON, MobEffects.WITHER,MobEffects.CONFUSION);
+            MobEffects.POISON, MobEffects.WITHER, MobEffects.CONFUSION);
 
     public OmenArmorItem(Holder<ArmorMaterial> material, Type type, Properties properties) {
         super(material, type, properties);

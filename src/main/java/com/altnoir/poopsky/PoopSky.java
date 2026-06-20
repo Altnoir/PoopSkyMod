@@ -3,6 +3,8 @@ package com.altnoir.poopsky;
 import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.block.p.CompooperBlock;
+import com.altnoir.poopsky.compat.PSMods;
+import com.altnoir.poopsky.compat.maid.MaidPlugin;
 import com.altnoir.poopsky.entity.p.PoopTntEntity;
 import com.altnoir.poopsky.init.*;
 import com.altnoir.poopsky.item.PItems;
@@ -25,8 +27,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -67,9 +71,11 @@ public class PoopSky {
         PFluids.FLUIDS.register(modEventBus);
         PFluidTypes.FLUID_TYPES.register(modEventBus);
 
-
         PMenuTypes.register(modEventBus);
 
+        if (ModList.get().isLoaded(PSMods.TOUHOU_LITTLE_MAID.id())) {
+            MaidPlugin.registry(modEventBus);
+        }
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
@@ -87,7 +93,7 @@ public class PoopSky {
                     Level level = blockSource.level();
                     BlockPos blockpos = blockSource.pos().relative(blockSource.state().getValue(DispenserBlock.FACING));
 
-                    if (!BoneMealItem.growCrop(item, level, blockpos) && !BoneMealItem.growWaterPlant(item, level, blockpos, null)) {
+                    if (!BoneMealItem.applyBonemeal(item, level, blockpos, null) && !BoneMealItem.growWaterPlant(item, level, blockpos, null)) {
                         this.setSuccess(false);
                     } else if (!level.isClientSide) {
                         level.levelEvent(1505, blockpos, 15);
@@ -102,25 +108,24 @@ public class PoopSky {
                     Direction facing = blockSource.state().getValue(DispenserBlock.FACING);
                     BlockPos pos = blockSource.pos().relative(facing);
 
-                    PoopTntEntity tnt = new PoopTntEntity(level,
-                            pos.getX() + 0.5, pos.getY() + 0.25, pos.getZ() + 0.5, null);
+                    PoopTntEntity tnt = new PoopTntEntity(level, pos.getX() + 0.5, pos.getY() + 0.25, pos.getZ() + 0.5, null);
                     level.addFreshEntity(tnt);
-                    level.playSound(null, tnt.getX(), tnt.getY(), tnt.getZ(),
-                            SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1.0F, 1.0F);
+                    level.playSound(null, tnt.getX(), tnt.getY(), tnt.getZ(), SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1.0F, 1.0F);
+                    level.gameEvent(null, GameEvent.ENTITY_PLACE, pos);
                     item.shrink(1);
                     return item;
                 }
             });
 
             FluidInteractionRegistry.addInteraction(NeoForgeMod.WATER_TYPE.value(), new FluidInteractionRegistry.InteractionInformation(
-                    PFluidTypes.POOP_FLUID_TYPE.get(), (fluidState) -> Blocks.CLAY.defaultBlockState()));
-            FluidInteractionRegistry.addInteraction(PFluidTypes.POOP_FLUID_TYPE.get(), new FluidInteractionRegistry.InteractionInformation(
+                    PFluidTypes.URINE_FLUID_TYPE.get(), (fluidState) -> fluidState.isSource() ? PBlocks.POOLIME_BLOCK.get().defaultBlockState() : Blocks.CLAY.defaultBlockState()));
+            FluidInteractionRegistry.addInteraction(PFluidTypes.URINE_FLUID_TYPE.get(), new FluidInteractionRegistry.InteractionInformation(
                     NeoForgeMod.WATER_TYPE.value(), (fluidState) -> fluidState.isSource() ? Blocks.COARSE_DIRT.defaultBlockState() : Blocks.CLAY.defaultBlockState()));
 
-            FluidInteractionRegistry.addInteraction(PFluidTypes.POOP_FLUID_TYPE.get(), new FluidInteractionRegistry.InteractionInformation(
-                    NeoForgeMod.LAVA_TYPE.value(), (fluidState) -> Blocks.NETHERRACK.defaultBlockState()));
+            FluidInteractionRegistry.addInteraction(PFluidTypes.URINE_FLUID_TYPE.get(), new FluidInteractionRegistry.InteractionInformation(
+                    NeoForgeMod.LAVA_TYPE.value(), (fluidState) -> fluidState.isSource() ? Blocks.MAGMA_BLOCK.defaultBlockState() : Blocks.NETHERRACK.defaultBlockState()));
             FluidInteractionRegistry.addInteraction(NeoForgeMod.LAVA_TYPE.value(), new FluidInteractionRegistry.InteractionInformation(
-                    PFluidTypes.POOP_FLUID_TYPE.get(), (fluidState) -> fluidState.isSource() ? Blocks.OBSIDIAN.defaultBlockState() : Blocks.MAGMA_BLOCK.defaultBlockState()));
+                    PFluidTypes.URINE_FLUID_TYPE.get(), (fluidState) -> fluidState.isSource() ? Blocks.OBSIDIAN.defaultBlockState() : Blocks.MAGMA_BLOCK.defaultBlockState()));
 
             FluidInteractionRegistry.addInteraction(NeoForgeMod.LAVA_TYPE.value(), new FluidInteractionRegistry.InteractionInformation(
                     (level, currentPos, relativePos, currentState) -> level.getBlockState(currentPos.below()).is(PBlocks.POOP_BLOCK.get()) && level.getBlockState(relativePos).is(Blocks.BLUE_ICE),

@@ -24,7 +24,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.PathComputationType;
@@ -37,7 +36,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public abstract class AbstractCompooperBlock extends Block {
     public static final int MIN_LEVEL = 0;
     public static final int MAX_LEVEL = 3;
-    public static final BooleanProperty POWERED = BooleanProperty.create("powered");
     public static final IntegerProperty LEVEL = IntegerProperty.create("level", MIN_LEVEL, MAX_LEVEL);
     private static final VoxelShape OUTER_SHAPE = Shapes.block();
     private static final VoxelShape[] SHAPES = Util.make(new VoxelShape[4], shapes -> {
@@ -77,16 +75,7 @@ public abstract class AbstractCompooperBlock extends Block {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(POWERED, LEVEL);
-    }
-
-    @Override
-    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
-        boolean hasPower = level.hasNeighborSignal(pos);
-        if (hasPower != state.getValue(POWERED)) {
-            level.setBlock(pos, state.setValue(POWERED, hasPower), Block.UPDATE_ALL);
-        }
-        super.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston);
+        builder.add(LEVEL);
     }
 
     protected ItemInteractionResult BucketUse(ItemStack stack, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, ItemStack item) {
@@ -162,7 +151,7 @@ public abstract class AbstractCompooperBlock extends Block {
     }
 
     protected void catalyst(ItemEntity itemEntity, BlockState state, Level level, BlockPos pos, int count, ItemLike item) {
-        if (Config.stickyCrafting) {
+        if (Config.compooperCrafting) {
             itemEntity.setItem(new ItemStack(item, count));
         } else {
             double height = getLiquidHeight(state);

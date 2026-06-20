@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.block.p;
 
-import com.altnoir.poopsky.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.block.PBlocks;
+import com.altnoir.poopsky.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.item.PItems;
 import com.mojang.serialization.MapCodec;
 import it.unimi.dsi.fastutil.objects.Object2FloatMap;
@@ -109,9 +109,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
 
     public CompooperBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any()
-                .setValue(POOP_LEVEL, 0)
-                .setValue(POWERED, false));
+        this.registerDefaultState(this.stateDefinition.any().setValue(POOP_LEVEL, 0));
     }
 
     @Override
@@ -131,7 +129,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(POWERED, POOP_LEVEL);
+        builder.add(POOP_LEVEL);
     }
 
 

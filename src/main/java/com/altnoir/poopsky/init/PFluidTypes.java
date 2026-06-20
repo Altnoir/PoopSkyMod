@@ -19,12 +19,12 @@ import java.util.function.Supplier;
 public class PFluidTypes {
     public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, PoopSky.MOD_ID);
 
-    public static final ResourceLocation POOP_STILL_TEXTURE = PoopSky.loc("block/poop_liquid");
-    public static final ResourceLocation POOP_FLOWING_TEXTURE = PoopSky.loc("block/poop_liquid_flowing");
+    public static final ResourceLocation URINE_STILL_TEXTURE = PoopSky.loc("block/urine_liquid");
+    public static final ResourceLocation URINE_FLOWING_TEXTURE = PoopSky.loc("block/urine_liquid_flowing");
 
-    public static final Supplier<FluidType> POOP_FLUID_TYPE = FLUID_TYPES.register("poop",
+    public static final Supplier<FluidType> URINE_FLUID_TYPE = FLUID_TYPES.register("urine",
             () -> new FluidType(FluidType.Properties.create()
-                    .descriptionId("block.poopsky.poop_liquid")
+                    .descriptionId("block.poopsky.urine_liquid")
                     .fallDistanceModifier(0F)
                     .canExtinguish(true)
                     .supportsBoating(true)

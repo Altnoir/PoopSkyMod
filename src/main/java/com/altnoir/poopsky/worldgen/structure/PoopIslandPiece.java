@@ -64,7 +64,7 @@ public class PoopIslandPiece extends TemplateStructurePiece {
             BlockPos pos
     ) {
         super.postProcess(level, structureManager, generator, random, box, chunkPos, pos);
-        RandomSource islandRandom = RandomSource.create(Mth.getSeed(this.templatePosition));
+        RandomSource islandRandom = RandomSource.create(BlockPos.asLong(this.templatePosition.getX(), this.templatePosition.getY(), this.templatePosition.getZ()));
         placeRandomPoopTree(level, islandRandom, this.template, this.templatePosition, this.placeSettings, box);
         spawnRandomPoolimes(level, islandRandom, this.template, this.templatePosition, this.placeSettings, box);
     }

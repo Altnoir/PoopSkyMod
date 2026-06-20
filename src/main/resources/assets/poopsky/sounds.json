@@ -6,6 +6,24 @@
       "poopsky:fart_2"
     ]
   },
+  "item.toilet_linker.boop": {
+    "subtitle": "subtitles.poopsky.item.toilet_linker.boop",
+    "sounds": [
+      {
+        "name": "minecraft:block.mud.break",
+        "type": "event"
+      }
+    ]
+  },
+  "item.toilet_linker.success": {
+    "subtitle": "subtitles.poopsky.item.toilet_linker.success",
+    "sounds": [
+      {
+        "name": "minecraft:block.mud.place",
+        "type": "event"
+      }
+    ]
+  },
   "block.poop_block.slide": {
     "subtitle": "subtitle.poopsky.block.poop_block.slide",
     "sounds": [

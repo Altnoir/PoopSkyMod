@@ -24,15 +24,15 @@ public class FishingHookMixin {
     private void onCalculateOpenWater(BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
         FluidState fluidstate = poopSky$fishingHook.level().getFluidState(pos);
 
-        if (fluidstate.is(PFluids.POOP.get()) || fluidstate.is(PFluids.FLOWING_POOP.get())) {
+        if (fluidstate.is(PFluids.URINE.get()) || fluidstate.is(PFluids.FLOWING_URINE.get())) {
             cir.setReturnValue(true);
         }
     }
 
     @Redirect(method = "retrieve", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/ReloadableServerRegistries$Holder;getLootTable(Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/world/level/storage/loot/LootTable;"))
     private LootTable redirectGetLootTable(ReloadableServerRegistries.Holder lookup, ResourceKey<LootTable> key) {
-        if ((poopSky$fishingHook.level().getFluidState(poopSky$fishingHook.blockPosition()).is(PFluids.POOP.get())
-                || poopSky$fishingHook.level().getFluidState(poopSky$fishingHook.blockPosition()).is(PFluids.FLOWING_POOP.get()))
+        if ((poopSky$fishingHook.level().getFluidState(poopSky$fishingHook.blockPosition()).is(PFluids.URINE.get())
+                || poopSky$fishingHook.level().getFluidState(poopSky$fishingHook.blockPosition()).is(PFluids.FLOWING_URINE.get()))
         ) {
             return lookup.getLootTable(PSFishingLootProvider.FISHING_URINE);
         }

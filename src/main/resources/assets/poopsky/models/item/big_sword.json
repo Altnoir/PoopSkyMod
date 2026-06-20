@@ -18,12 +18,12 @@
 		},
 		"firstperson_righthand": {
 			"rotation": [0, -90, 25],
-			"translation": [1.13, 7.2, 1.13],
+			"translation": [1.13, 7.7, 1.13],
 			"scale": [1.68, 1.68, 0.68]
 		},
 		"firstperson_lefthand": {
 			"rotation": [0, 90, -25],
-			"translation": [1.13, 7.2, 1.13],
+			"translation": [1.13, 7.7, 1.13],
 			"scale": [1.68, 1.68, 0.68]
 		},
 		"ground": {
@@ -31,6 +31,7 @@
 			"scale": [1, 1, 0.5]
 		},
 		"fixed": {
+			"rotation": [0, 0, 90],
 			"scale": [2, 2, 1]
 		},
 		"on_shelf": {

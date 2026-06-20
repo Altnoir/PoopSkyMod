@@ -23,13 +23,20 @@ public class OnTheVergeEffect extends MobEffect {
 
         if (!level.isClientSide) {
             int duration = Objects.requireNonNull(livingEntity.getEffect(PEffects.ON_THE_VERGE)).getDuration();
+            Vec3 vec3 = livingEntity.getDeltaMovement().add(new Vec3(0, 0.125, 0));
+            boolean openTheDoor = false;
 
             if ((livingEntity instanceof Player player && player.isShiftKeyDown()) || duration <= 2) {
-                Vec3 vec3 = livingEntity.getDeltaMovement().add(new Vec3(0, 1.125, 0));
-
-                livingEntity.setDeltaMovement(vec3);
-                PoopTntUtil.triggerExplosion(livingEntity, 1);
+                openTheDoor = true;
                 result = true;
+            } else if (amplifier >= 1 && duration > 200) {
+                openTheDoor = true;
+            }
+
+            if (openTheDoor) {
+                livingEntity.setDeltaMovement(vec3);
+                int radius = Math.min(18, amplifier + 2);
+                PoopTntUtil.triggerExplosion(livingEntity, radius);
             }
         }
 

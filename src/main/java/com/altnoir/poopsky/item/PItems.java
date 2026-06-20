@@ -8,13 +8,11 @@ import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.init.PFluids;
 import com.altnoir.poopsky.init.PSoundEvents;
 import com.altnoir.poopsky.item.p.*;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import org.jetbrains.annotations.Nullable;
 
 public class PItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(PoopSky.MOD_ID);
@@ -26,7 +24,7 @@ public class PItems {
     public static final DeferredItem<Item> GOLDEN_POOP = ITEMS.register("golden_poop", () ->
             new PoopItem(new Item.Properties().food(PFoods.GOLDEN_POOP).stacksTo(88)));
     public static final DeferredItem<Item> SEEDBED_CURSE = ITEMS.register("seedbed_curse", () ->
-            new Item(new Item.Properties()));
+            new Item(new Item.Properties().stacksTo(88)));
     public static final DeferredItem<Item> FOLIUM_SENNAE = ITEMS.register("folium_sennae", () ->
             new Item(new Item.Properties()));
 
@@ -66,7 +64,7 @@ public class PItems {
     public static final DeferredItem<Item> DRAGON_BREATH_CHILI = ITEMS.register("dragon_breath_chili", () ->
             new Item(new Item.Properties().food(PFoods.DRAGON_BREATH_CHILI)));
     public static final DeferredItem<Item> KING_OF_DRAGON_FRUIT = ITEMS.register("king_of_dragon_fruit", () ->
-            new Item(new Item.Properties().food(PFoods.KING_OF_DRAGON_FRUIT)));
+            new DragonFruitRItem(new Item.Properties().food(PFoods.KING_OF_DRAGON_FRUIT)));
 
     public static final DeferredItem<Item> TOILET_PLUG = ITEMS.register("toilet_plug", () ->
             new ToiletPlugItem(new Item.Properties().stacksTo(1)));
@@ -87,7 +85,7 @@ public class PItems {
 
     public static final DeferredItem<ArmorItem> OMEN_HELMET = ITEMS.register("omen_helmet", () ->
             new OmenArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.HELMET,
-                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(24))){
+                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(24))) {
             });
     public static final DeferredItem<ArmorItem> OMEN_CHESTPLATE = ITEMS.register("omen_chestplate", () ->
             new ArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE,
@@ -106,15 +104,14 @@ public class PItems {
             new TimeBellItem(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<Item> SPALL = ITEMS.register("spall", () ->
             new Item(new Item.Properties()));
-    public static final DeferredItem<Item> URINE_BOTTLE = ITEMS.register("urine_bottle",
-            () -> new UrineBottleItem(new Item.Properties()
+    public static final DeferredItem<Item> URINE_BOTTLE = ITEMS.register("urine_bottle", () ->
+            new UrineBottleItem(new Item.Properties()
                     .craftRemainder(Items.GLASS_BOTTLE)
                     .food(PFoods.URINE_BOTTLE)
                     .stacksTo(18)
-            )
-    );
+            ));
     public static final DeferredItem<BucketItem> URINE_BUCKET = ITEMS.register("urine_bucket",
-            () -> new BucketItem(PFluids.POOP.get(), new Item.Properties().stacksTo(1)));
+            () -> new BucketItem(PFluids.URINE.get(), new Item.Properties().stacksTo(1)));
 
     public static final DeferredItem<Item> POOLIME_SPAWN_EGG = ITEMS.register("poolime_spawn_egg",
             () -> new DeferredSpawnEggItem(PEntityType.POOLIME, 0x7D5F36, 0x5E4228,
@@ -134,6 +131,9 @@ public class PItems {
             () -> new FlyItem(new Item.Properties().stacksTo(88)));
     public static final DeferredItem<Item> FLY_CATCHER = ITEMS.register("fly_catcher",
             () -> new FlyCatcherItem(new Item.Properties().stacksTo(1).durability(64)));
+    public static final DeferredItem<Item> POOLIME_SPAWN_EGG = ITEMS.register("poolime_spawn_egg",
+            () -> new DeferredSpawnEggItem(PEntityType.POOLIME, 0x7D5F36, 0x5E4228,
+                    new Item.Properties()));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
