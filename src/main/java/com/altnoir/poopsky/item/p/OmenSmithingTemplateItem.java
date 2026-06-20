@@ -49,7 +49,7 @@ public class OmenSmithingTemplateItem extends SmithingTemplateItem {
     }
 
     private static List<ResourceLocation> createNetheriteUpgradeIconList() {
-        return List.of(EMPTY_SLOT_HELMET, EMPTY_SLOT_SWORD, EMPTY_SLOT_CHESTPLATE, EMPTY_SLOT_PICKAXE, EMPTY_SLOT_LEGGINGS, EMPTY_SLOT_AXE, EMPTY_SLOT_BOOTS, EMPTY_SLOT_HOE, EMPTY_SLOT_SHOVEL);
+        return List.of(EMPTY_SLOT_HELMET, EMPTY_SLOT_CHESTPLATE, EMPTY_SLOT_LEGGINGS, EMPTY_SLOT_BOOTS);
     }
 
     private static List<ResourceLocation> createNetheriteUpgradeMaterialList() {
