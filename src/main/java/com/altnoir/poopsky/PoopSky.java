@@ -61,7 +61,7 @@ public class PoopSky {
         PSStructures.register(modEventBus);
         PSChunkGenerators.register(modEventBus);
 
-        PSItemGroups.register(modEventBus);
+        PItemGroups.register(modEventBus);
         PSoundEvents.register(modEventBus);
         PStats.register(modEventBus);
 

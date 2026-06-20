@@ -3,7 +3,7 @@ package com.altnoir.poopsky.util;
 import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.block.p.PoopTntBlock;
 import com.altnoir.poopsky.init.PParticles;
-import com.altnoir.poopsky.tag.PTags;
+import com.altnoir.poopsky.PTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;

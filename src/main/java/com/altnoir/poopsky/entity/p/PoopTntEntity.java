@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.entity.p;
 
 import com.altnoir.poopsky.init.PEntityType;
-import com.altnoir.poopsky.tag.PTags;
+import com.altnoir.poopsky.PTags;
 import com.altnoir.poopsky.util.PoopTntUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

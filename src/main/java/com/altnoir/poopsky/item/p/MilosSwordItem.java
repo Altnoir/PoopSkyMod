@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.item.p;
 
 import com.altnoir.poopsky.init.PEffects;
-import com.altnoir.poopsky.tag.PTags;
+import com.altnoir.poopsky.PTags;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlotGroup;

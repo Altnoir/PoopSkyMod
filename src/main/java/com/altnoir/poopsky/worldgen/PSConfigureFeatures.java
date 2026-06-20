@@ -2,7 +2,7 @@ package com.altnoir.poopsky.worldgen;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.PBlocks;
-import com.altnoir.poopsky.tag.PTags;
+import com.altnoir.poopsky.PTags;
 import com.altnoir.poopsky.worldgen.foliage.PoopMegaFoliagePlacer;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.Holder;

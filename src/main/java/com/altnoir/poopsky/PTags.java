@@ -1,6 +1,5 @@
-package com.altnoir.poopsky.tag;
+package com.altnoir.poopsky;
 
-import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.compat.PSMods;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;

@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.compat.create.content.kinetics.fan.processing;
 
 import com.altnoir.poopsky.compat.create.PSRecipeTypes;
-import com.altnoir.poopsky.tag.PTags;
+import com.altnoir.poopsky.PTags;
 import com.simibubi.create.content.kinetics.fan.processing.FanProcessingType;
 import com.simibubi.create.foundation.recipe.RecipeApplier;
 import net.createmod.catnip.theme.Color;

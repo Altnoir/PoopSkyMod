@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.mixin;
 
 import com.altnoir.poopsky.init.PEffects;
-import com.altnoir.poopsky.tag.PTags;
+import com.altnoir.poopsky.PTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;

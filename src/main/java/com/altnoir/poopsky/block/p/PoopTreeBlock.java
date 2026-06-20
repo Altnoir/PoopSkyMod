@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.block.p;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.tag.PTags;
+import com.altnoir.poopsky.PTags;
 import com.altnoir.poopsky.worldgen.PSConfigureFeatures;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
