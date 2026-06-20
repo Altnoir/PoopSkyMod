@@ -18,8 +18,8 @@ public class PSDigestingRecipeGen extends DigestingRecipeGen {
 
     @Override
     public void buildRecipes(RecipeOutput output) {
-        convert(PItems.POOP.get(), Items.SPONGE);
-        convert(Items.GLASS_BOTTLE, PItems.URINE_BOTTLE.get());
-        convert(Items.SLIME_BALL, PItems.POOP_BALL.get());
+        convert(PItems.POOP.get(), Items.SPONGE).register(output);
+        convert(Items.GLASS_BOTTLE, PItems.URINE_BOTTLE.get()).register(output);
+        convert(Items.SLIME_BALL, PItems.POOP_BALL.get()).register(output);
     }
 }
