@@ -2,6 +2,7 @@ package com.altnoir.poopsky.block.p;
 
 import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.init.PEffects;
+import com.altnoir.poopsky.util.toiletUtil;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -59,11 +60,17 @@ public class ToiletLavaBlock extends AbstractToiletBlock {
                 player.removeEffect(PEffects.INTESTINAL_SPASM);
                 player.causeFoodExhaustion(1.0F);
             } else if (player.hasEffect(PEffects.FECAL_INCONTINENCE)) {
-                onPoop(level, player, true);
+                toiletUtil.onPoop(level, player, true, false, 0.1F, 0.5F);
                 player.causeFoodExhaustion(0.05F);
-            } else if (level.getGameTime() % 20 == 0) {
-                onPoop(level, player, false);
-                player.causeFoodExhaustion(1.0F);
+            } else {
+                var playerData = player.getPersistentData();
+                long lastPoopTime = playerData.getLong("poopTime");
+                long gameTime = level.getGameTime();
+                if (lastPoopTime == 0 || gameTime - lastPoopTime >= 20) {
+                    toiletUtil.onPoop(level, player, false, false, 0.1F, 0.5F);
+                    player.causeFoodExhaustion(1.0F);
+                    playerData.putLong("poopTime", gameTime);
+                }
             }
         }
     }

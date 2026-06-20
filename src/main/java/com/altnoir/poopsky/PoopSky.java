@@ -4,7 +4,7 @@ import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.block.p.CompooperBlock;
 import com.altnoir.poopsky.compat.PSMods;
-import com.altnoir.poopsky.compat.create.PFanProcessingTypes;
+import com.altnoir.poopsky.compat.create.CreatePlugin;
 import com.altnoir.poopsky.compat.maid.MaidPlugin;
 import com.altnoir.poopsky.entity.p.PoopTntEntity;
 import com.altnoir.poopsky.init.*;
@@ -76,7 +76,7 @@ public class PoopSky {
             MaidPlugin.registry(modEventBus);
         }
         if (ModList.get().isLoaded(PSMods.CREATE.id())) {
-            PFanProcessingTypes.register(modEventBus);
+            CreatePlugin.register(modEventBus);
         }
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }

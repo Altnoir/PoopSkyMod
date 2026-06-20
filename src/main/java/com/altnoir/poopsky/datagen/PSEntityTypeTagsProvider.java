@@ -2,7 +2,7 @@ package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.init.PEntityType;
-import com.altnoir.poopsky.tag.PEntityTypeTags;
+import com.altnoir.poopsky.tag.PTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
@@ -20,13 +20,13 @@ public class PSEntityTypeTagsProvider extends EntityTypeTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        tag(PEntityTypeTags.IGNORES_BLEEDING)
+        tag(PTags.EntityTypes.IGNORES_BLEEDING)
                 .add(EntityType.IRON_GOLEM, EntityType.SNOW_GOLEM);
 
-        tag(PEntityTypeTags.RETAIN_IN_SUB_LEVEL)
+        tag(PTags.EntityTypes.RETAIN_IN_SUB_LEVEL)
                 .add(PEntityType.STOOL.get())
                 .add(PEntityType.TOILET.get());
-        tag(PEntityTypeTags.DESTROY_WITH_SUB_LEVEL)
+        tag(PTags.EntityTypes.DESTROY_WITH_SUB_LEVEL)
                 .add(PEntityType.STOOL.get())
                 .add(PEntityType.TOILET.get());
 

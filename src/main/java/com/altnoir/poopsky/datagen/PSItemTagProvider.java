@@ -4,7 +4,7 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.item.PItems;
-import com.altnoir.poopsky.tag.PItemTags;
+import com.altnoir.poopsky.tag.PTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
@@ -26,11 +26,11 @@ public class PSItemTagProvider extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        tag(PItemTags.POOPS)
+        tag(PTags.Items.POOPS)
                 .add(PItems.POOP.get())
                 .add(PItems.CHILI_POOP.get())
                 .add(PItems.GOLDEN_POOP.get());
-        tag(PItemTags.TOILET_BLOCKS)
+        tag(PTags.Items.TOILET_BLOCKS)
                 .add(WOODEN_TOILETS)
                 .add(HARD_TOILETS);
 
@@ -87,7 +87,7 @@ public class PSItemTagProvider extends ItemTagsProvider {
                 .add(PItems.ROUNDWORM.get());
         tag(Tags.Items.FOODS_COOKED_MEAT)
                 .add(PItems.BAKED_MAGGOTS.get());
-        tag(PItemTags.PASTA)
+        tag(PTags.Items.PASTA)
                 .add(PItems.ROUNDWORM.get())
                 .add(PItems.POOP_PASTA.get());
 

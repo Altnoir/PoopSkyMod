@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.item.p;
 
 import com.altnoir.poopsky.init.PEffects;
-import com.altnoir.poopsky.tag.PEntityTypeTags;
+import com.altnoir.poopsky.tag.PTags;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlotGroup;
@@ -23,7 +23,7 @@ public class MilosSwordItem extends SwordItem {
 
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (!target.getType().is(PEntityTypeTags.IGNORES_BLEEDING)) {
+        if (!target.getType().is(PTags.EntityTypes.IGNORES_BLEEDING)) {
             if (attacker instanceof Player player && player.getAttackStrengthScale(0.0F) >= 1.0F) {
                 if (!target.hasEffect(PEffects.BLEEDING)) {
                     target.addEffect(new MobEffectInstance(PEffects.BLEEDING, 200));

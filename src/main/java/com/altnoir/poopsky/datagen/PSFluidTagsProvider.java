@@ -2,7 +2,7 @@ package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.init.PFluids;
-import com.altnoir.poopsky.tag.PFluidTags;
+import com.altnoir.poopsky.tag.PTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.FluidTagsProvider;
@@ -23,7 +23,7 @@ public class PSFluidTagsProvider extends FluidTagsProvider {
                 .add(PFluids.URINE.get())
                 .add(PFluids.FLOWING_URINE.get());
 
-        tag(PFluidTags.FAN_PROCESSING_CATALYSTS_DIGESTING)
+        tag(PTags.Fluids.FAN_PROCESSING_CATALYSTS_DIGESTING)
                 .add(PFluids.URINE.get())
                 .add(PFluids.FLOWING_URINE.get());
     }

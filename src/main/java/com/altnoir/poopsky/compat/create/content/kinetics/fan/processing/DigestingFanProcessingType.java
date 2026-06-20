@@ -1,8 +1,7 @@
 package com.altnoir.poopsky.compat.create.content.kinetics.fan.processing;
 
 import com.altnoir.poopsky.compat.create.PSRecipeTypes;
-import com.altnoir.poopsky.tag.PBlockTags;
-import com.altnoir.poopsky.tag.PFluidTags;
+import com.altnoir.poopsky.tag.PTags;
 import com.simibubi.create.content.kinetics.fan.processing.FanProcessingType;
 import com.simibubi.create.foundation.recipe.RecipeApplier;
 import net.createmod.catnip.theme.Color;
@@ -30,12 +29,12 @@ public class DigestingFanProcessingType implements FanProcessingType {
     @Override
     public boolean isValidAt(Level level, BlockPos pos) {
         FluidState fluidState = level.getFluidState(pos);
-        if (fluidState.is(PFluidTags.FAN_PROCESSING_CATALYSTS_DIGESTING)) {
+        if (fluidState.is(PTags.Fluids.FAN_PROCESSING_CATALYSTS_DIGESTING)) {
             return true;
         }
 
         BlockState blockState = level.getBlockState(pos);
-        return blockState.is(PBlockTags.FAN_PROCESSING_CATALYSTS_DIGESTING);
+        return blockState.is(PTags.Blocks.FAN_PROCESSING_CATALYSTS_DIGESTING);
     }
 
     @Override

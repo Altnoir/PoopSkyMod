@@ -1,14 +1,13 @@
 package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.tag.PDamageTypeTags;
+import com.altnoir.poopsky.tag.PTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageType;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
@@ -22,7 +21,7 @@ public class PDamageTypeTagsProvider extends TagsProvider<DamageType> {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        tag(PDamageTypeTags.BYPASSES_BLEEDING)
+        tag(PTags.DamageTypes.BYPASSES_BLEEDING)
                 .addTags(
                         DamageTypeTags.IS_FIRE,
                         DamageTypeTags.IS_FREEZING,
@@ -34,10 +33,10 @@ public class PDamageTypeTagsProvider extends TagsProvider<DamageType> {
                 )
                 .add(
                         NeoForgeMod.POISON_DAMAGE,
-                        DamageTypes.INDIRECT_MAGIC,
-                        DamageTypes.MAGIC,
-                        DamageTypes.WITHER,
-                        DamageTypes.DRAGON_BREATH
+                        net.minecraft.world.damagesource.DamageTypes.INDIRECT_MAGIC,
+                        net.minecraft.world.damagesource.DamageTypes.MAGIC,
+                        net.minecraft.world.damagesource.DamageTypes.WITHER,
+                        net.minecraft.world.damagesource.DamageTypes.DRAGON_BREATH
                 );
     }
 }

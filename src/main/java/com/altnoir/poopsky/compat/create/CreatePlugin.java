@@ -9,17 +9,16 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-public class PFanProcessingTypes {
+public class CreatePlugin {
     public static DeferredHolder<FanProcessingType, DigestingFanProcessingType> DIGESTING;
 
     public static void register(IEventBus modEventBus) {
-        PSRecipeTypes.register(modEventBus);
-        PSItemAttributes.register(modEventBus);
-
         var TYPES = DeferredRegister.create(CreateRegistries.FAN_PROCESSING_TYPE, PoopSky.MOD_ID);
 
         DIGESTING = TYPES.register("digesting", DigestingFanProcessingType::new);
 
+        PSRecipeTypes.register(modEventBus);
+        PSItemAttributes.register(modEventBus);
         TYPES.register(modEventBus);
     }
 }

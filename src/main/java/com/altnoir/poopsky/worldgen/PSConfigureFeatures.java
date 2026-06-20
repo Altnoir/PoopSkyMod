@@ -2,7 +2,7 @@ package com.altnoir.poopsky.worldgen;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.PBlocks;
-import com.altnoir.poopsky.tag.PBlockTags;
+import com.altnoir.poopsky.tag.PTags;
 import com.altnoir.poopsky.worldgen.foliage.PoopMegaFoliagePlacer;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.Holder;
@@ -96,7 +96,7 @@ public class PSConfigureFeatures {
                 )
         );
         register(context, POOP_PATCH_BONEMEAL, Feature.VEGETATION_PATCH,
-                vegetationPatch(PBlockTags.POOP_BLOCK, PBlocks.POOP_BLOCK.get(), holdergetter.getOrThrow(POOP_VEGETATION))
+                vegetationPatch(PTags.Blocks.POOP_BLOCK, PBlocks.POOP_BLOCK.get(), holdergetter.getOrThrow(POOP_VEGETATION))
         );
 
         register(context, CHILI_POOP_VEGETATION, Feature.SIMPLE_BLOCK,
@@ -111,7 +111,7 @@ public class PSConfigureFeatures {
                 )
         );
         register(context, CHILI_POOP_PATCH_BONEMEAL, Feature.VEGETATION_PATCH,
-                vegetationPatch(PBlockTags.CHILI_POOP_BLOCK, PBlocks.CHILI_POOP_BLOCK.get(), holdergetter.getOrThrow(CHILI_POOP_VEGETATION))
+                vegetationPatch(PTags.Blocks.CHILI_POOP_BLOCK, PBlocks.CHILI_POOP_BLOCK.get(), holdergetter.getOrThrow(CHILI_POOP_VEGETATION))
         );
 
         register(context, DRIED_POOP_PATCH, Feature.RANDOM_PATCH,
@@ -145,7 +145,7 @@ public class PSConfigureFeatures {
                         ))
         );
         register(context, RAW_SAPLING_POOP_PATCH_BONEMEAL, Feature.VEGETATION_PATCH,
-                vegetationPatch(PBlockTags.RAW_SAPLING_POOP_BLOCK, PBlocks.RAW_SAPLING_POOP_BLOCK.get(),
+                vegetationPatch(PTags.Blocks.RAW_SAPLING_POOP_BLOCK, PBlocks.RAW_SAPLING_POOP_BLOCK.get(),
                         holdergetter.getOrThrow(RAW_SAPLING_POOP_VEGETATION), 0.3F, 0.25F)
         );
         register(context, RAW_SEA_POOP_VEGETATION, Feature.SIMPLE_BLOCK,
@@ -165,7 +165,7 @@ public class PSConfigureFeatures {
                         ))
         );
         register(context, RAW_SEA_POOP_PATCH_BONEMEAL, Feature.VEGETATION_PATCH,
-                vegetationPatch(PBlockTags.RAW_SEA_POOP_BLOCK, PBlocks.RAW_SEA_POOP_BLOCK.get(),
+                vegetationPatch(PTags.Blocks.RAW_SEA_POOP_BLOCK, PBlocks.RAW_SEA_POOP_BLOCK.get(),
                         holdergetter.getOrThrow(RAW_SEA_POOP_VEGETATION), 0.3F, 0.25F)
         );
 
@@ -173,7 +173,7 @@ public class PSConfigureFeatures {
                 new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.WITHER_ROSE))
         );
         register(context, RAW_WITHER_POOP_PATCH_BONEMEAL, Feature.VEGETATION_PATCH,
-                vegetationPatch(PBlockTags.RAW_WITHER_POOP_BLOCK, PBlocks.RAW_WITHER_POOP_BLOCK.get(),
+                vegetationPatch(PTags.Blocks.RAW_WITHER_POOP_BLOCK, PBlocks.RAW_WITHER_POOP_BLOCK.get(),
                         holdergetter.getOrThrow(RAW_WITHER_POOP_VEGETATION), 0.1F, 0.125F)
         );
     }

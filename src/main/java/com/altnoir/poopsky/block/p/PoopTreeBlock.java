@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.block.p;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.tag.PBlockTags;
+import com.altnoir.poopsky.tag.PTags;
 import com.altnoir.poopsky.worldgen.PSConfigureFeatures;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -49,7 +49,7 @@ public class PoopTreeBlock extends SaplingBlock implements BonemealableBlock {
 
     @Override
     protected boolean mayPlaceOn(BlockState state, BlockGetter level, BlockPos pos) {
-        return state.is(PBlockTags.TOILET_BLOCKS) || super.mayPlaceOn(state, level, pos);
+        return state.is(PTags.Blocks.TOILET_BLOCKS) || super.mayPlaceOn(state, level, pos);
     }
 
     @Override

@@ -3,7 +3,7 @@ package com.altnoir.poopsky.compat.maid.toilet;
 import com.altnoir.poopsky.compat.maid.MaidPlugin;
 import com.altnoir.poopsky.entity.p.ToiletEntity;
 import com.altnoir.poopsky.init.PEntityType;
-import com.altnoir.poopsky.tag.PBlockTags;
+import com.altnoir.poopsky.tag.PTags;
 import com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -52,7 +52,7 @@ public class ToiletSensor extends Sensor<EntityMaid> {
 
                         mutablePos.set(centerPos.getX() + dx, centerPos.getY() + dy, centerPos.getZ() + dz);
 
-                        if (level.getBlockState(mutablePos).is(PBlockTags.TOILET_BLOCKS) && !isToiletOccupied(level, mutablePos)) {
+                        if (level.getBlockState(mutablePos).is(PTags.Blocks.TOILET_BLOCKS) && !isToiletOccupied(level, mutablePos)) {
                             return mutablePos.immutable();
                         }
                     }

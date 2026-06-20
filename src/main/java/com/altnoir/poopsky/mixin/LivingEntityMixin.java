@@ -1,8 +1,7 @@
 package com.altnoir.poopsky.mixin;
 
-import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.init.PEffects;
-import com.altnoir.poopsky.tag.PDamageTypeTags;
+import com.altnoir.poopsky.tag.PTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,7 +17,7 @@ public class LivingEntityMixin {
     )
     private float poopsky$applyBleedingDamage(DamageSource damageSource, float amount) {
         LivingEntity self = (LivingEntity) (Object) this;
-        if (self.hasEffect(PEffects.BLEEDING) && !damageSource.is(PDamageTypeTags.BYPASSES_BLEEDING)) {
+        if (self.hasEffect(PEffects.BLEEDING) && !damageSource.is(PTags.DamageTypes.BYPASSES_BLEEDING)) {
             float amplifier = (self.getEffect(PEffects.BLEEDING).getAmplifier() + 1) * 0.1F;
             return amount * (1 + amplifier);
         }
