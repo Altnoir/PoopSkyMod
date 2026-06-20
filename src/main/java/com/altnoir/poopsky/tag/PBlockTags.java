@@ -2,6 +2,7 @@ package com.altnoir.poopsky.tag;
 
 import com.altnoir.poopsky.PoopSky;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 
@@ -21,6 +22,9 @@ public class PBlockTags {
     public static final TagKey<Block> POOP_TNT_DESTROY = create("poop_tnt_destroy");
     public static final TagKey<Block> POOP_TNT_REPLACEABLE = create("poop_tnt_replaceable");
     public static final TagKey<Block> CONVERTABLE_TO_MOSS = create("convertable_to_moss");
+
+    // Compat
+    public static final TagKey<Block> FAN_PROCESSING_CATALYSTS_DIGESTING = create("fan_processing_catalysts/digesting");
 
     private static TagKey<Block> create(String name) {
         return TagKey.create(Registries.BLOCK, PoopSky.loc(name));

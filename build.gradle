@@ -20,8 +20,26 @@ group = mod_group_id
 repositories {
     mavenLocal()
     maven { url = "https://maven.ryanhcode.dev/releases" } // Sable
+    maven { url = "https://maven.createmod.net" } // Create, Ponder, Flywheel
+    maven { url = "https://mvn.devos.one/snapshots" } // Registrate
     maven { url = "https://maven.blamejared.com" } // JEI
     maven {url "https://cursemaven.com"}
+    // KubeJS, Rhino
+    maven {
+        url "https://maven.latvian.dev/releases"
+        content {
+            includeGroup "dev.latvian.mods"
+            includeGroup "dev.latvian.apps"
+        }
+    }
+
+    // KubeJS depends on a project in here
+    maven {
+        url 'https://jitpack.io'
+        content {
+            includeGroup "com.github.rtyley"
+        }
+    }
 }
 
 base {
@@ -123,7 +141,15 @@ dependencies {
     // Touhou Little Maid
     implementation "curse.maven:touhou-little-maid-355044:7307724"
     compileOnly files("libs/touhou_little_mad-0.1.2-alpha.jar")
-
+    // Create
+    implementation("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
+    implementation("net.createmod.ponder:Ponder-NeoForge-${minecraft_version}:${ponder_version}")
+    compileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-${minecraft_version}:${flywheel_version}")
+    runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-${minecraft_version}:${flywheel_version}")
+    implementation("com.tterrag.registrate:Registrate:${registrate_version}")
+    // KubeJS (compileOnly - compat removed, keep for future use)
+    compileOnly("dev.latvian.mods:kubejs-neoforge:$kubejs_version")
+    // Sable Companion
     jarJar(api("dev.ryanhcode.sable-companion:sable-companion-common-${minecraft_version}:[${sable_companion_version},)")) {
         version {
             prefer(sable_companion_version)

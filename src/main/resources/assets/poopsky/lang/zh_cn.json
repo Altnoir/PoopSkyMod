@@ -312,7 +312,10 @@
   "tag.item.poopsky.compooper_saplings": "堆粪桶可产出树苗",
   "jei.category.poopsky.compooper": "堆粪桶",
   "jei.category.poopsky.sieve": "筛架",
+  "jei.category.poopsky.digesting": "批量化粪",
+  "jei.category.poopsky.digesting.fan": "化粪鼓风机",
   "jei.poopsky.sieve_chance": "产出概率: %.2f%%",
+  "jei.poopsky.digesting_chance": "产出概率: %.2f%%",
   "task.poopsky.defecate": "如厕",
   "task.poopsky.defecate.desc": "女仆会寻找周围的厕所",
 

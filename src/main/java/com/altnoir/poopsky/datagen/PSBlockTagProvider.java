@@ -183,6 +183,8 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(PBlocks.URINE_COMPOOPER.get())
                 .add(WOODEN_TOILETS)
                 .add(HARD_TOILETS);
+
+        tag(PBlockTags.FAN_PROCESSING_CATALYSTS_DIGESTING).add(PBlocks.URINE_LIQUID.get());
     }
 
     public static final Block[] POOP_BUILDING_BLOCKS = {

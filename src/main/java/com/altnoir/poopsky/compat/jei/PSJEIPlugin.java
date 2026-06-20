@@ -2,10 +2,14 @@ package com.altnoir.poopsky.compat.jei;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.PBlocks;
+import com.altnoir.poopsky.compat.PSMods;
+import com.altnoir.poopsky.compat.create.jei.FanDigestingCategory;
 import com.altnoir.poopsky.item.PItems;
 import com.altnoir.poopsky.init.PRecipes;
+import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
@@ -14,12 +18,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
 @JeiPlugin
 public class PSJEIPlugin implements IModPlugin {
     private static final ResourceLocation PS_JEI_TEXTURE = PoopSky.loc("textures/gui/jei/enr_jei.png");
+    private final List<CreateRecipeCategory<?>> createCategories = new ArrayList<>();
 
     @Override
     public ResourceLocation getPluginUid() {
@@ -30,11 +36,16 @@ public class PSJEIPlugin implements IModPlugin {
     public void registerCategories(IRecipeCategoryRegistration registration) {
         var helper = registration.getJeiHelpers().getGuiHelper();
         var arrow = helper.createDrawable(PS_JEI_TEXTURE, 0, 18, 22, 15);
-        var plus = helper.createDrawable(PS_JEI_TEXTURE, 22, 18, 8, 8);
 
         registration.addRecipeCategories(
                 new CompooperRecipeCategory(registration.getJeiHelpers(), arrow),
                 new SieveRecipeCategory(registration.getJeiHelpers(), arrow));
+
+        if (PSMods.CREATE.isLoaded()) {
+            createCategories.clear();
+            createCategories.add(FanDigestingCategory.create());
+            registration.addRecipeCategories(createCategories.toArray(IRecipeCategory[]::new));
+        }
     }
 
     @Override
@@ -54,11 +65,19 @@ public class PSJEIPlugin implements IModPlugin {
                             .map(net.minecraft.world.item.crafting.RecipeHolder::value)
                             .toList());
         }
+
+        if (PSMods.CREATE.isLoaded()) {
+            createCategories.forEach(category -> category.registerRecipes(registration));
+        }
     }
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(new ItemStack(PBlocks.COMPOOPER.get()), CompooperRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(PBlocks.SIEVE.get()), SieveRecipeCategory.TYPE);
+
+        if (PSMods.CREATE.isLoaded()) {
+            createCategories.forEach(category -> category.registerCatalysts(registration));
+        }
     }
 }
