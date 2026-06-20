@@ -18,9 +18,7 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 
 public class ToiletHighlightRenderer {
-
     public static void onRenderLevel(RenderLevelStageEvent event) {
-        // 在半透明方块之后渲染，确保线框能穿透水或半透明物体显示
         if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS) {
             return;
         }
@@ -59,7 +57,7 @@ public class ToiletHighlightRenderer {
         AABB aabb = new AABB(pos).move(-cameraPos.x, -cameraPos.y, -cameraPos.z);
         aabb = aabb.inflate(0.01D);
 
-        LevelRenderer.renderLineBox(poseStack, vertexConsumer, aabb, 0.0F, 1.0F, 0.0F, 1.0F);
+        LevelRenderer.renderLineBox(poseStack, vertexConsumer, aabb, 0.804F, 0.522F, 0.247F, 1.0F);
 
         bufferSource.endBatch(RenderType.lines());
     }

@@ -2,33 +2,31 @@ package com.altnoir.poopsky;
 
 import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.block.abs.AbstractCompooperBlock;
-import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.entity.renderer.*;
 import com.altnoir.poopsky.event.PSClientGameEvents;
 import com.altnoir.poopsky.event.PSClientModEvents;
 import com.altnoir.poopsky.event.PSKeyBoardInput;
+import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.init.PFluidTypes;
 import com.altnoir.poopsky.init.PParticles;
 import com.altnoir.poopsky.init.PRecipes;
-import com.altnoir.poopsky.misc.particle.PoopParticle;
+import com.altnoir.poopsky.misc.TimeBellOverlay;
 import com.altnoir.poopsky.misc.ToiletHighlightRenderer;
+import com.altnoir.poopsky.misc.particle.PoopParticle;
+import net.minecraft.client.RecipeBookCategories;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.RecipeBookCategories;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
-import net.neoforged.neoforge.client.event.RegisterNamedRenderTypesEvent;
-import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
-import net.neoforged.neoforge.client.event.RegisterRecipeBookCategoriesEvent;
+import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.common.NeoForge;
 import org.jetbrains.annotations.NotNull;
 
@@ -53,6 +51,7 @@ public class PoopSkyClient {
         modEventBus.addListener(ClientModEvents::onRegisterBlockColors);
         modEventBus.addListener(ClientModEvents::onRegisterItemColors);
         modEventBus.addListener(ClientModEvents::onRegisterBlockRenderBuffers);
+        modEventBus.addListener(ClientModEvents::registerGuiOverlays);
         modEventBus.addListener(ClientModEvents::registerClientExtensions);
     }
 
@@ -63,6 +62,10 @@ public class PoopSkyClient {
     }
 
     public static class ClientModEvents {
+        public static void registerGuiOverlays(RegisterGuiLayersEvent event) {
+            event.registerBelow(VanillaGuiLayers.CAMERA_OVERLAYS, PoopSky.loc("time_bell_overlay"), TimeBellOverlay::render);
+        }
+
         public static void registerRenderTypes(RegisterNamedRenderTypesEvent event) {
             event.register(PoopSky.loc("poop_empty_log"), RenderType.cutout(), RenderType.entityCutout(PBlocks.POOP_EMPTY_LOG.getId()));
         }
