@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.block.p;
 
 import com.altnoir.poopsky.entity.p.PoopTntEntity;
+import com.altnoir.poopsky.init.PSoundEvents;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -139,7 +140,7 @@ public class PoopTntBlock extends Block {
                     pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, igniter);
             level.addFreshEntity(tnt);
             level.playSound(null, tnt.getX(), tnt.getY(), tnt.getZ(),
-                    SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1.0F, 1.0F);
+                    PSoundEvents.ENTITY_POP_PRIMED.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
             level.gameEvent(igniter, GameEvent.PRIME_FUSE, pos);
         }
     }
