@@ -131,9 +131,6 @@ public class PItems {
             () -> new FlyItem(new Item.Properties().stacksTo(88)));
     public static final DeferredItem<Item> FLY_CATCHER = ITEMS.register("fly_catcher",
             () -> new FlyCatcherItem(new Item.Properties().stacksTo(1).durability(64)));
-    public static final DeferredItem<Item> POOLIME_SPAWN_EGG = ITEMS.register("poolime_spawn_egg",
-            () -> new DeferredSpawnEggItem(PEntityType.POOLIME, 0x7D5F36, 0x5E4228,
-                    new Item.Properties()));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
