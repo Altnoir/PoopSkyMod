@@ -240,8 +240,8 @@
   "upgrade.poopsky.omen_upgrade": "Omen Upgrade",
   "item.poopsky.smithing_template.omen_upgrade.applies_to": "Golden Equipment",
   "item.poopsky.smithing_template.omen_upgrade.ingredients": "Ominous Filthy Ingot",
-  "smithing_template.omen_upgrade.base_slot_description": "Place Golden Equipment",
-  "smithing_template.omen_upgrade.additions_slot_description": "Place Ominous Filthy Ingot",
+  "item.poopsky.smithing_template.omen_upgrade.base_slot_description": "Place Golden Equipment",
+  "item.poopsky.smithing_template.omen_upgrade.additions_slot_description": "Place Ominous Filthy Ingot",
 
   "advancements.poopsky.root.title": "POOPSKY",
   "advancements.poopsky.root.description": "It all began with a pile of poop",

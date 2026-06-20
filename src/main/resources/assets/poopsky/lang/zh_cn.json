@@ -240,8 +240,8 @@
   "upgrade.poopsky.omen_upgrade":"忌讳升级",
   "item.poopsky.smithing_template.omen_upgrade.applies_to":"金装备",
   "item.poopsky.smithing_template.omen_upgrade.ingredients":"恶兆污秽锭",
-  "smithing_template.omen_upgrade.base_slot_description": "放入金盔甲",
-  "smithing_template.omen_upgrade.additions_slot_description": "放入恶兆污秽锭",
+  "item.poopsky.smithing_template.omen_upgrade.base_slot_description": "放入金盔甲",
+  "item.poopsky.smithing_template.omen_upgrade.additions_slot_description": "放入恶兆污秽锭",
 
   "advancements.poopsky.root.title": "空中厕所",
   "advancements.poopsky.root.description": "一切屎于脚下",
