@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "minecraft:item/purple_dye"
+    "layer0": "poopsky:item/purple_fly"
   }
 }

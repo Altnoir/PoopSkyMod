@@ -2,6 +2,7 @@ package com.altnoir.poopsky.init;
 
 import net.minecraft.network.chat.Component;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -35,7 +36,7 @@ public class PFlyTypes {
     public static final FlyType PURPLE = register("purple");
 
     public static Map<String, FlyType> getAll() {
-        return Map.copyOf(BY_ID);
+        return Collections.unmodifiableMap(BY_ID);
     }
 
     public static int getIndex(FlyType type) { int i = 0; for (var e : BY_ID.entrySet()) { if (e.getValue().equals(type)) return i; i++; } return 0; }
