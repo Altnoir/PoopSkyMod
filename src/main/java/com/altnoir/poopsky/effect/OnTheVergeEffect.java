@@ -26,7 +26,7 @@ public class OnTheVergeEffect extends MobEffect {
             Vec3 vec3 = livingEntity.getDeltaMovement().add(new Vec3(0, 0.125, 0));
             boolean openTheDoor = false;
 
-            if ((livingEntity instanceof Player player && player.isShiftKeyDown()) || duration <= 2) {
+            if ((livingEntity instanceof Player player && player.isShiftKeyDown()) || duration <= 1) {
                 openTheDoor = true;
                 result = true;
             } else if (amplifier >= 1 && duration > 200) {

@@ -82,6 +82,7 @@
   "effect.poopsky.on_the_verge": "On the Verge",
   "effect.poopsky.omener": "Omener",
   "effect.poopsky.bleeding": "Bleeding",
+  "effect.poopsky.moment_of_ptyme": "Moment of Ptyme",
 
   "block.poopsky.poop_piece": "Poop Piece",
   "block.poopsky.poop_block": "Poop Block",
@@ -342,5 +343,9 @@
   "poopsky.configuration.plugTrades": "Disable Toilet Plug Trades",
   "poopsky.configuration.plugTrades.tooltip": "Whether to disable Toilet Plug trading with villagers",
   "poopsky.configuration.upgradeTemplate": "Disable Upgrade Template Trades",
-  "poopsky.configuration.upgradeTemplate.tooltip": "Whether to disable upgrade template trading"
+  "poopsky.configuration.upgradeTemplate.tooltip": "Whether to disable upgrade template trading",
+  "poopsky.configuration.unlimitedFreeze": "Unlimited Freeze",
+  "poopsky.configuration.unlimitedFreeze.tooltip": "Whether to enable unlimited freeze",
+  "poopsky.configuration.freezeFilter": "Freeze Filter",
+  "poopsky.configuration.freezeFilter.tooltip": "Whether to disable freeze filter"
 }

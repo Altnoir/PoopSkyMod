@@ -82,6 +82,7 @@
   "effect.poopsky.on_the_verge": "一触即发",
   "effect.poopsky.omener": "食粪者",
   "effect.poopsky.bleeding": "出血",
+  "effect.poopsky.moment_of_ptyme": "屎之刻",
 
   "block.poopsky.poop_piece": "粪便片",
   "block.poopsky.poop_block": "粪便块",
@@ -342,5 +343,9 @@
   "poopsky.configuration.plugTrades": "禁用马桶搋子交易",
   "poopsky.configuration.plugTrades.tooltip": "是否禁用马桶搋子交易",
   "poopsky.configuration.upgradeTemplate": "禁用升级模板交易",
-  "poopsky.configuration.upgradeTemplate.tooltip": "是否禁用升级模板交易"
+  "poopsky.configuration.upgradeTemplate.tooltip": "是否禁用升级模板交易",
+  "poopsky.configuration.unlimitedFreeze": "无限时停",
+  "poopsky.configuration.unlimitedFreeze.tooltip": "是否启用无限时停",
+  "poopsky.configuration.freezeFilter": "时停滤镜",
+  "poopsky.configuration.freezeFilter.tooltip": "是否禁用时停滤镜"
 }
