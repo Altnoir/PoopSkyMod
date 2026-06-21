@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.inventory;
 
+import com.altnoir.poopsky.PTags;
 import com.altnoir.poopsky.init.PMenuTypes;
 import com.altnoir.poopsky.item.p.FlyItem;
-import com.altnoir.poopsky.tag.PItemTags;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -49,7 +49,7 @@ public class BreedingBoxMenu extends AbstractContainerMenu {
         this.addSlot(new Slot(container, FECES_SLOT, 44, 17) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return stack.is(PItemTags.POOPS);
+                return stack.is(PTags.Items.POOPS);
             }
         });
 
@@ -106,7 +106,7 @@ public class BreedingBoxMenu extends AbstractContainerMenu {
                 if (!this.moveItemStackTo(itemstack1, INV_SLOT_START, HOTBAR_SLOT_END, true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (itemstack1.is(PItemTags.POOPS)) {
+            } else if (itemstack1.is(PTags.Items.POOPS)) {
                 // 粪便 -> 粪便槽
                 if (!this.moveItemStackTo(itemstack1, FECES_SLOT, FECES_SLOT + 1, false)) {
                     return ItemStack.EMPTY;
@@ -151,9 +151,5 @@ public class BreedingBoxMenu extends AbstractContainerMenu {
     public void removed(Player player) {
         super.removed(player);
         this.breedingBox.stopOpen(player);
-    }
-
-    public Container getContainer() {
-        return breedingBox;
     }
 }

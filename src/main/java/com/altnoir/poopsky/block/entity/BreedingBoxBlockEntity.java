@@ -1,11 +1,10 @@
 package com.altnoir.poopsky.block.entity;
 
+import com.altnoir.poopsky.PTags;
 import com.altnoir.poopsky.init.PFlyRecipes;
 import com.altnoir.poopsky.init.PFlyTypes;
 import com.altnoir.poopsky.init.PBlockEntityType;
-import com.altnoir.poopsky.tag.PBlockTags;
 import com.altnoir.poopsky.item.p.FlyItem;
-import com.altnoir.poopsky.tag.PItemTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -50,7 +49,7 @@ public class BreedingBoxBlockEntity extends BlockEntity implements MenuProvider 
 
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
-            if (slot == SLOT_FECES) return stack.is(PItemTags.POOPS);
+            if (slot == SLOT_FECES) return stack.is(PTags.Items.POOPS);
             if (slot == SLOT_FLY_1 || slot == SLOT_FLY_2) return FlyItem.isFlyItem(stack);
             return false;
         }
@@ -129,7 +128,7 @@ public class BreedingBoxBlockEntity extends BlockEntity implements MenuProvider 
         for (BlockPos checkPos : BlockPos.betweenClosed(pos.offset(-1, -1, -1), pos.offset(1, 1, 1))) {
             if (checkPos.equals(pos)) continue;
             BlockState state = level.getBlockState(checkPos);
-            if (state.is(PBlockTags.POOP_BLOCKS)) {
+            if (state.is(PTags.Blocks.POOP_BLOCKS)) {
                 bonus++;
                 if (bonus >= MAX_ENVIRONMENT_BONUS) return bonus;
             }
