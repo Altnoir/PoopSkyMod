@@ -32,8 +32,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class UrineCompooperBlock extends AbstractCompooperBlock implements WorldlyContainerHolder {
     public static final MapCodec<UrineCompooperBlock> CODEC = simpleCodec(UrineCompooperBlock::new);

@@ -20,8 +20,7 @@ import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class ToiletBlockEntity extends BlockEntity {
     private BlockPos linkedPos;

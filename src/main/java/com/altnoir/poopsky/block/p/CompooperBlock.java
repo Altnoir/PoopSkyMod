@@ -41,8 +41,7 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class CompooperBlock extends AbstractCompooperBlock implements WorldlyContainerHolder {
     public static final MapCodec<CompooperBlock> CODEC = simpleCodec(CompooperBlock::new);
