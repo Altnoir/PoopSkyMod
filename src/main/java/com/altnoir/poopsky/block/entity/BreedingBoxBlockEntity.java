@@ -16,6 +16,7 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -39,6 +40,32 @@ public class BreedingBoxBlockEntity extends BlockEntity implements MenuProvider 
     private static final int MAX_ENVIRONMENT_BONUS = 10;
 
     private int progress = 0;
+    private int currentInterval = BASE_TICK_INTERVAL;
+
+    private final ContainerData data = new ContainerData() {
+        @Override
+        public int get(int index) {
+            return switch (index) {
+                case 0 -> BreedingBoxBlockEntity.this.progress;
+                case 1 -> BreedingBoxBlockEntity.this.currentInterval;
+                default -> 0;
+            };
+        }
+
+        @Override
+        public void set(int index, int value) {
+            if (index == 0) {
+                BreedingBoxBlockEntity.this.progress = value;
+            } else if (index == 1) {
+                BreedingBoxBlockEntity.this.currentInterval = value;
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+    };
 
     private final ItemStackHandler itemHandler = new ItemStackHandler(TOTAL_SLOTS) {
         @Override
@@ -99,11 +126,13 @@ public class BreedingBoxBlockEntity extends BlockEntity implements MenuProvider 
 
         if (fly1.isEmpty() || fly2.isEmpty() || feces.isEmpty()) {
             be.progress = 0;
+            be.currentInterval = BASE_TICK_INTERVAL;
             return;
         }
 
         if (!FlyItem.isFlyItem(fly1) || !FlyItem.isFlyItem(fly2)) {
             be.progress = 0;
+            be.currentInterval = BASE_TICK_INTERVAL;
             return;
         }
 
@@ -112,10 +141,10 @@ public class BreedingBoxBlockEntity extends BlockEntity implements MenuProvider 
 
         // 环境加速：附近的粪便块越多，繁殖越快
         int envBonus = be.getEnvironmentBonus(level, pos);
-        int currentInterval = Math.max(40, BASE_TICK_INTERVAL - envBonus * 30);
+        be.currentInterval = Math.max(40, BASE_TICK_INTERVAL - envBonus * 30);
         be.progress++;
 
-        if (be.progress >= currentInterval) {
+        if (be.progress >= be.currentInterval) {
             be.breed();
             be.progress = 0;
         }
@@ -204,7 +233,7 @@ public class BreedingBoxBlockEntity extends BlockEntity implements MenuProvider 
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player player) {
-        return new com.altnoir.poopsky.inventory.BreedingBoxMenu(id, playerInventory, createContainerProxy());
+        return new com.altnoir.poopsky.inventory.BreedingBoxMenu(id, playerInventory, createContainerProxy(), data);
     }
 
     private Container createContainerProxy() {

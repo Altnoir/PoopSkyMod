@@ -8,14 +8,16 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
 /**
  * 繁育箱GUI菜单。
  * 布局：
- *   3个输入槽（左列：粪便消耗槽 + 两只苍蝇槽，不消耗）
- *   3个输出槽（右列）
+ *   顶部左侧粪便消耗槽 + 两只苍蝇槽（不消耗）
+ *   顶部右侧3个输出槽
  *   玩家背包 + 快捷栏
  */
 public class BreedingBoxMenu extends AbstractContainerMenu {
@@ -32,21 +34,29 @@ public class BreedingBoxMenu extends AbstractContainerMenu {
     private static final int HOTBAR_SLOT_END = 42;
 
     private final Container breedingBox;
+    private final ContainerData data;
 
     // 客户端用
     public BreedingBoxMenu(int containerId, Inventory playerInventory) {
-        this(containerId, playerInventory, new SimpleContainer(SLOT_COUNT));
+        this(containerId, playerInventory, new SimpleContainer(SLOT_COUNT), new SimpleContainerData(2));
     }
 
     // 服务端用
     public BreedingBoxMenu(int containerId, Inventory playerInventory, Container container) {
+        this(containerId, playerInventory, container, new SimpleContainerData(2));
+    }
+
+    public BreedingBoxMenu(int containerId, Inventory playerInventory, Container container, ContainerData data) {
         super(PMenuTypes.BREEDING_BOX.get(), containerId);
         checkContainerSize(container, SLOT_COUNT);
+        checkContainerDataCount(data, 2);
         this.breedingBox = container;
+        this.data = data;
         container.startOpen(playerInventory.player);
+        this.addDataSlots(data);
 
         // 粪便消耗槽
-        this.addSlot(new Slot(container, FECES_SLOT, 44, 17) {
+        this.addSlot(new Slot(container, FECES_SLOT, 8, 20) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return stack.is(PTags.Items.POOPS);
@@ -54,7 +64,7 @@ public class BreedingBoxMenu extends AbstractContainerMenu {
         });
 
         // 苍蝇槽1（不消耗）
-        this.addSlot(new Slot(container, FLY_SLOT_1, 44, 35) {
+        this.addSlot(new Slot(container, FLY_SLOT_1, 44, 20) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return FlyItem.isFlyItem(stack);
@@ -62,7 +72,7 @@ public class BreedingBoxMenu extends AbstractContainerMenu {
         });
 
         // 苍蝇槽2（不消耗）
-        this.addSlot(new Slot(container, FLY_SLOT_2, 44, 53) {
+        this.addSlot(new Slot(container, FLY_SLOT_2, 62, 20) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return FlyItem.isFlyItem(stack);
@@ -72,7 +82,7 @@ public class BreedingBoxMenu extends AbstractContainerMenu {
         // 3个输出槽
         for (int i = 0; i < 3; i++) {
             final int slotIndex = OUTPUT_SLOT_1 + i;
-            this.addSlot(new Slot(container, slotIndex, 116 + (i % 3) * 18, 35) {
+            this.addSlot(new Slot(container, slotIndex, 116 + i * 18, 20) {
                 @Override
                 public boolean mayPlace(ItemStack stack) {
                     return false;
@@ -83,13 +93,13 @@ public class BreedingBoxMenu extends AbstractContainerMenu {
         // 玩家背包
         for (int k = 0; k < 3; ++k) {
             for (int i1 = 0; i1 < 9; ++i1) {
-                this.addSlot(new Slot(playerInventory, i1 + k * 9 + 9, 8 + i1 * 18, 84 + k * 18));
+                this.addSlot(new Slot(playerInventory, i1 + k * 9 + 9, 8 + i1 * 18, 51 + k * 18));
             }
         }
 
         // 玩家快捷栏
         for (int l = 0; l < 9; ++l) {
-            this.addSlot(new Slot(playerInventory, l, 8 + l * 18, 142));
+            this.addSlot(new Slot(playerInventory, l, 8 + l * 18, 109));
         }
     }
 
@@ -151,5 +161,13 @@ public class BreedingBoxMenu extends AbstractContainerMenu {
     public void removed(Player player) {
         super.removed(player);
         this.breedingBox.stopOpen(player);
+    }
+
+    public int getProgress() {
+        return this.data.get(0);
+    }
+
+    public int getMaxProgress() {
+        return this.data.get(1);
     }
 }

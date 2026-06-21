@@ -7,14 +7,16 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
 /**
  * 苍蝇窝GUI菜单。
  * 布局：
- *   1个输入槽（左中，接苍蝇物品，不消耗）
- *   4个输出槽（右侧2×2）
+ *   顶部左侧1个输入槽（接苍蝇物品，不消耗）
+ *   顶部右侧4个输出槽
  *   玩家背包 + 快捷栏
  */
 public class FlyNestMenu extends AbstractContainerMenu {
@@ -30,63 +32,56 @@ public class FlyNestMenu extends AbstractContainerMenu {
     private static final int HOTBAR_SLOT_END = 41;
 
     private final Container flyNest;
+    private final ContainerData data;
 
     // 客户端用构造函数
     public FlyNestMenu(int containerId, Inventory playerInventory) {
-        this(containerId, playerInventory, new SimpleContainer(SLOT_COUNT));
+        this(containerId, playerInventory, new SimpleContainer(SLOT_COUNT), new SimpleContainerData(2));
     }
 
     // 服务端用构造函数
     public FlyNestMenu(int containerId, Inventory playerInventory, Container container) {
+        this(containerId, playerInventory, container, new SimpleContainerData(2));
+    }
+
+    public FlyNestMenu(int containerId, Inventory playerInventory, Container container, ContainerData data) {
         super(PMenuTypes.FLY_NEST.get(), containerId);
         checkContainerSize(container, SLOT_COUNT);
+        checkContainerDataCount(data, 2);
         this.flyNest = container;
+        this.data = data;
         container.startOpen(playerInventory.player);
+        this.addDataSlots(data);
 
         // 输入槽（苍蝇，不消耗）
-        this.addSlot(new Slot(container, INPUT_SLOT, 44, 35) {
+        this.addSlot(new Slot(container, INPUT_SLOT, 26, 20) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return FlyItem.isFlyItem(stack);
             }
         });
 
-        // 4个输出槽（2×2网格）
-        this.addSlot(new Slot(container, OUTPUT_SLOT_1, 116, 17) {
-            @Override
-            public boolean mayPlace(ItemStack stack) {
-                return false;
-            }
-        });
-        this.addSlot(new Slot(container, OUTPUT_SLOT_2, 134, 17) {
-            @Override
-            public boolean mayPlace(ItemStack stack) {
-                return false;
-            }
-        });
-        this.addSlot(new Slot(container, OUTPUT_SLOT_3, 116, 35) {
-            @Override
-            public boolean mayPlace(ItemStack stack) {
-                return false;
-            }
-        });
-        this.addSlot(new Slot(container, OUTPUT_SLOT_4, 134, 35) {
-            @Override
-            public boolean mayPlace(ItemStack stack) {
-                return false;
-            }
-        });
+        // 4个输出槽
+        for (int i = 0; i < 4; i++) {
+            final int slotIndex = OUTPUT_SLOT_1 + i;
+            this.addSlot(new Slot(container, slotIndex, 80 + i * 18, 20) {
+                @Override
+                public boolean mayPlace(ItemStack stack) {
+                    return false;
+                }
+            });
+        }
 
         // 玩家背包
         for (int k = 0; k < 3; ++k) {
             for (int i1 = 0; i1 < 9; ++i1) {
-                this.addSlot(new Slot(playerInventory, i1 + k * 9 + 9, 8 + i1 * 18, 84 + k * 18));
+                this.addSlot(new Slot(playerInventory, i1 + k * 9 + 9, 8 + i1 * 18, 51 + k * 18));
             }
         }
 
         // 玩家快捷栏
         for (int l = 0; l < 9; ++l) {
-            this.addSlot(new Slot(playerInventory, l, 8 + l * 18, 142));
+            this.addSlot(new Slot(playerInventory, l, 8 + l * 18, 109));
         }
     }
 
@@ -148,5 +143,13 @@ public class FlyNestMenu extends AbstractContainerMenu {
 
     public Container getContainer() {
         return flyNest;
+    }
+
+    public int getProgress() {
+        return this.data.get(0);
+    }
+
+    public int getMaxProgress() {
+        return this.data.get(1);
     }
 }

@@ -16,6 +16,7 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -40,6 +41,32 @@ public class FlyNestBlockEntity extends BlockEntity implements MenuProvider {
     private static final int MAX_PRODUCT_COUNT = 4;
 
     private int progress = 0;
+    private int currentInterval = BASE_TICK_INTERVAL;
+
+    private final ContainerData data = new ContainerData() {
+        @Override
+        public int get(int index) {
+            return switch (index) {
+                case 0 -> FlyNestBlockEntity.this.progress;
+                case 1 -> FlyNestBlockEntity.this.currentInterval;
+                default -> 0;
+            };
+        }
+
+        @Override
+        public void set(int index, int value) {
+            if (index == 0) {
+                FlyNestBlockEntity.this.progress = value;
+            } else if (index == 1) {
+                FlyNestBlockEntity.this.currentInterval = value;
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+    };
 
     private final ItemStackHandler itemHandler = new ItemStackHandler(TOTAL_SLOTS) {
         @Override
@@ -96,6 +123,7 @@ public class FlyNestBlockEntity extends BlockEntity implements MenuProvider {
         ItemStack inputStack = be.itemHandler.getStackInSlot(SLOT_INPUT);
         if (inputStack.isEmpty() || !FlyItem.isFlyItem(inputStack)) {
             be.progress = 0;
+            be.currentInterval = BASE_TICK_INTERVAL;
             return;
         }
 
@@ -104,10 +132,10 @@ public class FlyNestBlockEntity extends BlockEntity implements MenuProvider {
 
         // 环境加速：附近的粪便块越多，生产越快
         int envBonus = be.getEnvironmentBonus(level, pos);
-        int currentInterval = Math.max(20, BASE_TICK_INTERVAL - envBonus * 15);
+        be.currentInterval = Math.max(20, BASE_TICK_INTERVAL - envBonus * 15);
         be.progress++;
 
-        if (be.progress >= currentInterval) {
+        if (be.progress >= be.currentInterval) {
             be.produce();
             be.progress = 0;
         }
@@ -177,7 +205,7 @@ public class FlyNestBlockEntity extends BlockEntity implements MenuProvider {
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player player) {
-        return new com.altnoir.poopsky.inventory.FlyNestMenu(id, playerInventory, createContainerProxy());
+        return new com.altnoir.poopsky.inventory.FlyNestMenu(id, playerInventory, createContainerProxy(), data);
     }
 
     private Container createContainerProxy() {

@@ -19,8 +19,8 @@ import net.minecraft.world.item.ItemStack;
 public class FlyNestRecipeCategory implements IRecipeCategory<FlyNestJeiRecipe> {
     public static final RecipeType<FlyNestJeiRecipe> TYPE = RecipeType.create(PoopSky.MOD_ID, "fly_nest", FlyNestJeiRecipe.class);
 
-    private static final int WIDTH = 82;
-    private static final int HEIGHT = 36;
+    private static final int WIDTH = 83;
+    private static final int HEIGHT = 37;
 
     private final IDrawable icon;
     private final Component title;
@@ -43,14 +43,14 @@ public class FlyNestRecipeCategory implements IRecipeCategory<FlyNestJeiRecipe> 
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, FlyNestJeiRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 1, 9).addItemStack(recipe.flyInput());
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 57, 9).addItemStack(recipe.product());
+        builder.addSlot(RecipeIngredientRole.INPUT, 2, 10).addItemStack(recipe.flyInput());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 58, 10).addItemStack(recipe.product());
     }
 
     @Override
     public void draw(FlyNestJeiRecipe recipe, IRecipeSlotsView slotsView, GuiGraphics graphics, double mouseX, double mouseY) {
-        this.slot.draw(graphics, 0, 8);
-        this.arrow.draw(graphics, 24, 10);
-        this.slot.draw(graphics, 56, 8);
+        this.slot.draw(graphics, 1, 9);
+        this.arrow.draw(graphics, 25, 11);
+        this.slot.draw(graphics, 57, 9);
     }
 }

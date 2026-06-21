@@ -2,7 +2,6 @@ package com.altnoir.poopsky.compat.jei;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.PBlocks;
-import com.altnoir.poopsky.item.PItems;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
@@ -19,8 +18,8 @@ import net.minecraft.world.item.ItemStack;
 public class BreedingBoxRecipeCategory implements IRecipeCategory<BreedingBoxJeiRecipe> {
     public static final RecipeType<BreedingBoxJeiRecipe> TYPE = RecipeType.create(PoopSky.MOD_ID, "breeding_box", BreedingBoxJeiRecipe.class);
 
-    private static final int WIDTH = 76;
-    private static final int HEIGHT = 36;
+    private static final int WIDTH = 77;
+    private static final int HEIGHT = 37;
 
     private final IDrawable icon;
     private final Component title;
@@ -43,11 +42,11 @@ public class BreedingBoxRecipeCategory implements IRecipeCategory<BreedingBoxJei
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, BreedingBoxJeiRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 1, 1).addItemStack(recipe.flyInput1());
-        builder.addSlot(RecipeIngredientRole.INPUT, 1, 19).addItemStack(recipe.flyInput2());
+        builder.addSlot(RecipeIngredientRole.INPUT, 2, 2).addItemStack(recipe.flyInput1());
+        builder.addSlot(RecipeIngredientRole.INPUT, 2, 20).addItemStack(recipe.flyInput2());
 
         // 变异成功产物
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 57, 10)
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 58, 11)
                 .addItemStack(recipe.resultFly())
                 .addRichTooltipCallback((view, tooltip) -> {
                     float chance = recipe.chance();
@@ -58,9 +57,9 @@ public class BreedingBoxRecipeCategory implements IRecipeCategory<BreedingBoxJei
 
     @Override
     public void draw(BreedingBoxJeiRecipe recipe, IRecipeSlotsView slotsView, GuiGraphics graphics, double mouseX, double mouseY) {
-        this.slot.draw(graphics, 0, 0);
-        this.slot.draw(graphics, 0, 18);
-        this.arrow.draw(graphics, 24, 10);
-        this.slot.draw(graphics, 56, 10);
+        this.slot.draw(graphics, 1, 1);
+        this.slot.draw(graphics, 1, 19);
+        this.arrow.draw(graphics, 25, 11);
+        this.slot.draw(graphics, 57, 11);
     }
 }
