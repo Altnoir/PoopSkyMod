@@ -1,12 +1,12 @@
 package com.altnoir.poopsky.block;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.p.*;
 import com.altnoir.poopsky.block.fluid.UrineLiquidBlock;
+import com.altnoir.poopsky.block.p.*;
 import com.altnoir.poopsky.init.PBlockSetType;
 import com.altnoir.poopsky.init.PFluids;
-import com.altnoir.poopsky.item.PItems;
 import com.altnoir.poopsky.init.PWoodType;
+import com.altnoir.poopsky.item.PItems;
 import com.altnoir.poopsky.item.p.CompooperBlockItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.BlockItem;
@@ -80,7 +80,7 @@ public class PBlocks {
     public static final DeferredBlock<Block> POOLIME_POOP_BLOCK = registerBlock("poolime_poop_block",
             () -> new PoolimePoopBlock(BlockBehaviour.Properties.of()
                     .randomTicks()
-                    .strength(POOP)
+                    .strength(1.0F)
                     .mapColor(MapColor.COLOR_BROWN)
                     .speedFactor(0.4F)
                     .isValidSpawn(Blocks::always)

@@ -13,9 +13,9 @@ import net.minecraft.world.level.block.Blocks;
 
 import java.util.concurrent.CompletableFuture;
 
-public class PSDigestingRecipeProvider extends DigestingRecipeGen {
+public class PSDigestingRecipeGen extends DigestingRecipeGen {
 
-    public PSDigestingRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
+    public PSDigestingRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries, PoopSky.MOD_ID);
     }
 
@@ -23,6 +23,8 @@ public class PSDigestingRecipeProvider extends DigestingRecipeGen {
     public void buildRecipes(RecipeOutput output) {
         convert(Items.GLASS_BOTTLE, PItems.URINE_BOTTLE.get()).register(output);
         convert(Items.SNOWBALL, PItems.POOP_BALL.get()).register(output);
+        convert(Items.SNOW, PBlocks.POOP_PIECE.get()).register(output);
+        convert(Blocks.SNOW_BLOCK, PBlocks.POOP_BLOCK.get()).register(output);
         convert(Blocks.TNT, PBlocks.POOP_TNT.get()).register(output);
         convert(ItemTags.LEAVES, PItems.FOLIUM_SENNAE.get()).register(output);
         convert(Items.BREAD, PItems.POOP_BREAD.get()).register(output);

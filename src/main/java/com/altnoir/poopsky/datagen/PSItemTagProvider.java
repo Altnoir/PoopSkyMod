@@ -1,10 +1,10 @@
 package com.altnoir.poopsky.datagen;
 
+import com.altnoir.poopsky.PTags;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.item.PItems;
-import com.altnoir.poopsky.PTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
@@ -87,9 +87,6 @@ public class PSItemTagProvider extends ItemTagsProvider {
                 .add(PItems.ROUNDWORM.get());
         tag(Tags.Items.FOODS_COOKED_MEAT)
                 .add(PItems.BAKED_MAGGOTS.get());
-        tag(PTags.Items.PASTA)
-                .add(PItems.ROUNDWORM.get())
-                .add(PItems.POOP_PASTA.get());
 
         tag(Tags.Items.GUNPOWDERS)
                 .add(PItems.KING_OF_DRAGON_FRUIT.get());
@@ -111,6 +108,27 @@ public class PSItemTagProvider extends ItemTagsProvider {
                 .add(PItems.LIGHT_DANCE_MUSIC_DISC.get())
                 .add(PItems.MOON_BOWL_MUSIC_DISC.get());
 
+        tag(PTags.Items.PASTA)
+                .add(PItems.ROUNDWORM.get())
+                .add(PItems.POOP_PASTA.get());
+        tag(PTags.Items.SOUP)
+                .add(PItems.POOP_SOUP.get());
+        tag(PTags.Items.UPRIGHT_ON_BELT).replace(false)
+                .add(PItems.POOP_BREAD.get())
+                .add(PItems.POOP_DUMPLINGS.get())
+                .add(PItems.POOP_MOONCAKE.get())
+                .add(PItems.CHILI_POOP_MOONCAKE.get())
+                .add(PItems.GOLDEN_POOP_MOONCAKE.get())
+                .add(PItems.POOP_SOUP.get())
+                .add(PItems.POOP_VEGETABLE_STICKS.get())
+                .add(PItems.POOBURGER_MEAT.get())
+                .add(PItems.POOBURGER.get())
+                .add(PItems.POOP_PASTA.get())
+                .add(PItems.POODDING.get())
+                .add(PItems.DRAGON_BREATH_CHILI.get())
+                .add(PItems.KING_OF_DRAGON_FRUIT.get())
+                .add(PItems.URINE_BOTTLE.get())
+                .add(PBlocks.POOP_CAKE.get().asItem());
 
         //方块物品标签
         tag(ItemTags.DIRT)

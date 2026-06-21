@@ -58,7 +58,7 @@ public class DataGenerators {
 
         // Compat
         if (ModList.get().isLoaded(PSMods.CREATE.id())) {
-            generators.addProvider(event.includeServer(), new PSDigestingRecipeProvider(packOutput, lookupProvider));
+            generators.addProvider(event.includeServer(), new PSDigestingRecipeGen(packOutput, lookupProvider));
         }
     }
 }

@@ -1,34 +1,24 @@
 package com.altnoir.poopsky.block.p;
 
-import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.entity.p.PoolimeEntity;
-import com.altnoir.poopsky.init.PParticles;
-import com.altnoir.poopsky.init.PSoundEvents;
+import com.altnoir.poopsky.init.PEntityType;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.item.PrimedTnt;
-import net.minecraft.world.entity.vehicle.AbstractMinecart;
-import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.PathComputationType;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class PoolimePoopBlock extends Block {
     public static final MapCodec<PoolimePoopBlock> CODEC = simpleCodec(PoolimePoopBlock::new);
-    protected static final VoxelShape SHAPE = Block.box(1.0, 0.0, 1.0, 15.0, 14.0, 15.0);
+    protected static final VoxelShape SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 14.0, 16.0);
 
     public PoolimePoopBlock(Properties properties) {
         super(properties);
@@ -52,72 +42,6 @@ public class PoolimePoopBlock extends Block {
     @Override
     protected VoxelShape getVisualShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return Shapes.block();
-    }
-
-    @Override
-    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        if (this.isSlidingDown(pos, entity)) {
-            this.maybeDoSlideAchievement(entity, pos);
-            this.doSlideMovement(entity);
-            this.maybeDoSlideEffects(level, entity);
-        }
-
-        super.entityInside(state, level, pos, entity);
-    }
-
-    private boolean isSlidingDown(BlockPos pos, Entity entity) {
-        if (entity.onGround()) {
-            return false;
-        } else if (entity.getY() > (double) pos.getY() + 0.9375 - 1.0E-7) {
-            return false;
-        } else if (entity.getDeltaMovement().y >= -0.08) {
-            return false;
-        } else {
-            double d0 = Math.abs((double) pos.getX() + 0.5 - entity.getX());
-            double d1 = Math.abs((double) pos.getZ() + 0.5 - entity.getZ());
-            double d2 = 0.4375 + (double) (entity.getBbWidth() / 2.0F);
-            return d0 + 1.0E-7 > d2 || d1 + 1.0E-7 > d2;
-        }
-    }
-
-    private void maybeDoSlideAchievement(Entity entity, BlockPos pos) {
-        if (entity instanceof ServerPlayer && entity.level().getGameTime() % 20L == 0L) {
-            CriteriaTriggers.HONEY_BLOCK_SLIDE.trigger((ServerPlayer) entity, entity.level().getBlockState(pos));
-        }
-    }
-
-    private void doSlideMovement(Entity entity) {
-        Vec3 vec3 = entity.getDeltaMovement();
-        if (vec3.y < -0.13) {
-            double d0 = -0.05 / vec3.y;
-            entity.setDeltaMovement(new Vec3(vec3.x * d0, -0.05, vec3.z * d0));
-        } else {
-            entity.setDeltaMovement(new Vec3(vec3.x, -0.05, vec3.z));
-        }
-
-        entity.resetFallDistance();
-    }
-
-    private void maybeDoSlideEffects(Level level, Entity entity) {
-        if (doesEntityDoPoopBlockSlideEffects(entity)) {
-            if (level.random.nextInt(5) == 0) {
-                entity.playSound(PSoundEvents.BLOCK_POOLIME_POOP_BLOCK_SLIDE.get(), 1.0F, 1.0F);
-            }
-
-            if (!level.isClientSide && level.random.nextInt(5) == 0) {
-                ((ServerLevel) level).sendParticles(
-                        PParticles.POOP_PARTICLE.get(),
-                        entity.getX(), entity.getY() + 0.1, entity.getZ(),
-                        8,
-                        0.0, -0.1, 0.0,
-                        3.0
-                );
-            }
-        }
-    }
-
-    private static boolean doesEntityDoPoopBlockSlideEffects(Entity entity) {
-        return entity instanceof LivingEntity || entity instanceof AbstractMinecart || entity instanceof PrimedTnt || entity instanceof Boat;
     }
 
     @Override
