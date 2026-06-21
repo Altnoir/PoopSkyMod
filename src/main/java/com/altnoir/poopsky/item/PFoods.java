@@ -82,7 +82,6 @@ public class PFoods {
 
     public static final FoodProperties POOP_SOUP = new FoodProperties.Builder()
             .nutrition(6).saturationModifier(0.6F)
-            .alwaysEdible()
             .usingConvertsTo(Items.BOWL)
             .effect(() -> new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 3600), 1.0F)
             .effect(() -> new MobEffectInstance(MobEffects.HUNGER, 600), 0.5F)
