@@ -255,10 +255,9 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
         }
     }
 
-    protected static BlockState empty(@Nullable Entity entity, BlockState state, LevelAccessor level, BlockPos pos) {
+    protected static void empty(@Nullable Entity entity, BlockState state, LevelAccessor level, BlockPos pos) {
         var blockstate = state.setValue(MAGGOTS, false);
         level.setBlock(pos, blockstate, 3);
         level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(entity, blockstate));
-        return blockstate;
     }
 }

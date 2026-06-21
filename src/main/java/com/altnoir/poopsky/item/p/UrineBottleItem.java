@@ -38,9 +38,7 @@ public class UrineBottleItem extends Item {
         if (stack.isEmpty()) {
             return new ItemStack(Items.GLASS_BOTTLE);
         } else {
-            if (entity instanceof Player) {
-                Player player = (Player)entity;
-
+            if (entity instanceof Player player) {
                 if (!player.hasInfiniteMaterials()) {
                     ItemStack itemstack = new ItemStack(Items.GLASS_BOTTLE);
                     if (!player.getInventory().add(itemstack)) {

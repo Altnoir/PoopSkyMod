@@ -59,13 +59,11 @@ public class TimeBellItem extends Item {
 
         broadcastFreezeState(server, true);
 
-        pendingUnfreeze = SCHEDULER.schedule(() -> {
-            server.execute(() -> {
-                if (server.tickRateManager().isFrozen()) {
-                    unfreeze(server, player);
-                }
-            });
-        }, FREEZE_SECONDS, TimeUnit.SECONDS);
+        pendingUnfreeze = SCHEDULER.schedule(() -> server.execute(() -> {
+            if (server.tickRateManager().isFrozen()) {
+                unfreeze(server, player);
+            }
+        }), FREEZE_SECONDS, TimeUnit.SECONDS);
 
         player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BELL_BLOCK, SoundSource.PLAYERS, 1.0F, 0.5F);
         player.displayClientMessage(Component.translatable("message.poopsky.time_bell.frozen"), true);

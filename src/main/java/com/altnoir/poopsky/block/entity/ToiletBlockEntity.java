@@ -25,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 public class ToiletBlockEntity extends BlockEntity {
     private BlockPos linkedPos;
     private String linkedDim;
-    public FluidTank fluidTank = new FluidTank(8888000) {
+    public final FluidTank fluidTank = new FluidTank(8888000) {
         @Override
         protected void onContentsChanged() {
             setChanged();

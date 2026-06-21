@@ -12,7 +12,6 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.armortrim.TrimMaterials;
-import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -22,7 +21,7 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import java.util.LinkedHashMap;
 
 public class PSItemModelProvider extends ItemModelProvider {
-    private static LinkedHashMap<ResourceKey<TrimMaterial>, Float> trimMaterials = new LinkedHashMap<>();
+    private static final LinkedHashMap<ResourceKey<TrimMaterial>, Float> trimMaterials = new LinkedHashMap<>();
 
     static {
         trimMaterials.put(TrimMaterials.QUARTZ, 0.1F);
@@ -102,8 +101,8 @@ public class PSItemModelProvider extends ItemModelProvider {
         trimmedArmorItem(PItems.OMEN_BOOTS);
     }
 
-    private ItemModelBuilder bigSowordItem(Item item) {
-        return this.withExistingParent(getItemPath(item), modLoc("item/big_sword"))
+    private void bigSowordItem(Item item) {
+        this.withExistingParent(getItemPath(item), modLoc("item/big_sword"))
                 .texture("layer0", PoopSky.loc("item/" + getItemPath(item)));
     }
 
@@ -113,41 +112,40 @@ public class PSItemModelProvider extends ItemModelProvider {
     }
 
     private void trimmedArmorItem(DeferredItem<ArmorItem> itemDeferredItem) {
-        if (itemDeferredItem.get() instanceof ArmorItem armorItem) {
-            trimMaterials.forEach((trimMaterial, value) -> {
-                float trimValue = value;
+        ArmorItem armorItem = itemDeferredItem.get();
+        trimMaterials.forEach((trimMaterial, value) -> {
+            float trimValue = value;
 
-                String armorType = switch (armorItem.getEquipmentSlot()) {
-                    case HEAD -> "helmet";
-                    case CHEST -> "chestplate";
-                    case LEGS -> "leggings";
-                    case FEET -> "boots";
-                    default -> "";
-                };
+            String armorType = switch (armorItem.getEquipmentSlot()) {
+                case HEAD -> "helmet";
+                case CHEST -> "chestplate";
+                case LEGS -> "leggings";
+                case FEET -> "boots";
+                default -> "";
+            };
 
-                String armorItemPath = armorItem.toString();
-                String trimPath = "trims/items/" + armorType + "_trim_" + trimMaterial.location().getPath();
-                String currentTrimName = armorItemPath + "_" + trimMaterial.location().getPath() + "_trim";
-                ResourceLocation armorItemResLoc = ResourceLocation.parse(armorItemPath);
-                ResourceLocation trimResLoc = ResourceLocation.parse(trimPath); // minecraft namespace
-                ResourceLocation trimNameResLoc = ResourceLocation.parse(currentTrimName);
+            String armorItemPath = armorItem.toString();
+            String trimPath = "trims/items/" + armorType + "_trim_" + trimMaterial.location().getPath();
+            String currentTrimName = armorItemPath + "_" + trimMaterial.location().getPath() + "_trim";
+            ResourceLocation armorItemResLoc = ResourceLocation.parse(armorItemPath);
+            ResourceLocation trimResLoc = ResourceLocation.parse(trimPath); // minecraft namespace
+            ResourceLocation trimNameResLoc = ResourceLocation.parse(currentTrimName);
 
-                existingFileHelper.trackGenerated(trimResLoc, PackType.CLIENT_RESOURCES, ".png", "textures");
+            existingFileHelper.trackGenerated(trimResLoc, PackType.CLIENT_RESOURCES, ".png", "textures");
 
-                getBuilder(currentTrimName)
-                        .parent(new ModelFile.UncheckedModelFile("item/generated"))
-                        .texture("layer0", armorItemResLoc.getNamespace() + ":item/" + armorItemResLoc.getPath())
-                        .texture("layer1", trimResLoc);
+            getBuilder(currentTrimName)
+                    .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                    .texture("layer0", armorItemResLoc.getNamespace() + ":item/" + armorItemResLoc.getPath())
+                    .texture("layer1", trimResLoc);
 
-                this.withExistingParent(itemDeferredItem.getId().getPath(),
-                                mcLoc("item/generated"))
-                        .override()
-                        .model(new ModelFile.UncheckedModelFile(trimNameResLoc.getNamespace() + ":item/" + trimNameResLoc.getPath()))
-                        .predicate(mcLoc("trim_type"), trimValue).end()
-                        .texture("layer0",
-                                PoopSky.loc("item/" + itemDeferredItem.getId().getPath()));
-            });
-        }
+            this.withExistingParent(itemDeferredItem.getId().getPath(),
+                            mcLoc("item/generated"))
+                    .override()
+                    .model(new ModelFile.UncheckedModelFile(trimNameResLoc.getNamespace() + ":item/" + trimNameResLoc.getPath()))
+                    .predicate(mcLoc("trim_type"), trimValue).end()
+                    .texture("layer0",
+                            PoopSky.loc("item/" + itemDeferredItem.getId().getPath()));
+        });
     }
 
     private String getItemPath(Item item) {

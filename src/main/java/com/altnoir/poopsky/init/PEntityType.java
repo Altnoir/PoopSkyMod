@@ -14,14 +14,14 @@ import java.util.function.Supplier;
 public class PEntityType {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(Registries.ENTITY_TYPE, PoopSky.MOD_ID);
 
-    public static Supplier<EntityType<ToiletPlugEntity>> TOILET_PLUG = ENTITY_TYPES.register("toilet_plug", () ->
+    public static final Supplier<EntityType<ToiletPlugEntity>> TOILET_PLUG = ENTITY_TYPES.register("toilet_plug", () ->
             EntityType.Builder.of(ToiletPlugEntity::new, MobCategory.MISC)
                     .fireImmune()
                     .clientTrackingRange(10)
                     .sized(0.75F, 0.35F)
                     .build("toilet_plug"));
 
-    public static Supplier<EntityType<PoolimeEntity>> POOLIME = ENTITY_TYPES.register("poolime", () ->
+    public static final Supplier<EntityType<PoolimeEntity>> POOLIME = ENTITY_TYPES.register("poolime", () ->
             EntityType.Builder.of(PoolimeEntity::new, MobCategory.MONSTER)
                     .sized(0.52F, 0.52F)
                     .eyeHeight(0.325F)
@@ -29,19 +29,19 @@ public class PEntityType {
                     .clientTrackingRange(10)
                     .build("pooplime"));
 
-    public static Supplier<EntityType<FlyEntity>> FLY = ENTITY_TYPES.register("fly", () ->
+    public static final Supplier<EntityType<FlyEntity>> FLY = ENTITY_TYPES.register("fly", () ->
             EntityType.Builder.of(FlyEntity::new, MobCategory.MONSTER)
                     .sized(0.7F, 0.6F)
                     .eyeHeight(0.3F)
                     .clientTrackingRange(8)
                     .build("fly"));
 
-    public static Supplier<EntityType<ChairEntity>> STOOL = ENTITY_TYPES.register("stool_entity", () ->
+    public static final Supplier<EntityType<ChairEntity>> STOOL = ENTITY_TYPES.register("stool_entity", () ->
             EntityType.Builder.of(ChairEntity::new, MobCategory.MISC)
                     .sized(0.5F, 0.5F)
                     .build("stool_entity"));
 
-    public static Supplier<EntityType<ToiletEntity>> TOILET = ENTITY_TYPES.register("toilet_entity", () ->
+    public static final Supplier<EntityType<ToiletEntity>> TOILET = ENTITY_TYPES.register("toilet_entity", () ->
             EntityType.Builder.of(ToiletEntity::new, MobCategory.MISC)
                     .sized(0.75F, 1.0F)
                     .build("toilet_entity"));
