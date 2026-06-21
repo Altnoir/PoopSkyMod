@@ -6,21 +6,18 @@
     }
   ],
   "type": "farmersdelight:cooking",
-  "experience": 1.0,
+  "cookingtime": 80,
+  "experience": 0.35,
   "ingredients": [
     {
-      "item": "poopsky:poop"
+      "tag": "minecraft:leaves"
     },
     {
-      "item": "poopsky:maggots_seeds"
-    },
-    {
-      "item": "poopsky:urine_bottle"
+      "item": "poopsky:poop_ball"
     }
   ],
-  "recipe_book_tab": "meals",
   "result": {
     "count": 1,
-    "id": "poopsky:poop_soup"
+    "id": "poopsky:poop_dumplings"
   }
 }

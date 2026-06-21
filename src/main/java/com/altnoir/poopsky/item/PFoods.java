@@ -98,7 +98,7 @@ public class PFoods {
             .build();
 
     public static final FoodProperties POOBURGER_MEAT = new FoodProperties.Builder()
-            .nutrition(6).saturationModifier(0.8F)
+            .nutrition(3).saturationModifier(0.4F)
             .effect(() -> new MobEffectInstance(MobEffects.POISON, 200), 0.1F)
             .effect(() -> new MobEffectInstance(MobEffects.HUNGER, 600), 0.5F)
             .effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 1200), 0.75F)
@@ -107,7 +107,7 @@ public class PFoods {
             .build();
 
     public static final FoodProperties POOBURGER = new FoodProperties.Builder()
-            .nutrition(18).saturationModifier(0.8F)
+            .nutrition(9).saturationModifier(0.8F)
             .effect(() -> new MobEffectInstance(MobEffects.DAMAGE_BOOST, 3600, 1), 1.0F)
             .effect(() -> new MobEffectInstance(MobEffects.HUNGER, 1200, 1), 0.5F)
             .effect(() -> new MobEffectInstance(MobEffects.BLINDNESS, 40), 1.0F)
@@ -115,7 +115,7 @@ public class PFoods {
             .build();
 
     public static final FoodProperties POOP_PASTA = new FoodProperties.Builder()
-            .nutrition(3).saturationModifier(0.8F)
+            .nutrition(2).saturationModifier(0.4F)
             .effect(() -> new MobEffectInstance(MobEffects.WATER_BREATHING, 200), 1.0F)
             .effect(() -> new MobEffectInstance(MobEffects.HUNGER, 600), 0.5F)
             .effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 200), 0.5F)
@@ -124,7 +124,7 @@ public class PFoods {
             .build();
 
     public static final FoodProperties POODDING = new FoodProperties.Builder()
-            .nutrition(3).saturationModifier(0.1F)
+            .nutrition(3).saturationModifier(0.5F)
             .effect(() -> new MobEffectInstance(MobEffects.BLINDNESS, 20), 1.0F)
             .effect(() -> new MobEffectInstance(MobEffects.DARKNESS, 60), 1.0F)
             .build();

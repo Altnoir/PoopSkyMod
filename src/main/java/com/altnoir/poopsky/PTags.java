@@ -42,6 +42,9 @@ public class PTags {
         TagKey<Item> TOILET_BLOCKS = create("toilet_blocks");
 
         TagKey<Item> PASTA = tag("foods/pasta");
+        TagKey<Item> SOUP = tag("foods/soup");
+
+        TagKey<Item> UPRIGHT_ON_BELT = createCreate("upright_on_belt");
 
         private static TagKey<Item> create(String name) {
             return TagKey.create(Registries.ITEM, PoopSky.loc(name));
@@ -50,6 +53,11 @@ public class PTags {
         private static TagKey<Item> tag(String name) {
             return ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", name));
         }
+
+        private static TagKey<Item> createCreate(String name) {
+            return ItemTags.create(ResourceLocation.fromNamespaceAndPath("create", name));
+        }
+
     }
 
     public interface EntityTypes {

@@ -62,6 +62,7 @@ public class PItems {
             new Item(new Item.Properties().food(PFoods.POOP_PASTA).stacksTo(88)));
     public static final DeferredItem<Item> POODDING = ITEMS.register("poodding", () ->
             new Item(new Item.Properties().food(PFoods.POODDING).stacksTo(88)));
+
     public static final DeferredItem<Item> DRAGON_BREATH_CHILI = ITEMS.register("dragon_breath_chili", () ->
             new Item(new Item.Properties().food(PFoods.DRAGON_BREATH_CHILI)));
     public static final DeferredItem<Item> KING_OF_DRAGON_FRUIT = ITEMS.register("king_of_dragon_fruit", () ->
