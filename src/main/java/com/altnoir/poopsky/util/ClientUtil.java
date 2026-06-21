@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.ColorResolver;
 import net.minecraft.world.level.LightLayer;
@@ -154,7 +155,7 @@ public class ClientUtil {
 
     public static boolean isPoopSkyWorldType(WorldCreationUiState.WorldTypeEntry worldType) {
         return Optional.ofNullable(worldType.preset())
-                .flatMap(holder -> holder.unwrapKey())
+                .flatMap(Holder::unwrapKey)
                 .filter(ASMHooks.POOPSKY::equals)
                 .isPresent();
     }

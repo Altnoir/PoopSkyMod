@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.entity.p;
 
-import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.PTags;
+import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.util.PoopTntUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -18,8 +18,7 @@ import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class PoopTntEntity extends Entity implements TraceableEntity {
     private static final EntityDataAccessor<Integer> DATA_FUSE_ID = SynchedEntityData.defineId(PoopTntEntity.class, EntityDataSerializers.INT);
@@ -30,7 +29,7 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
     private static final int MAX_EXPLOSION_RADIUS = 9;
     private static final double INSTANT_EXPLOSION_THRESHOLD = 0.5;
 
-    @javax.annotation.Nullable
+    @Nullable
     private LivingEntity owner;
 
     public PoopTntEntity(EntityType<? extends PoopTntEntity> entityType, Level level) {
@@ -38,7 +37,7 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
         this.blocksBuilding = true;
     }
 
-    public PoopTntEntity(Level level, double x, double y, double z, @javax.annotation.Nullable LivingEntity owner) {
+    public PoopTntEntity(Level level, double x, double y, double z, @Nullable LivingEntity owner) {
         this(PEntityType.POOP_TNT.get(), level);
         this.setPos(x, y, z);
         double d = level.random.nextDouble() * (double) ((float) Math.PI * 2F);

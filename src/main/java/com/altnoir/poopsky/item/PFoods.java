@@ -4,6 +4,7 @@ import com.altnoir.poopsky.init.PEffects;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.Items;
 
 public class PFoods {
     public static final FoodProperties POOP = new FoodProperties.Builder()
@@ -81,6 +82,8 @@ public class PFoods {
 
     public static final FoodProperties POOP_SOUP = new FoodProperties.Builder()
             .nutrition(6).saturationModifier(0.6F)
+            .alwaysEdible()
+            .usingConvertsTo(Items.BOWL)
             .effect(() -> new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 3600), 1.0F)
             .effect(() -> new MobEffectInstance(MobEffects.HUNGER, 600), 0.5F)
             .effect(() -> new MobEffectInstance(MobEffects.GLOWING, 2400), 1.0F)

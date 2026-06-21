@@ -15,9 +15,7 @@ public record TimeBellFreezePayload(boolean frozen) implements CustomPacketPaylo
     );
 
     public static void handle(final TimeBellFreezePayload payload, final IPayloadContext context) {
-        context.enqueueWork(() -> {
-            TimeBellOverlay.setFrozen(payload.frozen());
-        });
+        context.enqueueWork(() -> TimeBellOverlay.setFrozen(payload.frozen()));
     }
 
     private static void encode(FriendlyByteBuf buf, TimeBellFreezePayload payload) {

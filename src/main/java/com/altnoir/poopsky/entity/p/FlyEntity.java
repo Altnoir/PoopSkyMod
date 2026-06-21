@@ -131,11 +131,6 @@ public class FlyEntity extends Animal implements FlyingAnimal {
     }
 
     @Override
-    protected int getBaseExperienceReward() {
-        return super.getBaseExperienceReward();
-    }
-
-    @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         if (compound.contains("EggLayTime")) {

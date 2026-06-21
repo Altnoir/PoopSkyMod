@@ -45,7 +45,7 @@ public class OmenSmithingTemplateItem extends SmithingTemplateItem {
     }
 
     public static SmithingTemplateItem createOmenUpgradeTemplate() {
-        return new SmithingTemplateItem(OMEN_UPGRADE_APPLIES_TO, OMEN_UPGRADE_INGREDIENTS, OMEN_UPGRADE, OMEN_UPGRADE_BASE_SLOT_DESCRIPTION, OMEN_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, createNetheriteUpgradeIconList(), createNetheriteUpgradeMaterialList(), new FeatureFlag[0]);
+        return new SmithingTemplateItem(OMEN_UPGRADE_APPLIES_TO, OMEN_UPGRADE_INGREDIENTS, OMEN_UPGRADE, OMEN_UPGRADE_BASE_SLOT_DESCRIPTION, OMEN_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, createNetheriteUpgradeIconList(), createNetheriteUpgradeMaterialList());
     }
 
     private static List<ResourceLocation> createNetheriteUpgradeIconList() {

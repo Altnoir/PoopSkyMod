@@ -33,8 +33,8 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class ToiletPlugEntity extends VehicleEntity implements Leashable {
     private LeashData leashData;
