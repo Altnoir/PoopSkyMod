@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.villager;
 
-import com.altnoir.poopsky.tag.PItemTags;
+import com.altnoir.poopsky.PTags;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.behavior.EntityTracker;
@@ -43,6 +43,6 @@ public class PVillagerBehaviors {
     }
 
     private static boolean isHoldingPoop(Player player) {
-        return player.getMainHandItem().is(PItemTags.POOPS) || player.getOffhandItem().is(PItemTags.POOPS);
+        return player.getMainHandItem().is(PTags.Items.POOPS) || player.getOffhandItem().is(PTags.Items.POOPS);
     }
 }

@@ -1,0 +1,13 @@
+{
+  "type": "poopsky:digesting",
+  "ingredients": [
+    {
+      "item": "minecraft:snowball"
+    }
+  ],
+  "results": [
+    {
+      "id": "poopsky:poop_ball"
+    }
+  ]
+}

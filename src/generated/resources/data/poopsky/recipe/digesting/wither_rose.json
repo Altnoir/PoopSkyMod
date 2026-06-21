@@ -1,0 +1,13 @@
+{
+  "type": "poopsky:digesting",
+  "ingredients": [
+    {
+      "item": "minecraft:poppy"
+    }
+  ],
+  "results": [
+    {
+      "id": "minecraft:wither_rose"
+    }
+  ]
+}

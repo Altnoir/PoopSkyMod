@@ -15,10 +15,10 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
-// TODO 无法显示配方ID
-public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
-    public static final RecipeType<SieveRecipe> TYPE = RecipeType.create(PoopSky.MOD_ID, "sieve", SieveRecipe.class);
+public class SieveRecipeCategory implements IRecipeCategory<RecipeHolder<SieveRecipe>> {
+    public static final RecipeType<RecipeHolder<SieveRecipe>> TYPE = RecipeType.createRecipeHolderType(PoopSky.loc("sieve"));
 
     private static final int WIDTH = 145;
     private static final int HEIGHT = 36;
@@ -45,8 +45,9 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
         this.slot = guiHelper.getSlotDrawable();
     }
 
+
     @Override
-    public RecipeType<SieveRecipe> getRecipeType() {
+    public RecipeType<RecipeHolder<SieveRecipe>> getRecipeType() {
         return TYPE;
     }
 
@@ -61,17 +62,8 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
     }
 
     @Override
-    public int getWidth() {
-        return WIDTH;
-    }
-
-    @Override
-    public int getHeight() {
-        return HEIGHT;
-    }
-
-    @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, SieveRecipe recipe, IFocusGroup focuses) {
+    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<SieveRecipe> recipeHolder, IFocusGroup focuses) {
+        var recipe = recipeHolder.value();
         builder.addSlot(RecipeIngredientRole.INPUT, INPUT_X, INPUT_Y)
                 .addIngredients(recipe.input());
 
@@ -84,14 +76,14 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
                 var chanceItem = recipe.outputs().get(index);
                 slotBuilder.addItemStack(chanceItem.stack().copy()).addRichTooltipCallback(
                         (slotView, tooltip) -> tooltip.add(
-                                Component.translatable("jei.poopsky.sieve_chance",String.format("%.2f", chanceItem.chance() * 100.0F)).withStyle(ChatFormatting.GRAY)
+                                Component.translatable("jei.poopsky.sieve_chance", String.format("%.2f", chanceItem.chance() * 100.0F)).withStyle(ChatFormatting.GRAY)
                         ));
             }
         }
     }
 
     @Override
-    public void draw(SieveRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+    public void draw(RecipeHolder<SieveRecipe> recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         this.slot.draw(guiGraphics, INPUT_X - 1, INPUT_Y - 1);
         this.arrow.draw(guiGraphics, ARROW_X, ARROW_Y);
 
@@ -101,4 +93,16 @@ public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
             this.slot.draw(guiGraphics, x - 1, y - 1);
         }
     }
+
+    @Override
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
+    }
+
+
 }

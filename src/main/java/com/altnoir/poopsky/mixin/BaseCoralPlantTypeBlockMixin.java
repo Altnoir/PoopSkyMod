@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.mixin;
 
-import com.altnoir.poopsky.tag.PBlockTags;
+import com.altnoir.poopsky.PTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
@@ -16,7 +16,7 @@ public class BaseCoralPlantTypeBlockMixin {
     @Inject(method = "scanForWater", at = @At("HEAD"), cancellable = true)
     private static void injectScanForWater(BlockState state, BlockGetter level, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
         for (Direction direction : Direction.values()) {
-            if (level.getBlockState(pos.relative(direction)).is(PBlockTags.WATER_BLOCK)) {
+            if (level.getBlockState(pos.relative(direction)).is(PTags.Blocks.WATER_BLOCK)) {
                 cir.setReturnValue(true);
             }
         }

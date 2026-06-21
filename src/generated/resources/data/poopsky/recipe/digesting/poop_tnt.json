@@ -1,0 +1,13 @@
+{
+  "type": "poopsky:digesting",
+  "ingredients": [
+    {
+      "item": "minecraft:tnt"
+    }
+  ],
+  "results": [
+    {
+      "id": "poopsky:poop_tnt"
+    }
+  ]
+}

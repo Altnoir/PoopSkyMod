@@ -306,13 +306,18 @@
   "subtitle.poopsky.poolime.death": "Poolime dies",
   "subtitle.poopsky.poolime.hurt": "Poolime hurts",
   "subtitle.poopsky.poolime.squish": "Poolime squishes",
+  "subtitles.poopsky.pop.primed": "POP fizzes",
   "subtitles.poopsky.item.toilet_linker.boop": "Toilet Plug Wand links",
   "subtitles.poopsky.item.toilet_linker.success": "Toilet Plug Wand binds",
 
   "tag.item.poopsky.compooper_saplings": "Compooper can produce saplings",
   "jei.category.poopsky.compooper": "Compooper",
   "jei.category.poopsky.sieve": "Sieve",
+  "jei.category.poopsky.digesting": "Digesting",
+  "jei.category.poopsky.digesting.fan": "Place Digesting Fan After Urine Liquid",
   "jei.poopsky.sieve_chance": "Chance: %.2f%%",
+  "jei.poopsky.digesting_chance": "Chance: %.2f%%",
+  "create.item_attributes.can_be_digested": "Can be digested",
   "task.poopsky.defecate": "Defecate",
   "task.poopsky.defecate.desc": "Maid will search for toilets around",
 

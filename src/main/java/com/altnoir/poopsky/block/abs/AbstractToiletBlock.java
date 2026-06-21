@@ -5,7 +5,8 @@ import com.altnoir.poopsky.block.p.ToiletLavaBlock;
 import com.altnoir.poopsky.entity.p.ToiletEntity;
 import com.altnoir.poopsky.init.*;
 import com.altnoir.poopsky.item.PItems;
-import com.altnoir.poopsky.tag.PBlockTags;
+import com.altnoir.poopsky.PTags;
+import com.altnoir.poopsky.util.toiletUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
@@ -26,7 +27,6 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -102,7 +102,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
                 entity = entities.getFirst();
             }
             if (entity instanceof ToiletEntity toiletEntity) {
-                toiletEntity.setGoldenPoop(state.is(PBlockTags.GOLDEN_TOILET_BLOCKS));
+                toiletEntity.setGoldenPoop(state.is(PTags.Blocks.GOLDEN_TOILET_BLOCKS));
             }
             player.startRiding(entity);
         }
@@ -150,7 +150,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
 
     private void poopAnvil(Level level, BlockState blockState, Entity entity) {
         Item poopItem;
-        if (blockState.is(PBlockTags.GOLDEN_TOILET_BLOCKS)) {
+        if (blockState.is(PTags.Blocks.GOLDEN_TOILET_BLOCKS)) {
             poopItem = PItems.GOLDEN_POOP.get();
         } else {
             poopItem = PItems.POOP.get();
@@ -164,20 +164,10 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
         if (!level.isClientSide && entity instanceof Player player) {
             if (player.isShiftKeyDown() && isEntityCentered(pos, player)) {
-                if (player.hasEffect(PEffects.FECAL_INCONTINENCE)) {
-                    onPoop(level, player, player.hasEffect(PEffects.INTESTINAL_SPASM));
-                    player.causeFoodExhaustion(0.05F);
-                } else {
-                    var playerData = player.getPersistentData();
-                    long poopTime = playerData.getLong("poopTime");
-                    long gameTime = level.getGameTime();
-
-                    if (poopTime == 0 || gameTime - poopTime >= 20) {
-                        onPoop(level, player, player.hasEffect(PEffects.INTESTINAL_SPASM));
-                        player.causeFoodExhaustion(1.0F);
-                        playerData.putLong("poopTime", gameTime);
-                    }
-                }
+                var playerData = player.getPersistentData();
+                long lastPoopTime = playerData.getLong("poopTime");
+                toiletUtil.canPoop(level, player, player.hasEffect(PEffects.INTESTINAL_SPASM), false, 0.1F, 0.5F, lastPoopTime,
+                        time -> playerData.putLong("poopTime", time));
             }
         }
     }
@@ -185,40 +175,6 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     protected boolean isEntityCentered(BlockPos blockPos, Entity entity) {
         var blockAABB = new AABB(blockPos).inflate(0.2);
         return blockAABB.contains(entity.position());
-    }
-
-    protected void onPoop(Level level, Player player, boolean isFire) {
-        if (player.getFoodData().getFoodLevel() <= 0) {
-            player.hurt(level.damageSources().wither(), 1.0F);
-
-            var redStone = new ItemEntity(level, player.getX(), player.getY() + 0.1, player.getZ(), new ItemStack(Items.REDSTONE));
-            redStone.setDefaultPickUpDelay();
-            level.addFreshEntity(redStone);
-        } else {
-            Item poopItem;
-            if (isFire) {
-                poopItem = PItems.CHILI_POOP.get();
-            } else {
-                poopItem = PItems.POOP.get();
-            }
-            var poop = new ItemEntity(level, player.getX(), player.getY() + 0.1, player.getZ(), new ItemStack(poopItem));
-            poop.setDefaultPickUpDelay();
-            level.addFreshEntity(poop);
-        }
-        var pitch = level.random.nextFloat() + 0.5F;
-        level.playSound(null, player.getX(), player.getY() + 0.1, player.getZ(), PSoundEvents.FART.get(), SoundSource.PLAYERS, 1.0F, pitch);
-        ((ServerLevel) level).sendParticles(
-                PParticles.POOP_PARTICLE.get(),
-                player.getX(),
-                player.getY() + 0.1,
-                player.getZ(),
-                8,
-                0.0,
-                -0.1,
-                0.0,
-                3.0
-        );
-        player.awardStat(PStats.POOP_STATS.get());
     }
 
     public void teleportEntity(Level level, Entity entity, ToiletBlockEntity blockEntity, float fallDistance) {

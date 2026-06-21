@@ -19,7 +19,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.Set;
 import java.util.function.Supplier;
 
-public class PSItemGroups {
+public class PItemGroups {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TAB = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, PoopSky.MOD_ID);
 
     public static final Supplier<CreativeModeTab> POOPSKY_TAB = CREATIVE_MODE_TAB.register("poopsky_tab", () -> CreativeModeTab.builder()

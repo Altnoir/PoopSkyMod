@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.entity.p;
 
+import com.altnoir.poopsky.PTags;
 import com.altnoir.poopsky.init.PEntityType;
-import com.altnoir.poopsky.tag.PBlockTags;
 import com.altnoir.poopsky.util.PoopTntUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -18,8 +18,7 @@ import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class PoopTntEntity extends Entity implements TraceableEntity {
     private static final EntityDataAccessor<Integer> DATA_FUSE_ID = SynchedEntityData.defineId(PoopTntEntity.class, EntityDataSerializers.INT);
@@ -30,7 +29,7 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
     private static final int MAX_EXPLOSION_RADIUS = 9;
     private static final double INSTANT_EXPLOSION_THRESHOLD = 0.5;
 
-    @javax.annotation.Nullable
+    @Nullable
     private LivingEntity owner;
 
     public PoopTntEntity(EntityType<? extends PoopTntEntity> entityType, Level level) {
@@ -38,7 +37,7 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
         this.blocksBuilding = true;
     }
 
-    public PoopTntEntity(Level level, double x, double y, double z, @javax.annotation.Nullable LivingEntity owner) {
+    public PoopTntEntity(Level level, double x, double y, double z, @Nullable LivingEntity owner) {
         this(PEntityType.POOP_TNT.get(), level);
         this.setPos(x, y, z);
         double d = level.random.nextDouble() * (double) ((float) Math.PI * 2F);
@@ -83,7 +82,7 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
         if (!this.level().isClientSide) {
             var state = this.level().getBlockState(this.getOnPos());
 
-            if (impactSpeed > INSTANT_EXPLOSION_THRESHOLD && !state.is(PBlockTags.EMPTY_LOGS) && (this.horizontalCollision || this.verticalCollision)) {
+            if (impactSpeed > INSTANT_EXPLOSION_THRESHOLD && !state.is(PTags.Blocks.EMPTY_LOGS) && (this.horizontalCollision || this.verticalCollision)) {
                 this.setDeltaMovement(movement);
                 this.discard();
                 PoopTntUtil.triggerExplosion(this, radius + 1);
@@ -121,7 +120,7 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
         BlockPos checkPos = BlockPos.containing(midPos.x, midPos.y, midPos.z);
         BlockState state = this.level().getBlockState(checkPos);
 
-        if (state.is(PBlockTags.EMPTY_LOGS) && state.hasProperty(DirectionalBlock.FACING)) {
+        if (state.is(PTags.Blocks.EMPTY_LOGS) && state.hasProperty(DirectionalBlock.FACING)) {
             var direction = state.getValue(DirectionalBlock.FACING);
             Vec3 motion = getMotion(direction);
             this.setDeltaMovement(motion);

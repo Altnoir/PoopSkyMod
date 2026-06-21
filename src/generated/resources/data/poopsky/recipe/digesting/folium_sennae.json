@@ -1,0 +1,13 @@
+{
+  "type": "poopsky:digesting",
+  "ingredients": [
+    {
+      "tag": "minecraft:leaves"
+    }
+  ],
+  "results": [
+    {
+      "id": "poopsky:folium_sennae"
+    }
+  ]
+}

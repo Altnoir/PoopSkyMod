@@ -8,7 +8,7 @@ public class PSNetworking {
     private static final String VERSION = "1";
 
     @SubscribeEvent
-    public static void register(RegisterPayloadHandlersEvent event){
+    public static void register(RegisterPayloadHandlersEvent event) {
         var registrar = event.registrar(PoopSky.MOD_ID).versioned(VERSION);
         registrar.playToServer(
                 PlugActionPayload.TYPE,
@@ -25,6 +25,10 @@ public class PSNetworking {
                 PlugInputPayload.CODEC,
                 PlugInputPayload::handle
         );
-
+        registrar.playToClient(
+                TimeBellFreezePayload.TYPE,
+                TimeBellFreezePayload.CODEC,
+                TimeBellFreezePayload::handle
+        );
     }
 }

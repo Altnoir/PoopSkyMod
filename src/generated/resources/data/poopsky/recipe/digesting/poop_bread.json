@@ -1,0 +1,13 @@
+{
+  "type": "poopsky:digesting",
+  "ingredients": [
+    {
+      "item": "minecraft:bread"
+    }
+  ],
+  "results": [
+    {
+      "id": "poopsky:poop_bread"
+    }
+  ]
+}

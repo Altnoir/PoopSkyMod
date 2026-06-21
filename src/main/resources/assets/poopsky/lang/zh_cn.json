@@ -306,13 +306,18 @@
   "subtitle.poopsky.poolime.death": "屎莱姆：死亡",
   "subtitle.poopsky.poolime.hurt": "屎莱姆：受伤",
   "subtitle.poopsky.poolime.squish": "屎莱姆：挤压",
+  "subtitles.poopsky.pop.primed": "POP：嘶嘶作响",
   "subtitles.poopsky.item.toilet_linker.boop": "马桶制杖：连接",
   "subtitles.poopsky.item.toilet_linker.success": "马桶制杖：绑定",
 
   "tag.item.poopsky.compooper_saplings": "堆粪桶可产出树苗",
   "jei.category.poopsky.compooper": "堆粪桶",
   "jei.category.poopsky.sieve": "筛架",
+  "jei.category.poopsky.digesting": "批量化粪",
+  "jei.category.poopsky.digesting.fan": "在粪水后放置鼓风机",
   "jei.poopsky.sieve_chance": "产出概率: %.2f%%",
+  "jei.poopsky.digesting_chance": "产出概率: %.2f%%",
+  "create.item_attributes.can_be_digested": "可被化粪",
   "task.poopsky.defecate": "如厕",
   "task.poopsky.defecate.desc": "女仆会寻找周围的厕所",
 

@@ -1,19 +1,12 @@
 package com.altnoir.poopsky.block.p;
 
 import com.altnoir.poopsky.init.PEffects;
-import com.altnoir.poopsky.init.PStats;
-import com.altnoir.poopsky.item.PItems;
-import com.altnoir.poopsky.init.PParticles;
-import com.altnoir.poopsky.init.PSoundEvents;
+import com.altnoir.poopsky.util.toiletUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -31,45 +24,18 @@ public class GoldgenToiletBlock extends ToiletLavaBlock {
                 player.removeEffect(PEffects.INTESTINAL_SPASM);
                 player.causeFoodExhaustion(1.0F);
             } else if (player.hasEffect(PEffects.FECAL_INCONTINENCE)) {
-                onPoopGolden(level, player);
+                toiletUtil.onPoop(level, player, false, true, 0.1F, -0.5F);
                 player.causeFoodExhaustion(0.05F);
-            } else if (level.getGameTime() % 20 == 0) {
-                onPoopGolden(level, player);
-                player.causeFoodExhaustion(1.0F);
+            } else {
+                var playerData = player.getPersistentData();
+                long lastPoopTime = playerData.getLong("poopTime");
+                long gameTime = level.getGameTime();
+                if (lastPoopTime == 0 || gameTime - lastPoopTime >= 20) {
+                    toiletUtil.onPoop(level, player, false, true, 0.1F, -0.5F);
+                    player.causeFoodExhaustion(1.0F);
+                    playerData.putLong("poopTime", gameTime);
+                }
             }
         }
-    }
-
-    protected void onPoopGolden(Level level, Player player) {
-        if (player.getFoodData().getFoodLevel() <= 0) {
-            player.hurt(level.damageSources().wither(), 1.0F);
-
-            var redStone = new ItemEntity(
-                    level,
-                    player.getX(), player.getY() + 0.1, player.getZ(),
-                    new ItemStack(Items.REDSTONE)
-            );
-            redStone.setDefaultPickUpDelay();
-            level.addFreshEntity(redStone);
-        } else {
-            var poop = new ItemEntity(level, player.getX(), player.getY() + 0.1, player.getZ(), new ItemStack(PItems.GOLDEN_POOP.get()));
-
-            poop.setDefaultPickUpDelay();
-            level.addFreshEntity(poop);
-        }
-        var pitch = level.random.nextFloat() - 0.5F;
-        level.playSound(null, player.getX(), player.getY() + 0.1, player.getZ(), PSoundEvents.FART.get(), SoundSource.PLAYERS, 1.0F, pitch);
-        ((ServerLevel) level).sendParticles(
-                PParticles.POOP_PARTICLE.get(),
-                player.getX(),
-                player.getY() + 0.1,
-                player.getZ(),
-                8,
-                0.0,
-                -0.1,
-                0.0,
-                3.0
-        );
-        player.awardStat(PStats.POOP_STATS.get());
     }
 }

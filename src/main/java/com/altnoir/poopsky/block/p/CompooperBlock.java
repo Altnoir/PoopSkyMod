@@ -41,8 +41,7 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class CompooperBlock extends AbstractCompooperBlock implements WorldlyContainerHolder {
     public static final MapCodec<CompooperBlock> CODEC = simpleCodec(CompooperBlock::new);
@@ -222,11 +221,10 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
         level.playSound(null, pos, SoundEvents.COMPOSTER_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
     }
 
-    protected static BlockState empty(@Nullable Entity entity, BlockState state, LevelAccessor level, BlockPos pos) {
+    protected static void empty(@Nullable Entity entity, BlockState state, LevelAccessor level, BlockPos pos) {
         var blockstate = state.setValue(POOP_LEVEL, MIN_LEVEL);
         level.setBlock(pos, blockstate, 3);
         level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(entity, blockstate));
-        return blockstate;
     }
 
     private static BlockState addItem(@Nullable Entity entity, BlockState state, LevelAccessor level, BlockPos pos, ItemStack stack) {

@@ -4,6 +4,7 @@ import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.block.p.CompooperBlock;
 import com.altnoir.poopsky.compat.PSMods;
+import com.altnoir.poopsky.compat.create.CreatePlugin;
 import com.altnoir.poopsky.compat.maid.MaidPlugin;
 import com.altnoir.poopsky.entity.p.PoopTntEntity;
 import com.altnoir.poopsky.init.*;
@@ -60,7 +61,7 @@ public class PoopSky {
         PSStructures.register(modEventBus);
         PSChunkGenerators.register(modEventBus);
 
-        PSItemGroups.register(modEventBus);
+        PItemGroups.register(modEventBus);
         PSoundEvents.register(modEventBus);
         PStats.register(modEventBus);
 
@@ -75,6 +76,9 @@ public class PoopSky {
 
         if (ModList.get().isLoaded(PSMods.TOUHOU_LITTLE_MAID.id())) {
             MaidPlugin.registry(modEventBus);
+        }
+        if (ModList.get().isLoaded(PSMods.CREATE.id())) {
+            CreatePlugin.register(modEventBus);
         }
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }

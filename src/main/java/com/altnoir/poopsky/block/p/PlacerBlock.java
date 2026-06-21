@@ -158,9 +158,9 @@ public class PlacerBlock extends BaseEntityBlock {
         boolean flag1 = state.getValue(TRIGGERED);
         if (flag && !flag1) {
             level.scheduleTick(pos, this, 4);
-            level.setBlock(pos, state.setValue(TRIGGERED, Boolean.valueOf(true)), 2);
+            level.setBlock(pos, state.setValue(TRIGGERED, Boolean.TRUE), 2);
         } else if (!flag && flag1) {
-            level.setBlock(pos, state.setValue(TRIGGERED, Boolean.valueOf(false)), 2);
+            level.setBlock(pos, state.setValue(TRIGGERED, Boolean.FALSE), 2);
         }
     }
 
