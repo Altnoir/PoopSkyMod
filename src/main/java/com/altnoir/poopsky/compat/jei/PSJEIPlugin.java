@@ -1,7 +1,9 @@
 package com.altnoir.poopsky.compat.jei;
 
+import com.altnoir.poopsky.PTags;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.PBlocks;
+import com.altnoir.poopsky.block.p.CompooperBlock;
 import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.compat.jei.create.FanDigestingCategory;
 import com.altnoir.poopsky.init.PRecipes;
@@ -52,11 +54,18 @@ public class PSJEIPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         registration.addRecipes(CompooperRecipeCategory.TYPE, List.of(
                 new CompooperRecipe(
-                        Ingredient.of(Stream.empty()), new ItemStack(PItems.MAGGOTS_SEEDS.get()), PBlocks.URINE_COMPOOPER.get().defaultBlockState()),
+                        Ingredient.of(Stream.empty()), new ItemStack(PItems.MAGGOTS_SEEDS.get()), PBlocks.URINE_COMPOOPER.get().defaultBlockState()
+                ),
                 new CompooperRecipe(
-                        Ingredient.of(Items.STICK), new ItemStack(Items.BLAZE_ROD), PBlocks.LAVA_COMPOOPER.get().defaultBlockState()),
+                        Ingredient.of(PTags.Items.CAN_COMPOSTABLE), new ItemStack(PItems.SAPLING_POOP_BALL.get()),
+                        PBlocks.COMPOOPER.get().defaultBlockState().setValue(CompooperBlock.POOP_LEVEL, CompooperBlock.READY)
+                ),
                 new CompooperRecipe(
-                        Ingredient.of(Items.STICK), new ItemStack(Items.BREEZE_ROD), PBlocks.POWDER_SNOW_COMPOOPER.get().defaultBlockState())
+                        Ingredient.of(Items.STICK), new ItemStack(Items.BLAZE_ROD), PBlocks.LAVA_COMPOOPER.get().defaultBlockState()
+                ),
+                new CompooperRecipe(
+                        Ingredient.of(Items.STICK), new ItemStack(Items.BREEZE_ROD), PBlocks.POWDER_SNOW_COMPOOPER.get().defaultBlockState()
+                )
         ));
         var level = net.minecraft.client.Minecraft.getInstance().level;
         if (level != null) {

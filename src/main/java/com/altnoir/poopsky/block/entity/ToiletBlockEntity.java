@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.block.entity;
 
+import com.altnoir.poopsky.block.p.ToiletLavaBlock;
 import com.altnoir.poopsky.init.PBlockEntityType;
 import com.altnoir.poopsky.init.PFluids;
 import net.minecraft.core.BlockPos;
@@ -17,6 +18,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.status.ChunkStatus;
+import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
@@ -123,6 +125,14 @@ public class ToiletBlockEntity extends BlockEntity {
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, ToiletBlockEntity blockEntity) {
-        blockEntity.fluidTank.fill(new FluidStack(PFluids.URINE.get(), Integer.MAX_VALUE), IFluidHandler.FluidAction.EXECUTE);
+        var fluid = PFluids.URINE.get();
+        if (state.hasProperty(ToiletLavaBlock.LAVA) && state.getValue(ToiletLavaBlock.LAVA)) {
+            fluid = Fluids.LAVA;
+        }
+        var fluidTank = blockEntity.fluidTank.getFluid().getFluid();
+        if (fluidTank != fluid) {
+            blockEntity.fluidTank.drain(blockEntity.fluidTank.getFluidAmount(), IFluidHandler.FluidAction.EXECUTE);
+        }
+        blockEntity.fluidTank.fill(new FluidStack(fluid, Integer.MAX_VALUE), IFluidHandler.FluidAction.EXECUTE);
     }
 }

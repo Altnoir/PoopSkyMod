@@ -312,6 +312,7 @@
   "subtitles.poopsky.item.toilet_linker.success": "Toilet Plug Wand binds",
 
   "tag.item.poopsky.compooper_saplings": "Compooper can produce saplings",
+  "tag.item.poopsky.can_compooper": "Can be composted",
   "jei.category.poopsky.compooper": "Compooper",
   "jei.category.poopsky.sieve": "Sieve",
   "jei.category.poopsky.digesting": "Digesting",
