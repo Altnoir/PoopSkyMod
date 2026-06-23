@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.network;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.misc.TimeBellOverlay;
+import com.altnoir.poopsky.misc.renderer.TimeBellOverlay;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;

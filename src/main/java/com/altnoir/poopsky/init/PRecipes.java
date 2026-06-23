@@ -3,6 +3,7 @@ package com.altnoir.poopsky.init;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.recipe.BreedingBoxRecipe;
 import com.altnoir.poopsky.recipe.FlyNestRecipe;
+import com.altnoir.poopsky.recipe.POPExplosionRecipe;
 import com.altnoir.poopsky.recipe.SieveRecipe;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -15,6 +16,7 @@ public class PRecipes {
     public static final String SIEVE_RECIPE_FOLDER = "sieve";
     public static final String FLY_NEST_FOLDER = "fly_nest";
     public static final String BREEDING_BOX_FOLDER = "breeding_box";
+    public static final String POP_EXPLOSION_RECIPE_FOLDER = "pop_explosion";
 
     public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(BuiltInRegistries.RECIPE_SERIALIZER, PoopSky.MOD_ID);
     public static final DeferredRegister<RecipeType<?>> TYPES = DeferredRegister.create(BuiltInRegistries.RECIPE_TYPE, PoopSky.MOD_ID);
@@ -41,6 +43,12 @@ public class PRecipes {
     public static final DeferredHolder<RecipeType<?>, RecipeType<BreedingBoxRecipe>> BREEDING_BOX_TYPE = TYPES
             .register("breeding_box", () ->
                     RecipeType.simple(PoopSky.loc("breeding_box")));
+    public static final DeferredHolder<RecipeSerializer<?>, POPExplosionRecipe.Serializer> EXPLOSION_TRANSFORM_SERIALIZER = SERIALIZERS
+            .register("pop_explosion", POPExplosionRecipe.Serializer::new);
+
+    public static final DeferredHolder<RecipeType<?>, RecipeType<POPExplosionRecipe>> EXPLOSION_TRANSFORM_TYPE = TYPES
+            .register("pop_explosion", () ->
+                    RecipeType.simple(PoopSky.loc("pop_explosion")));
 
     public static void register(IEventBus eventBus) {
         SERIALIZERS.register(eventBus);

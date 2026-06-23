@@ -5,15 +5,15 @@
       "modid": "create"
     }
   ],
-  "type": "poopsky:digesting",
+  "type": "create:splashing",
   "ingredients": [
     {
-      "item": "minecraft:snow_block"
+      "item": "poopsky:poop_piece"
     }
   ],
   "results": [
     {
-      "id": "poopsky:poop_block"
+      "id": "minecraft:snow"
     }
   ]
 }

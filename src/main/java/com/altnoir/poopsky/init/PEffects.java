@@ -2,6 +2,7 @@ package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.effect.FecalIncontinenceEffect;
+import com.altnoir.poopsky.effect.MomentOfPtymeEffect;
 import com.altnoir.poopsky.effect.OnTheVergeEffect;
 import com.altnoir.poopsky.effect.PMobEffect;
 import net.minecraft.core.Holder;
@@ -36,6 +37,9 @@ public class PEffects {
     );
     public static final Holder<MobEffect> BLEEDING = MOB_EFFECTS.register("bleeding", () ->
             new PMobEffect(MobEffectCategory.HARMFUL, 0x8B0000)
+    );
+    public static final Holder<MobEffect> MOMENT_OF_PTYME = MOB_EFFECTS.register("moment_of_ptyme", () ->
+            new MomentOfPtymeEffect(MobEffectCategory.NEUTRAL, 0xFFD700)
     );
 
     public static void register(IEventBus eventBus) {

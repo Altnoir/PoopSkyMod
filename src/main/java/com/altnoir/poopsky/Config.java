@@ -14,10 +14,14 @@ public class Config {
     public static boolean lavaFluid;
     public static boolean plugTrades;
     public static boolean upgradeTemplate;
+    public static boolean unlimitedFreeze;
+
+    public static boolean freezeFilter;
 
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
     private static final ModConfigSpec.BooleanValue SET_POOPSKY_DEFAULT = BUILDER
+            .comment("Common")
             .comment("Whether the dedicated server level-type default should be set to poopsky")
             .translation("poopsky.configuration.setPoopskyDefault")
             .define("setPoopskyDefault", true);
@@ -45,6 +49,17 @@ public class Config {
             .comment("Whether to Disable the upgrade template trades")
             .translation("poopsky.configuration.upgradeTemplate")
             .define("upgradeTemplate", false);
+    private static final ModConfigSpec.BooleanValue UNLIMITED_FREEZE = BUILDER
+            .comment("Whether to Enable the unlimited freeze")
+            .translation("poopsky.configuration.unlimitedFreeze")
+            .define("unlimitedFreeze", false);
+
+    private static final ModConfigSpec.BooleanValue FREEZE_FILTER = BUILDER
+            .comment("Client")
+            .comment("Whether to Disable the freeze filter")
+            .translation("poopsky.configuration.freezeFilter")
+            .define("freezeFilter", false);
+
 
     static final ModConfigSpec SPEC = BUILDER.build();
 
@@ -57,5 +72,8 @@ public class Config {
         lavaFluid = LAVA_FLUID_BLOCK.get();
         plugTrades = PLUG_TRADES.get();
         upgradeTemplate = UPGRADE_TEMPLATE.get();
+        unlimitedFreeze = UNLIMITED_FREEZE.get();
+
+        freezeFilter = FREEZE_FILTER.get();
     }
 }

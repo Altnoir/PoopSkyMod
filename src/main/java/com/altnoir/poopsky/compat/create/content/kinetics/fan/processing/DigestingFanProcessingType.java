@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.compat.create.content.kinetics.fan.processing;
 
-import com.altnoir.poopsky.compat.create.PSRecipeTypes;
 import com.altnoir.poopsky.PTags;
+import com.altnoir.poopsky.compat.create.PSRecipeTypes;
 import com.simibubi.create.content.kinetics.fan.processing.FanProcessingType;
 import com.simibubi.create.foundation.recipe.RecipeApplier;
 import net.createmod.catnip.theme.Color;
@@ -12,7 +12,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
@@ -87,9 +87,9 @@ public class DigestingFanProcessingType implements FanProcessingType {
         if (level.isClientSide) {
             return;
         }
-        if (entity instanceof Player player) {
-            player.addEffect(new MobEffectInstance(MobEffects.POISON, 200, 0, true, true));
-            player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0, true, true));
+        if (entity instanceof LivingEntity livingEntity) {
+            livingEntity.addEffect(new MobEffectInstance(MobEffects.POISON, 200, 0, true, true));
+            livingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0, true, true));
         }
     }
 }

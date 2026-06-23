@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.misc;
+package com.altnoir.poopsky.misc.renderer;
 
 import com.altnoir.poopsky.block.ToiletComponent;
 import com.altnoir.poopsky.init.PComponents;

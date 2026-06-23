@@ -3,26 +3,24 @@ package com.altnoir.poopsky.util;
 import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.block.p.PoopTntBlock;
 import com.altnoir.poopsky.init.PParticles;
+import com.altnoir.poopsky.init.PRecipes;
 import com.altnoir.poopsky.PTags;
+import com.altnoir.poopsky.recipe.POPExplosionRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.Map;
-
 public class PoopTntUtil {
-    public static final Map<Block, Block> EXPLOSION_RECIPES = Map.of(
-            Blocks.COBBLESTONE, Blocks.GRAVEL,
-            Blocks.GRAVEL, Blocks.SAND
-    );
-
     public static void triggerExplosion(Entity entity, int radius) {
         Level level = entity.level();
         ServerLevel serverLevel = (ServerLevel) level;
@@ -60,10 +58,9 @@ public class PoopTntUtil {
                         continue;
                     }
 
-                    Block recipeOutput = EXPLOSION_RECIPES.get(state.getBlock());
+                    Block recipeOutput = findExplosionTransformOutput(level, state.getBlock());
                     if (recipeOutput != null) {
                         level.setBlockAndUpdate(pos, recipeOutput.defaultBlockState());
-                        //Block.popResource(level, pos, recipeOutput.copy());
                     } else if (distSq <= innerRadiusSq) {
                         if (state.canBeReplaced() || state.is(PTags.Blocks.POOP_TNT_DESTROY)) {
                             level.destroyBlock(pos, true, null);
@@ -96,6 +93,19 @@ public class PoopTntUtil {
         }
 */
         spawnPoopParticle((ServerLevel) level, entity.getX(), entity.getY(), entity.getZ(), radius);
+    }
+
+    private static Block findExplosionTransformOutput(Level level, Block block) {
+        if (level.isClientSide) return null;
+        ItemStack itemStack = new ItemStack(block.asItem());
+        SingleRecipeInput input = new SingleRecipeInput(itemStack);
+
+        for (RecipeHolder<POPExplosionRecipe> holder : level.getRecipeManager().getAllRecipesFor(PRecipes.EXPLOSION_TRANSFORM_TYPE.get())) {
+            if (holder.value().matches(input, level)) {
+                return holder.value().output();
+            }
+        }
+        return null;
     }
 
     private static void spawnPoopParticle(ServerLevel level, double x, double y, double z, int radius) {

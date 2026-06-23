@@ -2,6 +2,9 @@ package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.compat.PSMods;
+import com.altnoir.poopsky.datagen.create.PHauntingRecipeGen;
+import com.altnoir.poopsky.datagen.create.PSDigestingRecipeGen;
+import com.altnoir.poopsky.datagen.create.PWashingRecipeGen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -57,8 +60,8 @@ public class DataGenerators {
         generators.addProvider(event.includeClient(), new PSItemModelProvider(packOutput, existingFileHelper));
 
         // Compat
-        if (ModList.get().isLoaded(PSMods.CREATE.id())) {
-            generators.addProvider(event.includeServer(), new PSDigestingRecipeGen(packOutput, lookupProvider));
-        }
+        generators.addProvider(event.includeServer(), new PSDigestingRecipeGen(packOutput, lookupProvider));
+        generators.addProvider(event.includeServer(), new PWashingRecipeGen(packOutput, lookupProvider));
+        generators.addProvider(event.includeServer(), new PHauntingRecipeGen(packOutput, lookupProvider));
     }
 }

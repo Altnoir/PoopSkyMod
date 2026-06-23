@@ -82,6 +82,7 @@
   "effect.poopsky.on_the_verge": "On the Verge",
   "effect.poopsky.omener": "Omener",
   "effect.poopsky.bleeding": "Bleeding",
+  "effect.poopsky.moment_of_ptyme": "Moment of Ptyme",
 
   "block.poopsky.poop_piece": "Poop Piece",
   "block.poopsky.poop_block": "Poop Block",
@@ -314,10 +315,12 @@
   "subtitles.poopsky.item.toilet_linker.success": "Toilet Plug Wand binds",
 
   "tag.item.poopsky.compooper_saplings": "Compooper can produce saplings",
+  "tag.item.poopsky.can_compooper": "Can be composted",
   "jei.category.poopsky.compooper": "Compooper",
   "jei.category.poopsky.sieve": "Sieve",
   "jei.category.poopsky.digesting": "Digesting",
   "jei.category.poopsky.digesting.fan": "Place Digesting Fan After Urine Liquid",
+  "jei.category.poopsky.pop_explosion": "POP Explosion",
   "jei.poopsky.sieve_chance": "Chance: %.2f%%",
   "jei.poopsky.digesting_chance": "Chance: %.2f%%",
   "create.item_attributes.can_be_digested": "Can be digested",
@@ -376,5 +379,11 @@
   "poopsky.configuration.plugTrades": "Disable Toilet Plug Trades",
   "poopsky.configuration.plugTrades.tooltip": "Whether to disable Toilet Plug trading with villagers",
   "poopsky.configuration.upgradeTemplate": "Disable Upgrade Template Trades",
-  "poopsky.configuration.upgradeTemplate.tooltip": "Whether to disable upgrade template trading"
+  "poopsky.configuration.upgradeTemplate.tooltip": "Whether to disable upgrade template trading",
+
+  "poopsky.configuration.upgradeTemplate.tooltip": "Whether to disable upgrade template trading",
+  "poopsky.configuration.unlimitedFreeze": "Unlimited Freeze",
+  "poopsky.configuration.unlimitedFreeze.tooltip": "Whether to enable unlimited freeze",
+  "poopsky.configuration.freezeFilter": "Freeze Filter",
+  "poopsky.configuration.freezeFilter.tooltip": "Whether to disable freeze filter"
 }

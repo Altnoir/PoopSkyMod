@@ -87,8 +87,8 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
         add(f08, PBlocks.POOP_DOOR);
         add(f05, PBlocks.POOP_TRAPDOOR);
         add(f03, PBlocks.STOOL);
-        //add(0.2F, PSItems.BAKED_MAGGOTS);
         add(f01, PItems.MAGGOTS_SEEDS);
+        add(f03, PItems.ROUNDWORM);
         add(f08, PItems.POOP_BREAD);
         add(f08, PItems.POOP_DUMPLINGS);
         add(f08, PItems.POOP_MOONCAKE);

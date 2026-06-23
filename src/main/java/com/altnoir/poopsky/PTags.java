@@ -40,6 +40,7 @@ public class PTags {
     public interface Items {
         TagKey<Item> POOPS = create("poops");
         TagKey<Item> TOILET_BLOCKS = create("toilet_blocks");
+        TagKey<Item> CAN_COMPOSTABLE = create("can_compooper");
 
         TagKey<Item> PASTA = tag("foods/pasta");
         TagKey<Item> SOUP = tag("foods/soup");

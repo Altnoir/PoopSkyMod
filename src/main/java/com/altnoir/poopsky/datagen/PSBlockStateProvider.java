@@ -86,7 +86,6 @@ public class PSBlockStateProvider extends BlockStateProvider {
                             .modelFile(models().getExistingFile(modLoc("block/" + modelName)))
                             .build();
                 });
-
         //item models
         simpleBlockItem(PBlocks.POOP_BLOCK.get(), models().getExistingFile(modLoc("block/poop_block1")));
         simpleBlockItem(PBlocks.POOP_PIECE.get(), models().getExistingFile(modLoc("block/poop_height2")));

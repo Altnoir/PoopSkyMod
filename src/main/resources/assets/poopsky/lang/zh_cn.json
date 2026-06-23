@@ -82,6 +82,7 @@
   "effect.poopsky.on_the_verge": "一触即发",
   "effect.poopsky.omener": "食粪者",
   "effect.poopsky.bleeding": "出血",
+  "effect.poopsky.moment_of_ptyme": "屎之刻",
 
   "block.poopsky.poop_piece": "粪便片",
   "block.poopsky.poop_block": "粪便块",
@@ -314,10 +315,12 @@
   "subtitles.poopsky.item.toilet_linker.success": "马桶制杖：绑定",
 
   "tag.item.poopsky.compooper_saplings": "堆粪桶可产出树苗",
+  "tag.item.poopsky.can_compooper": "可堆粪",
   "jei.category.poopsky.compooper": "堆粪桶",
   "jei.category.poopsky.sieve": "筛架",
   "jei.category.poopsky.digesting": "批量化粪",
   "jei.category.poopsky.digesting.fan": "在粪水后放置鼓风机",
+  "jei.category.poopsky.pop_explosion": "POP爆炸转化",
   "jei.poopsky.sieve_chance": "产出概率: %.2f%%",
   "jei.poopsky.digesting_chance": "产出概率: %.2f%%",
   "create.item_attributes.can_be_digested": "可被化粪",
@@ -376,5 +379,11 @@
   "poopsky.configuration.plugTrades": "禁用马桶搋子交易",
   "poopsky.configuration.plugTrades.tooltip": "是否禁用马桶搋子交易",
   "poopsky.configuration.upgradeTemplate": "禁用升级模板交易",
-  "poopsky.configuration.upgradeTemplate.tooltip": "是否禁用升级模板交易"
+  "poopsky.configuration.upgradeTemplate.tooltip": "是否禁用升级模板交易",
+
+  "poopsky.configuration.upgradeTemplate.tooltip": "是否禁用升级模板交易",
+  "poopsky.configuration.unlimitedFreeze": "无限时停",
+  "poopsky.configuration.unlimitedFreeze.tooltip": "是否启用无限时停",
+  "poopsky.configuration.freezeFilter": "时停滤镜",
+  "poopsky.configuration.freezeFilter.tooltip": "是否禁用时停滤镜"
 }
