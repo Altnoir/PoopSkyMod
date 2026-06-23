@@ -317,6 +317,7 @@
   "jei.category.poopsky.sieve": "Sieve",
   "jei.category.poopsky.digesting": "Digesting",
   "jei.category.poopsky.digesting.fan": "Place Digesting Fan After Urine Liquid",
+  "jei.category.poopsky.pop_explosion": "POP Explosion",
   "jei.poopsky.sieve_chance": "Chance: %.2f%%",
   "jei.poopsky.digesting_chance": "Chance: %.2f%%",
   "create.item_attributes.can_be_digested": "Can be digested",

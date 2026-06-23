@@ -41,7 +41,8 @@ public class PSJEIPlugin implements IModPlugin {
 
         registration.addRecipeCategories(
                 new CompooperRecipeCategory(registration.getJeiHelpers(), arrow),
-                new SieveRecipeCategory(registration.getJeiHelpers(), arrow));
+                new SieveRecipeCategory(registration.getJeiHelpers(), arrow),
+                new POPExplosionRecipeCategory(registration.getJeiHelpers(), arrow));
 
         if (PSMods.CREATE.isLoaded()) {
             createCategories.clear();
@@ -70,6 +71,7 @@ public class PSJEIPlugin implements IModPlugin {
         var level = net.minecraft.client.Minecraft.getInstance().level;
         if (level != null) {
             registration.addRecipes(SieveRecipeCategory.TYPE, level.getRecipeManager().getAllRecipesFor(PRecipes.SIEVE_TYPE.get()));
+            registration.addRecipes(POPExplosionRecipeCategory.TYPE, level.getRecipeManager().getAllRecipesFor(PRecipes.EXPLOSION_TRANSFORM_TYPE.get()));
         }
 
         if (PSMods.CREATE.isLoaded()) {
@@ -81,6 +83,7 @@ public class PSJEIPlugin implements IModPlugin {
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(new ItemStack(PBlocks.COMPOOPER.get()), CompooperRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(PBlocks.SIEVE.get()), SieveRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(PBlocks.POOP_TNT.get()), POPExplosionRecipeCategory.TYPE);
 
         if (PSMods.CREATE.isLoaded()) {
             createCategories.forEach(category -> category.registerCatalysts(registration));

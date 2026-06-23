@@ -4,6 +4,7 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.item.PItems;
+import com.altnoir.poopsky.recipe.POPExplosionRecipeBuilder;
 import com.altnoir.poopsky.recipe.SieveRecipeBuilder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -13,6 +14,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
@@ -93,7 +95,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy(getItemName(PItems.MAGGOTS_SEEDS), has(PItems.MAGGOTS_SEEDS))
                 .save(recipeOutput);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PItems.POOBURGER_MEAT.get(),3)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PItems.POOBURGER_MEAT.get(), 3)
                 .requires(PItems.POOP, 3)
                 .requires(Items.EGG)
                 .unlockedBy(getItemName(PItems.POOP), has(PItems.POOP))
@@ -548,6 +550,18 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(recipeOutput);
 
         buildSieveRecipes(recipeOutput);
+        buildpopExplosionRecipes(recipeOutput);
+    }
+
+    private void buildpopExplosionRecipes(RecipeOutput recipeOutput) {
+        popExplosionRecipes(recipeOutput, Blocks.COBBLESTONE, Blocks.GRAVEL);
+        popExplosionRecipes(recipeOutput, Blocks.GRAVEL, Blocks.SAND);
+    }
+
+    private void popExplosionRecipes(RecipeOutput recipeOutput, Block input, Block output) {
+        POPExplosionRecipeBuilder.transform(input, output)
+                .unlockedBy(getItemName(input), has(input))
+                .save(recipeOutput, getItemName(input) + "_to_" + getItemName(output));
     }
 
     private void buildSieveRecipes(RecipeOutput recipeOutput) {
@@ -771,5 +785,4 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
     protected static String getConversionRecipeName(ItemLike result, ItemLike input) {
         return PoopSky.MOD_ID + ":" + getItemName(result) + "_from_" + getItemName(input);
     }
-
 }
