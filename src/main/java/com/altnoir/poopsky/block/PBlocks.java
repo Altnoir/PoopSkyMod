@@ -556,6 +556,7 @@ public class PBlocks {
             )
     );
 
+
     private static BlockBehaviour.Properties poopCakeProperties() {
         return BlockBehaviour.Properties.of()
                 .forceSolidOn()
