@@ -1,7 +1,13 @@
 {
   "variants": {
-    "": {
-      "model": "poopsky:block/raw_poop_block"
-    }
+    "": [
+      {
+        "model": "poopsky:block/raw_poop_block0",
+        "weight": 3
+      },
+      {
+        "model": "poopsky:block/raw_poop_block1"
+      }
+    ]
   }
 }
