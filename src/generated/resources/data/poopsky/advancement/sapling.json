@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "poopsky:saping_poop_ball"
+            "items": "poopsky:sapling_poop_ball"
           }
         ]
       },
@@ -18,7 +18,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "poopsky:saping_poop_ball"
+      "id": "poopsky:sapling_poop_ball"
     },
     "title": {
       "translate": "advancements.poopsky.sapling.title"
