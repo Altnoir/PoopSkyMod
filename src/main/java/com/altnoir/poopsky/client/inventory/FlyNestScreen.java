@@ -8,10 +8,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public class FlyNestScreen extends AbstractContainerScreen<FlyNestMenu> {
-    private static final ResourceLocation CONTAINER_BACKGROUND = 
+    private static final ResourceLocation CONTAINER_BACKGROUND =
             PoopSky.loc("textures/gui/fly_nest.png");
-    private static final int PROGRESS_X = 47;
-    private static final int PROGRESS_Y = 20;
+    private static final int PROGRESS_X = 48;
+    private static final int PROGRESS_Y = 19;
     private static final int PROGRESS_U = 176;
     private static final int PROGRESS_V = 0;
     private static final int PROGRESS_WIDTH = 26;
@@ -31,9 +31,10 @@ public class FlyNestScreen extends AbstractContainerScreen<FlyNestMenu> {
         graphics.blit(CONTAINER_BACKGROUND, x, y, 0, 0, this.imageWidth, this.imageHeight);
 
         int maxProgress = this.menu.getMaxProgress();
+        int progress = this.menu.getProgress();
         if (maxProgress > 0) {
-            int progressWidth = Math.min(PROGRESS_WIDTH, this.menu.getProgress() * PROGRESS_WIDTH / maxProgress);
-            if (progressWidth > 0) {
+            int progressWidth = Math.min(PROGRESS_WIDTH, (int) ((float) progress / maxProgress * PROGRESS_WIDTH + 0.5F));
+            if (progressWidth >= 0) {
                 graphics.blit(CONTAINER_BACKGROUND, x + PROGRESS_X, y + PROGRESS_Y,
                         PROGRESS_U, PROGRESS_V, progressWidth, PROGRESS_HEIGHT);
             }

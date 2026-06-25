@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.entity.p;
 
+import com.altnoir.poopsky.client.sound.TPFlySoundWrapper;
 import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.network.PlugInputPayload;
-import com.altnoir.poopsky.client.sound.TPFlySoundWrapper;
 import com.google.common.collect.Lists;
 import net.minecraft.BlockUtil;
 import net.minecraft.client.Minecraft;
@@ -32,8 +32,8 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3f;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 
 
 public class ToiletPlugEntity extends VehicleEntity implements Leashable {
@@ -63,13 +63,13 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
 
     public ToiletPlugEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
-        if (level.isClientSide()){
+        if (level.isClientSide()) {
             ToiletPlugEntityClient();
         }
     }
 
     @OnlyIn(Dist.CLIENT)
-    public void ToiletPlugEntityClient(){
+    public void ToiletPlugEntityClient() {
         TPFlySound = new TPFlySoundWrapper(this);
     }
 
@@ -135,12 +135,12 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
 
     @Override
     public float lerpTargetXRot() {
-        return this.lerpSteps > 0 ? (float)this.lerpXRot : this.getXRot();
+        return this.lerpSteps > 0 ? (float) this.lerpXRot : this.getXRot();
     }
 
     @Override
     public float lerpTargetYRot() {
-        return this.lerpSteps > 0 ? (float)this.lerpYRot : this.getYRot();
+        return this.lerpSteps > 0 ? (float) this.lerpYRot : this.getYRot();
     }
 
     @Override
@@ -149,7 +149,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
     }
 
     @Override
-    public void tick(){
+    public void tick() {
         super.tick();
         this.tickLerp();
 
@@ -162,8 +162,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
                     TPFlySound.play();
                     TPFlySound.tick();
                     spawnParticles();
-                }
-                else {
+                } else {
                     TPFlySound.stop();
                 }
             }
@@ -230,11 +229,13 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
 
     private void moveByInput() {
         float MAX_SPEED = inputFast ? 0.7f : 0.35f;
-        if (this.isUnderWater()){
+        if (this.isUnderWater()) {
             MAX_SPEED *= 0.35f;
         }
-        float FBSpeed = inputForward ? MAX_SPEED : inputBackward ? -MAX_SPEED : 0f;
-        float LRSpeed = inputLeft ? MAX_SPEED : inputRight ? -MAX_SPEED : 0f;
+        float isBack = inputBackward ? -MAX_SPEED : 0f;
+        float FBSpeed = inputForward ? MAX_SPEED : isBack;
+        float isRight = inputRight ? MAX_SPEED : 0f;
+        float LRSpeed = inputLeft ? MAX_SPEED : isRight;
         float DAMPING = 0.975f;
 
         var yawRad = (float) Math.toRadians(-this.getYRot());
@@ -283,8 +284,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
                 var zOffset = Math.cos(yawRad) * 0.375;
                 entity.setPos(entity.getX() + xOffset, entity.getY() + yOffset, entity.getZ() + zOffset);
             }
-        }
-        else {
+        } else {
             entity.setPos(entity.getX(), entity.getY() + yOffset, entity.getZ());
         }
     }
@@ -309,7 +309,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
     }
 
     @Override
-    public boolean isVehicle(){
+    public boolean isVehicle() {
         return true;
     }
 
@@ -469,19 +469,19 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
             var list = Lists.newArrayList();
             var d2 = this.level().getBlockFloorHeight(blockpos);
             if (DismountHelper.isBlockFloorValid(d2)) {
-                list.add(new Vec3(d0, (double)blockpos.getY() + d2, d1));
+                list.add(new Vec3(d0, (double) blockpos.getY() + d2, d1));
             }
 
             var d3 = this.level().getBlockFloorHeight(blockpos1);
             if (DismountHelper.isBlockFloorValid(d3)) {
-                list.add(new Vec3(d0, (double)blockpos1.getY() + d3, d1));
+                list.add(new Vec3(d0, (double) blockpos1.getY() + d3, d1));
             }
 
             for (Pose pose : livingEntity.getDismountPoses()) {
                 for (var vec31 : list) {
-                    if (DismountHelper.canDismountTo(this.level(), (Vec3)vec31, livingEntity, pose)) {
+                    if (DismountHelper.canDismountTo(this.level(), (Vec3) vec31, livingEntity, pose)) {
                         livingEntity.setPose(pose);
-                        return (Vec3)vec31;
+                        return (Vec3) vec31;
                     }
                 }
             }
@@ -524,7 +524,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
 
     @Override
     public void elasticRangeLeashBehaviour(Entity leashHolder, float distance) {
-        var vec3 = leashHolder.position().subtract(this.position()).normalize().scale((double)distance - 6.0);
+        var vec3 = leashHolder.position().subtract(this.position()).normalize().scale((double) distance - 6.0);
         var vec31 = this.getDeltaMovement();
         var flag = vec31.dot(vec3) > 0.0;
         this.setDeltaMovement(vec31.add(vec3.scale(flag ? 0.15F : 0.2F)));
