@@ -1,7 +1,6 @@
 package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.datagen.create.PHauntingRecipeGen;
 import com.altnoir.poopsky.datagen.create.PSDigestingRecipeGen;
 import com.altnoir.poopsky.datagen.create.PWashingRecipeGen;
@@ -13,7 +12,6 @@ import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -58,6 +56,7 @@ public class DataGenerators {
 
         generators.addProvider(event.includeClient(), new PSBlockStateProvider(packOutput, existingFileHelper));
         generators.addProvider(event.includeClient(), new PSItemModelProvider(packOutput, existingFileHelper));
+        generators.addProvider(event.includeClient(), new PSParticleProvider(packOutput, existingFileHelper));
 
         // Compat
         generators.addProvider(event.includeServer(), new PSDigestingRecipeGen(packOutput, lookupProvider));

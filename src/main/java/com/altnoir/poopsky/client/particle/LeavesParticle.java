@@ -1,0 +1,94 @@
+package com.altnoir.poopsky.client.particle;
+
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.particle.*;
+import net.minecraft.core.particles.SimpleParticleType;
+
+public class LeavesParticle extends TextureSheetParticle {
+    private static final float ACCELERATION_SCALE = 0.0025F;
+    private static final int INITIAL_LIFETIME = 300;
+    private static final int CURVE_ENDPOINT_TIME = 300;
+    private static final float FALL_ACC = 0.25F;
+    private static final float WIND_BIG = 2.0F;
+    private float rotSpeed;
+    private final float particleRandom;
+    private final float spinAcceleration;
+
+    protected LeavesParticle(ClientLevel level, double x, double y, double z, SpriteSet spriteSet, int color) {
+        super(level, x, y, z);
+        this.setSprite(spriteSet.get(this.random.nextInt(12), 12));
+        this.rotSpeed = (float) Math.toRadians(this.random.nextBoolean() ? -30.0 : 30.0);
+        this.particleRandom = this.random.nextFloat();
+        this.spinAcceleration = (float) Math.toRadians(this.random.nextBoolean() ? -5.0 : 5.0);
+        this.lifetime = INITIAL_LIFETIME;
+        this.gravity = 7.5E-4F;
+        float f = this.random.nextBoolean() ? 0.05F : 0.075F;
+        this.quadSize = f;
+        this.setSize(f, f);
+        this.friction = 1.0F;
+        this.setColor(color);
+    }
+
+    private void setColor(int color) {
+        this.rCol = ((color >> 16) & 0xFF) / 255.0F;
+        this.gCol = ((color >> 8) & 0xFF) / 255.0F;
+        this.bCol = (color & 0xFF) / 255.0F;
+    }
+
+    @Override
+    public ParticleRenderType getRenderType() {
+        return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
+    }
+
+    @Override
+    public void tick() {
+        this.xo = this.x;
+        this.yo = this.y;
+        this.zo = this.z;
+        if (this.lifetime-- <= 0) {
+            this.remove();
+        }
+
+        if (!this.removed) {
+            float f = (float) (INITIAL_LIFETIME - this.lifetime);
+            float f1 = Math.min(f / (float) CURVE_ENDPOINT_TIME, 1.0F);
+            double d0 = Math.cos(Math.toRadians((double) (this.particleRandom * 60.0F))) * WIND_BIG * Math.pow((double) f1, 1.25);
+            double d1 = Math.sin(Math.toRadians((double) (this.particleRandom * 60.0F))) * WIND_BIG * Math.pow((double) f1, 1.25);
+            this.xd += d0 * ACCELERATION_SCALE;
+            this.zd += d1 * ACCELERATION_SCALE;
+            this.yd = this.yd - (double) this.gravity;
+            this.rotSpeed = this.rotSpeed + this.spinAcceleration / 20.0F;
+            this.oRoll = this.roll;
+            this.roll = this.roll + this.rotSpeed / 20.0F;
+            this.move(this.xd, this.yd, this.zd);
+            if (this.onGround || this.lifetime < INITIAL_LIFETIME - 1 && (this.xd == 0.0 || this.zd == 0.0)) {
+                this.remove();
+            }
+
+            if (!this.removed) {
+                this.xd = this.xd * (double) this.friction;
+                this.yd = this.yd * (double) this.friction;
+                this.zd = this.zd * (double) this.friction;
+            }
+        }
+    }
+
+    public static ParticleEngine.SpriteParticleRegistration<SimpleParticleType> provider(int color) {
+        return sprites -> new Provider(sprites, color);
+    }
+
+    public static class Provider implements ParticleProvider<SimpleParticleType> {
+        private final SpriteSet sprites;
+        private final int color;
+
+        public Provider(SpriteSet sprites, int color) {
+            this.sprites = sprites;
+            this.color = color;
+        }
+
+        @Override
+        public Particle createParticle(SimpleParticleType type, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+            return new LeavesParticle(level, x, y, z, this.sprites, this.color);
+        }
+    }
+}
