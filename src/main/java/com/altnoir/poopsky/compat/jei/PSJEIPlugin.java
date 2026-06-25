@@ -24,6 +24,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +50,7 @@ public class PSJEIPlugin implements IModPlugin {
                 new CompooperRecipeCategory(registration.getJeiHelpers(), arrow),
                 new SieveRecipeCategory(registration.getJeiHelpers(), arrow),
                 new FlyNestRecipeCategory(registration.getJeiHelpers(), arrow),
-                new BreedingBoxRecipeCategory(registration.getJeiHelpers(), arrow));
+                new BreedingBoxRecipeCategory(registration.getJeiHelpers(), arrow),
                 new POPExplosionRecipeCategory(registration.getJeiHelpers(), arrow));
 
         if (PSMods.CREATE.isLoaded()) {
@@ -75,25 +77,18 @@ public class PSJEIPlugin implements IModPlugin {
                         Ingredient.of(Items.STICK), new ItemStack(Items.BREEZE_ROD), PBlocks.POWDER_SNOW_COMPOOPER.get().defaultBlockState()
                 )
         ));
-        var level = Minecraft.getInstance().level;
-        if (level == null) {
-            return;
-        var level = net.minecraft.client.Minecraft.getInstance().level;
-        if (level != null) {
-            registration.addRecipes(SieveRecipeCategory.TYPE, level.getRecipeManager().getAllRecipesFor(PRecipes.SIEVE_TYPE.get()));
-            registration.addRecipes(POPExplosionRecipeCategory.TYPE, level.getRecipeManager().getAllRecipesFor(PRecipes.EXPLOSION_TRANSFORM_TYPE.get()));
-        }
 
-        var recipeManager = level.getRecipeManager();
+        Level level = Minecraft.getInstance().level;
+        RecipeManager recipeManager = level.getRecipeManager();
+
+        registration.addRecipes(SieveRecipeCategory.TYPE, level.getRecipeManager().getAllRecipesFor(PRecipes.SIEVE_TYPE.get()));
+        registration.addRecipes(POPExplosionRecipeCategory.TYPE, level.getRecipeManager().getAllRecipesFor(PRecipes.EXPLOSION_TRANSFORM_TYPE.get()));
 
         registration.addRecipes(FlyNestRecipeCategory.TYPE,
                 recipeManager.getAllRecipesFor(PRecipes.FLY_NEST_TYPE.get()).stream()
                         .map(holder -> {
                             FlyNestRecipe recipe = holder.value();
-                            return new FlyNestJeiRecipe(
-                                    FlyItem.withType(PFlyTypes.byId(recipe.flyTypeId())),
-                                    recipe.result()
-                            );
+                            return new FlyNestJeiRecipe(FlyItem.withType(PFlyTypes.byId(recipe.flyTypeId())), recipe.result());
                         })
                         .toList());
 
@@ -104,12 +99,7 @@ public class PSJEIPlugin implements IModPlugin {
                             ItemStack resultFly = FlyItem.withType(PFlyTypes.byId(recipe.result()));
                             ItemStack parentFly1 = FlyItem.withType(PFlyTypes.byId(recipe.parent1()));
                             ItemStack parentFly2 = FlyItem.withType(PFlyTypes.byId(recipe.parent2()));
-                            return new BreedingBoxJeiRecipe(
-                                    parentFly1,
-                                    parentFly2,
-                                    resultFly,
-                                    recipe.chance()
-                            );
+                            return new BreedingBoxJeiRecipe(parentFly1, parentFly2, resultFly, recipe.chance());
                         })
                         .toList());
 

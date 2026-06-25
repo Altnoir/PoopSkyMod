@@ -3,16 +3,16 @@ package com.altnoir.poopsky.datagen;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.PBlocks;
+import com.altnoir.poopsky.init.PRecipes;
 import com.altnoir.poopsky.item.PItems;
 import com.altnoir.poopsky.recipe.POPExplosionRecipeBuilder;
 import com.altnoir.poopsky.recipe.SieveRecipeBuilder;
-import com.altnoir.poopsky.init.PRecipes;
-import net.minecraft.world.item.Items;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -792,7 +793,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
 
 
     private void buildFlyNestRecipes(RecipeOutput recipeOutput) {
-        var flyNestMap = new java.util.LinkedHashMap<String, ItemLike>();
+        LinkedHashMap<String, ItemLike> flyNestMap = new LinkedHashMap<String, ItemLike>();
         flyNestMap.put("normal", PItems.MAGGOTS_SEEDS);
         flyNestMap.put("white", Items.BONE_MEAL);
         flyNestMap.put("black", Items.COAL);
@@ -820,7 +821,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
 
     private void buildBreedingBoxRecipes(RecipeOutput recipeOutput) {
         record MutationRecipe(String p1, String p2, String result, float chance) {}
-        var breedingRecipes = java.util.List.of(
+        List<MutationRecipe> breedingRecipes = List.of(
                 new MutationRecipe("green", "blue", "cyan", 0.2f),
                 new MutationRecipe("purple", "pink", "magenta", 0.2f),
                 new MutationRecipe("red", "blue", "purple", 0.2f),
@@ -832,7 +833,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 new MutationRecipe("white", "red", "pink", 0.2f)
         );
 
-        for (var recipe : breedingRecipes) {
+        for (MutationRecipe recipe : breedingRecipes) {
             String id = recipe.p1 + "_plus_" + recipe.p2;
             BreedingBoxRecipeBuilder.breedingBox(recipe.p1, recipe.p2, recipe.result, recipe.chance)
                     .unlockedBy(getHasName(PBlocks.FLY_NEST), has(PBlocks.FLY_NEST))
@@ -840,5 +841,4 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         }
     }
 
-}
 }
