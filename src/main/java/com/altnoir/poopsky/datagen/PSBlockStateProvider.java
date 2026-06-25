@@ -2,10 +2,10 @@ package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.AllToiletBlocks;
-import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.block.p.PoopPieceBlock;
 import com.altnoir.poopsky.block.p.ToiletLavaBlock;
+import com.altnoir.poopsky.init.PBlocks;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -101,6 +101,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
         blockWithItem(PBlocks.POOP_LEAVES_GOLD.get());
         blockWithItem(PBlocks.POOP_LEAVES_IRON.get());
         cubeBottomTop(PBlocks.POOP_TNT.get());
+        cubeBottomTop(PBlocks.BREEDING_BOX.get(), PBlocks.CUT_POOP_BLOCK.get());
         orientable(PBlocks.PLACER.get());
 
         registerToilet(AllToiletBlocks.OAK_TOILET.get(), Blocks.OAK_PLANKS);
@@ -145,10 +146,6 @@ public class PSBlockStateProvider extends BlockStateProvider {
         getVariantBuilder(PBlocks.FLY_NEST.get()).partialState().addModels(
                 new ConfiguredModel(flyNestModel));
         simpleBlockItem(PBlocks.FLY_NEST.get(), flyNestModel);
-
-        var breedingBoxModel = models().singleTexture("breeding_box", mcLoc("block/cube_all"), mcLoc("block/bee_nest_side"));
-        getVariantBuilder(PBlocks.BREEDING_BOX.get()).partialState().addModels(new ConfiguredModel(breedingBoxModel));
-        simpleBlockItem(PBlocks.BREEDING_BOX.get(), breedingBoxModel);
 
         fluidBlockWithItem(PBlocks.URINE_LIQUID.get());
         makeCropBlock((CropBlock) PBlocks.MAGGOTS.get(), "maggots_stage", "maggots_stage");
@@ -273,10 +270,18 @@ public class PSBlockStateProvider extends BlockStateProvider {
     }
 
     private void cubeBottomTop(Block block) {
+        cubeBottomTop(block, getBlockPath(block) + "_top", getBlockPath(block) + "_side", getBlockPath(block) + "_bottom");
+    }
+
+    private void cubeBottomTop(Block block, Block topBottom) {
+        cubeBottomTop(block, getBlockPath(topBottom), getBlockPath(block) + "_side", getBlockPath(topBottom));
+    }
+
+    private void cubeBottomTop(Block block, String top, String side, String bottom) {
         var model = models().withExistingParent(getBlockPath(block), mcLoc("block/cube_bottom_top"))
-                .texture("top", modLoc("block/" + getBlockPath(block) + "_top"))
-                .texture("side", modLoc("block/" + getBlockPath(block) + "_side"))
-                .texture("bottom", modLoc("block/" + getBlockPath(block) + "_bottom"));
+                .texture("top", modLoc("block/" + top))
+                .texture("side", modLoc("block/" + side))
+                .texture("bottom", modLoc("block/" + bottom));
 
         getVariantBuilder(block).partialState().addModels(new ConfiguredModel(model));
 

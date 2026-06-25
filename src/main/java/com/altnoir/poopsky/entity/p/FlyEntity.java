@@ -1,9 +1,9 @@
 package com.altnoir.poopsky.entity.p;
 
-import com.altnoir.poopsky.init.PEntityType;
-import com.altnoir.poopsky.init.PSoundEvents;
-import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.PTags;
+import com.altnoir.poopsky.init.PEntityType;
+import com.altnoir.poopsky.init.PItems;
+import com.altnoir.poopsky.init.PSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -21,6 +21,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.FlyingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
@@ -32,6 +33,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -49,11 +51,14 @@ public class FlyEntity extends Animal implements FlyingAnimal {
     public float flapping = 1.0F;
     public int eggTime = this.random.nextInt(6000) + 6000;
 
-    private float rollAmount;
-    private float rollAmountO;
-
     public FlyEntity(EntityType<FlyEntity> entityType, Level level) {
         super(entityType, level);
+        this.moveControl = new FlyingMoveControl(this, 10, false);
+        this.setPathfindingMalus(PathType.DANGER_FIRE, -1.0F);
+        this.setPathfindingMalus(PathType.WATER, -1.0F);
+        this.setPathfindingMalus(PathType.WATER_BORDER, 16.0F);
+        this.setPathfindingMalus(PathType.COCOA, -1.0F);
+        this.setPathfindingMalus(PathType.FENCE, -1.0F);
     }
 
     @Override
@@ -90,7 +95,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
         super.aiStep();
         this.oFlap = this.flap;
         this.oFlapSpeed = this.flapSpeed;
-        
+
         // 根据是否在飞行调整翅膀扇动速度
         if (this.isFlying()) {
             this.flapSpeed = Mth.clamp(this.flapSpeed + 0.2F, 0.0F, 1.0F);
@@ -101,14 +106,14 @@ public class FlyEntity extends Animal implements FlyingAnimal {
             this.flapSpeed = Mth.clamp(this.flapSpeed - 0.2F, 0.0F, 1.0F);
             this.flapping *= 0.9F;
         }
-        
+
         // 减缓下落速度
         Vec3 vec3 = this.getDeltaMovement();
         if (!this.onGround() && vec3.y < 0.0) {
             this.setDeltaMovement(vec3.x, vec3.y * 0.6, vec3.z);
         }
         this.flap = this.flap + this.flapping * 2.0F;
-        
+
         // 产卵逻辑
         if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.eggTime <= 0) {
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
@@ -179,18 +184,6 @@ public class FlyEntity extends Animal implements FlyingAnimal {
     @Override
     public boolean causeFallDamage(float fallDistance, float multiplier, DamageSource damageSource) {
         return false;
-    }
-
-    public float getRollAmount(float partialTick) {
-        return Mth.lerp(partialTick, this.rollAmountO, this.rollAmount);
-    }
-
-    private boolean getFlag(int flagId) {
-        return (this.entityData.get(DATA_FLAGS_ID) & flagId) != 0;
-    }
-
-    public boolean hasStung() {
-        return this.getFlag(4);
     }
 
     public static boolean checkFlySpawnRules(EntityType<FlyEntity> fly, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {

@@ -1,10 +1,10 @@
 package com.altnoir.poopsky.util;
 
-import com.altnoir.poopsky.init.PBlocks;
+import com.altnoir.poopsky.PTags;
 import com.altnoir.poopsky.block.p.PoopTntBlock;
+import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PParticles;
 import com.altnoir.poopsky.init.PRecipes;
-import com.altnoir.poopsky.PTags;
 import com.altnoir.poopsky.recipe.POPExplosionRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -58,9 +58,14 @@ public class PoopTntUtil {
                         continue;
                     }
 
-                    Block recipeOutput = findExplosionTransformOutput(level, state.getBlock());
+                    POPExplosionRecipe.Output recipeOutput = findExplosionTransformOutput(level, state.getBlock(), radius);
                     if (recipeOutput != null) {
-                        level.setBlockAndUpdate(pos, recipeOutput.defaultBlockState());
+                        if (recipeOutput.isBlock() && recipeOutput.block() != null) {
+                            level.setBlockAndUpdate(pos, recipeOutput.block().defaultBlockState());
+                        } else if (recipeOutput.item() != null) {
+                            level.destroyBlock(pos, false);
+                            Block.popResource(level, pos, new ItemStack(recipeOutput.item()));
+                        }
                     } else if (distSq <= innerRadiusSq) {
                         if (state.canBeReplaced() || state.is(PTags.Blocks.POOP_TNT_DESTROY)) {
                             level.destroyBlock(pos, true, null);
@@ -95,13 +100,13 @@ public class PoopTntUtil {
         spawnPoopParticle((ServerLevel) level, entity.getX(), entity.getY(), entity.getZ(), radius);
     }
 
-    private static Block findExplosionTransformOutput(Level level, Block block) {
+    private static POPExplosionRecipe.Output findExplosionTransformOutput(Level level, Block block, int explosionRadius) {
         if (level.isClientSide) return null;
         ItemStack itemStack = new ItemStack(block.asItem());
         SingleRecipeInput input = new SingleRecipeInput(itemStack);
 
         for (RecipeHolder<POPExplosionRecipe> holder : level.getRecipeManager().getAllRecipesFor(PRecipes.EXPLOSION_TRANSFORM_TYPE.get())) {
-            if (holder.value().matches(input, level)) {
+            if (holder.value().matches(input, explosionRadius)) {
                 return holder.value().output();
             }
         }

@@ -25,24 +25,36 @@ public final class POPExplosionRecipeBuilder implements RecipeBuilder {
     private static final String RECIPE_TYPE = PRecipes.POP_EXPLOSION_RECIPE_FOLDER;
 
     private final Ingredient input;
-    private final Block output;
+    private final POPExplosionRecipe.Output output;
+    private int radius = 0;
     private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
 
-    public POPExplosionRecipeBuilder(Ingredient input, Block output) {
+    public POPExplosionRecipeBuilder(Ingredient input, POPExplosionRecipe.Output output) {
         this.input = input;
         this.output = output;
     }
 
-    public static POPExplosionRecipeBuilder transform(ItemLike input, Block output) {
-        return new POPExplosionRecipeBuilder(Ingredient.of(input), output);
-    }
-
-    public static POPExplosionRecipeBuilder transform(Block input, Block output) {
-        return new POPExplosionRecipeBuilder(Ingredient.of(input), output);
+    public static POPExplosionRecipeBuilder transform(ItemLike input, ItemLike output) {
+        if (output instanceof Block block) {
+            return transform(Ingredient.of(input), block);
+        }
+        if (output instanceof Item item) {
+            return transform(Ingredient.of(input), item);
+        }
+        throw new IllegalArgumentException("Output must be a Block or Item, got: " + output.getClass().getSimpleName());
     }
 
     public static POPExplosionRecipeBuilder transform(Ingredient input, Block output) {
-        return new POPExplosionRecipeBuilder(input, output);
+        return new POPExplosionRecipeBuilder(input, new POPExplosionRecipe.Output(output, null));
+    }
+
+    public static POPExplosionRecipeBuilder transform(Ingredient input, Item output) {
+        return new POPExplosionRecipeBuilder(input, new POPExplosionRecipe.Output(null, output));
+    }
+
+    public POPExplosionRecipeBuilder withRadius(int radius) {
+        this.radius = radius;
+        return this;
     }
 
     @Override
@@ -58,7 +70,7 @@ public final class POPExplosionRecipeBuilder implements RecipeBuilder {
 
     @Override
     public @NotNull Item getResult() {
-        return output.asItem();
+        return output.toItemStack().getItem();
     }
 
     public void save(@NotNull RecipeOutput recipeOutput, @NotNull String id) {
@@ -78,7 +90,7 @@ public final class POPExplosionRecipeBuilder implements RecipeBuilder {
 
         criteria.forEach(advancementBuilder::addCriterion);
 
-        POPExplosionRecipe recipe = new POPExplosionRecipe(input, output);
+        POPExplosionRecipe recipe = new POPExplosionRecipe(input, radius, output);
         recipeOutput.accept(id, recipe, advancementBuilder.build(advancementId.withPrefix("recipes/")));
     }
 

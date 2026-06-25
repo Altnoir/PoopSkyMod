@@ -12,7 +12,7 @@ public class FlyRenderer extends MobRenderer<FlyEntity, FlyModel<FlyEntity>> {
 
 
     public FlyRenderer(EntityRendererProvider.Context context) {
-        super(context, new FlyModel<>(context.bakeLayer(ModelLayers.BEE)), 0.4F);
+        super(context, new FlyModel<>(context.bakeLayer(FlyModel.LAYER_LOCATION)), 0.4F);
     }
 
     @Override

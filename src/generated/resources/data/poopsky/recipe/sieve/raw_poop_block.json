@@ -26,10 +26,10 @@
       }
     },
     {
-      "chance": 0.15,
+      "chance": 0.25,
       "item": {
         "count": 1,
-        "id": "minecraft:diamond"
+        "id": "minecraft:amethyst_shard"
       }
     }
   ],

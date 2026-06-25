@@ -34,24 +34,41 @@ public class BreedingBoxRecipeCategory implements IRecipeCategory<BreedingBoxJei
         this.slot = guiHelper.getSlotDrawable();
     }
 
-    @Override public RecipeType<BreedingBoxJeiRecipe> getRecipeType() { return TYPE; }
-    @Override public Component getTitle() { return title; }
-    @Override public IDrawable getIcon() { return icon; }
-    @Override public int getWidth() { return WIDTH; }
-    @Override public int getHeight() { return HEIGHT; }
+    @Override
+    public RecipeType<BreedingBoxJeiRecipe> getRecipeType() {
+        return TYPE;
+    }
+
+    @Override
+    public Component getTitle() {
+        return title;
+    }
+
+    @Override
+    public IDrawable getIcon() {
+        return icon;
+    }
+
+    @Override
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
+    }
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, BreedingBoxJeiRecipe recipe, IFocusGroup focuses) {
         builder.addSlot(RecipeIngredientRole.INPUT, 2, 2).addItemStack(recipe.flyInput1());
         builder.addSlot(RecipeIngredientRole.INPUT, 2, 20).addItemStack(recipe.flyInput2());
 
-        // 变异成功产物
         builder.addSlot(RecipeIngredientRole.OUTPUT, 58, 11)
                 .addItemStack(recipe.resultFly())
                 .addRichTooltipCallback((view, tooltip) -> {
-                    float chance = recipe.chance();
-                    tooltip.add(Component.translatable("jei.poopsky.breeding_box_chance",
-                            String.format("%.0f", chance * 100)).withStyle(ChatFormatting.GRAY));
+                    var chance = recipe.chance() * 100.0F < 1.0F ? "<1" : String.format("%.2f", recipe.chance() * 100.0F).replaceAll("\\.?0+$", "");
+                    tooltip.add(Component.translatable("jei.poopsky.breeding_box_chance", chance).withStyle(ChatFormatting.GOLD));
                 });
     }
 

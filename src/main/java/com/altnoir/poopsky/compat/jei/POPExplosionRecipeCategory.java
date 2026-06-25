@@ -4,6 +4,7 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.recipe.POPExplosionRecipe;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
+import mezz.jei.api.gui.builder.ITooltipBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IJeiHelpers;
@@ -11,6 +12,7 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -25,6 +27,8 @@ public class POPExplosionRecipeCategory implements IRecipeCategory<RecipeHolder<
     private static final int INPUT_Y = 1;
     private static final int ARROW_X = INPUT_X + 24;
     private static final int ARROW_Y = INPUT_Y + 1;
+    private static final int ARROW_WIDTH = 24;
+    private static final int ARROW_HEIGHT = 16;
     private static final int OUTPUT_X = ARROW_X + 31;
     private static final int OUTPUT_Y = 1;
 
@@ -57,22 +61,6 @@ public class POPExplosionRecipeCategory implements IRecipeCategory<RecipeHolder<
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<POPExplosionRecipe> recipeHolder, IFocusGroup focuses) {
-        var recipe = recipeHolder.value();
-        builder.addSlot(RecipeIngredientRole.INPUT, INPUT_X, INPUT_Y)
-                .addIngredients(recipe.input());
-        builder.addSlot(RecipeIngredientRole.OUTPUT, OUTPUT_X, OUTPUT_Y)
-                .addItemStack(new ItemStack(recipe.output().asItem()));
-    }
-
-    @Override
-    public void draw(RecipeHolder<POPExplosionRecipe> recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
-        this.slot.draw(guiGraphics, INPUT_X - 1, INPUT_Y - 1);
-        this.arrow.draw(guiGraphics, ARROW_X, ARROW_Y);
-        this.slot.draw(guiGraphics, OUTPUT_X - 1, OUTPUT_Y - 1);
-    }
-
-    @Override
     public int getWidth() {
         return WIDTH;
     }
@@ -80,5 +68,32 @@ public class POPExplosionRecipeCategory implements IRecipeCategory<RecipeHolder<
     @Override
     public int getHeight() {
         return HEIGHT;
+    }
+
+    @Override
+    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<POPExplosionRecipe> recipeHolder, IFocusGroup focuses) {
+        var recipe = recipeHolder.value();
+        builder.addSlot(RecipeIngredientRole.INPUT, INPUT_X, INPUT_Y)
+                .addIngredients(recipe.input());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, OUTPUT_X, OUTPUT_Y)
+                .addItemStack(recipe.output().toItemStack());
+    }
+
+    @Override
+    public void draw(RecipeHolder<POPExplosionRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+        this.slot.draw(guiGraphics, INPUT_X - 1, INPUT_Y - 1);
+        this.arrow.draw(guiGraphics, ARROW_X, ARROW_Y);
+        this.slot.draw(guiGraphics, OUTPUT_X - 1, OUTPUT_Y - 1);
+    }
+
+    @Override
+    public void getTooltip(ITooltipBuilder tooltip, RecipeHolder<POPExplosionRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+        var recipe = recipeHolder.value();
+        if (recipe.radius() <= 0) return;
+
+        if (mouseX >= ARROW_X && mouseX < ARROW_X + ARROW_WIDTH
+                && mouseY >= ARROW_Y && mouseY < ARROW_Y + ARROW_HEIGHT) {
+            tooltip.add(Component.translatable("jei.poopsky.pop_explosion_radius", recipe.radius()).withStyle(ChatFormatting.GOLD));
+        }
     }
 }

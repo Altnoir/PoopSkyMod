@@ -387,6 +387,22 @@ public class PBlocks {
                     .sound(SoundType.GRASS)
                     .ignitedByLava()
                     .pushReaction(PushReaction.DESTROY)));
+    public static final DeferredBlock<Block> FLY_NEST = registerDefaultBlock("fly_nest",
+            () -> new FlyNestBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(0.5F)
+                    .sound(SoundType.WOOD)
+                    .noOcclusion()
+            )
+    );
+    public static final DeferredBlock<Block> BREEDING_BOX = registerDefaultBlock("breeding_box",
+            () -> new BreedingBoxBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(1.0F)
+                    .sound(SoundType.WOOD)
+                    .noOcclusion()
+            )
+    );
 
     public static final DeferredBlock<Block> RAW_POOP_BLOCK = registerBlock("raw_poop_block",
             () -> new Block(BlockBehaviour.Properties.of()
@@ -417,7 +433,7 @@ public class PBlocks {
             )
     );
     public static final DeferredBlock<Block> POOP_EMPTY_LOG = registerBlock("poop_empty_log",
-            () -> new EmptyRotatedPillarBlock(BlockBehaviour.Properties.of()
+            () -> new PoopEmptyLogBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_BROWN)
                     .noOcclusion()
                     .instrument(NoteBlockInstrument.BASS)
@@ -435,7 +451,7 @@ public class PBlocks {
             )
     );
     public static final DeferredBlock<Block> STRIPPED_POOP_EMPTY_LOG = registerBlock("stripped_poop_empty_log",
-            () -> new EmptyRotatedPillarBlock(BlockBehaviour.Properties.of()
+            () -> new PoopEmptyLogBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_BROWN)
                     .noOcclusion()
                     .instrument(NoteBlockInstrument.BASS)
@@ -549,24 +565,6 @@ public class PBlocks {
                             .instabreak()
                             .sound(SoundType.TWISTING_VINES)
                             .pushReaction(PushReaction.DESTROY)
-            )
-    );
-
-    public static final DeferredBlock<Block> FLY_NEST = registerDefaultBlock("fly_nest",
-            () -> new FlyNestBlock(BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.COLOR_BROWN)
-                    .strength(0.5F)
-                    .sound(SoundType.WOOD)
-                    .noOcclusion()
-            )
-    );
-
-    public static final DeferredBlock<Block> BREEDING_BOX = registerDefaultBlock("breeding_box",
-            () -> new BreedingBoxBlock(BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.COLOR_BROWN)
-                    .strength(1.0F)
-                    .sound(SoundType.WOOD)
-                    .noOcclusion()
             )
     );
 

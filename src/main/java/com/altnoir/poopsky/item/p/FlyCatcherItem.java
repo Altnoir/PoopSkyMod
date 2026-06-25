@@ -21,14 +21,15 @@ public class FlyCatcherItem extends Item {
 
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
-        if (target instanceof FlyEntity fly && fly.isAlive()) {
-            if (!player.level().isClientSide) {
+        if (target instanceof FlyEntity fly && fly.isAlive() && !fly.isBaby()) {
+            var level = player.level();
+            if (!level.isClientSide) {
                 PFlyTypes.FlyType type = getFlyTypeFromEntity(fly);
                 ItemStack flyItem = FlyItem.withType(type);
 
                 fly.spawnAtLocation(flyItem);
 
-                player.level().playSound(null, fly.getX(), fly.getY(), fly.getZ(),
+                level.playSound(null, fly.getX(), fly.getY(), fly.getZ(),
                         SoundEvents.BEEHIVE_EXIT, SoundSource.NEUTRAL, 1.0F, 1.0F);
 
                 if (!player.getAbilities().instabuild) {

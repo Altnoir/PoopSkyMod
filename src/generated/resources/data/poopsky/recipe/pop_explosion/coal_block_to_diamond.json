@@ -1,0 +1,10 @@
+{
+  "type": "poopsky:pop_explosion",
+  "input": {
+    "item": "minecraft:coal_block"
+  },
+  "output": {
+    "item": "minecraft:diamond"
+  },
+  "radius": 6
+}

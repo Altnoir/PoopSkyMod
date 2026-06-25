@@ -3,5 +3,7 @@
   "input": {
     "item": "minecraft:cobblestone"
   },
-  "output": "minecraft:gravel"
+  "output": {
+    "block": "minecraft:gravel"
+  }
 }

@@ -223,7 +223,6 @@
   "block.poopsky.black_concrete_toilet": "Black Concrete Toilet",
   "block.poopsky.rainbow_toilet": "Rainbow Toilet",
 
-  "block.customportalapi.customportalblock": "Poop Portal",
   "entity.minecraft.villager.poopsky.poopmaker": "Poopmaker",
   "entity.minecraft.villager.poopsky.gastronome": "Gastronome",
   "entity.poopsky.toilet_plug": "Toilet Plug",
@@ -315,6 +314,13 @@
   "subtitles.poopsky.item.toilet_linker.boop": "Toilet Plug Wand links",
   "subtitles.poopsky.item.toilet_linker.success": "Toilet Plug Wand binds",
 
+  "stat.poopsky.poop_stats": "Poop Stats",
+  "stat.poopsky.inspect_placer": "Inspect Placer Stats",
+  "container.placer": "Placer",
+  "generator.poopsky.poopsky": "PoopSky",
+  "stat.poopsky.poop_stat": "Poop Stat",
+  "itemgroup.poopsky": "POOPSKY",
+
   "tag.item.poopsky.compooper_saplings": "Compooper can produce saplings",
   "tag.item.poopsky.can_compooper": "Can be composted",
   "jei.category.poopsky.compooper": "Compooper",
@@ -323,17 +329,11 @@
   "jei.category.poopsky.digesting.fan": "Place Digesting Fan After Urine Liquid",
   "jei.category.poopsky.pop_explosion": "POP Explosion",
   "jei.poopsky.sieve_chance": "Chance: %.2f%%",
+  "jei.poopsky.pop_explosion_radius": "Radius > %s",
   "jei.poopsky.digesting_chance": "Chance: %.2f%%",
   "create.item_attributes.can_be_digested": "Can be digested",
   "task.poopsky.defecate": "Defecate",
   "task.poopsky.defecate.desc": "Maid will search for toilets around",
-
-  "stat.poopsky.poop_stats": "Poop Stats",
-  "stat.poopsky.inspect_placer": "Inspect Placer Stats",
-  "container.placer": "Placer",
-  "generator.poopsky.poopsky": "PoopSky",
-  "stat.poopsky.poop_stat": "Poop Stat",
-  "itemgroup.poopsky": "POOPSKY",
 
   "fly_type.poopsky.normal": "Normal Fly",
   "fly_type.poopsky.white": "White Fly",

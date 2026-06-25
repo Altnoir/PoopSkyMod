@@ -9,7 +9,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "poopsky:sieve/poop_block_from_create"
+        "recipe": "poopsky:sieve/poop_block_has_create"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
@@ -32,7 +32,7 @@
   ],
   "rewards": {
     "recipes": [
-      "poopsky:sieve/poop_block_from_create"
+      "poopsky:sieve/poop_block_has_create"
     ]
   }
 }
