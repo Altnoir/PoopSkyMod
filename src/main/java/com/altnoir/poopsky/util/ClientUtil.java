@@ -1,6 +1,5 @@
 package com.altnoir.poopsky.util;
 
-import com.altnoir.poopsky.util.asm.ASMHooks;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
@@ -156,7 +155,7 @@ public class ClientUtil {
     public static boolean isPoopSkyWorldType(WorldCreationUiState.WorldTypeEntry worldType) {
         return Optional.ofNullable(worldType.preset())
                 .flatMap(Holder::unwrapKey)
-                .filter(ASMHooks.POOPSKY::equals)
+                .filter(PHooks.POOPSKY::equals)
                 .isPresent();
     }
 }

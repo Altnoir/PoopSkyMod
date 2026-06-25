@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.event;
 
 import com.altnoir.poopsky.entity.p.ToiletPlugEntity;
-import com.altnoir.poopsky.util.asm.ASMHooks;
+import com.altnoir.poopsky.util.PHooks;
 import com.altnoir.poopsky.network.PlugActionPayload;
 import com.altnoir.poopsky.network.PlugDismountPayload;
 import net.minecraft.client.Minecraft;
@@ -27,7 +27,7 @@ public class PSClientGameEvents {
                     originalDefaultWorldPreset = originalPreset;
                 }
                 if (originalDefaultWorldPreset.unwrapKey().equals(originalPreset.unwrapKey())) {
-                    var voidWorldPreset = uiState.getSettings().worldgenLoadContext().registryOrThrow(Registries.WORLD_PRESET).getHolder(ASMHooks.overrideDefaultWorldPreset()).orElse(null);
+                    var voidWorldPreset = uiState.getSettings().worldgenLoadContext().registryOrThrow(Registries.WORLD_PRESET).getHolder(PHooks.overrideDefaultWorldPreset()).orElse(null);
                     uiState.setWorldType(new WorldCreationUiState.WorldTypeEntry(voidWorldPreset));
                 }
             }

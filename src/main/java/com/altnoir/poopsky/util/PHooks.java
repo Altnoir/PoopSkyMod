@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.util.asm;
+package com.altnoir.poopsky.util;
 
 import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.PoopSky;
@@ -12,7 +12,7 @@ import net.neoforged.fml.ModList;
 import java.util.Properties;
 
 @SuppressWarnings("unused")
-public final class ASMHooks {
+public final class PHooks {
     public static final ResourceKey<WorldPreset> POOPSKY = ResourceKey.create(Registries.WORLD_PRESET, PoopSky.loc("poopsky"));
 
     /**
