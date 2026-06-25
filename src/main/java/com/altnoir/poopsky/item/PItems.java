@@ -14,7 +14,6 @@ import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-
 public class PItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(PoopSky.MOD_ID);
 
@@ -115,6 +114,13 @@ public class PItems {
     public static final DeferredItem<BucketItem> URINE_BUCKET = ITEMS.register("urine_bucket",
             () -> new BucketItem(PFluids.URINE.get(), new Item.Properties().stacksTo(1)));
 
+    public static final DeferredItem<Item> POOLIME_SPAWN_EGG = ITEMS.register("poolime_spawn_egg",
+            () -> new DeferredSpawnEggItem(PEntityType.POOLIME, 0x7D5F36, 0x5E4228,
+                    new Item.Properties()));
+    public static final DeferredItem<Item> FLY_SPAWN_EGG = ITEMS.register("fly_spawn_egg",
+            () -> new DeferredSpawnEggItem(PEntityType.FLY, 0xC8C800, 0x8B4513,
+                    new Item.Properties()));
+
     public static final DeferredItem<Item> LAWRENCE_MUSIC_DISC = ITEMS.register("music_disc_lawrence", () ->
             new Item(new Item.Properties().jukeboxPlayable(PSoundEvents.LAWRENCE_KEY).rarity(Rarity.RARE).stacksTo(1)));
     public static final DeferredItem<Item> LIGHT_DANCE_MUSIC_DISC = ITEMS.register("music_disc_light_dance", () ->
@@ -122,9 +128,10 @@ public class PItems {
     public static final DeferredItem<Item> MOON_BOWL_MUSIC_DISC = ITEMS.register("music_disc_moon_bowl", () ->
             new Item(new Item.Properties().jukeboxPlayable(PSoundEvents.MOON_BOWL_KEY).rarity(Rarity.RARE).stacksTo(1)));
 
-    public static final DeferredItem<Item> POOLIME_SPAWN_EGG = ITEMS.register("poolime_spawn_egg",
-            () -> new DeferredSpawnEggItem(PEntityType.POOLIME, 0x7D5F36, 0x5E4228,
-                    new Item.Properties()));
+    public static final DeferredItem<Item> FLY = ITEMS.register("fly",
+            () -> new FlyItem(new Item.Properties().stacksTo(88)));
+    public static final DeferredItem<Item> FLY_CATCHER = ITEMS.register("fly_catcher",
+            () -> new FlyCatcherItem(new Item.Properties().stacksTo(1).durability(64)));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

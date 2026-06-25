@@ -556,6 +556,23 @@ public class PBlocks {
             )
     );
 
+    public static final DeferredBlock<Block> FLY_NEST = registerDefaultBlock("fly_nest",
+            () -> new FlyNestBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(0.5F)
+                    .sound(SoundType.WOOD)
+                    .noOcclusion()
+            )
+    );
+
+    public static final DeferredBlock<Block> BREEDING_BOX = registerDefaultBlock("breeding_box",
+            () -> new BreedingBoxBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(1.0F)
+                    .sound(SoundType.WOOD)
+                    .noOcclusion()
+            )
+    );
 
     private static BlockBehaviour.Properties poopCakeProperties() {
         return BlockBehaviour.Properties.of()
@@ -632,3 +649,4 @@ public class PBlocks {
         BLOCKS.register(eventBus);
     }
 }
+

@@ -173,6 +173,33 @@
       }
     ]
   },
+  "entity.fly.ambient": {
+    "subtitle": "subtitle.poopsky.fly.ambient",
+    "sounds": [
+      {
+        "name": "minecraft:entity.bee.loop_aggressive",
+        "type": "event"
+      }
+    ]
+  },
+  "entity.fly.hurt": {
+    "subtitle": "subtitle.poopsky.fly.hurt",
+    "sounds": [
+      {
+        "name": "minecraft:entity.bee.hurt",
+        "type": "event"
+      }
+    ]
+  },
+  "entity.fly.death": {
+    "subtitle": "subtitle.poopsky.fly.death",
+    "sounds": [
+      {
+        "name": "minecraft:entity.bee.death",
+        "type": "event"
+      }
+    ]
+  },
   "lawrence": {
     "sounds": [
       {

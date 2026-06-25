@@ -31,6 +31,9 @@ public class PSoundEvents {
     public static final Supplier<SoundEvent> ENTITY_POOLIME_SQUISH = registerSoundEvent("entity.poolime.squish");
     public static final Supplier<SoundEvent> ENTITY_POOLIME_SQUISH_SMALL = registerSoundEvent("entity.poolime.squish_small");
     public static final Supplier<SoundEvent> ENTITY_POP_PRIMED = registerSoundEvent("entity.pop.primed");
+    public static final Supplier<SoundEvent> ENTITY_FLY_AMBIENT = registerSoundEvent("entity.fly.ambient");
+    public static final Supplier<SoundEvent> ENTITY_FLY_HURT = registerSoundEvent("entity.fly.hurt");
+    public static final Supplier<SoundEvent> ENTITY_FLY_DEATH = registerSoundEvent("entity.fly.death");
 
     public static final Supplier<SoundEvent> LAWRENCE = registerSoundEvent("lawrence");
     public static final ResourceKey<JukeboxSong> LAWRENCE_KEY = registerJukeboxSong("lawrence");

@@ -72,6 +72,8 @@ public class PoopSky {
         PFluids.FLUIDS.register(modEventBus);
         PFluidTypes.FLUID_TYPES.register(modEventBus);
 
+        PMenuTypes.register(modEventBus);
+
         if (ModList.get().isLoaded(PSMods.TOUHOU_LITTLE_MAID.id())) {
             MaidPlugin.registry(modEventBus);
         }
