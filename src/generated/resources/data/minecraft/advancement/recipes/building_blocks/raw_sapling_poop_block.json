@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_saping_poop_ball": {
+    "has_sapling_poop_ball": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:saping_poop_ball"
+            "items": "poopsky:sapling_poop_ball"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_saping_poop_ball"
+      "has_sapling_poop_ball"
     ]
   ],
   "rewards": {

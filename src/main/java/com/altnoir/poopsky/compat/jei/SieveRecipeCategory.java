@@ -45,7 +45,6 @@ public class SieveRecipeCategory implements IRecipeCategory<RecipeHolder<SieveRe
         this.slot = guiHelper.getSlotDrawable();
     }
 
-
     @Override
     public RecipeType<RecipeHolder<SieveRecipe>> getRecipeType() {
         return TYPE;
@@ -74,10 +73,9 @@ public class SieveRecipeCategory implements IRecipeCategory<RecipeHolder<SieveRe
 
             if (index < recipe.outputs().size()) {
                 var chanceItem = recipe.outputs().get(index);
+                var chance = chanceItem.chance() * 100.0F < 1.0F ? "<1" : String.format("%.2f", chanceItem.chance() * 100.0F).replaceAll("\\.?0+$", "");
                 slotBuilder.addItemStack(chanceItem.stack().copy()).addRichTooltipCallback(
-                        (slotView, tooltip) -> tooltip.add(
-                                Component.translatable("jei.poopsky.sieve_chance", String.format("%.2f", chanceItem.chance() * 100.0F)).withStyle(ChatFormatting.GRAY)
-                        ));
+                        (slotView, tooltip) -> tooltip.add(Component.translatable("jei.poopsky.sieve_chance", chance).withStyle(ChatFormatting.GOLD)));
             }
         }
     }

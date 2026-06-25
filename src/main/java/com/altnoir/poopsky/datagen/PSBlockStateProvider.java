@@ -30,70 +30,11 @@ public class PSBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        //block models
-        models().cubeAll("poop_block1", modLoc("block/poop_block"));
-        models().cubeAll("poop_block2", modLoc("block/poop_block_maggots")).texture(PARTICLE, modLoc("block/poop_block"));
-        models().withExistingParent("poop_block3", mcLoc("block/block"))
-                .texture("side", modLoc("block/poop_block"))
-                .texture("up", modLoc("block/poop_block_liquids"))
-                .texture(PARTICLE, modLoc("block/poop_block"))
-                .element().from(0, 0, 0).to(16, 16, 16)
-                .allFaces((face, faceBuilder) -> faceBuilder.texture("#side").uvs(0, 0, 16, 16))
-                .face(Direction.UP).texture("#up").end();
-
-        models().withExistingParent("poolime_poop_block", mcLoc("block/cube"))
-                .texture("south", modLoc("block/poop_block"))
-                .texture("west", modLoc("block/poop_block"))
-                .texture("north", modLoc("block/poop_block"))
-                .texture("east", modLoc("block/poop_block"))
-                .texture("down", modLoc("block/poop_block"))
-                .texture("up", modLoc("block/poolime_poop_block"))
-                .texture(PARTICLE, modLoc("block/poop_block"));
-
-        for (int layers = 1; layers < 8; layers++) {
-            int height = layers * 2;
-            int uvHeight = 16 - (layers * 2);
-            String modelName = "poop_height" + height;
-
-            models().withExistingParent(modelName, mcLoc("block/thin_block"))
-                    .texture("texture", modLoc("block/poop_block"))
-                    .texture(PARTICLE, modLoc("block/poop_block"))
-                    .element().from(0, 0, 0).to(16, height, 16)
-                    .allFaces((face, faceBuilder) -> {
-                        faceBuilder.texture("#texture");
-                        if (face != Direction.UP) faceBuilder.cullface(face);
-                    });
-        }
-
-        //block states
-        getVariantBuilder(PBlocks.POOP_BLOCK.get())
-                .partialState().addModels(
-                        new ConfiguredModel(models().getExistingFile(modLoc("block/poop_block1")), 0, 0, false, 9),
-                        new ConfiguredModel(models().getExistingFile(modLoc("block/poop_block2")), 0, 0, false, 1),
-                        new ConfiguredModel(models().getExistingFile(modLoc("block/poop_block3")), 0, 0, false, 2)
-                );
-
-        getVariantBuilder(PBlocks.POOP_PIECE.get())
-                .forAllStates(state -> {
-                    int layers = state.getValue(PoopPieceBlock.LAYERS);
-                    if (layers == 8) {
-                        return ConfiguredModel.builder()
-                                .modelFile(models().getExistingFile(modLoc("block/poop_block1")))
-                                .build();
-                    }
-                    String modelName = "poop_height" + (layers * 2);
-                    return ConfiguredModel.builder()
-                            .modelFile(models().getExistingFile(modLoc("block/" + modelName)))
-                            .build();
-                });
-        //item models
-        simpleBlockItem(PBlocks.POOP_BLOCK.get(), models().getExistingFile(modLoc("block/poop_block1")));
-        simpleBlockItem(PBlocks.POOP_PIECE.get(), models().getExistingFile(modLoc("block/poop_height2")));
         //
+        poopBlock();
+        poopPiece();
+        poolimePoopBlock();
         blockWithTranslucentRenderType(PBlocks.POOLIME_BLOCK.get());
-        getVariantBuilder(PBlocks.POOLIME_POOP_BLOCK.get()).partialState().addModels(new ConfiguredModel(models().getExistingFile(modLoc("block/poolime_poop_block"))));
-        simpleBlockItem(PBlocks.POOLIME_POOP_BLOCK.get(), models().getExistingFile(modLoc("block/poolime_poop_block")));
-
         blockWithItem(PBlocks.CHILI_POOP_BLOCK.get());
         stairsBlock((StairBlock) PBlocks.CHILI_POOP_STAIRS.get(), blockTexture(PBlocks.CHILI_POOP_BLOCK.get()));
         slabBlock((SlabBlock) PBlocks.CHILI_POOP_SLAB.get(), blockTexture(PBlocks.CHILI_POOP_BLOCK.get()), blockTexture(PBlocks.CHILI_POOP_BLOCK.get()));
@@ -134,7 +75,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
         slabBlock((SlabBlock) PBlocks.TILE_BLOCK_SLAB.get(), blockTexture(PBlocks.TILE_BLOCK.get()), blockTexture(PBlocks.TILE_BLOCK.get()));
         wallBlock((WallBlock) PBlocks.TILE_BLOCK_WALL.get(), blockTexture(PBlocks.TILE_BLOCK.get()));
 
-        blockWithItem(PBlocks.RAW_POOP_BLOCK.get());
+        randomBlockWithItem(PBlocks.RAW_POOP_BLOCK.get(), 3, 1);
         blockWithItem(PBlocks.RAW_SAPLING_POOP_BLOCK.get());
         blockWithItem(PBlocks.RAW_SEA_POOP_BLOCK.get());
         blockWithItem(PBlocks.RAW_WITHER_POOP_BLOCK.get());
@@ -224,6 +165,86 @@ public class PSBlockStateProvider extends BlockStateProvider {
         models[0] = new ConfiguredModel(models().crop(model + state.getValue(CropBlock.AGE),
                 PoopSky.loc("block/" + texture + state.getValue(CropBlock.AGE))).renderType("cutout"));
         return models;
+    }
+
+    private void poopBlock() {
+        models().cubeAll("poop_block1", modLoc("block/poop_block"));
+        models().cubeAll("poop_block2", modLoc("block/poop_block_maggots")).texture(PARTICLE, modLoc("block/poop_block"));
+        models().withExistingParent("poop_block3", mcLoc("block/block"))
+                .texture("side", modLoc("block/poop_block"))
+                .texture("up", modLoc("block/poop_block_liquids"))
+                .texture(PARTICLE, modLoc("block/poop_block"))
+                .element().from(0, 0, 0).to(16, 16, 16)
+                .allFaces((face, faceBuilder) -> faceBuilder.texture("#side").uvs(0, 0, 16, 16))
+                .face(Direction.UP).texture("#up").end();
+
+        getVariantBuilder(PBlocks.POOP_BLOCK.get())
+                .partialState().addModels(
+                        new ConfiguredModel(models().getExistingFile(modLoc("block/poop_block1")), 0, 0, false, 9),
+                        new ConfiguredModel(models().getExistingFile(modLoc("block/poop_block2")), 0, 0, false, 1),
+                        new ConfiguredModel(models().getExistingFile(modLoc("block/poop_block3")), 0, 0, false, 2)
+                );
+        simpleBlockItem(PBlocks.POOP_BLOCK.get(), models().getExistingFile(modLoc("block/poop_block1")));
+    }
+
+    private void poopPiece() {
+        for (int layers = 1; layers < 8; layers++) {
+            int height = layers * 2;
+            String modelName = "poop_height" + height;
+
+            models().withExistingParent(modelName, mcLoc("block/thin_block"))
+                    .texture("texture", modLoc("block/poop_block"))
+                    .texture(PARTICLE, modLoc("block/poop_block"))
+                    .element().from(0, 0, 0).to(16, height, 16)
+                    .allFaces((face, faceBuilder) -> {
+                        faceBuilder.texture("#texture");
+                        if (face != Direction.UP) faceBuilder.cullface(face);
+                    });
+        }
+        getVariantBuilder(PBlocks.POOP_PIECE.get())
+                .forAllStates(state -> {
+                    int layers = state.getValue(PoopPieceBlock.LAYERS);
+                    if (layers == 8) {
+                        return ConfiguredModel.builder()
+                                .modelFile(models().getExistingFile(modLoc("block/poop_block1")))
+                                .build();
+                    }
+                    String modelName = "poop_height" + (layers * 2);
+                    return ConfiguredModel.builder()
+                            .modelFile(models().getExistingFile(modLoc("block/" + modelName)))
+                            .build();
+                });
+        simpleBlockItem(PBlocks.POOP_PIECE.get(), models().getExistingFile(modLoc("block/poop_height2")));
+    }
+
+    private void poolimePoopBlock() {
+        models().withExistingParent("poolime_poop_block", mcLoc("block/cube"))
+                .texture("south", modLoc("block/poop_block"))
+                .texture("west", modLoc("block/poop_block"))
+                .texture("north", modLoc("block/poop_block"))
+                .texture("east", modLoc("block/poop_block"))
+                .texture("down", modLoc("block/poop_block"))
+                .texture("up", modLoc("block/poolime_poop_block"))
+                .texture(PARTICLE, modLoc("block/poop_block"));
+        getVariantBuilder(PBlocks.POOLIME_POOP_BLOCK.get()).partialState().addModels(new ConfiguredModel(models().getExistingFile(modLoc("block/poolime_poop_block"))));
+        simpleBlockItem(PBlocks.POOLIME_POOP_BLOCK.get(), models().getExistingFile(modLoc("block/poolime_poop_block")));
+    }
+
+    private void randomBlockWithItem(Block block, int... weight) {
+        var blockPath = getBlockPath(block);
+        int layers = weight.length;
+        ConfiguredModel[] configuredModels = new ConfiguredModel[layers];
+
+        for (int i = 0; i < layers; i++) {
+            String modelName = blockPath + (i);
+            String textureName = i == 0 ? blockPath : modelName;
+            models().cubeAll(modelName, modLoc("block/" + textureName));
+            configuredModels[i] = new ConfiguredModel(
+                    models().getExistingFile(modLoc("block/" + modelName)), 0, 0, false, weight[i]);
+        }
+
+        getVariantBuilder(block).partialState().addModels(configuredModels);
+        simpleBlockItem(block, models().getExistingFile(modLoc("block/" + blockPath + "0")));
     }
 
     private void fluidBlockWithItem(Block block) {
