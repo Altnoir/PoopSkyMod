@@ -5,15 +5,15 @@
       "modid": "create"
     }
   ],
-  "type": "create:haunting",
+  "type": "poopsky:digesting",
   "ingredients": [
     {
-      "item": "poopsky:poolime_block"
+      "item": "minecraft:powder_snow_bucket"
     }
   ],
   "results": [
     {
-      "id": "minecraft:ice"
+      "id": "poopsky:urine_bucket"
     }
   ]
 }

@@ -32,6 +32,8 @@ public class PSDigestingRecipeGen extends DigestingRecipeGen implements IConditi
         convert(Blocks.TNT, PBlocks.POOP_TNT.get()).register(conditionalOutput);
         convert(ItemTags.LEAVES, PItems.FOLIUM_SENNAE.get()).register(conditionalOutput);
         convert(Items.BREAD, PItems.POOP_BREAD.get()).register(conditionalOutput);
+        convert(Items.CAKE, PBlocks.POOP_CAKE.get()).register(conditionalOutput);
         convert(Items.POPPY, Items.WITHER_ROSE).register(conditionalOutput);
+        convert(Items.POWDER_SNOW_BUCKET, PItems.URINE_BUCKET.get()).register(conditionalOutput);
     }
 }

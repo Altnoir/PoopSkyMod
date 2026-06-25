@@ -5,15 +5,15 @@
       "modid": "create"
     }
   ],
-  "type": "create:haunting",
+  "type": "poopsky:digesting",
   "ingredients": [
     {
-      "item": "poopsky:poolime_block"
+      "item": "minecraft:cake"
     }
   ],
   "results": [
     {
-      "id": "minecraft:ice"
+      "id": "poopsky:poop_cake"
     }
   ]
 }

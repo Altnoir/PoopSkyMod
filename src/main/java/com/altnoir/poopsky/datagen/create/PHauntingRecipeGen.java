@@ -21,6 +21,6 @@ public class PHauntingRecipeGen extends HauntingRecipeGen implements IConditionB
     protected void buildRecipes(RecipeOutput p_recipeOutput, HolderLookup.Provider holderLookup) {
         RecipeOutput conditionalOutput = p_recipeOutput.withConditions(modLoaded(PSMods.CREATE.id()));
 
-        convert(PBlocks.POOP_BLOCK.get(), Blocks.ICE).register(conditionalOutput);
+        convert(PBlocks.POOLIME_BLOCK.get(), Blocks.ICE).register(conditionalOutput);
     }
 }

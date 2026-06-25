@@ -27,6 +27,7 @@ public class PWashingRecipeGen extends WashingRecipeGen implements IConditionBui
         convert(PBlocks.POOP_PIECE, Blocks.SNOW).register(conditionalOutput);
         convert(PBlocks.POOP_BLOCK, Blocks.SNOW_BLOCK).register(conditionalOutput);
         convert(PItems.POOP_BALL, Items.SNOWBALL).register(conditionalOutput);
+        convert(PItems.URINE_BUCKET, Items.POWDER_SNOW_BUCKET).register(conditionalOutput);
     }
 
     private GeneratedRecipe convert(ItemLike input, ItemLike result) {
