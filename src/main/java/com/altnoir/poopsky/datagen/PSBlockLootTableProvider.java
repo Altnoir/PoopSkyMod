@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.datagen;
 
-import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.block.AllToiletBlocks;
+import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.block.p.CompooperBlock;
 import com.altnoir.poopsky.block.p.PoopPieceBlock;
 import com.altnoir.poopsky.block.p.RoundwormVinesPlantBlock;
@@ -125,7 +125,7 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(PBlocks.RAW_SEA_POOP_BLOCK.get());
         dropSelf(PBlocks.RAW_WITHER_POOP_BLOCK.get());
 
-        dropSelf(PBlocks.POOP_CAKE.get());
+        add(PBlocks.POOP_CAKE.get(), noDrop());
         PBlocks.getPoopCandleCakes().forEach((candle, candleCake) ->
                 this.add(candleCake.get(), createCandleCakeDrops(candle)));
         dropSelf(PBlocks.POOLIME_BLOCK.get());
