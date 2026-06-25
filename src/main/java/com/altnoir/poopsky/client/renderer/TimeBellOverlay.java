@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.misc.renderer;
+package com.altnoir.poopsky.client.renderer;
 
 import com.altnoir.poopsky.Config;
 import net.minecraft.client.DeltaTracker;

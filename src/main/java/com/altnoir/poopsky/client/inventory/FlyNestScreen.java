@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.inventory;
+package com.altnoir.poopsky.client.inventory;
 
 import com.altnoir.poopsky.PoopSky;
 import net.minecraft.client.gui.GuiGraphics;

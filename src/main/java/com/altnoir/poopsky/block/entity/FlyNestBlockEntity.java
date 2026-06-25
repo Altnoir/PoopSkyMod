@@ -5,6 +5,7 @@ import com.altnoir.poopsky.init.PFlyRecipes;
 import com.altnoir.poopsky.init.PFlyTypes;
 import com.altnoir.poopsky.init.PBlockEntityType;
 import com.altnoir.poopsky.item.p.FlyItem;
+import com.altnoir.poopsky.client.inventory.FlyNestMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -205,7 +206,7 @@ public class FlyNestBlockEntity extends BlockEntity implements MenuProvider {
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player player) {
-        return new com.altnoir.poopsky.inventory.FlyNestMenu(id, playerInventory, createContainerProxy(), data);
+        return new FlyNestMenu(id, playerInventory, createContainerProxy(), data);
     }
 
     private Container createContainerProxy() {

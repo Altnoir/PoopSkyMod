@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.inventory.BreedingBoxMenu;
-import com.altnoir.poopsky.inventory.FlyNestMenu;
+import com.altnoir.poopsky.client.inventory.BreedingBoxMenu;
+import com.altnoir.poopsky.client.inventory.FlyNestMenu;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
