@@ -3,6 +3,7 @@ package com.altnoir.poopsky.datagen;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.PBlocks;
+import com.altnoir.poopsky.init.PRecipes;
 import com.altnoir.poopsky.item.PItems;
 import com.altnoir.poopsky.recipe.POPExplosionRecipeBuilder;
 import com.altnoir.poopsky.recipe.SieveRecipeBuilder;
@@ -19,6 +20,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -550,6 +552,8 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(recipeOutput);
 
         buildSieveRecipes(recipeOutput);
+        buildFlyNestRecipes(recipeOutput);
+        buildBreedingBoxRecipes(recipeOutput);
         buildpopExplosionRecipes(recipeOutput);
     }
 
@@ -785,4 +789,56 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
     protected static String getConversionRecipeName(ItemLike result, ItemLike input) {
         return PoopSky.MOD_ID + ":" + getItemName(result) + "_from_" + getItemName(input);
     }
+
+
+
+    private void buildFlyNestRecipes(RecipeOutput recipeOutput) {
+        LinkedHashMap<String, ItemLike> flyNestMap = new LinkedHashMap<String, ItemLike>();
+        flyNestMap.put("normal", PItems.MAGGOTS_SEEDS);
+        flyNestMap.put("white", Items.BONE_MEAL);
+        flyNestMap.put("black", Items.COAL);
+        flyNestMap.put("green", Items.CACTUS);
+        flyNestMap.put("yellow", Items.YELLOW_DYE);
+        flyNestMap.put("blue", Items.LAPIS_LAZULI);
+        flyNestMap.put("red", Items.REDSTONE);
+        flyNestMap.put("brown", Items.COCOA_BEANS);
+        flyNestMap.put("gray", Items.GRAY_DYE);
+        flyNestMap.put("light_gray", Items.LIGHT_GRAY_DYE);
+        flyNestMap.put("light_blue", Items.LIGHT_BLUE_DYE);
+        flyNestMap.put("lime", Items.SEA_PICKLE);
+        flyNestMap.put("magenta", Items.MAGENTA_DYE);
+        flyNestMap.put("cyan", Items.PRISMARINE_CRYSTALS);
+        flyNestMap.put("pink", Items.PINK_DYE);
+        flyNestMap.put("orange", Items.ORANGE_DYE);
+        flyNestMap.put("purple", Items.AMETHYST_SHARD);
+
+        flyNestMap.forEach((typeId, result) -> {
+            FlyNestRecipeBuilder.flyNest(typeId, result)
+                    .unlockedBy(getHasName(PBlocks.FLY_NEST), has(PBlocks.FLY_NEST))
+                    .save(recipeOutput, PoopSky.loc(PRecipes.FLY_NEST_FOLDER + "/" + typeId));
+        });
+    }
+
+    private void buildBreedingBoxRecipes(RecipeOutput recipeOutput) {
+        record MutationRecipe(String p1, String p2, String result, float chance) {}
+        List<MutationRecipe> breedingRecipes = List.of(
+                new MutationRecipe("green", "blue", "cyan", 0.2f),
+                new MutationRecipe("purple", "pink", "magenta", 0.2f),
+                new MutationRecipe("red", "blue", "purple", 0.2f),
+                new MutationRecipe("red", "yellow", "orange", 0.2f),
+                new MutationRecipe("white", "black", "gray", 0.2f),
+                new MutationRecipe("white", "blue", "light_blue", 0.2f),
+                new MutationRecipe("white", "gray", "light_gray", 0.2f),
+                new MutationRecipe("white", "green", "lime", 0.2f),
+                new MutationRecipe("white", "red", "pink", 0.2f)
+        );
+
+        for (MutationRecipe recipe : breedingRecipes) {
+            String id = recipe.p1 + "_plus_" + recipe.p2;
+            BreedingBoxRecipeBuilder.breedingBox(recipe.p1, recipe.p2, recipe.result, recipe.chance)
+                    .unlockedBy(getHasName(PBlocks.FLY_NEST), has(PBlocks.FLY_NEST))
+                    .save(recipeOutput, PoopSky.loc(PRecipes.BREEDING_BOX_FOLDER + "/" + id));
+        }
+    }
+
 }

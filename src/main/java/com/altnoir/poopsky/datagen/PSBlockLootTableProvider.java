@@ -149,6 +149,9 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
                 .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(RoundwormVinesPlantBlock.SEEDS, true));
         add(PBlocks.ROUNDWORM_VINES_PLANT.get(), createRoundwormVinesDrop(PItems.ROUNDWORM.get(), builder2));
         dropOther(PBlocks.ROUNDWORM_VINES.get(), PItems.ROUNDWORM.get());
+
+        dropSelf(PBlocks.FLY_NEST.get());
+        dropSelf(PBlocks.BREEDING_BOX.get());
     }
 
     protected LootTable.@NotNull Builder createPoopPieceDrop(Block block, Item item) {

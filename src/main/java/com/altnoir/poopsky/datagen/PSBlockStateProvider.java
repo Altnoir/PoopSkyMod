@@ -141,6 +141,15 @@ public class PSBlockStateProvider extends BlockStateProvider {
         registerToiletLava(AllToiletBlocks.PINK_CONCRETE_TOILET.get(), Blocks.PINK_CONCRETE);
         registerToiletLava(AllToiletBlocks.RAINBOW_TOILET.get(), "rainbow_concrete");
 
+        var flyNestModel = models().singleTexture("fly_nest", mcLoc("block/cube_all"), mcLoc("block/beehive_side"));
+        getVariantBuilder(PBlocks.FLY_NEST.get()).partialState().addModels(
+                new ConfiguredModel(flyNestModel));
+        simpleBlockItem(PBlocks.FLY_NEST.get(), flyNestModel);
+
+        var breedingBoxModel = models().singleTexture("breeding_box", mcLoc("block/cube_all"), mcLoc("block/bee_nest_side"));
+        getVariantBuilder(PBlocks.BREEDING_BOX.get()).partialState().addModels(new ConfiguredModel(breedingBoxModel));
+        simpleBlockItem(PBlocks.BREEDING_BOX.get(), breedingBoxModel);
+
         fluidBlockWithItem(PBlocks.URINE_LIQUID.get());
         makeCropBlock((CropBlock) PBlocks.MAGGOTS.get(), "maggots_stage", "maggots_stage");
     }

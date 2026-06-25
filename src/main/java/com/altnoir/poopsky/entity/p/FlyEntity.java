@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.entity.p;
 
 import com.altnoir.poopsky.init.PEntityType;
+import com.altnoir.poopsky.init.PSoundEvents;
 import com.altnoir.poopsky.item.PItems;
 import com.altnoir.poopsky.PTags;
 import net.minecraft.core.BlockPos;
@@ -35,6 +36,8 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.EnumSet;
+
 public class FlyEntity extends Animal implements FlyingAnimal {
     public static final int TICKS_PER_FLAP = Mth.ceil(1.4959966F);
     private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(FlyEntity.class, EntityDataSerializers.BYTE);
@@ -59,7 +62,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
         this.goalSelector.addGoal(0, new FloatGoal(this)); // 防止溺水
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.4)); // 受到伤害时逃跑
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0)); // 繁殖行为
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, itemStack -> itemStack.is(PTags.Items.POOPS), false));// 被便便引诱
+        this.goalSelector.addGoal(3, new FlyToToiletGoal(this, 1.1)); // 主动寻找厕所
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25)); // 跟随父母
         this.goalSelector.addGoal(5, new WaterAvoidingRandomFlyingGoal(this, 1.0)); // 随机飞行，避开水面
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F)); // 看向附近的玩家
@@ -150,17 +153,17 @@ public class FlyEntity extends Animal implements FlyingAnimal {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.BEE_LOOP_AGGRESSIVE;
+        return PSoundEvents.ENTITY_FLY_AMBIENT.get();
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return SoundEvents.BEE_HURT;
+        return PSoundEvents.ENTITY_FLY_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.BEE_DEATH;
+        return PSoundEvents.ENTITY_FLY_DEATH.get();
     }
 
 
@@ -198,5 +201,79 @@ public class FlyEntity extends Animal implements FlyingAnimal {
     protected void defineSynchedData(SynchedEntityData.@NotNull Builder builder) {
         super.defineSynchedData(builder);
         builder.define(DATA_FLAGS_ID, (byte) 0);
+    }
+
+    private static class FlyToToiletGoal extends Goal {
+        private static final int SEARCH_RADIUS = 12;
+        private static final int VERTICAL_SEARCH_RADIUS = 6;
+        private static final int SEARCH_COOLDOWN = 40;
+
+        private final FlyEntity fly;
+        private final double speedModifier;
+        private BlockPos targetPos;
+        private long nextSearchTick;
+
+        private FlyToToiletGoal(FlyEntity fly, double speedModifier) {
+            this.fly = fly;
+            this.speedModifier = speedModifier;
+            this.setFlags(EnumSet.of(Flag.MOVE));
+        }
+
+        @Override
+        public boolean canUse() {
+            if (this.fly.level().getGameTime() < this.nextSearchTick) {
+                return false;
+            }
+            this.nextSearchTick = this.fly.level().getGameTime() + SEARCH_COOLDOWN + this.fly.getRandom().nextInt(SEARCH_COOLDOWN);
+            this.targetPos = this.findNearestToilet();
+            return this.targetPos != null;
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return this.targetPos != null
+                    && !this.fly.getNavigation().isDone()
+                    && this.fly.level().getBlockState(this.targetPos).is(PTags.Blocks.TOILET_BLOCKS)
+                    && this.fly.blockPosition().distSqr(this.targetPos) > 4.0;
+        }
+
+        @Override
+        public void start() {
+            this.moveToTarget();
+        }
+
+        @Override
+        public void tick() {
+            if (this.targetPos != null && this.fly.tickCount % 20 == 0) {
+                this.moveToTarget();
+            }
+        }
+
+        private void moveToTarget() {
+            this.fly.getNavigation().moveTo(
+                    this.targetPos.getX() + 0.5,
+                    this.targetPos.getY() + 1.0,
+                    this.targetPos.getZ() + 0.5,
+                    this.speedModifier
+            );
+        }
+
+        @Nullable
+        private BlockPos findNearestToilet() {
+            BlockPos origin = this.fly.blockPosition();
+            BlockPos nearest = null;
+            double nearestDistance = Double.MAX_VALUE;
+            for (BlockPos pos : BlockPos.withinManhattan(origin, SEARCH_RADIUS, VERTICAL_SEARCH_RADIUS, SEARCH_RADIUS)) {
+                if (!this.fly.level().getBlockState(pos).is(PTags.Blocks.TOILET_BLOCKS)) {
+                    continue;
+                }
+                double distance = origin.distSqr(pos);
+                if (distance < nearestDistance) {
+                    nearest = pos.immutable();
+                    nearestDistance = distance;
+                }
+            }
+            return nearest;
+        }
     }
 }

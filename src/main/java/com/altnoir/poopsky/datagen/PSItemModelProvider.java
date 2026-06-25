@@ -3,6 +3,7 @@ package com.altnoir.poopsky.datagen;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.PBlocks;
+import com.altnoir.poopsky.init.PFlyTypes;
 import com.altnoir.poopsky.item.PItems;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -92,6 +93,7 @@ public class PSItemModelProvider extends ItemModelProvider {
         //withExistingParent("urine_bucket", mcLoc("item/generated")).texture("layer0", modLoc("item/urine_bucket"));
 
         withExistingParent(PItems.POOLIME_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(PItems.FLY_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
 
         basicItem(PItems.OMINOUS_FILTHY_INGOT.get());
         basicItem(PItems.OMEN_UPGRADE_SMITHING_TEMPLATE.get());
@@ -100,6 +102,42 @@ public class PSItemModelProvider extends ItemModelProvider {
         trimmedArmorItem(PItems.OMEN_CHESTPLATE);
         trimmedArmorItem(PItems.OMEN_LEGGINGS);
         trimmedArmorItem(PItems.OMEN_BOOTS);
+
+        flyCatcherItem();
+        flyItemWithOverrides();
+        blockItemModel(PBlocks.FLY_NEST);
+        blockItemModel(PBlocks.BREEDING_BOX);
+    }
+
+    private void flyItemWithOverrides() {
+        for (var entry : PFlyTypes.getAll().entrySet()) {
+            String id = entry.getKey();
+            getBuilder("fly_" + id)
+                    .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                    .texture("layer0", id.equals("normal")
+                            ? PoopSky.loc("item/normal_fly")
+                            : PoopSky.loc("item/" + id + "_fly"));
+        }
+
+        var flyBuilder = getBuilder("fly")
+                .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                .texture("layer0", PoopSky.loc("item/normal_fly"));
+        for (var entry : PFlyTypes.getAll().entrySet()) {
+            flyBuilder.override()
+                    .predicate(PoopSky.loc("fly_type"), PFlyTypes.getIndex(entry.getValue()))
+                    .model(new ModelFile.UncheckedModelFile(PoopSky.MOD_ID + ":item/fly_" + entry.getKey()))
+                    .end();
+        }
+    }
+
+    private void blockItemModel(DeferredBlock<?> block) {
+        withExistingParent(block.getId().getPath(), modLoc("block/" + block.getId().getPath()));
+    }
+
+    private void flyCatcherItem() {
+        getBuilder("fly_catcher")
+                .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                .texture("layer0", PoopSky.loc("item/fly_catcher"));
     }
 
     private void bigSowordItem(Item item) {
