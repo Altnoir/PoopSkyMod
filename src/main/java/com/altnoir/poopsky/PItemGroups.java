@@ -1,8 +1,8 @@
 package com.altnoir.poopsky;
 
-import com.altnoir.poopsky.block.PBlocks;
+import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.block.AllToiletBlocks;
-import com.altnoir.poopsky.item.PItems;
+import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.item.p.FlyItem;
 import com.altnoir.poopsky.init.PFlyTypes;
 import net.minecraft.core.registries.Registries;

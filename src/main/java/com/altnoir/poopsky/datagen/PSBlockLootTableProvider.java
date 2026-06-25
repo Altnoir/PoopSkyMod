@@ -1,12 +1,12 @@
 package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.block.AllToiletBlocks;
-import com.altnoir.poopsky.block.PBlocks;
+import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.block.p.CompooperBlock;
 import com.altnoir.poopsky.block.p.PoopPieceBlock;
 import com.altnoir.poopsky.block.p.RoundwormVinesPlantBlock;
 import com.altnoir.poopsky.block.p.UrineCompooperBlock;
-import com.altnoir.poopsky.item.PItems;
+import com.altnoir.poopsky.init.PItems;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;

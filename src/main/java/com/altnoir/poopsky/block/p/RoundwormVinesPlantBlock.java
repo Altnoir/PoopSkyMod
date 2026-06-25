@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.block.p;
 
-import com.altnoir.poopsky.block.PBlocks;
-import com.altnoir.poopsky.item.PItems;
+import com.altnoir.poopsky.init.PBlocks;
+import com.altnoir.poopsky.init.PItems;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

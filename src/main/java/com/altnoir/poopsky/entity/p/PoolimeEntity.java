@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.entity.p;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.PBlocks;
+import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PParticles;
 import com.altnoir.poopsky.init.PSoundEvents;
 import net.minecraft.core.BlockPos;

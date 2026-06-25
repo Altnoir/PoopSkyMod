@@ -7,7 +7,7 @@ import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.block.p.ToiletLavaBlock;
 import com.altnoir.poopsky.init.PEffects;
 import com.altnoir.poopsky.init.PFluids;
-import com.altnoir.poopsky.item.PItems;
+import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.init.PPotions;
 import com.altnoir.poopsky.villager.PVillagerBehaviors;
 import com.altnoir.poopsky.villager.PVillagerTrades;

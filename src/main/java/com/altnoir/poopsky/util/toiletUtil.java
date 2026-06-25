@@ -4,7 +4,7 @@ import com.altnoir.poopsky.init.PEffects;
 import com.altnoir.poopsky.init.PParticles;
 import com.altnoir.poopsky.init.PSoundEvents;
 import com.altnoir.poopsky.init.PStats;
-import com.altnoir.poopsky.item.PItems;
+import com.altnoir.poopsky.init.PItems;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;

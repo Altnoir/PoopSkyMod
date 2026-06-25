@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.compat.maid.toilet;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.item.PItems;
+import com.altnoir.poopsky.init.PItems;
 import com.github.tartaricacid.touhoulittlemaid.api.task.IMaidTask;
 import com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid;
 import com.google.common.collect.Lists;

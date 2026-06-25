@@ -2,7 +2,7 @@ package com.altnoir.poopsky.item.p;
 
 import com.altnoir.poopsky.init.PComponents;
 import com.altnoir.poopsky.init.PFlyTypes;
-import com.altnoir.poopsky.item.PItems;
+import com.altnoir.poopsky.init.PItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;

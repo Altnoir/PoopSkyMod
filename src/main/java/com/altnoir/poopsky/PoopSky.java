@@ -1,14 +1,14 @@
 package com.altnoir.poopsky;
 
 import com.altnoir.poopsky.block.AllToiletBlocks;
-import com.altnoir.poopsky.block.PBlocks;
+import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.block.p.CompooperBlock;
 import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.compat.create.CreatePlugin;
 import com.altnoir.poopsky.compat.maid.MaidPlugin;
 import com.altnoir.poopsky.entity.p.PoopTntEntity;
 import com.altnoir.poopsky.init.*;
-import com.altnoir.poopsky.item.PItems;
+import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.network.PSNetworking;
 import com.altnoir.poopsky.villager.PVillagers;
 import com.altnoir.poopsky.worldgen.PSChunkGenerators;

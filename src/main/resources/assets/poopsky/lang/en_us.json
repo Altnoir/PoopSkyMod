@@ -229,6 +229,7 @@
   "entity.poopsky.toilet_plug": "Toilet Plug",
   "entity.poopsky.stool_entity": "Poop Stool",
   "entity.poopsky.poolime": "Poolime",
+  "entity.poopsky.fly": "Fly",
   "entity.poopsky.poop_tnt": "POP",
 
   "key.category.poopsky": "POOPSKY",
@@ -379,8 +380,6 @@
   "poopsky.configuration.plugTrades": "Disable Toilet Plug Trades",
   "poopsky.configuration.plugTrades.tooltip": "Whether to disable Toilet Plug trading with villagers",
   "poopsky.configuration.upgradeTemplate": "Disable Upgrade Template Trades",
-  "poopsky.configuration.upgradeTemplate.tooltip": "Whether to disable upgrade template trading",
-
   "poopsky.configuration.upgradeTemplate.tooltip": "Whether to disable upgrade template trading",
   "poopsky.configuration.unlimitedFreeze": "Unlimited Freeze",
   "poopsky.configuration.unlimitedFreeze.tooltip": "Whether to enable unlimited freeze",

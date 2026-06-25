@@ -1,11 +1,8 @@
 {
   "neoforge:conditions": [
     {
-      "type": "neoforge:not",
-      "value": {
-        "type": "neoforge:mod_loaded",
-        "modid": "create"
-      }
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
     }
   ],
   "type": "poopsky:sieve",
@@ -21,7 +18,14 @@
       }
     },
     {
-      "chance": 0.75,
+      "chance": 1.0,
+      "item": {
+        "count": 8,
+        "id": "create:zinc_nugget"
+      }
+    },
+    {
+      "chance": 0.5,
       "item": {
         "count": 8,
         "id": "minecraft:iron_nugget"
@@ -31,7 +35,7 @@
       "chance": 0.5,
       "item": {
         "count": 8,
-        "id": "minecraft:iron_nugget"
+        "id": "create:zinc_nugget"
       }
     },
     {
@@ -39,6 +43,13 @@
       "item": {
         "count": 1,
         "id": "minecraft:raw_iron"
+      }
+    },
+    {
+      "chance": 0.5,
+      "item": {
+        "count": 1,
+        "id": "create:raw_zinc"
       }
     }
   ]

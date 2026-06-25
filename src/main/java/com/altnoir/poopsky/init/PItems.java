@@ -1,12 +1,10 @@
-package com.altnoir.poopsky.item;
+package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.block.ToiletComponent;
-import com.altnoir.poopsky.init.PComponents;
-import com.altnoir.poopsky.init.PEntityType;
-import com.altnoir.poopsky.init.PFluids;
-import com.altnoir.poopsky.init.PSoundEvents;
+import com.altnoir.poopsky.item.PArmorMaterials;
+import com.altnoir.poopsky.item.PFoods;
+import com.altnoir.poopsky.item.PToolTiers;
 import com.altnoir.poopsky.item.p.*;
 import net.minecraft.world.item.*;
 import net.neoforged.bus.api.IEventBus;
@@ -101,6 +99,8 @@ public class PItems {
     public static final DeferredItem<Item> OMEN_UPGRADE_SMITHING_TEMPLATE = ITEMS.register("omen_upgrade_smithing_template",
             OmenSmithingTemplateItem::createOmenUpgradeTemplate);
 
+    public static final DeferredItem<Item> FLY_CATCHER = ITEMS.register("fly_catcher",
+            () -> new FlyCatcherItem(new Item.Properties().stacksTo(1).durability(64)));
     public static final DeferredItem<Item> TIME_BELL = ITEMS.register("time_bell", () ->
             new TimeBellItem(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<Item> SPALL = ITEMS.register("spall", () ->
@@ -118,7 +118,7 @@ public class PItems {
             () -> new DeferredSpawnEggItem(PEntityType.POOLIME, 0x7D5F36, 0x5E4228,
                     new Item.Properties()));
     public static final DeferredItem<Item> FLY_SPAWN_EGG = ITEMS.register("fly_spawn_egg",
-            () -> new DeferredSpawnEggItem(PEntityType.FLY, 0xC8C800, 0x8B4513,
+            () -> new DeferredSpawnEggItem(PEntityType.FLY, 0x3B4346, 0x900D2D,
                     new Item.Properties()));
 
     public static final DeferredItem<Item> LAWRENCE_MUSIC_DISC = ITEMS.register("music_disc_lawrence", () ->
@@ -130,8 +130,6 @@ public class PItems {
 
     public static final DeferredItem<Item> FLY = ITEMS.register("fly",
             () -> new FlyItem(new Item.Properties().stacksTo(88)));
-    public static final DeferredItem<Item> FLY_CATCHER = ITEMS.register("fly_catcher",
-            () -> new FlyCatcherItem(new Item.Properties().stacksTo(1).durability(64)));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.entity.renderer;
 
-import com.altnoir.poopsky.block.PBlocks;
+import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.entity.p.PoopTntEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;

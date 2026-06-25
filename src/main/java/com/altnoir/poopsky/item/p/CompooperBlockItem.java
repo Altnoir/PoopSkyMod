@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.item.p;
 
 import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
-import com.altnoir.poopsky.block.PBlocks;
+import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.block.p.ToiletLavaBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;

@@ -1,11 +1,11 @@
 {
-  "type": "minecraft:smelting",
+  "type": "minecraft:blasting",
   "category": "blocks",
-  "cookingtime": 200,
+  "cookingtime": 100,
   "experience": 0.1,
   "group": "tile_block",
   "ingredient": {
-    "item": "poopsky:raw_poop_block"
+    "item": "poopsky:poolime_block"
   },
   "result": {
     "count": 1,

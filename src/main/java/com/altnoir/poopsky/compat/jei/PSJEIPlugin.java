@@ -2,13 +2,13 @@ package com.altnoir.poopsky.compat.jei;
 
 import com.altnoir.poopsky.PTags;
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.PBlocks;
+import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.block.p.CompooperBlock;
 import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.compat.jei.create.FanDigestingCategory;
 import com.altnoir.poopsky.init.PFlyTypes;
 import com.altnoir.poopsky.init.PRecipes;
-import com.altnoir.poopsky.item.PItems;
+import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.item.p.FlyItem;
 import com.altnoir.poopsky.recipe.BreedingBoxRecipe;
 import com.altnoir.poopsky.recipe.FlyNestRecipe;

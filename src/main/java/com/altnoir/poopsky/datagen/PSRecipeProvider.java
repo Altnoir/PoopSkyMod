@@ -2,11 +2,13 @@ package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.AllToiletBlocks;
-import com.altnoir.poopsky.block.PBlocks;
+import com.altnoir.poopsky.init.PBlocks;
+import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.init.PRecipes;
-import com.altnoir.poopsky.item.PItems;
+import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.recipe.POPExplosionRecipeBuilder;
 import com.altnoir.poopsky.recipe.SieveRecipeBuilder;
+import com.simibubi.create.AllItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
@@ -34,7 +36,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         List<ItemLike> POOP_LIST = List.of(PBlocks.POOP_BLOCK);
         List<ItemLike> POOP_BRICK_LIST = List.of(PBlocks.POOP_BRICKS);
         List<ItemLike> SMOOTH_POOP_LIST = List.of(PBlocks.DRIED_POOP_BLOCK);
-        List<ItemLike> TILE_BLOCK_LIST = List.of(PBlocks.RAW_POOP_BLOCK);
+        List<ItemLike> TILE_BLOCK_LIST = List.of(PBlocks.POOLIME_BLOCK);
         List<ItemLike> MAGGOTS_LIST = List.of(PItems.MAGGOTS_SEEDS);
         List<ItemLike> ROUNDWORM_LIST = List.of(PItems.ROUNDWORM);
 
@@ -569,13 +571,25 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
     }
 
     private void buildSieveRecipes(RecipeOutput recipeOutput) {
+        RecipeOutput createLoaded = recipeOutput.withConditions(modLoaded(PSMods.CREATE.id()));
+        RecipeOutput createNotLoaded = recipeOutput.withConditions(not(modLoaded(PSMods.CREATE.id())));
+
         SieveRecipeBuilder.sieve(PBlocks.POOP_BLOCK, 200)
                 .addOutput(Items.IRON_NUGGET, 8)
                 .addOutput(Items.IRON_NUGGET, 8, 0.75F)
                 .addOutput(Items.IRON_NUGGET, 8, 0.5F)
                 .addOutput(Items.RAW_IRON, 0.5F)
                 .unlockedBy(getItemName(PBlocks.SIEVE.get()), has(PBlocks.SIEVE.get()))
-                .save(recipeOutput, "poop_block");
+                .save(createNotLoaded, "poop_block");
+        SieveRecipeBuilder.sieve(PBlocks.POOP_BLOCK, 200)
+                .addOutput(Items.IRON_NUGGET, 8)
+                .addOutput(AllItems.ZINC_NUGGET, 8)
+                .addOutput(Items.IRON_NUGGET, 8, 0.5F)
+                .addOutput(AllItems.ZINC_NUGGET, 8, 0.5F)
+                .addOutput(Items.RAW_IRON, 0.5F)
+                .addOutput(AllItems.RAW_ZINC, 0.5F)
+                .unlockedBy(getItemName(PBlocks.SIEVE.get()), has(PBlocks.SIEVE.get()))
+                .save(createLoaded, "poop_block_from_create");
 
         SieveRecipeBuilder.sieve(PBlocks.CHILI_POOP_BLOCK, 300)
                 .addOutput(Items.QUARTZ, 4)
@@ -791,7 +805,6 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
     }
 
 
-
     private void buildFlyNestRecipes(RecipeOutput recipeOutput) {
         LinkedHashMap<String, ItemLike> flyNestMap = new LinkedHashMap<String, ItemLike>();
         flyNestMap.put("normal", PItems.MAGGOTS_SEEDS);
@@ -820,7 +833,8 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
     }
 
     private void buildBreedingBoxRecipes(RecipeOutput recipeOutput) {
-        record MutationRecipe(String p1, String p2, String result, float chance) {}
+        record MutationRecipe(String p1, String p2, String result, float chance) {
+        }
         List<MutationRecipe> breedingRecipes = List.of(
                 new MutationRecipe("green", "blue", "cyan", 0.2f),
                 new MutationRecipe("purple", "pink", "magenta", 0.2f),

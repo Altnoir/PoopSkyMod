@@ -3,7 +3,7 @@ package com.altnoir.poopsky.effect;
 import com.altnoir.poopsky.init.PEffects;
 import com.altnoir.poopsky.init.PParticles;
 import com.altnoir.poopsky.init.PSoundEvents;
-import com.altnoir.poopsky.item.PItems;
+import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.PTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;

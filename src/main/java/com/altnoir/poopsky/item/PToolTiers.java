@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.item;
 
+import com.altnoir.poopsky.init.PItems;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;

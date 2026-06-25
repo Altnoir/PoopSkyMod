@@ -229,6 +229,7 @@
   "entity.poopsky.toilet_plug": "马桶搋子",
   "entity.poopsky.stool_entity": "粪便凳",
   "entity.poopsky.poolime": "屎莱姆",
+  "entity.poopsky.fly": "苍蝇",
   "entity.poopsky.poop_tnt": "POP",
 
   "key.category.poopsky": "空中厕所",
@@ -379,8 +380,6 @@
   "poopsky.configuration.plugTrades": "禁用马桶搋子交易",
   "poopsky.configuration.plugTrades.tooltip": "是否禁用马桶搋子交易",
   "poopsky.configuration.upgradeTemplate": "禁用升级模板交易",
-  "poopsky.configuration.upgradeTemplate.tooltip": "是否禁用升级模板交易",
-
   "poopsky.configuration.upgradeTemplate.tooltip": "是否禁用升级模板交易",
   "poopsky.configuration.unlimitedFreeze": "无限时停",
   "poopsky.configuration.unlimitedFreeze.tooltip": "是否启用无限时停",

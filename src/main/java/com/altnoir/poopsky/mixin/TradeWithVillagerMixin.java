@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.mixin;
 
-import com.altnoir.poopsky.item.PItems;
+import com.altnoir.poopsky.init.PItems;
 import net.minecraft.world.entity.ai.behavior.TradeWithVillager;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.Item;

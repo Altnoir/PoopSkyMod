@@ -1,8 +1,6 @@
 package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.PBlocks;
-import com.altnoir.poopsky.item.PItems;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.material.FlowingFluid;

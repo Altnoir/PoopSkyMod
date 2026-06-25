@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.datagen;
 
-import com.altnoir.poopsky.block.PBlocks;
-import com.altnoir.poopsky.item.PItems;
+import com.altnoir.poopsky.init.PBlocks;
+import com.altnoir.poopsky.init.PItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.DataMapProvider;

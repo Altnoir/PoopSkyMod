@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.util;
 
-import com.altnoir.poopsky.block.PBlocks;
+import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.block.p.PoopTntBlock;
 import com.altnoir.poopsky.init.PParticles;
 import com.altnoir.poopsky.init.PRecipes;

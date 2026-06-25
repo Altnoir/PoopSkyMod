@@ -2,8 +2,8 @@ package com.altnoir.poopsky.villager;
 
 import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.block.AllToiletBlocks;
-import com.altnoir.poopsky.block.PBlocks;
-import com.altnoir.poopsky.item.PItems;
+import com.altnoir.poopsky.init.PBlocks;
+import com.altnoir.poopsky.init.PItems;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;

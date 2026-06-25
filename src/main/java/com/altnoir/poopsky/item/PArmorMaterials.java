@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.item;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.init.PItems;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;

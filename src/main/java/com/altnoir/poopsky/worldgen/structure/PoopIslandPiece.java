@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.worldgen.structure;
 
-import com.altnoir.poopsky.block.PBlocks;
+import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.entity.p.PoolimeEntity;
 import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.worldgen.PSStructures;

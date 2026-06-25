@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.mixin;
 
-import com.altnoir.poopsky.item.PItems;
+import com.altnoir.poopsky.init.PItems;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.Item;
 import org.spongepowered.asm.mixin.Mixin;

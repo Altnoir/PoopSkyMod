@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_raw_poop_block": {
+    "has_poolime_block": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:raw_poop_block"
+            "items": "poopsky:poolime_block"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "poopsky:tile_block_from_blasting_raw_poop_block"
+        "recipe": "poopsky:tile_block_from_blasting_poolime_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_raw_poop_block"
+      "has_poolime_block"
     ]
   ],
   "rewards": {
     "recipes": [
-      "poopsky:tile_block_from_blasting_raw_poop_block"
+      "poopsky:tile_block_from_blasting_poolime_block"
     ]
   }
 }

@@ -4,7 +4,7 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.compat.create.PSRecipeTypes;
 import com.altnoir.poopsky.compat.jei.create.animations.AnimatedUrineLiquid;
 import com.altnoir.poopsky.compat.create.content.kinetics.fan.processing.DigestingRecipe;
-import com.altnoir.poopsky.item.PItems;
+import com.altnoir.poopsky.init.PItems;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.compat.jei.DoubleItemIcon;

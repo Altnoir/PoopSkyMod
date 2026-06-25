@@ -4,7 +4,7 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.p.GoldgenToiletBlock;
 import com.altnoir.poopsky.block.p.ToiletBlock;
 import com.altnoir.poopsky.block.p.ToiletLavaBlock;
-import com.altnoir.poopsky.item.PItems;
+import com.altnoir.poopsky.init.PItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;

@@ -1,6 +1,6 @@
 package com.altnoir.poopsky;
 
-import com.altnoir.poopsky.block.PBlocks;
+import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.entity.renderer.*;
 import com.altnoir.poopsky.event.PSClientGameEvents;
@@ -9,7 +9,7 @@ import com.altnoir.poopsky.event.PSKeyBoardInput;
 import com.altnoir.poopsky.init.*;
 import com.altnoir.poopsky.inventory.BreedingBoxScreen;
 import com.altnoir.poopsky.inventory.FlyNestScreen;
-import com.altnoir.poopsky.item.PItems;
+import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.misc.particle.PoopParticle;
 import com.altnoir.poopsky.misc.renderer.TimeBellOverlay;
 import com.altnoir.poopsky.misc.renderer.ToiletHighlightRenderer;

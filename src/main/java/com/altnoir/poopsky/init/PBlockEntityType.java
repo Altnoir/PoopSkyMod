@@ -2,7 +2,6 @@ package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.AllToiletBlocks;
-import com.altnoir.poopsky.block.PBlocks;
 import com.altnoir.poopsky.block.entity.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;

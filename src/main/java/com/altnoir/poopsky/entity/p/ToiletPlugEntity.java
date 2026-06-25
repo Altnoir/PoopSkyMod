@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.entity.p;
 
-import com.altnoir.poopsky.item.PItems;
+import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.network.PlugInputPayload;
 import com.altnoir.poopsky.misc.sound.TPFlySoundWrapper;
 import com.google.common.collect.Lists;

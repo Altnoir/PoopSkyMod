@@ -4,7 +4,7 @@ import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.block.p.ToiletLavaBlock;
 import com.altnoir.poopsky.entity.p.ToiletEntity;
 import com.altnoir.poopsky.init.*;
-import com.altnoir.poopsky.item.PItems;
+import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.PTags;
 import com.altnoir.poopsky.util.toiletUtil;
 import net.minecraft.core.BlockPos;
