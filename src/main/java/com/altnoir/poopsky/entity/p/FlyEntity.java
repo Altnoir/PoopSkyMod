@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.entity.p;
 
 import com.altnoir.poopsky.PTags;
+import com.altnoir.poopsky.client.sound.FlyBuzzSoundWrapper;
 import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.init.PSoundEvents;
@@ -15,10 +16,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
@@ -35,6 +33,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -51,6 +51,8 @@ public class FlyEntity extends Animal implements FlyingAnimal {
     public float flapping = 1.0F;
     public int eggTime = this.random.nextInt(6000) + 6000;
 
+    private FlyBuzzSoundWrapper buzzSound;
+
     public FlyEntity(EntityType<FlyEntity> entityType, Level level) {
         super(entityType, level);
         this.moveControl = new FlyingMoveControl(this, 10, false);
@@ -59,6 +61,14 @@ public class FlyEntity extends Animal implements FlyingAnimal {
         this.setPathfindingMalus(PathType.WATER_BORDER, 16.0F);
         this.setPathfindingMalus(PathType.COCOA, -1.0F);
         this.setPathfindingMalus(PathType.FENCE, -1.0F);
+        if (level.isClientSide()) {
+            initClient();
+        }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    private void initClient() {
+        buzzSound = new FlyBuzzSoundWrapper(this);
     }
 
     @Override
@@ -67,11 +77,12 @@ public class FlyEntity extends Animal implements FlyingAnimal {
         this.goalSelector.addGoal(0, new FloatGoal(this)); // 防止溺水
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.4)); // 受到伤害时逃跑
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0)); // 繁殖行为
-        this.goalSelector.addGoal(3, new FlyToToiletGoal(this, 1.1)); // 主动寻找厕所
-        this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25)); // 跟随父母
-        this.goalSelector.addGoal(5, new WaterAvoidingRandomFlyingGoal(this, 1.0)); // 随机飞行，避开水面
-        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F)); // 看向附近的玩家
-        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this)); // 随机环顾四周
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, itemStack -> itemStack.is(PTags.Items.POOPS), false));
+        this.goalSelector.addGoal(4, new FlyToToiletGoal(this, 1.1)); // 主动寻找厕所
+        this.goalSelector.addGoal(5, new FollowParentGoal(this, 1.25)); // 跟随父母
+        this.goalSelector.addGoal(6, new WaterAvoidingRandomFlyingGoal(this, 1.0)); // 随机飞行，避开水面
+        this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0F)); // 看向附近的玩家
+        this.goalSelector.addGoal(8, new RandomLookAroundGoal(this)); // 随机环顾四周
     }
 
     @Override
@@ -93,6 +104,9 @@ public class FlyEntity extends Animal implements FlyingAnimal {
     @Override
     public void aiStep() {
         super.aiStep();
+        if (this.level().isClientSide && buzzSound != null) {
+            buzzSound.tick();
+        }
         this.oFlap = this.flap;
         this.oFlapSpeed = this.flapSpeed;
 
@@ -157,8 +171,16 @@ public class FlyEntity extends Animal implements FlyingAnimal {
     }
 
     @Override
-    protected SoundEvent getAmbientSound() {
-        return PSoundEvents.ENTITY_FLY_AMBIENT.get();
+    public void remove(Entity.RemovalReason reason) {
+        if (this.level().isClientSide && buzzSound != null) {
+            buzzSound.stop();
+        }
+        super.remove(reason);
+    }
+
+    @Override
+    public int getAmbientSoundInterval() {
+        return Integer.MAX_VALUE;
     }
 
     @Override

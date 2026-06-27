@@ -2,16 +2,12 @@ package com.altnoir.poopsky.compat.jei;
 
 import com.altnoir.poopsky.PTags;
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.block.p.CompooperBlock;
 import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.compat.jei.create.FanDigestingCategory;
-import com.altnoir.poopsky.init.PFlyTypes;
-import com.altnoir.poopsky.init.PRecipes;
+import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PItems;
-import com.altnoir.poopsky.item.p.FlyItem;
-import com.altnoir.poopsky.recipe.BreedingBoxRecipe;
-import com.altnoir.poopsky.recipe.FlyNestRecipe;
+import com.altnoir.poopsky.init.PRecipes;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -83,25 +79,8 @@ public class PSJEIPlugin implements IModPlugin {
 
         registration.addRecipes(SieveRecipeCategory.TYPE, level.getRecipeManager().getAllRecipesFor(PRecipes.SIEVE_TYPE.get()));
         registration.addRecipes(POPExplosionRecipeCategory.TYPE, level.getRecipeManager().getAllRecipesFor(PRecipes.EXPLOSION_TRANSFORM_TYPE.get()));
-
-        registration.addRecipes(FlyNestRecipeCategory.TYPE,
-                recipeManager.getAllRecipesFor(PRecipes.FLY_NEST_TYPE.get()).stream()
-                        .map(holder -> {
-                            FlyNestRecipe recipe = holder.value();
-                            return new FlyNestJeiRecipe(FlyItem.withType(PFlyTypes.byId(recipe.flyTypeId())), recipe.result());
-                        })
-                        .toList());
-
-        registration.addRecipes(BreedingBoxRecipeCategory.TYPE,
-                recipeManager.getAllRecipesFor(PRecipes.BREEDING_BOX_TYPE.get()).stream()
-                        .map(holder -> {
-                            BreedingBoxRecipe recipe = holder.value();
-                            ItemStack resultFly = FlyItem.withType(PFlyTypes.byId(recipe.result()));
-                            ItemStack parentFly1 = FlyItem.withType(PFlyTypes.byId(recipe.parent1()));
-                            ItemStack parentFly2 = FlyItem.withType(PFlyTypes.byId(recipe.parent2()));
-                            return new BreedingBoxJeiRecipe(parentFly1, parentFly2, resultFly, recipe.chance());
-                        })
-                        .toList());
+        registration.addRecipes(FlyNestRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PRecipes.FLY_NEST_TYPE.get()));
+        registration.addRecipes(BreedingBoxRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PRecipes.BREEDING_BOX_TYPE.get()));
 
         if (PSMods.CREATE.isLoaded()) {
             createCategories.forEach(category -> category.registerRecipes(registration));

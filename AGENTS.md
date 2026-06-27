@@ -16,7 +16,7 @@
 
 ## 模组简介
 
-PoopSky 是一个以**粪便为主题**的 Minecraft 空岛生存模组。玩家在虚空世界中从一棵"粪便树"开始，通过堆肥(Compooper)、筛矿(Sieve)、马桶排便等机制逐步发展科技树。核心玩法围绕粪便资源的收集、加工和转化展开。
+PoopSky 是一个以**粪便为主题**的 Minecraft 空岛生存模组。玩家在虚空世界中从一棵"粪便树"开始，通过堆肥(Compooper)、筛矿(Sieve)、厕所排便等机制逐步发展科技树。核心玩法围绕粪便资源的收集、加工和转化展开。
 
 ## 项目结构
 
@@ -204,17 +204,13 @@ Mixin 配置文件位于 `src/main/resources/poopsky.mixins.json`，包路径为
 
 ## 自定义配方
 
+### 堆肥配方 (CompooperRecipe)
+- 用于 JEI 显示堆肥桶配方
+
 ### 筛矿配方 (SieveRecipe)
 - 序列化器：`poopsky:sieve`
 - 配方文件夹：`sieve/`
 - 用于筛网方块产出矿物
-
-### 堆肥配方 (CompooperRecipe)
-- 用于 JEI 显示堆肥桶配方
-
-### Create 风扇消解配方 (DigestingRecipe)
-- 仅在 Create 模组加载时注册
-- 用风力处理粪便
 
 ### 爆炸转化配方 (ExplosionTransformRecipe)
 - 序列化器：`poopsky:explosion_transform`
@@ -232,6 +228,47 @@ Mixin 配置文件位于 `src/main/resources/poopsky.mixins.json`，包路径为
   "output": "minecraft:gravel"
 }
 ```
+
+### 苍蝇窝产出配方 (FlyNestRecipe)
+- 序列化器：`poopsky:fly_nest`
+- 配方文件夹：`fly_nest/`
+- 定义每种苍蝇品种在苍蝇窝中的产出物品
+- 字段：`fly_type`（品种 ID，如 `"normal"`、`"red"`）→ `result`（ItemStack）
+- 运行时通过 `PFlyRecipes.getFlyNestRecipes()` 查询，使用 `matches(flyTypeId)` 匹配
+- 不使用标准 `RecipeInput` 匹配（`matches(RecipeInput, Level)` 始终返回 `false`）
+- Datagen：`PSRecipeProvider.buildFlyNestRecipes()`，通过 `FlyNestRecipeBuilder.flyNest(typeId, result)` 构建
+- 配方 JSON 示例：
+```json
+{
+  "type": "poopsky:fly_nest",
+  "fly_type": "red",
+  "result": { "id": "minecraft:redstone", "count": 1 }
+}
+```
+
+### 繁育箱变异配方 (BreedingBoxRecipe)
+- 序列化器：`poopsky:breeding_box`
+- 配方文件夹：`breeding_box/`
+- 定义两只苍蝇杂交后产生的新品种及概率
+- 字段：`parent1` + `parent2`（父本品种 ID）→ `result`（子代品种 ID）+ `chance`（0.0~1.0）
+- 匹配是**双向的**：`parent1+parent2` 和 `parent2+parent1` 都能匹配
+- 不使用标准 `RecipeInput` 匹配，`assemble()` 和 `getResultItem()` 返回 `ItemStack.EMPTY`（结果不是物品而是品种 ID）
+- 运行时通过 `PFlyRecipes.getBreedingBoxRecipes()` 查询，使用 `matches(p1, p2)` 匹配
+- Datagen：`PSRecipeProvider.buildBreedingBoxRecipes()`，通过 `BreedingBoxRecipeBuilder.breedingBox(p1, p2, result, chance)` 构建
+- 配方 JSON 示例：
+```json
+{
+  "type": "poopsky:breeding_box",
+  "parent1": "red",
+  "parent2": "blue",
+  "result": "purple",
+  "chance": 0.2
+}
+```
+
+### Create 风扇消解配方 (DigestingRecipe)
+- 仅在 Create 模组加载时注册
+- 用风力处理粪便
 
 ## 数据生成 (Datagen)
 
@@ -348,3 +385,65 @@ if (ModList.get().isLoaded(PSMods.TOUHOU_LITTLE_MAID.id())) {
 ### 12. 标签
 - 使用 `PTags` 类集中管理标签
 - 标签通过 datagen 的 `PSBlockTagProvider` / `PSItemTagProvider` 生成
+
+### 13. BlockBehaviour.Properties 中的方块行为（非 Block 重写）
+1.21.1 中许多方块行为**不是** `Block` 类的可重写方法，而是在 `BlockBehaviour.Properties` 中设置的。不要尝试在 `Block` 子类中 `@Override` 这些方法，它们不存在：
+
+| 属性 | Properties 方法 | 说明 |
+|------|----------------|------|
+| 红石导通 | `.isRedstoneConductor(Blocks::always)` | 默认基于碰撞箱判断，不完整方块需手动设为 `always` |
+| 视线阻挡 | `.isViewBlocking(Blocks::never)` | 控制方块是否阻挡视线 |
+| 有效刷怪 | `.isValidSpawn(Blocks::always)` | 控制方块上是否可刷怪 |
+| 可被替换 | `.isReplacementReplaceable()` | 控制方块是否可被替换 |
+| 信号源 | `.isSignalSource()` | 控制方块是否为红石信号源 |
+
+**常见陷阱**：不完整碰撞箱的方块（如 `PoopBlock`）默认无法被红石充能，因为默认 `isRedstoneConductor` 依赖 `isCollisionShapeFullBlock()`。必须显式设置 `.isRedstoneConductor(Blocks::always)`。
+
+### 14. 客户端循环音效
+实现实体持续循环音效时，不要依赖 `getAmbientSound()`（它是间歇性的），应使用 `AbstractTickableSoundInstance` + `looping = true` 模式：
+
+- 创建 `XxxSoundInstance extends AbstractTickableSoundInstance`，设置 `this.looping = true`
+- 创建 `XxxSoundWrapper` 管理音效生命周期（创建、tick、停止）
+- 在实体的客户端构造函数中初始化 Wrapper，`aiStep()` 中调用 `tick()`
+
+**关键**：音效实例的初始 `volume` 必须 > 0（如 `0.1F`）。如果初始为 0，Minecraft 的 `SoundEngine` 不会创建 OpenAL 音频通道，后续 `tick()` 中调高音量也不会有声音。
+
+参考实现：`TPFlySoundInstance` / `TPFlySoundWrapper` / `FlyBuzzSoundInstance` / `FlyBuzzSoundWrapper`
+
+### 15. Minecraft 坐标系与方向向量
+Minecraft 使用右手坐标系（x 向南，z 向西，yaw 顺时针增大）：
+
+```
+forward = (-sin(yaw), 0, cos(yaw))   // 前方向
+right   = (-forward.z, 0, forward.x) // 右方向 = (cos(yaw), 0, sin(yaw))
+left    = -right                      // 左方向
+back    = -forward                    // 后方向
+```
+
+**常见错误**：用 `(forward.z, 0, -forward.x)` 从 forward 推导 right，这实际是**左方向**（逆时针旋转 90°）。正确的右方向是 forward **顺时针旋转 90°**，即 `(-forward.z, 0, forward.x)`。
+
+### 16. JEI 配方显示
+JEI 配方要正确显示配方 ID，`IRecipeCategory` 的泛型参数必须是 `RecipeHolder<...>`：
+
+```java
+// ✅ 正确：可以显示配方 ID
+public class XxxRecipeCategory implements IRecipeCategory<RecipeHolder<XxxRecipe>> {
+    static final RecipeType<RecipeHolder<XxxRecipe>> TYPE =
+        RecipeType.createRecipeHolderType(MOD_ID, "xxx", RecipeHolder.class);
+}
+
+// ❌ 错误：丢失配方 ID
+public class XxxRecipeCategory implements IRecipeCategory<XxxJeiRecipe> {
+    static final RecipeType<XxxJeiRecipe> TYPE =
+        RecipeType.create(MOD_ID, "xxx", XxxJeiRecipe.class);
+}
+```
+
+注册时直接传 `recipeManager.getAllRecipesFor(recipeType)` 的结果，不要手动 map 转换为纯 record（会丢失 ID）。
+
+### 17. 实体乘骑与输入控制
+实现可控载具实体时：
+- 输入处理在 `tick()` 或自定义方法中，通过 `getControllingPassenger()` 获取驾驶员
+- 左右移动的输入值：按左 = 负值，按右 = 正值
+- 朝向插值系数影响操控手感：`0.5f` 有明显漂移感，`0.9f` 几乎即时跟随，`1.0f` 完全同步
+- 速度阻尼（DAMPING）过高也会导致转向时漂移感

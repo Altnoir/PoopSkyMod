@@ -17,7 +17,7 @@ public class PSKeyBoardInput {
     public static final KeyMapping DISMOUNT_PLUG_KEY = new KeyMapping("key.poopsky.dismount_plug",
             KeyConflictContext.IN_GAME,
             InputConstants.Type.KEYSYM,
-            GLFW.GLFW_KEY_G,
+            GLFW.GLFW_KEY_C,
             "key.category.poopsky");
 
     public static Component getLocalizedKeyMessage(KeyMapping keyMapping) {

@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.entity.p;
 
 import com.altnoir.poopsky.client.sound.TPFlySoundWrapper;
+import com.altnoir.poopsky.init.PEffects;
 import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.network.PlugInputPayload;
 import com.google.common.collect.Lists;
@@ -228,19 +229,23 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
     }
 
     private void moveByInput() {
-        float MAX_SPEED = inputFast ? 0.7f : 0.35f;
+        float MAX_SPEED = inputFast ? 0.35f : 0.2f;
+        var driver = this.getControllingPassenger();
+        if (driver != null && driver.hasEffect(PEffects.OMENER)) {
+            MAX_SPEED *= 2.0f;
+        }
         if (this.isUnderWater()) {
             MAX_SPEED *= 0.35f;
         }
         float isBack = inputBackward ? -MAX_SPEED : 0f;
         float FBSpeed = inputForward ? MAX_SPEED : isBack;
         float isRight = inputRight ? MAX_SPEED : 0f;
-        float LRSpeed = inputLeft ? MAX_SPEED : isRight;
+        float LRSpeed = inputLeft ? -MAX_SPEED : isRight;
         float DAMPING = 0.975f;
 
         var yawRad = (float) Math.toRadians(-this.getYRot());
         var forward = new Vec3(Math.sin(yawRad), 0, Math.cos(yawRad));
-        var right = new Vec3(forward.z, 0, -forward.x);
+        var right = new Vec3(-forward.z, 0, forward.x);
         var movement = forward.scale(FBSpeed).add(right.scale(LRSpeed));
 
         var velocity = this.getDeltaMovement().add(movement.scale(ACCELERATION)).scale(DAMPING);
@@ -252,7 +257,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
         if (mainPassenger != null) {
             float targetYaw = mainPassenger.getYRot();
             float deltaYaw = Mth.wrapDegrees(targetYaw - this.getYRot());
-            this.setYRot(this.getYRot() + deltaYaw * 0.5f);
+            this.setYRot(this.getYRot() + deltaYaw * 0.65f);
         }
         this.setDeltaMovement(velocity.x, verVelocity, velocity.z);
     }

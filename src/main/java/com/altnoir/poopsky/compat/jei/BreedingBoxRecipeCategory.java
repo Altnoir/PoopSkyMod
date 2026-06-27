@@ -2,6 +2,9 @@ package com.altnoir.poopsky.compat.jei;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.init.PBlocks;
+import com.altnoir.poopsky.init.PFlyTypes;
+import com.altnoir.poopsky.item.p.FlyItem;
+import com.altnoir.poopsky.recipe.BreedingBoxRecipe;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
@@ -14,9 +17,10 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
-public class BreedingBoxRecipeCategory implements IRecipeCategory<BreedingBoxJeiRecipe> {
-    public static final RecipeType<BreedingBoxJeiRecipe> TYPE = RecipeType.create(PoopSky.MOD_ID, "breeding_box", BreedingBoxJeiRecipe.class);
+public class BreedingBoxRecipeCategory implements IRecipeCategory<RecipeHolder<BreedingBoxRecipe>> {
+    public static final RecipeType<RecipeHolder<BreedingBoxRecipe>> TYPE = RecipeType.createRecipeHolderType(PoopSky.loc("breeding_box"));
 
     private static final int WIDTH = 77;
     private static final int HEIGHT = 37;
@@ -35,7 +39,7 @@ public class BreedingBoxRecipeCategory implements IRecipeCategory<BreedingBoxJei
     }
 
     @Override
-    public RecipeType<BreedingBoxJeiRecipe> getRecipeType() {
+    public RecipeType<RecipeHolder<BreedingBoxRecipe>> getRecipeType() {
         return TYPE;
     }
 
@@ -60,12 +64,13 @@ public class BreedingBoxRecipeCategory implements IRecipeCategory<BreedingBoxJei
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, BreedingBoxJeiRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 2, 2).addItemStack(recipe.flyInput1());
-        builder.addSlot(RecipeIngredientRole.INPUT, 2, 20).addItemStack(recipe.flyInput2());
+    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<BreedingBoxRecipe> recipeHolder, IFocusGroup focuses) {
+        var recipe = recipeHolder.value();
+        builder.addSlot(RecipeIngredientRole.INPUT, 2, 2).addItemStack(FlyItem.withType(PFlyTypes.byId(recipe.parent1())));
+        builder.addSlot(RecipeIngredientRole.INPUT, 2, 20).addItemStack(FlyItem.withType(PFlyTypes.byId(recipe.parent2())));
 
         builder.addSlot(RecipeIngredientRole.OUTPUT, 58, 11)
-                .addItemStack(recipe.resultFly())
+                .addItemStack(FlyItem.withType(PFlyTypes.byId(recipe.result())))
                 .addRichTooltipCallback((view, tooltip) -> {
                     var chance = recipe.chance() * 100.0F < 1.0F ? "<1" : String.format("%.2f", recipe.chance() * 100.0F).replaceAll("\\.?0+$", "");
                     tooltip.add(Component.translatable("jei.poopsky.breeding_box_chance", chance).withStyle(ChatFormatting.GOLD));
@@ -73,7 +78,7 @@ public class BreedingBoxRecipeCategory implements IRecipeCategory<BreedingBoxJei
     }
 
     @Override
-    public void draw(BreedingBoxJeiRecipe recipe, IRecipeSlotsView slotsView, GuiGraphics graphics, double mouseX, double mouseY) {
+    public void draw(RecipeHolder<BreedingBoxRecipe> recipeHolder, IRecipeSlotsView slotsView, GuiGraphics graphics, double mouseX, double mouseY) {
         this.slot.draw(graphics, 1, 1);
         this.slot.draw(graphics, 1, 19);
         this.arrow.draw(graphics, 25, 11);

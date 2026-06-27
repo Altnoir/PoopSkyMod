@@ -6,6 +6,7 @@ import com.altnoir.poopsky.worldgen.PSConfigureFeatures;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
@@ -42,6 +43,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class PoopBlock extends Block implements BonemealableBlock {
     public static final MapCodec<PoopBlock> CODEC = simpleCodec(PoopBlock::new);

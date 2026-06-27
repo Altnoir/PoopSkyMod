@@ -70,6 +70,9 @@ public class PBlocks {
                     .mapColor(MapColor.COLOR_BROWN)
                     .speedFactor(0.4F)
                     .isValidSpawn(Blocks::always)
+                    .isRedstoneConductor(PBlocks::always)
+                    .isViewBlocking(PBlocks::always)
+                    .isSuffocating(PBlocks::always)
                     .instrument(NoteBlockInstrument.COW_BELL)
                     .sound(SoundType.MUD))
     );
@@ -222,6 +225,9 @@ public class PBlocks {
                     .strength(POOP)
                     .speedFactor(0.4F)
                     .isValidSpawn(Blocks::always)
+                    .isRedstoneConductor(PBlocks::always)
+                    .isViewBlocking(PBlocks::always)
+                    .isSuffocating(PBlocks::always)
                     .instrument(NoteBlockInstrument.COW_BELL)
                     .sound(SoundType.MUD)
             )
@@ -245,6 +251,9 @@ public class PBlocks {
                     .strength(0.65F)
                     .speedFactor(0.4F)
                     .isValidSpawn(Blocks::always)
+                    .isRedstoneConductor(PBlocks::always)
+                    .isViewBlocking(PBlocks::always)
+                    .isSuffocating(PBlocks::always)
                     .instrument(NoteBlockInstrument.BELL)
                     .sound(SoundType.MUD)
             )
@@ -603,6 +612,10 @@ public class PBlocks {
 
     public static boolean never(BlockState state, BlockGetter world, BlockPos pos) {
         return false;
+    }
+
+    public static boolean always(BlockState state, BlockGetter blockGetter, BlockPos pos) {
+        return true;
     }
 
     public static boolean neverBlockVision(BlockState state, BlockGetter world, BlockPos pos) {

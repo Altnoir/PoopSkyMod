@@ -24,12 +24,11 @@ public class PSEntityTypeTagsProvider extends EntityTypeTagsProvider {
                 .add(EntityType.IRON_GOLEM, EntityType.SNOW_GOLEM);
 
         tag(PTags.EntityTypes.RETAIN_IN_SUB_LEVEL)
-                .add(PEntityType.STOOL.get())
-                .add(PEntityType.TOILET.get());
+                .add(PEntityType.STOOL.get(), PEntityType.TOILET.get());
         tag(PTags.EntityTypes.DESTROY_WITH_SUB_LEVEL)
-                .add(PEntityType.STOOL.get())
-                .add(PEntityType.TOILET.get());
+                .add(PEntityType.STOOL.get(), PEntityType.TOILET.get());
 
-        tag(EntityTypeTags.IGNORES_POISON_AND_REGEN).add(PEntityType.POOLIME.get());
+        tag(EntityTypeTags.IGNORES_POISON_AND_REGEN)
+                .add(PEntityType.POOLIME.get(), PEntityType.FLY.get());
     }
 }

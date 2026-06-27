@@ -9,7 +9,7 @@ import com.altnoir.poopsky.compat.maid.MaidPlugin;
 import com.altnoir.poopsky.entity.p.PoopTntEntity;
 import com.altnoir.poopsky.init.*;
 import com.altnoir.poopsky.init.PItems;
-import com.altnoir.poopsky.network.PSNetworking;
+import com.altnoir.poopsky.init.PSNetworking;
 import com.altnoir.poopsky.villager.PVillagers;
 import com.altnoir.poopsky.worldgen.PSChunkGenerators;
 import com.altnoir.poopsky.worldgen.PSStructures;

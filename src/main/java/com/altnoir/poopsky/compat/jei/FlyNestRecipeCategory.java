@@ -2,6 +2,9 @@ package com.altnoir.poopsky.compat.jei;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.init.PBlocks;
+import com.altnoir.poopsky.init.PFlyTypes;
+import com.altnoir.poopsky.item.p.FlyItem;
+import com.altnoir.poopsky.recipe.FlyNestRecipe;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
@@ -13,9 +16,10 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
-public class FlyNestRecipeCategory implements IRecipeCategory<FlyNestJeiRecipe> {
-    public static final RecipeType<FlyNestJeiRecipe> TYPE = RecipeType.create(PoopSky.MOD_ID, "fly_nest", FlyNestJeiRecipe.class);
+public class FlyNestRecipeCategory implements IRecipeCategory<RecipeHolder<FlyNestRecipe>> {
+    public static final RecipeType<RecipeHolder<FlyNestRecipe>> TYPE = RecipeType.createRecipeHolderType(PoopSky.loc("fly_nest"));
 
     private static final int WIDTH = 83;
     private static final int HEIGHT = 37;
@@ -33,20 +37,21 @@ public class FlyNestRecipeCategory implements IRecipeCategory<FlyNestJeiRecipe> 
         this.slot = guiHelper.getSlotDrawable();
     }
 
-    @Override public RecipeType<FlyNestJeiRecipe> getRecipeType() { return TYPE; }
+    @Override public RecipeType<RecipeHolder<FlyNestRecipe>> getRecipeType() { return TYPE; }
     @Override public Component getTitle() { return title; }
     @Override public IDrawable getIcon() { return icon; }
     @Override public int getWidth() { return WIDTH; }
     @Override public int getHeight() { return HEIGHT; }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, FlyNestJeiRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 2, 10).addItemStack(recipe.flyInput());
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 58, 10).addItemStack(recipe.product());
+    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<FlyNestRecipe> recipeHolder, IFocusGroup focuses) {
+        var recipe = recipeHolder.value();
+        builder.addSlot(RecipeIngredientRole.INPUT, 2, 10).addItemStack(FlyItem.withType(PFlyTypes.byId(recipe.flyTypeId())));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 58, 10).addItemStack(recipe.result());
     }
 
     @Override
-    public void draw(FlyNestJeiRecipe recipe, IRecipeSlotsView slotsView, GuiGraphics graphics, double mouseX, double mouseY) {
+    public void draw(RecipeHolder<FlyNestRecipe> recipeHolder, IRecipeSlotsView slotsView, GuiGraphics graphics, double mouseX, double mouseY) {
         this.slot.draw(graphics, 1, 9);
         this.arrow.draw(graphics, 25, 11);
         this.slot.draw(graphics, 57, 9);

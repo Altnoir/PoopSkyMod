@@ -6,6 +6,8 @@ import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.init.PRecipes;
+import com.altnoir.poopsky.recipe.BreedingBoxRecipeBuilder;
+import com.altnoir.poopsky.recipe.FlyNestRecipeBuilder;
 import com.altnoir.poopsky.recipe.POPExplosionRecipeBuilder;
 import com.altnoir.poopsky.recipe.SieveRecipeBuilder;
 import com.simibubi.create.AllItems;

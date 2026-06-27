@@ -2,7 +2,7 @@
   "parent": "minecraft:item/generated",
   "overrides": [
     {
-      "model": "poopsky:item/fly_normal",
+      "model": "poopsky:item/fly",
       "predicate": {
         "poopsky:fly_type": 0.0
       }
@@ -105,6 +105,6 @@
     }
   ],
   "textures": {
-    "layer0": "poopsky:item/normal_fly"
+    "layer0": "poopsky:item/fly"
   }
 }
