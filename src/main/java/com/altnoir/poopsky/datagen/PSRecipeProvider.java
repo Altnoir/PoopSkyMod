@@ -682,7 +682,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
     }
 
     private void buildFlyNestRecipes(RecipeOutput recipeOutput) {
-        LinkedHashMap<String, ItemLike> flyNestMap = new LinkedHashMap<String, ItemLike>();
+        LinkedHashMap<String, ItemLike> flyNestMap = new LinkedHashMap<>();
         flyNestMap.put("normal", PItems.MAGGOTS_SEEDS);
         flyNestMap.put("white", Items.BONE_MEAL);
         flyNestMap.put("black", Items.COAL);
@@ -701,11 +701,9 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         flyNestMap.put("orange", Items.ORANGE_DYE);
         flyNestMap.put("purple", Items.AMETHYST_SHARD);
 
-        flyNestMap.forEach((typeId, result) -> {
-            FlyNestRecipeBuilder.flyNest(typeId, result)
-                    .unlockedBy(getHasName(PBlocks.FLY_NEST), has(PBlocks.FLY_NEST))
-                    .save(recipeOutput, PoopSky.loc(PRecipes.FLY_NEST_FOLDER + "/" + typeId));
-        });
+        flyNestMap.forEach((typeId, result) -> FlyNestRecipeBuilder.flyNest(typeId, result)
+                .unlockedBy(getHasName(PBlocks.FLY_NEST), has(PBlocks.FLY_NEST))
+                .save(recipeOutput, PoopSky.loc(PRecipes.FLY_NEST_FOLDER + "/" + typeId)));
     }
 
     private void toiletRecipes(RecipeOutput recipeOutput, ItemLike toilet, ItemLike block) {

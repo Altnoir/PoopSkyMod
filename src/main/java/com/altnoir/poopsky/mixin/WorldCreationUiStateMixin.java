@@ -14,11 +14,10 @@ public abstract class WorldCreationUiStateMixin {
     @Shadow
     private boolean bonusChest;
 
-    @Inject(method = "setBonusChest", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "setBonusChest", at = @At("HEAD"))
     private void poopsky$preventBonusChestForPoopSky(boolean bonusChest, CallbackInfo ci) {
-        if (bonusChest && ClientUtil.isPoopSkyWorldType((WorldCreationUiState)(Object)this)) {
-            this.bonusChest = false;
-            ci.cancel();
+        if (bonusChest) {
+            ClientUtil.isPoopSkyWorldType((WorldCreationUiState) (Object) this);
         }
     }
 

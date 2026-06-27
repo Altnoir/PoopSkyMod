@@ -1,19 +1,17 @@
 package com.altnoir.poopsky;
 
-import com.altnoir.poopsky.client.particle.LeavesParticle;
-import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.block.abs.AbstractCompooperBlock;
+import com.altnoir.poopsky.client.inventory.BreedingBoxScreen;
+import com.altnoir.poopsky.client.inventory.FlyNestScreen;
+import com.altnoir.poopsky.client.particle.LeavesParticle;
+import com.altnoir.poopsky.client.particle.PoopParticle;
+import com.altnoir.poopsky.client.renderer.TimeBellOverlay;
+import com.altnoir.poopsky.client.renderer.ToiletHighlightRenderer;
 import com.altnoir.poopsky.entity.renderer.*;
 import com.altnoir.poopsky.event.PSClientGameEvents;
 import com.altnoir.poopsky.event.PSClientModEvents;
 import com.altnoir.poopsky.event.PSKeyBoardInput;
 import com.altnoir.poopsky.init.*;
-import com.altnoir.poopsky.client.inventory.BreedingBoxScreen;
-import com.altnoir.poopsky.client.inventory.FlyNestScreen;
-import com.altnoir.poopsky.init.PItems;
-import com.altnoir.poopsky.client.particle.PoopParticle;
-import com.altnoir.poopsky.client.renderer.TimeBellOverlay;
-import com.altnoir.poopsky.client.renderer.ToiletHighlightRenderer;
 import net.minecraft.client.RecipeBookCategories;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.RenderType;
@@ -96,10 +94,8 @@ public class PoopSkyClient {
         }
 
         public static void registerItemProperties(FMLClientSetupEvent event) {
-            event.enqueueWork(() -> {
-                ItemProperties.register(PItems.FLY.get(), PoopSky.loc("fly_type"),
-                        (stack, level, entity, seed) -> (float) PFlyTypes.getIndex(PFlyTypes.byId(stack.get(PComponents.FLY_TYPE.get()))));
-            });
+            event.enqueueWork(() -> ItemProperties.register(PItems.FLY.get(), PoopSky.loc("fly_type"),
+                    (stack, level, entity, seed) -> (float) PFlyTypes.getIndex(PFlyTypes.byId(stack.get(PComponents.FLY_TYPE.get())))));
         }
 
         public static void registerParticleProviders(RegisterParticleProvidersEvent event) {

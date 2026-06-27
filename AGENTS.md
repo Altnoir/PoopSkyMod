@@ -84,13 +84,13 @@ PoopSkyMod/
 
 ## 依赖模组
 
-| 模组 | 版本 | 用途 |
-|------|------|------|
-| **Create** | `6.0.8-168` | 机械动力联动（风扇消解配方） |
-| **JEI** | `19.27.0.340` | 配方查看 |
-| **Sable Companion** | `1.6.0` | 辅助库 |
-| **KubeJS** | `2101.7.2-build.295` | 脚本扩展 |
-| **车万女仆** | - | 女仆AI联动 |
+| 模组                  | 版本                   | 用途             |
+|---------------------|----------------------|----------------|
+| **Create**          | `6.0.8-168`          | 机械动力联动（风扇消解配方） |
+| **JEI**             | `19.27.0.340`        | 配方查看           |
+| **Sable Companion** | `1.6.0`              | 辅助库            |
+| **KubeJS**          | `2101.7.2-build.295` | 脚本扩展           |
+| **车万女仆**            | -                    | 女仆AI联动         |
 
 ## 注册模式 (DeferredRegister)
 
@@ -164,18 +164,18 @@ Mixin 配置文件位于 `src/main/resources/poopsky.mixins.json`，包路径为
 
 当前注入的目标类：
 
-| Mixin 类 | 目标 | 用途 |
-|----------|------|------|
-| `LivingEntityMixin` | `LivingEntity` | 流血伤害、时停无敌 |
-| `FishingHookMixin` | `FishingHook` | 钓鱼战利品修改 |
-| `VillagerMixin` | `Villager` | 村民行为 |
-| `TradeWithVillagerMixin` | `ServerGamePacketListenerImpl` | 村民交易 |
-| `CarvedPumpkinBlockMixin` | `CarvedPumpkinBlock` | 南瓜生成 |
-| `BaseCoralPlantTypeBlockMixin` | `BaseCoralPlantTypeBlock` | 珊瑚 |
-| `NoiseBasedChunkGeneratorMixin` | `NoiseBasedChunkGenerator` | 世界生成 |
-| `ClientPacketListenerMixin` | `ClientPacketListener` | 客户端 |
-| `CreateWorldScreenWorldTabMixin` | `CreateWorldScreen` | 世界创建界面 |
-| `WorldCreationUiStateMixin` | `WorldCreationUiState` | 世界创建UI |
+| Mixin 类                          | 目标                             | 用途        |
+|----------------------------------|--------------------------------|-----------|
+| `LivingEntityMixin`              | `LivingEntity`                 | 流血伤害、时停无敌 |
+| `FishingHookMixin`               | `FishingHook`                  | 钓鱼战利品修改   |
+| `VillagerMixin`                  | `Villager`                     | 村民行为      |
+| `TradeWithVillagerMixin`         | `ServerGamePacketListenerImpl` | 村民交易      |
+| `CarvedPumpkinBlockMixin`        | `CarvedPumpkinBlock`           | 南瓜生成      |
+| `BaseCoralPlantTypeBlockMixin`   | `BaseCoralPlantTypeBlock`      | 珊瑚        |
+| `NoiseBasedChunkGeneratorMixin`  | `NoiseBasedChunkGenerator`     | 世界生成      |
+| `ClientPacketListenerMixin`      | `ClientPacketListener`         | 客户端       |
+| `CreateWorldScreenWorldTabMixin` | `CreateWorldScreen`            | 世界创建界面    |
+| `WorldCreationUiStateMixin`      | `WorldCreationUiState`         | 世界创建UI    |
 
 ## 网络通信
 
@@ -190,17 +190,17 @@ Mixin 配置文件位于 `src/main/resources/poopsky.mixins.json`，包路径为
 
 在 `Config.java` 中通过 `ModConfigSpec` 定义，配置文件类型为 `COMMON`：
 
-| 配置项 | 类型 | 默认值 | 说明 |
-|--------|------|--------|------|
-| `setPoopskyDefault` | boolean | true | 是否将 poopsky 设为默认世界类型 |
-| `voidNetherGeneration` | boolean | true | 地狱是否也使用虚空生成 |
-| `desperateWorld` | boolean | false | 绝望世界模式 |
-| `compooperCrafting` | boolean | false | 禁用堆肥配方消耗液体 |
-| `lavaFluid` | boolean | true | 禁用地下熔岩湖 |
-| `plugTrades` | boolean | false | 禁用塞子交易 |
-| `upgradeTemplate` | boolean | false | 禁用升级模板交易 |
-| `unlimitedFreeze` | boolean | false | 无限时停 |
-| `freezeFilter` | boolean | false | 禁用时停滤镜 (客户端) |
+| 配置项                    | 类型      | 默认值   | 说明                   |
+|------------------------|---------|-------|----------------------|
+| `setPoopskyDefault`    | boolean | true  | 是否将 poopsky 设为默认世界类型 |
+| `voidNetherGeneration` | boolean | true  | 地狱是否也使用虚空生成          |
+| `desperateWorld`       | boolean | false | 绝望世界模式               |
+| `compooperCrafting`    | boolean | false | 禁用堆肥配方消耗液体           |
+| `lavaFluid`            | boolean | true  | 禁用地下熔岩湖              |
+| `plugTrades`           | boolean | false | 禁用塞子交易               |
+| `upgradeTemplate`      | boolean | false | 禁用升级模板交易             |
+| `unlimitedFreeze`      | boolean | false | 无限时停                 |
+| `freezeFilter`         | boolean | false | 禁用时停滤镜 (客户端)         |
 
 ## 自定义配方
 
@@ -389,13 +389,13 @@ if (ModList.get().isLoaded(PSMods.TOUHOU_LITTLE_MAID.id())) {
 ### 13. BlockBehaviour.Properties 中的方块行为（非 Block 重写）
 1.21.1 中许多方块行为**不是** `Block` 类的可重写方法，而是在 `BlockBehaviour.Properties` 中设置的。不要尝试在 `Block` 子类中 `@Override` 这些方法，它们不存在：
 
-| 属性 | Properties 方法 | 说明 |
-|------|----------------|------|
+| 属性   | Properties 方法                          | 说明                            |
+|------|----------------------------------------|-------------------------------|
 | 红石导通 | `.isRedstoneConductor(Blocks::always)` | 默认基于碰撞箱判断，不完整方块需手动设为 `always` |
-| 视线阻挡 | `.isViewBlocking(Blocks::never)` | 控制方块是否阻挡视线 |
-| 有效刷怪 | `.isValidSpawn(Blocks::always)` | 控制方块上是否可刷怪 |
-| 可被替换 | `.isReplacementReplaceable()` | 控制方块是否可被替换 |
-| 信号源 | `.isSignalSource()` | 控制方块是否为红石信号源 |
+| 视线阻挡 | `.isViewBlocking(Blocks::never)`       | 控制方块是否阻挡视线                    |
+| 有效刷怪 | `.isValidSpawn(Blocks::always)`        | 控制方块上是否可刷怪                    |
+| 可被替换 | `.isReplacementReplaceable()`          | 控制方块是否可被替换                    |
+| 信号源  | `.isSignalSource()`                    | 控制方块是否为红石信号源                  |
 
 **常见陷阱**：不完整碰撞箱的方块（如 `PoopBlock`）默认无法被红石充能，因为默认 `isRedstoneConductor` 依赖 `isCollisionShapeFullBlock()`。必须显式设置 `.isRedstoneConductor(Blocks::always)`。
 
