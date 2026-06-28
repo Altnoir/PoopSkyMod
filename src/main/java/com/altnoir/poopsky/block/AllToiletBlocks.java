@@ -21,20 +21,25 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.function.Supplier;
 import java.util.function.ToIntFunction;
 
-public class AllToiletBlocks {
+public final class AllToiletBlocks {
+    private static final float WOOD_STRENGTH = 2.0F;
+    private static final float STONE_STRENGTH = 4.0F;
+    private static final float TOILET_RESISTANCE = 100.0F;
+    private static final int LAVA_LIGHT_LEVEL = 15;
+
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(PoopSky.MOD_ID);
 
-    public static final DeferredBlock<Block> OAK_TOILET = registerToilet("oak_toilet", MapColor.WOOD, SoundType.WOOD);
-    public static final DeferredBlock<Block> SPRUCE_TOILET = registerToilet("spruce_toilet", MapColor.WOOD, SoundType.WOOD);
-    public static final DeferredBlock<Block> BIRCH_TOILET = registerToilet("birch_toilet", MapColor.COLOR_YELLOW, SoundType.WOOD);
-    public static final DeferredBlock<Block> JUNGLE_TOILET = registerToilet("jungle_toilet", MapColor.COLOR_BROWN, SoundType.WOOD);
-    public static final DeferredBlock<Block> ACACIA_TOILET = registerToilet("acacia_toilet", MapColor.COLOR_ORANGE, SoundType.WOOD);
-    public static final DeferredBlock<Block> CHERRY_TOILET = registerToilet("cherry_toilet", MapColor.TERRACOTTA_WHITE, SoundType.CHERRY_WOOD);
-    public static final DeferredBlock<Block> DARK_OAK_TOILET = registerToilet("dark_oak_toilet", MapColor.COLOR_BROWN, SoundType.WOOD);
-    public static final DeferredBlock<Block> MANGROVE_TOILET = registerToilet("mangrove_toilet", MapColor.COLOR_RED, SoundType.WOOD);
-    public static final DeferredBlock<Block> BAMBOO_TOILET = registerToilet("bamboo_toilet", MapColor.COLOR_YELLOW, SoundType.BAMBOO_WOOD);
-    public static final DeferredBlock<Block> CRIMSON_TOILET = registerToilet("crimson_toilet", MapColor.TERRACOTTA_RED, SoundType.NETHER_WOOD);
-    public static final DeferredBlock<Block> WARPED_TOILET = registerToilet("warped_toilet", MapColor.WATER, SoundType.NETHER_WOOD);
+    public static final DeferredBlock<Block> OAK_TOILET = registerWoodToilet("oak_toilet", MapColor.WOOD, SoundType.WOOD);
+    public static final DeferredBlock<Block> SPRUCE_TOILET = registerWoodToilet("spruce_toilet", MapColor.WOOD, SoundType.WOOD);
+    public static final DeferredBlock<Block> BIRCH_TOILET = registerWoodToilet("birch_toilet", MapColor.COLOR_YELLOW, SoundType.WOOD);
+    public static final DeferredBlock<Block> JUNGLE_TOILET = registerWoodToilet("jungle_toilet", MapColor.COLOR_BROWN, SoundType.WOOD);
+    public static final DeferredBlock<Block> ACACIA_TOILET = registerWoodToilet("acacia_toilet", MapColor.COLOR_ORANGE, SoundType.WOOD);
+    public static final DeferredBlock<Block> CHERRY_TOILET = registerWoodToilet("cherry_toilet", MapColor.TERRACOTTA_WHITE, SoundType.CHERRY_WOOD);
+    public static final DeferredBlock<Block> DARK_OAK_TOILET = registerWoodToilet("dark_oak_toilet", MapColor.COLOR_BROWN, SoundType.WOOD);
+    public static final DeferredBlock<Block> MANGROVE_TOILET = registerWoodToilet("mangrove_toilet", MapColor.COLOR_RED, SoundType.WOOD);
+    public static final DeferredBlock<Block> BAMBOO_TOILET = registerWoodToilet("bamboo_toilet", MapColor.COLOR_YELLOW, SoundType.BAMBOO_WOOD);
+    public static final DeferredBlock<Block> CRIMSON_TOILET = registerWoodToilet("crimson_toilet", MapColor.TERRACOTTA_RED, SoundType.NETHER_WOOD);
+    public static final DeferredBlock<Block> WARPED_TOILET = registerWoodToilet("warped_toilet", MapColor.WATER, SoundType.NETHER_WOOD);
 
     public static final DeferredBlock<Block> STONE_TOILET = registerLavaToilet("stone_toilet", MapColor.STONE);
     public static final DeferredBlock<Block> COBBLESTONE_TOILET = registerLavaToilet("cobblestone_toilet", MapColor.STONE);
@@ -61,48 +66,51 @@ public class AllToiletBlocks {
     public static final DeferredBlock<Block> PURPLE_CONCRETE_TOILET = registerColorToilet("purple_concrete_toilet", DyeColor.PURPLE);
     public static final DeferredBlock<Block> MAGENTA_CONCRETE_TOILET = registerColorToilet("magenta_concrete_toilet", DyeColor.MAGENTA);
     public static final DeferredBlock<Block> PINK_CONCRETE_TOILET = registerColorToilet("pink_concrete_toilet", DyeColor.PINK);
-    public static final DeferredBlock<Block> RAINBOW_TOILET = registerBlock("rainbow_toilet", () ->
-            new GoldgenToiletBlock(BlockBehaviour.Properties.of()
-                    .mapColor(DyeColor.WHITE)
-                    .instrument(NoteBlockInstrument.BASEDRUM)
-                    .lightLevel(createLightLevelFromLavaBlockState(15))
-                    .strength(4.0F, 100.0F)
-                    .requiresCorrectToolForDrops()
-            )
+
+    public static final DeferredBlock<Block> RAINBOW_TOILET = registerBlock(
+            "rainbow_toilet",
+            () -> new GoldgenToiletBlock(lavaToiletProperties(DyeColor.WHITE.getMapColor()))
     );
 
-    private static DeferredBlock<Block> registerToilet(String name, MapColor color, SoundType sound) {
-        return registerBlock(name, () -> new ToiletBlock(BlockBehaviour.Properties.of()
-                .mapColor(color)
-                .instrument(NoteBlockInstrument.BASS)
-                .strength(2.0F, 100.0F)
-                .sound(sound)
-                .ignitedByLava()
-        ));
+    private static DeferredBlock<Block> registerWoodToilet(String name, MapColor color, SoundType sound) {
+        return registerBlock(name, () -> new ToiletBlock(woodToiletProperties(color, sound)));
     }
 
     private static DeferredBlock<Block> registerLavaToilet(String name, MapColor color) {
-        return registerBlock(name, () -> new ToiletLavaBlock(BlockBehaviour.Properties.of()
-                .mapColor(color)
-                .instrument(NoteBlockInstrument.BASEDRUM)
-                .lightLevel(createLightLevelFromLavaBlockState(15))
-                .strength(4.0F, 100.0F)
-                .requiresCorrectToolForDrops()
-        ));
+        return registerBlock(name, () -> new ToiletLavaBlock(lavaToiletProperties(color)));
     }
 
     private static DeferredBlock<Block> registerColorToilet(String name, DyeColor color) {
         return registerLavaToilet(name, color.getMapColor());
     }
 
-    private static ToIntFunction<BlockState> createLightLevelFromLavaBlockState(int litLevel) {
-        return state -> state.getValue(ToiletLavaBlock.LAVA) ? litLevel : 0;
+    private static BlockBehaviour.Properties woodToiletProperties(MapColor color, SoundType sound) {
+        return BlockBehaviour.Properties.of()
+                .mapColor(color)
+                .instrument(NoteBlockInstrument.BASS)
+                .strength(WOOD_STRENGTH, TOILET_RESISTANCE)
+                .sound(sound)
+                .ignitedByLava();
     }
 
-    public static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
-        DeferredBlock<T> toReturn = BLOCKS.register(name, block);
-        registerBlockItem(name, toReturn);
-        return toReturn;
+    private static BlockBehaviour.Properties lavaToiletProperties(MapColor color) {
+        return BlockBehaviour.Properties.of()
+                .mapColor(color)
+                .instrument(NoteBlockInstrument.BASEDRUM)
+                .lightLevel(lavaLightLevel())
+                .strength(STONE_STRENGTH, TOILET_RESISTANCE)
+                .requiresCorrectToolForDrops()
+                .ignitedByLava();
+    }
+
+    private static ToIntFunction<BlockState> lavaLightLevel() {
+        return state -> state.getValue(ToiletLavaBlock.LAVA) ? LAVA_LIGHT_LEVEL : 0;
+    }
+
+    public static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> blockFactory) {
+        DeferredBlock<T> block = BLOCKS.register(name, blockFactory);
+        registerBlockItem(name, block);
+        return block;
     }
 
     private static <T extends Block> void registerBlockItem(String name, DeferredBlock<T> block) {

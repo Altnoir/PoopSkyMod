@@ -18,16 +18,21 @@ import net.minecraft.server.TickTask;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -44,6 +49,7 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -54,7 +60,20 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final EnumProperty<ToiletState> CONNECTION = EnumProperty.create("connection", ToiletState.class);
 
-    private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
+    private static final VoxelShape NORTH_SOUTH_BASE_SHAPE = Shapes.or(
+            Block.box(0.0, 0.0, 0.0, 5.0, 16.0, 16.0),
+            Block.box(11.0, 0.0, 0.0, 16.0, 16.0, 16.0),
+            Block.box(5.0, 0.0, 0.0, 11.0, 12.0, 16.0)
+    );
+    private static final VoxelShape NORTH_CAP_SHAPE = Block.box(5.0, 12.0, 0.0, 11.0, 16.0, 1.0);
+    private static final VoxelShape SOUTH_CAP_SHAPE = Block.box(5.0, 12.0, 15.0, 11.0, 16.0, 16.0);
+    private static final VoxelShape EAST_WEST_BASE_SHAPE = Shapes.or(
+            Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 5.0),
+            Block.box(0.0, 0.0, 11.0, 16.0, 16.0, 16.0),
+            Block.box(0.0, 0.0, 5.0, 16.0, 12.0, 11.0)
+    );
+    private static final VoxelShape WEST_CAP_SHAPE = Block.box(0.0, 12.0, 5.0, 1.0, 16.0, 11.0);
+    private static final VoxelShape EAST_CAP_SHAPE = Block.box(15.0, 12.0, 5.0, 16.0, 16.0, 11.0);
 
     public enum ToiletState implements StringRepresentable {
         DEFAULT("default"),
@@ -104,6 +123,28 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
             }
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(
+            ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult
+    ) {
+        if (!stack.is(Items.FLINT_AND_STEEL) && !stack.is(Items.FIRE_CHARGE)) {
+            return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
+        }
+
+        Item item = stack.getItem();
+        if (!level.isClientSide && level instanceof ServerLevel serverLevel) {
+            explodeToilet(serverLevel, pos);
+        }
+
+        if (stack.is(Items.FLINT_AND_STEEL)) {
+            stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
+        } else {
+            stack.consume(1, player);
+        }
+        player.awardStat(Stats.ITEM_USED.get(item));
+        return ItemInteractionResult.sidedSuccess(level.isClientSide);
     }
 
     @Override
@@ -216,7 +257,32 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext context) {
-        return SHAPE;
+        return getToiletShape(state);
+    }
+
+    @Override
+    protected VoxelShape getVisualShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return getToiletShape(state);
+    }
+
+    private VoxelShape getToiletShape(BlockState state) {
+        Direction facing = state.getValue(FACING);
+        ToiletState connection = state.getValue(CONNECTION);
+
+        return switch (facing) {
+            case EAST -> Shapes.or(EAST_WEST_BASE_SHAPE,
+                    connection == ToiletState.BACK || connection == ToiletState.BOTH ? Shapes.empty() : WEST_CAP_SHAPE,
+                    connection == ToiletState.FRONT || connection == ToiletState.BOTH ? Shapes.empty() : EAST_CAP_SHAPE);
+            case WEST -> Shapes.or(EAST_WEST_BASE_SHAPE,
+                    connection == ToiletState.FRONT || connection == ToiletState.BOTH ? Shapes.empty() : WEST_CAP_SHAPE,
+                    connection == ToiletState.BACK || connection == ToiletState.BOTH ? Shapes.empty() : EAST_CAP_SHAPE);
+            case SOUTH -> Shapes.or(NORTH_SOUTH_BASE_SHAPE,
+                    connection == ToiletState.BACK || connection == ToiletState.BOTH ? Shapes.empty() : NORTH_CAP_SHAPE,
+                    connection == ToiletState.FRONT || connection == ToiletState.BOTH ? Shapes.empty() : SOUTH_CAP_SHAPE);
+            default -> Shapes.or(NORTH_SOUTH_BASE_SHAPE,
+                    connection == ToiletState.FRONT || connection == ToiletState.BOTH ? Shapes.empty() : NORTH_CAP_SHAPE,
+                    connection == ToiletState.BACK || connection == ToiletState.BOTH ? Shapes.empty() : SOUTH_CAP_SHAPE);
+        };
     }
 
     @Override
@@ -243,11 +309,15 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     @Override
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (hasHot(level, pos)) {
-            level.explode(null, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, 4.0F, Level.ExplosionInteraction.BLOCK);
-            level.setBlock(pos.above(), Blocks.AIR.defaultBlockState(), 3);
-            var poop = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, new ItemStack(PItems.POOP.get(), 88));
-            level.addFreshEntity(poop);
+            explodeToilet(level, pos);
         }
+    }
+
+    private void explodeToilet(ServerLevel level, BlockPos pos) {
+        level.explode(null, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, 4.0F, Level.ExplosionInteraction.BLOCK);
+        level.setBlock(pos.above(), Blocks.AIR.defaultBlockState(), 3);
+        var poop = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, new ItemStack(PItems.POOP.get(), 88));
+        level.addFreshEntity(poop);
     }
 
     @Override

@@ -88,6 +88,6 @@ public class ToiletLavaBlock extends AbstractToiletBlock {
                 return ItemInteractionResult.sidedSuccess(level.isClientSide);
             }
         }
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
     }
 }
