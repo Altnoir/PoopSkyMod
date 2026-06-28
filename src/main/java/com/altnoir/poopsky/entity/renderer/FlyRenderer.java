@@ -3,7 +3,6 @@ package com.altnoir.poopsky.entity.renderer;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.entity.model.FlyModel;
 import com.altnoir.poopsky.entity.p.FlyEntity;
-import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;

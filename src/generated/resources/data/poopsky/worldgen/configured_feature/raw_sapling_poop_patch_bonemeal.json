@@ -10,7 +10,7 @@
         "Name": "poopsky:raw_sapling_poop_block"
       }
     },
-    "replaceable": "#poopsky:raw_saping_poop_block",
+    "replaceable": "#poopsky:raw_sapling_poop_block",
     "surface": "floor",
     "vegetation_chance": 0.3,
     "vegetation_feature": {

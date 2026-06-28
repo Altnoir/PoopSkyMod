@@ -52,8 +52,8 @@ public class LeavesParticle extends TextureSheetParticle {
         if (!this.removed) {
             float f = (float) (INITIAL_LIFETIME - this.lifetime);
             float f1 = Math.min(f / (float) CURVE_ENDPOINT_TIME, 1.0F);
-            double d0 = Math.cos(Math.toRadians((double) (this.particleRandom * 60.0F))) * WIND_BIG * Math.pow((double) f1, 1.25);
-            double d1 = Math.sin(Math.toRadians((double) (this.particleRandom * 60.0F))) * WIND_BIG * Math.pow((double) f1, 1.25);
+            double d0 = Math.cos(Math.toRadians(this.particleRandom * 60.0F)) * WIND_BIG * Math.pow(f1, 1.25);
+            double d1 = Math.sin(Math.toRadians(this.particleRandom * 60.0F)) * WIND_BIG * Math.pow(f1, 1.25);
             this.xd += d0 * ACCELERATION_SCALE;
             this.zd += d1 * ACCELERATION_SCALE;
             this.yd = this.yd - (double) this.gravity;

@@ -3,11 +3,7 @@ package com.altnoir.poopsky.worldgen.structure;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.worldgen.PSStructures;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.SectionPos;
-import net.minecraft.core.Vec3i;
+import net.minecraft.core.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -28,6 +24,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -149,12 +146,7 @@ public class PoopIslandStructure extends Structure {
 
     public static BlockPos getGuaranteedSpawnIslandCenter(ServerLevel level) {
         BlockPos registeredSpawn = GUARANTEED_SPAWNS.get(level.getSeed());
-
-        if (registeredSpawn != null) {
-            return getGuaranteedSpawnIslandCenter(level.getSeed(), registeredSpawn);
-        }
-
-        return getGuaranteedSpawnIslandCenter(level.getSeed(), level.getSharedSpawnPos());
+        return getGuaranteedSpawnIslandCenter(level.getSeed(), Objects.requireNonNullElseGet(registeredSpawn, level::getSharedSpawnPos));
     }
 
     private static ResourceLocation randomTemplate(RandomSource random) {

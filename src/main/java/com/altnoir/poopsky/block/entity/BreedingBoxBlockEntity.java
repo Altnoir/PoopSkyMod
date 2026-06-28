@@ -1,11 +1,11 @@
 package com.altnoir.poopsky.block.entity;
 
 import com.altnoir.poopsky.PTags;
+import com.altnoir.poopsky.client.inventory.BreedingBoxMenu;
+import com.altnoir.poopsky.init.PBlockEntityType;
 import com.altnoir.poopsky.init.PFlyRecipes;
 import com.altnoir.poopsky.init.PFlyTypes;
-import com.altnoir.poopsky.init.PBlockEntityType;
 import com.altnoir.poopsky.item.p.FlyItem;
-import com.altnoir.poopsky.client.inventory.BreedingBoxMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -202,7 +202,6 @@ public class BreedingBoxBlockEntity extends BlockEntity implements MenuProvider 
         for (int i = SLOT_OUTPUT_1; i <= SLOT_OUTPUT_3; i++) {
             ItemStack remainder = tryInsert(i, flyProduct.copy());
             if (remainder.isEmpty()) {
-                flyProduct = ItemStack.EMPTY;
                 break;
             }
             flyProduct = remainder;

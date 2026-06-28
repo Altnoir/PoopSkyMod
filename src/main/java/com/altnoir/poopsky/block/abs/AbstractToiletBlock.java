@@ -1,11 +1,13 @@
 package com.altnoir.poopsky.block.abs;
 
+import com.altnoir.poopsky.PTags;
 import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.block.p.ToiletLavaBlock;
 import com.altnoir.poopsky.entity.p.ToiletEntity;
-import com.altnoir.poopsky.init.*;
+import com.altnoir.poopsky.init.PBlockEntityType;
+import com.altnoir.poopsky.init.PEffects;
+import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.init.PItems;
-import com.altnoir.poopsky.PTags;
 import com.altnoir.poopsky.util.toiletUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -18,7 +20,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.MobSpawnType;
@@ -47,7 +48,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 import java.util.Set;
 
 public abstract class AbstractToiletBlock extends BaseEntityBlock {
@@ -72,7 +72,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
             return this.name;
         }
 
-        public String getSerializedName() {
+        public @NotNull String getSerializedName() {
             return this.name;
         }
     }
@@ -88,23 +88,20 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (!player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
+        if (!player.getMainHandItem().isEmpty()) {
             return InteractionResult.PASS;
         }
 
         if (!level.isClientSide) {
-            Entity entity;
-            List<ToiletEntity> entities = level.getEntities(PEntityType.TOILET.get(), new AABB(pos), toiletEntity -> true);
+            ToiletEntity entity = level.getEntities(PEntityType.TOILET.get(), new AABB(pos), e -> true)
+                    .stream()
+                    .findFirst()
+                    .orElseGet(() -> PEntityType.TOILET.get().spawn((ServerLevel) level, pos, MobSpawnType.TRIGGERED));
 
-            if (entities.isEmpty()) {
-                entity = PEntityType.TOILET.get().spawn((ServerLevel) level, pos, MobSpawnType.TRIGGERED);
-            } else {
-                entity = entities.getFirst();
+            if (entity != null) {
+                entity.setGoldenPoop(state.is(PTags.Blocks.GOLDEN_TOILET_BLOCKS));
+                player.startRiding(entity);
             }
-            if (entity instanceof ToiletEntity toiletEntity) {
-                toiletEntity.setGoldenPoop(state.is(PTags.Blocks.GOLDEN_TOILET_BLOCKS));
-            }
-            player.startRiding(entity);
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
@@ -112,13 +109,10 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     @Override
     public void onRemove(BlockState oldState, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!oldState.is(newState.getBlock())) {
-            BlockEntity be = level.getBlockEntity(pos);
-            if (be instanceof ToiletBlockEntity toilet) {
+            if (level.getBlockEntity(pos) instanceof ToiletBlockEntity toilet) {
                 toilet.clearLinkedBlock();
             }
-            for (ToiletEntity toiletEntity : level.getEntities(PEntityType.TOILET.get(), new AABB(pos), e -> true)) {
-                toiletEntity.kill();
-            }
+            level.getEntities(PEntityType.TOILET.get(), new AABB(pos), e -> true).forEach(Entity::kill);
         }
         super.onRemove(oldState, level, pos, newState, isMoving);
     }
@@ -126,21 +120,21 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     @Override
     public void fallOn(Level level, BlockState blockState, BlockPos pos, Entity entity, float fallDistance) {
         if (!level.isClientSide) {
-            ToiletBlockEntity be = null;
-
             if (fallDistance >= 1.0f && isEntityCentered(pos, entity)) {
-                be = (ToiletBlockEntity) level.getBlockEntity(pos);
+                if (level.getBlockEntity(pos) instanceof ToiletBlockEntity be &&
+                        be.getLinkedPos() != null && be.getLinkedDim() != null && !be.getLinkedDim().isBlank()) {
+                    teleportEntity(level, entity, be, fallDistance);
+                    return; // 如果传送了，就不再触发默认掉落逻辑
+                }
             }
 
-            if (be != null && be.getLinkedPos() != null && be.getLinkedDim() != null && !be.getLinkedDim().isBlank()) {
-                teleportEntity(level, entity, be, fallDistance);
-            } else {
-                super.fallOn(level, blockState, pos, entity, fallDistance);
-            }
+            super.fallOn(level, blockState, pos, entity, fallDistance);
 
             if (entity instanceof FallingBlockEntity falling && isAnvil(falling.getBlockState())) {
                 poopAnvil(level, blockState, entity);
             }
+        } else {
+            super.fallOn(level, blockState, pos, entity, fallDistance);
         }
     }
 
@@ -149,12 +143,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     }
 
     private void poopAnvil(Level level, BlockState blockState, Entity entity) {
-        Item poopItem;
-        if (blockState.is(PTags.Blocks.GOLDEN_TOILET_BLOCKS)) {
-            poopItem = PItems.GOLDEN_POOP.get();
-        } else {
-            poopItem = PItems.POOP.get();
-        }
+        Item poopItem = blockState.is(PTags.Blocks.GOLDEN_TOILET_BLOCKS) ? PItems.GOLDEN_POOP.get() : PItems.POOP.get();
         var poop = new ItemEntity(level, entity.getX(), entity.getY() + 0.1, entity.getZ(), new ItemStack(poopItem, 8));
         poop.setDefaultPickUpDelay();
         level.addFreshEntity(poop);
@@ -173,31 +162,34 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     }
 
     protected boolean isEntityCentered(BlockPos blockPos, Entity entity) {
-        var blockAABB = new AABB(blockPos).inflate(0.2);
-        return blockAABB.contains(entity.position());
+        return new AABB(blockPos).inflate(0.2).contains(entity.position());
     }
 
     public void teleportEntity(Level level, Entity entity, ToiletBlockEntity blockEntity, float fallDistance) {
         var server = level.getServer();
-        var linkedDim = blockEntity.getLinkedDim();
-        var targetPos = blockEntity.getLinkedPos();
+        if (server == null) return;
 
-        var targetDimension = ResourceLocation.tryParse(linkedDim);
+        var targetDimension = ResourceLocation.tryParse(blockEntity.getLinkedDim());
         if (targetDimension == null) return;
 
         var targetWorld = server.getLevel(ResourceKey.create(Registries.DIMENSION, targetDimension));
         if (targetWorld == null) return;
+
+        var targetPos = blockEntity.getLinkedPos();
         targetWorld.getChunk(targetPos);
 
-        if (entity.isVehicle() && !entity.getPassengers().isEmpty()) {
-            entity.getControllingPassenger().teleportTo(targetWorld, targetPos.getX() + 0.5, targetPos.getY() + 1, targetPos.getZ() + 0.5, Set.of(), entity.getYRot(), entity.getXRot());
-            entity.teleportTo(targetWorld, targetPos.getX() + 0.5, targetPos.getY() + 1, targetPos.getZ() + 0.5, Set.of(), entity.getYRot(), entity.getXRot());
-        } else {
-            entity.teleportTo(targetWorld, targetPos.getX() + 0.5, targetPos.getY() + 1, targetPos.getZ() + 0.5, Set.of(), entity.getYRot(), entity.getXRot());
+        double destX = targetPos.getX() + 0.5;
+        double destY = targetPos.getY() + 1.0;
+        double destZ = targetPos.getZ() + 0.5;
+
+        if (entity.isVehicle() && entity.getControllingPassenger() != null) {
+            entity.getControllingPassenger().teleportTo(targetWorld, destX, destY, destZ, Set.of(), entity.getYRot(), entity.getXRot());
         }
+        entity.teleportTo(targetWorld, destX, destY, destZ, Set.of(), entity.getYRot(), entity.getXRot());
 
         var pitch = targetWorld.random.nextFloat() + 0.1F;
-        targetWorld.playSound(null, entity.getX(), entity.getY() + 0.1, entity.getZ(), SoundEvents.MUD_BREAK, SoundSource.PLAYERS, 1.0F, pitch);
+        targetWorld.playSound(null, destX, destY, destZ, SoundEvents.MUD_BREAK, SoundSource.PLAYERS, 1.0F, pitch);
+
         var bounce = Math.sqrt(2 * 0.08 * fallDistance) * 0.85;
         server.tell(new TickTask(server.getTickCount() + 1, () -> {
             entity.setDeltaMovement(entity.getDeltaMovement().x, bounce, entity.getDeltaMovement().z);
@@ -214,26 +206,8 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        var level = ctx.getLevel();
-        var pos = ctx.getClickedPos();
         Direction facing = ctx.getHorizontalDirection().getOpposite();
-
-        var forwardPos = pos.relative(facing);
-        var forwardConnected = isValidNeighbor(level, forwardPos, pos, facing);
-
-        var backwardPos = pos.relative(facing.getOpposite());
-        var backwardConnected = isValidNeighbor(level, backwardPos, pos, facing);
-
-        ToiletState connection;
-        if (forwardConnected && backwardConnected) {
-            connection = ToiletState.BOTH;
-        } else if (forwardConnected) {
-            connection = ToiletState.FRONT;
-        } else if (backwardConnected) {
-            connection = ToiletState.BACK;
-        } else {
-            connection = ToiletState.DEFAULT;
-        }
+        ToiletState connection = calculateConnection(ctx.getLevel(), ctx.getClickedPos(), facing);
 
         return this.defaultBlockState()
                 .setValue(FACING, facing)
@@ -294,50 +268,43 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
                 level.scheduleTick(pos, this, 1);
             }
 
-            var facing = state.getValue(FACING);
-            var forwardPos = pos.relative(facing);
-            var backwardPos = pos.relative(facing.getOpposite());
-
-            var forwardConnected = isValidNeighbor(level, forwardPos, pos, facing);
-            var backwardConnected = isValidNeighbor(level, backwardPos, pos, facing);
-            ToiletState connection;
-            if (forwardConnected && backwardConnected) {
-                connection = ToiletState.BOTH;
-            } else if (forwardConnected) {
-                connection = ToiletState.FRONT;
-            } else if (backwardConnected) {
-                connection = ToiletState.BACK;
-            } else {
-                connection = ToiletState.DEFAULT;
-            }
-            if (connection != state.getValue(CONNECTION)) {
-                level.setBlockAndUpdate(pos, state.setValue(CONNECTION, connection));
+            ToiletState newConnection = calculateConnection(level, pos, state.getValue(FACING));
+            if (newConnection != state.getValue(CONNECTION)) {
+                level.setBlockAndUpdate(pos, state.setValue(CONNECTION, newConnection));
             }
         }
+    }
+
+    private ToiletState calculateConnection(LevelReader level, BlockPos pos, Direction facing) {
+        boolean forwardConnected = isValidNeighbor(level, pos.relative(facing), pos, facing);
+        boolean backwardConnected = isValidNeighbor(level, pos.relative(facing.getOpposite()), pos, facing);
+
+        if (forwardConnected && backwardConnected) return ToiletState.BOTH;
+        if (forwardConnected) return ToiletState.FRONT;
+        if (backwardConnected) return ToiletState.BACK;
+        return ToiletState.DEFAULT;
     }
 
     protected boolean hasHot(ServerLevel level, BlockPos pos) {
         var above = pos.above();
-        if (!level.isInWorldBounds(above)) return false;
-        return level.getBlockState(above).is(Blocks.FIRE);
+        return level.isInWorldBounds(above) && level.getBlockState(above).is(Blocks.FIRE);
     }
 
     protected boolean isValidNeighbor(LevelReader level, BlockPos neighborPos, BlockPos pos, Direction facing) {
-        var neighbor = level.getBlockState(neighborPos);
-        var state = level.getBlockState(pos);
+        BlockState neighbor = level.getBlockState(neighborPos);
+        BlockState state = level.getBlockState(pos);
 
-        if (neighbor.getBlock() instanceof AbstractToiletBlock) {
-            if (this instanceof ToiletLavaBlock) {
-                if (neighbor.getBlock() instanceof ToiletLavaBlock) {
-                    return neighbor.getValue(ToiletLavaBlock.LAVA) == state.getValue(ToiletLavaBlock.LAVA) && isFaceConnected(neighbor, facing);
-                }
-            } else {
-                if (!(neighbor.getBlock() instanceof ToiletLavaBlock)) {
-                    return isFaceConnected(neighbor, facing);
-                }
-            }
+        if (!(neighbor.getBlock() instanceof AbstractToiletBlock) || !isFaceConnected(neighbor, facing)) {
+            return false;
         }
-        return false;
+
+        boolean thisIsLava = this instanceof ToiletLavaBlock;
+        boolean neighborIsLava = neighbor.getBlock() instanceof ToiletLavaBlock;
+
+        if (thisIsLava && neighborIsLava) {
+            return neighbor.getValue(ToiletLavaBlock.LAVA).equals(state.getValue(ToiletLavaBlock.LAVA));
+        }
+        return !thisIsLava && !neighborIsLava;
     }
 
     private boolean isFaceConnected(BlockState state, Direction facing) {
