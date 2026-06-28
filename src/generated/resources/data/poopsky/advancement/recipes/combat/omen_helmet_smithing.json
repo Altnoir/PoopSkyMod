@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "brain_coral": {
+    "has_ominous_filthy_ingot": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:brain_coral"
+            "items": "poopsky:ominous_filthy_ingot"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:brain_coral_block"
+        "recipe": "poopsky:omen_helmet_smithing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "brain_coral"
+      "has_ominous_filthy_ingot"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:brain_coral_block"
+      "poopsky:omen_helmet_smithing"
     ]
   }
 }

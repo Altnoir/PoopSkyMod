@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_raw_sapling_poop_block": {
+    "has_raw_poop_block": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:raw_sapling_poop_block"
+            "items": "poopsky:raw_poop_block"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:sapling_poop_ball"
+        "recipe": "poopsky:poop_ball_from_raw_poop_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_raw_sapling_poop_block"
+      "has_raw_poop_block"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:sapling_poop_ball"
+      "poopsky:poop_ball_from_raw_poop_block"
     ]
   }
 }

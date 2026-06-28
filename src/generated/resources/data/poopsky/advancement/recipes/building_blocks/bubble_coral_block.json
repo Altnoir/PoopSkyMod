@@ -1,32 +1,32 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "minecraft:cobweb"
-      },
-      "trigger": "minecraft:recipe_unlocked"
-    },
-    "maggots_seeds": {
+    "bubble_coral": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:maggots_seeds"
+            "items": "minecraft:bubble_coral"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:bubble_coral_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
       "has_the_recipe",
-      "maggots_seeds"
+      "bubble_coral"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:cobweb"
+      "poopsky:bubble_coral_block"
     ]
   }
 }

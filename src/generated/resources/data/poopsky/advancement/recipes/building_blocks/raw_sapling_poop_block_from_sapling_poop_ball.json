@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "fire_coral": {
+    "has_sapling_poop_ball": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:fire_coral"
+            "items": "poopsky:sapling_poop_ball"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:fire_coral_block"
+        "recipe": "poopsky:raw_sapling_poop_block_from_sapling_poop_ball"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "fire_coral"
+      "has_sapling_poop_ball"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:fire_coral_block"
+      "poopsky:raw_sapling_poop_block_from_sapling_poop_ball"
     ]
   }
 }

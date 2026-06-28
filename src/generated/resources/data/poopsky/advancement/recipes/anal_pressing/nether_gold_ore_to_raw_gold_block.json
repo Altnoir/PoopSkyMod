@@ -3,15 +3,15 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:raw_wither_poop_block"
+        "recipe": "poopsky:anal_pressing/nether_gold_ore_to_raw_gold_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "has_wither_poop_ball": {
+    "nether_gold_ore": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:wither_poop_ball"
+            "items": "minecraft:raw_gold_block"
           }
         ]
       },
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_wither_poop_ball"
+      "nether_gold_ore"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:raw_wither_poop_block"
+      "poopsky:anal_pressing/nether_gold_ore_to_raw_gold_block"
     ]
   }
 }

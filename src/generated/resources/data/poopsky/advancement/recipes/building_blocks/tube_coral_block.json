@@ -1,32 +1,32 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "bubble_coral": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:tube_coral_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "tube_coral": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:bubble_coral"
+            "items": "minecraft:tube_coral"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
-    },
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "minecraft:bubble_coral_block"
-      },
-      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
       "has_the_recipe",
-      "bubble_coral"
+      "tube_coral"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:bubble_coral_block"
+      "poopsky:tube_coral_block"
     ]
   }
 }

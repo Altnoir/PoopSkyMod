@@ -1,32 +1,32 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_raw_sea_poop_block": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:horn_coral_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "horn_coral": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:raw_sea_poop_block"
+            "items": "minecraft:horn_coral"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
-    },
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "minecraft:sea_poop_ball"
-      },
-      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
       "has_the_recipe",
-      "has_raw_sea_poop_block"
+      "horn_coral"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:sea_poop_ball"
+      "poopsky:horn_coral_block"
     ]
   }
 }

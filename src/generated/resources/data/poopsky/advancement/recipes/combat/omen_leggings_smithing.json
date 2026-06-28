@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_raw_poop_block": {
+    "has_ominous_filthy_ingot": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:raw_poop_block"
+            "items": "poopsky:ominous_filthy_ingot"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:poop_ball"
+        "recipe": "poopsky:omen_leggings_smithing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_raw_poop_block"
+      "has_ominous_filthy_ingot"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:poop_ball"
+      "poopsky:omen_leggings_smithing"
     ]
   }
 }

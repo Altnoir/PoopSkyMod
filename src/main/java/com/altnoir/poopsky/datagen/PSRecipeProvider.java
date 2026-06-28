@@ -146,7 +146,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('P', PItems.POOP_BALL)
                 .define('S', PItems.MAGGOTS_SEEDS)
                 .unlockedBy(getItemName(PItems.MAGGOTS_SEEDS), has(PItems.MAGGOTS_SEEDS))
-                .save(recipeOutput);
+                .save(recipeOutput, getConversionRecipeName(PItems.MAGGOTS_SEEDS));
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PItems.WITHER_POOP_BALL.get(), 8)
                 .pattern("PPP")
                 .pattern("PSP")
@@ -403,27 +403,27 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .requires(PBlocks.POOP_BLOCK)
                 .requires(Blocks.TUBE_CORAL).requires(Blocks.TUBE_CORAL_FAN)
                 .unlockedBy(getItemName(Blocks.TUBE_CORAL), has(Blocks.TUBE_CORAL))
-                .save(recipeOutput);
+                .save(recipeOutput, getConversionRecipeName(Blocks.TUBE_CORAL_BLOCK));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Blocks.BRAIN_CORAL_BLOCK)
                 .requires(PBlocks.POOP_BLOCK)
                 .requires(Blocks.BRAIN_CORAL).requires(Blocks.BRAIN_CORAL_FAN)
                 .unlockedBy(getItemName(Blocks.BRAIN_CORAL), has(Blocks.BRAIN_CORAL))
-                .save(recipeOutput);
+                .save(recipeOutput, getConversionRecipeName(Blocks.BRAIN_CORAL_BLOCK));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Blocks.BUBBLE_CORAL_BLOCK)
                 .requires(PBlocks.POOP_BLOCK)
                 .requires(Blocks.BUBBLE_CORAL).requires(Blocks.BUBBLE_CORAL_FAN)
                 .unlockedBy(getItemName(Blocks.BUBBLE_CORAL), has(Blocks.BUBBLE_CORAL))
-                .save(recipeOutput);
+                .save(recipeOutput, getConversionRecipeName(Blocks.BUBBLE_CORAL_BLOCK));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Blocks.FIRE_CORAL_BLOCK)
                 .requires(PBlocks.POOP_BLOCK)
                 .requires(Blocks.FIRE_CORAL).requires(Blocks.FIRE_CORAL_FAN)
                 .unlockedBy(getItemName(Blocks.FIRE_CORAL), has(Blocks.FIRE_CORAL))
-                .save(recipeOutput);
+                .save(recipeOutput, getConversionRecipeName(Blocks.FIRE_CORAL_BLOCK));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Blocks.HORN_CORAL_BLOCK)
                 .requires(PBlocks.POOP_BLOCK)
                 .requires(Blocks.HORN_CORAL).requires(Blocks.HORN_CORAL_FAN)
                 .unlockedBy(getItemName(Blocks.HORN_CORAL), has(Blocks.HORN_CORAL))
-                .save(recipeOutput);
+                .save(recipeOutput, getConversionRecipeName(Blocks.HORN_CORAL_BLOCK));
 
         offerCompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, Blocks.MOSSY_COBBLESTONE, PItems.SPALL);
         create1x2ShapelessFrom(recipeOutput, Blocks.GRASS_BLOCK, Blocks.DIRT, Blocks.MOSS_BLOCK);
@@ -878,7 +878,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                         Ingredient.of(PItems.OMEN_UPGRADE_SMITHING_TEMPLATE), Ingredient.of(ingredientItem), Ingredient.of(PItems.OMINOUS_FILTHY_INGOT), category, resultItem
                 )
                 .unlocks("has_ominous_filthy_ingot", has(PItems.OMINOUS_FILTHY_INGOT))
-                .save(recipeOutput, getItemName(resultItem) + "_smithing");
+                .save(recipeOutput, PoopSky.MOD_ID + ":" + getItemName(resultItem) + "_smithing");
     }
 
     protected static void oreSmelting(RecipeOutput recipeOutput, List<ItemLike> ingredients, RecipeCategory category, ItemLike result, float experience, int cookingTime, String group) {
@@ -914,6 +914,15 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
 
     protected static void copySmithingTemplate(RecipeOutput recipeOutput, ItemLike template, ItemLike baseItem, ItemLike item) {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, template, 2).define('#', item).define('C', baseItem).define('S', template).pattern("#S#").pattern("#C#").pattern("###").unlockedBy(getHasName(template), has(template)).save(recipeOutput);
+    }
+
+    protected static void nineBlockStorageRecipes(RecipeOutput recipeOutput, RecipeCategory unpackedCategory, ItemLike unpacked, RecipeCategory packedCategory, ItemLike packed) {
+        nineBlockStorageRecipes(recipeOutput, unpackedCategory, unpacked, packedCategory, packed, getItemName(packed) + "_from_" + getItemName(unpacked), getItemName(unpacked) + "_from_" + getItemName(packed));
+    }
+
+    protected static void nineBlockStorageRecipes(RecipeOutput recipeOutput, RecipeCategory unpackedCategory, ItemLike unpacked, RecipeCategory packedCategory, ItemLike packed, String packedName, String unpackedName) {
+        ShapelessRecipeBuilder.shapeless(unpackedCategory, unpacked, 9).requires(packed).unlockedBy(getHasName(packed), has(packed)).save(recipeOutput, PoopSky.loc(unpackedName));
+        ShapedRecipeBuilder.shaped(packedCategory, packed).define('#', unpacked).pattern("###").pattern("###").pattern("###").unlockedBy(getHasName(unpacked), has(unpacked)).save(recipeOutput, PoopSky.loc(packedName));
     }
 
     protected static String getConversionRecipeName(ItemLike result) {

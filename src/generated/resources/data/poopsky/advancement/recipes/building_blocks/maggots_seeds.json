@@ -3,15 +3,15 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:tube_coral_block"
+        "recipe": "poopsky:maggots_seeds"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "tube_coral": {
+    "maggots_seeds": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:tube_coral"
+            "items": "poopsky:maggots_seeds"
           }
         ]
       },
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "tube_coral"
+      "maggots_seeds"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:tube_coral_block"
+      "poopsky:maggots_seeds"
     ]
   }
 }
