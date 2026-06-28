@@ -14,8 +14,6 @@ public class PSParticleProvider extends ParticleDescriptionProvider {
     @Override
     protected void addDescriptions() {
         spriteSet(PParticles.POOP_PARTICLE.get(), PoopSky.loc("poop_particle"));
-        spriteSet(PParticles.LEAVES_PARTICLE_BROWN.get(), PoopSky.loc("leaves"), 12, false);
-        spriteSet(PParticles.LEAVES_PARTICLE_WHITE.get(), PoopSky.loc("leaves"), 12, false);
-        spriteSet(PParticles.LEAVES_PARTICLE_YELLOW.get(), PoopSky.loc("leaves"), 12, false);
+        spriteSet(PParticles.LEAVES_PARTICLE.get(), PoopSky.loc("leaves"), 12, false);
     }
 }

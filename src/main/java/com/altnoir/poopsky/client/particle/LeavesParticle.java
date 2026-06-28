@@ -2,7 +2,6 @@ package com.altnoir.poopsky.client.particle;
 
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
-import net.minecraft.core.particles.SimpleParticleType;
 
 public class LeavesParticle extends TextureSheetParticle {
     private static final float ACCELERATION_SCALE = 0.0025F;
@@ -73,22 +72,20 @@ public class LeavesParticle extends TextureSheetParticle {
         }
     }
 
-    public static ParticleEngine.SpriteParticleRegistration<SimpleParticleType> provider(int color) {
-        return sprites -> new Provider(sprites, color);
+    public static ParticleEngine.SpriteParticleRegistration<LeavesParticleOptions> provider() {
+        return Provider::new;
     }
 
-    public static class Provider implements ParticleProvider<SimpleParticleType> {
+    public static class Provider implements ParticleProvider<LeavesParticleOptions> {
         private final SpriteSet sprites;
-        private final int color;
 
-        public Provider(SpriteSet sprites, int color) {
+        public Provider(SpriteSet sprites) {
             this.sprites = sprites;
-            this.color = color;
         }
 
         @Override
-        public Particle createParticle(SimpleParticleType type, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            return new LeavesParticle(level, x, y, z, this.sprites, this.color);
+        public Particle createParticle(LeavesParticleOptions options, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+            return new LeavesParticle(level, x, y, z, this.sprites, options.color());
         }
     }
 }

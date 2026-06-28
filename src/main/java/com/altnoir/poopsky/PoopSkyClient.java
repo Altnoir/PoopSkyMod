@@ -100,9 +100,7 @@ public class PoopSkyClient {
 
         public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
             event.registerSpriteSet(PParticles.POOP_PARTICLE.get(), PoopParticle.Provider::new);
-            event.registerSpriteSet(PParticles.LEAVES_PARTICLE_BROWN.get(), LeavesParticle.provider(0x5E4228));
-            event.registerSpriteSet(PParticles.LEAVES_PARTICLE_WHITE.get(), LeavesParticle.provider(0xFFFFFF));
-            event.registerSpriteSet(PParticles.LEAVES_PARTICLE_YELLOW.get(), LeavesParticle.provider(0xFFD700));
+            event.registerSpriteSet(PParticles.LEAVES_PARTICLE.get(), LeavesParticle.provider());
         }
 
         public static void onRegisterBlockColors(RegisterColorHandlersEvent.Block event) {

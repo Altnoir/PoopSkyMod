@@ -467,7 +467,7 @@ public class PBlocks {
     );
 
     public static final DeferredBlock<Block> POOP_LEAVES = registerBlock("poop_leaves",
-            () -> new PoopLeavesBlock(PParticles.LEAVES_PARTICLE_BROWN, BlockBehaviour.Properties.of()
+            () -> new PoopLeavesBlock(0x5E4228, BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_BROWN)
                     .strength(0.2F)
                     .randomTicks()
@@ -482,7 +482,7 @@ public class PBlocks {
             )
     );
     public static final DeferredBlock<Block> POOP_LEAVES_IRON = registerBlock("poop_leaves_iron",
-            () -> new PoopLeavesBlock(PParticles.LEAVES_PARTICLE_WHITE, BlockBehaviour.Properties.of()
+            () -> new PoopLeavesBlock(0xFFFFFF, BlockBehaviour.Properties.of()
                     .mapColor(MapColor.TERRACOTTA_WHITE)
                     .strength(0.2F)
                     .randomTicks()
@@ -497,7 +497,7 @@ public class PBlocks {
             )
     );
     public static final DeferredBlock<Block> POOP_LEAVES_GOLD = registerBlock("poop_leaves_gold",
-            () -> new PoopLeavesBlock(PParticles.LEAVES_PARTICLE_YELLOW, BlockBehaviour.Properties.of()
+            () -> new PoopLeavesBlock(0xFFD700, BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_YELLOW)
                     .strength(0.2F)
                     .randomTicks()
