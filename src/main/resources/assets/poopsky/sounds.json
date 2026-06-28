@@ -200,6 +200,15 @@
       }
     ]
   },
+  "entity.fly.capture": {
+    "subtitle": "subtitle.poopsky.fly.capture",
+    "sounds": [
+      {
+        "name": "minecraft:block.beehive.exit",
+        "type": "event"
+      }
+    ]
+  },
   "lawrence": {
     "sounds": [
       {
