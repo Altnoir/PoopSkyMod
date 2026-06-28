@@ -25,6 +25,12 @@ public final class PComponents {
                     .networkSynchronized(ByteBufCodecs.STRING_UTF8)
             );
 
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> TOILET_TYPE =
+            COMPONENTS.registerComponentType("toilet_type", builder -> builder
+                    .persistent(ExtraCodecs.NON_EMPTY_STRING)
+                    .networkSynchronized(ByteBufCodecs.STRING_UTF8)
+            );
+
     public static void register(IEventBus eventBus) {
         COMPONENTS.register(eventBus);
     }

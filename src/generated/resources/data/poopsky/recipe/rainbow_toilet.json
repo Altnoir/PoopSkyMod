@@ -3,17 +3,20 @@
   "category": "building",
   "ingredients": [
     {
-      "item": "poopsky:red_concrete_toilet"
+      "item": "minecraft:red_concrete"
     },
     {
-      "item": "poopsky:green_concrete_toilet"
+      "item": "minecraft:green_concrete"
     },
     {
-      "item": "poopsky:blue_concrete_toilet"
+      "item": "minecraft:blue_concrete"
+    },
+    {
+      "item": "poopsky:poop"
     }
   ],
   "result": {
-    "count": 3,
+    "count": 1,
     "id": "poopsky:rainbow_toilet"
   }
 }

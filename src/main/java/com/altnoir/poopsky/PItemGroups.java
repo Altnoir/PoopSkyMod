@@ -1,7 +1,10 @@
 package com.altnoir.poopsky;
 
-import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.block.AllToiletBlocks;
+import com.altnoir.poopsky.block.p.MetalToiletBlock;
+import com.altnoir.poopsky.block.p.StoneToiletBlock;
+import com.altnoir.poopsky.block.p.ToiletBlock;
+import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.item.p.FlyItem;
 import com.altnoir.poopsky.init.PFlyTypes;
@@ -46,13 +49,23 @@ public class PItemGroups {
                         .filter(block -> !skip.contains(block))
                         .forEach(output::accept);
 
+                AllToiletBlocks.BLOCKS.getEntries().stream()
+                        .map(DeferredHolder::get)
+                        .forEach(block -> {
+                            if (block instanceof ToiletBlock toilet) {
+                                toilet.addToCreativeTab(output);
+                            } else if (block instanceof StoneToiletBlock stone) {
+                                stone.addToCreativeTab(output);
+                            } else if (block instanceof MetalToiletBlock metal) {
+                                metal.addToCreativeTab(output);
+                            } else {
+                                output.accept(block);
+                            }
+                        });
+
                 for (var type : PFlyTypes.getAll().values()) {
                     output.accept(FlyItem.withType(type));
                 }
-
-                AllToiletBlocks.BLOCKS.getEntries().stream()
-                        .map(DeferredHolder::get)
-                        .forEach(output::accept);
             })
             .build());
 

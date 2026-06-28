@@ -1,0 +1,840 @@
+{
+  "variants": {
+    "connection=back,facing=east,wood_type=acacia": {
+      "model": "poopsky:block/wood_toilet_acacia_s",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=back,facing=east,wood_type=bamboo": {
+      "model": "poopsky:block/wood_toilet_bamboo_s",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=back,facing=east,wood_type=birch": {
+      "model": "poopsky:block/wood_toilet_birch_s",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=back,facing=east,wood_type=cherry": {
+      "model": "poopsky:block/wood_toilet_cherry_s",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=back,facing=east,wood_type=crimson": {
+      "model": "poopsky:block/wood_toilet_crimson_s",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=back,facing=east,wood_type=dark_oak": {
+      "model": "poopsky:block/wood_toilet_dark_oak_s",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=back,facing=east,wood_type=jungle": {
+      "model": "poopsky:block/wood_toilet_jungle_s",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=back,facing=east,wood_type=mangrove": {
+      "model": "poopsky:block/wood_toilet_mangrove_s",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=back,facing=east,wood_type=oak": {
+      "model": "poopsky:block/wood_toilet_oak_s",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=back,facing=east,wood_type=spruce": {
+      "model": "poopsky:block/wood_toilet_spruce_s",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=back,facing=east,wood_type=warped": {
+      "model": "poopsky:block/wood_toilet_warped_s",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=back,facing=north,wood_type=acacia": {
+      "model": "poopsky:block/wood_toilet_acacia_s",
+      "uvlock": true
+    },
+    "connection=back,facing=north,wood_type=bamboo": {
+      "model": "poopsky:block/wood_toilet_bamboo_s",
+      "uvlock": true
+    },
+    "connection=back,facing=north,wood_type=birch": {
+      "model": "poopsky:block/wood_toilet_birch_s",
+      "uvlock": true
+    },
+    "connection=back,facing=north,wood_type=cherry": {
+      "model": "poopsky:block/wood_toilet_cherry_s",
+      "uvlock": true
+    },
+    "connection=back,facing=north,wood_type=crimson": {
+      "model": "poopsky:block/wood_toilet_crimson_s",
+      "uvlock": true
+    },
+    "connection=back,facing=north,wood_type=dark_oak": {
+      "model": "poopsky:block/wood_toilet_dark_oak_s",
+      "uvlock": true
+    },
+    "connection=back,facing=north,wood_type=jungle": {
+      "model": "poopsky:block/wood_toilet_jungle_s",
+      "uvlock": true
+    },
+    "connection=back,facing=north,wood_type=mangrove": {
+      "model": "poopsky:block/wood_toilet_mangrove_s",
+      "uvlock": true
+    },
+    "connection=back,facing=north,wood_type=oak": {
+      "model": "poopsky:block/wood_toilet_oak_s",
+      "uvlock": true
+    },
+    "connection=back,facing=north,wood_type=spruce": {
+      "model": "poopsky:block/wood_toilet_spruce_s",
+      "uvlock": true
+    },
+    "connection=back,facing=north,wood_type=warped": {
+      "model": "poopsky:block/wood_toilet_warped_s",
+      "uvlock": true
+    },
+    "connection=back,facing=south,wood_type=acacia": {
+      "model": "poopsky:block/wood_toilet_acacia_s",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=back,facing=south,wood_type=bamboo": {
+      "model": "poopsky:block/wood_toilet_bamboo_s",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=back,facing=south,wood_type=birch": {
+      "model": "poopsky:block/wood_toilet_birch_s",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=back,facing=south,wood_type=cherry": {
+      "model": "poopsky:block/wood_toilet_cherry_s",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=back,facing=south,wood_type=crimson": {
+      "model": "poopsky:block/wood_toilet_crimson_s",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=back,facing=south,wood_type=dark_oak": {
+      "model": "poopsky:block/wood_toilet_dark_oak_s",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=back,facing=south,wood_type=jungle": {
+      "model": "poopsky:block/wood_toilet_jungle_s",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=back,facing=south,wood_type=mangrove": {
+      "model": "poopsky:block/wood_toilet_mangrove_s",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=back,facing=south,wood_type=oak": {
+      "model": "poopsky:block/wood_toilet_oak_s",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=back,facing=south,wood_type=spruce": {
+      "model": "poopsky:block/wood_toilet_spruce_s",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=back,facing=south,wood_type=warped": {
+      "model": "poopsky:block/wood_toilet_warped_s",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=back,facing=west,wood_type=acacia": {
+      "model": "poopsky:block/wood_toilet_acacia_s",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=back,facing=west,wood_type=bamboo": {
+      "model": "poopsky:block/wood_toilet_bamboo_s",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=back,facing=west,wood_type=birch": {
+      "model": "poopsky:block/wood_toilet_birch_s",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=back,facing=west,wood_type=cherry": {
+      "model": "poopsky:block/wood_toilet_cherry_s",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=back,facing=west,wood_type=crimson": {
+      "model": "poopsky:block/wood_toilet_crimson_s",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=back,facing=west,wood_type=dark_oak": {
+      "model": "poopsky:block/wood_toilet_dark_oak_s",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=back,facing=west,wood_type=jungle": {
+      "model": "poopsky:block/wood_toilet_jungle_s",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=back,facing=west,wood_type=mangrove": {
+      "model": "poopsky:block/wood_toilet_mangrove_s",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=back,facing=west,wood_type=oak": {
+      "model": "poopsky:block/wood_toilet_oak_s",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=back,facing=west,wood_type=spruce": {
+      "model": "poopsky:block/wood_toilet_spruce_s",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=back,facing=west,wood_type=warped": {
+      "model": "poopsky:block/wood_toilet_warped_s",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=both,facing=east,wood_type=acacia": {
+      "model": "poopsky:block/wood_toilet_acacia_ns",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=both,facing=east,wood_type=bamboo": {
+      "model": "poopsky:block/wood_toilet_bamboo_ns",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=both,facing=east,wood_type=birch": {
+      "model": "poopsky:block/wood_toilet_birch_ns",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=both,facing=east,wood_type=cherry": {
+      "model": "poopsky:block/wood_toilet_cherry_ns",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=both,facing=east,wood_type=crimson": {
+      "model": "poopsky:block/wood_toilet_crimson_ns",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=both,facing=east,wood_type=dark_oak": {
+      "model": "poopsky:block/wood_toilet_dark_oak_ns",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=both,facing=east,wood_type=jungle": {
+      "model": "poopsky:block/wood_toilet_jungle_ns",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=both,facing=east,wood_type=mangrove": {
+      "model": "poopsky:block/wood_toilet_mangrove_ns",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=both,facing=east,wood_type=oak": {
+      "model": "poopsky:block/wood_toilet_oak_ns",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=both,facing=east,wood_type=spruce": {
+      "model": "poopsky:block/wood_toilet_spruce_ns",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=both,facing=east,wood_type=warped": {
+      "model": "poopsky:block/wood_toilet_warped_ns",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=both,facing=north,wood_type=acacia": {
+      "model": "poopsky:block/wood_toilet_acacia_ns",
+      "uvlock": true
+    },
+    "connection=both,facing=north,wood_type=bamboo": {
+      "model": "poopsky:block/wood_toilet_bamboo_ns",
+      "uvlock": true
+    },
+    "connection=both,facing=north,wood_type=birch": {
+      "model": "poopsky:block/wood_toilet_birch_ns",
+      "uvlock": true
+    },
+    "connection=both,facing=north,wood_type=cherry": {
+      "model": "poopsky:block/wood_toilet_cherry_ns",
+      "uvlock": true
+    },
+    "connection=both,facing=north,wood_type=crimson": {
+      "model": "poopsky:block/wood_toilet_crimson_ns",
+      "uvlock": true
+    },
+    "connection=both,facing=north,wood_type=dark_oak": {
+      "model": "poopsky:block/wood_toilet_dark_oak_ns",
+      "uvlock": true
+    },
+    "connection=both,facing=north,wood_type=jungle": {
+      "model": "poopsky:block/wood_toilet_jungle_ns",
+      "uvlock": true
+    },
+    "connection=both,facing=north,wood_type=mangrove": {
+      "model": "poopsky:block/wood_toilet_mangrove_ns",
+      "uvlock": true
+    },
+    "connection=both,facing=north,wood_type=oak": {
+      "model": "poopsky:block/wood_toilet_oak_ns",
+      "uvlock": true
+    },
+    "connection=both,facing=north,wood_type=spruce": {
+      "model": "poopsky:block/wood_toilet_spruce_ns",
+      "uvlock": true
+    },
+    "connection=both,facing=north,wood_type=warped": {
+      "model": "poopsky:block/wood_toilet_warped_ns",
+      "uvlock": true
+    },
+    "connection=both,facing=south,wood_type=acacia": {
+      "model": "poopsky:block/wood_toilet_acacia_ns",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=both,facing=south,wood_type=bamboo": {
+      "model": "poopsky:block/wood_toilet_bamboo_ns",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=both,facing=south,wood_type=birch": {
+      "model": "poopsky:block/wood_toilet_birch_ns",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=both,facing=south,wood_type=cherry": {
+      "model": "poopsky:block/wood_toilet_cherry_ns",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=both,facing=south,wood_type=crimson": {
+      "model": "poopsky:block/wood_toilet_crimson_ns",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=both,facing=south,wood_type=dark_oak": {
+      "model": "poopsky:block/wood_toilet_dark_oak_ns",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=both,facing=south,wood_type=jungle": {
+      "model": "poopsky:block/wood_toilet_jungle_ns",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=both,facing=south,wood_type=mangrove": {
+      "model": "poopsky:block/wood_toilet_mangrove_ns",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=both,facing=south,wood_type=oak": {
+      "model": "poopsky:block/wood_toilet_oak_ns",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=both,facing=south,wood_type=spruce": {
+      "model": "poopsky:block/wood_toilet_spruce_ns",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=both,facing=south,wood_type=warped": {
+      "model": "poopsky:block/wood_toilet_warped_ns",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=both,facing=west,wood_type=acacia": {
+      "model": "poopsky:block/wood_toilet_acacia_ns",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=both,facing=west,wood_type=bamboo": {
+      "model": "poopsky:block/wood_toilet_bamboo_ns",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=both,facing=west,wood_type=birch": {
+      "model": "poopsky:block/wood_toilet_birch_ns",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=both,facing=west,wood_type=cherry": {
+      "model": "poopsky:block/wood_toilet_cherry_ns",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=both,facing=west,wood_type=crimson": {
+      "model": "poopsky:block/wood_toilet_crimson_ns",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=both,facing=west,wood_type=dark_oak": {
+      "model": "poopsky:block/wood_toilet_dark_oak_ns",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=both,facing=west,wood_type=jungle": {
+      "model": "poopsky:block/wood_toilet_jungle_ns",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=both,facing=west,wood_type=mangrove": {
+      "model": "poopsky:block/wood_toilet_mangrove_ns",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=both,facing=west,wood_type=oak": {
+      "model": "poopsky:block/wood_toilet_oak_ns",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=both,facing=west,wood_type=spruce": {
+      "model": "poopsky:block/wood_toilet_spruce_ns",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=both,facing=west,wood_type=warped": {
+      "model": "poopsky:block/wood_toilet_warped_ns",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=default,facing=east,wood_type=acacia": {
+      "model": "poopsky:block/wood_toilet_acacia",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=default,facing=east,wood_type=bamboo": {
+      "model": "poopsky:block/wood_toilet_bamboo",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=default,facing=east,wood_type=birch": {
+      "model": "poopsky:block/wood_toilet_birch",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=default,facing=east,wood_type=cherry": {
+      "model": "poopsky:block/wood_toilet_cherry",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=default,facing=east,wood_type=crimson": {
+      "model": "poopsky:block/wood_toilet_crimson",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=default,facing=east,wood_type=dark_oak": {
+      "model": "poopsky:block/wood_toilet_dark_oak",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=default,facing=east,wood_type=jungle": {
+      "model": "poopsky:block/wood_toilet_jungle",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=default,facing=east,wood_type=mangrove": {
+      "model": "poopsky:block/wood_toilet_mangrove",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=default,facing=east,wood_type=oak": {
+      "model": "poopsky:block/wood_toilet_oak",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=default,facing=east,wood_type=spruce": {
+      "model": "poopsky:block/wood_toilet_spruce",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=default,facing=east,wood_type=warped": {
+      "model": "poopsky:block/wood_toilet_warped",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=default,facing=north,wood_type=acacia": {
+      "model": "poopsky:block/wood_toilet_acacia",
+      "uvlock": true
+    },
+    "connection=default,facing=north,wood_type=bamboo": {
+      "model": "poopsky:block/wood_toilet_bamboo",
+      "uvlock": true
+    },
+    "connection=default,facing=north,wood_type=birch": {
+      "model": "poopsky:block/wood_toilet_birch",
+      "uvlock": true
+    },
+    "connection=default,facing=north,wood_type=cherry": {
+      "model": "poopsky:block/wood_toilet_cherry",
+      "uvlock": true
+    },
+    "connection=default,facing=north,wood_type=crimson": {
+      "model": "poopsky:block/wood_toilet_crimson",
+      "uvlock": true
+    },
+    "connection=default,facing=north,wood_type=dark_oak": {
+      "model": "poopsky:block/wood_toilet_dark_oak",
+      "uvlock": true
+    },
+    "connection=default,facing=north,wood_type=jungle": {
+      "model": "poopsky:block/wood_toilet_jungle",
+      "uvlock": true
+    },
+    "connection=default,facing=north,wood_type=mangrove": {
+      "model": "poopsky:block/wood_toilet_mangrove",
+      "uvlock": true
+    },
+    "connection=default,facing=north,wood_type=oak": {
+      "model": "poopsky:block/wood_toilet_oak",
+      "uvlock": true
+    },
+    "connection=default,facing=north,wood_type=spruce": {
+      "model": "poopsky:block/wood_toilet_spruce",
+      "uvlock": true
+    },
+    "connection=default,facing=north,wood_type=warped": {
+      "model": "poopsky:block/wood_toilet_warped",
+      "uvlock": true
+    },
+    "connection=default,facing=south,wood_type=acacia": {
+      "model": "poopsky:block/wood_toilet_acacia",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=default,facing=south,wood_type=bamboo": {
+      "model": "poopsky:block/wood_toilet_bamboo",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=default,facing=south,wood_type=birch": {
+      "model": "poopsky:block/wood_toilet_birch",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=default,facing=south,wood_type=cherry": {
+      "model": "poopsky:block/wood_toilet_cherry",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=default,facing=south,wood_type=crimson": {
+      "model": "poopsky:block/wood_toilet_crimson",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=default,facing=south,wood_type=dark_oak": {
+      "model": "poopsky:block/wood_toilet_dark_oak",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=default,facing=south,wood_type=jungle": {
+      "model": "poopsky:block/wood_toilet_jungle",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=default,facing=south,wood_type=mangrove": {
+      "model": "poopsky:block/wood_toilet_mangrove",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=default,facing=south,wood_type=oak": {
+      "model": "poopsky:block/wood_toilet_oak",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=default,facing=south,wood_type=spruce": {
+      "model": "poopsky:block/wood_toilet_spruce",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=default,facing=south,wood_type=warped": {
+      "model": "poopsky:block/wood_toilet_warped",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=default,facing=west,wood_type=acacia": {
+      "model": "poopsky:block/wood_toilet_acacia",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=default,facing=west,wood_type=bamboo": {
+      "model": "poopsky:block/wood_toilet_bamboo",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=default,facing=west,wood_type=birch": {
+      "model": "poopsky:block/wood_toilet_birch",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=default,facing=west,wood_type=cherry": {
+      "model": "poopsky:block/wood_toilet_cherry",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=default,facing=west,wood_type=crimson": {
+      "model": "poopsky:block/wood_toilet_crimson",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=default,facing=west,wood_type=dark_oak": {
+      "model": "poopsky:block/wood_toilet_dark_oak",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=default,facing=west,wood_type=jungle": {
+      "model": "poopsky:block/wood_toilet_jungle",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=default,facing=west,wood_type=mangrove": {
+      "model": "poopsky:block/wood_toilet_mangrove",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=default,facing=west,wood_type=oak": {
+      "model": "poopsky:block/wood_toilet_oak",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=default,facing=west,wood_type=spruce": {
+      "model": "poopsky:block/wood_toilet_spruce",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=default,facing=west,wood_type=warped": {
+      "model": "poopsky:block/wood_toilet_warped",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=front,facing=east,wood_type=acacia": {
+      "model": "poopsky:block/wood_toilet_acacia_n",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=front,facing=east,wood_type=bamboo": {
+      "model": "poopsky:block/wood_toilet_bamboo_n",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=front,facing=east,wood_type=birch": {
+      "model": "poopsky:block/wood_toilet_birch_n",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=front,facing=east,wood_type=cherry": {
+      "model": "poopsky:block/wood_toilet_cherry_n",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=front,facing=east,wood_type=crimson": {
+      "model": "poopsky:block/wood_toilet_crimson_n",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=front,facing=east,wood_type=dark_oak": {
+      "model": "poopsky:block/wood_toilet_dark_oak_n",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=front,facing=east,wood_type=jungle": {
+      "model": "poopsky:block/wood_toilet_jungle_n",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=front,facing=east,wood_type=mangrove": {
+      "model": "poopsky:block/wood_toilet_mangrove_n",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=front,facing=east,wood_type=oak": {
+      "model": "poopsky:block/wood_toilet_oak_n",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=front,facing=east,wood_type=spruce": {
+      "model": "poopsky:block/wood_toilet_spruce_n",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=front,facing=east,wood_type=warped": {
+      "model": "poopsky:block/wood_toilet_warped_n",
+      "uvlock": true,
+      "y": 90
+    },
+    "connection=front,facing=north,wood_type=acacia": {
+      "model": "poopsky:block/wood_toilet_acacia_n",
+      "uvlock": true
+    },
+    "connection=front,facing=north,wood_type=bamboo": {
+      "model": "poopsky:block/wood_toilet_bamboo_n",
+      "uvlock": true
+    },
+    "connection=front,facing=north,wood_type=birch": {
+      "model": "poopsky:block/wood_toilet_birch_n",
+      "uvlock": true
+    },
+    "connection=front,facing=north,wood_type=cherry": {
+      "model": "poopsky:block/wood_toilet_cherry_n",
+      "uvlock": true
+    },
+    "connection=front,facing=north,wood_type=crimson": {
+      "model": "poopsky:block/wood_toilet_crimson_n",
+      "uvlock": true
+    },
+    "connection=front,facing=north,wood_type=dark_oak": {
+      "model": "poopsky:block/wood_toilet_dark_oak_n",
+      "uvlock": true
+    },
+    "connection=front,facing=north,wood_type=jungle": {
+      "model": "poopsky:block/wood_toilet_jungle_n",
+      "uvlock": true
+    },
+    "connection=front,facing=north,wood_type=mangrove": {
+      "model": "poopsky:block/wood_toilet_mangrove_n",
+      "uvlock": true
+    },
+    "connection=front,facing=north,wood_type=oak": {
+      "model": "poopsky:block/wood_toilet_oak_n",
+      "uvlock": true
+    },
+    "connection=front,facing=north,wood_type=spruce": {
+      "model": "poopsky:block/wood_toilet_spruce_n",
+      "uvlock": true
+    },
+    "connection=front,facing=north,wood_type=warped": {
+      "model": "poopsky:block/wood_toilet_warped_n",
+      "uvlock": true
+    },
+    "connection=front,facing=south,wood_type=acacia": {
+      "model": "poopsky:block/wood_toilet_acacia_n",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=front,facing=south,wood_type=bamboo": {
+      "model": "poopsky:block/wood_toilet_bamboo_n",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=front,facing=south,wood_type=birch": {
+      "model": "poopsky:block/wood_toilet_birch_n",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=front,facing=south,wood_type=cherry": {
+      "model": "poopsky:block/wood_toilet_cherry_n",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=front,facing=south,wood_type=crimson": {
+      "model": "poopsky:block/wood_toilet_crimson_n",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=front,facing=south,wood_type=dark_oak": {
+      "model": "poopsky:block/wood_toilet_dark_oak_n",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=front,facing=south,wood_type=jungle": {
+      "model": "poopsky:block/wood_toilet_jungle_n",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=front,facing=south,wood_type=mangrove": {
+      "model": "poopsky:block/wood_toilet_mangrove_n",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=front,facing=south,wood_type=oak": {
+      "model": "poopsky:block/wood_toilet_oak_n",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=front,facing=south,wood_type=spruce": {
+      "model": "poopsky:block/wood_toilet_spruce_n",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=front,facing=south,wood_type=warped": {
+      "model": "poopsky:block/wood_toilet_warped_n",
+      "uvlock": true,
+      "y": 180
+    },
+    "connection=front,facing=west,wood_type=acacia": {
+      "model": "poopsky:block/wood_toilet_acacia_n",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=front,facing=west,wood_type=bamboo": {
+      "model": "poopsky:block/wood_toilet_bamboo_n",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=front,facing=west,wood_type=birch": {
+      "model": "poopsky:block/wood_toilet_birch_n",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=front,facing=west,wood_type=cherry": {
+      "model": "poopsky:block/wood_toilet_cherry_n",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=front,facing=west,wood_type=crimson": {
+      "model": "poopsky:block/wood_toilet_crimson_n",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=front,facing=west,wood_type=dark_oak": {
+      "model": "poopsky:block/wood_toilet_dark_oak_n",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=front,facing=west,wood_type=jungle": {
+      "model": "poopsky:block/wood_toilet_jungle_n",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=front,facing=west,wood_type=mangrove": {
+      "model": "poopsky:block/wood_toilet_mangrove_n",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=front,facing=west,wood_type=oak": {
+      "model": "poopsky:block/wood_toilet_oak_n",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=front,facing=west,wood_type=spruce": {
+      "model": "poopsky:block/wood_toilet_spruce_n",
+      "uvlock": true,
+      "y": 270
+    },
+    "connection=front,facing=west,wood_type=warped": {
+      "model": "poopsky:block/wood_toilet_warped_n",
+      "uvlock": true,
+      "y": 270
+    }
+  }
+}

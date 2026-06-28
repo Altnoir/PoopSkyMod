@@ -34,7 +34,7 @@ public class PSAdvancementProvider extends AdvancementProvider {
         public void generate(HolderLookup.Provider registries, Consumer<AdvancementHolder> saver, ExistingFileHelper existingFileHelper) {
             AdvancementHolder root = Advancement.Builder.advancement()
                     .display(
-                            AllToiletBlocks.OAK_TOILET.get(),
+                            AllToiletBlocks.WOOD_TOILET.get(),
                             Component.translatable("advancements.poopsky.root.title"),
                             Component.translatable("advancements.poopsky.root.description"),
                             PoopSky.loc("textures/block/poop_block.png"),

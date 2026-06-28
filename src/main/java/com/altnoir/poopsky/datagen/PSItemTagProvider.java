@@ -217,43 +217,12 @@ public class PSItemTagProvider extends ItemTagsProvider {
     }
 
     public static final Item[] WOODEN_TOILETS = {
-            AllToiletBlocks.OAK_TOILET.get().asItem(),
-            AllToiletBlocks.SPRUCE_TOILET.get().asItem(),
-            AllToiletBlocks.BIRCH_TOILET.get().asItem(),
-            AllToiletBlocks.JUNGLE_TOILET.get().asItem(),
-            AllToiletBlocks.ACACIA_TOILET.get().asItem(),
-            AllToiletBlocks.CHERRY_TOILET.get().asItem(),
-            AllToiletBlocks.DARK_OAK_TOILET.get().asItem(),
-            AllToiletBlocks.MANGROVE_TOILET.get().asItem(),
-            AllToiletBlocks.BAMBOO_TOILET.get().asItem()
+            AllToiletBlocks.WOOD_TOILET.get().asItem()
     };
 
     public static final Item[] HARD_TOILETS = {
-            //石制
             AllToiletBlocks.STONE_TOILET.get().asItem(),
-            AllToiletBlocks.COBBLESTONE_TOILET.get().asItem(),
-            AllToiletBlocks.MOSSY_COBBLESTONE_TOILET.get().asItem(),
-            AllToiletBlocks.SMOOTH_STONE_TOILET.get().asItem(),
-            AllToiletBlocks.STONE_BRICK_TOILET.get().asItem(),
-            AllToiletBlocks.MOSSY_STONE_BRICK_TOILET.get().asItem(),
-            AllToiletBlocks.TILE_TOILET.get().asItem(),
-            //混凝土
-            AllToiletBlocks.WHITE_CONCRETE_TOILET.get().asItem(),
-            AllToiletBlocks.ORANGE_CONCRETE_TOILET.get().asItem(),
-            AllToiletBlocks.MAGENTA_CONCRETE_TOILET.get().asItem(),
-            AllToiletBlocks.LIGHT_BLUE_CONCRETE_TOILET.get().asItem(),
-            AllToiletBlocks.YELLOW_CONCRETE_TOILET.get().asItem(),
-            AllToiletBlocks.LIME_CONCRETE_TOILET.get().asItem(),
-            AllToiletBlocks.PINK_CONCRETE_TOILET.get().asItem(),
-            AllToiletBlocks.GRAY_CONCRETE_TOILET.get().asItem(),
-            AllToiletBlocks.LIGHT_GRAY_CONCRETE_TOILET.get().asItem(),
-            AllToiletBlocks.CYAN_CONCRETE_TOILET.get().asItem(),
-            AllToiletBlocks.PURPLE_CONCRETE_TOILET.get().asItem(),
-            AllToiletBlocks.BLUE_CONCRETE_TOILET.get().asItem(),
-            AllToiletBlocks.BROWN_CONCRETE_TOILET.get().asItem(),
-            AllToiletBlocks.GREEN_CONCRETE_TOILET.get().asItem(),
-            AllToiletBlocks.RED_CONCRETE_TOILET.get().asItem(),
-            AllToiletBlocks.BLACK_CONCRETE_TOILET.get().asItem(),
+            AllToiletBlocks.METAL_TOILET.get().asItem(),
             AllToiletBlocks.RAINBOW_TOILET.get().asItem()
     };
 }

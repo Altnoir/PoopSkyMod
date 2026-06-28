@@ -1,0 +1,6 @@
+{
+  "parent": "poopsky:block/toilet_lava_s",
+  "textures": {
+    "toilet": "minecraft:block/raw_gold_block"
+  }
+}

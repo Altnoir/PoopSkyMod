@@ -3,22 +3,27 @@ package com.altnoir.poopsky.datagen;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
-import com.altnoir.poopsky.block.p.PoopPieceBlock;
-import com.altnoir.poopsky.block.p.ToiletLavaBlock;
+import com.altnoir.poopsky.block.p.*;
 import com.altnoir.poopsky.init.PBlocks;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 public class PSBlockStateProvider extends BlockStateProvider {
@@ -104,42 +109,9 @@ public class PSBlockStateProvider extends BlockStateProvider {
         cubeBottomTop(PBlocks.BREEDING_BOX.get(), PBlocks.CUT_POOP_BLOCK.get());
         orientable(PBlocks.PLACER.get());
 
-        registerToilet(AllToiletBlocks.OAK_TOILET.get(), Blocks.OAK_PLANKS);
-        registerToilet(AllToiletBlocks.SPRUCE_TOILET.get(), Blocks.SPRUCE_PLANKS);
-        registerToilet(AllToiletBlocks.BIRCH_TOILET.get(), Blocks.BIRCH_PLANKS);
-        registerToilet(AllToiletBlocks.JUNGLE_TOILET.get(), Blocks.JUNGLE_PLANKS);
-        registerToilet(AllToiletBlocks.ACACIA_TOILET.get(), Blocks.ACACIA_PLANKS);
-        registerToilet(AllToiletBlocks.DARK_OAK_TOILET.get(), Blocks.DARK_OAK_PLANKS);
-        registerToilet(AllToiletBlocks.MANGROVE_TOILET.get(), Blocks.MANGROVE_PLANKS);
-        registerToilet(AllToiletBlocks.CHERRY_TOILET.get(), Blocks.CHERRY_PLANKS);
-        registerToilet(AllToiletBlocks.BAMBOO_TOILET.get(), Blocks.BAMBOO_PLANKS);
-        registerToilet(AllToiletBlocks.CRIMSON_TOILET.get(), Blocks.CRIMSON_PLANKS);
-        registerToilet(AllToiletBlocks.WARPED_TOILET.get(), Blocks.WARPED_PLANKS);
-
-        registerToiletLava(AllToiletBlocks.STONE_TOILET.get(), Blocks.STONE);
-        registerToiletLava(AllToiletBlocks.COBBLESTONE_TOILET.get(), Blocks.COBBLESTONE);
-        registerToiletLava(AllToiletBlocks.MOSSY_COBBLESTONE_TOILET.get(), Blocks.MOSSY_COBBLESTONE);
-        registerToiletLava(AllToiletBlocks.SMOOTH_STONE_TOILET.get(), Blocks.SMOOTH_STONE);
-        registerToiletLava(AllToiletBlocks.STONE_BRICK_TOILET.get(), Blocks.STONE_BRICKS);
-        registerToiletLava(AllToiletBlocks.MOSSY_STONE_BRICK_TOILET.get(), Blocks.MOSSY_STONE_BRICKS);
-        registerToiletLava(AllToiletBlocks.TILE_TOILET.get(), "tile_block");
-
-        registerToiletLava(AllToiletBlocks.WHITE_CONCRETE_TOILET.get(), Blocks.WHITE_CONCRETE);
-        registerToiletLava(AllToiletBlocks.LIGHT_GRAY_CONCRETE_TOILET.get(), Blocks.LIGHT_GRAY_CONCRETE);
-        registerToiletLava(AllToiletBlocks.GRAY_CONCRETE_TOILET.get(), Blocks.GRAY_CONCRETE);
-        registerToiletLava(AllToiletBlocks.BLACK_CONCRETE_TOILET.get(), Blocks.BLACK_CONCRETE);
-        registerToiletLava(AllToiletBlocks.BROWN_CONCRETE_TOILET.get(), Blocks.BROWN_CONCRETE);
-        registerToiletLava(AllToiletBlocks.RED_CONCRETE_TOILET.get(), Blocks.RED_CONCRETE);
-        registerToiletLava(AllToiletBlocks.ORANGE_CONCRETE_TOILET.get(), Blocks.ORANGE_CONCRETE);
-        registerToiletLava(AllToiletBlocks.YELLOW_CONCRETE_TOILET.get(), Blocks.YELLOW_CONCRETE);
-        registerToiletLava(AllToiletBlocks.LIME_CONCRETE_TOILET.get(), Blocks.LIME_CONCRETE);
-        registerToiletLava(AllToiletBlocks.GREEN_CONCRETE_TOILET.get(), Blocks.GREEN_CONCRETE);
-        registerToiletLava(AllToiletBlocks.CYAN_CONCRETE_TOILET.get(), Blocks.CYAN_CONCRETE);
-        registerToiletLava(AllToiletBlocks.LIGHT_BLUE_CONCRETE_TOILET.get(), Blocks.LIGHT_BLUE_CONCRETE);
-        registerToiletLava(AllToiletBlocks.BLUE_CONCRETE_TOILET.get(), Blocks.BLUE_CONCRETE);
-        registerToiletLava(AllToiletBlocks.PURPLE_CONCRETE_TOILET.get(), Blocks.PURPLE_CONCRETE);
-        registerToiletLava(AllToiletBlocks.MAGENTA_CONCRETE_TOILET.get(), Blocks.MAGENTA_CONCRETE);
-        registerToiletLava(AllToiletBlocks.PINK_CONCRETE_TOILET.get(), Blocks.PINK_CONCRETE);
+        registerWoodToilet();
+        registerStoneToilet();
+        registerMetalToilet();
         registerToiletLava(AllToiletBlocks.RAINBOW_TOILET.get(), "rainbow_concrete");
 
         var flyNestModel = models().singleTexture("fly_nest", mcLoc("block/cube_all"), mcLoc("block/beehive_side"));
@@ -319,6 +291,124 @@ public class PSBlockStateProvider extends BlockStateProvider {
         });
 
         simpleBlockItem(block, model);
+    }
+
+    private <T extends Enum<T> & StringRepresentable> void registerVariantToilet(
+            Block toilet, EnumProperty<T> typeProperty, Map<T, ResourceLocation> textures, T defaultType, boolean hasLava) {
+        Map<T, ModelFile[]> variantModels = new LinkedHashMap<>();
+        for (var entry : textures.entrySet()) {
+            T type = entry.getKey();
+            ResourceLocation tex = entry.getValue();
+            String suffix = "_" + type.getSerializedName();
+            List<ModelFile> modelList = new ArrayList<>();
+            modelList.add(models().withExistingParent(getBlockKey(toilet) + suffix, modLoc("block/toilet")).texture("toilet", tex));
+            modelList.add(models().withExistingParent(getBlockKey(toilet) + suffix + "_n", modLoc("block/toilet_n")).texture("toilet", tex));
+            modelList.add(models().withExistingParent(getBlockKey(toilet) + suffix + "_s", modLoc("block/toilet_s")).texture("toilet", tex));
+            modelList.add(models().withExistingParent(getBlockKey(toilet) + suffix + "_ns", modLoc("block/toilet_ns")).texture("toilet", tex));
+            if (hasLava) {
+                modelList.add(models().withExistingParent(getBlockKey(toilet) + suffix + "_lava", modLoc("block/toilet_lava")).texture("toilet", tex));
+                modelList.add(models().withExistingParent(getBlockKey(toilet) + suffix + "_lava_n", modLoc("block/toilet_lava_n")).texture("toilet", tex));
+                modelList.add(models().withExistingParent(getBlockKey(toilet) + suffix + "_lava_s", modLoc("block/toilet_lava_s")).texture("toilet", tex));
+                modelList.add(models().withExistingParent(getBlockKey(toilet) + suffix + "_lava_ns", modLoc("block/toilet_lava_ns")).texture("toilet", tex));
+            }
+            variantModels.put(type, modelList.toArray(new ModelFile[0]));
+        }
+
+        ModelFile defaultModel = variantModels.get(defaultType)[0];
+
+        getVariantBuilder(toilet).forAllStates(state -> {
+            var facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
+            var connection = state.getValue(AbstractToiletBlock.CONNECTION);
+            T variantType = state.getValue(typeProperty);
+
+            var yRot = switch (facing) {
+                case EAST -> 90;
+                case SOUTH -> 180;
+                case WEST -> 270;
+                default -> 0;
+            };
+
+            ModelFile[] models = variantModels.get(variantType);
+            int offset = hasLava && state.getValue(ToiletLavaBlock.LAVA) ? 4 : 0;
+            ModelFile chosenModel = switch (connection) {
+                case DEFAULT -> models[offset];
+                case FRONT -> models[offset + 1];
+                case BACK -> models[offset + 2];
+                case BOTH -> models[offset + 3];
+            };
+
+            return ConfiguredModel.builder()
+                    .modelFile(chosenModel)
+                    .rotationY(yRot)
+                    .uvLock(true)
+                    .build();
+        });
+
+        itemModels().getBuilder(getBlockPath(toilet)).parent(defaultModel);
+    }
+
+    private void registerWoodToilet() {
+        Map<ToiletBlock.WoodType, ResourceLocation> textures = new LinkedHashMap<>();
+        textures.put(ToiletBlock.WoodType.OAK, mcLoc("block/oak_planks"));
+        textures.put(ToiletBlock.WoodType.SPRUCE, mcLoc("block/spruce_planks"));
+        textures.put(ToiletBlock.WoodType.BIRCH, mcLoc("block/birch_planks"));
+        textures.put(ToiletBlock.WoodType.JUNGLE, mcLoc("block/jungle_planks"));
+        textures.put(ToiletBlock.WoodType.ACACIA, mcLoc("block/acacia_planks"));
+        textures.put(ToiletBlock.WoodType.CHERRY, mcLoc("block/cherry_planks"));
+        textures.put(ToiletBlock.WoodType.DARK_OAK, mcLoc("block/dark_oak_planks"));
+        textures.put(ToiletBlock.WoodType.MANGROVE, mcLoc("block/mangrove_planks"));
+        textures.put(ToiletBlock.WoodType.BAMBOO, mcLoc("block/bamboo_planks"));
+        textures.put(ToiletBlock.WoodType.CRIMSON, mcLoc("block/crimson_planks"));
+        textures.put(ToiletBlock.WoodType.WARPED, mcLoc("block/warped_planks"));
+
+        registerVariantToilet(AllToiletBlocks.WOOD_TOILET.get(), ToiletBlock.WOOD_TYPE, textures, ToiletBlock.WoodType.OAK, false);
+    }
+
+    private void registerStoneToilet() {
+        Map<StoneToiletBlock.StoneType, ResourceLocation> textures = new LinkedHashMap<>();
+        textures.put(StoneToiletBlock.StoneType.STONE, mcLoc("block/stone"));
+        textures.put(StoneToiletBlock.StoneType.COBBLESTONE, mcLoc("block/cobblestone"));
+        textures.put(StoneToiletBlock.StoneType.MOSSY_COBBLESTONE, mcLoc("block/mossy_cobblestone"));
+        textures.put(StoneToiletBlock.StoneType.SMOOTH_STONE, mcLoc("block/smooth_stone"));
+        textures.put(StoneToiletBlock.StoneType.STONE_BRICK, mcLoc("block/stone_bricks"));
+        textures.put(StoneToiletBlock.StoneType.MOSSY_STONE_BRICK, mcLoc("block/mossy_stone_bricks"));
+        textures.put(StoneToiletBlock.StoneType.TILE, modLoc("block/tile_block"));
+        textures.put(StoneToiletBlock.StoneType.WHITE_CONCRETE, mcLoc("block/white_concrete"));
+        textures.put(StoneToiletBlock.StoneType.ORANGE_CONCRETE, mcLoc("block/orange_concrete"));
+        textures.put(StoneToiletBlock.StoneType.MAGENTA_CONCRETE, mcLoc("block/magenta_concrete"));
+        textures.put(StoneToiletBlock.StoneType.LIGHT_BLUE_CONCRETE, mcLoc("block/light_blue_concrete"));
+        textures.put(StoneToiletBlock.StoneType.YELLOW_CONCRETE, mcLoc("block/yellow_concrete"));
+        textures.put(StoneToiletBlock.StoneType.LIME_CONCRETE, mcLoc("block/lime_concrete"));
+        textures.put(StoneToiletBlock.StoneType.PINK_CONCRETE, mcLoc("block/pink_concrete"));
+        textures.put(StoneToiletBlock.StoneType.GRAY_CONCRETE, mcLoc("block/gray_concrete"));
+        textures.put(StoneToiletBlock.StoneType.LIGHT_GRAY_CONCRETE, mcLoc("block/light_gray_concrete"));
+        textures.put(StoneToiletBlock.StoneType.CYAN_CONCRETE, mcLoc("block/cyan_concrete"));
+        textures.put(StoneToiletBlock.StoneType.PURPLE_CONCRETE, mcLoc("block/purple_concrete"));
+        textures.put(StoneToiletBlock.StoneType.BLUE_CONCRETE, mcLoc("block/blue_concrete"));
+        textures.put(StoneToiletBlock.StoneType.BROWN_CONCRETE, mcLoc("block/brown_concrete"));
+        textures.put(StoneToiletBlock.StoneType.GREEN_CONCRETE, mcLoc("block/green_concrete"));
+        textures.put(StoneToiletBlock.StoneType.RED_CONCRETE, mcLoc("block/red_concrete"));
+        textures.put(StoneToiletBlock.StoneType.BLACK_CONCRETE, mcLoc("block/black_concrete"));
+
+        registerVariantToilet(AllToiletBlocks.STONE_TOILET.get(), StoneToiletBlock.STONE_TYPE, textures, StoneToiletBlock.StoneType.STONE, true);
+    }
+
+    private void registerMetalToilet() {
+        Map<MetalToiletBlock.MetalType, ResourceLocation> textures = new LinkedHashMap<>();
+        textures.put(MetalToiletBlock.MetalType.IRON, mcLoc("block/iron_block"));
+        textures.put(MetalToiletBlock.MetalType.GOLD, mcLoc("block/gold_block"));
+        textures.put(MetalToiletBlock.MetalType.COPPER, mcLoc("block/copper_block"));
+        textures.put(MetalToiletBlock.MetalType.NETHERITE, mcLoc("block/netherite_block"));
+        textures.put(MetalToiletBlock.MetalType.RAW_IRON, mcLoc("block/raw_iron_block"));
+        textures.put(MetalToiletBlock.MetalType.RAW_GOLD, mcLoc("block/raw_gold_block"));
+        textures.put(MetalToiletBlock.MetalType.RAW_COPPER, mcLoc("block/raw_copper_block"));
+        textures.put(MetalToiletBlock.MetalType.DIAMOND, mcLoc("block/diamond_block"));
+        textures.put(MetalToiletBlock.MetalType.EMERALD, mcLoc("block/emerald_block"));
+        textures.put(MetalToiletBlock.MetalType.LAPIS, mcLoc("block/lapis_block"));
+        textures.put(MetalToiletBlock.MetalType.REDSTONE, mcLoc("block/redstone_block"));
+        textures.put(MetalToiletBlock.MetalType.QUARTZ, mcLoc("block/quartz_block_bottom"));
+
+        registerVariantToilet(AllToiletBlocks.METAL_TOILET.get(), MetalToiletBlock.METAL_TYPE, textures, MetalToiletBlock.MetalType.IRON, true);
     }
 
     private void registerToilet(Block toilet, Block textureBlock) {

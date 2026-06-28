@@ -507,47 +507,15 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.TILE_BLOCK_WALL, PBlocks.TILE_BLOCK);
 
         // 厕所配方
-        toiletRecipes(recipeOutput, AllToiletBlocks.OAK_TOILET, Blocks.OAK_PLANKS);
-        toiletRecipes(recipeOutput, AllToiletBlocks.SPRUCE_TOILET, Blocks.SPRUCE_PLANKS);
-        toiletRecipes(recipeOutput, AllToiletBlocks.BIRCH_TOILET, Blocks.BIRCH_PLANKS);
-        toiletRecipes(recipeOutput, AllToiletBlocks.JUNGLE_TOILET, Blocks.JUNGLE_PLANKS);
-        toiletRecipes(recipeOutput, AllToiletBlocks.ACACIA_TOILET, Blocks.ACACIA_PLANKS);
-        toiletRecipes(recipeOutput, AllToiletBlocks.DARK_OAK_TOILET, Blocks.DARK_OAK_PLANKS);
-        toiletRecipes(recipeOutput, AllToiletBlocks.MANGROVE_TOILET, Blocks.MANGROVE_PLANKS);
-        toiletRecipes(recipeOutput, AllToiletBlocks.CRIMSON_TOILET, Blocks.CRIMSON_PLANKS);
-        toiletRecipes(recipeOutput, AllToiletBlocks.BAMBOO_TOILET, Blocks.BAMBOO_PLANKS);
-        toiletRecipes(recipeOutput, AllToiletBlocks.CHERRY_TOILET, Blocks.CHERRY_PLANKS);
-        toiletRecipes(recipeOutput, AllToiletBlocks.WARPED_TOILET, Blocks.WARPED_PLANKS);
-
+        toiletRecipes(recipeOutput, AllToiletBlocks.WOOD_TOILET, Blocks.OAK_PLANKS);
         toiletRecipes(recipeOutput, AllToiletBlocks.STONE_TOILET, Blocks.STONE);
-        toiletRecipes(recipeOutput, AllToiletBlocks.COBBLESTONE_TOILET, Blocks.COBBLESTONE);
-        toiletRecipes(recipeOutput, AllToiletBlocks.MOSSY_COBBLESTONE_TOILET, Blocks.MOSSY_COBBLESTONE);
-        toiletRecipes(recipeOutput, AllToiletBlocks.SMOOTH_STONE_TOILET, Blocks.SMOOTH_STONE);
-        toiletRecipes(recipeOutput, AllToiletBlocks.STONE_BRICK_TOILET, Blocks.STONE_BRICKS);
-        toiletRecipes(recipeOutput, AllToiletBlocks.MOSSY_STONE_BRICK_TOILET, Blocks.MOSSY_STONE_BRICKS);
-        toiletRecipes(recipeOutput, AllToiletBlocks.TILE_TOILET, PBlocks.TILE_BLOCK);
+        toiletRecipes(recipeOutput, AllToiletBlocks.METAL_TOILET, Blocks.IRON_BLOCK);
 
-        toiletRecipes(recipeOutput, AllToiletBlocks.WHITE_CONCRETE_TOILET, Blocks.WHITE_CONCRETE);
-        toiletRecipes(recipeOutput, AllToiletBlocks.LIGHT_GRAY_CONCRETE_TOILET, Blocks.LIGHT_GRAY_CONCRETE);
-        toiletRecipes(recipeOutput, AllToiletBlocks.GRAY_CONCRETE_TOILET, Blocks.GRAY_CONCRETE);
-        toiletRecipes(recipeOutput, AllToiletBlocks.BLACK_CONCRETE_TOILET, Blocks.BLACK_CONCRETE);
-        toiletRecipes(recipeOutput, AllToiletBlocks.BROWN_CONCRETE_TOILET, Blocks.BROWN_CONCRETE);
-        toiletRecipes(recipeOutput, AllToiletBlocks.RED_CONCRETE_TOILET, Blocks.RED_CONCRETE);
-        toiletRecipes(recipeOutput, AllToiletBlocks.ORANGE_CONCRETE_TOILET, Blocks.ORANGE_CONCRETE);
-        toiletRecipes(recipeOutput, AllToiletBlocks.YELLOW_CONCRETE_TOILET, Blocks.YELLOW_CONCRETE);
-        toiletRecipes(recipeOutput, AllToiletBlocks.LIME_CONCRETE_TOILET, Blocks.LIME_CONCRETE);
-        toiletRecipes(recipeOutput, AllToiletBlocks.GREEN_CONCRETE_TOILET, Blocks.GREEN_CONCRETE);
-        toiletRecipes(recipeOutput, AllToiletBlocks.CYAN_CONCRETE_TOILET, Blocks.CYAN_CONCRETE);
-        toiletRecipes(recipeOutput, AllToiletBlocks.LIGHT_BLUE_CONCRETE_TOILET, Blocks.LIGHT_BLUE_CONCRETE);
-        toiletRecipes(recipeOutput, AllToiletBlocks.BLUE_CONCRETE_TOILET, Blocks.BLUE_CONCRETE);
-        toiletRecipes(recipeOutput, AllToiletBlocks.PURPLE_CONCRETE_TOILET, Blocks.PURPLE_CONCRETE);
-        toiletRecipes(recipeOutput, AllToiletBlocks.MAGENTA_CONCRETE_TOILET, Blocks.MAGENTA_CONCRETE);
-        toiletRecipes(recipeOutput, AllToiletBlocks.PINK_CONCRETE_TOILET, Blocks.PINK_CONCRETE);
-
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, AllToiletBlocks.RAINBOW_TOILET, 3)
-                .requires(AllToiletBlocks.RED_CONCRETE_TOILET)
-                .requires(AllToiletBlocks.GREEN_CONCRETE_TOILET)
-                .requires(AllToiletBlocks.BLUE_CONCRETE_TOILET)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, AllToiletBlocks.RAINBOW_TOILET)
+                .requires(Blocks.RED_CONCRETE)
+                .requires(Blocks.GREEN_CONCRETE)
+                .requires(Blocks.BLUE_CONCRETE)
+                .requires(PItems.POOP.get())
                 .unlockedBy(getItemName(PItems.POOP), has(PItems.POOP.get()))
                 .save(recipeOutput);
 
