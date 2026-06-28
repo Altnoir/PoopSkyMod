@@ -40,6 +40,7 @@
   "tooltip.poopsky.poop_ball.info_2": "500KG Poop",
 
   "item.poopsky.poolime_spawn_egg": "Poolime Spawn Egg",
+  "item.poopsky.fly_spawn_egg": "Fly Spawn Egg",
   "item.poopsky.music_disc_lawrence": "Music Disc",
   "item.poopsky.music_disc_lawrence.desc": "Ryuichi Sakamoto - Merry Christmas Mr. Lawrence",
   "item.poopsky.music_disc_light_dance": "Music Disc",
@@ -361,7 +362,6 @@
   "container.poopsky.breeding_box": "Breeding Box",
   "tooltip.poopsky.fly_type": "Type",
 
-  "item.poopsky.fly_spawn_egg": "Fly Spawn Egg",
   "jei.category.poopsky.fly_nest": "Fly Nest",
   "jei.category.poopsky.breeding_box": "Breeding Box",
   "jei.poopsky.breeding_box_chance": "Mutation Chance: %.0f%%",

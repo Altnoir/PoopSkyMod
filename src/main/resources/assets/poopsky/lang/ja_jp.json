@@ -365,8 +365,6 @@
   "container.poopsky.breeding_box": "繁殖箱",
   "tooltip.poopsky.fly_type": "種類",
 
-  "item.poopsky.fly_spawn_egg": "ハエのスポーンエッグ",
-
   "poopsky.configuration.title": "%s 設定",
   "poopsky.configuration.lavaFluid": "地下溶岩湖を無効化",
   "poopsky.configuration.lavaFluid.tooltip": "PoopSkyワールド生成時に地下溶岩湖を無効にする",
