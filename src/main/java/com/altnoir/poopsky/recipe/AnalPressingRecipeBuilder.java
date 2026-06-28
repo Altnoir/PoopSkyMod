@@ -7,38 +7,50 @@ import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public final class BreedingBoxRecipeBuilder implements RecipeBuilder {
-    private static final String RECIPE_TYPE = PRecipes.BREEDING_BOX_FOLDER;
+public final class AnalPressingRecipeBuilder implements RecipeBuilder {
+    private static final String RECIPE_TYPE = PRecipes.ANAL_PRESSING_FOLDER;
 
-    private final String parent1;
-    private final String parent2;
-    private final String result;
-    private float chance = 0.2f;
+    private final Ingredient input;
+    private final Block output;
+    private Block replaceTarget = Blocks.STONE;
+    private int radius = 1;
     private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
 
-    public BreedingBoxRecipeBuilder(String parent1, String parent2, String result) {
-        this.parent1 = parent1;
-        this.parent2 = parent2;
-        this.result = result;
+    public AnalPressingRecipeBuilder(Ingredient input, Block output) {
+        this.input = input;
+        this.output = output;
     }
 
-    public static BreedingBoxRecipeBuilder breedingBox(String parent1, String parent2, String result) {
-        return new BreedingBoxRecipeBuilder(parent1, parent2, result);
+    public static AnalPressingRecipeBuilder analPressing(ItemLike input, Block output) {
+        return new AnalPressingRecipeBuilder(Ingredient.of(input), output);
     }
 
-    public BreedingBoxRecipeBuilder chance(float chance) {
-        this.chance = chance;
+    public static AnalPressingRecipeBuilder analPressing(Ingredient input, Block output) {
+        return new AnalPressingRecipeBuilder(input, output);
+    }
+
+    public AnalPressingRecipeBuilder replaceTarget(Block replaceTarget) {
+        this.replaceTarget = replaceTarget;
+        return this;
+    }
+
+    public AnalPressingRecipeBuilder radius(int radius) {
+        this.radius = radius;
         return this;
     }
 
@@ -55,7 +67,7 @@ public final class BreedingBoxRecipeBuilder implements RecipeBuilder {
 
     @Override
     public @NotNull Item getResult() {
-        return ItemStack.EMPTY.getItem();
+        return output.asItem();
     }
 
     public void save(@NotNull RecipeOutput recipeOutput, @NotNull String id) {
@@ -66,14 +78,22 @@ public final class BreedingBoxRecipeBuilder implements RecipeBuilder {
     @Override
     public void save(@NotNull RecipeOutput recipeOutput, @NotNull ResourceLocation id) {
         ensureValid(id);
+        ResourceLocation advancementId = PoopSky.loc(id.getPath());
+
         Advancement.Builder advancementBuilder = recipeOutput.advancement()
                 .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
                 .rewards(AdvancementRewards.Builder.recipe(id))
                 .requirements(AdvancementRequirements.Strategy.OR);
+
         criteria.forEach(advancementBuilder::addCriterion);
 
-        BreedingBoxRecipe recipe = new BreedingBoxRecipe(parent1, parent2, result, chance);
-        recipeOutput.accept(id, recipe, advancementBuilder.build(id.withPrefix("recipes/")));
+        AnalPressingRecipe recipe = new AnalPressingRecipe(input, output, replaceTarget, radius);
+        recipeOutput.accept(id, recipe, advancementBuilder.build(advancementId.withPrefix("recipes/")));
+    }
+
+    public static ResourceLocation getDefaultRecipeId(ItemLike input) {
+        ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(input.asItem());
+        return PoopSky.loc(RECIPE_TYPE + "/" + itemId.getPath());
     }
 
     private void ensureValid(ResourceLocation id) {

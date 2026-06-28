@@ -5,11 +5,7 @@ import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PItems;
-import com.altnoir.poopsky.init.PRecipes;
-import com.altnoir.poopsky.recipe.BreedingBoxRecipeBuilder;
-import com.altnoir.poopsky.recipe.FlyNestRecipeBuilder;
-import com.altnoir.poopsky.recipe.POPExplosionRecipeBuilder;
-import com.altnoir.poopsky.recipe.SieveRecipeBuilder;
+import com.altnoir.poopsky.recipe.*;
 import com.simibubi.create.AllItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -19,6 +15,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
@@ -129,7 +126,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy(getItemName(PItems.MAGGOTS_SEEDS), has(PItems.MAGGOTS_SEEDS))
                 .save(recipeOutput);
 
-        // 杂
+        // 杂项
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PItems.TOILET_PLUG_WAND)
                 .requires(PItems.TOILET_PLUG.get())
                 .requires(PItems.POOP.get())
@@ -187,7 +184,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('P', PItems.TOILET_PLUG)
                 .unlockedBy(getItemName(PItems.OMINOUS_FILTHY_INGOT), has(PItems.OMINOUS_FILTHY_INGOT))
                 .save(recipeOutput);
-        //盔甲
+        // 盔甲
         omenSmithing(recipeOutput, Items.GOLDEN_CHESTPLATE, RecipeCategory.COMBAT, PItems.OMEN_CHESTPLATE.get());
         omenSmithing(recipeOutput, Items.GOLDEN_LEGGINGS, RecipeCategory.COMBAT, PItems.OMEN_LEGGINGS.get());
         omenSmithing(recipeOutput, Items.GOLDEN_HELMET, RecipeCategory.COMBAT, PItems.OMEN_HELMET.get());
@@ -361,7 +358,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         offer2x2CompactingRecipe(recipeOutput, PBlocks.POOLIME_BLOCK.get(), PItems.POOP_BALL.get());
         offerCompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOLIME_POOP_BLOCK.get(), PBlocks.POOP_BLOCK.get());
 
-        //原版物品配方
+        // 原版物品配方
         offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, Blocks.CRAFTING_TABLE, PItems.SPALL, 1);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.GUNPOWDER)
                 .requires(PItems.KING_OF_DRAGON_FRUIT)
@@ -437,7 +434,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         //create1x2ShapelessFrom(recipeOutput, Blocks.TUFF, Blocks.ANDESITE, PSItems.SPALL);
         //create1x2ShapelessFrom(recipeOutput, Blocks.CALCITE, Blocks.DIORITE, PSItems.SPALL);
 
-        //切石配方
+        // 切石配方
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.STOOL, PBlocks.DRIED_POOP_BLOCK, 2);
 
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_PIECE, PBlocks.POOP_BLOCK, 8);
@@ -509,7 +506,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.TILE_BLOCK_VERTICAL_SLAB, PBlocks.TILE_BLOCK, 2);
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.TILE_BLOCK_WALL, PBlocks.TILE_BLOCK);
 
-        //厕所配方
+        // 厕所配方
         toiletRecipes(recipeOutput, AllToiletBlocks.OAK_TOILET, Blocks.OAK_PLANKS);
         toiletRecipes(recipeOutput, AllToiletBlocks.SPRUCE_TOILET, Blocks.SPRUCE_PLANKS);
         toiletRecipes(recipeOutput, AllToiletBlocks.BIRCH_TOILET, Blocks.BIRCH_PLANKS);
@@ -556,27 +553,90 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
 
         buildSieveRecipes(recipeOutput);
         buildpopExplosionRecipes(recipeOutput);
+        buildAnalPressingRecipes(recipeOutput);
         buildBreedingBoxRecipes(recipeOutput);
         buildFlyNestRecipes(recipeOutput);
     }
 
     private void buildpopExplosionRecipes(RecipeOutput recipeOutput) {
-        popExplosionRecipes(recipeOutput, Blocks.COBBLESTONE, Blocks.GRAVEL);
-        popExplosionRecipes(recipeOutput, Blocks.GRAVEL, Blocks.SAND);
-        popExplosionRecipes(recipeOutput, Blocks.COAL_BLOCK, Items.DIAMOND, 6);
+        record PopExplosionEntry(ItemLike input, ItemLike output, int radius) {
+            static PopExplosionEntry of(ItemLike input, ItemLike output) {
+                return new PopExplosionEntry(input, output, 0);
+            }
+
+            static PopExplosionEntry of(ItemLike input, ItemLike output, int radius) {
+                return new PopExplosionEntry(input, output, radius);
+            }
+        }
+        List<PopExplosionEntry> recipes = List.of(
+                PopExplosionEntry.of(Blocks.COBBLESTONE, Blocks.GRAVEL),
+                PopExplosionEntry.of(Blocks.GRAVEL, Blocks.SAND),
+                PopExplosionEntry.of(Blocks.COAL_BLOCK, Items.DIAMOND, 6)
+        );
+
+        for (PopExplosionEntry entry : recipes) {
+            var builder = POPExplosionRecipeBuilder.transform(entry.input(), entry.output());
+            if (entry.radius() > 0) {
+                builder.withRadius(entry.radius());
+            }
+            builder.unlockedBy(getItemName(entry.input()), has(entry.input()))
+                    .save(recipeOutput, getModConversionRecipeName(entry.input(), entry.output()));
+        }
     }
 
-    private void popExplosionRecipes(RecipeOutput recipeOutput, ItemLike input, ItemLike output) {
-        POPExplosionRecipeBuilder.transform(input, output)
-                .unlockedBy(getItemName(input), has(input))
-                .save(recipeOutput, getItemName(input) + "_to_" + getItemName(output));
-    }
+    private void buildAnalPressingRecipes(RecipeOutput recipeOutput) {
+        record AnalPressingEntry(Block input, Block output, Block replaceTarget) {
+            static AnalPressingEntry of(Block input, Block output) {
+                return new AnalPressingEntry(input, output, null);
+            }
 
-    private void popExplosionRecipes(RecipeOutput recipeOutput, ItemLike input, ItemLike output, int radius) {
-        POPExplosionRecipeBuilder.transform(input, output)
-                .withRadius(radius)
-                .unlockedBy(getItemName(input), has(input))
-                .save(recipeOutput, getItemName(input) + "_to_" + getItemName(output));
+            static AnalPressingEntry ofDeepslate(Block input, Block output) {
+                return new AnalPressingEntry(input, output, Blocks.DEEPSLATE);
+            }
+
+            static AnalPressingEntry ofNetherrack(Block input, Block output) {
+                return new AnalPressingEntry(input, output, Blocks.NETHERRACK);
+            }
+        }
+        List<AnalPressingEntry> recipes = List.of(
+                AnalPressingEntry.of(Blocks.RAW_IRON_BLOCK, Blocks.IRON_ORE),
+                AnalPressingEntry.of(Blocks.RAW_COPPER_BLOCK, Blocks.COPPER_ORE),
+                AnalPressingEntry.of(Blocks.RAW_GOLD_BLOCK, Blocks.GOLD_ORE),
+                AnalPressingEntry.of(Blocks.IRON_BLOCK, Blocks.IRON_ORE),
+                AnalPressingEntry.of(Blocks.COPPER_BLOCK, Blocks.COPPER_ORE),
+                AnalPressingEntry.of(Blocks.GOLD_BLOCK, Blocks.GOLD_ORE),
+                AnalPressingEntry.of(Blocks.COAL_BLOCK, Blocks.COAL_ORE),
+                AnalPressingEntry.of(Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE),
+                AnalPressingEntry.of(Blocks.LAPIS_BLOCK, Blocks.LAPIS_ORE),
+                AnalPressingEntry.of(Blocks.REDSTONE_BLOCK, Blocks.REDSTONE_ORE),
+                AnalPressingEntry.of(Blocks.EMERALD_BLOCK, Blocks.EMERALD_ORE),
+
+                AnalPressingEntry.ofDeepslate(Blocks.RAW_IRON_BLOCK, Blocks.DEEPSLATE_IRON_ORE),
+                AnalPressingEntry.ofDeepslate(Blocks.RAW_COPPER_BLOCK, Blocks.DEEPSLATE_COPPER_ORE),
+                AnalPressingEntry.ofDeepslate(Blocks.RAW_GOLD_BLOCK, Blocks.DEEPSLATE_GOLD_ORE),
+                AnalPressingEntry.ofDeepslate(Blocks.IRON_BLOCK, Blocks.DEEPSLATE_IRON_ORE),
+                AnalPressingEntry.ofDeepslate(Blocks.COPPER_BLOCK, Blocks.DEEPSLATE_COPPER_ORE),
+                AnalPressingEntry.ofDeepslate(Blocks.GOLD_BLOCK, Blocks.DEEPSLATE_GOLD_ORE),
+                AnalPressingEntry.ofDeepslate(Blocks.COAL_BLOCK, Blocks.DEEPSLATE_COAL_ORE),
+                AnalPressingEntry.ofDeepslate(Blocks.DIAMOND_BLOCK, Blocks.DEEPSLATE_DIAMOND_ORE),
+                AnalPressingEntry.ofDeepslate(Blocks.LAPIS_BLOCK, Blocks.DEEPSLATE_LAPIS_ORE),
+                AnalPressingEntry.ofDeepslate(Blocks.REDSTONE_BLOCK, Blocks.DEEPSLATE_REDSTONE_ORE),
+                AnalPressingEntry.ofDeepslate(Blocks.EMERALD_BLOCK, Blocks.DEEPSLATE_EMERALD_ORE),
+
+                AnalPressingEntry.ofNetherrack(Blocks.RAW_GOLD_BLOCK, Blocks.NETHER_GOLD_ORE),
+                AnalPressingEntry.ofNetherrack(Blocks.GOLD_BLOCK, Blocks.NETHER_GOLD_ORE),
+                AnalPressingEntry.ofNetherrack(Blocks.QUARTZ_BLOCK, Blocks.NETHER_QUARTZ_ORE),
+                AnalPressingEntry.ofNetherrack(Blocks.NETHERITE_BLOCK, Blocks.ANCIENT_DEBRIS)
+        );
+
+        for (AnalPressingEntry entry : recipes) {
+            var builder = AnalPressingRecipeBuilder.analPressing(entry.input(), entry.output());
+            if (entry.replaceTarget() != null) {
+                builder.replaceTarget(entry.replaceTarget());
+            }
+            builder.unlockedBy(getItemName(entry.output()), has(entry.input()))
+                    .save(recipeOutput, getModConversionRecipeName(entry.input(), entry.output()));
+        }
     }
 
     private void buildSieveRecipes(RecipeOutput recipeOutput) {
@@ -659,25 +719,28 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
     }
 
     private void buildBreedingBoxRecipes(RecipeOutput recipeOutput) {
-        record MutationRecipe(String p1, String p2, String result, float chance) {
+        record MutationRecipe(String p1, String p2, String result) {
+            static MutationRecipe of(String p1, String p2, String result) {
+                return new MutationRecipe(p1, p2, result);
+            }
         }
         List<MutationRecipe> breedingRecipes = List.of(
-                new MutationRecipe("green", "blue", "cyan", 0.2f),
-                new MutationRecipe("purple", "pink", "magenta", 0.2f),
-                new MutationRecipe("red", "blue", "purple", 0.2f),
-                new MutationRecipe("red", "yellow", "orange", 0.2f),
-                new MutationRecipe("white", "black", "gray", 0.2f),
-                new MutationRecipe("white", "blue", "light_blue", 0.2f),
-                new MutationRecipe("white", "gray", "light_gray", 0.2f),
-                new MutationRecipe("white", "green", "lime", 0.2f),
-                new MutationRecipe("white", "red", "pink", 0.2f)
+                MutationRecipe.of("green", "blue", "cyan"),
+                MutationRecipe.of("purple", "pink", "magenta"),
+                MutationRecipe.of("red", "blue", "purple"),
+                MutationRecipe.of("red", "yellow", "orange"),
+                MutationRecipe.of("white", "black", "gray"),
+                MutationRecipe.of("white", "blue", "light_blue"),
+                MutationRecipe.of("white", "gray", "light_gray"),
+                MutationRecipe.of("white", "green", "lime"),
+                MutationRecipe.of("white", "red", "pink")
         );
 
         for (MutationRecipe recipe : breedingRecipes) {
             String id = recipe.p1 + "_plus_" + recipe.p2;
-            BreedingBoxRecipeBuilder.breedingBox(recipe.p1, recipe.p2, recipe.result, recipe.chance)
-                    .unlockedBy(getHasName(PBlocks.FLY_NEST), has(PBlocks.FLY_NEST))
-                    .save(recipeOutput, PoopSky.loc(PRecipes.BREEDING_BOX_FOLDER + "/" + id));
+            var builder = BreedingBoxRecipeBuilder.breedingBox(recipe.p1, recipe.p2, recipe.result);
+            builder.unlockedBy(getHasName(PBlocks.FLY_NEST), has(PBlocks.FLY_NEST))
+                    .save(recipeOutput, id);
         }
     }
 
@@ -703,7 +766,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
 
         flyNestMap.forEach((typeId, result) -> FlyNestRecipeBuilder.flyNest(typeId, result)
                 .unlockedBy(getHasName(PBlocks.FLY_NEST), has(PBlocks.FLY_NEST))
-                .save(recipeOutput, PoopSky.loc(PRecipes.FLY_NEST_FOLDER + "/" + typeId)));
+                .save(recipeOutput, typeId));
     }
 
     private void toiletRecipes(RecipeOutput recipeOutput, ItemLike toilet, ItemLike block) {
@@ -859,5 +922,9 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
 
     protected static String getConversionRecipeName(ItemLike result, ItemLike input) {
         return PoopSky.MOD_ID + ":" + getItemName(result) + "_from_" + getItemName(input);
+    }
+
+    protected static String getModConversionRecipeName(ItemLike result, ItemLike input) {
+        return getItemName(input) + "_to_" + getItemName(result);
     }
 }

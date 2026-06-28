@@ -447,3 +447,17 @@ public class XxxRecipeCategory implements IRecipeCategory<XxxJeiRecipe> {
 - 左右移动的输入值：按左 = 负值，按右 = 正值
 - 朝向插值系数影响操控手感：`0.5f` 有明显漂移感，`0.9f` 几乎即时跟随，`1.0f` 完全同步
 - 速度阻尼（DAMPING）过高也会导致转向时漂移感
+### 18. 文件编码规范
+- 所有 Java 源文件必须使用 **无 BOM 的 UTF-8** 编码
+- Java 编译器不识别 UTF-8 BOM (`\ufeff` / `EF BB BF`)，会导致编译错误 `非法字符: '\ufeff'`
+- 创建或写入文件时，使用 `[System.IO.File]::WriteAllText(path, content, [System.Text.UTF8Encoding]::new(False))` 而非 `Out-File -Encoding utf8`（后者会自动添加 BOM）
+- 如果文件已有 BOM，用以下方式移除：
+  ```powershell
+  $bytes = [System.IO.File]::ReadAllBytes($file)
+  if ($bytes[0] -eq 0xEF -and $bytes[1] -eq 0xBB -and $bytes[2] -eq 0xBF) {
+      $newBytes = New-Object byte[] ($bytes.Length - 3)
+      [Array]::Copy($bytes, 3, $newBytes, 0, $bytes.Length - 3)
+      [System.IO.File]::WriteAllBytes($file, $newBytes)
+  }
+  ```
+- JSON 资源文件（lang、models 等）同样必须使用无 BOM 的 UTF-8

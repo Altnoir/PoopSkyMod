@@ -41,13 +41,15 @@ public class PSJEIPlugin implements IModPlugin {
     public void registerCategories(IRecipeCategoryRegistration registration) {
         var helper = registration.getJeiHelpers().getGuiHelper();
         var arrow = helper.createDrawable(PS_JEI_TEXTURE, 0, 18, 22, 15);
+        var plus = helper.createDrawable(PS_JEI_TEXTURE, 22, 18, 13, 13);
 
         registration.addRecipeCategories(
                 new CompooperRecipeCategory(registration.getJeiHelpers(), arrow),
                 new SieveRecipeCategory(registration.getJeiHelpers(), arrow),
                 new FlyNestRecipeCategory(registration.getJeiHelpers(), arrow),
                 new BreedingBoxRecipeCategory(registration.getJeiHelpers(), arrow),
-                new POPExplosionRecipeCategory(registration.getJeiHelpers(), arrow));
+                new POPExplosionRecipeCategory(registration.getJeiHelpers(), arrow),
+                new AnalPressingRecipeCategory(registration.getJeiHelpers(), arrow, plus));
 
         if (PSMods.CREATE.isLoaded()) {
             createCategories.clear();
@@ -77,8 +79,9 @@ public class PSJEIPlugin implements IModPlugin {
         Level level = Minecraft.getInstance().level;
         RecipeManager recipeManager = level.getRecipeManager();
 
-        registration.addRecipes(SieveRecipeCategory.TYPE, level.getRecipeManager().getAllRecipesFor(PRecipes.SIEVE_TYPE.get()));
-        registration.addRecipes(POPExplosionRecipeCategory.TYPE, level.getRecipeManager().getAllRecipesFor(PRecipes.EXPLOSION_TRANSFORM_TYPE.get()));
+        registration.addRecipes(SieveRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PRecipes.SIEVE_TYPE.get()));
+        registration.addRecipes(POPExplosionRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PRecipes.EXPLOSION_TRANSFORM_TYPE.get()));
+        registration.addRecipes(AnalPressingRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PRecipes.ANAL_PRESSING_TYPE.get()));
         registration.addRecipes(FlyNestRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PRecipes.FLY_NEST_TYPE.get()));
         registration.addRecipes(BreedingBoxRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PRecipes.BREEDING_BOX_TYPE.get()));
 
@@ -94,6 +97,8 @@ public class PSJEIPlugin implements IModPlugin {
         registration.addRecipeCatalyst(new ItemStack(PBlocks.FLY_NEST.get()), FlyNestRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(PBlocks.BREEDING_BOX.get()), BreedingBoxRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(PBlocks.POOP_TNT.get()), POPExplosionRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(PItems.KING_OF_DRAGON_FRUIT.get()), AnalPressingRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(PItems.DRAGON_BREATH_CHILI.get()), AnalPressingRecipeCategory.TYPE);
 
         if (PSMods.CREATE.isLoaded()) {
             createCategories.forEach(category -> category.registerCatalysts(registration));

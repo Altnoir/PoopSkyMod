@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "coal_block": {
+    "deepslate_gold_ore": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:coal_block"
+            "items": "minecraft:gold_block"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "poopsky:pop_explosion/coal_block_to_diamond"
+        "recipe": "poopsky:anal_pressing/deepslate_gold_ore_to_gold_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "coal_block"
+      "deepslate_gold_ore"
     ]
   ],
   "rewards": {
     "recipes": [
-      "poopsky:pop_explosion/coal_block_to_diamond"
+      "poopsky:anal_pressing/deepslate_gold_ore_to_gold_block"
     ]
   }
 }

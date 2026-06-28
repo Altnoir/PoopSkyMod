@@ -1,0 +1,8 @@
+{
+  "type": "poopsky:anal_pressing",
+  "input": {
+    "item": "minecraft:netherite_block"
+  },
+  "output": "minecraft:ancient_debris",
+  "replace_target": "minecraft:netherrack"
+}

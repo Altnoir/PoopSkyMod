@@ -1,14 +1,16 @@
 package com.altnoir.poopsky.datagen.create;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.compat.PSMods;
+import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PItems;
 import com.simibubi.create.api.data.recipe.WashingRecipeGen;
+import net.createmod.catnip.registry.RegisteredObjectsHelper;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
@@ -31,6 +33,9 @@ public class PWashingRecipeGen extends WashingRecipeGen implements IConditionBui
     }
 
     private GeneratedRecipe convert(ItemLike input, ItemLike result) {
-        return create(() -> input, b -> b.output(result));
+        return create(asResource(RegisteredObjectsHelper.getKeyOrThrow(result.asItem())
+                        .getPath()),
+                p -> p.withItemIngredients(Ingredient.of(input))
+                        .output(result));
     }
 }

@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "cobblestone": {
+    "emerald_ore": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:cobblestone"
+            "items": "minecraft:emerald_block"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "poopsky:pop_explosion/cobblestone_to_gravel"
+        "recipe": "poopsky:anal_pressing/emerald_ore_to_emerald_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "cobblestone"
+      "emerald_ore"
     ]
   ],
   "rewards": {
     "recipes": [
-      "poopsky:pop_explosion/cobblestone_to_gravel"
+      "poopsky:anal_pressing/emerald_ore_to_emerald_block"
     ]
   }
 }

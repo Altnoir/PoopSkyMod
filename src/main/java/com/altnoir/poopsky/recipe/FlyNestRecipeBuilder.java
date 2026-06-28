@@ -1,5 +1,7 @@
 package com.altnoir.poopsky.recipe;
 
+import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.init.PRecipes;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
@@ -18,6 +20,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public final class FlyNestRecipeBuilder implements RecipeBuilder {
+    private static final String RECIPE_TYPE = PRecipes.FLY_NEST_FOLDER;
+
     private final String flyTypeId;
     private final ItemStack result;
     private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
@@ -49,6 +53,11 @@ public final class FlyNestRecipeBuilder implements RecipeBuilder {
     @Override
     public @NotNull Item getResult() {
         return result.getItem();
+    }
+
+    public void save(@NotNull RecipeOutput recipeOutput, @NotNull String id) {
+        ResourceLocation recipeId = PoopSky.loc(RECIPE_TYPE + "/" + id);
+        save(recipeOutput, recipeId);
     }
 
     @Override

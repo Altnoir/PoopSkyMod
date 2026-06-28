@@ -1,10 +1,7 @@
 package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.recipe.BreedingBoxRecipe;
-import com.altnoir.poopsky.recipe.FlyNestRecipe;
-import com.altnoir.poopsky.recipe.POPExplosionRecipe;
-import com.altnoir.poopsky.recipe.SieveRecipe;
+import com.altnoir.poopsky.recipe.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -17,6 +14,7 @@ public class PRecipes {
     public static final String FLY_NEST_FOLDER = "fly_nest";
     public static final String BREEDING_BOX_FOLDER = "breeding_box";
     public static final String POP_EXPLOSION_RECIPE_FOLDER = "pop_explosion";
+    public static final String ANAL_PRESSING_FOLDER = "anal_pressing";
 
     public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(BuiltInRegistries.RECIPE_SERIALIZER, PoopSky.MOD_ID);
     public static final DeferredRegister<RecipeType<?>> TYPES = DeferredRegister.create(BuiltInRegistries.RECIPE_TYPE, PoopSky.MOD_ID);
@@ -28,7 +26,6 @@ public class PRecipes {
             .register("sieve", () ->
                     RecipeType.simple(PoopSky.loc("sieve")));
 
-    // ——— 苍蝇窝配方 ———
     public static final DeferredHolder<RecipeSerializer<?>, FlyNestRecipe.Serializer> FLY_NEST_SERIALIZER = SERIALIZERS
             .register("fly_nest", FlyNestRecipe.Serializer::new);
 
@@ -36,7 +33,6 @@ public class PRecipes {
             .register("fly_nest", () ->
                     RecipeType.simple(PoopSky.loc("fly_nest")));
 
-    // ——— 繁育箱配方 ———
     public static final DeferredHolder<RecipeSerializer<?>, BreedingBoxRecipe.Serializer> BREEDING_BOX_SERIALIZER = SERIALIZERS
             .register("breeding_box", BreedingBoxRecipe.Serializer::new);
 
@@ -49,6 +45,13 @@ public class PRecipes {
     public static final DeferredHolder<RecipeType<?>, RecipeType<POPExplosionRecipe>> EXPLOSION_TRANSFORM_TYPE = TYPES
             .register("pop_explosion", () ->
                     RecipeType.simple(PoopSky.loc("pop_explosion")));
+
+    public static final DeferredHolder<RecipeSerializer<?>, AnalPressingRecipe.Serializer> ANAL_PRESSING_SERIALIZER = SERIALIZERS
+            .register("anal_pressing", AnalPressingRecipe.Serializer::new);
+
+    public static final DeferredHolder<RecipeType<?>, RecipeType<AnalPressingRecipe>> ANAL_PRESSING_TYPE = TYPES
+            .register("anal_pressing", () ->
+                    RecipeType.simple(PoopSky.loc("anal_pressing")));
 
     public static void register(IEventBus eventBus) {
         SERIALIZERS.register(eventBus);
