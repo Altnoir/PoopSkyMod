@@ -6,7 +6,6 @@ import com.altnoir.poopsky.block.p.*;
 import com.altnoir.poopsky.item.p.CompooperBlockItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
@@ -652,7 +651,7 @@ public class PBlocks {
     }
 
     private static <T extends Block> void registerBlockItem(String name, DeferredBlock<T> block) {
-        PItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
+        PItems.ITEMS.registerSimpleBlockItem(name, block, new Item.Properties());
     }
 
     private static <T extends Block> void registerCompooperBlockItem(String name, DeferredBlock<T> block) {
@@ -660,7 +659,7 @@ public class PBlocks {
     }
 
     private static <T extends Block> void registerBlockItem(String name, DeferredBlock<T> block, int stacksTo) {
-        PItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().stacksTo(stacksTo)));
+        PItems.ITEMS.registerSimpleBlockItem(name, block, new Item.Properties().stacksTo(stacksTo));
     }
 
     public static void register(IEventBus eventBus) {
