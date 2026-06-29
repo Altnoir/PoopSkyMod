@@ -1,10 +1,10 @@
 package com.altnoir.poopsky.block;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.block.p.GoldgenBaseToiletBlock;
 import com.altnoir.poopsky.block.p.LavaToiletBlock;
 import com.altnoir.poopsky.block.p.ToiletBlock;
-import com.altnoir.poopsky.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.item.p.ToiletBlockItem;
 import net.minecraft.world.item.Item;
@@ -24,6 +24,7 @@ import java.util.function.ToIntFunction;
 public final class AllToiletBlocks {
     private static final float WOOD_STRENGTH = 2.0F;
     private static final float STONE_STRENGTH = 4.0F;
+    private static final float METAL_STRENGTH = 10.0F;
     private static final float TOILET_RESISTANCE = 100.0F;
     private static final int LAVA_LIGHT_LEVEL = 15;
 
@@ -36,17 +37,17 @@ public final class AllToiletBlocks {
 
     public static final DeferredBlock<Block> STONE_TOILET = registerBlock(
             "stone_toilet",
-            () -> new LavaToiletBlock(LavaToiletVariant.COBBLESTONE, lavaToiletProperties(MapColor.STONE))
+            () -> new LavaToiletBlock(LavaToiletVariant.COBBLESTONE, lavaToiletProperties(MapColor.STONE, STONE_STRENGTH))
     );
 
     public static final DeferredBlock<Block> METAL_TOILET = registerBlock(
             "metal_toilet",
-            () -> new LavaToiletBlock(LavaToiletVariant.IRON, lavaToiletProperties(MapColor.METAL))
+            () -> new LavaToiletBlock(LavaToiletVariant.IRON, lavaToiletProperties(MapColor.METAL, METAL_STRENGTH))
     );
 
     public static final DeferredBlock<Block> RAINBOW_TOILET = registerBlock(
             "rainbow_toilet",
-            () -> new GoldgenBaseToiletBlock(lavaToiletProperties(MapColor.COLOR_LIGHT_GRAY))
+            () -> new GoldgenBaseToiletBlock(lavaToiletProperties(MapColor.COLOR_LIGHT_GRAY, STONE_STRENGTH))
     );
 
     private static BlockBehaviour.Properties woodToiletProperties(MapColor color, SoundType sound) {
@@ -58,12 +59,12 @@ public final class AllToiletBlocks {
                 .ignitedByLava();
     }
 
-    private static BlockBehaviour.Properties lavaToiletProperties(MapColor color) {
+    private static BlockBehaviour.Properties lavaToiletProperties(MapColor color, float strength) {
         return BlockBehaviour.Properties.of()
                 .mapColor(color)
                 .instrument(NoteBlockInstrument.BASEDRUM)
                 .lightLevel(lavaLightLevel())
-                .strength(STONE_STRENGTH, TOILET_RESISTANCE)
+                .strength(strength, TOILET_RESISTANCE)
                 .requiresCorrectToolForDrops()
                 .ignitedByLava();
     }
