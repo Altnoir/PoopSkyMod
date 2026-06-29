@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.block.p;
 
-import com.altnoir.poopsky.block.LavaToiletVariant;
+import com.altnoir.poopsky.block.LavaToiletType;
 import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.init.ToiletType;
 import com.altnoir.poopsky.item.p.ToiletBlockItem;
@@ -28,16 +28,16 @@ public class LavaToiletBlock extends BaseToiletLavaBlock {
 
     public static final MapCodec<LavaToiletBlock> CODEC = RecordCodecBuilder.mapCodec(instance ->
             instance.group(
-                    LavaToiletVariant.CODEC.fieldOf("default_variant").forGetter(b -> b.defaultVariant),
+                    LavaToiletType.CODEC.fieldOf("default_variant").forGetter(b -> b.defaultVariant),
                     propertiesCodec()
             ).apply(instance, LavaToiletBlock::new)
     );
 
-    public static final EnumProperty<LavaToiletVariant> VARIANT = EnumProperty.create("variant", LavaToiletVariant.class);
+    public static final EnumProperty<LavaToiletType> VARIANT = EnumProperty.create("variant", LavaToiletType.class);
 
-    private final LavaToiletVariant defaultVariant;
+    private final LavaToiletType defaultVariant;
 
-    public LavaToiletBlock(LavaToiletVariant defaultVariant, Properties properties) {
+    public LavaToiletBlock(LavaToiletType defaultVariant, Properties properties) {
         super(properties);
         this.defaultVariant = defaultVariant;
         this.registerDefaultState(this.stateDefinition.any()
@@ -70,7 +70,7 @@ public class LavaToiletBlock extends BaseToiletLavaBlock {
         if (stack.getItem() instanceof BlockItem blockItem) {
             ToiletType toiletType = ToiletType.bySourceBlock(blockItem.getBlock());
             if (toiletType != null) {
-                LavaToiletVariant variant = LavaToiletVariant.byToiletType(toiletType);
+                LavaToiletType variant = LavaToiletType.byToiletType(toiletType);
                 if (variant != null && variant.getCategory() == state.getValue(VARIANT).getCategory() && state.getValue(VARIANT) != variant) {
                     if (!state.getValue(LAVA)) {
                         level.setBlock(pos, state.setValue(VARIANT, variant), 3);
@@ -93,7 +93,7 @@ public class LavaToiletBlock extends BaseToiletLavaBlock {
 
     public void addToCreativeTab(CreativeModeTab.Output output) {
         ToiletType.Category category = defaultVariant.getCategory();
-        for (var variant : LavaToiletVariant.values()) {
+        for (var variant : LavaToiletType.values()) {
             if (variant.getCategory() == category) {
                 output.accept(withVariant(this, variant.getToiletType()));
             }
@@ -101,7 +101,7 @@ public class LavaToiletBlock extends BaseToiletLavaBlock {
     }
 
     public BlockState applyVariant(BlockState state, ToiletType toiletType) {
-        LavaToiletVariant variant = LavaToiletVariant.byToiletType(toiletType);
+        LavaToiletType variant = LavaToiletType.byToiletType(toiletType);
         if (variant != null && variant.getCategory() == defaultVariant.getCategory()) {
             return state.setValue(VARIANT, variant);
         }

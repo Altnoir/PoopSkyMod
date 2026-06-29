@@ -5,7 +5,7 @@ import com.altnoir.poopsky.init.ToiletType;
 import com.mojang.serialization.Codec;
 import net.minecraft.util.StringRepresentable;
 
-public enum LavaToiletVariant implements StringRepresentable {
+public enum LavaToiletType implements StringRepresentable {
     STONE(PToiletTypes.STONE),
     COBBLESTONE(PToiletTypes.COBBLESTONE),
     MOSSY_COBBLESTONE(PToiletTypes.MOSSY_COBBLESTONE),
@@ -39,11 +39,11 @@ public enum LavaToiletVariant implements StringRepresentable {
     EMERALD(PToiletTypes.EMERALD),
     NETHERITE(PToiletTypes.NETHERITE);
 
-    public static final Codec<LavaToiletVariant> CODEC = StringRepresentable.fromEnum(LavaToiletVariant::values);
+    public static final Codec<LavaToiletType> CODEC = StringRepresentable.fromEnum(LavaToiletType::values);
 
     private final ToiletType toiletType;
 
-    LavaToiletVariant(ToiletType toiletType) {
+    LavaToiletType(ToiletType toiletType) {
         this.toiletType = toiletType;
     }
 
@@ -60,7 +60,7 @@ public enum LavaToiletVariant implements StringRepresentable {
         return name().toLowerCase();
     }
 
-    public static LavaToiletVariant byToiletType(ToiletType type) {
+    public static LavaToiletType byToiletType(ToiletType type) {
         for (var v : values()) {
             if (v.toiletType.equals(type)) return v;
         }

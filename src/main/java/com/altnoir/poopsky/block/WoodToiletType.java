@@ -5,7 +5,7 @@ import com.altnoir.poopsky.init.ToiletType;
 import com.mojang.serialization.Codec;
 import net.minecraft.util.StringRepresentable;
 
-public enum WoodToiletVariant implements StringRepresentable {
+public enum WoodToiletType implements StringRepresentable {
     OAK(PToiletTypes.OAK),
     SPRUCE(PToiletTypes.SPRUCE),
     BIRCH(PToiletTypes.BIRCH),
@@ -18,11 +18,11 @@ public enum WoodToiletVariant implements StringRepresentable {
     CRIMSON(PToiletTypes.CRIMSON),
     WARPED(PToiletTypes.WARPED);
 
-    public static final Codec<WoodToiletVariant> CODEC = StringRepresentable.fromEnum(WoodToiletVariant::values);
+    public static final Codec<WoodToiletType> CODEC = StringRepresentable.fromEnum(WoodToiletType::values);
 
     private final ToiletType toiletType;
 
-    WoodToiletVariant(ToiletType toiletType) {
+    WoodToiletType(ToiletType toiletType) {
         this.toiletType = toiletType;
     }
 
@@ -35,7 +35,7 @@ public enum WoodToiletVariant implements StringRepresentable {
         return name().toLowerCase();
     }
 
-    public static WoodToiletVariant byToiletType(ToiletType type) {
+    public static WoodToiletType byToiletType(ToiletType type) {
         for (var v : values()) {
             if (v.toiletType.equals(type)) return v;
         }

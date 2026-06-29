@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.block.p;
 
-import com.altnoir.poopsky.block.WoodToiletVariant;
+import com.altnoir.poopsky.block.WoodToiletType;
 import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.init.ToiletType;
 import com.altnoir.poopsky.item.p.ToiletBlockItem;
@@ -27,15 +27,14 @@ import org.jetbrains.annotations.Nullable;
 
 public class ToiletBlock extends AbstractToiletBlock {
     public static final MapCodec<ToiletBlock> CODEC = simpleCodec(ToiletBlock::new);
-
-    public static final EnumProperty<WoodToiletVariant> WOOD_TYPE = EnumProperty.create("wood_type", WoodToiletVariant.class);
+    public static final EnumProperty<WoodToiletType> WOOD_TYPE = EnumProperty.create("wood_type", WoodToiletType.class);
 
     public ToiletBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(FACING, Direction.NORTH)
                 .setValue(CONNECTION, AbstractToiletBlock.ToiletState.DEFAULT)
-                .setValue(WOOD_TYPE, WoodToiletVariant.OAK));
+                .setValue(WOOD_TYPE, WoodToiletType.OAK));
     }
 
     @Override
@@ -60,7 +59,7 @@ public class ToiletBlock extends AbstractToiletBlock {
         if (stack.getItem() instanceof BlockItem blockItem) {
             ToiletType toiletType = ToiletType.bySourceBlock(blockItem.getBlock());
             if (toiletType != null && toiletType.category() == ToiletType.Category.WOOD) {
-                WoodToiletVariant variant = WoodToiletVariant.byToiletType(toiletType);
+                WoodToiletType variant = WoodToiletType.byToiletType(toiletType);
                 if (variant != null && state.getValue(WOOD_TYPE) != variant) {
                     level.setBlock(pos, state.setValue(WOOD_TYPE, variant), 3);
                     return ItemInteractionResult.sidedSuccess(level.isClientSide);
@@ -95,13 +94,13 @@ public class ToiletBlock extends AbstractToiletBlock {
     }
 
     public void addToCreativeTab(CreativeModeTab.Output output) {
-        for (var variant : WoodToiletVariant.values()) {
+        for (var variant : WoodToiletType.values()) {
             output.accept(withVariant(this, variant.getToiletType()));
         }
     }
 
     public BlockState applyVariant(BlockState state, ToiletType toiletType) {
-        WoodToiletVariant variant = WoodToiletVariant.byToiletType(toiletType);
+        WoodToiletType variant = WoodToiletType.byToiletType(toiletType);
         if (variant != null) {
             return state.setValue(WOOD_TYPE, variant);
         }

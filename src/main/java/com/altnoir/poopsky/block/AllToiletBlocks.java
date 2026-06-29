@@ -37,12 +37,12 @@ public final class AllToiletBlocks {
 
     public static final DeferredBlock<Block> STONE_TOILET = registerBlock(
             "stone_toilet",
-            () -> new LavaToiletBlock(LavaToiletVariant.COBBLESTONE, lavaToiletProperties(MapColor.STONE, STONE_STRENGTH))
+            () -> new LavaToiletBlock(LavaToiletType.COBBLESTONE, lavaToiletProperties(MapColor.STONE, STONE_STRENGTH))
     );
 
     public static final DeferredBlock<Block> METAL_TOILET = registerBlock(
             "metal_toilet",
-            () -> new LavaToiletBlock(LavaToiletVariant.IRON, lavaToiletProperties(MapColor.METAL, METAL_STRENGTH))
+            () -> new LavaToiletBlock(LavaToiletType.IRON, lavaToiletProperties(MapColor.METAL, METAL_STRENGTH))
     );
 
     public static final DeferredBlock<Block> RAINBOW_TOILET = registerBlock(

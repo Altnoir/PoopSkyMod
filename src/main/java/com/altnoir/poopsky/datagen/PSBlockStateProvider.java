@@ -2,8 +2,8 @@ package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.AllToiletBlocks;
-import com.altnoir.poopsky.block.LavaToiletVariant;
-import com.altnoir.poopsky.block.WoodToiletVariant;
+import com.altnoir.poopsky.block.LavaToiletType;
+import com.altnoir.poopsky.block.WoodToiletType;
 import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.block.p.*;
 import com.altnoir.poopsky.init.PBlocks;
@@ -413,64 +413,64 @@ public class PSBlockStateProvider extends BlockStateProvider {
     }
 
     private void registerWoodToilet() {
-        Map<WoodToiletVariant, ResourceLocation> textures = new LinkedHashMap<>();
-        textures.put(WoodToiletVariant.OAK, mcLoc("block/oak_planks"));
-        textures.put(WoodToiletVariant.SPRUCE, mcLoc("block/spruce_planks"));
-        textures.put(WoodToiletVariant.BIRCH, mcLoc("block/birch_planks"));
-        textures.put(WoodToiletVariant.JUNGLE, mcLoc("block/jungle_planks"));
-        textures.put(WoodToiletVariant.ACACIA, mcLoc("block/acacia_planks"));
-        textures.put(WoodToiletVariant.CHERRY, mcLoc("block/cherry_planks"));
-        textures.put(WoodToiletVariant.DARK_OAK, mcLoc("block/dark_oak_planks"));
-        textures.put(WoodToiletVariant.MANGROVE, mcLoc("block/mangrove_planks"));
-        textures.put(WoodToiletVariant.BAMBOO, mcLoc("block/bamboo_planks"));
-        textures.put(WoodToiletVariant.CRIMSON, mcLoc("block/crimson_planks"));
-        textures.put(WoodToiletVariant.WARPED, mcLoc("block/warped_planks"));
+        Map<WoodToiletType, ResourceLocation> textures = new LinkedHashMap<>();
+        textures.put(WoodToiletType.OAK, mcLoc("block/oak_planks"));
+        textures.put(WoodToiletType.SPRUCE, mcLoc("block/spruce_planks"));
+        textures.put(WoodToiletType.BIRCH, mcLoc("block/birch_planks"));
+        textures.put(WoodToiletType.JUNGLE, mcLoc("block/jungle_planks"));
+        textures.put(WoodToiletType.ACACIA, mcLoc("block/acacia_planks"));
+        textures.put(WoodToiletType.CHERRY, mcLoc("block/cherry_planks"));
+        textures.put(WoodToiletType.DARK_OAK, mcLoc("block/dark_oak_planks"));
+        textures.put(WoodToiletType.MANGROVE, mcLoc("block/mangrove_planks"));
+        textures.put(WoodToiletType.BAMBOO, mcLoc("block/bamboo_planks"));
+        textures.put(WoodToiletType.CRIMSON, mcLoc("block/crimson_planks"));
+        textures.put(WoodToiletType.WARPED, mcLoc("block/warped_planks"));
 
-        registerVariantToiletWithOverrides(AllToiletBlocks.WOOD_TOILET.get(), ToiletBlock.WOOD_TYPE, textures, WoodToiletVariant.OAK, false, WoodToiletVariant::getToiletType);
+        registerVariantToiletWithOverrides(AllToiletBlocks.WOOD_TOILET.get(), ToiletBlock.WOOD_TYPE, textures, WoodToiletType.OAK, false, WoodToiletType::getToiletType);
     }
 
     private void registerStoneToilet() {
-        Map<LavaToiletVariant, ResourceLocation> textures = new LinkedHashMap<>();
-        textures.put(LavaToiletVariant.STONE, mcLoc("block/stone"));
-        textures.put(LavaToiletVariant.COBBLESTONE, mcLoc("block/cobblestone"));
-        textures.put(LavaToiletVariant.MOSSY_COBBLESTONE, mcLoc("block/mossy_cobblestone"));
-        textures.put(LavaToiletVariant.SMOOTH_STONE, mcLoc("block/smooth_stone"));
-        textures.put(LavaToiletVariant.STONE_BRICK, mcLoc("block/stone_bricks"));
-        textures.put(LavaToiletVariant.MOSSY_STONE_BRICK, mcLoc("block/mossy_stone_bricks"));
-        textures.put(LavaToiletVariant.TILE, modLoc("block/tile_block"));
-        textures.put(LavaToiletVariant.WHITE_CONCRETE, mcLoc("block/white_concrete"));
-        textures.put(LavaToiletVariant.ORANGE_CONCRETE, mcLoc("block/orange_concrete"));
-        textures.put(LavaToiletVariant.MAGENTA_CONCRETE, mcLoc("block/magenta_concrete"));
-        textures.put(LavaToiletVariant.LIGHT_BLUE_CONCRETE, mcLoc("block/light_blue_concrete"));
-        textures.put(LavaToiletVariant.YELLOW_CONCRETE, mcLoc("block/yellow_concrete"));
-        textures.put(LavaToiletVariant.LIME_CONCRETE, mcLoc("block/lime_concrete"));
-        textures.put(LavaToiletVariant.PINK_CONCRETE, mcLoc("block/pink_concrete"));
-        textures.put(LavaToiletVariant.GRAY_CONCRETE, mcLoc("block/gray_concrete"));
-        textures.put(LavaToiletVariant.LIGHT_GRAY_CONCRETE, mcLoc("block/light_gray_concrete"));
-        textures.put(LavaToiletVariant.CYAN_CONCRETE, mcLoc("block/cyan_concrete"));
-        textures.put(LavaToiletVariant.PURPLE_CONCRETE, mcLoc("block/purple_concrete"));
-        textures.put(LavaToiletVariant.BLUE_CONCRETE, mcLoc("block/blue_concrete"));
-        textures.put(LavaToiletVariant.BROWN_CONCRETE, mcLoc("block/brown_concrete"));
-        textures.put(LavaToiletVariant.GREEN_CONCRETE, mcLoc("block/green_concrete"));
-        textures.put(LavaToiletVariant.RED_CONCRETE, mcLoc("block/red_concrete"));
-        textures.put(LavaToiletVariant.BLACK_CONCRETE, mcLoc("block/black_concrete"));
+        Map<LavaToiletType, ResourceLocation> textures = new LinkedHashMap<>();
+        textures.put(LavaToiletType.STONE, mcLoc("block/stone"));
+        textures.put(LavaToiletType.COBBLESTONE, mcLoc("block/cobblestone"));
+        textures.put(LavaToiletType.MOSSY_COBBLESTONE, mcLoc("block/mossy_cobblestone"));
+        textures.put(LavaToiletType.SMOOTH_STONE, mcLoc("block/smooth_stone"));
+        textures.put(LavaToiletType.STONE_BRICK, mcLoc("block/stone_bricks"));
+        textures.put(LavaToiletType.MOSSY_STONE_BRICK, mcLoc("block/mossy_stone_bricks"));
+        textures.put(LavaToiletType.TILE, modLoc("block/tile_block"));
+        textures.put(LavaToiletType.WHITE_CONCRETE, mcLoc("block/white_concrete"));
+        textures.put(LavaToiletType.ORANGE_CONCRETE, mcLoc("block/orange_concrete"));
+        textures.put(LavaToiletType.MAGENTA_CONCRETE, mcLoc("block/magenta_concrete"));
+        textures.put(LavaToiletType.LIGHT_BLUE_CONCRETE, mcLoc("block/light_blue_concrete"));
+        textures.put(LavaToiletType.YELLOW_CONCRETE, mcLoc("block/yellow_concrete"));
+        textures.put(LavaToiletType.LIME_CONCRETE, mcLoc("block/lime_concrete"));
+        textures.put(LavaToiletType.PINK_CONCRETE, mcLoc("block/pink_concrete"));
+        textures.put(LavaToiletType.GRAY_CONCRETE, mcLoc("block/gray_concrete"));
+        textures.put(LavaToiletType.LIGHT_GRAY_CONCRETE, mcLoc("block/light_gray_concrete"));
+        textures.put(LavaToiletType.CYAN_CONCRETE, mcLoc("block/cyan_concrete"));
+        textures.put(LavaToiletType.PURPLE_CONCRETE, mcLoc("block/purple_concrete"));
+        textures.put(LavaToiletType.BLUE_CONCRETE, mcLoc("block/blue_concrete"));
+        textures.put(LavaToiletType.BROWN_CONCRETE, mcLoc("block/brown_concrete"));
+        textures.put(LavaToiletType.GREEN_CONCRETE, mcLoc("block/green_concrete"));
+        textures.put(LavaToiletType.RED_CONCRETE, mcLoc("block/red_concrete"));
+        textures.put(LavaToiletType.BLACK_CONCRETE, mcLoc("block/black_concrete"));
 
-        registerVariantToiletWithOverrides(AllToiletBlocks.STONE_TOILET.get(), LavaToiletBlock.VARIANT, textures, LavaToiletVariant.COBBLESTONE, true, LavaToiletVariant::getToiletType);
+        registerVariantToiletWithOverrides(AllToiletBlocks.STONE_TOILET.get(), LavaToiletBlock.VARIANT, textures, LavaToiletType.COBBLESTONE, true, LavaToiletType::getToiletType);
     }
 
     private void registerMetalToilet() {
-        Map<LavaToiletVariant, ResourceLocation> textures = new LinkedHashMap<>();
-        textures.put(LavaToiletVariant.IRON, mcLoc("block/iron_block"));
-        textures.put(LavaToiletVariant.GOLD, mcLoc("block/gold_block"));
-        textures.put(LavaToiletVariant.COPPER, mcLoc("block/copper_block"));
-        textures.put(LavaToiletVariant.LAPIS, mcLoc("block/lapis_block"));
-        textures.put(LavaToiletVariant.REDSTONE, mcLoc("block/redstone_block"));
-        textures.put(LavaToiletVariant.QUARTZ, mcLoc("block/quartz_block_bottom"));
-        textures.put(LavaToiletVariant.DIAMOND, mcLoc("block/diamond_block"));
-        textures.put(LavaToiletVariant.EMERALD, mcLoc("block/emerald_block"));
-        textures.put(LavaToiletVariant.NETHERITE, mcLoc("block/netherite_block"));
+        Map<LavaToiletType, ResourceLocation> textures = new LinkedHashMap<>();
+        textures.put(LavaToiletType.IRON, mcLoc("block/iron_block"));
+        textures.put(LavaToiletType.GOLD, mcLoc("block/gold_block"));
+        textures.put(LavaToiletType.COPPER, mcLoc("block/copper_block"));
+        textures.put(LavaToiletType.LAPIS, mcLoc("block/lapis_block"));
+        textures.put(LavaToiletType.REDSTONE, mcLoc("block/redstone_block"));
+        textures.put(LavaToiletType.QUARTZ, mcLoc("block/quartz_block_bottom"));
+        textures.put(LavaToiletType.DIAMOND, mcLoc("block/diamond_block"));
+        textures.put(LavaToiletType.EMERALD, mcLoc("block/emerald_block"));
+        textures.put(LavaToiletType.NETHERITE, mcLoc("block/netherite_block"));
 
-        registerVariantToiletWithOverrides(AllToiletBlocks.METAL_TOILET.get(), LavaToiletBlock.VARIANT, textures, LavaToiletVariant.IRON, true, LavaToiletVariant::getToiletType);
+        registerVariantToiletWithOverrides(AllToiletBlocks.METAL_TOILET.get(), LavaToiletBlock.VARIANT, textures, LavaToiletType.IRON, true, LavaToiletType::getToiletType);
     }
 
     private void registerToiletLava(Block toilet, Object texture) {
