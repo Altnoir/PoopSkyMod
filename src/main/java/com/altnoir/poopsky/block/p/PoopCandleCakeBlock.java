@@ -15,7 +15,6 @@ import net.minecraft.world.level.block.CandleCakeBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -41,9 +40,11 @@ public class PoopCandleCakeBlock extends CandleCakeBlock {
             Map.entry(Blocks.RED_CANDLE, Blocks.RED_CANDLE_CAKE),
             Map.entry(Blocks.BLACK_CANDLE, Blocks.BLACK_CANDLE_CAKE)
     );
+    private final Block candle;
 
     public PoopCandleCakeBlock(Block candle, Properties properties) {
         super(candle, properties);
+        this.candle = candle;
         restoreVanillaCandleCake(candle);
     }
 
@@ -74,16 +75,15 @@ public class PoopCandleCakeBlock extends CandleCakeBlock {
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
 
-        return PoopCakeBlock.eat(level, pos, PBlocks.POOP_CAKE.get().defaultBlockState(), player);
+        InteractionResult result = PoopCakeBlock.eat(level, pos, PBlocks.POOP_CAKE.get().defaultBlockState(), player);
+        if (result.consumesAction() && !level.isClientSide) {
+            popResource(level, pos, new ItemStack(candle));
+        }
+        return result;
     }
 
     private static boolean isHittingCandle(BlockHitResult hitResult, BlockPos pos) {
-        Vec3 hitLocation = hitResult.getLocation().subtract(pos.getX(), pos.getY(), pos.getZ());
-        return hitLocation.y > 0.5
-                && hitLocation.x >= 7.0 / 16.0
-                && hitLocation.x <= 9.0 / 16.0
-                && hitLocation.z >= 7.0 / 16.0
-                && hitLocation.z <= 9.0 / 16.0;
+        return hitResult.getLocation().y - pos.getY() > 0.5;
     }
 
     private static void extinguish(BlockState state, Level level, BlockPos pos, Player player) {
