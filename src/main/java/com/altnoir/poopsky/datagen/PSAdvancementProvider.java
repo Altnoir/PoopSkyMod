@@ -386,7 +386,7 @@ public class PSAdvancementProvider extends AdvancementProvider {
             Advancement.Builder.advancement()
                     .parent(summon_villager)
                     .display(
-                            AllToiletBlocks.RAINBOW_TOILET.get(),
+                            AllToiletBlocks.STONE_TOILET.get(),
                             Component.translatable("advancements.poopsky.rainbow_toilet.title"),
                             Component.translatable("advancements.poopsky.rainbow_toilet.description"),
                             null,
@@ -395,7 +395,7 @@ public class PSAdvancementProvider extends AdvancementProvider {
                             true,
                             false
                     )
-                    .addCriterion("rainbow_toilet", InventoryChangeTrigger.TriggerInstance.hasItems(AllToiletBlocks.RAINBOW_TOILET.get()))
+                    .addCriterion("rainbow_toilet", InventoryChangeTrigger.TriggerInstance.hasItems(AllToiletBlocks.STONE_TOILET.get()))
                     .save(saver, modId("rainbow_toilet"), existingFileHelper);
 
             Advancement.Builder.advancement()

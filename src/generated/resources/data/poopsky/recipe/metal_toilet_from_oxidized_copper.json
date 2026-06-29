@@ -1,0 +1,23 @@
+{
+  "type": "poopsky:toilet_shaped",
+  "delegate": {
+    "category": "building",
+    "key": {
+      "#": {
+        "item": "minecraft:oxidized_copper"
+      },
+      "P": {
+        "item": "poopsky:poop"
+      }
+    },
+    "pattern": [
+      "P",
+      "#"
+    ],
+    "result": {
+      "count": 1,
+      "id": "poopsky:metal_toilet"
+    }
+  },
+  "toilet_type": "oxidized_copper"
+}

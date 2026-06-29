@@ -1,12 +1,19 @@
 package com.altnoir.poopsky.util;
 
+import com.altnoir.poopsky.block.p.BaseToiletLavaBlock;
+import com.altnoir.poopsky.block.p.LavaToiletBlock;
 import com.altnoir.poopsky.init.PEffects;
 import com.altnoir.poopsky.init.PParticles;
 import com.altnoir.poopsky.init.PSoundEvents;
 import com.altnoir.poopsky.init.PStats;
 import com.altnoir.poopsky.init.PItems;
+import com.altnoir.poopsky.init.PToiletTypes;
+import com.altnoir.poopsky.block.ToiletType;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -14,10 +21,43 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 
 import java.util.function.LongConsumer;
 
 public class toiletUtil {
+    public static boolean isGoldenToilet(BlockState state) {
+        if (state.getBlock() instanceof LavaToiletBlock) {
+            ToiletType type = state.getValue(LavaToiletBlock.TOILET_TYPE);
+            return type == PToiletTypes.GOLD || type == PToiletTypes.RAINBOW;
+        }
+        return false;
+    }
+
+    public static boolean isEntityCentered(BlockPos blockPos, Entity entity) {
+        return new AABB(blockPos).inflate(0.2).contains(entity.position());
+    }
+
+    public static void lavaToiletStepOn(Level level, BlockPos pos, BlockState state, Entity entity, boolean isGolden) {
+        if (!level.isClientSide && entity instanceof Player player && player.isShiftKeyDown() && isEntityCentered(pos, player) && !state.getValue(BaseToiletLavaBlock.LAVA)) {
+            if (player.hasEffect(PEffects.INTESTINAL_SPASM)) {
+                level.setBlock(pos, state.setValue(BaseToiletLavaBlock.LAVA, true), 3);
+                level.playSound(null, pos, SoundEvents.BUCKET_EMPTY_LAVA, SoundSource.PLAYERS, 1.0F, 1.0F);
+                player.removeEffect(PEffects.INTESTINAL_SPASM);
+                player.causeFoodExhaustion(1.0F);
+            } else {
+                boolean hasIncontinence = player.hasEffect(PEffects.FECAL_INCONTINENCE);
+                boolean isFire = hasIncontinence && !isGolden;
+                float pitchOffset = isGolden ? -0.5F : 0.5F;
+                var playerData = player.getPersistentData();
+                long lastPoopTime = playerData.getLong("poopTime");
+                canPoop(level, player, isFire, isGolden, 0.1F, pitchOffset, lastPoopTime,
+                        time -> playerData.putLong("poopTime", time));
+            }
+        }
+    }
+
     public static void canPoop(Level level, LivingEntity entity, boolean isFire, boolean isGolden, float yOffset, float pitchOffset, long lastPoopTime, LongConsumer poopTimeSetter) {
         boolean hasIncontinence = entity.hasEffect(PEffects.FECAL_INCONTINENCE);
 

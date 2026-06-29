@@ -1,136 +1,490 @@
 {
-  "parent": "poopsky:block/stone_toilet_cobblestone",
+  "parent": "poopsky:block/stone_toilet_tile_block",
   "overrides": [
     {
-      "model": "poopsky:block/stone_toilet_stone",
+      "model": "poopsky:block/stone_toilet_tile_block",
       "predicate": {
         "poopsky:toilet_type": 11.0
       }
     },
     {
-      "model": "poopsky:block/stone_toilet_mossy_cobblestone",
+      "model": "poopsky:block/stone_toilet_stone",
+      "predicate": {
+        "poopsky:toilet_type": 12.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_cobblestone",
       "predicate": {
         "poopsky:toilet_type": 13.0
       }
     },
     {
-      "model": "poopsky:block/stone_toilet_smooth_stone",
+      "model": "poopsky:block/stone_toilet_mossy_cobblestone",
       "predicate": {
         "poopsky:toilet_type": 14.0
       }
     },
     {
-      "model": "poopsky:block/stone_toilet_stone_brick",
+      "model": "poopsky:block/stone_toilet_smooth_stone",
       "predicate": {
         "poopsky:toilet_type": 15.0
       }
     },
     {
-      "model": "poopsky:block/stone_toilet_mossy_stone_brick",
+      "model": "poopsky:block/stone_toilet_stone_bricks",
       "predicate": {
         "poopsky:toilet_type": 16.0
       }
     },
     {
-      "model": "poopsky:block/stone_toilet_tile",
+      "model": "poopsky:block/stone_toilet_chiseled_stone_bricks",
       "predicate": {
         "poopsky:toilet_type": 17.0
       }
     },
     {
-      "model": "poopsky:block/stone_toilet_white_concrete",
+      "model": "poopsky:block/stone_toilet_mossy_stone_bricks",
       "predicate": {
         "poopsky:toilet_type": 18.0
       }
     },
     {
-      "model": "poopsky:block/stone_toilet_orange_concrete",
+      "model": "poopsky:block/stone_toilet_granite",
       "predicate": {
         "poopsky:toilet_type": 19.0
       }
     },
     {
-      "model": "poopsky:block/stone_toilet_magenta_concrete",
+      "model": "poopsky:block/stone_toilet_polished_granite",
       "predicate": {
         "poopsky:toilet_type": 20.0
       }
     },
     {
-      "model": "poopsky:block/stone_toilet_light_blue_concrete",
+      "model": "poopsky:block/stone_toilet_diorite",
       "predicate": {
         "poopsky:toilet_type": 21.0
       }
     },
     {
-      "model": "poopsky:block/stone_toilet_yellow_concrete",
+      "model": "poopsky:block/stone_toilet_polished_diorite",
       "predicate": {
         "poopsky:toilet_type": 22.0
       }
     },
     {
-      "model": "poopsky:block/stone_toilet_lime_concrete",
+      "model": "poopsky:block/stone_toilet_andesite",
       "predicate": {
         "poopsky:toilet_type": 23.0
       }
     },
     {
-      "model": "poopsky:block/stone_toilet_pink_concrete",
+      "model": "poopsky:block/stone_toilet_polished_andesite",
       "predicate": {
         "poopsky:toilet_type": 24.0
       }
     },
     {
-      "model": "poopsky:block/stone_toilet_gray_concrete",
+      "model": "poopsky:block/stone_toilet_calcite",
       "predicate": {
         "poopsky:toilet_type": 25.0
       }
     },
     {
-      "model": "poopsky:block/stone_toilet_light_gray_concrete",
+      "model": "poopsky:block/stone_toilet_dripstone_block",
       "predicate": {
         "poopsky:toilet_type": 26.0
       }
     },
     {
-      "model": "poopsky:block/stone_toilet_cyan_concrete",
+      "model": "poopsky:block/stone_toilet_deepslate",
       "predicate": {
         "poopsky:toilet_type": 27.0
       }
     },
     {
-      "model": "poopsky:block/stone_toilet_purple_concrete",
+      "model": "poopsky:block/stone_toilet_cobbled_deepslate",
       "predicate": {
         "poopsky:toilet_type": 28.0
       }
     },
     {
-      "model": "poopsky:block/stone_toilet_blue_concrete",
+      "model": "poopsky:block/stone_toilet_polished_deepslate",
       "predicate": {
         "poopsky:toilet_type": 29.0
       }
     },
     {
-      "model": "poopsky:block/stone_toilet_brown_concrete",
+      "model": "poopsky:block/stone_toilet_deepslate_bricks",
       "predicate": {
         "poopsky:toilet_type": 30.0
       }
     },
     {
-      "model": "poopsky:block/stone_toilet_green_concrete",
+      "model": "poopsky:block/stone_toilet_deepslate_tiles",
       "predicate": {
         "poopsky:toilet_type": 31.0
       }
     },
     {
-      "model": "poopsky:block/stone_toilet_red_concrete",
+      "model": "poopsky:block/stone_toilet_tuff",
       "predicate": {
         "poopsky:toilet_type": 32.0
       }
     },
     {
-      "model": "poopsky:block/stone_toilet_black_concrete",
+      "model": "poopsky:block/stone_toilet_polished_tuff",
       "predicate": {
         "poopsky:toilet_type": 33.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_tuff_bricks",
+      "predicate": {
+        "poopsky:toilet_type": 34.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_bricks",
+      "predicate": {
+        "poopsky:toilet_type": 35.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_mud_bricks",
+      "predicate": {
+        "poopsky:toilet_type": 36.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_sandstone",
+      "predicate": {
+        "poopsky:toilet_type": 37.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_smooth_sandstone",
+      "predicate": {
+        "poopsky:toilet_type": 38.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_red_sandstone",
+      "predicate": {
+        "poopsky:toilet_type": 39.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_smooth_red_sandstone",
+      "predicate": {
+        "poopsky:toilet_type": 40.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_prismarine",
+      "predicate": {
+        "poopsky:toilet_type": 41.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_prismarine_bricks",
+      "predicate": {
+        "poopsky:toilet_type": 42.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_dark_prismarine",
+      "predicate": {
+        "poopsky:toilet_type": 43.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_netherrack",
+      "predicate": {
+        "poopsky:toilet_type": 44.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_nether_bricks",
+      "predicate": {
+        "poopsky:toilet_type": 45.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_red_nether_bricks",
+      "predicate": {
+        "poopsky:toilet_type": 46.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_smooth_basalt",
+      "predicate": {
+        "poopsky:toilet_type": 47.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_blackstone",
+      "predicate": {
+        "poopsky:toilet_type": 48.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_polished_blackstone",
+      "predicate": {
+        "poopsky:toilet_type": 49.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_polished_blackstone_bricks",
+      "predicate": {
+        "poopsky:toilet_type": 50.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_quartz_block",
+      "predicate": {
+        "poopsky:toilet_type": 51.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_smooth_quartz",
+      "predicate": {
+        "poopsky:toilet_type": 52.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_chiseled_quartz_block",
+      "predicate": {
+        "poopsky:toilet_type": 53.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_quartz_bricks",
+      "predicate": {
+        "poopsky:toilet_type": 54.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_end_stone",
+      "predicate": {
+        "poopsky:toilet_type": 55.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_end_stone_bricks",
+      "predicate": {
+        "poopsky:toilet_type": 56.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_purpur_block",
+      "predicate": {
+        "poopsky:toilet_type": 57.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 58.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_white_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 59.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_orange_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 60.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_magenta_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 61.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_light_blue_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 62.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_yellow_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 63.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_lime_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 64.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_pink_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 65.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_gray_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 66.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_light_gray_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 67.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_cyan_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 68.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_purple_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 69.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_blue_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 70.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_brown_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 71.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_green_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 72.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_red_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 73.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_black_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 74.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_white_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 75.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_orange_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 76.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_magenta_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 77.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_light_blue_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 78.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_yellow_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 79.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_lime_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 80.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_pink_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 81.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_gray_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 82.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_light_gray_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 83.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_cyan_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 84.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_purple_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 85.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_blue_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 86.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_brown_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 87.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_green_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 88.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_red_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 89.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_black_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 90.0
+      }
+    },
+    {
+      "model": "poopsky:block/stone_toilet_rainbow",
+      "predicate": {
+        "poopsky:toilet_type": 91.0
       }
     }
   ]

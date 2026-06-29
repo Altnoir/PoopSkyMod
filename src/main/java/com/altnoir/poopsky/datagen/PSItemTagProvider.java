@@ -18,8 +18,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.concurrent.CompletableFuture;
 
 public class PSItemTagProvider extends ItemTagsProvider {
-
-
     public PSItemTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagLookup<Block>> blockTags, @Nullable ExistingFileHelper existingFileHelper) {
         super(output, lookupProvider, blockTags, PoopSky.MOD_ID, existingFileHelper);
     }
@@ -222,7 +220,6 @@ public class PSItemTagProvider extends ItemTagsProvider {
 
     public static final Item[] HARD_TOILETS = {
             AllToiletBlocks.STONE_TOILET.get().asItem(),
-            AllToiletBlocks.METAL_TOILET.get().asItem(),
-            AllToiletBlocks.RAINBOW_TOILET.get().asItem()
+            AllToiletBlocks.METAL_TOILET.get().asItem()
     };
 }

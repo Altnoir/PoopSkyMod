@@ -14,7 +14,6 @@ import net.minecraft.world.level.material.Fluid;
 public class PTags {
     public interface Blocks {
         TagKey<Block> TOILET_BLOCKS = create("toilet_blocks");
-        TagKey<Block> GOLDEN_TOILET_BLOCKS = create("golden_toilet_blocks");
         TagKey<Block> POOP_BLOCKS = create("poop_blocks");
         TagKey<Block> POOP_BUILDING_BLOCKS = create("poop_building_blocks");
         TagKey<Block> EMPTY_LOGS = create("empty_logs");

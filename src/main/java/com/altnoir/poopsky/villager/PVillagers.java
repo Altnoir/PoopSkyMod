@@ -38,8 +38,7 @@ public class PVillagers {
     public static final Supplier<Set<BlockState>> TOILET_POI = () -> ImmutableList.of(
                     AllToiletBlocks.WOOD_TOILET.get(),
                     AllToiletBlocks.STONE_TOILET.get(),
-                    AllToiletBlocks.METAL_TOILET.get(),
-                    AllToiletBlocks.RAINBOW_TOILET.get()
+                    AllToiletBlocks.METAL_TOILET.get()
             ).stream()
             .flatMap(block -> block.getStateDefinition().getPossibleStates().stream())
             .filter(state -> state.getBlock() instanceof AbstractToiletBlock)

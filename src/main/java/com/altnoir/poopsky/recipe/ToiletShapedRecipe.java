@@ -2,7 +2,7 @@ package com.altnoir.poopsky.recipe;
 
 import com.altnoir.poopsky.init.PComponents;
 import com.altnoir.poopsky.init.PRecipes;
-import com.altnoir.poopsky.init.ToiletType;
+import com.altnoir.poopsky.block.ToiletType;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;

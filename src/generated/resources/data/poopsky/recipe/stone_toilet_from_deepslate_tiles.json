@@ -1,0 +1,23 @@
+{
+  "type": "poopsky:toilet_shaped",
+  "delegate": {
+    "category": "building",
+    "key": {
+      "#": {
+        "item": "minecraft:deepslate_tiles"
+      },
+      "P": {
+        "item": "poopsky:poop"
+      }
+    },
+    "pattern": [
+      "P",
+      "#"
+    ],
+    "result": {
+      "count": 1,
+      "id": "poopsky:stone_toilet"
+    }
+  },
+  "toilet_type": "deepslate_tiles"
+}

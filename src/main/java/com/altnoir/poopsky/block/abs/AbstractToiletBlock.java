@@ -1,6 +1,5 @@
 package com.altnoir.poopsky.block.abs;
 
-import com.altnoir.poopsky.PTags;
 import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.entity.p.ToiletEntity;
@@ -46,6 +45,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -118,7 +118,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
                     .orElseGet(() -> PEntityType.TOILET.get().spawn((ServerLevel) level, pos, MobSpawnType.TRIGGERED));
 
             if (entity != null) {
-                entity.setGoldenPoop(state.is(PTags.Blocks.GOLDEN_TOILET_BLOCKS));
+                entity.setGoldenPoop(toiletUtil.isGoldenToilet(state));
                 player.startRiding(entity);
             }
         }
@@ -184,7 +184,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     }
 
     private void poopAnvil(Level level, BlockState blockState, Entity entity) {
-        Item poopItem = blockState.is(PTags.Blocks.GOLDEN_TOILET_BLOCKS) ? PItems.GOLDEN_POOP.get() : PItems.POOP.get();
+        Item poopItem = toiletUtil.isGoldenToilet(blockState) ? PItems.GOLDEN_POOP.get() : PItems.POOP.get();
         var poop = new ItemEntity(level, entity.getX(), entity.getY() + 0.1, entity.getZ(), new ItemStack(poopItem, 8));
         poop.setDefaultPickUpDelay();
         level.addFreshEntity(poop);
@@ -379,6 +379,11 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
 
     private boolean isFaceConnected(BlockState state, Direction facing) {
         return state.getValue(FACING) == facing || state.getValue(FACING) == facing.getOpposite();
+    }
+
+    @Override
+    protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
+        return false;
     }
 
     @Override

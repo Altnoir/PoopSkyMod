@@ -3,7 +3,7 @@ package com.altnoir.poopsky.item.p;
 import com.altnoir.poopsky.block.p.LavaToiletBlock;
 import com.altnoir.poopsky.block.p.ToiletBlock;
 import com.altnoir.poopsky.init.PComponents;
-import com.altnoir.poopsky.init.ToiletType;
+import com.altnoir.poopsky.block.ToiletType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
@@ -52,7 +52,7 @@ public class ToiletBlockItem extends BlockItem {
 
         tooltipComponents.add(Component.translatable("tooltip.poopsky.toilet_type")
                 .append(": ")
-                .append(type.getDisplayName())
+                .append(type.displayName())
                 .withStyle(ChatFormatting.GRAY));
     }
 }

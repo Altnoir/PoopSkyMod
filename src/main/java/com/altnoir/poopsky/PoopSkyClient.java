@@ -1,6 +1,7 @@
 package com.altnoir.poopsky;
 
 import com.altnoir.poopsky.block.AllToiletBlocks;
+import com.altnoir.poopsky.block.ToiletType;
 import com.altnoir.poopsky.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.client.inventory.BreedingBoxScreen;
 import com.altnoir.poopsky.client.inventory.FlyNestScreen;

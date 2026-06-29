@@ -5,7 +5,7 @@ import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PItems;
-import com.altnoir.poopsky.init.ToiletType;
+import com.altnoir.poopsky.block.ToiletType;
 import com.altnoir.poopsky.recipe.*;
 import com.simibubi.create.AllItems;
 import net.minecraft.core.HolderLookup;
@@ -512,19 +512,20 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
             toiletRecipes(recipeOutput, AllToiletBlocks.WOOD_TOILET, entry.getValue().sourceBlock(), entry.getValue());
         }
         for (var entry : ToiletType.getByCategory(ToiletType.Category.STONE).entrySet()) {
-            toiletRecipes(recipeOutput, AllToiletBlocks.STONE_TOILET, entry.getValue().sourceBlock(), entry.getValue());
+            if (entry.getValue().sourceBlock() != null) {
+                toiletRecipes(recipeOutput, AllToiletBlocks.STONE_TOILET, entry.getValue().sourceBlock(), entry.getValue());
+            }
         }
-        for (var entry : ToiletType.getByCategory(ToiletType.Category.METAL).entrySet()) {
-            toiletRecipes(recipeOutput, AllToiletBlocks.METAL_TOILET, entry.getValue().sourceBlock(), entry.getValue());
-        }
-
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, AllToiletBlocks.RAINBOW_TOILET)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, AllToiletBlocks.STONE_TOILET)
                 .requires(Blocks.RED_CONCRETE)
                 .requires(Blocks.GREEN_CONCRETE)
                 .requires(Blocks.BLUE_CONCRETE)
                 .requires(PItems.POOP.get())
                 .unlockedBy(getItemName(PItems.POOP), has(PItems.POOP.get()))
-                .save(recipeOutput);
+                .save(recipeOutput, PoopSky.loc("stone_toilet_from_rainbow"));
+        for (var entry : ToiletType.getByCategory(ToiletType.Category.METAL).entrySet()) {
+            toiletRecipes(recipeOutput, AllToiletBlocks.METAL_TOILET, entry.getValue().sourceBlock(), entry.getValue());
+        }
 
         buildSieveRecipes(recipeOutput);
         buildpopExplosionRecipes(recipeOutput);

@@ -4,7 +4,7 @@ import com.altnoir.poopsky.block.p.LavaToiletBlock;
 import com.altnoir.poopsky.block.p.ToiletBlock;
 import com.altnoir.poopsky.init.PComponents;
 import com.altnoir.poopsky.init.PLootFunctions;
-import com.altnoir.poopsky.init.ToiletType;
+import com.altnoir.poopsky.block.ToiletType;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.world.item.ItemStack;
@@ -37,9 +37,9 @@ public class SetToiletTypeFunction extends LootItemConditionalFunction {
         ToiletType type = null;
 
         if (block instanceof ToiletBlock) {
-            type = state.getValue(ToiletBlock.WOOD_TYPE).getToiletType();
+            type = state.getValue(ToiletBlock.WOOD_TYPE);
         } else if (block instanceof LavaToiletBlock) {
-            type = state.getValue(LavaToiletBlock.VARIANT).getToiletType();
+            type = state.getValue(LavaToiletBlock.TOILET_TYPE);
         }
 
         if (type != null) {

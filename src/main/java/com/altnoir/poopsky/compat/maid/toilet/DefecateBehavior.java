@@ -4,6 +4,7 @@ import com.altnoir.poopsky.compat.maid.MaidPlugin;
 import com.altnoir.poopsky.entity.p.ToiletEntity;
 import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.PTags;
+import com.altnoir.poopsky.util.toiletUtil;
 import com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -89,7 +90,7 @@ public class DefecateBehavior extends Behavior<EntityMaid> {
         }
 
         if (toiletEntity.getPassengers().isEmpty()) {
-            toiletEntity.setGoldenPoop(state.is(PTags.Blocks.GOLDEN_TOILET_BLOCKS));
+            toiletEntity.setGoldenPoop(toiletUtil.isGoldenToilet(state));
             maid.startRiding(toiletEntity);
         }
     }

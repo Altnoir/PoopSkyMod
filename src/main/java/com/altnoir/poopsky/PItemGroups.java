@@ -4,8 +4,7 @@ import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PFlyTypes;
 import com.altnoir.poopsky.init.PItems;
-import com.altnoir.poopsky.init.PToiletTypes;
-import com.altnoir.poopsky.init.ToiletType;
+import com.altnoir.poopsky.block.ToiletType;
 import com.altnoir.poopsky.item.p.FlyItem;
 import com.altnoir.poopsky.item.p.ToiletBlockItem;
 import net.minecraft.core.registries.Registries;
@@ -53,8 +52,6 @@ public class PItemGroups {
                     output.accept(FlyItem.withType(type));
                 }
 
-                PToiletTypes.OAK.id();
-
                 for (var type : ToiletType.getByCategory(ToiletType.Category.WOOD).values()) {
                     output.accept(ToiletBlockItem.withType(AllToiletBlocks.WOOD_TOILET.get(), type));
                 }
@@ -64,7 +61,6 @@ public class PItemGroups {
                 for (var type : ToiletType.getByCategory(ToiletType.Category.METAL).values()) {
                     output.accept(ToiletBlockItem.withType(AllToiletBlocks.METAL_TOILET.get(), type));
                 }
-                output.accept(AllToiletBlocks.RAINBOW_TOILET.get());
             })
             .build());
 
