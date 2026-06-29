@@ -1,0 +1,10 @@
+{
+  "parent": "minecraft:block/cake_slice6",
+  "textures": {
+    "bottom": "poopsky:block/poop_cake_bottom",
+    "inside": "poopsky:block/poop_cake_inner",
+    "particle": "poopsky:block/poop_cake_side",
+    "side": "poopsky:block/poop_cake_side",
+    "top": "poopsky:block/poop_cake_top"
+  }
+}

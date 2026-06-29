@@ -111,6 +111,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
         cubeBottomTop(PBlocks.POOP_TNT.get());
         cubeBottomTop(PBlocks.BREEDING_BOX.get(), PBlocks.CUT_POOP_BLOCK.get());
         orientable(PBlocks.PLACER.get());
+        registerPoopCake();
 
         registerWoodToilet();
         registerStoneToilet();
@@ -200,6 +201,55 @@ public class PSBlockStateProvider extends BlockStateProvider {
                 .texture(PARTICLE, modLoc("block/poop_block"));
         getVariantBuilder(PBlocks.POOLIME_POOP_BLOCK.get()).partialState().addModels(new ConfiguredModel(models().getExistingFile(modLoc("block/poolime_poop_block"))));
         simpleBlockItem(PBlocks.POOLIME_POOP_BLOCK.get(), models().getExistingFile(modLoc("block/poolime_poop_block")));
+    }
+
+    private void registerPoopCake() {
+        ResourceLocation bottom = modLoc("block/poop_cake_bottom");
+        ResourceLocation top = modLoc("block/poop_cake_top");
+        ResourceLocation side = modLoc("block/poop_cake_side");
+        ResourceLocation inside = modLoc("block/poop_cake_inner");
+
+        ModelFile[] cakeModels = new ModelFile[7];
+        cakeModels[0] = cakeModel("poop_cake", "cake", bottom, top, side, null);
+        for (int bites = 1; bites <= 6; bites++) {
+            cakeModels[bites] = cakeModel("poop_cake_slice" + bites, "cake_slice" + bites, bottom, top, side, inside);
+        }
+
+        getVariantBuilder(PBlocks.POOP_CAKE.get()).forAllStates(state -> ConfiguredModel.builder()
+                .modelFile(cakeModels[state.getValue(CakeBlock.BITES)])
+                .build());
+
+        PBlocks.getPoopCandleCakes().forEach((candle, candleCake) -> {
+            String candleCakePath = getBlockPath(candleCake.get());
+            String candlePath = getBlockPath(candle);
+            var unlitModel = candleCakeModel(candleCakePath, candlePath, bottom, top, side);
+            var litModel = candleCakeModel(candleCakePath + "_lit", candlePath + "_lit", bottom, top, side);
+
+            getVariantBuilder(candleCake.get())
+                    .partialState().with(PoopCandleCakeBlock.LIT, false).addModels(new ConfiguredModel(unlitModel))
+                    .partialState().with(PoopCandleCakeBlock.LIT, true).addModels(new ConfiguredModel(litModel));
+        });
+    }
+
+    private ModelFile cakeModel(String name, String parent, ResourceLocation bottom, ResourceLocation top, ResourceLocation side, ResourceLocation inside) {
+        var model = models().withExistingParent(name, mcLoc("block/" + parent))
+                .texture(PARTICLE, side)
+                .texture("bottom", bottom)
+                .texture("top", top)
+                .texture("side", side);
+        if (inside != null) {
+            model.texture("inside", inside);
+        }
+        return model;
+    }
+
+    private ModelFile candleCakeModel(String name, String candleTexture, ResourceLocation bottom, ResourceLocation top, ResourceLocation side) {
+        return models().withExistingParent(name, mcLoc("block/template_cake_with_candle"))
+                .texture(PARTICLE, side)
+                .texture("bottom", bottom)
+                .texture("top", top)
+                .texture("side", side)
+                .texture("candle", mcLoc("block/" + candleTexture));
     }
 
     private void randomBlockWithItem(Block block, int... weight) {

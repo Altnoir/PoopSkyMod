@@ -74,6 +74,8 @@ public class PSBlockTagProvider extends BlockTagsProvider {
         tag(BlockTags.BEACON_BASE_BLOCKS).addTag(PTags.Blocks.POOP_BLOCKS);
 
         tag(BlockTags.SNOW_LAYER_CAN_SURVIVE_ON).addTag(PTags.Blocks.POOP_BLOCKS);
+        PBlocks.getPoopCandleCakes().values().forEach(candleCake ->
+                tag(BlockTags.CANDLE_CAKES).add(candleCake.get()));
         tag(BlockTags.CLIMBABLE)
                 .add(PBlocks.ROUNDWORM_VINES.get())
                 .add(PBlocks.ROUNDWORM_VINES_PLANT.get());

@@ -5,6 +5,7 @@ import com.altnoir.poopsky.block.fluid.UrineLiquidBlock;
 import com.altnoir.poopsky.block.p.*;
 import com.altnoir.poopsky.item.p.CompooperBlockItem;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
@@ -18,6 +19,8 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -31,25 +34,27 @@ public class PBlocks {
             () -> new PoopCakeBlock(poopCakeProperties())
     );
 
-    private static final Map<Block, DeferredBlock<Block>> POOP_CANDLE_CAKES = Map.ofEntries(
-            registerPoopCandleCake("poop_candle_cake", Blocks.CANDLE),
-            registerPoopCandleCake("white_poop_candle_cake", Blocks.WHITE_CANDLE),
-            registerPoopCandleCake("orange_poop_candle_cake", Blocks.ORANGE_CANDLE),
-            registerPoopCandleCake("magenta_poop_candle_cake", Blocks.MAGENTA_CANDLE),
-            registerPoopCandleCake("light_blue_poop_candle_cake", Blocks.LIGHT_BLUE_CANDLE),
-            registerPoopCandleCake("yellow_poop_candle_cake", Blocks.YELLOW_CANDLE),
-            registerPoopCandleCake("lime_poop_candle_cake", Blocks.LIME_CANDLE),
-            registerPoopCandleCake("pink_poop_candle_cake", Blocks.PINK_CANDLE),
-            registerPoopCandleCake("gray_poop_candle_cake", Blocks.GRAY_CANDLE),
-            registerPoopCandleCake("light_gray_poop_candle_cake", Blocks.LIGHT_GRAY_CANDLE),
-            registerPoopCandleCake("cyan_poop_candle_cake", Blocks.CYAN_CANDLE),
-            registerPoopCandleCake("purple_poop_candle_cake", Blocks.PURPLE_CANDLE),
-            registerPoopCandleCake("blue_poop_candle_cake", Blocks.BLUE_CANDLE),
-            registerPoopCandleCake("brown_poop_candle_cake", Blocks.BROWN_CANDLE),
-            registerPoopCandleCake("green_poop_candle_cake", Blocks.GREEN_CANDLE),
-            registerPoopCandleCake("red_poop_candle_cake", Blocks.RED_CANDLE),
-            registerPoopCandleCake("black_poop_candle_cake", Blocks.BLACK_CANDLE)
-    );
+    private static final Block[] POOP_CAKE_CANDLES = {
+            Blocks.CANDLE,
+            Blocks.WHITE_CANDLE,
+            Blocks.ORANGE_CANDLE,
+            Blocks.MAGENTA_CANDLE,
+            Blocks.LIGHT_BLUE_CANDLE,
+            Blocks.YELLOW_CANDLE,
+            Blocks.LIME_CANDLE,
+            Blocks.PINK_CANDLE,
+            Blocks.GRAY_CANDLE,
+            Blocks.LIGHT_GRAY_CANDLE,
+            Blocks.CYAN_CANDLE,
+            Blocks.PURPLE_CANDLE,
+            Blocks.BLUE_CANDLE,
+            Blocks.BROWN_CANDLE,
+            Blocks.GREEN_CANDLE,
+            Blocks.RED_CANDLE,
+            Blocks.BLACK_CANDLE
+    };
+
+    private static final Map<Block, DeferredBlock<Block>> POOP_CANDLE_CAKES = registerPoopCandleCakes();
 
     public static final DeferredBlock<Block> POOP_PIECE = registerBlock("poop_piece",
             () -> new PoopPieceBlock(BlockBehaviour.Properties.of()
@@ -582,16 +587,25 @@ public class PBlocks {
                 .pushReaction(PushReaction.DESTROY);
     }
 
-    private static Map.Entry<Block, DeferredBlock<Block>> registerPoopCandleCake(String name, Block candle) {
+    private static Map<Block, DeferredBlock<Block>> registerPoopCandleCakes() {
+        Map<Block, DeferredBlock<Block>> candleCakes = new LinkedHashMap<>();
+        for (Block candle : POOP_CAKE_CANDLES) {
+            candleCakes.put(candle, registerPoopCandleCake(candle));
+        }
+        return Collections.unmodifiableMap(candleCakes);
+    }
+
+    private static DeferredBlock<Block> registerPoopCandleCake(Block candle) {
         if (!(candle instanceof CandleBlock)) {
             throw new IllegalArgumentException("Expected candle block: " + candle);
         }
 
-        DeferredBlock<Block> candleCake = BLOCKS.register(name,
+        String candleName = BuiltInRegistries.BLOCK.getKey(candle).getPath();
+        String name = candle == Blocks.CANDLE ? "poop_candle_cake" : candleName.replace("_candle", "_poop_candle_cake");
+
+        return BLOCKS.register(name,
                 () -> new PoopCandleCakeBlock(candle, poopCakeProperties()
                         .lightLevel(state -> state.getValue(PoopCandleCakeBlock.LIT) ? 3 : 0)));
-
-        return Map.entry(candle, candleCake);
     }
 
     public static Map<Block, DeferredBlock<Block>> getPoopCandleCakes() {

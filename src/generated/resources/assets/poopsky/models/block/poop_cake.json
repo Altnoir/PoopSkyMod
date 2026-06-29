@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/cake",
+  "textures": {
+    "bottom": "poopsky:block/poop_cake_bottom",
+    "particle": "poopsky:block/poop_cake_side",
+    "side": "poopsky:block/poop_cake_side",
+    "top": "poopsky:block/poop_cake_top"
+  }
+}

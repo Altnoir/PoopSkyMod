@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "poopsky:block/lime_poop_candle_cake"
+    },
+    "lit=true": {
+      "model": "poopsky:block/lime_poop_candle_cake_lit"
+    }
+  }
+}

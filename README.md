@@ -13,7 +13,7 @@ A Minecraft mod for NeoForge 1.21.1 that adds a variety of poop-themed blocks, i
 - **Toilets** — Toilet, Rainbow Toilet, Golden Toilet, Lava Toilet, colorful Concrete Toilets
 - **Compooper** — Compooper, Water Compooper, Lava Compooper, Powder Snow Compooper, Urine Compooper
 - **Machines** — Breeding Box, Fly Nest, Sieve, Placer
-- **Other** — Poop TNT, Poop Cake, Poop Candle Cake, Poolime Block, Maggots Block, Roundworm Vines, Chair, Raw Sea Block, Raw Wither Block
+- **Other** — POP, Poop Cake, Poop Candle Cake, Poolime Block, Maggots Block, Roundworm Vines, Chair, Raw Sea Block, Raw Wither Block
 
 ### Items
 - **Food** — Poop, Poop Bread, Poop Soup, Poop Pasta, Poop Dumplings, Poop Mooncake, Poop Vegetable Sticks, Pooburger, Pooburger Meat, Poodding
@@ -28,7 +28,7 @@ A Minecraft mod for NeoForge 1.21.1 that adds a variety of poop-themed blocks, i
 - **Chair** — Sittable chair entity
 - **Toilet** — Rideable toilet with plug system
 - **Projectiles** — Poop Ball, Sea Poop Ball, Wither Poop Ball
-- **Poop TNT** — Explosive poop projectile
+- **POP** — Explosive poop projectile
 
 ### Fluids
 - **Urine** — Custom fluid with interactions with Water, Lava, and Poop Blocks
@@ -56,14 +56,14 @@ A Minecraft mod for NeoForge 1.21.1 that adds a variety of poop-themed blocks, i
 
 ## Dependencies
 
-| Dependency | Version | Required |
-|---|---|---|
-| Minecraft | 1.21.1 | Yes |
-| NeoForge | 21.1.0+ | Yes |
-| Sable Companion | 1.6.0 | 可选 |
-| Create | 6.0.8+ | Optional |
-| JEI | 19.27+ | Optional |
-| Touhou Little Maid | — | Optional |
+| Dependency         | Version | Required |
+|--------------------|---------|----------|
+| Minecraft          | 1.21.1  | Yes      |
+| NeoForge           | 21.1.0+ | Yes      |
+| Sable Companion    | 1.6.0   | Optional |
+| Create             | 6.0.8+  | Optional |
+| JEI                | 19.27+  | Optional |
+| Touhou Little Maid | —       | Optional |
 
 ## Building
 
