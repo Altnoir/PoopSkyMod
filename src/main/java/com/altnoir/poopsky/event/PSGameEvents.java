@@ -4,7 +4,7 @@ import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
-import com.altnoir.poopsky.block.p.ToiletLavaBlock;
+import com.altnoir.poopsky.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.init.PEffects;
 import com.altnoir.poopsky.init.PFluids;
 import com.altnoir.poopsky.init.PItems;
@@ -72,7 +72,7 @@ public class PSGameEvents {
 
         if (!(heldItem.getItem() instanceof BottleItem) && !heldItem.is(Tags.Items.BUCKETS_EMPTY)) return;
         if (!(level.getBlockState(pos).getBlock() instanceof AbstractToiletBlock abstractToiletBlock)) return;
-        if (abstractToiletBlock instanceof ToiletLavaBlock && level.getBlockState(pos).getValue(ToiletLavaBlock.LAVA))
+        if (abstractToiletBlock instanceof BaseToiletLavaBlock && level.getBlockState(pos).getValue(BaseToiletLavaBlock.LAVA))
             return;
 
         if (!level.isClientSide) {

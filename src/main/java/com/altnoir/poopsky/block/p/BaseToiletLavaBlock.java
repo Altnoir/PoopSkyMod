@@ -24,11 +24,11 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class ToiletLavaBlock extends AbstractToiletBlock {
-    public static final MapCodec<ToiletLavaBlock> CODEC = simpleCodec(ToiletLavaBlock::new);
+public class BaseToiletLavaBlock extends AbstractToiletBlock {
+    public static final MapCodec<BaseToiletLavaBlock> CODEC = simpleCodec(BaseToiletLavaBlock::new);
     public static final BooleanProperty LAVA = BooleanProperty.create("lava");
 
-    public ToiletLavaBlock(Properties properties) {
+    public BaseToiletLavaBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH)
                 .setValue(LAVA, false));

@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.block.entity;
 
-import com.altnoir.poopsky.block.p.ToiletLavaBlock;
+import com.altnoir.poopsky.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.init.PBlockEntityType;
 import com.altnoir.poopsky.init.PFluids;
 import net.minecraft.core.BlockPos;
@@ -126,7 +126,7 @@ public class ToiletBlockEntity extends BlockEntity {
 
     public static void tick(Level level, BlockPos pos, BlockState state, ToiletBlockEntity blockEntity) {
         var fluid = PFluids.URINE.get();
-        if (state.hasProperty(ToiletLavaBlock.LAVA) && state.getValue(ToiletLavaBlock.LAVA)) {
+        if (state.hasProperty(BaseToiletLavaBlock.LAVA) && state.getValue(BaseToiletLavaBlock.LAVA)) {
             fluid = Fluids.LAVA;
         }
         var fluidTank = blockEntity.fluidTank.getFluid().getFluid();

@@ -1,7 +1,6 @@
 package com.altnoir.poopsky.item.p;
 
-import com.altnoir.poopsky.block.p.MetalToiletBlock;
-import com.altnoir.poopsky.block.p.StoneToiletBlock;
+import com.altnoir.poopsky.block.p.LavaToiletBlock;
 import com.altnoir.poopsky.block.p.ToiletBlock;
 import com.altnoir.poopsky.init.PComponents;
 import com.altnoir.poopsky.init.ToiletType;
@@ -38,10 +37,8 @@ public class ToiletBlockItem extends BlockItem {
         Block block = getBlock();
         if (block instanceof ToiletBlock toilet) {
             return toilet.applyVariant(state, type);
-        } else if (block instanceof StoneToiletBlock stone) {
-            return stone.applyVariant(state, type);
-        } else if (block instanceof MetalToiletBlock metal) {
-            return metal.applyVariant(state, type);
+        } else if (block instanceof LavaToiletBlock lava) {
+            return lava.applyVariant(state, type);
         }
 
         return state;

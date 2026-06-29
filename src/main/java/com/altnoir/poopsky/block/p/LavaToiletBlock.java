@@ -1,14 +1,14 @@
 package com.altnoir.poopsky.block.p;
 
+import com.altnoir.poopsky.block.LavaToiletVariant;
 import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
-import com.altnoir.poopsky.init.PToiletTypes;
 import com.altnoir.poopsky.init.ToiletType;
 import com.altnoir.poopsky.item.p.ToiletBlockItem;
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -20,7 +20,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -28,59 +27,27 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Map;
+public class LavaToiletBlock extends BaseToiletLavaBlock {
 
-public class MetalToiletBlock extends ToiletLavaBlock {
-    public static final MapCodec<MetalToiletBlock> CODEC = simpleCodec(MetalToiletBlock::new);
-
-    public enum MetalType implements StringRepresentable {
-        IRON(PToiletTypes.IRON),
-        GOLD(PToiletTypes.GOLD),
-        COPPER(PToiletTypes.COPPER),
-        LAPIS(PToiletTypes.LAPIS),
-        REDSTONE(PToiletTypes.REDSTONE),
-        QUARTZ(PToiletTypes.QUARTZ),
-        DIAMOND(PToiletTypes.DIAMOND),
-        EMERALD(PToiletTypes.EMERALD),
-        NETHERITE(PToiletTypes.NETHERITE);
-
-        private final ToiletType toiletType;
-
-        MetalType(ToiletType toiletType) {
-            this.toiletType = toiletType;
-        }
-
-        public ToiletType getToiletType() {
-            return toiletType;
-        }
-
-        @Override
-        public String getSerializedName() {
-            return name().toLowerCase();
-        }
-    }
-
-    public static final EnumProperty<MetalType> METAL_TYPE = EnumProperty.create("metal_type", MetalType.class);
-
-    private static final Map<Block, MetalType> BLOCK_TO_TYPE = Map.ofEntries(
-            Map.entry(Blocks.IRON_BLOCK, MetalType.IRON),
-            Map.entry(Blocks.GOLD_BLOCK, MetalType.GOLD),
-            Map.entry(Blocks.COPPER_BLOCK, MetalType.COPPER),
-            Map.entry(Blocks.LAPIS_BLOCK, MetalType.LAPIS),
-            Map.entry(Blocks.REDSTONE_BLOCK, MetalType.REDSTONE),
-            Map.entry(Blocks.QUARTZ_BLOCK, MetalType.QUARTZ),
-            Map.entry(Blocks.DIAMOND_BLOCK, MetalType.DIAMOND),
-            Map.entry(Blocks.EMERALD_BLOCK, MetalType.EMERALD),
-            Map.entry(Blocks.NETHERITE_BLOCK, MetalType.NETHERITE)
+    public static final MapCodec<LavaToiletBlock> CODEC = RecordCodecBuilder.mapCodec(instance ->
+            instance.group(
+                    LavaToiletVariant.CODEC.fieldOf("default_variant").forGetter(b -> b.defaultVariant),
+                    propertiesCodec()
+            ).apply(instance, LavaToiletBlock::new)
     );
 
-    public MetalToiletBlock(Properties properties) {
+    public static final EnumProperty<LavaToiletVariant> VARIANT = EnumProperty.create("variant", LavaToiletVariant.class);
+
+    private final LavaToiletVariant defaultVariant;
+
+    public LavaToiletBlock(LavaToiletVariant defaultVariant, Properties properties) {
         super(properties);
+        this.defaultVariant = defaultVariant;
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(FACING, Direction.NORTH)
                 .setValue(CONNECTION, AbstractToiletBlock.ToiletState.DEFAULT)
                 .setValue(LAVA, false)
-                .setValue(METAL_TYPE, MetalType.IRON));
+                .setValue(VARIANT, defaultVariant));
     }
 
     @Override
@@ -91,7 +58,7 @@ public class MetalToiletBlock extends ToiletLavaBlock {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
-        builder.add(METAL_TYPE);
+        builder.add(VARIANT);
     }
 
     @Override
@@ -104,11 +71,14 @@ public class MetalToiletBlock extends ToiletLavaBlock {
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (stack.getItem() instanceof BlockItem blockItem) {
-            MetalType type = BLOCK_TO_TYPE.get(blockItem.getBlock());
-            if (type != null && state.getValue(METAL_TYPE) != type) {
-                if (!state.getValue(LAVA)) {
-                    level.setBlock(pos, state.setValue(METAL_TYPE, type), 3);
-                    return ItemInteractionResult.sidedSuccess(level.isClientSide);
+            ToiletType toiletType = ToiletType.bySourceBlock(blockItem.getBlock());
+            if (toiletType != null) {
+                LavaToiletVariant variant = LavaToiletVariant.byToiletType(toiletType);
+                if (variant != null && variant.getCategory() == state.getValue(VARIANT).getCategory() && state.getValue(VARIANT) != variant) {
+                    if (!state.getValue(LAVA)) {
+                        level.setBlock(pos, state.setValue(VARIANT, variant), 3);
+                        return ItemInteractionResult.sidedSuccess(level.isClientSide);
+                    }
                 }
             }
         }
@@ -117,7 +87,7 @@ public class MetalToiletBlock extends ToiletLavaBlock {
 
     @Override
     public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
-        return withVariant(this, state.getValue(METAL_TYPE).getToiletType());
+        return withVariant(this, state.getValue(VARIANT).getToiletType());
     }
 
     @Override
@@ -132,16 +102,18 @@ public class MetalToiletBlock extends ToiletLavaBlock {
     }
 
     public void addToCreativeTab(CreativeModeTab.Output output) {
-        for (var type : MetalType.values()) {
-            output.accept(withVariant(this, type.getToiletType()));
+        ToiletType.Category category = defaultVariant.getCategory();
+        for (var variant : LavaToiletVariant.values()) {
+            if (variant.getCategory() == category) {
+                output.accept(withVariant(this, variant.getToiletType()));
+            }
         }
     }
 
     public BlockState applyVariant(BlockState state, ToiletType toiletType) {
-        for (var metalType : MetalType.values()) {
-            if (metalType.getToiletType().equals(toiletType)) {
-                return state.setValue(METAL_TYPE, metalType);
-            }
+        LavaToiletVariant variant = LavaToiletVariant.byToiletType(toiletType);
+        if (variant != null && variant.getCategory() == defaultVariant.getCategory()) {
+            return state.setValue(VARIANT, variant);
         }
         return state;
     }

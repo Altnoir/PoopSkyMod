@@ -10,8 +10,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class GoldgenToiletBlock extends ToiletLavaBlock {
-    public GoldgenToiletBlock(Properties properties) {
+public class GoldgenBaseToiletBlock extends BaseToiletLavaBlock {
+    public GoldgenBaseToiletBlock(Properties properties) {
         super(properties);
     }
 

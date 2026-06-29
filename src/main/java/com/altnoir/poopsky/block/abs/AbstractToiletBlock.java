@@ -2,7 +2,7 @@ package com.altnoir.poopsky.block.abs;
 
 import com.altnoir.poopsky.PTags;
 import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
-import com.altnoir.poopsky.block.p.ToiletLavaBlock;
+import com.altnoir.poopsky.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.entity.p.ToiletEntity;
 import com.altnoir.poopsky.init.PBlockEntityType;
 import com.altnoir.poopsky.init.PEffects;
@@ -368,11 +368,11 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
             return false;
         }
 
-        boolean thisIsLava = this instanceof ToiletLavaBlock;
-        boolean neighborIsLava = neighbor.getBlock() instanceof ToiletLavaBlock;
+        boolean thisIsLava = this instanceof BaseToiletLavaBlock;
+        boolean neighborIsLava = neighbor.getBlock() instanceof BaseToiletLavaBlock;
 
         if (thisIsLava && neighborIsLava) {
-            return neighbor.getValue(ToiletLavaBlock.LAVA).equals(state.getValue(ToiletLavaBlock.LAVA));
+            return neighbor.getValue(BaseToiletLavaBlock.LAVA).equals(state.getValue(BaseToiletLavaBlock.LAVA));
         }
         return !thisIsLava && !neighborIsLava;
     }

@@ -1,7 +1,6 @@
 package com.altnoir.poopsky.loot;
 
-import com.altnoir.poopsky.block.p.MetalToiletBlock;
-import com.altnoir.poopsky.block.p.StoneToiletBlock;
+import com.altnoir.poopsky.block.p.LavaToiletBlock;
 import com.altnoir.poopsky.block.p.ToiletBlock;
 import com.altnoir.poopsky.init.PComponents;
 import com.altnoir.poopsky.init.PLootFunctions;
@@ -39,10 +38,8 @@ public class SetToiletTypeFunction extends LootItemConditionalFunction {
 
         if (block instanceof ToiletBlock) {
             type = state.getValue(ToiletBlock.WOOD_TYPE).getToiletType();
-        } else if (block instanceof StoneToiletBlock) {
-            type = state.getValue(StoneToiletBlock.STONE_TYPE).getToiletType();
-        } else if (block instanceof MetalToiletBlock) {
-            type = state.getValue(MetalToiletBlock.METAL_TYPE).getToiletType();
+        } else if (block instanceof LavaToiletBlock) {
+            type = state.getValue(LavaToiletBlock.VARIANT).getToiletType();
         }
 
         if (type != null) {

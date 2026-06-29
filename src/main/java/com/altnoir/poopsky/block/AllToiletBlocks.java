@@ -1,14 +1,12 @@
 package com.altnoir.poopsky.block;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.p.GoldgenToiletBlock;
-import com.altnoir.poopsky.block.p.MetalToiletBlock;
-import com.altnoir.poopsky.block.p.StoneToiletBlock;
+import com.altnoir.poopsky.block.p.GoldgenBaseToiletBlock;
+import com.altnoir.poopsky.block.p.LavaToiletBlock;
 import com.altnoir.poopsky.block.p.ToiletBlock;
-import com.altnoir.poopsky.block.p.ToiletLavaBlock;
+import com.altnoir.poopsky.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.item.p.ToiletBlockItem;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -38,17 +36,17 @@ public final class AllToiletBlocks {
 
     public static final DeferredBlock<Block> STONE_TOILET = registerBlock(
             "stone_toilet",
-            () -> new StoneToiletBlock(lavaToiletProperties(MapColor.STONE))
+            () -> new LavaToiletBlock(LavaToiletVariant.COBBLESTONE, lavaToiletProperties(MapColor.STONE))
     );
 
     public static final DeferredBlock<Block> METAL_TOILET = registerBlock(
             "metal_toilet",
-            () -> new MetalToiletBlock(lavaToiletProperties(MapColor.METAL))
+            () -> new LavaToiletBlock(LavaToiletVariant.IRON, lavaToiletProperties(MapColor.METAL))
     );
 
     public static final DeferredBlock<Block> RAINBOW_TOILET = registerBlock(
             "rainbow_toilet",
-            () -> new GoldgenToiletBlock(lavaToiletProperties(MapColor.COLOR_LIGHT_GRAY))
+            () -> new GoldgenBaseToiletBlock(lavaToiletProperties(MapColor.COLOR_LIGHT_GRAY))
     );
 
     private static BlockBehaviour.Properties woodToiletProperties(MapColor color, SoundType sound) {
@@ -71,7 +69,7 @@ public final class AllToiletBlocks {
     }
 
     private static ToIntFunction<BlockState> lavaLightLevel() {
-        return state -> state.getValue(ToiletLavaBlock.LAVA) ? LAVA_LIGHT_LEVEL : 0;
+        return state -> state.getValue(BaseToiletLavaBlock.LAVA) ? LAVA_LIGHT_LEVEL : 0;
     }
 
     public static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> blockFactory) {

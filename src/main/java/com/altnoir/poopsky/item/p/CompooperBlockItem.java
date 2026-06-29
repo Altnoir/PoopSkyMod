@@ -2,7 +2,7 @@ package com.altnoir.poopsky.item.p;
 
 import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.init.PBlocks;
-import com.altnoir.poopsky.block.p.ToiletLavaBlock;
+import com.altnoir.poopsky.block.p.BaseToiletLavaBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -33,7 +33,7 @@ public class CompooperBlockItem extends BlockItem {
 
 
         if (block instanceof AbstractToiletBlock && player != null && !player.isShiftKeyDown()) {
-            if (block instanceof ToiletLavaBlock && state.getValue(ToiletLavaBlock.LAVA)) {
+            if (block instanceof BaseToiletLavaBlock && state.getValue(BaseToiletLavaBlock.LAVA)) {
                 return InteractionResult.PASS;
             }
             if (!level.isClientSide && !stack.isEmpty()) {
