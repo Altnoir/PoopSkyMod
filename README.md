@@ -60,7 +60,7 @@ A Minecraft mod for NeoForge 1.21.1 that adds a variety of poop-themed blocks, i
 |---|---|---|
 | Minecraft | 1.21.1 | Yes |
 | NeoForge | 21.1.0+ | Yes |
-| Sable Companion | 1.6.0 | Yes (bundled) |
+| Sable Companion | 1.6.0 | 可选 |
 | Create | 6.0.8+ | Optional |
 | JEI | 19.27+ | Optional |
 | Touhou Little Maid | — | Optional |
