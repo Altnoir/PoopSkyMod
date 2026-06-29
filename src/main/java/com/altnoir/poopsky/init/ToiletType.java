@@ -29,7 +29,7 @@ public record ToiletType(Block sourceBlock, Category category) {
     }
 
     public Component getDisplayName() {
-        return Component.translatable("toilet_type.poopsky." + id());
+        return sourceBlock.getName();
     }
 
     public String getSerializedName() {

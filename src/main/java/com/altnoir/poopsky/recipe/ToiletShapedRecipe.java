@@ -5,7 +5,6 @@ import com.altnoir.poopsky.init.PRecipes;
 import com.altnoir.poopsky.init.ToiletType;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.netty.buffer.ByteBuf;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -51,7 +50,9 @@ public class ToiletShapedRecipe implements CraftingRecipe {
 
     @Override
     public ItemStack getResultItem(HolderLookup.Provider registries) {
-        return delegate.getResultItem(registries);
+        ItemStack result = delegate.getResultItem(registries).copy();
+        result.set(PComponents.TOILET_TYPE.get(), toiletType);
+        return result;
     }
 
     @Override
