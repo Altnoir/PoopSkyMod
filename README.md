@@ -75,7 +75,8 @@ The output artifact will be in `build/libs/`.
 
 ## License
 
-MIT
+cod: MIT
+art: CC0
 
 ## Authors
 
