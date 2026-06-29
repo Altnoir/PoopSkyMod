@@ -357,12 +357,10 @@ public class PSBlockStateProvider extends BlockStateProvider {
             List<ModelFile> modelList = new ArrayList<>();
             modelList.add(models().withExistingParent(getBlockKey(toilet) + suffix, modLoc("block/toilet")).texture("toilet", tex));
             modelList.add(models().withExistingParent(getBlockKey(toilet) + suffix + "_n", modLoc("block/toilet_n")).texture("toilet", tex));
-            modelList.add(models().withExistingParent(getBlockKey(toilet) + suffix + "_s", modLoc("block/toilet_s")).texture("toilet", tex));
             modelList.add(models().withExistingParent(getBlockKey(toilet) + suffix + "_ns", modLoc("block/toilet_ns")).texture("toilet", tex));
             if (hasLava) {
                 modelList.add(models().withExistingParent(getBlockKey(toilet) + suffix + "_lava", modLoc("block/toilet_lava")).texture("toilet", tex));
                 modelList.add(models().withExistingParent(getBlockKey(toilet) + suffix + "_lava_n", modLoc("block/toilet_lava_n")).texture("toilet", tex));
-                modelList.add(models().withExistingParent(getBlockKey(toilet) + suffix + "_lava_s", modLoc("block/toilet_lava_s")).texture("toilet", tex));
                 modelList.add(models().withExistingParent(getBlockKey(toilet) + suffix + "_lava_ns", modLoc("block/toilet_lava_ns")).texture("toilet", tex));
             }
             variantModels.put(type, modelList.toArray(new ModelFile[0]));
@@ -386,17 +384,17 @@ public class PSBlockStateProvider extends BlockStateProvider {
             if (models == null) {
                 return ConfiguredModel.builder().modelFile(defaultModel).rotationY(yRot).uvLock(true).build();
             }
-            int offset = hasLava && state.getValue(BaseToiletLavaBlock.LAVA) ? 4 : 0;
+            int offset = hasLava && state.getValue(BaseToiletLavaBlock.LAVA) ? 3 : 0;
+            int extraYRot = connection == AbstractToiletBlock.ToiletState.BACK ? 180 : 0;
             ModelFile chosenModel = switch (connection) {
                 case DEFAULT -> models[offset];
-                case FRONT -> models[offset + 1];
-                case BACK -> models[offset + 2];
-                case BOTH -> models[offset + 3];
+                case FRONT, BACK -> models[offset + 1];
+                case BOTH -> models[offset + 2];
             };
 
             return ConfiguredModel.builder()
                     .modelFile(chosenModel)
-                    .rotationY(yRot)
+                    .rotationY((yRot + extraYRot) % 360)
                     .uvLock(true)
                     .build();
         });
@@ -487,8 +485,6 @@ public class PSBlockStateProvider extends BlockStateProvider {
                 modLoc("block/toilet")).texture("toilet", baseTexture);
         var modelN = models().withExistingParent(getBlockKey(toilet) + "_n",
                 modLoc("block/toilet_n")).texture("toilet", baseTexture);
-        var modelS = models().withExistingParent(getBlockKey(toilet) + "_s",
-                modLoc("block/toilet_s")).texture("toilet", baseTexture);
         var modelNS = models().withExistingParent(getBlockKey(toilet) + "_ns",
                 modLoc("block/toilet_ns")).texture("toilet", baseTexture);
 
@@ -497,8 +493,6 @@ public class PSBlockStateProvider extends BlockStateProvider {
                 modLoc("block/toilet_lava")).texture("toilet", baseTexture);
         var modelLavaN = models().withExistingParent(getBlockKey(toilet) + "_lava_n",
                 modLoc("block/toilet_lava_n")).texture("toilet", baseTexture);
-        var modelLavaS = models().withExistingParent(getBlockKey(toilet) + "_lava_s",
-                modLoc("block/toilet_lava_s")).texture("toilet", baseTexture);
         var modelLavaNS = models().withExistingParent(getBlockKey(toilet) + "_lava_ns",
                 modLoc("block/toilet_lava_ns")).texture("toilet", baseTexture);
 
@@ -519,21 +513,22 @@ public class PSBlockStateProvider extends BlockStateProvider {
                 chosenModel = switch (connection) {
                     case DEFAULT -> baseModel;
                     case FRONT -> modelN;
-                    case BACK -> modelS;
+                    case BACK -> modelN;
                     case BOTH -> modelNS;
                 };
             } else {
                 chosenModel = switch (connection) {
                     case DEFAULT -> modelLava;
                     case FRONT -> modelLavaN;
-                    case BACK -> modelLavaS;
+                    case BACK -> modelLavaN;
                     case BOTH -> modelLavaNS;
                 };
             }
+            int extraYRot = connection == AbstractToiletBlock.ToiletState.BACK ? 180 : 0;
 
             return ConfiguredModel.builder()
                     .modelFile(chosenModel)
-                    .rotationY(yRot)
+                    .rotationY((yRot + extraYRot) % 360)
                     .uvLock(true)
                     .build();
         });
@@ -548,11 +543,6 @@ public class PSBlockStateProvider extends BlockStateProvider {
     private void blockItem(DeferredBlock<?> block) {
         simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile(PoopSky.MOD_ID + ":block/" + block.getId().getPath()));
     }
-
-    private void blockItem(DeferredBlock<?> block, String path) {
-        simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile(PoopSky.MOD_ID + ":block/" + block.getId().getPath() + path));
-    }
-
 
     private String getBlockPath(Block block) {
         return getBlockKey(block).getPath();

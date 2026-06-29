@@ -21,9 +21,9 @@
       "y": 90
     },
     "connection=back,facing=east,lava=false,variant=copper": {
-      "model": "poopsky:block/metal_toilet_copper_s",
+      "model": "poopsky:block/metal_toilet_copper_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=false,variant=cyan_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -31,19 +31,19 @@
       "y": 90
     },
     "connection=back,facing=east,lava=false,variant=diamond": {
-      "model": "poopsky:block/metal_toilet_diamond_s",
+      "model": "poopsky:block/metal_toilet_diamond_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=false,variant=emerald": {
-      "model": "poopsky:block/metal_toilet_emerald_s",
+      "model": "poopsky:block/metal_toilet_emerald_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=false,variant=gold": {
-      "model": "poopsky:block/metal_toilet_gold_s",
+      "model": "poopsky:block/metal_toilet_gold_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=false,variant=gray_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -56,14 +56,14 @@
       "y": 90
     },
     "connection=back,facing=east,lava=false,variant=iron": {
-      "model": "poopsky:block/metal_toilet_iron_s",
+      "model": "poopsky:block/metal_toilet_iron_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=false,variant=lapis": {
-      "model": "poopsky:block/metal_toilet_lapis_s",
+      "model": "poopsky:block/metal_toilet_lapis_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=false,variant=light_blue_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -96,9 +96,9 @@
       "y": 90
     },
     "connection=back,facing=east,lava=false,variant=netherite": {
-      "model": "poopsky:block/metal_toilet_netherite_s",
+      "model": "poopsky:block/metal_toilet_netherite_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=false,variant=orange_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -116,9 +116,9 @@
       "y": 90
     },
     "connection=back,facing=east,lava=false,variant=quartz": {
-      "model": "poopsky:block/metal_toilet_quartz_s",
+      "model": "poopsky:block/metal_toilet_quartz_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=false,variant=red_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -126,9 +126,9 @@
       "y": 90
     },
     "connection=back,facing=east,lava=false,variant=redstone": {
-      "model": "poopsky:block/metal_toilet_redstone_s",
+      "model": "poopsky:block/metal_toilet_redstone_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=false,variant=smooth_stone": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -181,9 +181,9 @@
       "y": 90
     },
     "connection=back,facing=east,lava=true,variant=copper": {
-      "model": "poopsky:block/metal_toilet_copper_lava_s",
+      "model": "poopsky:block/metal_toilet_copper_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=cyan_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -191,19 +191,19 @@
       "y": 90
     },
     "connection=back,facing=east,lava=true,variant=diamond": {
-      "model": "poopsky:block/metal_toilet_diamond_lava_s",
+      "model": "poopsky:block/metal_toilet_diamond_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=emerald": {
-      "model": "poopsky:block/metal_toilet_emerald_lava_s",
+      "model": "poopsky:block/metal_toilet_emerald_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=gold": {
-      "model": "poopsky:block/metal_toilet_gold_lava_s",
+      "model": "poopsky:block/metal_toilet_gold_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=gray_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -216,14 +216,14 @@
       "y": 90
     },
     "connection=back,facing=east,lava=true,variant=iron": {
-      "model": "poopsky:block/metal_toilet_iron_lava_s",
+      "model": "poopsky:block/metal_toilet_iron_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=lapis": {
-      "model": "poopsky:block/metal_toilet_lapis_lava_s",
+      "model": "poopsky:block/metal_toilet_lapis_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=light_blue_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -256,9 +256,9 @@
       "y": 90
     },
     "connection=back,facing=east,lava=true,variant=netherite": {
-      "model": "poopsky:block/metal_toilet_netherite_lava_s",
+      "model": "poopsky:block/metal_toilet_netherite_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=orange_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -276,9 +276,9 @@
       "y": 90
     },
     "connection=back,facing=east,lava=true,variant=quartz": {
-      "model": "poopsky:block/metal_toilet_quartz_lava_s",
+      "model": "poopsky:block/metal_toilet_quartz_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=red_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -286,9 +286,9 @@
       "y": 90
     },
     "connection=back,facing=east,lava=true,variant=redstone": {
-      "model": "poopsky:block/metal_toilet_redstone_lava_s",
+      "model": "poopsky:block/metal_toilet_redstone_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=smooth_stone": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -337,24 +337,28 @@
       "uvlock": true
     },
     "connection=back,facing=north,lava=false,variant=copper": {
-      "model": "poopsky:block/metal_toilet_copper_s",
-      "uvlock": true
+      "model": "poopsky:block/metal_toilet_copper_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=false,variant=cyan_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
       "uvlock": true
     },
     "connection=back,facing=north,lava=false,variant=diamond": {
-      "model": "poopsky:block/metal_toilet_diamond_s",
-      "uvlock": true
+      "model": "poopsky:block/metal_toilet_diamond_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=false,variant=emerald": {
-      "model": "poopsky:block/metal_toilet_emerald_s",
-      "uvlock": true
+      "model": "poopsky:block/metal_toilet_emerald_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=false,variant=gold": {
-      "model": "poopsky:block/metal_toilet_gold_s",
-      "uvlock": true
+      "model": "poopsky:block/metal_toilet_gold_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=false,variant=gray_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -365,12 +369,14 @@
       "uvlock": true
     },
     "connection=back,facing=north,lava=false,variant=iron": {
-      "model": "poopsky:block/metal_toilet_iron_s",
-      "uvlock": true
+      "model": "poopsky:block/metal_toilet_iron_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=false,variant=lapis": {
-      "model": "poopsky:block/metal_toilet_lapis_s",
-      "uvlock": true
+      "model": "poopsky:block/metal_toilet_lapis_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=false,variant=light_blue_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -397,8 +403,9 @@
       "uvlock": true
     },
     "connection=back,facing=north,lava=false,variant=netherite": {
-      "model": "poopsky:block/metal_toilet_netherite_s",
-      "uvlock": true
+      "model": "poopsky:block/metal_toilet_netherite_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=false,variant=orange_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -413,16 +420,18 @@
       "uvlock": true
     },
     "connection=back,facing=north,lava=false,variant=quartz": {
-      "model": "poopsky:block/metal_toilet_quartz_s",
-      "uvlock": true
+      "model": "poopsky:block/metal_toilet_quartz_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=false,variant=red_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
       "uvlock": true
     },
     "connection=back,facing=north,lava=false,variant=redstone": {
-      "model": "poopsky:block/metal_toilet_redstone_s",
-      "uvlock": true
+      "model": "poopsky:block/metal_toilet_redstone_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=false,variant=smooth_stone": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -465,24 +474,28 @@
       "uvlock": true
     },
     "connection=back,facing=north,lava=true,variant=copper": {
-      "model": "poopsky:block/metal_toilet_copper_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/metal_toilet_copper_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=cyan_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
       "uvlock": true
     },
     "connection=back,facing=north,lava=true,variant=diamond": {
-      "model": "poopsky:block/metal_toilet_diamond_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/metal_toilet_diamond_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=emerald": {
-      "model": "poopsky:block/metal_toilet_emerald_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/metal_toilet_emerald_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=gold": {
-      "model": "poopsky:block/metal_toilet_gold_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/metal_toilet_gold_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=gray_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -493,12 +506,14 @@
       "uvlock": true
     },
     "connection=back,facing=north,lava=true,variant=iron": {
-      "model": "poopsky:block/metal_toilet_iron_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/metal_toilet_iron_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=lapis": {
-      "model": "poopsky:block/metal_toilet_lapis_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/metal_toilet_lapis_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=light_blue_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -525,8 +540,9 @@
       "uvlock": true
     },
     "connection=back,facing=north,lava=true,variant=netherite": {
-      "model": "poopsky:block/metal_toilet_netherite_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/metal_toilet_netherite_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=orange_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -541,16 +557,18 @@
       "uvlock": true
     },
     "connection=back,facing=north,lava=true,variant=quartz": {
-      "model": "poopsky:block/metal_toilet_quartz_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/metal_toilet_quartz_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=red_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
       "uvlock": true
     },
     "connection=back,facing=north,lava=true,variant=redstone": {
-      "model": "poopsky:block/metal_toilet_redstone_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/metal_toilet_redstone_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=smooth_stone": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -597,9 +615,8 @@
       "y": 180
     },
     "connection=back,facing=south,lava=false,variant=copper": {
-      "model": "poopsky:block/metal_toilet_copper_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/metal_toilet_copper_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=false,variant=cyan_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -607,19 +624,16 @@
       "y": 180
     },
     "connection=back,facing=south,lava=false,variant=diamond": {
-      "model": "poopsky:block/metal_toilet_diamond_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/metal_toilet_diamond_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=false,variant=emerald": {
-      "model": "poopsky:block/metal_toilet_emerald_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/metal_toilet_emerald_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=false,variant=gold": {
-      "model": "poopsky:block/metal_toilet_gold_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/metal_toilet_gold_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=false,variant=gray_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -632,14 +646,12 @@
       "y": 180
     },
     "connection=back,facing=south,lava=false,variant=iron": {
-      "model": "poopsky:block/metal_toilet_iron_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/metal_toilet_iron_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=false,variant=lapis": {
-      "model": "poopsky:block/metal_toilet_lapis_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/metal_toilet_lapis_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=false,variant=light_blue_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -672,9 +684,8 @@
       "y": 180
     },
     "connection=back,facing=south,lava=false,variant=netherite": {
-      "model": "poopsky:block/metal_toilet_netherite_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/metal_toilet_netherite_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=false,variant=orange_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -692,9 +703,8 @@
       "y": 180
     },
     "connection=back,facing=south,lava=false,variant=quartz": {
-      "model": "poopsky:block/metal_toilet_quartz_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/metal_toilet_quartz_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=false,variant=red_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -702,9 +712,8 @@
       "y": 180
     },
     "connection=back,facing=south,lava=false,variant=redstone": {
-      "model": "poopsky:block/metal_toilet_redstone_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/metal_toilet_redstone_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=false,variant=smooth_stone": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -757,9 +766,8 @@
       "y": 180
     },
     "connection=back,facing=south,lava=true,variant=copper": {
-      "model": "poopsky:block/metal_toilet_copper_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/metal_toilet_copper_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=cyan_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -767,19 +775,16 @@
       "y": 180
     },
     "connection=back,facing=south,lava=true,variant=diamond": {
-      "model": "poopsky:block/metal_toilet_diamond_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/metal_toilet_diamond_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=emerald": {
-      "model": "poopsky:block/metal_toilet_emerald_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/metal_toilet_emerald_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=gold": {
-      "model": "poopsky:block/metal_toilet_gold_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/metal_toilet_gold_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=gray_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -792,14 +797,12 @@
       "y": 180
     },
     "connection=back,facing=south,lava=true,variant=iron": {
-      "model": "poopsky:block/metal_toilet_iron_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/metal_toilet_iron_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=lapis": {
-      "model": "poopsky:block/metal_toilet_lapis_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/metal_toilet_lapis_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=light_blue_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -832,9 +835,8 @@
       "y": 180
     },
     "connection=back,facing=south,lava=true,variant=netherite": {
-      "model": "poopsky:block/metal_toilet_netherite_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/metal_toilet_netherite_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=orange_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -852,9 +854,8 @@
       "y": 180
     },
     "connection=back,facing=south,lava=true,variant=quartz": {
-      "model": "poopsky:block/metal_toilet_quartz_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/metal_toilet_quartz_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=red_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -862,9 +863,8 @@
       "y": 180
     },
     "connection=back,facing=south,lava=true,variant=redstone": {
-      "model": "poopsky:block/metal_toilet_redstone_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/metal_toilet_redstone_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=smooth_stone": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -917,9 +917,9 @@
       "y": 270
     },
     "connection=back,facing=west,lava=false,variant=copper": {
-      "model": "poopsky:block/metal_toilet_copper_s",
+      "model": "poopsky:block/metal_toilet_copper_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=false,variant=cyan_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -927,19 +927,19 @@
       "y": 270
     },
     "connection=back,facing=west,lava=false,variant=diamond": {
-      "model": "poopsky:block/metal_toilet_diamond_s",
+      "model": "poopsky:block/metal_toilet_diamond_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=false,variant=emerald": {
-      "model": "poopsky:block/metal_toilet_emerald_s",
+      "model": "poopsky:block/metal_toilet_emerald_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=false,variant=gold": {
-      "model": "poopsky:block/metal_toilet_gold_s",
+      "model": "poopsky:block/metal_toilet_gold_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=false,variant=gray_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -952,14 +952,14 @@
       "y": 270
     },
     "connection=back,facing=west,lava=false,variant=iron": {
-      "model": "poopsky:block/metal_toilet_iron_s",
+      "model": "poopsky:block/metal_toilet_iron_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=false,variant=lapis": {
-      "model": "poopsky:block/metal_toilet_lapis_s",
+      "model": "poopsky:block/metal_toilet_lapis_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=false,variant=light_blue_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -992,9 +992,9 @@
       "y": 270
     },
     "connection=back,facing=west,lava=false,variant=netherite": {
-      "model": "poopsky:block/metal_toilet_netherite_s",
+      "model": "poopsky:block/metal_toilet_netherite_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=false,variant=orange_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -1012,9 +1012,9 @@
       "y": 270
     },
     "connection=back,facing=west,lava=false,variant=quartz": {
-      "model": "poopsky:block/metal_toilet_quartz_s",
+      "model": "poopsky:block/metal_toilet_quartz_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=false,variant=red_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -1022,9 +1022,9 @@
       "y": 270
     },
     "connection=back,facing=west,lava=false,variant=redstone": {
-      "model": "poopsky:block/metal_toilet_redstone_s",
+      "model": "poopsky:block/metal_toilet_redstone_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=false,variant=smooth_stone": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -1077,9 +1077,9 @@
       "y": 270
     },
     "connection=back,facing=west,lava=true,variant=copper": {
-      "model": "poopsky:block/metal_toilet_copper_lava_s",
+      "model": "poopsky:block/metal_toilet_copper_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=cyan_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -1087,19 +1087,19 @@
       "y": 270
     },
     "connection=back,facing=west,lava=true,variant=diamond": {
-      "model": "poopsky:block/metal_toilet_diamond_lava_s",
+      "model": "poopsky:block/metal_toilet_diamond_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=emerald": {
-      "model": "poopsky:block/metal_toilet_emerald_lava_s",
+      "model": "poopsky:block/metal_toilet_emerald_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=gold": {
-      "model": "poopsky:block/metal_toilet_gold_lava_s",
+      "model": "poopsky:block/metal_toilet_gold_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=gray_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -1112,14 +1112,14 @@
       "y": 270
     },
     "connection=back,facing=west,lava=true,variant=iron": {
-      "model": "poopsky:block/metal_toilet_iron_lava_s",
+      "model": "poopsky:block/metal_toilet_iron_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=lapis": {
-      "model": "poopsky:block/metal_toilet_lapis_lava_s",
+      "model": "poopsky:block/metal_toilet_lapis_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=light_blue_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -1152,9 +1152,9 @@
       "y": 270
     },
     "connection=back,facing=west,lava=true,variant=netherite": {
-      "model": "poopsky:block/metal_toilet_netherite_lava_s",
+      "model": "poopsky:block/metal_toilet_netherite_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=orange_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -1172,9 +1172,9 @@
       "y": 270
     },
     "connection=back,facing=west,lava=true,variant=quartz": {
-      "model": "poopsky:block/metal_toilet_quartz_lava_s",
+      "model": "poopsky:block/metal_toilet_quartz_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=red_concrete": {
       "model": "poopsky:block/metal_toilet_iron",
@@ -1182,9 +1182,9 @@
       "y": 270
     },
     "connection=back,facing=west,lava=true,variant=redstone": {
-      "model": "poopsky:block/metal_toilet_redstone_lava_s",
+      "model": "poopsky:block/metal_toilet_redstone_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=smooth_stone": {
       "model": "poopsky:block/metal_toilet_iron",

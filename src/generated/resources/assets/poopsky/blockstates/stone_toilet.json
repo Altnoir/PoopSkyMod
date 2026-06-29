@@ -1,24 +1,24 @@
 {
   "variants": {
     "connection=back,facing=east,lava=false,variant=black_concrete": {
-      "model": "poopsky:block/stone_toilet_black_concrete_s",
+      "model": "poopsky:block/stone_toilet_black_concrete_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=false,variant=blue_concrete": {
-      "model": "poopsky:block/stone_toilet_blue_concrete_s",
+      "model": "poopsky:block/stone_toilet_blue_concrete_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=false,variant=brown_concrete": {
-      "model": "poopsky:block/stone_toilet_brown_concrete_s",
+      "model": "poopsky:block/stone_toilet_brown_concrete_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=false,variant=cobblestone": {
-      "model": "poopsky:block/stone_toilet_cobblestone_s",
+      "model": "poopsky:block/stone_toilet_cobblestone_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=false,variant=copper": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -26,9 +26,9 @@
       "y": 90
     },
     "connection=back,facing=east,lava=false,variant=cyan_concrete": {
-      "model": "poopsky:block/stone_toilet_cyan_concrete_s",
+      "model": "poopsky:block/stone_toilet_cyan_concrete_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=false,variant=diamond": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -46,14 +46,14 @@
       "y": 90
     },
     "connection=back,facing=east,lava=false,variant=gray_concrete": {
-      "model": "poopsky:block/stone_toilet_gray_concrete_s",
+      "model": "poopsky:block/stone_toilet_gray_concrete_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=false,variant=green_concrete": {
-      "model": "poopsky:block/stone_toilet_green_concrete_s",
+      "model": "poopsky:block/stone_toilet_green_concrete_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=false,variant=iron": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -66,34 +66,34 @@
       "y": 90
     },
     "connection=back,facing=east,lava=false,variant=light_blue_concrete": {
-      "model": "poopsky:block/stone_toilet_light_blue_concrete_s",
+      "model": "poopsky:block/stone_toilet_light_blue_concrete_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=false,variant=light_gray_concrete": {
-      "model": "poopsky:block/stone_toilet_light_gray_concrete_s",
+      "model": "poopsky:block/stone_toilet_light_gray_concrete_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=false,variant=lime_concrete": {
-      "model": "poopsky:block/stone_toilet_lime_concrete_s",
+      "model": "poopsky:block/stone_toilet_lime_concrete_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=false,variant=magenta_concrete": {
-      "model": "poopsky:block/stone_toilet_magenta_concrete_s",
+      "model": "poopsky:block/stone_toilet_magenta_concrete_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=false,variant=mossy_cobblestone": {
-      "model": "poopsky:block/stone_toilet_mossy_cobblestone_s",
+      "model": "poopsky:block/stone_toilet_mossy_cobblestone_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=false,variant=mossy_stone_brick": {
-      "model": "poopsky:block/stone_toilet_mossy_stone_brick_s",
+      "model": "poopsky:block/stone_toilet_mossy_stone_brick_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=false,variant=netherite": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -101,19 +101,19 @@
       "y": 90
     },
     "connection=back,facing=east,lava=false,variant=orange_concrete": {
-      "model": "poopsky:block/stone_toilet_orange_concrete_s",
+      "model": "poopsky:block/stone_toilet_orange_concrete_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=false,variant=pink_concrete": {
-      "model": "poopsky:block/stone_toilet_pink_concrete_s",
+      "model": "poopsky:block/stone_toilet_pink_concrete_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=false,variant=purple_concrete": {
-      "model": "poopsky:block/stone_toilet_purple_concrete_s",
+      "model": "poopsky:block/stone_toilet_purple_concrete_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=false,variant=quartz": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -121,9 +121,9 @@
       "y": 90
     },
     "connection=back,facing=east,lava=false,variant=red_concrete": {
-      "model": "poopsky:block/stone_toilet_red_concrete_s",
+      "model": "poopsky:block/stone_toilet_red_concrete_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=false,variant=redstone": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -131,54 +131,54 @@
       "y": 90
     },
     "connection=back,facing=east,lava=false,variant=smooth_stone": {
-      "model": "poopsky:block/stone_toilet_smooth_stone_s",
+      "model": "poopsky:block/stone_toilet_smooth_stone_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=false,variant=stone": {
-      "model": "poopsky:block/stone_toilet_stone_s",
+      "model": "poopsky:block/stone_toilet_stone_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=false,variant=stone_brick": {
-      "model": "poopsky:block/stone_toilet_stone_brick_s",
+      "model": "poopsky:block/stone_toilet_stone_brick_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=false,variant=tile": {
-      "model": "poopsky:block/stone_toilet_tile_s",
+      "model": "poopsky:block/stone_toilet_tile_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=false,variant=white_concrete": {
-      "model": "poopsky:block/stone_toilet_white_concrete_s",
+      "model": "poopsky:block/stone_toilet_white_concrete_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=false,variant=yellow_concrete": {
-      "model": "poopsky:block/stone_toilet_yellow_concrete_s",
+      "model": "poopsky:block/stone_toilet_yellow_concrete_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=black_concrete": {
-      "model": "poopsky:block/stone_toilet_black_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_black_concrete_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=blue_concrete": {
-      "model": "poopsky:block/stone_toilet_blue_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_blue_concrete_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=brown_concrete": {
-      "model": "poopsky:block/stone_toilet_brown_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_brown_concrete_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=cobblestone": {
-      "model": "poopsky:block/stone_toilet_cobblestone_lava_s",
+      "model": "poopsky:block/stone_toilet_cobblestone_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=copper": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -186,9 +186,9 @@
       "y": 90
     },
     "connection=back,facing=east,lava=true,variant=cyan_concrete": {
-      "model": "poopsky:block/stone_toilet_cyan_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_cyan_concrete_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=diamond": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -206,14 +206,14 @@
       "y": 90
     },
     "connection=back,facing=east,lava=true,variant=gray_concrete": {
-      "model": "poopsky:block/stone_toilet_gray_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_gray_concrete_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=green_concrete": {
-      "model": "poopsky:block/stone_toilet_green_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_green_concrete_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=iron": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -226,34 +226,34 @@
       "y": 90
     },
     "connection=back,facing=east,lava=true,variant=light_blue_concrete": {
-      "model": "poopsky:block/stone_toilet_light_blue_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_light_blue_concrete_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=light_gray_concrete": {
-      "model": "poopsky:block/stone_toilet_light_gray_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_light_gray_concrete_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=lime_concrete": {
-      "model": "poopsky:block/stone_toilet_lime_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_lime_concrete_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=magenta_concrete": {
-      "model": "poopsky:block/stone_toilet_magenta_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_magenta_concrete_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=mossy_cobblestone": {
-      "model": "poopsky:block/stone_toilet_mossy_cobblestone_lava_s",
+      "model": "poopsky:block/stone_toilet_mossy_cobblestone_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=mossy_stone_brick": {
-      "model": "poopsky:block/stone_toilet_mossy_stone_brick_lava_s",
+      "model": "poopsky:block/stone_toilet_mossy_stone_brick_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=netherite": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -261,19 +261,19 @@
       "y": 90
     },
     "connection=back,facing=east,lava=true,variant=orange_concrete": {
-      "model": "poopsky:block/stone_toilet_orange_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_orange_concrete_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=pink_concrete": {
-      "model": "poopsky:block/stone_toilet_pink_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_pink_concrete_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=purple_concrete": {
-      "model": "poopsky:block/stone_toilet_purple_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_purple_concrete_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=quartz": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -281,9 +281,9 @@
       "y": 90
     },
     "connection=back,facing=east,lava=true,variant=red_concrete": {
-      "model": "poopsky:block/stone_toilet_red_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_red_concrete_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=redstone": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -291,58 +291,63 @@
       "y": 90
     },
     "connection=back,facing=east,lava=true,variant=smooth_stone": {
-      "model": "poopsky:block/stone_toilet_smooth_stone_lava_s",
+      "model": "poopsky:block/stone_toilet_smooth_stone_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=stone": {
-      "model": "poopsky:block/stone_toilet_stone_lava_s",
+      "model": "poopsky:block/stone_toilet_stone_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=stone_brick": {
-      "model": "poopsky:block/stone_toilet_stone_brick_lava_s",
+      "model": "poopsky:block/stone_toilet_stone_brick_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=tile": {
-      "model": "poopsky:block/stone_toilet_tile_lava_s",
+      "model": "poopsky:block/stone_toilet_tile_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=white_concrete": {
-      "model": "poopsky:block/stone_toilet_white_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_white_concrete_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=east,lava=true,variant=yellow_concrete": {
-      "model": "poopsky:block/stone_toilet_yellow_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_yellow_concrete_lava_n",
       "uvlock": true,
-      "y": 90
+      "y": 270
     },
     "connection=back,facing=north,lava=false,variant=black_concrete": {
-      "model": "poopsky:block/stone_toilet_black_concrete_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_black_concrete_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=false,variant=blue_concrete": {
-      "model": "poopsky:block/stone_toilet_blue_concrete_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_blue_concrete_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=false,variant=brown_concrete": {
-      "model": "poopsky:block/stone_toilet_brown_concrete_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_brown_concrete_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=false,variant=cobblestone": {
-      "model": "poopsky:block/stone_toilet_cobblestone_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_cobblestone_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=false,variant=copper": {
       "model": "poopsky:block/stone_toilet_cobblestone",
       "uvlock": true
     },
     "connection=back,facing=north,lava=false,variant=cyan_concrete": {
-      "model": "poopsky:block/stone_toilet_cyan_concrete_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_cyan_concrete_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=false,variant=diamond": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -357,12 +362,14 @@
       "uvlock": true
     },
     "connection=back,facing=north,lava=false,variant=gray_concrete": {
-      "model": "poopsky:block/stone_toilet_gray_concrete_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_gray_concrete_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=false,variant=green_concrete": {
-      "model": "poopsky:block/stone_toilet_green_concrete_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_green_concrete_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=false,variant=iron": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -373,104 +380,125 @@
       "uvlock": true
     },
     "connection=back,facing=north,lava=false,variant=light_blue_concrete": {
-      "model": "poopsky:block/stone_toilet_light_blue_concrete_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_light_blue_concrete_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=false,variant=light_gray_concrete": {
-      "model": "poopsky:block/stone_toilet_light_gray_concrete_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_light_gray_concrete_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=false,variant=lime_concrete": {
-      "model": "poopsky:block/stone_toilet_lime_concrete_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_lime_concrete_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=false,variant=magenta_concrete": {
-      "model": "poopsky:block/stone_toilet_magenta_concrete_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_magenta_concrete_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=false,variant=mossy_cobblestone": {
-      "model": "poopsky:block/stone_toilet_mossy_cobblestone_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_mossy_cobblestone_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=false,variant=mossy_stone_brick": {
-      "model": "poopsky:block/stone_toilet_mossy_stone_brick_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_mossy_stone_brick_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=false,variant=netherite": {
       "model": "poopsky:block/stone_toilet_cobblestone",
       "uvlock": true
     },
     "connection=back,facing=north,lava=false,variant=orange_concrete": {
-      "model": "poopsky:block/stone_toilet_orange_concrete_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_orange_concrete_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=false,variant=pink_concrete": {
-      "model": "poopsky:block/stone_toilet_pink_concrete_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_pink_concrete_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=false,variant=purple_concrete": {
-      "model": "poopsky:block/stone_toilet_purple_concrete_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_purple_concrete_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=false,variant=quartz": {
       "model": "poopsky:block/stone_toilet_cobblestone",
       "uvlock": true
     },
     "connection=back,facing=north,lava=false,variant=red_concrete": {
-      "model": "poopsky:block/stone_toilet_red_concrete_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_red_concrete_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=false,variant=redstone": {
       "model": "poopsky:block/stone_toilet_cobblestone",
       "uvlock": true
     },
     "connection=back,facing=north,lava=false,variant=smooth_stone": {
-      "model": "poopsky:block/stone_toilet_smooth_stone_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_smooth_stone_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=false,variant=stone": {
-      "model": "poopsky:block/stone_toilet_stone_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_stone_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=false,variant=stone_brick": {
-      "model": "poopsky:block/stone_toilet_stone_brick_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_stone_brick_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=false,variant=tile": {
-      "model": "poopsky:block/stone_toilet_tile_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_tile_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=false,variant=white_concrete": {
-      "model": "poopsky:block/stone_toilet_white_concrete_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_white_concrete_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=false,variant=yellow_concrete": {
-      "model": "poopsky:block/stone_toilet_yellow_concrete_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_yellow_concrete_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=black_concrete": {
-      "model": "poopsky:block/stone_toilet_black_concrete_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_black_concrete_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=blue_concrete": {
-      "model": "poopsky:block/stone_toilet_blue_concrete_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_blue_concrete_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=brown_concrete": {
-      "model": "poopsky:block/stone_toilet_brown_concrete_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_brown_concrete_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=cobblestone": {
-      "model": "poopsky:block/stone_toilet_cobblestone_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_cobblestone_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=copper": {
       "model": "poopsky:block/stone_toilet_cobblestone",
       "uvlock": true
     },
     "connection=back,facing=north,lava=true,variant=cyan_concrete": {
-      "model": "poopsky:block/stone_toilet_cyan_concrete_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_cyan_concrete_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=diamond": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -485,12 +513,14 @@
       "uvlock": true
     },
     "connection=back,facing=north,lava=true,variant=gray_concrete": {
-      "model": "poopsky:block/stone_toilet_gray_concrete_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_gray_concrete_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=green_concrete": {
-      "model": "poopsky:block/stone_toilet_green_concrete_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_green_concrete_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=iron": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -501,100 +531,112 @@
       "uvlock": true
     },
     "connection=back,facing=north,lava=true,variant=light_blue_concrete": {
-      "model": "poopsky:block/stone_toilet_light_blue_concrete_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_light_blue_concrete_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=light_gray_concrete": {
-      "model": "poopsky:block/stone_toilet_light_gray_concrete_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_light_gray_concrete_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=lime_concrete": {
-      "model": "poopsky:block/stone_toilet_lime_concrete_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_lime_concrete_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=magenta_concrete": {
-      "model": "poopsky:block/stone_toilet_magenta_concrete_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_magenta_concrete_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=mossy_cobblestone": {
-      "model": "poopsky:block/stone_toilet_mossy_cobblestone_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_mossy_cobblestone_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=mossy_stone_brick": {
-      "model": "poopsky:block/stone_toilet_mossy_stone_brick_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_mossy_stone_brick_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=netherite": {
       "model": "poopsky:block/stone_toilet_cobblestone",
       "uvlock": true
     },
     "connection=back,facing=north,lava=true,variant=orange_concrete": {
-      "model": "poopsky:block/stone_toilet_orange_concrete_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_orange_concrete_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=pink_concrete": {
-      "model": "poopsky:block/stone_toilet_pink_concrete_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_pink_concrete_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=purple_concrete": {
-      "model": "poopsky:block/stone_toilet_purple_concrete_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_purple_concrete_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=quartz": {
       "model": "poopsky:block/stone_toilet_cobblestone",
       "uvlock": true
     },
     "connection=back,facing=north,lava=true,variant=red_concrete": {
-      "model": "poopsky:block/stone_toilet_red_concrete_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_red_concrete_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=redstone": {
       "model": "poopsky:block/stone_toilet_cobblestone",
       "uvlock": true
     },
     "connection=back,facing=north,lava=true,variant=smooth_stone": {
-      "model": "poopsky:block/stone_toilet_smooth_stone_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_smooth_stone_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=stone": {
-      "model": "poopsky:block/stone_toilet_stone_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_stone_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=stone_brick": {
-      "model": "poopsky:block/stone_toilet_stone_brick_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_stone_brick_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=tile": {
-      "model": "poopsky:block/stone_toilet_tile_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_tile_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=white_concrete": {
-      "model": "poopsky:block/stone_toilet_white_concrete_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_white_concrete_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=north,lava=true,variant=yellow_concrete": {
-      "model": "poopsky:block/stone_toilet_yellow_concrete_lava_s",
-      "uvlock": true
+      "model": "poopsky:block/stone_toilet_yellow_concrete_lava_n",
+      "uvlock": true,
+      "y": 180
     },
     "connection=back,facing=south,lava=false,variant=black_concrete": {
-      "model": "poopsky:block/stone_toilet_black_concrete_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_black_concrete_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=false,variant=blue_concrete": {
-      "model": "poopsky:block/stone_toilet_blue_concrete_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_blue_concrete_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=false,variant=brown_concrete": {
-      "model": "poopsky:block/stone_toilet_brown_concrete_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_brown_concrete_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=false,variant=cobblestone": {
-      "model": "poopsky:block/stone_toilet_cobblestone_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_cobblestone_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=false,variant=copper": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -602,9 +644,8 @@
       "y": 180
     },
     "connection=back,facing=south,lava=false,variant=cyan_concrete": {
-      "model": "poopsky:block/stone_toilet_cyan_concrete_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_cyan_concrete_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=false,variant=diamond": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -622,14 +663,12 @@
       "y": 180
     },
     "connection=back,facing=south,lava=false,variant=gray_concrete": {
-      "model": "poopsky:block/stone_toilet_gray_concrete_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_gray_concrete_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=false,variant=green_concrete": {
-      "model": "poopsky:block/stone_toilet_green_concrete_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_green_concrete_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=false,variant=iron": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -642,34 +681,28 @@
       "y": 180
     },
     "connection=back,facing=south,lava=false,variant=light_blue_concrete": {
-      "model": "poopsky:block/stone_toilet_light_blue_concrete_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_light_blue_concrete_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=false,variant=light_gray_concrete": {
-      "model": "poopsky:block/stone_toilet_light_gray_concrete_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_light_gray_concrete_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=false,variant=lime_concrete": {
-      "model": "poopsky:block/stone_toilet_lime_concrete_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_lime_concrete_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=false,variant=magenta_concrete": {
-      "model": "poopsky:block/stone_toilet_magenta_concrete_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_magenta_concrete_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=false,variant=mossy_cobblestone": {
-      "model": "poopsky:block/stone_toilet_mossy_cobblestone_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_mossy_cobblestone_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=false,variant=mossy_stone_brick": {
-      "model": "poopsky:block/stone_toilet_mossy_stone_brick_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_mossy_stone_brick_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=false,variant=netherite": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -677,19 +710,16 @@
       "y": 180
     },
     "connection=back,facing=south,lava=false,variant=orange_concrete": {
-      "model": "poopsky:block/stone_toilet_orange_concrete_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_orange_concrete_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=false,variant=pink_concrete": {
-      "model": "poopsky:block/stone_toilet_pink_concrete_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_pink_concrete_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=false,variant=purple_concrete": {
-      "model": "poopsky:block/stone_toilet_purple_concrete_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_purple_concrete_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=false,variant=quartz": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -697,9 +727,8 @@
       "y": 180
     },
     "connection=back,facing=south,lava=false,variant=red_concrete": {
-      "model": "poopsky:block/stone_toilet_red_concrete_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_red_concrete_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=false,variant=redstone": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -707,54 +736,44 @@
       "y": 180
     },
     "connection=back,facing=south,lava=false,variant=smooth_stone": {
-      "model": "poopsky:block/stone_toilet_smooth_stone_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_smooth_stone_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=false,variant=stone": {
-      "model": "poopsky:block/stone_toilet_stone_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_stone_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=false,variant=stone_brick": {
-      "model": "poopsky:block/stone_toilet_stone_brick_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_stone_brick_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=false,variant=tile": {
-      "model": "poopsky:block/stone_toilet_tile_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_tile_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=false,variant=white_concrete": {
-      "model": "poopsky:block/stone_toilet_white_concrete_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_white_concrete_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=false,variant=yellow_concrete": {
-      "model": "poopsky:block/stone_toilet_yellow_concrete_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_yellow_concrete_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=black_concrete": {
-      "model": "poopsky:block/stone_toilet_black_concrete_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_black_concrete_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=blue_concrete": {
-      "model": "poopsky:block/stone_toilet_blue_concrete_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_blue_concrete_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=brown_concrete": {
-      "model": "poopsky:block/stone_toilet_brown_concrete_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_brown_concrete_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=cobblestone": {
-      "model": "poopsky:block/stone_toilet_cobblestone_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_cobblestone_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=copper": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -762,9 +781,8 @@
       "y": 180
     },
     "connection=back,facing=south,lava=true,variant=cyan_concrete": {
-      "model": "poopsky:block/stone_toilet_cyan_concrete_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_cyan_concrete_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=diamond": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -782,14 +800,12 @@
       "y": 180
     },
     "connection=back,facing=south,lava=true,variant=gray_concrete": {
-      "model": "poopsky:block/stone_toilet_gray_concrete_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_gray_concrete_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=green_concrete": {
-      "model": "poopsky:block/stone_toilet_green_concrete_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_green_concrete_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=iron": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -802,34 +818,28 @@
       "y": 180
     },
     "connection=back,facing=south,lava=true,variant=light_blue_concrete": {
-      "model": "poopsky:block/stone_toilet_light_blue_concrete_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_light_blue_concrete_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=light_gray_concrete": {
-      "model": "poopsky:block/stone_toilet_light_gray_concrete_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_light_gray_concrete_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=lime_concrete": {
-      "model": "poopsky:block/stone_toilet_lime_concrete_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_lime_concrete_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=magenta_concrete": {
-      "model": "poopsky:block/stone_toilet_magenta_concrete_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_magenta_concrete_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=mossy_cobblestone": {
-      "model": "poopsky:block/stone_toilet_mossy_cobblestone_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_mossy_cobblestone_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=mossy_stone_brick": {
-      "model": "poopsky:block/stone_toilet_mossy_stone_brick_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_mossy_stone_brick_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=netherite": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -837,19 +847,16 @@
       "y": 180
     },
     "connection=back,facing=south,lava=true,variant=orange_concrete": {
-      "model": "poopsky:block/stone_toilet_orange_concrete_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_orange_concrete_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=pink_concrete": {
-      "model": "poopsky:block/stone_toilet_pink_concrete_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_pink_concrete_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=purple_concrete": {
-      "model": "poopsky:block/stone_toilet_purple_concrete_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_purple_concrete_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=quartz": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -857,9 +864,8 @@
       "y": 180
     },
     "connection=back,facing=south,lava=true,variant=red_concrete": {
-      "model": "poopsky:block/stone_toilet_red_concrete_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_red_concrete_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=redstone": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -867,54 +873,48 @@
       "y": 180
     },
     "connection=back,facing=south,lava=true,variant=smooth_stone": {
-      "model": "poopsky:block/stone_toilet_smooth_stone_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_smooth_stone_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=stone": {
-      "model": "poopsky:block/stone_toilet_stone_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_stone_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=stone_brick": {
-      "model": "poopsky:block/stone_toilet_stone_brick_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_stone_brick_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=tile": {
-      "model": "poopsky:block/stone_toilet_tile_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_tile_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=white_concrete": {
-      "model": "poopsky:block/stone_toilet_white_concrete_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_white_concrete_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=south,lava=true,variant=yellow_concrete": {
-      "model": "poopsky:block/stone_toilet_yellow_concrete_lava_s",
-      "uvlock": true,
-      "y": 180
+      "model": "poopsky:block/stone_toilet_yellow_concrete_lava_n",
+      "uvlock": true
     },
     "connection=back,facing=west,lava=false,variant=black_concrete": {
-      "model": "poopsky:block/stone_toilet_black_concrete_s",
+      "model": "poopsky:block/stone_toilet_black_concrete_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=false,variant=blue_concrete": {
-      "model": "poopsky:block/stone_toilet_blue_concrete_s",
+      "model": "poopsky:block/stone_toilet_blue_concrete_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=false,variant=brown_concrete": {
-      "model": "poopsky:block/stone_toilet_brown_concrete_s",
+      "model": "poopsky:block/stone_toilet_brown_concrete_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=false,variant=cobblestone": {
-      "model": "poopsky:block/stone_toilet_cobblestone_s",
+      "model": "poopsky:block/stone_toilet_cobblestone_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=false,variant=copper": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -922,9 +922,9 @@
       "y": 270
     },
     "connection=back,facing=west,lava=false,variant=cyan_concrete": {
-      "model": "poopsky:block/stone_toilet_cyan_concrete_s",
+      "model": "poopsky:block/stone_toilet_cyan_concrete_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=false,variant=diamond": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -942,14 +942,14 @@
       "y": 270
     },
     "connection=back,facing=west,lava=false,variant=gray_concrete": {
-      "model": "poopsky:block/stone_toilet_gray_concrete_s",
+      "model": "poopsky:block/stone_toilet_gray_concrete_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=false,variant=green_concrete": {
-      "model": "poopsky:block/stone_toilet_green_concrete_s",
+      "model": "poopsky:block/stone_toilet_green_concrete_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=false,variant=iron": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -962,34 +962,34 @@
       "y": 270
     },
     "connection=back,facing=west,lava=false,variant=light_blue_concrete": {
-      "model": "poopsky:block/stone_toilet_light_blue_concrete_s",
+      "model": "poopsky:block/stone_toilet_light_blue_concrete_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=false,variant=light_gray_concrete": {
-      "model": "poopsky:block/stone_toilet_light_gray_concrete_s",
+      "model": "poopsky:block/stone_toilet_light_gray_concrete_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=false,variant=lime_concrete": {
-      "model": "poopsky:block/stone_toilet_lime_concrete_s",
+      "model": "poopsky:block/stone_toilet_lime_concrete_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=false,variant=magenta_concrete": {
-      "model": "poopsky:block/stone_toilet_magenta_concrete_s",
+      "model": "poopsky:block/stone_toilet_magenta_concrete_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=false,variant=mossy_cobblestone": {
-      "model": "poopsky:block/stone_toilet_mossy_cobblestone_s",
+      "model": "poopsky:block/stone_toilet_mossy_cobblestone_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=false,variant=mossy_stone_brick": {
-      "model": "poopsky:block/stone_toilet_mossy_stone_brick_s",
+      "model": "poopsky:block/stone_toilet_mossy_stone_brick_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=false,variant=netherite": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -997,19 +997,19 @@
       "y": 270
     },
     "connection=back,facing=west,lava=false,variant=orange_concrete": {
-      "model": "poopsky:block/stone_toilet_orange_concrete_s",
+      "model": "poopsky:block/stone_toilet_orange_concrete_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=false,variant=pink_concrete": {
-      "model": "poopsky:block/stone_toilet_pink_concrete_s",
+      "model": "poopsky:block/stone_toilet_pink_concrete_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=false,variant=purple_concrete": {
-      "model": "poopsky:block/stone_toilet_purple_concrete_s",
+      "model": "poopsky:block/stone_toilet_purple_concrete_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=false,variant=quartz": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -1017,9 +1017,9 @@
       "y": 270
     },
     "connection=back,facing=west,lava=false,variant=red_concrete": {
-      "model": "poopsky:block/stone_toilet_red_concrete_s",
+      "model": "poopsky:block/stone_toilet_red_concrete_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=false,variant=redstone": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -1027,54 +1027,54 @@
       "y": 270
     },
     "connection=back,facing=west,lava=false,variant=smooth_stone": {
-      "model": "poopsky:block/stone_toilet_smooth_stone_s",
+      "model": "poopsky:block/stone_toilet_smooth_stone_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=false,variant=stone": {
-      "model": "poopsky:block/stone_toilet_stone_s",
+      "model": "poopsky:block/stone_toilet_stone_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=false,variant=stone_brick": {
-      "model": "poopsky:block/stone_toilet_stone_brick_s",
+      "model": "poopsky:block/stone_toilet_stone_brick_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=false,variant=tile": {
-      "model": "poopsky:block/stone_toilet_tile_s",
+      "model": "poopsky:block/stone_toilet_tile_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=false,variant=white_concrete": {
-      "model": "poopsky:block/stone_toilet_white_concrete_s",
+      "model": "poopsky:block/stone_toilet_white_concrete_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=false,variant=yellow_concrete": {
-      "model": "poopsky:block/stone_toilet_yellow_concrete_s",
+      "model": "poopsky:block/stone_toilet_yellow_concrete_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=black_concrete": {
-      "model": "poopsky:block/stone_toilet_black_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_black_concrete_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=blue_concrete": {
-      "model": "poopsky:block/stone_toilet_blue_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_blue_concrete_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=brown_concrete": {
-      "model": "poopsky:block/stone_toilet_brown_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_brown_concrete_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=cobblestone": {
-      "model": "poopsky:block/stone_toilet_cobblestone_lava_s",
+      "model": "poopsky:block/stone_toilet_cobblestone_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=copper": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -1082,9 +1082,9 @@
       "y": 270
     },
     "connection=back,facing=west,lava=true,variant=cyan_concrete": {
-      "model": "poopsky:block/stone_toilet_cyan_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_cyan_concrete_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=diamond": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -1102,14 +1102,14 @@
       "y": 270
     },
     "connection=back,facing=west,lava=true,variant=gray_concrete": {
-      "model": "poopsky:block/stone_toilet_gray_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_gray_concrete_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=green_concrete": {
-      "model": "poopsky:block/stone_toilet_green_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_green_concrete_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=iron": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -1122,34 +1122,34 @@
       "y": 270
     },
     "connection=back,facing=west,lava=true,variant=light_blue_concrete": {
-      "model": "poopsky:block/stone_toilet_light_blue_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_light_blue_concrete_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=light_gray_concrete": {
-      "model": "poopsky:block/stone_toilet_light_gray_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_light_gray_concrete_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=lime_concrete": {
-      "model": "poopsky:block/stone_toilet_lime_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_lime_concrete_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=magenta_concrete": {
-      "model": "poopsky:block/stone_toilet_magenta_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_magenta_concrete_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=mossy_cobblestone": {
-      "model": "poopsky:block/stone_toilet_mossy_cobblestone_lava_s",
+      "model": "poopsky:block/stone_toilet_mossy_cobblestone_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=mossy_stone_brick": {
-      "model": "poopsky:block/stone_toilet_mossy_stone_brick_lava_s",
+      "model": "poopsky:block/stone_toilet_mossy_stone_brick_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=netherite": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -1157,19 +1157,19 @@
       "y": 270
     },
     "connection=back,facing=west,lava=true,variant=orange_concrete": {
-      "model": "poopsky:block/stone_toilet_orange_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_orange_concrete_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=pink_concrete": {
-      "model": "poopsky:block/stone_toilet_pink_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_pink_concrete_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=purple_concrete": {
-      "model": "poopsky:block/stone_toilet_purple_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_purple_concrete_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=quartz": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -1177,9 +1177,9 @@
       "y": 270
     },
     "connection=back,facing=west,lava=true,variant=red_concrete": {
-      "model": "poopsky:block/stone_toilet_red_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_red_concrete_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=redstone": {
       "model": "poopsky:block/stone_toilet_cobblestone",
@@ -1187,34 +1187,34 @@
       "y": 270
     },
     "connection=back,facing=west,lava=true,variant=smooth_stone": {
-      "model": "poopsky:block/stone_toilet_smooth_stone_lava_s",
+      "model": "poopsky:block/stone_toilet_smooth_stone_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=stone": {
-      "model": "poopsky:block/stone_toilet_stone_lava_s",
+      "model": "poopsky:block/stone_toilet_stone_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=stone_brick": {
-      "model": "poopsky:block/stone_toilet_stone_brick_lava_s",
+      "model": "poopsky:block/stone_toilet_stone_brick_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=tile": {
-      "model": "poopsky:block/stone_toilet_tile_lava_s",
+      "model": "poopsky:block/stone_toilet_tile_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=white_concrete": {
-      "model": "poopsky:block/stone_toilet_white_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_white_concrete_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=back,facing=west,lava=true,variant=yellow_concrete": {
-      "model": "poopsky:block/stone_toilet_yellow_concrete_lava_s",
+      "model": "poopsky:block/stone_toilet_yellow_concrete_lava_n",
       "uvlock": true,
-      "y": 270
+      "y": 90
     },
     "connection=both,facing=east,lava=false,variant=black_concrete": {
       "model": "poopsky:block/stone_toilet_black_concrete_ns",
