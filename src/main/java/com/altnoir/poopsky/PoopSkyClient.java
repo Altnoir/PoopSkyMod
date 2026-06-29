@@ -1,5 +1,6 @@
 package com.altnoir.poopsky;
 
+import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.client.inventory.BreedingBoxScreen;
 import com.altnoir.poopsky.client.inventory.FlyNestScreen;
@@ -17,6 +18,8 @@ import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -94,8 +97,21 @@ public class PoopSkyClient {
         }
 
         public static void registerItemProperties(FMLClientSetupEvent event) {
-            event.enqueueWork(() -> ItemProperties.register(PItems.FLY.get(), PoopSky.loc("fly_type"),
-                    (stack, level, entity, seed) -> (float) PFlyTypes.getIndex(PFlyTypes.byId(stack.get(PComponents.FLY_TYPE.get())))));
+            event.enqueueWork(() -> {
+                ItemProperties.register(PItems.FLY.get(), PoopSky.loc("fly_type"),
+                        (stack, level, entity, seed) -> (float) PFlyTypes.getIndex(PFlyTypes.byId(stack.get(PComponents.FLY_TYPE.get()))));
+
+                for (var block : AllToiletBlocks.BLOCKS.getEntries()) {
+                    Item item = block.get().asItem();
+                    if (item != Items.AIR) {
+                        ItemProperties.register(item, PoopSky.loc("toilet_type"),
+                                (stack, level, entity, seed) -> {
+                                    ToiletType type = stack.get(PComponents.TOILET_TYPE.get());
+                                    return type != null ? (float) ToiletType.getIndex(type) : 0;
+                                });
+                    }
+                }
+            });
         }
 
         public static void registerParticleProviders(RegisterParticleProvidersEvent event) {

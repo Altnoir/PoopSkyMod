@@ -10,6 +10,8 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import com.altnoir.poopsky.init.ToiletType;
+
 public final class PComponents {
     public static final DeferredRegister.DataComponents COMPONENTS = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, PoopSky.MOD_ID);
 
@@ -25,10 +27,10 @@ public final class PComponents {
                     .networkSynchronized(ByteBufCodecs.STRING_UTF8)
             );
 
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> TOILET_TYPE =
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<ToiletType>> TOILET_TYPE =
             COMPONENTS.registerComponentType("toilet_type", builder -> builder
-                    .persistent(ExtraCodecs.NON_EMPTY_STRING)
-                    .networkSynchronized(ByteBufCodecs.STRING_UTF8)
+                    .persistent(ToiletType.CODEC)
+                    .networkSynchronized(ToiletType.STREAM_CODEC)
             );
 
     public static void register(IEventBus eventBus) {

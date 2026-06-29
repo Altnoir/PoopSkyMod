@@ -1,13 +1,13 @@
 package com.altnoir.poopsky;
 
 import com.altnoir.poopsky.block.AllToiletBlocks;
-import com.altnoir.poopsky.block.p.MetalToiletBlock;
-import com.altnoir.poopsky.block.p.StoneToiletBlock;
-import com.altnoir.poopsky.block.p.ToiletBlock;
 import com.altnoir.poopsky.init.PBlocks;
-import com.altnoir.poopsky.init.PItems;
-import com.altnoir.poopsky.item.p.FlyItem;
 import com.altnoir.poopsky.init.PFlyTypes;
+import com.altnoir.poopsky.init.PItems;
+import com.altnoir.poopsky.init.PToiletTypes;
+import com.altnoir.poopsky.init.ToiletType;
+import com.altnoir.poopsky.item.p.FlyItem;
+import com.altnoir.poopsky.item.p.ToiletBlockItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
@@ -49,23 +49,22 @@ public class PItemGroups {
                         .filter(block -> !skip.contains(block))
                         .forEach(output::accept);
 
-                AllToiletBlocks.BLOCKS.getEntries().stream()
-                        .map(DeferredHolder::get)
-                        .forEach(block -> {
-                            if (block instanceof ToiletBlock toilet) {
-                                toilet.addToCreativeTab(output);
-                            } else if (block instanceof StoneToiletBlock stone) {
-                                stone.addToCreativeTab(output);
-                            } else if (block instanceof MetalToiletBlock metal) {
-                                metal.addToCreativeTab(output);
-                            } else {
-                                output.accept(block);
-                            }
-                        });
-
                 for (var type : PFlyTypes.getAll().values()) {
                     output.accept(FlyItem.withType(type));
                 }
+
+                PToiletTypes.OAK.id();
+
+                for (var type : ToiletType.getByCategory(ToiletType.Category.WOOD).values()) {
+                    output.accept(ToiletBlockItem.withType(AllToiletBlocks.WOOD_TOILET.get(), type));
+                }
+                for (var type : ToiletType.getByCategory(ToiletType.Category.STONE).values()) {
+                    output.accept(ToiletBlockItem.withType(AllToiletBlocks.STONE_TOILET.get(), type));
+                }
+                for (var type : ToiletType.getByCategory(ToiletType.Category.METAL).values()) {
+                    output.accept(ToiletBlockItem.withType(AllToiletBlocks.METAL_TOILET.get(), type));
+                }
+                output.accept(AllToiletBlocks.RAINBOW_TOILET.get());
             })
             .build());
 

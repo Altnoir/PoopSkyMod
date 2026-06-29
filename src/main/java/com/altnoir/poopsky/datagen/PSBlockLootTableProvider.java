@@ -7,6 +7,7 @@ import com.altnoir.poopsky.block.p.PoopPieceBlock;
 import com.altnoir.poopsky.block.p.RoundwormVinesPlantBlock;
 import com.altnoir.poopsky.block.p.UrineCompooperBlock;
 import com.altnoir.poopsky.init.PItems;
+import com.altnoir.poopsky.loot.SetToiletTypeFunction;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
@@ -48,7 +49,7 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
     protected void generate() {
         AllToiletBlocks.BLOCKS.getEntries().stream()
                 .map(DeferredHolder::get)
-                .forEach(this::dropSelf);
+                .forEach(block -> this.add(block, this::dropToilet));
 
         this.add(PBlocks.POOP_LOG.get(), this::createSpallOreDrops);
         this.add(PBlocks.STRIPPED_POOP_LOG.get(), this::createSpallOreDrops);
@@ -320,6 +321,13 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
                                                         .hasProperty(UrineCompooperBlock.MAGGOTS, true))
                                 )
                 );
+    }
+
+    protected LootTable.Builder dropToilet(Block block) {
+        return LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .add(LootItem.lootTableItem(block)
+                                .apply(SetToiletTypeFunction.setType())));
     }
 
     private LootItemCondition.Builder doesNotHaveShearsOrSilkTouch() {

@@ -2,11 +2,12 @@ package com.altnoir.poopsky.block.p;
 
 import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.init.PComponents;
+import com.altnoir.poopsky.init.PToiletTypes;
+import com.altnoir.poopsky.init.ToiletType;
+import com.altnoir.poopsky.item.p.ToiletBlockItem;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
@@ -35,15 +36,31 @@ public class ToiletBlock extends AbstractToiletBlock {
     public static final MapCodec<ToiletBlock> CODEC = simpleCodec(ToiletBlock::new);
 
     public enum WoodType implements StringRepresentable {
-        OAK, SPRUCE, BIRCH, JUNGLE, ACACIA, CHERRY, DARK_OAK, MANGROVE, BAMBOO, CRIMSON, WARPED;
+        OAK(PToiletTypes.OAK),
+        SPRUCE(PToiletTypes.SPRUCE),
+        BIRCH(PToiletTypes.BIRCH),
+        JUNGLE(PToiletTypes.JUNGLE),
+        ACACIA(PToiletTypes.ACACIA),
+        CHERRY(PToiletTypes.CHERRY),
+        DARK_OAK(PToiletTypes.DARK_OAK),
+        MANGROVE(PToiletTypes.MANGROVE),
+        BAMBOO(PToiletTypes.BAMBOO),
+        CRIMSON(PToiletTypes.CRIMSON),
+        WARPED(PToiletTypes.WARPED);
+
+        private final ToiletType toiletType;
+
+        WoodType(ToiletType toiletType) {
+            this.toiletType = toiletType;
+        }
+
+        public ToiletType getToiletType() {
+            return toiletType;
+        }
 
         @Override
         public String getSerializedName() {
             return name().toLowerCase();
-        }
-
-        public Component getDisplayName() {
-            return Component.translatable("toilet_type.poopsky." + getSerializedName());
         }
     }
 
@@ -117,36 +134,32 @@ public class ToiletBlock extends AbstractToiletBlock {
 
     @Override
     public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
-        return withVariant(this, state.getValue(WOOD_TYPE).getSerializedName());
+        return withVariant(this, state.getValue(WOOD_TYPE).getToiletType());
     }
 
     @Override
     public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack tool) {
         player.awardStat(Stats.BLOCK_MINED.get(this));
         player.causeFoodExhaustion(0.005F);
-        if (level instanceof ServerLevel) {
-            popResource(level, pos, withVariant(this, state.getValue(WOOD_TYPE).getSerializedName()));
-        }
+        Block.dropResources(state, level, pos, blockEntity, player, tool);
     }
 
-    public static ItemStack withVariant(Block block, String variant) {
-        var stack = new ItemStack(block);
-        stack.set(PComponents.TOILET_TYPE.get(), variant);
-        return stack;
+    public static ItemStack withVariant(Block block, ToiletType toiletType) {
+        return ToiletBlockItem.withType(block, toiletType);
     }
 
     public void addToCreativeTab(CreativeModeTab.Output output) {
         for (var type : WoodType.values()) {
-            output.accept(withVariant(this, type.getSerializedName()));
+            output.accept(withVariant(this, type.getToiletType()));
         }
     }
 
-    public BlockState applyVariant(BlockState state, String variant) {
-        try {
-            var type = WoodType.valueOf(variant.toUpperCase());
-            return state.setValue(WOOD_TYPE, type);
-        } catch (IllegalArgumentException e) {
-            return state;
+    public BlockState applyVariant(BlockState state, ToiletType toiletType) {
+        for (var woodType : WoodType.values()) {
+            if (woodType.getToiletType().equals(toiletType)) {
+                return state.setValue(WOOD_TYPE, woodType);
+            }
         }
+        return state;
     }
 }

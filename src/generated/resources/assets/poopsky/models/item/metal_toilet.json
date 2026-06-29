@@ -1,3 +1,53 @@
 {
-  "parent": "poopsky:block/metal_toilet_iron"
+  "parent": "poopsky:block/metal_toilet_iron",
+  "overrides": [
+    {
+      "model": "poopsky:block/metal_toilet_gold",
+      "predicate": {
+        "poopsky:toilet_type": 35.0
+      }
+    },
+    {
+      "model": "poopsky:block/metal_toilet_copper",
+      "predicate": {
+        "poopsky:toilet_type": 36.0
+      }
+    },
+    {
+      "model": "poopsky:block/metal_toilet_lapis",
+      "predicate": {
+        "poopsky:toilet_type": 37.0
+      }
+    },
+    {
+      "model": "poopsky:block/metal_toilet_redstone",
+      "predicate": {
+        "poopsky:toilet_type": 38.0
+      }
+    },
+    {
+      "model": "poopsky:block/metal_toilet_quartz",
+      "predicate": {
+        "poopsky:toilet_type": 39.0
+      }
+    },
+    {
+      "model": "poopsky:block/metal_toilet_diamond",
+      "predicate": {
+        "poopsky:toilet_type": 40.0
+      }
+    },
+    {
+      "model": "poopsky:block/metal_toilet_emerald",
+      "predicate": {
+        "poopsky:toilet_type": 41.0
+      }
+    },
+    {
+      "model": "poopsky:block/metal_toilet_netherite",
+      "predicate": {
+        "poopsky:toilet_type": 42.0
+      }
+    }
+  ]
 }

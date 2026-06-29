@@ -1,12 +1,12 @@
 package com.altnoir.poopsky.block.p;
 
 import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
-import com.altnoir.poopsky.init.PComponents;
+import com.altnoir.poopsky.init.PToiletTypes;
+import com.altnoir.poopsky.init.ToiletType;
+import com.altnoir.poopsky.item.p.ToiletBlockItem;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
@@ -34,15 +34,29 @@ public class MetalToiletBlock extends ToiletLavaBlock {
     public static final MapCodec<MetalToiletBlock> CODEC = simpleCodec(MetalToiletBlock::new);
 
     public enum MetalType implements StringRepresentable {
-        IRON, GOLD, COPPER, NETHERITE, RAW_IRON, RAW_GOLD, RAW_COPPER, DIAMOND, EMERALD, LAPIS, REDSTONE, QUARTZ;
+        IRON(PToiletTypes.IRON),
+        GOLD(PToiletTypes.GOLD),
+        COPPER(PToiletTypes.COPPER),
+        LAPIS(PToiletTypes.LAPIS),
+        REDSTONE(PToiletTypes.REDSTONE),
+        QUARTZ(PToiletTypes.QUARTZ),
+        DIAMOND(PToiletTypes.DIAMOND),
+        EMERALD(PToiletTypes.EMERALD),
+        NETHERITE(PToiletTypes.NETHERITE);
+
+        private final ToiletType toiletType;
+
+        MetalType(ToiletType toiletType) {
+            this.toiletType = toiletType;
+        }
+
+        public ToiletType getToiletType() {
+            return toiletType;
+        }
 
         @Override
         public String getSerializedName() {
             return name().toLowerCase();
-        }
-
-        public Component getDisplayName() {
-            return Component.translatable("toilet_type.poopsky." + getSerializedName());
         }
     }
 
@@ -52,15 +66,12 @@ public class MetalToiletBlock extends ToiletLavaBlock {
             Map.entry(Blocks.IRON_BLOCK, MetalType.IRON),
             Map.entry(Blocks.GOLD_BLOCK, MetalType.GOLD),
             Map.entry(Blocks.COPPER_BLOCK, MetalType.COPPER),
-            Map.entry(Blocks.NETHERITE_BLOCK, MetalType.NETHERITE),
-            Map.entry(Blocks.RAW_IRON_BLOCK, MetalType.RAW_IRON),
-            Map.entry(Blocks.RAW_GOLD_BLOCK, MetalType.RAW_GOLD),
-            Map.entry(Blocks.RAW_COPPER_BLOCK, MetalType.RAW_COPPER),
-            Map.entry(Blocks.DIAMOND_BLOCK, MetalType.DIAMOND),
-            Map.entry(Blocks.EMERALD_BLOCK, MetalType.EMERALD),
             Map.entry(Blocks.LAPIS_BLOCK, MetalType.LAPIS),
             Map.entry(Blocks.REDSTONE_BLOCK, MetalType.REDSTONE),
-            Map.entry(Blocks.QUARTZ_BLOCK, MetalType.QUARTZ)
+            Map.entry(Blocks.QUARTZ_BLOCK, MetalType.QUARTZ),
+            Map.entry(Blocks.DIAMOND_BLOCK, MetalType.DIAMOND),
+            Map.entry(Blocks.EMERALD_BLOCK, MetalType.EMERALD),
+            Map.entry(Blocks.NETHERITE_BLOCK, MetalType.NETHERITE)
     );
 
     public MetalToiletBlock(Properties properties) {
@@ -106,36 +117,32 @@ public class MetalToiletBlock extends ToiletLavaBlock {
 
     @Override
     public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
-        return withVariant(this, state.getValue(METAL_TYPE).getSerializedName());
+        return withVariant(this, state.getValue(METAL_TYPE).getToiletType());
     }
 
     @Override
     public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack tool) {
         player.awardStat(Stats.BLOCK_MINED.get(this));
         player.causeFoodExhaustion(0.005F);
-        if (level instanceof ServerLevel) {
-            popResource(level, pos, withVariant(this, state.getValue(METAL_TYPE).getSerializedName()));
-        }
+        Block.dropResources(state, level, pos, blockEntity, player, tool);
     }
 
-    public static ItemStack withVariant(Block block, String variant) {
-        var stack = new ItemStack(block);
-        stack.set(PComponents.TOILET_TYPE.get(), variant);
-        return stack;
+    public static ItemStack withVariant(Block block, ToiletType toiletType) {
+        return ToiletBlockItem.withType(block, toiletType);
     }
 
     public void addToCreativeTab(CreativeModeTab.Output output) {
         for (var type : MetalType.values()) {
-            output.accept(withVariant(this, type.getSerializedName()));
+            output.accept(withVariant(this, type.getToiletType()));
         }
     }
 
-    public BlockState applyVariant(BlockState state, String variant) {
-        try {
-            var type = MetalType.valueOf(variant.toUpperCase());
-            return state.setValue(METAL_TYPE, type);
-        } catch (IllegalArgumentException e) {
-            return state;
+    public BlockState applyVariant(BlockState state, ToiletType toiletType) {
+        for (var metalType : MetalType.values()) {
+            if (metalType.getToiletType().equals(toiletType)) {
+                return state.setValue(METAL_TYPE, metalType);
+            }
         }
+        return state;
     }
 }

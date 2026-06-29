@@ -5,6 +5,7 @@ import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.block.p.*;
 import com.altnoir.poopsky.init.PBlocks;
+import com.altnoir.poopsky.init.ToiletType;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -293,8 +294,9 @@ public class PSBlockStateProvider extends BlockStateProvider {
         simpleBlockItem(block, model);
     }
 
-    private <T extends Enum<T> & StringRepresentable> void registerVariantToilet(
-            Block toilet, EnumProperty<T> typeProperty, Map<T, ResourceLocation> textures, T defaultType, boolean hasLava) {
+    private <T extends Enum<T> & StringRepresentable> void registerVariantToiletWithOverrides(
+            Block toilet, EnumProperty<T> typeProperty, Map<T, ResourceLocation> textures, T defaultType, boolean hasLava,
+            Function<T, ToiletType> toiletTypeLookup) {
         Map<T, ModelFile[]> variantModels = new LinkedHashMap<>();
         for (var entry : textures.entrySet()) {
             T type = entry.getKey();
@@ -344,7 +346,17 @@ public class PSBlockStateProvider extends BlockStateProvider {
                     .build();
         });
 
-        itemModels().getBuilder(getBlockPath(toilet)).parent(defaultModel);
+        var itemBuilder = itemModels().getBuilder(getBlockPath(toilet)).parent(defaultModel);
+        for (var entry : textures.entrySet()) {
+            if (entry.getKey() == defaultType) continue;
+            String suffix = "_" + entry.getKey().getSerializedName();
+            var overrideModel = new ModelFile.UncheckedModelFile(PoopSky.MOD_ID + ":block/" + getBlockPath(toilet) + suffix);
+            ToiletType toiletType = toiletTypeLookup.apply(entry.getKey());
+            itemBuilder.override()
+                    .predicate(PoopSky.loc("toilet_type"), ToiletType.getIndex(toiletType))
+                    .model(overrideModel)
+                    .end();
+        }
     }
 
     private void registerWoodToilet() {
@@ -361,7 +373,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
         textures.put(ToiletBlock.WoodType.CRIMSON, mcLoc("block/crimson_planks"));
         textures.put(ToiletBlock.WoodType.WARPED, mcLoc("block/warped_planks"));
 
-        registerVariantToilet(AllToiletBlocks.WOOD_TOILET.get(), ToiletBlock.WOOD_TYPE, textures, ToiletBlock.WoodType.OAK, false);
+        registerVariantToiletWithOverrides(AllToiletBlocks.WOOD_TOILET.get(), ToiletBlock.WOOD_TYPE, textures, ToiletBlock.WoodType.OAK, false, ToiletBlock.WoodType::getToiletType);
     }
 
     private void registerStoneToilet() {
@@ -390,7 +402,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
         textures.put(StoneToiletBlock.StoneType.RED_CONCRETE, mcLoc("block/red_concrete"));
         textures.put(StoneToiletBlock.StoneType.BLACK_CONCRETE, mcLoc("block/black_concrete"));
 
-        registerVariantToilet(AllToiletBlocks.STONE_TOILET.get(), StoneToiletBlock.STONE_TYPE, textures, StoneToiletBlock.StoneType.STONE, true);
+        registerVariantToiletWithOverrides(AllToiletBlocks.STONE_TOILET.get(), StoneToiletBlock.STONE_TYPE, textures, StoneToiletBlock.StoneType.STONE, true, StoneToiletBlock.StoneType::getToiletType);
     }
 
     private void registerMetalToilet() {
@@ -398,58 +410,14 @@ public class PSBlockStateProvider extends BlockStateProvider {
         textures.put(MetalToiletBlock.MetalType.IRON, mcLoc("block/iron_block"));
         textures.put(MetalToiletBlock.MetalType.GOLD, mcLoc("block/gold_block"));
         textures.put(MetalToiletBlock.MetalType.COPPER, mcLoc("block/copper_block"));
-        textures.put(MetalToiletBlock.MetalType.NETHERITE, mcLoc("block/netherite_block"));
-        textures.put(MetalToiletBlock.MetalType.RAW_IRON, mcLoc("block/raw_iron_block"));
-        textures.put(MetalToiletBlock.MetalType.RAW_GOLD, mcLoc("block/raw_gold_block"));
-        textures.put(MetalToiletBlock.MetalType.RAW_COPPER, mcLoc("block/raw_copper_block"));
-        textures.put(MetalToiletBlock.MetalType.DIAMOND, mcLoc("block/diamond_block"));
-        textures.put(MetalToiletBlock.MetalType.EMERALD, mcLoc("block/emerald_block"));
         textures.put(MetalToiletBlock.MetalType.LAPIS, mcLoc("block/lapis_block"));
         textures.put(MetalToiletBlock.MetalType.REDSTONE, mcLoc("block/redstone_block"));
         textures.put(MetalToiletBlock.MetalType.QUARTZ, mcLoc("block/quartz_block_bottom"));
+        textures.put(MetalToiletBlock.MetalType.DIAMOND, mcLoc("block/diamond_block"));
+        textures.put(MetalToiletBlock.MetalType.EMERALD, mcLoc("block/emerald_block"));
+        textures.put(MetalToiletBlock.MetalType.NETHERITE, mcLoc("block/netherite_block"));
 
-        registerVariantToilet(AllToiletBlocks.METAL_TOILET.get(), MetalToiletBlock.METAL_TYPE, textures, MetalToiletBlock.MetalType.IRON, true);
-    }
-
-    private void registerToilet(Block toilet, Block textureBlock) {
-        var texture = getBlockKey(textureBlock);
-
-        var textureRL = ResourceLocation.fromNamespaceAndPath(texture.getNamespace(), "block/" + texture.getPath());
-
-        var baseModel = models().withExistingParent(getBlockKey(toilet).toString(),
-                modLoc("block/toilet")).texture("toilet", textureRL);
-        var modelN = models().withExistingParent(getBlockKey(toilet) + "_n",
-                modLoc("block/toilet_n")).texture("toilet", textureRL);
-        var modelS = models().withExistingParent(getBlockKey(toilet) + "_s",
-                modLoc("block/toilet_s")).texture("toilet", textureRL);
-        var modelNS = models().withExistingParent(getBlockKey(toilet) + "_ns",
-                modLoc("block/toilet_ns")).texture("toilet", textureRL);
-
-        getVariantBuilder(toilet).forAllStates(state -> {
-            var facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
-            var connection = state.getValue(AbstractToiletBlock.CONNECTION);
-            var yRot = switch (facing) {
-                case EAST -> 90;
-                case SOUTH -> 180;
-                case WEST -> 270;
-                default -> 0;
-            };
-
-            ModelFile chosenModel = switch (connection) {
-                case DEFAULT -> baseModel;
-                case FRONT -> modelN;
-                case BACK -> modelS;
-                case BOTH -> modelNS;
-            };
-
-            return ConfiguredModel.builder()
-                    .modelFile(chosenModel)
-                    .rotationY(yRot)
-                    .uvLock(true)
-                    .build();
-        });
-        itemModels().getBuilder(getBlockPath(toilet))
-                .parent(baseModel);
+        registerVariantToiletWithOverrides(AllToiletBlocks.METAL_TOILET.get(), MetalToiletBlock.METAL_TYPE, textures, MetalToiletBlock.MetalType.IRON, true, MetalToiletBlock.MetalType::getToiletType);
     }
 
     private void registerToiletLava(Block toilet, Object texture) {

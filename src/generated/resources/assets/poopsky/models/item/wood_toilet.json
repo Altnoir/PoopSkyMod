@@ -1,3 +1,65 @@
 {
-  "parent": "poopsky:block/wood_toilet_oak"
+  "parent": "poopsky:block/wood_toilet_oak",
+  "overrides": [
+    {
+      "model": "poopsky:block/wood_toilet_spruce",
+      "predicate": {
+        "poopsky:toilet_type": 1.0
+      }
+    },
+    {
+      "model": "poopsky:block/wood_toilet_birch",
+      "predicate": {
+        "poopsky:toilet_type": 2.0
+      }
+    },
+    {
+      "model": "poopsky:block/wood_toilet_jungle",
+      "predicate": {
+        "poopsky:toilet_type": 3.0
+      }
+    },
+    {
+      "model": "poopsky:block/wood_toilet_acacia",
+      "predicate": {
+        "poopsky:toilet_type": 4.0
+      }
+    },
+    {
+      "model": "poopsky:block/wood_toilet_cherry",
+      "predicate": {
+        "poopsky:toilet_type": 5.0
+      }
+    },
+    {
+      "model": "poopsky:block/wood_toilet_dark_oak",
+      "predicate": {
+        "poopsky:toilet_type": 6.0
+      }
+    },
+    {
+      "model": "poopsky:block/wood_toilet_mangrove",
+      "predicate": {
+        "poopsky:toilet_type": 7.0
+      }
+    },
+    {
+      "model": "poopsky:block/wood_toilet_bamboo",
+      "predicate": {
+        "poopsky:toilet_type": 8.0
+      }
+    },
+    {
+      "model": "poopsky:block/wood_toilet_crimson",
+      "predicate": {
+        "poopsky:toilet_type": 9.0
+      }
+    },
+    {
+      "model": "poopsky:block/wood_toilet_warped",
+      "predicate": {
+        "poopsky:toilet_type": 10.0
+      }
+    }
+  ]
 }

@@ -4,6 +4,7 @@ import com.altnoir.poopsky.block.p.MetalToiletBlock;
 import com.altnoir.poopsky.block.p.StoneToiletBlock;
 import com.altnoir.poopsky.block.p.ToiletBlock;
 import com.altnoir.poopsky.init.PComponents;
+import com.altnoir.poopsky.init.ToiletType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
@@ -20,22 +21,27 @@ public class ToiletBlockItem extends BlockItem {
         super(block, properties);
     }
 
+    public static ItemStack withType(Block block, ToiletType toiletType) {
+        var stack = new ItemStack(block);
+        stack.set(PComponents.TOILET_TYPE.get(), toiletType);
+        return stack;
+    }
+
     @Override
     protected BlockState getPlacementState(BlockPlaceContext context) {
         BlockState state = super.getPlacementState(context);
         if (state == null) return null;
 
-        ItemStack stack = context.getItemInHand();
-        String variant = stack.get(PComponents.TOILET_TYPE.get());
-        if (variant == null) return state;
+        ToiletType type = context.getItemInHand().get(PComponents.TOILET_TYPE.get());
+        if (type == null) return state;
 
         Block block = getBlock();
         if (block instanceof ToiletBlock toilet) {
-            return toilet.applyVariant(state, variant);
+            return toilet.applyVariant(state, type);
         } else if (block instanceof StoneToiletBlock stone) {
-            return stone.applyVariant(state, variant);
+            return stone.applyVariant(state, type);
         } else if (block instanceof MetalToiletBlock metal) {
-            return metal.applyVariant(state, variant);
+            return metal.applyVariant(state, type);
         }
 
         return state;
@@ -44,36 +50,12 @@ public class ToiletBlockItem extends BlockItem {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-        String variant = stack.get(PComponents.TOILET_TYPE.get());
-        if (variant == null) return;
-
-        Block block = getBlock();
-        Component typeName;
-        if (block instanceof ToiletBlock) {
-            try {
-                typeName = ToiletBlock.WoodType.valueOf(variant.toUpperCase()).getDisplayName();
-            } catch (IllegalArgumentException e) {
-                typeName = Component.literal(variant);
-            }
-        } else if (block instanceof StoneToiletBlock) {
-            try {
-                typeName = StoneToiletBlock.StoneType.valueOf(variant.toUpperCase()).getDisplayName();
-            } catch (IllegalArgumentException e) {
-                typeName = Component.literal(variant);
-            }
-        } else if (block instanceof MetalToiletBlock) {
-            try {
-                typeName = MetalToiletBlock.MetalType.valueOf(variant.toUpperCase()).getDisplayName();
-            } catch (IllegalArgumentException e) {
-                typeName = Component.literal(variant);
-            }
-        } else {
-            typeName = Component.literal(variant);
-        }
+        ToiletType type = stack.get(PComponents.TOILET_TYPE.get());
+        if (type == null) return;
 
         tooltipComponents.add(Component.translatable("tooltip.poopsky.toilet_type")
                 .append(": ")
-                .append(typeName)
+                .append(type.getDisplayName())
                 .withStyle(ChatFormatting.GRAY));
     }
 }

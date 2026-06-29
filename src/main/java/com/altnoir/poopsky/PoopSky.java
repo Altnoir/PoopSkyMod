@@ -63,6 +63,7 @@ public class PoopSky {
         PStats.register(modEventBus);
 
         PComponents.register(modEventBus);
+        PLootFunctions.register(modEventBus);
         PVillagers.register(modEventBus);
         PRecipes.register(modEventBus);
 
@@ -83,6 +84,7 @@ public class PoopSky {
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             CompooperBlock.bootStrap();
+            PToiletTypes.OAK.id();
 
             DispenserBlock.registerProjectileBehavior(PItems.POOP_BALL);
             DispenserBlock.registerProjectileBehavior(PItems.SEA_POOP_BALL);

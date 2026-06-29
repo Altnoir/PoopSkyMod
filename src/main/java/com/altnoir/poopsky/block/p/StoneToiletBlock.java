@@ -3,11 +3,12 @@ package com.altnoir.poopsky.block.p;
 import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PComponents;
+import com.altnoir.poopsky.init.PToiletTypes;
+import com.altnoir.poopsky.init.ToiletType;
+import com.altnoir.poopsky.item.p.ToiletBlockItem;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
@@ -35,18 +36,43 @@ public class StoneToiletBlock extends ToiletLavaBlock {
     public static final MapCodec<StoneToiletBlock> CODEC = simpleCodec(StoneToiletBlock::new);
 
     public enum StoneType implements StringRepresentable {
-        STONE, COBBLESTONE, MOSSY_COBBLESTONE, SMOOTH_STONE, STONE_BRICK, MOSSY_STONE_BRICK, TILE,
-        WHITE_CONCRETE, ORANGE_CONCRETE, MAGENTA_CONCRETE, LIGHT_BLUE_CONCRETE, YELLOW_CONCRETE,
-        LIME_CONCRETE, PINK_CONCRETE, GRAY_CONCRETE, LIGHT_GRAY_CONCRETE, CYAN_CONCRETE,
-        PURPLE_CONCRETE, BLUE_CONCRETE, BROWN_CONCRETE, GREEN_CONCRETE, RED_CONCRETE, BLACK_CONCRETE;
+        STONE(PToiletTypes.STONE),
+        COBBLESTONE(PToiletTypes.COBBLESTONE),
+        MOSSY_COBBLESTONE(PToiletTypes.MOSSY_COBBLESTONE),
+        SMOOTH_STONE(PToiletTypes.SMOOTH_STONE),
+        STONE_BRICK(PToiletTypes.STONE_BRICK),
+        MOSSY_STONE_BRICK(PToiletTypes.MOSSY_STONE_BRICK),
+        TILE(PToiletTypes.TILE),
+        WHITE_CONCRETE(PToiletTypes.WHITE_CONCRETE),
+        ORANGE_CONCRETE(PToiletTypes.ORANGE_CONCRETE),
+        MAGENTA_CONCRETE(PToiletTypes.MAGENTA_CONCRETE),
+        LIGHT_BLUE_CONCRETE(PToiletTypes.LIGHT_BLUE_CONCRETE),
+        YELLOW_CONCRETE(PToiletTypes.YELLOW_CONCRETE),
+        LIME_CONCRETE(PToiletTypes.LIME_CONCRETE),
+        PINK_CONCRETE(PToiletTypes.PINK_CONCRETE),
+        GRAY_CONCRETE(PToiletTypes.GRAY_CONCRETE),
+        LIGHT_GRAY_CONCRETE(PToiletTypes.LIGHT_GRAY_CONCRETE),
+        CYAN_CONCRETE(PToiletTypes.CYAN_CONCRETE),
+        PURPLE_CONCRETE(PToiletTypes.PURPLE_CONCRETE),
+        BLUE_CONCRETE(PToiletTypes.BLUE_CONCRETE),
+        BROWN_CONCRETE(PToiletTypes.BROWN_CONCRETE),
+        GREEN_CONCRETE(PToiletTypes.GREEN_CONCRETE),
+        RED_CONCRETE(PToiletTypes.RED_CONCRETE),
+        BLACK_CONCRETE(PToiletTypes.BLACK_CONCRETE);
+
+        private final ToiletType toiletType;
+
+        StoneType(ToiletType toiletType) {
+            this.toiletType = toiletType;
+        }
+
+        public ToiletType getToiletType() {
+            return toiletType;
+        }
 
         @Override
         public String getSerializedName() {
             return name().toLowerCase();
-        }
-
-        public Component getDisplayName() {
-            return Component.translatable("toilet_type.poopsky." + getSerializedName());
         }
     }
 
@@ -121,36 +147,32 @@ public class StoneToiletBlock extends ToiletLavaBlock {
 
     @Override
     public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
-        return withVariant(this, state.getValue(STONE_TYPE).getSerializedName());
+        return withVariant(this, state.getValue(STONE_TYPE).getToiletType());
     }
 
     @Override
     public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack tool) {
         player.awardStat(Stats.BLOCK_MINED.get(this));
         player.causeFoodExhaustion(0.005F);
-        if (level instanceof ServerLevel) {
-            popResource(level, pos, withVariant(this, state.getValue(STONE_TYPE).getSerializedName()));
-        }
+        Block.dropResources(state, level, pos, blockEntity, player, tool);
     }
 
-    public static ItemStack withVariant(Block block, String variant) {
-        var stack = new ItemStack(block);
-        stack.set(PComponents.TOILET_TYPE.get(), variant);
-        return stack;
+    public static ItemStack withVariant(Block block, ToiletType toiletType) {
+        return ToiletBlockItem.withType(block, toiletType);
     }
 
     public void addToCreativeTab(CreativeModeTab.Output output) {
         for (var type : StoneType.values()) {
-            output.accept(withVariant(this, type.getSerializedName()));
+            output.accept(withVariant(this, type.getToiletType()));
         }
     }
 
-    public BlockState applyVariant(BlockState state, String variant) {
-        try {
-            var type = StoneType.valueOf(variant.toUpperCase());
-            return state.setValue(STONE_TYPE, type);
-        } catch (IllegalArgumentException e) {
-            return state;
+    public BlockState applyVariant(BlockState state, ToiletType toiletType) {
+        for (var stoneType : StoneType.values()) {
+            if (stoneType.getToiletType().equals(toiletType)) {
+                return state.setValue(STONE_TYPE, stoneType);
+            }
         }
+        return state;
     }
 }
