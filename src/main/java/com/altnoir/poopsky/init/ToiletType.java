@@ -59,6 +59,11 @@ public record ToiletType(Block sourceBlock, Category category) {
         return REGISTRY.get(id);
     }
 
+    public static ToiletType bySourceBlock(Block block) {
+        String id = BuiltInRegistries.BLOCK.getKey(block).getPath();
+        return REGISTRY.get(id);
+    }
+
     public static Map<String, ToiletType> getAll() {
         return Collections.unmodifiableMap(REGISTRY);
     }

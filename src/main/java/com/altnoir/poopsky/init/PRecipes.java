@@ -53,6 +53,9 @@ public class PRecipes {
             .register("anal_pressing", () ->
                     RecipeType.simple(PoopSky.loc("anal_pressing")));
 
+    public static final DeferredHolder<RecipeSerializer<?>, ToiletShapedRecipe.Serializer> TOILET_SHAPED_SERIALIZER = SERIALIZERS
+            .register("toilet_shaped", ToiletShapedRecipe.Serializer::new);
+
     public static void register(IEventBus eventBus) {
         SERIALIZERS.register(eventBus);
         TYPES.register(eventBus);

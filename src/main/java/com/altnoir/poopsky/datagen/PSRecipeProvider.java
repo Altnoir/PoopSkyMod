@@ -5,6 +5,7 @@ import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PItems;
+import com.altnoir.poopsky.init.ToiletType;
 import com.altnoir.poopsky.recipe.*;
 import com.simibubi.create.AllItems;
 import net.minecraft.core.HolderLookup;
@@ -507,9 +508,15 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.TILE_BLOCK_WALL, PBlocks.TILE_BLOCK);
 
         // 厕所配方
-        toiletRecipes(recipeOutput, AllToiletBlocks.WOOD_TOILET, Blocks.OAK_PLANKS);
-        toiletRecipes(recipeOutput, AllToiletBlocks.STONE_TOILET, Blocks.STONE);
-        toiletRecipes(recipeOutput, AllToiletBlocks.METAL_TOILET, Blocks.IRON_BLOCK);
+        for (var entry : ToiletType.getByCategory(ToiletType.Category.WOOD).entrySet()) {
+            toiletRecipes(recipeOutput, AllToiletBlocks.WOOD_TOILET, entry.getValue().sourceBlock(), entry.getValue());
+        }
+        for (var entry : ToiletType.getByCategory(ToiletType.Category.STONE).entrySet()) {
+            toiletRecipes(recipeOutput, AllToiletBlocks.STONE_TOILET, entry.getValue().sourceBlock(), entry.getValue());
+        }
+        for (var entry : ToiletType.getByCategory(ToiletType.Category.METAL).entrySet()) {
+            toiletRecipes(recipeOutput, AllToiletBlocks.METAL_TOILET, entry.getValue().sourceBlock(), entry.getValue());
+        }
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, AllToiletBlocks.RAINBOW_TOILET)
                 .requires(Blocks.RED_CONCRETE)
@@ -737,14 +744,14 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(recipeOutput, typeId));
     }
 
-    private void toiletRecipes(RecipeOutput recipeOutput, ItemLike toilet, ItemLike block) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, toilet)
+    private void toiletRecipes(RecipeOutput recipeOutput, ItemLike toilet, ItemLike block, ToiletType toiletType) {
+        new ToiletShapedRecipeBuilder(RecipeCategory.BUILDING_BLOCKS, toilet, toiletType)
                 .pattern("P")
                 .pattern("#")
                 .define('P', PItems.POOP.get())
                 .define('#', block)
                 .unlockedBy(getItemName(PItems.POOP), has(PItems.POOP.get()))
-                .save(recipeOutput);
+                .save(recipeOutput, PoopSky.loc(getItemName(toilet) + "_from_" + toiletType.id()));
     }
 
     public void stairsRecipe(RecipeOutput recipeOutput, ItemLike output, ItemLike input) {

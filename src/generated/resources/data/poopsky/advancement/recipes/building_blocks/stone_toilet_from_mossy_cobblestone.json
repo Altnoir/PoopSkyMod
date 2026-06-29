@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "poopsky:wood_toilet"
+        "recipe": "poopsky:stone_toilet_from_mossy_cobblestone"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "poopsky:wood_toilet"
+      "poopsky:stone_toilet_from_mossy_cobblestone"
     ]
   }
 }

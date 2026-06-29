@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "poopsky:metal_toilet"
+        "recipe": "poopsky:wood_toilet_from_warped_planks"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "poopsky:metal_toilet"
+      "poopsky:wood_toilet_from_warped_planks"
     ]
   }
 }

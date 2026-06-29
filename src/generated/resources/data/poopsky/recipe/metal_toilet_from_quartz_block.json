@@ -1,0 +1,23 @@
+{
+  "type": "poopsky:toilet_shaped",
+  "delegate": {
+    "category": "building",
+    "key": {
+      "#": {
+        "item": "minecraft:quartz_block"
+      },
+      "P": {
+        "item": "poopsky:poop"
+      }
+    },
+    "pattern": [
+      "P",
+      "#"
+    ],
+    "result": {
+      "count": 1,
+      "id": "poopsky:metal_toilet"
+    }
+  },
+  "toilet_type": "quartz_block"
+}

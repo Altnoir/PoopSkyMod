@@ -1,0 +1,23 @@
+{
+  "type": "poopsky:toilet_shaped",
+  "delegate": {
+    "category": "building",
+    "key": {
+      "#": {
+        "item": "minecraft:spruce_planks"
+      },
+      "P": {
+        "item": "poopsky:poop"
+      }
+    },
+    "pattern": [
+      "P",
+      "#"
+    ],
+    "result": {
+      "count": 1,
+      "id": "poopsky:wood_toilet"
+    }
+  },
+  "toilet_type": "spruce_planks"
+}
