@@ -1,10 +1,10 @@
 package com.altnoir.poopsky;
 
 import com.altnoir.poopsky.block.AllToiletBlocks;
+import com.altnoir.poopsky.block.ToiletType;
 import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PFlyTypes;
 import com.altnoir.poopsky.init.PItems;
-import com.altnoir.poopsky.block.ToiletType;
 import com.altnoir.poopsky.item.p.FlyItem;
 import com.altnoir.poopsky.item.p.ToiletBlockItem;
 import net.minecraft.core.registries.Registries;
@@ -26,7 +26,7 @@ public class PItemGroups {
 
     public static final Supplier<CreativeModeTab> POOPSKY_TAB = CREATIVE_MODE_TAB.register("poopsky_tab", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemgroup.poopsky"))
-            .icon(() -> new ItemStack(PItems.POOP.get()))
+            .icon(() -> new ItemStack(AllToiletBlocks.WOOD_TOILET.get().asItem()))
             .displayItems((parameters, output) -> {
                 PItems.ITEMS.getEntries().stream()
                         .map(DeferredHolder::get)
