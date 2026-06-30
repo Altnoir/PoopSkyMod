@@ -10,7 +10,7 @@ public class ToiletTypeProperty extends Property<ToiletType> {
 
     public ToiletTypeProperty(String name, ToiletType.Category... categories) {
         super(name, ToiletType.class);
-        PToiletTypes.bootstrap();
+        PToiletTypes.init();
         this.categories = Set.of(categories);
     }
 
