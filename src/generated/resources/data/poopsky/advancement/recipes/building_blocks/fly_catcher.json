@@ -1,32 +1,32 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "flint": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:fly_catcher"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "roundworm": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:flint"
+            "items": "poopsky:roundworm"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
-    },
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "poopsky:gravel_from_flint_x4"
-      },
-      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
       "has_the_recipe",
-      "flint"
+      "roundworm"
     ]
   ],
   "rewards": {
     "recipes": [
-      "poopsky:gravel_from_flint_x4"
+      "poopsky:fly_catcher"
     ]
   }
 }

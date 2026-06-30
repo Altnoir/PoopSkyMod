@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "R": {
+      "item": "poopsky:roundworm"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "RR",
+    "RS",
+    " S"
+  ],
+  "result": {
+    "count": 1,
+    "id": "poopsky:fly_catcher"
+  }
+}

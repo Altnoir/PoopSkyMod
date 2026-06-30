@@ -25,7 +25,9 @@ public class FlyCatcherItem extends Item {
                 PFlyTypes.FlyType type = getFlyTypeFromEntity(fly);
                 ItemStack flyItem = FlyItem.withType(type);
 
-                fly.spawnAtLocation(flyItem);
+                if (!player.getInventory().add(flyItem)) {
+                    fly.spawnAtLocation(flyItem);
+                }
 
                 level.playSound(null, fly.getX(), fly.getY(), fly.getZ(),
                         PSoundEvents.ENTITY_FLY_CAPTURE.get(), SoundSource.NEUTRAL, 1.0F, 1.0F);

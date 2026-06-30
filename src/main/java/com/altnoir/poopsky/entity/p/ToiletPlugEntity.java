@@ -421,9 +421,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
         if (source.getEntity() instanceof Player player && player.isCrouching()) {
             this.kill();
             if (!player.getAbilities().instabuild) {
-                if (!player.getInventory().add(new ItemStack(PItems.TOILET_PLUG.get()))) {
-                    this.spawnAtLocation(PItems.TOILET_PLUG.get());
-                }
+                this.spawnAtLocation(PItems.TOILET_PLUG.get());
             }
             return true;
         }

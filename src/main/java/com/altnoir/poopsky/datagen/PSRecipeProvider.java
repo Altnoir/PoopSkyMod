@@ -356,6 +356,14 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('A', PBlocks.POOP_BLOCK)
                 .unlockedBy(getItemName(PItems.KING_OF_DRAGON_FRUIT), has(PItems.KING_OF_DRAGON_FRUIT))
                 .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, PItems.FLY_CATCHER)
+                .pattern("RR")
+                .pattern("RS")
+                .pattern(" S")
+                .define('R', PItems.ROUNDWORM)
+                .define('S', Items.STICK)
+                .unlockedBy(getItemName(PItems.ROUNDWORM), has(PItems.ROUNDWORM))
+                .save(recipeOutput);
 
         offer2x2CompactingRecipe(recipeOutput, PBlocks.POOLIME_BLOCK.get(), PItems.POOP_BALL.get());
         offerCompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOLIME_POOP_BLOCK.get(), PBlocks.POOP_BLOCK.get());
@@ -387,12 +395,6 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('S', PItems.SPALL)
                 .unlockedBy(getItemName(PItems.SPALL), has(PItems.SPALL))
                 .save(recipeOutput, getConversionRecipeName(Items.FLINT) + "_from_spall");
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Blocks.GRAVEL)
-                .pattern("FF")
-                .pattern("FF")
-                .define('F', Items.FLINT)
-                .unlockedBy(getItemName(Items.FLINT), has(Items.FLINT))
-                .save(recipeOutput, getConversionRecipeName(Blocks.GRAVEL) + "_from_flint_x4");
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.TORCH, 4)
                 .pattern("P")
