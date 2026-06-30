@@ -135,6 +135,14 @@ public class LavaToiletBlock extends BaseToiletLavaBlock {
     }
 
     @Override
+    public SoundType getSoundType(BlockState state, LevelReader level, BlockPos pos, Entity entity) {
+        Block sourceBlock = state.getValue(TOILET_TYPE).sourceBlock();
+        return sourceBlock == null
+                ? super.getSoundType(state, level, pos, entity)
+                : sourceBlock.defaultBlockState().getSoundType(level, pos, entity);
+    }
+
+    @Override
     public float getDestroyProgress(BlockState state, Player player, BlockGetter level, BlockPos pos) {
         var type = state.getValue(TOILET_TYPE);
         if (type == PToiletTypes.NETHERITE || type == PToiletTypes.OBSIDIAN || type == PToiletTypes.CRYING_OBSIDIAN) {

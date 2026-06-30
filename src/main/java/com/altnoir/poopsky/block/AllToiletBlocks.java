@@ -93,6 +93,7 @@ public final class AllToiletBlocks {
     }
 
     public static void register(IEventBus eventBus) {
+        PToiletTypes.bootstrap();
         BLOCKS.register(eventBus);
     }
 }

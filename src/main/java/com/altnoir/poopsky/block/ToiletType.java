@@ -13,17 +13,24 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-public record ToiletType(@Nullable Block sourceBlock, Category category, String id, Component displayName, @Nullable String texture) implements Comparable<ToiletType> {
+public record ToiletType(@Nullable Supplier<? extends Block> sourceBlockSupplier, Category category, String id, Component displayName, @Nullable String texture) implements Comparable<ToiletType> {
 
     private static final Map<String, ToiletType> REGISTRY = new LinkedHashMap<>();
 
     public static ToiletType register(Block sourceBlock, Category category) {
-        var type = new ToiletType(sourceBlock, category,
+        var type = new ToiletType(() -> sourceBlock, category,
                 BuiltInRegistries.BLOCK.getKey(sourceBlock).getPath(),
                 sourceBlock.getName(), null);
         REGISTRY.put(type.id, type);
+        return type;
+    }
+
+    public static ToiletType register(String id, Supplier<? extends Block> sourceBlock, Category category, Component displayName) {
+        var type = new ToiletType(sourceBlock, category, id, displayName, null);
+        REGISTRY.put(id, type);
         return type;
     }
 
@@ -34,9 +41,14 @@ public record ToiletType(@Nullable Block sourceBlock, Category category, String 
     }
 
     public ToiletType texture(String texture) {
-        var type = new ToiletType(this.sourceBlock, this.category, this.id, this.displayName, texture);
+        var type = new ToiletType(this.sourceBlockSupplier, this.category, this.id, this.displayName, texture);
         REGISTRY.put(this.id, type);
         return type;
+    }
+
+    @Nullable
+    public Block sourceBlock() {
+        return this.sourceBlockSupplier == null ? null : this.sourceBlockSupplier.get();
     }
 
     public static final Codec<ToiletType> CODEC = Codec.STRING.comapFlatMap(

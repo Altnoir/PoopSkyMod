@@ -3,7 +3,6 @@ package com.altnoir.poopsky.init;
 import com.altnoir.poopsky.block.ToiletType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.Blocks;
-import net.neoforged.bus.api.IEventBus;
 
 public final class PToiletTypes {
     // ——— 木质马桶 ———
@@ -20,7 +19,11 @@ public final class PToiletTypes {
     public static final ToiletType WARPED = ToiletType.register(Blocks.WARPED_PLANKS, ToiletType.Category.WOOD);
 
     // ——— 石质马桶 ———
-    public static final ToiletType TILE = ToiletType.register(PBlocks.TILE_BLOCK.get(), ToiletType.Category.STONE);
+    public static final ToiletType TILE = ToiletType.register(
+            "tile_block",
+            PBlocks.TILE_BLOCK,
+            ToiletType.Category.STONE,
+            Component.translatable("block.poopsky.tile_block"));
     public static final ToiletType STONE = ToiletType.register(Blocks.STONE, ToiletType.Category.STONE);
     public static final ToiletType COBBLESTONE = ToiletType.register(Blocks.COBBLESTONE, ToiletType.Category.STONE);
     public static final ToiletType MOSSY_COBBLESTONE = ToiletType.register(Blocks.MOSSY_COBBLESTONE, ToiletType.Category.STONE);
@@ -128,5 +131,8 @@ public final class PToiletTypes {
     public static final ToiletType CRYING_OBSIDIAN = ToiletType.register(Blocks.CRYING_OBSIDIAN, ToiletType.Category.METAL);
 
     private PToiletTypes() {
+    }
+
+    public static void bootstrap() {
     }
 }

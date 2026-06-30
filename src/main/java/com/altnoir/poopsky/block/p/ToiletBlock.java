@@ -1,15 +1,16 @@
 package com.altnoir.poopsky.block.p;
 
+import com.altnoir.poopsky.block.ToiletType;
 import com.altnoir.poopsky.block.ToiletTypeProperty;
 import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.init.PToiletTypes;
-import com.altnoir.poopsky.block.ToiletType;
 import com.altnoir.poopsky.item.p.ToiletBlockItem;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -19,6 +20,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
@@ -26,7 +28,6 @@ import org.jetbrains.annotations.Nullable;
 
 public class ToiletBlock extends AbstractToiletBlock {
     public static final MapCodec<ToiletBlock> CODEC = simpleCodec(ToiletBlock::new);
-    private static final Object _INIT = PToiletTypes.OAK; // 初始类用的，删了就坏，很玄学
     public static final ToiletTypeProperty WOOD_TYPE = new ToiletTypeProperty("wood_type", ToiletType.Category.WOOD);
 
     public ToiletBlock(Properties properties) {
@@ -82,6 +83,14 @@ public class ToiletBlock extends AbstractToiletBlock {
     @Override
     public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
         return 20;
+    }
+
+    @Override
+    public SoundType getSoundType(BlockState state, LevelReader level, BlockPos pos, @Nullable Entity entity) {
+        Block sourceBlock = state.getValue(WOOD_TYPE).sourceBlock();
+        return sourceBlock == null
+                ? super.getSoundType(state, level, pos, entity)
+                : sourceBlock.defaultBlockState().getSoundType(level, pos, entity);
     }
 
     @Override

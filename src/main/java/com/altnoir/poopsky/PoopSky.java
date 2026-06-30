@@ -84,7 +84,6 @@ public class PoopSky {
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             CompooperBlock.bootStrap();
-            PToiletTypes.OAK.id();
 
             DispenserBlock.registerProjectileBehavior(PItems.POOP_BALL);
             DispenserBlock.registerProjectileBehavior(PItems.SEA_POOP_BALL);
