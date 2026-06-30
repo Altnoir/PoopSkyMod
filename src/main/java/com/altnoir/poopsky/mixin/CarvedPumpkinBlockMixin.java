@@ -32,7 +32,7 @@ public class CarvedPumpkinBlockMixin {
         PumkinBlockEvents.SpawnResult result = PumkinBlockEvents.trySpawn(level, pos, PUMPKINS_PREDICATE);
         if (result == null || result.entity() == null) return;
         switch (result.type()) {
-            case VILLAGER, BLAZE -> spawnGolemInWorld(level, result.match(), result.entity(), result.spawnPos());
+            case VILLAGER, BLAZE, FLY -> spawnGolemInWorld(level, result.match(), result.entity(), result.spawnPos());
         }
     }
 

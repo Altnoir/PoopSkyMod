@@ -108,6 +108,8 @@ public class PSBlockStateProvider extends BlockStateProvider {
         cubeBottomTop(PBlocks.BREEDING_BOX.get(), PBlocks.CUT_POOP_BLOCK.get());
         orientable(PBlocks.PLACER.get());
         registerPoopCake();
+        cubeBottomTop(PBlocks.MAGGOTS_BLOCK.get());
+        blockWithItem(PBlocks.ROUNDWORM_BLOCK.get());
 
         registerToilet(PBlocks.WOODEN_TOILET, ToiletBlock.WOOD_TYPE, ToiletType.Category.WOOD, false);
         registerToilet(PBlocks.HARD_TOILET, LavaToiletBlock.TOILET_TYPE, ToiletType.Category.HARD, false);

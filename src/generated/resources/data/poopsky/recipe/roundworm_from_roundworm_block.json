@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "poopsky:roundworm_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "poopsky:roundworm"
+  }
+}

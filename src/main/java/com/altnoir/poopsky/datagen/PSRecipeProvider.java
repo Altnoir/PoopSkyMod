@@ -247,6 +247,8 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PItems.SAPLING_POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PBlocks.RAW_SAPLING_POOP_BLOCK);
         nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PItems.SEA_POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PBlocks.RAW_SEA_POOP_BLOCK);
         nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PItems.WITHER_POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PBlocks.RAW_WITHER_POOP_BLOCK);
+        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PItems.MAGGOTS_SEEDS, RecipeCategory.BUILDING_BLOCKS, PBlocks.MAGGOTS_BLOCK);
+        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PItems.ROUNDWORM, RecipeCategory.BUILDING_BLOCKS, PBlocks.ROUNDWORM_BLOCK);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_BLOCK)
                 .pattern("P")

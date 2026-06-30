@@ -141,6 +141,8 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(PBlocks.SIEVE.get());
         dropSelf(PBlocks.POOP_TNT.get());
         add(PBlocks.POOP_PIECE.get(), createPoopPieceDrop(PBlocks.POOP_PIECE.get(), PItems.POOP_BALL.get()));
+        dropSelf(PBlocks.MAGGOTS_BLOCK.get());
+        dropSelf(PBlocks.ROUNDWORM_BLOCK.get());
 
         LootItemCondition.Builder builder = LootItemBlockStatePropertyCondition.hasBlockStateProperties(PBlocks.MAGGOTS.get())
                 .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, CropBlock.MAX_AGE));

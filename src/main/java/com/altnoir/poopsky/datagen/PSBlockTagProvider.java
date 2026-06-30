@@ -151,6 +151,8 @@ public class PSBlockTagProvider extends BlockTagsProvider {
 
         //工具标签
         tag(BlockTags.MINEABLE_WITH_AXE)
+                .add(PBlocks.MAGGOTS_BLOCK.get())
+                .add(PBlocks.ROUNDWORM_BLOCK.get())
                 .add(PBlocks.WOODEN_TOILET.get())
                 .add(PBlocks.MAGGOTS.get());
 

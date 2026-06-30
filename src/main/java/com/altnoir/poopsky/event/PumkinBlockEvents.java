@@ -1,6 +1,8 @@
 package com.altnoir.poopsky.event;
 
+import com.altnoir.poopsky.entity.p.FlyEntity;
 import com.altnoir.poopsky.init.PBlocks;
+import com.altnoir.poopsky.init.PEntityType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -23,7 +25,8 @@ import java.util.function.Predicate;
 public class PumkinBlockEvents {
     public enum GolemType {
         VILLAGER,
-        BLAZE
+        BLAZE,
+        FLY
     }
 
     public record SpawnResult(GolemType type, Entity entity, BlockPattern.BlockPatternMatch match, BlockPos spawnPos) {
@@ -39,6 +42,10 @@ public class PumkinBlockEvents {
         match = getBlaze(predicate).find(level, pos);
         if (match != null) {
             return createBlaze(level, match);
+        }
+        match = getFly(predicate).find(level, pos);
+        if (match != null) {
+            return createFly(level, match);
         }
         return null;
     }
@@ -62,8 +69,15 @@ public class PumkinBlockEvents {
         return new SpawnResult(GolemType.BLAZE, blaze, match, match.getBlock(0, 1, 0).getPos());
     }
 
+    private static SpawnResult createFly(Level level, BlockPattern.BlockPatternMatch match) {
+        FlyEntity fly = PEntityType.FLY.get().create(level);
+        return new SpawnResult(GolemType.FLY, fly, match, match.getBlock(0, 1, 0).getPos());
+    }
+
     public static boolean canSpawnCustomGolem(LevelReader level, BlockPos pos) {
-        return getVillagerDispenser().find(level, pos) != null || getBlazeDispenser().find(level, pos) != null;
+        return getVillagerDispenser().find(level, pos) != null
+                || getBlazeDispenser().find(level, pos) != null
+                || getFlyDispenser().find(level, pos) != null;
     }
 
 
@@ -94,6 +108,21 @@ public class PumkinBlockEvents {
         return BlockPatternBuilder.start()
                 .aisle(" ", "#")
                 .where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(PBlocks.CHILI_POOP_BLOCK.get())))
+                .build();
+    }
+
+    private static BlockPattern getFly(Predicate<BlockState> predicate) {
+        return BlockPatternBuilder.start()
+                .aisle("^", "#")
+                .where('^', BlockInWorld.hasState(predicate))
+                .where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(PBlocks.MAGGOTS_BLOCK.get())))
+                .build();
+    }
+
+    private static BlockPattern getFlyDispenser() {
+        return BlockPatternBuilder.start()
+                .aisle(" ", "#")
+                .where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(PBlocks.MAGGOTS_BLOCK.get())))
                 .build();
     }
 

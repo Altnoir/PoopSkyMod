@@ -551,6 +551,18 @@ public class PBlocks {
             )
     );
 
+    public static final DeferredBlock<Block> MAGGOTS_BLOCK = registerBlock("maggots_block",
+            () -> new Block(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_WHITE)
+                    .strength(POOP)
+                    .sound(SoundType.WEEPING_VINES))
+    );
+    public static final DeferredBlock<Block> ROUNDWORM_BLOCK = registerBlock("roundworm_block",
+            () -> new Block(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_WHITE)
+                    .strength(POOP)
+                    .sound(SoundType.TWISTING_VINES))
+    );
     public static final DeferredBlock<Block> MAGGOTS = BLOCKS.register("maggots",
             () -> new MaggotsBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_YELLOW)
@@ -561,7 +573,6 @@ public class PBlocks {
                     .pushReaction(PushReaction.DESTROY)
             )
     );
-
     public static final DeferredBlock<Block> ROUNDWORM_VINES = BLOCKS.register("roundworm_vines",
             () -> new RoundwormVinesBlock(
                     BlockBehaviour.Properties.of()
