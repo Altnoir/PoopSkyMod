@@ -24,6 +24,7 @@ PoopSky 是一个以**粪便为主题**的 Minecraft 空岛生存模组。玩家
 PoopSkyMod/
 ├── build.gradle                          # 构建脚本
 ├── gradle.properties                     # 版本与依赖配置
+├── src/generated/resources/              # Datagen 输出资源
 ├── src/main/
 │   ├── java/com/altnoir/poopsky/
 │   │   ├── PoopSky.java                  # 主模组类（@Mod 入口）
@@ -32,9 +33,9 @@ PoopSkyMod/
 │   │   ├── PItemGroups.java              # 创造模式物品栏
 │   │   ├── PTags.java                    # 标签定义
 │   │   ├── block/
-│   │   │   ├── PBlocks.java              # 方块注册中心
-│   │   │   ├── AllToiletBlocks.java      # 马桶方块注册
-│   │   │   ├── ToiletComponent.java      # 马桶组件
+│   │   │   ├── ToiletComponent.java      # 厕所组件
+│   │   │   ├── ToiletType.java           # 厕所类型定义
+│   │   │   ├── ToiletTypeProperty.java   # 厕所类型方块状态属性
 │   │   │   ├── abs/                      # 抽象基类
 │   │   │   │   ├── AbstractCompooperBlock.java
 │   │   │   │   ├── AbstractRawBlock.java
@@ -46,8 +47,12 @@ PoopSkyMod/
 │   │   │   ├── fluid/
 │   │   │   │   └── UrineLiquidBlock.java
 │   │   │   └── p/                        # 具体方块实现 (30+ 种)
+│   │   ├── client/
+│   │   │   ├── inventory/                # 菜单与客户端屏幕
+│   │   │   ├── particle/                 # 客户端粒子
+│   │   │   ├── renderer/                 # 客户端覆盖层/高亮渲染
+│   │   │   └── sound/                    # 客户端循环音效
 │   │   ├── item/
-│   │   │   ├── PItems.java               # 物品注册中心
 │   │   │   ├── PFoods.java               # 食物属性
 │   │   │   ├── PArmorMaterials.java      # 盔甲材料
 │   │   │   ├── PToolTiers.java           # 工具等级
@@ -56,12 +61,23 @@ PoopSkyMod/
 │   │   │   ├── model/                    # 实体模型
 │   │   │   ├── renderer/                 # 实体渲染器
 │   │   │   └── p/                        # 具体实体实现
-│   │   ├── init/                         # 注册中心 (PEntityType, PEffects...)
+│   │   ├── init/                         # 注册中心 (PBlocks, PItems, PEntityType...)
+│   │   │   ├── PBlocks.java              # 方块注册中心
+│   │   │   ├── PItems.java               # 物品注册中心
+│   │   │   ├── PBlockEntityType.java     # 方块实体注册
+│   │   │   ├── PComponents.java          # 数据组件注册
+│   │   │   ├── PRecipes.java             # 配方类型/序列化器注册
+│   │   │   ├── PSNetworking.java         # 网络包注册
+│   │   │   └── PToiletTypes.java         # 厕所类型注册
 │   │   ├── effect/                       # 药水效果
 │   │   ├── event/                        # 事件处理
+│   │   ├── loot/                         # 自定义战利品函数
 │   │   ├── recipe/                       # 自定义配方
 │   │   ├── worldgen/                     # 世界生成
 │   │   │   ├── PSChunkGenerators.java
+│   │   │   ├── PSConfigureFeatures.java
+│   │   │   ├── PSPlacedFeatures.java
+│   │   │   ├── PSStructures.java
 │   │   │   ├── PSVoidChunkGenerator.java
 │   │   │   ├── structure/                # 岛屿结构
 │   │   │   └── foliage/                  # 树叶生成器
@@ -79,7 +95,22 @@ PoopSkyMod/
 │       ├── poopsky.mixins.json           # Mixin 配置
 │       ├── META-INF/
 │       │   └── accesstransformer.cfg
-│       └── assets/poopsky/               # 模组资源
+│       ├── assets/poopsky/               # 客户端资源
+│       │   ├── blockstates/
+│       │   ├── lang/
+│       │   ├── models/
+│       │   ├── sounds/
+│       │   ├── textures/
+│       │   ├── icon.png
+│       │   └── sounds.json
+│       └── data/                         # 数据包资源
+│           ├── farmersdelight/recipe/    # Farmers Delight 兼容配方
+│           ├── minecraft/tags/           # 原版命名空间标签
+│           └── poopsky/
+│               ├── jukebox_song/
+│               ├── recipes/
+│               ├── structure/
+│               └── worldgen/
 ```
 
 ## 依赖模组

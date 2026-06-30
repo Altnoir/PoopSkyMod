@@ -186,7 +186,7 @@
 
   "block.poopsky.urine": "尿",
   "block.poopsky.toilet_block": "廁所",
-  "block.poopsky.wood_toilet": "木製廁所",
+  "block.poopsky.wooden_toilet": "木質廁所",
   "block.poopsky.hard_toilet": "硬質廁所",
   "block.poopsky.rainbow_toilet": "彩虹廁所",
 
@@ -285,7 +285,7 @@
   "advancements.poopsky.omen_armor.title": "忌諱化身",
   "advancements.poopsky.omen_armor.description": "用金裝備升級為忌諱盔甲",
   "advancements.poopsky.chili.title": "腸道痙攣",
-  "advancements.poopsky.chili.description": "從養糞人那購買龍息辣椒並食用\n食用後可在非木製廁所上拉出熔岩",
+  "advancements.poopsky.chili.description": "從養糞人那購買龍息辣椒並食用\n食用後可在非木質廁所上拉出熔岩",
   "advancements.poopsky.rainbow_toilet.title": "炫彩廁所",
   "advancements.poopsky.rainbow_toilet.description": "從養糞人那購買彩虹廁所",
   "advancements.poopsky.chili_poop.title": "辣味兒糞便",

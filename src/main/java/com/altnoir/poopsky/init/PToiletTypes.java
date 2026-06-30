@@ -5,7 +5,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.Blocks;
 
 public final class PToiletTypes {
-    // ——— 木质马桶 ———
+    // ——— 木质厕所 ———
     public static final ToiletType OAK = ToiletType.register(Blocks.OAK_PLANKS, ToiletType.Category.WOOD);
     public static final ToiletType SPRUCE = ToiletType.register(Blocks.SPRUCE_PLANKS, ToiletType.Category.WOOD);
     public static final ToiletType BIRCH = ToiletType.register(Blocks.BIRCH_PLANKS, ToiletType.Category.WOOD);
@@ -18,7 +18,7 @@ public final class PToiletTypes {
     public static final ToiletType CRIMSON = ToiletType.register(Blocks.CRIMSON_PLANKS, ToiletType.Category.WOOD);
     public static final ToiletType WARPED = ToiletType.register(Blocks.WARPED_PLANKS, ToiletType.Category.WOOD);
 
-    // ——— 石质马桶 ———
+    // ——— 石质厕所 ———
     public static final ToiletType TILE = ToiletType.register(PBlocks.TILE_BLOCK.get(), ToiletType.Category.HARD);
     public static final ToiletType STONE = ToiletType.register(Blocks.STONE, ToiletType.Category.HARD);
     public static final ToiletType COBBLESTONE = ToiletType.register(Blocks.COBBLESTONE, ToiletType.Category.HARD);
@@ -66,7 +66,7 @@ public final class PToiletTypes {
     public static final ToiletType END_STONE = ToiletType.register(Blocks.END_STONE, ToiletType.Category.HARD);
     public static final ToiletType END_STONE_BRICK = ToiletType.register(Blocks.END_STONE_BRICKS, ToiletType.Category.HARD);
     public static final ToiletType PURPUR_BLOCK = ToiletType.register(Blocks.PURPUR_BLOCK, ToiletType.Category.HARD);
-    // ——— 彩色石质马桶 ———
+    // ——— 彩色石质厕所 ———
     public static final ToiletType TERRACOTTA = ToiletType.register(Blocks.TERRACOTTA, ToiletType.Category.HARD);
     public static final ToiletType WHITE_TERRACOTTA = ToiletType.register(Blocks.WHITE_TERRACOTTA, ToiletType.Category.HARD);
     public static final ToiletType ORANGE_TERRACOTTA = ToiletType.register(Blocks.ORANGE_TERRACOTTA, ToiletType.Category.HARD);
@@ -101,7 +101,7 @@ public final class PToiletTypes {
     public static final ToiletType RED_CONCRETE = ToiletType.register(Blocks.RED_CONCRETE, ToiletType.Category.HARD);
     public static final ToiletType BLACK_CONCRETE = ToiletType.register(Blocks.BLACK_CONCRETE, ToiletType.Category.HARD);
     public static final ToiletType RAINBOW = ToiletType.register("rainbow", ToiletType.Category.HARD, Component.translatable("block.poopsky.rainbow_toilet")).texture("rainbow_concrete");
-    // ——— 金属马桶 ———
+    // ——— 金属厕所 ———
     public static final ToiletType IRON = ToiletType.register(Blocks.IRON_BLOCK, ToiletType.Category.HARD);
     public static final ToiletType GOLD = ToiletType.register(Blocks.GOLD_BLOCK, ToiletType.Category.HARD);
     public static final ToiletType COPPER = ToiletType.register(Blocks.COPPER_BLOCK, ToiletType.Category.HARD);

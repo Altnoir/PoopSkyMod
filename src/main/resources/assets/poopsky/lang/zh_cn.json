@@ -186,7 +186,7 @@
 
   "block.poopsky.urine": "尿",
   "block.poopsky.toilet_block": "厕所",
-  "block.poopsky.wooden_toilet": "木制厕所",
+  "block.poopsky.wooden_toilet": "木质厕所",
   "block.poopsky.hard_toilet": "硬质厕所",
   "block.poopsky.rainbow_toilet": "彩虹厕所",
 
@@ -285,7 +285,7 @@
   "advancements.poopsky.omen_armor.title": "忌讳化身",
   "advancements.poopsky.omen_armor.description": "用金装备升级为忌讳盔甲",
   "advancements.poopsky.chili.title": "肠道痉挛",
-  "advancements.poopsky.chili.description": "从养粪人那购买龙息辣椒并食用\n食用后可在非木制厕所上拉出熔岩",
+  "advancements.poopsky.chili.description": "从养粪人那购买龙息辣椒并食用\n食用后可在非木质厕所上拉出熔岩",
   "advancements.poopsky.rainbow_toilet.title": "炫彩厕所",
   "advancements.poopsky.rainbow_toilet.description": "从养粪人那购买彩虹厕所",
   "advancements.poopsky.chili_poop.title": "辣味儿粪便",
