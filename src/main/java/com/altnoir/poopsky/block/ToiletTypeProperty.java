@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.block;
 
+import com.altnoir.poopsky.init.PToiletTypes;
 import net.minecraft.world.level.block.state.properties.Property;
 
 import java.util.*;
@@ -9,6 +10,7 @@ public class ToiletTypeProperty extends Property<ToiletType> {
 
     public ToiletTypeProperty(String name, ToiletType.Category... categories) {
         super(name, ToiletType.class);
+        PToiletTypes.bootstrap();
         this.categories = Set.of(categories);
     }
 
