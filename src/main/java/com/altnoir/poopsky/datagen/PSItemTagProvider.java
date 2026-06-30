@@ -2,7 +2,6 @@ package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PTags;
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PItems;
 import net.minecraft.core.HolderLookup;
@@ -29,8 +28,8 @@ public class PSItemTagProvider extends ItemTagsProvider {
                 .add(PItems.CHILI_POOP.get())
                 .add(PItems.GOLDEN_POOP.get());
         tag(PTags.Items.TOILET_BLOCKS)
-                .add(WOODEN_TOILETS)
-                .add(HARD_TOILETS);
+                .add(PBlocks.WOODEN_TOILET.get().asItem())
+                .add(PBlocks.HARD_TOILET.get().asItem());
         tag(PTags.Items.CAN_COMPOSTABLE)
                 .add(PItems.POOP.get())
                 .add(PItems.POOP_BALL.get())
@@ -213,13 +212,4 @@ public class PSItemTagProvider extends ItemTagsProvider {
         tag(ItemTags.DOORS).add(PBlocks.POOP_DOOR.asItem());
         tag(ItemTags.TRAPDOORS).add(PBlocks.POOP_TRAPDOOR.asItem());
     }
-
-    public static final Item[] WOODEN_TOILETS = {
-            AllToiletBlocks.WOOD_TOILET.get().asItem()
-    };
-
-    public static final Item[] HARD_TOILETS = {
-            AllToiletBlocks.STONE_TOILET.get().asItem(),
-            AllToiletBlocks.METAL_TOILET.get().asItem()
-    };
 }

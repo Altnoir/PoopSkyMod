@@ -1,0 +1,23 @@
+{
+  "type": "poopsky:toilet_shaped",
+  "delegate": {
+    "category": "building",
+    "key": {
+      "#": {
+        "item": "minecraft:red_sandstone"
+      },
+      "P": {
+        "item": "poopsky:poop"
+      }
+    },
+    "pattern": [
+      "P",
+      "#"
+    ],
+    "result": {
+      "count": 1,
+      "id": "poopsky:hard_toilet"
+    }
+  },
+  "toilet_type": "red_sandstone"
+}

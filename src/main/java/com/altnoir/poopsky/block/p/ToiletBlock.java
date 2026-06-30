@@ -10,6 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -19,14 +20,20 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 public class ToiletBlock extends AbstractToiletBlock {
     public static final MapCodec<ToiletBlock> CODEC = simpleCodec(ToiletBlock::new);
-    private static final Object _INIT = PToiletTypes.OAK; // 初始类用的，删了就坏，很玄学
+    private static final Object _INIT;
+    static {
+        _INIT = PToiletTypes.OAK;
+    }
+
     public static final ToiletTypeProperty WOOD_TYPE = new ToiletTypeProperty("wood_type", ToiletType.Category.WOOD);
 
     public ToiletBlock(Properties properties) {
@@ -98,5 +105,23 @@ public class ToiletBlock extends AbstractToiletBlock {
             return state.setValue(WOOD_TYPE, toiletType);
         }
         return state;
+    }
+
+    @Override
+    public MapColor getMapColor(BlockState state, BlockGetter level, BlockPos pos, MapColor defaultColor) {
+        Block sourceBlock = state.getValue(WOOD_TYPE).sourceBlock();
+        if (sourceBlock != null) {
+            return sourceBlock.defaultBlockState().getMapColor(level, pos);
+        }
+        return super.getMapColor(state, level, pos, defaultColor);
+    }
+
+    @Override
+    public SoundType getSoundType(BlockState state, LevelReader level, BlockPos pos, @Nullable Entity entity) {
+        Block sourceBlock = state.getValue(WOOD_TYPE).sourceBlock();
+        if (sourceBlock != null) {
+            return sourceBlock.defaultBlockState().getSoundType();
+        }
+        return super.getSoundType(state, level, pos, entity);
     }
 }

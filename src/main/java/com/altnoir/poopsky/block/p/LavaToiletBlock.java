@@ -27,9 +27,11 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.event.EventHooks;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class LavaToiletBlock extends BaseToiletLavaBlock {
     public static final MapCodec<LavaToiletBlock> CODEC = RecordCodecBuilder.mapCodec(instance ->
@@ -39,8 +41,7 @@ public class LavaToiletBlock extends BaseToiletLavaBlock {
             ).apply(instance, LavaToiletBlock::new)
     );
 
-    public static final ToiletTypeProperty TOILET_TYPE = new ToiletTypeProperty("toilet_type", ToiletType.Category.STONE, ToiletType.Category.METAL);
-
+    public static final ToiletTypeProperty TOILET_TYPE = new ToiletTypeProperty("toilet_type", ToiletType.Category.HARD);
     private final ToiletType toiletType;
 
     public LavaToiletBlock(ToiletType toiletType, Properties properties) {
@@ -143,5 +144,23 @@ public class LavaToiletBlock extends BaseToiletLavaBlock {
             return player.getDigSpeed(state, pos) / hardness / (float) i;
         }
         return super.getDestroyProgress(state, player, level, pos);
+    }
+
+    @Override
+    public MapColor getMapColor(BlockState state, BlockGetter level, BlockPos pos, MapColor defaultColor) {
+        Block sourceBlock = state.getValue(TOILET_TYPE).sourceBlock();
+        if (sourceBlock != null) {
+            return sourceBlock.defaultBlockState().getMapColor(level, pos);
+        }
+        return super.getMapColor(state, level, pos, defaultColor);
+    }
+
+    @Override
+    public SoundType getSoundType(BlockState state, LevelReader level, BlockPos pos, @Nullable Entity entity) {
+        Block sourceBlock = state.getValue(TOILET_TYPE).sourceBlock();
+        if (sourceBlock != null) {
+            return sourceBlock.defaultBlockState().getSoundType();
+        }
+        return super.getSoundType(state, level, pos, entity);
     }
 }

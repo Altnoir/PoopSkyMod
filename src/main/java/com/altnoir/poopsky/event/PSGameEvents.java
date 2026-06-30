@@ -2,13 +2,9 @@ package com.altnoir.poopsky.event;
 
 import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.block.p.BaseToiletLavaBlock;
-import com.altnoir.poopsky.init.PEffects;
-import com.altnoir.poopsky.init.PFluids;
-import com.altnoir.poopsky.init.PItems;
-import com.altnoir.poopsky.init.PPotions;
+import com.altnoir.poopsky.init.*;
 import com.altnoir.poopsky.villager.PVillagerBehaviors;
 import com.altnoir.poopsky.villager.PVillagerTrades;
 import com.altnoir.poopsky.worldgen.PSVoidChunkGenerator;
@@ -150,7 +146,7 @@ public class PSGameEvents {
             var rand = new XoroshiroRandomSource(level.getSeed());
             var pos = new BlockPos.MutableBlockPos(rand.nextIntBetweenInclusive(-200, 200), 87, rand.nextIntBetweenInclusive(-200, 200));
 
-            level.setBlock(pos, AllToiletBlocks.WOOD_TOILET.get().defaultBlockState(), 2);
+            level.setBlock(pos, PBlocks.WOODEN_TOILET.get().defaultBlockState(), 2);
 
             event.setCanceled(true);
             BlockPos spawn = level.getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, pos);

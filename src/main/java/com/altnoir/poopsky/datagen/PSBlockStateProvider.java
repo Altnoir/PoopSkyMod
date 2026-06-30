@@ -1,12 +1,11 @@
 package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.AllToiletBlocks;
+import com.altnoir.poopsky.block.ToiletType;
 import com.altnoir.poopsky.block.ToiletTypeProperty;
 import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.block.p.*;
 import com.altnoir.poopsky.init.PBlocks;
-import com.altnoir.poopsky.block.ToiletType;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -110,9 +109,8 @@ public class PSBlockStateProvider extends BlockStateProvider {
         orientable(PBlocks.PLACER.get());
         registerPoopCake();
 
-        registerToilet(AllToiletBlocks.WOOD_TOILET, ToiletBlock.WOOD_TYPE, ToiletType.Category.WOOD, false);
-        registerToilet(AllToiletBlocks.STONE_TOILET, LavaToiletBlock.TOILET_TYPE, ToiletType.Category.STONE, true);
-        registerToilet(AllToiletBlocks.METAL_TOILET, LavaToiletBlock.TOILET_TYPE, ToiletType.Category.METAL, true);
+        registerToilet(PBlocks.WOODEN_TOILET, ToiletBlock.WOOD_TYPE, ToiletType.Category.WOOD, false);
+        registerToilet(PBlocks.HARD_TOILET, LavaToiletBlock.TOILET_TYPE, ToiletType.Category.HARD, false);
 
         var flyNestModel = models().singleTexture("fly_nest", mcLoc("block/cube_all"), mcLoc("block/beehive_side"));
         getVariantBuilder(PBlocks.FLY_NEST.get()).partialState().addModels(

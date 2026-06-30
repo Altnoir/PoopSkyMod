@@ -2,7 +2,6 @@ package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PTags;
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.init.PBlocks;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -53,9 +52,8 @@ public class PSBlockTagProvider extends BlockTagsProvider {
 
         tag(PTags.Blocks.TOILET_BLOCKS)
                 .add(
-                        AllToiletBlocks.WOOD_TOILET.get(),
-                        AllToiletBlocks.STONE_TOILET.get(),
-                        AllToiletBlocks.METAL_TOILET.get()
+                        PBlocks.WOODEN_TOILET.get(),
+                        PBlocks.HARD_TOILET.get()
                 );
 
         tag(PTags.Blocks.POOP_TNT_DESTROY)
@@ -84,7 +82,7 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(PBlocks.ROUNDWORM_VINES.get())
                 .add(PBlocks.ROUNDWORM_VINES_PLANT.get());
         tag(BlockTags.DRAGON_IMMUNE)
-                .add(AllToiletBlocks.METAL_TOILET.get());
+                .add(PBlocks.HARD_TOILET.get());
 
         tag(BlockTags.DIRT)
                 .addTag(PTags.Blocks.POOP_BLOCKS)
@@ -153,13 +151,12 @@ public class PSBlockTagProvider extends BlockTagsProvider {
 
         //工具标签
         tag(BlockTags.MINEABLE_WITH_AXE)
-                .add(AllToiletBlocks.WOOD_TOILET.get())
+                .add(PBlocks.WOODEN_TOILET.get())
                 .add(PBlocks.MAGGOTS.get());
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(
-                        AllToiletBlocks.STONE_TOILET.get(),
-                        AllToiletBlocks.METAL_TOILET.get(),
+                        PBlocks.HARD_TOILET.get(),
                         PBlocks.POOP_LOG.get(),
                         PBlocks.STRIPPED_POOP_LOG.get(),
                         PBlocks.TILE_BLOCK.get(),
@@ -177,9 +174,6 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 )
                 .add(HARDEN_POOP);
 
-        tag(BlockTags.NEEDS_STONE_TOOL)
-                .add(AllToiletBlocks.METAL_TOILET.get());
-
         tag(BlockTags.MINEABLE_WITH_HOE)
                 .addTag(PTags.Blocks.POOP_BUILDING_BLOCKS);
 
@@ -193,9 +187,8 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                         PBlocks.LAVA_COMPOOPER.get(),
                         PBlocks.POWDER_SNOW_COMPOOPER.get(),
                         PBlocks.URINE_COMPOOPER.get(),
-                        AllToiletBlocks.WOOD_TOILET.get(),
-                        AllToiletBlocks.STONE_TOILET.get(),
-                        AllToiletBlocks.METAL_TOILET.get()
+                        PBlocks.WOODEN_TOILET.get(),
+                        PBlocks.HARD_TOILET.get()
                 );
 
         tag(PTags.Blocks.FAN_PROCESSING_CATALYSTS_DIGESTING).add(PBlocks.URINE_LIQUID.get());

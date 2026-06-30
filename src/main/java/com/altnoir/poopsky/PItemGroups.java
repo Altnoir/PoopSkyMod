@@ -1,6 +1,5 @@
 package com.altnoir.poopsky;
 
-import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.ToiletType;
 import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PFlyTypes;
@@ -26,7 +25,7 @@ public class PItemGroups {
 
     public static final Supplier<CreativeModeTab> POOPSKY_TAB = CREATIVE_MODE_TAB.register("poopsky_tab", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemgroup.poopsky"))
-            .icon(() -> new ItemStack(AllToiletBlocks.WOOD_TOILET.get().asItem()))
+            .icon(() -> new ItemStack(PBlocks.WOODEN_TOILET.get().asItem()))
             .displayItems((parameters, output) -> {
                 PItems.ITEMS.getEntries().stream()
                         .map(DeferredHolder::get)
@@ -40,7 +39,9 @@ public class PItemGroups {
                         PBlocks.LAVA_COMPOOPER.get(),
                         PBlocks.POWDER_SNOW_COMPOOPER.get(),
                         PBlocks.URINE_COMPOOPER.get(),
-                        PBlocks.ROUNDWORM_VINES_PLANT.get()
+                        PBlocks.ROUNDWORM_VINES_PLANT.get(),
+                        PBlocks.WOODEN_TOILET.get(),
+                        PBlocks.HARD_TOILET.get()
                 );
                 PBlocks.BLOCKS.getEntries().stream()
                         .map(DeferredHolder::get)
@@ -53,13 +54,10 @@ public class PItemGroups {
                 }
 
                 for (var type : ToiletType.getByCategory(ToiletType.Category.WOOD).values()) {
-                    output.accept(ToiletBlockItem.withType(AllToiletBlocks.WOOD_TOILET.get(), type));
+                    output.accept(ToiletBlockItem.withType(PBlocks.WOODEN_TOILET.get(), type));
                 }
-                for (var type : ToiletType.getByCategory(ToiletType.Category.STONE).values()) {
-                    output.accept(ToiletBlockItem.withType(AllToiletBlocks.STONE_TOILET.get(), type));
-                }
-                for (var type : ToiletType.getByCategory(ToiletType.Category.METAL).values()) {
-                    output.accept(ToiletBlockItem.withType(AllToiletBlocks.METAL_TOILET.get(), type));
+                for (var type : ToiletType.getByCategory(ToiletType.Category.HARD).values()) {
+                    output.accept(ToiletBlockItem.withType(PBlocks.HARD_TOILET.get(), type));
                 }
             })
             .build());

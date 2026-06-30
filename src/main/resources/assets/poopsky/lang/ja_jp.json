@@ -187,8 +187,7 @@
   "block.poopsky.urine": "尿",
   "block.poopsky.toilet_block": "トイレ",
   "block.poopsky.wood_toilet": "木のトイレ",
-  "block.poopsky.stone_toilet": "石のトイレ",
-  "block.poopsky.metal_toilet": "金属のトイレ",
+  "block.poopsky.hard_toilet": "硬質トイレ",
   "block.poopsky.rainbow_toilet": "虹色のトイレ",
 
   "fly_type.poopsky.normal": "ノーマルハエ",

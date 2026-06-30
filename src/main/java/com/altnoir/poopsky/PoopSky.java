@@ -1,6 +1,5 @@
 package com.altnoir.poopsky;
 
-import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.p.CompooperBlock;
 import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.compat.create.CreatePlugin;
@@ -50,7 +49,6 @@ public class PoopSky {
         PParticles.register(modEventBus);
 
         PBlocks.register(modEventBus);
-        AllToiletBlocks.register(modEventBus);
         PBlockEntityType.register(modEventBus);
         PItems.register(modEventBus);
         PEntityType.register(modEventBus);
@@ -84,8 +82,6 @@ public class PoopSky {
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             CompooperBlock.bootStrap();
-            PToiletTypes.OAK.id();
-
             DispenserBlock.registerProjectileBehavior(PItems.POOP_BALL);
             DispenserBlock.registerProjectileBehavior(PItems.SEA_POOP_BALL);
             DispenserBlock.registerProjectileBehavior(PItems.WITHER_POOP_BALL);
@@ -134,7 +130,6 @@ public class PoopSky {
                     (level, currentPos, relativePos, currentState) -> level.getBlockState(currentPos.below()).is(PBlocks.POOP_BLOCK.get()) && level.getBlockState(relativePos).is(Blocks.BLUE_ICE),
                     Blocks.DEEPSLATE.defaultBlockState()));
         });
-
         PStats.init();
     }
 

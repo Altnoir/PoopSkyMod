@@ -187,8 +187,7 @@
   "block.poopsky.urine": "Urin",
   "block.poopsky.toilet_block": "Toilette",
   "block.poopsky.wood_toilet": "Holztoilette",
-  "block.poopsky.stone_toilet": "Steintoilette",
-  "block.poopsky.metal_toilet": "Metalltoilette",
+  "block.poopsky.hard_toilet": "Harttoilette",
   "block.poopsky.rainbow_toilet": "Regenbogentoilette",
 
   "fly_type.poopsky.normal": "Normale Fliege",

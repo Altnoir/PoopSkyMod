@@ -186,9 +186,8 @@
 
   "block.poopsky.urine": "尿",
   "block.poopsky.toilet_block": "厕所",
-  "block.poopsky.wood_toilet": "木制厕所",
-  "block.poopsky.stone_toilet": "石制厕所",
-  "block.poopsky.metal_toilet": "金属厕所",
+  "block.poopsky.wooden_toilet": "木制厕所",
+  "block.poopsky.hard_toilet": "硬质厕所",
   "block.poopsky.rainbow_toilet": "彩虹厕所",
 
   "fly_type.poopsky.normal": "普通苍蝇",

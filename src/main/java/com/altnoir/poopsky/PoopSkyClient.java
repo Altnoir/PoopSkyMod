@@ -1,6 +1,5 @@
 package com.altnoir.poopsky;
 
-import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.block.ToiletType;
 import com.altnoir.poopsky.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.client.inventory.BreedingBoxScreen;
@@ -14,6 +13,7 @@ import com.altnoir.poopsky.event.PSClientGameEvents;
 import com.altnoir.poopsky.event.PSClientModEvents;
 import com.altnoir.poopsky.event.PSKeyBoardInput;
 import com.altnoir.poopsky.init.*;
+import com.altnoir.poopsky.item.p.ToiletBlockItem;
 import net.minecraft.client.RecipeBookCategories;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.RenderType;
@@ -102,9 +102,9 @@ public class PoopSkyClient {
                 ItemProperties.register(PItems.FLY.get(), PoopSky.loc("fly_type"),
                         (stack, level, entity, seed) -> (float) PFlyTypes.getIndex(PFlyTypes.byId(stack.get(PComponents.FLY_TYPE.get()))));
 
-                for (var block : AllToiletBlocks.BLOCKS.getEntries()) {
+                for (var block : PBlocks.BLOCKS.getEntries()) {
                     Item item = block.get().asItem();
-                    if (item != Items.AIR) {
+                    if (item instanceof ToiletBlockItem && item != Items.AIR) {
                         ItemProperties.register(item, PoopSky.loc("toilet_type"),
                                 (stack, level, entity, seed) -> {
                                     ToiletType type = stack.get(PComponents.TOILET_TYPE.get());

@@ -1,7 +1,6 @@
 package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PEffects;
 import com.altnoir.poopsky.init.PItems;
@@ -34,7 +33,7 @@ public class PSAdvancementProvider extends AdvancementProvider {
         public void generate(HolderLookup.Provider registries, Consumer<AdvancementHolder> saver, ExistingFileHelper existingFileHelper) {
             AdvancementHolder root = Advancement.Builder.advancement()
                     .display(
-                            AllToiletBlocks.WOOD_TOILET.get(),
+                            PBlocks.WOODEN_TOILET.get(),
                             Component.translatable("advancements.poopsky.root.title"),
                             Component.translatable("advancements.poopsky.root.description"),
                             PoopSky.loc("textures/block/poop_block.png"),
@@ -386,7 +385,7 @@ public class PSAdvancementProvider extends AdvancementProvider {
             Advancement.Builder.advancement()
                     .parent(summon_villager)
                     .display(
-                            AllToiletBlocks.STONE_TOILET.get(),
+                            PBlocks.HARD_TOILET.get(),
                             Component.translatable("advancements.poopsky.rainbow_toilet.title"),
                             Component.translatable("advancements.poopsky.rainbow_toilet.description"),
                             null,
@@ -395,7 +394,7 @@ public class PSAdvancementProvider extends AdvancementProvider {
                             true,
                             false
                     )
-                    .addCriterion("rainbow_toilet", InventoryChangeTrigger.TriggerInstance.hasItems(AllToiletBlocks.STONE_TOILET.get()))
+                    .addCriterion("rainbow_toilet", InventoryChangeTrigger.TriggerInstance.hasItems(PBlocks.HARD_TOILET.get()))
                     .save(saver, modId("rainbow_toilet"), existingFileHelper);
 
             Advancement.Builder.advancement()

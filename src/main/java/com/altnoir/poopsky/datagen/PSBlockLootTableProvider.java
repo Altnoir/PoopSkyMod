@@ -1,11 +1,11 @@
 package com.altnoir.poopsky.datagen;
 
-import com.altnoir.poopsky.block.AllToiletBlocks;
-import com.altnoir.poopsky.init.PBlocks;
+import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.block.p.CompooperBlock;
 import com.altnoir.poopsky.block.p.PoopPieceBlock;
 import com.altnoir.poopsky.block.p.RoundwormVinesPlantBlock;
 import com.altnoir.poopsky.block.p.UrineCompooperBlock;
+import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.loot.SetToiletTypeFunction;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
@@ -38,7 +38,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class PSBlockLootTableProvider extends BlockLootSubProvider {
     protected PSBlockLootTableProvider(HolderLookup.Provider registries) {
@@ -47,8 +46,9 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
 
     @Override
     protected void generate() {
-        AllToiletBlocks.BLOCKS.getEntries().stream()
+        PBlocks.BLOCKS.getEntries().stream()
                 .map(DeferredHolder::get)
+                .filter(b -> b instanceof AbstractToiletBlock)
                 .forEach(block -> this.add(block, this::dropToilet));
 
         this.add(PBlocks.POOP_LOG.get(), this::createSpallOreDrops);
@@ -340,10 +340,7 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
 
     @Override
     protected @NotNull Iterable<Block> getKnownBlocks() {
-        return Stream.concat(
-                        PBlocks.BLOCKS.getEntries().stream(),
-                        AllToiletBlocks.BLOCKS.getEntries().stream()
-                )
+        return PBlocks.BLOCKS.getEntries().stream()
                 .map(Holder::value)
                 .collect(Collectors.toList());
     }

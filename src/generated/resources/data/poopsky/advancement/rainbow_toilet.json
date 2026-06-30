@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "poopsky:stone_toilet"
+            "items": "poopsky:hard_toilet"
           }
         ]
       },
@@ -19,7 +19,7 @@
     "frame": "challenge",
     "icon": {
       "count": 1,
-      "id": "poopsky:stone_toilet"
+      "id": "poopsky:hard_toilet"
     },
     "title": {
       "translate": "advancements.poopsky.rainbow_toilet.title"

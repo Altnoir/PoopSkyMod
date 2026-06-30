@@ -4,6 +4,7 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.fluid.UrineLiquidBlock;
 import com.altnoir.poopsky.block.p.*;
 import com.altnoir.poopsky.item.p.CompooperBlockItem;
+import com.altnoir.poopsky.item.p.ToiletBlockItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
@@ -22,11 +23,16 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Supplier;
+import java.util.function.ToIntFunction;
 
 public class PBlocks {
     private static final float POOP = 0.5F;
     private static final float HARDEN = 1.5F;
     private static final float LOG = 2.0F;
+    private static final float WOODEN_STRENGTH = 4.0F;
+    private static final float HARD_STRENGTH = 10.0F;
+    private static final float TOILET_RESISTANCE = 1200.0F;
+    private static final int LAVA_LIGHT_LEVEL = 15;
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(PoopSky.MOD_ID);
 
     public static final DeferredBlock<Block> POOP_CAKE = registerBlock("poop_cake",
@@ -578,6 +584,33 @@ public class PBlocks {
             )
     );
 
+    // Toilet
+    public static final DeferredBlock<Block> WOODEN_TOILET = registerToiletBlock(
+            "wooden_toilet",
+            () -> new ToiletBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.WOOD)
+                    .instrument(NoteBlockInstrument.BASS)
+                    .strength(WOODEN_STRENGTH, TOILET_RESISTANCE)
+                    .isRedstoneConductor(PBlocks::always)
+                    .isSuffocating(PBlocks::always)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
+    );
+
+    public static final DeferredBlock<Block> HARD_TOILET = registerToiletBlock(
+            "hard_toilet",
+            () -> new LavaToiletBlock(PToiletTypes.COBBLESTONE, BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.STONE)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .lightLevel(lavaLightLevel())
+                    .strength(HARD_STRENGTH, TOILET_RESISTANCE)
+                    .isRedstoneConductor(PBlocks::always)
+                    .isSuffocating(PBlocks::always)
+                    .requiresCorrectToolForDrops()
+                    .ignitedByLava())
+
+    );
+
     private static BlockBehaviour.Properties poopCakeProperties() {
         return BlockBehaviour.Properties.of()
                 .forceSolidOn()
@@ -644,10 +677,20 @@ public class PBlocks {
         return toReturn;
     }
 
+    public static <T extends Block> DeferredBlock<T> registerToiletBlock(String name, Supplier<T> block) {
+        DeferredBlock<T> toReturn = BLOCKS.register(name, block);
+        registerToiletBlockItem(name, toReturn);
+        return toReturn;
+    }
+
     public static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn, 88);
         return toReturn;
+    }
+
+    private static ToIntFunction<BlockState> lavaLightLevel() {
+        return state -> state.getValue(BaseToiletLavaBlock.LAVA) ? LAVA_LIGHT_LEVEL : 0;
     }
 
     private static <T extends Block> void registerBlockItem(String name, DeferredBlock<T> block) {
@@ -656,6 +699,10 @@ public class PBlocks {
 
     private static <T extends Block> void registerCompooperBlockItem(String name, DeferredBlock<T> block) {
         PItems.ITEMS.register(name, () -> new CompooperBlockItem(block.get(), new Item.Properties()));
+    }
+
+    private static <T extends Block> void registerToiletBlockItem(String name, DeferredBlock<T> block) {
+        PItems.ITEMS.register(name, () -> new ToiletBlockItem(block.get(), new Item.Properties().stacksTo(88)));
     }
 
     private static <T extends Block> void registerBlockItem(String name, DeferredBlock<T> block, int stacksTo) {

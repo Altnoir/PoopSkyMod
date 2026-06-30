@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "poopsky:set_toilet_type"
+            }
+          ],
+          "name": "poopsky:wooden_toilet"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "poopsky:blocks/wooden_toilet"
+}

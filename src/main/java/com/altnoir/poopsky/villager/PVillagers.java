@@ -3,7 +3,6 @@ package com.altnoir.poopsky.villager;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.init.PBlocks;
-import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.init.PSoundEvents;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -36,9 +35,8 @@ public class PVillagers {
             .flatMap(block -> block.getStateDefinition().getPossibleStates().stream())
             .collect(ImmutableSet.toImmutableSet());
     public static final Supplier<Set<BlockState>> TOILET_POI = () -> ImmutableList.of(
-                    AllToiletBlocks.WOOD_TOILET.get(),
-                    AllToiletBlocks.STONE_TOILET.get(),
-                    AllToiletBlocks.METAL_TOILET.get()
+                    PBlocks.WOODEN_TOILET.get(),
+                    PBlocks.HARD_TOILET.get()
             ).stream()
             .flatMap(block -> block.getStateDefinition().getPossibleStates().stream())
             .filter(state -> state.getBlock() instanceof AbstractToiletBlock)

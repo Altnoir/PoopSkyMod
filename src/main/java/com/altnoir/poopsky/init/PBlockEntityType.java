@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.AllToiletBlocks;
+import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.block.entity.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;
@@ -16,7 +16,8 @@ public class PBlockEntityType {
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ToiletBlockEntity>> TOILET_BLOCK_ENTITY = BLOCK_ENTITY_TYPES.register("toilet_block_entity",
             () -> {
-                var blocks = AllToiletBlocks.BLOCKS.getEntries().stream()
+                var blocks = PBlocks.BLOCKS.getEntries().stream()
+                        .filter(b -> b.get() instanceof AbstractToiletBlock)
                         .map(DeferredHolder::get)
                         .toArray(Block[]::new);
                 return BlockEntityType.Builder.of(ToiletBlockEntity::new, blocks).build(null);

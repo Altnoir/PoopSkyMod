@@ -16,7 +16,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public record ToiletType(@Nullable Block sourceBlock, Category category, String id, Component displayName, @Nullable String texture) implements Comparable<ToiletType> {
-
     private static final Map<String, ToiletType> REGISTRY = new LinkedHashMap<>();
 
     public static ToiletType register(Block sourceBlock, Category category) {
@@ -92,6 +91,6 @@ public record ToiletType(@Nullable Block sourceBlock, Category category, String 
     }
 
     public enum Category {
-        WOOD, STONE, METAL
+        WOOD, HARD
     }
 }

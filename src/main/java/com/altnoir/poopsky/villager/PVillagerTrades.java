@@ -1,7 +1,6 @@
 package com.altnoir.poopsky.villager;
 
 import com.altnoir.poopsky.Config;
-import com.altnoir.poopsky.block.AllToiletBlocks;
 import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.init.PToiletTypes;
@@ -81,7 +80,7 @@ public class PVillagerTrades {
             );
             trades.get(5).add((entity, random) -> new MerchantOffer(
                     new ItemCost(Items.EMERALD, 12),
-                    ToiletBlockItem.withType(AllToiletBlocks.STONE_TOILET.get(), PToiletTypes.RAINBOW), 8, 25, 0.5f)
+                    ToiletBlockItem.withType(PBlocks.HARD_TOILET.get(), PToiletTypes.RAINBOW), 8, 25, 0.5f)
             );
             if (!Config.plugTrades) {
                 trades.get(5).add((entity, random) -> new MerchantOffer(

@@ -23,60 +23,14 @@ import java.util.function.Supplier;
 import java.util.function.ToIntFunction;
 
 public final class AllToiletBlocks {
-    private static final float WOOD_STRENGTH = 2.0F;
-    private static final float STONE_STRENGTH = 4.0F;
-    private static final float METAL_STRENGTH = 10.0F;
+    private static final float WOODEN_STRENGTH = 4.0F;
+    private static final float HARD_STRENGTH = 10.0F;
     private static final float TOILET_RESISTANCE = 1200.0F;
     private static final int LAVA_LIGHT_LEVEL = 15;
 
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(PoopSky.MOD_ID);
 
-    public static final DeferredBlock<Block> WOOD_TOILET = registerBlock(
-            "wood_toilet",
-            () -> new ToiletBlock(woodToiletProperties(MapColor.WOOD, SoundType.WOOD))
-    );
 
-    public static final DeferredBlock<Block> STONE_TOILET = registerBlock(
-            "stone_toilet",
-            () -> new LavaToiletBlock(PToiletTypes.COBBLESTONE, lavaToiletProperties(
-                    MapColor.STONE,
-                    SoundType.STONE,
-                    STONE_STRENGTH)
-            )
-    );
-
-    public static final DeferredBlock<Block> METAL_TOILET = registerBlock(
-            "metal_toilet",
-            () -> new LavaToiletBlock(PToiletTypes.IRON, lavaToiletProperties(
-                    MapColor.METAL,
-                    SoundType.NETHERITE_BLOCK,
-                    METAL_STRENGTH)
-            )
-    );
-
-    private static BlockBehaviour.Properties woodToiletProperties(MapColor color, SoundType sound) {
-        return BlockBehaviour.Properties.of()
-                .mapColor(color)
-                .instrument(NoteBlockInstrument.BASS)
-                .strength(WOOD_STRENGTH, TOILET_RESISTANCE)
-                .isRedstoneConductor(PBlocks::always)
-                .isSuffocating(PBlocks::always)
-                .sound(sound)
-                .ignitedByLava();
-    }
-
-    private static BlockBehaviour.Properties lavaToiletProperties(MapColor color, SoundType sound, float strength) {
-        return BlockBehaviour.Properties.of()
-                .mapColor(color)
-                .instrument(NoteBlockInstrument.BASEDRUM)
-                .lightLevel(lavaLightLevel())
-                .strength(strength, TOILET_RESISTANCE)
-                .isRedstoneConductor(PBlocks::always)
-                .isSuffocating(PBlocks::always)
-                .requiresCorrectToolForDrops()
-                .sound(sound)
-                .ignitedByLava();
-    }
 
     private static ToIntFunction<BlockState> lavaLightLevel() {
         return state -> state.getValue(BaseToiletLavaBlock.LAVA) ? LAVA_LIGHT_LEVEL : 0;
