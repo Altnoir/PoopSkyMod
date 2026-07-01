@@ -1,7 +1,6 @@
 package com.altnoir.poopsky.block.abs;
 
 import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
-import com.altnoir.poopsky.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.entity.p.ToiletEntity;
 import com.altnoir.poopsky.init.PBlockEntityType;
 import com.altnoir.poopsky.init.PEffects;
@@ -154,6 +153,9 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
                 toilet.clearLinkedBlock();
             }
             level.getEntities(PEntityType.TOILET.get(), new AABB(pos), e -> true).forEach(Entity::kill);
+            if (!level.isClientSide) {
+                updateAdjacentConnections(level, pos, oldState);
+            }
         }
         super.onRemove(oldState, level, pos, newState, isMoving);
     }
@@ -248,11 +250,12 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
         Direction facing = ctx.getHorizontalDirection().getOpposite();
-        ToiletState connection = calculateConnection(ctx.getLevel(), ctx.getClickedPos(), facing);
-
-        return this.defaultBlockState()
+        BlockState state = this.defaultBlockState()
                 .setValue(FACING, facing)
-                .setValue(CONNECTION, connection);
+                .setValue(CONNECTION, ToiletState.DEFAULT);
+        ToiletState connection = calculateConnection(ctx.getLevel(), ctx.getClickedPos(), state);
+
+        return state.setValue(CONNECTION, connection);
     }
 
     @Override
@@ -324,7 +327,8 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean moved) {
         super.onPlace(state, level, pos, oldState, moved);
         if (!level.isClientSide) {
-            level.neighborChanged(pos, this, pos);
+            updateConnection(level, pos, state);
+            updateAdjacentConnections(level, pos, state);
             if (hasHot((ServerLevel) level, pos)) {
                 level.scheduleTick(pos, this, 1);
             }
@@ -338,16 +342,36 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
                 level.scheduleTick(pos, this, 1);
             }
 
-            ToiletState newConnection = calculateConnection(level, pos, state.getValue(FACING));
-            if (newConnection != state.getValue(CONNECTION)) {
-                level.setBlockAndUpdate(pos, state.setValue(CONNECTION, newConnection));
-            }
+            updateConnection(level, pos, state);
         }
     }
 
-    private ToiletState calculateConnection(LevelReader level, BlockPos pos, Direction facing) {
-        boolean forwardConnected = isValidNeighbor(level, pos.relative(facing), pos, facing);
-        boolean backwardConnected = isValidNeighbor(level, pos.relative(facing.getOpposite()), pos, facing);
+    public void updateConnection(Level level, BlockPos pos, BlockState state) {
+        if (level.isClientSide) return;
+
+        ToiletState newConnection = calculateConnection(level, pos, state);
+        if (newConnection != state.getValue(CONNECTION)) {
+            level.setBlockAndUpdate(pos, state.setValue(CONNECTION, newConnection));
+        }
+    }
+
+    private void updateAdjacentConnections(Level level, BlockPos pos, BlockState state) {
+        Direction facing = state.getValue(FACING);
+        updateNeighborConnection(level, pos.relative(facing));
+        updateNeighborConnection(level, pos.relative(facing.getOpposite()));
+    }
+
+    private void updateNeighborConnection(Level level, BlockPos pos) {
+        BlockState state = level.getBlockState(pos);
+        if (state.getBlock() instanceof AbstractToiletBlock toilet) {
+            toilet.updateConnection(level, pos, state);
+        }
+    }
+
+    private ToiletState calculateConnection(LevelReader level, BlockPos pos, BlockState state) {
+        Direction facing = state.getValue(FACING);
+        boolean forwardConnected = isValidNeighbor(level, pos.relative(facing), state, facing);
+        boolean backwardConnected = isValidNeighbor(level, pos.relative(facing.getOpposite()), state, facing);
 
         if (forwardConnected && backwardConnected) return ToiletState.BOTH;
         if (forwardConnected) return ToiletState.FRONT;
@@ -360,21 +384,14 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
         return level.isInWorldBounds(above) && level.getBlockState(above).is(Blocks.FIRE);
     }
 
-    protected boolean isValidNeighbor(LevelReader level, BlockPos neighborPos, BlockPos pos, Direction facing) {
+    protected boolean isValidNeighbor(LevelReader level, BlockPos neighborPos, BlockState state, Direction facing) {
         BlockState neighbor = level.getBlockState(neighborPos);
-        BlockState state = level.getBlockState(pos);
 
         if (!(neighbor.getBlock() instanceof AbstractToiletBlock) || !isFaceConnected(neighbor, facing)) {
             return false;
         }
 
-        boolean thisIsLava = this instanceof BaseToiletLavaBlock;
-        boolean neighborIsLava = neighbor.getBlock() instanceof BaseToiletLavaBlock;
-
-        if (thisIsLava && neighborIsLava) {
-            return neighbor.getValue(BaseToiletLavaBlock.LAVA).equals(state.getValue(BaseToiletLavaBlock.LAVA));
-        }
-        return !thisIsLava && !neighborIsLava;
+        return true;
     }
 
     private boolean isFaceConnected(BlockState state, Direction facing) {

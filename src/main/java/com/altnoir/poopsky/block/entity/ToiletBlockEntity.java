@@ -69,9 +69,9 @@ public class ToiletBlockEntity extends BlockEntity {
         this.toiletType = toiletType;
         this.setChanged();
         if (level instanceof ServerLevel serverLevel) {
-            serverLevel.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
-            requestModelDataUpdate();
             syncToiletModeToBlockState();
+            requestModelDataUpdate();
+            serverLevel.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
         }
     }
 

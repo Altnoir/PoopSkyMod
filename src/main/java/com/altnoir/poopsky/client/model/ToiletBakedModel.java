@@ -13,9 +13,9 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.model.data.ModelData;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.joml.Vector4f;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +51,16 @@ public class ToiletBakedModel implements BakedModel {
         int index = getStateIndex(state);
         if (models != null && index < models.length && models[index] != null) {
             return models[index];
+        }
+        return defaultModel;
+    }
+
+    private BakedModel selectParticleModel(ModelData modelData) {
+        ToiletType type = modelData.get(ToiletBlockEntity.TOILET_TYPE_PROPERTY);
+        if (type == null || !variantModels.containsKey(type)) return defaultModel;
+        BakedModel[] models = variantModels.get(type);
+        if (models != null && models.length > 0 && models[0] != null) {
+            return models[0];
         }
         return defaultModel;
     }
@@ -106,6 +116,16 @@ public class ToiletBakedModel implements BakedModel {
         int steps = (yRot / 90) % 4;
         Direction result = dir;
         for (int i = 0; i < steps; i++) {
+            result = result.getClockWise(Direction.Axis.Y);
+        }
+        return result;
+    }
+
+    private Direction unrotateDirection(Direction dir, int yRot) {
+        if (dir.getAxis() == Direction.Axis.Y) return dir;
+        int steps = (yRot / 90) % 4;
+        Direction result = dir;
+        for (int i = 0; i < steps; i++) {
             result = result.getCounterClockWise(Direction.Axis.Y);
         }
         return result;
@@ -119,8 +139,9 @@ public class ToiletBakedModel implements BakedModel {
     @Override
     public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction face, RandomSource random, ModelData modelData, @Nullable net.minecraft.client.renderer.RenderType renderType) {
         BakedModel selected = selectModel(state, modelData);
-        List<BakedQuad> quads = selected.getQuads(state, face, random, modelData, renderType);
         int yRot = getYRotation(state);
+        Direction sourceFace = face == null ? null : unrotateDirection(face, yRot);
+        List<BakedQuad> quads = selected.getQuads(state, sourceFace, random, modelData, renderType);
         return rotateQuads(quads, yRot);
     }
 
@@ -151,7 +172,7 @@ public class ToiletBakedModel implements BakedModel {
 
     @Override
     public TextureAtlasSprite getParticleIcon(ModelData modelData) {
-        return defaultModel.getParticleIcon(modelData);
+        return selectParticleModel(modelData).getParticleIcon(modelData);
     }
 
     @Override

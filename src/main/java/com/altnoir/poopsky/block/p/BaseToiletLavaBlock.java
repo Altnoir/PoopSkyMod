@@ -45,8 +45,9 @@ public class BaseToiletLavaBlock extends AbstractToiletBlock {
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState()
-                .setValue(FACING, context.getHorizontalDirection().getOpposite())
+        BlockState state = super.getStateForPlacement(context);
+        if (state == null) return null;
+        return state
                 .setValue(LAVA, false);
     }
 
@@ -59,6 +60,9 @@ public class BaseToiletLavaBlock extends AbstractToiletBlock {
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (state.getValue(LAVA)) {
             if (stack.is(Items.BUCKET)) {
+                if (level.isClientSide) {
+                    return ItemInteractionResult.SUCCESS;
+                }
                 level.playSound(null, pos, SoundEvents.BUCKET_FILL_LAVA, SoundSource.BLOCKS, 1.0F, 1.0F);
                 level.setBlock(pos, state.setValue(LAVA, false), 3);
 

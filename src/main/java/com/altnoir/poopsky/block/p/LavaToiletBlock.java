@@ -26,7 +26,6 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
@@ -86,8 +85,9 @@ public class LavaToiletBlock extends BaseToiletLavaBlock {
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState()
-                .setValue(FACING, context.getHorizontalDirection().getOpposite())
+        BlockState state = super.getStateForPlacement(context);
+        if (state == null) return null;
+        return state
                 .setValue(LAVA, false);
     }
 
@@ -111,6 +111,9 @@ public class LavaToiletBlock extends BaseToiletLavaBlock {
             ToiletType newType = ToiletType.bySourceBlock(blockItem.getBlock());
             if (newType != null && newType.category() == ToiletType.Category.HARD) {
                 if (!state.getValue(LAVA)) {
+                    if (level.isClientSide) {
+                        return ItemInteractionResult.SUCCESS;
+                    }
                     if (level.getBlockEntity(pos) instanceof ToiletBlockEntity be) {
                         ToiletType currentType = be.getToiletType();
                         if (currentType != newType) {

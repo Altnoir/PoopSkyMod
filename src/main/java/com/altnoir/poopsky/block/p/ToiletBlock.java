@@ -21,7 +21,6 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.MapColor;
@@ -50,8 +49,7 @@ public class ToiletBlock extends AbstractToiletBlock {
 
     @Override
     public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState()
-                .setValue(FACING, context.getHorizontalDirection().getOpposite());
+        return super.getStateForPlacement(context);
     }
 
     @Override
@@ -67,6 +65,9 @@ public class ToiletBlock extends AbstractToiletBlock {
         if (stack.getItem() instanceof BlockItem blockItem) {
             ToiletType toiletType = ToiletType.bySourceBlock(blockItem.getBlock());
             if (toiletType != null && toiletType.category() == ToiletType.Category.WOOD) {
+                if (level.isClientSide) {
+                    return ItemInteractionResult.SUCCESS;
+                }
                 if (level.getBlockEntity(pos) instanceof ToiletBlockEntity be) {
                     ToiletType currentType = be.getToiletType();
                     if (currentType != toiletType) {
