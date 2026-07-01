@@ -1,22 +1,29 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "category": "building",
-  "ingredients": [
-    {
-      "item": "minecraft:red_concrete"
+  "type": "poopsky:toilet_shaped",
+  "delegate": {
+    "category": "building",
+    "key": {
+      "B": {
+        "item": "minecraft:blue_concrete"
+      },
+      "G": {
+        "item": "minecraft:green_concrete"
+      },
+      "P": {
+        "item": "poopsky:poop"
+      },
+      "R": {
+        "item": "minecraft:red_concrete"
+      }
     },
-    {
-      "item": "minecraft:green_concrete"
-    },
-    {
-      "item": "minecraft:blue_concrete"
-    },
-    {
-      "item": "poopsky:poop"
+    "pattern": [
+      "P  ",
+      "RGB"
+    ],
+    "result": {
+      "count": 1,
+      "id": "poopsky:hard_toilet"
     }
-  ],
-  "result": {
-    "count": 1,
-    "id": "poopsky:hard_toilet"
-  }
+  },
+  "toilet_type": "rainbow"
 }

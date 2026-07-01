@@ -2,11 +2,13 @@ package com.altnoir.poopsky.block.abs;
 
 import com.altnoir.poopsky.block.ToiletType;
 import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
+import com.altnoir.poopsky.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.entity.p.ToiletEntity;
 import com.altnoir.poopsky.init.PBlockEntityType;
 import com.altnoir.poopsky.init.PEffects;
 import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.init.PItems;
+import com.altnoir.poopsky.init.PToiletTypes;
 import com.altnoir.poopsky.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.util.toiletUtil;
 import net.minecraft.core.BlockPos;
@@ -30,6 +32,7 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -100,6 +103,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
 
     public AbstractToiletBlock(Properties properties) {
         super(properties);
+        PToiletTypes.init();
         this.registerDefaultState(
                 this.defaultBlockState()
                         .setValue(FACING, Direction.NORTH)
@@ -107,7 +111,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
         );
     }
 
-    protected abstract ToiletType getDefaultToiletType();
+    public abstract ToiletType getDefaultToiletType();
 
     @Nullable
     protected ToiletType getToiletType(BlockGetter level, BlockPos pos) {
@@ -185,6 +189,39 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
         }
         player.awardStat(Stats.ITEM_USED.get(item));
         return ItemInteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    @Nullable
+    protected ItemInteractionResult handleVariantReplacement(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, ToiletType.Category acceptedCategory) {
+        if (stack.getItem() instanceof BlockItem blockItem) {
+            ToiletType newType = ToiletType.bySourceBlock(blockItem.getBlock());
+            if (newType != null && newType.category() == acceptedCategory) {
+                if (level.isClientSide) {
+                    return ItemInteractionResult.SUCCESS;
+                }
+                if (level.getBlockEntity(pos) instanceof ToiletBlockEntity be) {
+                    ToiletType currentType = be.getToiletType();
+                    if (currentType != newType) {
+                        be.setToiletType(newType);
+
+                        SoundType sound = blockItem.getBlock().defaultBlockState().getSoundType(level, pos, player);
+                        level.playSound(null, pos, sound.getPlaceSound(), SoundSource.BLOCKS, (sound.getVolume() + 1.0F) / 2.0F, sound.getPitch() * 0.8F);
+
+                        stack.consume(1, player);
+                        if (!player.getAbilities().instabuild) {
+                            Block oldBlock = currentType.sourceBlock();
+                            if (oldBlock != null) {
+                                ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.72, pos.getZ() + 0.5, new ItemStack(oldBlock));
+                                itemEntity.setDefaultPickUpDelay();
+                                level.addFreshEntity(itemEntity);
+                            }
+                        }
+                    }
+                    return ItemInteractionResult.sidedSuccess(false);
+                }
+            }
+        }
+        return null;
     }
 
     @Override
@@ -305,6 +342,11 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     }
 
     @Override
+    protected VoxelShape getInteractionShape(BlockState state, BlockGetter level, BlockPos pos) {
+        return Shapes.block();
+    }
+
+    @Override
     protected VoxelShape getVisualShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return getToiletShape(state);
     }
@@ -374,6 +416,9 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
                 level.scheduleTick(pos, this, 1);
             }
         }
+        if (level.getBlockEntity(pos) instanceof ToiletBlockEntity be && be.getToiletType() == null) {
+            be.setToiletType(getDefaultToiletType());
+        }
     }
 
     @Override
@@ -432,7 +477,9 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
             return false;
         }
 
-        return true;
+        boolean selfHasLava = state.hasProperty(BaseToiletLavaBlock.LAVA) && state.getValue(BaseToiletLavaBlock.LAVA);
+        boolean neighborHasLava = neighbor.hasProperty(BaseToiletLavaBlock.LAVA) && neighbor.getValue(BaseToiletLavaBlock.LAVA);
+        return selfHasLava == neighborHasLava;
     }
 
     private boolean isFaceConnected(BlockState state, Direction facing) {

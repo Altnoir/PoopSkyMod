@@ -7,6 +7,7 @@ import com.altnoir.poopsky.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.block.p.PoopCandleCakeBlock;
 import com.altnoir.poopsky.block.p.PoopPieceBlock;
 import com.altnoir.poopsky.init.PBlocks;
+import com.altnoir.poopsky.init.PToiletTypes;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -58,6 +59,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
         cubeBottomTop(PBlocks.MAGGOTS_BLOCK.get());
         blockWithItem(PBlocks.ROUNDWORM_BLOCK.get());
 
+        PToiletTypes.init();
         registerToilet(PBlocks.WOODEN_TOILET, ToiletType.Category.WOOD, false);
         registerToilet(PBlocks.HARD_TOILET, ToiletType.Category.HARD, true);
 

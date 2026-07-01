@@ -6,6 +6,7 @@ import com.altnoir.poopsky.common.FlyType;
 import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PItems;
+import com.altnoir.poopsky.init.PToiletTypes;
 import com.altnoir.poopsky.item.PFlyTypes;
 import com.altnoir.poopsky.recipe.*;
 import com.simibubi.create.AllItems;
@@ -486,6 +487,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.TILE_BLOCK_WALL, PBlocks.TILE_BLOCK);
 
         // 厕所配方
+        PToiletTypes.init();
         for (var entry : ToiletType.getByCategory(ToiletType.Category.WOOD).entrySet()) {
             toiletRecipes(recipeOutput, PBlocks.WOODEN_TOILET, entry.getValue().sourceBlock(), entry.getValue());
         }
@@ -494,11 +496,13 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 toiletRecipes(recipeOutput, PBlocks.HARD_TOILET, entry.getValue().sourceBlock(), entry.getValue());
             }
         }
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, PBlocks.HARD_TOILET)
-                .requires(Blocks.RED_CONCRETE)
-                .requires(Blocks.GREEN_CONCRETE)
-                .requires(Blocks.BLUE_CONCRETE)
-                .requires(PItems.POOP.get())
+        new ToiletShapedRecipeBuilder(RecipeCategory.BUILDING_BLOCKS, PBlocks.HARD_TOILET, PToiletTypes.RAINBOW)
+                .pattern(" P ")
+                .pattern("RGB")
+                .define('P', PItems.POOP.get())
+                .define('R', Blocks.RED_CONCRETE)
+                .define('G', Blocks.GREEN_CONCRETE)
+                .define('B', Blocks.BLUE_CONCRETE)
                 .unlockedBy(getItemName(PItems.POOP), has(PItems.POOP.get()))
                 .save(recipeOutput, PoopSky.loc("hard_toilet_from_rainbow"));
 

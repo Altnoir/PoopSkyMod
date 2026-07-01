@@ -63,15 +63,17 @@ public class ToiletBakedModel implements BakedModel {
     private BakedModel selectModel(@Nullable BlockState state, ModelData modelData) {
         if (state == null) return defaultModel;
         int index = getStateIndex(state);
-        if (templateModels != null && index < templateModels.length && templateModels[index] != null) {
-            return templateModels[index];
-        }
 
         ToiletType type = modelData.get(ToiletBlockEntity.TOILET_TYPE_PROPERTY);
-        if (type == null || !variantModels.containsKey(type)) return defaultModel;
-        BakedModel[] models = variantModels.get(type);
-        if (models != null && index < models.length && models[index] != null) {
-            return models[index];
+        if (type != null && variantModels.containsKey(type)) {
+            BakedModel[] models = variantModels.get(type);
+            if (models != null && index < models.length && models[index] != null) {
+                return models[index];
+            }
+        }
+
+        if (templateModels != null && index < templateModels.length && templateModels[index] != null) {
+            return templateModels[index];
         }
         return defaultModel;
     }
@@ -200,8 +202,11 @@ public class ToiletBakedModel implements BakedModel {
         if (modelData.has(ToiletBlockEntity.TOILET_TYPE_PROPERTY) || !(level instanceof Level levelWithTime)) {
             return modelData;
         }
-        ToiletType type = ToiletClientBlockExtensions.getCachedToiletType(levelWithTime, pos);
-        return type != null ? modelData.derive().with(ToiletBlockEntity.TOILET_TYPE_PROPERTY, type).build() : modelData;
+        if (levelWithTime.getBlockEntity(pos) instanceof ToiletBlockEntity be) {
+            ToiletType type = be.getToiletType();
+            return type != null ? modelData.derive().with(ToiletBlockEntity.TOILET_TYPE_PROPERTY, type).build() : modelData;
+        }
+        return modelData;
     }
 
     @Override

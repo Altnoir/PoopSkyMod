@@ -1,9 +1,9 @@
 package com.altnoir.poopsky.block.entity;
 
 import com.altnoir.poopsky.block.ToiletType;
+import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.block.p.LavaToiletBlock;
-import com.altnoir.poopsky.block.p.ToiletBlock;
 import com.altnoir.poopsky.init.PBlockEntityType;
 import com.altnoir.poopsky.init.PFluids;
 import com.altnoir.poopsky.init.PToiletTypes;
@@ -53,10 +53,8 @@ public class ToiletBlockEntity extends BlockEntity {
     }
 
     private static ToiletType inferDefaultType(BlockState state) {
-        if (state.getBlock() instanceof LavaToiletBlock) {
-            return PToiletTypes.COBBLESTONE;
-        } else if (state.getBlock() instanceof ToiletBlock) {
-            return PToiletTypes.OAK;
+        if (state.getBlock() instanceof AbstractToiletBlock toiletBlock) {
+            return toiletBlock.getDefaultToiletType();
         }
         return PToiletTypes.COBBLESTONE;
     }

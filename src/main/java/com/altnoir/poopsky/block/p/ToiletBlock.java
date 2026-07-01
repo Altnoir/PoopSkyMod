@@ -2,7 +2,6 @@ package com.altnoir.poopsky.block.p;
 
 import com.altnoir.poopsky.block.ToiletType;
 import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
-import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.init.PToiletTypes;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -10,7 +9,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -39,7 +37,7 @@ public class ToiletBlock extends AbstractToiletBlock {
     }
 
     @Override
-    protected ToiletType getDefaultToiletType() {
+    public ToiletType getDefaultToiletType() {
         return PToiletTypes.OAK;
     }
 
@@ -54,30 +52,9 @@ public class ToiletBlock extends AbstractToiletBlock {
     }
 
     @Override
-    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean moved) {
-        super.onPlace(state, level, pos, oldState, moved);
-        if (level.getBlockEntity(pos) instanceof ToiletBlockEntity be && be.getToiletType() == null) {
-            be.setToiletType(PToiletTypes.OAK);
-        }
-    }
-
-    @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (stack.getItem() instanceof BlockItem blockItem) {
-            ToiletType toiletType = ToiletType.bySourceBlock(blockItem.getBlock());
-            if (toiletType != null && toiletType.category() == ToiletType.Category.WOOD) {
-                if (level.isClientSide) {
-                    return ItemInteractionResult.SUCCESS;
-                }
-                if (level.getBlockEntity(pos) instanceof ToiletBlockEntity be) {
-                    ToiletType currentType = be.getToiletType();
-                    if (currentType != toiletType) {
-                        be.setToiletType(toiletType);
-                        return ItemInteractionResult.sidedSuccess(level.isClientSide);
-                    }
-                }
-            }
-        }
+        ItemInteractionResult result = handleVariantReplacement(stack, state, level, pos, player, ToiletType.Category.WOOD);
+        if (result != null) return result;
         return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
     }
 

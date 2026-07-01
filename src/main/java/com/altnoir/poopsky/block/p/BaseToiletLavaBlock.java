@@ -41,7 +41,7 @@ public class BaseToiletLavaBlock extends AbstractToiletBlock {
     }
 
     @Override
-    protected ToiletType getDefaultToiletType() {
+    public ToiletType getDefaultToiletType() {
         return PToiletTypes.COBBLESTONE;
     }
 
@@ -76,7 +76,7 @@ public class BaseToiletLavaBlock extends AbstractToiletBlock {
                 ItemStack itemStack = ItemUtils.createFilledResult(stack, player, new ItemStack(Items.LAVA_BUCKET));
                 player.setItemInHand(hand, itemStack);
 
-                return ItemInteractionResult.sidedSuccess(level.isClientSide);
+                return ItemInteractionResult.sidedSuccess(false);
             }
         }
         return super.useItemOn(stack, state, level, pos, player, hand, hitResult);

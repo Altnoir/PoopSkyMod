@@ -365,11 +365,10 @@ public class PBlocks {
 
     public static final DeferredBlock<Block> HARD_TOILET = registerToiletBlock(
             "hard_toilet",
-            () -> new LavaToiletBlock(PToiletTypes.COBBLESTONE, toiletProperties(MapColor.STONE, HARD_STRENGTH, SoundType.STONE, NoteBlockInstrument.BASEDRUM)
+            () -> new LavaToiletBlock(toiletProperties(MapColor.STONE, HARD_STRENGTH, SoundType.STONE, NoteBlockInstrument.BASEDRUM)
                     .lightLevel(lavaLightLevel())
                     .requiresCorrectToolForDrops()
                     .ignitedByLava())
-
     );
 
     public record BlockFamily(
