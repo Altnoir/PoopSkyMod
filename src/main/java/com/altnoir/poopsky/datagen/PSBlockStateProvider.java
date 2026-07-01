@@ -40,67 +40,13 @@ public class PSBlockStateProvider extends BlockStateProvider {
         poopPiece();
         poolimePoopBlock();
         blockWithTranslucentRenderType(PBlocks.POOLIME_BLOCK.get());
-        blockWithItem(PBlocks.CHILI_POOP_BLOCK.get());
-        stairsBlock((StairBlock) PBlocks.CHILI_POOP_STAIRS.get(), blockTexture(PBlocks.CHILI_POOP_BLOCK.get()));
-        slabBlock((SlabBlock) PBlocks.CHILI_POOP_SLAB.get(), blockTexture(PBlocks.CHILI_POOP_BLOCK.get()), blockTexture(PBlocks.CHILI_POOP_BLOCK.get()));
-        wallBlock((WallBlock) PBlocks.CHILI_POOP_WALL.get(), blockTexture(PBlocks.CHILI_POOP_BLOCK.get()));
-        blockWithItem(PBlocks.GOLDEN_POOP_BLOCK.get());
-        stairsBlock((StairBlock) PBlocks.GOLDEN_POOP_STAIRS.get(), blockTexture(PBlocks.GOLDEN_POOP_BLOCK.get()));
-        slabBlock((SlabBlock) PBlocks.GOLDEN_POOP_SLAB.get(), blockTexture(PBlocks.GOLDEN_POOP_BLOCK.get()), blockTexture(PBlocks.GOLDEN_POOP_BLOCK.get()));
-        wallBlock((WallBlock) PBlocks.GOLDEN_POOP_WALL.get(), blockTexture(PBlocks.GOLDEN_POOP_BLOCK.get()));
-
-        blockWithItem(PBlocks.POOP_BRICKS.get());
+        PBlocks.SIMPLE_MODEL_FAMILIES.forEach(this::blockFamily);
         blockWithItem(PBlocks.CRACKED_POOP_BRICKS.get());
-        stairsBlock((StairBlock) PBlocks.POOP_BRICK_STAIRS.get(), blockTexture(PBlocks.POOP_BRICKS.get()));
-        slabBlock((SlabBlock) PBlocks.POOP_BRICK_SLAB.get(), blockTexture(PBlocks.POOP_BRICKS.get()), blockTexture(PBlocks.POOP_BRICKS.get()));
-        wallBlock((WallBlock) PBlocks.POOP_BRICK_WALL.get(), blockTexture(PBlocks.POOP_BRICKS.get()));
-
-        blockWithItem(PBlocks.MOSSY_POOP_BRICKS.get());
-        stairsBlock((StairBlock) PBlocks.MOSSY_POOP_BRICK_STAIRS.get(), blockTexture(PBlocks.MOSSY_POOP_BRICKS.get()));
-        slabBlock((SlabBlock) PBlocks.MOSSY_POOP_BRICK_SLAB.get(), blockTexture(PBlocks.MOSSY_POOP_BRICKS.get()), blockTexture(PBlocks.MOSSY_POOP_BRICKS.get()));
-        wallBlock((WallBlock) PBlocks.MOSSY_POOP_BRICK_WALL.get(), blockTexture(PBlocks.MOSSY_POOP_BRICKS.get()));
-
-        blockWithItem(PBlocks.DRIED_POOP_BLOCK.get());
-        stairsBlock((StairBlock) PBlocks.DRIED_POOP_BLOCK_STAIRS.get(), blockTexture(PBlocks.DRIED_POOP_BLOCK.get()));
-        slabBlock((SlabBlock) PBlocks.DRIED_POOP_BLOCK_SLAB.get(), blockTexture(PBlocks.DRIED_POOP_BLOCK.get()), blockTexture(PBlocks.DRIED_POOP_BLOCK.get()));
-        wallBlock((WallBlock) PBlocks.DRIED_POOP_BLOCK_WALL.get(), blockTexture(PBlocks.DRIED_POOP_BLOCK.get()));
-
-        blockWithItem(PBlocks.SMOOTH_POOP_BLOCK.get());
-        stairsBlock((StairBlock) PBlocks.SMOOTH_POOP_BLOCK_STAIRS.get(), blockTexture(PBlocks.SMOOTH_POOP_BLOCK.get()));
-        slabBlock((SlabBlock) PBlocks.SMOOTH_POOP_BLOCK_SLAB.get(), blockTexture(PBlocks.SMOOTH_POOP_BLOCK.get()), blockTexture(PBlocks.SMOOTH_POOP_BLOCK.get()));
-        wallBlock((WallBlock) PBlocks.SMOOTH_POOP_BLOCK_WALL.get(), blockTexture(PBlocks.SMOOTH_POOP_BLOCK.get()));
-
-        blockWithItem(PBlocks.CUT_POOP_BLOCK.get());
-        stairsBlock((StairBlock) PBlocks.CUT_POOP_BLOCK_STAIRS.get(), blockTexture(PBlocks.CUT_POOP_BLOCK.get()));
-        slabBlock((SlabBlock) PBlocks.CUT_POOP_BLOCK_SLAB.get(), blockTexture(PBlocks.CUT_POOP_BLOCK.get()), blockTexture(PBlocks.CUT_POOP_BLOCK.get()));
-        wallBlock((WallBlock) PBlocks.CUT_POOP_BLOCK_WALL.get(), blockTexture(PBlocks.CUT_POOP_BLOCK.get()));
-
-        blockWithItem(PBlocks.TILE_BLOCK.get());
-        stairsBlock((StairBlock) PBlocks.TILE_BLOCK_STAIRS.get(), blockTexture(PBlocks.TILE_BLOCK.get()));
-        slabBlock((SlabBlock) PBlocks.TILE_BLOCK_SLAB.get(), blockTexture(PBlocks.TILE_BLOCK.get()), blockTexture(PBlocks.TILE_BLOCK.get()));
-        wallBlock((WallBlock) PBlocks.TILE_BLOCK_WALL.get(), blockTexture(PBlocks.TILE_BLOCK.get()));
 
         randomBlockWithItem(PBlocks.RAW_POOP_BLOCK.get(), 3, 1);
         blockWithItem(PBlocks.RAW_SAPLING_POOP_BLOCK.get());
         blockWithItem(PBlocks.RAW_SEA_POOP_BLOCK.get());
         blockWithItem(PBlocks.RAW_WITHER_POOP_BLOCK.get());
-
-        blockItem(PBlocks.CHILI_POOP_STAIRS);
-        blockItem(PBlocks.CHILI_POOP_SLAB);
-        blockItem(PBlocks.GOLDEN_POOP_STAIRS);
-        blockItem(PBlocks.GOLDEN_POOP_SLAB);
-        blockItem(PBlocks.POOP_BRICK_STAIRS);
-        blockItem(PBlocks.POOP_BRICK_SLAB);
-        blockItem(PBlocks.MOSSY_POOP_BRICK_STAIRS);
-        blockItem(PBlocks.MOSSY_POOP_BRICK_SLAB);
-        blockItem(PBlocks.DRIED_POOP_BLOCK_STAIRS);
-        blockItem(PBlocks.DRIED_POOP_BLOCK_SLAB);
-        blockItem(PBlocks.SMOOTH_POOP_BLOCK_STAIRS);
-        blockItem(PBlocks.SMOOTH_POOP_BLOCK_SLAB);
-        blockItem(PBlocks.CUT_POOP_BLOCK_STAIRS);
-        blockItem(PBlocks.CUT_POOP_BLOCK_SLAB);
-        blockItem(PBlocks.TILE_BLOCK_STAIRS);
-        blockItem(PBlocks.TILE_BLOCK_SLAB);
 
         blockWithItem(PBlocks.POOP_LEAVES.get());
         blockWithItem(PBlocks.POOP_LEAVES_GOLD.get());
@@ -115,10 +61,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
         registerToilet(PBlocks.WOODEN_TOILET, ToiletType.Category.WOOD, false);
         registerToilet(PBlocks.HARD_TOILET, ToiletType.Category.HARD, true);
 
-        var flyNestModel = models().singleTexture("fly_nest", mcLoc("block/cube_all"), mcLoc("block/beehive_side"));
-        getVariantBuilder(PBlocks.FLY_NEST.get()).partialState().addModels(
-                new ConfiguredModel(flyNestModel));
-        simpleBlockItem(PBlocks.FLY_NEST.get(), flyNestModel);
+        simpleBlockWithItem(PBlocks.FLY_NEST.get(), models().singleTexture("fly_nest", mcLoc("block/cube_all"), mcLoc("block/beehive_side")));
 
         fluidBlockWithItem(PBlocks.URINE_LIQUID.get());
         makeCropBlock((CropBlock) PBlocks.MAGGOTS.get(), "maggots_stage", "maggots_stage");
@@ -188,7 +131,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
     }
 
     private void poolimePoopBlock() {
-        models().withExistingParent("poolime_poop_block", mcLoc("block/cube"))
+        ModelFile model = models().withExistingParent("poolime_poop_block", mcLoc("block/cube"))
                 .texture("south", modLoc("block/poop_block"))
                 .texture("west", modLoc("block/poop_block"))
                 .texture("north", modLoc("block/poop_block"))
@@ -196,8 +139,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
                 .texture("down", modLoc("block/poop_block"))
                 .texture("up", modLoc("block/poolime_poop_block"))
                 .texture(PARTICLE, modLoc("block/poop_block"));
-        getVariantBuilder(PBlocks.POOLIME_POOP_BLOCK.get()).partialState().addModels(new ConfiguredModel(models().getExistingFile(modLoc("block/poolime_poop_block"))));
-        simpleBlockItem(PBlocks.POOLIME_POOP_BLOCK.get(), models().getExistingFile(modLoc("block/poolime_poop_block")));
+        simpleBlockWithItem(PBlocks.POOLIME_POOP_BLOCK.get(), model);
     }
 
     private void registerPoopCake() {
@@ -262,7 +204,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
                     models().getExistingFile(modLoc("block/" + modelName)), 0, 0, false, weight[i]);
         }
 
-        getVariantBuilder(block).partialState().addModels(configuredModels);
+        simpleBlock(block, configuredModels);
         simpleBlockItem(block, models().getExistingFile(modLoc("block/" + blockPath + "0")));
     }
 
@@ -274,7 +216,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
                 .texture("flow", modLoc("block/" + getBlockPath(block)))
                 .renderType("translucent");
 
-        getVariantBuilder(block).partialState().addModels(new ConfiguredModel(blockModel));
+        simpleBlock(block, blockModel);
 
         itemModels()
                 .withExistingParent(getBlockPath(block), mcLoc("item/generated"))
@@ -286,9 +228,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
                 getBlockPath(block), modLoc("block/" + getBlockPath(block))
         ).renderType("translucent");
 
-        getVariantBuilder(block).partialState().addModels(new ConfiguredModel(model));
-
-        simpleBlockItem(block, model);
+        simpleBlockWithItem(block, model);
     }
 
     private void cubeBottomTop(Block block) {
@@ -305,9 +245,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
                 .texture("side", modLoc("block/" + side))
                 .texture("bottom", modLoc("block/" + bottom));
 
-        getVariantBuilder(block).partialState().addModels(new ConfiguredModel(model));
-
-        simpleBlockItem(block, model);
+        simpleBlockWithItem(block, model);
     }
 
     private void orientable(Block block) {
@@ -424,8 +362,22 @@ public class PSBlockStateProvider extends BlockStateProvider {
         simpleBlockWithItem(block, cubeAll(block));
     }
 
-    private void blockItem(DeferredBlock<?> block) {
-        simpleBlockItem(block.get(), new ModelFile.UncheckedModelFile(PoopSky.MOD_ID + ":block/" + block.getId().getPath()));
+    private void blockFamily(PBlocks.BlockFamily family) {
+        blockFamily(family.block().get(), family.stairs().get(), family.slab().get(), family.wall().get());
+    }
+
+    private void blockFamily(Block block, Block stairs, Block slab, Block wall) {
+        var texture = blockTexture(block);
+        blockWithItem(block);
+        stairsBlock((StairBlock) stairs, texture);
+        slabBlock((SlabBlock) slab, texture, texture);
+        wallBlock((WallBlock) wall, texture);
+        simpleBlockItem(stairs, blockModel(stairs));
+        simpleBlockItem(slab, blockModel(slab));
+    }
+
+    private ModelFile blockModel(Block block) {
+        return new ModelFile.UncheckedModelFile(PoopSky.MOD_ID + ":block/" + getBlockPath(block));
     }
 
     private String getBlockNameSpace(Block block) {

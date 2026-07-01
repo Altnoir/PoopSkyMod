@@ -5,9 +5,9 @@ import com.altnoir.poopsky.block.p.CompooperBlock;
 import com.altnoir.poopsky.block.p.PoopPieceBlock;
 import com.altnoir.poopsky.block.p.RoundwormVinesPlantBlock;
 import com.altnoir.poopsky.block.p.UrineCompooperBlock;
+import com.altnoir.poopsky.common.SetToiletTypeFunction;
 import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PItems;
-import com.altnoir.poopsky.common.SetToiletTypeFunction;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
@@ -60,66 +60,24 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(PBlocks.POOP_EMPTY_LOG.get());
         dropSelf(PBlocks.STRIPPED_POOP_EMPTY_LOG.get());
 
-        dropSelf(PBlocks.POOP_BLOCK.get());
-        dropSelf(PBlocks.POOP_STAIRS.get());
-        add(PBlocks.POOP_SLAB.get(), block -> createSlabItemTable(PBlocks.POOP_SLAB.get()));
-        dropSelf(PBlocks.POOP_VERTICAL_SLAB.get());
+        dropBlockFamily(PBlocks.POOP_FAMILY);
         dropSelf(PBlocks.POOP_BUTTON.get());
         dropSelf(PBlocks.POOP_PRESSURE_PLATE.get());
         dropSelf(PBlocks.POOP_FENCE.get());
         dropSelf(PBlocks.POOP_FENCE_GATE.get());
-        dropSelf(PBlocks.POOP_WALL.get());
         dropSelf(PBlocks.POOP_TRAPDOOR.get());
         add(PBlocks.POOP_DOOR.get(), block -> createDoorTable(PBlocks.POOP_DOOR.get()));
 
-        dropSelf(PBlocks.CHILI_POOP_BLOCK.get());
-        dropSelf(PBlocks.CHILI_POOP_STAIRS.get());
-        add(PBlocks.CHILI_POOP_SLAB.get(), block -> createSlabItemTable(PBlocks.CHILI_POOP_SLAB.get()));
-        dropSelf(PBlocks.CHILI_POOP_VERTICAL_SLAB.get());
-        dropSelf(PBlocks.CHILI_POOP_WALL.get());
+        dropBlockFamily(PBlocks.CHILI_POOP_FAMILY);
+        dropBlockFamily(PBlocks.GOLDEN_POOP_FAMILY);
 
-        dropSelf(PBlocks.GOLDEN_POOP_BLOCK.get());
-        dropSelf(PBlocks.GOLDEN_POOP_STAIRS.get());
-        add(PBlocks.GOLDEN_POOP_SLAB.get(), block -> createSlabItemTable(PBlocks.GOLDEN_POOP_SLAB.get()));
-        dropSelf(PBlocks.GOLDEN_POOP_VERTICAL_SLAB.get());
-        dropSelf(PBlocks.GOLDEN_POOP_WALL.get());
-
-        dropSelf(PBlocks.POOP_BRICKS.get());
+        dropBlockFamily(PBlocks.POOP_BRICK_FAMILY);
         dropSelf(PBlocks.CRACKED_POOP_BRICKS.get());
-        dropSelf(PBlocks.POOP_BRICK_STAIRS.get());
-        add(PBlocks.POOP_BRICK_SLAB.get(), block -> createSlabItemTable(PBlocks.POOP_BRICK_SLAB.get()));
-        dropSelf(PBlocks.POOP_BRICK_VERTICAL_SLAB.get());
-        dropSelf(PBlocks.POOP_BRICK_WALL.get());
-
-        dropSelf(PBlocks.MOSSY_POOP_BRICKS.get());
-        dropSelf(PBlocks.MOSSY_POOP_BRICK_STAIRS.get());
-        add(PBlocks.MOSSY_POOP_BRICK_SLAB.get(), block -> createSlabItemTable(PBlocks.MOSSY_POOP_BRICK_SLAB.get()));
-        dropSelf(PBlocks.MOSSY_POOP_BRICK_VERTICAL_SLAB.get());
-        dropSelf(PBlocks.MOSSY_POOP_BRICK_WALL.get());
-
-        dropSelf(PBlocks.DRIED_POOP_BLOCK.get());
-        dropSelf(PBlocks.DRIED_POOP_BLOCK_STAIRS.get());
-        add(PBlocks.DRIED_POOP_BLOCK_SLAB.get(), block -> createSlabItemTable(PBlocks.DRIED_POOP_BLOCK_SLAB.get()));
-        dropSelf(PBlocks.DRIED_POOP_BLOCK_VERTICAL_SLAB.get());
-        dropSelf(PBlocks.DRIED_POOP_BLOCK_WALL.get());
-
-        dropSelf(PBlocks.SMOOTH_POOP_BLOCK.get());
-        dropSelf(PBlocks.SMOOTH_POOP_BLOCK_STAIRS.get());
-        add(PBlocks.SMOOTH_POOP_BLOCK_SLAB.get(), block -> createSlabItemTable(PBlocks.SMOOTH_POOP_BLOCK_SLAB.get()));
-        dropSelf(PBlocks.SMOOTH_POOP_BLOCK_VERTICAL_SLAB.get());
-        dropSelf(PBlocks.SMOOTH_POOP_BLOCK_WALL.get());
-
-        dropSelf(PBlocks.CUT_POOP_BLOCK.get());
-        dropSelf(PBlocks.CUT_POOP_BLOCK_STAIRS.get());
-        add(PBlocks.CUT_POOP_BLOCK_SLAB.get(), block -> createSlabItemTable(PBlocks.CUT_POOP_BLOCK_SLAB.get()));
-        dropSelf(PBlocks.CUT_POOP_BLOCK_VERTICAL_SLAB.get());
-        dropSelf(PBlocks.CUT_POOP_BLOCK_WALL.get());
-
-        dropSelf(PBlocks.TILE_BLOCK.get());
-        dropSelf(PBlocks.TILE_BLOCK_STAIRS.get());
-        add(PBlocks.TILE_BLOCK_SLAB.get(), block -> createSlabItemTable(PBlocks.TILE_BLOCK_SLAB.get()));
-        dropSelf(PBlocks.TILE_BLOCK_VERTICAL_SLAB.get());
-        dropSelf(PBlocks.TILE_BLOCK_WALL.get());
+        dropBlockFamily(PBlocks.MOSSY_POOP_BRICK_FAMILY);
+        dropBlockFamily(PBlocks.DRIED_POOP_BLOCK_FAMILY);
+        dropBlockFamily(PBlocks.SMOOTH_POOP_BLOCK_FAMILY);
+        dropBlockFamily(PBlocks.CUT_POOP_BLOCK_FAMILY);
+        dropBlockFamily(PBlocks.TILE_BLOCK_FAMILY);
 
         dropSelf(PBlocks.RAW_POOP_BLOCK.get());
         dropSelf(PBlocks.RAW_SAPLING_POOP_BLOCK.get());
@@ -155,6 +113,14 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
 
         dropSelf(PBlocks.FLY_NEST.get());
         dropSelf(PBlocks.BREEDING_BOX.get());
+    }
+
+    private void dropBlockFamily(PBlocks.BlockFamily family) {
+        dropSelf(family.block().get());
+        dropSelf(family.stairs().get());
+        add(family.slab().get(), block -> createSlabItemTable(family.slab().get()));
+        dropSelf(family.verticalSlab().get());
+        dropSelf(family.wall().get());
     }
 
     protected LootTable.@NotNull Builder createPoopPieceDrop(Block block, Item item) {

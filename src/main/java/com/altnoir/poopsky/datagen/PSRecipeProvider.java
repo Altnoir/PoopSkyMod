@@ -194,56 +194,29 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
 
         // 建筑
         offer2x2CompactingRecipe(recipeOutput, PBlocks.POOP_BLOCK, PItems.POOP);
-        stairsRecipe(recipeOutput, PBlocks.POOP_STAIRS, PBlocks.POOP_BLOCK);
-        slabRecipe(recipeOutput, PBlocks.POOP_SLAB, PBlocks.POOP_BLOCK);
-        verticalSlabRecipe(recipeOutput, PBlocks.POOP_VERTICAL_SLAB, PBlocks.POOP_BLOCK);
-        wallRecipe(recipeOutput, PBlocks.POOP_WALL, PBlocks.POOP_BLOCK);
+        blockFamilyRecipes(recipeOutput, PBlocks.POOP_FAMILY);
 
         offer2x2CompactingRecipe(recipeOutput, PBlocks.CHILI_POOP_BLOCK, PItems.CHILI_POOP);
-        stairsRecipe(recipeOutput, PBlocks.CHILI_POOP_STAIRS, PBlocks.CHILI_POOP_BLOCK);
-        slabRecipe(recipeOutput, PBlocks.CHILI_POOP_SLAB, PBlocks.CHILI_POOP_BLOCK);
-        verticalSlabRecipe(recipeOutput, PBlocks.CHILI_POOP_VERTICAL_SLAB, PBlocks.CHILI_POOP_BLOCK);
-        wallRecipe(recipeOutput, PBlocks.CHILI_POOP_WALL, PBlocks.CHILI_POOP_BLOCK);
+        blockFamilyRecipes(recipeOutput, PBlocks.CHILI_POOP_FAMILY);
 
         offer2x2CompactingRecipe(recipeOutput, PBlocks.GOLDEN_POOP_BLOCK, PItems.GOLDEN_POOP);
-        stairsRecipe(recipeOutput, PBlocks.GOLDEN_POOP_STAIRS, PBlocks.GOLDEN_POOP_BLOCK);
-        slabRecipe(recipeOutput, PBlocks.GOLDEN_POOP_SLAB, PBlocks.GOLDEN_POOP_BLOCK);
-        verticalSlabRecipe(recipeOutput, PBlocks.GOLDEN_POOP_VERTICAL_SLAB, PBlocks.GOLDEN_POOP_BLOCK);
-        wallRecipe(recipeOutput, PBlocks.GOLDEN_POOP_WALL, PBlocks.GOLDEN_POOP_BLOCK);
+        blockFamilyRecipes(recipeOutput, PBlocks.GOLDEN_POOP_FAMILY);
 
-        stairsRecipe(recipeOutput, PBlocks.DRIED_POOP_BLOCK_STAIRS, PBlocks.DRIED_POOP_BLOCK);
-        slabRecipe(recipeOutput, PBlocks.DRIED_POOP_BLOCK_SLAB, PBlocks.DRIED_POOP_BLOCK);
-        verticalSlabRecipe(recipeOutput, PBlocks.DRIED_POOP_BLOCK_VERTICAL_SLAB, PBlocks.DRIED_POOP_BLOCK);
-        wallRecipe(recipeOutput, PBlocks.DRIED_POOP_BLOCK_WALL, PBlocks.DRIED_POOP_BLOCK);
+        blockFamilyRecipes(recipeOutput, PBlocks.DRIED_POOP_BLOCK_FAMILY);
 
-        stairsRecipe(recipeOutput, PBlocks.SMOOTH_POOP_BLOCK_STAIRS, PBlocks.SMOOTH_POOP_BLOCK);
-        slabRecipe(recipeOutput, PBlocks.SMOOTH_POOP_BLOCK_SLAB, PBlocks.SMOOTH_POOP_BLOCK);
-        verticalSlabRecipe(recipeOutput, PBlocks.SMOOTH_POOP_BLOCK_VERTICAL_SLAB, PBlocks.SMOOTH_POOP_BLOCK);
-        wallRecipe(recipeOutput, PBlocks.SMOOTH_POOP_BLOCK_WALL, PBlocks.SMOOTH_POOP_BLOCK);
+        blockFamilyRecipes(recipeOutput, PBlocks.SMOOTH_POOP_BLOCK_FAMILY);
 
         offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.CUT_POOP_BLOCK, PBlocks.DRIED_POOP_BLOCK, 4);
-        stairsRecipe(recipeOutput, PBlocks.CUT_POOP_BLOCK_STAIRS, PBlocks.CUT_POOP_BLOCK);
-        slabRecipe(recipeOutput, PBlocks.CUT_POOP_BLOCK_SLAB, PBlocks.CUT_POOP_BLOCK);
-        verticalSlabRecipe(recipeOutput, PBlocks.CUT_POOP_BLOCK_VERTICAL_SLAB, PBlocks.CUT_POOP_BLOCK);
-        wallRecipe(recipeOutput, PBlocks.CUT_POOP_BLOCK_WALL, PBlocks.CUT_POOP_BLOCK);
+        blockFamilyRecipes(recipeOutput, PBlocks.CUT_POOP_BLOCK_FAMILY);
 
         offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_BRICKS, PBlocks.POOP_BLOCK, 4);
-        stairsRecipe(recipeOutput, PBlocks.POOP_BRICK_STAIRS, PBlocks.POOP_BRICKS);
-        slabRecipe(recipeOutput, PBlocks.POOP_BRICK_SLAB, PBlocks.POOP_BRICKS);
-        verticalSlabRecipe(recipeOutput, PBlocks.POOP_BRICK_VERTICAL_SLAB, PBlocks.POOP_BRICKS);
-        wallRecipe(recipeOutput, PBlocks.POOP_BRICK_WALL, PBlocks.POOP_BRICKS);
+        blockFamilyRecipes(recipeOutput, PBlocks.POOP_BRICK_FAMILY);
 
         create1x2ShapelessFrom(recipeOutput, PBlocks.MOSSY_POOP_BRICKS, PBlocks.POOP_BRICKS, Blocks.MOSS_BLOCK);
         create1x2ShapelessFrom(recipeOutput, PBlocks.MOSSY_POOP_BRICKS, PBlocks.POOP_BRICKS, Blocks.VINE);
-        stairsRecipe(recipeOutput, PBlocks.MOSSY_POOP_BRICK_STAIRS, PBlocks.MOSSY_POOP_BRICKS);
-        slabRecipe(recipeOutput, PBlocks.MOSSY_POOP_BRICK_SLAB, PBlocks.MOSSY_POOP_BRICKS);
-        verticalSlabRecipe(recipeOutput, PBlocks.MOSSY_POOP_BRICK_VERTICAL_SLAB, PBlocks.MOSSY_POOP_BRICKS);
-        wallRecipe(recipeOutput, PBlocks.MOSSY_POOP_BRICK_WALL, PBlocks.MOSSY_POOP_BRICKS);
+        blockFamilyRecipes(recipeOutput, PBlocks.MOSSY_POOP_BRICK_FAMILY);
 
-        stairsRecipe(recipeOutput, PBlocks.TILE_BLOCK_STAIRS, PBlocks.TILE_BLOCK);
-        slabRecipe(recipeOutput, PBlocks.TILE_BLOCK_SLAB, PBlocks.TILE_BLOCK);
-        verticalSlabRecipe(recipeOutput, PBlocks.TILE_BLOCK_VERTICAL_SLAB, PBlocks.TILE_BLOCK);
-        wallRecipe(recipeOutput, PBlocks.TILE_BLOCK_WALL, PBlocks.TILE_BLOCK);
+        blockFamilyRecipes(recipeOutput, PBlocks.TILE_BLOCK_FAMILY);
 
         nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PItems.POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PBlocks.RAW_POOP_BLOCK);
         nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PItems.SAPLING_POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PBlocks.RAW_SAPLING_POOP_BLOCK);
@@ -767,6 +740,13 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('P', input)
                 .unlockedBy(getItemName(input), has(input))
                 .save(recipeOutput);
+    }
+
+    private void blockFamilyRecipes(RecipeOutput recipeOutput, PBlocks.BlockFamily family) {
+        stairsRecipe(recipeOutput, family.stairs(), family.block());
+        slabRecipe(recipeOutput, family.slab(), family.block());
+        verticalSlabRecipe(recipeOutput, family.verticalSlab(), family.block());
+        wallRecipe(recipeOutput, family.wall(), family.block());
     }
 
     private void slabRecipe(RecipeOutput recipeOutput, ItemLike output, ItemLike input) {
