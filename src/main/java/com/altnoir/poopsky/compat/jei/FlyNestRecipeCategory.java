@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.compat.jei;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.common.FlyType;
 import com.altnoir.poopsky.init.PBlocks;
-import com.altnoir.poopsky.init.PFlyTypes;
 import com.altnoir.poopsky.item.p.FlyItem;
 import com.altnoir.poopsky.recipe.FlyNestRecipe;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -46,7 +46,7 @@ public class FlyNestRecipeCategory implements IRecipeCategory<RecipeHolder<FlyNe
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<FlyNestRecipe> recipeHolder, IFocusGroup focuses) {
         var recipe = recipeHolder.value();
-        builder.addSlot(RecipeIngredientRole.INPUT, 2, 10).addItemStack(FlyItem.withType(PFlyTypes.byId(recipe.flyTypeId())));
+        builder.addSlot(RecipeIngredientRole.INPUT, 2, 10).addItemStack(FlyItem.withType(FlyType.byId(recipe.flyTypeId())));
         builder.addSlot(RecipeIngredientRole.OUTPUT, 58, 10).addItemStack(recipe.result());
     }
 

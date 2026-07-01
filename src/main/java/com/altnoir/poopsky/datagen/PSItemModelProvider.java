@@ -2,7 +2,8 @@ package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.init.PBlocks;
-import com.altnoir.poopsky.init.PFlyTypes;
+import com.altnoir.poopsky.item.PFlyTypes;
+import com.altnoir.poopsky.common.FlyType;
 import com.altnoir.poopsky.init.PItems;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -127,16 +128,18 @@ public class PSItemModelProvider extends ItemModelProvider {
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))
                 .texture("layer0", PoopSky.loc("item/fly"));
 
-        for (var entry : PFlyTypes.getAll().entrySet()) {
-            String id = entry.getKey();
-            String flyId = id.equals("normal") ? "fly" : "fly_" + id;
+        int index = 0;
+        int total = FlyType.FLY_TYPES.size();
+        for (String id : FlyType.FLY_TYPES) {
+            String flyId = id.equals(PFlyTypes.NORMAL.id()) ? "fly" : "fly_" + id;
             getBuilder(flyId)
                     .parent(new ModelFile.UncheckedModelFile("item/generated"))
                     .texture("layer0", PoopSky.loc("item/" + flyId));
             flyBuilder.override()
-                    .predicate(PoopSky.loc("fly_type"), PFlyTypes.getIndex(entry.getValue()))
+                    .predicate(PoopSky.loc("fly_type"), (float) index / total)
                     .model(new ModelFile.UncheckedModelFile(PoopSky.MOD_ID + ":item/" + flyId))
                     .end();
+            index++;
         }
     }
 

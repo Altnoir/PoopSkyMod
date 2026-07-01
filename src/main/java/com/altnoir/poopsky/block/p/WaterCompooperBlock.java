@@ -2,12 +2,17 @@ package com.altnoir.poopsky.block.p;
 
 import com.altnoir.poopsky.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.init.PBlocks;
+import com.altnoir.poopsky.item.PFlyTypes;
+import com.altnoir.poopsky.item.p.FlyItem;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -54,5 +59,20 @@ public class WaterCompooperBlock extends AbstractCompooperBlock {
             return glassBottleUse(stack, state, level, pos, player, hand, SoundEvents.BOTTLE_FILL, PotionContents.createItemStack(Items.POTION, Potions.WATER));
         }
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    }
+
+    @Override
+    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        if (this.isEntityInsideContent(pos, state, entity)) {
+            if (entity instanceof ItemEntity itemEntity) {
+                ItemStack stack = itemEntity.getItem();
+                if (FlyItem.isFlyItem(stack) && FlyItem.getFlyType(stack).equals(PFlyTypes.NORMAL.get())) {
+                    int count = stack.getCount();
+
+                    catalyst(itemEntity, state, level, pos, count, FlyItem.withType(PFlyTypes.BLUE.get()), FlyItem.withType(PFlyTypes.NORMAL.get()));
+                    level.playSound(null, pos, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 1.0F, 1.0F);
+                }
+            }
+        }
     }
 }

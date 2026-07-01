@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.mixin;
 
-import com.altnoir.poopsky.event.PumkinBlockEvents;
+import com.altnoir.poopsky.common.event.PumkinBlockEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;

@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.effect;
+package com.altnoir.poopsky.common.effect;
 
 import com.altnoir.poopsky.item.p.TimeBellItem;
 import net.minecraft.world.effect.MobEffect;

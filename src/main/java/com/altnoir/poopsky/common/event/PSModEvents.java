@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.event;
+package com.altnoir.poopsky.common.event;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.entity.p.FlyEntity;

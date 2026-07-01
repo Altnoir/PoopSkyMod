@@ -1,8 +1,9 @@
 package com.altnoir.poopsky.item.p;
 
 import com.altnoir.poopsky.entity.p.FlyEntity;
-import com.altnoir.poopsky.init.PFlyTypes;
 import com.altnoir.poopsky.init.PSoundEvents;
+import com.altnoir.poopsky.item.PFlyTypes;
+import com.altnoir.poopsky.common.FlyType;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -22,7 +23,7 @@ public class FlyCatcherItem extends Item {
         if (target instanceof FlyEntity fly && fly.isAlive() && !fly.isBaby()) {
             Level level = player.level();
             if (!level.isClientSide) {
-                PFlyTypes.FlyType type = getFlyTypeFromEntity(fly);
+                FlyType.Type type = getFlyTypeFromEntity(fly);
                 ItemStack flyItem = FlyItem.withType(type);
 
                 if (!player.getInventory().add(flyItem)) {
@@ -43,7 +44,7 @@ public class FlyCatcherItem extends Item {
         return InteractionResult.PASS;
     }
 
-    private static PFlyTypes.FlyType getFlyTypeFromEntity(FlyEntity fly) {
-        return PFlyTypes.NORMAL;
+    private static FlyType.Type getFlyTypeFromEntity(FlyEntity fly) {
+        return PFlyTypes.NORMAL.get();
     }
 }

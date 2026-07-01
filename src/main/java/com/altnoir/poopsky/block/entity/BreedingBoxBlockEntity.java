@@ -3,8 +3,8 @@ package com.altnoir.poopsky.block.entity;
 import com.altnoir.poopsky.PTags;
 import com.altnoir.poopsky.client.inventory.BreedingBoxMenu;
 import com.altnoir.poopsky.init.PBlockEntityType;
+import com.altnoir.poopsky.common.FlyType;
 import com.altnoir.poopsky.init.PFlyRecipes;
-import com.altnoir.poopsky.init.PFlyTypes;
 import com.altnoir.poopsky.item.p.FlyItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -185,8 +185,8 @@ public class BreedingBoxBlockEntity extends BlockEntity implements MenuProvider 
         ItemStack fly1 = itemHandler.getStackInSlot(SLOT_FLY_1);
         ItemStack fly2 = itemHandler.getStackInSlot(SLOT_FLY_2);
 
-        PFlyTypes.FlyType type1 = FlyItem.getFlyType(fly1);
-        PFlyTypes.FlyType type2 = FlyItem.getFlyType(fly2);
+        FlyType.Type type1 = FlyItem.getFlyType(fly1);
+        FlyType.Type type2 = FlyItem.getFlyType(fly2);
 
         // 变异判定
         PFlyRecipes.MutationResult result = PFlyRecipes.tryMutate(level, type1, type2);

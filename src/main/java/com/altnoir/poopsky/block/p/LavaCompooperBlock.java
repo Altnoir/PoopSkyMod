@@ -56,7 +56,7 @@ public class LavaCompooperBlock extends AbstractCompooperBlock {
                 if (stack.is(Items.STICK)) {
                     int count = stack.getCount();
 
-                    catalyst(itemEntity, state, level, pos, count, Items.BLAZE_ROD);
+                    catalyst(itemEntity, state, level, pos, count, new ItemStack(Items.BLAZE_ROD), new ItemStack(Items.STICK));
                     level.playSound(null, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), SoundEvents.FIREWORK_ROCKET_BLAST, SoundSource.BLOCKS, 1.0F, 0.8F);
 
                 } else if (stack.is(Items.BLAZE_ROD)) {

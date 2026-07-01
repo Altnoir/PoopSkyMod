@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.compat.jei;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.common.FlyType;
 import com.altnoir.poopsky.init.PBlocks;
-import com.altnoir.poopsky.init.PFlyTypes;
 import com.altnoir.poopsky.item.p.FlyItem;
 import com.altnoir.poopsky.recipe.BreedingBoxRecipe;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -66,11 +66,11 @@ public class BreedingBoxRecipeCategory implements IRecipeCategory<RecipeHolder<B
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<BreedingBoxRecipe> recipeHolder, IFocusGroup focuses) {
         var recipe = recipeHolder.value();
-        builder.addSlot(RecipeIngredientRole.INPUT, 2, 2).addItemStack(FlyItem.withType(PFlyTypes.byId(recipe.parent1())));
-        builder.addSlot(RecipeIngredientRole.INPUT, 2, 20).addItemStack(FlyItem.withType(PFlyTypes.byId(recipe.parent2())));
+        builder.addSlot(RecipeIngredientRole.INPUT, 2, 2).addItemStack(FlyItem.withType(FlyType.byId(recipe.parent1())));
+        builder.addSlot(RecipeIngredientRole.INPUT, 2, 20).addItemStack(FlyItem.withType(FlyType.byId(recipe.parent2())));
 
         builder.addSlot(RecipeIngredientRole.OUTPUT, 58, 11)
-                .addItemStack(FlyItem.withType(PFlyTypes.byId(recipe.result())))
+                .addItemStack(FlyItem.withType(FlyType.byId(recipe.result())))
                 .addRichTooltipCallback((view, tooltip) -> {
                     var chance = recipe.chance() * 100.0F < 1.0F ? "<1" : String.format("%.2f", recipe.chance() * 100.0F).replaceAll("\\.?0+$", "");
                     tooltip.add(Component.translatable("jei.poopsky.breeding_box_chance", chance).withStyle(ChatFormatting.GOLD));

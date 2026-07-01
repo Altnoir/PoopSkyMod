@@ -8,11 +8,13 @@ import com.altnoir.poopsky.client.particle.LeavesParticle;
 import com.altnoir.poopsky.client.particle.PoopParticle;
 import com.altnoir.poopsky.client.renderer.TimeBellOverlay;
 import com.altnoir.poopsky.client.renderer.ToiletHighlightRenderer;
+import com.altnoir.poopsky.common.FlyType;
 import com.altnoir.poopsky.entity.renderer.*;
-import com.altnoir.poopsky.event.PSClientGameEvents;
-import com.altnoir.poopsky.event.PSClientModEvents;
-import com.altnoir.poopsky.event.PSKeyBoardInput;
+import com.altnoir.poopsky.common.event.PSClientGameEvents;
+import com.altnoir.poopsky.common.event.PSClientModEvents;
+import com.altnoir.poopsky.common.event.PSKeyBoardInput;
 import com.altnoir.poopsky.init.*;
+import com.altnoir.poopsky.item.PFlyTypes;
 import com.altnoir.poopsky.item.p.ToiletBlockItem;
 import net.minecraft.client.RecipeBookCategories;
 import net.minecraft.client.renderer.BiomeColors;
@@ -100,7 +102,10 @@ public class PoopSkyClient {
         public static void registerItemProperties(FMLClientSetupEvent event) {
             event.enqueueWork(() -> {
                 ItemProperties.register(PItems.FLY.get(), PoopSky.loc("fly_type"),
-                        (stack, level, entity, seed) -> (float) PFlyTypes.getIndex(PFlyTypes.byId(stack.get(PComponents.FLY_TYPE.get()))));
+                        (stack, level, entity, seed) -> {
+                            String id = stack.get(PComponents.FLY_TYPE.get());
+                            return (float) FlyType.getIndex(id != null ? id : PFlyTypes.NORMAL.id()) / FlyType.size();
+                        });
 
                 for (var block : PBlocks.BLOCKS.getEntries()) {
                     Item item = block.get().asItem();

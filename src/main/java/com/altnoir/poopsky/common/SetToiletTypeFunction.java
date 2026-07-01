@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.loot;
+package com.altnoir.poopsky.common;
 
 import com.altnoir.poopsky.block.p.LavaToiletBlock;
 import com.altnoir.poopsky.block.p.ToiletBlock;

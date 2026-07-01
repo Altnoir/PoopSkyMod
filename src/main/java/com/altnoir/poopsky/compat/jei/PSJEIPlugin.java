@@ -6,8 +6,10 @@ import com.altnoir.poopsky.block.p.CompooperBlock;
 import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.compat.jei.create.FanDigestingCategory;
 import com.altnoir.poopsky.init.PBlocks;
+import com.altnoir.poopsky.item.PFlyTypes;
 import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.init.PRecipes;
+import com.altnoir.poopsky.item.p.FlyItem;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -73,6 +75,9 @@ public class PSJEIPlugin implements IModPlugin {
                 ),
                 new CompooperRecipe(
                         Ingredient.of(Items.STICK), new ItemStack(Items.BREEZE_ROD), PBlocks.POWDER_SNOW_COMPOOPER.get().defaultBlockState()
+                ),
+                new CompooperRecipe(
+                        Ingredient.of(PItems.FLY.get()), FlyItem.withType(PFlyTypes.BLUE.get()), PBlocks.WATER_COMPOOPER.get().defaultBlockState()
                 )
         ));
 

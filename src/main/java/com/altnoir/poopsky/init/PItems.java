@@ -58,8 +58,8 @@ public class PItems {
     public static final DeferredItem<Item> POODDING = ITEMS.registerSimpleItem("poodding",
             new Item.Properties().food(PFoods.POODDING).stacksTo(88));
 
-    public static final DeferredItem<Item> DRAGON_BREATH_CHILI = ITEMS.registerSimpleItem("dragon_breath_chili",
-            new Item.Properties().food(PFoods.DRAGON_BREATH_CHILI));
+    public static final DeferredItem<Item> DRAGON_BREATH_CHILI = ITEMS.register("dragon_breath_chili", () ->
+            new ChiliItem(new Item.Properties().food(PFoods.DRAGON_BREATH_CHILI)));
     public static final DeferredItem<Item> KING_OF_DRAGON_FRUIT = ITEMS.register("king_of_dragon_fruit", () ->
             new DragonFruitRItem(new Item.Properties().food(PFoods.KING_OF_DRAGON_FRUIT)));
 

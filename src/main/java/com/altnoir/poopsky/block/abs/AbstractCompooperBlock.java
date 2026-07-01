@@ -17,7 +17,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -150,9 +149,9 @@ public abstract class AbstractCompooperBlock extends Block {
         return entity.getY() < (double) pos.getY() + height && entity.getBoundingBox().maxY > (double) pos.getY() + 0.125;
     }
 
-    protected void catalyst(ItemEntity itemEntity, BlockState state, Level level, BlockPos pos, int count, ItemLike item) {
+    protected void catalyst(ItemEntity itemEntity, BlockState state, Level level, BlockPos pos, int count, ItemStack result, ItemStack input) {
         if (Config.compooperCrafting) {
-            itemEntity.setItem(new ItemStack(item, count));
+            itemEntity.setItem(result.copyWithCount(count));
         } else {
             double height = getLiquidHeight(state);
 
@@ -161,12 +160,12 @@ public abstract class AbstractCompooperBlock extends Block {
             int newCount = count - 1;
 
             if (newCount > 0) {
-                itemEntity.setItem(new ItemStack(Items.STICK, newCount));
-                ItemEntity newItemEntity = new ItemEntity(level, vec3.x(), vec3.y(), vec3.z(), new ItemStack(item));
+                itemEntity.setItem(input.copyWithCount(newCount));
+                ItemEntity newItemEntity = new ItemEntity(level, vec3.x(), vec3.y(), vec3.z(), result.copyWithCount(1));
                 newItemEntity.setDefaultPickUpDelay();
                 level.addFreshEntity(newItemEntity);
             } else {
-                itemEntity.setItem(new ItemStack(item));
+                itemEntity.setItem(result.copyWithCount(1));
             }
 
             if (newLevel > MIN_LEVEL) {

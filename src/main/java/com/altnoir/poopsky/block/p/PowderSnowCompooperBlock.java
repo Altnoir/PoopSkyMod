@@ -56,7 +56,7 @@ public class PowderSnowCompooperBlock extends AbstractCompooperBlock {
                 if (stack.is(Items.STICK)) {
                     int count = stack.getCount();
 
-                    catalyst(itemEntity, state, level, pos, count,Items.BREEZE_ROD);
+                    catalyst(itemEntity, state, level, pos, count, new ItemStack(Items.BREEZE_ROD), new ItemStack(Items.STICK));
                     level.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.FIREWORK_ROCKET_BLAST, SoundSource.BLOCKS, 1.0F, 1.2F);
                 } else if (stack.is(Items.BREEZE_ROD)) {
                     entity.setDeltaMovement(entity.getDeltaMovement().x, entity.getGravity() + 0.1, entity.getDeltaMovement().z);

@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.block.entity;
 
 import com.altnoir.poopsky.PTags;
+import com.altnoir.poopsky.common.FlyType;
 import com.altnoir.poopsky.init.PFlyRecipes;
-import com.altnoir.poopsky.init.PFlyTypes;
 import com.altnoir.poopsky.init.PBlockEntityType;
 import com.altnoir.poopsky.item.p.FlyItem;
 import com.altnoir.poopsky.client.inventory.FlyNestMenu;
@@ -167,7 +167,7 @@ public class FlyNestBlockEntity extends BlockEntity implements MenuProvider {
 
     private void produce() {
         ItemStack inputStack = itemHandler.getStackInSlot(SLOT_INPUT);
-        PFlyTypes.FlyType type = FlyItem.getFlyType(inputStack);
+        FlyType.Type type = FlyItem.getFlyType(inputStack);
         ItemStack product = PFlyRecipes.getProduct(level, type);
         if (product.isEmpty()) return;
 

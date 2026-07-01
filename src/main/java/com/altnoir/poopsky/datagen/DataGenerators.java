@@ -37,6 +37,7 @@ public class DataGenerators {
                         new LootTableProvider.SubProviderEntry(PSFishingLootProvider::new, LootContextParamSets.FISHING)
                 ), lookupProvider));
         generators.addProvider(event.includeServer(), new PSRecipeProvider(packOutput, lookupProvider));
+        generators.addProvider(event.includeServer(), new PFlyTypeProvider(packOutput));
 
         BlockTagsProvider blockTagsProvider = new PSBlockTagProvider(packOutput, lookupProvider, existingFileHelper);
         ItemTagsProvider itemTagsProvider = new PSItemTagProvider(packOutput, lookupProvider, blockTagsProvider.contentsGetter(), existingFileHelper);

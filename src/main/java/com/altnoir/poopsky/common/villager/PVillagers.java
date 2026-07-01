@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.villager;
+package com.altnoir.poopsky.common.villager;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.abs.AbstractToiletBlock;

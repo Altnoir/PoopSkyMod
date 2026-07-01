@@ -1,12 +1,12 @@
-package com.altnoir.poopsky.event;
+package com.altnoir.poopsky.common.event;
 
 import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.init.*;
-import com.altnoir.poopsky.villager.PVillagerBehaviors;
-import com.altnoir.poopsky.villager.PVillagerTrades;
+import com.altnoir.poopsky.common.villager.PVillagerBehaviors;
+import com.altnoir.poopsky.common.villager.PVillagerTrades;
 import com.altnoir.poopsky.worldgen.PSVoidChunkGenerator;
 import com.altnoir.poopsky.worldgen.structure.PoopIslandStructure;
 import net.minecraft.core.BlockPos;

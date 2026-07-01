@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.event;
+package com.altnoir.poopsky.common.event;
 
 import com.altnoir.poopsky.init.PBlockEntityType;
 import com.altnoir.poopsky.block.entity.renderer.SieveBlockEntityRenderer;

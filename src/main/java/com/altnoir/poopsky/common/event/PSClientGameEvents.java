@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.event;
+package com.altnoir.poopsky.common.event;
 
 import com.altnoir.poopsky.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.util.PHooks;

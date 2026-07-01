@@ -1,12 +1,13 @@
 package com.altnoir.poopsky;
 
 import com.altnoir.poopsky.block.p.CompooperBlock;
+import com.altnoir.poopsky.common.FlyTypeManager;
 import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.compat.create.CreatePlugin;
 import com.altnoir.poopsky.compat.maid.MaidPlugin;
 import com.altnoir.poopsky.entity.p.PoopTntEntity;
 import com.altnoir.poopsky.init.*;
-import com.altnoir.poopsky.villager.PVillagers;
+import com.altnoir.poopsky.common.villager.PVillagers;
 import com.altnoir.poopsky.worldgen.PSChunkGenerators;
 import com.altnoir.poopsky.worldgen.PSStructures;
 import com.altnoir.poopsky.worldgen.foliage.PSFoliagePlacerTypes;
@@ -32,7 +33,9 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForgeMod;
+import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.neoforge.fluids.FluidInteractionRegistry;
+import net.neoforged.neoforge.common.NeoForge;
 import org.slf4j.Logger;
 
 @Mod(PoopSky.MOD_ID)
@@ -77,6 +80,12 @@ public class PoopSky {
             CreatePlugin.register(modEventBus);
         }
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+
+        NeoForge.EVENT_BUS.addListener(this::onAddReloadListener);
+    }
+
+    private void onAddReloadListener(AddReloadListenerEvent event) {
+        event.addListener(FlyTypeManager.INSTANCE);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

@@ -2,7 +2,7 @@ package com.altnoir.poopsky;
 
 import com.altnoir.poopsky.block.ToiletType;
 import com.altnoir.poopsky.init.PBlocks;
-import com.altnoir.poopsky.init.PFlyTypes;
+import com.altnoir.poopsky.common.FlyType;
 import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.item.p.FlyItem;
 import com.altnoir.poopsky.item.p.ToiletBlockItem;
@@ -49,8 +49,8 @@ public class PItemGroups {
                         .filter(block -> !skip.contains(block))
                         .forEach(output::accept);
 
-                for (var type : PFlyTypes.getAll().values()) {
-                    output.accept(FlyItem.withType(type));
+                for (String id : FlyType.FLY_TYPES) {
+                    output.accept(FlyItem.withType(id));
                 }
 
                 for (var type : ToiletType.getByCategory(ToiletType.Category.WOOD).values()) {

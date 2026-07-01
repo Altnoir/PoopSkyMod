@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.villager;
+package com.altnoir.poopsky.common.villager;
 
 import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.init.PBlocks;

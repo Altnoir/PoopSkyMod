@@ -7,7 +7,7 @@ import com.altnoir.poopsky.block.p.RoundwormVinesPlantBlock;
 import com.altnoir.poopsky.block.p.UrineCompooperBlock;
 import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PItems;
-import com.altnoir.poopsky.loot.SetToiletTypeFunction;
+import com.altnoir.poopsky.common.SetToiletTypeFunction;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;

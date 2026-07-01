@@ -1,10 +1,10 @@
 package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.effect.FecalIncontinenceEffect;
-import com.altnoir.poopsky.effect.MomentOfPtymeEffect;
-import com.altnoir.poopsky.effect.OnTheVergeEffect;
-import com.altnoir.poopsky.effect.PMobEffect;
+import com.altnoir.poopsky.common.effect.FecalIncontinenceEffect;
+import com.altnoir.poopsky.common.effect.MomentOfPtymeEffect;
+import com.altnoir.poopsky.common.effect.OnTheVergeEffect;
+import com.altnoir.poopsky.common.effect.PMobEffect;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.effect.MobEffect;
