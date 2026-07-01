@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "B": {
+      "tag": "c:barrels"
+    },
+    "C": {
+      "item": "poopsky:cut_poop_block"
+    },
+    "P": {
+      "item": "poopsky:poop"
+    }
+  },
+  "pattern": [
+    "CCC",
+    "CPC",
+    "CBC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "poopsky:breeding_box"
+  }
+}

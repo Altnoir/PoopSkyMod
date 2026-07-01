@@ -246,13 +246,11 @@ public class PBlocks {
                     .pushReaction(PushReaction.DESTROY)));
     public static final DeferredBlock<Block> FLY_NEST = registerDefaultBlock("fly_nest",
             () -> new FlyNestBlock(simpleProperties(MapColor.COLOR_BROWN, 0.5F, SoundType.WOOD)
-                    .noOcclusion()
-            )
+                    .noOcclusion())
     );
     public static final DeferredBlock<Block> BREEDING_BOX = registerDefaultBlock("breeding_box",
             () -> new BreedingBoxBlock(simpleProperties(MapColor.COLOR_BROWN, 1.0F, SoundType.WOOD)
-                    .noOcclusion()
-            )
+                    .noOcclusion())
     );
 
     public static final DeferredBlock<Block> RAW_POOP_BLOCK = registerBlock("raw_poop_block",

@@ -1,6 +1,8 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/cube_bottom_top",
   "textures": {
-    "texture": "minecraft:block/beehive_side"
+    "bottom": "poopsky:block/fly_nest_bottom",
+    "side": "poopsky:block/fly_nest_side",
+    "top": "poopsky:block/fly_nest_top"
   }
 }

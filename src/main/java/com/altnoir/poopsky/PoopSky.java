@@ -115,7 +115,7 @@ public class PoopSky {
                     Direction facing = blockSource.state().getValue(DispenserBlock.FACING);
                     BlockPos pos = blockSource.pos().relative(facing);
 
-                    PoopTntEntity tnt = new PoopTntEntity(level, pos.getX() + 0.5, pos.getY() + 0.25, pos.getZ() + 0.5, null);
+                    PoopTntEntity tnt = new PoopTntEntity(level, pos.getX() + 0.5, pos.getY() + 0.125, pos.getZ() + 0.5, null);
                     level.addFreshEntity(tnt);
                     level.playSound(null, tnt.getX(), tnt.getY(), tnt.getZ(), SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1.0F, 1.0F);
                     level.gameEvent(null, GameEvent.ENTITY_PLACE, pos);

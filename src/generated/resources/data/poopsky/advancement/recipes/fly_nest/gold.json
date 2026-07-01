@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_fly_nest": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:fly_nest"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:fly_nest/gold"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_fly_nest"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "poopsky:fly_nest/gold"
+    ]
+  }
+}

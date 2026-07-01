@@ -1,7 +1,36 @@
 {
   "variants": {
-    "": {
-      "model": "poopsky:block/fly_nest"
+    "facing=down": {
+      "model": "poopsky:block/fly_nest",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=east": {
+      "model": "poopsky:block/fly_nest",
+      "uvlock": true,
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "poopsky:block/fly_nest",
+      "uvlock": true,
+      "x": 90
+    },
+    "facing=south": {
+      "model": "poopsky:block/fly_nest",
+      "uvlock": true,
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "poopsky:block/fly_nest",
+      "uvlock": true
+    },
+    "facing=west": {
+      "model": "poopsky:block/fly_nest",
+      "uvlock": true,
+      "x": 90,
+      "y": 270
     }
   }
 }

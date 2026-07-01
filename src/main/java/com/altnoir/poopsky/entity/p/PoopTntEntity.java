@@ -24,7 +24,7 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
     private static final EntityDataAccessor<Integer> DATA_FUSE_ID = SynchedEntityData.defineId(PoopTntEntity.class, EntityDataSerializers.INT);
 
     private static final int DEFAULT_FUSE_TIME = 80;
-    private static final double MOMENTUM_PER_TICK = 2.0;
+    private static final double MOMENTUM_PER_TICK = 1.0;
     private static final int MIN_EXPLOSION_RADIUS = 1;
     private static final int MAX_EXPLOSION_RADIUS = 9;
     private static final double INSTANT_EXPLOSION_THRESHOLD = 0.5;
@@ -72,7 +72,11 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
     @Override
     public void tick() {
         this.handlePortal();
-        this.applyGravity();
+
+        Direction logFacing = this.getLogFacing();
+        if (logFacing == null || logFacing == Direction.DOWN) {
+            this.applyGravity();
+        }
 
         Vec3 movement = this.getDeltaMovement();
         double impactSpeed = movement.length();
@@ -94,7 +98,7 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
         if (this.onGround()) {
             this.setDeltaMovement(this.getDeltaMovement().multiply(0.7, -0.5, 0.7));
         }
-        this.applyLogPushing();
+        this.applyLogPushing(logFacing);
         int fuse = this.getFuse() - 1;
         this.setFuse(fuse);
         if (fuse <= 0) {
@@ -112,8 +116,9 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
         }
     }
 
-    private void applyLogPushing() {
-        if (this.level().isClientSide) return;
+    @Nullable
+    private Direction getLogFacing() {
+        if (this.level().isClientSide) return null;
 
         double midY = this.getY() + this.getBbHeight() / 2.0;
         Vec3 midPos = new Vec3(this.getX(), midY, this.getZ());
@@ -121,11 +126,16 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
         BlockState state = this.level().getBlockState(checkPos);
 
         if (state.is(PTags.Blocks.EMPTY_LOGS) && state.hasProperty(DirectionalBlock.FACING)) {
-            var direction = state.getValue(DirectionalBlock.FACING);
-            Vec3 motion = getMotion(direction);
-            this.setDeltaMovement(motion);
+            return state.getValue(DirectionalBlock.FACING);
         }
+        return null;
+    }
 
+    private void applyLogPushing(@Nullable Direction logFacing) {
+        if (logFacing == null) return;
+
+        Vec3 motion = getMotion(logFacing);
+        this.setDeltaMovement(motion);
     }
 
     private @NotNull Vec3 getMotion(Direction axis) {

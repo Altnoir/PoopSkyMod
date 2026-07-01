@@ -323,7 +323,6 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('A', Items.STRING)
                 .unlockedBy(getItemName(Blocks.MOSSY_COBBLESTONE_WALL), has(Blocks.MOSSY_COBBLESTONE_WALL))
                 .save(recipeOutput);
-
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PBlocks.POOP_TNT)
                 .pattern("SAS")
                 .pattern("ASA")
@@ -339,6 +338,20 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('R', PItems.ROUNDWORM)
                 .define('S', Items.STICK)
                 .unlockedBy(getItemName(PItems.ROUNDWORM), has(PItems.ROUNDWORM))
+                .save(recipeOutput);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, PBlocks.FLY_NEST)
+                .requires(Items.BARREL)
+                .requires(PBlocks.MAGGOTS_BLOCK)
+                .unlockedBy(getItemName(PBlocks.MAGGOTS_BLOCK), has(PBlocks.MAGGOTS_BLOCK))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PBlocks.BREEDING_BOX)
+                .pattern("CCC")
+                .pattern("CPC")
+                .pattern("CBC")
+                .define('C', PBlocks.CUT_POOP_BLOCK)
+                .define('P', PItems.POOP)
+                .define('B', Tags.Items.BARRELS)
+                .unlockedBy(getItemName(PBlocks.CUT_POOP_BLOCK), has(PBlocks.CUT_POOP_BLOCK))
                 .save(recipeOutput);
 
         offer2x2CompactingRecipe(recipeOutput, PBlocks.POOLIME_BLOCK.get(), PItems.POOP_BALL.get());
@@ -690,7 +703,17 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 MutationRecipe.of(PFlyTypes.WHITE.get(), PFlyTypes.BLUE.get(), PFlyTypes.LIGHT_BLUE.get()),
                 MutationRecipe.of(PFlyTypes.WHITE.get(), PFlyTypes.GRAY.get(), PFlyTypes.LIGHT_GRAY.get()),
                 MutationRecipe.of(PFlyTypes.WHITE.get(), PFlyTypes.GREEN.get(), PFlyTypes.LIME.get()),
-                MutationRecipe.of(PFlyTypes.WHITE.get(), PFlyTypes.RED.get(), PFlyTypes.PINK.get())
+                MutationRecipe.of(PFlyTypes.WHITE.get(), PFlyTypes.RED.get(), PFlyTypes.PINK.get()),
+                // More
+                MutationRecipe.of(PFlyTypes.GREEN.get(), PFlyTypes.YELLOW.get(), PFlyTypes.GLOWSTONE.get()),
+                MutationRecipe.of(PFlyTypes.ORANGE.get(), PFlyTypes.GLOWSTONE.get(), PFlyTypes.BLAZE.get()),
+                MutationRecipe.of(PFlyTypes.WHITE.get(), PFlyTypes.ORANGE.get(), PFlyTypes.COPPER.get()),
+                MutationRecipe.of(PFlyTypes.LIGHT_GRAY.get(), PFlyTypes.COPPER.get(), PFlyTypes.IRON.get()),
+                MutationRecipe.of(PFlyTypes.GLOWSTONE.get(), PFlyTypes.COPPER.get(), PFlyTypes.GOLD.get()),
+                MutationRecipe.of(PFlyTypes.LIME.get(), PFlyTypes.GOLD.get(), PFlyTypes.EMERALD.get()),
+                MutationRecipe.of(PFlyTypes.GOLD.get(), PFlyTypes.EMERALD.get(), PFlyTypes.DIAMOND.get()),
+                MutationRecipe.of(PFlyTypes.EMERALD.get(), PFlyTypes.DIAMOND.get(), PFlyTypes.NETHERITE.get()),
+                MutationRecipe.of(PFlyTypes.PURPLE.get(), PFlyTypes.CYAN.get(), PFlyTypes.ENDER.get())
         );
 
         for (MutationRecipe recipe : breedingRecipes) {
@@ -705,7 +728,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         LinkedHashMap<FlyType.Type, ItemLike> flyNestMap = new LinkedHashMap<>();
         flyNestMap.put(PFlyTypes.NORMAL.get(), PItems.MAGGOTS_SEEDS);
         flyNestMap.put(PFlyTypes.WHITE.get(), Items.BONE_MEAL);
-        flyNestMap.put(PFlyTypes.LIGHT_GRAY.get(), Items.OXEYE_DAISY);
+        flyNestMap.put(PFlyTypes.LIGHT_GRAY.get(), Items.QUARTZ);
         flyNestMap.put(PFlyTypes.GRAY.get(), Items.GRAVEL);
         flyNestMap.put(PFlyTypes.BLACK.get(), Items.COAL);
         flyNestMap.put(PFlyTypes.BROWN.get(), Items.COCOA_BEANS);
@@ -720,6 +743,16 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         flyNestMap.put(PFlyTypes.PURPLE.get(), Items.AMETHYST_SHARD);
         flyNestMap.put(PFlyTypes.MAGENTA.get(), Items.CHORUS_FRUIT);
         flyNestMap.put(PFlyTypes.PINK.get(), Items.PINK_PETALS);
+        // More
+        flyNestMap.put(PFlyTypes.IRON.get(), Items.RAW_IRON);
+        flyNestMap.put(PFlyTypes.COPPER.get(), Items.RAW_COPPER);
+        flyNestMap.put(PFlyTypes.GOLD.get(), Items.RAW_GOLD);
+        flyNestMap.put(PFlyTypes.EMERALD.get(), Items.EMERALD);
+        flyNestMap.put(PFlyTypes.DIAMOND.get(), Items.DIAMOND);
+        flyNestMap.put(PFlyTypes.NETHERITE.get(), Items.NETHERITE_SCRAP);
+        flyNestMap.put(PFlyTypes.GLOWSTONE.get(), Items.GLOWSTONE_DUST);
+        flyNestMap.put(PFlyTypes.BLAZE.get(), Items.BLAZE_POWDER);
+        flyNestMap.put(PFlyTypes.ENDER.get(), Items.ENDER_PEARL);
 
         flyNestMap.forEach((type, result) -> FlyNestRecipeBuilder.flyNest(type.id(), result)
                 .unlockedBy(getHasName(PBlocks.FLY_NEST), has(PBlocks.FLY_NEST))

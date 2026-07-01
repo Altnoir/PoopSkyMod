@@ -19,7 +19,18 @@ public enum PFlyTypes {
     LIGHT_BLUE,
     PURPLE,
     MAGENTA,
-    PINK;
+    PINK,
+    // MORE
+    IRON,
+    COPPER,
+    GOLD,
+    EMERALD,
+    DIAMOND,
+    NETHERITE,
+    GLOWSTONE,
+    BLAZE,
+    ENDER,
+    ;
 
     private final FlyType.Type flyType;
 

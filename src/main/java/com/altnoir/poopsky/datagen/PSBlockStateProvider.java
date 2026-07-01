@@ -53,6 +53,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
         blockWithItem(PBlocks.POOP_LEAVES_GOLD.get());
         blockWithItem(PBlocks.POOP_LEAVES_IRON.get());
         cubeBottomTop(PBlocks.POOP_TNT.get());
+        directional(PBlocks.FLY_NEST.get());
         cubeBottomTop(PBlocks.BREEDING_BOX.get(), PBlocks.CUT_POOP_BLOCK.get());
         orientable(PBlocks.PLACER.get());
         registerPoopCake();
@@ -62,8 +63,6 @@ public class PSBlockStateProvider extends BlockStateProvider {
         PToiletTypes.init();
         registerToilet(PBlocks.WOODEN_TOILET, ToiletType.Category.WOOD, false);
         registerToilet(PBlocks.HARD_TOILET, ToiletType.Category.HARD, true);
-
-        simpleBlockWithItem(PBlocks.FLY_NEST.get(), models().singleTexture("fly_nest", mcLoc("block/cube_all"), mcLoc("block/beehive_side")));
 
         fluidBlockWithItem(PBlocks.URINE_LIQUID.get());
         makeCropBlock((CropBlock) PBlocks.MAGGOTS.get(), "maggots_stage", "maggots_stage");
@@ -278,6 +277,31 @@ public class PSBlockStateProvider extends BlockStateProvider {
                 default -> 0;
             };
             return ConfiguredModel.builder().modelFile(model).rotationY(yRot).build();
+        });
+
+        simpleBlockItem(block, model);
+    }
+
+    private void directional(Block block) {
+        var model = models().withExistingParent(getBlockPath(block), mcLoc("block/cube_bottom_top"))
+                .texture("top", modLoc("block/" + getBlockPath(block) + "_top"))
+                .texture("side", modLoc("block/" + getBlockPath(block) + "_side"))
+                .texture("bottom", modLoc("block/" + getBlockPath(block) + "_bottom"));
+
+        getVariantBuilder(block).forAllStates(state -> {
+            var facing = state.getValue(BlockStateProperties.FACING);
+            int xRot = switch (facing) {
+                case DOWN -> 180;
+                case UP -> 0;
+                default -> 90;
+            };
+            int yRot = switch (facing) {
+                case SOUTH -> 180;
+                case WEST -> 270;
+                case EAST -> 90;
+                default -> 0;
+            };
+            return ConfiguredModel.builder().modelFile(model).rotationX(xRot).rotationY(yRot).uvLock(true).build();
         });
 
         simpleBlockItem(block, model);

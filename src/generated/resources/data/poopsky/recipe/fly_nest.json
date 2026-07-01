@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "minecraft:barrel"
+    },
+    {
+      "item": "poopsky:maggots_block"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "poopsky:fly_nest"
+  }
+}

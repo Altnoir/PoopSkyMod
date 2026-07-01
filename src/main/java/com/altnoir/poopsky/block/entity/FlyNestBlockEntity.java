@@ -11,6 +11,8 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -246,6 +248,14 @@ public class FlyNestBlockEntity extends BlockEntity implements MenuProvider {
             @Override
             public boolean stillValid(Player player) {
                 return Container.stillValidBlockEntity(FlyNestBlockEntity.this, player);
+            }
+
+            @Override
+            public void stopOpen(Player player) {
+                super.stopOpen(player);
+                if (level != null && !level.isClientSide) {
+                    level.playSound(null, worldPosition, SoundEvents.BARREL_CLOSE, SoundSource.BLOCKS, 0.5F, 1.0F);
+                }
             }
 
             @Override

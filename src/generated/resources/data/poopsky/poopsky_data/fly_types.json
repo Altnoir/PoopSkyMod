@@ -15,5 +15,14 @@
   "light_blue",
   "purple",
   "magenta",
-  "pink"
+  "pink",
+  "iron",
+  "copper",
+  "gold",
+  "emerald",
+  "diamond",
+  "netherite",
+  "glowstone",
+  "blaze",
+  "ender"
 ]
