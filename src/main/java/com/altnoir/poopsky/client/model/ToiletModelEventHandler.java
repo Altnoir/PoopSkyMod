@@ -5,7 +5,9 @@ import com.altnoir.poopsky.block.ToiletType;
 import com.altnoir.poopsky.init.PBlocks;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -24,18 +26,15 @@ public class ToiletModelEventHandler {
 
     @SubscribeEvent
     public static void onRegisterAdditional(ModelEvent.RegisterAdditional event) {
-        registerToiletVariants(event, "wooden_toilet", ToiletType.Category.WOOD, false);
-        registerToiletVariants(event, "hard_toilet", ToiletType.Category.HARD, true);
+        registerTemplateModels(event, "wooden_toilet", false);
+        registerTemplateModels(event, "hard_toilet", true);
     }
 
-    private static void registerToiletVariants(ModelEvent.RegisterAdditional event, String blockPath, ToiletType.Category category, boolean hasLava) {
+    private static void registerTemplateModels(ModelEvent.RegisterAdditional event, String blockPath, boolean hasLava) {
         String[] suffixes = hasLava ? LAVA_SUFFIXES : WOOD_SUFFIXES;
-        for (ToiletType type : ToiletType.getByCategory(category).values()) {
-            String typeSuffix = "_" + type.id();
-            for (String stateSuffix : suffixes) {
-                ResourceLocation modelLoc = PoopSky.loc("block/" + blockPath + typeSuffix + stateSuffix);
-                event.register(new ModelResourceLocation(modelLoc, ModelResourceLocation.STANDALONE_VARIANT));
-            }
+        for (String suffix : suffixes) {
+            ResourceLocation modelLoc = PoopSky.loc("block/" + blockPath + suffix);
+            event.register(new ModelResourceLocation(modelLoc, ModelResourceLocation.STANDALONE_VARIANT));
         }
     }
 
@@ -50,6 +49,14 @@ public class ToiletModelEventHandler {
         String[] stateSuffixes = hasLava ? LAVA_SUFFIXES : WOOD_SUFFIXES;
 
         Map<ToiletType, BakedModel[]> variantModels = new HashMap<>();
+        Map<ToiletType, ResourceLocation> variantTextures = new HashMap<>();
+        BakedModel[] templateModels = new BakedModel[stateSuffixes.length];
+        for (int i = 0; i < stateSuffixes.length; i++) {
+            ResourceLocation modelLoc = PoopSky.loc("block/" + blockPath + stateSuffixes[i]);
+            ModelResourceLocation mrl = new ModelResourceLocation(modelLoc, ModelResourceLocation.STANDALONE_VARIANT);
+            templateModels[i] = models.get(mrl);
+        }
+
         for (ToiletType type : ToiletType.getByCategory(category).values()) {
             String typeSuffix = "_" + type.id();
             BakedModel[] typeModels = new BakedModel[stateSuffixes.length];
@@ -59,6 +66,7 @@ public class ToiletModelEventHandler {
                 typeModels[i] = models.get(mrl);
             }
             variantModels.put(type, typeModels);
+            variantTextures.put(type, toiletTexture(type));
         }
 
         List<ModelResourceLocation> toWrap = new ArrayList<>();
@@ -71,7 +79,25 @@ public class ToiletModelEventHandler {
         }
 
         for (ModelResourceLocation key : toWrap) {
-            models.compute(key, (k, original) -> new ToiletBakedModel(original, variantModels, hasLava));
+            models.compute(key, (k, original) -> new ToiletBakedModel(original, templateModels, variantModels, variantTextures, hasLava));
         }
+    }
+
+    private static ResourceLocation toiletTexture(ToiletType toiletType) {
+        String tex = toiletType.texture();
+        if (tex != null) {
+            String namespace = toiletType.sourceBlock() != null
+                    ? blockKey(toiletType.sourceBlock()).getNamespace()
+                    : PoopSky.MOD_ID;
+            return ResourceLocation.fromNamespaceAndPath(namespace, "block/" + tex);
+        }
+
+        Block sourceBlock = toiletType.sourceBlock();
+        ResourceLocation key = blockKey(sourceBlock);
+        return ResourceLocation.fromNamespaceAndPath(key.getNamespace(), "block/" + key.getPath());
+    }
+
+    private static ResourceLocation blockKey(Block block) {
+        return BuiltInRegistries.BLOCK.getKey(block);
     }
 }

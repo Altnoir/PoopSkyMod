@@ -4,11 +4,14 @@ import com.altnoir.poopsky.block.ToiletType;
 import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.block.p.BaseToiletLavaBlock;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -23,12 +26,22 @@ import java.util.Map;
 
 public class ToiletBakedModel implements BakedModel {
     private final BakedModel defaultModel;
+    private final BakedModel[] templateModels;
     private final boolean hasLava;
     private final Map<ToiletType, BakedModel[]> variantModels;
+    private final Map<ToiletType, ResourceLocation> variantTextures;
 
-    public ToiletBakedModel(BakedModel defaultModel, Map<ToiletType, BakedModel[]> variantModels, boolean hasLava) {
+    public ToiletBakedModel(
+            BakedModel defaultModel,
+            BakedModel[] templateModels,
+            Map<ToiletType, BakedModel[]> variantModels,
+            Map<ToiletType, ResourceLocation> variantTextures,
+            boolean hasLava
+    ) {
         this.defaultModel = defaultModel;
+        this.templateModels = templateModels;
         this.variantModels = variantModels;
+        this.variantTextures = variantTextures;
         this.hasLava = hasLava;
     }
 
@@ -45,14 +58,26 @@ public class ToiletBakedModel implements BakedModel {
 
     private BakedModel selectModel(@Nullable BlockState state, ModelData modelData) {
         if (state == null) return defaultModel;
+        int index = getStateIndex(state);
+        if (templateModels != null && index < templateModels.length && templateModels[index] != null) {
+            return templateModels[index];
+        }
+
         ToiletType type = modelData.get(ToiletBlockEntity.TOILET_TYPE_PROPERTY);
         if (type == null || !variantModels.containsKey(type)) return defaultModel;
         BakedModel[] models = variantModels.get(type);
-        int index = getStateIndex(state);
         if (models != null && index < models.length && models[index] != null) {
             return models[index];
         }
         return defaultModel;
+    }
+
+    private TextureAtlasSprite getVariantSprite(ToiletType type) {
+        ResourceLocation texture = variantTextures.get(type);
+        if (texture == null) return null;
+        return Minecraft.getInstance()
+                .getTextureAtlas(TextureAtlas.LOCATION_BLOCKS)
+                .apply(texture);
     }
 
     private BakedModel selectParticleModel(ModelData modelData) {
@@ -111,6 +136,41 @@ public class ToiletBakedModel implements BakedModel {
         return new BakedQuad(vertexData, quad.getTintIndex(), newDirection, quad.getSprite(), quad.isShade());
     }
 
+    private List<BakedQuad> replaceToiletSprite(List<BakedQuad> quads, BakedModel selected, @Nullable ToiletType type) {
+        if (type == null || quads.isEmpty()) return quads;
+
+        TextureAtlasSprite sourceSprite = selected.getParticleIcon();
+        TextureAtlasSprite targetSprite = getVariantSprite(type);
+        if (targetSprite == null || targetSprite == sourceSprite) return quads;
+
+        List<BakedQuad> replaced = new ArrayList<>(quads.size());
+        for (BakedQuad quad : quads) {
+            if (quad.getSprite() == sourceSprite) {
+                replaced.add(replaceQuadSprite(quad, sourceSprite, targetSprite));
+            } else {
+                replaced.add(quad);
+            }
+        }
+        return replaced;
+    }
+
+    private BakedQuad replaceQuadSprite(BakedQuad quad, TextureAtlasSprite sourceSprite, TextureAtlasSprite targetSprite) {
+        int[] vertexData = quad.getVertices().clone();
+        int stride = vertexData.length / 4;
+        for (int i = 0; i < 4; i++) {
+            int offset = i * stride;
+            float u = Float.intBitsToFloat(vertexData[offset + 4]);
+            float v = Float.intBitsToFloat(vertexData[offset + 5]);
+            float unInterpolatedU = sourceSprite.getUOffset(u);
+            float unInterpolatedV = sourceSprite.getVOffset(v);
+
+            vertexData[offset + 4] = Float.floatToRawIntBits(targetSprite.getU(unInterpolatedU));
+            vertexData[offset + 5] = Float.floatToRawIntBits(targetSprite.getV(unInterpolatedV));
+        }
+
+        return new BakedQuad(vertexData, quad.getTintIndex(), quad.getDirection(), targetSprite, quad.isShade());
+    }
+
     private Direction rotateDirection(Direction dir, int yRot) {
         if (dir.getAxis() == Direction.Axis.Y) return dir;
         int steps = (yRot / 90) % 4;
@@ -142,7 +202,8 @@ public class ToiletBakedModel implements BakedModel {
         int yRot = getYRotation(state);
         Direction sourceFace = face == null ? null : unrotateDirection(face, yRot);
         List<BakedQuad> quads = selected.getQuads(state, sourceFace, random, modelData, renderType);
-        return rotateQuads(quads, yRot);
+        ToiletType type = modelData.get(ToiletBlockEntity.TOILET_TYPE_PROPERTY);
+        return rotateQuads(replaceToiletSprite(quads, selected, type), yRot);
     }
 
     @Override

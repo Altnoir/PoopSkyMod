@@ -1,6 +1,0 @@
-{
-  "parent": "poopsky:block/toilet_n",
-  "textures": {
-    "toilet": "minecraft:block/light_blue_concrete"
-  }
-}

@@ -3,7 +3,9 @@ package com.altnoir.poopsky.datagen;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.ToiletType;
 import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
-import com.altnoir.poopsky.block.p.*;
+import com.altnoir.poopsky.block.p.BaseToiletLavaBlock;
+import com.altnoir.poopsky.block.p.PoopCandleCakeBlock;
+import com.altnoir.poopsky.block.p.PoopPieceBlock;
 import com.altnoir.poopsky.init.PBlocks;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -350,25 +352,30 @@ public class PSBlockStateProvider extends BlockStateProvider {
     }
 
     private void registerVariantToilet(Block toilet, Map<ToiletType, ResourceLocation> textures, boolean hasLava) {
-        Map<ToiletType, ModelFile[]> variantModels = new LinkedHashMap<>();
+        ToiletType firstType = textures.keySet().iterator().next();
+        ResourceLocation firstTex = textures.get(firstType);
+        String blockPath = getBlockPath(toilet);
+
+        List<ModelFile> templateModelList = new ArrayList<>();
+        templateModelList.add(models().withExistingParent(blockPath, modLoc("block/toilet")).texture("toilet", firstTex));
+        templateModelList.add(models().withExistingParent(blockPath + "_n", modLoc("block/toilet_n")).texture("toilet", firstTex));
+        templateModelList.add(models().withExistingParent(blockPath + "_ns", modLoc("block/toilet_ns")).texture("toilet", firstTex));
+        if (hasLava) {
+            templateModelList.add(models().withExistingParent(blockPath + "_lava", modLoc("block/toilet_lava")).texture("toilet", firstTex));
+            templateModelList.add(models().withExistingParent(blockPath + "_lava_n", modLoc("block/toilet_lava_n")).texture("toilet", firstTex));
+            templateModelList.add(models().withExistingParent(blockPath + "_lava_ns", modLoc("block/toilet_lava_ns")).texture("toilet", firstTex));
+        }
+        ModelFile[] templateModels = templateModelList.toArray(new ModelFile[0]);
+
+        Map<ToiletType, ModelFile> itemModels = new LinkedHashMap<>();
         for (var entry : textures.entrySet()) {
             ToiletType type = entry.getKey();
             ResourceLocation tex = entry.getValue();
             String suffix = "_" + type.id();
-            List<ModelFile> modelList = new ArrayList<>();
-            modelList.add(models().withExistingParent(getBlockKey(toilet) + suffix, modLoc("block/toilet")).texture("toilet", tex));
-            modelList.add(models().withExistingParent(getBlockKey(toilet) + suffix + "_n", modLoc("block/toilet_n")).texture("toilet", tex));
-            modelList.add(models().withExistingParent(getBlockKey(toilet) + suffix + "_ns", modLoc("block/toilet_ns")).texture("toilet", tex));
-            if (hasLava) {
-                modelList.add(models().withExistingParent(getBlockKey(toilet) + suffix + "_lava", modLoc("block/toilet_lava")).texture("toilet", tex));
-                modelList.add(models().withExistingParent(getBlockKey(toilet) + suffix + "_lava_n", modLoc("block/toilet_lava_n")).texture("toilet", tex));
-                modelList.add(models().withExistingParent(getBlockKey(toilet) + suffix + "_lava_ns", modLoc("block/toilet_lava_ns")).texture("toilet", tex));
-            }
-            variantModels.put(type, modelList.toArray(new ModelFile[0]));
+            itemModels.put(type, models().withExistingParent(blockPath + suffix, modLoc("block/toilet")).texture("toilet", tex));
         }
 
-        ToiletType firstType = textures.keySet().iterator().next();
-        ModelFile defaultModel = variantModels.get(firstType)[0];
+        ModelFile defaultModel = itemModels.get(firstType);
 
         getVariantBuilder(toilet).forAllStates(state -> {
             var facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
@@ -381,13 +388,12 @@ public class PSBlockStateProvider extends BlockStateProvider {
                 default -> 0;
             };
 
-            ModelFile[] models = variantModels.get(firstType);
             int offset = hasLava && state.getValue(BaseToiletLavaBlock.LAVA) ? 3 : 0;
             int extraYRot = connection == AbstractToiletBlock.ToiletState.BACK ? 180 : 0;
             ModelFile chosenModel = switch (connection) {
-                case DEFAULT -> models[offset];
-                case FRONT, BACK -> models[offset + 1];
-                case BOTH -> models[offset + 2];
+                case DEFAULT -> templateModels[offset];
+                case FRONT, BACK -> templateModels[offset + 1];
+                case BOTH -> templateModels[offset + 2];
             };
 
             return ConfiguredModel.builder()
@@ -406,7 +412,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
         });
         for (var entry : sortedEntries) {
             String suffix = "_" + entry.getKey().id();
-            var overrideModel = new ModelFile.UncheckedModelFile(PoopSky.MOD_ID + ":block/" + getBlockPath(toilet) + suffix);
+            var overrideModel = new ModelFile.UncheckedModelFile(PoopSky.MOD_ID + ":block/" + blockPath + suffix);
             itemBuilder.override()
                     .predicate(PoopSky.loc("toilet_type"), ToiletType.getIndex(entry.getKey()))
                     .model(overrideModel)
