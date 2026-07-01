@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 import java.util.function.ToIntFunction;
 
@@ -502,15 +503,11 @@ public class PBlocks {
     }
 
     public static <T extends Block> DeferredBlock<T> registerCompooperBlock(String name, Supplier<T> block) {
-        DeferredBlock<T> toReturn = BLOCKS.register(name, block);
-        registerCompooperBlockItem(name, toReturn);
-        return toReturn;
+        return registerBlockWithItem(name, block, PBlocks::registerCompooperBlockItem);
     }
 
     public static <T extends Block> DeferredBlock<T> registerToiletBlock(String name, Supplier<T> block) {
-        DeferredBlock<T> toReturn = BLOCKS.register(name, block);
-        registerToiletBlockItem(name, toReturn);
-        return toReturn;
+        return registerBlockWithItem(name, block, PBlocks::registerToiletBlockItem);
     }
 
     public static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
@@ -536,8 +533,12 @@ public class PBlocks {
     }
 
     private static <T extends Block> DeferredBlock<T> registerSimpleBlock(String name, Supplier<T> block, Item.Properties properties) {
+        return registerBlockWithItem(name, block, (blockName, registeredBlock) -> PItems.ITEMS.registerSimpleBlockItem(blockName, registeredBlock, properties));
+    }
+
+    private static <T extends Block> DeferredBlock<T> registerBlockWithItem(String name, Supplier<T> block, BiConsumer<String, DeferredBlock<T>> itemRegistrar) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);
-        PItems.ITEMS.registerSimpleBlockItem(name, toReturn, properties);
+        itemRegistrar.accept(name, toReturn);
         return toReturn;
     }
 

@@ -4,15 +4,19 @@ import com.altnoir.poopsky.block.ToiletType;
 import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.block.p.BaseToiletLavaBlock;
+import com.altnoir.poopsky.client.ToiletClientBlockExtensions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
-import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.model.data.ModelData;
@@ -76,7 +80,7 @@ public class ToiletBakedModel implements BakedModel {
         ResourceLocation texture = variantTextures.get(type);
         if (texture == null) return null;
         return Minecraft.getInstance()
-                .getTextureAtlas(TextureAtlas.LOCATION_BLOCKS)
+                .getTextureAtlas(InventoryMenu.BLOCK_ATLAS)
                 .apply(texture);
     }
 
@@ -139,7 +143,7 @@ public class ToiletBakedModel implements BakedModel {
     private List<BakedQuad> replaceToiletSprite(List<BakedQuad> quads, BakedModel selected, @Nullable ToiletType type) {
         if (type == null || quads.isEmpty()) return quads;
 
-        TextureAtlasSprite sourceSprite = selected.getParticleIcon();
+        TextureAtlasSprite sourceSprite = selected.getParticleIcon(ModelData.EMPTY);
         TextureAtlasSprite targetSprite = getVariantSprite(type);
         if (targetSprite == null || targetSprite == sourceSprite) return quads;
 
@@ -192,8 +196,18 @@ public class ToiletBakedModel implements BakedModel {
     }
 
     @Override
+    public ModelData getModelData(BlockAndTintGetter level, BlockPos pos, BlockState state, ModelData modelData) {
+        if (modelData.has(ToiletBlockEntity.TOILET_TYPE_PROPERTY) || !(level instanceof Level levelWithTime)) {
+            return modelData;
+        }
+        ToiletType type = ToiletClientBlockExtensions.getCachedToiletType(levelWithTime, pos);
+        return type != null ? modelData.derive().with(ToiletBlockEntity.TOILET_TYPE_PROPERTY, type).build() : modelData;
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
     public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction face, RandomSource random) {
-        return defaultModel.getQuads(state, face, random);
+        return defaultModel.getQuads(state, face, random, ModelData.EMPTY, null);
     }
 
     @Override
@@ -227,13 +241,16 @@ public class ToiletBakedModel implements BakedModel {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public TextureAtlasSprite getParticleIcon() {
-        return defaultModel.getParticleIcon();
+        return defaultModel.getParticleIcon(ModelData.EMPTY);
     }
 
     @Override
     public TextureAtlasSprite getParticleIcon(ModelData modelData) {
-        return selectParticleModel(modelData).getParticleIcon(modelData);
+        ToiletType type = modelData.get(ToiletBlockEntity.TOILET_TYPE_PROPERTY);
+        TextureAtlasSprite sprite = type != null ? getVariantSprite(type) : null;
+        return sprite != null ? sprite : selectParticleModel(modelData).getParticleIcon(modelData);
     }
 
     @Override

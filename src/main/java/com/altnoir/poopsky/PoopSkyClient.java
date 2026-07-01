@@ -2,6 +2,7 @@ package com.altnoir.poopsky;
 
 import com.altnoir.poopsky.block.ToiletType;
 import com.altnoir.poopsky.block.abs.AbstractCompooperBlock;
+import com.altnoir.poopsky.client.ToiletClientBlockExtensions;
 import com.altnoir.poopsky.client.inventory.BreedingBoxScreen;
 import com.altnoir.poopsky.client.inventory.FlyNestScreen;
 import com.altnoir.poopsky.client.particle.LeavesParticle;
@@ -9,10 +10,10 @@ import com.altnoir.poopsky.client.particle.PoopParticle;
 import com.altnoir.poopsky.client.renderer.TimeBellOverlay;
 import com.altnoir.poopsky.client.renderer.ToiletHighlightRenderer;
 import com.altnoir.poopsky.common.FlyType;
-import com.altnoir.poopsky.entity.renderer.*;
 import com.altnoir.poopsky.common.event.PSClientGameEvents;
 import com.altnoir.poopsky.common.event.PSClientModEvents;
 import com.altnoir.poopsky.common.event.PSKeyBoardInput;
+import com.altnoir.poopsky.entity.renderer.*;
 import com.altnoir.poopsky.init.*;
 import com.altnoir.poopsky.item.PFlyTypes;
 import com.altnoir.poopsky.item.p.ToiletBlockItem;
@@ -148,6 +149,7 @@ public class PoopSkyClient {
         }
 
         public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
+            event.registerBlock(ToiletClientBlockExtensions.INSTANCE, PBlocks.WOODEN_TOILET.get(), PBlocks.HARD_TOILET.get());
             event.registerFluidType(new IClientFluidTypeExtensions() {
                 @Override
                 public @NotNull ResourceLocation getStillTexture() {

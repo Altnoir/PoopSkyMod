@@ -1,11 +1,13 @@
 package com.altnoir.poopsky.block.abs;
 
+import com.altnoir.poopsky.block.ToiletType;
 import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.entity.p.ToiletEntity;
 import com.altnoir.poopsky.init.PBlockEntityType;
 import com.altnoir.poopsky.init.PEffects;
 import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.init.PItems;
+import com.altnoir.poopsky.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.util.toiletUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -47,6 +49,7 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -102,6 +105,44 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
                         .setValue(FACING, Direction.NORTH)
                         .setValue(CONNECTION, ToiletState.DEFAULT)
         );
+    }
+
+    protected abstract ToiletType getDefaultToiletType();
+
+    @Nullable
+    protected ToiletType getToiletType(BlockGetter level, BlockPos pos) {
+        if (level.getBlockEntity(pos) instanceof ToiletBlockEntity be) {
+            return be.getToiletType();
+        }
+        return null;
+    }
+
+    public ToiletType getToiletTypeOrDefault(BlockGetter level, BlockPos pos) {
+        ToiletType type = getToiletType(level, pos);
+        return type != null ? type : getDefaultToiletType();
+    }
+
+    @Nullable
+    protected Block getVariantSourceBlock(BlockGetter level, BlockPos pos) {
+        ToiletType type = getToiletType(level, pos);
+        return type != null ? type.sourceBlock() : null;
+    }
+
+    @Override
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
+        return ToiletBlockItem.withType(this, getToiletTypeOrDefault(level, pos));
+    }
+
+    @Override
+    public SoundType getSoundType(BlockState state, LevelReader level, BlockPos pos, @Nullable Entity entity) {
+        Block sourceBlock = getVariantSourceBlock(level, pos);
+        return sourceBlock != null ? sourceBlock.defaultBlockState().getSoundType(level, pos, entity) : super.getSoundType(state, level, pos, entity);
+    }
+
+    public BlockState getParticleState(BlockState state, BlockGetter level, BlockPos pos) {
+        ToiletType type = getToiletType(level, pos);
+        Block sourceBlock = type != null ? type.sourceBlock() : null;
+        return sourceBlock != null ? sourceBlock.defaultBlockState() : state;
     }
 
     @Override

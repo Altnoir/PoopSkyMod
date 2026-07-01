@@ -4,7 +4,6 @@ import com.altnoir.poopsky.block.ToiletType;
 import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.init.PToiletTypes;
-import com.altnoir.poopsky.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.util.toiletUtil;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -22,7 +21,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -33,7 +31,6 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.event.EventHooks;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class LavaToiletBlock extends BaseToiletLavaBlock {
     public static final MapCodec<LavaToiletBlock> CODEC = RecordCodecBuilder.mapCodec(instance ->
@@ -78,6 +75,11 @@ public class LavaToiletBlock extends BaseToiletLavaBlock {
     }
 
     @Override
+    protected ToiletType getDefaultToiletType() {
+        return defaultToiletType;
+    }
+
+    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(TOILET_MODE);
@@ -119,7 +121,7 @@ public class LavaToiletBlock extends BaseToiletLavaBlock {
                         if (currentType != newType) {
                             be.setToiletType(newType);
 
-                            SoundType sound = blockItem.getBlock().defaultBlockState().getSoundType();
+                            SoundType sound = blockItem.getBlock().defaultBlockState().getSoundType(level, pos, player);
                             level.playSound(null, pos, sound.getPlaceSound(), SoundSource.BLOCKS, (sound.getVolume() + 1.0F) / 2.0F, sound.getPitch() * 0.8F);
 
                             stack.consume(1, player);
@@ -139,16 +141,6 @@ public class LavaToiletBlock extends BaseToiletLavaBlock {
             }
         }
         return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
-    }
-
-    @Override
-    public @NotNull ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
-        ToiletType type = getToiletTypeFromBE(level, pos);
-        return withType(this, type != null ? type : defaultToiletType);
-    }
-
-    public static ItemStack withType(Block block, ToiletType toiletType) {
-        return ToiletBlockItem.withType(block, toiletType);
     }
 
     public BlockState applyVariant(BlockState state, ToiletType toiletType) {
@@ -171,7 +163,7 @@ public class LavaToiletBlock extends BaseToiletLavaBlock {
 
     @Override
     public float getDestroyProgress(BlockState state, Player player, BlockGetter level, BlockPos pos) {
-        ToiletType type = getToiletTypeFromBE(level, pos);
+        ToiletType type = getToiletType(level, pos);
         if (type != null && (type == PToiletTypes.NETHERITE || type == PToiletTypes.OBSIDIAN || type == PToiletTypes.CRYING_OBSIDIAN)) {
             float hardness = 50.0F;
             int i = EventHooks.doPlayerHarvestCheck(player, state, level, pos) ? 30 : 100;
@@ -183,25 +175,5 @@ public class LavaToiletBlock extends BaseToiletLavaBlock {
     @Override
     public MapColor getMapColor(BlockState state, BlockGetter level, BlockPos pos, MapColor defaultColor) {
         return MapColor.STONE;
-    }
-
-    @Override
-    public SoundType getSoundType(BlockState state, LevelReader level, BlockPos pos, @Nullable Entity entity) {
-        ToiletType type = getToiletTypeFromBE(level, pos);
-        if (type != null) {
-            Block sourceBlock = type.sourceBlock();
-            if (sourceBlock != null) {
-                return sourceBlock.defaultBlockState().getSoundType();
-            }
-        }
-        return super.getSoundType(state, level, pos, entity);
-    }
-
-    @Nullable
-    private ToiletType getToiletTypeFromBE(BlockGetter level, BlockPos pos) {
-        if (level.getBlockEntity(pos) instanceof ToiletBlockEntity be) {
-            return be.getToiletType();
-        }
-        return null;
     }
 }
