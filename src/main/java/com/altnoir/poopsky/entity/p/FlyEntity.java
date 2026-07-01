@@ -2,9 +2,12 @@ package com.altnoir.poopsky.entity.p;
 
 import com.altnoir.poopsky.PTags;
 import com.altnoir.poopsky.client.sound.FlyBuzzSoundWrapper;
+import com.altnoir.poopsky.init.PDamageTypes;
 import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.init.PSoundEvents;
+import com.altnoir.poopsky.item.PFlyTypes;
+import com.altnoir.poopsky.item.p.FlyItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -16,6 +19,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -193,10 +197,47 @@ public class FlyEntity extends Animal implements FlyingAnimal {
         return PSoundEvents.ENTITY_FLY_DEATH.get();
     }
 
-
     @Override
     public @Nullable FlyEntity getBreedOffspring(ServerLevel level, AgeableMob otherParent) {
         return PEntityType.FLY.get().create(level);
+    }
+
+    @Override
+    public void die(DamageSource source) {
+        if (!this.level().isClientSide && !this.isBaby()) {
+            if (source.is(DamageTypes.DROWN)) {
+                var blueFlyItem = FlyItem.withType(PFlyTypes.BLUE.get());
+                this.spawnAtLocation(blueFlyItem);
+            }
+            if (source.is(PDamageTypes.ROUNDWORM)) {
+                var whiteFlyItem = FlyItem.withType(PFlyTypes.WHITE.get());
+                this.spawnAtLocation(whiteFlyItem);
+            }
+            if (source.is(DamageTypes.CACTUS)) {
+                var greenFlyItem = FlyItem.withType(PFlyTypes.GREEN.get());
+                var itemEntity = this.spawnAtLocation(greenFlyItem);
+                if (itemEntity != null) {
+                    itemEntity.setInvulnerable(true);
+                }
+            }
+            if (source.is(PDamageTypes.POOP_BALL)) {
+                var brownFlyItem = FlyItem.withType(PFlyTypes.BROWN.get());
+                this.spawnAtLocation(brownFlyItem);
+            }
+        }
+        super.die(source);
+    }
+
+    @Override
+    public void thunderHit(ServerLevel level, LightningBolt lightning) {
+        if (!this.level().isClientSide && !this.isBaby()) {
+            var blackFlyItem = FlyItem.withType(PFlyTypes.BLACK.get());
+            var itemEntity = this.spawnAtLocation(blackFlyItem);
+            if (itemEntity != null) {
+                itemEntity.setInvulnerable(true);
+            }
+            this.kill();
+        }
     }
 
     @Override

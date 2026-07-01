@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.entity.p;
 
+import com.altnoir.poopsky.init.PDamageTypes;
 import com.altnoir.poopsky.init.PItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ItemParticleOption;
@@ -64,8 +65,8 @@ public class PoopBall extends ThrowableItemProjectile {
     protected void onHitEntity(EntityHitResult result) {
         super.onHitEntity(result);
         Entity entity = result.getEntity();
-        int i = entity instanceof Slime ? 3 : 0;
-        entity.hurt(this.damageSources().thrown(this, this.getOwner()), (float) i);
+        int i = entity instanceof Slime ? 3 : 1;
+        entity.hurt(this.damageSources().source(PDamageTypes.POOP_BALL, this, this.getOwner()), (float) i);
 
         if (entity instanceof LivingEntity livingEntity) {
             livingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 100, 0), this.getOwner());

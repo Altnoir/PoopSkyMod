@@ -316,6 +316,10 @@
   "container.placer": "放置器",
   "generator.poopsky.poopsky": "空中厕所",
   "stat.poopsky.poop_stat": "排便数",
+  "death.attack.roundworm": "%1$s 死于蛔虫",
+  "death.attack.roundworm.player": "%1$s 被 %2$s 用蛔虫杀死了",
+  "death.attack.poop_ball": "%1$s 被粪便球砸死了",
+  "death.attack.poop_ball.player": "%1$s 被 %2$s 用粪便球砸死了",
   "itemgroup.poopsky": "空中厕所",
 
   "tag.item.poopsky.compooper_saplings": "堆粪桶可产出树苗",

@@ -1,6 +1,8 @@
 package com.altnoir.poopsky.block.p;
 
+import com.altnoir.poopsky.entity.p.FlyEntity;
 import com.altnoir.poopsky.init.PBlocks;
+import com.altnoir.poopsky.init.PDamageTypes;
 import com.altnoir.poopsky.init.PItems;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -11,9 +13,12 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -24,8 +29,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 
 public class RoundwormVinesPlantBlock extends GrowingPlantBodyBlock implements BonemealableBlock {
     public static final MapCodec<RoundwormVinesPlantBlock> CODEC = simpleCodec(RoundwormVinesPlantBlock::new);
@@ -74,6 +81,16 @@ public class RoundwormVinesPlantBlock extends GrowingPlantBodyBlock implements B
     }
 
     @Override
+    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        if (entity instanceof FlyEntity fly && fly.isAlive()) {
+            fly.hurt(level.damageSources().source(PDamageTypes.ROUNDWORM), 2.0F);
+        } else {
+            entity.hurt(level.damageSources().source(PDamageTypes.ROUNDWORM), 0.5F);
+        }
+        super.entityInside(state, level, pos, entity);
+    }
+
+    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(SEEDS);
     }
@@ -91,5 +108,10 @@ public class RoundwormVinesPlantBlock extends GrowingPlantBodyBlock implements B
     @Override
     public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
         level.setBlock(pos, state.setValue(SEEDS, Boolean.TRUE), 2);
+    }
+
+    @Override
+    public PathType getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, @Nullable Mob mob) {
+        return PathType.DAMAGE_OTHER;
     }
 }

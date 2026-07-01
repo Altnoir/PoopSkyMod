@@ -5,8 +5,8 @@ import com.altnoir.poopsky.block.ToiletType;
 import com.altnoir.poopsky.common.FlyType;
 import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.init.PBlocks;
-import com.altnoir.poopsky.item.PFlyTypes;
 import com.altnoir.poopsky.init.PItems;
+import com.altnoir.poopsky.item.PFlyTypes;
 import com.altnoir.poopsky.recipe.*;
 import com.simibubi.create.AllItems;
 import net.minecraft.core.HolderLookup;
@@ -21,7 +21,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
-
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -729,21 +728,21 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         LinkedHashMap<FlyType.Type, ItemLike> flyNestMap = new LinkedHashMap<>();
         flyNestMap.put(PFlyTypes.NORMAL.get(), PItems.MAGGOTS_SEEDS);
         flyNestMap.put(PFlyTypes.WHITE.get(), Items.BONE_MEAL);
+        flyNestMap.put(PFlyTypes.LIGHT_GRAY.get(), Items.OXEYE_DAISY);
+        flyNestMap.put(PFlyTypes.GRAY.get(), Items.GRAVEL);
         flyNestMap.put(PFlyTypes.BLACK.get(), Items.COAL);
-        flyNestMap.put(PFlyTypes.GREEN.get(), Items.CACTUS);
-        flyNestMap.put(PFlyTypes.YELLOW.get(), Items.YELLOW_DYE);
-        flyNestMap.put(PFlyTypes.BLUE.get(), Items.LAPIS_LAZULI);
-        flyNestMap.put(PFlyTypes.RED.get(), Items.REDSTONE);
         flyNestMap.put(PFlyTypes.BROWN.get(), Items.COCOA_BEANS);
-        flyNestMap.put(PFlyTypes.GRAY.get(), Items.GRAY_DYE);
-        flyNestMap.put(PFlyTypes.LIGHT_GRAY.get(), Items.LIGHT_GRAY_DYE);
-        flyNestMap.put(PFlyTypes.LIGHT_BLUE.get(), Items.LIGHT_BLUE_DYE);
+        flyNestMap.put(PFlyTypes.RED.get(), Items.REDSTONE);
+        flyNestMap.put(PFlyTypes.ORANGE.get(), Items.TORCHFLOWER);
+        flyNestMap.put(PFlyTypes.YELLOW.get(), Items.GLOW_BERRIES);
         flyNestMap.put(PFlyTypes.LIME.get(), Items.SEA_PICKLE);
-        flyNestMap.put(PFlyTypes.MAGENTA.get(), Items.MAGENTA_DYE);
-        flyNestMap.put(PFlyTypes.CYAN.get(), Items.PRISMARINE_CRYSTALS);
-        flyNestMap.put(PFlyTypes.PINK.get(), Items.PINK_DYE);
-        flyNestMap.put(PFlyTypes.ORANGE.get(), Items.ORANGE_DYE);
+        flyNestMap.put(PFlyTypes.GREEN.get(), Items.CACTUS);
+        flyNestMap.put(PFlyTypes.CYAN.get(), Items.PRISMARINE_SHARD);
+        flyNestMap.put(PFlyTypes.LIGHT_BLUE.get(), Items.PRISMARINE_CRYSTALS);
+        flyNestMap.put(PFlyTypes.BLUE.get(), Items.LAPIS_LAZULI);
         flyNestMap.put(PFlyTypes.PURPLE.get(), Items.AMETHYST_SHARD);
+        flyNestMap.put(PFlyTypes.MAGENTA.get(), Items.CHORUS_FRUIT);
+        flyNestMap.put(PFlyTypes.PINK.get(), Items.PINK_PETALS);
 
         flyNestMap.forEach((type, result) -> FlyNestRecipeBuilder.flyNest(type.id(), result)
                 .unlockedBy(getHasName(PBlocks.FLY_NEST), has(PBlocks.FLY_NEST))

@@ -16,6 +16,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.EnchantedCountIncreaseFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.functions.SmeltItemFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
@@ -63,7 +64,8 @@ public class PSEntityLootTableProvider extends EntityLootSubProvider {
                                         .setRolls(ConstantValue.exactly(1.0F))
                                         .add(
                                                 LootItem.lootTableItem(PItems.MAGGOTS_SEEDS.get())
-                                                        .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))
+                                                        .apply(SmeltItemFunction.smelted().when(this.shouldSmeltLoot()))
+                                                        .apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.registries, ConstantValue.exactly(1.0F)))
                                         )
                         )
         );

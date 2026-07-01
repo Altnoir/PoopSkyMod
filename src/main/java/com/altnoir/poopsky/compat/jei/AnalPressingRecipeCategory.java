@@ -78,12 +78,9 @@ public class AnalPressingRecipeCategory implements IRecipeCategory<RecipeHolder<
     public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<AnalPressingRecipe> recipeHolder, IFocusGroup focuses) {
         var recipe = recipeHolder.value();
         int count = (2 * recipe.radius() + 1) * (2 * recipe.radius() + 1);
-        builder.addSlot(RecipeIngredientRole.INPUT, INPUT1_X, INPUT1_Y)
-                .addIngredients(recipe.input());
-        builder.addSlot(RecipeIngredientRole.INPUT, INPUT2_X, INPUT2_Y)
-                .addItemStack(new ItemStack(recipe.replaceTarget(), count));
-        builder.addSlot(RecipeIngredientRole.OUTPUT, OUTPUT_X, OUTPUT_Y)
-                .addItemStack(new ItemStack(recipe.output()));
+        builder.addSlot(RecipeIngredientRole.INPUT, INPUT1_X, INPUT1_Y).addIngredients(recipe.input());
+        builder.addSlot(RecipeIngredientRole.INPUT, INPUT2_X, INPUT2_Y).addItemStack(new ItemStack(recipe.replaceTarget(), count));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, OUTPUT_X, OUTPUT_Y).addItemStack(new ItemStack(recipe.output()));
     }
 
     @Override
