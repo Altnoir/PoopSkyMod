@@ -118,7 +118,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
                     .orElseGet(() -> PEntityType.TOILET.get().spawn((ServerLevel) level, pos, MobSpawnType.TRIGGERED));
 
             if (entity != null) {
-                entity.setGoldenPoop(toiletUtil.isGoldenToilet(state));
+                entity.setGoldenPoop(toiletUtil.isGoldenToilet(level, pos));
                 player.startRiding(entity);
             }
         }
@@ -172,7 +172,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
             super.fallOn(level, blockState, pos, entity, fallDistance);
 
             if (entity instanceof FallingBlockEntity falling && isAnvil(falling.getBlockState())) {
-                poopAnvil(level, blockState, entity);
+                poopAnvil(level, pos, entity);
             }
         } else {
             super.fallOn(level, blockState, pos, entity, fallDistance);
@@ -183,8 +183,8 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
         return state.is(Blocks.ANVIL) || state.is(Blocks.CHIPPED_ANVIL) || state.is(Blocks.DAMAGED_ANVIL);
     }
 
-    private void poopAnvil(Level level, BlockState blockState, Entity entity) {
-        Item poopItem = toiletUtil.isGoldenToilet(blockState) ? PItems.GOLDEN_POOP.get() : PItems.POOP.get();
+    private void poopAnvil(Level level, BlockPos pos, Entity entity) {
+        Item poopItem = toiletUtil.isGoldenToilet(level, pos) ? PItems.GOLDEN_POOP.get() : PItems.POOP.get();
         var poop = new ItemEntity(level, entity.getX(), entity.getY() + 0.1, entity.getZ(), new ItemStack(poopItem, 8));
         poop.setDefaultPickUpDelay();
         level.addFreshEntity(poop);

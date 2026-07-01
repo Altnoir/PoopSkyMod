@@ -1,14 +1,14 @@
 package com.altnoir.poopsky.util;
 
+import com.altnoir.poopsky.block.ToiletType;
+import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.block.p.BaseToiletLavaBlock;
-import com.altnoir.poopsky.block.p.LavaToiletBlock;
 import com.altnoir.poopsky.init.PEffects;
 import com.altnoir.poopsky.init.PParticles;
 import com.altnoir.poopsky.init.PSoundEvents;
 import com.altnoir.poopsky.init.PStats;
 import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.init.PToiletTypes;
-import com.altnoir.poopsky.block.ToiletType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -27,11 +27,15 @@ import net.minecraft.world.phys.AABB;
 import java.util.function.LongConsumer;
 
 public class toiletUtil {
-    public static boolean isGoldenToilet(BlockState state) {
-        if (state.getBlock() instanceof LavaToiletBlock) {
-            ToiletType type = state.getValue(LavaToiletBlock.TOILET_TYPE);
+    public static boolean isGoldenToilet(Level level, BlockPos pos) {
+        if (level.getBlockEntity(pos) instanceof ToiletBlockEntity be) {
+            ToiletType type = be.getToiletType();
             return type == PToiletTypes.GOLD || type == PToiletTypes.RAINBOW;
         }
+        return false;
+    }
+
+    public static boolean isGoldenToilet(BlockState state) {
         return false;
     }
 

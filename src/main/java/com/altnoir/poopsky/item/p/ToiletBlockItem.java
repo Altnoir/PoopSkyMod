@@ -1,15 +1,18 @@
 package com.altnoir.poopsky.item.p;
 
+import com.altnoir.poopsky.block.ToiletType;
+import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.block.p.LavaToiletBlock;
 import com.altnoir.poopsky.block.p.ToiletBlock;
 import com.altnoir.poopsky.init.PComponents;
-import com.altnoir.poopsky.block.ToiletType;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -35,13 +38,29 @@ public class ToiletBlockItem extends BlockItem {
         if (type == null) return state;
 
         Block block = getBlock();
-        if (block instanceof ToiletBlock toilet) {
-            return toilet.applyVariant(state, type);
-        } else if (block instanceof LavaToiletBlock lava) {
+        if (block instanceof LavaToiletBlock lava) {
             return lava.applyVariant(state, type);
+        } else if (block instanceof ToiletBlock toilet) {
+            return toilet.applyVariant(state, type);
         }
 
         return state;
+    }
+
+    @Override
+    protected boolean placeBlock(BlockPlaceContext context, BlockState state) {
+        boolean result = super.placeBlock(context, state);
+        if (result) {
+            ToiletType type = context.getItemInHand().get(PComponents.TOILET_TYPE.get());
+            if (type != null) {
+                Level level = context.getLevel();
+                BlockPos pos = context.getClickedPos();
+                if (level.getBlockEntity(pos) instanceof ToiletBlockEntity be) {
+                    be.setToiletType(type);
+                }
+            }
+        }
+        return result;
     }
 
     @Override

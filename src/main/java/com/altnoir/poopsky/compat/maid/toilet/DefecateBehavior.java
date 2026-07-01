@@ -90,7 +90,7 @@ public class DefecateBehavior extends Behavior<EntityMaid> {
         }
 
         if (toiletEntity.getPassengers().isEmpty()) {
-            toiletEntity.setGoldenPoop(toiletUtil.isGoldenToilet(state));
+            toiletEntity.setGoldenPoop(toiletUtil.isGoldenToilet(level, pos));
             maid.startRiding(toiletEntity);
         }
     }

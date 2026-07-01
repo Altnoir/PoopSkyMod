@@ -2,7 +2,6 @@ package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.block.ToiletType;
-import com.altnoir.poopsky.block.ToiletTypeProperty;
 import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.block.p.*;
 import com.altnoir.poopsky.init.PBlocks;
@@ -111,8 +110,8 @@ public class PSBlockStateProvider extends BlockStateProvider {
         cubeBottomTop(PBlocks.MAGGOTS_BLOCK.get());
         blockWithItem(PBlocks.ROUNDWORM_BLOCK.get());
 
-        registerToilet(PBlocks.WOODEN_TOILET, ToiletBlock.WOOD_TYPE, ToiletType.Category.WOOD, false);
-        registerToilet(PBlocks.HARD_TOILET, LavaToiletBlock.TOILET_TYPE, ToiletType.Category.HARD, false);
+        registerToilet(PBlocks.WOODEN_TOILET, ToiletType.Category.WOOD, false);
+        registerToilet(PBlocks.HARD_TOILET, ToiletType.Category.HARD, true);
 
         var flyNestModel = models().singleTexture("fly_nest", mcLoc("block/cube_all"), mcLoc("block/beehive_side"));
         getVariantBuilder(PBlocks.FLY_NEST.get()).partialState().addModels(
@@ -342,15 +341,15 @@ public class PSBlockStateProvider extends BlockStateProvider {
         simpleBlockItem(block, model);
     }
 
-    private void registerToilet(DeferredBlock<?> block, ToiletTypeProperty property, ToiletType.Category category, boolean hasLava) {
+    private void registerToilet(DeferredBlock<?> block, ToiletType.Category category, boolean hasLava) {
         Map<ToiletType, ResourceLocation> textures = new LinkedHashMap<>();
         for (ToiletType type : ToiletType.getByCategory(category).values()) {
             textures.put(type, toiletTexture(type));
         }
-        registerVariantToiletWithOverrides(block.get(), property, textures, hasLava);
+        registerVariantToilet(block.get(), textures, hasLava);
     }
 
-    private void registerVariantToiletWithOverrides(Block toilet, ToiletTypeProperty typeProperty, Map<ToiletType, ResourceLocation> textures, boolean hasLava) {
+    private void registerVariantToilet(Block toilet, Map<ToiletType, ResourceLocation> textures, boolean hasLava) {
         Map<ToiletType, ModelFile[]> variantModels = new LinkedHashMap<>();
         for (var entry : textures.entrySet()) {
             ToiletType type = entry.getKey();
@@ -368,12 +367,12 @@ public class PSBlockStateProvider extends BlockStateProvider {
             variantModels.put(type, modelList.toArray(new ModelFile[0]));
         }
 
-        ModelFile defaultModel = variantModels.get(textures.keySet().iterator().next())[0];
+        ToiletType firstType = textures.keySet().iterator().next();
+        ModelFile defaultModel = variantModels.get(firstType)[0];
 
         getVariantBuilder(toilet).forAllStates(state -> {
             var facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
             var connection = state.getValue(AbstractToiletBlock.CONNECTION);
-            ToiletType variantType = state.getValue(typeProperty);
 
             var yRot = switch (facing) {
                 case EAST -> 90;
@@ -382,10 +381,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
                 default -> 0;
             };
 
-            ModelFile[] models = variantModels.get(variantType);
-            if (models == null) {
-                return ConfiguredModel.builder().modelFile(defaultModel).rotationY(yRot).uvLock(true).build();
-            }
+            ModelFile[] models = variantModels.get(firstType);
             int offset = hasLava && state.getValue(BaseToiletLavaBlock.LAVA) ? 3 : 0;
             int extraYRot = connection == AbstractToiletBlock.ToiletState.BACK ? 180 : 0;
             ModelFile chosenModel = switch (connection) {

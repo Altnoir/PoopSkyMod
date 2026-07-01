@@ -1,8 +1,12 @@
 package com.altnoir.poopsky.block.entity;
 
+import com.altnoir.poopsky.block.ToiletType;
 import com.altnoir.poopsky.block.p.BaseToiletLavaBlock;
+import com.altnoir.poopsky.block.p.LavaToiletBlock;
+import com.altnoir.poopsky.block.p.ToiletBlock;
 import com.altnoir.poopsky.init.PBlockEntityType;
 import com.altnoir.poopsky.init.PFluids;
+import com.altnoir.poopsky.init.PToiletTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -19,6 +23,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.material.Fluids;
+import net.neoforged.neoforge.client.model.data.ModelData;
+import net.neoforged.neoforge.client.model.data.ModelProperty;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
@@ -27,6 +33,10 @@ import org.jetbrains.annotations.Nullable;
 public class ToiletBlockEntity extends BlockEntity {
     private BlockPos linkedPos;
     private String linkedDim;
+    private ToiletType toiletType;
+
+    public static final ModelProperty<ToiletType> TOILET_TYPE_PROPERTY = new ModelProperty<>();
+
     public final FluidTank fluidTank = new FluidTank(8888000) {
         @Override
         protected void onContentsChanged() {
@@ -39,6 +49,43 @@ public class ToiletBlockEntity extends BlockEntity {
 
     public ToiletBlockEntity(BlockPos pos, BlockState state) {
         super(PBlockEntityType.TOILET_BLOCK_ENTITY.get(), pos, state);
+        this.toiletType = inferDefaultType(state);
+    }
+
+    private static ToiletType inferDefaultType(BlockState state) {
+        if (state.getBlock() instanceof LavaToiletBlock) {
+            return PToiletTypes.COBBLESTONE;
+        } else if (state.getBlock() instanceof ToiletBlock) {
+            return PToiletTypes.OAK;
+        }
+        return PToiletTypes.COBBLESTONE;
+    }
+
+    public ToiletType getToiletType() {
+        return toiletType;
+    }
+
+    public void setToiletType(ToiletType toiletType) {
+        this.toiletType = toiletType;
+        this.setChanged();
+        if (level instanceof ServerLevel serverLevel) {
+            serverLevel.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+            requestModelDataUpdate();
+            syncToiletModeToBlockState();
+        }
+    }
+
+    private void syncToiletModeToBlockState() {
+        if (level == null) return;
+        BlockState state = getBlockState();
+        boolean shouldBeRedstone = toiletType == PToiletTypes.REDSTONE;
+        if (state.getBlock() instanceof LavaToiletBlock) {
+            LavaToiletBlock.ToiletMode currentMode = state.getValue(LavaToiletBlock.TOILET_MODE);
+            LavaToiletBlock.ToiletMode targetMode = shouldBeRedstone ? LavaToiletBlock.ToiletMode.REDSTONE : LavaToiletBlock.ToiletMode.DEFAULT;
+            if (currentMode != targetMode) {
+                level.setBlock(getBlockPos(), state.setValue(LavaToiletBlock.TOILET_MODE, targetMode), 3);
+            }
+        }
     }
 
     public String getLinkedDim() {
@@ -89,6 +136,17 @@ public class ToiletBlockEntity extends BlockEntity {
             this.linkedPos = BlockPos.of(tag.getLong("LinkedPos"));
             this.linkedDim = tag.getString("LinkedDim");
         }
+        if (tag.contains("ToiletType")) {
+            String id = tag.getString("ToiletType");
+            ToiletType type = ToiletType.byId(id);
+            if (type != null) {
+                this.toiletType = type;
+            }
+        }
+        if (level != null && level.isClientSide) {
+            requestModelDataUpdate();
+            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+        }
     }
 
     @Override
@@ -99,6 +157,9 @@ public class ToiletBlockEntity extends BlockEntity {
             tag.putLong("LinkedPos", linkedPos.asLong());
             tag.putString("LinkedDim", linkedDim);
         }
+        if (toiletType != null) {
+            tag.putString("ToiletType", toiletType.id());
+        }
     }
 
     @Override
@@ -108,6 +169,25 @@ public class ToiletBlockEntity extends BlockEntity {
             this.linkedPos = BlockPos.of(tag.getLong("LinkedPos"));
             this.linkedDim = tag.getString("LinkedDim");
         }
+        if (tag.contains("ToiletType")) {
+            String id = tag.getString("ToiletType");
+            ToiletType type = ToiletType.byId(id);
+            if (type != null) {
+                this.toiletType = type;
+            }
+        }
+        if (level != null && level.isClientSide) {
+            requestModelDataUpdate();
+            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+        }
+    }
+
+    @Override
+    public ModelData getModelData() {
+        if (toiletType != null) {
+            return ModelData.builder().with(TOILET_TYPE_PROPERTY, toiletType).build();
+        }
+        return ModelData.EMPTY;
     }
 
     @Nullable

@@ -1,0 +1,161 @@
+package com.altnoir.poopsky.client.model;
+
+import com.altnoir.poopsky.block.ToiletType;
+import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
+import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
+import com.altnoir.poopsky.block.p.BaseToiletLavaBlock;
+import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.renderer.block.model.ItemOverrides;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.neoforged.neoforge.client.model.data.ModelData;
+import org.joml.Matrix4f;
+import org.joml.Vector4f;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+public class ToiletBakedModel implements BakedModel {
+    private final BakedModel defaultModel;
+    private final boolean hasLava;
+    private final Map<ToiletType, BakedModel[]> variantModels;
+
+    public ToiletBakedModel(BakedModel defaultModel, Map<ToiletType, BakedModel[]> variantModels, boolean hasLava) {
+        this.defaultModel = defaultModel;
+        this.variantModels = variantModels;
+        this.hasLava = hasLava;
+    }
+
+    private int getStateIndex(BlockState state) {
+        var connection = state.getValue(AbstractToiletBlock.CONNECTION);
+        boolean lava = hasLava && state.hasProperty(BaseToiletLavaBlock.LAVA) && state.getValue(BaseToiletLavaBlock.LAVA);
+        int offset = lava ? 3 : 0;
+        return offset + switch (connection) {
+            case DEFAULT -> 0;
+            case FRONT, BACK -> 1;
+            case BOTH -> 2;
+        };
+    }
+
+    private BakedModel selectModel(@Nullable BlockState state, ModelData modelData) {
+        if (state == null) return defaultModel;
+        ToiletType type = modelData.get(ToiletBlockEntity.TOILET_TYPE_PROPERTY);
+        if (type == null || !variantModels.containsKey(type)) return defaultModel;
+        BakedModel[] models = variantModels.get(type);
+        int index = getStateIndex(state);
+        if (models != null && index < models.length && models[index] != null) {
+            return models[index];
+        }
+        return defaultModel;
+    }
+
+    private int getYRotation(BlockState state) {
+        if (state == null || !state.hasProperty(BlockStateProperties.HORIZONTAL_FACING)) return 0;
+        var facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
+        var connection = state.getValue(AbstractToiletBlock.CONNECTION);
+        int baseRot = switch (facing) {
+            case EAST -> 90;
+            case SOUTH -> 180;
+            case WEST -> 270;
+            default -> 0;
+        };
+        int extraRot = connection == AbstractToiletBlock.ToiletState.BACK ? 180 : 0;
+        return (baseRot + extraRot) % 360;
+    }
+
+    private List<BakedQuad> rotateQuads(List<BakedQuad> quads, int yRot) {
+        if (yRot == 0 || quads.isEmpty()) return quads;
+        float angle = (float) Math.toRadians(-yRot);
+        Matrix4f rotMat = new Matrix4f().rotationY(angle);
+        List<BakedQuad> rotated = new ArrayList<>(quads.size());
+        for (BakedQuad quad : quads) {
+            rotated.add(rotateQuad(quad, rotMat, yRot));
+        }
+        return rotated;
+    }
+
+    private BakedQuad rotateQuad(BakedQuad quad, Matrix4f rotMat, int yRot) {
+        int[] vertexData = quad.getVertices().clone();
+        int stride = vertexData.length / 4;
+        for (int i = 0; i < 4; i++) {
+            int offset = i * stride;
+            float x = Float.intBitsToFloat(vertexData[offset]);
+            float y = Float.intBitsToFloat(vertexData[offset + 1]);
+            float z = Float.intBitsToFloat(vertexData[offset + 2]);
+
+            Vector4f pos = new Vector4f(x - 0.5f, y, z - 0.5f, 1.0f);
+            rotMat.transform(pos);
+
+            vertexData[offset] = Float.floatToRawIntBits(pos.x + 0.5f);
+            vertexData[offset + 1] = Float.floatToRawIntBits(pos.y);
+            vertexData[offset + 2] = Float.floatToRawIntBits(pos.z + 0.5f);
+        }
+
+        Direction newDirection = rotateDirection(quad.getDirection(), yRot);
+        return new BakedQuad(vertexData, quad.getTintIndex(), newDirection, quad.getSprite(), quad.isShade());
+    }
+
+    private Direction rotateDirection(Direction dir, int yRot) {
+        if (dir.getAxis() == Direction.Axis.Y) return dir;
+        int steps = (yRot / 90) % 4;
+        Direction result = dir;
+        for (int i = 0; i < steps; i++) {
+            result = result.getCounterClockWise(Direction.Axis.Y);
+        }
+        return result;
+    }
+
+    @Override
+    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction face, RandomSource random) {
+        return defaultModel.getQuads(state, face, random);
+    }
+
+    @Override
+    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction face, RandomSource random, ModelData modelData, @Nullable net.minecraft.client.renderer.RenderType renderType) {
+        BakedModel selected = selectModel(state, modelData);
+        List<BakedQuad> quads = selected.getQuads(state, face, random, modelData, renderType);
+        int yRot = getYRotation(state);
+        return rotateQuads(quads, yRot);
+    }
+
+    @Override
+    public boolean useAmbientOcclusion() {
+        return defaultModel.useAmbientOcclusion();
+    }
+
+    @Override
+    public boolean isGui3d() {
+        return defaultModel.isGui3d();
+    }
+
+    @Override
+    public boolean usesBlockLight() {
+        return defaultModel.usesBlockLight();
+    }
+
+    @Override
+    public boolean isCustomRenderer() {
+        return defaultModel.isCustomRenderer();
+    }
+
+    @Override
+    public TextureAtlasSprite getParticleIcon() {
+        return defaultModel.getParticleIcon();
+    }
+
+    @Override
+    public TextureAtlasSprite getParticleIcon(ModelData modelData) {
+        return defaultModel.getParticleIcon(modelData);
+    }
+
+    @Override
+    public ItemOverrides getOverrides() {
+        return defaultModel.getOverrides();
+    }
+}

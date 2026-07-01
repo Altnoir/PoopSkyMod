@@ -63,7 +63,7 @@ public class FecalIncontinenceEffect extends MobEffect {
 
             if (entity.hasEffect(PEffects.INTESTINAL_SPASM)) {
                 stack = PItems.CHILI_POOP.get();
-            } else if (toiletUtil.isGoldenToilet(level.getBlockState(entityPos.below()))) {
+            } else if (toiletUtil.isGoldenToilet(level, entityPos.below())) {
                 stack = PItems.GOLDEN_POOP.get();
             }
 
