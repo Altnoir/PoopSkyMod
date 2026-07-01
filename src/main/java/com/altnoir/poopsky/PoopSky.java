@@ -70,6 +70,7 @@ public class PoopSky {
 
         PFluids.FLUIDS.register(modEventBus);
         PFluidTypes.FLUID_TYPES.register(modEventBus);
+        NeoForge.EVENT_BUS.addListener(this::onAddReloadListener);
 
         PMenuTypes.register(modEventBus);
 
@@ -80,8 +81,6 @@ public class PoopSky {
             CreatePlugin.register(modEventBus);
         }
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
-
-        NeoForge.EVENT_BUS.addListener(this::onAddReloadListener);
     }
 
     private void onAddReloadListener(AddReloadListenerEvent event) {

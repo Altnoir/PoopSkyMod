@@ -14,7 +14,7 @@ public class PFlyTypeProvider implements DataProvider {
     private final Path outputPath;
 
     public PFlyTypeProvider(PackOutput packOutput) {
-        this.outputPath = packOutput.createPathProvider(PackOutput.Target.DATA_PACK, PoopSky.MOD_ID)
+        this.outputPath = packOutput.createPathProvider(PackOutput.Target.DATA_PACK, PoopSky.MOD_ID + "_data")
                 .json(PoopSky.loc("fly_types"));
     }
 
