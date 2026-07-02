@@ -1,18 +1,58 @@
 package com.altnoir.poopsky.item.p;
 
+import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.init.PEntityType;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 public class ToiletPlugItem extends Item {
+    private static final float ATTACK_DAMAGE_MODIFIER = 1.0F;
+    private static final float ATTACK_KNOCKBACK_MODIFIER = 1.0F;
+    private static final ResourceLocation BASE_ATTACK_KNOCKBACK_ID = PoopSky.loc("base_attack_knockback");
+    private static final int POISON_DURATION = 60;
+
     public ToiletPlugItem(Properties properties) {
         super(properties);
+    }
+
+    public static ItemAttributeModifiers createWeaponAttributes() {
+        return ItemAttributeModifiers.builder()
+                .add(
+                        Attributes.ATTACK_DAMAGE,
+                        new AttributeModifier(BASE_ATTACK_DAMAGE_ID, ATTACK_DAMAGE_MODIFIER, AttributeModifier.Operation.ADD_VALUE),
+                        EquipmentSlotGroup.MAINHAND
+                )
+                .add(
+                        Attributes.ATTACK_KNOCKBACK,
+                        new AttributeModifier(BASE_ATTACK_KNOCKBACK_ID, ATTACK_KNOCKBACK_MODIFIER, AttributeModifier.Operation.ADD_VALUE),
+                        EquipmentSlotGroup.MAINHAND
+                )
+                .build();
+    }
+
+    public static boolean poisonOnHit(LivingEntity target, LivingEntity attacker) {
+        target.addEffect(new MobEffectInstance(MobEffects.POISON, POISON_DURATION), attacker);
+        return true;
+    }
+
+    @Override
+    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        return poisonOnHit(target, attacker);
     }
 
     @Override

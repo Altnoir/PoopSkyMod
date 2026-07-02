@@ -5,6 +5,7 @@ import com.altnoir.poopsky.common.FlyType;
 import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.item.PFlyTypes;
+import net.minecraft.client.renderer.block.model.BlockModel.GuiLight;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
@@ -12,6 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.armortrim.TrimMaterials;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
@@ -66,7 +68,7 @@ public class PSItemModelProvider extends ItemModelProvider {
         basicItem(PItems.POODDING.get());
         basicItem(PItems.DRAGON_BREATH_CHILI.get());
         basicItem(PItems.KING_OF_DRAGON_FRUIT.get());
-        basicItem(PItems.TOILET_PLUG.get());
+        toiletPlugItemModel();
         basicItem(PItems.SPALL.get());
         basicItem(PItems.LAWRENCE_MUSIC_DISC.get());
         basicItem(PItems.LIGHT_DANCE_MUSIC_DISC.get());
@@ -112,6 +114,48 @@ public class PSItemModelProvider extends ItemModelProvider {
 
     private void blockItemModel(DeferredBlock<?> block) {
         withExistingParent(block.getId().getPath(), modLoc("block/" + block.getId().getPath()));
+    }
+
+    private void toiletPlugItemModel() {
+        getBuilder(PItems.TOILET_PLUG.getId().getPath())
+                .parent(new ModelFile.UncheckedModelFile("builtin/entity"))
+                .guiLight(GuiLight.FRONT)
+                .transforms()
+                .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND)
+                .rotation(0, 90, 0)
+                .translation(10, 6, -4)
+                .scale(0.9F)
+                .end()
+                .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND)
+                .rotation(0, 90, 0)
+                .translation(10, 6, 12)
+                .scale(0.9F)
+                .end()
+                .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND)
+                .rotation(0, -90, 25)
+                .translation(1.13F, 3.2F, 1.13F)
+                .scale(0.9F)
+                .end()
+                .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND)
+                .rotation(0, 90, -25)
+                .translation(1.13F, 3.2F, 1.13F)
+                .scale(0.9F)
+                .end()
+                .transform(ItemDisplayContext.GUI)
+                .rotation(30, -45, 0)
+                .translation(0, 0, 0)
+                .scale(1.0F)
+                .end()
+                .transform(ItemDisplayContext.GROUND)
+                .translation(0, 2, 0)
+                .scale(0.4F)
+                .end()
+                .transform(ItemDisplayContext.FIXED)
+                .rotation(0, 180, 0)
+                .translation(0, 0, 0)
+                .scale(0.65F)
+                .end()
+                .end();
     }
 
     private void bigSowordItem(Item item) {

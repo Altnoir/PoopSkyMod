@@ -9,10 +9,10 @@ import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.ColorResolver;
 import net.minecraft.world.level.LightLayer;
@@ -22,7 +22,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.lighting.LevelLightEngine;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.neoforged.neoforge.client.model.data.ModelData;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4fStack;
 import org.joml.Vector3f;
@@ -30,6 +29,7 @@ import org.joml.Vector3f;
 import java.util.Optional;
 
 public class ClientUtil {
+    private static final Minecraft mc = Minecraft.getInstance();
     private static final FluidState EMPTY = Fluids.EMPTY.defaultFluidState();
     private static final BlockState AIR = Blocks.AIR.defaultBlockState();
 
@@ -55,9 +55,12 @@ public class ClientUtil {
         FluidState fluidState = state.getFluidState();
 
         if (fluidState.isEmpty()) {
-            MultiBufferSource.BufferSource buffers = Minecraft.getInstance().renderBuffers().bufferSource();
+            MultiBufferSource.BufferSource buffers = mc.renderBuffers().bufferSource();
+            RenderType renderType = ItemBlockRenderTypes.getChunkRenderType(state);
             RenderSystem.setupGui3DDiffuseLighting(L1, L2);
-            Minecraft.getInstance().getBlockRenderer().renderSingleBlock(state, poseStack, buffers, 15728880, OverlayTexture.NO_OVERLAY, ModelData.EMPTY, null);
+            Dummy.tempState = state;
+            mc.getBlockRenderer().renderBatched(state, BlockPos.ZERO, Dummy.INSTANCE, poseStack, buffers.getBuffer(renderType), false, RandomSource.create());
+            Dummy.tempState = AIR;
             buffers.endBatch();
         } else {
             RenderType renderType = ItemBlockRenderTypes.getRenderLayer(fluidState);
@@ -72,7 +75,7 @@ public class ClientUtil {
 
             Dummy.tempState = state;
             Dummy.tempFluid = fluidState;
-            Minecraft.getInstance().getBlockRenderer().renderLiquid(BlockPos.ZERO, Dummy.INSTANCE, builder, state, state.getFluidState());
+            mc.getBlockRenderer().renderLiquid(BlockPos.ZERO, Dummy.INSTANCE, builder, state, state.getFluidState());
             Dummy.tempFluid = EMPTY;
             Dummy.tempState = AIR;
 
@@ -108,7 +111,7 @@ public class ClientUtil {
 
         @Override
         public int getBlockTint(BlockPos pBlockPos, ColorResolver pColorResolver) {
-            return 0;
+            return 0x3F76E4;
         }
 
         @Override

@@ -64,9 +64,14 @@ public class PItems {
             new DragonFruitRItem(new Item.Properties().food(PFoods.KING_OF_DRAGON_FRUIT)));
 
     public static final DeferredItem<Item> TOILET_PLUG = ITEMS.register("toilet_plug", () ->
-            new ToiletPlugItem(new Item.Properties().stacksTo(1)));
+            new ToiletPlugItem(new Item.Properties()
+                    .attributes(ToiletPlugItem.createWeaponAttributes())
+                    .stacksTo(1)));
     public static final DeferredItem<Item> TOILET_PLUG_WAND = ITEMS.register("toilet_plug_wand", () ->
-            new ToiletLinkerItem(new Item.Properties().component(PComponents.TOILET_COMPONENT, ToiletComponent.EMPTY).stacksTo(1)));
+            new ToiletLinkerItem(new Item.Properties()
+                    .attributes(ToiletPlugItem.createWeaponAttributes())
+                    .component(PComponents.TOILET_COMPONENT, ToiletComponent.EMPTY)
+                    .stacksTo(1)));
 
     public static final DeferredItem<Item> MAGGOTS_SEEDS = ITEMS.register("maggots_seeds", () ->
             new ItemNameBlockItem(PBlocks.MAGGOTS.get(), new Item.Properties().food(PFoods.MAGGOTS_SEEDS).stacksTo(88)));

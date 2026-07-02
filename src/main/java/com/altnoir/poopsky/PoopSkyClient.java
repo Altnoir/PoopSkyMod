@@ -9,6 +9,7 @@ import com.altnoir.poopsky.client.particle.LeavesParticle;
 import com.altnoir.poopsky.client.particle.PoopParticle;
 import com.altnoir.poopsky.client.renderer.TimeBellOverlay;
 import com.altnoir.poopsky.client.renderer.ToiletHighlightRenderer;
+import com.altnoir.poopsky.client.renderer.ToiletPlugItemRenderer;
 import com.altnoir.poopsky.common.FlyType;
 import com.altnoir.poopsky.common.event.PSClientGameEvents;
 import com.altnoir.poopsky.common.event.PSClientModEvents;
@@ -19,6 +20,7 @@ import com.altnoir.poopsky.item.PFlyTypes;
 import com.altnoir.poopsky.item.p.ToiletBlockItem;
 import net.minecraft.client.RecipeBookCategories;
 import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
@@ -31,6 +33,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
@@ -151,6 +154,12 @@ public class PoopSkyClient {
 
         public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
             event.registerBlock(ToiletClientBlockExtensions.INSTANCE, PBlocks.WOODEN_TOILET.get(), PBlocks.HARD_TOILET.get());
+            event.registerItem(new IClientItemExtensions() {
+                @Override
+                public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                    return ToiletPlugItemRenderer.INSTANCE;
+                }
+            }, PItems.TOILET_PLUG.get());
             event.registerFluidType(new IClientFluidTypeExtensions() {
                 @Override
                 public @NotNull ResourceLocation getStillTexture() {
