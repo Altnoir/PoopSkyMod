@@ -16,10 +16,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.BlockAndTintGetter;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.model.data.ModelData;
+import net.neoforged.neoforge.client.model.data.ModelProperty;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.joml.Vector4f;
@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ToiletBakedModel implements BakedModel {
+    public static final ModelProperty<ToiletType> TOILET_TYPE_PROPERTY = new ModelProperty<>();
+
     private final BakedModel defaultModel;
     private final BakedModel[] templateModels;
     private final boolean hasLava;
@@ -64,7 +66,7 @@ public class ToiletBakedModel implements BakedModel {
         if (state == null) return defaultModel;
         int index = getStateIndex(state);
 
-        ToiletType type = modelData.get(ToiletBlockEntity.TOILET_TYPE_PROPERTY);
+        ToiletType type = modelData.get(TOILET_TYPE_PROPERTY);
         if (type != null && variantModels.containsKey(type)) {
             BakedModel[] models = variantModels.get(type);
             if (models != null && index < models.length && models[index] != null) {
@@ -87,7 +89,7 @@ public class ToiletBakedModel implements BakedModel {
     }
 
     private BakedModel selectParticleModel(ModelData modelData) {
-        ToiletType type = modelData.get(ToiletBlockEntity.TOILET_TYPE_PROPERTY);
+        ToiletType type = modelData.get(TOILET_TYPE_PROPERTY);
         if (type == null || !variantModels.containsKey(type)) return defaultModel;
         BakedModel[] models = variantModels.get(type);
         if (models != null && models.length > 0 && models[0] != null) {
@@ -199,12 +201,12 @@ public class ToiletBakedModel implements BakedModel {
 
     @Override
     public ModelData getModelData(BlockAndTintGetter level, BlockPos pos, BlockState state, ModelData modelData) {
-        if (modelData.has(ToiletBlockEntity.TOILET_TYPE_PROPERTY) || !(level instanceof Level levelWithTime)) {
+        if (modelData.has(TOILET_TYPE_PROPERTY)) {
             return modelData;
         }
-        if (levelWithTime.getBlockEntity(pos) instanceof ToiletBlockEntity be) {
+        if (level.getBlockEntity(pos) instanceof ToiletBlockEntity be) {
             ToiletType type = be.getToiletType();
-            return type != null ? modelData.derive().with(ToiletBlockEntity.TOILET_TYPE_PROPERTY, type).build() : modelData;
+            return type != null ? modelData.derive().with(TOILET_TYPE_PROPERTY, type).build() : modelData;
         }
         return modelData;
     }
@@ -221,7 +223,7 @@ public class ToiletBakedModel implements BakedModel {
         int yRot = getYRotation(state);
         Direction sourceFace = face == null ? null : unrotateDirection(face, yRot);
         List<BakedQuad> quads = selected.getQuads(state, sourceFace, random, modelData, renderType);
-        ToiletType type = modelData.get(ToiletBlockEntity.TOILET_TYPE_PROPERTY);
+        ToiletType type = modelData.get(TOILET_TYPE_PROPERTY);
         return rotateQuads(replaceToiletSprite(quads, selected, type), yRot);
     }
 
@@ -253,7 +255,7 @@ public class ToiletBakedModel implements BakedModel {
 
     @Override
     public TextureAtlasSprite getParticleIcon(ModelData modelData) {
-        ToiletType type = modelData.get(ToiletBlockEntity.TOILET_TYPE_PROPERTY);
+        ToiletType type = modelData.get(TOILET_TYPE_PROPERTY);
         TextureAtlasSprite sprite = type != null ? getVariantSprite(type) : null;
         return sprite != null ? sprite : selectParticleModel(modelData).getParticleIcon(modelData);
     }

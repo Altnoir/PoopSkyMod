@@ -23,8 +23,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.material.Fluids;
-import net.neoforged.neoforge.client.model.data.ModelData;
-import net.neoforged.neoforge.client.model.data.ModelProperty;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
@@ -34,8 +32,6 @@ public class ToiletBlockEntity extends BlockEntity {
     private BlockPos linkedPos;
     private String linkedDim;
     private ToiletType toiletType;
-
-    public static final ModelProperty<ToiletType> TOILET_TYPE_PROPERTY = new ModelProperty<>();
 
     public final FluidTank fluidTank = new FluidTank(8888000) {
         @Override
@@ -178,14 +174,6 @@ public class ToiletBlockEntity extends BlockEntity {
             requestModelDataUpdate();
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
         }
-    }
-
-    @Override
-    public ModelData getModelData() {
-        if (toiletType != null) {
-            return ModelData.builder().with(TOILET_TYPE_PROPERTY, toiletType).build();
-        }
-        return ModelData.EMPTY;
     }
 
     @Nullable

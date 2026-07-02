@@ -60,7 +60,6 @@ public class PSBlockStateProvider extends BlockStateProvider {
         cubeBottomTop(PBlocks.MAGGOTS_BLOCK.get());
         blockWithItem(PBlocks.ROUNDWORM_BLOCK.get());
 
-        PToiletTypes.init();
         registerToilet(PBlocks.WOODEN_TOILET, ToiletType.Category.WOOD, false);
         registerToilet(PBlocks.HARD_TOILET, ToiletType.Category.HARD, true);
 
