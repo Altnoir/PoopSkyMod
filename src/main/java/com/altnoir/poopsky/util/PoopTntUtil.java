@@ -19,18 +19,18 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 
 public class PoopTntUtil {
     public static void triggerExplosion(Entity entity, int radius) {
-        Level level = entity.level();
-        ServerLevel serverLevel = (ServerLevel) level;
+        if (!(entity.level() instanceof ServerLevel level)) return;
+
         BlockPos center = entity.blockPosition();
         RandomSource random = level.getRandom();
-        Explosion explosion = serverLevel.explode(entity, entity.getX(), entity.getY(0.0625), entity.getZ(), radius, Level.ExplosionInteraction.NONE);
+        Explosion explosion = level.explode(entity, entity.getX(), entity.getY(0.0625), entity.getZ(), radius, Level.ExplosionInteraction.NONE);
 
         double radiusSq = (double) radius * radius;
         double innerRadiusSq = radiusSq * 0.64;
-        double edgeMinSq = radiusSq * 0.64;
 
         for (int x = -radius; x <= radius; x++) {
             double xSq = (double) x * x;
@@ -44,63 +44,74 @@ public class PoopTntUtil {
                     double distSq = xySq + (double) z * z;
 
                     if (distSq > radiusSq) continue;
-                    if (distSq > edgeMinSq && distSq <= radiusSq) {
-                        double edgeFactor = (distSq - edgeMinSq) / (radiusSq - edgeMinSq);
-                        if (random.nextDouble() < edgeFactor * 0.6) continue;
-                    }
+                    if (shouldSkipEdgeBlock(random, distSq, innerRadiusSq, radiusSq)) continue;
+
                     BlockPos pos = center.offset(x, y, z);
                     BlockState state = level.getBlockState(pos);
 
                     if (state.isAir() || state.getBlock() == Blocks.BEDROCK) continue;
-                    if (state.getBlock() instanceof PoopTntBlock poopTntBlock) {
-                        level.removeBlock(pos, false);
-                        poopTntBlock.wasExploded(level, pos, explosion);
-                        continue;
-                    }
 
-                    POPExplosionRecipe.Output recipeOutput = findExplosionTransformOutput(level, state.getBlock(), radius);
-                    if (recipeOutput != null) {
-                        if (recipeOutput.isBlock() && recipeOutput.block() != null) {
-                            level.setBlockAndUpdate(pos, recipeOutput.block().defaultBlockState());
-                        } else if (recipeOutput.item() != null) {
-                            level.destroyBlock(pos, false);
-                            Block.popResource(level, pos, new ItemStack(recipeOutput.item()));
-                        }
-                    } else if (distSq <= innerRadiusSq) {
-                        if (state.canBeReplaced() || state.is(PTags.Blocks.POOP_TNT_DESTROY)) {
-                            level.destroyBlock(pos, true, null);
-                        } else if (state.is(PTags.Blocks.POOP_TNT_REPLACEABLE)) {
-                            level.setBlockAndUpdate(pos, PBlocks.POOP_BLOCK.get().defaultBlockState());
-                        }
-                    } else {
-                        if (state.is(PTags.Blocks.POOP_TNT_REPLACEABLE)) {
-                            level.setBlockAndUpdate(pos, PBlocks.POOP_BLOCK.get().defaultBlockState());
-                        } else if (state.canBeReplaced()) {
-                            level.destroyBlock(pos, true, null);
-                        }
-                    }
+                    handleExplosionBlock(level, pos, state, explosion, radius, distSq <= innerRadiusSq);
                 }
             }
         }
-/*
-        AABB damageBox = new AABB(center).inflate(radius);
-        for (Entity entity : level.getEntities(this, damageBox)) {
-            if (entity.isAlive() && entity != this && !entity.isSpectator()) {
-                BlockPos ePos = entity.blockPosition();
-                if (Math.abs(ePos.getX() - center.getX()) <= radius
-                        && Math.abs(ePos.getY() - center.getY()) <= radius
-                        && Math.abs(ePos.getZ() - center.getZ()) <= radius) {
-                    double dist = entity.distanceTo(this);
-                    float damage = Math.max(1.0F, (float) ((radius * 2 + 1 - dist) * 2.0));
-                    entity.hurt(level.damageSources().explosion(null, this.getOwner()), damage);
-                }
-            }
-        }
-*/
-        spawnPoopParticle((ServerLevel) level, entity.getX(), entity.getY(), entity.getZ(), radius);
+
+        spawnPoopParticle(level, entity.getX(), entity.getY(), entity.getZ(), radius);
     }
 
-    private static POPExplosionRecipe.Output findExplosionTransformOutput(Level level, Block block, int explosionRadius) {
+    private static boolean shouldSkipEdgeBlock(RandomSource random, double distSq, double innerRadiusSq, double radiusSq) {
+        if (distSq <= innerRadiusSq) return false;
+
+        double edgeFactor = (distSq - innerRadiusSq) / (radiusSq - innerRadiusSq);
+        return random.nextDouble() < edgeFactor * 0.6;
+    }
+
+    private static void handleExplosionBlock(ServerLevel level, BlockPos pos, BlockState state, Explosion explosion, int radius, boolean inner) {
+        if (state.getBlock() instanceof PoopTntBlock poopTntBlock) {
+            level.removeBlock(pos, false);
+            poopTntBlock.wasExploded(level, pos, explosion);
+            return;
+        }
+
+        POPExplosionRecipe.Output recipeOutput = findExplosionTransformOutput(level, state.getBlock(), radius);
+        if (recipeOutput != null) {
+            applyRecipeOutput(level, pos, recipeOutput);
+            return;
+        }
+
+        if (inner) {
+            handleInnerExplosionBlock(level, pos, state);
+        } else {
+            handleOuterExplosionBlock(level, pos, state);
+        }
+    }
+
+    private static void handleInnerExplosionBlock(ServerLevel level, BlockPos pos, BlockState state) {
+        if (state.canBeReplaced() || state.is(PTags.Blocks.POOP_TNT_DESTROY)) {
+            level.destroyBlock(pos, true, null);
+        } else if (state.is(PTags.Blocks.POOP_TNT_REPLACEABLE)) {
+            level.setBlockAndUpdate(pos, PBlocks.POOP_BLOCK.get().defaultBlockState());
+        }
+    }
+
+    private static void handleOuterExplosionBlock(ServerLevel level, BlockPos pos, BlockState state) {
+        if (state.is(PTags.Blocks.POOP_TNT_REPLACEABLE)) {
+            level.setBlockAndUpdate(pos, PBlocks.POOP_BLOCK.get().defaultBlockState());
+        } else if (state.canBeReplaced()) {
+            level.destroyBlock(pos, true, null);
+        }
+    }
+
+    private static void applyRecipeOutput(Level level, BlockPos pos, POPExplosionRecipe.Output output) {
+        if (output.isBlock() && output.block() != null) {
+            level.setBlockAndUpdate(pos, output.block().defaultBlockState());
+        } else if (output.item() != null) {
+            level.destroyBlock(pos, false);
+            Block.popResource(level, pos, new ItemStack(output.item()));
+        }
+    }
+
+    private static POPExplosionRecipe.@Nullable Output findExplosionTransformOutput(Level level, Block block, int explosionRadius) {
         if (level.isClientSide) return null;
         ItemStack itemStack = new ItemStack(block.asItem());
         SingleRecipeInput input = new SingleRecipeInput(itemStack);

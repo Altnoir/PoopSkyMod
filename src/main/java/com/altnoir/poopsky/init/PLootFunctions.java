@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 public class PLootFunctions {
     public static final DeferredRegister<LootItemFunctionType<?>> LOOT_FUNCTIONS = DeferredRegister.create(Registries.LOOT_FUNCTION_TYPE, PoopSky.MOD_ID);
 
-    public static final Supplier<LootItemFunctionType<?>> SET_TOILET_TYPE = LOOT_FUNCTIONS.register("set_toilet_type",
+    public static final Supplier<LootItemFunctionType<SetToiletTypeFunction>> SET_TOILET_TYPE = LOOT_FUNCTIONS.register("set_toilet_type",
             () -> new LootItemFunctionType<>(SetToiletTypeFunction.CODEC));
 
     public static void register(IEventBus eventBus) {

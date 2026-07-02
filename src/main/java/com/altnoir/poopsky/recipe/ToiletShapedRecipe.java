@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.recipe;
 
+import com.altnoir.poopsky.block.ToiletType;
 import com.altnoir.poopsky.init.PComponents;
 import com.altnoir.poopsky.init.PRecipes;
-import com.altnoir.poopsky.block.ToiletType;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;
@@ -13,23 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
-public class ToiletShapedRecipe implements CraftingRecipe {
-
-    private final ShapedRecipe delegate;
-    private final ToiletType toiletType;
-
-    public ToiletShapedRecipe(ShapedRecipe delegate, ToiletType toiletType) {
-        this.delegate = delegate;
-        this.toiletType = toiletType;
-    }
-
-    public ShapedRecipe delegate() {
-        return delegate;
-    }
-
-    public ToiletType toiletType() {
-        return toiletType;
-    }
+public record ToiletShapedRecipe(ShapedRecipe delegate, ToiletType toiletType) implements CraftingRecipe {
 
     @Override
     public boolean matches(CraftingInput input, Level level) {
