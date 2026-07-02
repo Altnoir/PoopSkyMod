@@ -9,6 +9,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -61,8 +62,8 @@ public class RoundwormVinesBlock extends GrowingPlantHeadBlock {
     protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if (entity instanceof FlyEntity fly && fly.isAlive()) {
             fly.hurt(level.damageSources().source(PDamageTypes.ROUNDWORM), 2.0F);
-        } else {
-            entity.hurt(level.damageSources().source(PDamageTypes.ROUNDWORM), 0.5F);
+        } else if (entity instanceof LivingEntity livingEntity) {
+            livingEntity.hurt(level.damageSources().source(PDamageTypes.ROUNDWORM), 0.5F);
         }
         super.entityInside(state, level, pos, entity);
     }

@@ -2,44 +2,56 @@ package com.altnoir.poopsky.client.renderer;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.entity.model.ToiletPlugModel;
-import com.altnoir.poopsky.entity.p.ToiletPlugEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 public class ToiletPlugItemRenderer extends BlockEntityWithoutLevelRenderer {
-    public static final ToiletPlugItemRenderer INSTANCE = new ToiletPlugItemRenderer(
-            Minecraft.getInstance().getBlockEntityRenderDispatcher()
-    );
-
+    private ToiletPlugModel<?> plugModel;
     private static final ResourceLocation TEXTURE = PoopSky.loc("textures/entity/toilet_plug.png");
+    private static final float HAND_Y = 4.0F / 16.0F + 0.5F;
+    private static final float HAND_Z = 8.0F / 16.0F - 1.0F;
+    private static final float PIVOT_Y = -3.0F / 16.0F;
 
-    private final EntityModel<ToiletPlugEntity> model;
-
-    private ToiletPlugItemRenderer(BlockEntityRenderDispatcher dispatcher) {
-        super(dispatcher, Minecraft.getInstance().getEntityModels());
-        this.model = new ToiletPlugModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(ToiletPlugModel.LAYER_LOCATION));
+    public ToiletPlugItemRenderer() {
+        super(null, null);
     }
 
     @Override
-    public void renderByItem(ItemStack stack, ItemDisplayContext displayContext, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int packedOverlay) {
-        poseStack.pushPose();
-        poseStack.translate(0.5F, 1.7F, 0.5F);
-        poseStack.scale(0.9F, 0.9F, 0.9F);
-        poseStack.scale(1.0F, -1.0F, -1.0F);
+    public void renderByItem(@NotNull ItemStack stack, @NotNull ItemDisplayContext displayContext,
+                             @NotNull PoseStack poseStack, @NotNull MultiBufferSource bufferSource,
+                             int packedLight, int packedOverlay) {
+        if (plugModel == null) {
+            var entityModels = Minecraft.getInstance().getEntityModels();
+            plugModel = new ToiletPlugModel<>(entityModels.bakeLayer(ToiletPlugModel.LAYER_LOCATION));
+        }
 
-        VertexConsumer vertexConsumer = ItemRenderer.getFoilBufferDirect(buffer, this.model.renderType(TEXTURE), false, stack.hasFoil());
-        this.model.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY);
+        poseStack.pushPose();
+        applyDisplayTransform(displayContext, poseStack);
+
+        VertexConsumer vertexConsumer = bufferSource.getBuffer(plugModel.renderType(TEXTURE));
+        plugModel.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY);
 
         poseStack.popPose();
+    }
+
+    private void applyDisplayTransform(ItemDisplayContext ctx, PoseStack poseStack) {
+        switch (ctx) {
+            case THIRD_PERSON_RIGHT_HAND, THIRD_PERSON_LEFT_HAND, HEAD,
+                 FIRST_PERSON_RIGHT_HAND, FIRST_PERSON_LEFT_HAND -> {
+                poseStack.translate(0.5F, HAND_Y, HAND_Z);
+                poseStack.mulPose(Axis.XP.rotationDegrees(90));
+                poseStack.translate(0.0F, PIVOT_Y, 0.0F);
+            }
+            default -> poseStack.translate(0.5F, 0.5F, 0.5F);
+        }
     }
 }

@@ -34,6 +34,10 @@ public class PEffects {
     );
     public static final Holder<MobEffect> OMENER = MOB_EFFECTS.register("omener", () ->
             new PMobEffect(MobEffectCategory.BENEFICIAL, 0x47311A)
+                    .addAttributeModifier(Attributes.WATER_MOVEMENT_EFFICIENCY, PoopSky.loc("omener_water"), 1.0F,
+                            AttributeModifier.Operation.ADD_VALUE)
+                    .addAttributeModifier(Attributes.MOVEMENT_EFFICIENCY, PoopSky.loc("omener_block"), 1.0F,
+                            AttributeModifier.Operation.ADD_VALUE)
     );
     public static final Holder<MobEffect> BLEEDING = MOB_EFFECTS.register("bleeding", () ->
             new PMobEffect(MobEffectCategory.HARMFUL, 0x8B0000)

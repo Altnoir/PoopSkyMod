@@ -2,11 +2,11 @@
   "variants": {
     "facing=down,triggered=false": {
       "model": "poopsky:block/placer_vertical",
-      "x": 90
+      "x": 180
     },
     "facing=down,triggered=true": {
       "model": "poopsky:block/placer_vertical",
-      "x": 90
+      "x": 180
     },
     "facing=east,triggered=false": {
       "model": "poopsky:block/placer",

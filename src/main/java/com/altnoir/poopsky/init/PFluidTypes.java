@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -40,15 +41,17 @@ public class PFluidTypes {
                 @Override
                 public boolean canConvertToSource(FluidState state, LevelReader reader, BlockPos pos) {
                     if (reader instanceof Level level) {
-                        return level.getGameRules().getBoolean(GameRules.RULE_LAVA_SOURCE_CONVERSION);
+                        return level.getGameRules().getBoolean(GameRules.RULE_WATER_SOURCE_CONVERSION);
                     }
-                    //Best guess fallback to default (false)
-                    return super.canConvertToSource(state, reader, pos);
+                    return true;
                 }
 
                 @Override
                 public double motionScale(Entity entity) {
-                    return 0.0023333333333333335D;
+                    if (entity instanceof LivingEntity livingEntity && livingEntity.hasEffect(PEffects.OMENER)) {
+                        return 0.014D;
+                    }
+                    return 0.0023D;
                 }
             }
     );

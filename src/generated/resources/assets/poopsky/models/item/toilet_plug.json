@@ -1,105 +1,27 @@
 {
-  "parent": "minecraft:builtin/entity",
-  "display": {
-    "firstperson_lefthand": {
-      "rotation": [
-        0,
-        90,
-        -25
-      ],
-      "scale": [
-        0.9,
-        0.9,
-        0.9
-      ],
-      "translation": [
-        1.13,
-        3.2,
-        1.13
-      ]
-    },
-    "firstperson_righthand": {
-      "rotation": [
-        0,
-        -90,
-        25
-      ],
-      "scale": [
-        0.9,
-        0.9,
-        0.9
-      ],
-      "translation": [
-        1.13,
-        3.2,
-        1.13
-      ]
-    },
+  "base": {
+    "parent": "minecraft:builtin/entity"
+  },
+  "gui_light": "front",
+  "loader": "neoforge:separate_transforms",
+  "perspectives": {
     "fixed": {
-      "rotation": [
-        0,
-        180,
-        0
-      ],
-      "scale": [
-        0.65,
-        0.65,
-        0.65
-      ]
+      "parent": "minecraft:item/generated",
+      "textures": {
+        "layer0": "poopsky:item/toilet_plug"
+      }
     },
     "ground": {
-      "scale": [
-        0.4,
-        0.4,
-        0.4
-      ],
-      "translation": [
-        0,
-        2,
-        0
-      ]
+      "parent": "minecraft:item/generated",
+      "textures": {
+        "layer0": "poopsky:item/toilet_plug"
+      }
     },
     "gui": {
-      "rotation": [
-        30,
-        -45,
-        0
-      ]
-    },
-    "thirdperson_lefthand": {
-      "rotation": [
-        0,
-        90,
-        0
-      ],
-      "scale": [
-        0.9,
-        0.9,
-        0.9
-      ],
-      "translation": [
-        10,
-        6,
-        12
-      ]
-    },
-    "thirdperson_righthand": {
-      "rotation": [
-        0,
-        90,
-        0
-      ],
-      "scale": [
-        0.9,
-        0.9,
-        0.9
-      ],
-      "translation": [
-        10,
-        6,
-        -4
-      ]
+      "parent": "minecraft:item/generated",
+      "textures": {
+        "layer0": "poopsky:item/toilet_plug"
+      }
     }
-  },
-  "gui_light": "front"
+  }
 }

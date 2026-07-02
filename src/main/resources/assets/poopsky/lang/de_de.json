@@ -41,7 +41,6 @@
 
   "item.poopsky.poolime_spawn_egg": "Kackschleim-Spawn-Ei",
   "item.poopsky.fly_spawn_egg": "Fliegen-Spawn-Ei",
-  "item.poopsky.maggot_spawn_egg": "Maden-Spawn-Ei",
   "item.poopsky.music_disc_lawrence": "Schallplatte",
   "item.poopsky.music_disc_lawrence.desc": "Ryuichi Sakamoto - Merry Christmas Mr. Lawrence",
   "item.poopsky.music_disc_light_dance": "Schallplatte",
@@ -235,7 +234,6 @@
   "entity.poopsky.stool_entity": "Kackhocker",
   "entity.poopsky.poolime": "Kackschleim",
   "entity.poopsky.fly": "Fliege",
-  "entity.poopsky.maggot": "Made",
   "entity.poopsky.poop_tnt": "POP",
 
   "key.category.poopsky": "POOPSKY",
@@ -320,8 +318,7 @@
   "subtitle.poopsky.fly.hurt": "Fliege wird verletzt",
   "subtitle.poopsky.fly.death": "Fliege stirbt",
   "subtitle.poopsky.fly.capture": "Fliege gefangen",
-  "subtitle.poopsky.maggot.hurt": "Made wird verletzt",
-  "subtitle.poopsky.maggot.death": "Made stirbt",
+
   "subtitles.poopsky.pop.primed": "POP zischt",
   "subtitles.poopsky.item.toilet_linker.boop": "Toilettenverbinder: Verbindung",
   "subtitles.poopsky.item.toilet_linker.success": "Toilettenverbinder: Bindung",

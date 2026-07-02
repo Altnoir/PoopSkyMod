@@ -41,7 +41,6 @@
 
   "item.poopsky.poolime_spawn_egg": "Яйцо призыва Какаслизня",
   "item.poopsky.fly_spawn_egg": "Яйцо призыва мухи",
-  "item.poopsky.maggot_spawn_egg": "Яйцо призыва опарыша",
   "item.poopsky.music_disc_lawrence": "Музыкальный диск",
   "item.poopsky.music_disc_lawrence.desc": "Рюичи Сакамото - Merry Christmas Mr. Lawrence",
   "item.poopsky.music_disc_light_dance": "Музыкальный диск",
@@ -235,7 +234,6 @@
   "entity.poopsky.stool_entity": "Какашечный табурет",
   "entity.poopsky.poolime": "Какаслизень",
   "entity.poopsky.fly": "Муха",
-  "entity.poopsky.maggot": "Опарыш",
   "entity.poopsky.poop_tnt": "POP",
 
   "key.category.poopsky": "POOPSKY",
@@ -320,8 +318,7 @@
   "subtitle.poopsky.fly.hurt": "Муха ранена",
   "subtitle.poopsky.fly.death": "Муха умирает",
   "subtitle.poopsky.fly.capture": "Муха поймана",
-  "subtitle.poopsky.maggot.hurt": "Опарыш ранен",
-  "subtitle.poopsky.maggot.death": "Опарыш умирает",
+
   "subtitles.poopsky.pop.primed": "POP шипит",
   "subtitles.poopsky.item.toilet_linker.boop": "Соединитель унитазов: связь",
   "subtitles.poopsky.item.toilet_linker.success": "Соединитель унитазов: привязка",

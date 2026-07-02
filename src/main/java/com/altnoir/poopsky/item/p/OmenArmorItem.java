@@ -67,21 +67,22 @@ public class OmenArmorItem extends ArmorItem {
                 return false;
             }
         }
-
-        ArmorItem boots = ((ArmorItem) player.getInventory().getArmor(0).getItem());
-        ArmorItem leggings = ((ArmorItem) player.getInventory().getArmor(1).getItem());
-        ArmorItem chestplate = ((ArmorItem) player.getInventory().getArmor(2).getItem());
-        ArmorItem helmet = ((ArmorItem) player.getInventory().getArmor(3).getItem());
+        var inventory = player.getInventory();
+        ArmorItem boots = ((ArmorItem) inventory.getArmor(0).getItem());
+        ArmorItem leggings = ((ArmorItem) inventory.getArmor(1).getItem());
+        ArmorItem chestplate = ((ArmorItem) inventory.getArmor(2).getItem());
+        ArmorItem helmet = ((ArmorItem) inventory.getArmor(3).getItem());
 
         return boots.getMaterial() == mapArmorMaterial && leggings.getMaterial() == mapArmorMaterial
                 && chestplate.getMaterial() == mapArmorMaterial && helmet.getMaterial() == mapArmorMaterial;
     }
 
     private boolean hasFullSuitOfArmorOn(Player player) {
-        ItemStack boots = player.getInventory().getArmor(0);
-        ItemStack leggings = player.getInventory().getArmor(1);
-        ItemStack chestplate = player.getInventory().getArmor(2);
-        ItemStack helmet = player.getInventory().getArmor(3);
+        var inventory = player.getInventory();
+        ItemStack boots = inventory.getArmor(0);
+        ItemStack leggings = inventory.getArmor(1);
+        ItemStack chestplate = inventory.getArmor(2);
+        ItemStack helmet = inventory.getArmor(3);
 
         return !boots.isEmpty() && !leggings.isEmpty() && !chestplate.isEmpty() && !helmet.isEmpty();
     }

@@ -18,6 +18,7 @@ import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.armortrim.TrimMaterials;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.client.model.generators.loaders.SeparateTransformsModelBuilder;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -68,7 +69,7 @@ public class PSItemModelProvider extends ItemModelProvider {
         basicItem(PItems.POODDING.get());
         basicItem(PItems.DRAGON_BREATH_CHILI.get());
         basicItem(PItems.KING_OF_DRAGON_FRUIT.get());
-        toiletPlugItemModel();
+        toiletPlugItem();
         basicItem(PItems.SPALL.get());
         basicItem(PItems.LAWRENCE_MUSIC_DISC.get());
         basicItem(PItems.LIGHT_DANCE_MUSIC_DISC.get());
@@ -97,7 +98,6 @@ public class PSItemModelProvider extends ItemModelProvider {
 
         withExistingParent(PItems.POOLIME_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(PItems.FLY_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
-        withExistingParent(PItems.MAGGOT_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
 
         basicItem(PItems.OMINOUS_FILTHY_INGOT.get());
         basicItem(PItems.OMEN_UPGRADE_SMITHING_TEMPLATE.get());
@@ -116,45 +116,21 @@ public class PSItemModelProvider extends ItemModelProvider {
         withExistingParent(block.getId().getPath(), modLoc("block/" + block.getId().getPath()));
     }
 
-    private void toiletPlugItemModel() {
-        getBuilder(PItems.TOILET_PLUG.getId().getPath())
-                .parent(new ModelFile.UncheckedModelFile("builtin/entity"))
+    private void toiletPlugItem() {
+        var baseModel = nested()
+                .parent(new ModelFile.UncheckedModelFile("builtin/entity"));
+
+        var guiModel = nested()
+                .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                .texture("layer0", modLoc("item/toilet_plug"));
+
+        getBuilder("toilet_plug")
                 .guiLight(GuiLight.FRONT)
-                .transforms()
-                .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND)
-                .rotation(0, 90, 0)
-                .translation(10, 6, -4)
-                .scale(0.9F)
-                .end()
-                .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND)
-                .rotation(0, 90, 0)
-                .translation(10, 6, 12)
-                .scale(0.9F)
-                .end()
-                .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND)
-                .rotation(0, -90, 25)
-                .translation(1.13F, 3.2F, 1.13F)
-                .scale(0.9F)
-                .end()
-                .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND)
-                .rotation(0, 90, -25)
-                .translation(1.13F, 3.2F, 1.13F)
-                .scale(0.9F)
-                .end()
-                .transform(ItemDisplayContext.GUI)
-                .rotation(30, -45, 0)
-                .translation(0, 0, 0)
-                .scale(1.0F)
-                .end()
-                .transform(ItemDisplayContext.GROUND)
-                .translation(0, 2, 0)
-                .scale(0.4F)
-                .end()
-                .transform(ItemDisplayContext.FIXED)
-                .rotation(0, 180, 0)
-                .translation(0, 0, 0)
-                .scale(0.65F)
-                .end()
+                .customLoader(SeparateTransformsModelBuilder::begin)
+                .base(baseModel)
+                .perspective(ItemDisplayContext.GUI, guiModel)
+                .perspective(ItemDisplayContext.GROUND, guiModel)
+                .perspective(ItemDisplayContext.FIXED, guiModel)
                 .end();
     }
 

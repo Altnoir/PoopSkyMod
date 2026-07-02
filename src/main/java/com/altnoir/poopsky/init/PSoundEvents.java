@@ -37,9 +37,6 @@ public class PSoundEvents {
     public static final Supplier<SoundEvent> ENTITY_FLY_HURT = registerSoundEvent("entity.fly.hurt");
     public static final Supplier<SoundEvent> ENTITY_FLY_DEATH = registerSoundEvent("entity.fly.death");
     public static final Supplier<SoundEvent> ENTITY_FLY_CAPTURE = registerSoundEvent("entity.fly.capture");
-    public static final Supplier<SoundEvent> ENTITY_MAGGOT_HURT = registerSoundEvent("entity.maggot.hurt");
-    public static final Supplier<SoundEvent> ENTITY_MAGGOT_DEATH = registerSoundEvent("entity.maggot.death");
-
     public static final Supplier<SoundEvent> LAWRENCE = registerSoundEvent("lawrence");
     public static final ResourceKey<JukeboxSong> LAWRENCE_KEY = registerJukeboxSong("lawrence");
     public static final Supplier<SoundEvent> LIGHT_DANCE = registerSoundEvent("light_dance");

@@ -290,7 +290,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
 
             if (facing == Direction.UP || facing == Direction.DOWN) {
                 int xRot = switch (facing) {
-                    case DOWN -> 90;
+                    case DOWN -> 180;
                     default -> 0;
                 };
                 return ConfiguredModel.builder().modelFile(modelV).rotationX(xRot).build();

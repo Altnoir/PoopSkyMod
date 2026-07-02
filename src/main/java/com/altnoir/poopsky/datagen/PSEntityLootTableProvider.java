@@ -69,19 +69,7 @@ public class PSEntityLootTableProvider extends EntityLootSubProvider {
                                         )
                         )
         );
-        this.add(
-                PEntityType.MAGGOT.get(),
-                LootTable.lootTable()
-                        .withPool(
-                                LootPool.lootPool()
-                                        .setRolls(ConstantValue.exactly(1.0F))
-                                        .add(
-                                                LootItem.lootTableItem(PItems.MAGGOTS_SEEDS.get())
-                                                        .apply(SmeltItemFunction.smelted().when(this.shouldSmeltLoot()))
-                                                        .apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.registries, ConstantValue.exactly(1.0F)))
-                                        )
-                        )
-        );
+
     }
 
     @Override

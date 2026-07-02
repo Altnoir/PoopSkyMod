@@ -87,7 +87,6 @@ public class PoopSkyClient {
             event.registerEntityRenderer(PEntityType.TOILET_PLUG.get(), ToiletPlugRenderer::new);
             event.registerEntityRenderer(PEntityType.POOLIME.get(), PoolimeRenderer::new);
             event.registerEntityRenderer(PEntityType.FLY.get(), FlyRenderer::new);
-            event.registerEntityRenderer(PEntityType.MAGGOT.get(), MaggotRenderer::new);
             event.registerEntityRenderer(PEntityType.STOOL.get(), ChairRenderer::new);
             event.registerEntityRenderer(PEntityType.TOILET.get(), ToiletRenderer::new);
             event.registerEntityRenderer(PEntityType.POOP_TNT.get(), PoopTntRenderer::new);
@@ -154,12 +153,15 @@ public class PoopSkyClient {
 
         public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
             event.registerBlock(ToiletClientBlockExtensions.INSTANCE, PBlocks.WOODEN_TOILET.get(), PBlocks.HARD_TOILET.get());
+
+            var toiletPlugRenderer = new ToiletPlugItemRenderer();
             event.registerItem(new IClientItemExtensions() {
                 @Override
                 public BlockEntityWithoutLevelRenderer getCustomRenderer() {
-                    return ToiletPlugItemRenderer.INSTANCE;
+                    return toiletPlugRenderer;
                 }
             }, PItems.TOILET_PLUG.get());
+
             event.registerFluidType(new IClientFluidTypeExtensions() {
                 @Override
                 public @NotNull ResourceLocation getStillTexture() {

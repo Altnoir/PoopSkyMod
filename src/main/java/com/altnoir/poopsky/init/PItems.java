@@ -64,12 +64,10 @@ public class PItems {
             new DragonFruitRItem(new Item.Properties().food(PFoods.KING_OF_DRAGON_FRUIT)));
 
     public static final DeferredItem<Item> TOILET_PLUG = ITEMS.register("toilet_plug", () ->
-            new ToiletPlugItem(new Item.Properties()
-                    .attributes(ToiletPlugItem.createWeaponAttributes())
+            new ToiletPlugItem(new Item.Properties().attributes(ToiletPlugItem.createWeaponAttributes())
                     .stacksTo(1)));
     public static final DeferredItem<Item> TOILET_PLUG_WAND = ITEMS.register("toilet_plug_wand", () ->
-            new ToiletLinkerItem(new Item.Properties()
-                    .attributes(ToiletPlugItem.createWeaponAttributes())
+            new ToiletLinkerItem(new Item.Properties().attributes(ToiletPlugItem.createWeaponAttributes())
                     .component(PComponents.TOILET_COMPONENT, ToiletComponent.EMPTY)
                     .stacksTo(1)));
 
@@ -121,10 +119,6 @@ public class PItems {
     public static final DeferredItem<Item> FLY_SPAWN_EGG = ITEMS.register("fly_spawn_egg",
             () -> new DeferredSpawnEggItem(PEntityType.FLY, 0x3B4346, 0x900D2D,
                     new Item.Properties()));
-    public static final DeferredItem<Item> MAGGOT_SPAWN_EGG = ITEMS.register("maggot_spawn_egg",
-            () -> new DeferredSpawnEggItem(PEntityType.MAGGOT, 0xE8DFAE, 0xA99862,
-                    new Item.Properties()));
-
     public static final DeferredItem<Item> LAWRENCE_MUSIC_DISC = ITEMS.registerSimpleItem("music_disc_lawrence", new Item.Properties().jukeboxPlayable(PSoundEvents.LAWRENCE_KEY).rarity(Rarity.RARE).stacksTo(1));
     public static final DeferredItem<Item> LIGHT_DANCE_MUSIC_DISC = ITEMS.registerSimpleItem("music_disc_light_dance", new Item.Properties().jukeboxPlayable(PSoundEvents.LIGHT_DANCE_KEY).rarity(Rarity.RARE).stacksTo(1));
     public static final DeferredItem<Item> MOON_BOWL_MUSIC_DISC = ITEMS.registerSimpleItem("music_disc_moon_bowl", new Item.Properties().jukeboxPlayable(PSoundEvents.MOON_BOWL_KEY).rarity(Rarity.RARE).stacksTo(1));
