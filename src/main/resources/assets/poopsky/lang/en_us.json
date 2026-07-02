@@ -41,6 +41,7 @@
 
   "item.poopsky.poolime_spawn_egg": "Poolime Spawn Egg",
   "item.poopsky.fly_spawn_egg": "Fly Spawn Egg",
+  "item.poopsky.maggot_spawn_egg": "Maggot Spawn Egg",
   "item.poopsky.music_disc_lawrence": "Music Disc",
   "item.poopsky.music_disc_lawrence.desc": "Ryuichi Sakamoto - Merry Christmas Mr. Lawrence",
   "item.poopsky.music_disc_light_dance": "Music Disc",
@@ -234,6 +235,7 @@
   "entity.poopsky.stool_entity": "Poop Stool",
   "entity.poopsky.poolime": "Poolime",
   "entity.poopsky.fly": "Fly",
+  "entity.poopsky.maggot": "Maggot",
   "entity.poopsky.poop_tnt": "POP",
 
   "key.category.poopsky": "POOPSKY",
@@ -318,6 +320,8 @@
   "subtitle.poopsky.fly.hurt": "Fly hurts",
   "subtitle.poopsky.fly.death": "Fly dies",
   "subtitle.poopsky.fly.capture": "Fly captured",
+  "subtitle.poopsky.maggot.hurt": "Maggot hurts",
+  "subtitle.poopsky.maggot.death": "Maggot dies",
   "subtitles.poopsky.pop.primed": "POP fizzes",
   "subtitles.poopsky.item.toilet_linker.boop": "Toilet Plug Wand links",
   "subtitles.poopsky.item.toilet_linker.success": "Toilet Plug Wand binds",

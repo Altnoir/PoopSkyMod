@@ -116,6 +116,9 @@ public class PItems {
     public static final DeferredItem<Item> FLY_SPAWN_EGG = ITEMS.register("fly_spawn_egg",
             () -> new DeferredSpawnEggItem(PEntityType.FLY, 0x3B4346, 0x900D2D,
                     new Item.Properties()));
+    public static final DeferredItem<Item> MAGGOT_SPAWN_EGG = ITEMS.register("maggot_spawn_egg",
+            () -> new DeferredSpawnEggItem(PEntityType.MAGGOT, 0xE8DFAE, 0xA99862,
+                    new Item.Properties()));
 
     public static final DeferredItem<Item> LAWRENCE_MUSIC_DISC = ITEMS.registerSimpleItem("music_disc_lawrence", new Item.Properties().jukeboxPlayable(PSoundEvents.LAWRENCE_KEY).rarity(Rarity.RARE).stacksTo(1));
     public static final DeferredItem<Item> LIGHT_DANCE_MUSIC_DISC = ITEMS.registerSimpleItem("music_disc_light_dance", new Item.Properties().jukeboxPlayable(PSoundEvents.LIGHT_DANCE_KEY).rarity(Rarity.RARE).stacksTo(1));

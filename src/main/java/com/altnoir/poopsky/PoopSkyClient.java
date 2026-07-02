@@ -84,6 +84,7 @@ public class PoopSkyClient {
             event.registerEntityRenderer(PEntityType.TOILET_PLUG.get(), ToiletPlugRenderer::new);
             event.registerEntityRenderer(PEntityType.POOLIME.get(), PoolimeRenderer::new);
             event.registerEntityRenderer(PEntityType.FLY.get(), FlyRenderer::new);
+            event.registerEntityRenderer(PEntityType.MAGGOT.get(), MaggotRenderer::new);
             event.registerEntityRenderer(PEntityType.STOOL.get(), ChairRenderer::new);
             event.registerEntityRenderer(PEntityType.TOILET.get(), ToiletRenderer::new);
             event.registerEntityRenderer(PEntityType.POOP_TNT.get(), PoopTntRenderer::new);

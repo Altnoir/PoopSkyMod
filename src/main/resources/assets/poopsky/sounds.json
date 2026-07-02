@@ -227,6 +227,24 @@
       }
     ]
   },
+  "entity.maggot.hurt": {
+    "subtitle": "subtitle.poopsky.maggot.hurt",
+    "sounds": [
+      {
+        "name": "minecraft:entity.silverfish.hurt",
+        "type": "event"
+      }
+    ]
+  },
+  "entity.maggot.death": {
+    "subtitle": "subtitle.poopsky.maggot.death",
+    "sounds": [
+      {
+        "name": "minecraft:entity.silverfish.death",
+        "type": "event"
+      }
+    ]
+  },
   "lawrence": {
     "sounds": [
       {

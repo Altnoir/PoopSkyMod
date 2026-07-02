@@ -41,6 +41,7 @@
 
   "item.poopsky.poolime_spawn_egg": "똥 슬라임 생성 알",
   "item.poopsky.fly_spawn_egg": "파리 생성 알",
+  "item.poopsky.maggot_spawn_egg": "구더기 생성 알",
   "item.poopsky.music_disc_lawrence": "음반",
   "item.poopsky.music_disc_lawrence.desc": "사카모토 류이치 - Merry Christmas Mr. Lawrence",
   "item.poopsky.music_disc_light_dance": "음반",
@@ -234,6 +235,7 @@
   "entity.poopsky.stool_entity": "똥 의자",
   "entity.poopsky.poolime": "똥 슬라임",
   "entity.poopsky.fly": "파리",
+  "entity.poopsky.maggot": "구더기",
   "entity.poopsky.poop_tnt": "POP",
 
   "key.category.poopsky": "POOPSKY",
@@ -318,6 +320,8 @@
   "subtitle.poopsky.fly.hurt": "파리: 피해",
   "subtitle.poopsky.fly.death": "파리: 사망",
   "subtitle.poopsky.fly.capture": "파리 잡힘",
+  "subtitle.poopsky.maggot.hurt": "구더기가 다침",
+  "subtitle.poopsky.maggot.death": "구더기가 죽음",
   "subtitles.poopsky.pop.primed": "POP: 치익",
   "subtitles.poopsky.item.toilet_linker.boop": "변기 연결기: 연결",
   "subtitles.poopsky.item.toilet_linker.success": "변기 연결기: 바인딩",

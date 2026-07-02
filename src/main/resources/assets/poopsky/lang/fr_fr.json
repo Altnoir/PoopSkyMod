@@ -41,6 +41,7 @@
 
   "item.poopsky.poolime_spawn_egg": "Œuf d’apparition de Poolime",
   "item.poopsky.fly_spawn_egg": "Œuf d’apparition de mouche",
+  "item.poopsky.maggot_spawn_egg": "Œuf d'apparition d'asticot",
   "item.poopsky.music_disc_lawrence": "Disque de musique",
   "item.poopsky.music_disc_lawrence.desc": "Ryuichi Sakamoto - Merry Christmas Mr. Lawrence",
   "item.poopsky.music_disc_light_dance": "Disque de musique",
@@ -234,6 +235,7 @@
   "entity.poopsky.stool_entity": "Tabouret de crotte",
   "entity.poopsky.poolime": "Poolime",
   "entity.poopsky.fly": "Mouche",
+  "entity.poopsky.maggot": "Asticot",
   "entity.poopsky.poop_tnt": "POP",
 
   "key.category.poopsky": "POOPSKY",
@@ -318,6 +320,8 @@
   "subtitle.poopsky.fly.hurt": "Mouche blessée",
   "subtitle.poopsky.fly.death": "Mouche meurt",
   "subtitle.poopsky.fly.capture": "Mouche capturée",
+  "subtitle.poopsky.maggot.hurt": "Asticot blessé",
+  "subtitle.poopsky.maggot.death": "Asticot mort",
   "subtitles.poopsky.pop.primed": "POP grésille",
   "subtitles.poopsky.item.toilet_linker.boop": "Baguette de ventouse : liaison",
   "subtitles.poopsky.item.toilet_linker.success": "Baguette de ventouse : lien établi",

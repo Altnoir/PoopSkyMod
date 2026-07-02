@@ -36,6 +36,13 @@ public class PEntityType {
                     .clientTrackingRange(8)
                     .build("fly"));
 
+    public static final Supplier<EntityType<MaggotEntity>> MAGGOT = ENTITY_TYPES.register("maggot", () ->
+            EntityType.Builder.of(MaggotEntity::new, MobCategory.CREATURE)
+                    .sized(0.4F, 0.2F)
+                    .eyeHeight(0.09F)
+                    .clientTrackingRange(6)
+                    .build("maggot"));
+
     public static final Supplier<EntityType<ChairEntity>> STOOL = ENTITY_TYPES.register("stool_entity", () ->
             EntityType.Builder.of(ChairEntity::new, MobCategory.MISC)
                     .sized(0.5F, 0.5F)

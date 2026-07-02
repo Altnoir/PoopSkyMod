@@ -1,10 +1,10 @@
 package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.init.PBlocks;
-import com.altnoir.poopsky.item.PFlyTypes;
 import com.altnoir.poopsky.common.FlyType;
+import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PItems;
+import com.altnoir.poopsky.item.PFlyTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
@@ -95,6 +95,7 @@ public class PSItemModelProvider extends ItemModelProvider {
 
         withExistingParent(PItems.POOLIME_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(PItems.FLY_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(PItems.MAGGOT_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
 
         basicItem(PItems.OMINOUS_FILTHY_INGOT.get());
         basicItem(PItems.OMEN_UPGRADE_SMITHING_TEMPLATE.get());

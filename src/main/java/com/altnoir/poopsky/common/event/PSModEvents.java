@@ -2,6 +2,7 @@ package com.altnoir.poopsky.common.event;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.entity.p.FlyEntity;
+import com.altnoir.poopsky.entity.p.MaggotEntity;
 import com.altnoir.poopsky.entity.p.PoolimeEntity;
 import com.altnoir.poopsky.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.init.PBlockEntityType;
@@ -33,6 +34,7 @@ public class PSModEvents {
     public static void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(PEntityType.POOLIME.get(), PoolimeEntity.createAttributes().build());
         event.put(PEntityType.FLY.get(), FlyEntity.createAttributes().build());
+        event.put(PEntityType.MAGGOT.get(), MaggotEntity.createAttributes().build());
     }
 
     @SubscribeEvent
@@ -41,6 +43,8 @@ public class PSModEvents {
                 PoolimeEntity::checkPoolimeSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
         event.register(PEntityType.FLY.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 FlyEntity::checkFlySpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
+        event.register(PEntityType.MAGGOT.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                (entityType, level, spawnType, pos, random) -> MaggotEntity.checkMaggotSpawnRules(level, spawnType, pos), RegisterSpawnPlacementsEvent.Operation.REPLACE);
     }
 
     @SubscribeEvent

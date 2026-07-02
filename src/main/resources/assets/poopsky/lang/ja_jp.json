@@ -41,6 +41,7 @@
 
   "item.poopsky.poolime_spawn_egg": "プーライムのスポーンエッグ",
   "item.poopsky.fly_spawn_egg": "ハエのスポーンエッグ",
+  "item.poopsky.maggot_spawn_egg": "ウジ虫のスポーンエッグ",
   "item.poopsky.music_disc_lawrence": "音楽レコード",
   "item.poopsky.music_disc_lawrence.desc": "坂本龍一 - Merry Christmas Mr. Lawrence",
   "item.poopsky.music_disc_light_dance": "音楽レコード",
@@ -234,6 +235,7 @@
   "entity.poopsky.stool_entity": "糞のスツール",
   "entity.poopsky.poolime": "プーライム",
   "entity.poopsky.fly": "ハエ",
+  "entity.poopsky.maggot": "ウジ虫",
   "entity.poopsky.poop_tnt": "POP",
 
   "key.category.poopsky": "POOPSKY",
@@ -318,6 +320,8 @@
   "subtitle.poopsky.fly.hurt": "ハエ：ダメージ",
   "subtitle.poopsky.fly.death": "ハエ：死亡",
   "subtitle.poopsky.fly.capture": "ハエ：捕獲",
+  "subtitle.poopsky.maggot.hurt": "ウジ虫がダメージを受ける",
+  "subtitle.poopsky.maggot.death": "ウジ虫が死ぬ",
   "subtitles.poopsky.pop.primed": "POP：シューシュー",
   "subtitles.poopsky.item.toilet_linker.boop": "トイレリンカー：接続",
   "subtitles.poopsky.item.toilet_linker.success": "トイレリンカー：バインド",

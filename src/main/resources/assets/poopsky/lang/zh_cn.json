@@ -41,6 +41,7 @@
 
   "item.poopsky.poolime_spawn_egg": "屎莱姆刷怪蛋",
   "item.poopsky.fly_spawn_egg": "苍蝇刷怪蛋",
+  "item.poopsky.maggot_spawn_egg": "蛆刷怪蛋",
   "item.poopsky.music_disc_lawrence": "音乐唱片",
   "item.poopsky.music_disc_lawrence.desc": "坂本龍一 - Merry Christmas Mr. Lawrence",
   "item.poopsky.music_disc_light_dance": "音乐唱片",
@@ -234,6 +235,7 @@
   "entity.poopsky.stool_entity": "粪便凳",
   "entity.poopsky.poolime": "屎莱姆",
   "entity.poopsky.fly": "苍蝇",
+  "entity.poopsky.maggot": "蛆",
   "entity.poopsky.poop_tnt": "POP",
 
   "key.category.poopsky": "空中厕所",
@@ -318,6 +320,8 @@
   "subtitle.poopsky.fly.hurt": "苍蝇：受伤",
   "subtitle.poopsky.fly.death": "苍蝇：死亡",
   "subtitle.poopsky.fly.capture": "苍蝇：被捕获",
+  "subtitle.poopsky.maggot.hurt": "蛆受伤",
+  "subtitle.poopsky.maggot.death": "蛆死亡",
   "subtitles.poopsky.pop.primed": "POP：嘶嘶作响",
   "subtitles.poopsky.item.toilet_linker.boop": "马桶制杖：连接",
   "subtitles.poopsky.item.toilet_linker.success": "马桶制杖：绑定",
