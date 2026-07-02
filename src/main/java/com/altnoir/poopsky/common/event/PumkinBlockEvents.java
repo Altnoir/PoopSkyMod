@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.common.event;
 
-import com.altnoir.poopsky.entity.p.FlyEntity;
+import com.altnoir.poopsky.common.entity.p.FlyEntity;
 import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PEntityType;
 import net.minecraft.core.BlockPos;

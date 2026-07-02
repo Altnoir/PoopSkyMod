@@ -1,10 +1,9 @@
 package com.altnoir.poopsky.client.model;
 
-import com.altnoir.poopsky.block.ToiletType;
-import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
-import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
-import com.altnoir.poopsky.block.p.BaseToiletLavaBlock;
-import com.altnoir.poopsky.client.ToiletClientBlockExtensions;
+import com.altnoir.poopsky.common.block.ToiletType;
+import com.altnoir.poopsky.common.block.abs.AbstractToiletBlock;
+import com.altnoir.poopsky.common.block.entity.ToiletBlockEntity;
+import com.altnoir.poopsky.common.block.p.BaseToiletLavaBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;

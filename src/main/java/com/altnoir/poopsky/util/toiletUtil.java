@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.util;
 
-import com.altnoir.poopsky.block.ToiletType;
-import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
-import com.altnoir.poopsky.block.p.BaseToiletLavaBlock;
+import com.altnoir.poopsky.common.block.ToiletType;
+import com.altnoir.poopsky.common.block.entity.ToiletBlockEntity;
+import com.altnoir.poopsky.common.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.init.PEffects;
 import com.altnoir.poopsky.init.PParticles;
 import com.altnoir.poopsky.init.PSoundEvents;

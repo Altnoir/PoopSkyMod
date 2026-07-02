@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.common.effect;
 
-import com.altnoir.poopsky.item.p.TimeBellItem;
+import com.altnoir.poopsky.common.item.p.TimeBellItem;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;

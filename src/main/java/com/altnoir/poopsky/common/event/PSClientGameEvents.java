@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.common.event;
 
-import com.altnoir.poopsky.entity.p.ToiletPlugEntity;
+import com.altnoir.poopsky.common.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.util.PHooks;
 import com.altnoir.poopsky.network.PlugActionPayload;
 import com.altnoir.poopsky.network.PlugDismountPayload;

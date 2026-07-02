@@ -1,9 +1,9 @@
 package com.altnoir.poopsky.common.event;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.entity.p.FlyEntity;
-import com.altnoir.poopsky.entity.p.PoolimeEntity;
-import com.altnoir.poopsky.entity.p.ToiletPlugEntity;
+import com.altnoir.poopsky.common.entity.p.FlyEntity;
+import com.altnoir.poopsky.common.entity.p.PoolimeEntity;
+import com.altnoir.poopsky.common.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.init.PBlockEntityType;
 import com.altnoir.poopsky.init.PEffects;
 import com.altnoir.poopsky.init.PEntityType;

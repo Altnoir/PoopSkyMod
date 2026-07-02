@@ -1,14 +1,14 @@
 package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.ToiletType;
+import com.altnoir.poopsky.common.block.ToiletType;
 import com.altnoir.poopsky.common.FlyType;
 import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.init.PToiletTypes;
-import com.altnoir.poopsky.item.PFlyTypes;
-import com.altnoir.poopsky.recipe.*;
+import com.altnoir.poopsky.common.item.PFlyTypes;
+import com.altnoir.poopsky.common.recipe.*;
 import com.simibubi.create.AllItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;

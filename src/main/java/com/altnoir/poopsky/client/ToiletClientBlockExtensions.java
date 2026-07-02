@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.client;
 
-import com.altnoir.poopsky.block.ToiletType;
-import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
+import com.altnoir.poopsky.common.block.ToiletType;
+import com.altnoir.poopsky.common.block.abs.AbstractToiletBlock;
 import net.minecraft.client.particle.ParticleEngine;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;

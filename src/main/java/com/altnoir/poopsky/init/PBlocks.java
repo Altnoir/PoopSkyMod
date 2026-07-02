@@ -1,10 +1,10 @@
 package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.fluid.UrineLiquidBlock;
-import com.altnoir.poopsky.block.p.*;
-import com.altnoir.poopsky.item.p.CompooperBlockItem;
-import com.altnoir.poopsky.item.p.ToiletBlockItem;
+import com.altnoir.poopsky.common.block.fluid.UrineLiquidBlock;
+import com.altnoir.poopsky.common.block.p.*;
+import com.altnoir.poopsky.common.item.p.CompooperBlockItem;
+import com.altnoir.poopsky.common.item.p.ToiletBlockItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;

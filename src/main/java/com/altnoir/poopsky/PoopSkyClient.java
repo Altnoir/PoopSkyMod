@@ -1,7 +1,7 @@
 package com.altnoir.poopsky;
 
-import com.altnoir.poopsky.block.ToiletType;
-import com.altnoir.poopsky.block.abs.AbstractCompooperBlock;
+import com.altnoir.poopsky.common.block.ToiletType;
+import com.altnoir.poopsky.common.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.client.ToiletClientBlockExtensions;
 import com.altnoir.poopsky.client.inventory.BreedingBoxScreen;
 import com.altnoir.poopsky.client.inventory.FlyNestScreen;
@@ -14,10 +14,10 @@ import com.altnoir.poopsky.common.FlyType;
 import com.altnoir.poopsky.common.event.PSClientGameEvents;
 import com.altnoir.poopsky.common.event.PSClientModEvents;
 import com.altnoir.poopsky.common.event.PSKeyBoardInput;
-import com.altnoir.poopsky.entity.renderer.*;
+import com.altnoir.poopsky.common.entity.renderer.*;
 import com.altnoir.poopsky.init.*;
-import com.altnoir.poopsky.item.PFlyTypes;
-import com.altnoir.poopsky.item.p.ToiletBlockItem;
+import com.altnoir.poopsky.common.item.PFlyTypes;
+import com.altnoir.poopsky.common.item.p.ToiletBlockItem;
 import net.minecraft.client.RecipeBookCategories;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;

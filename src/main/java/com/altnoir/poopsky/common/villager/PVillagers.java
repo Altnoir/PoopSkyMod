@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.common.villager;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
+import com.altnoir.poopsky.common.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PSoundEvents;
 import com.google.common.collect.ImmutableList;

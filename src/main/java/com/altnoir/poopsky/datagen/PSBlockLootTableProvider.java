@@ -1,10 +1,10 @@
 package com.altnoir.poopsky.datagen;
 
-import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
-import com.altnoir.poopsky.block.p.CompooperBlock;
-import com.altnoir.poopsky.block.p.PoopPieceBlock;
-import com.altnoir.poopsky.block.p.RoundwormVinesPlantBlock;
-import com.altnoir.poopsky.block.p.UrineCompooperBlock;
+import com.altnoir.poopsky.common.block.abs.AbstractToiletBlock;
+import com.altnoir.poopsky.common.block.p.CompooperBlock;
+import com.altnoir.poopsky.common.block.p.PoopPieceBlock;
+import com.altnoir.poopsky.common.block.p.RoundwormVinesPlantBlock;
+import com.altnoir.poopsky.common.block.p.UrineCompooperBlock;
 import com.altnoir.poopsky.common.SetToiletTypeFunction;
 import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PItems;

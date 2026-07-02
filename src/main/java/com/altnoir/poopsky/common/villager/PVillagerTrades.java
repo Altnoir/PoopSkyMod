@@ -4,7 +4,7 @@ import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.init.PToiletTypes;
-import com.altnoir.poopsky.item.p.ToiletBlockItem;
+import com.altnoir.poopsky.common.item.p.ToiletBlockItem;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;

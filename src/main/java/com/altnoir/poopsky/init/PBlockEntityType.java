@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
-import com.altnoir.poopsky.block.entity.*;
+import com.altnoir.poopsky.common.block.abs.AbstractToiletBlock;
+import com.altnoir.poopsky.common.block.entity.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;

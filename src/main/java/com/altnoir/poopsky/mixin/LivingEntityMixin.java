@@ -2,12 +2,11 @@ package com.altnoir.poopsky.mixin;
 
 import com.altnoir.poopsky.PTags;
 import com.altnoir.poopsky.init.PEffects;
-import com.altnoir.poopsky.item.p.TimeBellItem;
+import com.altnoir.poopsky.common.item.p.TimeBellItem;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;

@@ -1,11 +1,11 @@
 package com.altnoir.poopsky;
 
-import com.altnoir.poopsky.block.p.CompooperBlock;
+import com.altnoir.poopsky.common.block.p.CompooperBlock;
 import com.altnoir.poopsky.common.FlyTypeManager;
 import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.compat.create.CreatePlugin;
 import com.altnoir.poopsky.compat.maid.MaidPlugin;
-import com.altnoir.poopsky.entity.p.PoopTntEntity;
+import com.altnoir.poopsky.common.entity.p.PoopTntEntity;
 import com.altnoir.poopsky.init.*;
 import com.altnoir.poopsky.common.villager.PVillagers;
 import com.altnoir.poopsky.worldgen.PSChunkGenerators;

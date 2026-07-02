@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.common.event;
 
-import com.altnoir.poopsky.block.entity.renderer.SieveBlockEntityRenderer;
-import com.altnoir.poopsky.entity.model.FlyModel;
-import com.altnoir.poopsky.entity.model.ToiletPlugModel;
+import com.altnoir.poopsky.common.block.entity.renderer.SieveBlockEntityRenderer;
+import com.altnoir.poopsky.common.entity.model.FlyModel;
+import com.altnoir.poopsky.common.entity.model.ToiletPlugModel;
 import com.altnoir.poopsky.init.PBlockEntityType;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 

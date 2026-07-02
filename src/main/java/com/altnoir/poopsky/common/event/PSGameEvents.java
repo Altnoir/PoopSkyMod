@@ -2,8 +2,8 @@ package com.altnoir.poopsky.common.event;
 
 import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
-import com.altnoir.poopsky.block.p.BaseToiletLavaBlock;
+import com.altnoir.poopsky.common.block.abs.AbstractToiletBlock;
+import com.altnoir.poopsky.common.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.init.*;
 import com.altnoir.poopsky.common.villager.PVillagerBehaviors;
 import com.altnoir.poopsky.common.villager.PVillagerTrades;

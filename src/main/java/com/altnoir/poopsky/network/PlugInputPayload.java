@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.network;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.entity.p.ToiletPlugEntity;
+import com.altnoir.poopsky.common.entity.p.ToiletPlugEntity;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;

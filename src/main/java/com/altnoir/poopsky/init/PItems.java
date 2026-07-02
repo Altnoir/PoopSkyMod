@@ -1,11 +1,11 @@
 package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.ToiletComponent;
-import com.altnoir.poopsky.item.PArmorMaterials;
-import com.altnoir.poopsky.item.PFoods;
-import com.altnoir.poopsky.item.PToolTiers;
-import com.altnoir.poopsky.item.p.*;
+import com.altnoir.poopsky.common.block.ToiletComponent;
+import com.altnoir.poopsky.common.item.PArmorMaterials;
+import com.altnoir.poopsky.common.item.PFoods;
+import com.altnoir.poopsky.common.item.PToolTiers;
+import com.altnoir.poopsky.common.item.p.*;
 import net.minecraft.world.item.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;

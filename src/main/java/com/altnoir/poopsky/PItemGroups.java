@@ -1,11 +1,11 @@
 package com.altnoir.poopsky;
 
-import com.altnoir.poopsky.block.ToiletType;
+import com.altnoir.poopsky.common.block.ToiletType;
 import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.common.FlyType;
 import com.altnoir.poopsky.init.PItems;
-import com.altnoir.poopsky.item.p.FlyItem;
-import com.altnoir.poopsky.item.p.ToiletBlockItem;
+import com.altnoir.poopsky.common.item.p.FlyItem;
+import com.altnoir.poopsky.common.item.p.ToiletBlockItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;

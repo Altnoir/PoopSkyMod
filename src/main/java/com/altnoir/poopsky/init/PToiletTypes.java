@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.init;
 
-import com.altnoir.poopsky.block.ToiletType;
+import com.altnoir.poopsky.common.block.ToiletType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.Blocks;
 

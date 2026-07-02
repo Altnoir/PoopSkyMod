@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.common;
 
-import com.altnoir.poopsky.block.ToiletType;
-import com.altnoir.poopsky.block.entity.ToiletBlockEntity;
+import com.altnoir.poopsky.common.block.ToiletType;
+import com.altnoir.poopsky.common.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.init.PComponents;
 import com.altnoir.poopsky.init.PLootFunctions;
 import com.mojang.serialization.MapCodec;

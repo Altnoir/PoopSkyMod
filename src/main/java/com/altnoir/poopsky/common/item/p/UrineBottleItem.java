@@ -1,0 +1,91 @@
+package com.altnoir.poopsky.common.item.p;
+
+import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Chicken;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.level.Level;
+
+public class UrineBottleItem extends Item {
+    public UrineBottleItem(Properties properties) {
+        super(properties);
+    }
+
+    @Override
+    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
+        super.finishUsingItem(stack, level, entity);
+        if (entity instanceof ServerPlayer player) {
+            CriteriaTriggers.CONSUME_ITEM.trigger(player, stack);
+            player.awardStat(Stats.ITEM_USED.get(this));
+        }
+
+        if (!level.isClientSide) {
+            entity.addEffect(new MobEffectInstance(MobEffects.POISON, 600, 0));
+        }
+
+        if (stack.isEmpty()) {
+            return new ItemStack(Items.GLASS_BOTTLE);
+        } else {
+            if (entity instanceof Player player) {
+                if (!player.hasInfiniteMaterials()) {
+                    ItemStack itemstack = new ItemStack(Items.GLASS_BOTTLE);
+                    if (!player.getInventory().add(itemstack)) {
+                        player.drop(itemstack, false);
+                    }
+                }
+            }
+            return stack;
+        }
+    }
+
+    @Override
+    public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity entity, InteractionHand hand) {
+        if (entity.isAlive() && entity instanceof Chicken chicken) {
+            if (!player.level().isClientSide) {
+                var waterPotion = PotionContents.createItemStack(Items.POTION, Potions.WATER);
+
+                chicken.playSound(SoundEvents.CHICKEN_EGG);
+                chicken.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 1200, 1));
+                chicken.hurt(player.damageSources().playerAttack(player), 1.0F);
+                if (!player.getAbilities().instabuild) {
+                    stack.shrink(1);
+                }
+                entity.spawnAtLocation(waterPotion);
+            }
+            return InteractionResult.sidedSuccess(player.level().isClientSide);
+        }
+        return super.interactLivingEntity(stack, player, entity, hand);
+    }
+
+    @Override
+    public UseAnim getUseAnimation(ItemStack stack) {
+        return UseAnim.DRINK;
+    }
+
+    @Override
+    public SoundEvent getDrinkingSound() {
+        return SoundEvents.GENERIC_DRINK;
+    }
+
+    @Override
+    public SoundEvent getEatingSound() {
+        return SoundEvents.GENERIC_DRINK;
+    }
+
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+        return ItemUtils.startUsingInstantly(world, player, hand);
+    }
+}

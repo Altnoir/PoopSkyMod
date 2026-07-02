@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.mixin;
 
-import com.altnoir.poopsky.entity.p.ToiletPlugEntity;
+import com.altnoir.poopsky.common.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.common.event.PSKeyBoardInput;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;

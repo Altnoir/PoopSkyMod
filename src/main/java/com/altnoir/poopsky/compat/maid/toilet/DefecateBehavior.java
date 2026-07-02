@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.compat.maid.toilet;
 
 import com.altnoir.poopsky.compat.maid.MaidPlugin;
-import com.altnoir.poopsky.entity.p.ToiletEntity;
+import com.altnoir.poopsky.common.entity.p.ToiletEntity;
 import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.PTags;
 import com.altnoir.poopsky.util.toiletUtil;

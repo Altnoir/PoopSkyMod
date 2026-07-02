@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.common.FlyType;
-import com.altnoir.poopsky.recipe.BreedingBoxRecipe;
+import com.altnoir.poopsky.common.recipe.BreedingBoxRecipe;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;

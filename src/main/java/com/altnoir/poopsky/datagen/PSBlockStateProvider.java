@@ -1,13 +1,12 @@
 package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.block.ToiletType;
-import com.altnoir.poopsky.block.abs.AbstractToiletBlock;
-import com.altnoir.poopsky.block.p.BaseToiletLavaBlock;
-import com.altnoir.poopsky.block.p.PoopCandleCakeBlock;
-import com.altnoir.poopsky.block.p.PoopPieceBlock;
+import com.altnoir.poopsky.common.block.ToiletType;
+import com.altnoir.poopsky.common.block.abs.AbstractToiletBlock;
+import com.altnoir.poopsky.common.block.p.BaseToiletLavaBlock;
+import com.altnoir.poopsky.common.block.p.PoopCandleCakeBlock;
+import com.altnoir.poopsky.common.block.p.PoopPieceBlock;
 import com.altnoir.poopsky.init.PBlocks;
-import com.altnoir.poopsky.init.PToiletTypes;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;

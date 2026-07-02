@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.client.renderer;
 
-import com.altnoir.poopsky.block.ToiletComponent;
+import com.altnoir.poopsky.common.block.ToiletComponent;
 import com.altnoir.poopsky.init.PComponents;
-import com.altnoir.poopsky.item.p.ToiletLinkerItem;
+import com.altnoir.poopsky.common.item.p.ToiletLinkerItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Camera;

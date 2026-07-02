@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.client.sound;
 
-import com.altnoir.poopsky.entity.p.FlyEntity;
+import com.altnoir.poopsky.common.entity.p.FlyEntity;
 import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;

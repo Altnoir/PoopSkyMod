@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.client.renderer;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.entity.model.ToiletPlugModel;
+import com.altnoir.poopsky.common.entity.model.ToiletPlugModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;

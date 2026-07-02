@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.common;
 
-import com.altnoir.poopsky.item.PFlyTypes;
+import com.altnoir.poopsky.common.item.PFlyTypes;
 import net.minecraft.network.chat.Component;
 
 import java.util.*;

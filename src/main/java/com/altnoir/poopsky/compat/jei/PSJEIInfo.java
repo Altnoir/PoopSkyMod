@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.compat.jei;
 
-import com.altnoir.poopsky.item.PFlyTypes;
-import com.altnoir.poopsky.item.p.FlyItem;
+import com.altnoir.poopsky.common.item.PFlyTypes;
+import com.altnoir.poopsky.common.item.p.FlyItem;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.network.chat.Component;
