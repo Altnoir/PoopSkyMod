@@ -2,8 +2,8 @@ package com.altnoir.poopsky.block.entity;
 
 import com.altnoir.poopsky.PTags;
 import com.altnoir.poopsky.client.inventory.BreedingBoxMenu;
-import com.altnoir.poopsky.init.PBlockEntityType;
 import com.altnoir.poopsky.common.FlyType;
+import com.altnoir.poopsky.init.PBlockEntityType;
 import com.altnoir.poopsky.init.PFlyRecipes;
 import com.altnoir.poopsky.item.p.FlyItem;
 import net.minecraft.core.BlockPos;
@@ -37,11 +37,15 @@ public class BreedingBoxBlockEntity extends BlockEntity implements MenuProvider 
     public static final int SLOT_OUTPUT_3 = 5;
     public static final int TOTAL_SLOTS = 6;
 
-    private static final int BASE_TICK_INTERVAL = 400; // 基础繁殖间隔（tick）
-    private static final int MAX_ENVIRONMENT_BONUS = 10;
+    private static final int BASE_TICK_INTERVAL = 1200; // 基础繁殖间隔（tick）
+    private static final int SCAN_INTERVAL = 160;         // 环境扫描间隔（tick）
+    private static final int SCAN_RANGE = 2;             // 扫描范围（5x5x5）
 
     private int progress = 0;
     private int currentInterval = BASE_TICK_INTERVAL;
+    private int currentPoopBonus = 0;
+    private int currentMaggotsBonus = 0;
+    private int scanCooldown = 0;
 
     private final ContainerData data = new ContainerData() {
         @Override
@@ -84,12 +88,12 @@ public class BreedingBoxBlockEntity extends BlockEntity implements MenuProvider 
 
         @Override
         public int getSlotLimit(int slot) {
-            return 64;
+            return slot == SLOT_FECES ? 88 : 64;
         }
     };
 
     // 自动化：上面/侧面 = 输入（粪便 + 苍蝇）
-    private final IItemHandler topSideHandler = new RangedWrapper(itemHandler, SLOT_FECES, SLOT_FLY_2 + 1) {
+    private final IItemHandler topSideHandler = new RangedWrapper(itemHandler, SLOT_FECES, SLOT_FECES + 1) {
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
             return super.isItemValid(slot, stack);
@@ -140,9 +144,13 @@ public class BreedingBoxBlockEntity extends BlockEntity implements MenuProvider 
         // 所有输出槽满则停止
         if (be.areOutputsFull()) return;
 
-        // 环境加速：附近的粪便块越多，繁殖越快
-        int envBonus = be.getEnvironmentBonus(level, pos);
-        be.currentInterval = Math.max(40, BASE_TICK_INTERVAL - envBonus * 30);
+        // 每 SCAN_INTERVAL tick 扫描一次周边环境（5x5x5）
+        if (be.scanCooldown <= 0) {
+            be.scanNeighbors(level, pos);
+            be.scanCooldown = SCAN_INTERVAL;
+        }
+        be.scanCooldown--;
+        be.currentInterval = Math.max(20, BASE_TICK_INTERVAL - be.currentPoopBonus * 10);
         be.progress++;
 
         if (be.progress >= be.currentInterval) {
@@ -153,17 +161,22 @@ public class BreedingBoxBlockEntity extends BlockEntity implements MenuProvider 
         be.setChanged();
     }
 
-    private int getEnvironmentBonus(Level level, BlockPos pos) {
-        int bonus = 0;
-        for (BlockPos checkPos : BlockPos.betweenClosed(pos.offset(-1, -1, -1), pos.offset(1, 1, 1))) {
+    private void scanNeighbors(Level level, BlockPos pos) {
+        int poop = 0;
+        int maggots = 0;
+        int r = SCAN_RANGE;
+        for (BlockPos checkPos : BlockPos.betweenClosed(pos.offset(-r, -r, -r), pos.offset(r, r, r))) {
             if (checkPos.equals(pos)) continue;
             BlockState state = level.getBlockState(checkPos);
             if (state.is(PTags.Blocks.POOP_BLOCKS)) {
-                bonus++;
-                if (bonus >= MAX_ENVIRONMENT_BONUS) return bonus;
+                poop++;
+            }
+            if (state.is(PTags.Blocks.MAGGOTS_BLOCKS)) {
+                maggots++;
             }
         }
-        return bonus;
+        this.currentPoopBonus = poop;
+        this.currentMaggotsBonus = maggots;
     }
 
     private boolean areOutputsFull() {
@@ -191,9 +204,8 @@ public class BreedingBoxBlockEntity extends BlockEntity implements MenuProvider 
         // 变异判定
         PFlyRecipes.MutationResult result = PFlyRecipes.tryMutate(level, type1, type2);
 
-        // 产卵数量：基础1个 + 环境加成
-        int envBonus = getEnvironmentBonus(level, worldPosition);
-        int count = Math.max(1, 1 + envBonus / 3);
+        // 产卵数量：基础1个 + 每个蛆块+1
+        int count = 1 + currentMaggotsBonus;
 
         ItemStack flyProduct = FlyItem.withType(result.result());
         flyProduct.setCount(count);

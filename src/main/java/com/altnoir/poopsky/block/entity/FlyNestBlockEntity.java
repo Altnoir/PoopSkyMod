@@ -1,11 +1,10 @@
 package com.altnoir.poopsky.block.entity;
 
-import com.altnoir.poopsky.PTags;
-import com.altnoir.poopsky.common.FlyType;
-import com.altnoir.poopsky.init.PFlyRecipes;
-import com.altnoir.poopsky.init.PBlockEntityType;
-import com.altnoir.poopsky.item.p.FlyItem;
 import com.altnoir.poopsky.client.inventory.FlyNestMenu;
+import com.altnoir.poopsky.common.FlyType;
+import com.altnoir.poopsky.init.PBlockEntityType;
+import com.altnoir.poopsky.init.PFlyRecipes;
+import com.altnoir.poopsky.item.p.FlyItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -38,10 +37,9 @@ public class FlyNestBlockEntity extends BlockEntity implements MenuProvider {
     public static final int SLOT_OUTPUT_4 = 4;
     public static final int TOTAL_SLOTS = 5;
 
-    private static final int BASE_TICK_INTERVAL = 200;  // 基础生产间隔（tick），环境加速会让这个值减小
-    private static final int MAX_ENVIRONMENT_BONUS = 10; // 最大环境加速（附近粪便块数量上限）
-    private static final int BASE_PRODUCT_COUNT = 1;     // 一次产出数量（受环境加速影响）
-    private static final int MAX_PRODUCT_COUNT = 4;
+    private static final int BASE_TICK_INTERVAL = 850;  // 基础生产间隔（tick），1只苍蝇=44.5秒
+    private static final int STACK_BONUS_PER_ITEM = 10;  // 输入堆叠每多1个减少的tick数（0.5秒=10tick）
+    private static final int MIN_INTERVAL = 20;          // 最快生产间隔（1秒=20tick）
 
     private int progress = 0;
     private int currentInterval = BASE_TICK_INTERVAL;
@@ -86,7 +84,7 @@ public class FlyNestBlockEntity extends BlockEntity implements MenuProvider {
 
         @Override
         public int getSlotLimit(int slot) {
-            return 64;
+            return slot == SLOT_INPUT ? 88 : 64;
         }
     };
 
@@ -133,9 +131,9 @@ public class FlyNestBlockEntity extends BlockEntity implements MenuProvider {
         // 所有输出槽满则停止生产
         if (be.areOutputsFull()) return;
 
-        // 环境加速：附近的粪便块越多，生产越快
-        int envBonus = be.getEnvironmentBonus(level, pos);
-        be.currentInterval = Math.max(20, BASE_TICK_INTERVAL - envBonus * 15);
+        // 堆叠加速：输入堆叠每多1个减少0.5秒（10tick）
+        int stackBonus = (inputStack.getCount() - 1) * STACK_BONUS_PER_ITEM;
+        be.currentInterval = Math.max(MIN_INTERVAL, BASE_TICK_INTERVAL - stackBonus);
         be.progress++;
 
         if (be.progress >= be.currentInterval) {
@@ -144,19 +142,6 @@ public class FlyNestBlockEntity extends BlockEntity implements MenuProvider {
         }
 
         be.setChanged();
-    }
-
-    private int getEnvironmentBonus(Level level, BlockPos pos) {
-        int bonus = 0;
-        for (BlockPos checkPos : BlockPos.betweenClosed(pos.offset(-1, -1, -1), pos.offset(1, 1, 1))) {
-            if (checkPos.equals(pos)) continue;
-            BlockState state = level.getBlockState(checkPos);
-            if (state.is(PTags.Blocks.POOP_BLOCKS)) {
-                bonus++;
-                if (bonus >= MAX_ENVIRONMENT_BONUS) return bonus;
-            }
-        }
-        return bonus;
     }
 
     private boolean areOutputsFull() {
@@ -173,10 +158,7 @@ public class FlyNestBlockEntity extends BlockEntity implements MenuProvider {
         ItemStack product = PFlyRecipes.getProduct(level, type);
         if (product.isEmpty()) return;
 
-        int envBonus = getEnvironmentBonus(level, worldPosition);
-        int count = Math.min(BASE_PRODUCT_COUNT + envBonus / 3, MAX_PRODUCT_COUNT);
-
-        ItemStack toInsert = product.copyWithCount(count);
+        ItemStack toInsert = product.copy();
         for (int i = SLOT_OUTPUT_1; i <= SLOT_OUTPUT_4; i++) {
             toInsert = tryInsert(i, toInsert);
             if (toInsert.isEmpty()) break;

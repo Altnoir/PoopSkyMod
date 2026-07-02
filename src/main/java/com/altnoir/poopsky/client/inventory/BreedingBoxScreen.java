@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.client.inventory;
 
 import com.altnoir.poopsky.PoopSky;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
@@ -45,5 +46,18 @@ public class BreedingBoxScreen extends AbstractContainerScreen<BreedingBoxMenu> 
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.render(graphics, mouseX, mouseY, partialTick);
         this.renderTooltip(graphics, mouseX, mouseY);
+
+        int x = (this.width - this.imageWidth) / 2;
+        int y = (this.height - this.imageHeight) / 2;
+        if (mouseX >= x + PROGRESS_X && mouseX < x + PROGRESS_X + PROGRESS_WIDTH &&
+                mouseY >= y + PROGRESS_Y && mouseY < y + PROGRESS_Y + PROGRESS_HEIGHT) {
+            int maxProgress = this.menu.getMaxProgress();
+            int progress = this.menu.getProgress();
+            if (maxProgress > 0) {
+                float percent = (float) progress / maxProgress * 100.0F;
+                graphics.renderTooltip(this.font,
+                        Component.literal(String.format("%.1f%%", percent)).withStyle(ChatFormatting.GRAY), mouseX, mouseY);
+            }
+        }
     }
 }

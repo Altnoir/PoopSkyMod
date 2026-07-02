@@ -44,6 +44,8 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 .add(PBlocks.POOP_BLOCK.get())
                 .add(PBlocks.CHILI_POOP_BLOCK.get())
                 .add(PBlocks.GOLDEN_POOP_BLOCK.get());
+        tag(PTags.Blocks.MAGGOTS_BLOCKS)
+                .add(PBlocks.MAGGOTS_BLOCK.get());
         var poopBuildingBlocks = tag(PTags.Blocks.POOP_BUILDING_BLOCKS)
                 .add(
                         PBlocks.POOP_SAPLING.get(),

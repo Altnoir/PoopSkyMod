@@ -16,6 +16,7 @@ public class PTags {
         TagKey<Block> TOILET_BLOCKS = create("toilet_blocks");
         TagKey<Block> POOP_BLOCKS = create("poop_blocks");
         TagKey<Block> POOP_BUILDING_BLOCKS = create("poop_building_blocks");
+        TagKey<Block> MAGGOTS_BLOCKS = create("maggots_blocks");
         TagKey<Block> EMPTY_LOGS = create("empty_logs");
 
         TagKey<Block> POOP_BLOCK = create("poop_block");
