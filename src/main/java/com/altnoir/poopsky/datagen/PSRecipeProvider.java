@@ -730,7 +730,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         flyNestMap.put(PFlyTypes.WHITE.get(), Items.BONE_MEAL);
         flyNestMap.put(PFlyTypes.LIGHT_GRAY.get(), Items.QUARTZ);
         flyNestMap.put(PFlyTypes.GRAY.get(), Items.GRAVEL);
-        flyNestMap.put(PFlyTypes.BLACK.get(), Items.COAL);
+        flyNestMap.put(PFlyTypes.BLACK.get(), Items.WITHER_ROSE);
         flyNestMap.put(PFlyTypes.BROWN.get(), Items.COCOA_BEANS);
         flyNestMap.put(PFlyTypes.RED.get(), Items.REDSTONE);
         flyNestMap.put(PFlyTypes.ORANGE.get(), Items.TORCHFLOWER);

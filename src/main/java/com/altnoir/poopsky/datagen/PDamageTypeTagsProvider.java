@@ -2,6 +2,7 @@ package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.PTags;
+import com.altnoir.poopsky.init.PDamageTypes;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
@@ -38,5 +39,7 @@ public class PDamageTypeTagsProvider extends TagsProvider<DamageType> {
                         net.minecraft.world.damagesource.DamageTypes.WITHER,
                         net.minecraft.world.damagesource.DamageTypes.DRAGON_BREATH
                 );
+        tag(DamageTypeTags.IS_PROJECTILE)
+                .add(PDamageTypes.POOP_BALL);
     }
 }

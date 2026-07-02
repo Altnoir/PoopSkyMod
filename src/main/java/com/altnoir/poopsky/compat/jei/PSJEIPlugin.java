@@ -90,6 +90,8 @@ public class PSJEIPlugin implements IModPlugin {
         registration.addRecipes(FlyNestRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PRecipes.FLY_NEST_TYPE.get()));
         registration.addRecipes(BreedingBoxRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PRecipes.BREEDING_BOX_TYPE.get()));
 
+        PSJEIInfo.register(registration);
+
         if (PSMods.CREATE.isLoaded()) {
             createCategories.forEach(category -> category.registerRecipes(registration));
         }
