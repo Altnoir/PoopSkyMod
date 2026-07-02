@@ -51,6 +51,24 @@
       }
     ]
   },
+  "block.fly_nest.open": {
+    "subtitle": "subtitle.poopsky.fly_nest.open",
+    "sounds": [
+      {
+        "name": "minecraft:block.barrel.open",
+        "type": "event"
+      }
+    ]
+  },
+  "block.fly_nest.close": {
+    "subtitle": "subtitle.poopsky.fly_nest.close",
+    "sounds": [
+      {
+        "name": "minecraft:block.barrel.close",
+        "type": "event"
+      }
+    ]
+  },
   "entity.villager.work_compooper": {
     "subtitle": "subtitle.poopsky.villager.work_compooper",
     "sounds": [

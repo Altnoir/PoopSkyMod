@@ -4,13 +4,13 @@ import com.altnoir.poopsky.client.inventory.FlyNestMenu;
 import com.altnoir.poopsky.common.FlyType;
 import com.altnoir.poopsky.init.PBlockEntityType;
 import com.altnoir.poopsky.init.PFlyRecipes;
+import com.altnoir.poopsky.init.PSoundEvents;
 import com.altnoir.poopsky.item.p.FlyItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
@@ -236,7 +236,7 @@ public class FlyNestBlockEntity extends BlockEntity implements MenuProvider {
             public void stopOpen(Player player) {
                 super.stopOpen(player);
                 if (level != null && !level.isClientSide) {
-                    level.playSound(null, worldPosition, SoundEvents.BARREL_CLOSE, SoundSource.BLOCKS, 0.5F, 1.0F);
+                    level.playSound(null, worldPosition, PSoundEvents.BLOCK_FLY_NEST_CLOSE.get(), SoundSource.BLOCKS, 0.5F, 1.0F);
                 }
             }
 
