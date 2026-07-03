@@ -1,5 +1,5 @@
 {
-  "parent": "poopsky:block/wooden_toilet_oak_planks",
+  "parent": "poopsky:block/wooden_toilet",
   "overrides": [
     {
       "model": "poopsky:block/wooden_toilet_oak_planks",

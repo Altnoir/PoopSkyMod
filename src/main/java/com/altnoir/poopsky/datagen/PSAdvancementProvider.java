@@ -13,7 +13,9 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -381,10 +383,13 @@ public class PSAdvancementProvider extends AdvancementProvider {
                     .addCriterion("chili", EffectsChangedTrigger.TriggerInstance.hasEffects(MobEffectsPredicate.Builder.effects().and(PEffects.INTESTINAL_SPASM)))
                     .save(saver, modId("chili"), existingFileHelper);
 
+            var rainbowStack = new ItemStack(PBlocks.HARD_TOILET.get());
+            rainbowStack.set(PComponents.TOILET_TYPE.get(), PToiletTypes.RAINBOW);
+
             Advancement.Builder.advancement()
                     .parent(summon_villager)
                     .display(
-                            PBlocks.HARD_TOILET.get(),
+                            rainbowStack,
                             Component.translatable("advancements.poopsky.rainbow_toilet.title"),
                             Component.translatable("advancements.poopsky.rainbow_toilet.description"),
                             null,

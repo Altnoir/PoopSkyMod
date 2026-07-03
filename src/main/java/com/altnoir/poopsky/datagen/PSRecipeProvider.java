@@ -506,7 +506,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 toiletRecipes(recipeOutput, PBlocks.HARD_TOILET, entry.getValue().sourceBlock(), entry.getValue());
             }
         }
-        new ToiletShapedRecipeBuilder(RecipeCategory.BUILDING_BLOCKS, PBlocks.HARD_TOILET, PToiletTypes.RAINBOW)
+        ToiletRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PBlocks.HARD_TOILET, PToiletTypes.RAINBOW)
                 .pattern(" P ")
                 .pattern("RGB")
                 .define('P', PItems.POOP.get())
@@ -757,7 +757,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
     }
 
     private void toiletRecipes(RecipeOutput recipeOutput, ItemLike toilet, ItemLike block, ToiletType toiletType) {
-        new ToiletShapedRecipeBuilder(RecipeCategory.BUILDING_BLOCKS, toilet, toiletType)
+        ToiletRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, toilet, toiletType)
                 .pattern("P")
                 .pattern("#")
                 .define('P', PItems.POOP.get())

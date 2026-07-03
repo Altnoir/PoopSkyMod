@@ -15,22 +15,26 @@ import net.neoforged.neoforge.common.conditions.ICondition;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class ToiletShapedRecipeBuilder implements RecipeBuilder {
+public class ToiletRecipeBuilder implements RecipeBuilder {
 
     private final ShapedRecipeBuilder delegate;
     private final ToiletType toiletType;
 
-    public ToiletShapedRecipeBuilder(RecipeCategory category, ItemLike toiletBlock, ToiletType toiletType) {
+    private ToiletRecipeBuilder(RecipeCategory category, ItemLike toiletBlock, ToiletType toiletType) {
         this.delegate = ShapedRecipeBuilder.shaped(category, toiletBlock);
         this.toiletType = toiletType;
     }
 
-    public ToiletShapedRecipeBuilder pattern(String pattern) {
+    public static ToiletRecipeBuilder shaped(RecipeCategory category, ItemLike toiletBlock, ToiletType toiletType) {
+        return new ToiletRecipeBuilder(category, toiletBlock, toiletType);
+    }
+
+    public ToiletRecipeBuilder pattern(String pattern) {
         delegate.pattern(pattern);
         return this;
     }
 
-    public ToiletShapedRecipeBuilder define(char symbol, ItemLike item) {
+    public ToiletRecipeBuilder define(char symbol, ItemLike item) {
         delegate.define(symbol, item);
         return this;
     }

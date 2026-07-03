@@ -345,8 +345,6 @@ public class PSBlockStateProvider extends BlockStateProvider {
             }
         }
 
-        ModelFile defaultModel = itemModels.get(firstType);
-
         getVariantBuilder(toilet).forAllStates(state -> {
             var facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
             var connection = state.getValue(AbstractToiletBlock.CONNECTION);
@@ -373,18 +371,19 @@ public class PSBlockStateProvider extends BlockStateProvider {
                     .build();
         });
 
-        var itemBuilder = itemModels().getBuilder(getBlockPath(toilet)).parent(defaultModel);
+        var itemBuilder = itemModels().getBuilder(getBlockPath(toilet)).parent(templateModels[0]);
         var sortedEntries = new ArrayList<>(textures.entrySet());
         sortedEntries.sort((a, b) -> {
             int ia = ToiletType.getIndex(a.getKey());
             int ib = ToiletType.getIndex(b.getKey());
             return Integer.compare(ia, ib);
         });
-        for (var entry : sortedEntries) {
+        for (int i = 0; i < sortedEntries.size(); i++) {
+            var entry = sortedEntries.get(i);
             String suffix = "_" + entry.getKey().id();
             var overrideModel = new ModelFile.UncheckedModelFile(PoopSky.MOD_ID + ":block/" + blockPath + suffix);
             itemBuilder.override()
-                    .predicate(PoopSky.loc("toilet_type"), ToiletType.getIndex(entry.getKey()))
+                    .predicate(PoopSky.loc("toilet_type"), (float) i)
                     .model(overrideModel)
                     .end();
         }

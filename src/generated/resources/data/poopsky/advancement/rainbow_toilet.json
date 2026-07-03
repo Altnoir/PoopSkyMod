@@ -21,6 +21,9 @@
     },
     "frame": "challenge",
     "icon": {
+      "components": {
+        "poopsky:toilet_type": "rainbow"
+      },
       "count": 1,
       "id": "poopsky:hard_toilet"
     },

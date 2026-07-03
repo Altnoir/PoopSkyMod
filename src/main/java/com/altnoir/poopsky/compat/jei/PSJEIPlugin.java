@@ -10,6 +10,7 @@ import com.altnoir.poopsky.common.item.PFlyTypes;
 import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.init.PRecipes;
 import com.altnoir.poopsky.common.item.p.FlyItem;
+import com.altnoir.poopsky.common.recipe.ToiletShapedRecipe;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -17,6 +18,7 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.IVanillaCategoryExtensionRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -58,6 +60,11 @@ public class PSJEIPlugin implements IModPlugin {
             createCategories.add(FanDigestingCategory.create());
             registration.addRecipeCategories(createCategories.toArray(IRecipeCategory[]::new));
         }
+    }
+
+    @Override
+    public void registerVanillaCategoryExtensions(IVanillaCategoryExtensionRegistration registration) {
+        registration.getCraftingCategory().addExtension(ToiletShapedRecipe.class, new ToiletCraftingExtension());
     }
 
     @Override

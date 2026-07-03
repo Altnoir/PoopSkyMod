@@ -119,7 +119,14 @@ public class PoopSkyClient {
                         ItemProperties.register(item, PoopSky.loc("toilet_type"),
                                 (stack, level, entity, seed) -> {
                                     ToiletType type = stack.get(PComponents.TOILET_TYPE.get());
-                                    return type != null ? (float) ToiletType.getIndex(type) : 0;
+                                    if (type == null) return 0;
+                                    var categoryTypes = ToiletType.getByCategory(type.category());
+                                    int localIndex = 0;
+                                    for (var entry : categoryTypes.entrySet()) {
+                                        if (entry.getValue().equals(type)) return (float) localIndex;
+                                        localIndex++;
+                                    }
+                                    return 0;
                                 });
                     }
                 }
