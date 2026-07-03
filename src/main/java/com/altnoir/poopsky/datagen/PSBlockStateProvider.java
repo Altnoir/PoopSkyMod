@@ -335,6 +335,14 @@ public class PSBlockStateProvider extends BlockStateProvider {
             ResourceLocation tex = entry.getValue();
             String suffix = "_" + type.id();
             itemModels.put(type, models().withExistingParent(blockPath + suffix, modLoc("block/toilet")).texture("toilet", tex));
+            // 生成 _n (FRONT/BACK) 和 _ns (BOTH) 变种模型，供 ToiletBakedModel 直接加载
+            models().withExistingParent(blockPath + suffix + "_n", modLoc("block/toilet_n")).texture("toilet", tex);
+            models().withExistingParent(blockPath + suffix + "_ns", modLoc("block/toilet_ns")).texture("toilet", tex);
+            if (hasLava) {
+                models().withExistingParent(blockPath + suffix + "_lava", modLoc("block/toilet_lava")).texture("toilet", tex);
+                models().withExistingParent(blockPath + suffix + "_lava_n", modLoc("block/toilet_lava_n")).texture("toilet", tex);
+                models().withExistingParent(blockPath + suffix + "_lava_ns", modLoc("block/toilet_lava_ns")).texture("toilet", tex);
+            }
         }
 
         ModelFile defaultModel = itemModels.get(firstType);

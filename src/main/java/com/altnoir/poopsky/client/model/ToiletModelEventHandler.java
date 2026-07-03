@@ -9,7 +9,6 @@ import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.ModelEvent;
 
@@ -23,20 +22,30 @@ public class ToiletModelEventHandler {
     private static final String[] LAVA_SUFFIXES = {"", "_n", "_ns", "_lava", "_lava_n", "_lava_ns"};
 
     public static void onRegisterAdditional(ModelEvent.RegisterAdditional event) {
-        registerTemplateModels(event, "wooden_toilet", false);
-        registerTemplateModels(event, "hard_toilet", true);
+        registerAllToiletModels(event, "wooden_toilet", ToiletType.Category.WOOD, false);
+        registerAllToiletModels(event, "hard_toilet", ToiletType.Category.HARD, true);
     }
 
-    private static void registerTemplateModels(ModelEvent.RegisterAdditional event, String blockPath, boolean hasLava) {
+    private static void registerAllToiletModels(ModelEvent.RegisterAdditional event, String blockPath, ToiletType.Category category, boolean hasLava) {
         String[] suffixes = hasLava ? LAVA_SUFFIXES : WOOD_SUFFIXES;
+        // 注册模板模型（无类型后缀，作为兜底）
         for (String suffix : suffixes) {
-            ResourceLocation modelLoc = PoopSky.loc("block/" + blockPath + suffix);
-            event.register(new ModelResourceLocation(modelLoc, ModelResourceLocation.STANDALONE_VARIANT));
+            event.register(new ModelResourceLocation(
+                    PoopSky.loc("block/" + blockPath + suffix),
+                    ModelResourceLocation.STANDALONE_VARIANT));
+        }
+        // 注册每种材质的变种模型
+        for (ToiletType type : ToiletType.getByCategory(category).values()) {
+            String typeSuffix = "_" + type.id();
+            for (String suffix : suffixes) {
+                event.register(new ModelResourceLocation(
+                        PoopSky.loc("block/" + blockPath + typeSuffix + suffix),
+                        ModelResourceLocation.STANDALONE_VARIANT));
+            }
         }
     }
 
     public static void onModifyBakingResult(ModelEvent.ModifyBakingResult event) {
-        PToiletTypes.init();
         var models = event.getModels();
         wrapToiletModels(models, PBlocks.WOODEN_TOILET.getId(), "wooden_toilet", ToiletType.Category.WOOD, false);
         wrapToiletModels(models, PBlocks.HARD_TOILET.getId(), "hard_toilet", ToiletType.Category.HARD, true);
