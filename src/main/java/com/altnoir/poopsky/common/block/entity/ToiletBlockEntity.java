@@ -72,7 +72,7 @@ public class ToiletBlockEntity extends BlockEntity {
     private void syncToiletModeToBlockState() {
         if (level == null) return;
         BlockState state = getBlockState();
-        boolean shouldBeRedstone = toiletType == PToiletTypes.REDSTONE;
+        boolean shouldBeRedstone = toiletType != null && toiletType.isRedstone();
         if (state.getBlock() instanceof LavaToiletBlock) {
             LavaToiletBlock.ToiletMode currentMode = state.getValue(LavaToiletBlock.TOILET_MODE);
             LavaToiletBlock.ToiletMode targetMode = shouldBeRedstone ? LavaToiletBlock.ToiletMode.REDSTONE : LavaToiletBlock.ToiletMode.DEFAULT;

@@ -38,6 +38,7 @@ public class DataGenerators {
                 ), lookupProvider));
         generators.addProvider(event.includeServer(), new PSRecipeProvider(packOutput, lookupProvider));
         generators.addProvider(event.includeServer(), new PFlyTypeProvider(packOutput));
+        generators.addProvider(event.includeServer(), new PToiletTypeProvider(packOutput));
 
         PSDatapackProvider datapackProvider = new PSDatapackProvider(packOutput, lookupProvider);
         BlockTagsProvider blockTagsProvider = new PSBlockTagProvider(packOutput, lookupProvider, existingFileHelper);

@@ -2,14 +2,19 @@ package com.altnoir.poopsky.common.block;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
+import com.mojang.serialization.JsonOps;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -25,20 +30,32 @@ public class ToiletType implements Comparable<ToiletType> {
     private final Component displayName;
     @Nullable
     private final String texture;
+    private final float hardness;
+    private final boolean isRedstone;
+    private final boolean isGolden;
+    @Nullable
+    private final String nameKey;
 
-    private ToiletType(Supplier<@Nullable Block> blockSupplier, Category category, String id, Component displayName, @Nullable String texture) {
+    private ToiletType(Supplier<@Nullable Block> blockSupplier, Category category, String id, Component displayName, @Nullable String texture, float hardness, boolean isRedstone, boolean isGolden, @Nullable String nameKey) {
         this.blockSupplier = blockSupplier;
         this.category = category;
         this.id = id;
         this.displayName = displayName;
         this.texture = texture;
+        this.hardness = hardness;
+        this.isRedstone = isRedstone;
+        this.isGolden = isGolden;
+        this.nameKey = nameKey;
     }
 
     /** 直接用方块对象注册（立即解析 id/名称），适合原版方块 */
     public static ToiletType register(Block sourceBlock, Category category) {
+        float h = getBlockDestroyTime(sourceBlock);
+        ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(sourceBlock);
+        String nameKey = "block." + blockId.getNamespace() + "." + blockId.getPath();
         var type = new ToiletType(() -> sourceBlock, category,
-                BuiltInRegistries.BLOCK.getKey(sourceBlock).getPath(),
-                sourceBlock.getName(), null);
+                blockId.getPath(),
+                sourceBlock.getName(), null, h, false, false, nameKey);
         REGISTRY.put(type.id, type);
         return type;
     }
@@ -46,25 +63,67 @@ public class ToiletType implements Comparable<ToiletType> {
     /** 用 Supplier 懒加载方块对象，适合 DeferredRegister 注册的自定义方块 */
     public static ToiletType register(Supplier<Block> sourceBlockSupplier, Category category) {
         Block block = sourceBlockSupplier.get();
+        float h = getBlockDestroyTime(block);
+        ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(block);
+        String nameKey = "block." + blockId.getNamespace() + "." + blockId.getPath();
         var type = new ToiletType(sourceBlockSupplier::get, category,
-                BuiltInRegistries.BLOCK.getKey(block).getPath(),
-                block.getName(), null);
+                blockId.getPath(),
+                block.getName(), null, h, false, false, nameKey);
         REGISTRY.put(type.id, type);
         return type;
     }
 
     /** 注册一个无 sourceBlock 的类型（如彩虹厕所），后面可以用 .texture() 设置纹理 */
     public static ToiletType register(String id, Category category, Component displayName) {
-        var type = new ToiletType(() -> null, category, id, displayName, null);
+        var type = new ToiletType(() -> null, category, id, displayName, null, 10.0F, false, false, null);
         REGISTRY.put(id, type);
         return type;
     }
 
     /** 用新纹理创建一个副本 */
     public ToiletType texture(String texture) {
-        var type = new ToiletType(this.blockSupplier, this.category, this.id, this.displayName, texture);
+        var type = new ToiletType(this.blockSupplier, this.category, this.id, this.displayName, texture, this.hardness, this.isRedstone, this.isGolden, this.nameKey);
         REGISTRY.put(this.id, type);
         return type;
+    }
+
+    /** 标记为金质厕所（黄金/彩虹等），创建一个副本 */
+    public ToiletType golden() {
+        var type = new ToiletType(this.blockSupplier, this.category, this.id, this.displayName, this.texture, this.hardness, this.isRedstone, true, this.nameKey);
+        REGISTRY.put(this.id, type);
+        return type;
+    }
+
+    /** 标记为红石厕所，创建一个副本 */
+    public ToiletType redstone() {
+        var type = new ToiletType(this.blockSupplier, this.category, this.id, this.displayName, this.texture, this.hardness, true, this.isGolden, this.nameKey);
+        REGISTRY.put(this.id, type);
+        return type;
+    }
+
+    /** 标记自定义名称翻译键，创建一个副本 */
+    public ToiletType nameKey(String nameKey) {
+        var type = new ToiletType(this.blockSupplier, this.category, this.id, this.displayName, this.texture, this.hardness, this.isRedstone, this.isGolden, nameKey);
+        REGISTRY.put(this.id, type);
+        return type;
+    }
+
+    /** 供数据驱动注册使用（ToiletTypeManager 调用） */
+    static ToiletType registerFromData(String id, @Nullable Block sourceBlock, Category category, Component displayName, @Nullable String texture, float hardness, boolean isRedstone, boolean isGolden, @Nullable String nameKey) {
+        var type = new ToiletType(() -> sourceBlock, category, id, displayName, texture, hardness, isRedstone, isGolden, nameKey);
+        REGISTRY.put(id, type);
+        return type;
+    }
+
+    /** 尝试通过反射读取 Block 的 destroyTime，失败则返回默认值 10 */
+    private static float getBlockDestroyTime(Block block) {
+        try {
+            Field field = BlockBehaviour.class.getDeclaredField("destroyTime");
+            field.setAccessible(true);
+            return field.getFloat(block);
+        } catch (Exception e) {
+            return 10.0F;
+        }
     }
 
     public static final Codec<ToiletType> CODEC = Codec.STRING.comapFlatMap(
@@ -85,6 +144,84 @@ public class ToiletType implements Comparable<ToiletType> {
             },
             ToiletType::id
     );
+
+    // ─── JSON 数据格式的序列化 ───
+
+    public static final Codec<Category> CATEGORY_CODEC = Codec.STRING.xmap(
+            s -> switch (s) {
+                case "wood" -> Category.WOOD;
+                case "hard" -> Category.HARD;
+                default -> Category.HARD;
+            },
+            c -> c == Category.WOOD ? "wood" : "hard"
+    );
+
+    /** 数据包 JSON 的格式（data/poopsky/poopsky_data/toilet_type/<id>.json） */
+    public static final Codec<ToiletType> DATA_CODEC = Codec.unit((ToiletType) null); // placeholder, see below
+
+    static {
+        // 由于 ToiletType 需要从 JsonElement 创建并放入 REGISTRY，我们用动态工厂
+    }
+
+    /** 从 JsonElement 解析一个 ToiletType 并注册到 REGISTRY */
+    public static ToiletType parseAndRegister(String id, com.google.gson.JsonElement json) {
+        var obj = json.getAsJsonObject();
+
+        // source_block (可选)
+        Block sourceBlock = null;
+        if (obj.has("source_block") && !obj.get("source_block").isJsonNull()) {
+            String blockId = obj.get("source_block").getAsString();
+            sourceBlock = BuiltInRegistries.BLOCK.get(ResourceLocation.parse(blockId));
+        }
+
+        // category (可选，默认 "wood")
+        Category category = Category.WOOD;
+        if (obj.has("category")) {
+            category = CATEGORY_CODEC.parse(JsonOps.INSTANCE, obj.get("category")).getOrThrow();
+        }
+
+        // display_name (可选 - 有 source_block 则自动读取其名称，否则用 id)
+        Component displayName;
+        if (obj.has("display_name")) {
+            displayName = ComponentSerialization.CODEC.parse(JsonOps.INSTANCE, obj.get("display_name")).getOrThrow();
+        } else if (sourceBlock != null) {
+            displayName = sourceBlock.getName();
+        } else {
+            displayName = Component.literal(id);
+        }
+
+        // texture (可选)
+        String texture = obj.has("texture") && !obj.get("texture").isJsonNull() ? obj.get("texture").getAsString() : null;
+
+        // hardness (可选 - 如果有 source_block 则默认读取其 destroyTime，否则 10)
+        float hardness;
+        if (obj.has("hardness")) {
+            hardness = obj.get("hardness").getAsFloat();
+        } else if (sourceBlock != null) {
+            hardness = getBlockDestroyTime(sourceBlock);
+        } else {
+            hardness = 10.0F;
+        }
+
+        // is_redstone (可选，默认 false)
+        boolean isRedstone = obj.has("is_redstone") && obj.get("is_redstone").getAsBoolean();
+
+        // is_golden (可选，默认 false)
+        boolean isGolden = obj.has("is_golden") && obj.get("is_golden").getAsBoolean();
+
+        // name_key (可选 - 未指定则默认用源方块的翻译键)
+        String nameKey;
+        if (obj.has("name_key") && !obj.get("name_key").isJsonNull()) {
+            nameKey = obj.get("name_key").getAsString();
+        } else if (sourceBlock != null) {
+            ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(sourceBlock);
+            nameKey = "block." + blockId.getNamespace() + "." + blockId.getPath();
+        } else {
+            nameKey = null;
+        }
+
+        return registerFromData(id, sourceBlock, category, displayName, texture, hardness, isRedstone, isGolden, nameKey);
+    }
 
     public static ToiletType byId(String id) {
         return REGISTRY.get(id);
@@ -137,6 +274,23 @@ public class ToiletType implements Comparable<ToiletType> {
     @Nullable
     public String texture() {
         return texture;
+    }
+
+    public float hardness() {
+        return hardness;
+    }
+
+    public boolean isRedstone() {
+        return isRedstone;
+    }
+
+    public boolean isGolden() {
+        return isGolden;
+    }
+
+    @Nullable
+    public String nameKey() {
+        return nameKey;
     }
 
     // ─── Object overrides ───

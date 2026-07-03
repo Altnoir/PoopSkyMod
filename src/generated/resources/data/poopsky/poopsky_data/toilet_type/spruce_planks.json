@@ -1,0 +1,7 @@
+{
+  "category": "wood",
+  "is_golden": false,
+  "is_redstone": false,
+  "name_key": "block.poopsky.toilet.spruce",
+  "source_block": "minecraft:spruce_planks"
+}

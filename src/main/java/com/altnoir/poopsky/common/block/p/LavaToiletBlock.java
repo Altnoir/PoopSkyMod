@@ -97,7 +97,7 @@ public class LavaToiletBlock extends BaseToiletLavaBlock {
 
     public BlockState applyVariant(BlockState state, ToiletType toiletType) {
         if (toiletType != null && toiletType.category() == ToiletType.Category.HARD) {
-            ToiletMode mode = toiletType == PToiletTypes.REDSTONE ? ToiletMode.REDSTONE : ToiletMode.DEFAULT;
+            ToiletMode mode = toiletType.isRedstone() ? ToiletMode.REDSTONE : ToiletMode.DEFAULT;
             return state.setValue(TOILET_MODE, mode);
         }
         return state;
@@ -116,8 +116,8 @@ public class LavaToiletBlock extends BaseToiletLavaBlock {
     @Override
     public float getDestroyProgress(BlockState state, Player player, BlockGetter level, BlockPos pos) {
         ToiletType type = getToiletType(level, pos);
-        if (type != null && (type == PToiletTypes.NETHERITE || type == PToiletTypes.OBSIDIAN || type == PToiletTypes.CRYING_OBSIDIAN)) {
-            float hardness = 50.0F;
+        if (type != null) {
+            float hardness = type.hardness();
             int i = EventHooks.doPlayerHarvestCheck(player, state, level, pos) ? 30 : 100;
             return player.getDigSpeed(state, pos) / hardness / (float) i;
         }

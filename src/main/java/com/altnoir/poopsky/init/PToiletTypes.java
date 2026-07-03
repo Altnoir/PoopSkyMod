@@ -6,20 +6,20 @@ import net.minecraft.world.level.block.Blocks;
 
 public final class PToiletTypes {
     // ——— 木质厕所 ———
-    public static final ToiletType OAK = ToiletType.register(Blocks.OAK_PLANKS, ToiletType.Category.WOOD);
-    public static final ToiletType SPRUCE = ToiletType.register(Blocks.SPRUCE_PLANKS, ToiletType.Category.WOOD);
-    public static final ToiletType BIRCH = ToiletType.register(Blocks.BIRCH_PLANKS, ToiletType.Category.WOOD);
-    public static final ToiletType JUNGLE = ToiletType.register(Blocks.JUNGLE_PLANKS, ToiletType.Category.WOOD);
-    public static final ToiletType ACACIA = ToiletType.register(Blocks.ACACIA_PLANKS, ToiletType.Category.WOOD);
-    public static final ToiletType CHERRY = ToiletType.register(Blocks.CHERRY_PLANKS, ToiletType.Category.WOOD);
-    public static final ToiletType DARK_OAK = ToiletType.register(Blocks.DARK_OAK_PLANKS, ToiletType.Category.WOOD);
-    public static final ToiletType MANGROVE = ToiletType.register(Blocks.MANGROVE_PLANKS, ToiletType.Category.WOOD);
-    public static final ToiletType BAMBOO = ToiletType.register(Blocks.BAMBOO_PLANKS, ToiletType.Category.WOOD);
-    public static final ToiletType CRIMSON = ToiletType.register(Blocks.CRIMSON_PLANKS, ToiletType.Category.WOOD);
-    public static final ToiletType WARPED = ToiletType.register(Blocks.WARPED_PLANKS, ToiletType.Category.WOOD);
+    public static final ToiletType OAK = ToiletType.register(Blocks.OAK_PLANKS, ToiletType.Category.WOOD).nameKey("block.poopsky.toilet.oak");
+    public static final ToiletType SPRUCE = ToiletType.register(Blocks.SPRUCE_PLANKS, ToiletType.Category.WOOD).nameKey("block.poopsky.toilet.spruce");
+    public static final ToiletType BIRCH = ToiletType.register(Blocks.BIRCH_PLANKS, ToiletType.Category.WOOD).nameKey("block.poopsky.toilet.birch");
+    public static final ToiletType JUNGLE = ToiletType.register(Blocks.JUNGLE_PLANKS, ToiletType.Category.WOOD).nameKey("block.poopsky.toilet.jungle");
+    public static final ToiletType ACACIA = ToiletType.register(Blocks.ACACIA_PLANKS, ToiletType.Category.WOOD).nameKey("block.poopsky.toilet.acacia");
+    public static final ToiletType CHERRY = ToiletType.register(Blocks.CHERRY_PLANKS, ToiletType.Category.WOOD).nameKey("block.poopsky.toilet.cherry");
+    public static final ToiletType DARK_OAK = ToiletType.register(Blocks.DARK_OAK_PLANKS, ToiletType.Category.WOOD).nameKey("block.poopsky.toilet.dark_oak");
+    public static final ToiletType MANGROVE = ToiletType.register(Blocks.MANGROVE_PLANKS, ToiletType.Category.WOOD).nameKey("block.poopsky.toilet.mangrove");
+    public static final ToiletType BAMBOO = ToiletType.register(Blocks.BAMBOO_PLANKS, ToiletType.Category.WOOD).nameKey("block.poopsky.toilet.bamboo");
+    public static final ToiletType CRIMSON = ToiletType.register(Blocks.CRIMSON_PLANKS, ToiletType.Category.WOOD).nameKey("block.poopsky.toilet.crimson");
+    public static final ToiletType WARPED = ToiletType.register(Blocks.WARPED_PLANKS, ToiletType.Category.WOOD).nameKey("block.poopsky.toilet.warped");
 
     // ——— 石质厕所 ———
-    public static final ToiletType TILE = ToiletType.register(PBlocks.TILE_BLOCK, ToiletType.Category.HARD);
+    public static final ToiletType TILE = ToiletType.register(PBlocks.TILE_BLOCK, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.tile");
     public static final ToiletType STONE = ToiletType.register(Blocks.STONE, ToiletType.Category.HARD);
     public static final ToiletType COBBLESTONE = ToiletType.register(Blocks.COBBLESTONE, ToiletType.Category.HARD);
     public static final ToiletType MOSSY_COBBLESTONE = ToiletType.register(Blocks.MOSSY_COBBLESTONE, ToiletType.Category.HARD);
@@ -34,7 +34,7 @@ public final class PToiletTypes {
     public static final ToiletType ANDESITE = ToiletType.register(Blocks.ANDESITE, ToiletType.Category.HARD);
     public static final ToiletType POLISHED_ANDESITE = ToiletType.register(Blocks.POLISHED_ANDESITE, ToiletType.Category.HARD);
     public static final ToiletType CALCITE = ToiletType.register(Blocks.CALCITE, ToiletType.Category.HARD);
-    public static final ToiletType DRIPSTONE_BLOCK = ToiletType.register(Blocks.DRIPSTONE_BLOCK, ToiletType.Category.HARD);
+    public static final ToiletType DRIPSTONE_BLOCK = ToiletType.register(Blocks.DRIPSTONE_BLOCK, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.dripstone");
     public static final ToiletType DEEPSLATE = ToiletType.register(Blocks.DEEPSLATE, ToiletType.Category.HARD);
     public static final ToiletType COBBLED_DEEPSLATE = ToiletType.register(Blocks.COBBLED_DEEPSLATE, ToiletType.Category.HARD);
     public static final ToiletType POLISHED_DEEPSLATE = ToiletType.register(Blocks.POLISHED_DEEPSLATE, ToiletType.Category.HARD);
@@ -43,7 +43,7 @@ public final class PToiletTypes {
     public static final ToiletType TUFF = ToiletType.register(Blocks.TUFF, ToiletType.Category.HARD);
     public static final ToiletType POLISHED_TUFF = ToiletType.register(Blocks.POLISHED_TUFF, ToiletType.Category.HARD);
     public static final ToiletType TUFF_BRICK = ToiletType.register(Blocks.TUFF_BRICKS, ToiletType.Category.HARD);
-    public static final ToiletType BRICK = ToiletType.register(Blocks.BRICKS, ToiletType.Category.HARD);
+    public static final ToiletType BRICK = ToiletType.register(Blocks.BRICKS, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.brick");
     public static final ToiletType MUD_BRICK = ToiletType.register(Blocks.MUD_BRICKS, ToiletType.Category.HARD);
     public static final ToiletType SANDSTONE = ToiletType.register(Blocks.SANDSTONE, ToiletType.Category.HARD);
     public static final ToiletType SMOOTH_SANDSTONE = ToiletType.register(Blocks.SMOOTH_SANDSTONE, ToiletType.Category.HARD).texture("sandstone_top");
@@ -60,7 +60,7 @@ public final class PToiletTypes {
     public static final ToiletType POLISHED_BLACKSTONE = ToiletType.register(Blocks.POLISHED_BLACKSTONE, ToiletType.Category.HARD);
     public static final ToiletType POLISHED_BLACKSTONE_BRICK = ToiletType.register(Blocks.POLISHED_BLACKSTONE_BRICKS, ToiletType.Category.HARD);
     public static final ToiletType QUARTZ_BLOCK = ToiletType.register(Blocks.QUARTZ_BLOCK, ToiletType.Category.HARD).texture("quartz_block_side");
-    public static final ToiletType SMOOTH_QUARTZ = ToiletType.register(Blocks.SMOOTH_QUARTZ, ToiletType.Category.HARD).texture("quartz_block_bottom");
+    public static final ToiletType SMOOTH_QUARTZ = ToiletType.register(Blocks.SMOOTH_QUARTZ, ToiletType.Category.HARD).texture("quartz_block_bottom").nameKey("block.poopsky.toilet.smooth_quartz");
     public static final ToiletType CHISELED_QUARTZ_BLOCK = ToiletType.register(Blocks.CHISELED_QUARTZ_BLOCK, ToiletType.Category.HARD);
     public static final ToiletType UARTZ_BRICKS = ToiletType.register(Blocks.QUARTZ_BRICKS, ToiletType.Category.HARD);
     public static final ToiletType END_STONE = ToiletType.register(Blocks.END_STONE, ToiletType.Category.HARD);
@@ -100,28 +100,28 @@ public final class PToiletTypes {
     public static final ToiletType GREEN_CONCRETE = ToiletType.register(Blocks.GREEN_CONCRETE, ToiletType.Category.HARD);
     public static final ToiletType RED_CONCRETE = ToiletType.register(Blocks.RED_CONCRETE, ToiletType.Category.HARD);
     public static final ToiletType BLACK_CONCRETE = ToiletType.register(Blocks.BLACK_CONCRETE, ToiletType.Category.HARD);
-    public static final ToiletType RAINBOW = ToiletType.register("rainbow", ToiletType.Category.HARD, Component.translatable("block.poopsky.rainbow_toilet")).texture("rainbow_concrete");
+    public static final ToiletType RAINBOW = ToiletType.register("rainbow", ToiletType.Category.HARD, Component.translatable("block.poopsky.rainbow_toilet")).texture("rainbow_concrete").golden().nameKey("block.poopsky.toilet.rainbow");
     // ——— 金属厕所 ———
-    public static final ToiletType IRON = ToiletType.register(Blocks.IRON_BLOCK, ToiletType.Category.HARD);
-    public static final ToiletType GOLD = ToiletType.register(Blocks.GOLD_BLOCK, ToiletType.Category.HARD);
-    public static final ToiletType COPPER = ToiletType.register(Blocks.COPPER_BLOCK, ToiletType.Category.HARD);
-    public static final ToiletType EXPOSED_COPPER = ToiletType.register(Blocks.EXPOSED_COPPER, ToiletType.Category.HARD);
-    public static final ToiletType WEATHERED_COPPER = ToiletType.register(Blocks.WEATHERED_COPPER, ToiletType.Category.HARD);
-    public static final ToiletType OXIDIZED_COPPER = ToiletType.register(Blocks.OXIDIZED_COPPER, ToiletType.Category.HARD);
-    public static final ToiletType CHISELED_COPPER = ToiletType.register(Blocks.CHISELED_COPPER, ToiletType.Category.HARD);
-    public static final ToiletType EXPOSED_CHISELED_COPPER = ToiletType.register(Blocks.EXPOSED_CHISELED_COPPER, ToiletType.Category.HARD);
-    public static final ToiletType WEATHERED_CHISELED_COPPER = ToiletType.register(Blocks.WEATHERED_CHISELED_COPPER, ToiletType.Category.HARD);
-    public static final ToiletType OXIDIZED_CHISELED_COPPER = ToiletType.register(Blocks.OXIDIZED_CHISELED_COPPER, ToiletType.Category.HARD);
-    public static final ToiletType CUT_COPPER = ToiletType.register(Blocks.CUT_COPPER, ToiletType.Category.HARD);
-    public static final ToiletType EXPOSED_CUT_COPPER = ToiletType.register(Blocks.EXPOSED_CUT_COPPER, ToiletType.Category.HARD);
-    public static final ToiletType WEATHERED_CUT_COPPER = ToiletType.register(Blocks.WEATHERED_CUT_COPPER, ToiletType.Category.HARD);
-    public static final ToiletType OXIDIZED_CUT_COPPER = ToiletType.register(Blocks.OXIDIZED_CUT_COPPER, ToiletType.Category.HARD);
-    public static final ToiletType AMETHYST = ToiletType.register(Blocks.AMETHYST_BLOCK, ToiletType.Category.HARD);
-    public static final ToiletType LAPIS = ToiletType.register(Blocks.LAPIS_BLOCK, ToiletType.Category.HARD);
-    public static final ToiletType REDSTONE = ToiletType.register(Blocks.REDSTONE_BLOCK, ToiletType.Category.HARD);
-    public static final ToiletType DIAMOND = ToiletType.register(Blocks.DIAMOND_BLOCK, ToiletType.Category.HARD);
-    public static final ToiletType EMERALD = ToiletType.register(Blocks.EMERALD_BLOCK, ToiletType.Category.HARD);
-    public static final ToiletType NETHERITE = ToiletType.register(Blocks.NETHERITE_BLOCK, ToiletType.Category.HARD);
+    public static final ToiletType IRON = ToiletType.register(Blocks.IRON_BLOCK, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.iron");
+    public static final ToiletType GOLD = ToiletType.register(Blocks.GOLD_BLOCK, ToiletType.Category.HARD).golden().nameKey("block.poopsky.toilet.gold");
+    public static final ToiletType COPPER = ToiletType.register(Blocks.COPPER_BLOCK, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.copper");
+    public static final ToiletType EXPOSED_COPPER = ToiletType.register(Blocks.EXPOSED_COPPER, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.exposed_copper");
+    public static final ToiletType WEATHERED_COPPER = ToiletType.register(Blocks.WEATHERED_COPPER, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.weathered_copper");
+    public static final ToiletType OXIDIZED_COPPER = ToiletType.register(Blocks.OXIDIZED_COPPER, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.oxidized_copper");
+    public static final ToiletType CHISELED_COPPER = ToiletType.register(Blocks.CHISELED_COPPER, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.chiseled_copper");
+    public static final ToiletType EXPOSED_CHISELED_COPPER = ToiletType.register(Blocks.EXPOSED_CHISELED_COPPER, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.exposed_chiseled_copper");
+    public static final ToiletType WEATHERED_CHISELED_COPPER = ToiletType.register(Blocks.WEATHERED_CHISELED_COPPER, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.weathered_chiseled_copper");
+    public static final ToiletType OXIDIZED_CHISELED_COPPER = ToiletType.register(Blocks.OXIDIZED_CHISELED_COPPER, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.oxidized_chiseled_copper");
+    public static final ToiletType CUT_COPPER = ToiletType.register(Blocks.CUT_COPPER, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.cut_copper");
+    public static final ToiletType EXPOSED_CUT_COPPER = ToiletType.register(Blocks.EXPOSED_CUT_COPPER, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.exposed_cut_copper");
+    public static final ToiletType WEATHERED_CUT_COPPER = ToiletType.register(Blocks.WEATHERED_CUT_COPPER, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.weathered_cut_copper");
+    public static final ToiletType OXIDIZED_CUT_COPPER = ToiletType.register(Blocks.OXIDIZED_CUT_COPPER, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.oxidized_cut_copper");
+    public static final ToiletType AMETHYST = ToiletType.register(Blocks.AMETHYST_BLOCK, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.amethyst");
+    public static final ToiletType LAPIS = ToiletType.register(Blocks.LAPIS_BLOCK, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.lapis");
+    public static final ToiletType REDSTONE = ToiletType.register(Blocks.REDSTONE_BLOCK, ToiletType.Category.HARD).redstone().nameKey("block.poopsky.toilet.redstone");
+    public static final ToiletType DIAMOND = ToiletType.register(Blocks.DIAMOND_BLOCK, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.diamond");
+    public static final ToiletType EMERALD = ToiletType.register(Blocks.EMERALD_BLOCK, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.emerald");
+    public static final ToiletType NETHERITE = ToiletType.register(Blocks.NETHERITE_BLOCK, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.netherite");
     public static final ToiletType OBSIDIAN = ToiletType.register(Blocks.OBSIDIAN, ToiletType.Category.HARD);
     public static final ToiletType CRYING_OBSIDIAN = ToiletType.register(Blocks.CRYING_OBSIDIAN, ToiletType.Category.HARD);
 

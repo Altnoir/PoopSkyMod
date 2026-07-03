@@ -1,5 +1,6 @@
 package com.altnoir.poopsky;
 
+import com.altnoir.poopsky.common.block.ToiletTypeManager;
 import com.altnoir.poopsky.common.block.p.CompooperBlock;
 import com.altnoir.poopsky.common.FlyTypeManager;
 import com.altnoir.poopsky.compat.PSMods;
@@ -85,6 +86,7 @@ public class PoopSky {
 
     private void onAddReloadListener(AddReloadListenerEvent event) {
         event.addListener(FlyTypeManager.INSTANCE);
+        event.addListener(ToiletTypeManager.INSTANCE);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

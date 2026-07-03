@@ -29,6 +29,17 @@ public class ToiletBlockItem extends BlockItem {
         return stack;
     }
 
+    private static final String TOILET_FORMAT_KEY = "block.poopsky.toilet_format";
+
+    @Override
+    public Component getName(ItemStack stack) {
+        ToiletType type = stack.get(PComponents.TOILET_TYPE.get());
+        if (type != null && type.nameKey() != null) {
+            return Component.translatable(TOILET_FORMAT_KEY, Component.translatable(type.nameKey()));
+        }
+        return super.getName(stack);
+    }
+
     @Override
     protected BlockState getPlacementState(BlockPlaceContext context) {
         BlockState state = super.getPlacementState(context);
