@@ -7,11 +7,11 @@
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "pooburger_meat": {
+    "seedbed_curse": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:pooburger_meat"
+            "items": "poopsky:seedbed_curse"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "pooburger_meat"
+      "seedbed_curse"
     ]
   ],
   "rewards": {

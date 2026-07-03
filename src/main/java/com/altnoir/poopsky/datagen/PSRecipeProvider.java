@@ -1,14 +1,14 @@
 package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.common.block.ToiletType;
 import com.altnoir.poopsky.common.FlyType;
+import com.altnoir.poopsky.common.block.ToiletType;
+import com.altnoir.poopsky.common.item.PFlyTypes;
+import com.altnoir.poopsky.common.recipe.*;
 import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.init.PToiletTypes;
-import com.altnoir.poopsky.common.item.PFlyTypes;
-import com.altnoir.poopsky.common.recipe.*;
 import com.simibubi.create.AllItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -105,13 +105,11 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .requires(Items.EGG)
                 .unlockedBy(getItemName(PItems.POOP), has(PItems.POOP))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PItems.POOBURGER.get())
-                .pattern("P")
-                .pattern("M")
-                .pattern("P")
-                .define('P', Items.BREAD)
-                .define('M', PItems.POOBURGER_MEAT)
-                .unlockedBy(getItemName(PItems.POOBURGER_MEAT), has(PItems.POOBURGER_MEAT))
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PItems.POOBURGER.get())
+                .requires(PItems.POOBURGER_MEAT)
+                .requires(PItems.SEEDBED_CURSE,2)
+                .requires(Items.BREAD)
+                .unlockedBy(getItemName(PItems.SEEDBED_CURSE), has(PItems.SEEDBED_CURSE))
                 .save(recipeOutput);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PItems.POODDING.get(), 2)
                 .requires(PItems.POOP_BALL)

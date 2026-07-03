@@ -19,7 +19,7 @@ public class LivingEntityMixin {
     @Inject(method = "hurt", at = @At("HEAD"), cancellable = true)
     private void poopsky$ignoreProjectiles(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         LivingEntity self = (LivingEntity) (Object) this;
-        if (poopSky$hasOmener(self) && source.is(DamageTypeTags.IS_PROJECTILE)) {
+        if (poopSky$hasCurse(self) && source.is(DamageTypeTags.IS_PROJECTILE)) {
             cir.setReturnValue(false);
         }
     }
@@ -35,7 +35,7 @@ public class LivingEntityMixin {
             float amplifier = (self.getEffect(PEffects.BLEEDING).getAmplifier() + 1) * 0.1F;
             return amount * (1 + amplifier);
         }
-        if (poopSky$hasOmener(self)) {
+        if (damageSource.getEntity() instanceof LivingEntity attacker && poopSky$hasCurse(attacker)) {
             return amount * 2.0F;
         }
         return amount;
@@ -52,7 +52,7 @@ public class LivingEntityMixin {
     }
 
     @Unique
-    private boolean poopSky$hasOmener(LivingEntity self) {
-        return self.hasEffect(PEffects.OMENER) && self.getEffect(PEffects.OMENER).getAmplifier() >= 1;
+    private boolean poopSky$hasCurse(LivingEntity self) {
+        return self.hasEffect(PEffects.SEEDBED_CURSE);
     }
 }

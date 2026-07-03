@@ -1,10 +1,9 @@
 package com.altnoir.poopsky.common.item.p;
 
-import com.altnoir.poopsky.init.PEffects;
 import com.altnoir.poopsky.common.item.PArmorMaterials;
+import com.altnoir.poopsky.init.PEffects;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.Holder;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -18,6 +17,10 @@ import java.util.List;
 import java.util.Map;
 
 public class OmenArmorItem extends ArmorItem {
+    private static final int BOOTS_SLOT = 0;
+    private static final int LEGGINGS_SLOT = 1;
+    private static final int CHESTPLATE_SLOT = 2;
+    private static final int HELMET_SLOT = 3;
     private static final Map<Holder<ArmorMaterial>, List<MobEffectInstance>> ARMOR_EFFECT =
             (new ImmutableMap.Builder<Holder<ArmorMaterial>, List<MobEffectInstance>>())
                     .put(PArmorMaterials.OMEN_ARMOR_MATERIAL, List.of(
@@ -25,8 +28,6 @@ public class OmenArmorItem extends ArmorItem {
                                     new MobEffectInstance(MobEffects.HUNGER, 160, 1, false, false)
                             )
                     ).build();
-    private static final List<Holder<MobEffect>> REMOVE_EFFECT = List.of(
-            MobEffects.POISON, MobEffects.WITHER, MobEffects.CONFUSION);
 
     public OmenArmorItem(Holder<ArmorMaterial> material, Type type, Properties properties) {
         super(material, type, properties);
@@ -68,10 +69,10 @@ public class OmenArmorItem extends ArmorItem {
             }
         }
         var inventory = player.getInventory();
-        ArmorItem boots = ((ArmorItem) inventory.getArmor(0).getItem());
-        ArmorItem leggings = ((ArmorItem) inventory.getArmor(1).getItem());
-        ArmorItem chestplate = ((ArmorItem) inventory.getArmor(2).getItem());
-        ArmorItem helmet = ((ArmorItem) inventory.getArmor(3).getItem());
+        ArmorItem boots = ((ArmorItem) inventory.getArmor(BOOTS_SLOT).getItem());
+        ArmorItem leggings = ((ArmorItem) inventory.getArmor(LEGGINGS_SLOT).getItem());
+        ArmorItem chestplate = ((ArmorItem) inventory.getArmor(CHESTPLATE_SLOT).getItem());
+        ArmorItem helmet = ((ArmorItem) inventory.getArmor(HELMET_SLOT).getItem());
 
         return boots.getMaterial() == mapArmorMaterial && leggings.getMaterial() == mapArmorMaterial
                 && chestplate.getMaterial() == mapArmorMaterial && helmet.getMaterial() == mapArmorMaterial;
@@ -79,10 +80,10 @@ public class OmenArmorItem extends ArmorItem {
 
     private boolean hasFullSuitOfArmorOn(Player player) {
         var inventory = player.getInventory();
-        ItemStack boots = inventory.getArmor(0);
-        ItemStack leggings = inventory.getArmor(1);
-        ItemStack chestplate = inventory.getArmor(2);
-        ItemStack helmet = inventory.getArmor(3);
+        ItemStack boots = inventory.getArmor(BOOTS_SLOT);
+        ItemStack leggings = inventory.getArmor(LEGGINGS_SLOT);
+        ItemStack chestplate = inventory.getArmor(CHESTPLATE_SLOT);
+        ItemStack helmet = inventory.getArmor(HELMET_SLOT);
 
         return !boots.isEmpty() && !leggings.isEmpty() && !chestplate.isEmpty() && !helmet.isEmpty();
     }

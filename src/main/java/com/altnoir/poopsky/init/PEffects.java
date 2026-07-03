@@ -39,6 +39,12 @@ public class PEffects {
                     .addAttributeModifier(Attributes.MOVEMENT_EFFICIENCY, PoopSky.loc("omener_block"), 1.0F,
                             AttributeModifier.Operation.ADD_VALUE)
     );
+    public static final Holder<MobEffect> SEEDBED_CURSE = MOB_EFFECTS.register("seedbed_curse", () ->
+            new PMobEffect(MobEffectCategory.HARMFUL, 0x6B2020)
+                    .addAttributeModifier(Attributes.MAX_HEALTH, PoopSky.loc("seedbed_curse"),
+                            -0.5F,
+                            AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+    );
     public static final Holder<MobEffect> BLEEDING = MOB_EFFECTS.register("bleeding", () ->
             new PMobEffect(MobEffectCategory.HARMFUL, 0x8B0000)
     );
