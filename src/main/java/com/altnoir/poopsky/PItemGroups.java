@@ -3,6 +3,7 @@ package com.altnoir.poopsky;
 import com.altnoir.poopsky.common.block.ToiletType;
 import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.common.FlyType;
+import com.altnoir.poopsky.common.FlyTypeManager;
 import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.common.item.p.FlyItem;
 import com.altnoir.poopsky.common.item.p.ToiletBlockItem;
@@ -49,7 +50,7 @@ public class PItemGroups {
                         .filter(block -> !skip.contains(block))
                         .forEach(output::accept);
 
-                for (String id : FlyType.FLY_TYPES) {
+                for (String id : FlyTypeManager.INSTANCE.getFlyTypes()) {
                     output.accept(FlyItem.withType(id));
                 }
 

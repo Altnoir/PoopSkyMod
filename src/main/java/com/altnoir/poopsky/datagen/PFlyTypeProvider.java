@@ -3,6 +3,7 @@ package com.altnoir.poopsky.datagen;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.common.FlyType;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
@@ -20,10 +21,13 @@ public class PFlyTypeProvider implements DataProvider {
 
     @Override
     public CompletableFuture<?> run(CachedOutput cachedOutput) {
-        JsonArray json = new JsonArray();
+        JsonObject json = new JsonObject();
+        json.addProperty("replace", false);
+        JsonArray values = new JsonArray();
         for (String id : FlyType.FLY_TYPES) {
-            json.add(id);
+            values.add(id);
         }
+        json.add("values", values);
         return DataProvider.saveStable(cachedOutput, json, outputPath);
     }
 
