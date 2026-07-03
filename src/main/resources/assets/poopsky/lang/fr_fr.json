@@ -82,6 +82,7 @@
   "effect.poopsky.intestinal_spasm": "Spasme intestinal",
   "effect.poopsky.on_the_verge": "Sur le point",
   "effect.poopsky.omener": "Porteur de mauvais augure",
+  "effect.poopsky.seedbed_curse": "Malédiction du lit de semence",
   "effect.poopsky.bleeding": "Saignement",
   "effect.poopsky.moment_of_ptyme": "Moment de Ptyme",
 
@@ -318,7 +319,6 @@
   "subtitle.poopsky.fly.hurt": "Mouche blessée",
   "subtitle.poopsky.fly.death": "Mouche meurt",
   "subtitle.poopsky.fly.capture": "Mouche capturée",
-
   "subtitles.poopsky.pop.primed": "POP grésille",
   "subtitles.poopsky.item.toilet_linker.boop": "Baguette de ventouse : liaison",
   "subtitles.poopsky.item.toilet_linker.success": "Baguette de ventouse : lien établi",
@@ -349,6 +349,11 @@
   "jei.poopsky.anal_pressing_replace": "Pressage max. %s",
   "jei.poopsky.digesting_chance": "Chance : %.2f%%",
   "jei.poopsky.breeding_box_chance": "Chance de mutation : %.0f%%",
+  "jei.poopsky.fly_desc.white": "Obtenue en tuant avec un ascaride",
+  "jei.poopsky.fly_desc.normal": "Obtenue par un éclair",
+  "jei.poopsky.fly_desc.red": "Obtenue en nourrissant avec du piment",
+  "jei.poopsky.fly_desc.green": "Obtenue en tuant avec un cactus",
+  "jei.poopsky.fly_desc.blue": "Obtenue par noyade",
   "create.item_attributes.can_be_digested": "Peut être digéré",
   "task.poopsky.defecate": "Déféquer",
   "task.poopsky.defecate.desc": "La servante cherchera des toilettes autour d’elle",

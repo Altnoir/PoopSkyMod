@@ -82,6 +82,7 @@
   "effect.poopsky.intestinal_spasm": "Кишечный спазм",
   "effect.poopsky.on_the_verge": "На грани",
   "effect.poopsky.omener": "Пожиратель навоза",
+  "effect.poopsky.seedbed_curse": "Проклятие семенного ложа",
   "effect.poopsky.bleeding": "Кровотечение",
   "effect.poopsky.moment_of_ptyme": "Момент кала",
 
@@ -318,7 +319,6 @@
   "subtitle.poopsky.fly.hurt": "Муха ранена",
   "subtitle.poopsky.fly.death": "Муха умирает",
   "subtitle.poopsky.fly.capture": "Муха поймана",
-
   "subtitles.poopsky.pop.primed": "POP шипит",
   "subtitles.poopsky.item.toilet_linker.boop": "Соединитель унитазов: связь",
   "subtitles.poopsky.item.toilet_linker.success": "Соединитель унитазов: привязка",
@@ -349,6 +349,11 @@
   "jei.poopsky.anal_pressing_replace": "Макс. прессование: %s",
   "jei.poopsky.digesting_chance": "Шанс: %.2f%%",
   "jei.poopsky.breeding_box_chance": "Шанс мутации: %.0f%%",
+  "jei.poopsky.fly_desc.white": "Получается при убийстве аскаридой",
+  "jei.poopsky.fly_desc.normal": "Получается от удара молнии",
+  "jei.poopsky.fly_desc.red": "Получается при кормлении чили",
+  "jei.poopsky.fly_desc.green": "Получается при убийстве кактусом",
+  "jei.poopsky.fly_desc.blue": "Получается при утоплении",
   "create.item_attributes.can_be_digested": "Можно переварить",
   "task.poopsky.defecate": "Испражниться",
   "task.poopsky.defecate.desc": "Горничная будет искать унитазы поблизости",

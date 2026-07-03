@@ -82,6 +82,7 @@
   "effect.poopsky.intestinal_spasm": "腸の痙攣",
   "effect.poopsky.on_the_verge": "寸前",
   "effect.poopsky.omener": "食糞者",
+  "effect.poopsky.seedbed_curse": "温床の呪い",
   "effect.poopsky.bleeding": "出血",
   "effect.poopsky.moment_of_ptyme": "糞の刻",
 
@@ -318,7 +319,6 @@
   "subtitle.poopsky.fly.hurt": "ハエ：ダメージ",
   "subtitle.poopsky.fly.death": "ハエ：死亡",
   "subtitle.poopsky.fly.capture": "ハエ：捕獲",
-
   "subtitles.poopsky.pop.primed": "POP：シューシュー",
   "subtitles.poopsky.item.toilet_linker.boop": "トイレリンカー：接続",
   "subtitles.poopsky.item.toilet_linker.success": "トイレリンカー：バインド",
@@ -349,6 +349,11 @@
   "jei.poopsky.anal_pressing_replace": "最大%s個までプレス可能",
   "jei.poopsky.digesting_chance": "確率: %.2f%%",
   "jei.poopsky.breeding_box_chance": "突然変異確率: %.0f%%",
+  "jei.poopsky.fly_desc.white": "回虫で倒すと入手",
+  "jei.poopsky.fly_desc.normal": "雷撃で入手",
+  "jei.poopsky.fly_desc.red": "チリを与えると入手",
+  "jei.poopsky.fly_desc.green": "サボテンで倒すと入手",
+  "jei.poopsky.fly_desc.blue": "溺死させると入手",
   "create.item_attributes.can_be_digested": "消化可能",
   "task.poopsky.defecate": "排泄",
   "task.poopsky.defecate.desc": "メイドは周囲のトイレを探します",

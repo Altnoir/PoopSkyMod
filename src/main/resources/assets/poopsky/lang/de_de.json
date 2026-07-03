@@ -82,6 +82,7 @@
   "effect.poopsky.intestinal_spasm": "Darmkrampf",
   "effect.poopsky.on_the_verge": "Grenzerfahrung",
   "effect.poopsky.omener": "Kotfresser",
+  "effect.poopsky.seedbed_curse": "Saatbettfluch",
   "effect.poopsky.bleeding": "Blutung",
   "effect.poopsky.moment_of_ptyme": "Moment der Kacke",
 
@@ -318,7 +319,6 @@
   "subtitle.poopsky.fly.hurt": "Fliege wird verletzt",
   "subtitle.poopsky.fly.death": "Fliege stirbt",
   "subtitle.poopsky.fly.capture": "Fliege gefangen",
-
   "subtitles.poopsky.pop.primed": "POP zischt",
   "subtitles.poopsky.item.toilet_linker.boop": "Toilettenverbinder: Verbindung",
   "subtitles.poopsky.item.toilet_linker.success": "Toilettenverbinder: Bindung",
@@ -349,6 +349,11 @@
   "jei.poopsky.anal_pressing_replace": "Maximal %s pressen",
   "jei.poopsky.digesting_chance": "Chance: %.2f%%",
   "jei.poopsky.breeding_box_chance": "Mutationschance: %.0f%%",
+  "jei.poopsky.fly_desc.white": "Durch Töten mit einem Spulwurm erhalten",
+  "jei.poopsky.fly_desc.normal": "Durch Blitzschlag erhalten",
+  "jei.poopsky.fly_desc.red": "Durch Füttern mit Chili erhalten",
+  "jei.poopsky.fly_desc.green": "Durch Töten mit Kaktus erhalten",
+  "jei.poopsky.fly_desc.blue": "Durch Ertrinken erhalten",
   "create.item_attributes.can_be_digested": "Verdaubar",
   "task.poopsky.defecate": "Defäkieren",
   "task.poopsky.defecate.desc": "Das Dienstmädchen sucht nach Toiletten in der Nähe",
