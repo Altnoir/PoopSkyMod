@@ -100,6 +100,6 @@ public class ToiletModelEventHandler {
 
     public static void register(IEventBus modEventBus) {
         modEventBus.addListener(ToiletModelEventHandler::onRegisterAdditional);
-        modEventBus.addListener(EventPriority.LOW, ToiletModelEventHandler::onModifyBakingResult);
+        modEventBus.addListener(ToiletModelEventHandler::onModifyBakingResult);
     }
 }
