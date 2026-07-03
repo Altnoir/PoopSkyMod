@@ -498,7 +498,6 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.TILE_BLOCK_WALL, PBlocks.TILE_BLOCK);
 
         // 厕所配方
-        PToiletTypes.init();
         for (var entry : ToiletType.getByCategory(ToiletType.Category.WOOD).entrySet()) {
             toiletRecipes(recipeOutput, PBlocks.WOODEN_TOILET, entry.getValue().sourceBlock(), entry.getValue());
         }
