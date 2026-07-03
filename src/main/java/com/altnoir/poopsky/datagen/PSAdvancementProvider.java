@@ -1,15 +1,14 @@
 package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.init.PBlocks;
-import com.altnoir.poopsky.init.PEffects;
-import com.altnoir.poopsky.init.PItems;
+import com.altnoir.poopsky.init.*;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentPredicate;
 import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -394,7 +393,11 @@ public class PSAdvancementProvider extends AdvancementProvider {
                             true,
                             false
                     )
-                    .addCriterion("rainbow_toilet", InventoryChangeTrigger.TriggerInstance.hasItems(PBlocks.HARD_TOILET.get()))
+                    .addCriterion("rainbow_toilet", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
+                            .of(PBlocks.HARD_TOILET.get())
+                            .hasComponents(DataComponentPredicate.builder()
+                                    .expect(PComponents.TOILET_TYPE.get(), PToiletTypes.RAINBOW)
+                                    .build())))
                     .save(saver, modId("rainbow_toilet"), existingFileHelper);
 
             Advancement.Builder.advancement()
