@@ -3,13 +3,16 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "minecraft:bread"
-    },
-    {
       "item": "poopsky:pooburger_meat"
     },
     {
       "item": "poopsky:seedbed_curse"
+    },
+    {
+      "item": "poopsky:seedbed_curse"
+    },
+    {
+      "item": "minecraft:bread"
     }
   ],
   "result": {

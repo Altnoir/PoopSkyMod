@@ -139,8 +139,35 @@ public class ToiletBakedModel implements BakedModel {
             vertexData[offset + 2] = Float.floatToRawIntBits(pos.z + 0.5f);
         }
 
+        if (quad.getDirection().getAxis() == Direction.Axis.Y && yRot != 0) {
+            int uvRot = quad.getDirection() == Direction.DOWN ? (360 - yRot) % 360 : yRot;
+            rotateUVForYAxis(vertexData, stride, uvRot, quad.getSprite());
+        }
+
         Direction newDirection = rotateDirection(quad.getDirection(), yRot);
         return new BakedQuad(vertexData, quad.getTintIndex(), newDirection, quad.getSprite(), quad.isShade());
+    }
+
+    private void rotateUVForYAxis(int[] vertexData, int stride, int yRot, TextureAtlasSprite sprite) {
+        float angle = (float) Math.toRadians(yRot);
+        float cos = (float) Math.cos(angle);
+        float sin = (float) Math.sin(angle);
+        for (int i = 0; i < 4; i++) {
+            int offset = i * stride;
+            float u = Float.intBitsToFloat(vertexData[offset + 4]);
+            float v = Float.intBitsToFloat(vertexData[offset + 5]);
+
+            float unInterpU = sprite.getUOffset(u);
+            float unInterpV = sprite.getVOffset(v);
+
+            float cu = unInterpU - 0.5f;
+            float cv = unInterpV - 0.5f;
+            float newUnInterpU = cu * cos - cv * sin + 0.5f;
+            float newUnInterpV = cu * sin + cv * cos + 0.5f;
+
+            vertexData[offset + 4] = Float.floatToRawIntBits(sprite.getU(newUnInterpU));
+            vertexData[offset + 5] = Float.floatToRawIntBits(sprite.getV(newUnInterpV));
+        }
     }
 
     private List<BakedQuad> replaceToiletSprite(List<BakedQuad> quads, BakedModel selected, @Nullable ToiletType type) {

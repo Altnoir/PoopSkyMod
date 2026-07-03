@@ -10,8 +10,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.EventPriority;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.ModelEvent;
 
 import java.util.ArrayList;
@@ -19,13 +18,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@EventBusSubscriber(modid = PoopSky.MOD_ID)
 public class ToiletModelEventHandler {
-
     private static final String[] WOOD_SUFFIXES = {"", "_n", "_ns"};
     private static final String[] LAVA_SUFFIXES = {"", "_n", "_ns", "_lava", "_lava_n", "_lava_ns"};
 
-    @SubscribeEvent
     public static void onRegisterAdditional(ModelEvent.RegisterAdditional event) {
         registerTemplateModels(event, "wooden_toilet", false);
         registerTemplateModels(event, "hard_toilet", true);
@@ -39,7 +35,6 @@ public class ToiletModelEventHandler {
         }
     }
 
-    @SubscribeEvent(priority = EventPriority.LOW)
     public static void onModifyBakingResult(ModelEvent.ModifyBakingResult event) {
         PToiletTypes.init();
         var models = event.getModels();
@@ -101,5 +96,10 @@ public class ToiletModelEventHandler {
 
     private static ResourceLocation blockKey(Block block) {
         return BuiltInRegistries.BLOCK.getKey(block);
+    }
+
+    public static void register(IEventBus modEventBus) {
+        modEventBus.addListener(ToiletModelEventHandler::onRegisterAdditional);
+        modEventBus.addListener(EventPriority.LOW, ToiletModelEventHandler::onModifyBakingResult);
     }
 }

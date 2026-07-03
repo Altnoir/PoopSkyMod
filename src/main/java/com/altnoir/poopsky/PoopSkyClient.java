@@ -1,5 +1,6 @@
 package com.altnoir.poopsky;
 
+import com.altnoir.poopsky.client.model.ToiletModelEventHandler;
 import com.altnoir.poopsky.common.block.ToiletType;
 import com.altnoir.poopsky.common.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.client.ToiletClientBlockExtensions;
@@ -52,6 +53,7 @@ public class PoopSkyClient {
     }
 
     public static void registerMod(IEventBus modEventBus) {
+        ToiletModelEventHandler.register(modEventBus);
         modEventBus.addListener(PSClientModEvents::registerLayers);
         modEventBus.addListener(ClientModEvents::registerItemProperties);
         modEventBus.addListener(PSClientModEvents::registerBlockEntityRenderers);
