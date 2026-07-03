@@ -5,6 +5,9 @@
       "conditions": {
         "items": [
           {
+            "components": {
+              "poopsky:toilet_type": "rainbow"
+            },
             "items": "poopsky:hard_toilet"
           }
         ]
