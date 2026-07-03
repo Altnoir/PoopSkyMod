@@ -31,7 +31,7 @@ public class PEntityType {
 
     public static final Supplier<EntityType<FlyEntity>> FLY = ENTITY_TYPES.register("fly", () ->
             EntityType.Builder.of(FlyEntity::new, MobCategory.CREATURE)
-                    .sized(0.7F, 0.6F)
+                    .sized(0.5F, 0.6F)
                     .eyeHeight(0.3F)
                     .clientTrackingRange(8)
                     .build("fly"));
