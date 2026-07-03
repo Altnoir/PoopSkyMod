@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.common.block.entity.renderer;
+package com.altnoir.poopsky.common.block.renderer;
 
 import com.altnoir.poopsky.common.block.entity.SieveBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;

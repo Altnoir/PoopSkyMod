@@ -141,6 +141,10 @@ public class FlyNestBlockEntity extends BlockEntity implements MenuProvider {
             be.progress = 0;
         }
 
+        if (level.getRandom().nextDouble() < 0.005) {
+            level.playSound(null, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, PSoundEvents.BLOCK_FLY_NEST_WORK.get(), SoundSource.BLOCKS, 1.0F, 1.2F);
+        }
+
         be.setChanged();
     }
 
@@ -236,7 +240,7 @@ public class FlyNestBlockEntity extends BlockEntity implements MenuProvider {
             public void stopOpen(Player player) {
                 super.stopOpen(player);
                 if (level != null && !level.isClientSide) {
-                    level.playSound(null, worldPosition, PSoundEvents.BLOCK_FLY_NEST_CLOSE.get(), SoundSource.BLOCKS, 0.5F, 1.0F);
+                    level.playSound(null, worldPosition, PSoundEvents.BLOCK_FLY_NEST_CLOSE.get(), SoundSource.BLOCKS, 0.5F, 0.7F);
                 }
             }
 

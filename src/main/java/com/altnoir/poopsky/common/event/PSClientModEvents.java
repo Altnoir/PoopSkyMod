@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.common.event;
 
-import com.altnoir.poopsky.common.block.entity.renderer.SieveBlockEntityRenderer;
+import com.altnoir.poopsky.common.block.renderer.SieveBlockEntityRenderer;
 import com.altnoir.poopsky.common.entity.model.FlyModel;
 import com.altnoir.poopsky.common.entity.model.ToiletPlugModel;
 import com.altnoir.poopsky.init.PBlockEntityType;

@@ -78,7 +78,7 @@ public class FlyNestBlock extends BaseEntityBlock {
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (!level.isClientSide) {
             if (level.getBlockEntity(pos) instanceof FlyNestBlockEntity be) {
-                level.playSound(null, pos, PSoundEvents.BLOCK_FLY_NEST_OPEN.get(), SoundSource.BLOCKS, 0.5F, 1.0F);
+                level.playSound(null, pos, PSoundEvents.BLOCK_FLY_NEST_OPEN.get(), SoundSource.BLOCKS, 0.5F, 0.7F);
                 player.openMenu(be);
             }
         }
@@ -89,7 +89,6 @@ public class FlyNestBlock extends BaseEntityBlock {
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         if (!state.is(newState.getBlock())) {
             if (level.getBlockEntity(pos) instanceof FlyNestBlockEntity be) {
-                // 掉落所有物品
                 for (int i = 0; i < FlyNestBlockEntity.TOTAL_SLOTS; i++) {
                     Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), be.getItemHandler().getStackInSlot(i));
                 }

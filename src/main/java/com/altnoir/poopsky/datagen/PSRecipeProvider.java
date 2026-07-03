@@ -106,9 +106,9 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy(getItemName(PItems.POOP), has(PItems.POOP))
                 .save(recipeOutput);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PItems.POOBURGER.get())
-                .requires(PItems.POOBURGER_MEAT)
-                .requires(PItems.SEEDBED_CURSE,2)
                 .requires(Items.BREAD)
+                .requires(PItems.POOBURGER_MEAT)
+                .requires(PItems.SEEDBED_CURSE)
                 .unlockedBy(getItemName(PItems.SEEDBED_CURSE), has(PItems.SEEDBED_CURSE))
                 .save(recipeOutput);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PItems.POODDING.get(), 2)

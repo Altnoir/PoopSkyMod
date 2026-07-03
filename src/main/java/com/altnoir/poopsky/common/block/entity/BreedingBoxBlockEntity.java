@@ -5,12 +5,14 @@ import com.altnoir.poopsky.client.inventory.BreedingBoxMenu;
 import com.altnoir.poopsky.common.FlyType;
 import com.altnoir.poopsky.init.PBlockEntityType;
 import com.altnoir.poopsky.init.PFlyRecipes;
+import com.altnoir.poopsky.init.PSoundEvents;
 import com.altnoir.poopsky.common.item.p.FlyItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -156,6 +158,10 @@ public class BreedingBoxBlockEntity extends BlockEntity implements MenuProvider 
         if (be.progress >= be.currentInterval) {
             be.breed();
             be.progress = 0;
+        }
+
+        if (level.getRandom().nextDouble() < 0.005) {
+            level.playSound(null, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, PSoundEvents.BLOCK_BREEDING_BOX_WORK.get(), SoundSource.BLOCKS, 1.0F, 1.2F);
         }
 
         be.setChanged();

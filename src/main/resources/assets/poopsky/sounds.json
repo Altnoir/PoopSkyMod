@@ -69,6 +69,24 @@
       }
     ]
   },
+  "block.fly_nest.work": {
+    "subtitle": "subtitle.poopsky.fly_nest.work",
+    "sounds": [
+      {
+        "name": "minecraft:block.beehive.work",
+        "type": "event"
+      }
+    ]
+  },
+  "block.breeding_box.work": {
+    "subtitle": "subtitle.poopsky.breeding_box.work",
+    "sounds": [
+      {
+        "name": "minecraft:block.beehive.work",
+        "type": "event"
+      }
+    ]
+  },
   "entity.villager.work_compooper": {
     "subtitle": "subtitle.poopsky.villager.work_compooper",
     "sounds": [

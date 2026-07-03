@@ -2,12 +2,17 @@ package com.altnoir.poopsky.compat.jei;
 
 import com.altnoir.poopsky.common.item.PFlyTypes;
 import com.altnoir.poopsky.common.item.p.FlyItem;
+import com.altnoir.poopsky.init.PItems;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.network.chat.Component;
 
 public class PSJEIInfo {
     public static void register(IRecipeRegistration registration) {
+        registration.addIngredientInfo(
+                PItems.SAPLING_POOP_BALL.get(),
+                Component.translatable("jei.poopsky.sapling_poop_ball")
+        );
         registration.addIngredientInfo(
                 FlyItem.withType(PFlyTypes.WHITE.get()),
                 VanillaTypes.ITEM_STACK,
