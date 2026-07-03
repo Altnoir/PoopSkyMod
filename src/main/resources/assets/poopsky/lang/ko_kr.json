@@ -82,6 +82,7 @@
   "effect.poopsky.intestinal_spasm": "장 경련",
   "effect.poopsky.on_the_verge": "일촉즉발",
   "effect.poopsky.omener": "식분자",
+  "effect.poopsky.seedbed_curse": "온상의 저주",
   "effect.poopsky.bleeding": "출혈",
   "effect.poopsky.moment_of_ptyme": "똥의 순간",
 
@@ -318,7 +319,6 @@
   "subtitle.poopsky.fly.hurt": "파리: 피해",
   "subtitle.poopsky.fly.death": "파리: 사망",
   "subtitle.poopsky.fly.capture": "파리 잡힘",
-
   "subtitles.poopsky.pop.primed": "POP: 치익",
   "subtitles.poopsky.item.toilet_linker.boop": "변기 연결기: 연결",
   "subtitles.poopsky.item.toilet_linker.success": "변기 연결기: 바인딩",
@@ -349,6 +349,11 @@
   "jei.poopsky.anal_pressing_replace": "최대 %s개 압착",
   "jei.poopsky.digesting_chance": "확률: %.2f%%",
   "jei.poopsky.breeding_box_chance": "돌연변이 확률: %.0f%%",
+  "jei.poopsky.fly_desc.white": "회충으로 처치해 획득",
+  "jei.poopsky.fly_desc.normal": "번개에 맞아 획득",
+  "jei.poopsky.fly_desc.red": "고추를 먹여 획득",
+  "jei.poopsky.fly_desc.green": "선인장으로 처치해 획득",
+  "jei.poopsky.fly_desc.blue": "익사시켜 획득",
   "create.item_attributes.can_be_digested": "소화 가능",
   "task.poopsky.defecate": "배변",
   "task.poopsky.defecate.desc": "메이드가 주변의 변기를 찾습니다",
