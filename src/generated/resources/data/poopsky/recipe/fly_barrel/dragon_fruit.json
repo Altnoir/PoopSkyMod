@@ -1,8 +1,8 @@
 {
   "type": "poopsky:fly_barrel",
-  "fly_type": "blaze",
+  "fly_type": "dragon_fruit",
   "result": {
     "count": 1,
-    "id": "minecraft:blaze_powder"
+    "id": "minecraft:gunpowder"
   }
 }

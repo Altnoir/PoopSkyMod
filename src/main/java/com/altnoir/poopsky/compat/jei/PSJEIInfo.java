@@ -52,6 +52,11 @@ public class PSJEIInfo {
                 Component.translatable("jei.poopsky.fly_desc.blue")
         );
         registration.addIngredientInfo(
+                FlyItem.withType(PFlyTypes.DRAGON_FRUIT.get()),
+                VanillaTypes.ITEM_STACK,
+                Component.translatable("jei.poopsky.fly_desc.dragon_fruit")
+        );
+        registration.addIngredientInfo(
                 PBlocks.BREEDING_CHEST.get(),
                 Component.translatable("jei.poopsky.breeding_chest_desc")
         );

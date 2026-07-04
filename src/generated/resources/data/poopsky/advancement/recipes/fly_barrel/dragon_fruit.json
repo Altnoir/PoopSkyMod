@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "poopsky:fly_barrel/blaze"
+        "recipe": "poopsky:fly_barrel/dragon_fruit"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "poopsky:fly_barrel/blaze"
+      "poopsky:fly_barrel/dragon_fruit"
     ]
   }
 }

@@ -718,8 +718,8 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 MutationRecipe.of(PFlyTypes.WHITE.get(), PFlyTypes.GREEN.get(), PFlyTypes.LIME.get()),
                 MutationRecipe.of(PFlyTypes.WHITE.get(), PFlyTypes.RED.get(), PFlyTypes.PINK.get()),
                 // More
-                MutationRecipe.of(PFlyTypes.GREEN.get(), PFlyTypes.YELLOW.get(), PFlyTypes.GLOWSTONE.get()),
-                MutationRecipe.of(PFlyTypes.ORANGE.get(), PFlyTypes.GLOWSTONE.get(), PFlyTypes.BLAZE.get()),
+                MutationRecipe.of(PFlyTypes.GREEN.get(), PFlyTypes.YELLOW.get(), PFlyTypes.DRAGON_FRUIT.get()),
+                MutationRecipe.of(PFlyTypes.DRAGON_FRUIT.get(), PFlyTypes.YELLOW.get(), PFlyTypes.GLOWSTONE.get()),
                 MutationRecipe.of(PFlyTypes.WHITE.get(), PFlyTypes.ORANGE.get(), PFlyTypes.COPPER.get()),
                 MutationRecipe.of(PFlyTypes.LIGHT_GRAY.get(), PFlyTypes.COPPER.get(), PFlyTypes.IRON.get()),
                 MutationRecipe.of(PFlyTypes.GLOWSTONE.get(), PFlyTypes.COPPER.get(), PFlyTypes.GOLD.get()),
@@ -763,8 +763,8 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         flyBarrelMap.put(PFlyTypes.EMERALD.get(), Items.EMERALD);
         flyBarrelMap.put(PFlyTypes.DIAMOND.get(), Items.DIAMOND);
         flyBarrelMap.put(PFlyTypes.NETHERITE.get(), Items.NETHERITE_SCRAP);
+        flyBarrelMap.put(PFlyTypes.DRAGON_FRUIT.get(), Items.GUNPOWDER);
         flyBarrelMap.put(PFlyTypes.GLOWSTONE.get(), Items.GLOWSTONE_DUST);
-        flyBarrelMap.put(PFlyTypes.BLAZE.get(), Items.BLAZE_POWDER);
         flyBarrelMap.put(PFlyTypes.ENDER.get(), Items.ENDER_PEARL);
 
         flyBarrelMap.forEach((type, result) -> FlyBarrelRecipeBuilder.flyBarrel(type.id(), result)

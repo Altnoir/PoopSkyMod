@@ -27,8 +27,8 @@ public enum PFlyTypes {
     EMERALD,
     DIAMOND,
     NETHERITE,
+    DRAGON_FRUIT,
     GLOWSTONE,
-    BLAZE,
     ENDER,
     ;
 

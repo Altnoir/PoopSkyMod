@@ -1,7 +1,7 @@
 {
   "type": "poopsky:breeding_chest",
   "chance": 0.2,
-  "parent1": "green",
+  "parent1": "dragon_fruit",
   "parent2": "yellow",
-  "result": "dragon_fruit"
+  "result": "glowstone"
 }

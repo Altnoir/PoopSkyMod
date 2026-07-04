@@ -3,7 +3,7 @@ package com.altnoir.poopsky.common.block.entity;
 import com.altnoir.poopsky.client.inventory.FlyBarrelMenu;
 import com.altnoir.poopsky.common.FlyType;
 import com.altnoir.poopsky.init.PBlockEntityType;
-import com.altnoir.poopsky.init.PFlyRecipes;
+import com.altnoir.poopsky.common.recipe.PFlyRecipes;
 import com.altnoir.poopsky.init.PSoundEvents;
 import com.altnoir.poopsky.common.item.p.FlyItem;
 import net.minecraft.core.BlockPos;

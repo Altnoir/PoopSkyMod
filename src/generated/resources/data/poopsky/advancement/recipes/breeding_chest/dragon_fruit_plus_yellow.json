@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "poopsky:breeding_chest/orange_plus_glowstone"
+        "recipe": "poopsky:breeding_chest/dragon_fruit_plus_yellow"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "poopsky:breeding_chest/orange_plus_glowstone"
+      "poopsky:breeding_chest/dragon_fruit_plus_yellow"
     ]
   }
 }

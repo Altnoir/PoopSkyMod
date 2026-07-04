@@ -5,7 +5,7 @@ import com.altnoir.poopsky.client.inventory.BreedingChestMenu;
 import com.altnoir.poopsky.common.FlyType;
 import com.altnoir.poopsky.common.item.p.FlyItem;
 import com.altnoir.poopsky.init.PBlockEntityType;
-import com.altnoir.poopsky.init.PFlyRecipes;
+import com.altnoir.poopsky.common.recipe.PFlyRecipes;
 import com.altnoir.poopsky.init.PSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
