@@ -2,23 +2,24 @@ package com.altnoir.poopsky.compat.jei;
 
 import com.altnoir.poopsky.PTags;
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.common.block.ToiletType;
 import com.altnoir.poopsky.common.block.p.CompooperBlock;
+import com.altnoir.poopsky.common.item.PFlyTypes;
+import com.altnoir.poopsky.common.item.p.FlyItem;
+import com.altnoir.poopsky.common.recipe.ToiletShapedRecipe;
 import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.compat.jei.create.FanDigestingCategory;
 import com.altnoir.poopsky.init.PBlocks;
-import com.altnoir.poopsky.common.item.PFlyTypes;
+import com.altnoir.poopsky.init.PComponents;
 import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.init.PRecipes;
-import com.altnoir.poopsky.common.item.p.FlyItem;
-import com.altnoir.poopsky.common.recipe.ToiletShapedRecipe;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.ingredients.subtypes.ISubtypeInterpreter;
+import mezz.jei.api.ingredients.subtypes.UidContext;
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import mezz.jei.api.registration.IRecipeCatalystRegistration;
-import mezz.jei.api.registration.IRecipeCategoryRegistration;
-import mezz.jei.api.registration.IRecipeRegistration;
-import mezz.jei.api.registration.IVanillaCategoryExtensionRegistration;
+import mezz.jei.api.registration.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -26,6 +27,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +62,38 @@ public class PSJEIPlugin implements IModPlugin {
             createCategories.add(FanDigestingCategory.create());
             registration.addRecipeCategories(createCategories.toArray(IRecipeCategory[]::new));
         }
+    }
+
+    @Override
+    public void registerItemSubtypes(ISubtypeRegistration registration) {
+        registration.registerSubtypeInterpreter(PItems.FLY.get(), new ISubtypeInterpreter<>() {
+            @Override
+            public Object getSubtypeData(ItemStack itemStack, UidContext context) {
+                return itemStack.get(PComponents.FLY_TYPE.get());
+            }
+
+            @Override
+            public @NotNull String getLegacyStringSubtypeInfo(ItemStack itemStack, UidContext context) {
+                String flyType = itemStack.get(PComponents.FLY_TYPE.get());
+                return flyType != null ? flyType : "";
+            }
+        });
+
+        ISubtypeInterpreter<ItemStack> toiletSubtypeInterpreter = new ISubtypeInterpreter<>() {
+            @Override
+            public Object getSubtypeData(ItemStack itemStack, UidContext context) {
+                ToiletType toiletType = itemStack.get(PComponents.TOILET_TYPE.get());
+                return toiletType != null ? toiletType.id() : null;
+            }
+
+            @Override
+            public @NotNull String getLegacyStringSubtypeInfo(ItemStack itemStack, UidContext context) {
+                ToiletType toiletType = itemStack.get(PComponents.TOILET_TYPE.get());
+                return toiletType != null ? toiletType.id() : "";
+            }
+        };
+        registration.registerSubtypeInterpreter(PBlocks.WOODEN_TOILET.asItem(), toiletSubtypeInterpreter);
+        registration.registerSubtypeInterpreter(PBlocks.HARD_TOILET.asItem(), toiletSubtypeInterpreter);
     }
 
     @Override
