@@ -238,7 +238,6 @@ public class ToiletBakedModel implements BakedModel {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction face, RandomSource random) {
         return defaultModel.getQuads(state, face, random, ModelData.EMPTY, null);
     }
@@ -274,7 +273,6 @@ public class ToiletBakedModel implements BakedModel {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public TextureAtlasSprite getParticleIcon() {
         return defaultModel.getParticleIcon(ModelData.EMPTY);
     }

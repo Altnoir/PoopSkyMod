@@ -394,7 +394,7 @@
   "jei.poopsky.anal_pressing_replace": "最大可冲压%s个",
   "jei.poopsky.digesting_chance": "%.2f%% 概率",
   "jei.poopsky.breeding_box_chance": "%.2f%% 概率",
-  "jei.poopsky.breeding_box_desc": "繁育箱是用于苍蝇杂交的工作方块。放入两种不同的苍蝇，消耗粪便可杂交。以繁育箱为中心，5X5X5的范围内，可放置粪便类方块加速工作效率，放置蛆块可增加产量",
+  "jei.poopsky.breeding_box_desc": "繁育箱是用于苍蝇变异的工作方块。放入两种不同的苍蝇，消耗粪便可变异。以繁育箱为中心，5X5X5的范围内，可放置粪便类方块加速工作效率，放置蛆块可增加产量",
   "jei.poopsky.folium_senna": "钓鱼概率获取",
   "jei.poopsky.sea_poop_ball": "在粪水里钓鱼概率获取",
   "jei.poopsky.sapling_poop_ball": "树苗粪便球是由堆粪桶堆粪获取，吃下可获取树苗",

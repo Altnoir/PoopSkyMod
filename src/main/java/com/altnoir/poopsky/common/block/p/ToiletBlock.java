@@ -73,13 +73,6 @@ public class ToiletBlock extends AbstractToiletBlock {
         return 20;
     }
 
-    public BlockState applyVariant(BlockState state, ToiletType toiletType) {
-        if (toiletType != null && toiletType.category() == ToiletType.Category.WOOD) {
-            return state;
-        }
-        return state;
-    }
-
     @Override
     public MapColor getMapColor(BlockState state, BlockGetter level, BlockPos pos, MapColor defaultColor) {
         return MapColor.WOOD;
