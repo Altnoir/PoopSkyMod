@@ -52,8 +52,8 @@ public class PSJEIInfo {
                 Component.translatable("jei.poopsky.fly_desc.blue")
         );
         registration.addIngredientInfo(
-                PBlocks.BREEDING_BOX.get(),
-                Component.translatable("jei.poopsky.breeding_box_desc")
+                PBlocks.BREEDING_CHEST.get(),
+                Component.translatable("jei.poopsky.breeding_chest_desc")
         );
     }
 }

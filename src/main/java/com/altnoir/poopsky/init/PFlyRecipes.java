@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.common.FlyType;
-import com.altnoir.poopsky.common.recipe.BreedingBoxRecipe;
+import com.altnoir.poopsky.common.recipe.BreedingChestRecipe;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
@@ -27,12 +27,12 @@ public class PFlyRecipes {
     public static MutationResult tryMutate(Level level, FlyType.Type parent1, FlyType.Type parent2) {
         if (level == null) return fallbackResult(parent1, parent2);
 
-        List<RecipeHolder<BreedingBoxRecipe>> recipes = level.getRecipeManager()
-                .getAllRecipesFor(PRecipes.BREEDING_BOX.type().get());
+        List<RecipeHolder<BreedingChestRecipe>> recipes = level.getRecipeManager()
+                .getAllRecipesFor(PRecipes.BREEDING_CHEST.type().get());
 
         Random random = new Random();
         for (var holder : recipes) {
-            BreedingBoxRecipe recipe = holder.value();
+            BreedingChestRecipe recipe = holder.value();
             if (recipe.matches(parent1.id(), parent2.id())) {
                 if (random.nextFloat() < recipe.chance()) {
                 return new MutationResult(FlyType.byId(recipe.result()), true);

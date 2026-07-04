@@ -248,8 +248,8 @@ public class PBlocks {
             () -> new FlyBarrelBlock(simpleProperties(MapColor.COLOR_BROWN, 0.5F, SoundType.WOOD)
                     .noOcclusion())
     );
-    public static final DeferredBlock<Block> BREEDING_BOX = registerDefaultBlock("breeding_box",
-            () -> new BreedingBoxBlock(simpleProperties(MapColor.COLOR_BROWN, 1.0F, SoundType.WOOD)
+    public static final DeferredBlock<Block> BREEDING_CHEST = registerDefaultBlock("breeding_chest",
+            () -> new BreedingChestBlock(simpleProperties(MapColor.COLOR_BROWN, 1.0F, SoundType.POLISHED_TUFF)
                     .noOcclusion())
     );
 

@@ -112,7 +112,7 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
         dropOther(PBlocks.ROUNDWORM_VINES.get(), PItems.ROUNDWORM.get());
 
         dropSelf(PBlocks.FLY_BARREL.get());
-        dropSelf(PBlocks.BREEDING_BOX.get());
+        dropSelf(PBlocks.BREEDING_CHEST.get());
     }
 
     private void dropBlockFamily(PBlocks.BlockFamily family) {

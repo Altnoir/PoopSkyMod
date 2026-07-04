@@ -342,7 +342,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .requires(PBlocks.MAGGOTS_BLOCK)
                 .unlockedBy(getItemName(PBlocks.MAGGOTS_BLOCK), has(PBlocks.MAGGOTS_BLOCK))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PBlocks.BREEDING_BOX)
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PBlocks.BREEDING_CHEST)
                 .pattern("CCC")
                 .pattern("CPC")
                 .pattern("CBC")
@@ -526,7 +526,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         buildSieveRecipes(recipeOutput);
         buildpopExplosionRecipes(recipeOutput);
         buildAnalPressingRecipes(recipeOutput);
-        buildBreedingBoxRecipes(recipeOutput);
+        buildBreedingChestRecipes(recipeOutput);
         buildFlyBarrelRecipes(recipeOutput);
     }
 
@@ -699,7 +699,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(recipeOutput, "cactus");
     }
 
-    private void buildBreedingBoxRecipes(RecipeOutput recipeOutput) {
+    private void buildBreedingChestRecipes(RecipeOutput recipeOutput) {
         record MutationRecipe(String p1, String p2, String result) {
             static MutationRecipe of(FlyType.Type p1, FlyType.Type p2, FlyType.Type result) {
                 return new MutationRecipe(p1.id(), p2.id(), result.id());
@@ -731,7 +731,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
 
         for (MutationRecipe recipe : breedingRecipes) {
             String id = recipe.p1 + "_plus_" + recipe.p2;
-            var builder = BreedingBoxRecipeBuilder.breedingBox(recipe.p1, recipe.p2, recipe.result);
+            var builder = BreedingChestRecipeBuilder.breedingChest(recipe.p1, recipe.p2, recipe.result);
             builder.unlockedBy(getHasName(PBlocks.FLY_BARREL), has(PBlocks.FLY_BARREL))
                     .save(recipeOutput, id);
         }

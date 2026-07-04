@@ -18,7 +18,7 @@ public class PRecipes {
 
     public static final RecipeEntry<SieveRecipe.Serializer, SieveRecipe> SIEVE = register("sieve", SieveRecipe.Serializer::new);
     public static final RecipeEntry<FlyBarrelRecipe.Serializer, FlyBarrelRecipe> FLY_BARREL = register("fly_barrel", FlyBarrelRecipe.Serializer::new);
-    public static final RecipeEntry<BreedingBoxRecipe.Serializer, BreedingBoxRecipe> BREEDING_BOX = register("breeding_box", BreedingBoxRecipe.Serializer::new);
+    public static final RecipeEntry<BreedingChestRecipe.Serializer, BreedingChestRecipe> BREEDING_CHEST = register("breeding_chest", BreedingChestRecipe.Serializer::new);
     public static final RecipeEntry<POPExplosionRecipe.Serializer, POPExplosionRecipe> POP_EXPLOSION = register("pop_explosion", POPExplosionRecipe.Serializer::new);
     public static final RecipeEntry<AnalPressingRecipe.Serializer, AnalPressingRecipe> ANAL_PRESSING = register("anal_pressing", AnalPressingRecipe.Serializer::new);
 

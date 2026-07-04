@@ -206,17 +206,17 @@ public class PSAdvancementProvider extends AdvancementProvider {
             Advancement.Builder.advancement()
                     .parent(fly_catcher)
                     .display(
-                            PBlocks.BREEDING_BOX.get(),
-                            Component.translatable("advancements.poopsky.breeding_box.title"),
-                            Component.translatable("advancements.poopsky.breeding_box.description"),
+                            PBlocks.BREEDING_CHEST.get(),
+                            Component.translatable("advancements.poopsky.breeding_chest.title"),
+                            Component.translatable("advancements.poopsky.breeding_chest.description"),
                             null,
                             AdvancementType.GOAL,
                             true,
                             true,
                             false
                     )
-                    .addCriterion("breeding_box", InventoryChangeTrigger.TriggerInstance.hasItems(PBlocks.BREEDING_BOX.get()))
-                    .save(saver, modId("breeding_box"), existingFileHelper);
+                    .addCriterion("breeding_chest", InventoryChangeTrigger.TriggerInstance.hasItems(PBlocks.BREEDING_CHEST.get()))
+                    .save(saver, modId("breeding_chest"), existingFileHelper);
 
             Advancement.Builder.advancement()
                     .parent(compooper)

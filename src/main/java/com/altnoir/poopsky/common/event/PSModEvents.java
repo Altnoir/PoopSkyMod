@@ -80,7 +80,7 @@ public class PSModEvents {
         );
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
-                PBlockEntityType.BREEDING_BOX.get(),
+                PBlockEntityType.BREEDING_CHEST.get(),
                 (blockEntity, direction) -> {
                     if (direction == null || direction == Direction.DOWN) {
                         return blockEntity.getBottomHandler();

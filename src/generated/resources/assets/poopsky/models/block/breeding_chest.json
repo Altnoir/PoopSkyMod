@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "poopsky:block/cut_poop_block",
+    "side": "poopsky:block/breeding_chest_side",
+    "top": "poopsky:block/cut_poop_block"
+  }
+}

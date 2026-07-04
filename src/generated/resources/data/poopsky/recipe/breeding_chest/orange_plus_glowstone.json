@@ -1,0 +1,7 @@
+{
+  "type": "poopsky:breeding_chest",
+  "chance": 0.2,
+  "parent1": "orange",
+  "parent2": "glowstone",
+  "result": "blaze"
+}

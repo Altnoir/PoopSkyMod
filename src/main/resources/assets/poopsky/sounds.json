@@ -69,8 +69,8 @@
       }
     ]
   },
-  "block.breeding_box.work": {
-    "subtitle": "subtitle.poopsky.breeding_box.work",
+  "block.breeding_chest.work": {
+    "subtitle": "subtitle.poopsky.breeding_chest.work",
     "sounds": [
       {
         "name": "minecraft:block.beehive.work",

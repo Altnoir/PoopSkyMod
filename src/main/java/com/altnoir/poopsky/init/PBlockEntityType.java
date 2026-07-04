@@ -34,9 +34,9 @@ public class PBlockEntityType {
             BLOCK_ENTITY_TYPES.register("fly_barrel", () ->
                     BlockEntityType.Builder.of(FlyBarrelBlockEntity::new, PBlocks.FLY_BARREL.get()).build(null));
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BreedingBoxBlockEntity>> BREEDING_BOX =
-            BLOCK_ENTITY_TYPES.register("breeding_box", () ->
-                    BlockEntityType.Builder.of(BreedingBoxBlockEntity::new, PBlocks.BREEDING_BOX.get()).build(null));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BreedingChestBlockEntity>> BREEDING_CHEST =
+            BLOCK_ENTITY_TYPES.register("breeding_chest", () ->
+                    BlockEntityType.Builder.of(BreedingChestBlockEntity::new, PBlocks.BREEDING_CHEST.get()).build(null));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITY_TYPES.register(eventBus);

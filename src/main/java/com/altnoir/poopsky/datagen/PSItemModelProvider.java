@@ -109,7 +109,7 @@ public class PSItemModelProvider extends ItemModelProvider {
 
         flyItemWithOverrides();
         blockItemModel(PBlocks.FLY_BARREL);
-        blockItemModel(PBlocks.BREEDING_BOX);
+        blockItemModel(PBlocks.BREEDING_CHEST);
     }
 
     private void blockItemModel(DeferredBlock<?> block) {

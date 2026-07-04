@@ -21,7 +21,7 @@ public class PSoundEvents {
     public static final Supplier<SoundEvent> BLOCK_FLY_BARREL_OPEN = registerSoundEvent("block.fly_barrel.open");
     public static final Supplier<SoundEvent> BLOCK_FLY_BARREL_CLOSE = registerSoundEvent("block.fly_barrel.close");
     public static final Supplier<SoundEvent> BLOCK_FLY_BARREL_WORK = registerSoundEvent("block.fly_barrel.work");
-    public static final Supplier<SoundEvent> BLOCK_BREEDING_BOX_WORK = registerSoundEvent("block.breeding_box.work");
+    public static final Supplier<SoundEvent> BLOCK_BREEDING_CHEST_WORK = registerSoundEvent("block.breeding_chest.work");
     public static final Supplier<SoundEvent> ENTITY_VILLAGER_WORK_COMPOOPER = registerSoundEvent("entity.villager.work_compooper");
     public static final Supplier<SoundEvent> ENTITY_VILLAGER_WORK_TOILET = registerSoundEvent("entity.villager.work_toilet");
     public static final Supplier<SoundEvent> ENTITY_POOLIME_ATTACK = registerSoundEvent("entity.poolime.attack");

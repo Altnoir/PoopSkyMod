@@ -4,7 +4,7 @@ import com.altnoir.poopsky.client.model.ToiletModelEventHandler;
 import com.altnoir.poopsky.common.block.ToiletType;
 import com.altnoir.poopsky.common.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.client.ToiletClientBlockExtensions;
-import com.altnoir.poopsky.client.inventory.BreedingBoxScreen;
+import com.altnoir.poopsky.client.inventory.BreedingChestScreen;
 import com.altnoir.poopsky.client.inventory.FlyBarrelScreen;
 import com.altnoir.poopsky.client.particle.LeavesParticle;
 import com.altnoir.poopsky.client.particle.PoopParticle;
@@ -96,13 +96,13 @@ public class PoopSkyClient {
 
         public static void registerMenuScreens(RegisterMenuScreensEvent event) {
             event.register(PMenuTypes.FLY_BARREL.get(), FlyBarrelScreen::new);
-            event.register(PMenuTypes.BREEDING_BOX.get(), BreedingBoxScreen::new);
+            event.register(PMenuTypes.BREEDING_CHEST.get(), BreedingChestScreen::new);
         }
 
         public static void registerRecipeBookCategories(RegisterRecipeBookCategoriesEvent event) {
             event.registerRecipeCategoryFinder(PRecipes.SIEVE.type().get(), recipe -> RecipeBookCategories.UNKNOWN);
             event.registerRecipeCategoryFinder(PRecipes.FLY_BARREL.type().get(), recipe -> RecipeBookCategories.UNKNOWN);
-            event.registerRecipeCategoryFinder(PRecipes.BREEDING_BOX.type().get(), recipe -> RecipeBookCategories.UNKNOWN);
+            event.registerRecipeCategoryFinder(PRecipes.BREEDING_CHEST.type().get(), recipe -> RecipeBookCategories.UNKNOWN);
         }
 
         public static void registerItemProperties(FMLClientSetupEvent event) {
