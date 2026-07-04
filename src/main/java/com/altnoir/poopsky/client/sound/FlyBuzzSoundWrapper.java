@@ -15,22 +15,11 @@ public class FlyBuzzSoundWrapper {
     }
 
     public void tick() {
-        if (fly.level().isClientSide) {
-            tick0();
+        if (!fly.level().isClientSide) {
+            return;
         }
-    }
 
-    public void stop() {
-        if (fly.level().isClientSide) {
-            stop0();
-        }
-    }
-
-    private void tick0() {
-        if (sound == null) {
-            sound = new FlyBuzzSoundInstance(fly);
-            Minecraft.getInstance().getSoundManager().play(sound);
-        } else if (sound.isStopped()) {
+        if (sound == null || sound.isStopped()) {
             sound = new FlyBuzzSoundInstance(fly);
             Minecraft.getInstance().getSoundManager().play(sound);
         } else {
@@ -38,8 +27,8 @@ public class FlyBuzzSoundWrapper {
         }
     }
 
-    private void stop0() {
-        if (sound != null) {
+    public void stop() {
+        if (fly.level().isClientSide && sound != null) {
             Minecraft.getInstance().getSoundManager().stop(sound);
             sound = null;
         }
