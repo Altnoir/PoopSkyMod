@@ -81,8 +81,8 @@ public class PBlocks {
                     .isSuffocating(PBlocks::always)
                     .instrument(NoteBlockInstrument.COW_BELL))
     );
-    public static final DeferredBlock<Block> POOLIME_POOP_BLOCK = registerBlock("poolime_poop_block",
-            () -> new PoolimePoopBlock(poopProperties(1.0F)
+    public static final DeferredBlock<Block> POOLIME_MAGGOTS_BLOCK = registerBlock("poolime_maggots_block",
+            () -> new PoolimeMaggotsBlock(poopProperties(1.0F)
                     .randomTicks()
                     .speedFactor(0.4F)
                     .isValidSpawn(Blocks::always)

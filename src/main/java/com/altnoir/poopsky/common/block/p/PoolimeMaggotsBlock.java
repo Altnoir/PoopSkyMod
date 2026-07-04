@@ -16,11 +16,11 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class PoolimePoopBlock extends Block {
-    public static final MapCodec<PoolimePoopBlock> CODEC = simpleCodec(PoolimePoopBlock::new);
+public class PoolimeMaggotsBlock extends Block {
+    public static final MapCodec<PoolimeMaggotsBlock> CODEC = simpleCodec(PoolimeMaggotsBlock::new);
     protected static final VoxelShape SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 14.0, 16.0);
 
-    public PoolimePoopBlock(Properties properties) {
+    public PoolimeMaggotsBlock(Properties properties) {
         super(properties);
     }
 

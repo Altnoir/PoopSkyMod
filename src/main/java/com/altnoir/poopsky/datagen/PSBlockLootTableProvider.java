@@ -88,7 +88,7 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
         PBlocks.getPoopCandleCakes().forEach((candle, candleCake) ->
                 this.add(candleCake.get(), createCandleCakeDrops(candle)));
         dropSelf(PBlocks.POOLIME_BLOCK.get());
-        dropSelf(PBlocks.POOLIME_POOP_BLOCK.get());
+        dropSelf(PBlocks.POOLIME_MAGGOTS_BLOCK.get());
         dropSelf(PBlocks.STOOL.get());
         this.add(PBlocks.COMPOOPER.get(), this::createCompoomerDrops);
         dropOther(PBlocks.WATER_COMPOOPER.get(), PBlocks.COMPOOPER.get());

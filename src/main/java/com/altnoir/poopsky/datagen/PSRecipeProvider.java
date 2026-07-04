@@ -353,7 +353,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(recipeOutput);
 
         offer2x2CompactingRecipe(recipeOutput, PBlocks.POOLIME_BLOCK.get(), PItems.POOP_BALL.get());
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PBlocks.POOLIME_POOP_BLOCK.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PBlocks.POOLIME_MAGGOTS_BLOCK.get())
                 .pattern("PPP")
                 .pattern("PMP")
                 .pattern("PPP")

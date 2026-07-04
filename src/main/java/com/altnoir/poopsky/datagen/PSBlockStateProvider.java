@@ -38,7 +38,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
         //
         poopBlock();
         poopPiece();
-        poolimePoopBlock();
+        poolimeMaggotsBlock();
         blockWithTranslucentRenderType(PBlocks.POOLIME_BLOCK.get());
         PBlocks.SIMPLE_MODEL_FAMILIES.forEach(this::blockFamily);
         blockWithItem(PBlocks.CRACKED_POOP_BRICKS.get());
@@ -129,16 +129,16 @@ public class PSBlockStateProvider extends BlockStateProvider {
         simpleBlockItem(PBlocks.POOP_PIECE.get(), models().getExistingFile(modLoc("block/poop_height2")));
     }
 
-    private void poolimePoopBlock() {
-        ModelFile model = models().withExistingParent("poolime_poop_block", mcLoc("block/cube"))
+    private void poolimeMaggotsBlock() {
+        ModelFile model = models().withExistingParent(getBlockPath(PBlocks.POOLIME_MAGGOTS_BLOCK.get()), mcLoc("block/cube"))
                 .texture("south", modLoc("block/poop_block"))
                 .texture("west", modLoc("block/poop_block"))
                 .texture("north", modLoc("block/poop_block"))
                 .texture("east", modLoc("block/poop_block"))
                 .texture("down", modLoc("block/poop_block"))
-                .texture("up", modLoc("block/poolime_poop_block"))
+                .texture("up", modLoc("block/" + getBlockPath(PBlocks.POOLIME_MAGGOTS_BLOCK.get())))
                 .texture(PARTICLE, modLoc("block/poop_block"));
-        simpleBlockWithItem(PBlocks.POOLIME_POOP_BLOCK.get(), model);
+        simpleBlockWithItem(PBlocks.POOLIME_MAGGOTS_BLOCK.get(), model);
     }
 
     private void registerPoopCake() {

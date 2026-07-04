@@ -37,7 +37,7 @@ public class PSItemTagProvider extends ItemTagsProvider {
                 .add(PBlocks.POOP_LEAVES.asItem())
                 .add(PBlocks.POOP_PIECE.asItem())
                 .add(PBlocks.POOP_BLOCK.asItem())
-                .add(PBlocks.POOLIME_POOP_BLOCK.asItem())
+                .add(PBlocks.POOLIME_MAGGOTS_BLOCK.asItem())
                 .add(PBlocks.POOP_STAIRS.asItem())
                 .add(PBlocks.POOP_SLAB.asItem())
                 .add(PBlocks.POOP_VERTICAL_SLAB.asItem())

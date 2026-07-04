@@ -6,7 +6,7 @@
     "north": "poopsky:block/poop_block",
     "particle": "poopsky:block/poop_block",
     "south": "poopsky:block/poop_block",
-    "up": "poopsky:block/poolime_poop_block",
+    "up": "poopsky:block/poolime_maggots_block",
     "west": "poopsky:block/poop_block"
   }
 }

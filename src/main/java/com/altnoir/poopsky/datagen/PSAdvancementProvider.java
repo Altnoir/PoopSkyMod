@@ -132,22 +132,22 @@ public class PSAdvancementProvider extends AdvancementProvider {
                     )
                     .addCriterion("maggots", InventoryChangeTrigger.TriggerInstance.hasItems(PBlocks.MAGGOTS_BLOCK.get()))
                     .save(saver, modId("maggots"), existingFileHelper);
-            AdvancementHolder poolime_poop_block = Advancement.Builder.advancement()
+            AdvancementHolder poolime_maggots_block = Advancement.Builder.advancement()
                     .parent(maggots)
                     .display(
-                            PBlocks.POOLIME_POOP_BLOCK.get(),
-                            Component.translatable("advancements.poopsky.poolime_poop_block.title"),
-                            Component.translatable("advancements.poopsky.poolime_poop_block.description"),
+                            PBlocks.POOLIME_MAGGOTS_BLOCK.get(),
+                            Component.translatable("advancements.poopsky.poolime_maggots_block.title"),
+                            Component.translatable("advancements.poopsky.poolime_maggots_block.description"),
                             null,
                             AdvancementType.GOAL,
                             true,
                             true,
                             false
                     )
-                    .addCriterion("poolime_poop_block", InventoryChangeTrigger.TriggerInstance.hasItems(PBlocks.POOLIME_POOP_BLOCK.get()))
-                    .save(saver, modId("poolime_poop_block"), existingFileHelper);
+                    .addCriterion("poolime_maggots_block", InventoryChangeTrigger.TriggerInstance.hasItems(PBlocks.POOLIME_MAGGOTS_BLOCK.get()))
+                    .save(saver, modId("poolime_maggots_block"), existingFileHelper);
             AdvancementHolder poop_ball = Advancement.Builder.advancement()
-                    .parent(poolime_poop_block)
+                    .parent(poolime_maggots_block)
                     .display(
                             PItems.POOP_BALL.get(),
                             Component.translatable("advancements.poopsky.poop_ball.title"),

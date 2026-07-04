@@ -87,7 +87,7 @@ public class PSBlockTagProvider extends BlockTagsProvider {
         //基础标签
         tag(BlockTags.MOSS_REPLACEABLE)
                 .add(PBlocks.POOP_BLOCK.get())
-                .add(PBlocks.POOLIME_POOP_BLOCK.get())
+                .add(PBlocks.POOLIME_MAGGOTS_BLOCK.get())
                 .add(PBlocks.CHILI_POOP_BLOCK.get())
                 .add(PBlocks.RAW_POOP_BLOCK.get())
                 .add(PBlocks.RAW_SAPLING_POOP_BLOCK.get())

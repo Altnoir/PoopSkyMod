@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "poopsky:poolime_poop_block"
+        "recipe": "poopsky:poolime_maggots_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "poopsky:poolime_poop_block"
+      "poopsky:poolime_maggots_block"
     ]
   }
 }

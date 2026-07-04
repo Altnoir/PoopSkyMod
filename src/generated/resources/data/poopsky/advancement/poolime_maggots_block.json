@@ -1,11 +1,11 @@
 {
   "parent": "poopsky:maggots",
   "criteria": {
-    "poolime_poop_block": {
+    "poolime_maggots_block": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:poolime_poop_block"
+            "items": "poopsky:poolime_maggots_block"
           }
         ]
       },
@@ -14,20 +14,20 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.poopsky.poolime_poop_block.description"
+      "translate": "advancements.poopsky.poolime_maggots_block.description"
     },
     "frame": "goal",
     "icon": {
       "count": 1,
-      "id": "poopsky:poolime_poop_block"
+      "id": "poopsky:poolime_maggots_block"
     },
     "title": {
-      "translate": "advancements.poopsky.poolime_poop_block.title"
+      "translate": "advancements.poopsky.poolime_maggots_block.title"
     }
   },
   "requirements": [
     [
-      "poolime_poop_block"
+      "poolime_maggots_block"
     ]
   ],
   "sends_telemetry_event": true

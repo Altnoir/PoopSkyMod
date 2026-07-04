@@ -1,5 +1,5 @@
 {
-  "parent": "poopsky:poolime_poop_block",
+  "parent": "poopsky:poolime_maggots_block",
   "criteria": {
     "poop_ball": {
       "conditions": {

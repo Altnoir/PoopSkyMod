@@ -84,7 +84,7 @@ public class PoolimeEntity extends Slime {
             return true;
         }
 
-        return level.getBlockState(pos.below()).is(PBlocks.POOLIME_POOP_BLOCK.get()) || isInPoopIsland(level, pos);
+        return level.getBlockState(pos.below()).is(PBlocks.POOLIME_MAGGOTS_BLOCK.get()) || isInPoopIsland(level, pos);
     }
 
     private static boolean isInPoopIsland(LevelAccessor level, BlockPos pos) {
