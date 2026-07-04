@@ -70,7 +70,7 @@ public class PSModEvents {
         );
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
-                PBlockEntityType.FLY_NEST.get(),
+                PBlockEntityType.FLY_BARREL.get(),
                 (blockEntity, direction) -> {
                     if (direction == null || direction == Direction.DOWN) {
                         return blockEntity.getBottomHandler();

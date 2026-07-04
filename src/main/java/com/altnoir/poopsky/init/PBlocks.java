@@ -244,8 +244,8 @@ public class PBlocks {
             () -> new PoopTntBlock(simpleProperties(MapColor.FIRE, 0.0F, SoundType.GRASS)
                     .ignitedByLava()
                     .pushReaction(PushReaction.DESTROY)));
-    public static final DeferredBlock<Block> FLY_NEST = registerDefaultBlock("fly_nest",
-            () -> new FlyNestBlock(simpleProperties(MapColor.COLOR_BROWN, 0.5F, SoundType.WOOD)
+    public static final DeferredBlock<Block> FLY_BARREL = registerDefaultBlock("fly_barrel",
+            () -> new FlyBarrelBlock(simpleProperties(MapColor.COLOR_BROWN, 0.5F, SoundType.WOOD)
                     .noOcclusion())
     );
     public static final DeferredBlock<Block> BREEDING_BOX = registerDefaultBlock("breeding_box",

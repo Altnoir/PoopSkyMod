@@ -29,7 +29,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.wrapper.RangedWrapper;
 import org.jetbrains.annotations.Nullable;
 
-public class FlyNestBlockEntity extends BlockEntity implements MenuProvider {
+public class FlyBarrelBlockEntity extends BlockEntity implements MenuProvider {
     public static final int SLOT_INPUT = 0;
     public static final int SLOT_OUTPUT_1 = 1;
     public static final int SLOT_OUTPUT_2 = 2;
@@ -48,8 +48,8 @@ public class FlyNestBlockEntity extends BlockEntity implements MenuProvider {
         @Override
         public int get(int index) {
             return switch (index) {
-                case 0 -> FlyNestBlockEntity.this.progress;
-                case 1 -> FlyNestBlockEntity.this.currentInterval;
+                case 0 -> FlyBarrelBlockEntity.this.progress;
+                case 1 -> FlyBarrelBlockEntity.this.currentInterval;
                 default -> 0;
             };
         }
@@ -57,9 +57,9 @@ public class FlyNestBlockEntity extends BlockEntity implements MenuProvider {
         @Override
         public void set(int index, int value) {
             if (index == 0) {
-                FlyNestBlockEntity.this.progress = value;
+                FlyBarrelBlockEntity.this.progress = value;
             } else if (index == 1) {
-                FlyNestBlockEntity.this.currentInterval = value;
+                FlyBarrelBlockEntity.this.currentInterval = value;
             }
         }
 
@@ -114,11 +114,11 @@ public class FlyNestBlockEntity extends BlockEntity implements MenuProvider {
         }
     };
 
-    public FlyNestBlockEntity(BlockPos pos, BlockState blockState) {
-        super(PBlockEntityType.FLY_NEST.get(), pos, blockState);
+    public FlyBarrelBlockEntity(BlockPos pos, BlockState blockState) {
+        super(PBlockEntityType.FLY_BARREL.get(), pos, blockState);
     }
 
-    public static void tick(Level level, BlockPos pos, BlockState state, FlyNestBlockEntity be) {
+    public static void tick(Level level, BlockPos pos, BlockState state, FlyBarrelBlockEntity be) {
         if (level.isClientSide) return;
 
         ItemStack inputStack = be.itemHandler.getStackInSlot(SLOT_INPUT);
@@ -228,12 +228,12 @@ public class FlyNestBlockEntity extends BlockEntity implements MenuProvider {
 
             @Override
             public void setChanged() {
-                FlyNestBlockEntity.this.setChanged();
+                FlyBarrelBlockEntity.this.setChanged();
             }
 
             @Override
             public boolean stillValid(Player player) {
-                return Container.stillValidBlockEntity(FlyNestBlockEntity.this, player);
+                return Container.stillValidBlockEntity(FlyBarrelBlockEntity.this, player);
             }
 
             @Override

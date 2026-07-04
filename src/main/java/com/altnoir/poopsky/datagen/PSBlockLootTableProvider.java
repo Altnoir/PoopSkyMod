@@ -111,7 +111,7 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
         add(PBlocks.ROUNDWORM_VINES_PLANT.get(), createRoundwormVinesDrop(PItems.ROUNDWORM.get(), builder2));
         dropOther(PBlocks.ROUNDWORM_VINES.get(), PItems.ROUNDWORM.get());
 
-        dropSelf(PBlocks.FLY_NEST.get());
+        dropSelf(PBlocks.FLY_BARREL.get());
         dropSelf(PBlocks.BREEDING_BOX.get());
     }
 

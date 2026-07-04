@@ -1,32 +1,32 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_fly_barrel": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:fly_barrel"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "maggots_block": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:fly_barrel"
+            "items": "poopsky:maggots_block"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
-    },
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "poopsky:breeding_box/black_plus_yellow"
-      },
-      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
       "has_the_recipe",
-      "has_fly_barrel"
+      "maggots_block"
     ]
   ],
   "rewards": {
     "recipes": [
-      "poopsky:breeding_box/black_plus_yellow"
+      "poopsky:fly_barrel"
     ]
   }
 }

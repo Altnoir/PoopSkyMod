@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.common.block.p;
 
-import com.altnoir.poopsky.common.block.entity.FlyNestBlockEntity;
+import com.altnoir.poopsky.common.block.entity.FlyBarrelBlockEntity;
 import com.altnoir.poopsky.init.PBlockEntityType;
 import com.altnoir.poopsky.init.PSoundEvents;
 import com.mojang.serialization.MapCodec;
@@ -24,11 +24,11 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
-public class FlyNestBlock extends BaseEntityBlock {
+public class FlyBarrelBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
-    protected static final MapCodec<FlyNestBlock> CODEC = simpleCodec(FlyNestBlock::new);
+    protected static final MapCodec<FlyBarrelBlock> CODEC = simpleCodec(FlyBarrelBlock::new);
 
-    public FlyNestBlock(Properties properties) {
+    public FlyBarrelBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
@@ -61,12 +61,12 @@ public class FlyNestBlock extends BaseEntityBlock {
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new FlyNestBlockEntity(blockPos, blockState);
+        return new FlyBarrelBlockEntity(blockPos, blockState);
     }
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return createTickerHelper(blockEntityType, PBlockEntityType.FLY_NEST.get(), FlyNestBlockEntity::tick);
+        return createTickerHelper(blockEntityType, PBlockEntityType.FLY_BARREL.get(), FlyBarrelBlockEntity::tick);
     }
 
     @Override
@@ -77,7 +77,7 @@ public class FlyNestBlock extends BaseEntityBlock {
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (!level.isClientSide) {
-            if (level.getBlockEntity(pos) instanceof FlyNestBlockEntity be) {
+            if (level.getBlockEntity(pos) instanceof FlyBarrelBlockEntity be) {
                 level.playSound(null, pos, PSoundEvents.BLOCK_FLY_NEST_OPEN.get(), SoundSource.BLOCKS, 0.5F, 0.7F);
                 player.openMenu(be);
             }
@@ -88,8 +88,8 @@ public class FlyNestBlock extends BaseEntityBlock {
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         if (!state.is(newState.getBlock())) {
-            if (level.getBlockEntity(pos) instanceof FlyNestBlockEntity be) {
-                for (int i = 0; i < FlyNestBlockEntity.TOTAL_SLOTS; i++) {
+            if (level.getBlockEntity(pos) instanceof FlyBarrelBlockEntity be) {
+                for (int i = 0; i < FlyBarrelBlockEntity.TOTAL_SLOTS; i++) {
                     Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), be.getItemHandler().getStackInSlot(i));
                 }
             }

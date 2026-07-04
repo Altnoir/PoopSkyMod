@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "poopsky:fly_nest"
+        "recipe": "poopsky:poolime_poop_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "poopsky:fly_nest"
+      "poopsky:poolime_poop_block"
     ]
   }
 }

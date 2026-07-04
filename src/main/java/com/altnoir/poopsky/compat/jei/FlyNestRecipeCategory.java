@@ -36,7 +36,7 @@ public class FlyNestRecipeCategory implements IRecipeCategory<RecipeHolder<FlyNe
 
     public FlyNestRecipeCategory(IJeiHelpers helpers, IDrawable arrow) {
         var guiHelper = helpers.getGuiHelper();
-        this.icon = guiHelper.createDrawableItemStack(new ItemStack(PBlocks.FLY_NEST.get()));
+        this.icon = guiHelper.createDrawableItemStack(new ItemStack(PBlocks.FLY_BARREL.get()));
         this.title = Component.translatable("jei.category." + PoopSky.MOD_ID + ".fly_nest");
         this.arrow = arrow;
         this.slot = guiHelper.getSlotDrawable();

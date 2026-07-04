@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "poopsky:block/fly_barrel_bottom",
+    "side": "poopsky:block/fly_barrel_side",
+    "top": "poopsky:block/fly_barrel_top"
+  }
+}

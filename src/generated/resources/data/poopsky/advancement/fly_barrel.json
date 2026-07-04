@@ -1,11 +1,11 @@
 {
-  "parent": "poopsky:urine_compooper",
+  "parent": "poopsky:fly_catcher",
   "criteria": {
-    "maggots_seeds": {
+    "fly_barrel": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:maggots_seeds"
+            "items": "poopsky:fly_barrel"
           }
         ]
       },
@@ -14,19 +14,20 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.poopsky.maggots_seeds.description"
+      "translate": "advancements.poopsky.fly_barrel.description"
     },
+    "frame": "goal",
     "icon": {
       "count": 1,
-      "id": "poopsky:maggots_seeds"
+      "id": "poopsky:fly_barrel"
     },
     "title": {
-      "translate": "advancements.poopsky.maggots_seeds.title"
+      "translate": "advancements.poopsky.fly_barrel.title"
     }
   },
   "requirements": [
     [
-      "maggots_seeds"
+      "fly_barrel"
     ]
   ],
   "sends_telemetry_event": true

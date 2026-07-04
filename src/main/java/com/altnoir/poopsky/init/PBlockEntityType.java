@@ -30,9 +30,9 @@ public class PBlockEntityType {
             BLOCK_ENTITY_TYPES.register("placer_entity", () ->
                     BlockEntityType.Builder.of(PlacerBlockEntity::new, PBlocks.PLACER.get()).build(null));
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FlyNestBlockEntity>> FLY_NEST =
-            BLOCK_ENTITY_TYPES.register("fly_nest", () ->
-                    BlockEntityType.Builder.of(FlyNestBlockEntity::new, PBlocks.FLY_NEST.get()).build(null));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FlyBarrelBlockEntity>> FLY_BARREL =
+            BLOCK_ENTITY_TYPES.register("fly_barrel", () ->
+                    BlockEntityType.Builder.of(FlyBarrelBlockEntity::new, PBlocks.FLY_BARREL.get()).build(null));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BreedingBoxBlockEntity>> BREEDING_BOX =
             BLOCK_ENTITY_TYPES.register("breeding_box", () ->

@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "poopsky:fly_nest"
+          "name": "poopsky:fly_barrel"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "poopsky:blocks/fly_nest"
+  "random_sequence": "poopsky:blocks/fly_barrel"
 }

@@ -1,0 +1,33 @@
+{
+  "parent": "poopsky:urine_compooper",
+  "criteria": {
+    "maggots": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:maggots_block"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.poopsky.maggots.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "poopsky:maggots_block"
+    },
+    "title": {
+      "translate": "advancements.poopsky.maggots.title"
+    }
+  },
+  "requirements": [
+    [
+      "maggots"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

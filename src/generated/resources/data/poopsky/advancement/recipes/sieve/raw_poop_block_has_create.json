@@ -1,17 +1,23 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    }
+  ],
   "parent": "minecraft:recipes/root",
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "poopsky:poolime_poop_block_from_compacting"
+        "recipe": "poopsky:sieve/raw_poop_block_has_create"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "poop_block": {
+    "sieve_stable": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:poop_block"
+            "items": "poopsky:sieve_stable"
           }
         ]
       },
@@ -21,12 +27,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "poop_block"
+      "sieve_stable"
     ]
   ],
   "rewards": {
     "recipes": [
-      "poopsky:poolime_poop_block_from_compacting"
+      "poopsky:sieve/raw_poop_block_has_create"
     ]
   }
 }

@@ -337,7 +337,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('S', Items.STICK)
                 .unlockedBy(getItemName(PItems.ROUNDWORM), has(PItems.ROUNDWORM))
                 .save(recipeOutput);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, PBlocks.FLY_NEST)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, PBlocks.FLY_BARREL)
                 .requires(Items.BARREL)
                 .requires(PBlocks.MAGGOTS_BLOCK)
                 .unlockedBy(getItemName(PBlocks.MAGGOTS_BLOCK), has(PBlocks.MAGGOTS_BLOCK))
@@ -353,7 +353,14 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(recipeOutput);
 
         offer2x2CompactingRecipe(recipeOutput, PBlocks.POOLIME_BLOCK.get(), PItems.POOP_BALL.get());
-        offerCompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOLIME_POOP_BLOCK.get(), PBlocks.POOP_BLOCK.get());
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PBlocks.POOLIME_POOP_BLOCK.get())
+                .pattern("PPP")
+                .pattern("PMP")
+                .pattern("PPP")
+                .define('P', PBlocks.POOP_BLOCK)
+                .define('M', PBlocks.MAGGOTS_BLOCK)
+                .unlockedBy(getItemName(PBlocks.MAGGOTS_BLOCK), has(PBlocks.MAGGOTS_BLOCK))
+                .save(recipeOutput);
 
         // 原版物品配方
         offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, Blocks.CRAFTING_TABLE, PItems.SPALL, 1);
@@ -643,11 +650,20 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
 
         SieveRecipeBuilder.sieve(PBlocks.RAW_POOP_BLOCK, 100)
                 .addOutput(Items.RAW_COPPER)
-                .addOutput(Items.LAPIS_LAZULI, 0.8F)
-                .addOutput(Items.REDSTONE, 0.75F)
+                .addOutput(Items.REDSTONE, 2, 0.75F)
+                .addOutput(Items.REDSTONE, 0.5F)
                 .addOutput(Items.AMETHYST_SHARD, 0.25F)
                 .unlockedBy(getItemName(PBlocks.SIEVE.get()), has(PBlocks.SIEVE.get()))
-                .save(recipeOutput, "raw_poop_block");
+                .save(createNotLoaded, "raw_poop_block");
+        SieveRecipeBuilder.sieve(PBlocks.RAW_POOP_BLOCK, 100)
+                .addOutput(AllItems.COPPER_NUGGET, 8)
+                .addOutput(AllItems.COPPER_NUGGET, 8, 0.75F)
+                .addOutput(Items.RAW_COPPER, 0.5F)
+                .addOutput(Items.REDSTONE, 2, 0.75F)
+                .addOutput(Items.REDSTONE, 0.5F)
+                .addOutput(Items.AMETHYST_SHARD, 0.25F)
+                .unlockedBy(getItemName(PBlocks.SIEVE.get()), has(PBlocks.SIEVE.get()))
+                .save(createLoaded, "raw_poop_block_has_create");
 
         SieveRecipeBuilder.sieve(PBlocks.RAW_SAPLING_POOP_BLOCK, 100)
                 .addOutput(Items.SUNFLOWER).addOutput(Items.LILAC)
@@ -716,7 +732,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         for (MutationRecipe recipe : breedingRecipes) {
             String id = recipe.p1 + "_plus_" + recipe.p2;
             var builder = BreedingBoxRecipeBuilder.breedingBox(recipe.p1, recipe.p2, recipe.result);
-            builder.unlockedBy(getHasName(PBlocks.FLY_NEST), has(PBlocks.FLY_NEST))
+            builder.unlockedBy(getHasName(PBlocks.FLY_BARREL), has(PBlocks.FLY_BARREL))
                     .save(recipeOutput, id);
         }
     }
@@ -752,7 +768,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         flyNestMap.put(PFlyTypes.ENDER.get(), Items.ENDER_PEARL);
 
         flyNestMap.forEach((type, result) -> FlyNestRecipeBuilder.flyNest(type.id(), result)
-                .unlockedBy(getHasName(PBlocks.FLY_NEST), has(PBlocks.FLY_NEST))
+                .unlockedBy(getHasName(PBlocks.FLY_BARREL), has(PBlocks.FLY_BARREL))
                 .save(recipeOutput, type.id()));
     }
 

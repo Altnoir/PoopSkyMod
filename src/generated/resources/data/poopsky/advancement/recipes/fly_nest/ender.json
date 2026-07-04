@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_fly_nest": {
+    "has_fly_barrel": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:fly_nest"
+            "items": "poopsky:fly_barrel"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_fly_nest"
+      "has_fly_barrel"
     ]
   ],
   "rewards": {

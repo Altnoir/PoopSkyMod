@@ -15,7 +15,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -148,20 +147,76 @@ public class PSAdvancementProvider extends AdvancementProvider {
                     )
                     .addCriterion("urine_compooper", InventoryChangeTrigger.TriggerInstance.hasItems(PBlocks.URINE_COMPOOPER.get()))
                     .save(saver, modId("urine_compooper"), existingFileHelper);
-            Advancement.Builder.advancement()
+            AdvancementHolder maggots = Advancement.Builder.advancement()
                     .parent(urine_compooper)
                     .display(
-                            PItems.MAGGOTS_SEEDS.get(),
-                            Component.translatable("advancements.poopsky.maggots_seeds.title"),
-                            Component.translatable("advancements.poopsky.maggots_seeds.description"),
+                            PBlocks.MAGGOTS_BLOCK.get(),
+                            Component.translatable("advancements.poopsky.maggots.title"),
+                            Component.translatable("advancements.poopsky.maggots.description"),
                             null,
                             AdvancementType.TASK,
                             true,
                             true,
                             false
                     )
-                    .addCriterion("maggots_seeds", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.MAGGOTS_SEEDS.get()))
-                    .save(saver, modId("maggots_seeds"), existingFileHelper);
+                    .addCriterion("maggots", InventoryChangeTrigger.TriggerInstance.hasItems(PBlocks.MAGGOTS_BLOCK.get()))
+                    .save(saver, modId("maggots"), existingFileHelper);
+            AdvancementHolder fly = Advancement.Builder.advancement()
+                    .parent(maggots)
+                    .display(
+                            PItems.FLY.get(),
+                            Component.translatable("advancements.poopsky.fly.title"),
+                            Component.translatable("advancements.poopsky.fly.description"),
+                            null,
+                            AdvancementType.TASK,
+                            true,
+                            true,
+                            false
+                    )
+                    .addCriterion("fly", SummonedEntityTrigger.TriggerInstance.summonedEntity(EntityPredicate.Builder.entity().of(PEntityType.FLY.get())))
+                    .save(saver, modId("fly"), existingFileHelper);
+            AdvancementHolder fly_catcher = Advancement.Builder.advancement()
+                    .parent(fly)
+                    .display(
+                            PItems.FLY_CATCHER.get(),
+                            Component.translatable("advancements.poopsky.fly_catcher.title"),
+                            Component.translatable("advancements.poopsky.fly_catcher.description"),
+                            null,
+                            AdvancementType.TASK,
+                            true,
+                            true,
+                            false
+                    )
+                    .addCriterion("fly_catcher", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.FLY_CATCHER.get()))
+                    .save(saver, modId("fly_catcher"), existingFileHelper);
+            Advancement.Builder.advancement()
+                    .parent(fly_catcher)
+                    .display(
+                            PBlocks.FLY_BARREL.get(),
+                            Component.translatable("advancements.poopsky.fly_barrel.title"),
+                            Component.translatable("advancements.poopsky.fly_barrel.description"),
+                            null,
+                            AdvancementType.GOAL,
+                            true,
+                            true,
+                            false
+                    )
+                    .addCriterion("fly_barrel", InventoryChangeTrigger.TriggerInstance.hasItems(PBlocks.FLY_BARREL.get()))
+                    .save(saver, modId("fly_barrel"), existingFileHelper);
+            Advancement.Builder.advancement()
+                    .parent(fly_catcher)
+                    .display(
+                            PBlocks.BREEDING_BOX.get(),
+                            Component.translatable("advancements.poopsky.breeding_box.title"),
+                            Component.translatable("advancements.poopsky.breeding_box.description"),
+                            null,
+                            AdvancementType.GOAL,
+                            true,
+                            true,
+                            false
+                    )
+                    .addCriterion("breeding_box", InventoryChangeTrigger.TriggerInstance.hasItems(PBlocks.BREEDING_BOX.get()))
+                    .save(saver, modId("breeding_box"), existingFileHelper);
 
             Advancement.Builder.advancement()
                     .parent(compooper)

@@ -23,6 +23,10 @@ public class PSJEIInfo {
                 Component.translatable("jei.poopsky.sea_poop_ball")
         );
         registration.addIngredientInfo(
+                PItems.MAGGOTS_SEEDS.get(),
+                Component.translatable("jei.poopsky.maggots_seeds")
+        );
+        registration.addIngredientInfo(
                 FlyItem.withType(PFlyTypes.WHITE.get()),
                 VanillaTypes.ITEM_STACK,
                 Component.translatable("jei.poopsky.fly_desc.white")
@@ -30,7 +34,7 @@ public class PSJEIInfo {
         registration.addIngredientInfo(
                 FlyItem.withType(PFlyTypes.BLACK.get()),
                 VanillaTypes.ITEM_STACK,
-                Component.translatable("jei.poopsky.fly_desc.normal")
+                Component.translatable("jei.poopsky.fly_desc.black")
         );
         registration.addIngredientInfo(
                 FlyItem.withType(PFlyTypes.RED.get()),

@@ -52,7 +52,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
         blockWithItem(PBlocks.POOP_LEAVES_GOLD.get());
         blockWithItem(PBlocks.POOP_LEAVES_IRON.get());
         cubeBottomTop(PBlocks.POOP_TNT.get());
-        cubeBottomTopFace(PBlocks.FLY_NEST.get());
+        cubeBottomTopFace(PBlocks.FLY_BARREL.get());
         cubeBottomTop(PBlocks.BREEDING_BOX.get(), PBlocks.CUT_POOP_BLOCK.get());
         orientable(PBlocks.PLACER.get());
         registerPoopCake();

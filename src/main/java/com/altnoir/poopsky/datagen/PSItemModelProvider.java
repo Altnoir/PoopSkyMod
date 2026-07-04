@@ -108,7 +108,7 @@ public class PSItemModelProvider extends ItemModelProvider {
         trimmedArmorItem(PItems.OMEN_BOOTS);
 
         flyItemWithOverrides();
-        blockItemModel(PBlocks.FLY_NEST);
+        blockItemModel(PBlocks.FLY_BARREL);
         blockItemModel(PBlocks.BREEDING_BOX);
     }
 
