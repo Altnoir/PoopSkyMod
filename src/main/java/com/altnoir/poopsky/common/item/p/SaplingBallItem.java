@@ -1,18 +1,22 @@
 package com.altnoir.poopsky.common.item.p;
 
+import com.altnoir.poopsky.common.item.IFeedable;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
-public class SaplingBallItem extends Item {
+public class SaplingBallItem extends Item implements IFeedable {
     public SaplingBallItem(Properties properties) {
         super(properties);
     }
@@ -51,6 +55,13 @@ public class SaplingBallItem extends Item {
     @Override
     public int getUseDuration(ItemStack stack, LivingEntity entity) {
         return 80;
+    }
+
+    @Override
+    public @NotNull InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
+        InteractionResult feedResult = tryFeedToPlayer(stack, player, target);
+        if (feedResult.consumesAction()) return feedResult;
+        return super.interactLivingEntity(stack, player, target, hand);
     }
 
     private static Item randomProduce() {

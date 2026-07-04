@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.common.item.p;
 
 import com.altnoir.poopsky.common.entity.p.FlyEntity;
+import com.altnoir.poopsky.common.item.IFeedable;
 import com.altnoir.poopsky.common.item.PFlyTypes;
 import com.altnoir.poopsky.init.PEffects;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -19,7 +20,7 @@ import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class DragonFruitRItem extends Item {
+public class DragonFruitRItem extends Item implements IFeedable {
     public DragonFruitRItem(Properties properties) {
         super(properties);
 
@@ -27,6 +28,8 @@ public class DragonFruitRItem extends Item {
 
     @Override
     public @NotNull InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
+        InteractionResult feedResult = tryFeedToPlayer(stack, player, target);
+        if (feedResult.consumesAction()) return feedResult;
         if (target instanceof FlyEntity fly && fly.isAlive()) {
             if (!player.level().isClientSide) {
                 ItemStack dragonFlyItem = FlyItem.withType(PFlyTypes.DRAGON_FRUIT.get());

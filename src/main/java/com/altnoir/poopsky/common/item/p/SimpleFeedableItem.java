@@ -7,21 +7,11 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class ChiliPoopItem extends Item implements IFeedable {
-    public ChiliPoopItem(Properties properties) {
+public class SimpleFeedableItem extends Item implements IFeedable {
+    public SimpleFeedableItem(Properties properties) {
         super(properties);
-    }
-
-    @Override
-    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity livingEntity) {
-        super.finishUsingItem(stack, level, livingEntity);
-        if (!level.isClientSide) {
-            livingEntity.hurt(livingEntity.damageSources().inFire(), 1.0F);
-        }
-        return stack;
     }
 
     @Override

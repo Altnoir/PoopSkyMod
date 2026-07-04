@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.common.item.p;
 
 import com.altnoir.poopsky.common.entity.p.FlyEntity;
+import com.altnoir.poopsky.common.item.IFeedable;
 import com.altnoir.poopsky.common.item.PFlyTypes;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -10,13 +11,15 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-public class ChiliItem extends Item {
+public class ChiliItem extends Item implements IFeedable {
     public ChiliItem(Properties properties) {
         super(properties);
     }
 
     @Override
     public @NotNull InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
+        InteractionResult feedResult = tryFeedToPlayer(stack, player, target);
+        if (feedResult.consumesAction()) return feedResult;
         if (target instanceof FlyEntity fly && fly.isAlive()) {
             if (!player.level().isClientSide) {
                 ItemStack redFlyItem = FlyItem.withType(PFlyTypes.RED.get());

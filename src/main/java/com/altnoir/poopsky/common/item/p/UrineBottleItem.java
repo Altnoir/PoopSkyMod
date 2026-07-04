@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.common.item.p;
 
+import com.altnoir.poopsky.common.item.IFeedable;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -18,7 +19,7 @@ import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
 
-public class UrineBottleItem extends Item {
+public class UrineBottleItem extends Item implements IFeedable {
     public UrineBottleItem(Properties properties) {
         super(properties);
     }
@@ -52,6 +53,8 @@ public class UrineBottleItem extends Item {
 
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity entity, InteractionHand hand) {
+        InteractionResult feedResult = tryFeedToPlayer(stack, player, entity);
+        if (feedResult.consumesAction()) return feedResult;
         if (entity.isAlive() && entity instanceof Chicken chicken) {
             if (!player.level().isClientSide) {
                 var waterPotion = PotionContents.createItemStack(Items.POTION, Potions.WATER);

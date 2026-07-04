@@ -5,23 +5,14 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
 
-public class ChiliPoopItem extends Item implements IFeedable {
-    public ChiliPoopItem(Properties properties) {
-        super(properties);
-    }
-
-    @Override
-    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity livingEntity) {
-        super.finishUsingItem(stack, level, livingEntity);
-        if (!level.isClientSide) {
-            livingEntity.hurt(livingEntity.damageSources().inFire(), 1.0F);
-        }
-        return stack;
+public class FeedableBlockItem extends ItemNameBlockItem implements IFeedable {
+    public FeedableBlockItem(Block block, Properties properties) {
+        super(block, properties);
     }
 
     @Override
