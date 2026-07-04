@@ -8,9 +8,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
-public class FlyNestScreen extends AbstractContainerScreen<FlyNestMenu> {
+public class FlyBarrelScreen extends AbstractContainerScreen<FlyBarrelMenu> {
     private static final ResourceLocation CONTAINER_BACKGROUND =
-            PoopSky.loc("textures/gui/fly_nest.png");
+            PoopSky.loc("textures/gui/fly_barrel.png");
     private static final int PROGRESS_X = 48;
     private static final int PROGRESS_Y = 19;
     private static final int PROGRESS_U = 176;
@@ -18,7 +18,7 @@ public class FlyNestScreen extends AbstractContainerScreen<FlyNestMenu> {
     private static final int PROGRESS_WIDTH = 26;
     private static final int PROGRESS_HEIGHT = 16;
 
-    public FlyNestScreen(FlyNestMenu menu, Inventory playerInventory, Component title) {
+    public FlyBarrelScreen(FlyBarrelMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
         this.imageHeight = 132;
         this.imageWidth = 176;

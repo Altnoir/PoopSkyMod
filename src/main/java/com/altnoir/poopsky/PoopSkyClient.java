@@ -5,7 +5,7 @@ import com.altnoir.poopsky.common.block.ToiletType;
 import com.altnoir.poopsky.common.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.client.ToiletClientBlockExtensions;
 import com.altnoir.poopsky.client.inventory.BreedingBoxScreen;
-import com.altnoir.poopsky.client.inventory.FlyNestScreen;
+import com.altnoir.poopsky.client.inventory.FlyBarrelScreen;
 import com.altnoir.poopsky.client.particle.LeavesParticle;
 import com.altnoir.poopsky.client.particle.PoopParticle;
 import com.altnoir.poopsky.client.renderer.TimeBellOverlay;
@@ -95,7 +95,7 @@ public class PoopSkyClient {
         }
 
         public static void registerMenuScreens(RegisterMenuScreensEvent event) {
-            event.register(PMenuTypes.FLY_NEST.get(), FlyNestScreen::new);
+            event.register(PMenuTypes.FLY_BARREL.get(), FlyBarrelScreen::new);
             event.register(PMenuTypes.BREEDING_BOX.get(), BreedingBoxScreen::new);
         }
 

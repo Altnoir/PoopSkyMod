@@ -18,7 +18,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
-public class FlyNestRecipeCategory implements IRecipeCategory<RecipeHolder<FlyNestRecipe>> {
+public class FlyBarrelRecipeCategory implements IRecipeCategory<RecipeHolder<FlyNestRecipe>> {
     public static final RecipeType<RecipeHolder<FlyNestRecipe>> TYPE = RecipeType.createRecipeHolderType(PoopSky.loc("fly_nest"));
 
     private static final int HEIGHT = 18;
@@ -34,7 +34,7 @@ public class FlyNestRecipeCategory implements IRecipeCategory<RecipeHolder<FlyNe
     private final IDrawable arrow;
     private final IDrawable slot;
 
-    public FlyNestRecipeCategory(IJeiHelpers helpers, IDrawable arrow) {
+    public FlyBarrelRecipeCategory(IJeiHelpers helpers, IDrawable arrow) {
         var guiHelper = helpers.getGuiHelper();
         this.icon = guiHelper.createDrawableItemStack(new ItemStack(PBlocks.FLY_BARREL.get()));
         this.title = Component.translatable("jei.category." + PoopSky.MOD_ID + ".fly_nest");

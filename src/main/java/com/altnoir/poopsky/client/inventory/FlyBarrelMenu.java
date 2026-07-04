@@ -19,7 +19,7 @@ import net.minecraft.world.item.ItemStack;
  *   顶部右侧4个输出槽
  *   玩家背包 + 快捷栏
  */
-public class FlyNestMenu extends AbstractContainerMenu {
+public class FlyBarrelMenu extends AbstractContainerMenu {
     private static final int INPUT_SLOT = 0;
     private static final int OUTPUT_SLOT_1 = 1;
     private static final int OUTPUT_SLOT_2 = 2;
@@ -31,24 +31,24 @@ public class FlyNestMenu extends AbstractContainerMenu {
     private static final int HOTBAR_SLOT_START = 32;
     private static final int HOTBAR_SLOT_END = 41;
 
-    private final Container flyNest;
+    private final Container flyBarrel;
     private final ContainerData data;
 
     // 客户端用构造函数
-    public FlyNestMenu(int containerId, Inventory playerInventory) {
+    public FlyBarrelMenu(int containerId, Inventory playerInventory) {
         this(containerId, playerInventory, new SimpleContainer(SLOT_COUNT), new SimpleContainerData(2));
     }
 
     // 服务端用构造函数
-    public FlyNestMenu(int containerId, Inventory playerInventory, Container container) {
+    public FlyBarrelMenu(int containerId, Inventory playerInventory, Container container) {
         this(containerId, playerInventory, container, new SimpleContainerData(2));
     }
 
-    public FlyNestMenu(int containerId, Inventory playerInventory, Container container, ContainerData data) {
-        super(PMenuTypes.FLY_NEST.get(), containerId);
+    public FlyBarrelMenu(int containerId, Inventory playerInventory, Container container, ContainerData data) {
+        super(PMenuTypes.FLY_BARREL.get(), containerId);
         checkContainerSize(container, SLOT_COUNT);
         checkContainerDataCount(data, 2);
-        this.flyNest = container;
+        this.flyBarrel = container;
         this.data = data;
         container.startOpen(playerInventory.player);
         this.addDataSlots(data);
@@ -132,17 +132,17 @@ public class FlyNestMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return this.flyNest.stillValid(player);
+        return this.flyBarrel.stillValid(player);
     }
 
     @Override
     public void removed(Player player) {
         super.removed(player);
-        this.flyNest.stopOpen(player);
+        this.flyBarrel.stopOpen(player);
     }
 
     public Container getContainer() {
-        return flyNest;
+        return flyBarrel;
     }
 
     public int getProgress() {

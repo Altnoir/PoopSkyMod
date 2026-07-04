@@ -50,7 +50,7 @@ public class PSJEIPlugin implements IModPlugin {
         registration.addRecipeCategories(
                 new CompooperRecipeCategory(registration.getJeiHelpers(), arrow),
                 new SieveRecipeCategory(registration.getJeiHelpers(), arrow),
-                new FlyNestRecipeCategory(registration.getJeiHelpers(), arrow),
+                new FlyBarrelRecipeCategory(registration.getJeiHelpers(), arrow),
                 new BreedingBoxRecipeCategory(registration.getJeiHelpers(), arrow),
                 new POPExplosionRecipeCategory(registration.getJeiHelpers(), arrow),
                 new AnalPressingRecipeCategory(registration.getJeiHelpers(), arrow, plus));
@@ -94,7 +94,7 @@ public class PSJEIPlugin implements IModPlugin {
         registration.addRecipes(SieveRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PRecipes.SIEVE_TYPE.get()));
         registration.addRecipes(POPExplosionRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PRecipes.EXPLOSION_TRANSFORM_TYPE.get()));
         registration.addRecipes(AnalPressingRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PRecipes.ANAL_PRESSING_TYPE.get()));
-        registration.addRecipes(FlyNestRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PRecipes.FLY_NEST_TYPE.get()));
+        registration.addRecipes(FlyBarrelRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PRecipes.FLY_NEST_TYPE.get()));
         registration.addRecipes(BreedingBoxRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PRecipes.BREEDING_BOX_TYPE.get()));
 
         PSJEIInfo.register(registration);
@@ -108,7 +108,7 @@ public class PSJEIPlugin implements IModPlugin {
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(new ItemStack(PBlocks.COMPOOPER.get()), CompooperRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(PBlocks.SIEVE.get()), SieveRecipeCategory.TYPE);
-        registration.addRecipeCatalyst(new ItemStack(PBlocks.FLY_BARREL.get()), FlyNestRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(PBlocks.FLY_BARREL.get()), FlyBarrelRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(PBlocks.BREEDING_BOX.get()), BreedingBoxRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(PBlocks.POOP_TNT.get()), POPExplosionRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(PItems.KING_OF_DRAGON_FRUIT.get()), AnalPressingRecipeCategory.TYPE);
