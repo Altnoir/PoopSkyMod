@@ -51,8 +51,8 @@ public class ToiletBlockItem extends BlockItem {
         Block block = getBlock();
         if (block instanceof LavaToiletBlock lava) {
             return lava.applyVariant(state, type);
-        } else if (block instanceof ToiletBlock toilet) {
-            return toilet.applyVariant(state, type);
+        } else if (block instanceof ToiletBlock) {
+            return state;
         }
 
         return state;

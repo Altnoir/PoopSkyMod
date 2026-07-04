@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.common.block;
 
+import com.google.gson.JsonElement;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
@@ -66,7 +67,7 @@ public class ToiletType implements Comparable<ToiletType> {
         float h = getBlockDestroyTime(block);
         ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(block);
         String nameKey = "block." + blockId.getNamespace() + "." + blockId.getPath();
-        var type = new ToiletType(sourceBlockSupplier::get, category,
+        var type = new ToiletType(sourceBlockSupplier, category,
                 blockId.getPath(),
                 block.getName(), null, h, false, false, nameKey);
         REGISTRY.put(type.id, type);
@@ -156,15 +157,10 @@ public class ToiletType implements Comparable<ToiletType> {
             c -> c == Category.WOOD ? "wood" : "hard"
     );
 
-    /** 数据包 JSON 的格式（data/poopsky/poopsky_data/toilet_type/<id>.json） */
-    public static final Codec<ToiletType> DATA_CODEC = Codec.unit((ToiletType) null); // placeholder, see below
-
-    static {
-        // 由于 ToiletType 需要从 JsonElement 创建并放入 REGISTRY，我们用动态工厂
-    }
-
-    /** 从 JsonElement 解析一个 ToiletType 并注册到 REGISTRY */
-    public static ToiletType parseAndRegister(String id, com.google.gson.JsonElement json) {
+    /**
+     * 从 JsonElement 解析一个 ToiletType 并注册到 REGISTRY
+     */
+    public static void parseAndRegister(String id, JsonElement json) {
         var obj = json.getAsJsonObject();
 
         // source_block (可选)
@@ -220,7 +216,7 @@ public class ToiletType implements Comparable<ToiletType> {
             nameKey = null;
         }
 
-        return registerFromData(id, sourceBlock, category, displayName, texture, hardness, isRedstone, isGolden, nameKey);
+        registerFromData(id, sourceBlock, category, displayName, texture, hardness, isRedstone, isGolden, nameKey);
     }
 
     public static ToiletType byId(String id) {

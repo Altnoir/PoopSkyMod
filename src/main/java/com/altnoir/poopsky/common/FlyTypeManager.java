@@ -10,7 +10,9 @@ import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 
 import java.io.Reader;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class FlyTypeManager extends SimpleJsonResourceReloadListener {
     private static final Gson GSON = new GsonBuilder().create();
@@ -50,7 +52,7 @@ public class FlyTypeManager extends SimpleJsonResourceReloadListener {
                     if (element.isJsonObject()) {
                         JsonObject obj = element.getAsJsonObject();
                         // replace 字段可选，默认为 false（追加模式）
-                        replace = obj.has("replace") ? obj.get("replace").getAsBoolean() : false;
+                        replace = obj.has("replace") && obj.get("replace").getAsBoolean();
                         if (obj.has("values") && obj.get("values").isJsonArray()) {
                             values = obj.get("values").getAsJsonArray();
                         }

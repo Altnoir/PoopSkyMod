@@ -3,31 +3,22 @@ package com.altnoir.poopsky.worldgen;
 import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.worldgen.structure.PoopIslandStructure;
-import com.mojang.datafixers.util.Pair;
 import com.mojang.datafixers.util.Either;
+import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.CrashReport;
 import net.minecraft.ReportedException;
 import net.minecraft.SharedConstants;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderSet;
-import net.minecraft.core.Registry;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.SectionPos;
+import net.minecraft.core.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.LevelHeightAccessor;
-import net.minecraft.world.level.NoiseColumn;
-import net.minecraft.world.level.StructureManager;
-import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeManager;
 import net.minecraft.world.level.biome.BiomeSource;
@@ -36,15 +27,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.chunk.ChunkGeneratorStructureState;
-import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.levelgen.LegacyRandomSource;
-import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
-import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
-import net.minecraft.world.level.levelgen.RandomState;
-import net.minecraft.world.level.levelgen.RandomSupport;
-import net.minecraft.world.level.levelgen.WorldgenRandom;
-import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
+import net.minecraft.world.level.levelgen.*;
 import net.minecraft.world.level.levelgen.blending.Blender;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.Structure;
@@ -55,12 +38,7 @@ import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -91,9 +69,9 @@ public class PSVoidChunkGenerator extends NoiseBasedChunkGenerator {
                             AllowedStructureSets::ofTag,
                             AllowedStructureSets::ofKeys
                     ),
-                    allowed -> allowed.tag()
-                            .<Either<TagKey<StructureSet>, List<ResourceKey<StructureSet>>>>map(Either::left)
-                            .orElseGet(() -> Either.right(allowed.keys()))
+                    allowed -> allowed.tag() != null
+                            ? Either.left(allowed.tag())
+                            : Either.right(allowed.keys())
             );
 
     public static final MapCodec<PSVoidChunkGenerator> CODEC =
@@ -103,22 +81,20 @@ public class PSVoidChunkGenerator extends NoiseBasedChunkGenerator {
                     NoiseGeneratorSettings.CODEC.fieldOf("settings")
                             .forGetter(generator -> generator.settings),
                     ALLOWED_STRUCTURE_SETS_CODEC.optionalFieldOf("allowed_structure_sets")
-                            .forGetter(generator -> generator.allowedStructureSets)
-            ).apply(instance, instance.stable(PSVoidChunkGenerator::new)));
+                            .forGetter(generator -> Optional.ofNullable(generator.allowedStructureSets))
+            ).apply(instance, instance.stable((biomeSource, settings, allowedStructureSets) ->
+                    new PSVoidChunkGenerator(biomeSource, settings, allowedStructureSets.orElse(null)))));
 
     private final Holder<NoiseGeneratorSettings> settings;
-    private final Optional<AllowedStructureSets> allowedStructureSets;
+    @Nullable
+    private final AllowedStructureSets allowedStructureSets;
     private final boolean generateNormal;
 
-    public PSVoidChunkGenerator(BiomeSource biomeSource, Holder<NoiseGeneratorSettings> settings, Optional<AllowedStructureSets> allowedStructureSets) {
+    public PSVoidChunkGenerator(BiomeSource biomeSource, Holder<NoiseGeneratorSettings> settings, @Nullable AllowedStructureSets allowedStructureSets) {
         super(biomeSource, settings);
         this.settings = settings;
         this.allowedStructureSets = allowedStructureSets;
         this.generateNormal = settings.is(ResourceLocation.parse("minecraft:nether")) && !Config.voidNetherGeneration;
-    }
-
-    public PSVoidChunkGenerator(BiomeSource biomeSource, Holder<NoiseGeneratorSettings> settings) {
-        this(biomeSource, settings, Optional.empty());
     }
 
     @Override
@@ -126,30 +102,31 @@ public class PSVoidChunkGenerator extends NoiseBasedChunkGenerator {
         return CODEC;
     }
 
-    private record AllowedStructureSets(Optional<TagKey<StructureSet>> tag, List<ResourceKey<StructureSet>> keys) {
+    private record AllowedStructureSets(@Nullable TagKey<StructureSet> tag, List<ResourceKey<StructureSet>> keys) {
         private static AllowedStructureSets ofTag(TagKey<StructureSet> tag) {
-            return new AllowedStructureSets(Optional.of(tag), List.of());
+            return new AllowedStructureSets(tag, List.of());
         }
 
         private static AllowedStructureSets ofKeys(List<ResourceKey<StructureSet>> keys) {
-            return new AllowedStructureSets(Optional.empty(), List.copyOf(keys));
+            return new AllowedStructureSets(null, List.copyOf(keys));
         }
 
         private boolean contains(Holder<StructureSet> holder) {
-            return tag.map(holder::is)
-                    .orElseGet(() -> {
-                        Set<ResourceLocation> allowedLocations = keys.stream()
-                                .map(ResourceKey::location)
-                                .collect(Collectors.toUnmodifiableSet());
+            if (tag != null) {
+                return holder.is(tag);
+            }
 
-                        return holder.unwrapKey()
-                                .map(key -> allowedLocations.contains(key.location()))
-                                .orElse(false)
-                                || holder.value().structures().stream()
-                                .map(StructureSelectionEntry::structure)
-                                .map(Holder::unwrapKey)
-                                .anyMatch(key -> key.map(ResourceKey::location).filter(allowedLocations::contains).isPresent());
-                    });
+            Set<ResourceLocation> allowedLocations = keys.stream()
+                    .map(ResourceKey::location)
+                    .collect(Collectors.toUnmodifiableSet());
+
+            return holder.unwrapKey()
+                    .map(key -> allowedLocations.contains(key.location()))
+                    .orElse(false)
+                    || holder.value().structures().stream()
+                    .map(StructureSelectionEntry::structure)
+                    .map(Holder::unwrapKey)
+                    .anyMatch(key -> key.map(ResourceKey::location).filter(allowedLocations::contains).isPresent());
         }
     }
 
@@ -219,7 +196,7 @@ public class PSVoidChunkGenerator extends NoiseBasedChunkGenerator {
             ChunkAccess chunk,
             StructureTemplateManager templateManager
     ) {
-        if (generateNormal || allowedStructureSets.isEmpty()) {
+        if (generateNormal || allowedStructureSets == null) {
             super.createStructures(registries, structureState, structureManager, chunk, templateManager);
         } else {
             createAllowedStructures(registries, structureState, structureManager, chunk, templateManager);
@@ -234,7 +211,7 @@ public class PSVoidChunkGenerator extends NoiseBasedChunkGenerator {
     @Nullable
     public Pair<BlockPos, Holder<Structure>> findNearestMapStructure(ServerLevel level, HolderSet<Structure> structures, BlockPos pos, int searchRadius, boolean skipKnownStructures) {
         Pair<BlockPos, Holder<Structure>> guaranteedSpawnIsland = findGuaranteedSpawnIsland(level, structures, pos, searchRadius, skipKnownStructures);
-        if (generateNormal || allowedStructureSets.isEmpty()) {
+        if (generateNormal || allowedStructureSets == null) {
             return nearestStructure(pos, super.findNearestMapStructure(level, structures, pos, searchRadius, skipKnownStructures), guaranteedSpawnIsland);
         }
 
@@ -275,11 +252,11 @@ public class PSVoidChunkGenerator extends NoiseBasedChunkGenerator {
     }
 
     private Set<Structure> resolveAllowedStructures(RegistryAccess registries) {
-        if (allowedStructureSets.isEmpty()) {
+        if (allowedStructureSets == null) {
             return Set.of();
         }
 
-        AllowedStructureSets allowed = allowedStructureSets.get();
+        AllowedStructureSets allowed = allowedStructureSets;
         Registry<StructureSet> registry = registries.registryOrThrow(Registries.STRUCTURE_SET);
 
         return registry.holders()
@@ -291,7 +268,7 @@ public class PSVoidChunkGenerator extends NoiseBasedChunkGenerator {
     }
 
     private boolean isStructureAllowed(RegistryAccess registries, ResourceLocation structureId) {
-        if (allowedStructureSets.isEmpty()) {
+        if (allowedStructureSets == null) {
             return true;
         }
 
@@ -340,7 +317,7 @@ public class PSVoidChunkGenerator extends NoiseBasedChunkGenerator {
         ChunkPos chunkPos = chunk.getPos();
         SectionPos sectionPos = SectionPos.bottomOf(chunk);
         RandomState randomState = structureState.randomState();
-        AllowedStructureSets allowed = allowedStructureSets.orElseThrow();
+        AllowedStructureSets allowed = allowedStructureSets;
 
         for (Holder<StructureSet> structureSetHolder : structureState.possibleStructureSets()) {
             if (!allowed.contains(structureSetHolder)) {
@@ -437,7 +414,7 @@ public class PSVoidChunkGenerator extends NoiseBasedChunkGenerator {
 
         Map<Integer, List<Structure>> structuresByStep =
                 structureRegistry.stream()
-                        .filter(structure -> allowedStructureSets.isEmpty() || allowedStructures.contains(structure))
+                        .filter(structure -> allowedStructureSets == null || allowedStructures.contains(structure))
                         .collect(Collectors.groupingBy(structure -> structure.step().ordinal()));
 
         WorldgenRandom random = new WorldgenRandom(new XoroshiroRandomSource(RandomSupport.generateUniqueSeed()));

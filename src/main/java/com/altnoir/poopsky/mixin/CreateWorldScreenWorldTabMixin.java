@@ -14,7 +14,7 @@ import java.util.function.BooleanSupplier;
 public abstract class CreateWorldScreenWorldTabMixin {
     @Shadow
     @Final
-    private CreateWorldScreen this$0;
+    CreateWorldScreen this$0;
 
     @ModifyArg(
             method = "<init>",

@@ -50,7 +50,7 @@ public class PlacerBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = DirectionalBlock.FACING;
     public static final BooleanProperty TRIGGERED = BlockStateProperties.TRIGGERED;
     private static final DefaultDispenseItemBehavior DEFAULT_BEHAVIOR = new DefaultDispenseItemBehavior();
-    public static final Map<Item, DispenseItemBehavior> PLACER_REGISTRY = (Map) Util.make(new Object2ObjectOpenHashMap(), (map) -> map.defaultReturnValue(DEFAULT_BEHAVIOR));
+    public static final Map<Item, DispenseItemBehavior> PLACER_REGISTRY = Util.make(new Object2ObjectOpenHashMap<>(), map -> map.defaultReturnValue(DEFAULT_BEHAVIOR));
 
     public PlacerBlock(Properties properties) {
         super(properties);

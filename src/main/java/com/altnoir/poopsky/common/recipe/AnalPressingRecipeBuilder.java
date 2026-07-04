@@ -7,7 +7,6 @@ import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -38,10 +37,6 @@ public final class AnalPressingRecipeBuilder implements RecipeBuilder {
 
     public static AnalPressingRecipeBuilder analPressing(ItemLike input, Block output) {
         return new AnalPressingRecipeBuilder(Ingredient.of(input), output);
-    }
-
-    public static AnalPressingRecipeBuilder analPressing(Ingredient input, Block output) {
-        return new AnalPressingRecipeBuilder(input, output);
     }
 
     public AnalPressingRecipeBuilder replaceTarget(Block replaceTarget) {
@@ -89,11 +84,6 @@ public final class AnalPressingRecipeBuilder implements RecipeBuilder {
 
         AnalPressingRecipe recipe = new AnalPressingRecipe(input, output, replaceTarget, radius);
         recipeOutput.accept(id, recipe, advancementBuilder.build(advancementId.withPrefix("recipes/")));
-    }
-
-    public static ResourceLocation getDefaultRecipeId(ItemLike input) {
-        ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(input.asItem());
-        return PoopSky.loc(RECIPE_TYPE + "/" + itemId.getPath());
     }
 
     private void ensureValid(ResourceLocation id) {
