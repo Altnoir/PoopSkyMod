@@ -1,0 +1,8 @@
+{
+  "type": "poopsky:fly_barrel",
+  "fly_type": "green",
+  "result": {
+    "count": 1,
+    "id": "minecraft:cactus"
+  }
+}

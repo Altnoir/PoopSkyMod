@@ -48,12 +48,12 @@ public record AnalPressingRecipe(Ingredient input, Block output, Block replaceTa
 
     @Override
     public RecipeType<?> getType() {
-        return PRecipes.ANAL_PRESSING_TYPE.get();
+        return PRecipes.ANAL_PRESSING.type().get();
     }
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return PRecipes.ANAL_PRESSING_SERIALIZER.get();
+        return PRecipes.ANAL_PRESSING.serializer().get();
     }
 
     public void applyConversion(Level level, BlockPos centerPos) {

@@ -22,7 +22,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public final class POPExplosionRecipeBuilder implements RecipeBuilder {
-    private static final String RECIPE_TYPE = PRecipes.POP_EXPLOSION_RECIPE_FOLDER;
+    private static final String RECIPE_TYPE = PRecipes.POP_EXPLOSION.folder();
 
     private final Ingredient input;
     private final POPExplosionRecipe.Output output;

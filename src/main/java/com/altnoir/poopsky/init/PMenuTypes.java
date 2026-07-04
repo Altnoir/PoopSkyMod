@@ -11,8 +11,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class PMenuTypes {
-    public static final DeferredRegister<MenuType<?>> MENU_TYPES =
-            DeferredRegister.create(BuiltInRegistries.MENU, PoopSky.MOD_ID);
+    public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(BuiltInRegistries.MENU, PoopSky.MOD_ID);
 
     public static final DeferredHolder<MenuType<?>, MenuType<FlyBarrelMenu>> FLY_BARREL = MENU_TYPES.register(
             "fly_barrel", () -> new MenuType<>(FlyBarrelMenu::new, FeatureFlags.DEFAULT_FLAGS));

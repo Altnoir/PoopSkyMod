@@ -1,8 +1,0 @@
-{
-  "type": "poopsky:fly_nest",
-  "fly_type": "red",
-  "result": {
-    "count": 1,
-    "id": "minecraft:redstone"
-  }
-}

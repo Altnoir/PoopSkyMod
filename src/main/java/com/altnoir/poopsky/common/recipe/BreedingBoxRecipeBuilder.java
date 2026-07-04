@@ -19,7 +19,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public final class BreedingBoxRecipeBuilder implements RecipeBuilder {
-    private static final String RECIPE_TYPE = PRecipes.BREEDING_BOX_FOLDER;
+    private static final String RECIPE_TYPE = PRecipes.BREEDING_BOX.folder();
 
     private final String parent1;
     private final String parent2;

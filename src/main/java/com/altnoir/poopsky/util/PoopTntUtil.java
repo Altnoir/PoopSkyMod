@@ -116,7 +116,7 @@ public class PoopTntUtil {
         ItemStack itemStack = new ItemStack(block.asItem());
         SingleRecipeInput input = new SingleRecipeInput(itemStack);
 
-        for (RecipeHolder<POPExplosionRecipe> holder : level.getRecipeManager().getAllRecipesFor(PRecipes.EXPLOSION_TRANSFORM_TYPE.get())) {
+        for (RecipeHolder<POPExplosionRecipe> holder : level.getRecipeManager().getAllRecipesFor(PRecipes.POP_EXPLOSION.type().get())) {
             if (holder.value().matches(input, explosionRadius)) {
                 return holder.value().output();
             }

@@ -91,11 +91,11 @@ public class PSJEIPlugin implements IModPlugin {
         Level level = Minecraft.getInstance().level;
         RecipeManager recipeManager = level.getRecipeManager();
 
-        registration.addRecipes(SieveRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PRecipes.SIEVE_TYPE.get()));
-        registration.addRecipes(POPExplosionRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PRecipes.EXPLOSION_TRANSFORM_TYPE.get()));
-        registration.addRecipes(AnalPressingRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PRecipes.ANAL_PRESSING_TYPE.get()));
-        registration.addRecipes(FlyBarrelRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PRecipes.FLY_NEST_TYPE.get()));
-        registration.addRecipes(BreedingBoxRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PRecipes.BREEDING_BOX_TYPE.get()));
+        registration.addRecipes(SieveRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PRecipes.SIEVE.type().get()));
+        registration.addRecipes(POPExplosionRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PRecipes.POP_EXPLOSION.type().get()));
+        registration.addRecipes(AnalPressingRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PRecipes.ANAL_PRESSING.type().get()));
+        registration.addRecipes(FlyBarrelRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PRecipes.FLY_BARREL.type().get()));
+        registration.addRecipes(BreedingBoxRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PRecipes.BREEDING_BOX.type().get()));
 
         PSJEIInfo.register(registration);
 

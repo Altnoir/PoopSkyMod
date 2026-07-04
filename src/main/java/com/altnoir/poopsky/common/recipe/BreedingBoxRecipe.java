@@ -49,12 +49,12 @@ public record BreedingBoxRecipe(String parent1, String parent2, String result, f
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return PRecipes.BREEDING_BOX_SERIALIZER.get();
+        return PRecipes.BREEDING_BOX.serializer().get();
     }
 
     @Override
     public RecipeType<?> getType() {
-        return PRecipes.BREEDING_BOX_TYPE.get();
+        return PRecipes.BREEDING_BOX.type().get();
     }
 
     public static class Serializer implements RecipeSerializer<BreedingBoxRecipe> {

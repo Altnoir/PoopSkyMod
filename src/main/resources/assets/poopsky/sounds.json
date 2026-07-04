@@ -33,15 +33,6 @@
       }
     ]
   },
-  "block.poolime_poop_block.slide": {
-    "subtitle": "subtitle.poopsky.block.poolime_poop_block.slide",
-    "sounds": [
-      {
-        "name": "minecraft:block.honey_block.slide",
-        "type": "event"
-      }
-    ]
-  },
   "block.compooper.maggots": {
     "subtitle": "subtitle.poopsky.compooper.maggots",
     "sounds": [
@@ -51,8 +42,8 @@
       }
     ]
   },
-  "block.fly_nest.open": {
-    "subtitle": "subtitle.poopsky.fly_nest.open",
+  "block.fly_barrel.open": {
+    "subtitle": "subtitle.poopsky.fly_barrel.open",
     "sounds": [
       {
         "name": "minecraft:block.barrel.open",
@@ -60,8 +51,8 @@
       }
     ]
   },
-  "block.fly_nest.close": {
-    "subtitle": "subtitle.poopsky.fly_nest.close",
+  "block.fly_barrel.close": {
+    "subtitle": "subtitle.poopsky.fly_barrel.close",
     "sounds": [
       {
         "name": "minecraft:block.barrel.close",
@@ -69,8 +60,8 @@
       }
     ]
   },
-  "block.fly_nest.work": {
-    "subtitle": "subtitle.poopsky.fly_nest.work",
+  "block.fly_barrel.work": {
+    "subtitle": "subtitle.poopsky.fly_barrel.work",
     "sounds": [
       {
         "name": "minecraft:block.beehive.work",

@@ -16,7 +16,7 @@ public class PFlyRecipes {
     public static ItemStack getProduct(Level level, FlyType.Type type) {
         if (level == null) return ItemStack.EMPTY;
         return level.getRecipeManager()
-                .getAllRecipesFor(PRecipes.FLY_NEST_TYPE.get())
+                .getAllRecipesFor(PRecipes.FLY_BARREL.type().get())
                 .stream()
                 .filter(holder -> holder.value().matches(type.id()))
                 .findFirst()
@@ -28,7 +28,7 @@ public class PFlyRecipes {
         if (level == null) return fallbackResult(parent1, parent2);
 
         List<RecipeHolder<BreedingBoxRecipe>> recipes = level.getRecipeManager()
-                .getAllRecipesFor(PRecipes.BREEDING_BOX_TYPE.get());
+                .getAllRecipesFor(PRecipes.BREEDING_BOX.type().get());
 
         Random random = new Random();
         for (var holder : recipes) {

@@ -9,8 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public class FlyBarrelScreen extends AbstractContainerScreen<FlyBarrelMenu> {
-    private static final ResourceLocation CONTAINER_BACKGROUND =
-            PoopSky.loc("textures/gui/fly_barrel.png");
+    private static final ResourceLocation CONTAINER_BACKGROUND = PoopSky.loc("textures/gui/fly_barrel.png");
     private static final int PROGRESS_X = 48;
     private static final int PROGRESS_Y = 19;
     private static final int PROGRESS_U = 176;

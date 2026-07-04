@@ -237,7 +237,7 @@ public class SieveBlockEntity extends BlockEntity {
     private Optional<SieveRecipe> findRecipe(ItemStack stack) {
         if (level == null || stack.isEmpty()) return Optional.empty();
         return level.getRecipeManager()
-                .getRecipeFor(PRecipes.SIEVE_TYPE.get(), new SingleRecipeInput(stack), level)
+                .getRecipeFor(PRecipes.SIEVE.type().get(), new SingleRecipeInput(stack), level)
                 .map(RecipeHolder::value);
     }
 

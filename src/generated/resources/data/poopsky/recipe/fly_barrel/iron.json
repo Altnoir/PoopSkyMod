@@ -1,0 +1,8 @@
+{
+  "type": "poopsky:fly_barrel",
+  "fly_type": "iron",
+  "result": {
+    "count": 1,
+    "id": "minecraft:raw_iron"
+  }
+}

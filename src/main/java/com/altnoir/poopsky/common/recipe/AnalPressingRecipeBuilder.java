@@ -22,7 +22,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public final class AnalPressingRecipeBuilder implements RecipeBuilder {
-    private static final String RECIPE_TYPE = PRecipes.ANAL_PRESSING_FOLDER;
+    private static final String RECIPE_TYPE = PRecipes.ANAL_PRESSING.folder();
 
     private final Ingredient input;
     private final Block output;

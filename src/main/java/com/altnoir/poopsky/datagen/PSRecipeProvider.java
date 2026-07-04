@@ -527,7 +527,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         buildpopExplosionRecipes(recipeOutput);
         buildAnalPressingRecipes(recipeOutput);
         buildBreedingBoxRecipes(recipeOutput);
-        buildFlyNestRecipes(recipeOutput);
+        buildFlyBarrelRecipes(recipeOutput);
     }
 
     private void buildpopExplosionRecipes(RecipeOutput recipeOutput) {
@@ -737,37 +737,37 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         }
     }
 
-    private void buildFlyNestRecipes(RecipeOutput recipeOutput) {
-        LinkedHashMap<FlyType.Type, ItemLike> flyNestMap = new LinkedHashMap<>();
-        flyNestMap.put(PFlyTypes.NORMAL.get(), PItems.MAGGOTS_SEEDS);
-        flyNestMap.put(PFlyTypes.WHITE.get(), Items.BONE_MEAL);
-        flyNestMap.put(PFlyTypes.LIGHT_GRAY.get(), Items.QUARTZ);
-        flyNestMap.put(PFlyTypes.GRAY.get(), Items.GRAVEL);
-        flyNestMap.put(PFlyTypes.BLACK.get(), Items.WITHER_ROSE);
-        flyNestMap.put(PFlyTypes.BROWN.get(), Items.COCOA_BEANS);
-        flyNestMap.put(PFlyTypes.RED.get(), Items.REDSTONE);
-        flyNestMap.put(PFlyTypes.ORANGE.get(), Items.TORCHFLOWER);
-        flyNestMap.put(PFlyTypes.YELLOW.get(), Items.GLOW_BERRIES);
-        flyNestMap.put(PFlyTypes.LIME.get(), Items.SEA_PICKLE);
-        flyNestMap.put(PFlyTypes.GREEN.get(), Items.CACTUS);
-        flyNestMap.put(PFlyTypes.CYAN.get(), Items.PRISMARINE_SHARD);
-        flyNestMap.put(PFlyTypes.LIGHT_BLUE.get(), Items.PRISMARINE_CRYSTALS);
-        flyNestMap.put(PFlyTypes.BLUE.get(), Items.LAPIS_LAZULI);
-        flyNestMap.put(PFlyTypes.PURPLE.get(), Items.AMETHYST_SHARD);
-        flyNestMap.put(PFlyTypes.MAGENTA.get(), Items.CHORUS_FRUIT);
-        flyNestMap.put(PFlyTypes.PINK.get(), Items.PINK_PETALS);
+    private void buildFlyBarrelRecipes(RecipeOutput recipeOutput) {
+        LinkedHashMap<FlyType.Type, ItemLike> flyBarrelMap = new LinkedHashMap<>();
+        flyBarrelMap.put(PFlyTypes.NORMAL.get(), PItems.MAGGOTS_SEEDS);
+        flyBarrelMap.put(PFlyTypes.WHITE.get(), Items.BONE_MEAL);
+        flyBarrelMap.put(PFlyTypes.LIGHT_GRAY.get(), Items.QUARTZ);
+        flyBarrelMap.put(PFlyTypes.GRAY.get(), Items.GRAVEL);
+        flyBarrelMap.put(PFlyTypes.BLACK.get(), Items.WITHER_ROSE);
+        flyBarrelMap.put(PFlyTypes.BROWN.get(), Items.COCOA_BEANS);
+        flyBarrelMap.put(PFlyTypes.RED.get(), Items.REDSTONE);
+        flyBarrelMap.put(PFlyTypes.ORANGE.get(), Items.TORCHFLOWER);
+        flyBarrelMap.put(PFlyTypes.YELLOW.get(), Items.GLOW_BERRIES);
+        flyBarrelMap.put(PFlyTypes.LIME.get(), Items.SEA_PICKLE);
+        flyBarrelMap.put(PFlyTypes.GREEN.get(), Items.CACTUS);
+        flyBarrelMap.put(PFlyTypes.CYAN.get(), Items.PRISMARINE_SHARD);
+        flyBarrelMap.put(PFlyTypes.LIGHT_BLUE.get(), Items.PRISMARINE_CRYSTALS);
+        flyBarrelMap.put(PFlyTypes.BLUE.get(), Items.LAPIS_LAZULI);
+        flyBarrelMap.put(PFlyTypes.PURPLE.get(), Items.AMETHYST_SHARD);
+        flyBarrelMap.put(PFlyTypes.MAGENTA.get(), Items.CHORUS_FRUIT);
+        flyBarrelMap.put(PFlyTypes.PINK.get(), Items.PINK_PETALS);
         // More
-        flyNestMap.put(PFlyTypes.IRON.get(), Items.RAW_IRON);
-        flyNestMap.put(PFlyTypes.COPPER.get(), Items.RAW_COPPER);
-        flyNestMap.put(PFlyTypes.GOLD.get(), Items.RAW_GOLD);
-        flyNestMap.put(PFlyTypes.EMERALD.get(), Items.EMERALD);
-        flyNestMap.put(PFlyTypes.DIAMOND.get(), Items.DIAMOND);
-        flyNestMap.put(PFlyTypes.NETHERITE.get(), Items.NETHERITE_SCRAP);
-        flyNestMap.put(PFlyTypes.GLOWSTONE.get(), Items.GLOWSTONE_DUST);
-        flyNestMap.put(PFlyTypes.BLAZE.get(), Items.BLAZE_POWDER);
-        flyNestMap.put(PFlyTypes.ENDER.get(), Items.ENDER_PEARL);
+        flyBarrelMap.put(PFlyTypes.IRON.get(), Items.RAW_IRON);
+        flyBarrelMap.put(PFlyTypes.COPPER.get(), Items.RAW_COPPER);
+        flyBarrelMap.put(PFlyTypes.GOLD.get(), Items.RAW_GOLD);
+        flyBarrelMap.put(PFlyTypes.EMERALD.get(), Items.EMERALD);
+        flyBarrelMap.put(PFlyTypes.DIAMOND.get(), Items.DIAMOND);
+        flyBarrelMap.put(PFlyTypes.NETHERITE.get(), Items.NETHERITE_SCRAP);
+        flyBarrelMap.put(PFlyTypes.GLOWSTONE.get(), Items.GLOWSTONE_DUST);
+        flyBarrelMap.put(PFlyTypes.BLAZE.get(), Items.BLAZE_POWDER);
+        flyBarrelMap.put(PFlyTypes.ENDER.get(), Items.ENDER_PEARL);
 
-        flyNestMap.forEach((type, result) -> FlyNestRecipeBuilder.flyNest(type.id(), result)
+        flyBarrelMap.forEach((type, result) -> FlyBarrelRecipeBuilder.flyBarrel(type.id(), result)
                 .unlockedBy(getHasName(PBlocks.FLY_BARREL), has(PBlocks.FLY_BARREL))
                 .save(recipeOutput, type.id()));
     }

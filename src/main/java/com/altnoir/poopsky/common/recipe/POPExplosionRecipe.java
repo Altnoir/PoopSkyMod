@@ -99,12 +99,12 @@ public record POPExplosionRecipe(Ingredient input, int radius, Output output) im
 
     @Override
     public RecipeType<?> getType() {
-        return PRecipes.EXPLOSION_TRANSFORM_TYPE.get();
+        return PRecipes.POP_EXPLOSION.type().get();
     }
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return PRecipes.EXPLOSION_TRANSFORM_SERIALIZER.get();
+        return PRecipes.POP_EXPLOSION.serializer().get();
     }
 
     public static class Serializer implements RecipeSerializer<POPExplosionRecipe> {

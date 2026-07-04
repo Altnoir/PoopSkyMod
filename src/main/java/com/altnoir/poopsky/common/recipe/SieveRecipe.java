@@ -48,12 +48,12 @@ public record SieveRecipe(Ingredient input, List<ChanceItemStack> outputs, int p
 
     @Override
     public RecipeType<?> getType() {
-        return PRecipes.SIEVE_TYPE.get();
+        return PRecipes.SIEVE.type().get();
     }
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return PRecipes.SIEVE_SERIALIZER.get();
+        return PRecipes.SIEVE.serializer().get();
     }
 
     public List<ItemStack> rollOutputs(RandomSource random) {

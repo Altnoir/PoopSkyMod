@@ -78,7 +78,7 @@ public class FlyBarrelBlock extends BaseEntityBlock {
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (!level.isClientSide) {
             if (level.getBlockEntity(pos) instanceof FlyBarrelBlockEntity be) {
-                level.playSound(null, pos, PSoundEvents.BLOCK_FLY_NEST_OPEN.get(), SoundSource.BLOCKS, 0.5F, 0.7F);
+                level.playSound(null, pos, PSoundEvents.BLOCK_FLY_BARREL_OPEN.get(), SoundSource.BLOCKS, 0.5F, 0.7F);
                 player.openMenu(be);
             }
         }

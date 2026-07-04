@@ -39,7 +39,7 @@ public class OnTheVergeEffect extends MobEffect {
                         BlockState state = level.getBlockState(pos);
                         BlockState stoneState = level.getBlockState(stonePos);
 
-                        for (var holder : level.getRecipeManager().getAllRecipesFor(PRecipes.ANAL_PRESSING_TYPE.get())) {
+                        for (var holder : level.getRecipeManager().getAllRecipesFor(PRecipes.ANAL_PRESSING.type().get())) {
                             var recipe = holder.value();
                             if (recipe.input().test(new ItemStack(state.getBlock().asItem())) && recipe.replaceTarget() == stoneState.getBlock()) {
                                 level.removeBlock(pos, false);

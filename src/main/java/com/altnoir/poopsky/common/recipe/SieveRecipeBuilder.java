@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 public final class SieveRecipeBuilder implements RecipeBuilder {
-    private static final String RECIPE_TYPE = PRecipes.SIEVE_RECIPE_FOLDER;
+    private static final String RECIPE_TYPE = PRecipes.SIEVE.folder();
 
     private final Ingredient input;
     private final int processingTime;
