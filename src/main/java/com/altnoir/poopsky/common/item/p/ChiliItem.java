@@ -9,11 +9,22 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 public class ChiliItem extends Item implements IFeedable {
     public ChiliItem(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity livingEntity) {
+        super.finishUsingItem(stack, level, livingEntity);
+        if (!level.isClientSide) {
+            livingEntity.hurt(livingEntity.damageSources().inFire(), 1.0F);
+            livingEntity.igniteForSeconds(3);
+        }
+        return stack;
     }
 
     @Override
@@ -25,6 +36,7 @@ public class ChiliItem extends Item implements IFeedable {
                 ItemStack redFlyItem = FlyItem.withType(PFlyTypes.RED.get());
                 fly.spawnAtLocation(redFlyItem);
                 fly.kill();
+                stack.consume(1, player);
             }
             return InteractionResult.SUCCESS;
         }

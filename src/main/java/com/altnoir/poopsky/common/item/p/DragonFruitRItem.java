@@ -35,6 +35,7 @@ public class DragonFruitRItem extends Item implements IFeedable {
                 ItemStack dragonFlyItem = FlyItem.withType(PFlyTypes.DRAGON_FRUIT.get());
                 fly.spawnAtLocation(dragonFlyItem);
                 fly.kill();
+                stack.consume(1, player);
             }
             return InteractionResult.SUCCESS;
         }

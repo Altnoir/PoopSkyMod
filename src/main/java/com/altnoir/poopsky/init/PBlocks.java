@@ -250,6 +250,7 @@ public class PBlocks {
     );
     public static final DeferredBlock<Block> BREEDING_CHEST = registerDefaultBlock("breeding_chest",
             () -> new BreedingChestBlock(simpleProperties(MapColor.COLOR_BROWN, 1.0F, SoundType.POLISHED_TUFF)
+                    .requiresCorrectToolForDrops()
                     .noOcclusion())
     );
 

@@ -1,11 +1,11 @@
 {
-  "parent": "poopsky:maggots",
+  "parent": "poopsky:poop_sapling",
   "criteria": {
-    "poolime_poop_block": {
+    "pointed_dripstone": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:poolime_poop_block"
+            "items": "minecraft:pointed_dripstone"
           }
         ]
       },
@@ -14,20 +14,19 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.poopsky.poolime_poop_block.description"
+      "translate": "advancements.poopsky.pointed_dripstone.description"
     },
-    "frame": "goal",
     "icon": {
       "count": 1,
-      "id": "poopsky:poolime_poop_block"
+      "id": "minecraft:pointed_dripstone"
     },
     "title": {
-      "translate": "advancements.poopsky.poolime_poop_block.title"
+      "translate": "advancements.poopsky.pointed_dripstone.title"
     }
   },
   "requirements": [
     [
-      "poolime_poop_block"
+      "pointed_dripstone"
     ]
   ],
   "sends_telemetry_event": true

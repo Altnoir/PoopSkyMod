@@ -100,7 +100,7 @@ public class PItems {
             OmenSmithingTemplateItem::createOmenUpgradeTemplate);
 
     public static final DeferredItem<Item> FLY_CATCHER = ITEMS.register("fly_catcher",
-            () -> new FlyCatcherItem(new Item.Properties().stacksTo(1).durability(64)));
+            () -> new FlyCatcherItem(new Item.Properties().stacksTo(1).durability(88)));
     public static final DeferredItem<Item> TIME_BELL = ITEMS.register("time_bell", () ->
             new TimeBellItem(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<Item> SPALL = ITEMS.registerSimpleItem("spall", new Item.Properties());

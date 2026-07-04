@@ -168,11 +168,13 @@ public class PSBlockTagProvider extends BlockTagsProvider {
         //工具标签
         tag(BlockTags.MINEABLE_WITH_AXE)
                 .add(PBlocks.WOODEN_TOILET.get())
+                .add(PBlocks.FLY_BARREL.get())
                 .add(PBlocks.MAGGOTS.get());
 
         var mineableWithPickaxe = tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(
                         PBlocks.HARD_TOILET.get(),
+                        PBlocks.BREEDING_CHEST.get(),
                         PBlocks.POOP_LOG.get(),
                         PBlocks.STRIPPED_POOP_LOG.get()
                 );
