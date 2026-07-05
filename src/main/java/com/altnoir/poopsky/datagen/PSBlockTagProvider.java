@@ -55,18 +55,18 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                         PBlocks.POOP_PIECE.get()
                 );
         poopBuildingBlocks.add(
-                        PBlocks.POOP_BLOCK.get(),
-                        PBlocks.POOP_STAIRS.get(),
-                        PBlocks.POOP_SLAB.get(),
-                        PBlocks.POOP_VERTICAL_SLAB.get(),
-                        PBlocks.POOP_BUTTON.get(),
-                        PBlocks.POOP_PRESSURE_PLATE.get(),
-                        PBlocks.POOP_FENCE.get(),
-                        PBlocks.POOP_FENCE_GATE.get(),
-                        PBlocks.POOP_WALL.get(),
-                        PBlocks.POOP_DOOR.get(),
-                        PBlocks.POOP_TRAPDOOR.get()
-                );
+                PBlocks.POOP_BLOCK.get(),
+                PBlocks.POOP_STAIRS.get(),
+                PBlocks.POOP_SLAB.get(),
+                PBlocks.POOP_VERTICAL_SLAB.get(),
+                PBlocks.POOP_BUTTON.get(),
+                PBlocks.POOP_PRESSURE_PLATE.get(),
+                PBlocks.POOP_FENCE.get(),
+                PBlocks.POOP_FENCE_GATE.get(),
+                PBlocks.POOP_WALL.get(),
+                PBlocks.POOP_DOOR.get(),
+                PBlocks.POOP_TRAPDOOR.get()
+        );
         PBlocks.CHILI_POOP_FAMILY.blocks().forEach(block -> poopBuildingBlocks.add(block.get()));
         PBlocks.GOLDEN_POOP_FAMILY.blocks().forEach(block -> poopBuildingBlocks.add(block.get()));
         tag(PTags.Blocks.EMPTY_LOGS)
@@ -180,21 +180,26 @@ public class PSBlockTagProvider extends BlockTagsProvider {
                 );
         PBlocks.TILE_BLOCK_FAMILY.blocks().forEach(block -> mineableWithPickaxe.add(block.get()));
         mineableWithPickaxe.add(
-                        PBlocks.SIEVE.get(),
-                        PBlocks.PLACER.get(),
-                        PBlocks.COMPOOPER.get(),
-                        PBlocks.WATER_COMPOOPER.get(),
-                        PBlocks.LAVA_COMPOOPER.get(),
-                        PBlocks.POWDER_SNOW_COMPOOPER.get(),
-                        PBlocks.URINE_COMPOOPER.get()
-                );
+                PBlocks.SIEVE.get(),
+                PBlocks.PLACER.get(),
+                PBlocks.COMPOOPER.get(),
+                PBlocks.WATER_COMPOOPER.get(),
+                PBlocks.LAVA_COMPOOPER.get(),
+                PBlocks.POWDER_SNOW_COMPOOPER.get(),
+                PBlocks.URINE_COMPOOPER.get()
+        );
         mineableWithPickaxe.add(PBlocks.POOP_BRICKS.get(), PBlocks.CRACKED_POOP_BRICKS.get());
         PBlocks.POOP_BRICK_FAMILY.blocks().stream().skip(1).forEach(block -> mineableWithPickaxe.add(block.get()));
         PBlocks.HARDENED_POOP_FAMILIES.stream().skip(1).forEach(family -> family.blocks().forEach(block -> mineableWithPickaxe.add(block.get())));
 
         tag(BlockTags.MINEABLE_WITH_HOE)
-                .add(PBlocks.MAGGOTS_BLOCK.get())
-                .add(PBlocks.ROUNDWORM_BLOCK.get())
+                .add(PBlocks.MAGGOTS_BLOCK.get(),
+                        PBlocks.ROUNDWORM_BLOCK.get(),
+                        PBlocks.RAW_POOP_BLOCK.get(),
+                        PBlocks.RAW_SAPLING_POOP_BLOCK.get(),
+                        PBlocks.RAW_SEA_POOP_BLOCK.get(),
+                        PBlocks.RAW_WITHER_POOP_BLOCK.get()
+                )
                 .addTag(PTags.Blocks.POOP_BUILDING_BLOCKS);
 
         tag(BlockTags.MINEABLE_WITH_SHOVEL)
