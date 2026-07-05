@@ -622,15 +622,6 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .addOutput(Items.RAW_IRON, 0.5F)
                 .unlockedBy(getItemName(PBlocks.SIEVE.get()), has(PBlocks.SIEVE.get()))
                 .save(createNotLoaded, "poop_block");
-        SieveRecipeBuilder.sieve(PBlocks.POOP_BLOCK, 200)
-                .addOutput(Items.IRON_NUGGET, 8)
-                .addOutput(AllItems.ZINC_NUGGET, 8)
-                .addOutput(Items.IRON_NUGGET, 8, 0.5F)
-                .addOutput(AllItems.ZINC_NUGGET, 8, 0.5F)
-                .addOutput(Items.RAW_IRON, 0.5F)
-                .addOutput(AllItems.RAW_ZINC, 0.5F)
-                .unlockedBy(getItemName(PBlocks.SIEVE.get()), has(PBlocks.SIEVE.get()))
-                .save(createLoaded, "poop_block_has_create");
 
         SieveRecipeBuilder.sieve(PBlocks.CHILI_POOP_BLOCK, 300)
                 .addOutput(Items.QUARTZ, 4)
@@ -655,15 +646,6 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .addOutput(Items.AMETHYST_SHARD, 0.25F)
                 .unlockedBy(getItemName(PBlocks.SIEVE.get()), has(PBlocks.SIEVE.get()))
                 .save(createNotLoaded, "raw_poop_block");
-        SieveRecipeBuilder.sieve(PBlocks.RAW_POOP_BLOCK, 100)
-                .addOutput(AllItems.COPPER_NUGGET, 8)
-                .addOutput(AllItems.COPPER_NUGGET, 8, 0.75F)
-                .addOutput(Items.RAW_COPPER, 0.5F)
-                .addOutput(Items.REDSTONE, 2, 0.75F)
-                .addOutput(Items.REDSTONE, 0.5F)
-                .addOutput(Items.AMETHYST_SHARD, 0.25F)
-                .unlockedBy(getItemName(PBlocks.SIEVE.get()), has(PBlocks.SIEVE.get()))
-                .save(createLoaded, "raw_poop_block_has_create");
 
         SieveRecipeBuilder.sieve(PBlocks.RAW_SAPLING_POOP_BLOCK, 100)
                 .addOutput(Items.SUNFLOWER).addOutput(Items.LILAC)
@@ -677,10 +659,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         SieveRecipeBuilder.sieve(PBlocks.RAW_SEA_POOP_BLOCK, 100)
                 .addOutput(Items.SEAGRASS, 2).addOutput(Items.SEAGRASS, 0.75F)
                 .addOutput(Items.LILY_PAD)
-                .addOutput(Items.SEA_PICKLE, 0.5F)
                 .addOutput(Items.KELP, 0.5F)
-                .addOutput(Items.PRISMARINE_SHARD, 0.25F)
-                .addOutput(Items.PRISMARINE_CRYSTALS, 0.2F)
                 .addOutput(Items.NAUTILUS_SHELL, 0.09F)
                 .addOutput(Items.HEART_OF_THE_SEA, 0.01F)
                 .unlockedBy(getItemName(PBlocks.SIEVE.get()), has(PBlocks.SIEVE.get()))
@@ -697,6 +676,61 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .addOutput(PItems.KING_OF_DRAGON_FRUIT.get(), 0.5F)
                 .unlockedBy(getItemName(PBlocks.SIEVE.get()), has(PBlocks.SIEVE.get()))
                 .save(recipeOutput, "cactus");
+
+        // Create
+        SieveRecipeBuilder.sieve(PBlocks.POOP_BLOCK, 200)
+                .addOutput(Items.IRON_NUGGET, 8)
+                .addOutput(AllItems.ZINC_NUGGET, 8)
+                .addOutput(Items.IRON_NUGGET, 8, 0.5F)
+                .addOutput(AllItems.ZINC_NUGGET, 8, 0.5F)
+                .addOutput(Items.RAW_IRON, 0.5F)
+                .addOutput(AllItems.RAW_ZINC, 0.5F)
+                .unlockedBy(getItemName(PBlocks.SIEVE.get()), has(PBlocks.SIEVE.get()))
+                .save(createLoaded, "poop_block_has_create");
+        SieveRecipeBuilder.sieve(PBlocks.RAW_POOP_BLOCK, 100)
+                .addOutput(AllItems.COPPER_NUGGET, 8)
+                .addOutput(AllItems.COPPER_NUGGET, 8, 0.75F)
+                .addOutput(Items.RAW_COPPER, 0.5F)
+                .addOutput(Items.REDSTONE, 2, 0.75F)
+                .addOutput(Items.REDSTONE, 0.5F)
+                .addOutput(Items.AMETHYST_SHARD, 0.25F)
+                .unlockedBy(getItemName(PBlocks.SIEVE.get()), has(PBlocks.SIEVE.get()))
+                .save(createLoaded, "raw_poop_block_has_create");
+    }
+
+    private void buildFlyBarrelRecipes(RecipeOutput recipeOutput) {
+        LinkedHashMap<FlyType.Type, ItemLike> flyBarrelMap = new LinkedHashMap<>();
+        flyBarrelMap.put(PFlyTypes.NORMAL.get(), PItems.MAGGOTS_SEEDS);
+        flyBarrelMap.put(PFlyTypes.WHITE.get(), Items.BONE_MEAL);
+        flyBarrelMap.put(PFlyTypes.LIGHT_GRAY.get(), Items.QUARTZ);
+        flyBarrelMap.put(PFlyTypes.GRAY.get(), Items.GRAVEL);
+        flyBarrelMap.put(PFlyTypes.BLACK.get(), Items.WITHER_ROSE);
+        flyBarrelMap.put(PFlyTypes.BROWN.get(), Items.COCOA_BEANS);
+        flyBarrelMap.put(PFlyTypes.RED.get(), Items.REDSTONE);
+        flyBarrelMap.put(PFlyTypes.ORANGE.get(), Items.TORCHFLOWER);
+        flyBarrelMap.put(PFlyTypes.YELLOW.get(), Items.GLOW_BERRIES);
+        flyBarrelMap.put(PFlyTypes.LIME.get(), Items.SEA_PICKLE);
+        flyBarrelMap.put(PFlyTypes.GREEN.get(), Items.CACTUS);
+        flyBarrelMap.put(PFlyTypes.CYAN.get(), Items.PRISMARINE_SHARD);
+        flyBarrelMap.put(PFlyTypes.LIGHT_BLUE.get(), Items.PRISMARINE_CRYSTALS);
+        flyBarrelMap.put(PFlyTypes.BLUE.get(), Items.LAPIS_LAZULI);
+        flyBarrelMap.put(PFlyTypes.PURPLE.get(), Items.AMETHYST_SHARD);
+        flyBarrelMap.put(PFlyTypes.MAGENTA.get(), Items.CHORUS_FRUIT);
+        flyBarrelMap.put(PFlyTypes.PINK.get(), Items.PINK_PETALS);
+        // More
+        flyBarrelMap.put(PFlyTypes.IRON.get(), Items.RAW_IRON);
+        flyBarrelMap.put(PFlyTypes.COPPER.get(), Items.RAW_COPPER);
+        flyBarrelMap.put(PFlyTypes.GOLD.get(), Items.RAW_GOLD);
+        flyBarrelMap.put(PFlyTypes.EMERALD.get(), Items.EMERALD);
+        flyBarrelMap.put(PFlyTypes.DIAMOND.get(), Items.DIAMOND);
+        flyBarrelMap.put(PFlyTypes.NETHERITE.get(), Items.NETHERITE_SCRAP);
+        flyBarrelMap.put(PFlyTypes.DRAGON_FRUIT.get(), Items.GUNPOWDER);
+        flyBarrelMap.put(PFlyTypes.GLOWSTONE.get(), Items.GLOWSTONE_DUST);
+        flyBarrelMap.put(PFlyTypes.ENDER.get(), Items.ENDER_PEARL);
+
+        flyBarrelMap.forEach((type, result) -> FlyBarrelRecipeBuilder.flyBarrel(type.id(), result)
+                .unlockedBy(getHasName(PBlocks.FLY_BARREL), has(PBlocks.FLY_BARREL))
+                .save(recipeOutput, type.id()));
     }
 
     private void buildBreedingChestRecipes(RecipeOutput recipeOutput) {
@@ -735,41 +769,6 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
             builder.unlockedBy(getHasName(PBlocks.FLY_BARREL), has(PBlocks.FLY_BARREL))
                     .save(recipeOutput, id);
         }
-    }
-
-    private void buildFlyBarrelRecipes(RecipeOutput recipeOutput) {
-        LinkedHashMap<FlyType.Type, ItemLike> flyBarrelMap = new LinkedHashMap<>();
-        flyBarrelMap.put(PFlyTypes.NORMAL.get(), PItems.MAGGOTS_SEEDS);
-        flyBarrelMap.put(PFlyTypes.WHITE.get(), Items.BONE_MEAL);
-        flyBarrelMap.put(PFlyTypes.LIGHT_GRAY.get(), Items.QUARTZ);
-        flyBarrelMap.put(PFlyTypes.GRAY.get(), Items.GRAVEL);
-        flyBarrelMap.put(PFlyTypes.BLACK.get(), Items.WITHER_ROSE);
-        flyBarrelMap.put(PFlyTypes.BROWN.get(), Items.COCOA_BEANS);
-        flyBarrelMap.put(PFlyTypes.RED.get(), Items.REDSTONE);
-        flyBarrelMap.put(PFlyTypes.ORANGE.get(), Items.TORCHFLOWER);
-        flyBarrelMap.put(PFlyTypes.YELLOW.get(), Items.GLOW_BERRIES);
-        flyBarrelMap.put(PFlyTypes.LIME.get(), Items.SEA_PICKLE);
-        flyBarrelMap.put(PFlyTypes.GREEN.get(), Items.CACTUS);
-        flyBarrelMap.put(PFlyTypes.CYAN.get(), Items.PRISMARINE_SHARD);
-        flyBarrelMap.put(PFlyTypes.LIGHT_BLUE.get(), Items.PRISMARINE_CRYSTALS);
-        flyBarrelMap.put(PFlyTypes.BLUE.get(), Items.LAPIS_LAZULI);
-        flyBarrelMap.put(PFlyTypes.PURPLE.get(), Items.AMETHYST_SHARD);
-        flyBarrelMap.put(PFlyTypes.MAGENTA.get(), Items.CHORUS_FRUIT);
-        flyBarrelMap.put(PFlyTypes.PINK.get(), Items.PINK_PETALS);
-        // More
-        flyBarrelMap.put(PFlyTypes.IRON.get(), Items.RAW_IRON);
-        flyBarrelMap.put(PFlyTypes.COPPER.get(), Items.RAW_COPPER);
-        flyBarrelMap.put(PFlyTypes.GOLD.get(), Items.RAW_GOLD);
-        flyBarrelMap.put(PFlyTypes.EMERALD.get(), Items.EMERALD);
-        flyBarrelMap.put(PFlyTypes.DIAMOND.get(), Items.DIAMOND);
-        flyBarrelMap.put(PFlyTypes.NETHERITE.get(), Items.NETHERITE_SCRAP);
-        flyBarrelMap.put(PFlyTypes.DRAGON_FRUIT.get(), Items.GUNPOWDER);
-        flyBarrelMap.put(PFlyTypes.GLOWSTONE.get(), Items.GLOWSTONE_DUST);
-        flyBarrelMap.put(PFlyTypes.ENDER.get(), Items.ENDER_PEARL);
-
-        flyBarrelMap.forEach((type, result) -> FlyBarrelRecipeBuilder.flyBarrel(type.id(), result)
-                .unlockedBy(getHasName(PBlocks.FLY_BARREL), has(PBlocks.FLY_BARREL))
-                .save(recipeOutput, type.id()));
     }
 
     private void toiletRecipes(RecipeOutput recipeOutput, ItemLike toilet, ItemLike block, ToiletType toiletType) {

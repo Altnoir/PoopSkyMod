@@ -85,7 +85,7 @@ public class PVillagerTrades {
             if (!Config.plugTrades) {
                 trades.get(5).add((entity, random) -> new MerchantOffer(
                         new ItemCost(Items.EMERALD, 42),
-                        Optional.of(new ItemCost(Items.BREEZE_ROD, 8)),
+                        Optional.of(new ItemCost(Items.BREEZE_ROD, 6)),
                         new ItemStack(PItems.TOILET_PLUG.get(), 1), 2, 100, 1.0f)
                 );
             }

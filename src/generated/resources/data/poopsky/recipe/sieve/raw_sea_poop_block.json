@@ -29,28 +29,7 @@
       "chance": 0.5,
       "item": {
         "count": 1,
-        "id": "minecraft:sea_pickle"
-      }
-    },
-    {
-      "chance": 0.5,
-      "item": {
-        "count": 1,
         "id": "minecraft:kelp"
-      }
-    },
-    {
-      "chance": 0.25,
-      "item": {
-        "count": 1,
-        "id": "minecraft:prismarine_shard"
-      }
-    },
-    {
-      "chance": 0.2,
-      "item": {
-        "count": 1,
-        "id": "minecraft:prismarine_crystals"
       }
     },
     {
