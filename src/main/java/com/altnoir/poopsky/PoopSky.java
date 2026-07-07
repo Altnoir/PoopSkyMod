@@ -7,11 +7,12 @@ import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.compat.create.CreatePlugin;
 import com.altnoir.poopsky.compat.maid.MaidPlugin;
 import com.altnoir.poopsky.common.entity.p.PoopTntEntity;
-import com.altnoir.poopsky.init.*;
-import com.altnoir.poopsky.common.villager.PVillagers;
-import com.altnoir.poopsky.worldgen.PSChunkGenerators;
-import com.altnoir.poopsky.worldgen.PSStructures;
-import com.altnoir.poopsky.worldgen.foliage.PSFoliagePlacerTypes;
+import com.altnoir.poopsky.init.PBlocks;
+import com.altnoir.poopsky.init.PFluidTypes;
+import com.altnoir.poopsky.init.PItems;
+import com.altnoir.poopsky.init.PSNetworking;
+import com.altnoir.poopsky.init.PSRegistries;
+import com.altnoir.poopsky.init.PStats;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -48,32 +49,8 @@ public class PoopSky {
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(PSNetworking::register);
 
-        PEffects.register(modEventBus);
-        PPotions.register(modEventBus);
-        PParticles.register(modEventBus);
-
-        PBlocks.register(modEventBus);
-        PBlockEntityType.register(modEventBus);
-        PItems.register(modEventBus);
-        PEntityType.register(modEventBus);
-        PSFoliagePlacerTypes.register(modEventBus);
-        PSStructures.register(modEventBus);
-        PSChunkGenerators.register(modEventBus);
-
-        PItemGroups.register(modEventBus);
-        PSoundEvents.register(modEventBus);
-        PStats.register(modEventBus);
-
-        PComponents.register(modEventBus);
-        PLootFunctions.register(modEventBus);
-        PVillagers.register(modEventBus);
-        PRecipes.register(modEventBus);
-
-        PFluids.FLUIDS.register(modEventBus);
-        PFluidTypes.FLUID_TYPES.register(modEventBus);
+        PSRegistries.registerAll(modEventBus);
         NeoForge.EVENT_BUS.addListener(this::onAddReloadListener);
-
-        PMenuTypes.register(modEventBus);
 
         if (ModList.get().isLoaded(PSMods.TOUHOU_LITTLE_MAID.id())) {
             MaidPlugin.registry(modEventBus);
