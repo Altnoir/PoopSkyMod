@@ -6,127 +6,135 @@ import com.altnoir.poopsky.common.item.PArmorMaterials;
 import com.altnoir.poopsky.common.item.PFoods;
 import com.altnoir.poopsky.common.item.PToolTiers;
 import com.altnoir.poopsky.common.item.p.*;
+import com.tterrag.registrate.Registrate;
+import com.tterrag.registrate.util.entry.ItemEntry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.*;
-import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
-import net.neoforged.neoforge.registries.DeferredItem;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.DeferredHolder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PItems {
-    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(PoopSky.MOD_ID);
+    public static final Registrate ITEMS = PoopSky.REGISTRATE;
 
-    public static final DeferredItem<Item> POOP = ITEMS.register("poop", () ->
-            new PoopItem(new Item.Properties().food(PFoods.POOP).stacksTo(88)));
-    public static final DeferredItem<Item> CHILI_POOP = ITEMS.register("chili_poop", () ->
-            new ChiliPoopItem(new Item.Properties().food(PFoods.POOP).stacksTo(88)));
-    public static final DeferredItem<Item> GOLDEN_POOP = ITEMS.register("golden_poop", () ->
-            new PoopItem(new Item.Properties().food(PFoods.GOLDEN_POOP).stacksTo(88)));
-    public static final DeferredItem<Item> SEEDBED_CURSE = ITEMS.registerSimpleItem("seedbed_curse", new Item.Properties().stacksTo(88));
-    public static final DeferredItem<Item> FOLIUM_SENNAE = ITEMS.registerSimpleItem("folium_sennae", new Item.Properties());
+    public static final ItemEntry<PoopItem> POOP = ITEMS.item("poop",
+            props -> new PoopItem(props.food(PFoods.POOP).stacksTo(88))).register();
+    public static final ItemEntry<ChiliPoopItem> CHILI_POOP = ITEMS.item("chili_poop",
+            props -> new ChiliPoopItem(props.food(PFoods.POOP).stacksTo(88))).register();
+    public static final ItemEntry<PoopItem> GOLDEN_POOP = ITEMS.item("golden_poop",
+            props -> new PoopItem(props.food(PFoods.GOLDEN_POOP).stacksTo(88))).register();
+    public static final ItemEntry<Item> SEEDBED_CURSE = ITEMS.item("seedbed_curse",
+            props -> new Item(props.stacksTo(88))).register();
+    public static final ItemEntry<Item> FOLIUM_SENNAE = ITEMS.item("folium_sennae", Item::new).register();
 
-    public static final DeferredItem<Item> POOP_BALL = ITEMS.register("poop_ball", () ->
-            new PoopBallItem(new Item.Properties().stacksTo(88)));
-    public static final DeferredItem<Item> SAPLING_POOP_BALL = ITEMS.register("sapling_poop_ball", () ->
-            new SaplingBallItem(new Item.Properties().food(PFoods.SAPLING_BALL).stacksTo(88)));
-    public static final DeferredItem<Item> SEA_POOP_BALL = ITEMS.register("sea_poop_ball", () ->
-            new SeaPoopBallItem(new Item.Properties().stacksTo(88)));
-    public static final DeferredItem<Item> WITHER_POOP_BALL = ITEMS.register("wither_poop_ball", () ->
-            new WitherPoopBallItem(new Item.Properties().stacksTo(88)));
+    public static final ItemEntry<PoopBallItem> POOP_BALL = ITEMS.item("poop_ball",
+            props -> new PoopBallItem(props.stacksTo(88))).register();
+    public static final ItemEntry<SaplingBallItem> SAPLING_POOP_BALL = ITEMS.item("sapling_poop_ball",
+            props -> new SaplingBallItem(props.food(PFoods.SAPLING_BALL).stacksTo(88))).register();
+    public static final ItemEntry<SeaPoopBallItem> SEA_POOP_BALL = ITEMS.item("sea_poop_ball",
+            props -> new SeaPoopBallItem(props.stacksTo(88))).register();
+    public static final ItemEntry<WitherPoopBallItem> WITHER_POOP_BALL = ITEMS.item("wither_poop_ball",
+            props -> new WitherPoopBallItem(props.stacksTo(88))).register();
 
-    public static final DeferredItem<Item> POOP_MOONCAKE = ITEMS.register("poop_mooncake", () ->
-            new SimpleFeedableItem(new Item.Properties().food(PFoods.POOP_MOONCAKE).stacksTo(88)));
-    public static final DeferredItem<Item> CHILI_POOP_MOONCAKE = ITEMS.register("chili_poop_mooncake", () ->
-            new SimpleFeedableItem(new Item.Properties().food(PFoods.CHILI_POOP_MOONCAKE).stacksTo(88)));
-    public static final DeferredItem<Item> GOLDEN_POOP_MOONCAKE = ITEMS.register("golden_poop_mooncake", () ->
-            new SimpleFeedableItem(new Item.Properties().food(PFoods.GOLDEN_POOP_MOONCAKE).stacksTo(88)));
-    public static final DeferredItem<Item> BAKED_MAGGOTS = ITEMS.register("baked_maggots", () ->
-            new SimpleFeedableItem(new Item.Properties().food(PFoods.BAKED_MAGGOTS).stacksTo(88)));
-    public static final DeferredItem<Item> POOP_BREAD = ITEMS.register("poop_bread", () ->
-            new SimpleFeedableItem(new Item.Properties().food(PFoods.POOP_BREAD).stacksTo(88)));
-    public static final DeferredItem<Item> POOP_DUMPLINGS = ITEMS.register("poop_dumplings", () ->
-            new SimpleFeedableItem(new Item.Properties().food(PFoods.POOP_DUMPLINGS).stacksTo(88)));
-    public static final DeferredItem<Item> POOP_SOUP = ITEMS.register("poop_soup", () ->
-            new SimpleFeedableItem(new Item.Properties().food(PFoods.POOP_SOUP).stacksTo(88)));
-    public static final DeferredItem<Item> POOP_VEGETABLE_STICKS = ITEMS.register("poop_vegetable_sticks", () ->
-            new SimpleFeedableItem(new Item.Properties().food(PFoods.POOP_VEGETABLE_STICKS).stacksTo(88)));
-    public static final DeferredItem<Item> POOBURGER_MEAT = ITEMS.register("pooburger_meat", () ->
-            new SimpleFeedableItem(new Item.Properties().food(PFoods.POOBURGER_MEAT).stacksTo(88)));
-    public static final DeferredItem<Item> POOBURGER = ITEMS.register("pooburger", () ->
-            new SimpleFeedableItem(new Item.Properties().food(PFoods.POOBURGER).stacksTo(88)));
-    public static final DeferredItem<Item> POOP_PASTA = ITEMS.register("poop_pasta", () ->
-            new SimpleFeedableItem(new Item.Properties().food(PFoods.POOP_PASTA).stacksTo(88)));
-    public static final DeferredItem<Item> POODDING = ITEMS.register("poodding", () ->
-            new SimpleFeedableItem(new Item.Properties().food(PFoods.POODDING).stacksTo(88)));
+    public static final ItemEntry<SimpleFeedableItem> POOP_MOONCAKE = ITEMS.item("poop_mooncake",
+            props -> new SimpleFeedableItem(props.food(PFoods.POOP_MOONCAKE).stacksTo(88))).register();
+    public static final ItemEntry<SimpleFeedableItem> CHILI_POOP_MOONCAKE = ITEMS.item("chili_poop_mooncake",
+            props -> new SimpleFeedableItem(props.food(PFoods.CHILI_POOP_MOONCAKE).stacksTo(88))).register();
+    public static final ItemEntry<SimpleFeedableItem> GOLDEN_POOP_MOONCAKE = ITEMS.item("golden_poop_mooncake",
+            props -> new SimpleFeedableItem(props.food(PFoods.GOLDEN_POOP_MOONCAKE).stacksTo(88))).register();
+    public static final ItemEntry<SimpleFeedableItem> BAKED_MAGGOTS = ITEMS.item("baked_maggots",
+            props -> new SimpleFeedableItem(props.food(PFoods.BAKED_MAGGOTS).stacksTo(88))).register();
+    public static final ItemEntry<SimpleFeedableItem> POOP_BREAD = ITEMS.item("poop_bread",
+            props -> new SimpleFeedableItem(props.food(PFoods.POOP_BREAD).stacksTo(88))).register();
+    public static final ItemEntry<SimpleFeedableItem> POOP_DUMPLINGS = ITEMS.item("poop_dumplings",
+            props -> new SimpleFeedableItem(props.food(PFoods.POOP_DUMPLINGS).stacksTo(88))).register();
+    public static final ItemEntry<SimpleFeedableItem> POOP_SOUP = ITEMS.item("poop_soup",
+            props -> new SimpleFeedableItem(props.food(PFoods.POOP_SOUP).stacksTo(88))).register();
+    public static final ItemEntry<SimpleFeedableItem> POOP_VEGETABLE_STICKS = ITEMS.item("poop_vegetable_sticks",
+            props -> new SimpleFeedableItem(props.food(PFoods.POOP_VEGETABLE_STICKS).stacksTo(88))).register();
+    public static final ItemEntry<SimpleFeedableItem> POOBURGER_MEAT = ITEMS.item("pooburger_meat",
+            props -> new SimpleFeedableItem(props.food(PFoods.POOBURGER_MEAT).stacksTo(88))).register();
+    public static final ItemEntry<SimpleFeedableItem> POOBURGER = ITEMS.item("pooburger",
+            props -> new SimpleFeedableItem(props.food(PFoods.POOBURGER).stacksTo(88))).register();
+    public static final ItemEntry<SimpleFeedableItem> POOP_PASTA = ITEMS.item("poop_pasta",
+            props -> new SimpleFeedableItem(props.food(PFoods.POOP_PASTA).stacksTo(88))).register();
+    public static final ItemEntry<SimpleFeedableItem> POODDING = ITEMS.item("poodding",
+            props -> new SimpleFeedableItem(props.food(PFoods.POODDING).stacksTo(88))).register();
 
-    public static final DeferredItem<Item> DRAGON_BREATH_CHILI = ITEMS.register("dragon_breath_chili", () ->
-            new ChiliItem(new Item.Properties().food(PFoods.DRAGON_BREATH_CHILI)));
-    public static final DeferredItem<Item> KING_OF_DRAGON_FRUIT = ITEMS.register("king_of_dragon_fruit", () ->
-            new DragonFruitRItem(new Item.Properties().food(PFoods.KING_OF_DRAGON_FRUIT)));
+    public static final ItemEntry<ChiliItem> DRAGON_BREATH_CHILI = ITEMS.item("dragon_breath_chili",
+            props -> new ChiliItem(props.food(PFoods.DRAGON_BREATH_CHILI))).register();
+    public static final ItemEntry<DragonFruitRItem> KING_OF_DRAGON_FRUIT = ITEMS.item("king_of_dragon_fruit",
+            props -> new DragonFruitRItem(props.food(PFoods.KING_OF_DRAGON_FRUIT))).register();
 
-    public static final DeferredItem<Item> TOILET_PLUG = ITEMS.register("toilet_plug", () ->
-            new ToiletPlugItem(new Item.Properties().attributes(ToiletPlugItem.createWeaponAttributes())
-                    .stacksTo(1)));
-    public static final DeferredItem<Item> TOILET_PLUG_WAND = ITEMS.register("toilet_plug_wand", () ->
-            new ToiletLinkerItem(new Item.Properties().attributes(ToiletPlugItem.createWeaponAttributes())
+    public static final ItemEntry<ToiletPlugItem> TOILET_PLUG = ITEMS.item("toilet_plug",
+            props -> new ToiletPlugItem(props.attributes(ToiletPlugItem.createWeaponAttributes())
+                    .stacksTo(1))).register();
+    public static final ItemEntry<ToiletLinkerItem> TOILET_PLUG_WAND = ITEMS.item("toilet_plug_wand",
+            props -> new ToiletLinkerItem(props.attributes(ToiletPlugItem.createWeaponAttributes())
                     .component(PComponents.TOILET_COMPONENT, ToiletComponent.EMPTY)
-                    .stacksTo(1)));
+                    .stacksTo(1))).register();
+    public static final ItemEntry<FeedableBlockItem> MAGGOTS_SEEDS = ITEMS.item("maggots_seeds",
+            props -> new FeedableBlockItem(PBlocks.MAGGOTS.get(), new Item.Properties().food(PFoods.MAGGOTS_SEEDS).stacksTo(88))).register();
+    public static final ItemEntry<FeedableBlockItem> ROUNDWORM = ITEMS.item("roundworm",
+            props -> new FeedableBlockItem(PBlocks.ROUNDWORM_VINES.get(), new Item.Properties().food(PFoods.ROUNDWORM).stacksTo(88))).register();
 
-    public static final DeferredItem<Item> MAGGOTS_SEEDS = ITEMS.register("maggots_seeds", () ->
-            new FeedableBlockItem(PBlocks.MAGGOTS.get(), new Item.Properties().food(PFoods.MAGGOTS_SEEDS).stacksTo(88)));
-    public static final DeferredItem<Item> ROUNDWORM = ITEMS.register("roundworm", () ->
-            new FeedableBlockItem(PBlocks.ROUNDWORM_VINES.get(), new Item.Properties().food(PFoods.ROUNDWORM).stacksTo(88)));
+    public static final ItemEntry<Item> OMINOUS_FILTHY_INGOT = ITEMS.item("ominous_filthy_ingot", Item::new).register();
+    public static final ItemEntry<MilosSwordItem> MILOS_SWORD = ITEMS.item("milos_sword",
+            prop -> new MilosSwordItem(PToolTiers.MILOS,
+                    prop.attributes(MilosSwordItem.createAttributes(PToolTiers.MILOS, 2, 1, -3.4F))
+            )).register();
 
-    public static final DeferredItem<Item> OMINOUS_FILTHY_INGOT = ITEMS.registerSimpleItem("ominous_filthy_ingot", new Item.Properties());
-    public static final DeferredItem<SwordItem> MILOS_SWORD = ITEMS.register("milos_sword", () ->
-            new MilosSwordItem(PToolTiers.MILOS,
-                    new Item.Properties().attributes(MilosSwordItem.createAttributes(PToolTiers.MILOS, 2, 1, -3.4F))
-            ));
+    public static final ItemEntry<OmenArmorItem> OMEN_HELMET = ITEMS.item("omen_helmet",
+            prop -> new OmenArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.HELMET,
+                    prop.durability(ArmorItem.Type.HELMET.getDurability(24)))).register();
+    public static final ItemEntry<ArmorItem> OMEN_CHESTPLATE = ITEMS.item("omen_chestplate",
+            prop -> new ArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE,
+                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(24)))).register();
+    public static final ItemEntry<ArmorItem> OMEN_LEGGINGS = ITEMS.item("omen_leggings",
+            prop -> new ArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS,
+                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(24)))).register();
+    public static final ItemEntry<ArmorItem> OMEN_BOOTS = ITEMS.item("omen_boots",
+            prop -> new ArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
+                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(24)))).register();
 
-    public static final DeferredItem<ArmorItem> OMEN_HELMET = ITEMS.register("omen_helmet", () ->
-            new OmenArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.HELMET,
-                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(24))) {
-            });
-    public static final DeferredItem<ArmorItem> OMEN_CHESTPLATE = ITEMS.register("omen_chestplate", () ->
-            new ArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE,
-                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(24))));
-    public static final DeferredItem<ArmorItem> OMEN_LEGGINGS = ITEMS.register("omen_leggings", () ->
-            new ArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS,
-                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(24))));
-    public static final DeferredItem<ArmorItem> OMEN_BOOTS = ITEMS.register("omen_boots", () ->
-            new ArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
-                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(24))));
+    public static final ItemEntry<SmithingTemplateItem> OMEN_UPGRADE_SMITHING_TEMPLATE = ITEMS.item("omen_upgrade_smithing_template",
+            props -> OmenSmithingTemplateItem.createOmenUpgradeTemplate()).register();
 
-    public static final DeferredItem<Item> OMEN_UPGRADE_SMITHING_TEMPLATE = ITEMS.register("omen_upgrade_smithing_template",
-            OmenSmithingTemplateItem::createOmenUpgradeTemplate);
-
-    public static final DeferredItem<Item> FLY_CATCHER = ITEMS.register("fly_catcher",
-            () -> new FlyCatcherItem(new Item.Properties().stacksTo(1).durability(88)));
-    public static final DeferredItem<Item> TIME_BELL = ITEMS.register("time_bell", () ->
-            new TimeBellItem(new Item.Properties().stacksTo(1)));
-    public static final DeferredItem<Item> SPALL = ITEMS.registerSimpleItem("spall", new Item.Properties());
-    public static final DeferredItem<Item> URINE_BOTTLE = ITEMS.register("urine_bottle", () ->
-            new UrineBottleItem(new Item.Properties()
+    public static final ItemEntry<FlyCatcherItem> FLY_CATCHER = ITEMS.item("fly_catcher",
+            props -> new FlyCatcherItem(props.stacksTo(1).durability(88))).register();
+    public static final ItemEntry<TimeBellItem> TIME_BELL = ITEMS.item("time_bell",
+            props -> new TimeBellItem(props.stacksTo(1))).register();
+    public static final ItemEntry<Item> SPALL = ITEMS.item("spall", Item::new).register();
+    public static final ItemEntry<UrineBottleItem> URINE_BOTTLE = ITEMS.item("urine_bottle",
+            prop -> new UrineBottleItem(prop
                     .craftRemainder(Items.GLASS_BOTTLE)
                     .food(PFoods.URINE_BOTTLE)
                     .stacksTo(18)
-            ));
-    public static final DeferredItem<BucketItem> URINE_BUCKET = ITEMS.register("urine_bucket",
-            () -> new BucketItem(PFluids.URINE.get(), new Item.Properties().stacksTo(1)));
+            )).register();
+    public static final ItemEntry<BucketItem> URINE_BUCKET = ITEMS.item("urine_bucket",
+            prop -> new BucketItem(PFluids.URINE.get(), prop.stacksTo(1))).register();
 
-    public static final DeferredItem<Item> POOLIME_SPAWN_EGG = ITEMS.register("poolime_spawn_egg",
-            () -> new DeferredSpawnEggItem(PEntityType.POOLIME, 0x7D5F36, 0x5E4228,
-                    new Item.Properties()));
-    public static final DeferredItem<Item> FLY_SPAWN_EGG = ITEMS.register("fly_spawn_egg",
-            () -> new DeferredSpawnEggItem(PEntityType.FLY, 0x3B4346, 0x900D2D,
-                    new Item.Properties()));
-    public static final DeferredItem<Item> LAWRENCE_MUSIC_DISC = ITEMS.registerSimpleItem("music_disc_lawrence", new Item.Properties().jukeboxPlayable(PSoundEvents.LAWRENCE_KEY).rarity(Rarity.RARE).stacksTo(1));
-    public static final DeferredItem<Item> LIGHT_DANCE_MUSIC_DISC = ITEMS.registerSimpleItem("music_disc_light_dance", new Item.Properties().jukeboxPlayable(PSoundEvents.LIGHT_DANCE_KEY).rarity(Rarity.RARE).stacksTo(1));
-    public static final DeferredItem<Item> MOON_BOWL_MUSIC_DISC = ITEMS.registerSimpleItem("music_disc_moon_bowl", new Item.Properties().jukeboxPlayable(PSoundEvents.MOON_BOWL_KEY).rarity(Rarity.RARE).stacksTo(1));
+    public static final ItemEntry<DeferredSpawnEggItem> POOLIME_SPAWN_EGG = ITEMS.item("poolime_spawn_egg",
+            prop -> new DeferredSpawnEggItem(PEntityType.POOLIME, 0x7D5F36, 0x5E4228, prop)).register();
+    public static final ItemEntry<DeferredSpawnEggItem> FLY_SPAWN_EGG = ITEMS.item("fly_spawn_egg",
+            prop -> new DeferredSpawnEggItem(PEntityType.FLY, 0x3B4346, 0x900D2D, prop)).register();
+    public static final ItemEntry<Item> LAWRENCE_MUSIC_DISC = ITEMS.item("music_disc_lawrence",
+            props -> new Item(props.jukeboxPlayable(PSoundEvents.LAWRENCE_KEY).rarity(Rarity.RARE).stacksTo(1))).register();
+    public static final ItemEntry<Item> LIGHT_DANCE_MUSIC_DISC = ITEMS.item("music_disc_light_dance",
+            props -> new Item(props.jukeboxPlayable(PSoundEvents.LIGHT_DANCE_KEY).rarity(Rarity.RARE).stacksTo(1))).register();
+    public static final ItemEntry<Item> MOON_BOWL_MUSIC_DISC = ITEMS.item("music_disc_moon_bowl",
+            props -> new Item(props.jukeboxPlayable(PSoundEvents.MOON_BOWL_KEY).rarity(Rarity.RARE).stacksTo(1))).register();
 
-    public static final DeferredItem<Item> FLY = ITEMS.register("fly",
-            () -> new FlyItem(new Item.Properties().stacksTo(88)));
+    public static final ItemEntry<FlyItem> FLY = ITEMS.item("fly",
+            props -> new FlyItem(props.stacksTo(88))).register();
 
-    public static void register(IEventBus eventBus) {
-        ITEMS.register(eventBus);
+    public static List<Item> getAllItems() {
+        var registrateItems = PoopSky.REGISTRATE.getAll(Registries.ITEM).stream()
+                .map(DeferredHolder::get)
+                .toList();
+
+        return new ArrayList<>(registrateItems);
     }
 }

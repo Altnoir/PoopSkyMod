@@ -27,8 +27,7 @@ public class PItemGroups {
             .title(Component.translatable("itemgroup.poopsky"))
             .icon(() -> new ItemStack(PBlocks.WOODEN_TOILET.get().asItem()))
             .displayItems((parameters, output) -> {
-                PItems.ITEMS.getEntries().stream()
-                        .map(DeferredHolder::get)
+                PItems.getAllItems().stream()
                         .filter(item -> !(item instanceof BlockItem))
                         .filter(item -> !(item instanceof FlyItem))
                         .forEach(output::accept);

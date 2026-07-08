@@ -7,6 +7,7 @@ import com.altnoir.poopsky.common.item.p.CompooperBlockItem;
 import com.altnoir.poopsky.common.item.p.ToiletBlockItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
@@ -531,7 +532,9 @@ public class PBlocks {
     }
 
     private static <T extends Block> DeferredBlock<T> registerSimpleBlock(String name, Supplier<T> block, Item.Properties properties) {
-        return registerBlockWithItem(name, block, (blockName, registeredBlock) -> PItems.ITEMS.registerSimpleBlockItem(blockName, registeredBlock, properties));
+        DeferredBlock<T> registered = BLOCKS.register(name, block);
+        PoopSky.REGISTRATE.item(name, props -> new BlockItem(registered.get(), properties)).register();
+        return registered;
     }
 
     private static <T extends Block> DeferredBlock<T> registerBlockWithItem(String name, Supplier<T> block, BiConsumer<String, DeferredBlock<T>> itemRegistrar) {
@@ -541,11 +544,11 @@ public class PBlocks {
     }
 
     private static <T extends Block> void registerCompooperBlockItem(String name, DeferredBlock<T> block) {
-        PItems.ITEMS.register(name, () -> new CompooperBlockItem(block.get(), new Item.Properties()));
+        PoopSky.REGISTRATE.item(name, props -> new CompooperBlockItem(block.get(), new Item.Properties())).register();
     }
 
     private static <T extends Block> void registerToiletBlockItem(String name, DeferredBlock<T> block) {
-        PItems.ITEMS.register(name, () -> new ToiletBlockItem(block.get(), new Item.Properties().stacksTo(88)));
+        PoopSky.REGISTRATE.item(name, props -> new ToiletBlockItem(block.get(), new Item.Properties().stacksTo(88))).register();
     }
 
     public static void register(IEventBus eventBus) {

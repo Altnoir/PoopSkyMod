@@ -24,7 +24,6 @@ public final class PSRegistries {
         PParticles.register(modEventBus);
         PBlocks.register(modEventBus);
         PBlockEntityType.register(modEventBus);
-        PItems.register(modEventBus);
         PEntityType.register(modEventBus);
         PSFoliagePlacerTypes.register(modEventBus);
         PSStructures.register(modEventBus);

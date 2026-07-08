@@ -5,6 +5,7 @@ import com.altnoir.poopsky.common.FlyType;
 import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.common.item.PFlyTypes;
+import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.client.renderer.block.model.BlockModel.GuiLight;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -164,7 +165,7 @@ public class PSItemModelProvider extends ItemModelProvider {
         }
     }
 
-    private void trimmedArmorItem(DeferredItem<ArmorItem> itemDeferredItem) {
+    private void trimmedArmorItem(ItemEntry<? extends ArmorItem> itemDeferredItem) {
         ArmorItem armorItem = itemDeferredItem.get();
         trimMaterials.forEach((trimMaterial, value) -> {
             float trimValue = value;

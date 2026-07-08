@@ -14,6 +14,7 @@ import com.altnoir.poopsky.init.PSNetworking;
 import com.altnoir.poopsky.init.PSRegistries;
 import com.altnoir.poopsky.init.PStats;
 import com.mojang.logging.LogUtils;
+import com.tterrag.registrate.Registrate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.dispenser.BlockSource;
@@ -44,6 +45,7 @@ import org.slf4j.Logger;
 public class PoopSky {
     public static final String MOD_ID = "poopsky";
     public static final Logger LOGGER = LogUtils.getLogger();
+    public static final Registrate REGISTRATE = Registrate.create(MOD_ID);
 
     public PoopSky(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::commonSetup);

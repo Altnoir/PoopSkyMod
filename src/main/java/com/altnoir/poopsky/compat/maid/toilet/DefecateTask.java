@@ -24,7 +24,7 @@ public class DefecateTask implements IMaidTask {
 
     @Override
     public ItemStack getIcon() {
-        return PItems.POOP.toStack();
+        return PItems.POOP.asStack();
     }
 
     @Override
