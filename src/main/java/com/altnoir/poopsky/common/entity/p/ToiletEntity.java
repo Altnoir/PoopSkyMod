@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.common.entity.p;
 
-import com.altnoir.poopsky.init.PEffects;
 import com.altnoir.poopsky.PTags;
+import com.altnoir.poopsky.init.PEffects;
 import com.altnoir.poopsky.util.toiletUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -73,7 +73,6 @@ public class ToiletEntity extends Entity {
     @Override
     protected void removePassenger(Entity passenger) {
         super.removePassenger(passenger);
-        passenger.setPos(this.getX(), this.getY() + 1.05F, this.getZ());
         if (!this.isRemoved()) {
             this.kill();
         }
@@ -83,9 +82,9 @@ public class ToiletEntity extends Entity {
     protected void positionRider(Entity passenger, MoveFunction callback) {
         super.positionRider(passenger, callback);
         if (passenger instanceof Player player) {
-            player.setPos(this.getX(), this.getY() + 0.45, this.getZ());
+            callback.accept(player, this.getX(), this.getY() + 0.45, this.getZ());
         } else {
-            passenger.setPos(this.getX(), this.getY() + 0.95, this.getZ());
+            callback.accept(passenger, this.getX(), this.getY() + 0.95, this.getZ());
         }
     }
 }
