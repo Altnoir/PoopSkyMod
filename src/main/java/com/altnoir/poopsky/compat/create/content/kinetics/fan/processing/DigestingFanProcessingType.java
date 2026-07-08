@@ -44,7 +44,7 @@ public class DigestingFanProcessingType implements FanProcessingType {
 
     @Override
     public boolean canProcess(ItemStack stack, Level level) {
-        var input = new SingleRecipeInput(stack);
+        SingleRecipeInput input = new SingleRecipeInput(stack);
         return level.getRecipeManager()
                 .getRecipeFor(PSRecipeTypes.DIGESTING.getType(), input, level)
                 .isPresent();
@@ -52,7 +52,7 @@ public class DigestingFanProcessingType implements FanProcessingType {
 
     @Override
     public @Nullable List<ItemStack> process(ItemStack stack, Level level) {
-        var input = new SingleRecipeInput(stack);
+        SingleRecipeInput input = new SingleRecipeInput(stack);
         return level.getRecipeManager()
                 .getRecipeFor(PSRecipeTypes.DIGESTING.getType(), input, level)
                 .map(recipe -> RecipeApplier.applyRecipeOn(level, stack, recipe.value(), true))
@@ -67,7 +67,7 @@ public class DigestingFanProcessingType implements FanProcessingType {
         level.addParticle(new DustParticleOptions(color, 1), pos.x + (level.random.nextFloat() - .5f) * .5f,
                 pos.y + .5f, pos.z + (level.random.nextFloat() - .5f) * .5f, 0, 1 / 8f, 0);
         if (level.random.nextInt(4) == 0) {
-            level.addParticle(ParticleTypes.DRIPPING_HONEY, pos.x + (level.random.nextFloat() - .5f) * .5f,
+            level.addParticle(ParticleTypes.FALLING_NECTAR, pos.x + (level.random.nextFloat() - .5f) * .5f,
                     pos.y + .5f, pos.z + (level.random.nextFloat() - .5f) * .5f, 0, -0.05, 0);
         }
     }
@@ -77,7 +77,7 @@ public class DigestingFanProcessingType implements FanProcessingType {
         particleAccess.setColor(Color.mixColors(0x8B6914, 0x5C4400, random.nextFloat()));
         particleAccess.setAlpha(1f);
         if (random.nextFloat() < 1 / 64f)
-            particleAccess.spawnExtraParticle(ParticleTypes.DRIPPING_HONEY, .125f);
+            particleAccess.spawnExtraParticle(ParticleTypes.FALLING_NECTAR, .125f);
         if (random.nextFloat() < 1 / 128f)
             particleAccess.spawnExtraParticle(ParticleTypes.DUST_PLUME, .075f);
     }
