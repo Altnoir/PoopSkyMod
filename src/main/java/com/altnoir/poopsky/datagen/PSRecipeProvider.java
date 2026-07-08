@@ -752,6 +752,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 MutationRecipe.of(PFlyTypes.WHITE.get(), PFlyTypes.GREEN.get(), PFlyTypes.LIME.get()),
                 MutationRecipe.of(PFlyTypes.WHITE.get(), PFlyTypes.RED.get(), PFlyTypes.PINK.get()),
                 // More
+                MutationRecipe.of(PFlyTypes.PURPLE.get(), PFlyTypes.CYAN.get(), PFlyTypes.ENDER.get()),
                 MutationRecipe.of(PFlyTypes.GREEN.get(), PFlyTypes.YELLOW.get(), PFlyTypes.DRAGON_FRUIT.get()),
                 MutationRecipe.of(PFlyTypes.DRAGON_FRUIT.get(), PFlyTypes.YELLOW.get(), PFlyTypes.GLOWSTONE.get()),
                 MutationRecipe.of(PFlyTypes.WHITE.get(), PFlyTypes.ORANGE.get(), PFlyTypes.COPPER.get()),
@@ -760,7 +761,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 MutationRecipe.of(PFlyTypes.LIME.get(), PFlyTypes.GOLD.get(), PFlyTypes.EMERALD.get()),
                 MutationRecipe.of(PFlyTypes.GOLD.get(), PFlyTypes.EMERALD.get(), PFlyTypes.DIAMOND.get()),
                 MutationRecipe.of(PFlyTypes.EMERALD.get(), PFlyTypes.DIAMOND.get(), PFlyTypes.NETHERITE.get()),
-                MutationRecipe.of(PFlyTypes.PURPLE.get(), PFlyTypes.CYAN.get(), PFlyTypes.ENDER.get())
+                MutationRecipe.of(PFlyTypes.NORMAL.get(), PFlyTypes.COPPER.get(), PFlyTypes.BLACK.get())
         );
 
         for (MutationRecipe recipe : breedingRecipes) {

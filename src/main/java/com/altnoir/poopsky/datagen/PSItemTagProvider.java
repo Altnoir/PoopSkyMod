@@ -126,7 +126,11 @@ public class PSItemTagProvider extends ItemTagsProvider {
                 .add(PItems.OMEN_LEGGINGS.get())
                 .add(PItems.OMEN_BOOTS.get());
 
-        tag(ItemTags.SWORDS).add(PItems.MILOS_SWORD.get());
+        tag(ItemTags.SWORDS).add(
+                PItems.MILOS_SWORD.get(),
+                PItems.TOILET_PLUG.get(),
+                PItems.TOILET_PLUG_WAND.get()
+        );
         tag(ItemTags.FOOT_ARMOR).add(PItems.OMEN_BOOTS.get());
         tag(ItemTags.LEG_ARMOR).add(PItems.OMEN_LEGGINGS.get());
         tag(ItemTags.CHEST_ARMOR).add(PItems.OMEN_CHESTPLATE.get());

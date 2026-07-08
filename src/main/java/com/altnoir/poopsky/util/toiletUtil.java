@@ -22,6 +22,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.function.LongConsumer;
 
@@ -34,8 +35,9 @@ public class toiletUtil {
         return false;
     }
 
-    public static boolean isGoldenToilet(BlockState state) {
-        return false;
+    public static Vec3 getBackwardDirection(LivingEntity entity) {
+        float yaw = entity.getYRot() * ((float) Math.PI / 180F);
+        return new Vec3(Math.sin(yaw), 0, -Math.cos(yaw));
     }
 
     public static boolean isEntityCentered(BlockPos blockPos, Entity entity) {
@@ -106,6 +108,10 @@ public class toiletUtil {
             }
             var poop = new ItemEntity(level, livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), new ItemStack(poopItem));
             poop.setDefaultPickUpDelay();
+            if (livingEntity.hasEffect(PEffects.FECAL_INCONTINENCE)) {
+                Vec3 backward = getBackwardDirection(livingEntity);
+                poop.setDeltaMovement(backward.x * 0.5F, 0.2F, backward.z * 0.5F);
+            }
             level.addFreshEntity(poop);
         }
 

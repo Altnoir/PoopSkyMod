@@ -54,8 +54,11 @@ public class ToiletEntity extends Entity {
             this.kill();
             return;
         }
+
         Entity firstPassenger = this.getPassengers().getFirst();
         if (firstPassenger instanceof LivingEntity livingEntity) {
+            this.setYRot(livingEntity.getYRot());
+
             float yOffset = livingEntity instanceof Player ? 0.55F : 0.05F;
             toiletUtil.canPoop(level(), livingEntity, livingEntity.hasEffect(PEffects.INTESTINAL_SPASM), goldenPoop, yOffset, 0.5F, poopTime,
                     time -> this.poopTime = time);
@@ -63,9 +66,14 @@ public class ToiletEntity extends Entity {
     }
 
     @Override
+    public void onPassengerTurned(Entity entityToUpdate) {
+
+    }
+
+    @Override
     protected void removePassenger(Entity passenger) {
-        passenger.setPos(this.getX(), this.getY() + 1.05F, this.getZ());
         super.removePassenger(passenger);
+        passenger.setPos(this.getX(), this.getY() + 1.05F, this.getZ());
         if (!this.isRemoved()) {
             this.kill();
         }
