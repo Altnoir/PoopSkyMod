@@ -10,7 +10,7 @@
 - **模组版本**: `1.21.1-2.0`
 - **Java 版本**: 21
 - **映射**: Parchment `2024.11.17` (Mojang 映射 + 社区参数名)
-- **构建工具**: Gradle + NeoGradle (moddev `2.0.78`)
+- **构建工具**: Gradle + NeoGradle (moddev `2.0.141`)
 - **许可证**: MIT
 - **作者**: Altnoir, lonelyicer, Wulian233
 

@@ -2,7 +2,7 @@ plugins {
     id 'idea'
     id 'java-library'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.78'
+    id 'net.neoforged.moddev' version '2.0.141'
 }
 
 tasks.named('wrapper', Wrapper).configure {
@@ -23,10 +23,10 @@ repositories {
     maven { url = "https://maven.createmod.net" } // Create, Ponder, Flywheel
     maven { url = "https://mvn.devos.one/snapshots" } // Registrate
     maven { url = "https://maven.blamejared.com" } // JEI
-    maven {url "https://cursemaven.com"}
+    maven { url = "https://cursemaven.com" }
     // KubeJS, Rhino
     maven {
-        url "https://maven.latvian.dev/releases"
+        url = "https://maven.latvian.dev/releases"
         content {
             includeGroup "dev.latvian.mods"
             includeGroup "dev.latvian.apps"
@@ -35,7 +35,7 @@ repositories {
 
     // KubeJS depends on a project in here
     maven {
-        url 'https://jitpack.io'
+        url = "https://jitpack.io"
         content {
             includeGroup "com.github.rtyley"
         }
@@ -193,7 +193,7 @@ publishing {
     }
     repositories {
         maven {
-            url "file://${project.projectDir}/repo"
+            url = "file://${project.projectDir}/repo"
         }
     }
 }
