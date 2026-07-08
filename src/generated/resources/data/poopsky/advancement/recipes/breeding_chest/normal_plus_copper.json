@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "poopsky:breeding_chest/white_plus_copper"
+        "recipe": "poopsky:breeding_chest/normal_plus_copper"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "poopsky:breeding_chest/white_plus_copper"
+      "poopsky:breeding_chest/normal_plus_copper"
     ]
   }
 }
