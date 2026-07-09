@@ -65,9 +65,7 @@ public class PSItemTagProvider extends ItemTagsProvider {
 
         // 原版Tags
         tag(Tags.Items.FOODS)
-                .add(PItems.POOP.get())
-                .add(PItems.CHILI_POOP.get())
-                .add(PItems.GOLDEN_POOP.get())
+                .addTag(PTags.Items.POOPS)
                 .add(PItems.SAPLING_POOP_BALL.get())
                 .add(PItems.BAKED_MAGGOTS.get())
                 .add(PItems.MAGGOTS_SEEDS.get())
@@ -89,9 +87,7 @@ public class PSItemTagProvider extends ItemTagsProvider {
                 .add(PBlocks.POOP_CAKE.get().asItem());
 
         tag(Tags.Items.FOODS_FOOD_POISONING)
-                .add(PItems.POOP.get())
-                .add(PItems.CHILI_POOP.get())
-                .add(PItems.GOLDEN_POOP.get())
+                .addTag(PTags.Items.POOPS)
                 .add(PItems.SAPLING_POOP_BALL.get())
                 .add(PItems.POOP_BREAD.get())
                 .add(PItems.POOP_DUMPLINGS.get())
@@ -107,9 +103,7 @@ public class PSItemTagProvider extends ItemTagsProvider {
                 .add(PItems.URINE_BOTTLE.get())
                 .add(PBlocks.POOP_CAKE.asItem());
         tag(ItemTags.WOLF_FOOD)
-                .add(PItems.POOP.get())
-                .add(PItems.CHILI_POOP.get())
-                .add(PItems.GOLDEN_POOP.get());
+                .addTag(PTags.Items.POOPS);
         tag(ItemTags.MEAT)
                 .add(PItems.MAGGOTS_SEEDS.get())
                 .add(PItems.ROUNDWORM.get())
