@@ -1,10 +1,10 @@
 package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.common.SetToiletTypeFunction;
 import com.altnoir.poopsky.common.block.fluid.UrineLiquidBlock;
 import com.altnoir.poopsky.common.block.p.*;
 import com.altnoir.poopsky.common.item.p.CompooperBlockItem;
-import com.altnoir.poopsky.common.SetToiletTypeFunction;
 import com.altnoir.poopsky.common.item.p.ToiletBlockItem;
 import com.tterrag.registrate.Registrate;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
@@ -689,41 +689,27 @@ public class PBlocks {
 
     private static LootTable.Builder createIronLeavesDrops(RegistrateBlockLootTables loot, Block block) {
         var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
-        return loot.createSilkTouchDispatchTable(block,
-                loot.applyExplosionDecay(block,
-                        LootItem.lootTableItem(Items.IRON_NUGGET)
-                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 3.0F)))
-                                .apply(ApplyBonusCount.addUniformBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE))))
-        );
+        return createShearsOrSilkTouchDispatchTable(loot, block,
+                LootItem.lootTableItem(Items.IRON_NUGGET)
+                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 3.0F)))
+                        .apply(ApplyBonusCount.addUniformBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE))));
     }
 
     private static LootTable.Builder createGoldLeavesDrops(RegistrateBlockLootTables loot, Block block) {
         var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
-        return loot.createSilkTouchDispatchTable(block,
-                loot.applyExplosionDecay(block,
-                        LootItem.lootTableItem(Items.GOLD_NUGGET)
-                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
-                                .apply(ApplyBonusCount.addUniformBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE))))
-        );
+        return createShearsOrSilkTouchDispatchTable(loot, block,
+                LootItem.lootTableItem(Items.GOLD_NUGGET)
+                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
+                        .apply(ApplyBonusCount.addUniformBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE))));
     }
 
     private static LootTable.Builder createLeavesDrops(RegistrateBlockLootTables loot, Block block, Item dropItem) {
         var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
-        LootItemCondition.Builder hasSilkTouch = MatchTool.toolMatches(
-                ItemPredicate.Builder.item()
-                        .withSubPredicate(
-                                ItemSubPredicates.ENCHANTMENTS,
-                                ItemEnchantmentsPredicate.enchantments(
-                                        List.of(new EnchantmentPredicate(registrylookup.getOrThrow(Enchantments.SILK_TOUCH), MinMaxBounds.Ints.atLeast(1)))
-                                )
-                        ));
-        LootItemCondition.Builder hasShearsOrSilkTouch = MatchTool.toolMatches(ItemPredicate.Builder.item().of(Items.SHEARS))
-                .or(hasSilkTouch);
-        return loot.createSilkTouchDispatchTable(block,
-                loot.applyExplosionDecay(block,
-                        LootItem.lootTableItem(dropItem)
-                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
-                                .apply(ApplyBonusCount.addUniformBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE))))
+        LootItemCondition.Builder hasShearsOrSilkTouch = hasShearsOrSilkTouch(loot);
+        return createShearsOrSilkTouchDispatchTable(loot, block,
+                LootItem.lootTableItem(dropItem)
+                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
+                        .apply(ApplyBonusCount.addUniformBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE)))
         ).withPool(
                 LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0F))
@@ -733,5 +719,30 @@ public class PBlocks {
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
                                 .apply(ApplyBonusCount.addUniformBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE))))
         );
+    }
+
+    private static LootTable.Builder createShearsOrSilkTouchDispatchTable(RegistrateBlockLootTables loot, Block block, LootPoolSingletonContainer.Builder<?> fallback) {
+        LootItemCondition.Builder hasShearsOrSilkTouch = hasShearsOrSilkTouch(loot);
+        return LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .add(AlternativesEntry.alternatives(
+                                loot.applyExplosionCondition(block, LootItem.lootTableItem(block))
+                                        .when(hasShearsOrSilkTouch),
+                                loot.applyExplosionDecay(block, fallback)
+                        )));
+    }
+
+    private static LootItemCondition.Builder hasShearsOrSilkTouch(RegistrateBlockLootTables loot) {
+        var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
+        LootItemCondition.Builder hasSilkTouch = MatchTool.toolMatches(
+                ItemPredicate.Builder.item()
+                        .withSubPredicate(
+                                ItemSubPredicates.ENCHANTMENTS,
+                                ItemEnchantmentsPredicate.enchantments(
+                                        List.of(new EnchantmentPredicate(registrylookup.getOrThrow(Enchantments.SILK_TOUCH), MinMaxBounds.Ints.atLeast(1)))
+                                )
+                        ));
+        return MatchTool.toolMatches(ItemPredicate.Builder.item().of(Items.SHEARS))
+                .or(hasSilkTouch);
     }
 }
