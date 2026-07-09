@@ -45,6 +45,7 @@ PoopSkyMod/
 │   │   ├── PItemGroups.java              # 创造模式物品栏
 │   │   ├── PTags.java                    # 标签定义
 │   │   ├── init/                         # 注册中心
+│   │   │   ├── PRegistries.java          # 统一注册入口与 Registrate 实例
 │   │   │   ├── PBlocks.java              # 方块注册
 │   │   │   ├── PItems.java               # 物品注册
 │   │   │   ├── PBlockEntityType.java     # 方块实体注册
@@ -53,6 +54,7 @@ PoopSkyMod/
 │   │   │   ├── PFluidTypes.java          # 流体类型注册
 │   │   │   ├── PMenuTypes.java           # 菜单注册
 │   │   │   ├── PComponents.java          # 数据组件注册
+│   │   │   ├── PDamageTypes.java         # 伤害类型 Key
 │   │   │   ├── PRecipes.java             # 配方类型/序列化器注册
 │   │   │   ├── PSNetworking.java         # 网络包注册
 │   │   │   ├── PSoundEvents.java         # 音效事件注册
@@ -63,9 +65,8 @@ PoopSkyMod/
 │   │   │   ├── PLootFunctions.java       # 战利品函数注册
 │   │   │   ├── PBlockSetType.java        # 方块集合类型
 │   │   │   ├── PWoodType.java            # 木材类型
-│   │   │   ├── PToiletTypes.java         # 内置厕所类型
-│   │   │   └── PFlyRecipes.java          # 苍蝇相关配方查询缓存
-│   │   ├── common/                       # 通用/服务端逻辑
+│   │   │   └── PToiletTypes.java         # 内置厕所类型
+│   │   ├── content/                      # 通用玩法内容
 │   │   │   ├── FlyType.java              # 苍蝇类型定义
 │   │   │   ├── FlyTypeManager.java       # 数据包苍蝇类型重载
 │   │   │   ├── SetToiletTypeFunction.java# 战利品函数
@@ -91,9 +92,10 @@ PoopSkyMod/
 │   │   │   │   ├── PFoods.java
 │   │   │   │   ├── PToolTiers.java
 │   │   │   │   └── p/                    # 具体物品实现
-│   │   │   ├── recipe/                   # 自定义配方与 Builder
+│   │   │   ├── recipe/                   # 自定义配方、Builder、PFlyRecipes 缓存
 │   │   │   └── villager/                 # 村民交易与行为
 │   │   ├── client/                       # 客户端专用逻辑
+│   │   │   ├── ToiletClientBlockExtensions.java
 │   │   │   ├── inventory/                # 菜单与客户端屏幕
 │   │   │   ├── model/                    # 客户端模型替换/烘焙事件
 │   │   │   ├── particle/                 # 客户端粒子
@@ -102,10 +104,28 @@ PoopSkyMod/
 │   │   ├── compat/                       # 可选模组兼容
 │   │   │   ├── PSMods.java               # 可选模组枚举
 │   │   │   ├── create/                   # Create 联动
+│   │   │   │   ├── content/              # Create 风扇/物流等运行时兼容
+│   │   │   │   ├── DigestingRecipeGen.java
+│   │   │   │   ├── CreatePlugin.java
+│   │   │   │   └── PSRecipeTypes.java
 │   │   │   ├── jei/                      # JEI 配方显示
 │   │   │   └── maid/                     # 车万女仆联动
 │   │   ├── datagen/                      # 数据生成
+│   │   │   ├── DataGenerators.java       # GatherDataEvent 入口
+│   │   │   ├── PBlockLootTableProvider.java
+│   │   │   ├── PSRecipeProvider.java
+│   │   │   ├── PSBlockStateProvider.java
+│   │   │   ├── PSItemModelProvider.java
+│   │   │   ├── PSBlockTagProvider.java
+│   │   │   ├── PSItemTagProvider.java
+│   │   │   ├── PSFluidTagsProvider.java
+│   │   │   ├── PSEntityTypeTagsProvider.java
+│   │   │   ├── PDamageTypeTagsProvider.java
+│   │   │   ├── PFlyTypeProvider.java
+│   │   │   ├── PToiletTypeProvider.java
 │   │   │   └── create/                   # Create 配方 datagen
+│   │   ├── impl/
+│   │   │   └── registrate/               # Registrate 扩展/辅助实现
 │   │   ├── mixin/                        # Mixin 注入
 │   │   ├── network/                      # 网络 Payload
 │   │   ├── util/                         # 工具类
@@ -143,39 +163,36 @@ PoopSkyMod/
 | **KubeJS**          | `2101.7.2-build.295` | 脚本扩展           |
 | **车万女仆**            | -                    | 女仆AI联动         |
 
-## 注册模式 (DeferredRegister)
+## 注册模式 (Registrate + DeferredRegister)
 
-本项目使用 NeoForge 的标准 `DeferredRegister` 注册系统。所有注册类集中在 `init/`，并在 `PoopSky` 构造函数中注册到 mod event bus。
+本项目当前混合使用 Registrate 与 NeoForge `DeferredRegister`。方块与物品主线注册使用 `PRegistries.REGISTRATE`，非方块/物品注册（实体、方块实体、菜单、配方、粒子、音效、数据组件、流体、世界生成等）仍按各自注册类使用 `DeferredRegister`。统一入口是 `PRegistries.registerAll(modEventBus)`，由 `PoopSky` 构造函数调用。
 
 ### 方块注册
 
 ```java
 // PBlocks.java
-public static final DeferredRegister.Blocks BLOCKS =
-        DeferredRegister.createBlocks(PoopSky.MOD_ID);
+public static final Registrate BLOCKS = PRegistries.REGISTRATE;
 
-public static final DeferredBlock<Block> POOP_BLOCK = registerBlock("poop_block",
-        () -> new PoopBlock(BlockBehaviour.Properties.of()
+public static final BlockEntry<PoopBlock> POOP_BLOCK = registerBlock("poop_block",
+        props -> new PoopBlock(poopProperties()
                 .randomTicks()
-                .strength(0.5F)
-                .mapColor(MapColor.COLOR_BROWN)
                 .speedFactor(0.4F)
                 .isValidSpawn(Blocks::always)
-                .instrument(NoteBlockInstrument.COW_BELL)
-                .sound(SoundType.MUD)));
+                .isRedstoneConductor(PBlocks::always)
+                .isSuffocating(PBlocks::always)
+                .instrument(NoteBlockInstrument.COW_BELL)));
 ```
+
+默认方块注册辅助会同时生成空 blockstate/model provider hook、默认战利品表和方块物品。特殊掉落（如厕所类型组件、层数掉落、门）在 `PBlocks.registerBlock(..., loot)` 的 loot 回调中处理。
 
 ### 物品注册
 
 ```java
 // PItems.java
-public static final DeferredRegister.Items ITEMS =
-        DeferredRegister.createItems(PoopSky.MOD_ID);
+public static final Registrate ITEMS = PRegistries.REGISTRATE;
 
-public static final DeferredItem<Item> POOP = ITEMS.register("poop",
-        () -> new PoopItem(new Item.Properties()
-                .food(PFoods.POOP)
-                .stacksTo(88)));
+public static final ItemEntry<PoopItem> POOP = registerItem("poop",
+        props -> new PoopItem(props.food(PFoods.POOP).stacksTo(88)));
 ```
 
 ### 实体注册
@@ -190,15 +207,8 @@ public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
 
 ```java
 // PoopSky.java 构造函数
-PEffects.register(modEventBus);
-PPotions.register(modEventBus);
-PParticles.register(modEventBus);
-PBlocks.register(modEventBus);
-PBlockEntityType.register(modEventBus);
-PItems.register(modEventBus);
-PEntityType.register(modEventBus);
-PRecipes.register(modEventBus);
-PMenuTypes.register(modEventBus);
+modEventBus.addListener(PSNetworking::register);
+PRegistries.registerAll(modEventBus);
 ```
 
 ## 命名约定
@@ -206,16 +216,16 @@ PMenuTypes.register(modEventBus);
 ### 类命名
 
 - 注册类以 `P` 或 `PS` 前缀开头：`PBlocks`, `PItems`, `PEntityType`, `PSNetworking`, `PSoundEvents`。
-- 抽象类放在 `common/block/abs/`，以 `Abstract` 前缀开头。
-- 具体方块、物品、实体实现分别放在 `common/block/p/`、`common/item/p/`、`common/entity/p/`。
-- 客户端专用类放在 `client/`；通用逻辑放在 `common/`；不要把客户端依赖引入通用代码。
+- 抽象类放在 `content/block/abs/`，以 `Abstract` 前缀开头。
+- 具体方块、物品、实体实现分别放在 `content/block/p/`、`content/item/p/`、`content/entity/p/`。
+- 客户端专用类放在 `client/`；通用玩法逻辑放在 `content/`；不要把客户端依赖引入通用代码。
 - Mixin 类以 `Mixin` 后缀结尾。
 - 方块实体以 `BlockEntity` 后缀结尾。
 - 自定义配方以 `Recipe` 后缀结尾，配套 Builder 以 `RecipeBuilder` 后缀结尾。
 
 ### 注册名 (Registry Name)
 
-- 使用 `snake_case`：`poop_block`, `golden_poop`, `compooper`, `fly_nest`。
+- 使用 `snake_case`：`poop_block`, `golden_poop`, `compooper`, `fly_barrel`。
 - 保持与 Minecraft 原版命名风格一致。
 - 注册名、资源路径、配方文件名、本地化键后缀应尽量一致。
 
@@ -316,22 +326,22 @@ Mixin 配置文件位于 `src/main/resources/poopsky.mixins.json`，包路径为
 - 运行时通过 `applyConversion(Level, BlockPos)` 在指定半径内替换目标方块。
 - Builder：`AnalPressingRecipeBuilder`。
 
-### 苍蝇窝产出配方 (FlyNestRecipe)
+### 苍蝇桶产出配方 (FlyBarrelRecipe)
 
-- 序列化器：`poopsky:fly_nest`
-- 配方类型：`poopsky:fly_nest`
-- 配方文件夹：`recipe/fly_nest/`
-- 定义每种苍蝇品种在苍蝇窝中的产出物品。
+- 序列化器：`poopsky:fly_barrel`
+- 配方类型：`poopsky:fly_barrel`
+- 配方文件夹：`recipe/fly_barrel/`
+- 定义每种苍蝇品种在苍蝇桶中的产出物品。
 - 字段：`fly_type`（品种 ID，如 `"normal"`、`"red"`）→ `result`（ItemStack）。
-- 运行时通过 `PFlyRecipes.getFlyNestRecipes()` 查询，使用 `matches(flyTypeId)` 匹配。
+- 运行时通过 `PFlyRecipes.getProduct(level, type)` 查询，底层使用 `matches(flyTypeId)` 匹配。
 - 不使用标准 `RecipeInput` 匹配（`matches(RecipeInput, Level)` 始终返回 `false`）。
-- Datagen：`PSRecipeProvider.buildFlyNestRecipes()`，通过 `FlyNestRecipeBuilder.flyNest(typeId, result)` 构建。
+- Datagen：`PSRecipeProvider.buildFlyBarrelRecipes()`，通过 `FlyBarrelRecipeBuilder.flyBarrel(typeId, result)` 构建。
 
 配方 JSON 示例：
 
 ```json
 {
-  "type": "poopsky:fly_nest",
+  "type": "poopsky:fly_barrel",
   "fly_type": "red",
   "result": {
     "id": "minecraft:redstone",
@@ -340,23 +350,23 @@ Mixin 配置文件位于 `src/main/resources/poopsky.mixins.json`，包路径为
 }
 ```
 
-### 繁育箱变异配方 (BreedingBoxRecipe)
+### 繁育箱变异配方 (BreedingChestRecipe)
 
-- 序列化器：`poopsky:breeding_box`
-- 配方类型：`poopsky:breeding_box`
-- 配方文件夹：`recipe/breeding_box/`
+- 序列化器：`poopsky:breeding_chest`
+- 配方类型：`poopsky:breeding_chest`
+- 配方文件夹：`recipe/breeding_chest/`
 - 定义两只苍蝇变异后产生的新品种及概率。
 - 字段：`parent1` + `parent2`（父本品种 ID）→ `result`（子代品种 ID）+ `chance`（0.0~1.0）。
 - 匹配是**双向的**：`parent1+parent2` 和 `parent2+parent1` 都能匹配。
 - 不使用标准 `RecipeInput` 匹配，`assemble()` 和 `getResultItem()` 返回 `ItemStack.EMPTY`（结果不是物品而是品种 ID）。
-- 运行时通过 `PFlyRecipes.getBreedingBoxRecipes()` 查询，使用 `matches(p1, p2)` 匹配。
-- Datagen：`PSRecipeProvider.buildBreedingBoxRecipes()`，通过 `BreedingBoxRecipeBuilder.breedingBox(p1, p2, result, chance)` 构建。
+- 运行时通过 `PFlyRecipes.tryMutate(level, parent1, parent2)` 查询，底层使用 `matches(p1, p2)` 匹配。
+- Datagen：`PSRecipeProvider.buildBreedingChestRecipes()`，通过 `BreedingChestRecipeBuilder.breedingChest(p1, p2, result)` 构建，必要时链式调用 `.chance(chance)`。
 
 配方 JSON 示例：
 
 ```json
 {
-  "type": "poopsky:breeding_box",
+  "type": "poopsky:breeding_chest",
   "parent1": "red",
   "parent2": "blue",
   "result": "purple",
@@ -366,7 +376,7 @@ Mixin 配置文件位于 `src/main/resources/poopsky.mixins.json`，包路径为
 
 ### Create 风扇配方
 
-- 位于 `compat/create/` 与 `datagen/create/`。
+- 运行时位于 `compat/create/` 与 `compat/create/content/`，datagen 位于 `datagen/create/`。
 - 仅在 Create 加载时通过 `CreatePlugin.register(modEventBus)` 注册。
 - 当前 datagen 包含 `PSDigestingRecipeGen`、`PWashingRecipeGen`、`PHauntingRecipeGen`。
 
@@ -445,24 +455,12 @@ PY
 
 包含的 Provider：
 
-- `PSBlockStateProvider` — 方块状态 JSON
-- `PSItemModelProvider` — 物品模型 JSON
-- `PSBlockLootTableProvider` — 方块战利品表
-- `PSEntityLootTableProvider` — 实体战利品表
-- `PSRecipeProvider` — 原版与自定义配方
-- `PSBlockTagProvider` / `PSItemTagProvider` — 方块/物品标签
-- `PSFluidTagsProvider` — 流体标签
-- `PSEntityTypeTagsProvider` — 实体类型标签
-- `PSDamageTypeTagsProvider` — 伤害类型标签
-- `PSAdvancementProvider` — 进度
-- `PSDatapackProvider` — 数据包动态注册数据
-- `PSGlobalLootModifierProvider` — 全局战利品修改器
-- `PSDataMapProvider` — 数据映射
-- `PSFishingLootProvider` — 钓鱼战利品
-- `PSParticleProvider` — 粒子 JSON
-- `PToiletTypeProvider` — 厕所类型数据
-- `PFlyTypeProvider` — 苍蝇类型数据
-- `PSDigestingRecipeGen` / `PWashingRecipeGen` / `PHauntingRecipeGen` — Create 兼容配方
+- 服务端战利品：`LootTableProvider` 聚合 `PBlockLootTableProvider`、`PSEntityLootTableProvider`、`PSFishingLootProvider`。
+- 服务端配方与扩展数据：`PSRecipeProvider`、`PFlyTypeProvider`、`PToiletTypeProvider`。
+- 标签与动态注册数据：`PSBlockTagProvider`、`PSItemTagProvider`、`PSEntityTypeTagsProvider`、`PSFluidTagsProvider`、`PSDatapackProvider`、`PDamageTypeTagsProvider`。
+- 其他服务端数据：`PSDataMapProvider`、`PSAdvancementProvider`、`PSGlobalLootModifierProvider`。
+- 客户端资源：`PSBlockStateProvider`、`PSItemModelProvider`、`PSParticleProvider`。
+- Create 兼容配方：`PSDigestingRecipeGen`、`PWashingRecipeGen`、`PHauntingRecipeGen`。
 
 ### 运行数据生成
 
@@ -506,13 +504,13 @@ if (ModList.get().isLoaded(PSMods.CREATE.id())) {
 
 ## NeoForge 1.21.1 开发规则
 
-### 1. 使用 DeferredRegister
+### 1. 使用 Registrate / DeferredRegister
 
-- 所有注册必须使用 `DeferredRegister`，不得使用原版 `Registry.register()`。
-- 方块使用 `DeferredRegister.createBlocks()`。
-- 物品使用 `DeferredRegister.createItems()`。
-- 非方块/物品注册使用 `DeferredRegister.create(BuiltInRegistries.X, PoopSky.MOD_ID)`。
-- 注册字段使用 `DeferredBlock`、`DeferredItem` 或 `DeferredHolder`。
+- 不得直接使用原版 `Registry.register()`。
+- 方块与普通物品优先沿用 `PBlocks` / `PItems` 的 `PRegistries.REGISTRATE` helper，字段类型通常为 `BlockEntry<T>` / `ItemEntry<T>`。
+- 需要自定义方块物品、战利品表或无物品方块时，使用 `PBlocks.registerBlock`、`registerDefaultBlock`、`registerBlockNoItem`、`registerCompooperBlock`、`registerToiletBlock` 等现有 helper。
+- 实体、方块实体、菜单、配方、粒子、音效、数据组件、流体、村民、世界生成注册仍使用对应注册类中的 `DeferredRegister`。
+- 新增 `DeferredRegister` 时应放入现有注册类并由 `PRegistries.registerAll(modEventBus)` 或对应兼容插件统一挂到 mod event bus。
 
 ### 2. 方块属性
 
@@ -523,7 +521,7 @@ if (ModList.get().isLoaded(PSMods.CREATE.id())) {
 
 ### 3. 方块实体
 
-- 方块实体类放在 `common/block/entity/`。
+- 方块实体类放在 `content/block/entity/`。
 - 在 `PBlockEntityType` 中注册。
 - 使用已有项目模式关联方块与 `BlockEntityType`。
 - 菜单类放在 `client/inventory/`，菜单类型在 `PMenuTypes` 中注册。
@@ -582,7 +580,7 @@ if (ModList.get().isLoaded(PSMods.CREATE.id())) {
 - 客户端初始化集中在 `PoopSkyClient.java`。
 - 客户端模型、渲染、粒子、音效放在 `client/`。
 - 客户端 Mixin 在 `poopsky.mixins.json` 的 `client` 数组中声明。
-- 通用代码不得直接引用 `Minecraft`、客户端渲染类或客户端声音类。
+- `content/`、`init/`、`network/` 等通用代码不得直接引用 `Minecraft`、客户端渲染类或客户端声音类。
 - 必要时使用 `DistExecutor` 或 NeoForge 客户端事件隔离客户端逻辑。
 
 ### 12. 标签

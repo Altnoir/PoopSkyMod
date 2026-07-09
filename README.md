@@ -12,7 +12,7 @@ A Minecraft mod for NeoForge 1.21.1 that adds a variety of poop-themed blocks, i
 - **Poop Trees** — Poop Log, Poop Empty Log, Poop Leaves, Poop Leaves (Gold/Iron variants), Raw Sapling Block
 - **Toilets** — Toilet, Rainbow Toilet, Golden Toilet, Lava Toilet, colorful Concrete Toilets
 - **Compooper** — Compooper, Water Compooper, Lava Compooper, Powder Snow Compooper, Urine Compooper
-- **Machines** — Breeding Box, Fly Nest, Sieve, Placer
+- **Machines** — Breeding Chest, Fly Barrel, Sieve, Placer
 - **Other** — POP, Poop Cake, Poop Candle Cake, Poolime Block, Maggots Block, Roundworm Vines, Chair, Raw Sea Block, Raw Wither Block
 
 ### Items
@@ -44,8 +44,10 @@ A Minecraft mod for NeoForge 1.21.1 that adds a variety of poop-themed blocks, i
 ### Recipes
 - **Sieve** — Process blocks through sieving
 - **POP Explosion** — Explosion-based crafting
-- **Fly Nest** — Fly nest processing
-- **Breeding Box** — Entity breeding automation
+- **Fly Barrel** — Fly-type output recipes
+- **Breeding Chest** — Fly mutation recipes
+- **Anal Pressing** — Area block conversion recipes
+- **Toilet Shaped** — Toilet crafting recipes that preserve toilet type data
 
 ## Mod Compatibility
 
@@ -58,20 +60,10 @@ A Minecraft mod for NeoForge 1.21.1 that adds a variety of poop-themed blocks, i
 
 | Dependency         | Version | Required |
 |--------------------|---------|----------|
-| Minecraft          | 1.21.1  | Yes      |
-| NeoForge           | 21.1.0+ | Yes      |
-| Sable Companion    | 1.6.0   | Optional |
+| Sable              | 1.6.0   | Optional |
 | Create             | 6.0.8+  | Optional |
 | JEI                | 19.27+  | Optional |
 | Touhou Little Maid | —       | Optional |
-
-## Building
-
-```bash
-./gradlew build
-```
-
-The output artifact will be in `build/libs/`.
 
 ## License
 
