@@ -1,6 +1,5 @@
 package com.altnoir.poopsky.init;
 
-import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.SetToiletTypeFunction;
 import com.altnoir.poopsky.content.block.fluid.UrineLiquidBlock;
 import com.altnoir.poopsky.content.block.p.*;
@@ -35,12 +34,12 @@ import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
 import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.predicates.ExplosionCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.MatchTool;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -57,7 +56,6 @@ public class PBlocks {
     private static final float HARD_STRENGTH = 10.0F;
     private static final float TOILET_RESISTANCE = 1200.0F;
     private static final int LAVA_LIGHT_LEVEL = 15;
-    public static final DeferredRegister.Blocks OLD_BLOCKS = DeferredRegister.createBlocks(PoopSky.MOD_ID);
     public static final Registrate BLOCKS = PRegistries.REGISTRATE;
 
     public static final BlockEntry<PoopCakeBlock> POOP_CAKE = registerBlock("poop_cake",
@@ -401,10 +399,7 @@ public class PBlocks {
             "wooden_toilet",
             props -> new ToiletBlock(toiletProperties(MapColor.WOOD, WOODEN_STRENGTH, SoundType.WOOD, NoteBlockInstrument.BASS)
                     .ignitedByLava()),
-            (loot, block) -> loot.add(block, LootTable.lootTable()
-                    .withPool(LootPool.lootPool()
-                            .add(LootItem.lootTableItem(block)
-                                    .apply(SetToiletTypeFunction.setType())))));
+            (loot, block) -> loot.add(block, createToiletDrop(block)));
 
     public static final BlockEntry<LavaToiletBlock> HARD_TOILET = registerToiletBlock(
             "hard_toilet",
@@ -412,10 +407,7 @@ public class PBlocks {
                     .lightLevel(lavaLightLevel())
                     .requiresCorrectToolForDrops()
                     .ignitedByLava()),
-            (loot, block) -> loot.add(block, LootTable.lootTable()
-                    .withPool(LootPool.lootPool()
-                            .add(LootItem.lootTableItem(block)
-                                    .apply(SetToiletTypeFunction.setType())))));
+            (loot, block) -> loot.add(block, createToiletDrop(block)));
 
     public record BlockFamily(
             BlockEntry<? extends Block> block,
@@ -635,6 +627,15 @@ public class PBlocks {
 
     private static ToIntFunction<BlockState> lavaLightLevel() {
         return state -> state.getValue(BaseToiletLavaBlock.LAVA) ? LAVA_LIGHT_LEVEL : 0;
+    }
+
+    public static LootTable.Builder createToiletDrop(Block block) {
+        return LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .when(ExplosionCondition.survivesExplosion())
+                        .add(LootItem.lootTableItem(block)
+                                .apply(SetToiletTypeFunction.setType())));
     }
 
     private static LootTable.Builder createPoopPieceDrop(RegistrateBlockLootTables loot, Block block, Item item) {

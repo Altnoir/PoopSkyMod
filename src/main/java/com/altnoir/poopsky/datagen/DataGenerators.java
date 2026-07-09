@@ -32,6 +32,7 @@ public class DataGenerators {
 
         generators.addProvider(event.includeServer(), new LootTableProvider(packOutput, Collections.emptySet(),
                 List.of(
+                        new LootTableProvider.SubProviderEntry(PBlockLootTableProvider::new, LootContextParamSets.BLOCK),
                         new LootTableProvider.SubProviderEntry(PSEntityLootTableProvider::new, LootContextParamSets.ENTITY),
                         new LootTableProvider.SubProviderEntry(PSFishingLootProvider::new, LootContextParamSets.FISHING)
                 ), lookupProvider));
