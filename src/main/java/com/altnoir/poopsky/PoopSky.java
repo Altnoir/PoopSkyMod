@@ -1,28 +1,26 @@
 package com.altnoir.poopsky;
 
+import com.altnoir.poopsky.common.FlyTypeManager;
 import com.altnoir.poopsky.common.block.ToiletTypeManager;
 import com.altnoir.poopsky.common.block.p.CompooperBlock;
-import com.altnoir.poopsky.common.FlyTypeManager;
+import com.altnoir.poopsky.common.entity.p.PoopTntEntity;
 import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.compat.create.CreatePlugin;
 import com.altnoir.poopsky.compat.maid.MaidPlugin;
-import com.altnoir.poopsky.common.entity.p.PoopTntEntity;
-import com.altnoir.poopsky.init.PBlocks;
-import com.altnoir.poopsky.init.PFluidTypes;
-import com.altnoir.poopsky.init.PItems;
-import com.altnoir.poopsky.init.PSNetworking;
-import com.altnoir.poopsky.init.PRegistries;
-import com.altnoir.poopsky.init.PStats;
+import com.altnoir.poopsky.init.*;
 import com.mojang.logging.LogUtils;
+import com.tterrag.registrate.Registrate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.BoneMealItem;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -34,22 +32,27 @@ import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.neoforge.fluids.FluidInteractionRegistry;
-import net.neoforged.neoforge.common.NeoForge;
 import org.slf4j.Logger;
 
 @Mod(PoopSky.MOD_ID)
 public class PoopSky {
     public static final String MOD_ID = "poopsky";
     public static final Logger LOGGER = LogUtils.getLogger();
+    public static final Registrate REGISTRATE = Registrate.create(MOD_ID);
+
+    static {
+        REGISTRATE.defaultCreativeTab((ResourceKey<CreativeModeTab>) null);
+    }
 
     public PoopSky(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(PSNetworking::register);
 
-        PRegistries.registerAll(modEventBus);
+        PSRegistries.registerAll(modEventBus);
         NeoForge.EVENT_BUS.addListener(this::onAddReloadListener);
 
         if (ModList.get().isLoaded(PSMods.TOUHOU_LITTLE_MAID.id())) {
