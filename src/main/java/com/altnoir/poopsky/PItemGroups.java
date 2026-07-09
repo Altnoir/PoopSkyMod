@@ -8,13 +8,9 @@ import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.Set;
@@ -42,10 +38,11 @@ public class PItemGroups {
                         PBlocks.WOODEN_TOILET.get(),
                         PBlocks.HARD_TOILET.get()
                 );
-                PBlocks.OLD_BLOCKS.getEntries().stream()
-                        .map(DeferredHolder::get)
-                        .filter(block -> block.asItem() != Items.AIR)
-                        .filter(block -> !skip.contains(block))
+                PItems.getAllItems().stream()
+                        .filter(item -> item instanceof BlockItem)
+                        .map(Item::getDefaultInstance)
+                        .filter(stack -> stack.getItem() != Items.AIR)
+                        .filter(stack -> !skip.contains(((BlockItem) stack.getItem()).getBlock()))
                         .forEach(output::accept);
 
                 for (String id : FlyTypeManager.INSTANCE.getFlyTypes()) {

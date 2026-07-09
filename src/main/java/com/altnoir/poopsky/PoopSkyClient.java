@@ -1,24 +1,24 @@
 package com.altnoir.poopsky;
 
-import com.altnoir.poopsky.client.model.ToiletModelEventHandler;
-import com.altnoir.poopsky.common.block.ToiletType;
-import com.altnoir.poopsky.common.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.client.ToiletClientBlockExtensions;
 import com.altnoir.poopsky.client.inventory.BreedingChestScreen;
 import com.altnoir.poopsky.client.inventory.FlyBarrelScreen;
+import com.altnoir.poopsky.client.model.ToiletModelEventHandler;
 import com.altnoir.poopsky.client.particle.LeavesParticle;
 import com.altnoir.poopsky.client.particle.PoopParticle;
 import com.altnoir.poopsky.client.renderer.TimeBellOverlay;
 import com.altnoir.poopsky.client.renderer.ToiletHighlightRenderer;
 import com.altnoir.poopsky.client.renderer.ToiletPlugItemRenderer;
 import com.altnoir.poopsky.common.FlyType;
+import com.altnoir.poopsky.common.block.ToiletType;
+import com.altnoir.poopsky.common.block.abs.AbstractCompooperBlock;
+import com.altnoir.poopsky.common.entity.renderer.*;
 import com.altnoir.poopsky.common.event.PSClientGameEvents;
 import com.altnoir.poopsky.common.event.PSClientModEvents;
 import com.altnoir.poopsky.common.event.PSKeyBoardInput;
-import com.altnoir.poopsky.common.entity.renderer.*;
-import com.altnoir.poopsky.init.*;
 import com.altnoir.poopsky.common.item.PFlyTypes;
 import com.altnoir.poopsky.common.item.p.ToiletBlockItem;
+import com.altnoir.poopsky.init.*;
 import net.minecraft.client.RecipeBookCategories;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -113,8 +113,7 @@ public class PoopSkyClient {
                             return (float) FlyType.getIndex(id != null ? id : PFlyTypes.NORMAL.id()) / FlyType.FLY_TYPES.size();
                         });
 
-                for (var block : PBlocks.OLD_BLOCKS.getEntries()) {
-                    Item item = block.get().asItem();
+                for (Item item : PItems.getAllItems()) {
                     if (item instanceof ToiletBlockItem && item != Items.AIR) {
                         ItemProperties.register(item, PoopSky.loc("toilet_type"),
                                 (stack, level, entity, seed) -> {
