@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.client.inventory;
 
 import com.altnoir.poopsky.init.PMenuTypes;
-import com.altnoir.poopsky.common.item.p.FlyItem;
+import com.altnoir.poopsky.content.item.p.FlyItem;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;

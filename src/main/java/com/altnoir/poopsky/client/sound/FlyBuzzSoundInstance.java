@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.client.sound;
 
-import com.altnoir.poopsky.common.entity.p.FlyEntity;
+import com.altnoir.poopsky.content.entity.p.FlyEntity;
 import com.altnoir.poopsky.init.PSoundEvents;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.sounds.SoundSource;

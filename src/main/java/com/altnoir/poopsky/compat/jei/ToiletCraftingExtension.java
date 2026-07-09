@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.compat.jei;
 
-import com.altnoir.poopsky.common.recipe.ToiletShapedRecipe;
+import com.altnoir.poopsky.content.recipe.ToiletShapedRecipe;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.ICraftingGridHelper;
 import mezz.jei.api.recipe.category.extensions.vanilla.crafting.ICraftingCategoryExtension;

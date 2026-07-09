@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.common.block.entity.*;
+import com.altnoir.poopsky.content.block.entity.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;

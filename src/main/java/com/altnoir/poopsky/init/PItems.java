@@ -1,10 +1,10 @@
 package com.altnoir.poopsky.init;
 
-import com.altnoir.poopsky.common.block.ToiletComponent;
-import com.altnoir.poopsky.common.item.PArmorMaterials;
-import com.altnoir.poopsky.common.item.PFoods;
-import com.altnoir.poopsky.common.item.PToolTiers;
-import com.altnoir.poopsky.common.item.p.*;
+import com.altnoir.poopsky.content.block.ToiletComponent;
+import com.altnoir.poopsky.content.item.PArmorMaterials;
+import com.altnoir.poopsky.content.item.PFoods;
+import com.altnoir.poopsky.content.item.PToolTiers;
+import com.altnoir.poopsky.content.item.p.*;
 import com.tterrag.registrate.Registrate;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullFunction;

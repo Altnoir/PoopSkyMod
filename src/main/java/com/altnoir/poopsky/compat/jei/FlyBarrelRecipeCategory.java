@@ -1,10 +1,10 @@
 package com.altnoir.poopsky.compat.jei;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.common.FlyType;
+import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.init.PBlocks;
-import com.altnoir.poopsky.common.item.p.FlyItem;
-import com.altnoir.poopsky.common.recipe.FlyBarrelRecipe;
+import com.altnoir.poopsky.content.item.p.FlyItem;
+import com.altnoir.poopsky.content.recipe.FlyBarrelRecipe;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;

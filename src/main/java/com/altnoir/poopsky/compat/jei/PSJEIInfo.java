@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.compat.jei;
 
-import com.altnoir.poopsky.common.item.PFlyTypes;
-import com.altnoir.poopsky.common.item.p.FlyItem;
+import com.altnoir.poopsky.content.item.PFlyTypes;
+import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PItems;
 import mezz.jei.api.constants.VanillaTypes;

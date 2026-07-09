@@ -1,10 +1,10 @@
 package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.common.FlyType;
+import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PItems;
-import com.altnoir.poopsky.common.item.PFlyTypes;
+import com.altnoir.poopsky.content.item.PFlyTypes;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.client.renderer.block.model.BlockModel.GuiLight;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -24,7 +24,6 @@ import net.neoforged.neoforge.client.model.generators.loaders.SeparateTransforms
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.neoforged.neoforge.registries.DeferredBlock;
-import net.neoforged.neoforge.registries.DeferredItem;
 
 import java.util.LinkedHashMap;
 

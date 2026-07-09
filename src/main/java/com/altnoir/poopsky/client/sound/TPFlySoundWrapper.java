@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.client.sound;
 
-import com.altnoir.poopsky.common.entity.p.ToiletPlugEntity;
+import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
 import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;

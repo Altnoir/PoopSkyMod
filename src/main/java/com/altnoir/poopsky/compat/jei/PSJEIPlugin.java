@@ -2,11 +2,11 @@ package com.altnoir.poopsky.compat.jei;
 
 import com.altnoir.poopsky.PTags;
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.common.block.ToiletType;
-import com.altnoir.poopsky.common.block.p.CompooperBlock;
-import com.altnoir.poopsky.common.item.PFlyTypes;
-import com.altnoir.poopsky.common.item.p.FlyItem;
-import com.altnoir.poopsky.common.recipe.ToiletShapedRecipe;
+import com.altnoir.poopsky.content.block.ToiletType;
+import com.altnoir.poopsky.content.block.p.CompooperBlock;
+import com.altnoir.poopsky.content.item.PFlyTypes;
+import com.altnoir.poopsky.content.item.p.FlyItem;
+import com.altnoir.poopsky.content.recipe.ToiletShapedRecipe;
 import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.compat.jei.create.FanDigestingCategory;
 import com.altnoir.poopsky.init.PBlocks;

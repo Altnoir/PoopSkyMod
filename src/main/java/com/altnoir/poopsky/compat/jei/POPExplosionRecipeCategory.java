@@ -2,7 +2,7 @@ package com.altnoir.poopsky.compat.jei;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.init.PBlocks;
-import com.altnoir.poopsky.common.recipe.POPExplosionRecipe;
+import com.altnoir.poopsky.content.recipe.POPExplosionRecipe;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.ITooltipBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;

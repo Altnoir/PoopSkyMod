@@ -1,9 +1,9 @@
 package com.altnoir.poopsky;
 
-import com.altnoir.poopsky.common.FlyTypeManager;
-import com.altnoir.poopsky.common.block.ToiletTypeManager;
-import com.altnoir.poopsky.common.block.p.CompooperBlock;
-import com.altnoir.poopsky.common.entity.p.PoopTntEntity;
+import com.altnoir.poopsky.content.FlyTypeManager;
+import com.altnoir.poopsky.content.block.ToiletTypeManager;
+import com.altnoir.poopsky.content.block.p.CompooperBlock;
+import com.altnoir.poopsky.content.entity.p.PoopTntEntity;
 import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.compat.create.CreatePlugin;
 import com.altnoir.poopsky.compat.maid.MaidPlugin;

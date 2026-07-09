@@ -1,11 +1,11 @@
 package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.common.SetToiletTypeFunction;
-import com.altnoir.poopsky.common.block.fluid.UrineLiquidBlock;
-import com.altnoir.poopsky.common.block.p.*;
-import com.altnoir.poopsky.common.item.p.CompooperBlockItem;
-import com.altnoir.poopsky.common.item.p.ToiletBlockItem;
+import com.altnoir.poopsky.content.SetToiletTypeFunction;
+import com.altnoir.poopsky.content.block.fluid.UrineLiquidBlock;
+import com.altnoir.poopsky.content.block.p.*;
+import com.altnoir.poopsky.content.item.p.CompooperBlockItem;
+import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.tterrag.registrate.Registrate;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import com.tterrag.registrate.util.entry.BlockEntry;

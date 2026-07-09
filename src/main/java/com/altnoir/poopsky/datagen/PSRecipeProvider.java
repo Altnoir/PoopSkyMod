@@ -1,10 +1,10 @@
 package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.common.FlyType;
-import com.altnoir.poopsky.common.block.ToiletType;
-import com.altnoir.poopsky.common.item.PFlyTypes;
-import com.altnoir.poopsky.common.recipe.*;
+import com.altnoir.poopsky.content.FlyType;
+import com.altnoir.poopsky.content.block.ToiletType;
+import com.altnoir.poopsky.content.item.PFlyTypes;
+import com.altnoir.poopsky.content.recipe.*;
 import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PItems;
