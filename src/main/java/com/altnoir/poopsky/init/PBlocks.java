@@ -4,6 +4,7 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.common.block.fluid.UrineLiquidBlock;
 import com.altnoir.poopsky.common.block.p.*;
 import com.altnoir.poopsky.common.item.p.CompooperBlockItem;
+import com.altnoir.poopsky.common.SetToiletTypeFunction;
 import com.altnoir.poopsky.common.item.p.ToiletBlockItem;
 import com.tterrag.registrate.Registrate;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
@@ -399,14 +400,22 @@ public class PBlocks {
     public static final BlockEntry<ToiletBlock> WOODEN_TOILET = registerToiletBlock(
             "wooden_toilet",
             props -> new ToiletBlock(toiletProperties(MapColor.WOOD, WOODEN_STRENGTH, SoundType.WOOD, NoteBlockInstrument.BASS)
-                    .ignitedByLava()));
+                    .ignitedByLava()),
+            (loot, block) -> loot.add(block, LootTable.lootTable()
+                    .withPool(LootPool.lootPool()
+                            .add(LootItem.lootTableItem(block)
+                                    .apply(SetToiletTypeFunction.setType())))));
 
     public static final BlockEntry<LavaToiletBlock> HARD_TOILET = registerToiletBlock(
             "hard_toilet",
             props -> new LavaToiletBlock(toiletProperties(MapColor.STONE, HARD_STRENGTH, SoundType.STONE, NoteBlockInstrument.BASEDRUM)
                     .lightLevel(lavaLightLevel())
                     .requiresCorrectToolForDrops()
-                    .ignitedByLava()));
+                    .ignitedByLava()),
+            (loot, block) -> loot.add(block, LootTable.lootTable()
+                    .withPool(LootPool.lootPool()
+                            .add(LootItem.lootTableItem(block)
+                                    .apply(SetToiletTypeFunction.setType())))));
 
     public record BlockFamily(
             BlockEntry<? extends Block> block,
@@ -582,10 +591,6 @@ public class PBlocks {
                 .register();
     }
 
-    public static <T extends Block> BlockEntry<T> registerCompooperBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory) {
-        return registerCompooperBlock(name, factory, RegistrateBlockLootTables::dropSelf);
-    }
-
     public static <T extends Block> BlockEntry<T> registerCompooperBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
         return BLOCKS.block(name, factory)
                 .blockstate((ctx, prov) -> {
@@ -598,10 +603,11 @@ public class PBlocks {
                 .register();
     }
 
-    public static <T extends Block> BlockEntry<T> registerToiletBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory) {
+    public static <T extends Block> BlockEntry<T> registerToiletBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
         return BLOCKS.block(name, factory)
                 .blockstate((ctx, prov) -> {
                 })
+                .loot(loot)
                 .item((b, p) -> new ToiletBlockItem(b, p.stacksTo(88)))
                 .model((ctx, prov) -> {
                 })
