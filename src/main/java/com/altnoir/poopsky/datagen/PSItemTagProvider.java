@@ -106,6 +106,10 @@ public class PSItemTagProvider extends ItemTagsProvider {
                 .add(PItems.POODDING.get())
                 .add(PItems.URINE_BOTTLE.get())
                 .add(PBlocks.POOP_CAKE.asItem());
+        tag(ItemTags.WOLF_FOOD)
+                .add(PItems.POOP.get())
+                .add(PItems.CHILI_POOP.get())
+                .add(PItems.GOLDEN_POOP.get());
         tag(ItemTags.MEAT)
                 .add(PItems.MAGGOTS_SEEDS.get())
                 .add(PItems.ROUNDWORM.get())
