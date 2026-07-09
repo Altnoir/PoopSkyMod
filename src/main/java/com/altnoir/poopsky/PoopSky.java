@@ -9,7 +9,6 @@ import com.altnoir.poopsky.compat.create.CreatePlugin;
 import com.altnoir.poopsky.compat.maid.MaidPlugin;
 import com.altnoir.poopsky.init.*;
 import com.mojang.logging.LogUtils;
-import com.tterrag.registrate.Registrate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.dispenser.BlockSource;
@@ -42,17 +41,16 @@ import org.slf4j.Logger;
 public class PoopSky {
     public static final String MOD_ID = "poopsky";
     public static final Logger LOGGER = LogUtils.getLogger();
-    public static final Registrate REGISTRATE = Registrate.create(MOD_ID);
 
     static {
-        REGISTRATE.defaultCreativeTab((ResourceKey<CreativeModeTab>) null);
+        PRegistries.REGISTRATE.defaultCreativeTab((ResourceKey<CreativeModeTab>) null);
     }
 
     public PoopSky(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(PSNetworking::register);
 
-        PSRegistries.registerAll(modEventBus);
+        PRegistries.registerAll(modEventBus);
         NeoForge.EVENT_BUS.addListener(this::onAddReloadListener);
 
         if (ModList.get().isLoaded(PSMods.TOUHOU_LITTLE_MAID.id())) {

@@ -6,12 +6,23 @@ import com.altnoir.poopsky.common.block.p.*;
 import com.altnoir.poopsky.common.item.p.CompooperBlockItem;
 import com.altnoir.poopsky.common.item.p.ToiletBlockItem;
 import com.tterrag.registrate.Registrate;
+import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
+import net.minecraft.advancements.critereon.EnchantmentPredicate;
+import net.minecraft.advancements.critereon.ItemEnchantmentsPredicate;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.critereon.ItemSubPredicates;
+import net.minecraft.advancements.critereon.MinMaxBounds;
+import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -19,6 +30,19 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.AlternativesEntry;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
+import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.MatchTool;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.Collections;
@@ -26,6 +50,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.ToIntFunction;
+import java.util.stream.IntStream;
 
 public class PBlocks {
     private static final float POOP = 0.5F;
@@ -39,7 +64,7 @@ public class PBlocks {
     public static final Registrate BLOCKS = PRegistries.REGISTRATE;
 
     public static final BlockEntry<PoopCakeBlock> POOP_CAKE = registerBlock("poop_cake",
-            props -> new PoopCakeBlock(poopCakeProperties()));
+            props -> new PoopCakeBlock(poopCakeProperties().noLootTable()));
 
     private static final Block[] POOP_CAKE_CANDLES = {
             Blocks.CANDLE,
@@ -69,7 +94,8 @@ public class PBlocks {
                     .randomTicks()
                     .requiresCorrectToolForDrops()
                     .isViewBlocking((state, getter, pos) -> state.getValue(PoopPieceBlock.LAYERS) >= 8)
-                    .pushReaction(PushReaction.DESTROY)));
+                    .pushReaction(PushReaction.DESTROY)),
+            (loot, block) -> loot.add(block, createPoopPieceDrop(loot, block, PItems.POOP_BALL.get())));
     public static final BlockEntry<PoopBlock> POOP_BLOCK = registerBlock("poop_block",
             props -> new PoopBlock(poopProperties()
                     .randomTicks()
@@ -106,7 +132,8 @@ public class PBlocks {
     public static final BlockEntry<DoorBlock> POOP_DOOR = registerBlock("poop_door",
             props -> new DoorBlock(PBlockSetType.POOP, poopProperties()
                     .noOcclusion()
-                    .pushReaction(PushReaction.DESTROY)));
+                    .pushReaction(PushReaction.DESTROY)),
+            (loot, block) -> loot.add(block, loot.createDoorTable(block)));
     public static final BlockEntry<TrapDoorBlock> POOP_TRAPDOOR = registerBlock("poop_trapdoor",
             props -> new TrapDoorBlock(PBlockSetType.POOP, poopProperties()
                     .noOcclusion()
@@ -204,15 +231,34 @@ public class PBlocks {
             props -> new CompooperBlock(simpleProperties(MapColor.COLOR_BROWN, 0.6F, SoundType.METAL)
                     .noOcclusion()
                     .instrument(NoteBlockInstrument.BASS)
-                    .requiresCorrectToolForDrops()));
+                    .requiresCorrectToolForDrops()),
+            (loot, block) -> loot.add(block, LootTable.lootTable()
+                    .withPool(LootPool.lootPool()
+                            .add(loot.applyExplosionDecay(block, LootItem.lootTableItem(block))))
+                    .withPool(LootPool.lootPool()
+                            .add(LootItem.lootTableItem(PItems.SAPLING_POOP_BALL.get()))
+                            .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                                    .setProperties(StatePropertiesPredicate.Builder.properties()
+                                            .hasProperty(CompooperBlock.POOP_LEVEL, CompooperBlock.READY))))));
     public static final BlockEntry<WaterCompooperBlock> WATER_COMPOOPER = registerDefaultBlock("water_compooper",
-            props -> new WaterCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get())));
+            props -> new WaterCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get())),
+            (loot, block) -> loot.dropOther(block, COMPOOPER.get()));
     public static final BlockEntry<LavaCompooperBlock> LAVA_COMPOOPER = registerDefaultBlock("lava_compooper",
-            props -> new LavaCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()).lightLevel(state -> 15)));
+            props -> new LavaCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()).lightLevel(state -> 15)),
+            (loot, block) -> loot.dropOther(block, COMPOOPER.get()));
     public static final BlockEntry<PowderSnowCompooperBlock> POWDER_SNOW_COMPOOPER = registerDefaultBlock("powder_snow_compooper",
-            props -> new PowderSnowCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get())));
+            props -> new PowderSnowCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get())),
+            (loot, block) -> loot.dropOther(block, COMPOOPER.get()));
     public static final BlockEntry<UrineCompooperBlock> URINE_COMPOOPER = registerDefaultBlock("urine_compooper",
-            props -> new UrineCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()).randomTicks()));
+            props -> new UrineCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()).randomTicks()),
+            (loot, block) -> loot.add(block, LootTable.lootTable()
+                    .withPool(LootPool.lootPool()
+                            .add(loot.applyExplosionDecay(block, LootItem.lootTableItem(COMPOOPER.get()))))
+                    .withPool(LootPool.lootPool()
+                            .add(LootItem.lootTableItem(PItems.MAGGOTS_SEEDS.get()))
+                            .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                                    .setProperties(StatePropertiesPredicate.Builder.properties()
+                                            .hasProperty(UrineCompooperBlock.MAGGOTS, true))))));
     public static final BlockEntry<PlacerBlock> PLACER = registerDefaultBlock("placer",
             props -> new PlacerBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
                     .instrument(NoteBlockInstrument.BASEDRUM)
@@ -250,20 +296,25 @@ public class PBlocks {
             props -> new RawWitherBlock(BlockBehaviour.Properties.ofFullCopy(RAW_POOP_BLOCK.get()).sound(SoundType.ROOTED_DIRT)));
 
     public static final BlockEntry<PoopLogBlock> POOP_LOG = registerBlock("poop_log",
-            props -> new PoopLogBlock(logProperties(SoundType.STEM).randomTicks()));
+            props -> new PoopLogBlock(logProperties(SoundType.STEM).randomTicks()),
+            (loot, block) -> loot.add(block, createSpallOreDrops(loot, block)));
     public static final BlockEntry<PoopEmptyLogBlock> POOP_EMPTY_LOG = registerBlock("poop_empty_log",
             props -> new PoopEmptyLogBlock(logProperties(SoundType.BAMBOO_WOOD).noOcclusion()));
     public static final BlockEntry<PoopLogBlock> STRIPPED_POOP_LOG = registerBlock("stripped_poop_log",
-            props -> new PoopLogBlock(logProperties(SoundType.STEM).randomTicks()));
+            props -> new PoopLogBlock(logProperties(SoundType.STEM).randomTicks()),
+            (loot, block) -> loot.add(block, createSpallOreDrops(loot, block)));
     public static final BlockEntry<PoopEmptyLogBlock> STRIPPED_POOP_EMPTY_LOG = registerBlock("stripped_poop_empty_log",
             props -> new PoopEmptyLogBlock(logProperties(SoundType.BAMBOO_WOOD).noOcclusion()));
 
     public static final BlockEntry<PoopLeavesBlock> POOP_LEAVES = registerBlock("poop_leaves",
-            props -> new PoopLeavesBlock(0x5E4228, leavesProperties(MapColor.COLOR_BROWN)));
+            props -> new PoopLeavesBlock(0x5E4228, leavesProperties(MapColor.COLOR_BROWN)),
+            (loot, block) -> loot.add(block, createLeavesDrops(loot, block, PItems.POOP.get())));
     public static final BlockEntry<PoopLeavesBlock> POOP_LEAVES_IRON = registerBlock("poop_leaves_iron",
-            props -> new PoopLeavesBlock(0xFFFFFF, leavesProperties(MapColor.TERRACOTTA_WHITE)));
+            props -> new PoopLeavesBlock(0xFFFFFF, leavesProperties(MapColor.TERRACOTTA_WHITE)),
+            (loot, block) -> loot.add(block, createIronLeavesDrops(loot, block)));
     public static final BlockEntry<PoopLeavesBlock> POOP_LEAVES_GOLD = registerBlock("poop_leaves_gold",
-            props -> new PoopLeavesBlock(0xFFD700, leavesProperties(MapColor.COLOR_YELLOW)));
+            props -> new PoopLeavesBlock(0xFFD700, leavesProperties(MapColor.COLOR_YELLOW)),
+            (loot, block) -> loot.add(block, createGoldLeavesDrops(loot, block)));
 
     public static final BlockEntry<PoopTreeBlock> POOP_SAPLING = registerBlock("poop_sapling",
             props -> new PoopTreeBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN)
@@ -296,16 +347,56 @@ public class PBlocks {
     public static final BlockEntry<MaggotsBlock> MAGGOTS = registerBlockNoItem("maggots",
             props -> new MaggotsBlock(plantProperties(MapColor.COLOR_YELLOW, SoundType.CROP)
                     .noCollission()
-                    .randomTicks()));
+                    .randomTicks()),
+            (loot, block) -> {
+                LootItemCondition.Builder grownCondition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                        .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, CropBlock.MAX_AGE));
+                var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
+                loot.add(block, loot.applyExplosionDecay(block,
+                        LootTable.lootTable()
+                                .withPool(LootPool.lootPool()
+                                        .add(LootItem.lootTableItem(Items.WHEAT_SEEDS).when(grownCondition).otherwise(LootItem.lootTableItem(PItems.MAGGOTS_SEEDS.get())))
+                                        .add(LootItem.lootTableItem(Items.SWEET_BERRIES).when(grownCondition).otherwise(LootItem.lootTableItem(PItems.MAGGOTS_SEEDS.get())))
+                                        .add(LootItem.lootTableItem(Items.CARROT).when(grownCondition).otherwise(LootItem.lootTableItem(PItems.MAGGOTS_SEEDS.get())))
+                                        .add(LootItem.lootTableItem(Items.POTATO).when(grownCondition).otherwise(LootItem.lootTableItem(PItems.MAGGOTS_SEEDS.get())))
+                                )
+                                .withPool(LootPool.lootPool()
+                                        .when(grownCondition)
+                                        .add(LootItem.lootTableItem(PItems.MAGGOTS_SEEDS.get())
+                                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))
+                                                .apply(ApplyBonusCount.addBonusBinomialDistributionCount(registrylookup.getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3)))
+                                )
+                ));
+            });
     public static final BlockEntry<RoundwormVinesBlock> ROUNDWORM_VINES = registerBlockNoItem("roundworm_vines",
             props -> new RoundwormVinesBlock(
                     plantProperties(MapColor.TERRACOTTA_WHITE, SoundType.TWISTING_VINES)
                             .randomTicks()
-                            .noCollission()));
+                            .noCollission()),
+            (loot, block) -> loot.dropOther(block, PItems.ROUNDWORM.get()));
     public static final BlockEntry<RoundwormVinesPlantBlock> ROUNDWORM_VINES_PLANT = registerBlockNoItem("roundworm_vines_plant",
             props -> new RoundwormVinesPlantBlock(
                     plantProperties(MapColor.TERRACOTTA_WHITE, SoundType.TWISTING_VINES)
-                            .noCollission()));
+                            .noCollission()),
+            (loot, block) -> {
+                LootItemCondition.Builder seedsCondition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                        .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(RoundwormVinesPlantBlock.SEEDS, true));
+                var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
+                loot.add(block, LootTable.lootTable()
+                        .withPool(LootPool.lootPool()
+                                .add(LootItem.lootTableItem(Items.PUMPKIN_SEEDS).when(seedsCondition).otherwise(LootItem.lootTableItem(PItems.ROUNDWORM.get())))
+                                .add(LootItem.lootTableItem(Items.MELON_SEEDS).when(seedsCondition).otherwise(LootItem.lootTableItem(PItems.ROUNDWORM.get())))
+                                .add(LootItem.lootTableItem(Items.FROGSPAWN).when(seedsCondition).otherwise(LootItem.lootTableItem(PItems.ROUNDWORM.get())))
+                                .add(LootItem.lootTableItem(Items.BEETROOT_SEEDS).when(seedsCondition).otherwise(LootItem.lootTableItem(PItems.ROUNDWORM.get())))
+                        )
+                        .withPool(LootPool.lootPool()
+                                .when(seedsCondition)
+                                .add(LootItem.lootTableItem(PItems.ROUNDWORM.get())
+                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))
+                                        .apply(ApplyBonusCount.addBonusBinomialDistributionCount(registrylookup.getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3)))
+                        )
+                );
+            });
 
     // Toilet
     public static final BlockEntry<ToiletBlock> WOODEN_TOILET = registerToiletBlock(
@@ -420,6 +511,7 @@ public class PBlocks {
                 props -> new PoopCandleCakeBlock(candle, poopCakeProperties()
                         .lightLevel(state -> state.getValue(PoopCandleCakeBlock.LIT) ? 3 : 0)))
                 .blockstate((ctx, prov) -> {})
+                .loot((loot, block) -> loot.add(block, RegistrateBlockLootTables.createCandleCakeDrops(candle)))
                 .register();
     }
 
@@ -449,8 +541,13 @@ public class PBlocks {
     }
 
     public static <T extends Block> BlockEntry<T> registerBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory) {
+        return registerBlock(name, factory, RegistrateBlockLootTables::dropSelf);
+    }
+
+    public static <T extends Block> BlockEntry<T> registerBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
         return BLOCKS.block(name, factory)
                 .blockstate((ctx, prov) -> {})
+                .loot(loot)
                 .item((b, p) -> new BlockItem(b, p.stacksTo(88)))
                 .model((ctx, prov) -> {})
                 .build()
@@ -458,8 +555,13 @@ public class PBlocks {
     }
 
     public static <T extends Block> BlockEntry<T> registerDefaultBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory) {
+        return registerDefaultBlock(name, factory, RegistrateBlockLootTables::dropSelf);
+    }
+
+    public static <T extends Block> BlockEntry<T> registerDefaultBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
         return BLOCKS.block(name, factory)
                 .blockstate((ctx, prov) -> {})
+                .loot(loot)
                 .item()
                 .model((ctx, prov) -> {})
                 .build()
@@ -467,14 +569,24 @@ public class PBlocks {
     }
 
     public static <T extends Block> BlockEntry<T> registerBlockNoItem(String name, NonNullFunction<BlockBehaviour.Properties, T> factory) {
+        return registerBlockNoItem(name, factory, RegistrateBlockLootTables::dropSelf);
+    }
+
+    public static <T extends Block> BlockEntry<T> registerBlockNoItem(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
         return BLOCKS.block(name, factory)
                 .blockstate((ctx, prov) -> {})
+                .loot(loot)
                 .register();
     }
 
     public static <T extends Block> BlockEntry<T> registerCompooperBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory) {
+        return registerCompooperBlock(name, factory, RegistrateBlockLootTables::dropSelf);
+    }
+
+    public static <T extends Block> BlockEntry<T> registerCompooperBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
         return BLOCKS.block(name, factory)
                 .blockstate((ctx, prov) -> {})
+                .loot(loot)
                 .item((b, p) -> new CompooperBlockItem(b, new Item.Properties()))
                 .model((ctx, prov) -> {})
                 .build()
@@ -494,17 +606,119 @@ public class PBlocks {
         return new BlockFamily(
                 base,
                 registerFamilyBlock(name + "_stairs", props -> new StairBlock(base.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(base.get())), defaultBlockItem),
-                registerFamilyBlock(name + "_slab", props -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(base.get())), defaultBlockItem),
+                registerFamilyBlock(name + "_slab", props -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(base.get())), defaultBlockItem, (loot, block) -> loot.add(block, loot.createSlabItemTable(block))),
                 registerFamilyBlock(name + "_vertical_slab", props -> new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(base.get())), defaultBlockItem),
                 registerFamilyBlock(name + "_wall", props -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(base.get())), defaultBlockItem)
         );
     }
 
     private static <T extends Block> BlockEntry<T> registerFamilyBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, boolean defaultBlockItem) {
-        return defaultBlockItem ? registerDefaultBlock(name, factory) : registerBlock(name, factory);
+        return registerFamilyBlock(name, factory, defaultBlockItem, RegistrateBlockLootTables::dropSelf);
+    }
+
+    private static <T extends Block> BlockEntry<T> registerFamilyBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, boolean defaultBlockItem, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
+        return defaultBlockItem ? registerDefaultBlock(name, factory, loot) : registerBlock(name, factory, loot);
     }
 
     private static ToIntFunction<BlockState> lavaLightLevel() {
         return state -> state.getValue(BaseToiletLavaBlock.LAVA) ? LAVA_LIGHT_LEVEL : 0;
+    }
+
+    private static LootTable.Builder createPoopPieceDrop(RegistrateBlockLootTables loot, Block block, Item item) {
+        var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
+        LootItemCondition.Builder hasSilkTouch = MatchTool.toolMatches(
+                ItemPredicate.Builder.item()
+                        .withSubPredicate(
+                                ItemSubPredicates.ENCHANTMENTS,
+                                ItemEnchantmentsPredicate.enchantments(
+                                        List.of(new EnchantmentPredicate(registrylookup.getOrThrow(Enchantments.SILK_TOUCH), MinMaxBounds.Ints.atLeast(1)))
+                                )
+                        ));
+
+        LootPoolEntryContainer.Builder<?> nonSilkTouch = AlternativesEntry.alternatives(
+                IntStream.rangeClosed(1, 8)
+                        .mapToObj(i -> LootItem.lootTableItem(item)
+                                .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                                        .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(PoopPieceBlock.LAYERS, i)))
+                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(i)))
+                                .apply(ApplyBonusCount.addOreBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE)))
+                        ).toArray(LootPoolEntryContainer.Builder[]::new)
+        ).when(hasSilkTouch.invert());
+
+        LootPoolEntryContainer.Builder<?> silkTouch = AlternativesEntry.alternatives(
+                IntStream.rangeClosed(1, 8)
+                        .mapToObj(i -> {
+                            if (i == 8) {
+                                return LootItem.lootTableItem(POOP_BLOCK.get());
+                            }
+                            return LootItem.lootTableItem(block)
+                                    .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                                            .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(PoopPieceBlock.LAYERS, i)))
+                                    .apply(SetItemCountFunction.setCount(ConstantValue.exactly(i)));
+                        }).toArray(LootPoolEntryContainer.Builder[]::new)
+        ).when(hasSilkTouch);
+
+        return LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .add(AlternativesEntry.alternatives(nonSilkTouch, silkTouch))
+                );
+    }
+
+    private static LootTable.Builder createSpallOreDrops(RegistrateBlockLootTables loot, Block block) {
+        var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
+        return loot.createSilkTouchDispatchTable(block,
+                loot.applyExplosionDecay(block,
+                        LootItem.lootTableItem(PItems.SPALL)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(4.0F, 5.0F)))
+                                .apply(ApplyBonusCount.addUniformBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE))))
+        );
+    }
+
+    private static LootTable.Builder createIronLeavesDrops(RegistrateBlockLootTables loot, Block block) {
+        var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
+        return loot.createSilkTouchDispatchTable(block,
+                loot.applyExplosionDecay(block,
+                        LootItem.lootTableItem(Items.IRON_NUGGET)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 3.0F)))
+                                .apply(ApplyBonusCount.addUniformBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE))))
+        );
+    }
+
+    private static LootTable.Builder createGoldLeavesDrops(RegistrateBlockLootTables loot, Block block) {
+        var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
+        return loot.createSilkTouchDispatchTable(block,
+                loot.applyExplosionDecay(block,
+                        LootItem.lootTableItem(Items.GOLD_NUGGET)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
+                                .apply(ApplyBonusCount.addUniformBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE))))
+        );
+    }
+
+    private static LootTable.Builder createLeavesDrops(RegistrateBlockLootTables loot, Block block, Item dropItem) {
+        var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
+        LootItemCondition.Builder hasSilkTouch = MatchTool.toolMatches(
+                ItemPredicate.Builder.item()
+                        .withSubPredicate(
+                                ItemSubPredicates.ENCHANTMENTS,
+                                ItemEnchantmentsPredicate.enchantments(
+                                        List.of(new EnchantmentPredicate(registrylookup.getOrThrow(Enchantments.SILK_TOUCH), MinMaxBounds.Ints.atLeast(1)))
+                                )
+                        ));
+        LootItemCondition.Builder hasShearsOrSilkTouch = MatchTool.toolMatches(ItemPredicate.Builder.item().of(Items.SHEARS))
+                .or(hasSilkTouch);
+        return loot.createSilkTouchDispatchTable(block,
+                loot.applyExplosionDecay(block,
+                        LootItem.lootTableItem(dropItem)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
+                                .apply(ApplyBonusCount.addUniformBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE))))
+        ).withPool(
+                LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .when(hasShearsOrSilkTouch.invert())
+                        .add(((LootPoolSingletonContainer.Builder<?>)
+                                loot.applyExplosionCondition(block, LootItem.lootTableItem(PItems.ROUNDWORM.get())))
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
+                                .apply(ApplyBonusCount.addUniformBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE))))
+        );
     }
 }
