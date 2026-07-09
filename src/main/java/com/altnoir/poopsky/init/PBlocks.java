@@ -10,15 +10,11 @@ import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
-import net.minecraft.advancements.critereon.EnchantmentPredicate;
-import net.minecraft.advancements.critereon.ItemEnchantmentsPredicate;
-import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.advancements.critereon.ItemSubPredicates;
-import net.minecraft.advancements.critereon.MinMaxBounds;
-import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -64,7 +60,8 @@ public class PBlocks {
     public static final Registrate BLOCKS = PRegistries.REGISTRATE;
 
     public static final BlockEntry<PoopCakeBlock> POOP_CAKE = registerBlock("poop_cake",
-            props -> new PoopCakeBlock(poopCakeProperties().noLootTable()));
+            props -> new PoopCakeBlock(poopCakeProperties()),
+            (loot, block) -> loot.add(block, BlockLootSubProvider.noDrop()));
 
     private static final Block[] POOP_CAKE_CANDLES = {
             Blocks.CANDLE,
@@ -508,9 +505,10 @@ public class PBlocks {
         String name = candle == Blocks.CANDLE ? "poop_candle_cake" : candleName.replace("_candle", "_poop_candle_cake");
 
         return BLOCKS.block(name,
-                props -> new PoopCandleCakeBlock(candle, poopCakeProperties()
-                        .lightLevel(state -> state.getValue(PoopCandleCakeBlock.LIT) ? 3 : 0)))
-                .blockstate((ctx, prov) -> {})
+                        props -> new PoopCandleCakeBlock(candle, poopCakeProperties()
+                                .lightLevel(state -> state.getValue(PoopCandleCakeBlock.LIT) ? 3 : 0)))
+                .blockstate((ctx, prov) -> {
+                })
                 .loot((loot, block) -> loot.add(block, RegistrateBlockLootTables.createCandleCakeDrops(candle)))
                 .register();
     }
@@ -546,10 +544,12 @@ public class PBlocks {
 
     public static <T extends Block> BlockEntry<T> registerBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
         return BLOCKS.block(name, factory)
-                .blockstate((ctx, prov) -> {})
+                .blockstate((ctx, prov) -> {
+                })
                 .loot(loot)
                 .item((b, p) -> new BlockItem(b, p.stacksTo(88)))
-                .model((ctx, prov) -> {})
+                .model((ctx, prov) -> {
+                })
                 .build()
                 .register();
     }
@@ -560,10 +560,12 @@ public class PBlocks {
 
     public static <T extends Block> BlockEntry<T> registerDefaultBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
         return BLOCKS.block(name, factory)
-                .blockstate((ctx, prov) -> {})
+                .blockstate((ctx, prov) -> {
+                })
                 .loot(loot)
                 .item()
-                .model((ctx, prov) -> {})
+                .model((ctx, prov) -> {
+                })
                 .build()
                 .register();
     }
@@ -574,7 +576,8 @@ public class PBlocks {
 
     public static <T extends Block> BlockEntry<T> registerBlockNoItem(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
         return BLOCKS.block(name, factory)
-                .blockstate((ctx, prov) -> {})
+                .blockstate((ctx, prov) -> {
+                })
                 .loot(loot)
                 .register();
     }
@@ -585,19 +588,23 @@ public class PBlocks {
 
     public static <T extends Block> BlockEntry<T> registerCompooperBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
         return BLOCKS.block(name, factory)
-                .blockstate((ctx, prov) -> {})
+                .blockstate((ctx, prov) -> {
+                })
                 .loot(loot)
                 .item((b, p) -> new CompooperBlockItem(b, new Item.Properties()))
-                .model((ctx, prov) -> {})
+                .model((ctx, prov) -> {
+                })
                 .build()
                 .register();
     }
 
     public static <T extends Block> BlockEntry<T> registerToiletBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory) {
         return BLOCKS.block(name, factory)
-                .blockstate((ctx, prov) -> {})
+                .blockstate((ctx, prov) -> {
+                })
                 .item((b, p) -> new ToiletBlockItem(b, p.stacksTo(88)))
-                .model((ctx, prov) -> {})
+                .model((ctx, prov) -> {
+                })
                 .build()
                 .register();
     }
