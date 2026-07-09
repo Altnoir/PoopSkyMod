@@ -533,7 +533,10 @@ public class PBlocks {
 
     private static <T extends Block> DeferredBlock<T> registerSimpleBlock(String name, Supplier<T> block, Item.Properties properties) {
         DeferredBlock<T> registered = BLOCKS.register(name, block);
-        PoopSky.REGISTRATE.item(name, props -> new BlockItem(registered.get(), properties)).register();
+        PItems.itemNoLang(name, props -> new BlockItem(registered.get(), properties))
+                .model((ctx, prov) -> {
+                })
+                .register();
         return registered;
     }
 
@@ -544,11 +547,17 @@ public class PBlocks {
     }
 
     private static <T extends Block> void registerCompooperBlockItem(String name, DeferredBlock<T> block) {
-        PoopSky.REGISTRATE.item(name, props -> new CompooperBlockItem(block.get(), new Item.Properties())).register();
+        PItems.itemNoLang(name, props -> new CompooperBlockItem(block.get(), new Item.Properties()))
+                .model((ctx, prov) -> {
+                })
+                .register();
     }
 
     private static <T extends Block> void registerToiletBlockItem(String name, DeferredBlock<T> block) {
-        PoopSky.REGISTRATE.item(name, props -> new ToiletBlockItem(block.get(), new Item.Properties().stacksTo(88))).register();
+        PItems.itemNoLang(name, props -> new ToiletBlockItem(block.get(), new Item.Properties().stacksTo(88)))
+                .model((ctx, prov) -> {
+                })
+                .register();
     }
 
     public static void register(IEventBus eventBus) {
