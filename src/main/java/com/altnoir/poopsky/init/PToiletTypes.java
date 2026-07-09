@@ -19,7 +19,7 @@ public final class PToiletTypes {
     public static final ToiletType WARPED = ToiletType.register(Blocks.WARPED_PLANKS, ToiletType.Category.WOOD).nameKey("block.poopsky.toilet.warped");
 
     // ——— 石质厕所 ———
-    public static final ToiletType TILE = ToiletType.register(PBlocks.TILE_BLOCK, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.tile");
+    public static final ToiletType TILE = ToiletType.register(PBlocks.TILE_BLOCK.get(), ToiletType.Category.HARD).nameKey("block.poopsky.toilet.tile");
     public static final ToiletType STONE = ToiletType.register(Blocks.STONE, ToiletType.Category.HARD);
     public static final ToiletType COBBLESTONE = ToiletType.register(Blocks.COBBLESTONE, ToiletType.Category.HARD);
     public static final ToiletType MOSSY_COBBLESTONE = ToiletType.register(Blocks.MOSSY_COBBLESTONE, ToiletType.Category.HARD);

@@ -16,7 +16,7 @@ public class PBlockEntityType {
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ToiletBlockEntity>> TOILET_BLOCK_ENTITY = BLOCK_ENTITY_TYPES.register("toilet_block_entity",
             () -> {
-                var blocks = PBlocks.BLOCKS.getEntries().stream()
+                var blocks = PBlocks.OLD_BLOCKS.getEntries().stream()
                         .filter(b -> b.get() instanceof AbstractToiletBlock)
                         .map(DeferredHolder::get)
                         .toArray(Block[]::new);

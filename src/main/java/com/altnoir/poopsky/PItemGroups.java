@@ -42,7 +42,7 @@ public class PItemGroups {
                         PBlocks.WOODEN_TOILET.get(),
                         PBlocks.HARD_TOILET.get()
                 );
-                PBlocks.BLOCKS.getEntries().stream()
+                PBlocks.OLD_BLOCKS.getEntries().stream()
                         .map(DeferredHolder::get)
                         .filter(block -> block.asItem() != Items.AIR)
                         .filter(block -> !skip.contains(block))

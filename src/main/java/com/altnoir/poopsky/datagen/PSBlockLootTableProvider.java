@@ -35,6 +35,7 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -46,10 +47,8 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
 
     @Override
     protected void generate() {
-        PBlocks.BLOCKS.getEntries().stream()
-                .map(DeferredHolder::get)
-                .filter(b -> b instanceof AbstractToiletBlock)
-                .forEach(block -> this.add(block, this::dropToilet));
+        this.add(PBlocks.WOODEN_TOILET.get(), this::dropToilet);
+        this.add(PBlocks.HARD_TOILET.get(), this::dropToilet);
 
         this.add(PBlocks.POOP_LOG.get(), this::createSpallOreDrops);
         this.add(PBlocks.STRIPPED_POOP_LOG.get(), this::createSpallOreDrops);
@@ -308,8 +307,64 @@ public class PSBlockLootTableProvider extends BlockLootSubProvider {
 
     @Override
     protected @NotNull Iterable<Block> getKnownBlocks() {
-        return PBlocks.BLOCKS.getEntries().stream()
-                .map(Holder::value)
-                .collect(Collectors.toList());
+        List<Block> knownBlocks = new java.util.ArrayList<>();
+        knownBlocks.add(PBlocks.WOODEN_TOILET.get());
+        knownBlocks.add(PBlocks.HARD_TOILET.get());
+        knownBlocks.add(PBlocks.POOP_LOG.get());
+        knownBlocks.add(PBlocks.STRIPPED_POOP_LOG.get());
+        knownBlocks.add(PBlocks.POOP_LEAVES_IRON.get());
+        knownBlocks.add(PBlocks.POOP_LEAVES_GOLD.get());
+        knownBlocks.add(PBlocks.POOP_LEAVES.get());
+        knownBlocks.add(PBlocks.POOP_SAPLING.get());
+        knownBlocks.add(PBlocks.POOP_EMPTY_LOG.get());
+        knownBlocks.add(PBlocks.STRIPPED_POOP_EMPTY_LOG.get());
+
+        for (var block : PBlocks.POOP_FAMILY.blocks()) knownBlocks.add(block.get());
+        knownBlocks.add(PBlocks.POOP_BUTTON.get());
+        knownBlocks.add(PBlocks.POOP_PRESSURE_PLATE.get());
+        knownBlocks.add(PBlocks.POOP_FENCE.get());
+        knownBlocks.add(PBlocks.POOP_FENCE_GATE.get());
+        knownBlocks.add(PBlocks.POOP_TRAPDOOR.get());
+        knownBlocks.add(PBlocks.POOP_DOOR.get());
+
+        for (var block : PBlocks.CHILI_POOP_FAMILY.blocks()) knownBlocks.add(block.get());
+        for (var block : PBlocks.GOLDEN_POOP_FAMILY.blocks()) knownBlocks.add(block.get());
+
+        for (var block : PBlocks.POOP_BRICK_FAMILY.blocks()) knownBlocks.add(block.get());
+        knownBlocks.add(PBlocks.CRACKED_POOP_BRICKS.get());
+        for (var block : PBlocks.MOSSY_POOP_BRICK_FAMILY.blocks()) knownBlocks.add(block.get());
+        for (var block : PBlocks.DRIED_POOP_BLOCK_FAMILY.blocks()) knownBlocks.add(block.get());
+        for (var block : PBlocks.SMOOTH_POOP_BLOCK_FAMILY.blocks()) knownBlocks.add(block.get());
+        for (var block : PBlocks.CUT_POOP_BLOCK_FAMILY.blocks()) knownBlocks.add(block.get());
+        for (var block : PBlocks.TILE_BLOCK_FAMILY.blocks()) knownBlocks.add(block.get());
+
+        knownBlocks.add(PBlocks.RAW_POOP_BLOCK.get());
+        knownBlocks.add(PBlocks.RAW_SAPLING_POOP_BLOCK.get());
+        knownBlocks.add(PBlocks.RAW_SEA_POOP_BLOCK.get());
+        knownBlocks.add(PBlocks.RAW_WITHER_POOP_BLOCK.get());
+
+        knownBlocks.add(PBlocks.POOP_CAKE.get());
+        PBlocks.getPoopCandleCakes().forEach((candle, candleCake) -> knownBlocks.add(candleCake.get()));
+        knownBlocks.add(PBlocks.POOLIME_BLOCK.get());
+        knownBlocks.add(PBlocks.POOLIME_MAGGOTS_BLOCK.get());
+        knownBlocks.add(PBlocks.STOOL.get());
+        knownBlocks.add(PBlocks.COMPOOPER.get());
+        knownBlocks.add(PBlocks.WATER_COMPOOPER.get());
+        knownBlocks.add(PBlocks.LAVA_COMPOOPER.get());
+        knownBlocks.add(PBlocks.POWDER_SNOW_COMPOOPER.get());
+        knownBlocks.add(PBlocks.URINE_COMPOOPER.get());
+        knownBlocks.add(PBlocks.PLACER.get());
+        knownBlocks.add(PBlocks.SIEVE.get());
+        knownBlocks.add(PBlocks.POOP_TNT.get());
+        knownBlocks.add(PBlocks.POOP_PIECE.get());
+        knownBlocks.add(PBlocks.MAGGOTS_BLOCK.get());
+        knownBlocks.add(PBlocks.ROUNDWORM_BLOCK.get());
+        knownBlocks.add(PBlocks.MAGGOTS.get());
+        knownBlocks.add(PBlocks.ROUNDWORM_VINES_PLANT.get());
+        knownBlocks.add(PBlocks.ROUNDWORM_VINES.get());
+        knownBlocks.add(PBlocks.FLY_BARREL.get());
+        knownBlocks.add(PBlocks.BREEDING_CHEST.get());
+
+        return knownBlocks;
     }
 }

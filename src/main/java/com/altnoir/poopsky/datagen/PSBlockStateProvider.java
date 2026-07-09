@@ -18,6 +18,7 @@ import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import com.tterrag.registrate.util.entry.BlockEntry;
 import net.neoforged.neoforge.registries.DeferredBlock;
 
 import java.util.ArrayList;
@@ -306,6 +307,14 @@ public class PSBlockStateProvider extends BlockStateProvider {
     }
 
     private void registerToilet(DeferredBlock<?> block, ToiletType.Category category, boolean hasLava) {
+        Map<ToiletType, ResourceLocation> textures = new LinkedHashMap<>();
+        for (ToiletType type : ToiletType.getByCategory(category).values()) {
+            textures.put(type, toiletTexture(type));
+        }
+        registerVariantToilet(block.get(), textures, hasLava);
+    }
+
+    private void registerToilet(BlockEntry<? extends Block> block, ToiletType.Category category, boolean hasLava) {
         Map<ToiletType, ResourceLocation> textures = new LinkedHashMap<>();
         for (ToiletType type : ToiletType.getByCategory(category).values()) {
             textures.put(type, toiletTexture(type));

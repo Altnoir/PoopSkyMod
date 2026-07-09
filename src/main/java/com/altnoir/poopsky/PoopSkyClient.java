@@ -113,7 +113,7 @@ public class PoopSkyClient {
                             return (float) FlyType.getIndex(id != null ? id : PFlyTypes.NORMAL.id()) / FlyType.FLY_TYPES.size();
                         });
 
-                for (var block : PBlocks.BLOCKS.getEntries()) {
+                for (var block : PBlocks.OLD_BLOCKS.getEntries()) {
                     Item item = block.get().asItem();
                     if (item instanceof ToiletBlockItem && item != Items.AIR) {
                         ItemProperties.register(item, PoopSky.loc("toilet_type"),

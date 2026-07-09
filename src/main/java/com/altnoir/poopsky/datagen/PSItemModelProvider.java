@@ -15,12 +15,14 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.armortrim.TrimMaterials;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.client.model.generators.loaders.SeparateTransformsModelBuilder;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import com.tterrag.registrate.util.entry.BlockEntry;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 
@@ -117,6 +119,10 @@ public class PSItemModelProvider extends ItemModelProvider {
         withExistingParent(block.getId().getPath(), modLoc("block/" + block.getId().getPath()));
     }
 
+    private void blockItemModel(BlockEntry<? extends Block> block) {
+        withExistingParent(block.getId().getPath(), modLoc("block/" + block.getId().getPath()));
+    }
+
     private void toiletPlugItem() {
         var baseModel = nested()
                 .parent(new ModelFile.UncheckedModelFile("builtin/entity"));
@@ -141,6 +147,21 @@ public class PSItemModelProvider extends ItemModelProvider {
     }
 
     private void wallItem(DeferredBlock<?> block, DeferredBlock<?> baseBlock) {
+        this.withExistingParent(block.getId().getPath(), mcLoc("block/wall_inventory"))
+                .texture("wall", PoopSky.loc("block/" + baseBlock.getId().getPath()));
+    }
+
+    private void wallItem(BlockEntry<? extends Block> block, BlockEntry<? extends Block> baseBlock) {
+        this.withExistingParent(block.getId().getPath(), mcLoc("block/wall_inventory"))
+                .texture("wall", PoopSky.loc("block/" + baseBlock.getId().getPath()));
+    }
+
+    private void wallItem(DeferredBlock<?> block, BlockEntry<? extends Block> baseBlock) {
+        this.withExistingParent(block.getId().getPath(), mcLoc("block/wall_inventory"))
+                .texture("wall", PoopSky.loc("block/" + baseBlock.getId().getPath()));
+    }
+
+    private void wallItem(BlockEntry<? extends Block> block, DeferredBlock<?> baseBlock) {
         this.withExistingParent(block.getId().getPath(), mcLoc("block/wall_inventory"))
                 .texture("wall", PoopSky.loc("block/" + baseBlock.getId().getPath()));
     }
