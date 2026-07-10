@@ -90,7 +90,7 @@ public class PoopSkyClient {
                 ItemProperties.register(PItems.FLY.get(), PoopSky.loc("fly_type"),
                         (stack, level, entity, seed) -> {
                             String id = stack.get(PComponents.FLY_TYPE.get());
-                            return (float) FlyType.getIndex(id != null ? id : PFlyTypes.NORMAL.id()) / FlyType.FLY_TYPES.size();
+                            return (float) FlyType.getIndex(id != null ? id : PFlyTypes.NORMAL.id());
                         });
 
                 for (Item item : PItems.getAllItems()) {

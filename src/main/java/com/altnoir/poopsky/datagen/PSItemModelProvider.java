@@ -2,9 +2,10 @@ package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.FlyType;
+import com.altnoir.poopsky.content.item.PFlyTypes;
 import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PItems;
-import com.altnoir.poopsky.content.item.PFlyTypes;
+import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.client.renderer.block.model.BlockModel.GuiLight;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -15,15 +16,13 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.armortrim.TrimMaterials;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.client.model.generators.loaders.SeparateTransformsModelBuilder;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import com.tterrag.registrate.util.entry.BlockEntry;
-import net.neoforged.neoforge.registries.DeferredBlock;
 
 import java.util.LinkedHashMap;
 
@@ -114,10 +113,6 @@ public class PSItemModelProvider extends ItemModelProvider {
         blockItemModel(PBlocks.BREEDING_CHEST);
     }
 
-    private void blockItemModel(DeferredBlock<?> block) {
-        withExistingParent(block.getId().getPath(), modLoc("block/" + block.getId().getPath()));
-    }
-
     private void blockItemModel(BlockEntry<? extends Block> block) {
         withExistingParent(block.getId().getPath(), modLoc("block/" + block.getId().getPath()));
     }
@@ -145,22 +140,7 @@ public class PSItemModelProvider extends ItemModelProvider {
                 .texture("layer0", PoopSky.loc("item/" + getItemPath(item)));
     }
 
-    private void wallItem(DeferredBlock<?> block, DeferredBlock<?> baseBlock) {
-        this.withExistingParent(block.getId().getPath(), mcLoc("block/wall_inventory"))
-                .texture("wall", PoopSky.loc("block/" + baseBlock.getId().getPath()));
-    }
-
     private void wallItem(BlockEntry<? extends Block> block, BlockEntry<? extends Block> baseBlock) {
-        this.withExistingParent(block.getId().getPath(), mcLoc("block/wall_inventory"))
-                .texture("wall", PoopSky.loc("block/" + baseBlock.getId().getPath()));
-    }
-
-    private void wallItem(DeferredBlock<?> block, BlockEntry<? extends Block> baseBlock) {
-        this.withExistingParent(block.getId().getPath(), mcLoc("block/wall_inventory"))
-                .texture("wall", PoopSky.loc("block/" + baseBlock.getId().getPath()));
-    }
-
-    private void wallItem(BlockEntry<? extends Block> block, DeferredBlock<?> baseBlock) {
         this.withExistingParent(block.getId().getPath(), mcLoc("block/wall_inventory"))
                 .texture("wall", PoopSky.loc("block/" + baseBlock.getId().getPath()));
     }
@@ -171,14 +151,13 @@ public class PSItemModelProvider extends ItemModelProvider {
                 .texture("layer0", PoopSky.loc("item/fly"));
 
         int index = 0;
-        int total = FlyType.FLY_TYPES.size();
         for (String id : FlyType.FLY_TYPES) {
             String flyId = id.equals(PFlyTypes.NORMAL.id()) ? "fly" : "fly_" + id;
             getBuilder(flyId)
                     .parent(new ModelFile.UncheckedModelFile("item/generated"))
                     .texture("layer0", PoopSky.loc("item/" + flyId));
             flyBuilder.override()
-                    .predicate(PoopSky.loc("fly_type"), (float) index / total)
+                    .predicate(PoopSky.loc("fly_type"), (float) index)
                     .model(new ModelFile.UncheckedModelFile(PoopSky.MOD_ID + ":item/" + flyId))
                     .end();
             index++;
