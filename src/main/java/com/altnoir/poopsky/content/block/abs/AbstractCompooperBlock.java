@@ -149,6 +149,15 @@ public abstract class AbstractCompooperBlock extends Block {
         return entity.getY() < (double) pos.getY() + height && entity.getBoundingBox().maxY > (double) pos.getY() + 0.125;
     }
 
+    protected static void lowerFillLevel(BlockState state, Level level, BlockPos pos) {
+        int newLevel = state.getValue(LEVEL) - 1;
+        BlockState newState = newLevel == MIN_LEVEL
+                ? PBlocks.COMPOOPER.get().defaultBlockState()
+                : state.setValue(LEVEL, newLevel);
+        level.setBlockAndUpdate(pos, newState);
+        level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(newState));
+    }
+
     protected void catalyst(ItemEntity itemEntity, BlockState state, Level level, BlockPos pos, int count, ItemStack result, ItemStack input) {
         if (Config.compooperCrafting) {
             itemEntity.setItem(result.copyWithCount(count));
