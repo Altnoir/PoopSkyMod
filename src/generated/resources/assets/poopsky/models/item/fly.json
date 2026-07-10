@@ -10,151 +10,151 @@
     {
       "model": "poopsky:item/fly_white",
       "predicate": {
-        "poopsky:fly_type": 0.03846154
+        "poopsky:fly_type": 1.0
       }
     },
     {
       "model": "poopsky:item/fly_black",
       "predicate": {
-        "poopsky:fly_type": 0.07692308
+        "poopsky:fly_type": 2.0
       }
     },
     {
       "model": "poopsky:item/fly_green",
       "predicate": {
-        "poopsky:fly_type": 0.115384616
+        "poopsky:fly_type": 3.0
       }
     },
     {
       "model": "poopsky:item/fly_blue",
       "predicate": {
-        "poopsky:fly_type": 0.15384616
+        "poopsky:fly_type": 4.0
       }
     },
     {
       "model": "poopsky:item/fly_red",
       "predicate": {
-        "poopsky:fly_type": 0.1923077
+        "poopsky:fly_type": 5.0
       }
     },
     {
       "model": "poopsky:item/fly_gray",
       "predicate": {
-        "poopsky:fly_type": 0.23076923
+        "poopsky:fly_type": 6.0
       }
     },
     {
       "model": "poopsky:item/fly_light_gray",
       "predicate": {
-        "poopsky:fly_type": 0.26923078
+        "poopsky:fly_type": 7.0
       }
     },
     {
       "model": "poopsky:item/fly_brown",
       "predicate": {
-        "poopsky:fly_type": 0.30769232
+        "poopsky:fly_type": 8.0
       }
     },
     {
       "model": "poopsky:item/fly_orange",
       "predicate": {
-        "poopsky:fly_type": 0.34615386
+        "poopsky:fly_type": 9.0
       }
     },
     {
       "model": "poopsky:item/fly_yellow",
       "predicate": {
-        "poopsky:fly_type": 0.3846154
+        "poopsky:fly_type": 10.0
       }
     },
     {
       "model": "poopsky:item/fly_lime",
       "predicate": {
-        "poopsky:fly_type": 0.42307693
+        "poopsky:fly_type": 11.0
       }
     },
     {
       "model": "poopsky:item/fly_cyan",
       "predicate": {
-        "poopsky:fly_type": 0.46153846
+        "poopsky:fly_type": 12.0
       }
     },
     {
       "model": "poopsky:item/fly_light_blue",
       "predicate": {
-        "poopsky:fly_type": 0.5
+        "poopsky:fly_type": 13.0
       }
     },
     {
       "model": "poopsky:item/fly_purple",
       "predicate": {
-        "poopsky:fly_type": 0.53846157
+        "poopsky:fly_type": 14.0
       }
     },
     {
       "model": "poopsky:item/fly_magenta",
       "predicate": {
-        "poopsky:fly_type": 0.5769231
+        "poopsky:fly_type": 15.0
       }
     },
     {
       "model": "poopsky:item/fly_pink",
       "predicate": {
-        "poopsky:fly_type": 0.61538464
+        "poopsky:fly_type": 16.0
       }
     },
     {
       "model": "poopsky:item/fly_iron",
       "predicate": {
-        "poopsky:fly_type": 0.65384614
+        "poopsky:fly_type": 17.0
       }
     },
     {
       "model": "poopsky:item/fly_copper",
       "predicate": {
-        "poopsky:fly_type": 0.6923077
+        "poopsky:fly_type": 18.0
       }
     },
     {
       "model": "poopsky:item/fly_gold",
       "predicate": {
-        "poopsky:fly_type": 0.7307692
+        "poopsky:fly_type": 19.0
       }
     },
     {
       "model": "poopsky:item/fly_emerald",
       "predicate": {
-        "poopsky:fly_type": 0.7692308
+        "poopsky:fly_type": 20.0
       }
     },
     {
       "model": "poopsky:item/fly_diamond",
       "predicate": {
-        "poopsky:fly_type": 0.8076923
+        "poopsky:fly_type": 21.0
       }
     },
     {
       "model": "poopsky:item/fly_netherite",
       "predicate": {
-        "poopsky:fly_type": 0.84615386
+        "poopsky:fly_type": 22.0
       }
     },
     {
       "model": "poopsky:item/fly_dragon_fruit",
       "predicate": {
-        "poopsky:fly_type": 0.88461536
+        "poopsky:fly_type": 23.0
       }
     },
     {
       "model": "poopsky:item/fly_glowstone",
       "predicate": {
-        "poopsky:fly_type": 0.9230769
+        "poopsky:fly_type": 24.0
       }
     },
     {
       "model": "poopsky:item/fly_ender",
       "predicate": {
-        "poopsky:fly_type": 0.96153843
+        "poopsky:fly_type": 25.0
       }
     }
   ],

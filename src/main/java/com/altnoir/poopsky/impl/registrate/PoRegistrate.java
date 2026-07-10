@@ -3,21 +3,27 @@ package com.altnoir.poopsky.impl.registrate;
 import com.tterrag.registrate.AbstractRegistrate;
 import com.tterrag.registrate.builders.NoConfigBuilder;
 import net.minecraft.world.item.CreativeModeTab;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 
 public class PoRegistrate extends AbstractRegistrate<PoRegistrate> {
-    /**
-     * Construct a new Registrate for the given mod ID.
-     *
-     * @param modid The mod ID for which objects will be registered
-     */
+    private static final org.apache.logging.log4j.Logger log = org.apache.logging.log4j.LogManager.getLogger(PoRegistrate.class);
+
     protected PoRegistrate(String modid) {
         super(modid);
     }
 
     public static PoRegistrate create(String modId) {
-        return new PoRegistrate(modId);
+        var ret = new PoRegistrate(modId);
+        Optional<IEventBus> modEventBus = ModList.get().getModContainerById(modId).map(ModContainer::getEventBus);
+        modEventBus.ifPresentOrElse(ret::registerEventListeners, () -> {
+            log.fatal("Failed to register eventListeners for mod {}", modId);
+        });
+        return ret;
     }
 
     public NoConfigBuilder<CreativeModeTab, CreativeModeTab, PoRegistrate> creativeTab(Consumer<CreativeModeTab.Builder> config) {
