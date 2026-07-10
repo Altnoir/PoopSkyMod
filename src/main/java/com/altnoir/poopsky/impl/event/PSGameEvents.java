@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.content.event;
+package com.altnoir.poopsky.impl.event;
 
 import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.PoopSky;
