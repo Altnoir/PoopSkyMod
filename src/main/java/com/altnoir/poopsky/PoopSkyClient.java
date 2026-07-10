@@ -1,8 +1,6 @@
 package com.altnoir.poopsky;
 
 import com.altnoir.poopsky.client.ToiletClientBlockExtensions;
-import com.altnoir.poopsky.client.inventory.BreedingChestScreen;
-import com.altnoir.poopsky.client.inventory.FlyBarrelScreen;
 import com.altnoir.poopsky.client.model.ToiletModelEventHandler;
 import com.altnoir.poopsky.client.particle.LeavesParticle;
 import com.altnoir.poopsky.client.particle.PoopParticle;
@@ -67,7 +65,6 @@ public class PoopSkyClient {
         modEventBus.addListener(ClientModEvents::onRegisterBlockRenderBuffers);
         modEventBus.addListener(ClientModEvents::registerGuiOverlays);
         modEventBus.addListener(ClientModEvents::registerClientExtensions);
-        modEventBus.addListener(ClientModEvents::registerMenuScreens);
     }
 
     public static void registerGame(IEventBus modEventBus) {
@@ -92,11 +89,6 @@ public class PoopSkyClient {
             event.registerEntityRenderer(PEntityType.STOOL.get(), ChairRenderer::new);
             event.registerEntityRenderer(PEntityType.TOILET.get(), ToiletRenderer::new);
             event.registerEntityRenderer(PEntityType.POOP_TNT.get(), PoopTntRenderer::new);
-        }
-
-        public static void registerMenuScreens(RegisterMenuScreensEvent event) {
-            event.register(PMenuTypes.FLY_BARREL.get(), FlyBarrelScreen::new);
-            event.register(PMenuTypes.BREEDING_CHEST.get(), BreedingChestScreen::new);
         }
 
         public static void registerRecipeBookCategories(RegisterRecipeBookCategoriesEvent event) {

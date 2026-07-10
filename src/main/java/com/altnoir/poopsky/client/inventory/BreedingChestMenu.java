@@ -1,16 +1,13 @@
 package com.altnoir.poopsky.client.inventory;
 
 import com.altnoir.poopsky.PTags;
-import com.altnoir.poopsky.init.PMenuTypes;
 import com.altnoir.poopsky.content.item.p.FlyItem;
+import com.altnoir.poopsky.init.PMenuTypes;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.SimpleContainerData;
-import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 
 /**
@@ -35,18 +32,16 @@ public class BreedingChestMenu extends AbstractContainerMenu {
     private final Container breedingChest;
     private final ContainerData data;
 
-    // 客户端用
-    public BreedingChestMenu(int containerId, Inventory playerInventory) {
-        this(containerId, playerInventory, new SimpleContainer(SLOT_COUNT), new SimpleContainerData(2));
-    }
-
-    // 服务端用
-    public BreedingChestMenu(int containerId, Inventory playerInventory, Container container) {
-        this(containerId, playerInventory, container, new SimpleContainerData(2));
+    public BreedingChestMenu(MenuType<BreedingChestMenu> menuType, int containerId, Inventory playerInventory) {
+        this(menuType, containerId, playerInventory, new SimpleContainer(SLOT_COUNT), new SimpleContainerData(2));
     }
 
     public BreedingChestMenu(int containerId, Inventory playerInventory, Container container, ContainerData data) {
-        super(PMenuTypes.BREEDING_CHEST.get(), containerId);
+        this(PMenuTypes.BREEDING_CHEST.get(), containerId, playerInventory, container, data);
+    }
+
+    private BreedingChestMenu(MenuType<BreedingChestMenu> menuType, int containerId, Inventory playerInventory, Container container, ContainerData data) {
+        super(menuType, containerId);
         checkContainerSize(container, SLOT_COUNT);
         checkContainerDataCount(data, 2);
         this.breedingChest = container;

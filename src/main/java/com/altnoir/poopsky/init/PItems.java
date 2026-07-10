@@ -113,8 +113,7 @@ public class PItems {
                     .food(PFoods.URINE_BOTTLE)
                     .stacksTo(18)
             ));
-    public static final ItemEntry<BucketItem> URINE_BUCKET = registerItem("urine_bucket",
-            prop -> new BucketItem(PFluids.URINE.get(), prop.stacksTo(1)));
+    public static final ItemEntry<BucketItem> URINE_BUCKET = PFluids.URINE_BUCKET;
 
     public static final ItemEntry<DeferredSpawnEggItem> POOLIME_SPAWN_EGG = registerItem("poolime_spawn_egg",
             prop -> new DeferredSpawnEggItem(PEntityType.POOLIME, 0x7D5F36, 0x5E4228, prop));
@@ -142,5 +141,8 @@ public class PItems {
         return ITEMS.item(name, factory)
                 .model((ctx, prov) -> {})
                 .register();
+    }
+
+    public static void register() {
     }
 }

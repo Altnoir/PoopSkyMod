@@ -1,25 +1,25 @@
 package com.altnoir.poopsky.init;
 
-import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.client.inventory.BreedingChestMenu;
+import com.altnoir.poopsky.client.inventory.BreedingChestScreen;
 import com.altnoir.poopsky.client.inventory.FlyBarrelMenu;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.flag.FeatureFlags;
-import net.minecraft.world.inventory.MenuType;
+import com.altnoir.poopsky.client.inventory.FlyBarrelScreen;
+import com.tterrag.registrate.builders.MenuBuilder;
+import com.tterrag.registrate.util.entry.MenuEntry;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
 
-public class PMenuTypes {
-    public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(BuiltInRegistries.MENU, PoopSky.MOD_ID);
+public final class PMenuTypes {
+    public static final MenuEntry<FlyBarrelMenu> FLY_BARREL = PRegistries.REGISTRATE
+            .menu("fly_barrel", (MenuBuilder.MenuFactory<FlyBarrelMenu>) FlyBarrelMenu::new, () -> FlyBarrelScreen::new)
+            .register();
 
-    public static final DeferredHolder<MenuType<?>, MenuType<FlyBarrelMenu>> FLY_BARREL = MENU_TYPES.register(
-            "fly_barrel", () -> new MenuType<>(FlyBarrelMenu::new, FeatureFlags.DEFAULT_FLAGS));
+    public static final MenuEntry<BreedingChestMenu> BREEDING_CHEST = PRegistries.REGISTRATE
+            .menu("breeding_chest", (MenuBuilder.MenuFactory<BreedingChestMenu>) BreedingChestMenu::new, () -> BreedingChestScreen::new)
+            .register();
 
-    public static final DeferredHolder<MenuType<?>, MenuType<BreedingChestMenu>> BREEDING_CHEST = MENU_TYPES.register(
-            "breeding_chest", () -> new MenuType<>(BreedingChestMenu::new, FeatureFlags.DEFAULT_FLAGS));
+    private PMenuTypes() {
+    }
 
     public static void register(IEventBus eventBus) {
-        MENU_TYPES.register(eventBus);
     }
 }

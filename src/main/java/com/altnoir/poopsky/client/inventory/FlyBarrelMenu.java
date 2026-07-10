@@ -1,15 +1,12 @@
 package com.altnoir.poopsky.client.inventory;
 
-import com.altnoir.poopsky.init.PMenuTypes;
 import com.altnoir.poopsky.content.item.p.FlyItem;
+import com.altnoir.poopsky.init.PMenuTypes;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.SimpleContainerData;
-import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 
 /**
@@ -34,18 +31,16 @@ public class FlyBarrelMenu extends AbstractContainerMenu {
     private final Container flyBarrel;
     private final ContainerData data;
 
-    // 客户端用构造函数
-    public FlyBarrelMenu(int containerId, Inventory playerInventory) {
-        this(containerId, playerInventory, new SimpleContainer(SLOT_COUNT), new SimpleContainerData(2));
-    }
-
-    // 服务端用构造函数
-    public FlyBarrelMenu(int containerId, Inventory playerInventory, Container container) {
-        this(containerId, playerInventory, container, new SimpleContainerData(2));
+    public FlyBarrelMenu(MenuType<FlyBarrelMenu> menuType, int containerId, Inventory playerInventory) {
+        this(menuType, containerId, playerInventory, new SimpleContainer(SLOT_COUNT), new SimpleContainerData(2));
     }
 
     public FlyBarrelMenu(int containerId, Inventory playerInventory, Container container, ContainerData data) {
-        super(PMenuTypes.FLY_BARREL.get(), containerId);
+        this(PMenuTypes.FLY_BARREL.get(), containerId, playerInventory, container, data);
+    }
+
+    private FlyBarrelMenu(MenuType<FlyBarrelMenu> menuType, int containerId, Inventory playerInventory, Container container, ContainerData data) {
+        super(menuType, containerId);
         checkContainerSize(container, SLOT_COUNT);
         checkContainerDataCount(data, 2);
         this.flyBarrel = container;

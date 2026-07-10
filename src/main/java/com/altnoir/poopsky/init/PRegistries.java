@@ -22,9 +22,13 @@ public final class PRegistries {
     }
 
     public static void registerAll(IEventBus modEventBus) {
+        PItems.register();
+        PBlocks.register();
+        PFluids.register();
+        PParticles.register();
+
         PEffects.register(modEventBus);
         PPotions.register(modEventBus);
-        PParticles.register(modEventBus);
         PBlockEntityType.register(modEventBus);
         PEntityType.register(modEventBus);
         PSFoliagePlacerTypes.register(modEventBus);
@@ -38,9 +42,6 @@ public final class PRegistries {
         PVillagers.register(modEventBus);
         PRecipes.register(modEventBus);
         PMenuTypes.register(modEventBus);
-
-        PFluids.FLUIDS.register(modEventBus);
-        PFluidTypes.FLUID_TYPES.register(modEventBus);
 
         for (DeferredRegister<?> register : REGISTERS) {
             register.register(modEventBus);

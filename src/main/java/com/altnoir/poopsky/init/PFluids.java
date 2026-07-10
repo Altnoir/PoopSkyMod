@@ -1,37 +1,133 @@
 package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
-import net.minecraft.core.registries.BuiltInRegistries;
+import com.altnoir.poopsky.content.block.fluid.UrineLiquidBlock;
+import com.tterrag.registrate.providers.ProviderType;
+import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
+import com.tterrag.registrate.util.entry.BlockEntry;
+import com.tterrag.registrate.util.entry.FluidEntry;
+import com.tterrag.registrate.util.entry.ItemEntry;
+import com.tterrag.registrate.util.entry.RegistryEntry;
+import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.material.FlowingFluid;
-import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.*;
+import net.neoforged.neoforge.common.SoundActions;
 import net.neoforged.neoforge.fluids.BaseFlowingFluid;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
-import java.util.function.Supplier;
+public final class PFluids {
+    public static final ResourceLocation URINE_STILL_TEXTURE = PoopSky.loc("block/urine_liquid");
+    public static final ResourceLocation URINE_FLOWING_TEXTURE = PoopSky.loc("block/urine_liquid_flowing");
 
-public class PFluids {
-    public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(BuiltInRegistries.FLUID, PoopSky.MOD_ID);
+    public static final RegistryEntry<FluidType, FluidType> URINE_FLUID_TYPE = PRegistries.REGISTRATE.simple(
+            "urine",
+            NeoForgeRegistries.Keys.FLUID_TYPES,
+            PFluids::createUrineFluidType);
 
-    public static final Supplier<FlowingFluid> URINE = FLUIDS.register("urine",
-            () -> new BaseFlowingFluid.Source(PFluids.URINE_FLUID_PROPERTIES) {
-                @Override
-                public int getTickDelay(LevelReader level) {
-                    return 10;
+    public static final FluidEntry<BaseFlowingFluid.Flowing> FLOWING_URINE = PRegistries.REGISTRATE
+            .fluid("urine", URINE_STILL_TEXTURE, URINE_FLOWING_TEXTURE, URINE_FLUID_TYPE, PFluids::createFlowingUrine)
+            .source(PFluids::createSourceUrine)
+            .noBlock()
+            .fluidProperties(properties -> properties
+                    .slopeFindDistance(2)
+                    .levelDecreasePerBlock(1)
+                    .block(PFluids.URINE_LIQUID))
+            .setData(ProviderType.LANG, NonNullBiConsumer.noop())
+            .bucket()
+            .model((ctx, prov) -> {
+            })
+            .build()
+            .register();
+
+    public static final RegistryEntry<Fluid, FlowingFluid> URINE = PRegistries.REGISTRATE.get("urine", Registries.FLUID);
+    public static final ItemEntry<BucketItem> URINE_BUCKET = ItemEntry.cast(PRegistries.REGISTRATE.get("urine_bucket", Registries.ITEM));
+    public static final BlockEntry<UrineLiquidBlock> URINE_LIQUID = PRegistries.REGISTRATE
+            .block("urine_liquid", properties -> new UrineLiquidBlock(URINE.get(), urineLiquidProperties()))
+            .blockstate((ctx, prov) -> {
+            })
+            .loot(RegistrateBlockLootTables::dropSelf)
+            .register();
+
+    private PFluids() {
+    }
+
+    public static void register() {
+    }
+
+    private static FluidType createUrineFluidType() {
+        return new FluidType(FluidType.Properties.create()
+                .descriptionId("block.poopsky.urine_liquid")
+                .fallDistanceModifier(0F)
+                .canExtinguish(true)
+                .supportsBoating(true)
+                .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL_LAVA)
+                .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY_LAVA)
+                .canHydrate(true)
+                .canDrown(true)
+                .canPushEntity(true)
+                .lightLevel(7)
+                .density(3000)
+                .viscosity(6000)
+        ) {
+            @Override
+            public boolean canConvertToSource(FluidState state, LevelReader reader, BlockPos pos) {
+                if (reader instanceof Level level) {
+                    return level.getGameRules().getBoolean(GameRules.RULE_WATER_SOURCE_CONVERSION);
                 }
-            });
+                return true;
+            }
 
-    public static final Supplier<FlowingFluid> FLOWING_URINE = FLUIDS.register("flowing_urine",
-            () -> new BaseFlowingFluid.Flowing(PFluids.URINE_FLUID_PROPERTIES) {
-                @Override
-                public int getTickDelay(LevelReader level) {
-                    return 10;
+            @Override
+            public double motionScale(Entity entity) {
+                if (entity instanceof LivingEntity livingEntity && livingEntity.hasEffect(PEffects.OMENER)) {
+                    return 0.014D;
                 }
-            });
+                return 0.0023D;
+            }
+        };
+    }
 
-    private static final BaseFlowingFluid.Properties URINE_FLUID_PROPERTIES = new BaseFlowingFluid.Properties(PFluidTypes.URINE_FLUID_TYPE, URINE, FLOWING_URINE)
-            .slopeFindDistance(2)
-            .levelDecreasePerBlock(1)
-            .block(PBlocks.URINE_LIQUID)
-            .bucket(PItems.URINE_BUCKET);
+    private static BlockBehaviour.Properties urineLiquidProperties() {
+        return BlockBehaviour.Properties.of()
+                .mapColor(MapColor.COLOR_BROWN)
+                .replaceable()
+                .noCollission()
+                .randomTicks()
+                .strength(100.0F)
+                .lightLevel(state -> 7)
+                .pushReaction(PushReaction.DESTROY)
+                .noLootTable()
+                .liquid()
+                .sound(SoundType.EMPTY);
+    }
+
+    private static BaseFlowingFluid.Source createSourceUrine(BaseFlowingFluid.Properties properties) {
+        return new BaseFlowingFluid.Source(properties) {
+            @Override
+            public int getTickDelay(LevelReader level) {
+                return 10;
+            }
+        };
+    }
+
+    private static BaseFlowingFluid.Flowing createFlowingUrine(BaseFlowingFluid.Properties properties) {
+        return new BaseFlowingFluid.Flowing(properties) {
+            @Override
+            public int getTickDelay(LevelReader level) {
+                return 10;
+            }
+        };
+    }
 }

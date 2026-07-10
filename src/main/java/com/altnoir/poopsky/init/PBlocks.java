@@ -1,7 +1,6 @@
 package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.content.SetToiletTypeFunction;
-import com.altnoir.poopsky.content.block.fluid.UrineLiquidBlock;
 import com.altnoir.poopsky.content.block.p.*;
 import com.altnoir.poopsky.content.item.p.CompooperBlockItem;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
@@ -321,20 +320,7 @@ public class PBlocks {
                     .offsetType(BlockBehaviour.OffsetType.XZ)
                     .pushReaction(PushReaction.DESTROY)));
 
-    public static final BlockEntry<LiquidBlock> URINE_LIQUID = registerBlockNoItem("urine_liquid",
-            props -> new UrineLiquidBlock(
-                    PFluids.URINE.get(),
-                    BlockBehaviour.Properties.of()
-                            .mapColor(MapColor.COLOR_BROWN)
-                            .replaceable()
-                            .noCollission()
-                            .randomTicks()
-                            .strength(100.0F)
-                            .lightLevel(state -> 7)
-                            .pushReaction(PushReaction.DESTROY)
-                            .noLootTable()
-                            .liquid()
-                            .sound(SoundType.EMPTY)));
+    public static final BlockEntry<? extends LiquidBlock> URINE_LIQUID = PFluids.URINE_LIQUID;
 
     public static final BlockEntry<Block> MAGGOTS_BLOCK = registerBlock("maggots_block",
             props -> new Block(simpleProperties(MapColor.TERRACOTTA_WHITE, POOP, SoundType.WEEPING_VINES)));
@@ -581,6 +567,9 @@ public class PBlocks {
                 })
                 .loot(loot)
                 .register();
+    }
+
+    public static void register() {
     }
 
     public static <T extends Block> BlockEntry<T> registerCompooperBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
