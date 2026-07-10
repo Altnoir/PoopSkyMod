@@ -6,12 +6,14 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
 import java.util.function.Consumer;
 
 public class PoRegistrate extends AbstractRegistrate<PoRegistrate> {
-    private static final org.apache.logging.log4j.Logger log = org.apache.logging.log4j.LogManager.getLogger(PoRegistrate.class);
+    private static final Logger log = LogManager.getLogger(PoRegistrate.class);
 
     protected PoRegistrate(String modid) {
         super(modid);
