@@ -10,7 +10,6 @@ import com.altnoir.poopsky.client.renderer.ToiletPlugItemRenderer;
 import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.block.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
-import com.altnoir.poopsky.content.entity.renderer.*;
 import com.altnoir.poopsky.content.event.PSClientGameEvents;
 import com.altnoir.poopsky.content.event.PSClientModEvents;
 import com.altnoir.poopsky.content.event.PSKeyBoardInput;
@@ -54,10 +53,8 @@ public class PoopSkyClient {
         ToiletModelEventHandler.register(modEventBus);
         modEventBus.addListener(PSClientModEvents::registerLayers);
         modEventBus.addListener(ClientModEvents::registerItemProperties);
-        modEventBus.addListener(PSClientModEvents::registerBlockEntityRenderers);
         modEventBus.addListener(PSKeyBoardInput::onRegisterKeyMappings);
         modEventBus.addListener(ClientModEvents::registerRenderTypes);
-        modEventBus.addListener(ClientModEvents::registerEntityRenderers);
         modEventBus.addListener(ClientModEvents::registerParticleProviders);
         modEventBus.addListener(ClientModEvents::registerRecipeBookCategories);
         modEventBus.addListener(ClientModEvents::onRegisterBlockColors);
@@ -80,15 +77,6 @@ public class PoopSkyClient {
 
         public static void registerRenderTypes(RegisterNamedRenderTypesEvent event) {
             event.register(PoopSky.loc("poop_empty_log"), RenderType.cutout(), RenderType.entityCutout(PBlocks.POOP_EMPTY_LOG.getId()));
-        }
-
-        public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-            event.registerEntityRenderer(PEntityType.TOILET_PLUG.get(), ToiletPlugRenderer::new);
-            event.registerEntityRenderer(PEntityType.POOLIME.get(), PoolimeRenderer::new);
-            event.registerEntityRenderer(PEntityType.FLY.get(), FlyRenderer::new);
-            event.registerEntityRenderer(PEntityType.STOOL.get(), ChairRenderer::new);
-            event.registerEntityRenderer(PEntityType.TOILET.get(), ToiletRenderer::new);
-            event.registerEntityRenderer(PEntityType.POOP_TNT.get(), PoopTntRenderer::new);
         }
 
         public static void registerRecipeBookCategories(RegisterRecipeBookCategoriesEvent event) {

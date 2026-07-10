@@ -5,7 +5,6 @@ import com.altnoir.poopsky.init.PItems;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.advancements.critereon.SlimePredicate;
-import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.EntityLootSubProvider;
 import net.minecraft.world.entity.EntityType;
@@ -74,6 +73,6 @@ public class PSEntityLootTableProvider extends EntityLootSubProvider {
 
     @Override
     protected @NotNull Stream<EntityType<?>> getKnownEntityTypes() {
-        return PEntityType.ENTITY_TYPES.getEntries().stream().map(Holder::value);
+        return PEntityType.getAllEntityTypes();
     }
 }

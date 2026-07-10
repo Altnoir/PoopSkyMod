@@ -1,61 +1,76 @@
 package com.altnoir.poopsky.init;
 
-import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.entity.p.*;
+import com.altnoir.poopsky.content.entity.renderer.*;
+import com.tterrag.registrate.util.entry.EntityEntry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
 
-import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public class PEntityType {
-    public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(Registries.ENTITY_TYPE, PoopSky.MOD_ID);
-
-    public static final Supplier<EntityType<ToiletPlugEntity>> TOILET_PLUG = ENTITY_TYPES.register("toilet_plug", () ->
-            EntityType.Builder.of(ToiletPlugEntity::new, MobCategory.MISC)
+    public static final EntityEntry<ToiletPlugEntity> TOILET_PLUG = PRegistries.REGISTRATE
+            .entity("toilet_plug", ToiletPlugEntity::new, MobCategory.MISC)
+            .properties(properties -> properties
                     .fireImmune()
                     .clientTrackingRange(10)
-                    .sized(0.75F, 0.35F)
-                    .build("toilet_plug"));
+                    .sized(0.75F, 0.35F))
+            .renderer(() -> ToiletPlugRenderer::new)
+            .register();
 
-    public static final Supplier<EntityType<PoolimeEntity>> POOLIME = ENTITY_TYPES.register("poolime", () ->
-            EntityType.Builder.of(PoolimeEntity::new, MobCategory.MONSTER)
+    public static final EntityEntry<PoolimeEntity> POOLIME = PRegistries.REGISTRATE
+            .entity("poolime", PoolimeEntity::new, MobCategory.MONSTER)
+            .properties(properties -> properties
                     .sized(0.52F, 0.52F)
                     .eyeHeight(0.325F)
                     .spawnDimensionsScale(4.0F)
-                    .clientTrackingRange(10)
-                    .build("pooplime"));
+                    .clientTrackingRange(10))
+            .renderer(() -> PoolimeRenderer::new)
+            .register();
 
-    public static final Supplier<EntityType<FlyEntity>> FLY = ENTITY_TYPES.register("fly", () ->
-            EntityType.Builder.of(FlyEntity::new, MobCategory.CREATURE)
+    public static final EntityEntry<FlyEntity> FLY = PRegistries.REGISTRATE
+            .entity("fly", FlyEntity::new, MobCategory.CREATURE)
+            .properties(properties -> properties
                     .sized(0.5F, 0.6F)
                     .eyeHeight(0.3F)
-                    .clientTrackingRange(8)
-                    .build("fly"));
+                    .clientTrackingRange(8))
+            .renderer(() -> FlyRenderer::new)
+            .register();
 
-    public static final Supplier<EntityType<ChairEntity>> STOOL = ENTITY_TYPES.register("stool_entity", () ->
-            EntityType.Builder.of(ChairEntity::new, MobCategory.MISC)
-                    .sized(0.5F, 0.5F)
-                    .build("stool_entity"));
+    public static final EntityEntry<ChairEntity> STOOL = PRegistries.REGISTRATE
+            .entity("stool_entity", ChairEntity::new, MobCategory.MISC)
+            .properties(properties -> properties
+                    .sized(0.5F, 0.5F))
+            .renderer(() -> ChairRenderer::new)
+            .register();
 
-    public static final Supplier<EntityType<ToiletEntity>> TOILET = ENTITY_TYPES.register("toilet_entity", () ->
-            EntityType.Builder.of(ToiletEntity::new, MobCategory.MISC)
-                    .sized(0.75F, 1.0F)
-                    .build("toilet_entity"));
+    public static final EntityEntry<ToiletEntity> TOILET = PRegistries.REGISTRATE
+            .entity("toilet_entity", ToiletEntity::new, MobCategory.MISC)
+            .properties(properties -> properties
+                    .sized(0.75F, 1.0F))
+            .renderer(() -> ToiletRenderer::new)
+            .register();
 
-    public static final DeferredHolder<EntityType<?>, EntityType<PoopTntEntity>> POOP_TNT = ENTITY_TYPES.register("poop_tnt", () ->
-            EntityType.Builder.<PoopTntEntity>of(PoopTntEntity::new, MobCategory.MISC)
+    public static final EntityEntry<PoopTntEntity> POOP_TNT = PRegistries.REGISTRATE
+            .<PoopTntEntity>entity("poop_tnt", PoopTntEntity::new, MobCategory.MISC)
+            .properties(properties -> properties
                     .sized(0.75F, 0.75F)
                     .eyeHeight(0.15F)
                     .clientTrackingRange(10)
                     .updateInterval(10)
-                    .fireImmune()
-                    .build("poop_tnt"));
+                    .fireImmune())
+            .renderer(() -> PoopTntRenderer::new)
+            .register();
+
+    public static Stream<EntityType<?>> getAllEntityTypes() {
+        return PRegistries.REGISTRATE.getAll(Registries.ENTITY_TYPE)
+                .stream()
+                .map(DeferredHolder::get);
+    }
 
     public static void register(IEventBus eventBus) {
-        ENTITY_TYPES.register(eventBus);
     }
 }
