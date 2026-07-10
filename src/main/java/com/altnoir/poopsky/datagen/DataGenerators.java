@@ -33,7 +33,6 @@ public class DataGenerators {
         generators.addProvider(event.includeServer(), new LootTableProvider(packOutput, Collections.emptySet(),
                 List.of(
                         new LootTableProvider.SubProviderEntry(PBlockLootTableProvider::new, LootContextParamSets.BLOCK),
-                        new LootTableProvider.SubProviderEntry(PSEntityLootTableProvider::new, LootContextParamSets.ENTITY),
                         new LootTableProvider.SubProviderEntry(PSFishingLootProvider::new, LootContextParamSets.FISHING)
                 ), lookupProvider));
         generators.addProvider(event.includeServer(), new PSRecipeProvider(packOutput, lookupProvider));
@@ -55,7 +54,6 @@ public class DataGenerators {
         generators.addProvider(event.includeServer(), damageTypeTagsProvider);
 
         generators.addProvider(event.includeServer(), new PSDataMapProvider(packOutput, lookupProvider));
-        generators.addProvider(event.includeServer(), new PSAdvancementProvider(packOutput, lookupProvider, existingFileHelper));
         generators.addProvider(event.includeServer(), new PSGlobalLootModifierProvider(packOutput, lookupProvider));
 
         generators.addProvider(event.includeClient(), new PSBlockStateProvider(packOutput, existingFileHelper));

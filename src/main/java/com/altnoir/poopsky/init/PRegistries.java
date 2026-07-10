@@ -3,6 +3,8 @@ package com.altnoir.poopsky.init;
 import com.altnoir.poopsky.PItemGroups;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.villager.PVillagers;
+import com.altnoir.poopsky.datagen.PSAdvancementProvider;
+import com.altnoir.poopsky.datagen.PSEntityLootTableProvider;
 import com.altnoir.poopsky.worldgen.PSChunkGenerators;
 import com.altnoir.poopsky.worldgen.PSStructures;
 import com.altnoir.poopsky.worldgen.foliage.PSFoliagePlacerTypes;
@@ -26,6 +28,8 @@ public final class PRegistries {
         PBlocks.register();
         PFluids.register();
         PParticles.register();
+        PSAdvancementProvider.register();
+        PSEntityLootTableProvider.register();
 
         PEffects.register(modEventBus);
         PPotions.register(modEventBus);
