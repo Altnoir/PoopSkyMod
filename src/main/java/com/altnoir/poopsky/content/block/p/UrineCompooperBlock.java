@@ -1,10 +1,10 @@
 package com.altnoir.poopsky.content.block.p;
 
-import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
+import com.altnoir.poopsky.init.PBlocks;
+import com.altnoir.poopsky.init.PItems;
 import com.altnoir.poopsky.init.PParticles;
 import com.altnoir.poopsky.init.PSoundEvents;
-import com.altnoir.poopsky.init.PItems;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -14,7 +14,10 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.*;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -31,8 +34,8 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Vector3f;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 
 public class UrineCompooperBlock extends AbstractCompooperBlock implements WorldlyContainerHolder {
     public static final MapCodec<UrineCompooperBlock> CODEC = simpleCodec(UrineCompooperBlock::new);
@@ -83,6 +86,18 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
             return InteractionResult.sidedSuccess(level.isClientSide);
         } else {
             return InteractionResult.PASS;
+        }
+    }
+
+    @Override
+    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        if (level.isClientSide || !this.isEntityInsideContent(pos, state, entity)) {
+            return;
+        }
+
+        if (entity instanceof LivingEntity livingEntity) {
+            livingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200));
+            livingEntity.addEffect(new MobEffectInstance(MobEffects.POISON, 200));
         }
     }
 

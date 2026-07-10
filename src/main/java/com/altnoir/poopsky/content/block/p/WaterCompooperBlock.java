@@ -1,9 +1,9 @@
 package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
-import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.content.item.PFlyTypes;
 import com.altnoir.poopsky.content.item.p.FlyItem;
+import com.altnoir.poopsky.init.PBlocks;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
@@ -63,15 +63,25 @@ public class WaterCompooperBlock extends AbstractCompooperBlock {
 
     @Override
     protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        if (this.isEntityInsideContent(pos, state, entity)) {
-            if (entity instanceof ItemEntity itemEntity) {
-                ItemStack stack = itemEntity.getItem();
-                if (FlyItem.isFlyItem(stack) && FlyItem.getFlyType(stack).equals(PFlyTypes.NORMAL.get())) {
-                    int count = stack.getCount();
+        if (level.isClientSide || !this.isEntityInsideContent(pos, state, entity)) {
+            return;
+        }
 
-                    catalyst(itemEntity, state, level, pos, count, FlyItem.withType(PFlyTypes.BLUE.get()), FlyItem.withType(PFlyTypes.NORMAL.get()));
-                    level.playSound(null, pos, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 1.0F, 1.0F);
-                }
+        if (entity.isOnFire()) {
+            entity.clearFire();
+            if (entity.mayInteract(level, pos)) {
+                lowerFillLevel(state, level, pos);
+            }
+            return;
+        }
+
+        if (entity instanceof ItemEntity itemEntity) {
+            ItemStack stack = itemEntity.getItem();
+            if (FlyItem.isFlyItem(stack) && FlyItem.getFlyType(stack).equals(PFlyTypes.NORMAL.get())) {
+                int count = stack.getCount();
+
+                catalyst(itemEntity, state, level, pos, count, FlyItem.withType(PFlyTypes.BLUE.get()), FlyItem.withType(PFlyTypes.NORMAL.get()));
+                level.playSound(null, pos, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 1.0F, 1.0F);
             }
         }
     }
