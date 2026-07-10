@@ -1,10 +1,11 @@
 package com.altnoir.poopsky.init;
 
+import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.SetToiletTypeFunction;
 import com.altnoir.poopsky.content.block.p.*;
 import com.altnoir.poopsky.content.item.p.CompooperBlockItem;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
-import com.tterrag.registrate.Registrate;
+import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
@@ -55,7 +56,7 @@ public class PBlocks {
     private static final float HARD_STRENGTH = 10.0F;
     private static final float TOILET_RESISTANCE = 1200.0F;
     private static final int LAVA_LIGHT_LEVEL = 15;
-    public static final Registrate BLOCKS = PRegistries.REGISTRATE;
+    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
     public static final BlockEntry<PoopCakeBlock> POOP_CAKE = registerBlock("poop_cake",
             props -> new PoopCakeBlock(poopCakeProperties()),
@@ -491,7 +492,7 @@ public class PBlocks {
         String candleName = BuiltInRegistries.BLOCK.getKey(candle).getPath();
         String name = candle == Blocks.CANDLE ? "poop_candle_cake" : candleName.replace("_candle", "_poop_candle_cake");
 
-        return BLOCKS.block(name,
+        return REGISTRATE.block(name,
                         props -> new PoopCandleCakeBlock(candle, poopCakeProperties()
                                 .lightLevel(state -> state.getValue(PoopCandleCakeBlock.LIT) ? 3 : 0)))
                 .blockstate((ctx, prov) -> {
@@ -530,7 +531,7 @@ public class PBlocks {
     }
 
     public static <T extends Block> BlockEntry<T> registerBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
-        return BLOCKS.block(name, factory)
+        return REGISTRATE.block(name, factory)
                 .blockstate((ctx, prov) -> {
                 })
                 .loot(loot)
@@ -546,7 +547,7 @@ public class PBlocks {
     }
 
     public static <T extends Block> BlockEntry<T> registerDefaultBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
-        return BLOCKS.block(name, factory)
+        return REGISTRATE.block(name, factory)
                 .blockstate((ctx, prov) -> {
                 })
                 .loot(loot)
@@ -562,7 +563,7 @@ public class PBlocks {
     }
 
     public static <T extends Block> BlockEntry<T> registerBlockNoItem(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
-        return BLOCKS.block(name, factory)
+        return REGISTRATE.block(name, factory)
                 .blockstate((ctx, prov) -> {
                 })
                 .loot(loot)
@@ -573,7 +574,7 @@ public class PBlocks {
     }
 
     public static <T extends Block> BlockEntry<T> registerCompooperBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
-        return BLOCKS.block(name, factory)
+        return REGISTRATE.block(name, factory)
                 .blockstate((ctx, prov) -> {
                 })
                 .loot(loot)
@@ -585,7 +586,7 @@ public class PBlocks {
     }
 
     public static <T extends Block> BlockEntry<T> registerToiletBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
-        return BLOCKS.block(name, factory)
+        return REGISTRATE.block(name, factory)
                 .blockstate((ctx, prov) -> {
                 })
                 .loot(loot)

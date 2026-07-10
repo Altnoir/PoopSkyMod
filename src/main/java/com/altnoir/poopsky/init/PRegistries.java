@@ -1,14 +1,12 @@
 package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PItemGroups;
-import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.villager.PVillagers;
 import com.altnoir.poopsky.datagen.PSAdvancementProvider;
 import com.altnoir.poopsky.datagen.PSEntityLootTableProvider;
 import com.altnoir.poopsky.worldgen.PSChunkGenerators;
 import com.altnoir.poopsky.worldgen.PSStructures;
 import com.altnoir.poopsky.worldgen.foliage.PSFoliagePlacerTypes;
-import com.tterrag.registrate.Registrate;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -17,7 +15,6 @@ import java.util.Collections;
 import java.util.List;
 
 public final class PRegistries {
-    public static final Registrate REGISTRATE = Registrate.create(PoopSky.MOD_ID);
     private static final List<DeferredRegister<?>> REGISTERS = new ArrayList<>();
 
     private PRegistries() {

@@ -1,11 +1,12 @@
 package com.altnoir.poopsky.init;
 
+import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.ToiletComponent;
 import com.altnoir.poopsky.content.item.PArmorMaterials;
 import com.altnoir.poopsky.content.item.PFoods;
 import com.altnoir.poopsky.content.item.PToolTiers;
 import com.altnoir.poopsky.content.item.p.*;
-import com.tterrag.registrate.Registrate;
+import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import net.minecraft.core.registries.Registries;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PItems {
-    public static final Registrate ITEMS = PRegistries.REGISTRATE;
+    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
     public static final ItemEntry<PoopItem> POOP = registerItem("poop",
             props -> new PoopItem(props.food(PFoods.POOP).stacksTo(88)));
@@ -130,7 +131,7 @@ public class PItems {
             props -> new FlyItem(props.stacksTo(88)));
 
     public static List<Item> getAllItems() {
-        var registrateItems = ITEMS.getAll(Registries.ITEM).stream()
+        var registrateItems = REGISTRATE.getAll(Registries.ITEM).stream()
                 .map(DeferredHolder::get)
                 .toList();
 
@@ -138,8 +139,9 @@ public class PItems {
     }
 
     private static <T extends Item> ItemEntry<T> registerItem(String name, NonNullFunction<Item.Properties, T> factory) {
-        return ITEMS.item(name, factory)
-                .model((ctx, prov) -> {})
+        return REGISTRATE.item(name, factory)
+                .model((ctx, prov) -> {
+                })
                 .register();
     }
 

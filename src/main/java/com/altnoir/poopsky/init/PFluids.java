@@ -2,6 +2,7 @@ package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.fluid.UrineLiquidBlock;
+import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -30,13 +31,14 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 public final class PFluids {
     public static final ResourceLocation URINE_STILL_TEXTURE = PoopSky.loc("block/urine_liquid");
     public static final ResourceLocation URINE_FLOWING_TEXTURE = PoopSky.loc("block/urine_liquid_flowing");
+    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
-    public static final RegistryEntry<FluidType, FluidType> URINE_FLUID_TYPE = PRegistries.REGISTRATE.simple(
+    public static final RegistryEntry<FluidType, FluidType> URINE_FLUID_TYPE = REGISTRATE.simple(
             "urine",
             NeoForgeRegistries.Keys.FLUID_TYPES,
             PFluids::createUrineFluidType);
 
-    public static final FluidEntry<BaseFlowingFluid.Flowing> FLOWING_URINE = PRegistries.REGISTRATE
+    public static final FluidEntry<BaseFlowingFluid.Flowing> FLOWING_URINE = REGISTRATE
             .fluid("urine", URINE_STILL_TEXTURE, URINE_FLOWING_TEXTURE, URINE_FLUID_TYPE, PFluids::createFlowingUrine)
             .source(PFluids::createSourceUrine)
             .noBlock()
@@ -51,9 +53,9 @@ public final class PFluids {
             .build()
             .register();
 
-    public static final RegistryEntry<Fluid, FlowingFluid> URINE = PRegistries.REGISTRATE.get("urine", Registries.FLUID);
-    public static final ItemEntry<BucketItem> URINE_BUCKET = ItemEntry.cast(PRegistries.REGISTRATE.get("urine_bucket", Registries.ITEM));
-    public static final BlockEntry<UrineLiquidBlock> URINE_LIQUID = PRegistries.REGISTRATE
+    public static final RegistryEntry<Fluid, FlowingFluid> URINE = REGISTRATE.get("urine", Registries.FLUID);
+    public static final ItemEntry<BucketItem> URINE_BUCKET = ItemEntry.cast(REGISTRATE.get("urine_bucket", Registries.ITEM));
+    public static final BlockEntry<UrineLiquidBlock> URINE_LIQUID = REGISTRATE
             .block("urine_liquid", properties -> new UrineLiquidBlock(URINE.get(), urineLiquidProperties()))
             .blockstate((ctx, prov) -> {
             })

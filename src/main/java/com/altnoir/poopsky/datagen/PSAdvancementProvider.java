@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.init.*;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateAdvancementProvider;
@@ -17,11 +18,13 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 
 public final class PSAdvancementProvider {
+    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
+
     private PSAdvancementProvider() {
     }
 
     public static void register() {
-        PRegistries.REGISTRATE.addDataGenerator(ProviderType.ADVANCEMENT, PSAdvancementProvider::generate);
+        REGISTRATE.addDataGenerator(ProviderType.ADVANCEMENT, PSAdvancementProvider::generate);
     }
 
     private static void generate(RegistrateAdvancementProvider provider) {

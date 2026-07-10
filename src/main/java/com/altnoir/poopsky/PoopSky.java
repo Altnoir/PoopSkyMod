@@ -1,12 +1,13 @@
 package com.altnoir.poopsky;
 
+import com.altnoir.poopsky.compat.PSMods;
+import com.altnoir.poopsky.compat.create.CreatePlugin;
+import com.altnoir.poopsky.compat.maid.MaidPlugin;
 import com.altnoir.poopsky.content.FlyTypeManager;
 import com.altnoir.poopsky.content.block.ToiletTypeManager;
 import com.altnoir.poopsky.content.block.p.CompooperBlock;
 import com.altnoir.poopsky.content.entity.p.PoopTntEntity;
-import com.altnoir.poopsky.compat.PSMods;
-import com.altnoir.poopsky.compat.create.CreatePlugin;
-import com.altnoir.poopsky.compat.maid.MaidPlugin;
+import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.init.*;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
@@ -41,9 +42,10 @@ import org.slf4j.Logger;
 public class PoopSky {
     public static final String MOD_ID = "poopsky";
     public static final Logger LOGGER = LogUtils.getLogger();
+    private static final PoRegistrate REGISTRATE = PoRegistrate.create(MOD_ID);
 
     static {
-        PRegistries.REGISTRATE.defaultCreativeTab((ResourceKey<CreativeModeTab>) null);
+        REGISTRATE.defaultCreativeTab((ResourceKey<CreativeModeTab>) null);
     }
 
     public PoopSky(IEventBus modEventBus, ModContainer modContainer) {
@@ -123,5 +125,9 @@ public class PoopSky {
 
     public static ResourceLocation loc(String path) {
         return ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, path);
+    }
+
+    public static PoRegistrate registrate() {
+        return REGISTRATE;
     }
 }

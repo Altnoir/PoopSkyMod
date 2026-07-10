@@ -1,8 +1,9 @@
 package com.altnoir.poopsky.datagen;
 
+import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.init.PEntityType;
 import com.altnoir.poopsky.init.PItems;
-import com.altnoir.poopsky.init.PRegistries;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.loot.RegistrateEntityLootTables;
 import com.tterrag.registrate.providers.loot.RegistrateLootTableProvider.LootType;
@@ -29,11 +30,13 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import java.util.List;
 
 public final class PSEntityLootTableProvider {
+    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
+
     private PSEntityLootTableProvider() {
     }
 
     public static void register() {
-        PRegistries.REGISTRATE.addDataGenerator(
+        REGISTRATE.addDataGenerator(
                 ProviderType.LOOT,
                 provider -> provider.addLootAction(LootType.ENTITY, PSEntityLootTableProvider::generate));
     }
