@@ -6,57 +6,51 @@ import com.altnoir.poopsky.init.PRecipes;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.*;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.item.crafting.CraftingInput;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.ShapedRecipe;
 
-public record ToiletShapedRecipe(ShapedRecipe delegate, ToiletType toiletType) implements CraftingRecipe {
 
-    @Override
-    public boolean matches(CraftingInput input, Level level) {
-        return delegate.matches(input, level);
+public class ToiletShapedRecipe extends ShapedRecipe {
+    private final ShapedRecipe delegate;
+    private final ToiletType toiletType;
+
+    public ToiletShapedRecipe(ShapedRecipe delegate, ToiletType toiletType) {
+        super(
+                delegate.getGroup(),
+                delegate.category(),
+                delegate.pattern,
+                delegate.getResultItem(null).copy(),
+                delegate.showNotification()
+        );
+        this.delegate = delegate;
+        this.toiletType = toiletType;
+    }
+
+    public ShapedRecipe delegate() {
+        return delegate;
+    }
+
+    public ToiletType toiletType() {
+        return toiletType;
     }
 
     @Override
     public ItemStack assemble(CraftingInput input, HolderLookup.Provider registries) {
-        ItemStack result = delegate.assemble(input, registries);
+        ItemStack result = super.assemble(input, registries);
         result.set(PComponents.TOILET_TYPE.get(), toiletType);
         return result;
-    }
-
-    @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return delegate.canCraftInDimensions(width, height);
     }
 
     @Override
     public ItemStack getResultItem(HolderLookup.Provider registries) {
-        ItemStack result = delegate.getResultItem(registries).copy();
+        ItemStack result = super.getResultItem(registries).copy();
         result.set(PComponents.TOILET_TYPE.get(), toiletType);
         return result;
-    }
-
-    @Override
-    public NonNullList<Ingredient> getIngredients() {
-        return delegate.getIngredients();
-    }
-
-    @Override
-    public boolean showNotification() {
-        return delegate.showNotification();
-    }
-
-    @Override
-    public String getGroup() {
-        return delegate.getGroup();
-    }
-
-    @Override
-    public CraftingBookCategory category() {
-        return delegate.category();
     }
 
     @Override
