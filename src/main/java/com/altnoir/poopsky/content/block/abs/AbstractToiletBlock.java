@@ -9,6 +9,8 @@ import com.altnoir.poopsky.init.*;
 import com.altnoir.poopsky.util.toiletUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -150,6 +152,18 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     public BlockState getParticleState(BlockState state, BlockGetter level, BlockPos pos) {
         Block sourceBlock = getVariantSourceBlock(level, pos);
         return sourceBlock != null ? sourceBlock.defaultBlockState() : state;
+    }
+
+    @Override
+    public boolean addLandingEffects(BlockState state, ServerLevel level, BlockPos pos, BlockState state2, LivingEntity entity, int numberOfParticles) {
+        BlockState particleState = getParticleState(state, level, pos);
+        if (particleState == state) {
+            return false;
+        }
+
+        level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, particleState).setPos(pos),
+                entity.getX(), entity.getY(), entity.getZ(), numberOfParticles, 0.0, 0.0, 0.0, 0.15F);
+        return true;
     }
 
     @Override
