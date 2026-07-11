@@ -4,24 +4,26 @@ import com.altnoir.poopsky.content.FlyTypeManager;
 import com.altnoir.poopsky.content.block.ToiletType;
 import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
+import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PItems;
+import com.tterrag.registrate.util.entry.RegistryEntry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.Set;
-import java.util.function.Supplier;
 
 public class PItemGroups {
-    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TAB = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, PoopSky.MOD_ID);
+    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
-    public static final Supplier<CreativeModeTab> POOPSKY_TAB = CREATIVE_MODE_TAB.register("poopsky_tab", () -> CreativeModeTab.builder()
+    public static final RegistryEntry<CreativeModeTab, CreativeModeTab> POOPSKY_TAB = REGISTRATE.generic("poopsky_tab", Registries.CREATIVE_MODE_TAB, () -> CreativeModeTab.builder()
             .title(Component.translatable("itemgroup.poopsky"))
-            .icon(() -> new ItemStack(PBlocks.WOODEN_TOILET.get().asItem()))
+            .icon(PBlocks.WOODEN_TOILET::asStack)
             .displayItems((parameters, output) -> {
                 PItems.getAllItems().stream()
                         .filter(item -> !(item instanceof BlockItem))
@@ -56,9 +58,8 @@ public class PItemGroups {
                     output.accept(ToiletBlockItem.withType(PBlocks.HARD_TOILET.get(), type));
                 }
             })
-            .build());
+            .build()).register();
 
-    public static void register(IEventBus eventBus) {
-        CREATIVE_MODE_TAB.register(eventBus);
+    public static void register() {
     }
 }

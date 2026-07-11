@@ -5,28 +5,27 @@ import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.item.PFlyTypes;
 import com.altnoir.poopsky.init.PBlocks;
 import com.altnoir.poopsky.init.PItems;
+import com.tterrag.registrate.AbstractRegistrate;
+import com.tterrag.registrate.providers.RegistrateItemModelProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.client.renderer.block.model.BlockModel.GuiLight;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.armortrim.TrimMaterials;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.client.model.generators.loaders.SeparateTransformsModelBuilder;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.LinkedHashMap;
 
-public class PSItemModelProvider extends ItemModelProvider {
+public class PItemModelProvider extends RegistrateItemModelProvider {
     private static final LinkedHashMap<ResourceKey<TrimMaterial>, Float> trimMaterials = new LinkedHashMap<>();
 
     static {
@@ -42,48 +41,48 @@ public class PSItemModelProvider extends ItemModelProvider {
         trimMaterials.put(TrimMaterials.AMETHYST, 1.0F);
     }
 
-    public PSItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
-        super(output, PoopSky.MOD_ID, existingFileHelper);
+    public PItemModelProvider(AbstractRegistrate<?> parent, PackOutput output, ExistingFileHelper existingFileHelper) {
+        super(parent, output, existingFileHelper);
     }
 
     @Override
     protected void registerModels() {
-        basicItem(PItems.POOP.get());
-        basicItem(PItems.CHILI_POOP.get());
-        basicItem(PItems.GOLDEN_POOP.get());
-        basicItem(PItems.SEEDBED_CURSE.get());
-        basicItem(PItems.FOLIUM_SENNAE.get());
-        basicItem(PItems.POOP_BALL.get());
-        basicItem(PItems.SAPLING_POOP_BALL.get());
-        basicItem(PItems.SEA_POOP_BALL.get());
-        basicItem(PItems.WITHER_POOP_BALL.get());
-        basicItem(PItems.POOP_BREAD.get());
-        basicItem(PItems.POOP_DUMPLINGS.get());
-        basicItem(PItems.POOP_MOONCAKE.get());
-        basicItem(PItems.CHILI_POOP_MOONCAKE.get());
-        basicItem(PItems.GOLDEN_POOP_MOONCAKE.get());
-        basicItem(PItems.POOP_SOUP.get());
-        basicItem(PItems.POOP_VEGETABLE_STICKS.get());
-        basicItem(PItems.POOBURGER_MEAT.get());
-        basicItem(PItems.POOBURGER.get());
-        basicItem(PItems.POOP_PASTA.get());
-        basicItem(PItems.POODDING.get());
-        basicItem(PItems.DRAGON_BREATH_CHILI.get());
-        basicItem(PItems.KING_OF_DRAGON_FRUIT.get());
+        generated(PItems.POOP);
+        generated(PItems.CHILI_POOP);
+        generated(PItems.GOLDEN_POOP);
+        generated(PItems.SEEDBED_CURSE);
+        generated(PItems.FOLIUM_SENNAE);
+        generated(PItems.POOP_BALL);
+        generated(PItems.SAPLING_POOP_BALL);
+        generated(PItems.SEA_POOP_BALL);
+        generated(PItems.WITHER_POOP_BALL);
+        generated(PItems.POOP_BREAD);
+        generated(PItems.POOP_DUMPLINGS);
+        generated(PItems.POOP_MOONCAKE);
+        generated(PItems.CHILI_POOP_MOONCAKE);
+        generated(PItems.GOLDEN_POOP_MOONCAKE);
+        generated(PItems.POOP_SOUP);
+        generated(PItems.POOP_VEGETABLE_STICKS);
+        generated(PItems.POOBURGER_MEAT);
+        generated(PItems.POOBURGER);
+        generated(PItems.POOP_PASTA);
+        generated(PItems.POODDING);
+        generated(PItems.DRAGON_BREATH_CHILI);
+        generated(PItems.KING_OF_DRAGON_FRUIT);
         toiletPlugItem();
-        basicItem(PItems.SPALL.get());
-        basicItem(PItems.LAWRENCE_MUSIC_DISC.get());
-        basicItem(PItems.LIGHT_DANCE_MUSIC_DISC.get());
-        basicItem(PItems.MOON_BOWL_MUSIC_DISC.get());
-        basicItem(PItems.TOILET_PLUG_WAND.get());
-        basicItem(PItems.URINE_BOTTLE.get());
-        basicItem(PItems.URINE_BUCKET.get());
-        basicItem(PItems.MAGGOTS_SEEDS.get());
-        basicItem(PItems.ROUNDWORM.get());
-        basicItem(PItems.BAKED_MAGGOTS.get());
+        generated(PItems.SPALL);
+        generated(PItems.LAWRENCE_MUSIC_DISC);
+        generated(PItems.LIGHT_DANCE_MUSIC_DISC);
+        generated(PItems.MOON_BOWL_MUSIC_DISC);
+        generated(PItems.TOILET_PLUG_WAND);
+        generated(PItems.URINE_BOTTLE);
+        generated(PItems.URINE_BUCKET);
+        generated(PItems.MAGGOTS_SEEDS);
+        generated(PItems.ROUNDWORM);
+        generated(PItems.BAKED_MAGGOTS);
 
-        basicItem(PItems.FLY_CATCHER.get());
-        basicItem(PItems.TIME_BELL.get());
+        generated(PItems.FLY_CATCHER);
+        generated(PItems.TIME_BELL);
 
         wallItem(PBlocks.CHILI_POOP_WALL, PBlocks.CHILI_POOP_BLOCK);
         wallItem(PBlocks.GOLDEN_POOP_WALL, PBlocks.GOLDEN_POOP_BLOCK);
@@ -94,27 +93,20 @@ public class PSItemModelProvider extends ItemModelProvider {
         wallItem(PBlocks.CUT_POOP_BLOCK_WALL, PBlocks.CUT_POOP_BLOCK);
         wallItem(PBlocks.TILE_BLOCK_WALL, PBlocks.TILE_BLOCK);
 
-        // 添加液体桶的模型
-        //withExistingParent("urine_bucket", mcLoc("item/generated")).texture("layer0", modLoc("item/urine_bucket"));
+        withExistingParent(name(PItems.POOLIME_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
+        withExistingParent(name(PItems.FLY_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
 
-        withExistingParent(PItems.POOLIME_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
-        withExistingParent(PItems.FLY_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
-
-        basicItem(PItems.OMINOUS_FILTHY_INGOT.get());
-        basicItem(PItems.OMEN_UPGRADE_SMITHING_TEMPLATE.get());
-        bigSowordItem(PItems.MILOS_SWORD.get());
+        generated(PItems.OMINOUS_FILTHY_INGOT);
+        generated(PItems.OMEN_UPGRADE_SMITHING_TEMPLATE);
+        bigSowordItem();
         trimmedArmorItem(PItems.OMEN_HELMET);
         trimmedArmorItem(PItems.OMEN_CHESTPLATE);
         trimmedArmorItem(PItems.OMEN_LEGGINGS);
         trimmedArmorItem(PItems.OMEN_BOOTS);
 
         flyItemWithOverrides();
-        blockItemModel(PBlocks.FLY_BARREL);
-        blockItemModel(PBlocks.BREEDING_CHEST);
-    }
-
-    private void blockItemModel(BlockEntry<? extends Block> block) {
-        withExistingParent(block.getId().getPath(), modLoc("block/" + block.getId().getPath()));
+        blockItem(PBlocks.FLY_BARREL);
+        blockItem(PBlocks.BREEDING_CHEST);
     }
 
     private void toiletPlugItem() {
@@ -135,14 +127,14 @@ public class PSItemModelProvider extends ItemModelProvider {
                 .end();
     }
 
-    private void bigSowordItem(Item item) {
-        this.withExistingParent(getItemPath(item), modLoc("item/big_sword"))
-                .texture("layer0", PoopSky.loc("item/" + getItemPath(item)));
+    private void bigSowordItem() {
+        this.withExistingParent(name(PItems.MILOS_SWORD), modLoc("item/big_sword"))
+                .texture("layer0", itemTexture(PItems.MILOS_SWORD));
     }
 
     private void wallItem(BlockEntry<? extends Block> block, BlockEntry<? extends Block> baseBlock) {
-        this.withExistingParent(block.getId().getPath(), mcLoc("block/wall_inventory"))
-                .texture("wall", PoopSky.loc("block/" + baseBlock.getId().getPath()));
+        this.withExistingParent(name(block), mcLoc("block/wall_inventory"))
+                .texture("wall", modLoc("block/" + name(baseBlock)));
     }
 
     private void flyItemWithOverrides() {
@@ -177,35 +169,25 @@ public class PSItemModelProvider extends ItemModelProvider {
                 default -> "";
             };
 
-            String armorItemPath = armorItem.toString();
+            String armorItemPath = name(itemDeferredItem);
             String trimPath = "trims/items/" + armorType + "_trim_" + trimMaterial.location().getPath();
             String currentTrimName = armorItemPath + "_" + trimMaterial.location().getPath() + "_trim";
-            ResourceLocation armorItemResLoc = ResourceLocation.parse(armorItemPath);
             ResourceLocation trimResLoc = ResourceLocation.parse(trimPath); // minecraft namespace
-            ResourceLocation trimNameResLoc = ResourceLocation.parse(currentTrimName);
+            ResourceLocation trimNameResLoc = modLoc(currentTrimName);
 
             existingFileHelper.trackGenerated(trimResLoc, PackType.CLIENT_RESOURCES, ".png", "textures");
 
             getBuilder(currentTrimName)
                     .parent(new ModelFile.UncheckedModelFile("item/generated"))
-                    .texture("layer0", armorItemResLoc.getNamespace() + ":item/" + armorItemResLoc.getPath())
+                    .texture("layer0", itemTexture(itemDeferredItem))
                     .texture("layer1", trimResLoc);
 
-            this.withExistingParent(itemDeferredItem.getId().getPath(),
+            this.withExistingParent(name(itemDeferredItem),
                             mcLoc("item/generated"))
                     .override()
                     .model(new ModelFile.UncheckedModelFile(trimNameResLoc.getNamespace() + ":item/" + trimNameResLoc.getPath()))
                     .predicate(mcLoc("trim_type"), trimValue).end()
-                    .texture("layer0",
-                            PoopSky.loc("item/" + itemDeferredItem.getId().getPath()));
+                    .texture("layer0", itemTexture(itemDeferredItem));
         });
-    }
-
-    private String getItemPath(Item item) {
-        return getItemKey(item).getPath();
-    }
-
-    private ResourceLocation getItemKey(Item item) {
-        return BuiltInRegistries.ITEM.getKey(item);
     }
 }

@@ -52,7 +52,7 @@ public class RoundwormVinesPlantBlock extends GrowingPlantBodyBlock implements B
 
     @Override
     protected GrowingPlantHeadBlock getHeadBlock() {
-        return (GrowingPlantHeadBlock) PBlocks.ROUNDWORM_VINES.get();
+        return PBlocks.ROUNDWORM_VINES.get();
     }
 
     @Override

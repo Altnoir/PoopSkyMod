@@ -1,24 +1,23 @@
 package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.impl.registrate.PoRegistrate;
+import com.tterrag.registrate.util.entry.RegistryEntry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.stats.StatFormatter;
 import net.minecraft.stats.Stats;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class PStats {
-    public static final DeferredRegister<ResourceLocation> CUSTOM_STATS = DeferredRegister.create(Registries.CUSTOM_STAT, PoopSky.MOD_ID);
+    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
-    public static final DeferredHolder<ResourceLocation, ResourceLocation> POOP_STATS = CUSTOM_STATS.register("poop_stats", () ->
+    public static final RegistryEntry<ResourceLocation, ResourceLocation> POOP_STATS = REGISTRATE.simple("poop_stats", Registries.CUSTOM_STAT, () ->
             PoopSky.loc("poop_stats"));
-    public static final DeferredHolder<ResourceLocation, ResourceLocation> INSPECT_PLACER = CUSTOM_STATS.register("inspect_placer", () ->
+    public static final RegistryEntry<ResourceLocation, ResourceLocation> INSPECT_PLACER = REGISTRATE.simple("inspect_placer", Registries.CUSTOM_STAT, () ->
             PoopSky.loc("inspect_placer"));
 
     public static void register(IEventBus modEventBus) {
-        CUSTOM_STATS.register(modEventBus);
     }
 
     public static void init() {

@@ -256,11 +256,10 @@ public class PSVoidChunkGenerator extends NoiseBasedChunkGenerator {
             return Set.of();
         }
 
-        AllowedStructureSets allowed = allowedStructureSets;
         Registry<StructureSet> registry = registries.registryOrThrow(Registries.STRUCTURE_SET);
 
         return registry.holders()
-                .filter(allowed::contains)
+                .filter(allowedStructureSets::contains)
                 .flatMap(holder -> holder.value().structures().stream())
                 .map(StructureSelectionEntry::structure)
                 .map(Holder::value)

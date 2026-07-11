@@ -56,8 +56,8 @@ public class DataGenerators {
         generators.addProvider(event.includeServer(), new PSDataMapProvider(packOutput, lookupProvider));
         generators.addProvider(event.includeServer(), new PSGlobalLootModifierProvider(packOutput, lookupProvider));
 
-        generators.addProvider(event.includeClient(), new PSBlockStateProvider(packOutput, existingFileHelper));
-        generators.addProvider(event.includeClient(), new PSItemModelProvider(packOutput, existingFileHelper));
+        generators.addProvider(event.includeClient(), new PBlockStateProvider(packOutput, existingFileHelper));
+        generators.addProvider(event.includeClient(), new PItemModelProvider(PoopSky.registrate(), packOutput, existingFileHelper));
         generators.addProvider(event.includeClient(), new PSParticleProvider(packOutput, existingFileHelper));
 
         // Compat

@@ -27,6 +27,7 @@ public final class PRegistries {
         PParticles.register();
         PSAdvancementProvider.register();
         PSEntityLootTableProvider.register();
+        PItemGroups.register();
 
         PEffects.register(modEventBus);
         PPotions.register(modEventBus);
@@ -35,7 +36,6 @@ public final class PRegistries {
         PSFoliagePlacerTypes.register(modEventBus);
         PSStructures.register(modEventBus);
         PSChunkGenerators.register(modEventBus);
-        PItemGroups.register(modEventBus);
         PSoundEvents.register(modEventBus);
         PStats.register(modEventBus);
         PComponents.register(modEventBus);

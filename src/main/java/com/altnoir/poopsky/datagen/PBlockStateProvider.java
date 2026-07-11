@@ -7,6 +7,7 @@ import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.block.p.PoopCandleCakeBlock;
 import com.altnoir.poopsky.content.block.p.PoopPieceBlock;
 import com.altnoir.poopsky.init.PBlocks;
+import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -18,8 +19,6 @@ import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import com.tterrag.registrate.util.entry.BlockEntry;
-import net.neoforged.neoforge.registries.DeferredBlock;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -27,16 +26,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-public class PSBlockStateProvider extends BlockStateProvider {
+public class PBlockStateProvider extends BlockStateProvider {
     public static final String PARTICLE = "particle";
 
-    public PSBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
+    public PBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
         super(output, PoopSky.MOD_ID, exFileHelper);
     }
 
     @Override
     protected void registerStatesAndModels() {
-        //
         poopBlock();
         poopPiece();
         poolimeMaggotsBlock();
@@ -64,7 +62,7 @@ public class PSBlockStateProvider extends BlockStateProvider {
         registerToilet(PBlocks.HARD_TOILET, ToiletType.Category.HARD, true);
 
         fluidBlockWithItem(PBlocks.URINE_LIQUID.get());
-        makeCropBlock((CropBlock) PBlocks.MAGGOTS.get(), "maggots_stage", "maggots_stage");
+        makeCropBlock(PBlocks.MAGGOTS.get(), "maggots_stage", "maggots_stage");
     }
 
     protected void makeCropBlock(CropBlock cropBlock, String model, String texture) {
@@ -274,44 +272,38 @@ public class PSBlockStateProvider extends BlockStateProvider {
     }
 
     private void orientable(Block block) {
-        var model = models().withExistingParent(getBlockPath(block), mcLoc("block/orientable"))
-                .texture("top", modLoc("block/" + getBlockPath(block) + "_top"))
-                .texture("side", modLoc("block/" + getBlockPath(block) + "_side"))
-                .texture("front", modLoc("block/" + getBlockPath(block) + "_front"))
-                .texture(PARTICLE, modLoc("block/" + getBlockPath(block) + "_side"));
-        var modelV = models().withExistingParent(getBlockPath(block) + "_vertical", mcLoc("block/orientable_vertical"))
-                .texture("side", modLoc("block/" + getBlockPath(block) + "_top"))
-                .texture("front", modLoc("block/" + getBlockPath(block) + "_front_vertical"))
-                .texture(PARTICLE, modLoc("block/" + getBlockPath(block) + "_side"));
+        String path = getBlockPath(block);
+        String texture = "block/" + path;
+
+        var horizontal = models()
+                .withExistingParent(path, mcLoc("block/orientable"))
+                .texture("top", modLoc(texture + "_top"))
+                .texture("side", modLoc(texture + "_side"))
+                .texture("front", modLoc(texture + "_front"))
+                .texture(PARTICLE, modLoc(texture + "_side"));
+
+        var vertical = models()
+                .withExistingParent(path + "_vertical", mcLoc("block/orientable_vertical"))
+                .texture("side", modLoc(texture + "_top"))
+                .texture("front", modLoc(texture + "_front_vertical"))
+                .texture(PARTICLE, modLoc(texture + "_side"));
 
         getVariantBuilder(block).forAllStates(state -> {
-            var facing = state.getValue(BlockStateProperties.FACING);
+            Direction facing = state.getValue(BlockStateProperties.FACING);
 
-            if (facing == Direction.UP || facing == Direction.DOWN) {
-                int xRot = switch (facing) {
-                    case DOWN -> 180;
-                    default -> 0;
-                };
-                return ConfiguredModel.builder().modelFile(modelV).rotationX(xRot).build();
-            }
-            int yRot = switch (facing) {
-                case EAST -> 90;
-                case SOUTH -> 180;
-                case WEST -> 270;
-                default -> 0;
-            };
-            return ConfiguredModel.builder().modelFile(model).rotationY(yRot).build();
+            return ConfiguredModel.builder()
+                    .modelFile(facing.getAxis().isVertical() ? vertical : horizontal)
+                    .rotationX(facing == Direction.DOWN ? 180 : 0)
+                    .rotationY(switch (facing) {
+                        case EAST -> 90;
+                        case SOUTH -> 180;
+                        case WEST -> 270;
+                        default -> 0;
+                    })
+                    .build();
         });
 
-        simpleBlockItem(block, model);
-    }
-
-    private void registerToilet(DeferredBlock<?> block, ToiletType.Category category, boolean hasLava) {
-        Map<ToiletType, ResourceLocation> textures = new LinkedHashMap<>();
-        for (ToiletType type : ToiletType.getByCategory(category).values()) {
-            textures.put(type, toiletTexture(type));
-        }
-        registerVariantToilet(block.get(), textures, hasLava);
+        simpleBlockItem(block, horizontal);
     }
 
     private void registerToilet(BlockEntry<? extends Block> block, ToiletType.Category category, boolean hasLava) {
