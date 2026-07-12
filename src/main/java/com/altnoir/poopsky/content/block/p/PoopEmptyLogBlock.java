@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.content.block.p;
 
-import com.altnoir.poopsky.init.PBlocks;
+import com.altnoir.poopsky.init.PoBlocks;
 import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.BlockPos;
@@ -30,7 +30,7 @@ public class PoopEmptyLogBlock extends EmptyRotatedPillarBlock {
 
     private static final Supplier<Map<Block, Block>> STRIPPABLES = Suppliers.memoize(() ->
             ImmutableMap.<Block, Block>builder()
-                    .put(PBlocks.POOP_EMPTY_LOG.get(), PBlocks.STRIPPED_POOP_EMPTY_LOG.get())
+                    .put(PoBlocks.POOP_EMPTY_LOG.get(), PoBlocks.STRIPPED_POOP_EMPTY_LOG.get())
                     .build()
     );
 

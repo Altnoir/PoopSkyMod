@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.content.entity.renderer;
 
-import com.altnoir.poopsky.init.PBlocks;
+import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.content.entity.p.PoopTntEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -40,7 +40,7 @@ public class PoopTntRenderer extends EntityRenderer<PoopTntEntity> {
         poseStack.translate(-0.5F, -0.5F, 0.5F);
         poseStack.mulPose(Axis.YP.rotationDegrees(90.0F));
         TntMinecartRenderer.renderWhiteSolidBlock(this.blockRenderer,
-                PBlocks.POOP_TNT.get().defaultBlockState(), poseStack, bufferSource, packedLight, fuse / 5 % 2 == 0);
+                PoBlocks.POOP_TNT.get().defaultBlockState(), poseStack, bufferSource, packedLight, fuse / 5 % 2 == 0);
         poseStack.popPose();
         super.render(p_entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }

@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.init.PItems;
+import com.altnoir.poopsky.init.PoItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.LootTableSubProvider;
@@ -26,17 +26,17 @@ public class PSFishingLootProvider implements LootTableSubProvider {
         biConsumer.accept(FISHING_SENNAE, LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0F))
-                        .add(LootItem.lootTableItem(PItems.FOLIUM_SENNAE.get()).setWeight(100))
+                        .add(LootItem.lootTableItem(PoItems.FOLIUM_SENNAE.get()).setWeight(100))
                 ));
         biConsumer.accept(FISHING_URINE, LootTable.lootTable()
                 .withPool(
                         LootPool.lootPool().setBonusRolls(ConstantValue.exactly(1.0F))
                                 .setRolls(ConstantValue.exactly(1.0F))
-                                .add(LootItem.lootTableItem(PItems.SEA_POOP_BALL.get()).setWeight(100))
-                                .add(LootItem.lootTableItem(PItems.POOP_DUMPLINGS.get()).setWeight(20))
-                                .add(LootItem.lootTableItem(PItems.POOBURGER_MEAT.get()).setWeight(20))
-                                .add(LootItem.lootTableItem(PItems.POOP_PASTA.get()).setWeight(20))
-                                .add(LootItem.lootTableItem(PItems.ROUNDWORM.get()).setWeight(10))
+                                .add(LootItem.lootTableItem(PoItems.SEA_POOP_BALL.get()).setWeight(100))
+                                .add(LootItem.lootTableItem(PoItems.POOP_DUMPLINGS.get()).setWeight(20))
+                                .add(LootItem.lootTableItem(PoItems.POOBURGER_MEAT.get()).setWeight(20))
+                                .add(LootItem.lootTableItem(PoItems.POOP_PASTA.get()).setWeight(20))
+                                .add(LootItem.lootTableItem(PoItems.ROUNDWORM.get()).setWeight(10))
                                 .add(LootItem.lootTableItem(Items.BAMBOO).setWeight(20))
                                 .add(LootItem.lootTableItem(Items.TROPICAL_FISH).setWeight(10))
                                 .add(LootItem.lootTableItem(Items.PUFFERFISH).setWeight(10))

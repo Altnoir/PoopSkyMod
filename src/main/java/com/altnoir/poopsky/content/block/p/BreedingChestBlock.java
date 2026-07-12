@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.content.block.entity.BreedingChestBlockEntity;
-import com.altnoir.poopsky.init.PBlockEntityType;
+import com.altnoir.poopsky.init.PoBlockEntityType;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Containers;
@@ -37,7 +37,7 @@ public class BreedingChestBlock extends BaseEntityBlock {
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return createTickerHelper(blockEntityType, PBlockEntityType.BREEDING_CHEST.get(), BreedingChestBlockEntity::tick);
+        return createTickerHelper(blockEntityType, PoBlockEntityType.BREEDING_CHEST.get(), BreedingChestBlockEntity::tick);
     }
 
     @Override

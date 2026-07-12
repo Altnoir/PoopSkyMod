@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.content.recipe;
 
-import com.altnoir.poopsky.init.PRecipes;
+import com.altnoir.poopsky.init.PoRecipes;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -99,12 +99,12 @@ public record POPExplosionRecipe(Ingredient input, int radius, Output output) im
 
     @Override
     public RecipeType<?> getType() {
-        return PRecipes.POP_EXPLOSION.type().get();
+        return PoRecipes.POP_EXPLOSION.type().get();
     }
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return PRecipes.POP_EXPLOSION.serializer().get();
+        return PoRecipes.POP_EXPLOSION.serializer().get();
     }
 
     public static class Serializer implements RecipeSerializer<POPExplosionRecipe> {

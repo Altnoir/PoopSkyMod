@@ -2,8 +2,8 @@ package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
-import com.altnoir.poopsky.init.PEntityType;
-import com.altnoir.poopsky.init.PItems;
+import com.altnoir.poopsky.init.PoEntityType;
+import com.altnoir.poopsky.init.PoItems;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.loot.RegistrateEntityLootTables;
 import com.tterrag.registrate.providers.loot.RegistrateLootTableProvider.LootType;
@@ -29,35 +29,35 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 import java.util.List;
 
-public final class PSEntityLootTableProvider {
+public final class PoEntityLootTableProvider {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
-    private PSEntityLootTableProvider() {
+    private PoEntityLootTableProvider() {
     }
 
     public static void register() {
         REGISTRATE.addDataGenerator(
                 ProviderType.LOOT,
-                provider -> provider.addLootAction(LootType.ENTITY, PSEntityLootTableProvider::generate));
+                provider -> provider.addLootAction(LootType.ENTITY, PoEntityLootTableProvider::generate));
     }
 
     private static void generate(RegistrateEntityLootTables loot) {
         HolderLookup.Provider registries = loot.getRegistries();
 
         loot.add(
-                PEntityType.POOLIME.get(),
+                PoEntityType.POOLIME.get(),
                 LootTable.lootTable()
                         .withPool(
                                 LootPool.lootPool()
                                         .setRolls(ConstantValue.exactly(1.0F))
                                         .add(
-                                                LootItem.lootTableItem(PItems.POOP_BALL.get())
+                                                LootItem.lootTableItem(PoItems.POOP_BALL.get())
                                                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))
                                                         .apply(EnchantedCountIncreaseFunction.lootingMultiplier(registries, UniformGenerator.between(0.0F, 1.0F)))
                                                         .when(killedByFrog().invert())
                                         )
                                         .add(
-                                                LootItem.lootTableItem(PItems.POOP_BALL.get())
+                                                LootItem.lootTableItem(PoItems.POOP_BALL.get())
                                                         .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))
                                                         .when(killedByFrog())
                                         )
@@ -70,13 +70,13 @@ public final class PSEntityLootTableProvider {
                         )
         );
         loot.add(
-                PEntityType.FLY.get(),
+                PoEntityType.FLY.get(),
                 LootTable.lootTable()
                         .withPool(
                                 LootPool.lootPool()
                                         .setRolls(ConstantValue.exactly(1.0F))
                                         .add(
-                                                LootItem.lootTableItem(PItems.MAGGOTS_SEEDS.get())
+                                                LootItem.lootTableItem(PoItems.MAGGOTS_SEEDS.get())
                                                         .apply(SmeltItemFunction.smelted().when(shouldSmeltLoot(registries)))
                                                         .apply(EnchantedCountIncreaseFunction.lootingMultiplier(registries, ConstantValue.exactly(1.0F)))
                                         )

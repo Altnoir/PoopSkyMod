@@ -1,9 +1,9 @@
 package com.altnoir.poopsky.network;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.init.PEntityType;
+import com.altnoir.poopsky.init.PoEntityType;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
-import com.altnoir.poopsky.init.PItems;
+import com.altnoir.poopsky.init.PoItems;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -39,7 +39,7 @@ public record PlugActionPayload() implements CustomPacketPayload {
 
     private static void spawnAndRidePlug(ServerPlayer player) {
         var level = player.level();
-        var entity = PEntityType.TOILET_PLUG.get().create(level);
+        var entity = PoEntityType.TOILET_PLUG.get().create(level);
         if (entity == null) return;
 
         entity.setPos(player.position());
@@ -55,7 +55,7 @@ public record PlugActionPayload() implements CustomPacketPayload {
         Level level = player.level();
         level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.5F, 1.0F);
         if (!player.isCreative()) {
-            giveOrDropItem(player, new ItemStack(PItems.TOILET_PLUG.get()));
+            giveOrDropItem(player, new ItemStack(PoItems.TOILET_PLUG.get()));
         }
     }
 
@@ -69,13 +69,13 @@ public record PlugActionPayload() implements CustomPacketPayload {
         Inventory inv = player.getInventory();
 
         for (ItemStack stack : inv.items) {
-            if (stack.is(PItems.TOILET_PLUG.get())) {
+            if (stack.is(PoItems.TOILET_PLUG.get())) {
                 return stack;
             }
         }
 
         for (ItemStack stack : inv.offhand) {
-            if (stack.is(PItems.TOILET_PLUG.get())) {
+            if (stack.is(PoItems.TOILET_PLUG.get())) {
                 return stack;
             }
         }

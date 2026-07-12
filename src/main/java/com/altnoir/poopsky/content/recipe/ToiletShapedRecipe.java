@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.content.recipe;
 
 import com.altnoir.poopsky.content.block.ToiletType;
-import com.altnoir.poopsky.init.PComponents;
-import com.altnoir.poopsky.init.PRecipes;
+import com.altnoir.poopsky.init.PoComponents;
+import com.altnoir.poopsky.init.PoRecipes;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;
@@ -42,20 +42,20 @@ public class ToiletShapedRecipe extends ShapedRecipe {
     @Override
     public ItemStack assemble(CraftingInput input, HolderLookup.Provider registries) {
         ItemStack result = super.assemble(input, registries);
-        result.set(PComponents.TOILET_TYPE.get(), toiletType);
+        result.set(PoComponents.TOILET_TYPE.get(), toiletType);
         return result;
     }
 
     @Override
     public ItemStack getResultItem(HolderLookup.Provider registries) {
         ItemStack result = super.getResultItem(registries).copy();
-        result.set(PComponents.TOILET_TYPE.get(), toiletType);
+        result.set(PoComponents.TOILET_TYPE.get(), toiletType);
         return result;
     }
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return PRecipes.TOILET_SHAPED_SERIALIZER.get();
+        return PoRecipes.TOILET_SHAPED_SERIALIZER.get();
     }
 
     @Override

@@ -12,7 +12,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import com.altnoir.poopsky.content.block.ToiletType;
 
-public final class PComponents {
+public final class PoComponents {
     public static final DeferredRegister.DataComponents COMPONENTS = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, PoopSky.MOD_ID);
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<ToiletComponent>> TOILET_COMPONENT =

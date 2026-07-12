@@ -7,14 +7,14 @@ import com.altnoir.poopsky.content.FlyTypeManager;
 import com.altnoir.poopsky.content.block.ToiletTypeManager;
 import com.altnoir.poopsky.content.block.p.CompooperBlock;
 import com.altnoir.poopsky.content.entity.p.PoopTntEntity;
-import com.altnoir.poopsky.content.villager.PVillagers;
-import com.altnoir.poopsky.datagen.PSAdvancementProvider;
-import com.altnoir.poopsky.datagen.PSEntityLootTableProvider;
+import com.altnoir.poopsky.content.villager.PoVillagers;
+import com.altnoir.poopsky.datagen.PoAdvancementProvider;
+import com.altnoir.poopsky.datagen.PoEntityLootTableProvider;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.init.*;
-import com.altnoir.poopsky.worldgen.PSChunkGenerators;
-import com.altnoir.poopsky.worldgen.PSStructures;
-import com.altnoir.poopsky.worldgen.foliage.PSFoliagePlacerTypes;
+import com.altnoir.poopsky.worldgen.PoChunkGenerators;
+import com.altnoir.poopsky.worldgen.PoStructures;
+import com.altnoir.poopsky.worldgen.foliage.PoFoliagePlacerTypes;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -56,30 +56,30 @@ public class PoopSky {
 
     public PoopSky(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::commonSetup);
-        modEventBus.addListener(PSNetworking::register);
+        modEventBus.addListener(PoNetworking::register);
 
-        PItems.register();
-        PBlocks.register();
-        PFluids.register();
-        PParticles.register();
-        PSAdvancementProvider.register();
-        PSEntityLootTableProvider.register();
-        PItemGroups.register();
+        PoItems.register();
+        PoBlocks.register();
+        PoFluids.register();
+        PoParticles.register();
+        PoAdvancementProvider.register();
+        PoEntityLootTableProvider.register();
+        PoItemGroups.register();
 
-        PEffects.register();
-        PPotions.register();
-        PBlockEntityType.register();
-        PEntityType.register();
-        PSFoliagePlacerTypes.register(modEventBus);
-        PSStructures.register(modEventBus);
-        PSChunkGenerators.register(modEventBus);
-        PSoundEvents.register(modEventBus);
-        PStats.register(modEventBus);
-        PComponents.register(modEventBus);
-        PLootFunctions.register(modEventBus);
-        PVillagers.register(modEventBus);
-        PRecipes.register(modEventBus);
-        PMenuTypes.register(modEventBus);
+        PoEffects.register();
+        PoPotions.register();
+        PoBlockEntityType.register();
+        PoEntityType.register();
+        PoFoliagePlacerTypes.register();
+        PoStructures.register(modEventBus);
+        PoChunkGenerators.register(modEventBus);
+        PoSoundEvents.register(modEventBus);
+        PoStats.register();
+        PoComponents.register(modEventBus);
+        PoLootFunctions.register();
+        PoVillagers.register(modEventBus);
+        PoRecipes.register(modEventBus);
+        PoMenuTypes.register();
 
         NeoForge.EVENT_BUS.addListener(this::onAddReloadListener);
 
@@ -100,10 +100,10 @@ public class PoopSky {
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             CompooperBlock.bootStrap();
-            DispenserBlock.registerProjectileBehavior(PItems.POOP_BALL);
-            DispenserBlock.registerProjectileBehavior(PItems.SEA_POOP_BALL);
-            DispenserBlock.registerProjectileBehavior(PItems.WITHER_POOP_BALL);
-            DispenserBlock.registerBehavior(PItems.POOP.get(), new OptionalDispenseItemBehavior() {
+            DispenserBlock.registerProjectileBehavior(PoItems.POOP_BALL);
+            DispenserBlock.registerProjectileBehavior(PoItems.SEA_POOP_BALL);
+            DispenserBlock.registerProjectileBehavior(PoItems.WITHER_POOP_BALL);
+            DispenserBlock.registerBehavior(PoItems.POOP.get(), new OptionalDispenseItemBehavior() {
                 @Override
                 protected ItemStack execute(BlockSource blockSource, ItemStack item) {
                     this.setSuccess(true);
@@ -118,7 +118,7 @@ public class PoopSky {
                     return item;
                 }
             });
-            DispenserBlock.registerBehavior(PBlocks.POOP_TNT.asItem(), new DefaultDispenseItemBehavior() {
+            DispenserBlock.registerBehavior(PoBlocks.POOP_TNT.asItem(), new DefaultDispenseItemBehavior() {
                 @Override
                 protected ItemStack execute(BlockSource blockSource, ItemStack item) {
                     Level level = blockSource.level();
@@ -135,7 +135,7 @@ public class PoopSky {
             });
 
             FluidInteractionRegistry.addInteraction(NeoForgeMod.WATER_TYPE.value(), new FluidInteractionRegistry.InteractionInformation(
-                    PFluidTypes.URINE_FLUID_TYPE.get(), (fluidState) -> fluidState.isSource() ? PBlocks.POOLIME_BLOCK.get().defaultBlockState() : Blocks.CLAY.defaultBlockState()));
+                    PFluidTypes.URINE_FLUID_TYPE.get(), (fluidState) -> fluidState.isSource() ? PoBlocks.POOLIME_BLOCK.get().defaultBlockState() : Blocks.CLAY.defaultBlockState()));
             FluidInteractionRegistry.addInteraction(PFluidTypes.URINE_FLUID_TYPE.get(), new FluidInteractionRegistry.InteractionInformation(
                     NeoForgeMod.WATER_TYPE.value(), (fluidState) -> fluidState.isSource() ? Blocks.COARSE_DIRT.defaultBlockState() : Blocks.CLAY.defaultBlockState()));
 
@@ -145,10 +145,10 @@ public class PoopSky {
                     PFluidTypes.URINE_FLUID_TYPE.get(), (fluidState) -> fluidState.isSource() ? Blocks.OBSIDIAN.defaultBlockState() : Blocks.MAGMA_BLOCK.defaultBlockState()));
 
             FluidInteractionRegistry.addInteraction(NeoForgeMod.LAVA_TYPE.value(), new FluidInteractionRegistry.InteractionInformation(
-                    (level, currentPos, relativePos, currentState) -> level.getBlockState(currentPos.below()).is(PBlocks.POOP_BLOCK.get()) && level.getBlockState(relativePos).is(Blocks.BLUE_ICE),
+                    (level, currentPos, relativePos, currentState) -> level.getBlockState(currentPos.below()).is(PoBlocks.POOP_BLOCK.get()) && level.getBlockState(relativePos).is(Blocks.BLUE_ICE),
                     Blocks.DEEPSLATE.defaultBlockState()));
         });
-        PStats.init();
+        PoStats.init();
     }
 
     public static ResourceLocation loc(String path) {

@@ -4,7 +4,7 @@ import com.altnoir.poopsky.content.block.ToiletType;
 import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.content.block.p.LavaToiletBlock;
 import com.altnoir.poopsky.content.block.p.ToiletBlock;
-import com.altnoir.poopsky.init.PComponents;
+import com.altnoir.poopsky.init.PoComponents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -25,7 +25,7 @@ public class ToiletBlockItem extends BlockItem {
 
     public static ItemStack withType(Block block, ToiletType toiletType) {
         var stack = new ItemStack(block);
-        stack.set(PComponents.TOILET_TYPE.get(), toiletType);
+        stack.set(PoComponents.TOILET_TYPE.get(), toiletType);
         return stack;
     }
 
@@ -33,7 +33,7 @@ public class ToiletBlockItem extends BlockItem {
 
     @Override
     public Component getName(ItemStack stack) {
-        ToiletType type = stack.get(PComponents.TOILET_TYPE.get());
+        ToiletType type = stack.get(PoComponents.TOILET_TYPE.get());
         if (type != null && type.nameKey() != null) {
             return Component.translatable(TOILET_FORMAT_KEY, Component.translatable(type.nameKey()));
         }
@@ -45,7 +45,7 @@ public class ToiletBlockItem extends BlockItem {
         BlockState state = super.getPlacementState(context);
         if (state == null) return null;
 
-        ToiletType type = context.getItemInHand().get(PComponents.TOILET_TYPE.get());
+        ToiletType type = context.getItemInHand().get(PoComponents.TOILET_TYPE.get());
         if (type == null) return state;
 
         Block block = getBlock();
@@ -62,7 +62,7 @@ public class ToiletBlockItem extends BlockItem {
     protected boolean placeBlock(BlockPlaceContext context, BlockState state) {
         boolean result = super.placeBlock(context, state);
         if (result) {
-            ToiletType type = context.getItemInHand().get(PComponents.TOILET_TYPE.get());
+            ToiletType type = context.getItemInHand().get(PoComponents.TOILET_TYPE.get());
             if (type != null) {
                 Level level = context.getLevel();
                 BlockPos pos = context.getClickedPos();
@@ -77,7 +77,7 @@ public class ToiletBlockItem extends BlockItem {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-        ToiletType type = stack.get(PComponents.TOILET_TYPE.get());
+        ToiletType type = stack.get(PoComponents.TOILET_TYPE.get());
         if (type == null) return;
 
         tooltipComponents.add(Component.translatable("tooltip.poopsky.toilet_type")

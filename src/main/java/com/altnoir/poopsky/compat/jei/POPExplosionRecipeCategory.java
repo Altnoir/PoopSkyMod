@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.compat.jei;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.init.PBlocks;
+import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.content.recipe.POPExplosionRecipe;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.ITooltipBuilder;
@@ -39,7 +39,7 @@ public class POPExplosionRecipeCategory implements IRecipeCategory<RecipeHolder<
 
     public POPExplosionRecipeCategory(IJeiHelpers helpers, IDrawable arrow) {
         var guiHelper = helpers.getGuiHelper();
-        this.icon = guiHelper.createDrawableItemStack(new ItemStack(PBlocks.POOP_TNT.get()));
+        this.icon = guiHelper.createDrawableItemStack(new ItemStack(PoBlocks.POOP_TNT.get()));
         this.title = Component.translatable("jei.category." + PoopSky.MOD_ID + ".pop_explosion");
         this.arrow = arrow;
         this.slot = guiHelper.getSlotDrawable();

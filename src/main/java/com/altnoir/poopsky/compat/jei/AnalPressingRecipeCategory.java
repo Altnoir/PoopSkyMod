@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.compat.jei;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.init.PItems;
+import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.content.recipe.AnalPressingRecipe;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.ITooltipBuilder;
@@ -42,7 +42,7 @@ public class AnalPressingRecipeCategory implements IRecipeCategory<RecipeHolder<
 
     public AnalPressingRecipeCategory(IJeiHelpers helpers, IDrawable arrow, IDrawable plus) {
         var guiHelper = helpers.getGuiHelper();
-        this.icon = guiHelper.createDrawableItemStack(new ItemStack(PItems.KING_OF_DRAGON_FRUIT.get()));
+        this.icon = guiHelper.createDrawableItemStack(new ItemStack(PoItems.KING_OF_DRAGON_FRUIT.get()));
         this.title = Component.translatable("jei.category." + PoopSky.MOD_ID + ".anal_pressing");
         this.plus = plus;
         this.arrow = arrow;

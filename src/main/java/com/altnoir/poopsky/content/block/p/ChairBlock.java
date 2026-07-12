@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.content.entity.p.ChairEntity;
-import com.altnoir.poopsky.init.PEntityType;
+import com.altnoir.poopsky.init.PoEntityType;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -43,9 +43,9 @@ public class ChairBlock extends Block {
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (!level.isClientSide) {
             Entity entity;
-            List<ChairEntity> entities = level.getEntities(PEntityType.STOOL.get(), new AABB(pos), chairEntity -> true);
+            List<ChairEntity> entities = level.getEntities(PoEntityType.STOOL.get(), new AABB(pos), chairEntity -> true);
             if (entities.isEmpty()) {
-                entity = PEntityType.STOOL.get().spawn((ServerLevel) level, pos, MobSpawnType.TRIGGERED);
+                entity = PoEntityType.STOOL.get().spawn((ServerLevel) level, pos, MobSpawnType.TRIGGERED);
             } else {
                 entity = entities.getFirst();
             }
@@ -58,7 +58,7 @@ public class ChairBlock extends Block {
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         if (!state.is(newState.getBlock())) {
-            for (ChairEntity chairEntity : level.getEntities(PEntityType.STOOL.get(), new AABB(pos), e -> true)) {
+            for (ChairEntity chairEntity : level.getEntities(PoEntityType.STOOL.get(), new AABB(pos), e -> true)) {
                 chairEntity.kill();
             }
         }

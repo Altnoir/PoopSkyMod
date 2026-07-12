@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.content.block.p;
 
-import com.altnoir.poopsky.worldgen.PSConfigureFeatures;
+import com.altnoir.poopsky.worldgen.PoConfigureFeatures;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
@@ -35,7 +35,7 @@ public class DriedPoopBlock extends Block implements BonemealableBlock {
     public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
         level.registryAccess()
                 .registry(Registries.CONFIGURED_FEATURE)
-                .flatMap(holder -> holder.getHolder(PSConfigureFeatures.DRIED_POOP_PATCH))
+                .flatMap(holder -> holder.getHolder(PoConfigureFeatures.DRIED_POOP_PATCH))
                 .ifPresent(reference -> reference.value().place(level, level.getChunkSource().getGenerator(), random, pos.above()));
     }
 

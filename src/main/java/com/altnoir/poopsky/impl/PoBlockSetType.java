@@ -1,10 +1,10 @@
-package com.altnoir.poopsky.init;
+package com.altnoir.poopsky.impl;
 
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 
-public class PBlockSetType {
+public class PoBlockSetType {
     public static final BlockSetType POOP = BlockSetType.register(
             new BlockSetType("poop",
                     true,

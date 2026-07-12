@@ -1,14 +1,14 @@
-package com.altnoir.poopsky.init;
+package com.altnoir.poopsky.impl;
 
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.properties.WoodType;
 
-public class PWoodType {
+public class PoWoodType {
     public static final WoodType POOP = WoodType.register(
             new WoodType(
                     "poop",
-                    PBlockSetType.POOP,
+                    PoBlockSetType.POOP,
                     SoundType.MUD,
                     SoundType.BAMBOO_WOOD_HANGING_SIGN, // 悬挂告示牌音效
                     SoundEvents.MUD_STEP, // 栅栏门关闭音效

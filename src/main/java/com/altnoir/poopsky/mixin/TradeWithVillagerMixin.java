@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.mixin;
 
-import com.altnoir.poopsky.init.PItems;
+import com.altnoir.poopsky.init.PoItems;
 import net.minecraft.world.entity.ai.behavior.TradeWithVillager;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.Item;
@@ -20,7 +20,7 @@ public class TradeWithVillagerMixin {
     private Set<Item> redirectFoodPointsKeySet(Map<Item, Integer> item) {
         if (item == Villager.FOOD_POINTS) {
             Set<Item> originalKeys = new java.util.HashSet<>(item.keySet());
-            originalKeys.add(PItems.POOP.get());
+            originalKeys.add(PoItems.POOP.get());
             return originalKeys;
         }
         return item.keySet();

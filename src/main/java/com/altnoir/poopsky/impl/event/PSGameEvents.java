@@ -7,7 +7,7 @@ import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.init.*;
 import com.altnoir.poopsky.content.villager.PVillagerBehaviors;
 import com.altnoir.poopsky.content.villager.PVillagerTrades;
-import com.altnoir.poopsky.worldgen.PSVoidChunkGenerator;
+import com.altnoir.poopsky.worldgen.PoVoidChunkGenerator;
 import com.altnoir.poopsky.worldgen.structure.PoopIslandStructure;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -48,14 +48,14 @@ public class PSGameEvents {
     public static void onBrewingRecipeRegistry(RegisterBrewingRecipesEvent event) {
         PotionBrewing.Builder builder = event.getBuilder();
 
-        builder.addMix(Potions.AWKWARD, PItems.FOLIUM_SENNAE.get(), PPotions.FECAL_INCONTINENCE_POTION);
-        builder.addMix(PPotions.FECAL_INCONTINENCE_POTION, Items.REDSTONE, PPotions.LONG_FECAL_INCONTINENCE_POTION);
-        builder.addMix(PPotions.FECAL_INCONTINENCE_POTION, Items.GLOWSTONE_DUST, PPotions.STRONG_FECAL_INCONTINENCE_POTION);
-        builder.addMix(PPotions.FECAL_INCONTINENCE_POTION, Items.GLOWSTONE, PPotions.SUPER_FECAL_INCONTINENCE_POTION);
+        builder.addMix(Potions.AWKWARD, PoItems.FOLIUM_SENNAE.get(), PoPotions.FECAL_INCONTINENCE_POTION);
+        builder.addMix(PoPotions.FECAL_INCONTINENCE_POTION, Items.REDSTONE, PoPotions.LONG_FECAL_INCONTINENCE_POTION);
+        builder.addMix(PoPotions.FECAL_INCONTINENCE_POTION, Items.GLOWSTONE_DUST, PoPotions.STRONG_FECAL_INCONTINENCE_POTION);
+        builder.addMix(PoPotions.FECAL_INCONTINENCE_POTION, Items.GLOWSTONE, PoPotions.SUPER_FECAL_INCONTINENCE_POTION);
 
-        builder.addMix(Potions.AWKWARD, PItems.KING_OF_DRAGON_FRUIT.get(), PPotions.ON_THE_VGE_POTION);
-        builder.addMix(PPotions.ON_THE_VGE_POTION, Items.REDSTONE, PPotions.LONG_ON_THE_VGE_POTION);
-        builder.addMix(PPotions.ON_THE_VGE_POTION, Items.GLOWSTONE_DUST, PPotions.STRONG_ON_THE_VGE_POTION);
+        builder.addMix(Potions.AWKWARD, PoItems.KING_OF_DRAGON_FRUIT.get(), PoPotions.ON_THE_VGE_POTION);
+        builder.addMix(PoPotions.ON_THE_VGE_POTION, Items.REDSTONE, PoPotions.LONG_ON_THE_VGE_POTION);
+        builder.addMix(PoPotions.ON_THE_VGE_POTION, Items.GLOWSTONE_DUST, PoPotions.STRONG_ON_THE_VGE_POTION);
     }
 
     @SubscribeEvent
@@ -76,10 +76,10 @@ public class PSGameEvents {
             Item item;
             if (heldItem.is(Tags.Items.BUCKETS_EMPTY)) {
                 sound = SoundEvents.BUCKET_FILL;
-                item = PItems.URINE_BUCKET.get();
+                item = PoItems.URINE_BUCKET.get();
             } else {
                 sound = SoundEvents.BOTTLE_FILL;
-                item = PItems.URINE_BOTTLE.get();
+                item = PoItems.URINE_BOTTLE.get();
             }
             level.playSound(null, pos, sound, SoundSource.PLAYERS, 1.0F, 0.6F);
             level.gameEvent(player, GameEvent.FLUID_PICKUP, pos);
@@ -103,12 +103,12 @@ public class PSGameEvents {
             BlockHitResult blockhitresult = Item.getPlayerPOVHitResult(level, player, ClipContext.Fluid.SOURCE_ONLY);
             BlockPos blockpos = blockhitresult.getBlockPos();
 
-            if (blockhitresult.getType() == HitResult.Type.BLOCK && level.mayInteract(player, blockpos) && level.getFluidState(blockpos).is(PFluids.URINE.get())) {
+            if (blockhitresult.getType() == HitResult.Type.BLOCK && level.mayInteract(player, blockpos) && level.getFluidState(blockpos).is(PoFluids.URINE.get())) {
                 if (!level.isClientSide) {
                     level.playSound(null, blockpos, SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 0.6F);
                     level.gameEvent(player, GameEvent.FLUID_PICKUP, blockpos);
 
-                    ItemStack itemStack = ItemUtils.createFilledResult(stack, player, new ItemStack(PItems.URINE_BOTTLE.get()));
+                    ItemStack itemStack = ItemUtils.createFilledResult(stack, player, new ItemStack(PoItems.URINE_BOTTLE.get()));
                     player.setItemInHand(event.getHand(), itemStack);
                 }
 
@@ -136,17 +136,17 @@ public class PSGameEvents {
         if (event.getLevel().isClientSide() || !Config.desperateWorld) return;
         Mob mob = event.getEntity();
 
-        if (mob.hasEffect(PEffects.FECAL_INCONTINENCE)) return;
-        mob.addEffect(new MobEffectInstance(PEffects.FECAL_INCONTINENCE, MobEffectInstance.INFINITE_DURATION, 3));
+        if (mob.hasEffect(PoEffects.FECAL_INCONTINENCE)) return;
+        mob.addEffect(new MobEffectInstance(PoEffects.FECAL_INCONTINENCE, MobEffectInstance.INFINITE_DURATION, 3));
     }
 
     @SubscribeEvent
     public static void createSpawnToilet(LevelEvent.CreateSpawnPosition event) {
-        if (event.getLevel() instanceof ServerLevel level && level.getChunkSource().getGenerator() instanceof PSVoidChunkGenerator) {
+        if (event.getLevel() instanceof ServerLevel level && level.getChunkSource().getGenerator() instanceof PoVoidChunkGenerator) {
             var rand = new XoroshiroRandomSource(level.getSeed());
             var pos = new BlockPos.MutableBlockPos(rand.nextIntBetweenInclusive(-200, 200), 87, rand.nextIntBetweenInclusive(-200, 200));
 
-            level.setBlock(pos, PBlocks.WOODEN_TOILET.get().defaultBlockState(), 2);
+            level.setBlock(pos, PoBlocks.WOODEN_TOILET.get().defaultBlockState(), 2);
 
             event.setCanceled(true);
             BlockPos spawn = level.getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, pos);

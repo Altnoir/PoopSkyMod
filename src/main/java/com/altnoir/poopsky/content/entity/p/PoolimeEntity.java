@@ -1,9 +1,9 @@
 package com.altnoir.poopsky.content.entity.p;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.init.PBlocks;
-import com.altnoir.poopsky.init.PParticles;
-import com.altnoir.poopsky.init.PSoundEvents;
+import com.altnoir.poopsky.init.PoBlocks;
+import com.altnoir.poopsky.init.PoParticles;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.registries.Registries;
@@ -38,27 +38,27 @@ public class PoolimeEntity extends Slime {
 
     @Override
     protected @NotNull ParticleOptions getParticleType() {
-        return PParticles.POOP_PARTICLE.get();
+        return PoParticles.POOP_PARTICLE.get();
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return this.isTiny() ? PSoundEvents.ENTITY_POOLIME_HURT_SMALL.get() : PSoundEvents.ENTITY_POOLIME_HURT.get();
+        return this.isTiny() ? PoSoundEvents.ENTITY_POOLIME_HURT_SMALL.get() : PoSoundEvents.ENTITY_POOLIME_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return this.isTiny() ? PSoundEvents.ENTITY_POOLIME_DEATH_SMALL.get() : PSoundEvents.ENTITY_POOLIME_DEATH.get();
+        return this.isTiny() ? PoSoundEvents.ENTITY_POOLIME_DEATH_SMALL.get() : PoSoundEvents.ENTITY_POOLIME_DEATH.get();
     }
 
     @Override
     protected SoundEvent getSquishSound() {
-        return this.isTiny() ? PSoundEvents.ENTITY_POOLIME_SQUISH_SMALL.get() : PSoundEvents.ENTITY_POOLIME_SQUISH.get();
+        return this.isTiny() ? PoSoundEvents.ENTITY_POOLIME_SQUISH_SMALL.get() : PoSoundEvents.ENTITY_POOLIME_SQUISH.get();
     }
 
     @Override
     protected SoundEvent getJumpSound() {
-        return this.isTiny() ? PSoundEvents.ENTITY_POOLIME_JUMP_SMALL.get() : PSoundEvents.ENTITY_POOLIME_JUMP.get();
+        return this.isTiny() ? PoSoundEvents.ENTITY_POOLIME_JUMP_SMALL.get() : PoSoundEvents.ENTITY_POOLIME_JUMP.get();
     }
 
     @Override
@@ -67,7 +67,7 @@ public class PoolimeEntity extends Slime {
             DamageSource damageSource = this.damageSources().mobAttack(this);
             if (livingEntity.hurt(damageSource, this.getAttackDamage())) {
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.POISON, 120, 0));
-                this.playSound(PSoundEvents.ENTITY_POOLIME_ATTACK.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+                this.playSound(PoSoundEvents.ENTITY_POOLIME_ATTACK.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
                 if (this.level() instanceof ServerLevel serverLevel) {
                     EnchantmentHelper.doPostAttackEffects(serverLevel, livingEntity, damageSource);
                 }
@@ -84,7 +84,7 @@ public class PoolimeEntity extends Slime {
             return true;
         }
 
-        return level.getBlockState(pos.below()).is(PBlocks.POOLIME_MAGGOTS_BLOCK.get()) || isInPoopIsland(level, pos);
+        return level.getBlockState(pos.below()).is(PoBlocks.POOLIME_MAGGOTS_BLOCK.get()) || isInPoopIsland(level, pos);
     }
 
     private static boolean isInPoopIsland(LevelAccessor level, BlockPos pos) {

@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.datagen;
 
-import com.altnoir.poopsky.PTags;
+import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.init.PDamageTypes;
+import com.altnoir.poopsky.impl.PoDamageTypes;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
@@ -43,11 +43,11 @@ public class PDamageTypeTagsProvider extends TagsProvider<DamageType> {
 
     @Override
     protected void addTags(@NotNull Provider provider) {
-        var bypassesBleeding = tag(PTags.DamageTypes.BYPASSES_BLEEDING);
+        var bypassesBleeding = tag(PoTags.DamageTypes.BYPASSES_BLEEDING);
         BLEEDING_BYPASS_TAGS.forEach(bypassesBleeding::addTag);
         BLEEDING_BYPASS_TYPES.forEach(bypassesBleeding::add);
 
         tag(DamageTypeTags.IS_PROJECTILE)
-                .add(PDamageTypes.POOP_BALL);
+                .add(PoDamageTypes.POOP_BALL);
     }
 }

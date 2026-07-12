@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.content.villager;
 
-import com.altnoir.poopsky.PTags;
+import com.altnoir.poopsky.impl.PoTags;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.behavior.EntityTracker;
@@ -39,10 +39,10 @@ public class PVillagerBehaviors {
         }
 
         VillagerProfession profession = villager.getVillagerData().getProfession();
-        return profession == PVillagers.POOP_MAKER.value() || profession == PVillagers.GASTRONOME.value();
+        return profession == PoVillagers.POOP_MAKER.value() || profession == PoVillagers.GASTRONOME.value();
     }
 
     private static boolean isHoldingPoop(Player player) {
-        return player.getMainHandItem().is(PTags.Items.POOPS) || player.getOffhandItem().is(PTags.Items.POOPS);
+        return player.getMainHandItem().is(PoTags.Items.POOPS) || player.getOffhandItem().is(PoTags.Items.POOPS);
     }
 }

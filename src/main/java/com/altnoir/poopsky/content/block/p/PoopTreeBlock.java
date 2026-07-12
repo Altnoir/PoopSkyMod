@@ -1,8 +1,7 @@
 package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.PTags;
-import com.altnoir.poopsky.worldgen.PSConfigureFeatures;
+import com.altnoir.poopsky.worldgen.PoConfigureFeatures;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
@@ -24,8 +23,8 @@ import java.util.Optional;
 public class PoopTreeBlock extends SaplingBlock implements BonemealableBlock {
     public static final MapCodec<PoopTreeBlock> CODEC = simpleCodec(PoopTreeBlock::new);
     public static final TreeGrower treeGrower = new TreeGrower(PoopSky.MOD_ID + ":poop_tree",
-            Optional.of(PSConfigureFeatures.MEGA_POOP_TREE),
-            Optional.of(PSConfigureFeatures.POOP_TREE),
+            Optional.of(PoConfigureFeatures.MEGA_POOP_TREE),
+            Optional.of(PoConfigureFeatures.POOP_TREE),
             Optional.empty());
     private static final VoxelShape SHAPE = Shapes.or(
             Block.box(3.0, 8.0, 3.0, 13.0, 15.0, 13.0),

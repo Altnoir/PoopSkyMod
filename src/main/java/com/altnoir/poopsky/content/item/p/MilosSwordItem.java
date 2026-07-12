@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.item.p;
 
-import com.altnoir.poopsky.init.PEffects;
-import com.altnoir.poopsky.PTags;
+import com.altnoir.poopsky.init.PoEffects;
+import com.altnoir.poopsky.impl.PoTags;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlotGroup;
@@ -23,20 +23,20 @@ public class MilosSwordItem extends SwordItem {
 
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (!target.getType().is(PTags.EntityTypes.IGNORES_BLEEDING)) {
+        if (!target.getType().is(PoTags.EntityTypes.IGNORES_BLEEDING)) {
             if (attacker instanceof Player player && player.getAttackStrengthScale(0.0F) >= 1.0F) {
-                if (!target.hasEffect(PEffects.BLEEDING)) {
-                    target.addEffect(new MobEffectInstance(PEffects.BLEEDING, 200));
+                if (!target.hasEffect(PoEffects.BLEEDING)) {
+                    target.addEffect(new MobEffectInstance(PoEffects.BLEEDING, 200));
                 } else {
-                    int duration = target.getEffect(PEffects.BLEEDING).getDuration() + 200;
-                    int amplifier = target.getEffect(PEffects.BLEEDING).getAmplifier() + 1;
+                    int duration = target.getEffect(PoEffects.BLEEDING).getDuration() + 200;
+                    int amplifier = target.getEffect(PoEffects.BLEEDING).getAmplifier() + 1;
 
                     if (amplifier % 5 == 0) {
                         float baseDamage = (0.1F + 0.1F * (amplifier / 5.0F)) / (1.0F + 0.1F * amplifier);
                         float damage = target.getMaxHealth() * baseDamage;
                         target.hurt(target.damageSources().mobAttack(attacker), damage);
                     }
-                    target.addEffect(new MobEffectInstance(PEffects.BLEEDING, duration, amplifier));
+                    target.addEffect(new MobEffectInstance(PoEffects.BLEEDING, duration, amplifier));
                 }
             }
         }

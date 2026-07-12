@@ -2,8 +2,8 @@ package com.altnoir.poopsky.content.item.p;
 
 import com.altnoir.poopsky.content.block.ToiletComponent;
 import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
-import com.altnoir.poopsky.init.PComponents;
-import com.altnoir.poopsky.init.PSoundEvents;
+import com.altnoir.poopsky.init.PoComponents;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
@@ -76,25 +76,25 @@ public class ToiletLinkerItem extends PSBaseItem {
     }
 
     private ItemStack resetComponent(ItemStack stack, Player player) {
-        stack.set(PComponents.TOILET_COMPONENT.get(), ToiletComponent.EMPTY);
+        stack.set(PoComponents.TOILET_COMPONENT.get(), ToiletComponent.EMPTY);
         player.displayClientMessage(Component.translatable("message.poopsky.toilet_linker.4").withStyle(ChatFormatting.RED), true);
         return stack;
     }
 
     private void executeBindingLogic(ServerLevel level, BlockPos pos, Player player, ItemStack stack) {
-        ToiletComponent comp = stack.getOrDefault(PComponents.TOILET_COMPONENT.get(), ToiletComponent.EMPTY);
+        ToiletComponent comp = stack.getOrDefault(PoComponents.TOILET_COMPONENT.get(), ToiletComponent.EMPTY);
         String dimKey = level.dimension().location().toString();
 
         if (comp.level1().isEmpty()) {
             // 绑定第一端
-            stack.set(PComponents.TOILET_COMPONENT.get(), new ToiletComponent(
+            stack.set(PoComponents.TOILET_COMPONENT.get(), new ToiletComponent(
                     dimKey, comp.level2(),
                     pos.getX(), pos.getY(), pos.getZ(),
                     comp.x2(), comp.y2(), comp.z2()
             ));
             var pitch = level.random.nextFloat() + 0.1F;
             player.displayClientMessage(Component.translatable("message.poopsky.toilet_linker.1"), true);
-            level.playSound(null, pos, PSoundEvents.ITEM_TOILET_LINKER_BOOP.get(), SoundSource.PLAYERS, 1.0F, pitch);
+            level.playSound(null, pos, PoSoundEvents.ITEM_TOILET_LINKER_BOOP.get(), SoundSource.PLAYERS, 1.0F, pitch);
         } else if (comp.level2().isEmpty()) {
             // 暂存第二端的数据
             ToiletComponent fullComp = new ToiletComponent(
@@ -130,10 +130,10 @@ public class ToiletLinkerItem extends PSBaseItem {
             notifyBlockUpdate(level2, pos2);
 
             player.displayClientMessage(Component.translatable("message.poopsky.toilet_linker.3").withStyle(ChatFormatting.GREEN), true);
-            stack.set(PComponents.TOILET_COMPONENT.get(), ToiletComponent.EMPTY);
+            stack.set(PoComponents.TOILET_COMPONENT.get(), ToiletComponent.EMPTY);
 
             var pitch = level2.random.nextFloat() + 0.3F;
-            level2.playSound(null, pos2, PSoundEvents.ITEM_TOILET_LINKER_SUCCESS.get(), SoundSource.BLOCKS, 1.0F, pitch);
+            level2.playSound(null, pos2, PoSoundEvents.ITEM_TOILET_LINKER_SUCCESS.get(), SoundSource.BLOCKS, 1.0F, pitch);
         }
     }
 
@@ -154,13 +154,13 @@ public class ToiletLinkerItem extends PSBaseItem {
 
     @Override
     public boolean isDisplay(ItemStack stack) {
-        var comp = stack.get(PComponents.TOILET_COMPONENT.get());
+        var comp = stack.get(PoComponents.TOILET_COMPONENT.get());
         return comp != null && (!comp.level1().isEmpty() || !comp.level2().isEmpty());
     }
 
     @Override
     public void appendShiftTooltip(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        var comp = stack.get(PComponents.TOILET_COMPONENT.get());
+        var comp = stack.get(PoComponents.TOILET_COMPONENT.get());
         if (comp == null) return;
 
         if (!comp.level1().isEmpty()) {

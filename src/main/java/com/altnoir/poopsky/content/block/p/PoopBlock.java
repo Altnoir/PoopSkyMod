@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.content.block.p;
 
-import com.altnoir.poopsky.init.PParticles;
-import com.altnoir.poopsky.init.PSoundEvents;
-import com.altnoir.poopsky.worldgen.PSConfigureFeatures;
+import com.altnoir.poopsky.init.PoParticles;
+import com.altnoir.poopsky.init.PoSoundEvents;
+import com.altnoir.poopsky.worldgen.PoConfigureFeatures;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -157,12 +157,12 @@ public class PoopBlock extends Block implements BonemealableBlock {
     private void maybeDoSlideEffects(Level level, Entity entity) {
         if (doesEntityDoPoopBlockSlideEffects(entity)) {
             if (level.random.nextInt(5) == 0) {
-                entity.playSound(PSoundEvents.BLOCK_POOP_BLOCK_SLIDE.get(), 1.0F, 1.0F);
+                entity.playSound(PoSoundEvents.BLOCK_POOP_BLOCK_SLIDE.get(), 1.0F, 1.0F);
             }
 
             if (!level.isClientSide && level.random.nextInt(5) == 0) {
                 ((ServerLevel) level).sendParticles(
-                        PParticles.POOP_PARTICLE.get(),
+                        PoParticles.POOP_PARTICLE.get(),
                         entity.getX(), entity.getY() + 0.1, entity.getZ(),
                         8,
                         0.0, -0.1, 0.0,
@@ -196,7 +196,7 @@ public class PoopBlock extends Block implements BonemealableBlock {
     public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
         level.registryAccess()
                 .registry(Registries.CONFIGURED_FEATURE)
-                .flatMap(holder -> holder.getHolder(PSConfigureFeatures.POOP_PATCH_BONEMEAL))
+                .flatMap(holder -> holder.getHolder(PoConfigureFeatures.POOP_PATCH_BONEMEAL))
                 .ifPresent(reference -> reference.value().place(level, level.getChunkSource().getGenerator(), random, pos.above()));
     }
 

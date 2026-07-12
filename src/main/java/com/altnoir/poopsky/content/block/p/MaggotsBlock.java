@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.content.block.p;
 
-import com.altnoir.poopsky.init.PItems;
+import com.altnoir.poopsky.init.PoItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ItemLike;
@@ -27,7 +27,7 @@ public class MaggotsBlock extends CropBlock {
 
     @Override
     protected ItemLike getBaseSeedId() {
-        return PItems.MAGGOTS_SEEDS.get();
+        return PoItems.MAGGOTS_SEEDS.get();
     }
 
     @Override

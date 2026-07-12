@@ -1,9 +1,9 @@
 package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.content.entity.p.FlyEntity;
-import com.altnoir.poopsky.init.PBlocks;
-import com.altnoir.poopsky.init.PDamageTypes;
-import com.altnoir.poopsky.init.PItems;
+import com.altnoir.poopsky.init.PoBlocks;
+import com.altnoir.poopsky.impl.PoDamageTypes;
+import com.altnoir.poopsky.init.PoItems;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -40,7 +40,7 @@ public class RoundwormVinesBlock extends GrowingPlantHeadBlock {
 
     @Override
     protected Block getBodyBlock() {
-        return PBlocks.ROUNDWORM_VINES_PLANT.get();
+        return PoBlocks.ROUNDWORM_VINES_PLANT.get();
     }
 
     @Override
@@ -55,15 +55,15 @@ public class RoundwormVinesBlock extends GrowingPlantHeadBlock {
 
     @Override
     public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
-        return new ItemStack(PItems.ROUNDWORM.get());
+        return new ItemStack(PoItems.ROUNDWORM.get());
     }
 
     @Override
     protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if (entity instanceof FlyEntity fly && fly.isAlive()) {
-            fly.hurt(level.damageSources().source(PDamageTypes.ROUNDWORM), 2.0F);
+            fly.hurt(level.damageSources().source(PoDamageTypes.ROUNDWORM), 2.0F);
         } else if (entity instanceof LivingEntity livingEntity) {
-            livingEntity.hurt(level.damageSources().source(PDamageTypes.ROUNDWORM), 0.5F);
+            livingEntity.hurt(level.damageSources().source(PoDamageTypes.ROUNDWORM), 0.5F);
         }
         super.entityInside(state, level, pos, entity);
     }

@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.recipe;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.init.PRecipes;
+import com.altnoir.poopsky.init.PoRecipes;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
@@ -22,7 +22,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public final class POPExplosionRecipeBuilder implements RecipeBuilder {
-    private static final String RECIPE_TYPE = PRecipes.POP_EXPLOSION.folder();
+    private static final String RECIPE_TYPE = PoRecipes.POP_EXPLOSION.folder();
 
     private final Ingredient input;
     private final POPExplosionRecipe.Output output;

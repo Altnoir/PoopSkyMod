@@ -8,9 +8,8 @@ import com.altnoir.poopsky.client.inventory.FlyBarrelScreen;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.tterrag.registrate.builders.MenuBuilder;
 import com.tterrag.registrate.util.entry.MenuEntry;
-import net.neoforged.bus.api.IEventBus;
 
-public final class PMenuTypes {
+public final class PoMenuTypes {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
     public static final MenuEntry<FlyBarrelMenu> FLY_BARREL = REGISTRATE
@@ -21,9 +20,9 @@ public final class PMenuTypes {
             .menu("breeding_chest", (MenuBuilder.MenuFactory<BreedingChestMenu>) BreedingChestMenu::new, () -> BreedingChestScreen::new)
             .register();
 
-    private PMenuTypes() {
+    private PoMenuTypes() {
     }
 
-    public static void register(IEventBus eventBus) {
+    public static void register() {
     }
 }

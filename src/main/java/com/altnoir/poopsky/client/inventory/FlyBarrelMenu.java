@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.client.inventory;
 
 import com.altnoir.poopsky.content.item.p.FlyItem;
-import com.altnoir.poopsky.init.PMenuTypes;
+import com.altnoir.poopsky.init.PoMenuTypes;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -36,7 +36,7 @@ public class FlyBarrelMenu extends AbstractContainerMenu {
     }
 
     public FlyBarrelMenu(int containerId, Inventory playerInventory, Container container, ContainerData data) {
-        this(PMenuTypes.FLY_BARREL.get(), containerId, playerInventory, container, data);
+        this(PoMenuTypes.FLY_BARREL.get(), containerId, playerInventory, container, data);
     }
 
     private FlyBarrelMenu(MenuType<FlyBarrelMenu> menuType, int containerId, Inventory playerInventory, Container container, ContainerData data) {

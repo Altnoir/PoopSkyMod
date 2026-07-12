@@ -2,8 +2,8 @@ package com.altnoir.poopsky.content.villager;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
-import com.altnoir.poopsky.init.PBlocks;
-import com.altnoir.poopsky.init.PSoundEvents;
+import com.altnoir.poopsky.init.PoBlocks;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.core.Holder;
@@ -18,7 +18,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.Set;
 import java.util.function.Supplier;
 
-public class PVillagers {
+public class PoVillagers {
     public static final DeferredRegister<PoiType> POI_TYPES = DeferredRegister.create(BuiltInRegistries.POINT_OF_INTEREST_TYPE, PoopSky.MOD_ID);
     public static final DeferredRegister<VillagerProfession> VILLAGER_PROFESSIONS = DeferredRegister.create(BuiltInRegistries.VILLAGER_PROFESSION, PoopSky.MOD_ID);
 
@@ -26,17 +26,17 @@ public class PVillagers {
     public static final ResourceKey<PoiType> TOILET_POI_KEY = registryPoiKey("toilet");
 
     public static final Supplier<Set<BlockState>> COMPOOPER_POI = () -> ImmutableList.of(
-                    PBlocks.COMPOOPER.get(),
-                    PBlocks.WATER_COMPOOPER.get(),
-                    PBlocks.LAVA_COMPOOPER.get(),
-                    PBlocks.POWDER_SNOW_COMPOOPER.get(),
-                    PBlocks.URINE_COMPOOPER.get()
+                    PoBlocks.COMPOOPER.get(),
+                    PoBlocks.WATER_COMPOOPER.get(),
+                    PoBlocks.LAVA_COMPOOPER.get(),
+                    PoBlocks.POWDER_SNOW_COMPOOPER.get(),
+                    PoBlocks.URINE_COMPOOPER.get()
             ).stream()
             .flatMap(block -> block.getStateDefinition().getPossibleStates().stream())
             .collect(ImmutableSet.toImmutableSet());
     public static final Supplier<Set<BlockState>> TOILET_POI = () -> ImmutableList.of(
-                    PBlocks.WOODEN_TOILET.get(),
-                    PBlocks.HARD_TOILET.get()
+                    PoBlocks.WOODEN_TOILET.get(),
+                    PoBlocks.HARD_TOILET.get()
             ).stream()
             .flatMap(block -> block.getStateDefinition().getPossibleStates().stream())
             .filter(state -> state.getBlock() instanceof AbstractToiletBlock)
@@ -50,14 +50,14 @@ public class PVillagers {
                     poiTypeHolder -> poiTypeHolder.is(COMPOOPER_POI_KEY),
                     ImmutableSet.of(),
                     ImmutableSet.of(),
-                    PSoundEvents.ENTITY_VILLAGER_WORK_COMPOOPER.get()));
+                    PoSoundEvents.ENTITY_VILLAGER_WORK_COMPOOPER.get()));
 
     public static final Holder<VillagerProfession> GASTRONOME = VILLAGER_PROFESSIONS.register("gastronome", () ->
             new VillagerProfession("gastronome", holder -> holder.is(TOILET_POI_KEY),
                     poiTypeHolder -> poiTypeHolder.is(TOILET_POI_KEY),
                     ImmutableSet.of(),
                     ImmutableSet.of(),
-                    PSoundEvents.ENTITY_VILLAGER_WORK_TOILET.get()));
+                    PoSoundEvents.ENTITY_VILLAGER_WORK_TOILET.get()));
 
     public static void register(IEventBus eventBus) {
         POI_TYPES.register(eventBus);

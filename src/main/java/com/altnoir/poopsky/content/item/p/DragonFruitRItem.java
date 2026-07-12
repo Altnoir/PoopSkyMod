@@ -3,7 +3,7 @@ package com.altnoir.poopsky.content.item.p;
 import com.altnoir.poopsky.content.entity.p.FlyEntity;
 import com.altnoir.poopsky.content.item.IFeedable;
 import com.altnoir.poopsky.content.item.PFlyTypes;
-import com.altnoir.poopsky.init.PEffects;
+import com.altnoir.poopsky.init.PoEffects;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -52,11 +52,11 @@ public class DragonFruitRItem extends Item implements IFeedable {
         }
 
         if (!level.isClientSide) {
-            if (!livingEntity.hasEffect(PEffects.ON_THE_VERGE)) {
-                livingEntity.addEffect(new MobEffectInstance(PEffects.ON_THE_VERGE, 200));
+            if (!livingEntity.hasEffect(PoEffects.ON_THE_VERGE)) {
+                livingEntity.addEffect(new MobEffectInstance(PoEffects.ON_THE_VERGE, 200));
             } else {
-                int amplifier = livingEntity.getEffect(PEffects.ON_THE_VERGE).getAmplifier() + 1;
-                livingEntity.addEffect(new MobEffectInstance(PEffects.ON_THE_VERGE, 200, amplifier));
+                int amplifier = livingEntity.getEffect(PoEffects.ON_THE_VERGE).getAmplifier() + 1;
+                livingEntity.addEffect(new MobEffectInstance(PoEffects.ON_THE_VERGE, 200, amplifier));
             }
             livingEntity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 200));
         }

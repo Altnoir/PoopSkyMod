@@ -4,9 +4,9 @@ import com.altnoir.poopsky.content.block.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.block.p.LavaToiletBlock;
-import com.altnoir.poopsky.init.PBlockEntityType;
-import com.altnoir.poopsky.init.PFluids;
-import com.altnoir.poopsky.init.PToiletTypes;
+import com.altnoir.poopsky.init.PoBlockEntityType;
+import com.altnoir.poopsky.init.PoFluids;
+import com.altnoir.poopsky.impl.PoToiletTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -44,7 +44,7 @@ public class ToiletBlockEntity extends BlockEntity {
     };
 
     public ToiletBlockEntity(BlockPos pos, BlockState state) {
-        super(PBlockEntityType.TOILET_BLOCK_ENTITY.get(), pos, state);
+        super(PoBlockEntityType.TOILET_BLOCK_ENTITY.get(), pos, state);
         this.toiletType = inferDefaultType(state);
     }
 
@@ -52,7 +52,7 @@ public class ToiletBlockEntity extends BlockEntity {
         if (state.getBlock() instanceof AbstractToiletBlock toiletBlock) {
             return toiletBlock.getDefaultToiletType();
         }
-        return PToiletTypes.COBBLESTONE;
+        return PoToiletTypes.COBBLESTONE;
     }
 
     public ToiletType getToiletType() {
@@ -191,7 +191,7 @@ public class ToiletBlockEntity extends BlockEntity {
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, ToiletBlockEntity blockEntity) {
-        var fluid = PFluids.URINE.get();
+        var fluid = PoFluids.URINE.get();
         if (state.hasProperty(BaseToiletLavaBlock.LAVA) && state.getValue(BaseToiletLavaBlock.LAVA)) {
             fluid = Fluids.LAVA;
         }

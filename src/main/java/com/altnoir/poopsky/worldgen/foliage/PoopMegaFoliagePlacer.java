@@ -28,7 +28,7 @@ public class PoopMegaFoliagePlacer extends FoliagePlacer {
 
     @Override
     protected FoliagePlacerType<?> type() {
-        return PSFoliagePlacerTypes.POOP_MEGA_FOLIAGE_PLACER.get();
+        return PoFoliagePlacerTypes.POOP_MEGA_FOLIAGE_PLACER.get();
     }
 
     @Override

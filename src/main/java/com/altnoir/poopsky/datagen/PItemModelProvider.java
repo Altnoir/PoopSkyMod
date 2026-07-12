@@ -3,8 +3,8 @@ package com.altnoir.poopsky.datagen;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.item.PFlyTypes;
-import com.altnoir.poopsky.init.PBlocks;
-import com.altnoir.poopsky.init.PItems;
+import com.altnoir.poopsky.init.PoBlocks;
+import com.altnoir.poopsky.init.PoItems;
 import com.tterrag.registrate.AbstractRegistrate;
 import com.tterrag.registrate.providers.RegistrateItemModelProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -47,66 +47,66 @@ public class PItemModelProvider extends RegistrateItemModelProvider {
 
     @Override
     protected void registerModels() {
-        generated(PItems.POOP);
-        generated(PItems.CHILI_POOP);
-        generated(PItems.GOLDEN_POOP);
-        generated(PItems.SEEDBED_CURSE);
-        generated(PItems.FOLIUM_SENNAE);
-        generated(PItems.POOP_BALL);
-        generated(PItems.SAPLING_POOP_BALL);
-        generated(PItems.SEA_POOP_BALL);
-        generated(PItems.WITHER_POOP_BALL);
-        generated(PItems.POOP_BREAD);
-        generated(PItems.POOP_DUMPLINGS);
-        generated(PItems.POOP_MOONCAKE);
-        generated(PItems.CHILI_POOP_MOONCAKE);
-        generated(PItems.GOLDEN_POOP_MOONCAKE);
-        generated(PItems.POOP_SOUP);
-        generated(PItems.POOP_VEGETABLE_STICKS);
-        generated(PItems.POOBURGER_MEAT);
-        generated(PItems.POOBURGER);
-        generated(PItems.POOP_PASTA);
-        generated(PItems.POODDING);
-        generated(PItems.DRAGON_BREATH_CHILI);
-        generated(PItems.KING_OF_DRAGON_FRUIT);
+        generated(PoItems.POOP);
+        generated(PoItems.CHILI_POOP);
+        generated(PoItems.GOLDEN_POOP);
+        generated(PoItems.SEEDBED_CURSE);
+        generated(PoItems.FOLIUM_SENNAE);
+        generated(PoItems.POOP_BALL);
+        generated(PoItems.SAPLING_POOP_BALL);
+        generated(PoItems.SEA_POOP_BALL);
+        generated(PoItems.WITHER_POOP_BALL);
+        generated(PoItems.POOP_BREAD);
+        generated(PoItems.POOP_DUMPLINGS);
+        generated(PoItems.POOP_MOONCAKE);
+        generated(PoItems.CHILI_POOP_MOONCAKE);
+        generated(PoItems.GOLDEN_POOP_MOONCAKE);
+        generated(PoItems.POOP_SOUP);
+        generated(PoItems.POOP_VEGETABLE_STICKS);
+        generated(PoItems.POOBURGER_MEAT);
+        generated(PoItems.POOBURGER);
+        generated(PoItems.POOP_PASTA);
+        generated(PoItems.POODDING);
+        generated(PoItems.DRAGON_BREATH_CHILI);
+        generated(PoItems.KING_OF_DRAGON_FRUIT);
         toiletPlugItem();
-        generated(PItems.SPALL);
-        generated(PItems.LAWRENCE_MUSIC_DISC);
-        generated(PItems.LIGHT_DANCE_MUSIC_DISC);
-        generated(PItems.MOON_BOWL_MUSIC_DISC);
-        generated(PItems.TOILET_PLUG_WAND);
-        generated(PItems.URINE_BOTTLE);
-        generated(PItems.URINE_BUCKET);
-        generated(PItems.MAGGOTS_SEEDS);
-        generated(PItems.ROUNDWORM);
-        generated(PItems.BAKED_MAGGOTS);
+        generated(PoItems.SPALL);
+        generated(PoItems.LAWRENCE_MUSIC_DISC);
+        generated(PoItems.LIGHT_DANCE_MUSIC_DISC);
+        generated(PoItems.MOON_BOWL_MUSIC_DISC);
+        generated(PoItems.TOILET_PLUG_WAND);
+        generated(PoItems.URINE_BOTTLE);
+        generated(PoItems.URINE_BUCKET);
+        generated(PoItems.MAGGOTS_SEEDS);
+        generated(PoItems.ROUNDWORM);
+        generated(PoItems.BAKED_MAGGOTS);
 
-        generated(PItems.FLY_CATCHER);
-        generated(PItems.TIME_BELL);
+        generated(PoItems.FLY_CATCHER);
+        generated(PoItems.TIME_BELL);
 
-        wallItem(PBlocks.CHILI_POOP_WALL, PBlocks.CHILI_POOP_BLOCK);
-        wallItem(PBlocks.GOLDEN_POOP_WALL, PBlocks.GOLDEN_POOP_BLOCK);
-        wallItem(PBlocks.POOP_BRICK_WALL, PBlocks.POOP_BRICKS);
-        wallItem(PBlocks.MOSSY_POOP_BRICK_WALL, PBlocks.MOSSY_POOP_BRICKS);
-        wallItem(PBlocks.DRIED_POOP_BLOCK_WALL, PBlocks.DRIED_POOP_BLOCK);
-        wallItem(PBlocks.SMOOTH_POOP_BLOCK_WALL, PBlocks.SMOOTH_POOP_BLOCK);
-        wallItem(PBlocks.CUT_POOP_BLOCK_WALL, PBlocks.CUT_POOP_BLOCK);
-        wallItem(PBlocks.TILE_BLOCK_WALL, PBlocks.TILE_BLOCK);
+        wallItem(PoBlocks.CHILI_POOP_WALL, PoBlocks.CHILI_POOP_BLOCK);
+        wallItem(PoBlocks.GOLDEN_POOP_WALL, PoBlocks.GOLDEN_POOP_BLOCK);
+        wallItem(PoBlocks.POOP_BRICK_WALL, PoBlocks.POOP_BRICKS);
+        wallItem(PoBlocks.MOSSY_POOP_BRICK_WALL, PoBlocks.MOSSY_POOP_BRICKS);
+        wallItem(PoBlocks.DRIED_POOP_BLOCK_WALL, PoBlocks.DRIED_POOP_BLOCK);
+        wallItem(PoBlocks.SMOOTH_POOP_BLOCK_WALL, PoBlocks.SMOOTH_POOP_BLOCK);
+        wallItem(PoBlocks.CUT_POOP_BLOCK_WALL, PoBlocks.CUT_POOP_BLOCK);
+        wallItem(PoBlocks.TILE_BLOCK_WALL, PoBlocks.TILE_BLOCK);
 
-        withExistingParent(name(PItems.POOLIME_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
-        withExistingParent(name(PItems.FLY_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
+        withExistingParent(name(PoItems.POOLIME_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
+        withExistingParent(name(PoItems.FLY_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
 
-        generated(PItems.OMINOUS_FILTHY_INGOT);
-        generated(PItems.OMEN_UPGRADE_SMITHING_TEMPLATE);
+        generated(PoItems.OMINOUS_FILTHY_INGOT);
+        generated(PoItems.OMEN_UPGRADE_SMITHING_TEMPLATE);
         bigSowordItem();
-        trimmedArmorItem(PItems.OMEN_HELMET);
-        trimmedArmorItem(PItems.OMEN_CHESTPLATE);
-        trimmedArmorItem(PItems.OMEN_LEGGINGS);
-        trimmedArmorItem(PItems.OMEN_BOOTS);
+        trimmedArmorItem(PoItems.OMEN_HELMET);
+        trimmedArmorItem(PoItems.OMEN_CHESTPLATE);
+        trimmedArmorItem(PoItems.OMEN_LEGGINGS);
+        trimmedArmorItem(PoItems.OMEN_BOOTS);
 
         flyItemWithOverrides();
-        blockItem(PBlocks.FLY_BARREL);
-        blockItem(PBlocks.BREEDING_CHEST);
+        blockItem(PoBlocks.FLY_BARREL);
+        blockItem(PoBlocks.BREEDING_CHEST);
     }
 
     private void toiletPlugItem() {
@@ -128,8 +128,8 @@ public class PItemModelProvider extends RegistrateItemModelProvider {
     }
 
     private void bigSowordItem() {
-        this.withExistingParent(name(PItems.MILOS_SWORD), modLoc("item/big_sword"))
-                .texture("layer0", itemTexture(PItems.MILOS_SWORD));
+        this.withExistingParent(name(PoItems.MILOS_SWORD), modLoc("item/big_sword"))
+                .texture("layer0", itemTexture(PoItems.MILOS_SWORD));
     }
 
     private void wallItem(BlockEntry<? extends Block> block, BlockEntry<? extends Block> baseBlock) {

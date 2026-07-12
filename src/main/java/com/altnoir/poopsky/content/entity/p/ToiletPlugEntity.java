@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.content.entity.p;
 
 import com.altnoir.poopsky.client.sound.TPFlySoundWrapper;
-import com.altnoir.poopsky.init.PEffects;
-import com.altnoir.poopsky.init.PItems;
+import com.altnoir.poopsky.init.PoEffects;
+import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.network.PlugInputPayload;
 import com.google.common.collect.Lists;
 import net.minecraft.BlockUtil;
@@ -231,7 +231,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
     private void moveByInput() {
         float MAX_SPEED = inputFast ? 0.35f : 0.2f;
         var driver = this.getControllingPassenger();
-        if (driver != null && driver.hasEffect(PEffects.OMENER)) {
+        if (driver != null && driver.hasEffect(PoEffects.OMENER)) {
             MAX_SPEED *= 2.0f;
         }
         if (this.isUnderWater()) {
@@ -398,7 +398,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
 
     @Override
     protected Item getDropItem() {
-        return PItems.TOILET_PLUG.get();
+        return PoItems.TOILET_PLUG.get();
     }
 
     @Override
@@ -421,7 +421,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
         if (source.getEntity() instanceof Player player && player.isCrouching()) {
             this.kill();
             if (!player.getAbilities().instabuild) {
-                this.spawnAtLocation(PItems.TOILET_PLUG.get());
+                this.spawnAtLocation(PoItems.TOILET_PLUG.get());
             }
             return true;
         }

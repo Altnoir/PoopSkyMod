@@ -2,8 +2,8 @@ package com.altnoir.poopsky.datagen.create;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.compat.PSMods;
-import com.altnoir.poopsky.init.PBlocks;
-import com.altnoir.poopsky.init.PItems;
+import com.altnoir.poopsky.init.PoBlocks;
+import com.altnoir.poopsky.init.PoItems;
 import com.simibubi.create.api.data.recipe.WashingRecipeGen;
 import net.createmod.catnip.registry.RegisteredObjectsHelper;
 import net.minecraft.core.HolderLookup;
@@ -26,10 +26,10 @@ public class PWashingRecipeGen extends WashingRecipeGen implements IConditionBui
     protected void buildRecipes(RecipeOutput p_recipeOutput, HolderLookup.Provider holderLookup) {
         RecipeOutput conditionalOutput = p_recipeOutput.withConditions(modLoaded(PSMods.CREATE.id()));
 
-        convert(PBlocks.POOP_PIECE, Blocks.SNOW).register(conditionalOutput);
-        convert(PBlocks.POOP_BLOCK, Blocks.SNOW_BLOCK).register(conditionalOutput);
-        convert(PItems.POOP_BALL, Items.SNOWBALL).register(conditionalOutput);
-        convert(PItems.URINE_BUCKET, Items.POWDER_SNOW_BUCKET).register(conditionalOutput);
+        convert(PoBlocks.POOP_PIECE, Blocks.SNOW).register(conditionalOutput);
+        convert(PoBlocks.POOP_BLOCK, Blocks.SNOW_BLOCK).register(conditionalOutput);
+        convert(PoItems.POOP_BALL, Items.SNOWBALL).register(conditionalOutput);
+        convert(PoItems.URINE_BUCKET, Items.POWDER_SNOW_BUCKET).register(conditionalOutput);
     }
 
     private GeneratedRecipe convert(ItemLike input, ItemLike result) {

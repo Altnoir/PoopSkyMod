@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.datagen.create;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.init.PBlocks;
+import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.compat.PSMods;
 import com.simibubi.create.api.data.recipe.HauntingRecipeGen;
 import net.minecraft.core.HolderLookup;
@@ -21,6 +21,6 @@ public class PHauntingRecipeGen extends HauntingRecipeGen implements IConditionB
     protected void buildRecipes(RecipeOutput p_recipeOutput, HolderLookup.Provider holderLookup) {
         RecipeOutput conditionalOutput = p_recipeOutput.withConditions(modLoaded(PSMods.CREATE.id()));
 
-        convert(PBlocks.POOLIME_BLOCK.get(), Blocks.ICE).register(conditionalOutput);
+        convert(PoBlocks.POOLIME_BLOCK.get(), Blocks.ICE).register(conditionalOutput);
     }
 }

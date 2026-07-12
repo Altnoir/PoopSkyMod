@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.item.p;
 
 import com.altnoir.poopsky.content.item.PArmorMaterials;
-import com.altnoir.poopsky.init.PEffects;
+import com.altnoir.poopsky.init.PoEffects;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -24,7 +24,7 @@ public class OmenArmorItem extends ArmorItem {
     private static final Map<Holder<ArmorMaterial>, List<MobEffectInstance>> ARMOR_EFFECT =
             (new ImmutableMap.Builder<Holder<ArmorMaterial>, List<MobEffectInstance>>())
                     .put(PArmorMaterials.OMEN_ARMOR_MATERIAL, List.of(
-                                    new MobEffectInstance(PEffects.OMENER, 160, 0, false, false),
+                                    new MobEffectInstance(PoEffects.OMENER, 160, 0, false, false),
                                     new MobEffectInstance(MobEffects.HUNGER, 160, 1, false, false)
                             )
                     ).build();

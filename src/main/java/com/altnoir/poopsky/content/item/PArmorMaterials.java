@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.item;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.init.PItems;
+import com.altnoir.poopsky.init.PoItems;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -26,7 +26,7 @@ public class PArmorMaterials{
                 map.put(ArmorItem.Type.HELMET, 3);
                 map.put(ArmorItem.Type.BODY, 11);
             }),
-            30, SoundEvents.ARMOR_EQUIP_NETHERITE, 1.0F, 0.05F, PItems.OMINOUS_FILTHY_INGOT.get()
+            30, SoundEvents.ARMOR_EQUIP_NETHERITE, 1.0F, 0.05F, PoItems.OMINOUS_FILTHY_INGOT.get()
     );
 
     private static Holder<ArmorMaterial> register(

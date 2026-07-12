@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.content.block.p;
 
-import com.altnoir.poopsky.init.PBlocks;
+import com.altnoir.poopsky.init.PoBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
@@ -22,7 +22,7 @@ public class PoopPieceBlock extends SnowLayerBlock {
             return false;
         } else {
             return blockstate.is(BlockTags.SNOW_LAYER_CAN_SURVIVE_ON)
-                    || blockstate.is(PBlocks.POOP_BLOCK.get())
+                    || blockstate.is(PoBlocks.POOP_BLOCK.get())
                     || Block.isFaceFull(blockstate.getCollisionShape(level, pos.below()), Direction.UP)
                     || blockstate.is(this) && blockstate.getValue(LAYERS) == 8;
         }

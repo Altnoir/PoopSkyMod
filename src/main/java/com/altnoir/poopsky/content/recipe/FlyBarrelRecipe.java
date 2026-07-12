@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.content.recipe;
 
-import com.altnoir.poopsky.init.PRecipes;
+import com.altnoir.poopsky.init.PoRecipes;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;
@@ -45,12 +45,12 @@ public record FlyBarrelRecipe(String flyTypeId, ItemStack result) implements Rec
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return PRecipes.FLY_BARREL.serializer().get();
+        return PoRecipes.FLY_BARREL.serializer().get();
     }
 
     @Override
     public RecipeType<?> getType() {
-        return PRecipes.FLY_BARREL.type().get();
+        return PoRecipes.FLY_BARREL.type().get();
     }
 
     public static class Serializer implements RecipeSerializer<FlyBarrelRecipe> {

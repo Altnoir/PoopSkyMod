@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.compat.maid.toilet;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.init.PItems;
+import com.altnoir.poopsky.init.PoItems;
 import com.github.tartaricacid.touhoulittlemaid.api.task.IMaidTask;
 import com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid;
 import com.google.common.collect.Lists;
@@ -24,7 +24,7 @@ public class DefecateTask implements IMaidTask {
 
     @Override
     public ItemStack getIcon() {
-        return PItems.POOP.asStack();
+        return PoItems.POOP.asStack();
     }
 
     @Override

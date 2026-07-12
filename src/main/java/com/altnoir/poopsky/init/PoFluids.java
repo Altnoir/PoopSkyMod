@@ -28,7 +28,7 @@ import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
-public final class PFluids {
+public final class PoFluids {
     public static final ResourceLocation URINE_STILL_TEXTURE = PoopSky.loc("block/urine_liquid");
     public static final ResourceLocation URINE_FLOWING_TEXTURE = PoopSky.loc("block/urine_liquid_flowing");
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
@@ -36,16 +36,16 @@ public final class PFluids {
     public static final RegistryEntry<FluidType, FluidType> URINE_FLUID_TYPE = REGISTRATE.simple(
             "urine",
             NeoForgeRegistries.Keys.FLUID_TYPES,
-            PFluids::createUrineFluidType);
+            PoFluids::createUrineFluidType);
 
     public static final FluidEntry<BaseFlowingFluid.Flowing> FLOWING_URINE = REGISTRATE
-            .fluid("urine", URINE_STILL_TEXTURE, URINE_FLOWING_TEXTURE, URINE_FLUID_TYPE, PFluids::createFlowingUrine)
-            .source(PFluids::createSourceUrine)
+            .fluid("urine", URINE_STILL_TEXTURE, URINE_FLOWING_TEXTURE, URINE_FLUID_TYPE, PoFluids::createFlowingUrine)
+            .source(PoFluids::createSourceUrine)
             .noBlock()
             .fluidProperties(properties -> properties
                     .slopeFindDistance(2)
                     .levelDecreasePerBlock(1)
-                    .block(PFluids.URINE_LIQUID))
+                    .block(PoFluids.URINE_LIQUID))
             .setData(ProviderType.LANG, NonNullBiConsumer.noop())
             .bucket()
             .model((ctx, prov) -> {
@@ -62,7 +62,7 @@ public final class PFluids {
             .loot(RegistrateBlockLootTables::dropSelf)
             .register();
 
-    private PFluids() {
+    private PoFluids() {
     }
 
     public static void register() {
@@ -93,7 +93,7 @@ public final class PFluids {
 
             @Override
             public double motionScale(Entity entity) {
-                if (entity instanceof LivingEntity livingEntity && livingEntity.hasEffect(PEffects.OMENER)) {
+                if (entity instanceof LivingEntity livingEntity && livingEntity.hasEffect(PoEffects.OMENER)) {
                     return 0.014D;
                 }
                 return 0.0023D;

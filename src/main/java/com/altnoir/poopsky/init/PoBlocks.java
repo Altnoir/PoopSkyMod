@@ -5,6 +5,8 @@ import com.altnoir.poopsky.content.SetToiletTypeFunction;
 import com.altnoir.poopsky.content.block.p.*;
 import com.altnoir.poopsky.content.item.p.CompooperBlockItem;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
+import com.altnoir.poopsky.impl.PoBlockSetType;
+import com.altnoir.poopsky.impl.PoWoodType;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -48,7 +50,7 @@ import java.util.Map;
 import java.util.function.ToIntFunction;
 import java.util.stream.IntStream;
 
-public class PBlocks {
+public class PoBlocks {
     private static final float POOP = 0.5F;
     private static final float HARDEN = 1.5F;
     private static final float LOG = 2.0F;
@@ -91,14 +93,14 @@ public class PBlocks {
                     .requiresCorrectToolForDrops()
                     .isViewBlocking((state, getter, pos) -> state.getValue(PoopPieceBlock.LAYERS) >= 8)
                     .pushReaction(PushReaction.DESTROY)),
-            (loot, block) -> loot.add(block, createPoopPieceDrop(loot, block, PItems.POOP_BALL.get())));
+            (loot, block) -> loot.add(block, createPoopPieceDrop(loot, block, PoItems.POOP_BALL.get())));
     public static final BlockEntry<PoopBlock> POOP_BLOCK = registerBlock("poop_block",
             props -> new PoopBlock(poopProperties()
                     .randomTicks()
                     .speedFactor(0.4F)
                     .isValidSpawn(Blocks::always)
-                    .isRedstoneConductor(PBlocks::always)
-                    .isSuffocating(PBlocks::always)
+                    .isRedstoneConductor(PoBlocks::always)
+                    .isSuffocating(PoBlocks::always)
                     .instrument(NoteBlockInstrument.COW_BELL)));
     public static final BlockEntry<PoolimeMaggotsBlock> POOLIME_MAGGOTS_BLOCK = registerBlock("poolime_maggots_block",
             props -> new PoolimeMaggotsBlock(poopProperties(1.0F)
@@ -114,24 +116,24 @@ public class PBlocks {
     public static final BlockEntry<VerticalSlabBlock> POOP_VERTICAL_SLAB = registerBlock("poop_vertical_slab",
             props -> new VerticalSlabBlock(poopProperties()));
     public static final BlockEntry<ButtonBlock> POOP_BUTTON = registerBlock("poop_button",
-            props -> new ButtonBlock(PBlockSetType.POOP, 200, poopProperties().noCollission()));
+            props -> new ButtonBlock(PoBlockSetType.POOP, 200, poopProperties().noCollission()));
     public static final BlockEntry<PressurePlateBlock> POOP_PRESSURE_PLATE = registerBlock("poop_pressure_plate",
-            props -> new PressurePlateBlock(PBlockSetType.POOP, poopProperties().noCollission()));
+            props -> new PressurePlateBlock(PoBlockSetType.POOP, poopProperties().noCollission()));
     public static final BlockEntry<FenceBlock> POOP_FENCE = registerBlock("poop_fence",
             props -> new FenceBlock(poopProperties()));
     public static final BlockEntry<FenceGateBlock> POOP_FENCE_GATE = registerBlock("poop_fence_gate",
-            props -> new FenceGateBlock(PWoodType.POOP, poopProperties()));
+            props -> new FenceGateBlock(PoWoodType.POOP, poopProperties()));
     public static final BlockEntry<WallBlock> POOP_WALL = registerBlock("poop_wall",
             props -> new WallBlock(poopProperties()));
     public static final BlockFamily POOP_FAMILY = new BlockFamily(POOP_BLOCK, POOP_STAIRS, POOP_SLAB, POOP_VERTICAL_SLAB, POOP_WALL);
 
     public static final BlockEntry<DoorBlock> POOP_DOOR = registerBlock("poop_door",
-            props -> new DoorBlock(PBlockSetType.POOP, poopProperties()
+            props -> new DoorBlock(PoBlockSetType.POOP, poopProperties()
                     .noOcclusion()
                     .pushReaction(PushReaction.DESTROY)),
             (loot, block) -> loot.add(block, loot.createDoorTable(block)));
     public static final BlockEntry<TrapDoorBlock> POOP_TRAPDOOR = registerBlock("poop_trapdoor",
-            props -> new TrapDoorBlock(PBlockSetType.POOP, poopProperties()
+            props -> new TrapDoorBlock(PoBlockSetType.POOP, poopProperties()
                     .noOcclusion()
                     .isValidSpawn(Blocks::never)));
 
@@ -168,8 +170,8 @@ public class PBlocks {
                     .requiresCorrectToolForDrops()
                     .speedFactor(0.4F)
                     .isValidSpawn(Blocks::always)
-                    .isRedstoneConductor(PBlocks::always)
-                    .isSuffocating(PBlocks::always)
+                    .isRedstoneConductor(PoBlocks::always)
+                    .isSuffocating(PoBlocks::always)
                     .instrument(NoteBlockInstrument.COW_BELL)));
     public static final BlockFamily CHILI_POOP_FAMILY = registerBlockFamily("chili_poop", CHILI_POOP_BLOCK, false);
     public static final BlockEntry<StairBlock> CHILI_POOP_STAIRS = CHILI_POOP_FAMILY.stairs();
@@ -181,8 +183,8 @@ public class PBlocks {
                     .requiresCorrectToolForDrops()
                     .speedFactor(0.4F)
                     .isValidSpawn(Blocks::always)
-                    .isRedstoneConductor(PBlocks::always)
-                    .isSuffocating(PBlocks::always)
+                    .isRedstoneConductor(PoBlocks::always)
+                    .isSuffocating(PoBlocks::always)
                     .instrument(NoteBlockInstrument.BELL)));
     public static final BlockFamily GOLDEN_POOP_FAMILY = registerBlockFamily("golden_poop", GOLDEN_POOP_BLOCK, false);
     public static final BlockEntry<StairBlock> GOLDEN_POOP_STAIRS = GOLDEN_POOP_FAMILY.stairs();
@@ -232,7 +234,7 @@ public class PBlocks {
                     .withPool(LootPool.lootPool()
                             .add(loot.applyExplosionDecay(block, LootItem.lootTableItem(block))))
                     .withPool(LootPool.lootPool()
-                            .add(LootItem.lootTableItem(PItems.SAPLING_POOP_BALL.get()))
+                            .add(LootItem.lootTableItem(PoItems.SAPLING_POOP_BALL.get()))
                             .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
                                     .setProperties(StatePropertiesPredicate.Builder.properties()
                                             .hasProperty(CompooperBlock.POOP_LEVEL, CompooperBlock.READY))))));
@@ -251,7 +253,7 @@ public class PBlocks {
                     .withPool(LootPool.lootPool()
                             .add(loot.applyExplosionDecay(block, LootItem.lootTableItem(COMPOOPER.get()))))
                     .withPool(LootPool.lootPool()
-                            .add(LootItem.lootTableItem(PItems.MAGGOTS_SEEDS.get()))
+                            .add(LootItem.lootTableItem(PoItems.MAGGOTS_SEEDS.get()))
                             .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
                                     .setProperties(StatePropertiesPredicate.Builder.properties()
                                             .hasProperty(UrineCompooperBlock.MAGGOTS, true))))));
@@ -304,7 +306,7 @@ public class PBlocks {
 
     public static final BlockEntry<PoopLeavesBlock> POOP_LEAVES = registerBlock("poop_leaves",
             props -> new PoopLeavesBlock(0x5E4228, leavesProperties(MapColor.COLOR_BROWN)),
-            (loot, block) -> loot.add(block, createLeavesDrops(loot, block, PItems.POOP.get())));
+            (loot, block) -> loot.add(block, createLeavesDrops(loot, block, PoItems.POOP.get())));
     public static final BlockEntry<PoopLeavesBlock> POOP_LEAVES_IRON = registerBlock("poop_leaves_iron",
             props -> new PoopLeavesBlock(0xFFFFFF, leavesProperties(MapColor.TERRACOTTA_WHITE)),
             (loot, block) -> loot.add(block, createIronLeavesDrops(loot, block)));
@@ -321,7 +323,7 @@ public class PBlocks {
                     .offsetType(BlockBehaviour.OffsetType.XZ)
                     .pushReaction(PushReaction.DESTROY)));
 
-    public static final BlockEntry<? extends LiquidBlock> URINE_LIQUID = PFluids.URINE_LIQUID;
+    public static final BlockEntry<? extends LiquidBlock> URINE_LIQUID = PoFluids.URINE_LIQUID;
 
     public static final BlockEntry<Block> MAGGOTS_BLOCK = registerBlock("maggots_block",
             props -> new Block(simpleProperties(MapColor.TERRACOTTA_WHITE, POOP, SoundType.WEEPING_VINES)));
@@ -338,14 +340,14 @@ public class PBlocks {
                 loot.add(block, loot.applyExplosionDecay(block,
                         LootTable.lootTable()
                                 .withPool(LootPool.lootPool()
-                                        .add(LootItem.lootTableItem(Items.WHEAT_SEEDS).when(grownCondition).otherwise(LootItem.lootTableItem(PItems.MAGGOTS_SEEDS.get())))
-                                        .add(LootItem.lootTableItem(Items.SWEET_BERRIES).when(grownCondition).otherwise(LootItem.lootTableItem(PItems.MAGGOTS_SEEDS.get())))
-                                        .add(LootItem.lootTableItem(Items.CARROT).when(grownCondition).otherwise(LootItem.lootTableItem(PItems.MAGGOTS_SEEDS.get())))
-                                        .add(LootItem.lootTableItem(Items.POTATO).when(grownCondition).otherwise(LootItem.lootTableItem(PItems.MAGGOTS_SEEDS.get())))
+                                        .add(LootItem.lootTableItem(Items.WHEAT_SEEDS).when(grownCondition).otherwise(LootItem.lootTableItem(PoItems.MAGGOTS_SEEDS.get())))
+                                        .add(LootItem.lootTableItem(Items.SWEET_BERRIES).when(grownCondition).otherwise(LootItem.lootTableItem(PoItems.MAGGOTS_SEEDS.get())))
+                                        .add(LootItem.lootTableItem(Items.CARROT).when(grownCondition).otherwise(LootItem.lootTableItem(PoItems.MAGGOTS_SEEDS.get())))
+                                        .add(LootItem.lootTableItem(Items.POTATO).when(grownCondition).otherwise(LootItem.lootTableItem(PoItems.MAGGOTS_SEEDS.get())))
                                 )
                                 .withPool(LootPool.lootPool()
                                         .when(grownCondition)
-                                        .add(LootItem.lootTableItem(PItems.MAGGOTS_SEEDS.get())
+                                        .add(LootItem.lootTableItem(PoItems.MAGGOTS_SEEDS.get())
                                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))
                                                 .apply(ApplyBonusCount.addBonusBinomialDistributionCount(registrylookup.getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3)))
                                 )
@@ -356,7 +358,7 @@ public class PBlocks {
                     plantProperties(MapColor.TERRACOTTA_WHITE, SoundType.TWISTING_VINES)
                             .randomTicks()
                             .noCollission()),
-            (loot, block) -> loot.dropOther(block, PItems.ROUNDWORM.get()));
+            (loot, block) -> loot.dropOther(block, PoItems.ROUNDWORM.get()));
     public static final BlockEntry<RoundwormVinesPlantBlock> ROUNDWORM_VINES_PLANT = registerBlockNoItem("roundworm_vines_plant",
             props -> new RoundwormVinesPlantBlock(
                     plantProperties(MapColor.TERRACOTTA_WHITE, SoundType.TWISTING_VINES)
@@ -367,14 +369,14 @@ public class PBlocks {
                 var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
                 loot.add(block, LootTable.lootTable()
                         .withPool(LootPool.lootPool()
-                                .add(LootItem.lootTableItem(Items.PUMPKIN_SEEDS).when(seedsCondition).otherwise(LootItem.lootTableItem(PItems.ROUNDWORM.get())))
-                                .add(LootItem.lootTableItem(Items.MELON_SEEDS).when(seedsCondition).otherwise(LootItem.lootTableItem(PItems.ROUNDWORM.get())))
-                                .add(LootItem.lootTableItem(Items.FROGSPAWN).when(seedsCondition).otherwise(LootItem.lootTableItem(PItems.ROUNDWORM.get())))
-                                .add(LootItem.lootTableItem(Items.BEETROOT_SEEDS).when(seedsCondition).otherwise(LootItem.lootTableItem(PItems.ROUNDWORM.get())))
+                                .add(LootItem.lootTableItem(Items.PUMPKIN_SEEDS).when(seedsCondition).otherwise(LootItem.lootTableItem(PoItems.ROUNDWORM.get())))
+                                .add(LootItem.lootTableItem(Items.MELON_SEEDS).when(seedsCondition).otherwise(LootItem.lootTableItem(PoItems.ROUNDWORM.get())))
+                                .add(LootItem.lootTableItem(Items.FROGSPAWN).when(seedsCondition).otherwise(LootItem.lootTableItem(PoItems.ROUNDWORM.get())))
+                                .add(LootItem.lootTableItem(Items.BEETROOT_SEEDS).when(seedsCondition).otherwise(LootItem.lootTableItem(PoItems.ROUNDWORM.get())))
                         )
                         .withPool(LootPool.lootPool()
                                 .when(seedsCondition)
-                                .add(LootItem.lootTableItem(PItems.ROUNDWORM.get())
+                                .add(LootItem.lootTableItem(PoItems.ROUNDWORM.get())
                                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))
                                         .apply(ApplyBonusCount.addBonusBinomialDistributionCount(registrylookup.getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3)))
                         )
@@ -444,11 +446,11 @@ public class PBlocks {
                 .randomTicks()
                 .noOcclusion()
                 .isValidSpawn(Blocks::ocelotOrParrot)
-                .isSuffocating(PBlocks::neverSuffocate)
-                .isViewBlocking(PBlocks::neverBlockVision)
+                .isSuffocating(PoBlocks::neverSuffocate)
+                .isViewBlocking(PoBlocks::neverBlockVision)
                 .ignitedByLava()
                 .pushReaction(PushReaction.DESTROY)
-                .isRedstoneConductor(PBlocks::never);
+                .isRedstoneConductor(PoBlocks::never);
     }
 
     private static BlockBehaviour.Properties plantProperties(MapColor color, SoundType sound) {
@@ -464,8 +466,8 @@ public class PBlocks {
                 .mapColor(color)
                 .instrument(instrument)
                 .strength(strength, TOILET_RESISTANCE)
-                .isRedstoneConductor(PBlocks::always)
-                .isSuffocating(PBlocks::always)
+                .isRedstoneConductor(PoBlocks::always)
+                .isSuffocating(PoBlocks::always)
                 .sound(sound);
     }
 
@@ -672,7 +674,7 @@ public class PBlocks {
         var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
         return loot.createSilkTouchDispatchTable(block,
                 loot.applyExplosionDecay(block,
-                        LootItem.lootTableItem(PItems.SPALL)
+                        LootItem.lootTableItem(PoItems.SPALL)
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(4.0F, 5.0F)))
                                 .apply(ApplyBonusCount.addUniformBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE))))
         );
@@ -706,7 +708,7 @@ public class PBlocks {
                         .setRolls(ConstantValue.exactly(1.0F))
                         .when(hasShearsOrSilkTouch.invert())
                         .add(((LootPoolSingletonContainer.Builder<?>)
-                                loot.applyExplosionCondition(block, LootItem.lootTableItem(PItems.ROUNDWORM.get())))
+                                loot.applyExplosionCondition(block, LootItem.lootTableItem(PoItems.ROUNDWORM.get())))
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
                                 .apply(ApplyBonusCount.addUniformBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE))))
         );

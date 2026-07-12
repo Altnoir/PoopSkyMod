@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.compat.jei;
 
-import com.altnoir.poopsky.PTags;
+import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.ToiletType;
 import com.altnoir.poopsky.content.block.p.CompooperBlock;
@@ -9,10 +9,10 @@ import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.content.recipe.ToiletShapedRecipe;
 import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.compat.jei.create.FanDigestingCategory;
-import com.altnoir.poopsky.init.PBlocks;
-import com.altnoir.poopsky.init.PComponents;
-import com.altnoir.poopsky.init.PItems;
-import com.altnoir.poopsky.init.PRecipes;
+import com.altnoir.poopsky.init.PoBlocks;
+import com.altnoir.poopsky.init.PoComponents;
+import com.altnoir.poopsky.init.PoItems;
+import com.altnoir.poopsky.init.PoRecipes;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -66,15 +66,15 @@ public class PSJEIPlugin implements IModPlugin {
 
     @Override
     public void registerItemSubtypes(ISubtypeRegistration registration) {
-        registration.registerSubtypeInterpreter(PItems.FLY.get(), new ISubtypeInterpreter<>() {
+        registration.registerSubtypeInterpreter(PoItems.FLY.get(), new ISubtypeInterpreter<>() {
             @Override
             public Object getSubtypeData(ItemStack itemStack, UidContext context) {
-                return itemStack.get(PComponents.FLY_TYPE.get());
+                return itemStack.get(PoComponents.FLY_TYPE.get());
             }
 
             @Override
             public @NotNull String getLegacyStringSubtypeInfo(ItemStack itemStack, UidContext context) {
-                String flyType = itemStack.get(PComponents.FLY_TYPE.get());
+                String flyType = itemStack.get(PoComponents.FLY_TYPE.get());
                 return flyType != null ? flyType : "";
             }
         });
@@ -82,18 +82,18 @@ public class PSJEIPlugin implements IModPlugin {
         ISubtypeInterpreter<ItemStack> toiletSubtypeInterpreter = new ISubtypeInterpreter<>() {
             @Override
             public Object getSubtypeData(ItemStack itemStack, UidContext context) {
-                ToiletType toiletType = itemStack.get(PComponents.TOILET_TYPE.get());
+                ToiletType toiletType = itemStack.get(PoComponents.TOILET_TYPE.get());
                 return toiletType != null ? toiletType.id() : null;
             }
 
             @Override
             public @NotNull String getLegacyStringSubtypeInfo(ItemStack itemStack, UidContext context) {
-                ToiletType toiletType = itemStack.get(PComponents.TOILET_TYPE.get());
+                ToiletType toiletType = itemStack.get(PoComponents.TOILET_TYPE.get());
                 return toiletType != null ? toiletType.id() : "";
             }
         };
-        registration.registerSubtypeInterpreter(PBlocks.WOODEN_TOILET.asItem(), toiletSubtypeInterpreter);
-        registration.registerSubtypeInterpreter(PBlocks.HARD_TOILET.asItem(), toiletSubtypeInterpreter);
+        registration.registerSubtypeInterpreter(PoBlocks.WOODEN_TOILET.asItem(), toiletSubtypeInterpreter);
+        registration.registerSubtypeInterpreter(PoBlocks.HARD_TOILET.asItem(), toiletSubtypeInterpreter);
     }
 
     @Override
@@ -105,31 +105,31 @@ public class PSJEIPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         registration.addRecipes(CompooperRecipeCategory.TYPE, List.of(
                 new CompooperRecipe(
-                        Ingredient.of(Stream.empty()), new ItemStack(PItems.MAGGOTS_SEEDS.get()), PBlocks.URINE_COMPOOPER.get().defaultBlockState()
+                        Ingredient.of(Stream.empty()), new ItemStack(PoItems.MAGGOTS_SEEDS.get()), PoBlocks.URINE_COMPOOPER.get().defaultBlockState()
                 ),
                 new CompooperRecipe(
-                        Ingredient.of(PTags.Items.CAN_COMPOSTABLE), new ItemStack(PItems.SAPLING_POOP_BALL.get()),
-                        PBlocks.COMPOOPER.get().defaultBlockState().setValue(CompooperBlock.POOP_LEVEL, CompooperBlock.READY)
+                        Ingredient.of(PoTags.Items.CAN_COMPOSTABLE), new ItemStack(PoItems.SAPLING_POOP_BALL.get()),
+                        PoBlocks.COMPOOPER.get().defaultBlockState().setValue(CompooperBlock.POOP_LEVEL, CompooperBlock.READY)
                 ),
                 new CompooperRecipe(
-                        Ingredient.of(Items.STICK), new ItemStack(Items.BLAZE_ROD), PBlocks.LAVA_COMPOOPER.get().defaultBlockState()
+                        Ingredient.of(Items.STICK), new ItemStack(Items.BLAZE_ROD), PoBlocks.LAVA_COMPOOPER.get().defaultBlockState()
                 ),
                 new CompooperRecipe(
-                        Ingredient.of(Items.STICK), new ItemStack(Items.BREEZE_ROD), PBlocks.POWDER_SNOW_COMPOOPER.get().defaultBlockState()
+                        Ingredient.of(Items.STICK), new ItemStack(Items.BREEZE_ROD), PoBlocks.POWDER_SNOW_COMPOOPER.get().defaultBlockState()
                 ),
                 new CompooperRecipe(
-                        Ingredient.of(PItems.FLY.get()), FlyItem.withType(PFlyTypes.BLUE.get()), PBlocks.WATER_COMPOOPER.get().defaultBlockState()
+                        Ingredient.of(PoItems.FLY.get()), FlyItem.withType(PFlyTypes.BLUE.get()), PoBlocks.WATER_COMPOOPER.get().defaultBlockState()
                 )
         ));
 
         Level level = Minecraft.getInstance().level;
         RecipeManager recipeManager = level.getRecipeManager();
 
-        registration.addRecipes(SieveRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PRecipes.SIEVE.type().get()));
-        registration.addRecipes(POPExplosionRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PRecipes.POP_EXPLOSION.type().get()));
-        registration.addRecipes(AnalPressingRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PRecipes.ANAL_PRESSING.type().get()));
-        registration.addRecipes(FlyBarrelRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PRecipes.FLY_BARREL.type().get()));
-        registration.addRecipes(BreedingChestRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PRecipes.BREEDING_CHEST.type().get()));
+        registration.addRecipes(SieveRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PoRecipes.SIEVE.type().get()));
+        registration.addRecipes(POPExplosionRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PoRecipes.POP_EXPLOSION.type().get()));
+        registration.addRecipes(AnalPressingRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PoRecipes.ANAL_PRESSING.type().get()));
+        registration.addRecipes(FlyBarrelRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PoRecipes.FLY_BARREL.type().get()));
+        registration.addRecipes(BreedingChestRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PoRecipes.BREEDING_CHEST.type().get()));
 
         PSJEIInfo.register(registration);
 
@@ -140,13 +140,13 @@ public class PSJEIPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        registration.addRecipeCatalyst(new ItemStack(PBlocks.COMPOOPER.get()), CompooperRecipeCategory.TYPE);
-        registration.addRecipeCatalyst(new ItemStack(PBlocks.SIEVE.get()), SieveRecipeCategory.TYPE);
-        registration.addRecipeCatalyst(new ItemStack(PBlocks.FLY_BARREL.get()), FlyBarrelRecipeCategory.TYPE);
-        registration.addRecipeCatalyst(new ItemStack(PBlocks.BREEDING_CHEST.get()), BreedingChestRecipeCategory.TYPE);
-        registration.addRecipeCatalyst(new ItemStack(PBlocks.POOP_TNT.get()), POPExplosionRecipeCategory.TYPE);
-        registration.addRecipeCatalyst(new ItemStack(PItems.KING_OF_DRAGON_FRUIT.get()), AnalPressingRecipeCategory.TYPE);
-        registration.addRecipeCatalyst(new ItemStack(PItems.DRAGON_BREATH_CHILI.get()), AnalPressingRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(PoBlocks.COMPOOPER.get()), CompooperRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(PoBlocks.SIEVE.get()), SieveRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(PoBlocks.FLY_BARREL.get()), FlyBarrelRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(PoBlocks.BREEDING_CHEST.get()), BreedingChestRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(PoBlocks.POOP_TNT.get()), POPExplosionRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(PoItems.KING_OF_DRAGON_FRUIT.get()), AnalPressingRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(PoItems.DRAGON_BREATH_CHILI.get()), AnalPressingRecipeCategory.TYPE);
 
         if (PSMods.CREATE.isLoaded()) {
             createCategories.forEach(category -> category.registerCatalysts(registration));

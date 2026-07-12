@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.item.p;
 
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
-import com.altnoir.poopsky.init.PBlocks;
+import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
@@ -40,7 +40,7 @@ public class CompooperBlockItem extends BlockItem {
                 level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.PLAYERS, 1.0F, 0.6F);
                 level.gameEvent(player, GameEvent.FLUID_PICKUP, pos);
 
-                var result = ItemUtils.createFilledResult(stack, player, new ItemStack(PBlocks.URINE_COMPOOPER.get()));
+                var result = ItemUtils.createFilledResult(stack, player, new ItemStack(PoBlocks.URINE_COMPOOPER.get()));
                 player.setItemInHand(context.getHand(), result);
             }
             return InteractionResult.SUCCESS;

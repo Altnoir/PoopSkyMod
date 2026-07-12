@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.worldgen.structure;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.worldgen.PSStructures;
+import com.altnoir.poopsky.worldgen.PoStructures;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.Registries;
@@ -73,7 +73,7 @@ public class PoopIslandStructure extends Structure {
 
     @Override
     public StructureType<?> type() {
-        return PSStructures.POOP_ISLAND.get();
+        return PoStructures.POOP_ISLAND.get();
     }
 
     public static void addGuaranteedSpawnStart(

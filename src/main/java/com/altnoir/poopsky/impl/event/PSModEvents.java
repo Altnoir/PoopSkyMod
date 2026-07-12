@@ -4,9 +4,9 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.entity.p.FlyEntity;
 import com.altnoir.poopsky.content.entity.p.PoolimeEntity;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
-import com.altnoir.poopsky.init.PBlockEntityType;
-import com.altnoir.poopsky.init.PEffects;
-import com.altnoir.poopsky.init.PEntityType;
+import com.altnoir.poopsky.init.PoBlockEntityType;
+import com.altnoir.poopsky.init.PoEffects;
+import com.altnoir.poopsky.init.PoEntityType;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
@@ -31,15 +31,15 @@ import java.util.Set;
 public class PSModEvents {
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event) {
-        event.put(PEntityType.POOLIME.get(), PoolimeEntity.createAttributes().build());
-        event.put(PEntityType.FLY.get(), FlyEntity.createAttributes().build());
+        event.put(PoEntityType.POOLIME.get(), PoolimeEntity.createAttributes().build());
+        event.put(PoEntityType.FLY.get(), FlyEntity.createAttributes().build());
     }
 
     @SubscribeEvent
     public static void registerSpawnPlacements(RegisterSpawnPlacementsEvent event) {
-        event.register(PEntityType.POOLIME.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+        event.register(PoEntityType.POOLIME.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 PoolimeEntity::checkPoolimeSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
-        event.register(PEntityType.FLY.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+        event.register(PoEntityType.FLY.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 FlyEntity::checkFlySpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
     }
 
@@ -55,7 +55,7 @@ public class PSModEvents {
     public static void CapabilitiesRegister(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
-                PBlockEntityType.SIEVE_BLOCK_ENTITY.get(),
+                PoBlockEntityType.SIEVE_BLOCK_ENTITY.get(),
                 (blockEntity, direction) -> {
                     if (direction == null || direction == Direction.DOWN) {
                         return blockEntity.getBottomHandler();
@@ -65,12 +65,12 @@ public class PSModEvents {
         );
         event.registerBlockEntity(
                 Capabilities.FluidHandler.BLOCK,
-                PBlockEntityType.TOILET_BLOCK_ENTITY.get(),
+                PoBlockEntityType.TOILET_BLOCK_ENTITY.get(),
                 (blockEntity, side) -> blockEntity.fluidTank
         );
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
-                PBlockEntityType.FLY_BARREL.get(),
+                PoBlockEntityType.FLY_BARREL.get(),
                 (blockEntity, direction) -> {
                     if (direction == null || direction == Direction.DOWN) {
                         return blockEntity.getBottomHandler();
@@ -80,7 +80,7 @@ public class PSModEvents {
         );
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
-                PBlockEntityType.BREEDING_CHEST.get(),
+                PoBlockEntityType.BREEDING_CHEST.get(),
                 (blockEntity, direction) -> {
                     if (direction == null || direction == Direction.DOWN) {
                         return blockEntity.getBottomHandler();
@@ -95,9 +95,9 @@ public class PSModEvents {
         LivingEntity entity = event.getEntity();
         MobEffectInstance effectInstance = event.getEffectInstance();
 
-        if (OMEN_EFFECTS.contains(effectInstance.getEffect()) && entity.hasEffect(PEffects.OMENER)) {
+        if (OMEN_EFFECTS.contains(effectInstance.getEffect()) && entity.hasEffect(PoEffects.OMENER)) {
             if (!effectInstance.is(MobEffects.CONFUSION) && !entity.hasEffect(MobEffects.REGENERATION)) {
-                int amplifier = entity.getEffect(PEffects.OMENER).getAmplifier();
+                int amplifier = entity.getEffect(PoEffects.OMENER).getAmplifier();
                 entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 40, amplifier + 1));
             }
             event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);

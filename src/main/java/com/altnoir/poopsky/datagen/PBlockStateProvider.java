@@ -6,7 +6,7 @@ import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.block.p.PoopCandleCakeBlock;
 import com.altnoir.poopsky.content.block.p.PoopPieceBlock;
-import com.altnoir.poopsky.init.PBlocks;
+import com.altnoir.poopsky.init.PoBlocks;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -38,31 +38,31 @@ public class PBlockStateProvider extends BlockStateProvider {
         poopBlock();
         poopPiece();
         poolimeMaggotsBlock();
-        blockWithTranslucentRenderType(PBlocks.POOLIME_BLOCK.get());
-        PBlocks.SIMPLE_MODEL_FAMILIES.forEach(this::blockFamily);
-        blockWithItem(PBlocks.CRACKED_POOP_BRICKS.get());
+        blockWithTranslucentRenderType(PoBlocks.POOLIME_BLOCK.get());
+        PoBlocks.SIMPLE_MODEL_FAMILIES.forEach(this::blockFamily);
+        blockWithItem(PoBlocks.CRACKED_POOP_BRICKS.get());
 
-        randomBlockWithItem(PBlocks.RAW_POOP_BLOCK.get(), 3, 1);
-        blockWithItem(PBlocks.RAW_SAPLING_POOP_BLOCK.get());
-        blockWithItem(PBlocks.RAW_SEA_POOP_BLOCK.get());
-        blockWithItem(PBlocks.RAW_WITHER_POOP_BLOCK.get());
+        randomBlockWithItem(PoBlocks.RAW_POOP_BLOCK.get(), 3, 1);
+        blockWithItem(PoBlocks.RAW_SAPLING_POOP_BLOCK.get());
+        blockWithItem(PoBlocks.RAW_SEA_POOP_BLOCK.get());
+        blockWithItem(PoBlocks.RAW_WITHER_POOP_BLOCK.get());
 
-        blockWithItem(PBlocks.POOP_LEAVES.get());
-        blockWithItem(PBlocks.POOP_LEAVES_GOLD.get());
-        blockWithItem(PBlocks.POOP_LEAVES_IRON.get());
-        cubeBottomTop(PBlocks.POOP_TNT.get());
-        cubeBottomTopFace(PBlocks.FLY_BARREL.get());
-        cubeBottomTop(PBlocks.BREEDING_CHEST.get(), PBlocks.CUT_POOP_BLOCK.get());
-        orientable(PBlocks.PLACER.get());
+        blockWithItem(PoBlocks.POOP_LEAVES.get());
+        blockWithItem(PoBlocks.POOP_LEAVES_GOLD.get());
+        blockWithItem(PoBlocks.POOP_LEAVES_IRON.get());
+        cubeBottomTop(PoBlocks.POOP_TNT.get());
+        cubeBottomTopFace(PoBlocks.FLY_BARREL.get());
+        cubeBottomTop(PoBlocks.BREEDING_CHEST.get(), PoBlocks.CUT_POOP_BLOCK.get());
+        orientable(PoBlocks.PLACER.get());
         registerPoopCake();
-        cubeBottomTop(PBlocks.MAGGOTS_BLOCK.get());
-        blockWithItem(PBlocks.ROUNDWORM_BLOCK.get());
+        cubeBottomTop(PoBlocks.MAGGOTS_BLOCK.get());
+        blockWithItem(PoBlocks.ROUNDWORM_BLOCK.get());
 
-        registerToilet(PBlocks.WOODEN_TOILET, ToiletType.Category.WOOD, false);
-        registerToilet(PBlocks.HARD_TOILET, ToiletType.Category.HARD, true);
+        registerToilet(PoBlocks.WOODEN_TOILET, ToiletType.Category.WOOD, false);
+        registerToilet(PoBlocks.HARD_TOILET, ToiletType.Category.HARD, true);
 
-        fluidBlockWithItem(PBlocks.URINE_LIQUID.get());
-        makeCropBlock(PBlocks.MAGGOTS.get(), "maggots_stage", "maggots_stage");
+        fluidBlockWithItem(PoBlocks.URINE_LIQUID.get());
+        makeCropBlock(PoBlocks.MAGGOTS.get(), "maggots_stage", "maggots_stage");
     }
 
     protected void makeCropBlock(CropBlock cropBlock, String model, String texture) {
@@ -89,13 +89,13 @@ public class PBlockStateProvider extends BlockStateProvider {
                 .allFaces((face, faceBuilder) -> faceBuilder.texture("#side").uvs(0, 0, 16, 16))
                 .face(Direction.UP).texture("#up").end();
 
-        getVariantBuilder(PBlocks.POOP_BLOCK.get())
+        getVariantBuilder(PoBlocks.POOP_BLOCK.get())
                 .partialState().addModels(
                         new ConfiguredModel(models().getExistingFile(modLoc("block/poop_block1")), 0, 0, false, 9),
                         new ConfiguredModel(models().getExistingFile(modLoc("block/poop_block2")), 0, 0, false, 1),
                         new ConfiguredModel(models().getExistingFile(modLoc("block/poop_block3")), 0, 0, false, 2)
                 );
-        simpleBlockItem(PBlocks.POOP_BLOCK.get(), models().getExistingFile(modLoc("block/poop_block1")));
+        simpleBlockItem(PoBlocks.POOP_BLOCK.get(), models().getExistingFile(modLoc("block/poop_block1")));
     }
 
     private void poopPiece() {
@@ -112,7 +112,7 @@ public class PBlockStateProvider extends BlockStateProvider {
                         if (face != Direction.UP) faceBuilder.cullface(face);
                     });
         }
-        getVariantBuilder(PBlocks.POOP_PIECE.get())
+        getVariantBuilder(PoBlocks.POOP_PIECE.get())
                 .forAllStates(state -> {
                     int layers = state.getValue(PoopPieceBlock.LAYERS);
                     if (layers == 8) {
@@ -125,19 +125,19 @@ public class PBlockStateProvider extends BlockStateProvider {
                             .modelFile(models().getExistingFile(modLoc("block/" + modelName)))
                             .build();
                 });
-        simpleBlockItem(PBlocks.POOP_PIECE.get(), models().getExistingFile(modLoc("block/poop_height2")));
+        simpleBlockItem(PoBlocks.POOP_PIECE.get(), models().getExistingFile(modLoc("block/poop_height2")));
     }
 
     private void poolimeMaggotsBlock() {
-        ModelFile model = models().withExistingParent(getBlockPath(PBlocks.POOLIME_MAGGOTS_BLOCK.get()), mcLoc("block/cube"))
+        ModelFile model = models().withExistingParent(getBlockPath(PoBlocks.POOLIME_MAGGOTS_BLOCK.get()), mcLoc("block/cube"))
                 .texture("south", modLoc("block/poop_block"))
                 .texture("west", modLoc("block/poop_block"))
                 .texture("north", modLoc("block/poop_block"))
                 .texture("east", modLoc("block/poop_block"))
                 .texture("down", modLoc("block/poop_block"))
-                .texture("up", modLoc("block/" + getBlockPath(PBlocks.POOLIME_MAGGOTS_BLOCK.get())))
+                .texture("up", modLoc("block/" + getBlockPath(PoBlocks.POOLIME_MAGGOTS_BLOCK.get())))
                 .texture(PARTICLE, modLoc("block/poop_block"));
-        simpleBlockWithItem(PBlocks.POOLIME_MAGGOTS_BLOCK.get(), model);
+        simpleBlockWithItem(PoBlocks.POOLIME_MAGGOTS_BLOCK.get(), model);
     }
 
     private void registerPoopCake() {
@@ -152,11 +152,11 @@ public class PBlockStateProvider extends BlockStateProvider {
             cakeModels[bites] = cakeModel("poop_cake_slice" + bites, "cake_slice" + bites, bottom, top, side, inside);
         }
 
-        getVariantBuilder(PBlocks.POOP_CAKE.get()).forAllStates(state -> ConfiguredModel.builder()
+        getVariantBuilder(PoBlocks.POOP_CAKE.get()).forAllStates(state -> ConfiguredModel.builder()
                 .modelFile(cakeModels[state.getValue(CakeBlock.BITES)])
                 .build());
 
-        PBlocks.getPoopCandleCakes().forEach((candle, candleCake) -> {
+        PoBlocks.getPoopCandleCakes().forEach((candle, candleCake) -> {
             String candleCakePath = getBlockPath(candleCake.get());
             String candlePath = getBlockPath(candle);
             var unlitModel = candleCakeModel(candleCakePath, candlePath, bottom, top, side);
@@ -394,7 +394,7 @@ public class PBlockStateProvider extends BlockStateProvider {
         simpleBlockWithItem(block, cubeAll(block));
     }
 
-    private void blockFamily(PBlocks.BlockFamily family) {
+    private void blockFamily(PoBlocks.BlockFamily family) {
         blockFamily(family.block().get(), family.stairs().get(), family.slab().get(), family.wall().get());
     }
 

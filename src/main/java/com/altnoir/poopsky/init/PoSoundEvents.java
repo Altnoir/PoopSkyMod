@@ -12,7 +12,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
-public class PSoundEvents {
+public class PoSoundEvents {
     public static final DeferredRegister<SoundEvent> SOUND_EVENT = DeferredRegister.create(BuiltInRegistries.SOUND_EVENT, PoopSky.MOD_ID);
 
     public static final Supplier<SoundEvent> FART = registerSoundEvent("fart");

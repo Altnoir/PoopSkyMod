@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.content.recipe;
 
-import com.altnoir.poopsky.init.PRecipes;
+import com.altnoir.poopsky.init.PoRecipes;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;
@@ -49,12 +49,12 @@ public record BreedingChestRecipe(String parent1, String parent2, String result,
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return PRecipes.BREEDING_CHEST.serializer().get();
+        return PoRecipes.BREEDING_CHEST.serializer().get();
     }
 
     @Override
     public RecipeType<?> getType() {
-        return PRecipes.BREEDING_CHEST.type().get();
+        return PoRecipes.BREEDING_CHEST.type().get();
     }
 
     public static class Serializer implements RecipeSerializer<BreedingChestRecipe> {

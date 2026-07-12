@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.entity.p;
 
-import com.altnoir.poopsky.PTags;
-import com.altnoir.poopsky.init.PEntityType;
+import com.altnoir.poopsky.impl.PoTags;
+import com.altnoir.poopsky.init.PoEntityType;
 import com.altnoir.poopsky.util.PoopTntUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -38,7 +38,7 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
     }
 
     public PoopTntEntity(Level level, double x, double y, double z, @Nullable LivingEntity owner) {
-        this(PEntityType.POOP_TNT.get(), level);
+        this(PoEntityType.POOP_TNT.get(), level);
         this.setPos(x, y, z);
         double d = level.random.nextDouble() * (double) ((float) Math.PI * 2F);
         this.setDeltaMovement(-Math.sin(d) * 0.02, 0.2F, -Math.cos(d) * 0.02);
@@ -86,7 +86,7 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
         if (!this.level().isClientSide) {
             var state = this.level().getBlockState(this.getOnPos());
 
-            if (impactSpeed > INSTANT_EXPLOSION_THRESHOLD && !state.is(PTags.Blocks.EMPTY_LOGS) && (this.horizontalCollision || this.verticalCollision)) {
+            if (impactSpeed > INSTANT_EXPLOSION_THRESHOLD && !state.is(PoTags.Blocks.EMPTY_LOGS) && (this.horizontalCollision || this.verticalCollision)) {
                 this.setDeltaMovement(movement);
                 this.discard();
                 PoopTntUtil.triggerExplosion(this, radius + 1);
@@ -125,7 +125,7 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
         BlockPos checkPos = BlockPos.containing(midPos.x, midPos.y, midPos.z);
         BlockState state = this.level().getBlockState(checkPos);
 
-        if (state.is(PTags.Blocks.EMPTY_LOGS) && state.hasProperty(DirectionalBlock.FACING)) {
+        if (state.is(PoTags.Blocks.EMPTY_LOGS) && state.hasProperty(DirectionalBlock.FACING)) {
             return state.getValue(DirectionalBlock.FACING);
         }
         return null;

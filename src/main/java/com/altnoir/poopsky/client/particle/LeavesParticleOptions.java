@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.client.particle;
 
-import com.altnoir.poopsky.init.PParticles;
+import com.altnoir.poopsky.init.PoParticles;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.particles.ParticleOptions;
@@ -18,6 +18,6 @@ public record LeavesParticleOptions(int color) implements ParticleOptions {
 
     @Override
     public ParticleType<LeavesParticleOptions> getType() {
-        return PParticles.LEAVES_PARTICLE.get();
+        return PoParticles.LEAVES_PARTICLE.get();
     }
 }

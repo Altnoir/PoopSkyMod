@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.block.p;
 
-import com.altnoir.poopsky.init.PBlocks;
-import com.altnoir.poopsky.init.PParticles;
+import com.altnoir.poopsky.init.PoBlocks;
+import com.altnoir.poopsky.init.PoParticles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
@@ -55,7 +55,7 @@ public class PoopCakeBlock extends CakeBlock {
         }
 
         Block candle = Block.byItem(stack.getItem());
-        return candle instanceof CandleBlock candleBlock ? PBlocks.getPoopCandleCake(candleBlock) : null;
+        return candle instanceof CandleBlock candleBlock ? PoBlocks.getPoopCandleCake(candleBlock) : null;
     }
 
     @Override
@@ -81,7 +81,7 @@ public class PoopCakeBlock extends CakeBlock {
             player.getFoodData().eat(2, 0.1F);
             level.playSound(null, pos, SoundEvents.GENERIC_EAT, SoundSource.PLAYERS, 0.5F, 0.6F);
             if (!level.isClientSide() && level instanceof ServerLevel serverLevel) {
-                serverLevel.sendParticles(PParticles.POOP_PARTICLE.get(),
+                serverLevel.sendParticles(PoParticles.POOP_PARTICLE.get(),
                         pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
                         8,
                         0.0, -0.1, 0.0,

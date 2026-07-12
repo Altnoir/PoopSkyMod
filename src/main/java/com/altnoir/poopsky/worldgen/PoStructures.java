@@ -10,7 +10,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-public final class PSStructures {
+public final class PoStructures {
     public static final DeferredRegister<StructureType<?>> STRUCTURE_TYPES =
             DeferredRegister.create(Registries.STRUCTURE_TYPE, PoopSky.MOD_ID);
     public static final DeferredRegister<StructurePieceType> STRUCTURE_PIECES =
@@ -21,7 +21,7 @@ public final class PSStructures {
     public static final DeferredHolder<StructurePieceType, StructurePieceType> POOP_ISLAND_PIECE =
             STRUCTURE_PIECES.register("poop_island", () -> (StructurePieceType.StructureTemplateType) PoopIslandPiece::new);
 
-    private PSStructures() {
+    private PoStructures() {
     }
 
     public static void register(IEventBus eventBus) {

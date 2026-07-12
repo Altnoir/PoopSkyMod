@@ -8,9 +8,8 @@ import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.EntityEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import net.minecraft.world.entity.MobCategory;
-import net.neoforged.bus.api.IEventBus;
 
-public class PEntityType {
+public class PoEntityType {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
     public static final EntityEntry<ToiletPlugEntity> TOILET_PLUG = REGISTRATE.entity("toilet_plug", ToiletPlugEntity::new, MobCategory.MISC)

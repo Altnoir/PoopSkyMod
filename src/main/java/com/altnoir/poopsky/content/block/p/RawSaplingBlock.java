@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.content.block.abs.AbstractRawBlock;
-import com.altnoir.poopsky.worldgen.PSConfigureFeatures;
+import com.altnoir.poopsky.worldgen.PoConfigureFeatures;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
@@ -17,7 +17,7 @@ public class RawSaplingBlock extends AbstractRawBlock {
     public void performBonemeal(ServerLevel serverLevel, RandomSource randomSource, BlockPos blockPos, BlockState blockState) {
         serverLevel.registryAccess()
                 .registry(Registries.CONFIGURED_FEATURE)
-                .flatMap(holder -> holder.getHolder(PSConfigureFeatures.RAW_SAPLING_POOP_PATCH_BONEMEAL))
+                .flatMap(holder -> holder.getHolder(PoConfigureFeatures.RAW_SAPLING_POOP_PATCH_BONEMEAL))
                 .ifPresent(reference -> reference.value().place(serverLevel, serverLevel.getChunkSource().getGenerator(), randomSource, blockPos.above()));
     }
 }

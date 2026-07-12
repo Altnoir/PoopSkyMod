@@ -1,10 +1,10 @@
 package com.altnoir.poopsky.util;
 
-import com.altnoir.poopsky.PTags;
+import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.content.block.p.PoopTntBlock;
-import com.altnoir.poopsky.init.PBlocks;
-import com.altnoir.poopsky.init.PParticles;
-import com.altnoir.poopsky.init.PRecipes;
+import com.altnoir.poopsky.init.PoBlocks;
+import com.altnoir.poopsky.init.PoParticles;
+import com.altnoir.poopsky.init.PoRecipes;
 import com.altnoir.poopsky.content.recipe.POPExplosionRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -87,16 +87,16 @@ public class PoopTntUtil {
     }
 
     private static void handleInnerExplosionBlock(ServerLevel level, BlockPos pos, BlockState state) {
-        if (state.canBeReplaced() || state.is(PTags.Blocks.POOP_TNT_DESTROY)) {
+        if (state.canBeReplaced() || state.is(PoTags.Blocks.POOP_TNT_DESTROY)) {
             level.destroyBlock(pos, true, null);
-        } else if (state.is(PTags.Blocks.POOP_TNT_REPLACEABLE)) {
-            level.setBlockAndUpdate(pos, PBlocks.POOP_BLOCK.get().defaultBlockState());
+        } else if (state.is(PoTags.Blocks.POOP_TNT_REPLACEABLE)) {
+            level.setBlockAndUpdate(pos, PoBlocks.POOP_BLOCK.get().defaultBlockState());
         }
     }
 
     private static void handleOuterExplosionBlock(ServerLevel level, BlockPos pos, BlockState state) {
-        if (state.is(PTags.Blocks.POOP_TNT_REPLACEABLE)) {
-            level.setBlockAndUpdate(pos, PBlocks.POOP_BLOCK.get().defaultBlockState());
+        if (state.is(PoTags.Blocks.POOP_TNT_REPLACEABLE)) {
+            level.setBlockAndUpdate(pos, PoBlocks.POOP_BLOCK.get().defaultBlockState());
         } else if (state.canBeReplaced()) {
             level.destroyBlock(pos, true, null);
         }
@@ -116,7 +116,7 @@ public class PoopTntUtil {
         ItemStack itemStack = new ItemStack(block.asItem());
         SingleRecipeInput input = new SingleRecipeInput(itemStack);
 
-        for (RecipeHolder<POPExplosionRecipe> holder : level.getRecipeManager().getAllRecipesFor(PRecipes.POP_EXPLOSION.type().get())) {
+        for (RecipeHolder<POPExplosionRecipe> holder : level.getRecipeManager().getAllRecipesFor(PoRecipes.POP_EXPLOSION.type().get())) {
             if (holder.value().matches(input, explosionRadius)) {
                 return holder.value().output();
             }
@@ -128,7 +128,7 @@ public class PoopTntUtil {
         int particleCount = radius * 30;
         double offset = radius * 0.5;
         double speed = 0.4 + level.random.nextDouble() * 0.4;
-        level.sendParticles(PParticles.POOP_PARTICLE.get(), x, y, z, particleCount, offset, offset, offset, speed);
+        level.sendParticles(PoParticles.POOP_PARTICLE.get(), x, y, z, particleCount, offset, offset, offset, speed);
         if (radius <= 2) {
             level.sendParticles(ParticleTypes.EXPLOSION, x, y, z, radius, offset, offset, offset, speed);
         } else {

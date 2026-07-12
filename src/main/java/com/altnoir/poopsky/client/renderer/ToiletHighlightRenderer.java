@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.client.renderer;
 
 import com.altnoir.poopsky.content.block.ToiletComponent;
-import com.altnoir.poopsky.init.PComponents;
+import com.altnoir.poopsky.init.PoComponents;
 import com.altnoir.poopsky.content.item.p.ToiletLinkerItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -35,7 +35,7 @@ public class ToiletHighlightRenderer {
             }
         }
 
-        ToiletComponent comp = stack.get(PComponents.TOILET_COMPONENT.get());
+        ToiletComponent comp = stack.get(PoComponents.TOILET_COMPONENT.get());
         if (comp == null || comp.level1().isEmpty() || !comp.level2().isEmpty()) {
             return;
         }

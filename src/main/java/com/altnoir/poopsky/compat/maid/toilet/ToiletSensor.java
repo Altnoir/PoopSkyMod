@@ -2,8 +2,8 @@ package com.altnoir.poopsky.compat.maid.toilet;
 
 import com.altnoir.poopsky.compat.maid.MaidPlugin;
 import com.altnoir.poopsky.content.entity.p.ToiletEntity;
-import com.altnoir.poopsky.init.PEntityType;
-import com.altnoir.poopsky.PTags;
+import com.altnoir.poopsky.init.PoEntityType;
+import com.altnoir.poopsky.impl.PoTags;
 import com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -29,7 +29,7 @@ public class ToiletSensor extends Sensor<EntityMaid> {
     }
 
     private static boolean isToiletOccupied(ServerLevel level, BlockPos pos) {
-        List<ToiletEntity> entities = level.getEntities(PEntityType.TOILET.get(), new AABB(pos), e -> true);
+        List<ToiletEntity> entities = level.getEntities(PoEntityType.TOILET.get(), new AABB(pos), e -> true);
         for (ToiletEntity toilet : entities) {
             if (!toilet.getPassengers().isEmpty()) {
                 return true;
@@ -52,7 +52,7 @@ public class ToiletSensor extends Sensor<EntityMaid> {
 
                         mutablePos.set(centerPos.getX() + dx, centerPos.getY() + dy, centerPos.getZ() + dz);
 
-                        if (level.getBlockState(mutablePos).is(PTags.Blocks.TOILET_BLOCKS) && !isToiletOccupied(level, mutablePos)) {
+                        if (level.getBlockState(mutablePos).is(PoTags.Blocks.TOILET_BLOCKS) && !isToiletOccupied(level, mutablePos)) {
                             return mutablePos.immutable();
                         }
                     }

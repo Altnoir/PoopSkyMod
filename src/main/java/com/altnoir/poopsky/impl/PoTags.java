@@ -1,5 +1,6 @@
-package com.altnoir.poopsky;
+package com.altnoir.poopsky.impl;
 
+import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.compat.PSMods;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -11,7 +12,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
 
-public class PTags {
+public class PoTags {
     public interface Blocks {
         TagKey<Block> TOILET_BLOCKS = create("toilet_blocks");
         TagKey<Block> POOP_BLOCKS = create("poop_blocks");

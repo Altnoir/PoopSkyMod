@@ -76,28 +76,28 @@ public class PoopSkyClient {
         }
 
         public static void registerRenderTypes(RegisterNamedRenderTypesEvent event) {
-            event.register(PoopSky.loc("poop_empty_log"), RenderType.cutout(), RenderType.entityCutout(PBlocks.POOP_EMPTY_LOG.getId()));
+            event.register(PoopSky.loc("poop_empty_log"), RenderType.cutout(), RenderType.entityCutout(PoBlocks.POOP_EMPTY_LOG.getId()));
         }
 
         public static void registerRecipeBookCategories(RegisterRecipeBookCategoriesEvent event) {
-            event.registerRecipeCategoryFinder(PRecipes.SIEVE.type().get(), recipe -> RecipeBookCategories.UNKNOWN);
-            event.registerRecipeCategoryFinder(PRecipes.FLY_BARREL.type().get(), recipe -> RecipeBookCategories.UNKNOWN);
-            event.registerRecipeCategoryFinder(PRecipes.BREEDING_CHEST.type().get(), recipe -> RecipeBookCategories.UNKNOWN);
+            event.registerRecipeCategoryFinder(PoRecipes.SIEVE.type().get(), recipe -> RecipeBookCategories.UNKNOWN);
+            event.registerRecipeCategoryFinder(PoRecipes.FLY_BARREL.type().get(), recipe -> RecipeBookCategories.UNKNOWN);
+            event.registerRecipeCategoryFinder(PoRecipes.BREEDING_CHEST.type().get(), recipe -> RecipeBookCategories.UNKNOWN);
         }
 
         public static void registerItemProperties(FMLClientSetupEvent event) {
             event.enqueueWork(() -> {
-                ItemProperties.register(PItems.FLY.get(), PoopSky.loc("fly_type"),
+                ItemProperties.register(PoItems.FLY.get(), PoopSky.loc("fly_type"),
                         (stack, level, entity, seed) -> {
-                            String id = stack.get(PComponents.FLY_TYPE.get());
+                            String id = stack.get(PoComponents.FLY_TYPE.get());
                             return (float) FlyType.getIndex(id != null ? id : PFlyTypes.NORMAL.id());
                         });
 
-                for (Item item : PItems.getAllItems()) {
+                for (Item item : PoItems.getAllItems()) {
                     if (item instanceof ToiletBlockItem && item != Items.AIR) {
                         ItemProperties.register(item, PoopSky.loc("toilet_type"),
                                 (stack, level, entity, seed) -> {
-                                    ToiletType type = stack.get(PComponents.TOILET_TYPE.get());
+                                    ToiletType type = stack.get(PoComponents.TOILET_TYPE.get());
                                     if (type == null) return 0;
                                     var categoryTypes = ToiletType.getByCategory(type.category());
                                     int localIndex = 0;
@@ -113,8 +113,8 @@ public class PoopSkyClient {
         }
 
         public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
-            event.registerSpriteSet(PParticles.POOP_PARTICLE.get(), PoopParticle.Provider::new);
-            event.registerSpriteSet(PParticles.LEAVES_PARTICLE.get(), LeavesParticle.provider());
+            event.registerSpriteSet(PoParticles.POOP_PARTICLE.get(), PoopParticle.Provider::new);
+            event.registerSpriteSet(PoParticles.LEAVES_PARTICLE.get(), LeavesParticle.provider());
         }
 
         public static void onRegisterBlockColors(RegisterColorHandlersEvent.Block event) {
@@ -128,11 +128,11 @@ public class PoopSkyClient {
                     return 0x47311A;
                 }
                 return -1;
-            }, PBlocks.WATER_COMPOOPER.get());
+            }, PoBlocks.WATER_COMPOOPER.get());
         }
 
         public static void onRegisterItemColors(RegisterColorHandlersEvent.Item event) {
-            event.register((stack, tintIndex) -> tintIndex == 1 ? 0x3F76E4 : -1, PBlocks.WATER_COMPOOPER.get());
+            event.register((stack, tintIndex) -> tintIndex == 1 ? 0x3F76E4 : -1, PoBlocks.WATER_COMPOOPER.get());
         }
 
         public static void onRegisterBlockRenderBuffers(net.neoforged.neoforge.client.event.RegisterRenderBuffersEvent event) {
@@ -140,7 +140,7 @@ public class PoopSkyClient {
         }
 
         public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
-            event.registerBlock(ToiletClientBlockExtensions.INSTANCE, PBlocks.WOODEN_TOILET.get(), PBlocks.HARD_TOILET.get());
+            event.registerBlock(ToiletClientBlockExtensions.INSTANCE, PoBlocks.WOODEN_TOILET.get(), PoBlocks.HARD_TOILET.get());
 
             var toiletPlugRenderer = new ToiletPlugItemRenderer();
             event.registerItem(new IClientItemExtensions() {
@@ -148,7 +148,7 @@ public class PoopSkyClient {
                 public BlockEntityWithoutLevelRenderer getCustomRenderer() {
                     return toiletPlugRenderer;
                 }
-            }, PItems.TOILET_PLUG.get());
+            }, PoItems.TOILET_PLUG.get());
 
             event.registerFluidType(new IClientFluidTypeExtensions() {
                 @Override

@@ -1,10 +1,11 @@
-package com.altnoir.poopsky.init;
+package com.altnoir.poopsky.impl;
 
 import com.altnoir.poopsky.content.block.ToiletType;
+import com.altnoir.poopsky.init.PoBlocks;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.Blocks;
 
-public final class PToiletTypes {
+public final class PoToiletTypes {
     // ——— 木质厕所 ———
     public static final ToiletType OAK = ToiletType.register(Blocks.OAK_PLANKS, ToiletType.Category.WOOD).nameKey("block.poopsky.toilet.oak");
     public static final ToiletType SPRUCE = ToiletType.register(Blocks.SPRUCE_PLANKS, ToiletType.Category.WOOD).nameKey("block.poopsky.toilet.spruce");
@@ -19,7 +20,7 @@ public final class PToiletTypes {
     public static final ToiletType WARPED = ToiletType.register(Blocks.WARPED_PLANKS, ToiletType.Category.WOOD).nameKey("block.poopsky.toilet.warped");
 
     // ——— 石质厕所 ———
-    public static final ToiletType TILE = ToiletType.register(PBlocks.TILE_BLOCK.get(), ToiletType.Category.HARD).nameKey("block.poopsky.toilet.tile");
+    public static final ToiletType TILE = ToiletType.register(PoBlocks.TILE_BLOCK.get(), ToiletType.Category.HARD).nameKey("block.poopsky.toilet.tile");
     public static final ToiletType STONE = ToiletType.register(Blocks.STONE, ToiletType.Category.HARD);
     public static final ToiletType COBBLESTONE = ToiletType.register(Blocks.COBBLESTONE, ToiletType.Category.HARD);
     public static final ToiletType MOSSY_COBBLESTONE = ToiletType.register(Blocks.MOSSY_COBBLESTONE, ToiletType.Category.HARD);
@@ -125,7 +126,7 @@ public final class PToiletTypes {
     public static final ToiletType OBSIDIAN = ToiletType.register(Blocks.OBSIDIAN, ToiletType.Category.HARD);
     public static final ToiletType CRYING_OBSIDIAN = ToiletType.register(Blocks.CRYING_OBSIDIAN, ToiletType.Category.HARD);
 
-    private PToiletTypes() {
+    private PoToiletTypes() {
     }
     public static void init() {
     }

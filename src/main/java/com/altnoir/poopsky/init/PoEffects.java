@@ -13,7 +13,7 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
-public class PEffects {
+public class PoEffects {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
     public static final RegistryEntry<MobEffect, MobEffect> FECAL_INCONTINENCE = REGISTRATE.simple(

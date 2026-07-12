@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.content.entity.p.PoolimeEntity;
-import com.altnoir.poopsky.init.PEntityType;
+import com.altnoir.poopsky.init.PoEntityType;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -47,7 +47,7 @@ public class PoolimeMaggotsBlock extends Block {
     @Override
     protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         super.randomTick(state, level, pos, random);
-        PoolimeEntity poolime = PEntityType.POOLIME.get().create(level);
+        PoolimeEntity poolime = PoEntityType.POOLIME.get().create(level);
 
         if (poolime != null) {
             int count = level.getEntitiesOfClass(PoolimeEntity.class, poolime.getBoundingBox().inflate(64.0D)).size();

@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.impl.event;
 
 import com.altnoir.poopsky.content.entity.p.FlyEntity;
-import com.altnoir.poopsky.init.PBlocks;
-import com.altnoir.poopsky.init.PEntityType;
+import com.altnoir.poopsky.init.PoBlocks;
+import com.altnoir.poopsky.init.PoEntityType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -70,7 +70,7 @@ public class PumkinBlockEvents {
     }
 
     private static SpawnResult createFly(Level level, BlockPattern.BlockPatternMatch match) {
-        FlyEntity fly = PEntityType.FLY.get().create(level);
+        FlyEntity fly = PoEntityType.FLY.get().create(level);
         return new SpawnResult(GolemType.FLY, fly, match, match.getBlock(0, 1, 0).getPos());
     }
 
@@ -85,14 +85,14 @@ public class PumkinBlockEvents {
         return BlockPatternBuilder.start()
                 .aisle("^", "#")
                 .where('^', BlockInWorld.hasState(predicate))
-                .where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(PBlocks.POOP_BLOCK.get())))
+                .where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(PoBlocks.POOP_BLOCK.get())))
                 .build();
     }
 
     private static BlockPattern getVillagerDispenser() {
         return BlockPatternBuilder.start()
                 .aisle(" ", "#")
-                .where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(PBlocks.POOP_BLOCK.get())))
+                .where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(PoBlocks.POOP_BLOCK.get())))
                 .build();
     }
 
@@ -100,14 +100,14 @@ public class PumkinBlockEvents {
         return BlockPatternBuilder.start()
                 .aisle("^", "#")
                 .where('^', BlockInWorld.hasState(predicate))
-                .where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(PBlocks.CHILI_POOP_BLOCK.get())))
+                .where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(PoBlocks.CHILI_POOP_BLOCK.get())))
                 .build();
     }
 
     private static BlockPattern getBlazeDispenser() {
         return BlockPatternBuilder.start()
                 .aisle(" ", "#")
-                .where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(PBlocks.CHILI_POOP_BLOCK.get())))
+                .where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(PoBlocks.CHILI_POOP_BLOCK.get())))
                 .build();
     }
 
@@ -115,14 +115,14 @@ public class PumkinBlockEvents {
         return BlockPatternBuilder.start()
                 .aisle("^", "#")
                 .where('^', BlockInWorld.hasState(predicate))
-                .where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(PBlocks.MAGGOTS_BLOCK.get())))
+                .where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(PoBlocks.MAGGOTS_BLOCK.get())))
                 .build();
     }
 
     private static BlockPattern getFlyDispenser() {
         return BlockPatternBuilder.start()
                 .aisle(" ", "#")
-                .where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(PBlocks.MAGGOTS_BLOCK.get())))
+                .where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(PoBlocks.MAGGOTS_BLOCK.get())))
                 .build();
     }
 

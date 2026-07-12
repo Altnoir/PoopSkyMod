@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.recipe;
 
 import com.altnoir.poopsky.content.FlyType;
-import com.altnoir.poopsky.init.PRecipes;
+import com.altnoir.poopsky.init.PoRecipes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
@@ -16,7 +16,7 @@ public class PFlyRecipes {
     public static ItemStack getProduct(Level level, FlyType.Type type) {
         if (level == null) return ItemStack.EMPTY;
         return level.getRecipeManager()
-                .getAllRecipesFor(PRecipes.FLY_BARREL.type().get())
+                .getAllRecipesFor(PoRecipes.FLY_BARREL.type().get())
                 .stream()
                 .filter(holder -> holder.value().matches(type.id()))
                 .findFirst()
@@ -28,7 +28,7 @@ public class PFlyRecipes {
         if (level == null) return fallbackResult(parent1, parent2);
 
         List<RecipeHolder<BreedingChestRecipe>> recipes = level.getRecipeManager()
-                .getAllRecipesFor(PRecipes.BREEDING_CHEST.type().get());
+                .getAllRecipesFor(PoRecipes.BREEDING_CHEST.type().get());
 
         Random random = new Random();
         for (var holder : recipes) {

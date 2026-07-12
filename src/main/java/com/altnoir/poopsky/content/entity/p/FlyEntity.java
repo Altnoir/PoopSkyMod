@@ -1,11 +1,11 @@
 package com.altnoir.poopsky.content.entity.p;
 
-import com.altnoir.poopsky.PTags;
+import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.client.sound.FlyBuzzSoundWrapper;
-import com.altnoir.poopsky.init.PDamageTypes;
-import com.altnoir.poopsky.init.PEntityType;
-import com.altnoir.poopsky.init.PItems;
-import com.altnoir.poopsky.init.PSoundEvents;
+import com.altnoir.poopsky.impl.PoDamageTypes;
+import com.altnoir.poopsky.init.PoEntityType;
+import com.altnoir.poopsky.init.PoItems;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.content.item.PFlyTypes;
 import com.altnoir.poopsky.content.item.p.FlyItem;
 import net.minecraft.core.BlockPos;
@@ -81,7 +81,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
         this.goalSelector.addGoal(0, new FloatGoal(this)); // 防止溺水
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.4)); // 受到伤害时逃跑
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0)); // 繁殖行为
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, itemStack -> itemStack.is(PTags.Items.POOPS), false));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, itemStack -> itemStack.is(PoTags.Items.POOPS), false));
         this.goalSelector.addGoal(4, new FlyToToiletGoal(this, 1.1)); // 主动寻找厕所
         this.goalSelector.addGoal(5, new FollowParentGoal(this, 1.25)); // 跟随父母
         this.goalSelector.addGoal(6, new WaterAvoidingRandomFlyingGoal(this, 1.0)); // 随机飞行，避开水面
@@ -135,7 +135,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
         // 产卵逻辑
         if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.eggTime <= 0) {
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-            this.spawnAtLocation(PItems.MAGGOTS_SEEDS.get());
+            this.spawnAtLocation(PoItems.MAGGOTS_SEEDS.get());
             this.gameEvent(GameEvent.ENTITY_PLACE);
             this.eggTime = this.random.nextInt(6000) + 6000;
         }
@@ -153,7 +153,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
 
     @Override
     public boolean isFood(ItemStack stack) {
-        return stack.is(PTags.Items.POOPS);
+        return stack.is(PoTags.Items.POOPS);
     }
 
     @Override
@@ -189,17 +189,17 @@ public class FlyEntity extends Animal implements FlyingAnimal {
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return PSoundEvents.ENTITY_FLY_HURT.get();
+        return PoSoundEvents.ENTITY_FLY_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return PSoundEvents.ENTITY_FLY_DEATH.get();
+        return PoSoundEvents.ENTITY_FLY_DEATH.get();
     }
 
     @Override
     public @Nullable FlyEntity getBreedOffspring(ServerLevel level, AgeableMob otherParent) {
-        return PEntityType.FLY.get().create(level);
+        return PoEntityType.FLY.get().create(level);
     }
 
     @Override
@@ -209,7 +209,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
                 var blueFlyItem = FlyItem.withType(PFlyTypes.BLUE.get());
                 this.spawnAtLocation(blueFlyItem);
             }
-            if (source.is(PDamageTypes.ROUNDWORM)) {
+            if (source.is(PoDamageTypes.ROUNDWORM)) {
                 var whiteFlyItem = FlyItem.withType(PFlyTypes.WHITE.get());
                 this.spawnAtLocation(whiteFlyItem);
             }
@@ -220,7 +220,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
                     itemEntity.setInvulnerable(true);
                 }
             }
-            if (source.is(PDamageTypes.POOP_BALL)) {
+            if (source.is(PoDamageTypes.POOP_BALL)) {
                 var brownFlyItem = FlyItem.withType(PFlyTypes.BROWN.get());
                 this.spawnAtLocation(brownFlyItem);
             }
@@ -289,7 +289,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
         public boolean canContinueToUse() {
             return this.targetPos != null
                     && !this.fly.getNavigation().isDone()
-                    && this.fly.level().getBlockState(this.targetPos).is(PTags.Blocks.TOILET_BLOCKS)
+                    && this.fly.level().getBlockState(this.targetPos).is(PoTags.Blocks.TOILET_BLOCKS)
                     && this.fly.blockPosition().distSqr(this.targetPos) > 4.0;
         }
 
@@ -320,7 +320,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
             BlockPos nearest = null;
             double nearestDistance = Double.MAX_VALUE;
             for (BlockPos pos : BlockPos.withinManhattan(origin, SEARCH_RADIUS, VERTICAL_SEARCH_RADIUS, SEARCH_RADIUS)) {
-                if (!this.fly.level().getBlockState(pos).is(PTags.Blocks.TOILET_BLOCKS)) {
+                if (!this.fly.level().getBlockState(pos).is(PoTags.Blocks.TOILET_BLOCKS)) {
                     continue;
                 }
                 double distance = origin.distSqr(pos);

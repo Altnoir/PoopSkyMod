@@ -11,7 +11,7 @@ import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 
 import java.util.List;
 
-public class PSPlacedFeatures {
+public class PoPlacedFeatures {
     public static void bootstrap(BootstrapContext<PlacedFeature> context) {
 
     }

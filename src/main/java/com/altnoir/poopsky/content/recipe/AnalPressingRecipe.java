@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.content.recipe;
 
-import com.altnoir.poopsky.init.PRecipes;
+import com.altnoir.poopsky.init.PoRecipes;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -48,12 +48,12 @@ public record AnalPressingRecipe(Ingredient input, Block output, Block replaceTa
 
     @Override
     public RecipeType<?> getType() {
-        return PRecipes.ANAL_PRESSING.type().get();
+        return PoRecipes.ANAL_PRESSING.type().get();
     }
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return PRecipes.ANAL_PRESSING.serializer().get();
+        return PoRecipes.ANAL_PRESSING.serializer().get();
     }
 
     public void applyConversion(Level level, BlockPos centerPos) {

@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.block.abs;
 
 import com.altnoir.poopsky.Config;
-import com.altnoir.poopsky.init.PBlocks;
+import com.altnoir.poopsky.init.PoBlocks;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -131,7 +131,7 @@ public abstract class AbstractCompooperBlock extends Block {
 
     protected void setBlock(BlockState state, Level level, BlockPos pos, Player player, SoundEvent sound, float pitch) {
         level.playSound(null, pos, sound, SoundSource.BLOCKS, 1.0F, pitch);
-        var newState = state.getValue(LEVEL) == MIN_LEVEL ? PBlocks.COMPOOPER.get().defaultBlockState() : state;
+        var newState = state.getValue(LEVEL) == MIN_LEVEL ? PoBlocks.COMPOOPER.get().defaultBlockState() : state;
         level.setBlockAndUpdate(pos, newState);
         level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, newState));
     }
@@ -152,7 +152,7 @@ public abstract class AbstractCompooperBlock extends Block {
     protected static void lowerFillLevel(BlockState state, Level level, BlockPos pos) {
         int newLevel = state.getValue(LEVEL) - 1;
         BlockState newState = newLevel == MIN_LEVEL
-                ? PBlocks.COMPOOPER.get().defaultBlockState()
+                ? PoBlocks.COMPOOPER.get().defaultBlockState()
                 : state.setValue(LEVEL, newLevel);
         level.setBlockAndUpdate(pos, newState);
         level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(newState));
@@ -180,7 +180,7 @@ public abstract class AbstractCompooperBlock extends Block {
             if (newLevel > MIN_LEVEL) {
                 level.setBlockAndUpdate(pos, state.setValue(LEVEL, newLevel));
             } else {
-                BlockState compooperBlock = PBlocks.COMPOOPER.get().defaultBlockState();
+                BlockState compooperBlock = PoBlocks.COMPOOPER.get().defaultBlockState();
                 level.setBlockAndUpdate(pos, compooperBlock);
                 level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(itemEntity, compooperBlock));
             }

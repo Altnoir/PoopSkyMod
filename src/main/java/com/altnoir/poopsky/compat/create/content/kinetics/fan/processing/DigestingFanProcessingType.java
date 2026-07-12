@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.compat.create.content.kinetics.fan.processing;
 
-import com.altnoir.poopsky.PTags;
+import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.compat.create.PSRecipeTypes;
-import com.altnoir.poopsky.init.PParticles;
+import com.altnoir.poopsky.init.PoParticles;
 import com.simibubi.create.content.kinetics.fan.processing.FanProcessingType;
 import com.simibubi.create.foundation.recipe.RecipeApplier;
 import net.createmod.catnip.theme.Color;
@@ -30,12 +30,12 @@ public class DigestingFanProcessingType implements FanProcessingType {
     @Override
     public boolean isValidAt(Level level, BlockPos pos) {
         FluidState fluidState = level.getFluidState(pos);
-        if (fluidState.is(PTags.Fluids.FAN_PROCESSING_CATALYSTS_DIGESTING)) {
+        if (fluidState.is(PoTags.Fluids.FAN_PROCESSING_CATALYSTS_DIGESTING)) {
             return true;
         }
 
         BlockState blockState = level.getBlockState(pos);
-        return blockState.is(PTags.Blocks.FAN_PROCESSING_CATALYSTS_DIGESTING);
+        return blockState.is(PoTags.Blocks.FAN_PROCESSING_CATALYSTS_DIGESTING);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class DigestingFanProcessingType implements FanProcessingType {
         level.addParticle(new DustParticleOptions(color, 1), pos.x + (level.random.nextFloat() - .5f) * .5f,
                 pos.y + .5f, pos.z + (level.random.nextFloat() - .5f) * .5f, 0, 1 / 8f, 0);
         if (level.random.nextInt(4) == 0) {
-            level.addParticle(PParticles.POOP_PARTICLE.get(), pos.x + (level.random.nextFloat() - .5f) * .5f,
+            level.addParticle(PoParticles.POOP_PARTICLE.get(), pos.x + (level.random.nextFloat() - .5f) * .5f,
                     pos.y + .5f, pos.z + (level.random.nextFloat() - .5f) * .5f, 0, -0.05, 0);
         }
     }
@@ -78,7 +78,7 @@ public class DigestingFanProcessingType implements FanProcessingType {
         particleAccess.setColor(Color.mixColors(0x8B6914, 0x5C4400, random.nextFloat()));
         particleAccess.setAlpha(1f);
         if (random.nextFloat() < 1 / 64f)
-            particleAccess.spawnExtraParticle(PParticles.POOP_PARTICLE.get(), .125f);
+            particleAccess.spawnExtraParticle(PoParticles.POOP_PARTICLE.get(), .125f);
         if (random.nextFloat() < 1 / 128f)
             particleAccess.spawnExtraParticle(ParticleTypes.DUST_PLUME, .075f);
     }

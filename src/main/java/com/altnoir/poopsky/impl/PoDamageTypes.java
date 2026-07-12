@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.init;
+package com.altnoir.poopsky.impl;
 
 import com.altnoir.poopsky.PoopSky;
 import net.minecraft.core.registries.Registries;
@@ -9,7 +9,7 @@ import net.minecraft.world.damagesource.DamageType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PDamageTypes {
+public class PoDamageTypes {
     private static final List<ResourceKey<DamageType>> KEYS = new ArrayList<>();
 
     public static final ResourceKey<DamageType> ROUNDWORM = create("roundworm");

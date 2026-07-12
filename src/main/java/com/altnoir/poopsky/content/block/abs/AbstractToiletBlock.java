@@ -5,6 +5,7 @@ import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.entity.p.ToiletEntity;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
+import com.altnoir.poopsky.impl.PoToiletTypes;
 import com.altnoir.poopsky.init.*;
 import com.altnoir.poopsky.util.toiletUtil;
 import net.minecraft.core.BlockPos;
@@ -109,7 +110,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
 
     public AbstractToiletBlock(Properties properties) {
         super(properties);
-        PToiletTypes.init();
+        PoToiletTypes.init();
         this.registerDefaultState(
                 this.defaultBlockState()
                         .setValue(FACING, Direction.NORTH)
@@ -202,10 +203,10 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
 
     @Nullable
     private ToiletEntity getOrCreateToiletEntity(ServerLevel level, BlockPos pos) {
-        return level.getEntities(PEntityType.TOILET.get(), new AABB(pos), e -> true)
+        return level.getEntities(PoEntityType.TOILET.get(), new AABB(pos), e -> true)
                 .stream()
                 .findFirst()
-                .orElseGet(() -> PEntityType.TOILET.get().spawn(level, pos, MobSpawnType.TRIGGERED));
+                .orElseGet(() -> PoEntityType.TOILET.get().spawn(level, pos, MobSpawnType.TRIGGERED));
     }
 
     private void consumeFireStarter(ItemStack stack, Player player, InteractionHand hand) {
@@ -276,7 +277,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
             if (level.getBlockEntity(pos) instanceof ToiletBlockEntity toilet) {
                 toilet.clearLinkedBlock();
             }
-            level.getEntities(PEntityType.TOILET.get(), new AABB(pos), e -> true).forEach(Entity::kill);
+            level.getEntities(PoEntityType.TOILET.get(), new AABB(pos), e -> true).forEach(Entity::kill);
             if (!level.isClientSide) {
                 updateAdjacentConnections(level, pos, oldState);
             }
@@ -324,7 +325,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     }
 
     private void poopAnvil(Level level, BlockPos pos, Entity entity) {
-        Item poopItem = toiletUtil.isGoldenToilet(level, pos) ? PItems.GOLDEN_POOP.get() : PItems.POOP.get();
+        Item poopItem = toiletUtil.isGoldenToilet(level, pos) ? PoItems.GOLDEN_POOP.get() : PoItems.POOP.get();
         var poop = new ItemEntity(level, entity.getX(), entity.getY() + 0.1, entity.getZ(), new ItemStack(poopItem, ANVIL_POOP_COUNT));
         poop.setDefaultPickUpDelay();
         level.addFreshEntity(poop);
@@ -336,7 +337,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
             if (player.isShiftKeyDown() && toiletUtil.isEntityCentered(pos, player)) {
                 var playerData = player.getPersistentData();
                 long lastPoopTime = playerData.getLong("poopTime");
-                toiletUtil.canPoop(level, player, player.hasEffect(PEffects.INTESTINAL_SPASM), false, 0.1F, 0.5F, lastPoopTime,
+                toiletUtil.canPoop(level, player, player.hasEffect(PoEffects.INTESTINAL_SPASM), false, 0.1F, 0.5F, lastPoopTime,
                         time -> playerData.putLong("poopTime", time));
             }
         }
@@ -462,7 +463,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
         if (level.getBlockState(above).is(Blocks.FIRE)) {
             level.setBlock(above, Blocks.AIR.defaultBlockState(), 3);
         }
-        var poop = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + TOILET_USE_Y, pos.getZ() + 0.5, new ItemStack(PItems.POOP.get(), EXPLOSION_POOP_COUNT));
+        var poop = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + TOILET_USE_Y, pos.getZ() + 0.5, new ItemStack(PoItems.POOP.get(), EXPLOSION_POOP_COUNT));
         level.addFreshEntity(poop);
     }
 
@@ -551,6 +552,6 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return level.isClientSide() ? null : createTickerHelper(blockEntityType, PBlockEntityType.TOILET_BLOCK_ENTITY.get(), ToiletBlockEntity::tick);
+        return level.isClientSide() ? null : createTickerHelper(blockEntityType, PoBlockEntityType.TOILET_BLOCK_ENTITY.get(), ToiletBlockEntity::tick);
     }
 }

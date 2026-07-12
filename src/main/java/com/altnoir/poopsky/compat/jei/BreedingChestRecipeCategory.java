@@ -2,7 +2,7 @@ package com.altnoir.poopsky.compat.jei;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.FlyType;
-import com.altnoir.poopsky.init.PBlocks;
+import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.content.recipe.BreedingChestRecipe;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -39,7 +39,7 @@ public class BreedingChestRecipeCategory implements IRecipeCategory<RecipeHolder
 
     public BreedingChestRecipeCategory(IJeiHelpers helpers, IDrawable arrow) {
         var guiHelper = helpers.getGuiHelper();
-        this.icon = guiHelper.createDrawableItemStack(new ItemStack(PBlocks.BREEDING_CHEST.get()));
+        this.icon = guiHelper.createDrawableItemStack(new ItemStack(PoBlocks.BREEDING_CHEST.get()));
         this.title = Component.translatable("jei.category." + PoopSky.MOD_ID + ".breeding_chest");
         this.arrow = arrow;
         this.slot = guiHelper.getSlotDrawable();

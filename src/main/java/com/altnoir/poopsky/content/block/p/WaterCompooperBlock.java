@@ -3,7 +3,7 @@ package com.altnoir.poopsky.content.block.p;
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.content.item.PFlyTypes;
 import com.altnoir.poopsky.content.item.p.FlyItem;
-import com.altnoir.poopsky.init.PBlocks;
+import com.altnoir.poopsky.init.PoBlocks;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
@@ -40,7 +40,7 @@ public class WaterCompooperBlock extends AbstractCompooperBlock {
 
     @Override
     public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
-        return new ItemStack(PBlocks.COMPOOPER.get());
+        return new ItemStack(PoBlocks.COMPOOPER.get());
     }
 
     @Override

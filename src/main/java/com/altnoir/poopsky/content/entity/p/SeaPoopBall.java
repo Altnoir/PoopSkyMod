@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.content.entity.p;
 
-import com.altnoir.poopsky.init.PItems;
+import com.altnoir.poopsky.init.PoItems;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -29,7 +29,7 @@ public class SeaPoopBall extends ThrowableItemProjectile {
 
     @Override
     protected @NotNull Item getDefaultItem() {
-        return PItems.SEA_POOP_BALL.get();
+        return PoItems.SEA_POOP_BALL.get();
     }
 
     private ParticleOptions getParticle() {

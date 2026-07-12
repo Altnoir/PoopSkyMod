@@ -2,7 +2,7 @@ package com.altnoir.poopsky.compat.jei;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.FlyType;
-import com.altnoir.poopsky.init.PBlocks;
+import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.content.recipe.FlyBarrelRecipe;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -36,7 +36,7 @@ public class FlyBarrelRecipeCategory implements IRecipeCategory<RecipeHolder<Fly
 
     public FlyBarrelRecipeCategory(IJeiHelpers helpers, IDrawable arrow) {
         var guiHelper = helpers.getGuiHelper();
-        this.icon = guiHelper.createDrawableItemStack(new ItemStack(PBlocks.FLY_BARREL.get()));
+        this.icon = guiHelper.createDrawableItemStack(new ItemStack(PoBlocks.FLY_BARREL.get()));
         this.title = Component.translatable("jei.category." + PoopSky.MOD_ID + ".fly_barrel");
         this.arrow = arrow;
         this.slot = guiHelper.getSlotDrawable();

@@ -2,8 +2,8 @@ package com.altnoir.poopsky.compat.jei;
 
 import com.altnoir.poopsky.content.item.PFlyTypes;
 import com.altnoir.poopsky.content.item.p.FlyItem;
-import com.altnoir.poopsky.init.PBlocks;
-import com.altnoir.poopsky.init.PItems;
+import com.altnoir.poopsky.init.PoBlocks;
+import com.altnoir.poopsky.init.PoItems;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.network.chat.Component;
@@ -11,19 +11,19 @@ import net.minecraft.network.chat.Component;
 public class PSJEIInfo {
     public static void register(IRecipeRegistration registration) {
         registration.addIngredientInfo(
-                PItems.FOLIUM_SENNAE.get(),
+                PoItems.FOLIUM_SENNAE.get(),
                 Component.translatable("jei.poopsky.folium_senna")
         );
         registration.addIngredientInfo(
-                PItems.SAPLING_POOP_BALL.get(),
+                PoItems.SAPLING_POOP_BALL.get(),
                 Component.translatable("jei.poopsky.sapling_poop_ball")
         );
         registration.addIngredientInfo(
-                PItems.SEA_POOP_BALL.get(),
+                PoItems.SEA_POOP_BALL.get(),
                 Component.translatable("jei.poopsky.sea_poop_ball")
         );
         registration.addIngredientInfo(
-                PItems.MAGGOTS_SEEDS.get(),
+                PoItems.MAGGOTS_SEEDS.get(),
                 Component.translatable("jei.poopsky.maggots_seeds")
         );
         registration.addIngredientInfo(
@@ -57,7 +57,7 @@ public class PSJEIInfo {
                 Component.translatable("jei.poopsky.fly_desc.dragon_fruit")
         );
         registration.addIngredientInfo(
-                PBlocks.BREEDING_CHEST.get(),
+                PoBlocks.BREEDING_CHEST.get(),
                 Component.translatable("jei.poopsky.breeding_chest_desc")
         );
     }

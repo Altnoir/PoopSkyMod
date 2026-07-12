@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.datagen;
 
-import com.altnoir.poopsky.init.PBlocks;
+import com.altnoir.poopsky.init.PoBlocks;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
@@ -17,15 +17,15 @@ public class PBlockLootTableProvider extends BlockLootSubProvider {
 
     @Override
     protected void generate() {
-        this.add(PBlocks.WOODEN_TOILET.get(), PBlocks.createToiletDrop(PBlocks.WOODEN_TOILET.get()));
-        this.add(PBlocks.HARD_TOILET.get(), PBlocks.createToiletDrop(PBlocks.HARD_TOILET.get()));
+        this.add(PoBlocks.WOODEN_TOILET.get(), PoBlocks.createToiletDrop(PoBlocks.WOODEN_TOILET.get()));
+        this.add(PoBlocks.HARD_TOILET.get(), PoBlocks.createToiletDrop(PoBlocks.HARD_TOILET.get()));
     }
 
     @Override
     protected @NotNull Iterable<Block> getKnownBlocks() {
         return List.of(
-                PBlocks.WOODEN_TOILET.get(),
-                PBlocks.HARD_TOILET.get()
+                PoBlocks.WOODEN_TOILET.get(),
+                PoBlocks.HARD_TOILET.get()
         );
     }
 }

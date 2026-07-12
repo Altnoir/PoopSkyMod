@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.item.p;
 
 import com.altnoir.poopsky.Config;
-import com.altnoir.poopsky.init.PEffects;
+import com.altnoir.poopsky.init.PoEffects;
 import com.altnoir.poopsky.network.TimeBellFreezePayload;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
@@ -34,7 +34,7 @@ public class TimeBellItem extends Item {
         if (!level.isClientSide && level.getServer() != null) {
             var server = level.getServer();
             if (server.tickRateManager().isFrozen()) {
-                player.removeEffect(PEffects.MOMENT_OF_PTYME);
+                player.removeEffect(PoEffects.MOMENT_OF_PTYME);
                 unfreeze(server, player);
             } else {
                 freeze(server, player);
@@ -52,7 +52,7 @@ public class TimeBellItem extends Item {
         broadcastFreezeState(server, true);
 
         if (!Config.unlimitedFreeze) {
-            player.addEffect(new MobEffectInstance(PEffects.MOMENT_OF_PTYME, FREEZE_TICKS, 0, false, false));
+            player.addEffect(new MobEffectInstance(PoEffects.MOMENT_OF_PTYME, FREEZE_TICKS, 0, false, false));
         }
         player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BELL_BLOCK, SoundSource.PLAYERS, 1.0F, 0.5F);
         player.displayClientMessage(Component.translatable("message.poopsky.time_bell.frozen"), true);

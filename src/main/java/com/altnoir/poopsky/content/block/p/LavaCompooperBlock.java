@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
-import com.altnoir.poopsky.init.PBlocks;
+import com.altnoir.poopsky.init.PoBlocks;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
@@ -35,7 +35,7 @@ public class LavaCompooperBlock extends AbstractCompooperBlock {
 
     @Override
     public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
-        return new ItemStack(PBlocks.COMPOOPER.get());
+        return new ItemStack(PoBlocks.COMPOOPER.get());
     }
 
     @Override

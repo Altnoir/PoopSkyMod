@@ -2,8 +2,8 @@ package com.altnoir.poopsky.content;
 
 import com.altnoir.poopsky.content.block.ToiletType;
 import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
-import com.altnoir.poopsky.init.PComponents;
-import com.altnoir.poopsky.init.PLootFunctions;
+import com.altnoir.poopsky.init.PoComponents;
+import com.altnoir.poopsky.init.PoLootFunctions;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.world.item.ItemStack;
@@ -40,7 +40,7 @@ public class SetToiletTypeFunction extends LootItemConditionalFunction {
         }
 
         if (type != null) {
-            stack.set(PComponents.TOILET_TYPE.get(), type);
+            stack.set(PoComponents.TOILET_TYPE.get(), type);
         }
 
         return stack;
@@ -48,7 +48,7 @@ public class SetToiletTypeFunction extends LootItemConditionalFunction {
 
     @Override
     public LootItemFunctionType<SetToiletTypeFunction> getType() {
-        return PLootFunctions.SET_TOILET_TYPE.get();
+        return PoLootFunctions.SET_TOILET_TYPE.get();
     }
 
     public static Builder setType() {

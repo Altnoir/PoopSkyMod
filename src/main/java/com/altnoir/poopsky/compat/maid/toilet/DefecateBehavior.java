@@ -2,8 +2,8 @@ package com.altnoir.poopsky.compat.maid.toilet;
 
 import com.altnoir.poopsky.compat.maid.MaidPlugin;
 import com.altnoir.poopsky.content.entity.p.ToiletEntity;
-import com.altnoir.poopsky.init.PEntityType;
-import com.altnoir.poopsky.PTags;
+import com.altnoir.poopsky.init.PoEntityType;
+import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.util.toiletUtil;
 import com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid;
 import net.minecraft.core.BlockPos;
@@ -44,7 +44,7 @@ public class DefecateBehavior extends Behavior<EntityMaid> {
         }
 
         if (maid.getVehicle() instanceof ToiletEntity toiletEntity) {
-            if (toiletEntity.isRemoved() && !level.getBlockState(toiletEntity.blockPosition()).is(PTags.Blocks.TOILET_BLOCKS)) {
+            if (toiletEntity.isRemoved() && !level.getBlockState(toiletEntity.blockPosition()).is(PoTags.Blocks.TOILET_BLOCKS)) {
                 maid.stopRiding();
                 maid.getBrain().eraseMemory(MaidPlugin.TOILET_MEMORY.get());
             }
@@ -57,7 +57,7 @@ public class DefecateBehavior extends Behavior<EntityMaid> {
             if (!pos.closerThan(maid.blockPosition(), 30)) {
                 return;
             }
-            if (!level.getBlockState(pos).is(PTags.Blocks.TOILET_BLOCKS)) {
+            if (!level.getBlockState(pos).is(PoTags.Blocks.TOILET_BLOCKS)) {
                 maid.getBrain().eraseMemory(MaidPlugin.TOILET_MEMORY.get());
                 return;
             }
@@ -73,14 +73,14 @@ public class DefecateBehavior extends Behavior<EntityMaid> {
 
     private void rideToilet(ServerLevel level, EntityMaid maid, BlockPos pos) {
         var state = level.getBlockState(pos);
-        if (!state.is(PTags.Blocks.TOILET_BLOCKS)) {
+        if (!state.is(PoTags.Blocks.TOILET_BLOCKS)) {
             return;
         }
 
-        List<ToiletEntity> entities = level.getEntities(PEntityType.TOILET.get(), new AABB(pos), e -> true);
+        List<ToiletEntity> entities = level.getEntities(PoEntityType.TOILET.get(), new AABB(pos), e -> true);
         ToiletEntity toiletEntity;
         if (entities.isEmpty()) {
-            Entity entity = PEntityType.TOILET.get().spawn(level, pos, MobSpawnType.TRIGGERED);
+            Entity entity = PoEntityType.TOILET.get().spawn(level, pos, MobSpawnType.TRIGGERED);
             if (!(entity instanceof ToiletEntity te)) {
                 return;
             }

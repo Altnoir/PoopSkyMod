@@ -7,13 +7,13 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-public final class PSChunkGenerators {
+public final class PoChunkGenerators {
     public static final DeferredRegister<MapCodec<? extends ChunkGenerator>> CHUNK_GENERATORS = DeferredRegister.create(Registries.CHUNK_GENERATOR, "poopsky");
 
-    public static final DeferredHolder<MapCodec<? extends ChunkGenerator>, MapCodec<PSVoidChunkGenerator>> VOID = CHUNK_GENERATORS
-            .register("void", () -> PSVoidChunkGenerator.CODEC);
+    public static final DeferredHolder<MapCodec<? extends ChunkGenerator>, MapCodec<PoVoidChunkGenerator>> VOID = CHUNK_GENERATORS
+            .register("void", () -> PoVoidChunkGenerator.CODEC);
 
-    private PSChunkGenerators() {
+    private PoChunkGenerators() {
     }
 
     public static void register(IEventBus eventBus) {

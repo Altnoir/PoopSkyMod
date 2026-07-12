@@ -3,11 +3,11 @@ package com.altnoir.poopsky.util;
 import com.altnoir.poopsky.content.block.ToiletType;
 import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
-import com.altnoir.poopsky.init.PEffects;
-import com.altnoir.poopsky.init.PParticles;
-import com.altnoir.poopsky.init.PSoundEvents;
-import com.altnoir.poopsky.init.PStats;
-import com.altnoir.poopsky.init.PItems;
+import com.altnoir.poopsky.init.PoEffects;
+import com.altnoir.poopsky.init.PoParticles;
+import com.altnoir.poopsky.init.PoSoundEvents;
+import com.altnoir.poopsky.init.PoStats;
+import com.altnoir.poopsky.init.PoItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -46,13 +46,13 @@ public class toiletUtil {
 
     public static void lavaToiletStepOn(Level level, BlockPos pos, BlockState state, Entity entity, boolean isGolden) {
         if (!level.isClientSide && entity instanceof Player player && player.isShiftKeyDown() && isEntityCentered(pos, player) && !state.getValue(BaseToiletLavaBlock.LAVA)) {
-            if (player.hasEffect(PEffects.INTESTINAL_SPASM)) {
+            if (player.hasEffect(PoEffects.INTESTINAL_SPASM)) {
                 level.setBlock(pos, state.setValue(BaseToiletLavaBlock.LAVA, true), 3);
                 level.playSound(null, pos, SoundEvents.BUCKET_EMPTY_LAVA, SoundSource.PLAYERS, 1.0F, 1.0F);
-                player.removeEffect(PEffects.INTESTINAL_SPASM);
+                player.removeEffect(PoEffects.INTESTINAL_SPASM);
                 player.causeFoodExhaustion(1.0F);
             } else {
-                boolean hasIncontinence = player.hasEffect(PEffects.FECAL_INCONTINENCE);
+                boolean hasIncontinence = player.hasEffect(PoEffects.FECAL_INCONTINENCE);
                 boolean isFire = hasIncontinence && !isGolden;
                 float pitchOffset = isGolden ? -0.5F : 0.5F;
                 var playerData = player.getPersistentData();
@@ -64,7 +64,7 @@ public class toiletUtil {
     }
 
     public static void canPoop(Level level, LivingEntity entity, boolean isFire, boolean isGolden, float yOffset, float pitchOffset, long lastPoopTime, LongConsumer poopTimeSetter) {
-        boolean hasIncontinence = entity.hasEffect(PEffects.FECAL_INCONTINENCE);
+        boolean hasIncontinence = entity.hasEffect(PoEffects.FECAL_INCONTINENCE);
 
         if (hasIncontinence) {
             onPoop(level, entity, isFire, isGolden, yOffset, pitchOffset);
@@ -94,21 +94,21 @@ public class toiletUtil {
                 redStone.setDefaultPickUpDelay();
                 level.addFreshEntity(redStone);
             }
-            player.awardStat(PStats.POOP_STATS.get());
+            player.awardStat(PoStats.POOP_STATS.get());
         }
 
         if (shouldPoop) {
             Item poopItem;
             if (isFire) {
-                poopItem = PItems.CHILI_POOP.get();
+                poopItem = PoItems.CHILI_POOP.get();
             } else if (isGolden) {
-                poopItem = PItems.GOLDEN_POOP.get();
+                poopItem = PoItems.GOLDEN_POOP.get();
             } else {
-                poopItem = PItems.POOP.get();
+                poopItem = PoItems.POOP.get();
             }
             var poop = new ItemEntity(level, livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), new ItemStack(poopItem));
             poop.setDefaultPickUpDelay();
-            if (livingEntity.hasEffect(PEffects.FECAL_INCONTINENCE)) {
+            if (livingEntity.hasEffect(PoEffects.FECAL_INCONTINENCE)) {
                 Vec3 backward = getBackwardDirection(livingEntity);
                 poop.setDeltaMovement(backward.x * 0.5F, 0.2F, backward.z * 0.5F);
             }
@@ -116,9 +116,9 @@ public class toiletUtil {
         }
 
         var pitch = level.random.nextFloat() + pitchOffset;
-        level.playSound(null, livingEntity.getX(), livingEntity.getY() + yOffset, livingEntity.getZ(), PSoundEvents.FART.get(), SoundSource.PLAYERS, 1.0F, pitch);
+        level.playSound(null, livingEntity.getX(), livingEntity.getY() + yOffset, livingEntity.getZ(), PoSoundEvents.FART.get(), SoundSource.PLAYERS, 1.0F, pitch);
         ((ServerLevel) level).sendParticles(
-                PParticles.POOP_PARTICLE.get(),
+                PoParticles.POOP_PARTICLE.get(),
                 livingEntity.getX(),
                 livingEntity.getY() + yOffset,
                 livingEntity.getZ(),

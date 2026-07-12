@@ -17,7 +17,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PItems {
+public class PoItems {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
     public static final ItemEntry<PoopItem> POOP = registerItem("poop",
@@ -74,12 +74,12 @@ public class PItems {
                     .stacksTo(1)));
     public static final ItemEntry<ToiletLinkerItem> TOILET_PLUG_WAND = registerItem("toilet_plug_wand",
             props -> new ToiletLinkerItem(props.attributes(ToiletPlugItem.createWeaponAttributes())
-                    .component(PComponents.TOILET_COMPONENT, ToiletComponent.EMPTY)
+                    .component(PoComponents.TOILET_COMPONENT, ToiletComponent.EMPTY)
                     .stacksTo(1)));
     public static final ItemEntry<FeedableBlockItem> MAGGOTS_SEEDS = registerItem("maggots_seeds",
-            props -> new FeedableBlockItem(PBlocks.MAGGOTS.get(), new Item.Properties().food(PFoods.MAGGOTS_SEEDS).stacksTo(88)));
+            props -> new FeedableBlockItem(PoBlocks.MAGGOTS.get(), new Item.Properties().food(PFoods.MAGGOTS_SEEDS).stacksTo(88)));
     public static final ItemEntry<FeedableBlockItem> ROUNDWORM = registerItem("roundworm",
-            props -> new FeedableBlockItem(PBlocks.ROUNDWORM_VINES.get(), new Item.Properties().food(PFoods.ROUNDWORM).stacksTo(88)));
+            props -> new FeedableBlockItem(PoBlocks.ROUNDWORM_VINES.get(), new Item.Properties().food(PFoods.ROUNDWORM).stacksTo(88)));
 
     public static final ItemEntry<Item> OMINOUS_FILTHY_INGOT = registerItem("ominous_filthy_ingot", Item::new);
     public static final ItemEntry<MilosSwordItem> MILOS_SWORD = registerItem("milos_sword",
@@ -114,18 +114,18 @@ public class PItems {
                     .food(PFoods.URINE_BOTTLE)
                     .stacksTo(18)
             ));
-    public static final ItemEntry<BucketItem> URINE_BUCKET = PFluids.URINE_BUCKET;
+    public static final ItemEntry<BucketItem> URINE_BUCKET = PoFluids.URINE_BUCKET;
 
     public static final ItemEntry<DeferredSpawnEggItem> POOLIME_SPAWN_EGG = registerItem("poolime_spawn_egg",
-            prop -> new DeferredSpawnEggItem(PEntityType.POOLIME, 0x7D5F36, 0x5E4228, prop));
+            prop -> new DeferredSpawnEggItem(PoEntityType.POOLIME, 0x7D5F36, 0x5E4228, prop));
     public static final ItemEntry<DeferredSpawnEggItem> FLY_SPAWN_EGG = registerItem("fly_spawn_egg",
-            prop -> new DeferredSpawnEggItem(PEntityType.FLY, 0x3B4346, 0x900D2D, prop));
+            prop -> new DeferredSpawnEggItem(PoEntityType.FLY, 0x3B4346, 0x900D2D, prop));
     public static final ItemEntry<Item> LAWRENCE_MUSIC_DISC = registerItem("music_disc_lawrence",
-            props -> new Item(props.jukeboxPlayable(PSoundEvents.LAWRENCE_KEY).rarity(Rarity.RARE).stacksTo(1)));
+            props -> new Item(props.jukeboxPlayable(PoSoundEvents.LAWRENCE_KEY).rarity(Rarity.RARE).stacksTo(1)));
     public static final ItemEntry<Item> LIGHT_DANCE_MUSIC_DISC = registerItem("music_disc_light_dance",
-            props -> new Item(props.jukeboxPlayable(PSoundEvents.LIGHT_DANCE_KEY).rarity(Rarity.RARE).stacksTo(1)));
+            props -> new Item(props.jukeboxPlayable(PoSoundEvents.LIGHT_DANCE_KEY).rarity(Rarity.RARE).stacksTo(1)));
     public static final ItemEntry<Item> MOON_BOWL_MUSIC_DISC = registerItem("music_disc_moon_bowl",
-            props -> new Item(props.jukeboxPlayable(PSoundEvents.MOON_BOWL_KEY).rarity(Rarity.RARE).stacksTo(1)));
+            props -> new Item(props.jukeboxPlayable(PoSoundEvents.MOON_BOWL_KEY).rarity(Rarity.RARE).stacksTo(1)));
 
     public static final ItemEntry<FlyItem> FLY = registerItem("fly",
             props -> new FlyItem(props.stacksTo(88)));

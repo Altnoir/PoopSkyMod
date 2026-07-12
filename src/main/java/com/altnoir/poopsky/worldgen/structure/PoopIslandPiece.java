@@ -1,9 +1,9 @@
 package com.altnoir.poopsky.worldgen.structure;
 
-import com.altnoir.poopsky.init.PBlocks;
+import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.content.entity.p.PoolimeEntity;
-import com.altnoir.poopsky.init.PEntityType;
-import com.altnoir.poopsky.worldgen.PSStructures;
+import com.altnoir.poopsky.init.PoEntityType;
+import com.altnoir.poopsky.worldgen.PoStructures;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -31,11 +31,11 @@ public class PoopIslandPiece extends TemplateStructurePiece {
     private static final String ROTATION_KEY = "Rotation";
 
     public PoopIslandPiece(StructureTemplateManager manager, ResourceLocation templateId, BlockPos pos, Rotation rotation) {
-        super(PSStructures.POOP_ISLAND_PIECE.get(), 0, manager, templateId, templateId.toString(), placeSettings(rotation), pos);
+        super(PoStructures.POOP_ISLAND_PIECE.get(), 0, manager, templateId, templateId.toString(), placeSettings(rotation), pos);
     }
 
     public PoopIslandPiece(StructureTemplateManager manager, CompoundTag tag) {
-        super(PSStructures.POOP_ISLAND_PIECE.get(), tag, manager, id -> placeSettings(readRotation(tag)));
+        super(PoStructures.POOP_ISLAND_PIECE.get(), tag, manager, id -> placeSettings(readRotation(tag)));
     }
 
     public static StructurePlaceSettings placeSettings(Rotation rotation) {
@@ -87,7 +87,7 @@ public class PoopIslandPiece extends TemplateStructurePiece {
     }
 
     public static void spawnRandomPoolimes(WorldGenLevel level, RandomSource random, StructureTemplate template, BlockPos origin, StructurePlaceSettings settings, BoundingBox box) {
-        List<StructureTemplate.StructureBlockInfo> poolimeBlocks = new ArrayList<>(template.filterBlocks(origin, settings, PBlocks.POOLIME_BLOCK.get())
+        List<StructureTemplate.StructureBlockInfo> poolimeBlocks = new ArrayList<>(template.filterBlocks(origin, settings, PoBlocks.POOLIME_BLOCK.get())
                 .stream()
                 .filter(blockInfo -> box.isInside(blockInfo.pos().above()))
                 .filter(blockInfo -> level.getBlockState(blockInfo.pos().above()).canBeReplaced())
@@ -100,7 +100,7 @@ public class PoopIslandPiece extends TemplateStructurePiece {
         int spawnCount = Math.min(poolimeBlocks.size(), random.nextIntBetweenInclusive(1, 3));
         for (int index = 0; index < spawnCount; index++) {
             BlockPos pos = poolimeBlocks.remove(random.nextInt(poolimeBlocks.size())).pos().above();
-            PoolimeEntity poolime = PEntityType.POOLIME.get().create(level.getLevel());
+            PoolimeEntity poolime = PoEntityType.POOLIME.get().create(level.getLevel());
             if (poolime == null) {
                 continue;
             }
@@ -116,7 +116,7 @@ public class PoopIslandPiece extends TemplateStructurePiece {
     private static void placePoopTree(WorldGenLevel level, RandomSource random, BlockPos basePos) {
         int trunkHeight = random.nextIntBetweenInclusive(4, 5);
         for (int y = 0; y < trunkHeight; y++) {
-            placeTreeBlock(level, basePos.above(y), PBlocks.POOP_LOG.get().defaultBlockState());
+            placeTreeBlock(level, basePos.above(y), PoBlocks.POOP_LOG.get().defaultBlockState());
         }
 
         BlockPos crown = basePos.above(trunkHeight);
@@ -128,7 +128,7 @@ public class PoopIslandPiece extends TemplateStructurePiece {
                         continue;
                     }
 
-                    placeTreeBlock(level, crown.offset(x, y, z), PBlocks.POOP_LEAVES.get().defaultBlockState());
+                    placeTreeBlock(level, crown.offset(x, y, z), PoBlocks.POOP_LEAVES.get().defaultBlockState());
                 }
             }
         }

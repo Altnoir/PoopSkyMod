@@ -11,7 +11,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 
-public final class PParticles {
+public final class PoParticles {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
     public static final RegistryEntry<ParticleType<?>, SimpleParticleType> POOP_PARTICLE = REGISTRATE.simple(
@@ -23,7 +23,7 @@ public final class PParticles {
     public static final RegistryEntry<ParticleType<?>, ParticleType<LeavesParticleOptions>> LEAVES_PARTICLE = REGISTRATE.simple(
             "leaves_particle",
             Registries.PARTICLE_TYPE,
-            PParticles::createLeavesParticleType
+            PoParticles::createLeavesParticleType
     );
 
     private static ParticleType<LeavesParticleOptions> createLeavesParticleType() {

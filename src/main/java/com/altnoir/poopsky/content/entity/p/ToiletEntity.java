@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.entity.p;
 
-import com.altnoir.poopsky.PTags;
-import com.altnoir.poopsky.init.PEffects;
+import com.altnoir.poopsky.impl.PoTags;
+import com.altnoir.poopsky.init.PoEffects;
 import com.altnoir.poopsky.util.toiletUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -46,7 +46,7 @@ public class ToiletEntity extends Entity {
         if (this.level().isClientSide) {
             return;
         }
-        if (!this.level().getBlockState(this.blockPosition()).is(PTags.Blocks.TOILET_BLOCKS)) {
+        if (!this.level().getBlockState(this.blockPosition()).is(PoTags.Blocks.TOILET_BLOCKS)) {
             this.kill();
             return;
         }
@@ -60,7 +60,7 @@ public class ToiletEntity extends Entity {
             this.setYRot(livingEntity.getYRot());
 
             float yOffset = livingEntity instanceof Player ? 0.55F : 0.05F;
-            toiletUtil.canPoop(level(), livingEntity, livingEntity.hasEffect(PEffects.INTESTINAL_SPASM), goldenPoop, yOffset, 0.5F, poopTime,
+            toiletUtil.canPoop(level(), livingEntity, livingEntity.hasEffect(PoEffects.INTESTINAL_SPASM), goldenPoop, yOffset, 0.5F, poopTime,
                     time -> this.poopTime = time);
         }
     }

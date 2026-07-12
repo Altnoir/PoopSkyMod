@@ -8,7 +8,7 @@ import com.altnoir.poopsky.network.TimeBellFreezePayload;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
-public class PSNetworking {
+public class PoNetworking {
     private static final String VERSION = "1";
 
     @SubscribeEvent

@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.mixin;
 
-import com.altnoir.poopsky.PTags;
+import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.content.item.p.TimeBellItem;
-import com.altnoir.poopsky.init.PEffects;
+import com.altnoir.poopsky.init.PoEffects;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -32,8 +32,8 @@ public class LivingEntityMixin {
     private float poopsky$applyDamage(DamageSource damageSource, float amount) {
         LivingEntity self = (LivingEntity) (Object) this;
         float finalAmount = amount;
-        if (poopSky$hasBleeding(self) && !damageSource.is(PTags.DamageTypes.BYPASSES_BLEEDING)) {
-            float amplifier = (self.getEffect(PEffects.BLEEDING).getAmplifier() + 1) * 0.1F;
+        if (poopSky$hasBleeding(self) && !damageSource.is(PoTags.DamageTypes.BYPASSES_BLEEDING)) {
+            float amplifier = (self.getEffect(PoEffects.BLEEDING).getAmplifier() + 1) * 0.1F;
             finalAmount = finalAmount * (1 + amplifier);
         }
         if (damageSource.getEntity() instanceof LivingEntity attacker && poopSky$hasCurse(attacker)) {
@@ -54,11 +54,11 @@ public class LivingEntityMixin {
 
     @Unique
     private boolean poopSky$hasCurse(LivingEntity self) {
-        return self.hasEffect(PEffects.SEEDBED_CURSE);
+        return self.hasEffect(PoEffects.SEEDBED_CURSE);
     }
 
     @Unique
     private boolean poopSky$hasBleeding(LivingEntity self) {
-        return self.hasEffect(PEffects.BLEEDING);
+        return self.hasEffect(PoEffects.BLEEDING);
     }
 }

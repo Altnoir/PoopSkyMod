@@ -44,7 +44,7 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-public class PSVoidChunkGenerator extends NoiseBasedChunkGenerator {
+public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
     private static final int VIRTUAL_SURFACE_Y = 64;
 
     private static final Codec<List<ResourceKey<StructureSet>>> STRUCTURE_SET_KEYS_CODEC =
@@ -74,7 +74,7 @@ public class PSVoidChunkGenerator extends NoiseBasedChunkGenerator {
                             : Either.right(allowed.keys())
             );
 
-    public static final MapCodec<PSVoidChunkGenerator> CODEC =
+    public static final MapCodec<PoVoidChunkGenerator> CODEC =
             RecordCodecBuilder.mapCodec(instance -> instance.group(
                     BiomeSource.CODEC.fieldOf("biome_source")
                             .forGetter(generator -> generator.biomeSource),
@@ -83,14 +83,14 @@ public class PSVoidChunkGenerator extends NoiseBasedChunkGenerator {
                     ALLOWED_STRUCTURE_SETS_CODEC.optionalFieldOf("allowed_structure_sets")
                             .forGetter(generator -> Optional.ofNullable(generator.allowedStructureSets))
             ).apply(instance, instance.stable((biomeSource, settings, allowedStructureSets) ->
-                    new PSVoidChunkGenerator(biomeSource, settings, allowedStructureSets.orElse(null)))));
+                    new PoVoidChunkGenerator(biomeSource, settings, allowedStructureSets.orElse(null)))));
 
     private final Holder<NoiseGeneratorSettings> settings;
     @Nullable
     private final AllowedStructureSets allowedStructureSets;
     private final boolean generateNormal;
 
-    public PSVoidChunkGenerator(BiomeSource biomeSource, Holder<NoiseGeneratorSettings> settings, @Nullable AllowedStructureSets allowedStructureSets) {
+    public PoVoidChunkGenerator(BiomeSource biomeSource, Holder<NoiseGeneratorSettings> settings, @Nullable AllowedStructureSets allowedStructureSets) {
         super(biomeSource, settings);
         this.settings = settings;
         this.allowedStructureSets = allowedStructureSets;

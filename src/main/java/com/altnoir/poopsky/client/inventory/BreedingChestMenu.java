@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.client.inventory;
 
-import com.altnoir.poopsky.PTags;
+import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.content.item.p.FlyItem;
-import com.altnoir.poopsky.init.PMenuTypes;
+import com.altnoir.poopsky.init.PoMenuTypes;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -37,7 +37,7 @@ public class BreedingChestMenu extends AbstractContainerMenu {
     }
 
     public BreedingChestMenu(int containerId, Inventory playerInventory, Container container, ContainerData data) {
-        this(PMenuTypes.BREEDING_CHEST.get(), containerId, playerInventory, container, data);
+        this(PoMenuTypes.BREEDING_CHEST.get(), containerId, playerInventory, container, data);
     }
 
     private BreedingChestMenu(MenuType<BreedingChestMenu> menuType, int containerId, Inventory playerInventory, Container container, ContainerData data) {
@@ -53,7 +53,7 @@ public class BreedingChestMenu extends AbstractContainerMenu {
         this.addSlot(new Slot(container, FECES_SLOT, 8, 20) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return stack.is(PTags.Items.POOPS);
+                return stack.is(PoTags.Items.POOPS);
             }
         });
 
@@ -120,7 +120,7 @@ public class BreedingChestMenu extends AbstractContainerMenu {
                 if (!this.moveItemStackTo(itemstack1, INV_SLOT_START, HOTBAR_SLOT_END, true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (itemstack1.is(PTags.Items.POOPS)) {
+            } else if (itemstack1.is(PoTags.Items.POOPS)) {
                 // 粪便 -> 粪便槽
                 if (!this.moveItemStackTo(itemstack1, FECES_SLOT, FECES_SLOT + 1, false)) {
                     return ItemStack.EMPTY;

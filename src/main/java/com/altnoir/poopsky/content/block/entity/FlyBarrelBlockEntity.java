@@ -2,9 +2,9 @@ package com.altnoir.poopsky.content.block.entity;
 
 import com.altnoir.poopsky.client.inventory.FlyBarrelMenu;
 import com.altnoir.poopsky.content.FlyType;
-import com.altnoir.poopsky.init.PBlockEntityType;
+import com.altnoir.poopsky.init.PoBlockEntityType;
 import com.altnoir.poopsky.content.recipe.PFlyRecipes;
-import com.altnoir.poopsky.init.PSoundEvents;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.content.item.p.FlyItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -115,7 +115,7 @@ public class FlyBarrelBlockEntity extends BlockEntity implements MenuProvider {
     };
 
     public FlyBarrelBlockEntity(BlockPos pos, BlockState blockState) {
-        super(PBlockEntityType.FLY_BARREL.get(), pos, blockState);
+        super(PoBlockEntityType.FLY_BARREL.get(), pos, blockState);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, FlyBarrelBlockEntity be) {
@@ -142,7 +142,7 @@ public class FlyBarrelBlockEntity extends BlockEntity implements MenuProvider {
         }
 
         if (level.getRandom().nextDouble() < 0.005) {
-            level.playSound(null, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, PSoundEvents.BLOCK_FLY_BARREL_WORK.get(), SoundSource.BLOCKS, 1.0F, 1.2F);
+            level.playSound(null, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, PoSoundEvents.BLOCK_FLY_BARREL_WORK.get(), SoundSource.BLOCKS, 1.0F, 1.2F);
         }
 
         be.setChanged();
@@ -240,7 +240,7 @@ public class FlyBarrelBlockEntity extends BlockEntity implements MenuProvider {
             public void stopOpen(Player player) {
                 super.stopOpen(player);
                 if (level != null && !level.isClientSide) {
-                    level.playSound(null, worldPosition, PSoundEvents.BLOCK_FLY_BARREL_CLOSE.get(), SoundSource.BLOCKS, 0.5F, 0.7F);
+                    level.playSound(null, worldPosition, PoSoundEvents.BLOCK_FLY_BARREL_CLOSE.get(), SoundSource.BLOCKS, 0.5F, 0.7F);
                 }
             }
 

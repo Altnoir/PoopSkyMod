@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.datagen;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.impl.PoToiletTypes;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.init.*;
 import com.tterrag.registrate.providers.ProviderType;
@@ -17,20 +18,20 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 
-public final class PSAdvancementProvider {
+public final class PoAdvancementProvider {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
-    private PSAdvancementProvider() {
+    private PoAdvancementProvider() {
     }
 
     public static void register() {
-        REGISTRATE.addDataGenerator(ProviderType.ADVANCEMENT, PSAdvancementProvider::generate);
+        REGISTRATE.addDataGenerator(ProviderType.ADVANCEMENT, PoAdvancementProvider::generate);
     }
 
     private static void generate(RegistrateAdvancementProvider provider) {
         AdvancementHolder root = Advancement.Builder.advancement()
                 .display(
-                        PBlocks.WOODEN_TOILET.get(),
+                        PoBlocks.WOODEN_TOILET.get(),
                         Component.translatable("advancements.poopsky.root.title"),
                         Component.translatable("advancements.poopsky.root.description"),
                         PoopSky.loc("textures/block/poop_block.png"),
@@ -39,14 +40,14 @@ public final class PSAdvancementProvider {
                         true,
                         false
                 )
-                .addCriterion("join_poopsky", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.POOP.get()))
+                .addCriterion("join_poopsky", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.POOP.get()))
                 .requirements(AdvancementRequirements.Strategy.OR)
                 .save(provider, modId("root"));
 
         Advancement.Builder.advancement()
                 .parent(root)
                 .display(
-                        PBlocks.POOP_BLOCK.get(),
+                        PoBlocks.POOP_BLOCK.get(),
                         Component.translatable("advancements.poopsky.poop_block_slide.title"),
                         Component.translatable("advancements.poopsky.poop_block_slide.description"),
                         null,
@@ -55,13 +56,13 @@ public final class PSAdvancementProvider {
                         true,
                         false
                 )
-                .addCriterion("poop_block_slide", SlideDownBlockTrigger.TriggerInstance.slidesDownBlock(PBlocks.POOP_BLOCK.get()))
+                .addCriterion("poop_block_slide", SlideDownBlockTrigger.TriggerInstance.slidesDownBlock(PoBlocks.POOP_BLOCK.get()))
                 .save(provider, modId("poop_block_slide"));
 
         AdvancementHolder poop_sapling = Advancement.Builder.advancement()
                 .parent(root)
                 .display(
-                        PBlocks.POOP_SAPLING.get(),
+                        PoBlocks.POOP_SAPLING.get(),
                         Component.translatable("advancements.poopsky.poop_sapling.title"),
                         Component.translatable("advancements.poopsky.poop_sapling.description"),
                         null,
@@ -70,7 +71,7 @@ public final class PSAdvancementProvider {
                         true,
                         false
                 )
-                .addCriterion("poop_sapling", InventoryChangeTrigger.TriggerInstance.hasItems(PBlocks.POOP_SAPLING.get()))
+                .addCriterion("poop_sapling", InventoryChangeTrigger.TriggerInstance.hasItems(PoBlocks.POOP_SAPLING.get()))
                 .save(provider, modId("poop_sapling"));
         Advancement.Builder.advancement()
                 .parent(poop_sapling)
@@ -90,7 +91,7 @@ public final class PSAdvancementProvider {
         AdvancementHolder compooper = Advancement.Builder.advancement()
                 .parent(poop_sapling)
                 .display(
-                        PBlocks.COMPOOPER.get(),
+                        PoBlocks.COMPOOPER.get(),
                         Component.translatable("advancements.poopsky.compooper.title"),
                         Component.translatable("advancements.poopsky.compooper.description"),
                         null,
@@ -99,12 +100,12 @@ public final class PSAdvancementProvider {
                         true,
                         false
                 )
-                .addCriterion("compooper", InventoryChangeTrigger.TriggerInstance.hasItems(PBlocks.COMPOOPER.get()))
+                .addCriterion("compooper", InventoryChangeTrigger.TriggerInstance.hasItems(PoBlocks.COMPOOPER.get()))
                 .save(provider, modId("compooper"));
         AdvancementHolder urine_compooper = Advancement.Builder.advancement()
                 .parent(compooper)
                 .display(
-                        PBlocks.URINE_COMPOOPER.get(),
+                        PoBlocks.URINE_COMPOOPER.get(),
                         Component.translatable("advancements.poopsky.urine_compooper.title"),
                         Component.translatable("advancements.poopsky.urine_compooper.description"),
                         null,
@@ -113,12 +114,12 @@ public final class PSAdvancementProvider {
                         true,
                         false
                 )
-                .addCriterion("urine_compooper", InventoryChangeTrigger.TriggerInstance.hasItems(PBlocks.URINE_COMPOOPER.get()))
+                .addCriterion("urine_compooper", InventoryChangeTrigger.TriggerInstance.hasItems(PoBlocks.URINE_COMPOOPER.get()))
                 .save(provider, modId("urine_compooper"));
         AdvancementHolder maggots = Advancement.Builder.advancement()
                 .parent(urine_compooper)
                 .display(
-                        PBlocks.MAGGOTS_BLOCK.get(),
+                        PoBlocks.MAGGOTS_BLOCK.get(),
                         Component.translatable("advancements.poopsky.maggots.title"),
                         Component.translatable("advancements.poopsky.maggots.description"),
                         null,
@@ -127,12 +128,12 @@ public final class PSAdvancementProvider {
                         true,
                         false
                 )
-                .addCriterion("maggots", InventoryChangeTrigger.TriggerInstance.hasItems(PBlocks.MAGGOTS_BLOCK.get()))
+                .addCriterion("maggots", InventoryChangeTrigger.TriggerInstance.hasItems(PoBlocks.MAGGOTS_BLOCK.get()))
                 .save(provider, modId("maggots"));
         AdvancementHolder poolime_maggots_block = Advancement.Builder.advancement()
                 .parent(maggots)
                 .display(
-                        PBlocks.POOLIME_MAGGOTS_BLOCK.get(),
+                        PoBlocks.POOLIME_MAGGOTS_BLOCK.get(),
                         Component.translatable("advancements.poopsky.poolime_maggots_block.title"),
                         Component.translatable("advancements.poopsky.poolime_maggots_block.description"),
                         null,
@@ -141,12 +142,12 @@ public final class PSAdvancementProvider {
                         true,
                         false
                 )
-                .addCriterion("poolime_maggots_block", InventoryChangeTrigger.TriggerInstance.hasItems(PBlocks.POOLIME_MAGGOTS_BLOCK.get()))
+                .addCriterion("poolime_maggots_block", InventoryChangeTrigger.TriggerInstance.hasItems(PoBlocks.POOLIME_MAGGOTS_BLOCK.get()))
                 .save(provider, modId("poolime_maggots_block"));
         AdvancementHolder poop_ball = Advancement.Builder.advancement()
                 .parent(poolime_maggots_block)
                 .display(
-                        PItems.POOP_BALL.get(),
+                        PoItems.POOP_BALL.get(),
                         Component.translatable("advancements.poopsky.poop_ball.title"),
                         Component.translatable("advancements.poopsky.poop_ball.description"),
                         null,
@@ -155,12 +156,12 @@ public final class PSAdvancementProvider {
                         true,
                         false
                 )
-                .addCriterion("poop_ball", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.POOP_BALL.get()))
+                .addCriterion("poop_ball", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.POOP_BALL.get()))
                 .save(provider, modId("poop_ball"));
         Advancement.Builder.advancement()
                 .parent(poop_ball)
                 .display(
-                        PItems.WITHER_POOP_BALL.get(),
+                        PoItems.WITHER_POOP_BALL.get(),
                         Component.translatable("advancements.poopsky.wither_poop_ball.title"),
                         Component.translatable("advancements.poopsky.wither_poop_ball.description"),
                         null,
@@ -169,12 +170,12 @@ public final class PSAdvancementProvider {
                         true,
                         false
                 )
-                .addCriterion("wither_poop_ball", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.WITHER_POOP_BALL.get()))
+                .addCriterion("wither_poop_ball", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.WITHER_POOP_BALL.get()))
                 .save(provider, modId("wither_poop_ball"));
         AdvancementHolder fly = Advancement.Builder.advancement()
                 .parent(maggots)
                 .display(
-                        PItems.FLY.get(),
+                        PoItems.FLY.get(),
                         Component.translatable("advancements.poopsky.fly.title"),
                         Component.translatable("advancements.poopsky.fly.description"),
                         null,
@@ -183,12 +184,12 @@ public final class PSAdvancementProvider {
                         true,
                         false
                 )
-                .addCriterion("fly", SummonedEntityTrigger.TriggerInstance.summonedEntity(EntityPredicate.Builder.entity().of(PEntityType.FLY.get())))
+                .addCriterion("fly", SummonedEntityTrigger.TriggerInstance.summonedEntity(EntityPredicate.Builder.entity().of(PoEntityType.FLY.get())))
                 .save(provider, modId("fly"));
         AdvancementHolder fly_catcher = Advancement.Builder.advancement()
                 .parent(fly)
                 .display(
-                        PItems.FLY_CATCHER.get(),
+                        PoItems.FLY_CATCHER.get(),
                         Component.translatable("advancements.poopsky.fly_catcher.title"),
                         Component.translatable("advancements.poopsky.fly_catcher.description"),
                         null,
@@ -197,12 +198,12 @@ public final class PSAdvancementProvider {
                         true,
                         false
                 )
-                .addCriterion("fly_catcher", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.FLY_CATCHER.get()))
+                .addCriterion("fly_catcher", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.FLY_CATCHER.get()))
                 .save(provider, modId("fly_catcher"));
         Advancement.Builder.advancement()
                 .parent(fly_catcher)
                 .display(
-                        PBlocks.FLY_BARREL.get(),
+                        PoBlocks.FLY_BARREL.get(),
                         Component.translatable("advancements.poopsky.fly_barrel.title"),
                         Component.translatable("advancements.poopsky.fly_barrel.description"),
                         null,
@@ -211,12 +212,12 @@ public final class PSAdvancementProvider {
                         true,
                         false
                 )
-                .addCriterion("fly_barrel", InventoryChangeTrigger.TriggerInstance.hasItems(PBlocks.FLY_BARREL.get()))
+                .addCriterion("fly_barrel", InventoryChangeTrigger.TriggerInstance.hasItems(PoBlocks.FLY_BARREL.get()))
                 .save(provider, modId("fly_barrel"));
         Advancement.Builder.advancement()
                 .parent(fly_catcher)
                 .display(
-                        PBlocks.BREEDING_CHEST.get(),
+                        PoBlocks.BREEDING_CHEST.get(),
                         Component.translatable("advancements.poopsky.breeding_chest.title"),
                         Component.translatable("advancements.poopsky.breeding_chest.description"),
                         null,
@@ -225,13 +226,13 @@ public final class PSAdvancementProvider {
                         true,
                         false
                 )
-                .addCriterion("breeding_chest", InventoryChangeTrigger.TriggerInstance.hasItems(PBlocks.BREEDING_CHEST.get()))
+                .addCriterion("breeding_chest", InventoryChangeTrigger.TriggerInstance.hasItems(PoBlocks.BREEDING_CHEST.get()))
                 .save(provider, modId("breeding_chest"));
 
         Advancement.Builder.advancement()
                 .parent(compooper)
                 .display(
-                        PItems.SAPLING_POOP_BALL.get(),
+                        PoItems.SAPLING_POOP_BALL.get(),
                         Component.translatable("advancements.poopsky.sapling.title"),
                         Component.translatable("advancements.poopsky.sapling.description"),
                         null,
@@ -240,7 +241,7 @@ public final class PSAdvancementProvider {
                         true,
                         false
                 )
-                .addCriterion("sapling", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.SAPLING_POOP_BALL.get()))
+                .addCriterion("sapling", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.SAPLING_POOP_BALL.get()))
                 .save(provider, modId("sapling"));
 
         AdvancementHolder coal_block = Advancement.Builder.advancement()
@@ -288,7 +289,7 @@ public final class PSAdvancementProvider {
         Advancement.Builder.advancement()
                 .parent(string)
                 .display(
-                        PItems.SEA_POOP_BALL.get(),
+                        PoItems.SEA_POOP_BALL.get(),
                         Component.translatable("advancements.poopsky.sea_poop_ball.title"),
                         Component.translatable("advancements.poopsky.sea_poop_ball.description"),
                         null,
@@ -297,12 +298,12 @@ public final class PSAdvancementProvider {
                         true,
                         false
                 )
-                .addCriterion("sea_poop_ball", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.SEA_POOP_BALL.get()))
+                .addCriterion("sea_poop_ball", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.SEA_POOP_BALL.get()))
                 .save(provider, modId("sea_poop_ball"));
         Advancement.Builder.advancement()
                 .parent(string)
                 .display(
-                        PItems.FOLIUM_SENNAE,
+                        PoItems.FOLIUM_SENNAE,
                         Component.translatable("advancements.poopsky.foliium_senna.title"),
                         Component.translatable("advancements.poopsky.foliium_senna.description"),
                         null,
@@ -311,12 +312,12 @@ public final class PSAdvancementProvider {
                         true,
                         false
                 )
-                .addCriterion("foliium_senna", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.FOLIUM_SENNAE.get()))
+                .addCriterion("foliium_senna", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.FOLIUM_SENNAE.get()))
                 .save(provider, modId("foliium_senna"));
         AdvancementHolder sieve = Advancement.Builder.advancement()
                 .parent(string)
                 .display(
-                        PBlocks.SIEVE,
+                        PoBlocks.SIEVE,
                         Component.translatable("advancements.poopsky.sieve.title"),
                         Component.translatable("advancements.poopsky.sieve.description"),
                         null,
@@ -325,13 +326,13 @@ public final class PSAdvancementProvider {
                         true,
                         false
                 )
-                .addCriterion("sieve", InventoryChangeTrigger.TriggerInstance.hasItems(PBlocks.SIEVE.get()))
+                .addCriterion("sieve", InventoryChangeTrigger.TriggerInstance.hasItems(PoBlocks.SIEVE.get()))
                 .save(provider, modId("sieve"));
 
         AdvancementHolder king_of_dragon_fruit = Advancement.Builder.advancement()
                 .parent(sieve)
                 .display(
-                        PItems.KING_OF_DRAGON_FRUIT,
+                        PoItems.KING_OF_DRAGON_FRUIT,
                         Component.translatable("advancements.poopsky.king_of_dragon_fruit.title"),
                         Component.translatable("advancements.poopsky.king_of_dragon_fruit.description"),
                         null,
@@ -340,12 +341,12 @@ public final class PSAdvancementProvider {
                         true,
                         false
                 )
-                .addCriterion("king_of_dragon_fruit", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.KING_OF_DRAGON_FRUIT.get()))
+                .addCriterion("king_of_dragon_fruit", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.KING_OF_DRAGON_FRUIT.get()))
                 .save(provider, modId("king_of_dragon_fruit"));
         Advancement.Builder.advancement()
                 .parent(king_of_dragon_fruit)
                 .display(
-                        PBlocks.POOP_TNT,
+                        PoBlocks.POOP_TNT,
                         Component.translatable("advancements.poopsky.pooop_tnt.title"),
                         Component.translatable("advancements.poopsky.pooop_tnt.description"),
                         null,
@@ -354,13 +355,13 @@ public final class PSAdvancementProvider {
                         true,
                         false
                 )
-                .addCriterion("pooop_tnt", InventoryChangeTrigger.TriggerInstance.hasItems(PBlocks.POOP_TNT.get()))
+                .addCriterion("pooop_tnt", InventoryChangeTrigger.TriggerInstance.hasItems(PoBlocks.POOP_TNT.get()))
                 .save(provider, modId("pooop_tnt"));
 
         AdvancementHolder roundworm = Advancement.Builder.advancement()
                 .parent(poop_sapling)
                 .display(
-                        PItems.ROUNDWORM,
+                        PoItems.ROUNDWORM,
                         Component.translatable("advancements.poopsky.roundworm.title"),
                         Component.translatable("advancements.poopsky.roundworm.description"),
                         null,
@@ -369,7 +370,7 @@ public final class PSAdvancementProvider {
                         true,
                         false
                 )
-                .addCriterion("roundworm", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.ROUNDWORM.get()))
+                .addCriterion("roundworm", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.ROUNDWORM.get()))
                 .save(provider, modId("roundworm"));
 
         AdvancementHolder summon_villager = Advancement.Builder.advancement()
@@ -389,7 +390,7 @@ public final class PSAdvancementProvider {
         AdvancementHolder toilet_plug = Advancement.Builder.advancement()
                 .parent(summon_villager)
                 .display(
-                        PItems.TOILET_PLUG,
+                        PoItems.TOILET_PLUG,
                         Component.translatable("advancements.poopsky.toilet_plug.title"),
                         Component.translatable("advancements.poopsky.toilet_plug.description"),
                         null,
@@ -398,12 +399,12 @@ public final class PSAdvancementProvider {
                         true,
                         false
                 )
-                .addCriterion("toilet_plug", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.TOILET_PLUG.get()))
+                .addCriterion("toilet_plug", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.TOILET_PLUG.get()))
                 .save(provider, modId("toilet_plug"));
         Advancement.Builder.advancement()
                 .parent(toilet_plug)
                 .display(
-                        PBlocks.PLACER,
+                        PoBlocks.PLACER,
                         Component.translatable("advancements.poopsky.placer.title"),
                         Component.translatable("advancements.poopsky.placer.description"),
                         null,
@@ -412,12 +413,12 @@ public final class PSAdvancementProvider {
                         true,
                         false
                 )
-                .addCriterion("placer", InventoryChangeTrigger.TriggerInstance.hasItems(PBlocks.PLACER.get()))
+                .addCriterion("placer", InventoryChangeTrigger.TriggerInstance.hasItems(PoBlocks.PLACER.get()))
                 .save(provider, modId("placer"));
         Advancement.Builder.advancement()
                 .parent(summon_villager)
                 .display(
-                        PItems.OMEN_CHESTPLATE,
+                        PoItems.OMEN_CHESTPLATE,
                         Component.translatable("advancements.poopsky.omen_armor.title"),
                         Component.translatable("advancements.poopsky.omen_armor.description"),
                         null,
@@ -427,16 +428,16 @@ public final class PSAdvancementProvider {
                         false
                 )
                 .requirements(AdvancementRequirements.Strategy.OR)
-                .addCriterion("omen_helmet", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.OMEN_HELMET))
-                .addCriterion("omen_chestplate", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.OMEN_CHESTPLATE))
-                .addCriterion("omen_leggings", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.OMEN_LEGGINGS))
-                .addCriterion("omen_boots", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.OMEN_BOOTS))
+                .addCriterion("omen_helmet", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.OMEN_HELMET))
+                .addCriterion("omen_chestplate", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.OMEN_CHESTPLATE))
+                .addCriterion("omen_leggings", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.OMEN_LEGGINGS))
+                .addCriterion("omen_boots", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.OMEN_BOOTS))
                 .save(provider, modId("omen_armor"));
 
         AdvancementHolder chili = Advancement.Builder.advancement()
                 .parent(summon_villager)
                 .display(
-                        PItems.DRAGON_BREATH_CHILI,
+                        PoItems.DRAGON_BREATH_CHILI,
                         Component.translatable("advancements.poopsky.chili.title"),
                         Component.translatable("advancements.poopsky.chili.description"),
                         null,
@@ -445,11 +446,11 @@ public final class PSAdvancementProvider {
                         true,
                         false
                 )
-                .addCriterion("chili", EffectsChangedTrigger.TriggerInstance.hasEffects(MobEffectsPredicate.Builder.effects().and(PEffects.INTESTINAL_SPASM)))
+                .addCriterion("chili", EffectsChangedTrigger.TriggerInstance.hasEffects(MobEffectsPredicate.Builder.effects().and(PoEffects.INTESTINAL_SPASM)))
                 .save(provider, modId("chili"));
 
-        var rainbowStack = new ItemStack(PBlocks.HARD_TOILET.get());
-        rainbowStack.set(PComponents.TOILET_TYPE.get(), PToiletTypes.RAINBOW);
+        var rainbowStack = new ItemStack(PoBlocks.HARD_TOILET.get());
+        rainbowStack.set(PoComponents.TOILET_TYPE.get(), PoToiletTypes.RAINBOW);
 
         Advancement.Builder.advancement()
                 .parent(summon_villager)
@@ -464,16 +465,16 @@ public final class PSAdvancementProvider {
                         false
                 )
                 .addCriterion("rainbow_toilet", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
-                        .of(PBlocks.HARD_TOILET.get())
+                        .of(PoBlocks.HARD_TOILET.get())
                         .hasComponents(DataComponentPredicate.builder()
-                                .expect(PComponents.TOILET_TYPE.get(), PToiletTypes.RAINBOW)
+                                .expect(PoComponents.TOILET_TYPE.get(), PoToiletTypes.RAINBOW)
                                 .build())))
                 .save(provider, modId("rainbow_toilet"));
 
         Advancement.Builder.advancement()
                 .parent(chili)
                 .display(
-                        PItems.CHILI_POOP,
+                        PoItems.CHILI_POOP,
                         Component.translatable("advancements.poopsky.chili_poop.title"),
                         Component.translatable("advancements.poopsky.chili_poop.description"),
                         null,
@@ -482,7 +483,7 @@ public final class PSAdvancementProvider {
                         true,
                         false
                 )
-                .addCriterion("chili_poop", InventoryChangeTrigger.TriggerInstance.hasItems(PItems.CHILI_POOP.get()))
+                .addCriterion("chili_poop", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.CHILI_POOP.get()))
                 .save(provider, modId("chili_poop"));
     }
 

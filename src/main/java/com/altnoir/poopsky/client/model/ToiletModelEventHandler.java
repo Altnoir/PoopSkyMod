@@ -2,7 +2,7 @@ package com.altnoir.poopsky.client.model;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.ToiletType;
-import com.altnoir.poopsky.init.PBlocks;
+import com.altnoir.poopsky.init.PoBlocks;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -46,8 +46,8 @@ public class ToiletModelEventHandler {
 
     public static void onModifyBakingResult(ModelEvent.ModifyBakingResult event) {
         var models = event.getModels();
-        wrapToiletModels(models, PBlocks.WOODEN_TOILET.getId(), "wooden_toilet", ToiletType.Category.WOOD, false);
-        wrapToiletModels(models, PBlocks.HARD_TOILET.getId(), "hard_toilet", ToiletType.Category.HARD, true);
+        wrapToiletModels(models, PoBlocks.WOODEN_TOILET.getId(), "wooden_toilet", ToiletType.Category.WOOD, false);
+        wrapToiletModels(models, PoBlocks.HARD_TOILET.getId(), "hard_toilet", ToiletType.Category.HARD, true);
     }
 
     private static void wrapToiletModels(Map<ModelResourceLocation, BakedModel> models, ResourceLocation blockId, String blockPath, ToiletType.Category category, boolean hasLava) {

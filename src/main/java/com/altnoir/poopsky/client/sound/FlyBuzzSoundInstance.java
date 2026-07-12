@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.client.sound;
 
 import com.altnoir.poopsky.content.entity.p.FlyEntity;
-import com.altnoir.poopsky.init.PSoundEvents;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -11,7 +11,7 @@ public class FlyBuzzSoundInstance extends AbstractTickableSoundInstance {
     private final FlyEntity fly;
 
     public FlyBuzzSoundInstance(FlyEntity fly) {
-        super(PSoundEvents.ENTITY_FLY_AMBIENT.get(), SoundSource.NEUTRAL, RandomSource.create());
+        super(PoSoundEvents.ENTITY_FLY_AMBIENT.get(), SoundSource.NEUTRAL, RandomSource.create());
         this.fly = fly;
         this.looping = true;
         this.delay = 0;

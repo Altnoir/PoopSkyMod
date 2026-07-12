@@ -1,12 +1,12 @@
 package com.altnoir.poopsky.content.block.entity;
 
-import com.altnoir.poopsky.PTags;
+import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.client.inventory.BreedingChestMenu;
 import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.item.p.FlyItem;
-import com.altnoir.poopsky.init.PBlockEntityType;
+import com.altnoir.poopsky.init.PoBlockEntityType;
 import com.altnoir.poopsky.content.recipe.PFlyRecipes;
-import com.altnoir.poopsky.init.PSoundEvents;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -83,7 +83,7 @@ public class BreedingChestBlockEntity extends BlockEntity implements MenuProvide
 
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
-            if (slot == SLOT_FECES) return stack.is(PTags.Items.POOPS);
+            if (slot == SLOT_FECES) return stack.is(PoTags.Items.POOPS);
             if (slot == SLOT_FLY_1 || slot == SLOT_FLY_2) return FlyItem.isFlyItem(stack);
             return false;
         }
@@ -123,7 +123,7 @@ public class BreedingChestBlockEntity extends BlockEntity implements MenuProvide
     };
 
     public BreedingChestBlockEntity(BlockPos pos, BlockState blockState) {
-        super(PBlockEntityType.BREEDING_CHEST.get(), pos, blockState);
+        super(PoBlockEntityType.BREEDING_CHEST.get(), pos, blockState);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, BreedingChestBlockEntity be) {
@@ -172,7 +172,7 @@ public class BreedingChestBlockEntity extends BlockEntity implements MenuProvide
         }
 
         if (level.getRandom().nextDouble() < 0.005) {
-            level.playSound(null, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, PSoundEvents.BLOCK_BREEDING_CHEST_WORK.get(), SoundSource.BLOCKS, 1.0F, 1.2F);
+            level.playSound(null, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, PoSoundEvents.BLOCK_BREEDING_CHEST_WORK.get(), SoundSource.BLOCKS, 1.0F, 1.2F);
         }
 
         be.setChanged();
@@ -185,10 +185,10 @@ public class BreedingChestBlockEntity extends BlockEntity implements MenuProvide
         for (BlockPos checkPos : BlockPos.betweenClosed(pos.offset(-r, -r, -r), pos.offset(r, r, r))) {
             if (checkPos.equals(pos)) continue;
             BlockState state = level.getBlockState(checkPos);
-            if (state.is(PTags.Blocks.POOP_BLOCKS)) {
+            if (state.is(PoTags.Blocks.POOP_BLOCKS)) {
                 poop++;
             }
-            if (state.is(PTags.Blocks.MAGGOTS_BLOCKS)) {
+            if (state.is(PoTags.Blocks.MAGGOTS_BLOCKS)) {
                 maggots++;
             }
         }

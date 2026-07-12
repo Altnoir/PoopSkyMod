@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.content.item.p;
 
 import com.altnoir.poopsky.content.FlyType;
-import com.altnoir.poopsky.init.PComponents;
-import com.altnoir.poopsky.init.PItems;
+import com.altnoir.poopsky.init.PoComponents;
+import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.content.item.PFlyTypes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -18,24 +18,24 @@ public class FlyItem extends Item {
     }
 
     public static ItemStack withType(FlyType.Type type) {
-        var stack = new ItemStack(PItems.FLY.get());
-        stack.set(PComponents.FLY_TYPE.get(), type.id());
+        var stack = new ItemStack(PoItems.FLY.get());
+        stack.set(PoComponents.FLY_TYPE.get(), type.id());
         return stack;
     }
 
     public static ItemStack withType(String typeId) {
-        var stack = new ItemStack(PItems.FLY.get());
-        stack.set(PComponents.FLY_TYPE.get(), typeId);
+        var stack = new ItemStack(PoItems.FLY.get());
+        stack.set(PoComponents.FLY_TYPE.get(), typeId);
         return stack;
     }
 
     public static FlyType.Type getFlyType(ItemStack stack) {
-        String typeId = stack.get(PComponents.FLY_TYPE.get());
+        String typeId = stack.get(PoComponents.FLY_TYPE.get());
         return typeId != null ? FlyType.byId(typeId) : PFlyTypes.NORMAL.get();
     }
 
     public static boolean isFlyItem(ItemStack stack) {
-        return stack.has(PComponents.FLY_TYPE.get());
+        return stack.has(PoComponents.FLY_TYPE.get());
     }
 
     @Override

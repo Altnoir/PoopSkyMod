@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.item.p;
 
 import com.altnoir.poopsky.content.entity.p.FlyEntity;
-import com.altnoir.poopsky.init.PSoundEvents;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.content.item.PFlyTypes;
 import com.altnoir.poopsky.content.FlyType;
 import net.minecraft.sounds.SoundSource;
@@ -31,7 +31,7 @@ public class FlyCatcherItem extends Item {
                 }
 
                 level.playSound(null, fly.getX(), fly.getY(), fly.getZ(),
-                        PSoundEvents.ENTITY_FLY_CAPTURE.get(), SoundSource.NEUTRAL, 1.0F, 1.0F);
+                        PoSoundEvents.ENTITY_FLY_CAPTURE.get(), SoundSource.NEUTRAL, 1.0F, 1.0F);
 
                 if (!player.getAbilities().instabuild) {
                     stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));

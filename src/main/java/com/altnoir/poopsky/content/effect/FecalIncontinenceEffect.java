@@ -1,9 +1,9 @@
 package com.altnoir.poopsky.content.effect;
 
-import com.altnoir.poopsky.init.PEffects;
-import com.altnoir.poopsky.init.PParticles;
-import com.altnoir.poopsky.init.PSoundEvents;
-import com.altnoir.poopsky.init.PItems;
+import com.altnoir.poopsky.init.PoEffects;
+import com.altnoir.poopsky.init.PoParticles;
+import com.altnoir.poopsky.init.PoSoundEvents;
+import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.util.toiletUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -47,12 +47,12 @@ public class FecalIncontinenceEffect extends MobEffect {
             var level = (ServerLevel) entity.level();
             BlockPos entityPos = entity.blockPosition();
 
-            Item stack = PItems.POOP.get();
+            Item stack = PoItems.POOP.get();
 
             boolean dropPoop = BlockPos.betweenClosedStream(entityPos.offset(0, -1, 0), entityPos.offset(0, 1, 0))
                     .anyMatch(targetPos -> {
-                        boolean applied = BoneMealItem.applyBonemeal(new ItemStack(PItems.POOP.get()), level, targetPos, null)
-                                || BoneMealItem.growWaterPlant(new ItemStack(PItems.POOP.get()), level, targetPos, null);
+                        boolean applied = BoneMealItem.applyBonemeal(new ItemStack(PoItems.POOP.get()), level, targetPos, null)
+                                || BoneMealItem.growWaterPlant(new ItemStack(PoItems.POOP.get()), level, targetPos, null);
 
                         if (applied) {
                             BoneMealItem.addGrowthParticles(level, targetPos, 15);
@@ -61,10 +61,10 @@ public class FecalIncontinenceEffect extends MobEffect {
                         return applied;
                     });
 
-            if (entity.hasEffect(PEffects.INTESTINAL_SPASM)) {
-                stack = PItems.CHILI_POOP.get();
+            if (entity.hasEffect(PoEffects.INTESTINAL_SPASM)) {
+                stack = PoItems.CHILI_POOP.get();
             } else if (toiletUtil.isGoldenToilet(level, entityPos.below())) {
-                stack = PItems.GOLDEN_POOP.get();
+                stack = PoItems.GOLDEN_POOP.get();
             }
 
             ItemStack finalStack = new ItemStack(stack);
@@ -80,14 +80,14 @@ public class FecalIncontinenceEffect extends MobEffect {
                 level.addFreshEntity(poop);
 
                 level.sendParticles(
-                        PParticles.POOP_PARTICLE.get(),
+                        PoParticles.POOP_PARTICLE.get(),
                         entity.getX(), entity.getY() + 0.1, entity.getZ(),
                         8, 0.0, -0.1, 0.0, 3.0
                 );
 
                 level.playSound(null,
                         entity.getX(), entity.getY() + 0.1, entity.getZ(),
-                        PSoundEvents.FART.get(), entity.getSoundSource(),
+                        PoSoundEvents.FART.get(), entity.getSoundSource(),
                         1.0F, pitch
                 );
             }

@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.effect;
 
-import com.altnoir.poopsky.init.PEffects;
-import com.altnoir.poopsky.init.PRecipes;
+import com.altnoir.poopsky.init.PoEffects;
+import com.altnoir.poopsky.init.PoRecipes;
 import com.altnoir.poopsky.util.PoopTntUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffect;
@@ -27,19 +27,19 @@ public class OnTheVergeEffect extends MobEffect {
         boolean result2 = false;
 
         if (!level.isClientSide) {
-            int duration = Objects.requireNonNull(livingEntity.getEffect(PEffects.ON_THE_VERGE)).getDuration();
+            int duration = Objects.requireNonNull(livingEntity.getEffect(PoEffects.ON_THE_VERGE)).getDuration();
             Vec3 vec3 = livingEntity.getDeltaMovement().add(new Vec3(0, 0.125, 0));
             boolean openTheDoor = false;
 
             if (livingEntity instanceof Player player) {
                 if (player.isShiftKeyDown()) {
-                    if (player.hasEffect(PEffects.INTESTINAL_SPASM)) {
+                    if (player.hasEffect(PoEffects.INTESTINAL_SPASM)) {
                         BlockPos pos = livingEntity.blockPosition().below();
                         BlockPos stonePos = pos.below();
                         BlockState state = level.getBlockState(pos);
                         BlockState stoneState = level.getBlockState(stonePos);
 
-                        for (var holder : level.getRecipeManager().getAllRecipesFor(PRecipes.ANAL_PRESSING.type().get())) {
+                        for (var holder : level.getRecipeManager().getAllRecipesFor(PoRecipes.ANAL_PRESSING.type().get())) {
                             var recipe = holder.value();
                             if (recipe.input().test(new ItemStack(state.getBlock().asItem())) && recipe.replaceTarget() == stoneState.getBlock()) {
                                 level.removeBlock(pos, false);
@@ -69,10 +69,10 @@ public class OnTheVergeEffect extends MobEffect {
         }
 
         if (result) {
-            livingEntity.removeEffect(PEffects.ON_THE_VERGE);
+            livingEntity.removeEffect(PoEffects.ON_THE_VERGE);
         }
         if (result2) {
-            livingEntity.removeEffect(PEffects.INTESTINAL_SPASM);
+            livingEntity.removeEffect(PoEffects.INTESTINAL_SPASM);
         }
         return true;
     }

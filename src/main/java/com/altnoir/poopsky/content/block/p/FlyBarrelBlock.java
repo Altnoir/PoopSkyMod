@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.content.block.entity.FlyBarrelBlockEntity;
-import com.altnoir.poopsky.init.PBlockEntityType;
-import com.altnoir.poopsky.init.PSoundEvents;
+import com.altnoir.poopsky.init.PoBlockEntityType;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -66,7 +66,7 @@ public class FlyBarrelBlock extends BaseEntityBlock {
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return createTickerHelper(blockEntityType, PBlockEntityType.FLY_BARREL.get(), FlyBarrelBlockEntity::tick);
+        return createTickerHelper(blockEntityType, PoBlockEntityType.FLY_BARREL.get(), FlyBarrelBlockEntity::tick);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class FlyBarrelBlock extends BaseEntityBlock {
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (!level.isClientSide) {
             if (level.getBlockEntity(pos) instanceof FlyBarrelBlockEntity be) {
-                level.playSound(null, pos, PSoundEvents.BLOCK_FLY_BARREL_OPEN.get(), SoundSource.BLOCKS, 0.5F, 0.7F);
+                level.playSound(null, pos, PoSoundEvents.BLOCK_FLY_BARREL_OPEN.get(), SoundSource.BLOCKS, 0.5F, 0.7F);
                 player.openMenu(be);
             }
         }

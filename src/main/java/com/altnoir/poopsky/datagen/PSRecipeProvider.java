@@ -6,9 +6,9 @@ import com.altnoir.poopsky.content.block.ToiletType;
 import com.altnoir.poopsky.content.item.PFlyTypes;
 import com.altnoir.poopsky.content.recipe.*;
 import com.altnoir.poopsky.compat.PSMods;
-import com.altnoir.poopsky.init.PBlocks;
-import com.altnoir.poopsky.init.PItems;
-import com.altnoir.poopsky.init.PToiletTypes;
+import com.altnoir.poopsky.init.PoBlocks;
+import com.altnoir.poopsky.init.PoItems;
+import com.altnoir.poopsky.impl.PoToiletTypes;
 import com.simibubi.create.AllItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -34,109 +34,109 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
 
     @Override
     protected void buildRecipes(RecipeOutput recipeOutput) {
-        List<ItemLike> POOP_LIST = List.of(PBlocks.POOP_BLOCK);
-        List<ItemLike> POOP_BRICK_LIST = List.of(PBlocks.POOP_BRICKS);
-        List<ItemLike> SMOOTH_POOP_LIST = List.of(PBlocks.DRIED_POOP_BLOCK);
-        List<ItemLike> TILE_BLOCK_LIST = List.of(PBlocks.POOLIME_BLOCK);
-        List<ItemLike> MAGGOTS_LIST = List.of(PItems.MAGGOTS_SEEDS);
-        List<ItemLike> ROUNDWORM_LIST = List.of(PItems.ROUNDWORM);
+        List<ItemLike> POOP_LIST = List.of(PoBlocks.POOP_BLOCK);
+        List<ItemLike> POOP_BRICK_LIST = List.of(PoBlocks.POOP_BRICKS);
+        List<ItemLike> SMOOTH_POOP_LIST = List.of(PoBlocks.DRIED_POOP_BLOCK);
+        List<ItemLike> TILE_BLOCK_LIST = List.of(PoBlocks.POOLIME_BLOCK);
+        List<ItemLike> MAGGOTS_LIST = List.of(PoItems.MAGGOTS_SEEDS);
+        List<ItemLike> ROUNDWORM_LIST = List.of(PoItems.ROUNDWORM);
 
         shapeless1x1Recipe(recipeOutput, Blocks.CRIMSON_NYLIUM, Blocks.CRIMSON_FUNGUS, Blocks.NETHERRACK);
         shapeless1x1Recipe(recipeOutput, Blocks.WARPED_NYLIUM, Blocks.WARPED_FUNGUS, Blocks.NETHERRACK);
-        shapeless1x1Recipe(recipeOutput, Blocks.SLIME_BLOCK, Items.LIME_DYE, PBlocks.POOLIME_BLOCK);
+        shapeless1x1Recipe(recipeOutput, Blocks.SLIME_BLOCK, Items.LIME_DYE, PoBlocks.POOLIME_BLOCK);
 
-        oreSmelting(recipeOutput, POOP_LIST, RecipeCategory.BUILDING_BLOCKS, PBlocks.DRIED_POOP_BLOCK, 0.1F, 200, "dried_poop_block");
-        oreBlasting(recipeOutput, POOP_LIST, RecipeCategory.BUILDING_BLOCKS, PBlocks.DRIED_POOP_BLOCK, 0.1F, 100, "dried_poop_block");
+        oreSmelting(recipeOutput, POOP_LIST, RecipeCategory.BUILDING_BLOCKS, PoBlocks.DRIED_POOP_BLOCK, 0.1F, 200, "dried_poop_block");
+        oreBlasting(recipeOutput, POOP_LIST, RecipeCategory.BUILDING_BLOCKS, PoBlocks.DRIED_POOP_BLOCK, 0.1F, 100, "dried_poop_block");
 
-        oreSmelting(recipeOutput, POOP_BRICK_LIST, RecipeCategory.BUILDING_BLOCKS, PBlocks.CRACKED_POOP_BRICKS, 0.1F, 200, "cracked_poop_bricks");
-        oreBlasting(recipeOutput, POOP_BRICK_LIST, RecipeCategory.BUILDING_BLOCKS, PBlocks.CRACKED_POOP_BRICKS, 0.1F, 100, "cracked_poop_bricks");
+        oreSmelting(recipeOutput, POOP_BRICK_LIST, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CRACKED_POOP_BRICKS, 0.1F, 200, "cracked_poop_bricks");
+        oreBlasting(recipeOutput, POOP_BRICK_LIST, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CRACKED_POOP_BRICKS, 0.1F, 100, "cracked_poop_bricks");
 
-        oreSmelting(recipeOutput, SMOOTH_POOP_LIST, RecipeCategory.BUILDING_BLOCKS, PBlocks.SMOOTH_POOP_BLOCK, 0.1F, 200, "smooth_poop_block");
-        oreBlasting(recipeOutput, SMOOTH_POOP_LIST, RecipeCategory.BUILDING_BLOCKS, PBlocks.SMOOTH_POOP_BLOCK, 0.1F, 100, "smooth_poop_block");
+        oreSmelting(recipeOutput, SMOOTH_POOP_LIST, RecipeCategory.BUILDING_BLOCKS, PoBlocks.SMOOTH_POOP_BLOCK, 0.1F, 200, "smooth_poop_block");
+        oreBlasting(recipeOutput, SMOOTH_POOP_LIST, RecipeCategory.BUILDING_BLOCKS, PoBlocks.SMOOTH_POOP_BLOCK, 0.1F, 100, "smooth_poop_block");
 
-        oreSmelting(recipeOutput, TILE_BLOCK_LIST, RecipeCategory.BUILDING_BLOCKS, PBlocks.TILE_BLOCK, 0.1F, 200, "tile_block");
-        oreBlasting(recipeOutput, TILE_BLOCK_LIST, RecipeCategory.BUILDING_BLOCKS, PBlocks.TILE_BLOCK, 0.1F, 100, "tile_block");
+        oreSmelting(recipeOutput, TILE_BLOCK_LIST, RecipeCategory.BUILDING_BLOCKS, PoBlocks.TILE_BLOCK, 0.1F, 200, "tile_block");
+        oreBlasting(recipeOutput, TILE_BLOCK_LIST, RecipeCategory.BUILDING_BLOCKS, PoBlocks.TILE_BLOCK, 0.1F, 100, "tile_block");
 
-        oreCooking(recipeOutput, List.of(PItems.POOP.get()), RecipeCategory.MISC, Items.COCOA_BEANS, 0.35F, 600, "cocoa_beans");
+        oreCooking(recipeOutput, List.of(PoItems.POOP.get()), RecipeCategory.MISC, Items.COCOA_BEANS, 0.35F, 600, "cocoa_beans");
         oreSmelting(recipeOutput, ROUNDWORM_LIST, RecipeCategory.MISC, Items.STRING, 0.35F, 200, "roundworm");
         oreCooking(recipeOutput, ROUNDWORM_LIST, RecipeCategory.MISC, Items.STRING, 0.35F, 200, "roundworm");
         // 食物
-        oreSmelting(recipeOutput, MAGGOTS_LIST, RecipeCategory.BUILDING_BLOCKS, PItems.BAKED_MAGGOTS, 0.35F, 200, "maggots_seeds");
-        oreCooking(recipeOutput, RecipeSerializer.SMOKING_RECIPE, SmokingRecipe::new, MAGGOTS_LIST, RecipeCategory.BUILDING_BLOCKS, PItems.BAKED_MAGGOTS, 0.35F, 100, "maggots_seeds", "_from_smoking");
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PItems.POOP_BREAD)
+        oreSmelting(recipeOutput, MAGGOTS_LIST, RecipeCategory.BUILDING_BLOCKS, PoItems.BAKED_MAGGOTS, 0.35F, 200, "maggots_seeds");
+        oreCooking(recipeOutput, RecipeSerializer.SMOKING_RECIPE, SmokingRecipe::new, MAGGOTS_LIST, RecipeCategory.BUILDING_BLOCKS, PoItems.BAKED_MAGGOTS, 0.35F, 100, "maggots_seeds", "_from_smoking");
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PoItems.POOP_BREAD)
                 .pattern("PMP")
-                .define('P', PItems.POOP)
-                .define('M', PItems.MAGGOTS_SEEDS)
-                .unlockedBy(getItemName(PItems.MAGGOTS_SEEDS), has(PItems.MAGGOTS_SEEDS))
+                .define('P', PoItems.POOP)
+                .define('M', PoItems.MAGGOTS_SEEDS)
+                .unlockedBy(getItemName(PoItems.MAGGOTS_SEEDS), has(PoItems.MAGGOTS_SEEDS))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PItems.POOP_MOONCAKE, 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PoItems.POOP_MOONCAKE, 2)
                 .pattern("WPW")
                 .define('W', Items.WHEAT)
-                .define('P', PItems.POOP)
+                .define('P', PoItems.POOP)
                 .unlockedBy(getItemName(Items.WHEAT), has(Items.WHEAT))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PItems.CHILI_POOP_MOONCAKE, 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PoItems.CHILI_POOP_MOONCAKE, 2)
                 .pattern("WPW")
                 .define('W', Items.WHEAT)
-                .define('P', PItems.CHILI_POOP)
+                .define('P', PoItems.CHILI_POOP)
                 .unlockedBy(getItemName(Items.WHEAT), has(Items.WHEAT))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PItems.GOLDEN_POOP_MOONCAKE, 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PoItems.GOLDEN_POOP_MOONCAKE, 2)
                 .pattern("WPW")
                 .define('W', Items.WHEAT)
-                .define('P', PItems.GOLDEN_POOP)
+                .define('P', PoItems.GOLDEN_POOP)
                 .unlockedBy(getItemName(Items.WHEAT), has(Items.WHEAT))
                 .save(recipeOutput);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PItems.POOP_DUMPLINGS)
-                .requires(PItems.POOP_BALL.get())
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PoItems.POOP_DUMPLINGS)
+                .requires(PoItems.POOP_BALL.get())
                 .requires(ItemTags.LEAVES)
-                .unlockedBy(getItemName(PItems.POOP_BALL.get()), has(PItems.POOP_BALL.get()))
+                .unlockedBy(getItemName(PoItems.POOP_BALL.get()), has(PoItems.POOP_BALL.get()))
                 .save(recipeOutput);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PItems.POOP_SOUP)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PoItems.POOP_SOUP)
                 .requires(Items.BOWL)
-                .requires(PItems.POOP)
-                .requires(PItems.MAGGOTS_SEEDS)
-                .requires(PItems.URINE_BOTTLE)
-                .unlockedBy(getItemName(PItems.MAGGOTS_SEEDS), has(PItems.MAGGOTS_SEEDS))
+                .requires(PoItems.POOP)
+                .requires(PoItems.MAGGOTS_SEEDS)
+                .requires(PoItems.URINE_BOTTLE)
+                .unlockedBy(getItemName(PoItems.MAGGOTS_SEEDS), has(PoItems.MAGGOTS_SEEDS))
                 .save(recipeOutput);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PItems.POOBURGER_MEAT.get(), 3)
-                .requires(PItems.POOP, 3)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PoItems.POOBURGER_MEAT.get(), 3)
+                .requires(PoItems.POOP, 3)
                 .requires(Items.EGG)
-                .unlockedBy(getItemName(PItems.POOP), has(PItems.POOP))
+                .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP))
                 .save(recipeOutput);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PItems.POOBURGER.get())
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PoItems.POOBURGER.get())
                 .requires(Items.BREAD)
-                .requires(PItems.POOBURGER_MEAT)
-                .requires(PItems.SEEDBED_CURSE)
-                .unlockedBy(getItemName(PItems.SEEDBED_CURSE), has(PItems.SEEDBED_CURSE))
+                .requires(PoItems.POOBURGER_MEAT)
+                .requires(PoItems.SEEDBED_CURSE)
+                .unlockedBy(getItemName(PoItems.SEEDBED_CURSE), has(PoItems.SEEDBED_CURSE))
                 .save(recipeOutput);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PItems.POODDING.get(), 2)
-                .requires(PItems.POOP_BALL)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PoItems.POODDING.get(), 2)
+                .requires(PoItems.POOP_BALL)
                 .requires(Items.EGG).requires(Items.SUGAR)
-                .unlockedBy(getItemName(PItems.POOP_BALL), has(PItems.POOP_BALL))
+                .unlockedBy(getItemName(PoItems.POOP_BALL), has(PoItems.POOP_BALL))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PBlocks.POOP_CAKE.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PoBlocks.POOP_CAKE.get())
                 .pattern("MMM")
                 .pattern("SES")
                 .pattern("PPP")
-                .define('M', PItems.MAGGOTS_SEEDS)
+                .define('M', PoItems.MAGGOTS_SEEDS)
                 .define('S', Items.SUGAR).define('E', Items.EGG)
-                .define('P', PItems.POOP)
-                .unlockedBy(getItemName(PItems.MAGGOTS_SEEDS), has(PItems.MAGGOTS_SEEDS))
+                .define('P', PoItems.POOP)
+                .unlockedBy(getItemName(PoItems.MAGGOTS_SEEDS), has(PoItems.MAGGOTS_SEEDS))
                 .save(recipeOutput);
 
         // 杂项
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PItems.TOILET_PLUG_WAND)
-                .requires(PItems.TOILET_PLUG.get())
-                .requires(PItems.POOP.get())
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PoItems.TOILET_PLUG_WAND)
+                .requires(PoItems.TOILET_PLUG.get())
+                .requires(PoItems.POOP.get())
                 .requires(Items.ENDER_EYE)
                 .unlockedBy(getItemName(Items.ENDER_EYE), has(Items.ENDER_EYE))
                 .save(recipeOutput);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PItems.TIME_BELL)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PoItems.TIME_BELL)
                 .requires(Items.BELL)
-                .requires(PItems.POOP.get())
+                .requires(PoItems.POOP.get())
                 .requires(Items.DRAGON_EGG)
                 .unlockedBy(getItemName(Items.DRAGON_EGG), has(Items.DRAGON_EGG))
                 .save(recipeOutput);
@@ -144,176 +144,176 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .pattern("S S")
                 .pattern(" P ")
                 .pattern("S S")
-                .define('P', PItems.POOP_BALL)
-                .define('S', PItems.MAGGOTS_SEEDS)
-                .unlockedBy(getItemName(PItems.MAGGOTS_SEEDS), has(PItems.MAGGOTS_SEEDS))
-                .save(recipeOutput, getConversionRecipeName(PItems.MAGGOTS_SEEDS));
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PItems.WITHER_POOP_BALL.get(), 8)
+                .define('P', PoItems.POOP_BALL)
+                .define('S', PoItems.MAGGOTS_SEEDS)
+                .unlockedBy(getItemName(PoItems.MAGGOTS_SEEDS), has(PoItems.MAGGOTS_SEEDS))
+                .save(recipeOutput, getConversionRecipeName(PoItems.MAGGOTS_SEEDS));
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoItems.WITHER_POOP_BALL.get(), 8)
                 .pattern("PPP")
                 .pattern("PSP")
                 .pattern("PPP")
-                .define('P', PItems.POOP_BALL)
+                .define('P', PoItems.POOP_BALL)
                 .define('S', Items.WITHER_ROSE)
                 .unlockedBy(getItemName(Items.WITHER_ROSE), has(Items.WITHER_ROSE))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PItems.GOLDEN_POOP.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoItems.GOLDEN_POOP.get())
                 .pattern("PPP")
                 .pattern("PSP")
                 .pattern("PPP")
                 .define('P', Items.GOLD_NUGGET)
-                .define('S', PItems.POOP)
+                .define('S', PoItems.POOP)
                 .unlockedBy(getItemName(Items.GOLD_NUGGET), has(Items.GOLD_NUGGET))
                 .save(recipeOutput);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PItems.SEEDBED_CURSE.get())
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PoItems.SEEDBED_CURSE.get())
                 .requires(Items.ROTTEN_FLESH, 4)
-                .requires(PItems.POOP_BALL)
-                .requires(PItems.POOP, 4)
+                .requires(PoItems.POOP_BALL)
+                .requires(PoItems.POOP, 4)
                 .unlockedBy(getItemName(Items.ROTTEN_FLESH), has(Items.ROTTEN_FLESH))
                 .save(recipeOutput);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PItems.OMINOUS_FILTHY_INGOT.get())
-                .requires(PItems.SEEDBED_CURSE, 4)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PoItems.OMINOUS_FILTHY_INGOT.get())
+                .requires(PoItems.SEEDBED_CURSE, 4)
                 .requires(Items.IRON_INGOT, 4)
-                .unlockedBy(getItemName(PItems.SEEDBED_CURSE), has(PItems.SEEDBED_CURSE))
+                .unlockedBy(getItemName(PoItems.SEEDBED_CURSE), has(PoItems.SEEDBED_CURSE))
                 .save(recipeOutput);
-        copySmithingTemplate(recipeOutput, PItems.OMEN_UPGRADE_SMITHING_TEMPLATE, PBlocks.POOP_BLOCK, PItems.SEEDBED_CURSE);
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PItems.MILOS_SWORD)
+        copySmithingTemplate(recipeOutput, PoItems.OMEN_UPGRADE_SMITHING_TEMPLATE, PoBlocks.POOP_BLOCK, PoItems.SEEDBED_CURSE);
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PoItems.MILOS_SWORD)
                 .pattern("BOB")
                 .pattern(" O ")
                 .pattern(" P ")
                 .define('B', Items.BONE)
-                .define('O', PItems.OMINOUS_FILTHY_INGOT)
-                .define('P', PItems.TOILET_PLUG)
-                .unlockedBy(getItemName(PItems.OMINOUS_FILTHY_INGOT), has(PItems.OMINOUS_FILTHY_INGOT))
+                .define('O', PoItems.OMINOUS_FILTHY_INGOT)
+                .define('P', PoItems.TOILET_PLUG)
+                .unlockedBy(getItemName(PoItems.OMINOUS_FILTHY_INGOT), has(PoItems.OMINOUS_FILTHY_INGOT))
                 .save(recipeOutput);
         // 盔甲
-        omenSmithing(recipeOutput, Items.GOLDEN_CHESTPLATE, RecipeCategory.COMBAT, PItems.OMEN_CHESTPLATE.get());
-        omenSmithing(recipeOutput, Items.GOLDEN_LEGGINGS, RecipeCategory.COMBAT, PItems.OMEN_LEGGINGS.get());
-        omenSmithing(recipeOutput, Items.GOLDEN_HELMET, RecipeCategory.COMBAT, PItems.OMEN_HELMET.get());
-        omenSmithing(recipeOutput, Items.GOLDEN_BOOTS, RecipeCategory.COMBAT, PItems.OMEN_BOOTS.get());
+        omenSmithing(recipeOutput, Items.GOLDEN_CHESTPLATE, RecipeCategory.COMBAT, PoItems.OMEN_CHESTPLATE.get());
+        omenSmithing(recipeOutput, Items.GOLDEN_LEGGINGS, RecipeCategory.COMBAT, PoItems.OMEN_LEGGINGS.get());
+        omenSmithing(recipeOutput, Items.GOLDEN_HELMET, RecipeCategory.COMBAT, PoItems.OMEN_HELMET.get());
+        omenSmithing(recipeOutput, Items.GOLDEN_BOOTS, RecipeCategory.COMBAT, PoItems.OMEN_BOOTS.get());
 
         // 建筑
-        offer2x2CompactingRecipe(recipeOutput, PBlocks.POOP_BLOCK, PItems.POOP);
-        blockFamilyRecipes(recipeOutput, PBlocks.POOP_FAMILY);
+        offer2x2CompactingRecipe(recipeOutput, PoBlocks.POOP_BLOCK, PoItems.POOP);
+        blockFamilyRecipes(recipeOutput, PoBlocks.POOP_FAMILY);
 
-        offer2x2CompactingRecipe(recipeOutput, PBlocks.CHILI_POOP_BLOCK, PItems.CHILI_POOP);
-        blockFamilyRecipes(recipeOutput, PBlocks.CHILI_POOP_FAMILY);
+        offer2x2CompactingRecipe(recipeOutput, PoBlocks.CHILI_POOP_BLOCK, PoItems.CHILI_POOP);
+        blockFamilyRecipes(recipeOutput, PoBlocks.CHILI_POOP_FAMILY);
 
-        offer2x2CompactingRecipe(recipeOutput, PBlocks.GOLDEN_POOP_BLOCK, PItems.GOLDEN_POOP);
-        blockFamilyRecipes(recipeOutput, PBlocks.GOLDEN_POOP_FAMILY);
+        offer2x2CompactingRecipe(recipeOutput, PoBlocks.GOLDEN_POOP_BLOCK, PoItems.GOLDEN_POOP);
+        blockFamilyRecipes(recipeOutput, PoBlocks.GOLDEN_POOP_FAMILY);
 
-        blockFamilyRecipes(recipeOutput, PBlocks.DRIED_POOP_BLOCK_FAMILY);
+        blockFamilyRecipes(recipeOutput, PoBlocks.DRIED_POOP_BLOCK_FAMILY);
 
-        blockFamilyRecipes(recipeOutput, PBlocks.SMOOTH_POOP_BLOCK_FAMILY);
+        blockFamilyRecipes(recipeOutput, PoBlocks.SMOOTH_POOP_BLOCK_FAMILY);
 
-        offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.CUT_POOP_BLOCK, PBlocks.DRIED_POOP_BLOCK, 4);
-        blockFamilyRecipes(recipeOutput, PBlocks.CUT_POOP_BLOCK_FAMILY);
+        offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CUT_POOP_BLOCK, PoBlocks.DRIED_POOP_BLOCK, 4);
+        blockFamilyRecipes(recipeOutput, PoBlocks.CUT_POOP_BLOCK_FAMILY);
 
-        offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_BRICKS, PBlocks.POOP_BLOCK, 4);
-        blockFamilyRecipes(recipeOutput, PBlocks.POOP_BRICK_FAMILY);
+        offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BRICKS, PoBlocks.POOP_BLOCK, 4);
+        blockFamilyRecipes(recipeOutput, PoBlocks.POOP_BRICK_FAMILY);
 
-        create1x2ShapelessFrom(recipeOutput, PBlocks.MOSSY_POOP_BRICKS, PBlocks.POOP_BRICKS, Blocks.MOSS_BLOCK);
-        create1x2ShapelessFrom(recipeOutput, PBlocks.MOSSY_POOP_BRICKS, PBlocks.POOP_BRICKS, Blocks.VINE);
-        blockFamilyRecipes(recipeOutput, PBlocks.MOSSY_POOP_BRICK_FAMILY);
+        create1x2ShapelessFrom(recipeOutput, PoBlocks.MOSSY_POOP_BRICKS, PoBlocks.POOP_BRICKS, Blocks.MOSS_BLOCK);
+        create1x2ShapelessFrom(recipeOutput, PoBlocks.MOSSY_POOP_BRICKS, PoBlocks.POOP_BRICKS, Blocks.VINE);
+        blockFamilyRecipes(recipeOutput, PoBlocks.MOSSY_POOP_BRICK_FAMILY);
 
-        blockFamilyRecipes(recipeOutput, PBlocks.TILE_BLOCK_FAMILY);
+        blockFamilyRecipes(recipeOutput, PoBlocks.TILE_BLOCK_FAMILY);
 
-        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PItems.POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PBlocks.RAW_POOP_BLOCK);
-        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PItems.SAPLING_POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PBlocks.RAW_SAPLING_POOP_BLOCK);
-        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PItems.SEA_POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PBlocks.RAW_SEA_POOP_BLOCK);
-        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PItems.WITHER_POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PBlocks.RAW_WITHER_POOP_BLOCK);
-        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PItems.MAGGOTS_SEEDS, RecipeCategory.BUILDING_BLOCKS, PBlocks.MAGGOTS_BLOCK);
-        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PItems.ROUNDWORM, RecipeCategory.BUILDING_BLOCKS, PBlocks.ROUNDWORM_BLOCK);
+        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PoItems.POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PoBlocks.RAW_POOP_BLOCK);
+        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PoItems.SAPLING_POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PoBlocks.RAW_SAPLING_POOP_BLOCK);
+        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PoItems.SEA_POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PoBlocks.RAW_SEA_POOP_BLOCK);
+        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PoItems.WITHER_POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PoBlocks.RAW_WITHER_POOP_BLOCK);
+        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PoItems.MAGGOTS_SEEDS, RecipeCategory.BUILDING_BLOCKS, PoBlocks.MAGGOTS_BLOCK);
+        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PoItems.ROUNDWORM, RecipeCategory.BUILDING_BLOCKS, PoBlocks.ROUNDWORM_BLOCK);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_BLOCK)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BLOCK)
                 .pattern("P")
                 .pattern("P")
-                .define('P', PBlocks.POOP_SLAB)
-                .unlockedBy(getItemName(PBlocks.POOP_BLOCK), has(PBlocks.POOP_BLOCK))
-                .save(recipeOutput, getConversionRecipeName(PBlocks.POOP_BLOCK) + "_from_slab");
+                .define('P', PoBlocks.POOP_SLAB)
+                .unlockedBy(getItemName(PoBlocks.POOP_BLOCK), has(PoBlocks.POOP_BLOCK))
+                .save(recipeOutput, getConversionRecipeName(PoBlocks.POOP_BLOCK) + "_from_slab");
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_BLOCK)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BLOCK)
                 .pattern("PP")
-                .define('P', PBlocks.POOP_VERTICAL_SLAB)
-                .unlockedBy(getItemName(PBlocks.POOP_BLOCK), has(PBlocks.POOP_BLOCK))
-                .save(recipeOutput, getConversionRecipeName(PBlocks.POOP_BLOCK) + "_from_vertical_slab");
+                .define('P', PoBlocks.POOP_VERTICAL_SLAB)
+                .unlockedBy(getItemName(PoBlocks.POOP_BLOCK), has(PoBlocks.POOP_BLOCK))
+                .save(recipeOutput, getConversionRecipeName(PoBlocks.POOP_BLOCK) + "_from_vertical_slab");
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_BUTTON)
-                .requires(PItems.POOP.get())
-                .unlockedBy(getItemName(PItems.POOP), has(PItems.POOP))
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BUTTON)
+                .requires(PoItems.POOP.get())
+                .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_PRESSURE_PLATE)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_PRESSURE_PLATE)
                 .pattern("PP")
-                .define('P', PItems.POOP)
-                .unlockedBy(getItemName(PItems.POOP), has(PItems.POOP))
+                .define('P', PoItems.POOP)
+                .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_FENCE, 3)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_FENCE, 3)
                 .pattern("BPB")
                 .pattern("BPB")
-                .define('B', PBlocks.POOP_BLOCK)
-                .define('P', PItems.POOP)
-                .unlockedBy(getItemName(PBlocks.POOP_BLOCK), has(PBlocks.POOP_BLOCK))
+                .define('B', PoBlocks.POOP_BLOCK)
+                .define('P', PoItems.POOP)
+                .unlockedBy(getItemName(PoBlocks.POOP_BLOCK), has(PoBlocks.POOP_BLOCK))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_FENCE_GATE)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_FENCE_GATE)
                 .pattern("PBP")
                 .pattern("PBP")
-                .define('B', PBlocks.POOP_BLOCK)
-                .define('P', PItems.POOP)
-                .unlockedBy(getItemName(PBlocks.POOP_BLOCK), has(PBlocks.POOP_BLOCK))
+                .define('B', PoBlocks.POOP_BLOCK)
+                .define('P', PoItems.POOP)
+                .unlockedBy(getItemName(PoBlocks.POOP_BLOCK), has(PoBlocks.POOP_BLOCK))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_DOOR, 3)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_DOOR, 3)
                 .pattern("PP")
                 .pattern("PP")
                 .pattern("PP")
-                .define('P', PBlocks.POOP_BLOCK)
-                .unlockedBy(getItemName(PBlocks.POOP_BLOCK), has(PBlocks.POOP_BLOCK))
+                .define('P', PoBlocks.POOP_BLOCK)
+                .unlockedBy(getItemName(PoBlocks.POOP_BLOCK), has(PoBlocks.POOP_BLOCK))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_TRAPDOOR, 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_TRAPDOOR, 2)
                 .pattern("PP")
                 .pattern("PP")
-                .define('P', PBlocks.POOP_SLAB)
-                .unlockedBy(getItemName(PBlocks.POOP_BLOCK), has(PBlocks.POOP_BLOCK))
-                .save(recipeOutput);
-
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_BLOCK, 4)
-                .requires(PBlocks.POOP_EMPTY_LOG)
-                .unlockedBy(getItemName(PBlocks.POOP_LOG), has(PBlocks.POOP_LOG))
-                .save(recipeOutput, getConversionRecipeName(PBlocks.POOP_BLOCK, PBlocks.POOP_EMPTY_LOG));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_BLOCK, 4)
-                .requires(PBlocks.STRIPPED_POOP_EMPTY_LOG)
-                .unlockedBy(getItemName(PBlocks.POOP_LOG), has(PBlocks.POOP_LOG))
-                .save(recipeOutput, getConversionRecipeName(PBlocks.POOP_BLOCK, PBlocks.STRIPPED_POOP_EMPTY_LOG));
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_PIECE, 3)
-                .pattern("PP")
-                .define('P', PBlocks.POOP_BLOCK)
-                .unlockedBy(getItemName(PBlocks.POOP_BLOCK), has(PBlocks.POOP_BLOCK))
+                .define('P', PoBlocks.POOP_SLAB)
+                .unlockedBy(getItemName(PoBlocks.POOP_BLOCK), has(PoBlocks.POOP_BLOCK))
                 .save(recipeOutput);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, PItems.LAWRENCE_MUSIC_DISC)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BLOCK, 4)
+                .requires(PoBlocks.POOP_EMPTY_LOG)
+                .unlockedBy(getItemName(PoBlocks.POOP_LOG), has(PoBlocks.POOP_LOG))
+                .save(recipeOutput, getConversionRecipeName(PoBlocks.POOP_BLOCK, PoBlocks.POOP_EMPTY_LOG));
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BLOCK, 4)
+                .requires(PoBlocks.STRIPPED_POOP_EMPTY_LOG)
+                .unlockedBy(getItemName(PoBlocks.POOP_LOG), has(PoBlocks.POOP_LOG))
+                .save(recipeOutput, getConversionRecipeName(PoBlocks.POOP_BLOCK, PoBlocks.STRIPPED_POOP_EMPTY_LOG));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_PIECE, 3)
+                .pattern("PP")
+                .define('P', PoBlocks.POOP_BLOCK)
+                .unlockedBy(getItemName(PoBlocks.POOP_BLOCK), has(PoBlocks.POOP_BLOCK))
+                .save(recipeOutput);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, PoItems.LAWRENCE_MUSIC_DISC)
                 .requires(Tags.Items.MUSIC_DISCS)
-                .requires(PItems.POOP)
-                .unlockedBy(getItemName(PItems.POOP), has(PItems.POOP))
+                .requires(PoItems.POOP)
+                .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PBlocks.COMPOOPER)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.COMPOOPER)
                 .pattern("S S")
                 .pattern("S S")
                 .pattern("SSS")
                 .define('S', Blocks.MOSSY_COBBLESTONE_SLAB)
                 .unlockedBy(getItemName(Blocks.MOSSY_COBBLESTONE_SLAB), has(Blocks.MOSSY_COBBLESTONE_SLAB))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PBlocks.PLACER)
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.PLACER)
                 .pattern("SSS")
                 .pattern("SPS")
                 .pattern("SAS")
                 .define('S', Blocks.MOSSY_COBBLESTONE)
                 .define('A', Items.REDSTONE)
-                .define('P', PItems.TOILET_PLUG)
-                .unlockedBy(getItemName(PItems.TOILET_PLUG), has(PItems.TOILET_PLUG))
+                .define('P', PoItems.TOILET_PLUG)
+                .unlockedBy(getItemName(PoItems.TOILET_PLUG), has(PoItems.TOILET_PLUG))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PBlocks.SIEVE)
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.SIEVE)
                 .pattern("SAS")
                 .pattern("S S")
                 .pattern("S S")
@@ -321,206 +321,206 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('A', Items.STRING)
                 .unlockedBy(getItemName(Blocks.MOSSY_COBBLESTONE_WALL), has(Blocks.MOSSY_COBBLESTONE_WALL))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PBlocks.POOP_TNT)
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.POOP_TNT)
                 .pattern("SAS")
                 .pattern("ASA")
                 .pattern("SAS")
                 .define('S', Tags.Items.GUNPOWDERS)
-                .define('A', PBlocks.POOP_BLOCK)
-                .unlockedBy(getItemName(PItems.KING_OF_DRAGON_FRUIT), has(PItems.KING_OF_DRAGON_FRUIT))
+                .define('A', PoBlocks.POOP_BLOCK)
+                .unlockedBy(getItemName(PoItems.KING_OF_DRAGON_FRUIT), has(PoItems.KING_OF_DRAGON_FRUIT))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, PItems.FLY_CATCHER)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, PoItems.FLY_CATCHER)
                 .pattern("RR")
                 .pattern("RS")
                 .pattern(" S")
-                .define('R', PItems.ROUNDWORM)
+                .define('R', PoItems.ROUNDWORM)
                 .define('S', Items.STICK)
-                .unlockedBy(getItemName(PItems.ROUNDWORM), has(PItems.ROUNDWORM))
+                .unlockedBy(getItemName(PoItems.ROUNDWORM), has(PoItems.ROUNDWORM))
                 .save(recipeOutput);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, PBlocks.FLY_BARREL)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, PoBlocks.FLY_BARREL)
                 .requires(Items.BARREL)
-                .requires(PBlocks.MAGGOTS_BLOCK)
-                .unlockedBy(getItemName(PBlocks.MAGGOTS_BLOCK), has(PBlocks.MAGGOTS_BLOCK))
+                .requires(PoBlocks.MAGGOTS_BLOCK)
+                .unlockedBy(getItemName(PoBlocks.MAGGOTS_BLOCK), has(PoBlocks.MAGGOTS_BLOCK))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PBlocks.BREEDING_CHEST)
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.BREEDING_CHEST)
                 .pattern("CCC")
                 .pattern("CPC")
                 .pattern("CBC")
-                .define('C', PBlocks.CUT_POOP_BLOCK)
-                .define('P', PItems.POOP)
+                .define('C', PoBlocks.CUT_POOP_BLOCK)
+                .define('P', PoItems.POOP)
                 .define('B', Tags.Items.BARRELS)
-                .unlockedBy(getItemName(PBlocks.CUT_POOP_BLOCK), has(PBlocks.CUT_POOP_BLOCK))
+                .unlockedBy(getItemName(PoBlocks.CUT_POOP_BLOCK), has(PoBlocks.CUT_POOP_BLOCK))
                 .save(recipeOutput);
 
-        offer2x2CompactingRecipe(recipeOutput, PBlocks.POOLIME_BLOCK.get(), PItems.POOP_BALL.get());
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PBlocks.POOLIME_MAGGOTS_BLOCK.get())
+        offer2x2CompactingRecipe(recipeOutput, PoBlocks.POOLIME_BLOCK.get(), PoItems.POOP_BALL.get());
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOLIME_MAGGOTS_BLOCK.get())
                 .pattern("PPP")
                 .pattern("PMP")
                 .pattern("PPP")
-                .define('P', PBlocks.POOP_BLOCK)
-                .define('M', PBlocks.MAGGOTS_BLOCK)
-                .unlockedBy(getItemName(PBlocks.MAGGOTS_BLOCK), has(PBlocks.MAGGOTS_BLOCK))
+                .define('P', PoBlocks.POOP_BLOCK)
+                .define('M', PoBlocks.MAGGOTS_BLOCK)
+                .unlockedBy(getItemName(PoBlocks.MAGGOTS_BLOCK), has(PoBlocks.MAGGOTS_BLOCK))
                 .save(recipeOutput);
 
         // 原版物品配方
-        offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, Blocks.CRAFTING_TABLE, PItems.SPALL, 1);
+        offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, Blocks.CRAFTING_TABLE, PoItems.SPALL, 1);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.GUNPOWDER)
-                .requires(PItems.KING_OF_DRAGON_FRUIT)
-                .unlockedBy(getItemName(PItems.KING_OF_DRAGON_FRUIT), has(PItems.KING_OF_DRAGON_FRUIT))
-                .save(recipeOutput, getConversionRecipeName(Items.GUNPOWDER) + "_from_" + getItemName(PItems.KING_OF_DRAGON_FRUIT));
+                .requires(PoItems.KING_OF_DRAGON_FRUIT)
+                .unlockedBy(getItemName(PoItems.KING_OF_DRAGON_FRUIT), has(PoItems.KING_OF_DRAGON_FRUIT))
+                .save(recipeOutput, getConversionRecipeName(Items.GUNPOWDER) + "_from_" + getItemName(PoItems.KING_OF_DRAGON_FRUIT));
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, Blocks.COARSE_DIRT, 4)
                 .pattern("PG")
                 .pattern("GP")
                 .define('G', Blocks.GRAVEL)
-                .define('P', PBlocks.POOP_BLOCK)
-                .unlockedBy(getItemName(PBlocks.POOP_BLOCK), has(PBlocks.POOP_BLOCK))
+                .define('P', PoBlocks.POOP_BLOCK)
+                .unlockedBy(getItemName(PoBlocks.POOP_BLOCK), has(PoBlocks.POOP_BLOCK))
                 .save(recipeOutput, getConversionRecipeName(Blocks.COARSE_DIRT) + "_from_poop_block");
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Blocks.POINTED_DRIPSTONE)
                 .pattern("S")
                 .pattern("S")
                 .pattern("S")
-                .define('S', PItems.SPALL)
-                .unlockedBy(getItemName(PItems.SPALL), has(PItems.SPALL))
+                .define('S', PoItems.SPALL)
+                .unlockedBy(getItemName(PoItems.SPALL), has(PoItems.SPALL))
                 .save(recipeOutput, getConversionRecipeName(Blocks.POINTED_DRIPSTONE) + "_from_spall");
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.FLINT)
                 .pattern("S")
                 .pattern("S")
-                .define('S', PItems.SPALL)
-                .unlockedBy(getItemName(PItems.SPALL), has(PItems.SPALL))
+                .define('S', PoItems.SPALL)
+                .unlockedBy(getItemName(PoItems.SPALL), has(PoItems.SPALL))
                 .save(recipeOutput, getConversionRecipeName(Items.FLINT) + "_from_spall");
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.TORCH, 4)
                 .pattern("P")
                 .pattern("S")
-                .define('P', PItems.POOP_BALL)
+                .define('P', PoItems.POOP_BALL)
                 .define('S', Items.STICK)
-                .unlockedBy(getItemName(PItems.POOP_BALL), has(PItems.POOP_BALL))
+                .unlockedBy(getItemName(PoItems.POOP_BALL), has(PoItems.POOP_BALL))
                 .save(recipeOutput, getConversionRecipeName(Items.TORCH) + "_from_poop_ball");
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Blocks.TUBE_CORAL_BLOCK)
-                .requires(PBlocks.POOP_BLOCK)
+                .requires(PoBlocks.POOP_BLOCK)
                 .requires(Blocks.TUBE_CORAL).requires(Blocks.TUBE_CORAL_FAN)
                 .unlockedBy(getItemName(Blocks.TUBE_CORAL), has(Blocks.TUBE_CORAL))
                 .save(recipeOutput, getConversionRecipeName(Blocks.TUBE_CORAL_BLOCK));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Blocks.BRAIN_CORAL_BLOCK)
-                .requires(PBlocks.POOP_BLOCK)
+                .requires(PoBlocks.POOP_BLOCK)
                 .requires(Blocks.BRAIN_CORAL).requires(Blocks.BRAIN_CORAL_FAN)
                 .unlockedBy(getItemName(Blocks.BRAIN_CORAL), has(Blocks.BRAIN_CORAL))
                 .save(recipeOutput, getConversionRecipeName(Blocks.BRAIN_CORAL_BLOCK));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Blocks.BUBBLE_CORAL_BLOCK)
-                .requires(PBlocks.POOP_BLOCK)
+                .requires(PoBlocks.POOP_BLOCK)
                 .requires(Blocks.BUBBLE_CORAL).requires(Blocks.BUBBLE_CORAL_FAN)
                 .unlockedBy(getItemName(Blocks.BUBBLE_CORAL), has(Blocks.BUBBLE_CORAL))
                 .save(recipeOutput, getConversionRecipeName(Blocks.BUBBLE_CORAL_BLOCK));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Blocks.FIRE_CORAL_BLOCK)
-                .requires(PBlocks.POOP_BLOCK)
+                .requires(PoBlocks.POOP_BLOCK)
                 .requires(Blocks.FIRE_CORAL).requires(Blocks.FIRE_CORAL_FAN)
                 .unlockedBy(getItemName(Blocks.FIRE_CORAL), has(Blocks.FIRE_CORAL))
                 .save(recipeOutput, getConversionRecipeName(Blocks.FIRE_CORAL_BLOCK));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Blocks.HORN_CORAL_BLOCK)
-                .requires(PBlocks.POOP_BLOCK)
+                .requires(PoBlocks.POOP_BLOCK)
                 .requires(Blocks.HORN_CORAL).requires(Blocks.HORN_CORAL_FAN)
                 .unlockedBy(getItemName(Blocks.HORN_CORAL), has(Blocks.HORN_CORAL))
                 .save(recipeOutput, getConversionRecipeName(Blocks.HORN_CORAL_BLOCK));
 
-        offerCompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, Blocks.MOSSY_COBBLESTONE, PItems.SPALL);
+        offerCompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, Blocks.MOSSY_COBBLESTONE, PoItems.SPALL);
         create1x2ShapelessFrom(recipeOutput, Blocks.GRASS_BLOCK, Blocks.DIRT, Blocks.MOSS_BLOCK);
 
         create1x2ShapelessFrom(recipeOutput, Blocks.DIORITE, Blocks.COBBLESTONE, Blocks.CLAY, 2);
         create1x2ShapelessFrom(recipeOutput, Blocks.GRANITE, Blocks.COBBLESTONE, Blocks.DRIPSTONE_BLOCK, 2);
-        create1x2ShapelessFrom(recipeOutput, Blocks.DIRT, Blocks.MUD, PItems.POOP.get());
+        create1x2ShapelessFrom(recipeOutput, Blocks.DIRT, Blocks.MUD, PoItems.POOP.get());
         //create1x2ShapelessFrom(recipeOutput, Blocks.TUFF, Blocks.ANDESITE, PSItems.SPALL);
         //create1x2ShapelessFrom(recipeOutput, Blocks.CALCITE, Blocks.DIORITE, PSItems.SPALL);
 
         // 切石配方
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.STOOL, PBlocks.DRIED_POOP_BLOCK, 2);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.STOOL, PoBlocks.DRIED_POOP_BLOCK, 2);
 
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_PIECE, PBlocks.POOP_BLOCK, 8);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_STAIRS, PBlocks.POOP_BLOCK);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_SLAB, PBlocks.POOP_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_VERTICAL_SLAB, PBlocks.POOP_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_FENCE, PBlocks.POOP_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_FENCE_GATE, PBlocks.POOP_BLOCK);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_WALL, PBlocks.POOP_BLOCK);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_DOOR, PBlocks.POOP_BLOCK);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_TRAPDOOR, PBlocks.POOP_BLOCK);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_PRESSURE_PLATE, PBlocks.POOP_BLOCK);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_BUTTON, PBlocks.POOP_BLOCK, 4);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_PIECE, PoBlocks.POOP_BLOCK, 8);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_STAIRS, PoBlocks.POOP_BLOCK);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_SLAB, PoBlocks.POOP_BLOCK, 2);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_VERTICAL_SLAB, PoBlocks.POOP_BLOCK, 2);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_FENCE, PoBlocks.POOP_BLOCK, 2);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_FENCE_GATE, PoBlocks.POOP_BLOCK);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_WALL, PoBlocks.POOP_BLOCK);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_DOOR, PoBlocks.POOP_BLOCK);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_TRAPDOOR, PoBlocks.POOP_BLOCK);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_PRESSURE_PLATE, PoBlocks.POOP_BLOCK);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BUTTON, PoBlocks.POOP_BLOCK, 4);
 
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.CHILI_POOP_STAIRS, PBlocks.CHILI_POOP_BLOCK);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.CHILI_POOP_SLAB, PBlocks.CHILI_POOP_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.CHILI_POOP_VERTICAL_SLAB, PBlocks.CHILI_POOP_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.CHILI_POOP_WALL, PBlocks.CHILI_POOP_BLOCK);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CHILI_POOP_STAIRS, PoBlocks.CHILI_POOP_BLOCK);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CHILI_POOP_SLAB, PoBlocks.CHILI_POOP_BLOCK, 2);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CHILI_POOP_VERTICAL_SLAB, PoBlocks.CHILI_POOP_BLOCK, 2);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CHILI_POOP_WALL, PoBlocks.CHILI_POOP_BLOCK);
 
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.GOLDEN_POOP_STAIRS, PBlocks.GOLDEN_POOP_BLOCK);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.GOLDEN_POOP_SLAB, PBlocks.GOLDEN_POOP_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.GOLDEN_POOP_VERTICAL_SLAB, PBlocks.GOLDEN_POOP_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.GOLDEN_POOP_WALL, PBlocks.GOLDEN_POOP_BLOCK);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.GOLDEN_POOP_STAIRS, PoBlocks.GOLDEN_POOP_BLOCK);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.GOLDEN_POOP_SLAB, PoBlocks.GOLDEN_POOP_BLOCK, 2);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.GOLDEN_POOP_VERTICAL_SLAB, PoBlocks.GOLDEN_POOP_BLOCK, 2);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.GOLDEN_POOP_WALL, PoBlocks.GOLDEN_POOP_BLOCK);
 
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_BRICKS, PBlocks.POOP_BLOCK);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_BRICK_STAIRS, PBlocks.POOP_BLOCK);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_BRICK_SLAB, PBlocks.POOP_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_BRICK_VERTICAL_SLAB, PBlocks.POOP_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_BRICK_WALL, PBlocks.POOP_BLOCK);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_BRICK_STAIRS, PBlocks.POOP_BRICKS);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_BRICK_SLAB, PBlocks.POOP_BRICKS, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_BRICK_VERTICAL_SLAB, PBlocks.POOP_BRICKS, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_BRICK_WALL, PBlocks.POOP_BRICKS);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BRICKS, PoBlocks.POOP_BLOCK);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BRICK_STAIRS, PoBlocks.POOP_BLOCK);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BRICK_SLAB, PoBlocks.POOP_BLOCK, 2);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BRICK_VERTICAL_SLAB, PoBlocks.POOP_BLOCK, 2);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BRICK_WALL, PoBlocks.POOP_BLOCK);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BRICK_STAIRS, PoBlocks.POOP_BRICKS);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BRICK_SLAB, PoBlocks.POOP_BRICKS, 2);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BRICK_VERTICAL_SLAB, PoBlocks.POOP_BRICKS, 2);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BRICK_WALL, PoBlocks.POOP_BRICKS);
 
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.MOSSY_POOP_BRICK_STAIRS, PBlocks.MOSSY_POOP_BRICKS);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.MOSSY_POOP_BRICK_SLAB, PBlocks.MOSSY_POOP_BRICKS, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.MOSSY_POOP_BRICK_VERTICAL_SLAB, PBlocks.MOSSY_POOP_BRICKS, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.MOSSY_POOP_BRICK_WALL, PBlocks.MOSSY_POOP_BRICKS);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.MOSSY_POOP_BRICK_STAIRS, PoBlocks.MOSSY_POOP_BRICKS);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.MOSSY_POOP_BRICK_SLAB, PoBlocks.MOSSY_POOP_BRICKS, 2);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.MOSSY_POOP_BRICK_VERTICAL_SLAB, PoBlocks.MOSSY_POOP_BRICKS, 2);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.MOSSY_POOP_BRICK_WALL, PoBlocks.MOSSY_POOP_BRICKS);
 
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.DRIED_POOP_BLOCK_STAIRS, PBlocks.DRIED_POOP_BLOCK);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.DRIED_POOP_BLOCK_SLAB, PBlocks.DRIED_POOP_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.DRIED_POOP_BLOCK_VERTICAL_SLAB, PBlocks.DRIED_POOP_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.DRIED_POOP_BLOCK_WALL, PBlocks.DRIED_POOP_BLOCK);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.DRIED_POOP_BLOCK_STAIRS, PoBlocks.DRIED_POOP_BLOCK);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.DRIED_POOP_BLOCK_SLAB, PoBlocks.DRIED_POOP_BLOCK, 2);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.DRIED_POOP_BLOCK_VERTICAL_SLAB, PoBlocks.DRIED_POOP_BLOCK, 2);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.DRIED_POOP_BLOCK_WALL, PoBlocks.DRIED_POOP_BLOCK);
 
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.CUT_POOP_BLOCK, PBlocks.DRIED_POOP_BLOCK);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.CUT_POOP_BLOCK_STAIRS, PBlocks.DRIED_POOP_BLOCK);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.CUT_POOP_BLOCK_SLAB, PBlocks.DRIED_POOP_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.CUT_POOP_BLOCK_VERTICAL_SLAB, PBlocks.DRIED_POOP_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.CUT_POOP_BLOCK_WALL, PBlocks.DRIED_POOP_BLOCK);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.CUT_POOP_BLOCK_STAIRS, PBlocks.CUT_POOP_BLOCK);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.CUT_POOP_BLOCK_SLAB, PBlocks.CUT_POOP_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.CUT_POOP_BLOCK_VERTICAL_SLAB, PBlocks.CUT_POOP_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.CUT_POOP_BLOCK_WALL, PBlocks.CUT_POOP_BLOCK);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CUT_POOP_BLOCK, PoBlocks.DRIED_POOP_BLOCK);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CUT_POOP_BLOCK_STAIRS, PoBlocks.DRIED_POOP_BLOCK);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CUT_POOP_BLOCK_SLAB, PoBlocks.DRIED_POOP_BLOCK, 2);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CUT_POOP_BLOCK_VERTICAL_SLAB, PoBlocks.DRIED_POOP_BLOCK, 2);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CUT_POOP_BLOCK_WALL, PoBlocks.DRIED_POOP_BLOCK);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CUT_POOP_BLOCK_STAIRS, PoBlocks.CUT_POOP_BLOCK);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CUT_POOP_BLOCK_SLAB, PoBlocks.CUT_POOP_BLOCK, 2);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CUT_POOP_BLOCK_VERTICAL_SLAB, PoBlocks.CUT_POOP_BLOCK, 2);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CUT_POOP_BLOCK_WALL, PoBlocks.CUT_POOP_BLOCK);
 
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.SMOOTH_POOP_BLOCK_STAIRS, PBlocks.SMOOTH_POOP_BLOCK);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.SMOOTH_POOP_BLOCK_SLAB, PBlocks.SMOOTH_POOP_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.SMOOTH_POOP_BLOCK_VERTICAL_SLAB, PBlocks.SMOOTH_POOP_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.SMOOTH_POOP_BLOCK_WALL, PBlocks.SMOOTH_POOP_BLOCK);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.SMOOTH_POOP_BLOCK_STAIRS, PoBlocks.SMOOTH_POOP_BLOCK);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.SMOOTH_POOP_BLOCK_SLAB, PoBlocks.SMOOTH_POOP_BLOCK, 2);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.SMOOTH_POOP_BLOCK_VERTICAL_SLAB, PoBlocks.SMOOTH_POOP_BLOCK, 2);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.SMOOTH_POOP_BLOCK_WALL, PoBlocks.SMOOTH_POOP_BLOCK);
 
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.STRIPPED_POOP_LOG, PBlocks.POOP_LOG);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_EMPTY_LOG, PBlocks.POOP_LOG);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.STRIPPED_POOP_EMPTY_LOG, PBlocks.STRIPPED_POOP_LOG);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.STRIPPED_POOP_EMPTY_LOG, PBlocks.POOP_EMPTY_LOG);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_BLOCK, PBlocks.POOP_EMPTY_LOG, 4);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.POOP_BLOCK, PBlocks.STRIPPED_POOP_EMPTY_LOG, 4);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.STRIPPED_POOP_LOG, PoBlocks.POOP_LOG);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_EMPTY_LOG, PoBlocks.POOP_LOG);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.STRIPPED_POOP_EMPTY_LOG, PoBlocks.STRIPPED_POOP_LOG);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.STRIPPED_POOP_EMPTY_LOG, PoBlocks.POOP_EMPTY_LOG);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BLOCK, PoBlocks.POOP_EMPTY_LOG, 4);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BLOCK, PoBlocks.STRIPPED_POOP_EMPTY_LOG, 4);
 
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.TILE_BLOCK_STAIRS, PBlocks.TILE_BLOCK);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.TILE_BLOCK_SLAB, PBlocks.TILE_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.TILE_BLOCK_VERTICAL_SLAB, PBlocks.TILE_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PBlocks.TILE_BLOCK_WALL, PBlocks.TILE_BLOCK);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.TILE_BLOCK_STAIRS, PoBlocks.TILE_BLOCK);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.TILE_BLOCK_SLAB, PoBlocks.TILE_BLOCK, 2);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.TILE_BLOCK_VERTICAL_SLAB, PoBlocks.TILE_BLOCK, 2);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.TILE_BLOCK_WALL, PoBlocks.TILE_BLOCK);
 
         // 厕所配方
         for (var entry : ToiletType.getByCategory(ToiletType.Category.WOOD).entrySet()) {
-            toiletRecipes(recipeOutput, PBlocks.WOODEN_TOILET, entry.getValue().sourceBlock(), entry.getValue());
+            toiletRecipes(recipeOutput, PoBlocks.WOODEN_TOILET, entry.getValue().sourceBlock(), entry.getValue());
         }
         for (var entry : ToiletType.getByCategory(ToiletType.Category.HARD).entrySet()) {
             if (entry.getValue().sourceBlock() != null) {
-                toiletRecipes(recipeOutput, PBlocks.HARD_TOILET, entry.getValue().sourceBlock(), entry.getValue());
+                toiletRecipes(recipeOutput, PoBlocks.HARD_TOILET, entry.getValue().sourceBlock(), entry.getValue());
             }
         }
-        ToiletRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PBlocks.HARD_TOILET, PToiletTypes.RAINBOW)
+        ToiletRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.HARD_TOILET, PoToiletTypes.RAINBOW)
                 .pattern(" P ")
                 .pattern("RGB")
-                .define('P', PItems.POOP.get())
+                .define('P', PoItems.POOP.get())
                 .define('R', Blocks.RED_CONCRETE)
                 .define('G', Blocks.GREEN_CONCRETE)
                 .define('B', Blocks.BLUE_CONCRETE)
-                .unlockedBy(getItemName(PItems.POOP), has(PItems.POOP.get()))
+                .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP.get()))
                 .save(recipeOutput, PoopSky.loc("hard_toilet_from_rainbow"));
 
         buildSieveRecipes(recipeOutput);
@@ -615,92 +615,92 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         RecipeOutput createLoaded = recipeOutput.withConditions(modLoaded(PSMods.CREATE.id()));
         RecipeOutput createNotLoaded = recipeOutput.withConditions(not(modLoaded(PSMods.CREATE.id())));
 
-        SieveRecipeBuilder.sieve(PBlocks.POOP_BLOCK, 200)
+        SieveRecipeBuilder.sieve(PoBlocks.POOP_BLOCK, 200)
                 .addOutput(Items.IRON_NUGGET, 8)
                 .addOutput(Items.IRON_NUGGET, 8, 0.75F)
                 .addOutput(Items.IRON_NUGGET, 8, 0.5F)
                 .addOutput(Items.RAW_IRON, 0.5F)
-                .unlockedBy(getItemName(PBlocks.SIEVE.get()), has(PBlocks.SIEVE.get()))
+                .unlockedBy(getItemName(PoBlocks.SIEVE.get()), has(PoBlocks.SIEVE.get()))
                 .save(createNotLoaded, "poop_block");
 
-        SieveRecipeBuilder.sieve(PBlocks.CHILI_POOP_BLOCK, 300)
+        SieveRecipeBuilder.sieve(PoBlocks.CHILI_POOP_BLOCK, 300)
                 .addOutput(Items.QUARTZ, 4)
                 .addOutput(Items.QUARTZ, 4, 0.5F)
                 .addOutput(Items.NETHER_WART, 2, 0.75F)
                 .addOutput(Items.MAGMA_CREAM, 0.5F)
                 .addOutput(Items.GHAST_TEAR, 0.2F)
-                .unlockedBy(getItemName(PBlocks.SIEVE.get()), has(PBlocks.SIEVE.get()))
+                .unlockedBy(getItemName(PoBlocks.SIEVE.get()), has(PoBlocks.SIEVE.get()))
                 .save(recipeOutput, "chili_poop_block");
 
-        SieveRecipeBuilder.sieve(PBlocks.GOLDEN_POOP_BLOCK, 300)
+        SieveRecipeBuilder.sieve(PoBlocks.GOLDEN_POOP_BLOCK, 300)
                 .addOutput(Items.GOLD_NUGGET, 8)
                 .addOutput(Items.GOLD_NUGGET, 8, 0.75F)
                 .addOutput(Items.RAW_GOLD, 0.5F)
-                .unlockedBy(getItemName(PBlocks.SIEVE.get()), has(PBlocks.SIEVE.get()))
+                .unlockedBy(getItemName(PoBlocks.SIEVE.get()), has(PoBlocks.SIEVE.get()))
                 .save(recipeOutput, "golden_poop_block");
 
-        SieveRecipeBuilder.sieve(PBlocks.RAW_POOP_BLOCK, 100)
+        SieveRecipeBuilder.sieve(PoBlocks.RAW_POOP_BLOCK, 100)
                 .addOutput(Items.RAW_COPPER)
                 .addOutput(Items.REDSTONE, 2, 0.75F)
                 .addOutput(Items.REDSTONE, 0.5F)
                 .addOutput(Items.AMETHYST_SHARD, 0.25F)
-                .unlockedBy(getItemName(PBlocks.SIEVE.get()), has(PBlocks.SIEVE.get()))
+                .unlockedBy(getItemName(PoBlocks.SIEVE.get()), has(PoBlocks.SIEVE.get()))
                 .save(createNotLoaded, "raw_poop_block");
 
-        SieveRecipeBuilder.sieve(PBlocks.RAW_SAPLING_POOP_BLOCK, 100)
+        SieveRecipeBuilder.sieve(PoBlocks.RAW_SAPLING_POOP_BLOCK, 100)
                 .addOutput(Items.SUNFLOWER).addOutput(Items.LILAC)
                 .addOutput(Items.ROSE_BUSH).addOutput(Items.PEONY)
                 .addOutput(Items.VINE, 0.75F)
                 .addOutput(Items.SMALL_DRIPLEAF, 0.5F)
                 .addOutput(Items.SNIFFER_EGG, 0.05F)
-                .unlockedBy(getItemName(PBlocks.SIEVE.get()), has(PBlocks.SIEVE.get()))
+                .unlockedBy(getItemName(PoBlocks.SIEVE.get()), has(PoBlocks.SIEVE.get()))
                 .save(recipeOutput, "raw_sapling_poop_block");
 
-        SieveRecipeBuilder.sieve(PBlocks.RAW_SEA_POOP_BLOCK, 100)
+        SieveRecipeBuilder.sieve(PoBlocks.RAW_SEA_POOP_BLOCK, 100)
                 .addOutput(Items.SEAGRASS, 2).addOutput(Items.SEAGRASS, 0.75F)
                 .addOutput(Items.LILY_PAD)
                 .addOutput(Items.KELP, 0.5F)
                 .addOutput(Items.NAUTILUS_SHELL, 0.09F)
                 .addOutput(Items.HEART_OF_THE_SEA, 0.01F)
-                .unlockedBy(getItemName(PBlocks.SIEVE.get()), has(PBlocks.SIEVE.get()))
+                .unlockedBy(getItemName(PoBlocks.SIEVE.get()), has(PoBlocks.SIEVE.get()))
                 .save(recipeOutput, "raw_sea_poop_block");
 
-        SieveRecipeBuilder.sieve(PBlocks.RAW_WITHER_POOP_BLOCK, 100)
+        SieveRecipeBuilder.sieve(PoBlocks.RAW_WITHER_POOP_BLOCK, 100)
                 .addOutput(Items.COAL)
                 .addOutput(Items.NETHERITE_SCRAP, 0.1F)
                 .addOutput(Items.WITHER_SKELETON_SKULL, 0.005F)
-                .unlockedBy(getItemName(PBlocks.SIEVE.get()), has(PBlocks.SIEVE.get()))
+                .unlockedBy(getItemName(PoBlocks.SIEVE.get()), has(PoBlocks.SIEVE.get()))
                 .save(recipeOutput, "raw_wither_poop_block");
         SieveRecipeBuilder.sieve(Blocks.CACTUS, 100)
-                .addOutput(PItems.KING_OF_DRAGON_FRUIT.get())
-                .addOutput(PItems.KING_OF_DRAGON_FRUIT.get(), 0.5F)
-                .unlockedBy(getItemName(PBlocks.SIEVE.get()), has(PBlocks.SIEVE.get()))
+                .addOutput(PoItems.KING_OF_DRAGON_FRUIT.get())
+                .addOutput(PoItems.KING_OF_DRAGON_FRUIT.get(), 0.5F)
+                .unlockedBy(getItemName(PoBlocks.SIEVE.get()), has(PoBlocks.SIEVE.get()))
                 .save(recipeOutput, "cactus");
 
         // Create
-        SieveRecipeBuilder.sieve(PBlocks.POOP_BLOCK, 200)
+        SieveRecipeBuilder.sieve(PoBlocks.POOP_BLOCK, 200)
                 .addOutput(Items.IRON_NUGGET, 8)
                 .addOutput(AllItems.ZINC_NUGGET, 8)
                 .addOutput(Items.IRON_NUGGET, 8, 0.5F)
                 .addOutput(AllItems.ZINC_NUGGET, 8, 0.5F)
                 .addOutput(Items.RAW_IRON, 0.5F)
                 .addOutput(AllItems.RAW_ZINC, 0.5F)
-                .unlockedBy(getItemName(PBlocks.SIEVE.get()), has(PBlocks.SIEVE.get()))
+                .unlockedBy(getItemName(PoBlocks.SIEVE.get()), has(PoBlocks.SIEVE.get()))
                 .save(createLoaded, "poop_block_has_create");
-        SieveRecipeBuilder.sieve(PBlocks.RAW_POOP_BLOCK, 100)
+        SieveRecipeBuilder.sieve(PoBlocks.RAW_POOP_BLOCK, 100)
                 .addOutput(AllItems.COPPER_NUGGET, 8)
                 .addOutput(AllItems.COPPER_NUGGET, 8, 0.75F)
                 .addOutput(Items.RAW_COPPER, 0.5F)
                 .addOutput(Items.REDSTONE, 2, 0.75F)
                 .addOutput(Items.REDSTONE, 0.5F)
                 .addOutput(Items.AMETHYST_SHARD, 0.25F)
-                .unlockedBy(getItemName(PBlocks.SIEVE.get()), has(PBlocks.SIEVE.get()))
+                .unlockedBy(getItemName(PoBlocks.SIEVE.get()), has(PoBlocks.SIEVE.get()))
                 .save(createLoaded, "raw_poop_block_has_create");
     }
 
     private void buildFlyBarrelRecipes(RecipeOutput recipeOutput) {
         LinkedHashMap<FlyType.Type, ItemLike> flyBarrelMap = new LinkedHashMap<>();
-        flyBarrelMap.put(PFlyTypes.NORMAL.get(), PItems.MAGGOTS_SEEDS);
+        flyBarrelMap.put(PFlyTypes.NORMAL.get(), PoItems.MAGGOTS_SEEDS);
         flyBarrelMap.put(PFlyTypes.WHITE.get(), Items.BONE_MEAL);
         flyBarrelMap.put(PFlyTypes.LIGHT_GRAY.get(), Items.QUARTZ);
         flyBarrelMap.put(PFlyTypes.GRAY.get(), Items.GRAVEL);
@@ -729,7 +729,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         flyBarrelMap.put(PFlyTypes.ENDER.get(), Items.ENDER_PEARL);
 
         flyBarrelMap.forEach((type, result) -> FlyBarrelRecipeBuilder.flyBarrel(type.id(), result)
-                .unlockedBy(getHasName(PBlocks.FLY_BARREL), has(PBlocks.FLY_BARREL))
+                .unlockedBy(getHasName(PoBlocks.FLY_BARREL), has(PoBlocks.FLY_BARREL))
                 .save(recipeOutput, type.id()));
     }
 
@@ -767,7 +767,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         for (MutationRecipe recipe : breedingRecipes) {
             String id = recipe.p1 + "_plus_" + recipe.p2;
             var builder = BreedingChestRecipeBuilder.breedingChest(recipe.p1, recipe.p2, recipe.result);
-            builder.unlockedBy(getHasName(PBlocks.FLY_BARREL), has(PBlocks.FLY_BARREL))
+            builder.unlockedBy(getHasName(PoBlocks.FLY_BARREL), has(PoBlocks.FLY_BARREL))
                     .save(recipeOutput, id);
         }
     }
@@ -776,9 +776,9 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
         ToiletRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, toilet, toiletType)
                 .pattern("P")
                 .pattern("#")
-                .define('P', PItems.POOP.get())
+                .define('P', PoItems.POOP.get())
                 .define('#', block)
-                .unlockedBy(getItemName(PItems.POOP), has(PItems.POOP.get()))
+                .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP.get()))
                 .save(recipeOutput, PoopSky.loc(getItemName(toilet) + "_from_" + toiletType.id()));
     }
 
@@ -792,7 +792,7 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(recipeOutput);
     }
 
-    private void blockFamilyRecipes(RecipeOutput recipeOutput, PBlocks.BlockFamily family) {
+    private void blockFamilyRecipes(RecipeOutput recipeOutput, PoBlocks.BlockFamily family) {
         stairsRecipe(recipeOutput, family.stairs(), family.block());
         slabRecipe(recipeOutput, family.slab(), family.block());
         verticalSlabRecipe(recipeOutput, family.verticalSlab(), family.block());
@@ -885,9 +885,9 @@ public class PSRecipeProvider extends RecipeProvider implements IConditionBuilde
 
     protected static void omenSmithing(RecipeOutput recipeOutput, Item ingredientItem, RecipeCategory category, Item resultItem) {
         SmithingTransformRecipeBuilder.smithing(
-                        Ingredient.of(PItems.OMEN_UPGRADE_SMITHING_TEMPLATE), Ingredient.of(ingredientItem), Ingredient.of(PItems.OMINOUS_FILTHY_INGOT), category, resultItem
+                        Ingredient.of(PoItems.OMEN_UPGRADE_SMITHING_TEMPLATE), Ingredient.of(ingredientItem), Ingredient.of(PoItems.OMINOUS_FILTHY_INGOT), category, resultItem
                 )
-                .unlocks("has_ominous_filthy_ingot", has(PItems.OMINOUS_FILTHY_INGOT))
+                .unlocks("has_ominous_filthy_ingot", has(PoItems.OMINOUS_FILTHY_INGOT))
                 .save(recipeOutput, PoopSky.MOD_ID + ":" + getItemName(resultItem) + "_smithing");
     }
 

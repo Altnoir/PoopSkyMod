@@ -4,7 +4,7 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.compat.create.PSRecipeTypes;
 import com.altnoir.poopsky.compat.jei.create.animations.AnimatedUrineLiquid;
 import com.altnoir.poopsky.compat.create.content.kinetics.fan.processing.DigestingRecipe;
-import com.altnoir.poopsky.init.PItems;
+import com.altnoir.poopsky.init.PoItems;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.compat.jei.DoubleItemIcon;
@@ -29,7 +29,7 @@ public class FanDigestingCategory extends ProcessingViaFanCategory.MultiOutput<D
         var id = PoopSky.loc("fan_digesting");
         var title = Component.translatable("jei.category." + PoopSky.MOD_ID + ".digesting");
         var background = new EmptyBackground(178, 72);
-        var icon = new DoubleItemIcon(AllItems.PROPELLER::asStack, () -> new ItemStack(PItems.URINE_BUCKET.get()));
+        var icon = new DoubleItemIcon(AllItems.PROPELLER::asStack, () -> new ItemStack(PoItems.URINE_BUCKET.get()));
         var catalyst = AllBlocks.ENCASED_FAN.asStack();
         catalyst.set(DataComponents.CUSTOM_NAME, Component.translatable("jei.category." + PoopSky.MOD_ID + ".digesting.fan").withStyle(style -> style.withItalic(false)));
         var info = new Info<>(TYPE, title, background, icon, FanDigestingCategory::getAllRecipes, List.of(() -> catalyst));
