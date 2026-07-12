@@ -2,7 +2,7 @@ package com.altnoir.poopsky.content.item.p;
 
 import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.init.PoEffects;
-import com.altnoir.poopsky.network.TimeBellFreezePayload;
+import com.altnoir.poopsky.impl.network.TimeBellFreezePayload;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;

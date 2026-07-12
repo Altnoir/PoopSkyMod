@@ -3,7 +3,7 @@ package com.altnoir.poopsky.content.entity.p;
 import com.altnoir.poopsky.client.sound.TPFlySoundWrapper;
 import com.altnoir.poopsky.init.PoEffects;
 import com.altnoir.poopsky.init.PoItems;
-import com.altnoir.poopsky.network.PlugInputPayload;
+import com.altnoir.poopsky.impl.network.PlugInputPayload;
 import com.google.common.collect.Lists;
 import net.minecraft.BlockUtil;
 import net.minecraft.client.Minecraft;

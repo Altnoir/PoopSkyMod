@@ -3,7 +3,7 @@ package com.altnoir.poopsky.content.block.p;
 import com.altnoir.poopsky.content.block.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.impl.PoToiletTypes;
-import com.altnoir.poopsky.util.toiletUtil;
+import com.altnoir.poopsky.impl.util.toiletUtil;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

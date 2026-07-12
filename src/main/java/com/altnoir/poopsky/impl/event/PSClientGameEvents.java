@@ -1,9 +1,9 @@
 package com.altnoir.poopsky.impl.event;
 
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
-import com.altnoir.poopsky.util.PHooks;
-import com.altnoir.poopsky.network.PlugActionPayload;
-import com.altnoir.poopsky.network.PlugDismountPayload;
+import com.altnoir.poopsky.impl.util.PHooks;
+import com.altnoir.poopsky.impl.network.PlugActionPayload;
+import com.altnoir.poopsky.impl.network.PlugDismountPayload;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
 import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;

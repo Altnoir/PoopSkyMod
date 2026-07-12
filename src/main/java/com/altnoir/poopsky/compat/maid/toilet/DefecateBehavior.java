@@ -4,7 +4,7 @@ import com.altnoir.poopsky.compat.maid.MaidPlugin;
 import com.altnoir.poopsky.content.entity.p.ToiletEntity;
 import com.altnoir.poopsky.init.PoEntityType;
 import com.altnoir.poopsky.impl.PoTags;
-import com.altnoir.poopsky.util.toiletUtil;
+import com.altnoir.poopsky.impl.util.toiletUtil;
 import com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;

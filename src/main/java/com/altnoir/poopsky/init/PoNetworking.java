@@ -1,10 +1,10 @@
 package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.network.PlugActionPayload;
-import com.altnoir.poopsky.network.PlugDismountPayload;
-import com.altnoir.poopsky.network.PlugInputPayload;
-import com.altnoir.poopsky.network.TimeBellFreezePayload;
+import com.altnoir.poopsky.impl.network.PlugActionPayload;
+import com.altnoir.poopsky.impl.network.PlugDismountPayload;
+import com.altnoir.poopsky.impl.network.PlugInputPayload;
+import com.altnoir.poopsky.impl.network.TimeBellFreezePayload;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 

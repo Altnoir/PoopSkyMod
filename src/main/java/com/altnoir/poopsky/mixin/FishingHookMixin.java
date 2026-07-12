@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.mixin;
 
-import com.altnoir.poopsky.datagen.PSFishingLootProvider;
+import com.altnoir.poopsky.impl.registrate.FishingLootGen;
 import com.altnoir.poopsky.init.PoFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
@@ -34,7 +34,7 @@ public class FishingHookMixin {
         if ((poopSky$fishingHook.level().getFluidState(poopSky$fishingHook.blockPosition()).is(PoFluids.URINE.get())
                 || poopSky$fishingHook.level().getFluidState(poopSky$fishingHook.blockPosition()).is(PoFluids.FLOWING_URINE.get()))
         ) {
-            return lookup.getLootTable(PSFishingLootProvider.FISHING_URINE);
+            return lookup.getLootTable(FishingLootGen.FISHING_URINE);
         }
         return lookup.getLootTable(key);
     }

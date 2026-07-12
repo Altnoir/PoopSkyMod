@@ -8,13 +8,13 @@ import com.altnoir.poopsky.content.block.ToiletTypeManager;
 import com.altnoir.poopsky.content.block.p.CompooperBlock;
 import com.altnoir.poopsky.content.entity.p.PoopTntEntity;
 import com.altnoir.poopsky.content.villager.PoVillagers;
-import com.altnoir.poopsky.datagen.PoAdvancementProvider;
-import com.altnoir.poopsky.datagen.PoEntityLootTableProvider;
+import com.altnoir.poopsky.impl.registrate.AdvancementGen;
+import com.altnoir.poopsky.impl.registrate.EntityLootTableGen;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.init.*;
-import com.altnoir.poopsky.worldgen.PoChunkGenerators;
-import com.altnoir.poopsky.worldgen.PoStructures;
-import com.altnoir.poopsky.worldgen.foliage.PoFoliagePlacerTypes;
+import com.altnoir.poopsky.content.worldgen.PoChunkGenerators;
+import com.altnoir.poopsky.content.worldgen.PoStructures;
+import com.altnoir.poopsky.content.worldgen.foliage.PoFoliagePlacerTypes;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -71,12 +71,12 @@ public class PoopSky {
 
         PoEntityType.register();
         PoBlockEntityType.register();
-        PoEntityLootTableProvider.register();
+        EntityLootTableGen.register();
         PoLootFunctions.register();
         PoVillagers.register();
 
         PoParticles.register();
-        PoAdvancementProvider.register();
+        AdvancementGen.register();
         PoSoundEvents.register();
         PoStats.register();
 

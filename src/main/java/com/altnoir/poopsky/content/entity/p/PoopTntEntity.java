@@ -2,7 +2,7 @@ package com.altnoir.poopsky.content.entity.p;
 
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.init.PoEntityType;
-import com.altnoir.poopsky.util.PoopTntUtil;
+import com.altnoir.poopsky.impl.util.PoopTntUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;

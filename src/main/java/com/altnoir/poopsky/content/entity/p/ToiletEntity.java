@@ -2,7 +2,7 @@ package com.altnoir.poopsky.content.entity.p;
 
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.init.PoEffects;
-import com.altnoir.poopsky.util.toiletUtil;
+import com.altnoir.poopsky.impl.util.toiletUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.Entity;

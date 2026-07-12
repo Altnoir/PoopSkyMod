@@ -4,7 +4,7 @@ import com.altnoir.poopsky.init.PoEffects;
 import com.altnoir.poopsky.init.PoParticles;
 import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.init.PoItems;
-import com.altnoir.poopsky.util.toiletUtil;
+import com.altnoir.poopsky.impl.util.toiletUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;

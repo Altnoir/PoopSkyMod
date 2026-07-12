@@ -2,7 +2,7 @@ package com.altnoir.poopsky.content.effect;
 
 import com.altnoir.poopsky.init.PoEffects;
 import com.altnoir.poopsky.init.PoRecipes;
-import com.altnoir.poopsky.util.PoopTntUtil;
+import com.altnoir.poopsky.impl.util.PoopTntUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
