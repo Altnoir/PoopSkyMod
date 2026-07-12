@@ -22,13 +22,17 @@ public class PoRecipes {
     public static final RecipeEntry<POPExplosionRecipe.Serializer, POPExplosionRecipe> POP_EXPLOSION = register("pop_explosion", POPExplosionRecipe.Serializer::new);
     public static final RecipeEntry<AnalPressingRecipe.Serializer, AnalPressingRecipe> ANAL_PRESSING = register("anal_pressing", AnalPressingRecipe.Serializer::new);
 
-    public static final DeferredHolder<RecipeSerializer<?>, ToiletShapedRecipe.Serializer> TOILET_SHAPED_SERIALIZER = SERIALIZERS.register("toilet_shaped", ToiletShapedRecipe.Serializer::new);
+    public static final DeferredHolder<RecipeSerializer<?>, ToiletShapedRecipe.Serializer> TOILET_SHAPED_SERIALIZER = registerSerializer("toilet_shaped", ToiletShapedRecipe.Serializer::new);
 
     @SuppressWarnings("unchecked")
     private static <S extends RecipeSerializer<?>, R extends Recipe<?>> RecipeEntry<S, R> register(String name, Supplier<? extends S> serializerSupplier) {
-        var serializer = (DeferredHolder<RecipeSerializer<?>, S>) SERIALIZERS.register(name, serializerSupplier);
+        var serializer = (DeferredHolder<RecipeSerializer<?>, S>) registerSerializer(name, serializerSupplier);
         var type = (DeferredHolder<RecipeType<?>, RecipeType<R>>) (DeferredHolder<?, ?>) TYPES.register(name, () -> RecipeType.simple(PoopSky.loc(name)));
         return new RecipeEntry<>(serializer, type, name);
+    }
+
+    private static <S extends RecipeSerializer<?>> DeferredHolder<RecipeSerializer<?>, S> registerSerializer(String name, Supplier<? extends S> serializerSupplier) {
+        return SERIALIZERS.register(name, serializerSupplier);
     }
 
     public record RecipeEntry<S extends RecipeSerializer<?>, R extends Recipe<?>>(
