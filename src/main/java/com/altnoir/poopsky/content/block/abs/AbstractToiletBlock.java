@@ -290,20 +290,17 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
 
     @Override
     public void fallOn(Level level, BlockState blockState, BlockPos pos, Entity entity, float fallDistance) {
-        if (level.isClientSide) {
+        if (!level.isClientSide) {
+            if (entity instanceof FallingBlockEntity falling && isAnvil(falling.getBlockState())) {
+                poopAnvil(level, pos, entity);
+            }
+
+            if (tryTeleportFromFall(level, pos, entity, fallDistance)) {
+                return;
+            }
             super.fallOn(level, blockState, pos, entity, fallDistance);
-            return;
         }
-
-        if (tryTeleportFromFall(level, pos, entity, fallDistance)) {
-            return;
-        }
-
         super.fallOn(level, blockState, pos, entity, fallDistance);
-
-        if (entity instanceof FallingBlockEntity falling && isAnvil(falling.getBlockState())) {
-            poopAnvil(level, pos, entity);
-        }
     }
 
     private boolean tryTeleportFromFall(Level level, BlockPos pos, Entity entity, float fallDistance) {
