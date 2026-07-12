@@ -190,6 +190,8 @@
   "block.poopsky.urine": "Моча",
   "block.poopsky.toilet_block": "Унитаз",
   "block.poopsky.toilet_format": "%s унитаз",
+  "block.poopsky.hard_toilet": "Прочный унитаз",
+  "block.poopsky.wooden_toilet": "Деревянный унитаз",
   "block.poopsky.rainbow_toilet": "Радужный унитаз",
 
   "fly_type.poopsky.normal": "Обычная муха",
@@ -267,6 +269,8 @@
 
   "entity.minecraft.villager.poopsky.poopmaker": "Какашечник",
   "entity.minecraft.villager.poopsky.gastronome": "Гастроном",
+  "entity.minecraft.villager.poopmaker": "Какашечник",
+  "entity.minecraft.villager.gastronome": "Гастроном",
   "entity.poopsky.toilet_plug": "Вантуз",
   "entity.poopsky.stool_entity": "Какашечный табурет",
   "entity.poopsky.poolime": "Какаслизень",
