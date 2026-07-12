@@ -190,6 +190,8 @@
   "block.poopsky.urine": "Urin",
   "block.poopsky.toilet_block": "Toilette",
   "block.poopsky.toilet_format": "%s-Toilette",
+  "block.poopsky.hard_toilet": "Harte Toilette",
+  "block.poopsky.wooden_toilet": "Holztoilette",
   "block.poopsky.rainbow_toilet": "Regenbogentoilette",
 
   "fly_type.poopsky.normal": "Normale Fliege",
@@ -267,6 +269,8 @@
 
   "entity.minecraft.villager.poopsky.poopmaker": "Kackmacher",
   "entity.minecraft.villager.poopsky.gastronome": "Gastronom",
+  "entity.minecraft.villager.poopmaker": "Kackmacher",
+  "entity.minecraft.villager.gastronome": "Gastronom",
   "entity.poopsky.toilet_plug": "Pümpel",
   "entity.poopsky.stool_entity": "Kackhocker",
   "entity.poopsky.poolime": "Kackschleim",

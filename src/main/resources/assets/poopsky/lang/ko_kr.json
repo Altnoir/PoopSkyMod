@@ -190,6 +190,8 @@
   "block.poopsky.urine": "오줌",
   "block.poopsky.toilet_block": "변기",
   "block.poopsky.toilet_format": "%s 변기",
+  "block.poopsky.hard_toilet": "단단한 변기",
+  "block.poopsky.wooden_toilet": "목제 변기",
   "block.poopsky.rainbow_toilet": "무지개 변기",
 
   "fly_type.poopsky.normal": "일반 파리",
@@ -267,6 +269,8 @@
 
   "entity.minecraft.villager.poopsky.poopmaker": "똥 제조 전문가",
   "entity.minecraft.villager.poopsky.gastronome": "미식가",
+  "entity.minecraft.villager.poopmaker": "똥 제조 전문가",
+  "entity.minecraft.villager.gastronome": "미식가",
   "entity.poopsky.toilet_plug": "변기 뚫어뻥",
   "entity.poopsky.stool_entity": "똥 의자",
   "entity.poopsky.poolime": "똥 슬라임",

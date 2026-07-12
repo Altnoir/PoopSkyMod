@@ -190,6 +190,8 @@
   "block.poopsky.urine": "尿",
   "block.poopsky.toilet_block": "廁所",
   "block.poopsky.toilet_format": "%s廁所",
+  "block.poopsky.hard_toilet": "硬質廁所",
+  "block.poopsky.wooden_toilet": "木製廁所",
   "block.poopsky.rainbow_toilet": "彩虹廁所",
 
   "fly_type.poopsky.normal": "普通蒼蠅",
@@ -267,6 +269,8 @@
 
   "entity.minecraft.villager.poopsky.poopmaker": "養糞人",
   "entity.minecraft.villager.poopsky.gastronome": "美食家",
+  "entity.minecraft.villager.poopmaker": "養糞人",
+  "entity.minecraft.villager.gastronome": "美食家",
   "entity.poopsky.toilet_plug": "廁所吸盤",
   "entity.poopsky.stool_entity": "糞便凳",
   "entity.poopsky.poolime": "屎萊姆",
