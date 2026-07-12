@@ -6,7 +6,10 @@ import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.entity.p.ToiletEntity;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.impl.PoToiletTypes;
-import com.altnoir.poopsky.init.*;
+import com.altnoir.poopsky.init.PoBlockEntityType;
+import com.altnoir.poopsky.init.PoEffects;
+import com.altnoir.poopsky.init.PoEntityType;
+import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.util.toiletUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -459,11 +462,12 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
 
     private void explodeToilet(ServerLevel level, BlockPos pos) {
         BlockPos above = pos.above();
+        Item poopItem = toiletUtil.isGoldenToilet(level, pos) ? PoItems.GOLDEN_POOP.get() : PoItems.POOP.get();
         level.explode(null, pos.getX() + 0.5, pos.getY() + TOILET_USE_Y, pos.getZ() + 0.5, EXPLOSION_POWER, Level.ExplosionInteraction.BLOCK);
         if (level.getBlockState(above).is(Blocks.FIRE)) {
             level.setBlock(above, Blocks.AIR.defaultBlockState(), 3);
         }
-        var poop = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + TOILET_USE_Y, pos.getZ() + 0.5, new ItemStack(PoItems.POOP.get(), EXPLOSION_POOP_COUNT));
+        ItemEntity poop = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + TOILET_USE_Y, pos.getZ() + 0.5, new ItemStack(poopItem, EXPLOSION_POOP_COUNT));
         level.addFreshEntity(poop);
     }
 
