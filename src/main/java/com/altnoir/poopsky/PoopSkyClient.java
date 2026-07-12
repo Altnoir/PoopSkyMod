@@ -10,20 +10,30 @@ import com.altnoir.poopsky.client.renderer.ToiletPlugItemRenderer;
 import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.block.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
-import com.altnoir.poopsky.impl.event.PSClientGameEvents;
-import com.altnoir.poopsky.impl.event.PSClientModEvents;
-import com.altnoir.poopsky.impl.event.PSKeyBoardInput;
+import com.altnoir.poopsky.content.entity.model.FlyModel;
+import com.altnoir.poopsky.content.entity.model.ToiletPlugModel;
+import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.content.item.PFlyTypes;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
+import com.altnoir.poopsky.impl.event.PSKeyBoardInput;
+import com.altnoir.poopsky.impl.network.PlugActionPayload;
+import com.altnoir.poopsky.impl.network.PlugDismountPayload;
+import com.altnoir.poopsky.impl.util.PHooks;
 import com.altnoir.poopsky.init.*;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.RecipeBookCategories;
+import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
+import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.levelgen.presets.WorldPreset;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -37,6 +47,7 @@ import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 
 @Mod(value = PoopSky.MOD_ID, dist = Dist.CLIENT)
@@ -51,9 +62,9 @@ public class PoopSkyClient {
 
     public static void registerMod(IEventBus modEventBus) {
         ToiletModelEventHandler.register(modEventBus);
-        modEventBus.addListener(PSClientModEvents::registerLayers);
-        modEventBus.addListener(ClientModEvents::registerItemProperties);
         modEventBus.addListener(PSKeyBoardInput::onRegisterKeyMappings);
+        modEventBus.addListener(ClientModEvents::registerLayers);
+        modEventBus.addListener(ClientModEvents::registerItemProperties);
         modEventBus.addListener(ClientModEvents::registerRenderTypes);
         modEventBus.addListener(ClientModEvents::registerParticleProviders);
         modEventBus.addListener(ClientModEvents::registerRecipeBookCategories);
@@ -65,12 +76,17 @@ public class PoopSkyClient {
     }
 
     public static void registerGame(IEventBus modEventBus) {
-        modEventBus.addListener(PSClientGameEvents::onScreenOpen);
-        modEventBus.addListener(PSClientGameEvents::onClientTick);
+        modEventBus.addListener(ClientGameEvents::onScreenOpen);
+        modEventBus.addListener(ClientGameEvents::onClientTick);
         modEventBus.addListener(ToiletHighlightRenderer::onRenderLevel);
     }
 
     public static class ClientModEvents {
+        public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+            event.registerLayerDefinition(ToiletPlugModel.LAYER_LOCATION, ToiletPlugModel::createBodyLayer);
+            event.registerLayerDefinition(FlyModel.LAYER_LOCATION, FlyModel::createBodyLayer);
+        }
+
         public static void registerGuiOverlays(RegisterGuiLayersEvent event) {
             event.registerBelow(VanillaGuiLayers.CAMERA_OVERLAYS, PoopSky.loc("time_bell_overlay"), TimeBellOverlay::render);
         }
@@ -166,6 +182,41 @@ public class PoopSkyClient {
                     return null;
                 }
             }, PFluidTypes.URINE_FLUID_TYPE.get());
+        }
+    }
+
+    public class ClientGameEvents {
+        public static Holder<WorldPreset> originalDefaultWorldPreset;
+
+        public static void onScreenOpen(ScreenEvent.Opening event) {
+            if (event.getNewScreen() instanceof CreateWorldScreen screen) {
+                var uiState = screen.getUiState();
+                var originalPreset = uiState.getWorldType().preset();
+
+                if (originalPreset != null) {
+                    if (originalDefaultWorldPreset == null) {
+                        originalDefaultWorldPreset = originalPreset;
+                    }
+                    if (originalDefaultWorldPreset.unwrapKey().equals(originalPreset.unwrapKey())) {
+                        var voidWorldPreset = uiState.getSettings().worldgenLoadContext().registryOrThrow(Registries.WORLD_PRESET).getHolder(PHooks.overrideDefaultWorldPreset()).orElse(null);
+                        uiState.setWorldType(new WorldCreationUiState.WorldTypeEntry(voidWorldPreset));
+                    }
+                }
+            }
+        }
+
+        public static void onClientTick(ClientTickEvent.Pre event) {
+            var mc = Minecraft.getInstance();
+            if (mc.player == null || mc.level == null) return;
+
+            boolean isRidingPlug = mc.player.getVehicle() instanceof ToiletPlugEntity;
+
+            while (PSKeyBoardInput.USE_PLUG_KEY.consumeClick()) {
+                PacketDistributor.sendToServer(new PlugActionPayload());
+            }
+            if (isRidingPlug && PSKeyBoardInput.DISMOUNT_PLUG_KEY.consumeClick()) {
+                PacketDistributor.sendToServer(new PlugDismountPayload());
+            }
         }
     }
 }

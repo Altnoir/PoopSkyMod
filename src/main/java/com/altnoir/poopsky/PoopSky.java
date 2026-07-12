@@ -8,13 +8,15 @@ import com.altnoir.poopsky.content.block.ToiletTypeManager;
 import com.altnoir.poopsky.content.block.p.CompooperBlock;
 import com.altnoir.poopsky.content.entity.p.PoopTntEntity;
 import com.altnoir.poopsky.content.villager.PoVillagers;
+import com.altnoir.poopsky.content.worldgen.PoChunkGenerators;
+import com.altnoir.poopsky.content.worldgen.PoStructures;
+import com.altnoir.poopsky.content.worldgen.foliage.PoFoliagePlacerTypes;
+import com.altnoir.poopsky.impl.event.PSGameEvents;
+import com.altnoir.poopsky.impl.event.PSModEvents;
 import com.altnoir.poopsky.impl.registrate.AdvancementGen;
 import com.altnoir.poopsky.impl.registrate.EntityLootTableGen;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.init.*;
-import com.altnoir.poopsky.content.worldgen.PoChunkGenerators;
-import com.altnoir.poopsky.content.worldgen.PoStructures;
-import com.altnoir.poopsky.content.worldgen.foliage.PoFoliagePlacerTypes;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -84,6 +86,9 @@ public class PoopSky {
         PoStructures.register();
         PoChunkGenerators.register();
 
+        var gameEventBus = NeoForge.EVENT_BUS;
+        PoopSky.registerMod(modEventBus);
+        PoopSky.registerGame(gameEventBus);
         NeoForge.EVENT_BUS.addListener(this::onAddReloadListener);
 
         if (ModList.get().isLoaded(PSMods.TOUHOU_LITTLE_MAID.id())) {
@@ -93,6 +98,24 @@ public class PoopSky {
             CreatePlugin.register(modEventBus);
         }
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+    }
+
+    public static void registerMod(IEventBus modEventBus) {
+        modEventBus.addListener(PSModEvents::registerAttributes);
+        modEventBus.addListener(PSModEvents::registerSpawnPlacements);
+        modEventBus.addListener(PSModEvents::registerCapabilities);
+    }
+
+    public static void registerGame(IEventBus gameEventBus) {
+        gameEventBus.addListener(PSGameEvents::onRightClickBlock);
+        gameEventBus.addListener(PSGameEvents::onRightClickItem);
+        gameEventBus.addListener(PSGameEvents::onBrewingRecipeRegistry);
+        gameEventBus.addListener(PSGameEvents::onVillagerTrades);
+        gameEventBus.addListener(PSGameEvents::onEntityDismount);
+        gameEventBus.addListener(PSGameEvents::onMobEffectApplicable);
+        gameEventBus.addListener(PSGameEvents::onEntityTick);
+        gameEventBus.addListener(PSGameEvents::onFinalizeSpawn);
+        gameEventBus.addListener(PSGameEvents::onCreateSpawnToilet);
     }
 
     private void onAddReloadListener(AddReloadListenerEvent event) {

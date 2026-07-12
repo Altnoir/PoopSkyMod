@@ -1,22 +1,26 @@
 package com.altnoir.poopsky.impl.event;
 
 import com.altnoir.poopsky.Config;
-import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
-import com.altnoir.poopsky.init.*;
+import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.content.villager.PVillagerBehaviors;
 import com.altnoir.poopsky.content.villager.PVillagerTrades;
 import com.altnoir.poopsky.content.worldgen.PoVoidChunkGenerator;
 import com.altnoir.poopsky.content.worldgen.structure.PoopIslandStructure;
+import com.altnoir.poopsky.init.*;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
@@ -32,33 +36,19 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
+import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
+import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 
-@EventBusSubscriber(modid = PoopSky.MOD_ID)
+import java.util.Set;
+
 public class PSGameEvents {
-    @SubscribeEvent
-    public static void onBrewingRecipeRegistry(RegisterBrewingRecipesEvent event) {
-        PotionBrewing.Builder builder = event.getBuilder();
-
-        builder.addMix(Potions.AWKWARD, PoItems.FOLIUM_SENNAE.get(), PoPotions.FECAL_INCONTINENCE_POTION);
-        builder.addMix(PoPotions.FECAL_INCONTINENCE_POTION, Items.REDSTONE, PoPotions.LONG_FECAL_INCONTINENCE_POTION);
-        builder.addMix(PoPotions.FECAL_INCONTINENCE_POTION, Items.GLOWSTONE_DUST, PoPotions.STRONG_FECAL_INCONTINENCE_POTION);
-        builder.addMix(PoPotions.FECAL_INCONTINENCE_POTION, Items.GLOWSTONE, PoPotions.SUPER_FECAL_INCONTINENCE_POTION);
-
-        builder.addMix(Potions.AWKWARD, PoItems.KING_OF_DRAGON_FRUIT.get(), PoPotions.ON_THE_VGE_POTION);
-        builder.addMix(PoPotions.ON_THE_VGE_POTION, Items.REDSTONE, PoPotions.LONG_ON_THE_VGE_POTION);
-        builder.addMix(PoPotions.ON_THE_VGE_POTION, Items.GLOWSTONE_DUST, PoPotions.STRONG_ON_THE_VGE_POTION);
-    }
-
-    @SubscribeEvent
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         var level = event.getLevel();
         var player = event.getEntity();
@@ -93,7 +83,6 @@ public class PSGameEvents {
         event.setCanceled(true);
     }
 
-    @SubscribeEvent
     public static void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
         ItemStack stack = event.getItemStack();
         Player player = event.getEntity();
@@ -118,12 +107,49 @@ public class PSGameEvents {
         }
     }
 
-    @SubscribeEvent
-    public static void registerTrades(VillagerTradesEvent event) {
+    public static void onBrewingRecipeRegistry(RegisterBrewingRecipesEvent event) {
+        PotionBrewing.Builder builder = event.getBuilder();
+
+        builder.addMix(Potions.AWKWARD, PoItems.FOLIUM_SENNAE.get(), PoPotions.FECAL_INCONTINENCE_POTION);
+        builder.addMix(PoPotions.FECAL_INCONTINENCE_POTION, Items.REDSTONE, PoPotions.LONG_FECAL_INCONTINENCE_POTION);
+        builder.addMix(PoPotions.FECAL_INCONTINENCE_POTION, Items.GLOWSTONE_DUST, PoPotions.STRONG_FECAL_INCONTINENCE_POTION);
+        builder.addMix(PoPotions.FECAL_INCONTINENCE_POTION, Items.GLOWSTONE, PoPotions.SUPER_FECAL_INCONTINENCE_POTION);
+
+        builder.addMix(Potions.AWKWARD, PoItems.KING_OF_DRAGON_FRUIT.get(), PoPotions.ON_THE_VGE_POTION);
+        builder.addMix(PoPotions.ON_THE_VGE_POTION, Items.REDSTONE, PoPotions.LONG_ON_THE_VGE_POTION);
+        builder.addMix(PoPotions.ON_THE_VGE_POTION, Items.GLOWSTONE_DUST, PoPotions.STRONG_ON_THE_VGE_POTION);
+    }
+
+    public static void onVillagerTrades(VillagerTradesEvent event) {
         PVillagerTrades.registerTrades(event.getType(), event.getTrades());
     }
 
-    @SubscribeEvent
+    public static void onEntityDismount(EntityMountEvent event) {
+        if (event.isDismounting() && event.getEntityBeingMounted() instanceof ToiletPlugEntity &&
+                event.getEntity() instanceof Player player && player.isShiftKeyDown()) {
+            event.setCanceled(true);
+        }
+    }
+
+    public static void onMobEffectApplicable(MobEffectEvent.Applicable event) {
+        LivingEntity entity = event.getEntity();
+        MobEffectInstance effectInstance = event.getEffectInstance();
+
+        if (OMEN_EFFECTS.contains(effectInstance.getEffect()) && entity.hasEffect(PoEffects.OMENER)) {
+            if (!effectInstance.is(MobEffects.CONFUSION) && !entity.hasEffect(MobEffects.REGENERATION)) {
+                int amplifier = entity.getEffect(PoEffects.OMENER).getAmplifier();
+                entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 40, amplifier + 1));
+            }
+            event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
+        }
+    }
+
+    private static final Set<Holder<MobEffect>> OMEN_EFFECTS = Set.of(
+            MobEffects.POISON,
+            MobEffects.WITHER,
+            MobEffects.CONFUSION
+    );
+
     public static void onEntityTick(EntityTickEvent.Pre event) {
         Entity entity = event.getEntity();
         if (!(entity instanceof Villager villager) || entity.level().isClientSide || entity.tickCount % 10 != 0) return;
@@ -131,7 +157,6 @@ public class PSGameEvents {
         PVillagerBehaviors.tickPoopTemptation(villager);
     }
 
-    @SubscribeEvent
     public static void onFinalizeSpawn(FinalizeSpawnEvent event) {
         if (event.getLevel().isClientSide() || !Config.desperateWorld) return;
         Mob mob = event.getEntity();
@@ -140,8 +165,7 @@ public class PSGameEvents {
         mob.addEffect(new MobEffectInstance(PoEffects.FECAL_INCONTINENCE, MobEffectInstance.INFINITE_DURATION, 3));
     }
 
-    @SubscribeEvent
-    public static void createSpawnToilet(LevelEvent.CreateSpawnPosition event) {
+    public static void onCreateSpawnToilet(LevelEvent.CreateSpawnPosition event) {
         if (event.getLevel() instanceof ServerLevel level && level.getChunkSource().getGenerator() instanceof PoVoidChunkGenerator) {
             var rand = new XoroshiroRandomSource(level.getSeed());
             var pos = new BlockPos.MutableBlockPos(rand.nextIntBetweenInclusive(-200, 200), 87, rand.nextIntBetweenInclusive(-200, 200));
