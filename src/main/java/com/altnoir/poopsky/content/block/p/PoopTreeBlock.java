@@ -48,11 +48,6 @@ public class PoopTreeBlock extends SaplingBlock implements BonemealableBlock {
     }
 
     @Override
-    protected boolean mayPlaceOn(BlockState state, BlockGetter level, BlockPos pos) {
-        return state.is(PTags.Blocks.TOILET_BLOCKS) || super.mayPlaceOn(state, level, pos);
-    }
-
-    @Override
     public boolean isValidBonemealTarget(LevelReader levelReader, BlockPos blockPos, BlockState blockState) {
         return levelReader.getFluidState(blockPos.above()).isEmpty();
     }
