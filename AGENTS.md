@@ -511,6 +511,7 @@ if (ModList.get().isLoaded(PSMods.CREATE.id())) {
 - 需要自定义方块物品、战利品表或无物品方块时，使用 `PBlocks.registerBlock`、`registerDefaultBlock`、`registerBlockNoItem`、`registerCompooperBlock`、`registerToiletBlock` 等现有 helper。
 - 实体、方块实体、菜单、配方、粒子、音效、数据组件、流体、村民、世界生成注册仍使用对应注册类中的 `DeferredRegister`。
 - 新增 `DeferredRegister` 时应放入现有注册类并由 `PRegistries.registerAll(modEventBus)` 或对应兼容插件统一挂到 mod event bus。
+- Registrate API 中所有需要 `Supplier` 的地方必须使用 `com.tterrag.registrate.util.nullness.NonNullSupplier`，而非 `java.util.function.Supplier`。例如 `REGISTRATE.simple(name, registry, supplier)` 的第三个参数类型为 `NonNullSupplier<T>`。
 
 ### 2. 方块属性
 
