@@ -6,13 +6,16 @@ import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.entity.p.ToiletEntity;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.impl.PoToiletTypes;
+import com.altnoir.poopsky.impl.util.toiletUtil;
 import com.altnoir.poopsky.init.PoBlockEntityType;
 import com.altnoir.poopsky.init.PoEffects;
 import com.altnoir.poopsky.init.PoEntityType;
 import com.altnoir.poopsky.init.PoItems;
-import com.altnoir.poopsky.impl.util.toiletUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.dispenser.BlockSource;
+import net.minecraft.core.dispenser.DispenseItemBehavior;
+import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
@@ -40,6 +43,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
@@ -544,6 +548,32 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
 
     private boolean isFaceConnected(BlockState state, Direction facing) {
         return state.getValue(FACING) == facing || state.getValue(FACING) == facing.getOpposite();
+    }
+
+    @FunctionalInterface
+    public interface ToiletExplosionConsumer {
+        void accept(AbstractToiletBlock toilet, ServerLevel level, BlockPos pos, ItemStack stack);
+    }
+
+    public static void dispenserToiletExplosion(ItemLike item, ToiletExplosionConsumer onToilet) {
+        DispenseItemBehavior original = DispenserBlock.DISPENSER_REGISTRY.get(item.asItem());
+        DispenserBlock.registerBehavior(item, new OptionalDispenseItemBehavior() {
+            @Override
+            protected ItemStack execute(BlockSource source, ItemStack stack) {
+                ServerLevel level = source.level();
+                Direction direction = source.state().getValue(DispenserBlock.FACING);
+                BlockPos pos = source.pos().relative(direction);
+
+                if (level.getBlockState(pos).getBlock() instanceof AbstractToiletBlock toilet) {
+                    this.setSuccess(true);
+                    toilet.explodeToilet(level, pos);
+                    onToilet.accept(toilet, level, pos, stack);
+                    return stack;
+                }
+
+                return original.dispense(source, stack);
+            }
+        });
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.altnoir.poopsky;
 import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.compat.create.CreatePlugin;
 import com.altnoir.poopsky.compat.maid.MaidPlugin;
+import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.p.CompooperBlock;
 import com.altnoir.poopsky.content.entity.p.PoopTntEntity;
 import com.altnoir.poopsky.content.villager.PoVillagers;
@@ -28,6 +29,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.BoneMealItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
@@ -133,6 +135,13 @@ public class PoopSky {
                 }
             });
 
+            AbstractToiletBlock.dispenserToiletExplosion(Items.FLINT_AND_STEEL, (toilet, level, pos, stack) -> {
+                stack.hurtAndBreak(1, level, null, p -> {});
+            });
+            AbstractToiletBlock.dispenserToiletExplosion(Items.FIRE_CHARGE, (toilet, level, pos, stack) -> {
+                stack.shrink(1);
+            });
+
             FluidInteractionRegistry.addInteraction(NeoForgeMod.WATER_TYPE.value(), new FluidInteractionRegistry.InteractionInformation(
                     PFluidTypes.URINE_FLUID_TYPE.get(), (fluidState) -> fluidState.isSource() ? PoBlocks.POOLIME_BLOCK.get().defaultBlockState() : Blocks.CLAY.defaultBlockState()));
             FluidInteractionRegistry.addInteraction(PFluidTypes.URINE_FLUID_TYPE.get(), new FluidInteractionRegistry.InteractionInformation(
@@ -157,4 +166,5 @@ public class PoopSky {
     public static PoRegistrate registrate() {
         return REGISTRATE;
     }
+
 }
