@@ -5,54 +5,66 @@ import com.altnoir.poopsky.content.effect.FecalIncontinenceEffect;
 import com.altnoir.poopsky.content.effect.MomentOfPtymeEffect;
 import com.altnoir.poopsky.content.effect.OnTheVergeEffect;
 import com.altnoir.poopsky.content.effect.PMobEffect;
-import net.minecraft.core.Holder;
+import com.altnoir.poopsky.impl.registrate.PoRegistrate;
+import com.tterrag.registrate.util.entry.RegistryEntry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class PEffects {
-    public static final DeferredRegister<MobEffect> MOB_EFFECTS = DeferredRegister.create(Registries.MOB_EFFECT, PoopSky.MOD_ID);
+    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
-    public static final Holder<MobEffect> FECAL_INCONTINENCE = MOB_EFFECTS.register("fecal_incontinence", () ->
-            new FecalIncontinenceEffect(MobEffectCategory.HARMFUL, 0x47311A)
+    public static final RegistryEntry<MobEffect, MobEffect> FECAL_INCONTINENCE = REGISTRATE.simple(
+            "fecal_incontinence",
+            Registries.MOB_EFFECT,
+            () -> new FecalIncontinenceEffect(MobEffectCategory.HARMFUL, 0x47311A)
                     .addAttributeModifier(Attributes.GRAVITY, PoopSky.loc("fecal_incontinence"),
                             -0.0125f,
                             AttributeModifier.Operation.ADD_VALUE)
     );
-    public static final Holder<MobEffect> INTESTINAL_SPASM = MOB_EFFECTS.register("intestinal_spasm", () ->
-            new PMobEffect(MobEffectCategory.HARMFUL, 0x8B0000)
+    public static final RegistryEntry<MobEffect, MobEffect> INTESTINAL_SPASM = REGISTRATE.simple(
+            "intestinal_spasm",
+            Registries.MOB_EFFECT,
+            () -> new PMobEffect(MobEffectCategory.HARMFUL, 0x8B0000)
                     .addAttributeModifier(Attributes.MOVEMENT_SPEED, PoopSky.loc("intestinal_spasm"),
                             -0.025F,
                             AttributeModifier.Operation.ADD_VALUE)
     );
-    public static final Holder<MobEffect> ON_THE_VERGE = MOB_EFFECTS.register("on_the_verge", () ->
-            new OnTheVergeEffect(MobEffectCategory.BENEFICIAL, 0x8B0000)
+    public static final RegistryEntry<MobEffect, MobEffect> ON_THE_VERGE = REGISTRATE.simple(
+            "on_the_verge",
+            Registries.MOB_EFFECT,
+            () -> new OnTheVergeEffect(MobEffectCategory.BENEFICIAL, 0x8B0000)
     );
-    public static final Holder<MobEffect> OMENER = MOB_EFFECTS.register("omener", () ->
-            new PMobEffect(MobEffectCategory.BENEFICIAL, 0x47311A)
+    public static final RegistryEntry<MobEffect, MobEffect> OMENER = REGISTRATE.simple(
+            "omener",
+            Registries.MOB_EFFECT,
+            () -> new PMobEffect(MobEffectCategory.BENEFICIAL, 0x47311A)
                     .addAttributeModifier(Attributes.WATER_MOVEMENT_EFFICIENCY, PoopSky.loc("omener"), 1.0F,
                             AttributeModifier.Operation.ADD_VALUE)
                     .addAttributeModifier(Attributes.MOVEMENT_EFFICIENCY, PoopSky.loc("omener_block"), 1.0F,
                             AttributeModifier.Operation.ADD_VALUE)
     );
-    public static final Holder<MobEffect> SEEDBED_CURSE = MOB_EFFECTS.register("seedbed_curse", () ->
-            new PMobEffect(MobEffectCategory.HARMFUL, 0x6B2020)
+    public static final RegistryEntry<MobEffect, MobEffect> SEEDBED_CURSE = REGISTRATE.simple(
+            "seedbed_curse",
+            Registries.MOB_EFFECT,
+            () -> new PMobEffect(MobEffectCategory.HARMFUL, 0x6B2020)
                     .addAttributeModifier(Attributes.MAX_HEALTH, PoopSky.loc("seedbed_curse"),
                             -0.5F,
                             AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
     );
-    public static final Holder<MobEffect> BLEEDING = MOB_EFFECTS.register("bleeding", () ->
-            new PMobEffect(MobEffectCategory.HARMFUL, 0x8B0000)
+    public static final RegistryEntry<MobEffect, MobEffect> BLEEDING = REGISTRATE.simple(
+            "bleeding",
+            Registries.MOB_EFFECT,
+            () -> new PMobEffect(MobEffectCategory.HARMFUL, 0x8B0000)
     );
-    public static final Holder<MobEffect> MOMENT_OF_PTYME = MOB_EFFECTS.register("moment_of_ptyme", () ->
-            new MomentOfPtymeEffect(MobEffectCategory.NEUTRAL, 0xFFD700)
+    public static final RegistryEntry<MobEffect, MobEffect> MOMENT_OF_PTYME = REGISTRATE.simple(
+            "moment_of_ptyme",
+            Registries.MOB_EFFECT,
+            () -> new MomentOfPtymeEffect(MobEffectCategory.NEUTRAL, 0xFFD700)
     );
 
-    public static void register(IEventBus eventBus) {
-        MOB_EFFECTS.register(eventBus);
+    public static void register() {
     }
 }

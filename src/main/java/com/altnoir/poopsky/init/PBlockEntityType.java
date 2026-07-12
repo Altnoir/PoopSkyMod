@@ -36,6 +36,6 @@ public class PBlockEntityType {
             .validBlock(PBlocks.BREEDING_CHEST)
             .register();
 
-    public static void register(IEventBus eventBus) {
+    public static void register() {
     }
 }

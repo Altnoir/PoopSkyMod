@@ -7,8 +7,14 @@ import com.altnoir.poopsky.content.FlyTypeManager;
 import com.altnoir.poopsky.content.block.ToiletTypeManager;
 import com.altnoir.poopsky.content.block.p.CompooperBlock;
 import com.altnoir.poopsky.content.entity.p.PoopTntEntity;
+import com.altnoir.poopsky.content.villager.PVillagers;
+import com.altnoir.poopsky.datagen.PSAdvancementProvider;
+import com.altnoir.poopsky.datagen.PSEntityLootTableProvider;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.init.*;
+import com.altnoir.poopsky.worldgen.PSChunkGenerators;
+import com.altnoir.poopsky.worldgen.PSStructures;
+import com.altnoir.poopsky.worldgen.foliage.PSFoliagePlacerTypes;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -52,7 +58,29 @@ public class PoopSky {
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(PSNetworking::register);
 
-        PRegistries.registerAll(modEventBus);
+        PItems.register();
+        PBlocks.register();
+        PFluids.register();
+        PParticles.register();
+        PSAdvancementProvider.register();
+        PSEntityLootTableProvider.register();
+        PItemGroups.register();
+
+        PEffects.register();
+        PPotions.register();
+        PBlockEntityType.register();
+        PEntityType.register();
+        PSFoliagePlacerTypes.register(modEventBus);
+        PSStructures.register(modEventBus);
+        PSChunkGenerators.register(modEventBus);
+        PSoundEvents.register(modEventBus);
+        PStats.register(modEventBus);
+        PComponents.register(modEventBus);
+        PLootFunctions.register(modEventBus);
+        PVillagers.register(modEventBus);
+        PRecipes.register(modEventBus);
+        PMenuTypes.register(modEventBus);
+
         NeoForge.EVENT_BUS.addListener(this::onAddReloadListener);
 
         if (ModList.get().isLoaded(PSMods.TOUHOU_LITTLE_MAID.id())) {

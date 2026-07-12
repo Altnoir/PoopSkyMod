@@ -66,6 +66,6 @@ public class PEntityType {
             .setData(ProviderType.LANG, NonNullBiConsumer.noop())
             .register();
 
-    public static void register(IEventBus eventBus) {
+    public static void register() {
     }
 }
