@@ -1,6 +1,8 @@
 package com.altnoir.poopsky.impl.event;
 
 import com.altnoir.poopsky.Config;
+import com.altnoir.poopsky.content.FlyTypeManager;
+import com.altnoir.poopsky.content.block.ToiletTypeManager;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
@@ -36,7 +38,9 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
@@ -48,7 +52,20 @@ import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 
 import java.util.Set;
 
-public class PSGameEvents {
+public class PoGameEvents {
+    public static void registerGame(IEventBus gameEventBus) {
+        gameEventBus.addListener(PoGameEvents::onRightClickBlock);
+        gameEventBus.addListener(PoGameEvents::onRightClickItem);
+        gameEventBus.addListener(PoGameEvents::onBrewingRecipeRegistry);
+        gameEventBus.addListener(PoGameEvents::onVillagerTrades);
+        gameEventBus.addListener(PoGameEvents::onEntityDismount);
+        gameEventBus.addListener(PoGameEvents::onMobEffectApplicable);
+        gameEventBus.addListener(PoGameEvents::onAddReloadListener);
+        gameEventBus.addListener(PoGameEvents::onEntityTick);
+        gameEventBus.addListener(PoGameEvents::onFinalizeSpawn);
+        gameEventBus.addListener(PoGameEvents::onCreateSpawnToilet);
+    }
+
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         var level = event.getLevel();
         var player = event.getEntity();
@@ -149,6 +166,11 @@ public class PSGameEvents {
             MobEffects.WITHER,
             MobEffects.CONFUSION
     );
+
+    public static void onAddReloadListener(AddReloadListenerEvent event) {
+        event.addListener(FlyTypeManager.INSTANCE);
+        event.addListener(ToiletTypeManager.INSTANCE);
+    }
 
     public static void onEntityTick(EntityTickEvent.Pre event) {
         Entity entity = event.getEntity();

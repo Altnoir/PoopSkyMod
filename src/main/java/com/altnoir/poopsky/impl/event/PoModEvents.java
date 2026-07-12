@@ -7,12 +7,19 @@ import com.altnoir.poopsky.init.PoEntityType;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 
-public class PSModEvents {
+public class PoModEvents {
+    public static void registerMod(IEventBus modEventBus) {
+        modEventBus.addListener(PoModEvents::registerAttributes);
+        modEventBus.addListener(PoModEvents::registerSpawnPlacements);
+        modEventBus.addListener(PoModEvents::registerCapabilities);
+    }
+
     public static void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(PoEntityType.POOLIME.get(), PoolimeEntity.createAttributes().build());
         event.put(PoEntityType.FLY.get(), FlyEntity.createAttributes().build());

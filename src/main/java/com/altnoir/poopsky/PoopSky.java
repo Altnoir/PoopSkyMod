@@ -3,16 +3,14 @@ package com.altnoir.poopsky;
 import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.compat.create.CreatePlugin;
 import com.altnoir.poopsky.compat.maid.MaidPlugin;
-import com.altnoir.poopsky.content.FlyTypeManager;
-import com.altnoir.poopsky.content.block.ToiletTypeManager;
 import com.altnoir.poopsky.content.block.p.CompooperBlock;
 import com.altnoir.poopsky.content.entity.p.PoopTntEntity;
 import com.altnoir.poopsky.content.villager.PoVillagers;
 import com.altnoir.poopsky.content.worldgen.PoChunkGenerators;
 import com.altnoir.poopsky.content.worldgen.PoStructures;
 import com.altnoir.poopsky.content.worldgen.foliage.PoFoliagePlacerTypes;
-import com.altnoir.poopsky.impl.event.PSGameEvents;
-import com.altnoir.poopsky.impl.event.PSModEvents;
+import com.altnoir.poopsky.impl.event.PoGameEvents;
+import com.altnoir.poopsky.impl.event.PoModEvents;
 import com.altnoir.poopsky.impl.registrate.AdvancementGen;
 import com.altnoir.poopsky.impl.registrate.EntityLootTableGen;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
@@ -42,7 +40,6 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.NeoForgeMod;
-import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.neoforge.fluids.FluidInteractionRegistry;
 import org.slf4j.Logger;
 
@@ -87,9 +84,8 @@ public class PoopSky {
         PoChunkGenerators.register();
 
         var gameEventBus = NeoForge.EVENT_BUS;
-        PoopSky.registerMod(modEventBus);
-        PoopSky.registerGame(gameEventBus);
-        NeoForge.EVENT_BUS.addListener(this::onAddReloadListener);
+        PoModEvents.registerMod(modEventBus);
+        PoGameEvents.registerGame(gameEventBus);
 
         if (ModList.get().isLoaded(PSMods.TOUHOU_LITTLE_MAID.id())) {
             MaidPlugin.registry(modEventBus);
@@ -98,29 +94,6 @@ public class PoopSky {
             CreatePlugin.register(modEventBus);
         }
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
-    }
-
-    public static void registerMod(IEventBus modEventBus) {
-        modEventBus.addListener(PSModEvents::registerAttributes);
-        modEventBus.addListener(PSModEvents::registerSpawnPlacements);
-        modEventBus.addListener(PSModEvents::registerCapabilities);
-    }
-
-    public static void registerGame(IEventBus gameEventBus) {
-        gameEventBus.addListener(PSGameEvents::onRightClickBlock);
-        gameEventBus.addListener(PSGameEvents::onRightClickItem);
-        gameEventBus.addListener(PSGameEvents::onBrewingRecipeRegistry);
-        gameEventBus.addListener(PSGameEvents::onVillagerTrades);
-        gameEventBus.addListener(PSGameEvents::onEntityDismount);
-        gameEventBus.addListener(PSGameEvents::onMobEffectApplicable);
-        gameEventBus.addListener(PSGameEvents::onEntityTick);
-        gameEventBus.addListener(PSGameEvents::onFinalizeSpawn);
-        gameEventBus.addListener(PSGameEvents::onCreateSpawnToilet);
-    }
-
-    private void onAddReloadListener(AddReloadListenerEvent event) {
-        event.addListener(FlyTypeManager.INSTANCE);
-        event.addListener(ToiletTypeManager.INSTANCE);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
