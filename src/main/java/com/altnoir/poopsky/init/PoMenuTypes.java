@@ -12,13 +12,11 @@ import com.tterrag.registrate.util.entry.MenuEntry;
 public final class PoMenuTypes {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
-    public static final MenuEntry<FlyBarrelMenu> FLY_BARREL = REGISTRATE
-            .menu("fly_barrel", (MenuBuilder.MenuFactory<FlyBarrelMenu>) FlyBarrelMenu::new, () -> FlyBarrelScreen::new)
-            .register();
+    public static final MenuEntry<FlyBarrelMenu> FLY_BARREL = REGISTRATE.menu("fly_barrel",
+            (MenuBuilder.MenuFactory<FlyBarrelMenu>) FlyBarrelMenu::new, () -> FlyBarrelScreen::new).register();
 
-    public static final MenuEntry<BreedingChestMenu> BREEDING_CHEST = REGISTRATE
-            .menu("breeding_chest", (MenuBuilder.MenuFactory<BreedingChestMenu>) BreedingChestMenu::new, () -> BreedingChestScreen::new)
-            .register();
+    public static final MenuEntry<BreedingChestMenu> BREEDING_CHEST = REGISTRATE.menu("breeding_chest",
+            (MenuBuilder.MenuFactory<BreedingChestMenu>) BreedingChestMenu::new, () -> BreedingChestScreen::new).register();
 
     private PoMenuTypes() {
     }

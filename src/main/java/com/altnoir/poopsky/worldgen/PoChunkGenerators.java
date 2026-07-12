@@ -1,22 +1,23 @@
 package com.altnoir.poopsky.worldgen;
 
+import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.mojang.serialization.MapCodec;
+import com.tterrag.registrate.util.entry.RegistryEntry;
+import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
 
-public final class PoChunkGenerators {
-    public static final DeferredRegister<MapCodec<? extends ChunkGenerator>> CHUNK_GENERATORS = DeferredRegister.create(Registries.CHUNK_GENERATOR, "poopsky");
+public class PoChunkGenerators {
+    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
-    public static final DeferredHolder<MapCodec<? extends ChunkGenerator>, MapCodec<PoVoidChunkGenerator>> VOID = CHUNK_GENERATORS
-            .register("void", () -> PoVoidChunkGenerator.CODEC);
+    public static final RegistryEntry<MapCodec<? extends ChunkGenerator>, MapCodec<PoVoidChunkGenerator>> VOID = registerChunkGenerator(
+            "void", () -> PoVoidChunkGenerator.CODEC);
 
-    private PoChunkGenerators() {
+    private static <T extends ChunkGenerator> RegistryEntry<MapCodec<? extends ChunkGenerator>, MapCodec<T>> registerChunkGenerator(String name, NonNullSupplier<MapCodec<T>> codec) {
+        return REGISTRATE.simple(name, Registries.CHUNK_GENERATOR, codec);
     }
 
-    public static void register(IEventBus eventBus) {
-        CHUNK_GENERATORS.register(eventBus);
+    public static void register() {
     }
 }

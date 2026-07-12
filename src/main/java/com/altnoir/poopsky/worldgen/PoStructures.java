@@ -1,31 +1,31 @@
 package com.altnoir.poopsky.worldgen;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.worldgen.structure.PoopIslandPiece;
 import com.altnoir.poopsky.worldgen.structure.PoopIslandStructure;
+import com.tterrag.registrate.util.entry.RegistryEntry;
+import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
 
-public final class PoStructures {
-    public static final DeferredRegister<StructureType<?>> STRUCTURE_TYPES =
-            DeferredRegister.create(Registries.STRUCTURE_TYPE, PoopSky.MOD_ID);
-    public static final DeferredRegister<StructurePieceType> STRUCTURE_PIECES =
-            DeferredRegister.create(Registries.STRUCTURE_PIECE, PoopSky.MOD_ID);
+public class PoStructures {
+    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
-    public static final DeferredHolder<StructureType<?>, StructureType<PoopIslandStructure>> POOP_ISLAND =
-            STRUCTURE_TYPES.register("poop_island", () -> () -> PoopIslandStructure.CODEC);
-    public static final DeferredHolder<StructurePieceType, StructurePieceType> POOP_ISLAND_PIECE =
-            STRUCTURE_PIECES.register("poop_island", () -> (StructurePieceType.StructureTemplateType) PoopIslandPiece::new);
+    public static final RegistryEntry<StructureType<?>, StructureType<PoopIslandStructure>> POOP_ISLAND = registerStructureType(
+            "poop_island", () -> () -> PoopIslandStructure.CODEC);
+    public static final RegistryEntry<StructurePieceType, StructurePieceType> POOP_ISLAND_PIECE = registerStructurePiece(
+            "poop_island", () -> (StructurePieceType.StructureTemplateType) PoopIslandPiece::new);
 
-    private PoStructures() {
+    private static <T extends StructureType<?>> RegistryEntry<StructureType<?>, T> registerStructureType(String name, NonNullSupplier<T> type) {
+        return REGISTRATE.simple(name, Registries.STRUCTURE_TYPE, type);
     }
 
-    public static void register(IEventBus eventBus) {
-        STRUCTURE_TYPES.register(eventBus);
-        STRUCTURE_PIECES.register(eventBus);
+    private static RegistryEntry<StructurePieceType, StructurePieceType> registerStructurePiece(String name, NonNullSupplier<StructurePieceType> type) {
+        return REGISTRATE.simple(name, Registries.STRUCTURE_PIECE, type);
+    }
+
+    public static void register() {
     }
 }

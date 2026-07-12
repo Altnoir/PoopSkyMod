@@ -61,25 +61,28 @@ public class PoopSky {
         PoItems.register();
         PoBlocks.register();
         PoFluids.register();
-        PoParticles.register();
-        PoAdvancementProvider.register();
-        PoEntityLootTableProvider.register();
         PoItemGroups.register();
+        PoMenuTypes.register();
 
         PoEffects.register();
         PoPotions.register();
-        PoBlockEntityType.register();
-        PoEntityType.register();
-        PoFoliagePlacerTypes.register();
-        PoStructures.register(modEventBus);
-        PoChunkGenerators.register(modEventBus);
-        PoSoundEvents.register(modEventBus);
-        PoStats.register();
-        PoComponents.register(modEventBus);
-        PoLootFunctions.register();
-        PoVillagers.register(modEventBus);
         PoRecipes.register(modEventBus);
-        PoMenuTypes.register();
+        PoComponents.register(modEventBus);
+
+        PoEntityType.register();
+        PoBlockEntityType.register();
+        PoEntityLootTableProvider.register();
+        PoLootFunctions.register();
+        PoVillagers.register();
+
+        PoParticles.register();
+        PoAdvancementProvider.register();
+        PoSoundEvents.register();
+        PoStats.register();
+
+        PoFoliagePlacerTypes.register();
+        PoStructures.register();
+        PoChunkGenerators.register();
 
         NeoForge.EVENT_BUS.addListener(this::onAddReloadListener);
 
