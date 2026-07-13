@@ -382,13 +382,12 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
             double y = pos.getY() + 1.0;
             double z = pos.getZ() + 0.5;
             var pitch = level.random.nextFloat() - 0.4F;
-            level.sendParticles(PoParticles.TOILET_PARTICLE.get(), x, y, z, 100, 0.05, 0.3, 0.05, 0.25);
-            level.sendParticles(PoParticles.TOILET_PARTICLE.get(), x, y + 1, z, 60, 0.01, 0.15, 0.01, 0.5);
+            level.sendParticles(PoParticles.TOILET_PARTICLE.get(), x, y - 0.5, z, 100, 0.05, 0.05, 0.05, 0.5);
             level.playSound(null, x, y, z, PoSoundEvents.FART, SoundSource.BLOCKS, 1.0F, pitch);
 
             AABB area = new AABB(pos.getX(), y, pos.getZ(), pos.getX() + 1, y + 2, pos.getZ() + 1);
             for (Entity entity : level.getEntitiesOfClass(Entity.class, area)) {
-                entity.setDeltaMovement(entity.getDeltaMovement().add(0.0, 1.8, 0.0));
+                entity.setDeltaMovement(entity.getDeltaMovement().add(0.0, 1.6, 0.0));
                 entity.hurtMarked = true;
                 entity.hasImpulse = true;
             }

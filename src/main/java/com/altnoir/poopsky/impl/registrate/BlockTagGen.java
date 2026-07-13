@@ -135,13 +135,6 @@ public final class BlockTagGen {
                 .add(PoBlocks.POOP_LEAVES.get())
                 .addTag(PoTags.Blocks.POOP_BUILDING_BLOCKS);
 
-//        ToiletBlocks.BLOCKS.getEntries().stream()
-//                .map(DeferredHolder::get)
-//                .forEach(toilet -> {
-//                    tag(PSBlockTags.TOILET_BLOCKS)
-//                            .add(toilet);
-//                });
-
         tag(BlockTags.LOGS)
                 .add(PoBlocks.POOP_LOG.get())
                 .add(PoBlocks.POOP_EMPTY_LOG.get())

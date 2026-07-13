@@ -6,15 +6,18 @@ import net.minecraft.core.particles.SimpleParticleType;
 
 public class ToiletParticle extends TextureSheetParticle {
     protected ToiletParticle(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, SpriteSet sprites) {
-        super(level, x, y, z, xSpeed, ySpeed, zSpeed);
+        super(level, x, y, z);
         this.setSpriteFromAge(sprites);
-        this.gravity = 0.2F;
-        this.friction = 1.0F;
+        this.gravity = 0.8F;
+        this.friction = 0.99F;
         this.lifetime = 40 + level.random.nextInt(20);
         this.quadSize *= 0.8F + level.random.nextFloat() * 0.4F;
         this.rCol = 1.0F;
         this.gCol = 1.0F;
         this.bCol = 1.0F;
+        this.xd = (level.random.nextFloat() - 0.5F) * 0.05F;
+        this.yd = 0.25F + level.random.nextFloat() * 0.3F;
+        this.zd = (level.random.nextFloat() - 0.5F) * 0.05F;
     }
 
     @Override
