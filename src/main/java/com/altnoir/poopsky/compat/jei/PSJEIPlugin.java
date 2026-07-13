@@ -7,7 +7,7 @@ import com.altnoir.poopsky.content.block.p.CompooperBlock;
 import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.content.recipe.ToiletShapedRecipe;
-import com.altnoir.poopsky.compat.PSMods;
+import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.compat.jei.create.FanDigestingCategory;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoComponents;
@@ -57,7 +57,7 @@ public class PSJEIPlugin implements IModPlugin {
                 new POPExplosionRecipeCategory(registration.getJeiHelpers(), arrow),
                 new AnalPressingRecipeCategory(registration.getJeiHelpers(), arrow, plus));
 
-        if (PSMods.CREATE.isLoaded()) {
+        if (PoMods.CREATE.isLoaded()) {
             createCategories.clear();
             createCategories.add(FanDigestingCategory.create());
             registration.addRecipeCategories(createCategories.toArray(IRecipeCategory[]::new));
@@ -133,7 +133,7 @@ public class PSJEIPlugin implements IModPlugin {
 
         PSJEIInfo.register(registration);
 
-        if (PSMods.CREATE.isLoaded()) {
+        if (PoMods.CREATE.isLoaded()) {
             createCategories.forEach(category -> category.registerRecipes(registration));
         }
     }
@@ -148,7 +148,7 @@ public class PSJEIPlugin implements IModPlugin {
         registration.addRecipeCatalyst(new ItemStack(PoItems.KING_OF_DRAGON_FRUIT.get()), AnalPressingRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(PoItems.DRAGON_BREATH_CHILI.get()), AnalPressingRecipeCategory.TYPE);
 
-        if (PSMods.CREATE.isLoaded()) {
+        if (PoMods.CREATE.isLoaded()) {
             createCategories.forEach(category -> category.registerCatalysts(registration));
         }
     }

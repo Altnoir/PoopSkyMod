@@ -2,7 +2,7 @@ package com.altnoir.poopsky.impl.create;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.init.PoBlocks;
-import com.altnoir.poopsky.compat.PSMods;
+import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.compat.create.DigestingRecipeGen;
 import com.altnoir.poopsky.init.PoItems;
 import net.minecraft.core.HolderLookup;
@@ -23,7 +23,7 @@ public class PDigestingRecipeGen extends DigestingRecipeGen implements IConditio
 
     @Override
     public void buildRecipes(RecipeOutput output) {
-        RecipeOutput conditionalOutput = output.withConditions(modLoaded(PSMods.CREATE.id()));
+        RecipeOutput conditionalOutput = output.withConditions(modLoaded(PoMods.CREATE.id()));
 
         convert(Items.GLASS_BOTTLE, PoItems.URINE_BOTTLE.get()).register(conditionalOutput);
         convert(Items.SNOWBALL, PoItems.POOP_BALL.get()).register(conditionalOutput);

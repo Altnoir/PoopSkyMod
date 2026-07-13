@@ -1,13 +1,13 @@
 package com.altnoir.poopsky;
 
-import com.altnoir.poopsky.compat.PSMods;
+import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.content.FlyTypeManager;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
-import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.FlyTypes;
+import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import net.minecraft.core.registries.Registries;
@@ -50,7 +50,9 @@ public class PoItemGroups {
                         .forEach(output::accept);
 
                 for (String id : FlyTypeManager.INSTANCE.getFlyTypes()) {
-                    if (FlyTypes.ZINC.id().equals(id) && !PSMods.CREATE.isLoaded()) continue;
+                    if (createFly(id) && !PoMods.CREATE.isLoaded()) continue;
+                    if (ae2Fly(id) && !PoMods.AE2.isLoaded()) continue;
+                    if (mekFly(id) && !PoMods.MEKANISM.isLoaded()) continue;
                     output.accept(FlyItem.withType(id));
                 }
 
@@ -62,6 +64,18 @@ public class PoItemGroups {
                 }
             })
             .build()).register();
+
+    private static boolean createFly(String id) {
+        return FlyTypes.ZINC.id().equals(id);
+    }
+
+    private static boolean ae2Fly(String id) {
+        return FlyTypes.CERTUS.id().equals(id) || FlyTypes.SKY_DUST.id().equals(id);
+    }
+
+    private static boolean mekFly(String id) {
+        return FlyTypes.OSMIUM.id().equals(id) || FlyTypes.TIN.id().equals(id) || FlyTypes.LEAD.id().equals(id) || FlyTypes.URANIUM.id().equals(id);
+    }
 
     public static void register() {
     }

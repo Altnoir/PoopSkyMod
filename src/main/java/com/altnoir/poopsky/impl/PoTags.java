@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.impl;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.compat.PSMods;
+import com.altnoir.poopsky.compat.PoMods;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
@@ -73,7 +73,7 @@ public class PoTags {
         }
 
         private static TagKey<EntityType<?>> createSable(String name) {
-            return TagKey.create(Registries.ENTITY_TYPE, PSMods.SABLE.rl(name));
+            return TagKey.create(Registries.ENTITY_TYPE, PoMods.SABLE.rl(name));
         }
     }
 

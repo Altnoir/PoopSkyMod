@@ -32,6 +32,14 @@ public enum FlyTypes {
     ENDER,
     // CREATE
     ZINC,
+    // AE2
+    CERTUS,
+    SKY_DUST,
+    // MEK
+    OSMIUM,
+    TIN,
+    LEAD,
+    URANIUM,
     ;
 
     private final FlyType.Type flyType;

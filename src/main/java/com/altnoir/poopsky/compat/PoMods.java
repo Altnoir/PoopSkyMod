@@ -1,20 +1,24 @@
 package com.altnoir.poopsky.compat;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.fml.loading.LoadingModList;
 
 import java.util.Locale;
 
-public enum PSMods {
+public enum PoMods {
     SABLE,
     CREATE,
     SKYBLOCKBUILDER,
-    TOUHOU_LITTLE_MAID;
+    TOUHOU_LITTLE_MAID,
+    AE2,
+    MEKANISM;
 
     private final String id;
     private final boolean isLoaded;
 
-    PSMods() {
+    PoMods() {
         id = name().toLowerCase(Locale.ROOT);
         isLoaded = LoadingModList.get().getModFileById(id) != null;
     }
@@ -29,5 +33,9 @@ public enum PSMods {
 
     public boolean isLoaded() {
         return isLoaded;
+    }
+
+    public ItemStack itemStack(String path) {
+        return new ItemStack(BuiltInRegistries.ITEM.get(rl(path)));
     }
 }

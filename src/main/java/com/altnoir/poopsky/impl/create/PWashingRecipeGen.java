@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.impl.create;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.compat.PSMods;
+import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
 import com.simibubi.create.api.data.recipe.WashingRecipeGen;
@@ -24,7 +24,7 @@ public class PWashingRecipeGen extends WashingRecipeGen implements IConditionBui
 
     @Override
     protected void buildRecipes(RecipeOutput p_recipeOutput, HolderLookup.Provider holderLookup) {
-        RecipeOutput conditionalOutput = p_recipeOutput.withConditions(modLoaded(PSMods.CREATE.id()));
+        RecipeOutput conditionalOutput = p_recipeOutput.withConditions(modLoaded(PoMods.CREATE.id()));
 
         convert(PoBlocks.POOP_PIECE, Blocks.SNOW).register(conditionalOutput);
         convert(PoBlocks.POOP_BLOCK, Blocks.SNOW_BLOCK).register(conditionalOutput);

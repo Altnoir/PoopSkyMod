@@ -1,0 +1,13 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "type": "poopsky:breeding_chest",
+  "chance": 0.2,
+  "parent1": "light_gray",
+  "parent2": "iron",
+  "result": "tin"
+}

@@ -162,6 +162,42 @@
       "predicate": {
         "poopsky:fly_type": 26.0
       }
+    },
+    {
+      "model": "poopsky:item/fly_certus",
+      "predicate": {
+        "poopsky:fly_type": 27.0
+      }
+    },
+    {
+      "model": "poopsky:item/fly_sky_dust",
+      "predicate": {
+        "poopsky:fly_type": 28.0
+      }
+    },
+    {
+      "model": "poopsky:item/fly_osmium",
+      "predicate": {
+        "poopsky:fly_type": 29.0
+      }
+    },
+    {
+      "model": "poopsky:item/fly_tin",
+      "predicate": {
+        "poopsky:fly_type": 30.0
+      }
+    },
+    {
+      "model": "poopsky:item/fly_lead",
+      "predicate": {
+        "poopsky:fly_type": 31.0
+      }
+    },
+    {
+      "model": "poopsky:item/fly_uranium",
+      "predicate": {
+        "poopsky:fly_type": 32.0
+      }
     }
   ],
   "textures": {

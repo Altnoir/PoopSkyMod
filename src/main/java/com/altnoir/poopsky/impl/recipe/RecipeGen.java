@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.impl.recipe;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.compat.PSMods;
+import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.recipe.*;
@@ -560,51 +560,51 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
     }
 
     private void buildAnalPressingRecipes(RecipeOutput recipeOutput) {
-        record AnalPressingEntry(Block input, Block output, Block replaceTarget) {
-            static AnalPressingEntry of(Block input, Block output) {
-                return new AnalPressingEntry(input, output, null);
+        record AnalPressing(Block input, Block output, Block replaceTarget) {
+            static AnalPressing of(Block input, Block output) {
+                return new AnalPressing(input, output, null);
             }
 
-            static AnalPressingEntry ofDeepslate(Block input, Block output) {
-                return new AnalPressingEntry(input, output, Blocks.DEEPSLATE);
+            static AnalPressing ofDeepslate(Block input, Block output) {
+                return new AnalPressing(input, output, Blocks.DEEPSLATE);
             }
 
-            static AnalPressingEntry ofNetherrack(Block input, Block output) {
-                return new AnalPressingEntry(input, output, Blocks.NETHERRACK);
+            static AnalPressing ofNetherrack(Block input, Block output) {
+                return new AnalPressing(input, output, Blocks.NETHERRACK);
             }
         }
-        List<AnalPressingEntry> recipes = List.of(
-                AnalPressingEntry.of(Blocks.RAW_IRON_BLOCK, Blocks.IRON_ORE),
-                AnalPressingEntry.of(Blocks.RAW_COPPER_BLOCK, Blocks.COPPER_ORE),
-                AnalPressingEntry.of(Blocks.RAW_GOLD_BLOCK, Blocks.GOLD_ORE),
-                AnalPressingEntry.of(Blocks.IRON_BLOCK, Blocks.IRON_ORE),
-                AnalPressingEntry.of(Blocks.COPPER_BLOCK, Blocks.COPPER_ORE),
-                AnalPressingEntry.of(Blocks.GOLD_BLOCK, Blocks.GOLD_ORE),
-                AnalPressingEntry.of(Blocks.COAL_BLOCK, Blocks.COAL_ORE),
-                AnalPressingEntry.of(Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE),
-                AnalPressingEntry.of(Blocks.LAPIS_BLOCK, Blocks.LAPIS_ORE),
-                AnalPressingEntry.of(Blocks.REDSTONE_BLOCK, Blocks.REDSTONE_ORE),
-                AnalPressingEntry.of(Blocks.EMERALD_BLOCK, Blocks.EMERALD_ORE),
+        List<AnalPressing> recipes = List.of(
+                AnalPressing.of(Blocks.RAW_IRON_BLOCK, Blocks.IRON_ORE),
+                AnalPressing.of(Blocks.RAW_COPPER_BLOCK, Blocks.COPPER_ORE),
+                AnalPressing.of(Blocks.RAW_GOLD_BLOCK, Blocks.GOLD_ORE),
+                AnalPressing.of(Blocks.IRON_BLOCK, Blocks.IRON_ORE),
+                AnalPressing.of(Blocks.COPPER_BLOCK, Blocks.COPPER_ORE),
+                AnalPressing.of(Blocks.GOLD_BLOCK, Blocks.GOLD_ORE),
+                AnalPressing.of(Blocks.COAL_BLOCK, Blocks.COAL_ORE),
+                AnalPressing.of(Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE),
+                AnalPressing.of(Blocks.LAPIS_BLOCK, Blocks.LAPIS_ORE),
+                AnalPressing.of(Blocks.REDSTONE_BLOCK, Blocks.REDSTONE_ORE),
+                AnalPressing.of(Blocks.EMERALD_BLOCK, Blocks.EMERALD_ORE),
 
-                AnalPressingEntry.ofDeepslate(Blocks.RAW_IRON_BLOCK, Blocks.DEEPSLATE_IRON_ORE),
-                AnalPressingEntry.ofDeepslate(Blocks.RAW_COPPER_BLOCK, Blocks.DEEPSLATE_COPPER_ORE),
-                AnalPressingEntry.ofDeepslate(Blocks.RAW_GOLD_BLOCK, Blocks.DEEPSLATE_GOLD_ORE),
-                AnalPressingEntry.ofDeepslate(Blocks.IRON_BLOCK, Blocks.DEEPSLATE_IRON_ORE),
-                AnalPressingEntry.ofDeepslate(Blocks.COPPER_BLOCK, Blocks.DEEPSLATE_COPPER_ORE),
-                AnalPressingEntry.ofDeepslate(Blocks.GOLD_BLOCK, Blocks.DEEPSLATE_GOLD_ORE),
-                AnalPressingEntry.ofDeepslate(Blocks.COAL_BLOCK, Blocks.DEEPSLATE_COAL_ORE),
-                AnalPressingEntry.ofDeepslate(Blocks.DIAMOND_BLOCK, Blocks.DEEPSLATE_DIAMOND_ORE),
-                AnalPressingEntry.ofDeepslate(Blocks.LAPIS_BLOCK, Blocks.DEEPSLATE_LAPIS_ORE),
-                AnalPressingEntry.ofDeepslate(Blocks.REDSTONE_BLOCK, Blocks.DEEPSLATE_REDSTONE_ORE),
-                AnalPressingEntry.ofDeepslate(Blocks.EMERALD_BLOCK, Blocks.DEEPSLATE_EMERALD_ORE),
+                AnalPressing.ofDeepslate(Blocks.RAW_IRON_BLOCK, Blocks.DEEPSLATE_IRON_ORE),
+                AnalPressing.ofDeepslate(Blocks.RAW_COPPER_BLOCK, Blocks.DEEPSLATE_COPPER_ORE),
+                AnalPressing.ofDeepslate(Blocks.RAW_GOLD_BLOCK, Blocks.DEEPSLATE_GOLD_ORE),
+                AnalPressing.ofDeepslate(Blocks.IRON_BLOCK, Blocks.DEEPSLATE_IRON_ORE),
+                AnalPressing.ofDeepslate(Blocks.COPPER_BLOCK, Blocks.DEEPSLATE_COPPER_ORE),
+                AnalPressing.ofDeepslate(Blocks.GOLD_BLOCK, Blocks.DEEPSLATE_GOLD_ORE),
+                AnalPressing.ofDeepslate(Blocks.COAL_BLOCK, Blocks.DEEPSLATE_COAL_ORE),
+                AnalPressing.ofDeepslate(Blocks.DIAMOND_BLOCK, Blocks.DEEPSLATE_DIAMOND_ORE),
+                AnalPressing.ofDeepslate(Blocks.LAPIS_BLOCK, Blocks.DEEPSLATE_LAPIS_ORE),
+                AnalPressing.ofDeepslate(Blocks.REDSTONE_BLOCK, Blocks.DEEPSLATE_REDSTONE_ORE),
+                AnalPressing.ofDeepslate(Blocks.EMERALD_BLOCK, Blocks.DEEPSLATE_EMERALD_ORE),
 
-                AnalPressingEntry.ofNetherrack(Blocks.RAW_GOLD_BLOCK, Blocks.NETHER_GOLD_ORE),
-                AnalPressingEntry.ofNetherrack(Blocks.GOLD_BLOCK, Blocks.NETHER_GOLD_ORE),
-                AnalPressingEntry.ofNetherrack(Blocks.QUARTZ_BLOCK, Blocks.NETHER_QUARTZ_ORE),
-                AnalPressingEntry.ofNetherrack(Blocks.NETHERITE_BLOCK, Blocks.ANCIENT_DEBRIS)
+                AnalPressing.ofNetherrack(Blocks.RAW_GOLD_BLOCK, Blocks.NETHER_GOLD_ORE),
+                AnalPressing.ofNetherrack(Blocks.GOLD_BLOCK, Blocks.NETHER_GOLD_ORE),
+                AnalPressing.ofNetherrack(Blocks.QUARTZ_BLOCK, Blocks.NETHER_QUARTZ_ORE),
+                AnalPressing.ofNetherrack(Blocks.NETHERITE_BLOCK, Blocks.ANCIENT_DEBRIS)
         );
 
-        for (AnalPressingEntry entry : recipes) {
+        for (AnalPressing entry : recipes) {
             var builder = AnalPressingRecipeBuilder.analPressing(entry.input(), entry.output());
             if (entry.replaceTarget() != null) {
                 builder.replaceTarget(entry.replaceTarget());
@@ -615,8 +615,8 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
     }
 
     private void buildSieveRecipes(RecipeOutput recipeOutput) {
-        RecipeOutput createLoaded = recipeOutput.withConditions(modLoaded(PSMods.CREATE.id()));
-        RecipeOutput createNotLoaded = recipeOutput.withConditions(not(modLoaded(PSMods.CREATE.id())));
+        RecipeOutput createLoaded = recipeOutput.withConditions(modLoaded(PoMods.CREATE.id()));
+        RecipeOutput createNotLoaded = recipeOutput.withConditions(not(modLoaded(PoMods.CREATE.id())));
 
         SieveRecipeBuilder.sieve(PoBlocks.POOP_BLOCK, 200)
                 .addOutput(Items.IRON_NUGGET, 8)
@@ -729,7 +729,9 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
     }
 
     private void buildFlyBarrelRecipes(RecipeOutput recipeOutput) {
-        RecipeOutput create = recipeOutput.withConditions(modLoaded(PSMods.CREATE.id()));
+        RecipeOutput create = recipeOutput.withConditions(modLoaded(PoMods.CREATE.id()));
+        RecipeOutput ae2 = recipeOutput.withConditions(modLoaded(PoMods.AE2.id()));
+        RecipeOutput mekanism = recipeOutput.withConditions(modLoaded(PoMods.MEKANISM.id()));
 
         class FlyMap {
             private final LinkedHashMap<FlyType.Type, ItemLike> items = new LinkedHashMap<>();
@@ -783,17 +785,28 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         flyMap.put(FlyTypes.ENDER.get(), Items.ENDER_PEARL);
         // Create
         flyMap.put(FlyTypes.ZINC.get(), AllItems.RAW_ZINC).loaded(create);
+        // AE2
+        flyMap.put(FlyTypes.CERTUS.get(), PoMods.AE2.itemStack("certus_quartz_crystal").getItem()).loaded(ae2);
+        flyMap.put(FlyTypes.SKY_DUST.get(), PoMods.AE2.itemStack("sky_dust").getItem()).loaded(ae2);
+        // MEK
+        flyMap.put(FlyTypes.OSMIUM.get(), PoMods.MEKANISM.itemStack("raw_osmium").getItem()).loaded(mekanism);
+        flyMap.put(FlyTypes.TIN.get(), PoMods.MEKANISM.itemStack("raw_tin").getItem()).loaded(mekanism);
+        flyMap.put(FlyTypes.LEAD.get(), PoMods.MEKANISM.itemStack("raw_lead").getItem()).loaded(mekanism);
+        flyMap.put(FlyTypes.URANIUM.get(), PoMods.MEKANISM.itemStack("raw_uranium").getItem()).loaded(mekanism);
 
         flyMap.saveAll();
     }
 
     private void buildBreedingChestRecipes(RecipeOutput recipeOutput) {
-        RecipeOutput create = recipeOutput.withConditions(modLoaded(PSMods.CREATE.id()));
+        RecipeOutput create = recipeOutput.withConditions(modLoaded(PoMods.CREATE.id()));
+        RecipeOutput ae2 = recipeOutput.withConditions(modLoaded(PoMods.AE2.id()));
+        RecipeOutput mekanism = recipeOutput.withConditions(modLoaded(PoMods.MEKANISM.id()));
 
         record Breeding(String p1, String p2, String result, RecipeOutput output) {
             static Breeding of(FlyType.Type p1, FlyType.Type p2, FlyType.Type result) {
                 return new Breeding(p1.id(), p2.id(), result.id(), null);
             }
+
             Breeding loaded(RecipeOutput output) {
                 return new Breeding(p1, p2, result, output);
             }
@@ -823,7 +836,15 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 Breeding.of(FlyTypes.EMERALD.get(), FlyTypes.DIAMOND.get(), FlyTypes.NETHERITE.get()),
                 Breeding.of(FlyTypes.NORMAL.get(), FlyTypes.COPPER.get(), FlyTypes.BLACK.get()),
                 // Create
-                Breeding.of(FlyTypes.CYAN.get(), FlyTypes.IRON.get(), FlyTypes.ZINC.get()).loaded(create)
+                Breeding.of(FlyTypes.CYAN.get(), FlyTypes.IRON.get(), FlyTypes.ZINC.get()).loaded(create),
+                // AE2
+                Breeding.of(FlyTypes.LIGHT_BLUE.get(), FlyTypes.DIAMOND.get(), FlyTypes.CERTUS.get()).loaded(ae2),
+                Breeding.of(FlyTypes.BLACK.get(), FlyTypes.GLOWSTONE.get(), FlyTypes.SKY_DUST.get()).loaded(ae2),
+                // MEK
+                Breeding.of(FlyTypes.LIGHT_GRAY.get(), FlyTypes.IRON.get(), FlyTypes.TIN.get()).loaded(mekanism),
+                Breeding.of(FlyTypes.IRON.get(), FlyTypes.TIN.get(), FlyTypes.LEAD.get()).loaded(mekanism),
+                Breeding.of(FlyTypes.DIAMOND.get(), FlyTypes.LEAD.get(), FlyTypes.OSMIUM.get()).loaded(mekanism),
+                Breeding.of(FlyTypes.DRAGON_FRUIT.get(), FlyTypes.EMERALD.get(), FlyTypes.URANIUM.get()).loaded(mekanism)
         );
 
         for (Breeding recipe : breedingRecipes) {

@@ -2,7 +2,7 @@ package com.altnoir.poopsky.impl.create;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.init.PoBlocks;
-import com.altnoir.poopsky.compat.PSMods;
+import com.altnoir.poopsky.compat.PoMods;
 import com.simibubi.create.api.data.recipe.HauntingRecipeGen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -19,7 +19,7 @@ public class PHauntingRecipeGen extends HauntingRecipeGen implements IConditionB
 
     @Override
     protected void buildRecipes(RecipeOutput p_recipeOutput, HolderLookup.Provider holderLookup) {
-        RecipeOutput conditionalOutput = p_recipeOutput.withConditions(modLoaded(PSMods.CREATE.id()));
+        RecipeOutput conditionalOutput = p_recipeOutput.withConditions(modLoaded(PoMods.CREATE.id()));
 
         convert(PoBlocks.POOLIME_BLOCK.get(), Blocks.ICE).register(conditionalOutput);
     }

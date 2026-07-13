@@ -1,6 +1,6 @@
 package com.altnoir.poopsky;
 
-import com.altnoir.poopsky.compat.PSMods;
+import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.compat.create.CreatePlugin;
 import com.altnoir.poopsky.compat.maid.MaidPlugin;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
@@ -95,10 +95,10 @@ public class PoopSky {
         PoModEvents.registerMod(modEventBus);
         PoGameEvents.registerGame(gameEventBus);
 
-        if (ModList.get().isLoaded(PSMods.TOUHOU_LITTLE_MAID.id())) {
+        if (ModList.get().isLoaded(PoMods.TOUHOU_LITTLE_MAID.id())) {
             MaidPlugin.registry(modEventBus);
         }
-        if (ModList.get().isLoaded(PSMods.CREATE.id())) {
+        if (ModList.get().isLoaded(PoMods.CREATE.id())) {
             CreatePlugin.register(modEventBus);
         }
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);

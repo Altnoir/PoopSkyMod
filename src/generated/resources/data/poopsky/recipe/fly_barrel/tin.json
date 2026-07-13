@@ -1,0 +1,14 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "type": "poopsky:fly_barrel",
+  "fly_type": "tin",
+  "result": {
+    "count": 1,
+    "id": "mekanism:raw_tin"
+  }
+}
