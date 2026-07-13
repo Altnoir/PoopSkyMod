@@ -17,6 +17,8 @@ public final class PoParticles {
 
     public static final RegistryEntry<ParticleType<?>, SimpleParticleType> POOP_PARTICLE = registerSimpleParticle(
             "poop_particle");
+    public static final RegistryEntry<ParticleType<?>, SimpleParticleType> TOILET_PARTICLE = registerSimpleParticle(
+            "toilet_particle");
 
     public static final RegistryEntry<ParticleType<?>, ParticleType<LeavesParticleOptions>> LEAVES_PARTICLE = registerParticle(
             "leaves_particle", PoParticles::createLeavesParticleType);

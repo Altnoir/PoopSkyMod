@@ -4,6 +4,7 @@ import com.altnoir.poopsky.client.ToiletClientBlockExtensions;
 import com.altnoir.poopsky.client.model.ToiletModelEventHandler;
 import com.altnoir.poopsky.client.particle.LeavesParticle;
 import com.altnoir.poopsky.client.particle.PoopParticle;
+import com.altnoir.poopsky.client.particle.ToiletParticle;
 import com.altnoir.poopsky.client.renderer.TimeBellOverlay;
 import com.altnoir.poopsky.client.renderer.ToiletHighlightRenderer;
 import com.altnoir.poopsky.client.renderer.ToiletPlugItemRenderer;
@@ -130,6 +131,7 @@ public class PoopSkyClient {
 
         public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
             event.registerSpriteSet(PoParticles.POOP_PARTICLE.get(), PoopParticle.Provider::new);
+            event.registerSpriteSet(PoParticles.TOILET_PARTICLE.get(), ToiletParticle.Provider::new);
             event.registerSpriteSet(PoParticles.LEAVES_PARTICLE.get(), LeavesParticle.provider());
         }
 

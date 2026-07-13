@@ -387,6 +387,7 @@ public class PoBlocks {
     public static final BlockEntry<ToiletBlock> WOODEN_TOILET = registerToiletBlock(
             "wooden_toilet",
             props -> new ToiletBlock(toiletProperties(MapColor.WOOD, WOODEN_STRENGTH, SoundType.WOOD, NoteBlockInstrument.BASS)
+                    .randomTicks()
                     .ignitedByLava()),
             (loot, block) -> loot.add(block, createToiletDrop(block)));
 
@@ -395,6 +396,7 @@ public class PoBlocks {
             props -> new LavaToiletBlock(toiletProperties(MapColor.STONE, HARD_STRENGTH, SoundType.STONE, NoteBlockInstrument.BASEDRUM)
                     .lightLevel(lavaLightLevel())
                     .requiresCorrectToolForDrops()
+                    .randomTicks()
                     .ignitedByLava()),
             (loot, block) -> loot.add(block, createToiletDrop(block)));
 

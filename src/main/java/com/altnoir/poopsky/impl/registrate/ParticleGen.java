@@ -14,6 +14,7 @@ public class ParticleGen extends ParticleDescriptionProvider {
     @Override
     protected void addDescriptions() {
         spriteSet(PoParticles.POOP_PARTICLE.get(), PoopSky.loc("poop_particle"));
+        spriteSet(PoParticles.TOILET_PARTICLE.get(), PoopSky.loc("poop_particle"));
         spriteSet(PoParticles.LEAVES_PARTICLE.get(), PoopSky.loc("leaves"), 12, false);
     }
 }

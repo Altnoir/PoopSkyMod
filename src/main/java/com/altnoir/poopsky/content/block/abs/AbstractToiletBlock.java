@@ -5,12 +5,10 @@ import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.entity.p.ToiletEntity;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
+import com.altnoir.poopsky.impl.sound.PoSoundEvents;
 import com.altnoir.poopsky.impl.type.PoToiletTypes;
 import com.altnoir.poopsky.impl.util.toiletUtil;
-import com.altnoir.poopsky.init.PoBlockEntityType;
-import com.altnoir.poopsky.init.PoEffects;
-import com.altnoir.poopsky.init.PoEntityType;
-import com.altnoir.poopsky.init.PoItems;
+import com.altnoir.poopsky.init.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.dispenser.BlockSource;
@@ -375,6 +373,26 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
             entity.hurtMarked = true;
             entity.hasImpulse = true;
         }));
+    }
+
+    @Override
+    protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        if (level.getBlockState(pos.below()).is(Blocks.MAGMA_BLOCK)) {
+            double x = pos.getX() + 0.5;
+            double y = pos.getY() + 1.0;
+            double z = pos.getZ() + 0.5;
+            var pitch = level.random.nextFloat() - 0.4F;
+            level.sendParticles(PoParticles.TOILET_PARTICLE.get(), x, y, z, 100, 0.05, 0.3, 0.05, 0.25);
+            level.sendParticles(PoParticles.TOILET_PARTICLE.get(), x, y + 1, z, 60, 0.01, 0.15, 0.01, 0.5);
+            level.playSound(null, x, y, z, PoSoundEvents.FART, SoundSource.BLOCKS, 1.0F, pitch);
+
+            AABB area = new AABB(pos.getX(), y, pos.getZ(), pos.getX() + 1, y + 2, pos.getZ() + 1);
+            for (Entity entity : level.getEntitiesOfClass(Entity.class, area)) {
+                entity.setDeltaMovement(entity.getDeltaMovement().add(0.0, 1.8, 0.0));
+                entity.hurtMarked = true;
+                entity.hasImpulse = true;
+            }
+        }
     }
 
     @Override
