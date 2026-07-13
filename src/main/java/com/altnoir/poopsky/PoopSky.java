@@ -56,7 +56,6 @@ public class PoopSky {
 
     public PoopSky(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::commonSetup);
-        modEventBus.addListener(PoNetworking::register);
 
         PoItems.register();
         PoBlocks.register();
