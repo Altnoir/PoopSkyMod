@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.impl.damageType;
+package com.altnoir.poopsky.impl.type.damageType;
 
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.PoopSky;

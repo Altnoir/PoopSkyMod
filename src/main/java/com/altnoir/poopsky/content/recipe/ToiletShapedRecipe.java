@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.content.recipe;
 
-import com.altnoir.poopsky.content.block.ToiletType;
+import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.init.PoComponents;
 import com.altnoir.poopsky.init.PoRecipes;
 import com.mojang.serialization.MapCodec;

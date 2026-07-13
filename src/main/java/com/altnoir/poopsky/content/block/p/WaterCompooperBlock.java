@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
-import com.altnoir.poopsky.content.item.PFlyTypes;
+import com.altnoir.poopsky.init.PFlyTypes;
 import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.mojang.serialization.MapCodec;

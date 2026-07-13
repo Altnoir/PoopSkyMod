@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.content.block;
+package com.altnoir.poopsky.content;
 
 import com.altnoir.poopsky.PoopSky;
 import com.google.gson.Gson;

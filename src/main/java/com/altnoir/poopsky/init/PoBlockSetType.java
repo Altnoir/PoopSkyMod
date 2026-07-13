@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.impl.type;
+package com.altnoir.poopsky.init;
 
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.block.SoundType;

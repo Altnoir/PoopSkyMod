@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.client.model;
 
-import com.altnoir.poopsky.content.block.ToiletType;
+import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;

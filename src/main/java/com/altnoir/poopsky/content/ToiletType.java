@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.content.block;
+package com.altnoir.poopsky.content;
 
 import com.google.gson.JsonElement;
 import com.mojang.serialization.Codec;

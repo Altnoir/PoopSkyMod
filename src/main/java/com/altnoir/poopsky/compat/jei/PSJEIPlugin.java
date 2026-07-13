@@ -2,9 +2,9 @@ package com.altnoir.poopsky.compat.jei;
 
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.content.block.ToiletType;
+import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.p.CompooperBlock;
-import com.altnoir.poopsky.content.item.PFlyTypes;
+import com.altnoir.poopsky.init.PFlyTypes;
 import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.content.recipe.ToiletShapedRecipe;
 import com.altnoir.poopsky.compat.PSMods;

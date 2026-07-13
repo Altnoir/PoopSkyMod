@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.content.item;
+package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.content.FlyType;
 
@@ -30,6 +30,8 @@ public enum PFlyTypes {
     DRAGON_FRUIT,
     GLOWSTONE,
     ENDER,
+    // CREATE
+    ZINC,
     ;
 
     private final FlyType.Type flyType;

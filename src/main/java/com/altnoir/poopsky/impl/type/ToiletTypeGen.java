@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.impl.type;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.content.block.ToiletType;
+import com.altnoir.poopsky.content.ToiletType;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.core.registries.BuiltInRegistries;

@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.client.model;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.content.block.ToiletType;
+import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.init.PoBlocks;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;

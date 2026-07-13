@@ -1,7 +1,7 @@
 package com.altnoir.poopsky;
 
 import com.altnoir.poopsky.content.FlyTypeManager;
-import com.altnoir.poopsky.content.block.ToiletType;
+import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;

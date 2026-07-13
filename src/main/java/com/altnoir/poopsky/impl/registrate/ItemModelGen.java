@@ -2,7 +2,7 @@ package com.altnoir.poopsky.impl.registrate;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.FlyType;
-import com.altnoir.poopsky.content.item.PFlyTypes;
+import com.altnoir.poopsky.init.PFlyTypes;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
 import com.tterrag.registrate.providers.RegistrateItemModelProvider;

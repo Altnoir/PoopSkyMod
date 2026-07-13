@@ -1,6 +1,5 @@
 package com.altnoir.poopsky.content;
 
-import com.altnoir.poopsky.content.block.ToiletType;
 import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.init.PoComponents;
 import com.altnoir.poopsky.init.PoLootFunctions;

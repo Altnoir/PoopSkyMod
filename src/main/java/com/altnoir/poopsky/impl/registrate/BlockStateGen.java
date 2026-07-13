@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.impl.registrate;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.content.block.ToiletType;
+import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.block.p.PoopCandleCakeBlock;

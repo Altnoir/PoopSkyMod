@@ -2,7 +2,7 @@ package com.altnoir.poopsky.impl.event;
 
 import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.content.FlyTypeManager;
-import com.altnoir.poopsky.content.block.ToiletTypeManager;
+import com.altnoir.poopsky.content.ToiletTypeManager;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
