@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.impl.registrate;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.impl.PoToiletTypes;
+import com.altnoir.poopsky.impl.type.PoToiletTypes;
 import com.altnoir.poopsky.init.*;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateAdvancementProvider;

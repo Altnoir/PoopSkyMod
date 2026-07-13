@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.impl;
+package com.altnoir.poopsky.impl.type;
 
 import com.altnoir.poopsky.PoopSky;
 import net.minecraft.core.registries.Registries;

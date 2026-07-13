@@ -15,9 +15,9 @@ import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 
 import java.util.concurrent.CompletableFuture;
 
-public class PSDigestingRecipeGen extends DigestingRecipeGen implements IConditionBuilder {
+public class PDigestingRecipeGen extends DigestingRecipeGen implements IConditionBuilder {
 
-    public PSDigestingRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
+    public PDigestingRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries, PoopSky.MOD_ID);
     }
 

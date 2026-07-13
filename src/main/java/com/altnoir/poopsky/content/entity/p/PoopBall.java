@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.content.entity.p;
 
-import com.altnoir.poopsky.impl.PoDamageTypes;
+import com.altnoir.poopsky.impl.type.PoDamageTypes;
 import com.altnoir.poopsky.init.PoItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ItemParticleOption;

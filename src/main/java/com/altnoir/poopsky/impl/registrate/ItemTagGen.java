@@ -1,27 +1,31 @@
 package com.altnoir.poopsky.impl.registrate;
 
-import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.ItemTagsProvider;
+import com.tterrag.registrate.providers.ProviderType;
+import com.tterrag.registrate.providers.RegistrateItemTagsProvider;
+import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.concurrent.CompletableFuture;
+public class ItemTagGen {
+    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
+    private static RegistrateItemTagsProvider provider;
 
-public class ItemTagGen extends ItemTagsProvider {
-    public ItemTagGen(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagLookup<Block>> blockTags, @Nullable ExistingFileHelper existingFileHelper) {
-        super(output, lookupProvider, blockTags, PoopSky.MOD_ID, existingFileHelper);
+    public static void register() {
+        REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, ItemTagGen::generate);
     }
 
-    @Override
-    protected void addTags(HolderLookup.Provider provider) {
+    private static IntrinsicHolderTagsProvider.IntrinsicTagAppender<Item> tag(TagKey<Item> tag) {
+        return provider.addTag(tag);
+    }
+
+    private static void generate(RegistrateItemTagsProvider provider) {
+        ItemTagGen.provider = provider;
         tag(PoTags.Items.POOPS)
                 .add(PoItems.POOP.get())
                 .add(PoItems.CHILI_POOP.get())

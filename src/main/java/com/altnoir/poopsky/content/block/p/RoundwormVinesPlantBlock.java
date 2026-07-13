@@ -2,7 +2,7 @@ package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.content.entity.p.FlyEntity;
 import com.altnoir.poopsky.init.PoBlocks;
-import com.altnoir.poopsky.impl.PoDamageTypes;
+import com.altnoir.poopsky.impl.type.PoDamageTypes;
 import com.altnoir.poopsky.init.PoItems;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;

@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.impl;
+package com.altnoir.poopsky.impl.type;
 
 import com.altnoir.poopsky.content.block.ToiletType;
 import com.altnoir.poopsky.init.PoBlocks;

@@ -6,7 +6,7 @@ import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.block.ToiletType;
 import com.altnoir.poopsky.content.item.PFlyTypes;
 import com.altnoir.poopsky.content.recipe.*;
-import com.altnoir.poopsky.impl.PoToiletTypes;
+import com.altnoir.poopsky.impl.type.PoToiletTypes;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
 import com.simibubi.create.AllItems;

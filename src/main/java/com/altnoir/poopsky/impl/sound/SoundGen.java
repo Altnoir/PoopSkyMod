@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.impl.registrate;
+package com.altnoir.poopsky.impl.sound;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.init.PoSoundEvents;

@@ -3,7 +3,7 @@ package com.altnoir.poopsky.content.villager;
 import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
-import com.altnoir.poopsky.impl.PoToiletTypes;
+import com.altnoir.poopsky.impl.type.PoToiletTypes;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.core.Holder;

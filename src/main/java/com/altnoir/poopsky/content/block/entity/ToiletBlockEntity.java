@@ -6,7 +6,7 @@ import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.block.p.LavaToiletBlock;
 import com.altnoir.poopsky.init.PoBlockEntityType;
 import com.altnoir.poopsky.init.PoFluids;
-import com.altnoir.poopsky.impl.PoToiletTypes;
+import com.altnoir.poopsky.impl.type.PoToiletTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;

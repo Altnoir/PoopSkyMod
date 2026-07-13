@@ -15,6 +15,7 @@ import com.altnoir.poopsky.impl.event.PoModEvents;
 import com.altnoir.poopsky.impl.lang.LangGen;
 import com.altnoir.poopsky.impl.registrate.AdvancementGen;
 import com.altnoir.poopsky.impl.registrate.EntityLootTableGen;
+import com.altnoir.poopsky.impl.registrate.ItemTagGen;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.init.*;
 import com.mojang.logging.LogUtils;
@@ -82,6 +83,7 @@ public class PoopSky {
         PoSoundEvents.register();
         PoStats.register();
 
+        ItemTagGen.register();
         LangGen.register();
 
         PoFoliagePlacerTypes.register();
@@ -139,7 +141,8 @@ public class PoopSky {
             });
 
             AbstractToiletBlock.dispenserToiletExplosion(Items.FLINT_AND_STEEL, (toilet, level, pos, stack) -> {
-                stack.hurtAndBreak(1, level, null, p -> {});
+                stack.hurtAndBreak(1, level, null, p -> {
+                });
             });
             AbstractToiletBlock.dispenserToiletExplosion(Items.FIRE_CHARGE, (toilet, level, pos, stack) -> {
                 stack.shrink(1);

@@ -1,16 +1,18 @@
 package com.altnoir.poopsky.impl;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.impl.create.PDigestingRecipeGen;
 import com.altnoir.poopsky.impl.create.PHauntingRecipeGen;
-import com.altnoir.poopsky.impl.create.PSDigestingRecipeGen;
 import com.altnoir.poopsky.impl.create.PWashingRecipeGen;
 import com.altnoir.poopsky.impl.registrate.*;
+import com.altnoir.poopsky.impl.sound.SoundGen;
+import com.altnoir.poopsky.impl.type.FlyTypeGen;
+import com.altnoir.poopsky.impl.type.ToiletTypeGen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
-import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -42,13 +44,11 @@ public class DataGenerators {
 
         DatapackGen datapackProvider = new DatapackGen(packOutput, lookupProvider);
         BlockTagsProvider blockTagsProvider = new BlockTagGen(packOutput, lookupProvider, existingFileHelper);
-        ItemTagsProvider itemTagsProvider = new ItemTagGen(packOutput, lookupProvider, blockTagsProvider.contentsGetter(), existingFileHelper);
         EntityTypeTagsProvider entityTagsProvider = new EntityTypeTagsGen(packOutput, lookupProvider, existingFileHelper);
         FluidTagsGen fluidTagProvider = new FluidTagsGen(packOutput, lookupProvider, existingFileHelper);
         DamageTypeTagsGen damageTypeTagsProvider = new DamageTypeTagsGen(packOutput, datapackProvider.getRegistryProvider(), existingFileHelper);
 
         generators.addProvider(event.includeServer(), blockTagsProvider);
-        generators.addProvider(event.includeServer(), itemTagsProvider);
         generators.addProvider(event.includeServer(), entityTagsProvider);
         generators.addProvider(event.includeServer(), fluidTagProvider);
         generators.addProvider(event.includeServer(), datapackProvider);
@@ -63,7 +63,7 @@ public class DataGenerators {
         generators.addProvider(event.includeClient(), new SoundGen(packOutput, existingFileHelper));
 
         // Compat
-        generators.addProvider(event.includeServer(), new PSDigestingRecipeGen(packOutput, lookupProvider));
+        generators.addProvider(event.includeServer(), new PDigestingRecipeGen(packOutput, lookupProvider));
         generators.addProvider(event.includeServer(), new PWashingRecipeGen(packOutput, lookupProvider));
         generators.addProvider(event.includeServer(), new PHauntingRecipeGen(packOutput, lookupProvider));
     }
