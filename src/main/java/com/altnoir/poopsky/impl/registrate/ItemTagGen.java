@@ -12,16 +12,15 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.common.Tags;
 
-public class ItemTagGen {
+public final class ItemTagGen {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
     private static RegistrateItemTagsProvider provider;
 
-    public static void register() {
-        REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, ItemTagGen::generate);
+    private ItemTagGen() {
     }
 
-    private static IntrinsicHolderTagsProvider.IntrinsicTagAppender<Item> tag(TagKey<Item> tag) {
-        return provider.addTag(tag);
+    public static void register() {
+        REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, ItemTagGen::generate);
     }
 
     private static void generate(RegistrateItemTagsProvider provider) {
@@ -216,5 +215,9 @@ public class ItemTagGen {
         tag(ItemTags.FENCE_GATES).add(PoBlocks.POOP_FENCE_GATE.asItem());
         tag(ItemTags.DOORS).add(PoBlocks.POOP_DOOR.asItem());
         tag(ItemTags.TRAPDOORS).add(PoBlocks.POOP_TRAPDOOR.asItem());
+    }
+
+    private static IntrinsicHolderTagsProvider.IntrinsicTagAppender<Item> tag(TagKey<Item> tag) {
+        return provider.addTag(tag);
     }
 }

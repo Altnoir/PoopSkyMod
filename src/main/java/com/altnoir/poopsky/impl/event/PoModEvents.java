@@ -2,6 +2,7 @@ package com.altnoir.poopsky.impl.event;
 
 import com.altnoir.poopsky.content.entity.p.FlyEntity;
 import com.altnoir.poopsky.content.entity.p.PoolimeEntity;
+import com.altnoir.poopsky.impl.DataGenerators;
 import com.altnoir.poopsky.init.PoBlockEntityType;
 import com.altnoir.poopsky.init.PoEntityType;
 import net.minecraft.core.Direction;
@@ -15,6 +16,7 @@ import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 
 public class PoModEvents {
     public static void registerMod(IEventBus modEventBus) {
+        modEventBus.addListener(DataGenerators::gatherData);
         modEventBus.addListener(PoModEvents::registerAttributes);
         modEventBus.addListener(PoModEvents::registerSpawnPlacements);
         modEventBus.addListener(PoModEvents::registerCapabilities);

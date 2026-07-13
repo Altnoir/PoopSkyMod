@@ -12,11 +12,8 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.LootTableProvider;
-import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
@@ -24,7 +21,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-@EventBusSubscriber(modid = PoopSky.MOD_ID)
 public class DataGenerators {
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {
@@ -43,18 +39,11 @@ public class DataGenerators {
         generators.addProvider(event.includeServer(), new ToiletTypeGen(packOutput));
 
         DatapackGen datapackProvider = new DatapackGen(packOutput, lookupProvider);
-        BlockTagsProvider blockTagsProvider = new BlockTagGen(packOutput, lookupProvider, existingFileHelper);
-        EntityTypeTagsProvider entityTagsProvider = new EntityTypeTagsGen(packOutput, lookupProvider, existingFileHelper);
-        FluidTagsGen fluidTagProvider = new FluidTagsGen(packOutput, lookupProvider, existingFileHelper);
         DamageTypeTagsGen damageTypeTagsProvider = new DamageTypeTagsGen(packOutput, datapackProvider.getRegistryProvider(), existingFileHelper);
 
-        generators.addProvider(event.includeServer(), blockTagsProvider);
-        generators.addProvider(event.includeServer(), entityTagsProvider);
-        generators.addProvider(event.includeServer(), fluidTagProvider);
         generators.addProvider(event.includeServer(), datapackProvider);
         generators.addProvider(event.includeServer(), damageTypeTagsProvider);
 
-        generators.addProvider(event.includeServer(), new DataMapGen(packOutput, lookupProvider));
         generators.addProvider(event.includeServer(), new GlobalLootModifierGen(packOutput, lookupProvider));
 
         generators.addProvider(event.includeClient(), new BlockStateGen(packOutput, existingFileHelper));

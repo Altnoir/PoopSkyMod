@@ -13,10 +13,7 @@ import com.altnoir.poopsky.content.worldgen.foliage.PoFoliagePlacerTypes;
 import com.altnoir.poopsky.impl.event.PoGameEvents;
 import com.altnoir.poopsky.impl.event.PoModEvents;
 import com.altnoir.poopsky.impl.lang.LangGen;
-import com.altnoir.poopsky.impl.registrate.AdvancementGen;
-import com.altnoir.poopsky.impl.registrate.EntityLootTableGen;
-import com.altnoir.poopsky.impl.registrate.ItemTagGen;
-import com.altnoir.poopsky.impl.registrate.PoRegistrate;
+import com.altnoir.poopsky.impl.registrate.*;
 import com.altnoir.poopsky.init.*;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
@@ -84,6 +81,10 @@ public class PoopSky {
         PoStats.register();
 
         ItemTagGen.register();
+        BlockTagGen.register();
+        EntityTypeTagsGen.register();
+        FluidTagsGen.register();
+        DataMapGen.register();
         LangGen.register();
 
         PoFoliagePlacerTypes.register();

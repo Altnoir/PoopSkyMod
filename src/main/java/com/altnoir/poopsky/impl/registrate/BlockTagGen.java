@@ -1,27 +1,30 @@
 package com.altnoir.poopsky.impl.registrate;
 
-import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.init.PoBlocks;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.data.PackOutput;
+import com.tterrag.registrate.providers.ProviderType;
+import com.tterrag.registrate.providers.RegistrateTagsProvider;
+import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.data.BlockTagsProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.concurrent.CompletableFuture;
+public final class BlockTagGen {
+    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
+    private static RegistrateTagsProvider.IntrinsicImpl<Block> provider;
 
-public class BlockTagGen extends BlockTagsProvider {
-    public BlockTagGen(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
-        super(output, lookupProvider, PoopSky.MOD_ID, existingFileHelper);
+    private BlockTagGen() {
     }
 
-    @Override
-    protected void addTags(HolderLookup.@NotNull Provider provider) {
+    public static void register() {
+        REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, BlockTagGen::generate);
+    }
+
+    private static void generate(RegistrateTagsProvider.IntrinsicImpl<Block> provider) {
+        BlockTagGen.provider = provider;
         tag(PoTags.Blocks.POOP_BLOCK).add(PoBlocks.POOP_BLOCK.get());
         tag(PoTags.Blocks.CHILI_POOP_BLOCK).add(PoBlocks.CHILI_POOP_BLOCK.get());
 
@@ -217,5 +220,9 @@ public class BlockTagGen extends BlockTagsProvider {
                 );
 
         tag(PoTags.Blocks.FAN_PROCESSING_CATALYSTS_DIGESTING).add(PoBlocks.URINE_LIQUID.get());
+    }
+
+    private static IntrinsicHolderTagsProvider.IntrinsicTagAppender<Block> tag(TagKey<Block> tag) {
+        return provider.addTag(tag);
     }
 }

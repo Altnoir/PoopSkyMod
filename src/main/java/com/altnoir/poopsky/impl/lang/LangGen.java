@@ -5,9 +5,12 @@ import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateLangProvider;
 
-public class LangGen {
+public final class LangGen {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
     private static RegistrateLangProvider provider; // 静态字段
+
+    private LangGen() {
+    }
 
     public static void register() {
         REGISTRATE.addDataGenerator(ProviderType.LANG, LangGen::generateEnUs);
