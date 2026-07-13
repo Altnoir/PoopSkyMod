@@ -7,7 +7,6 @@ import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.block.p.PoopCandleCakeBlock;
 import com.altnoir.poopsky.content.block.p.PoopPieceBlock;
 import com.altnoir.poopsky.init.PoBlocks;
-import com.tterrag.registrate.AbstractRegistrate;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.core.Direction;
@@ -17,7 +16,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -31,8 +29,8 @@ import java.util.function.Function;
 public class BlockStateGen extends RegistrateBlockstateProvider {
     public static final String PARTICLE = "particle";
 
-    public BlockStateGen(AbstractRegistrate<?> parent, PackOutput packOutput, ExistingFileHelper exFileHelper) {
-        super(parent, packOutput, exFileHelper);
+    public BlockStateGen(PackOutput packOutput, ExistingFileHelper exFileHelper) {
+        super(PoopSky.registrate(), packOutput, exFileHelper);
     }
 
     @Override

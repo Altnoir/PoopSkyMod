@@ -46,8 +46,8 @@ public class DataGenerators {
 
         generators.addProvider(event.includeServer(), new GlobalLootModifierGen(packOutput, lookupProvider));
 
-        generators.addProvider(event.includeClient(), new BlockStateGen(PoopSky.registrate(), packOutput, existingFileHelper));
-        generators.addProvider(event.includeClient(), new ItemModelGen(PoopSky.registrate(), packOutput, existingFileHelper));
+        generators.addProvider(event.includeClient(), new BlockStateGen(packOutput, existingFileHelper));
+        generators.addProvider(event.includeClient(), new ItemModelGen(packOutput, existingFileHelper));
         generators.addProvider(event.includeClient(), new ParticleGen(packOutput, existingFileHelper));
         generators.addProvider(event.includeClient(), new SoundGen(packOutput, existingFileHelper));
 

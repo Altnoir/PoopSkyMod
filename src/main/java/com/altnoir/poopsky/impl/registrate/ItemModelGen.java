@@ -5,7 +5,6 @@ import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.item.PFlyTypes;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
-import com.tterrag.registrate.AbstractRegistrate;
 import com.tterrag.registrate.providers.RegistrateItemModelProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
@@ -41,8 +40,8 @@ public class ItemModelGen extends RegistrateItemModelProvider {
         trimMaterials.put(TrimMaterials.AMETHYST, 1.0F);
     }
 
-    public ItemModelGen(AbstractRegistrate<?> parent, PackOutput output, ExistingFileHelper existingFileHelper) {
-        super(parent, output, existingFileHelper);
+    public ItemModelGen(PackOutput output, ExistingFileHelper existingFileHelper) {
+        super(PoopSky.registrate(), output, existingFileHelper);
     }
 
     @Override
