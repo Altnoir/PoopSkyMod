@@ -1,11 +1,10 @@
-package com.altnoir.poopsky.impl.type;
+package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.content.ToiletType;
-import com.altnoir.poopsky.init.PoBlocks;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.Blocks;
 
-public final class PoToiletTypes {
+public final class ToiletTypes {
     // ——— 木质厕所 ———
     public static final ToiletType OAK = ToiletType.register(Blocks.OAK_PLANKS, ToiletType.Category.WOOD).nameKey("block.poopsky.toilet.oak");
     public static final ToiletType SPRUCE = ToiletType.register(Blocks.SPRUCE_PLANKS, ToiletType.Category.WOOD).nameKey("block.poopsky.toilet.spruce");
@@ -126,7 +125,7 @@ public final class PoToiletTypes {
     public static final ToiletType OBSIDIAN = ToiletType.register(Blocks.OBSIDIAN, ToiletType.Category.HARD);
     public static final ToiletType CRYING_OBSIDIAN = ToiletType.register(Blocks.CRYING_OBSIDIAN, ToiletType.Category.HARD);
 
-    private PoToiletTypes() {
+    private ToiletTypes() {
     }
     public static void init() {
     }

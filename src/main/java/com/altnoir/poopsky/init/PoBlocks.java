@@ -5,6 +5,7 @@ import com.altnoir.poopsky.content.SetToiletTypeFunction;
 import com.altnoir.poopsky.content.block.p.*;
 import com.altnoir.poopsky.content.item.p.CompooperBlockItem;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
+import com.altnoir.poopsky.impl.type.PoBlockSetType;
 import com.altnoir.poopsky.impl.type.PoWoodType;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;

@@ -2,7 +2,7 @@ package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
-import com.altnoir.poopsky.impl.type.PoToiletTypes;
+import com.altnoir.poopsky.init.ToiletTypes;
 import com.altnoir.poopsky.impl.util.toiletUtil;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -41,7 +41,7 @@ public class BaseToiletLavaBlock extends AbstractToiletBlock {
 
     @Override
     public ToiletType getDefaultToiletType() {
-        return PoToiletTypes.COBBLESTONE;
+        return ToiletTypes.COBBLESTONE;
     }
 
     @Override

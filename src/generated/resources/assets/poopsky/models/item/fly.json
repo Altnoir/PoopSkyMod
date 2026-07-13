@@ -156,6 +156,12 @@
       "predicate": {
         "poopsky:fly_type": 25.0
       }
+    },
+    {
+      "model": "poopsky:item/fly_zinc",
+      "predicate": {
+        "poopsky:fly_type": 26.0
+      }
     }
   ],
   "textures": {

@@ -2,7 +2,7 @@ package com.altnoir.poopsky.impl.registrate;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.FlyType;
-import com.altnoir.poopsky.init.PFlyTypes;
+import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
 import com.tterrag.registrate.providers.RegistrateItemModelProvider;
@@ -148,7 +148,7 @@ public class ItemModelGen extends RegistrateItemModelProvider {
 
         int index = 0;
         for (String id : FlyType.FLY_TYPES) {
-            String flyId = id.equals(PFlyTypes.NORMAL.id()) ? "fly" : "fly_" + id;
+            String flyId = id.equals(FlyTypes.NORMAL.id()) ? "fly" : "fly_" + id;
             getBuilder(flyId)
                     .parent(new ModelFile.UncheckedModelFile("item/generated"))
                     .texture("layer0", PoopSky.loc("item/" + flyId));

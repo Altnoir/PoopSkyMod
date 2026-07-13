@@ -2,7 +2,7 @@ package com.altnoir.poopsky.content.item.p;
 
 import com.altnoir.poopsky.content.entity.p.FlyEntity;
 import com.altnoir.poopsky.content.item.IFeedable;
-import com.altnoir.poopsky.init.PFlyTypes;
+import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoEffects;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerPlayer;
@@ -32,7 +32,7 @@ public class DragonFruitRItem extends Item implements IFeedable {
         if (feedResult.consumesAction()) return feedResult;
         if (target instanceof FlyEntity fly && fly.isAlive()) {
             if (!player.level().isClientSide) {
-                ItemStack dragonFlyItem = FlyItem.withType(PFlyTypes.DRAGON_FRUIT.get());
+                ItemStack dragonFlyItem = FlyItem.withType(FlyTypes.DRAGON_FRUIT.get());
                 fly.spawnAtLocation(dragonFlyItem);
                 fly.kill();
                 stack.consume(1, player);

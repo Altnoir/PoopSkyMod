@@ -6,7 +6,7 @@ import com.altnoir.poopsky.impl.type.damageType.PoDamageTypes;
 import com.altnoir.poopsky.init.PoEntityType;
 import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.impl.sound.PoSoundEvents;
-import com.altnoir.poopsky.init.PFlyTypes;
+import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.content.item.p.FlyItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -206,22 +206,22 @@ public class FlyEntity extends Animal implements FlyingAnimal {
     public void die(DamageSource source) {
         if (!this.level().isClientSide && !this.isBaby()) {
             if (source.is(DamageTypes.DROWN)) {
-                var blueFlyItem = FlyItem.withType(PFlyTypes.BLUE.get());
+                var blueFlyItem = FlyItem.withType(FlyTypes.BLUE.get());
                 this.spawnAtLocation(blueFlyItem);
             }
             if (source.is(PoDamageTypes.ROUNDWORM)) {
-                var whiteFlyItem = FlyItem.withType(PFlyTypes.WHITE.get());
+                var whiteFlyItem = FlyItem.withType(FlyTypes.WHITE.get());
                 this.spawnAtLocation(whiteFlyItem);
             }
             if (source.is(DamageTypes.CACTUS)) {
-                var greenFlyItem = FlyItem.withType(PFlyTypes.GREEN.get());
+                var greenFlyItem = FlyItem.withType(FlyTypes.GREEN.get());
                 var itemEntity = this.spawnAtLocation(greenFlyItem);
                 if (itemEntity != null) {
                     itemEntity.setInvulnerable(true);
                 }
             }
             if (source.is(PoDamageTypes.POOP_BALL)) {
-                var brownFlyItem = FlyItem.withType(PFlyTypes.BROWN.get());
+                var brownFlyItem = FlyItem.withType(FlyTypes.BROWN.get());
                 this.spawnAtLocation(brownFlyItem);
             }
         }
@@ -231,7 +231,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
     @Override
     public void thunderHit(ServerLevel level, LightningBolt lightning) {
         if (!this.level().isClientSide && !this.isBaby()) {
-            var blackFlyItem = FlyItem.withType(PFlyTypes.BLACK.get());
+            var blackFlyItem = FlyItem.withType(FlyTypes.BLACK.get());
             var itemEntity = this.spawnAtLocation(blackFlyItem);
             if (itemEntity != null) {
                 itemEntity.setInvulnerable(true);

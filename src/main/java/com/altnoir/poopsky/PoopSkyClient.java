@@ -14,7 +14,7 @@ import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.content.entity.model.FlyModel;
 import com.altnoir.poopsky.content.entity.model.ToiletPlugModel;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
-import com.altnoir.poopsky.init.PFlyTypes;
+import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.impl.event.PSKeyBoardInput;
 import com.altnoir.poopsky.impl.network.PlugActionPayload;
@@ -107,7 +107,7 @@ public class PoopSkyClient {
                 ItemProperties.register(PoItems.FLY.get(), PoopSky.loc("fly_type"),
                         (stack, level, entity, seed) -> {
                             String id = stack.get(PoComponents.FLY_TYPE.get());
-                            return (float) FlyType.getIndex(id != null ? id : PFlyTypes.NORMAL.id());
+                            return (float) FlyType.getIndex(id != null ? id : FlyTypes.NORMAL.id());
                         });
 
                 for (Item item : PoItems.getAllItems()) {

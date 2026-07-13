@@ -4,11 +4,11 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.ToiletType;
-import com.altnoir.poopsky.init.PFlyTypes;
 import com.altnoir.poopsky.content.recipe.*;
-import com.altnoir.poopsky.impl.type.PoToiletTypes;
+import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
+import com.altnoir.poopsky.init.ToiletTypes;
 import com.simibubi.create.AllItems;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import net.minecraft.core.HolderLookup;
@@ -24,6 +24,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -515,7 +516,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 toiletRecipes(recipeOutput, PoBlocks.HARD_TOILET, entry.getValue().sourceBlock(), entry.getValue());
             }
         }
-        ToiletRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.HARD_TOILET, PoToiletTypes.RAINBOW)
+        ToiletRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.HARD_TOILET, ToiletTypes.RAINBOW)
                 .pattern(" P ")
                 .pattern("RGB")
                 .define('P', PoItems.POOP.get())
@@ -728,76 +729,108 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
     }
 
     private void buildFlyBarrelRecipes(RecipeOutput recipeOutput) {
-        LinkedHashMap<FlyType.Type, ItemLike> flyBarrelMap = new LinkedHashMap<>();
-        flyBarrelMap.put(PFlyTypes.NORMAL.get(), PoItems.MAGGOTS_SEEDS);
-        flyBarrelMap.put(PFlyTypes.WHITE.get(), Items.BONE_MEAL);
-        flyBarrelMap.put(PFlyTypes.LIGHT_GRAY.get(), Items.QUARTZ);
-        flyBarrelMap.put(PFlyTypes.GRAY.get(), Items.GRAVEL);
-        flyBarrelMap.put(PFlyTypes.BLACK.get(), Items.WITHER_ROSE);
-        flyBarrelMap.put(PFlyTypes.BROWN.get(), Items.COCOA_BEANS);
-        flyBarrelMap.put(PFlyTypes.RED.get(), Items.REDSTONE);
-        flyBarrelMap.put(PFlyTypes.ORANGE.get(), Items.TORCHFLOWER);
-        flyBarrelMap.put(PFlyTypes.YELLOW.get(), Items.GLOW_BERRIES);
-        flyBarrelMap.put(PFlyTypes.LIME.get(), Items.SEA_PICKLE);
-        flyBarrelMap.put(PFlyTypes.GREEN.get(), Items.CACTUS);
-        flyBarrelMap.put(PFlyTypes.CYAN.get(), Items.PRISMARINE_SHARD);
-        flyBarrelMap.put(PFlyTypes.LIGHT_BLUE.get(), Items.PRISMARINE_CRYSTALS);
-        flyBarrelMap.put(PFlyTypes.BLUE.get(), Items.LAPIS_LAZULI);
-        flyBarrelMap.put(PFlyTypes.PURPLE.get(), Items.AMETHYST_SHARD);
-        flyBarrelMap.put(PFlyTypes.MAGENTA.get(), Items.CHORUS_FRUIT);
-        flyBarrelMap.put(PFlyTypes.PINK.get(), Items.PINK_PETALS);
-        // More
-        flyBarrelMap.put(PFlyTypes.IRON.get(), Items.RAW_IRON);
-        flyBarrelMap.put(PFlyTypes.COPPER.get(), Items.RAW_COPPER);
-        flyBarrelMap.put(PFlyTypes.GOLD.get(), Items.RAW_GOLD);
-        flyBarrelMap.put(PFlyTypes.EMERALD.get(), Items.EMERALD);
-        flyBarrelMap.put(PFlyTypes.DIAMOND.get(), Items.DIAMOND);
-        flyBarrelMap.put(PFlyTypes.NETHERITE.get(), Items.NETHERITE_SCRAP);
-        flyBarrelMap.put(PFlyTypes.DRAGON_FRUIT.get(), Items.GUNPOWDER);
-        flyBarrelMap.put(PFlyTypes.GLOWSTONE.get(), Items.GLOWSTONE_DUST);
-        flyBarrelMap.put(PFlyTypes.ENDER.get(), Items.ENDER_PEARL);
+        RecipeOutput create = recipeOutput.withConditions(modLoaded(PSMods.CREATE.id()));
 
-        flyBarrelMap.forEach((type, result) -> FlyBarrelRecipeBuilder.flyBarrel(type.id(), result)
-                .unlockedBy(getHasName(PoBlocks.FLY_BARREL), has(PoBlocks.FLY_BARREL))
-                .save(recipeOutput, type.id()));
+        class FlyMap {
+            private final LinkedHashMap<FlyType.Type, ItemLike> items = new LinkedHashMap<>();
+            private final HashMap<FlyType.Type, RecipeOutput> overrides = new HashMap<>();
+            private FlyType.Type lastKey;
+
+            FlyMap put(FlyType.Type type, ItemLike result) {
+                items.put(type, result);
+                lastKey = type;
+                return this;
+            }
+
+            void loaded(RecipeOutput output) {
+                if (lastKey != null) overrides.put(lastKey, output);
+            }
+
+            void saveAll() {
+                items.forEach((type, result) -> FlyBarrelRecipeBuilder.flyBarrel(type.id(), result)
+                        .unlockedBy(getHasName(PoBlocks.FLY_BARREL.get()), has(PoBlocks.FLY_BARREL.get()))
+                        .save(overrides.getOrDefault(type, recipeOutput), type.id()));
+            }
+        }
+
+        var flyMap = new FlyMap();
+        flyMap.put(FlyTypes.NORMAL.get(), PoItems.MAGGOTS_SEEDS);
+        flyMap.put(FlyTypes.WHITE.get(), Items.BONE_MEAL);
+        flyMap.put(FlyTypes.LIGHT_GRAY.get(), Items.QUARTZ);
+        flyMap.put(FlyTypes.GRAY.get(), Items.GRAVEL);
+        flyMap.put(FlyTypes.BLACK.get(), Items.WITHER_ROSE);
+        flyMap.put(FlyTypes.BROWN.get(), Items.COCOA_BEANS);
+        flyMap.put(FlyTypes.RED.get(), Items.REDSTONE);
+        flyMap.put(FlyTypes.ORANGE.get(), Items.TORCHFLOWER);
+        flyMap.put(FlyTypes.YELLOW.get(), Items.GLOW_BERRIES);
+        flyMap.put(FlyTypes.LIME.get(), Items.SEA_PICKLE);
+        flyMap.put(FlyTypes.GREEN.get(), Items.CACTUS);
+        flyMap.put(FlyTypes.CYAN.get(), Items.PRISMARINE_SHARD);
+        flyMap.put(FlyTypes.LIGHT_BLUE.get(), Items.PRISMARINE_CRYSTALS);
+        flyMap.put(FlyTypes.BLUE.get(), Items.LAPIS_LAZULI);
+        flyMap.put(FlyTypes.PURPLE.get(), Items.AMETHYST_SHARD);
+        flyMap.put(FlyTypes.MAGENTA.get(), Items.CHORUS_FRUIT);
+        flyMap.put(FlyTypes.PINK.get(), Items.PINK_PETALS);
+        // More
+        flyMap.put(FlyTypes.IRON.get(), Items.RAW_IRON);
+        flyMap.put(FlyTypes.COPPER.get(), Items.RAW_COPPER);
+        flyMap.put(FlyTypes.GOLD.get(), Items.RAW_GOLD);
+        flyMap.put(FlyTypes.EMERALD.get(), Items.EMERALD);
+        flyMap.put(FlyTypes.DIAMOND.get(), Items.DIAMOND);
+        flyMap.put(FlyTypes.NETHERITE.get(), Items.NETHERITE_SCRAP);
+        flyMap.put(FlyTypes.DRAGON_FRUIT.get(), Items.GUNPOWDER);
+        flyMap.put(FlyTypes.GLOWSTONE.get(), Items.GLOWSTONE_DUST);
+        flyMap.put(FlyTypes.ENDER.get(), Items.ENDER_PEARL);
+        // Create
+        flyMap.put(FlyTypes.ZINC.get(), AllItems.RAW_ZINC).loaded(create);
+
+        flyMap.saveAll();
     }
 
     private void buildBreedingChestRecipes(RecipeOutput recipeOutput) {
-        record MutationRecipe(String p1, String p2, String result) {
-            static MutationRecipe of(FlyType.Type p1, FlyType.Type p2, FlyType.Type result) {
-                return new MutationRecipe(p1.id(), p2.id(), result.id());
+        RecipeOutput create = recipeOutput.withConditions(modLoaded(PSMods.CREATE.id()));
+
+        record Breeding(String p1, String p2, String result, RecipeOutput output) {
+            static Breeding of(FlyType.Type p1, FlyType.Type p2, FlyType.Type result) {
+                return new Breeding(p1.id(), p2.id(), result.id(), null);
+            }
+            Breeding loaded(RecipeOutput output) {
+                return new Breeding(p1, p2, result, output);
             }
         }
-        List<MutationRecipe> breedingRecipes = List.of(
-                MutationRecipe.of(PFlyTypes.BLACK.get(), PFlyTypes.YELLOW.get(), PFlyTypes.BROWN.get()),
-                MutationRecipe.of(PFlyTypes.GREEN.get(), PFlyTypes.BLUE.get(), PFlyTypes.CYAN.get()),
-                MutationRecipe.of(PFlyTypes.PURPLE.get(), PFlyTypes.PINK.get(), PFlyTypes.MAGENTA.get()),
-                MutationRecipe.of(PFlyTypes.RED.get(), PFlyTypes.BLUE.get(), PFlyTypes.PURPLE.get()),
-                MutationRecipe.of(PFlyTypes.RED.get(), PFlyTypes.GREEN.get(), PFlyTypes.YELLOW.get()),
-                MutationRecipe.of(PFlyTypes.RED.get(), PFlyTypes.YELLOW.get(), PFlyTypes.ORANGE.get()),
-                MutationRecipe.of(PFlyTypes.WHITE.get(), PFlyTypes.BLACK.get(), PFlyTypes.GRAY.get()),
-                MutationRecipe.of(PFlyTypes.WHITE.get(), PFlyTypes.BLUE.get(), PFlyTypes.LIGHT_BLUE.get()),
-                MutationRecipe.of(PFlyTypes.WHITE.get(), PFlyTypes.GRAY.get(), PFlyTypes.LIGHT_GRAY.get()),
-                MutationRecipe.of(PFlyTypes.WHITE.get(), PFlyTypes.GREEN.get(), PFlyTypes.LIME.get()),
-                MutationRecipe.of(PFlyTypes.WHITE.get(), PFlyTypes.RED.get(), PFlyTypes.PINK.get()),
+
+        List<Breeding> breedingRecipes = List.of(
+                Breeding.of(FlyTypes.BLACK.get(), FlyTypes.YELLOW.get(), FlyTypes.BROWN.get()),
+                Breeding.of(FlyTypes.GREEN.get(), FlyTypes.BLUE.get(), FlyTypes.CYAN.get()),
+                Breeding.of(FlyTypes.PURPLE.get(), FlyTypes.PINK.get(), FlyTypes.MAGENTA.get()),
+                Breeding.of(FlyTypes.RED.get(), FlyTypes.BLUE.get(), FlyTypes.PURPLE.get()),
+                Breeding.of(FlyTypes.RED.get(), FlyTypes.GREEN.get(), FlyTypes.YELLOW.get()),
+                Breeding.of(FlyTypes.RED.get(), FlyTypes.YELLOW.get(), FlyTypes.ORANGE.get()),
+                Breeding.of(FlyTypes.WHITE.get(), FlyTypes.BLACK.get(), FlyTypes.GRAY.get()),
+                Breeding.of(FlyTypes.WHITE.get(), FlyTypes.BLUE.get(), FlyTypes.LIGHT_BLUE.get()),
+                Breeding.of(FlyTypes.WHITE.get(), FlyTypes.GRAY.get(), FlyTypes.LIGHT_GRAY.get()),
+                Breeding.of(FlyTypes.WHITE.get(), FlyTypes.GREEN.get(), FlyTypes.LIME.get()),
+                Breeding.of(FlyTypes.WHITE.get(), FlyTypes.RED.get(), FlyTypes.PINK.get()),
                 // More
-                MutationRecipe.of(PFlyTypes.PURPLE.get(), PFlyTypes.CYAN.get(), PFlyTypes.ENDER.get()),
-                MutationRecipe.of(PFlyTypes.GREEN.get(), PFlyTypes.YELLOW.get(), PFlyTypes.DRAGON_FRUIT.get()),
-                MutationRecipe.of(PFlyTypes.DRAGON_FRUIT.get(), PFlyTypes.YELLOW.get(), PFlyTypes.GLOWSTONE.get()),
-                MutationRecipe.of(PFlyTypes.WHITE.get(), PFlyTypes.ORANGE.get(), PFlyTypes.COPPER.get()),
-                MutationRecipe.of(PFlyTypes.LIGHT_GRAY.get(), PFlyTypes.COPPER.get(), PFlyTypes.IRON.get()),
-                MutationRecipe.of(PFlyTypes.GLOWSTONE.get(), PFlyTypes.COPPER.get(), PFlyTypes.GOLD.get()),
-                MutationRecipe.of(PFlyTypes.LIME.get(), PFlyTypes.GOLD.get(), PFlyTypes.EMERALD.get()),
-                MutationRecipe.of(PFlyTypes.GOLD.get(), PFlyTypes.EMERALD.get(), PFlyTypes.DIAMOND.get()),
-                MutationRecipe.of(PFlyTypes.EMERALD.get(), PFlyTypes.DIAMOND.get(), PFlyTypes.NETHERITE.get()),
-                MutationRecipe.of(PFlyTypes.NORMAL.get(), PFlyTypes.COPPER.get(), PFlyTypes.BLACK.get())
+                Breeding.of(FlyTypes.PURPLE.get(), FlyTypes.CYAN.get(), FlyTypes.ENDER.get()),
+                Breeding.of(FlyTypes.GREEN.get(), FlyTypes.YELLOW.get(), FlyTypes.DRAGON_FRUIT.get()),
+                Breeding.of(FlyTypes.DRAGON_FRUIT.get(), FlyTypes.YELLOW.get(), FlyTypes.GLOWSTONE.get()),
+                Breeding.of(FlyTypes.WHITE.get(), FlyTypes.ORANGE.get(), FlyTypes.COPPER.get()),
+                Breeding.of(FlyTypes.LIGHT_GRAY.get(), FlyTypes.COPPER.get(), FlyTypes.IRON.get()),
+                Breeding.of(FlyTypes.GLOWSTONE.get(), FlyTypes.COPPER.get(), FlyTypes.GOLD.get()),
+                Breeding.of(FlyTypes.LIME.get(), FlyTypes.GOLD.get(), FlyTypes.EMERALD.get()),
+                Breeding.of(FlyTypes.GOLD.get(), FlyTypes.EMERALD.get(), FlyTypes.DIAMOND.get()),
+                Breeding.of(FlyTypes.EMERALD.get(), FlyTypes.DIAMOND.get(), FlyTypes.NETHERITE.get()),
+                Breeding.of(FlyTypes.NORMAL.get(), FlyTypes.COPPER.get(), FlyTypes.BLACK.get()),
+                // Create
+                Breeding.of(FlyTypes.CYAN.get(), FlyTypes.IRON.get(), FlyTypes.ZINC.get()).loaded(create)
         );
 
-        for (MutationRecipe recipe : breedingRecipes) {
+        for (Breeding recipe : breedingRecipes) {
             String id = recipe.p1 + "_plus_" + recipe.p2;
             var builder = BreedingChestRecipeBuilder.breedingChest(recipe.p1, recipe.p2, recipe.result);
             builder.unlockedBy(getHasName(PoBlocks.FLY_BARREL), has(PoBlocks.FLY_BARREL))
-                    .save(recipeOutput, id);
+                    .save(recipe.output != null ? recipe.output : recipeOutput, id);
         }
     }
 

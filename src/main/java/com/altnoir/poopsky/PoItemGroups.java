@@ -1,11 +1,13 @@
 package com.altnoir.poopsky;
 
+import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.content.FlyTypeManager;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.init.PoBlocks;
+import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoItems;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import net.minecraft.core.registries.Registries;
@@ -48,6 +50,7 @@ public class PoItemGroups {
                         .forEach(output::accept);
 
                 for (String id : FlyTypeManager.INSTANCE.getFlyTypes()) {
+                    if (FlyTypes.ZINC.id().equals(id) && !PSMods.CREATE.isLoaded()) continue;
                     output.accept(FlyItem.withType(id));
                 }
 

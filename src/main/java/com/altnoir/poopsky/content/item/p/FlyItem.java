@@ -3,7 +3,7 @@ package com.altnoir.poopsky.content.item.p;
 import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.init.PoComponents;
 import com.altnoir.poopsky.init.PoItems;
-import com.altnoir.poopsky.init.PFlyTypes;
+import com.altnoir.poopsky.init.FlyTypes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
@@ -31,7 +31,7 @@ public class FlyItem extends Item {
 
     public static FlyType.Type getFlyType(ItemStack stack) {
         String typeId = stack.get(PoComponents.FLY_TYPE.get());
-        return typeId != null ? FlyType.byId(typeId) : PFlyTypes.NORMAL.get();
+        return typeId != null ? FlyType.byId(typeId) : FlyTypes.NORMAL.get();
     }
 
     public static boolean isFlyItem(ItemStack stack) {

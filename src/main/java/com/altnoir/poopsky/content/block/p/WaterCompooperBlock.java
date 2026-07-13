@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
-import com.altnoir.poopsky.init.PFlyTypes;
+import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.mojang.serialization.MapCodec;
@@ -77,10 +77,10 @@ public class WaterCompooperBlock extends AbstractCompooperBlock {
 
         if (entity instanceof ItemEntity itemEntity) {
             ItemStack stack = itemEntity.getItem();
-            if (FlyItem.isFlyItem(stack) && FlyItem.getFlyType(stack).equals(PFlyTypes.NORMAL.get())) {
+            if (FlyItem.isFlyItem(stack) && FlyItem.getFlyType(stack).equals(FlyTypes.NORMAL.get())) {
                 int count = stack.getCount();
 
-                catalyst(itemEntity, state, level, pos, count, FlyItem.withType(PFlyTypes.BLUE.get()), FlyItem.withType(PFlyTypes.NORMAL.get()));
+                catalyst(itemEntity, state, level, pos, count, FlyItem.withType(FlyTypes.BLUE.get()), FlyItem.withType(FlyTypes.NORMAL.get()));
                 level.playSound(null, pos, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 1.0F, 1.0F);
             }
         }

@@ -1,6 +1,5 @@
 package com.altnoir.poopsky.impl.type;
 
-import com.altnoir.poopsky.init.PoBlockSetType;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.properties.WoodType;

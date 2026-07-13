@@ -2,7 +2,7 @@ package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.content.FlyType;
 
-public enum PFlyTypes {
+public enum FlyTypes {
     NORMAL,
     WHITE,
     BLACK,
@@ -36,7 +36,7 @@ public enum PFlyTypes {
 
     private final FlyType.Type flyType;
 
-    PFlyTypes() {
+    FlyTypes() {
         this.flyType = new FlyType.Type(name().toLowerCase());
     }
 

@@ -4,7 +4,7 @@ import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.p.CompooperBlock;
-import com.altnoir.poopsky.init.PFlyTypes;
+import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.content.recipe.ToiletShapedRecipe;
 import com.altnoir.poopsky.compat.PSMods;
@@ -118,7 +118,7 @@ public class PSJEIPlugin implements IModPlugin {
                         Ingredient.of(Items.STICK), new ItemStack(Items.BREEZE_ROD), PoBlocks.POWDER_SNOW_COMPOOPER.get().defaultBlockState()
                 ),
                 new CompooperRecipe(
-                        Ingredient.of(PoItems.FLY.get()), FlyItem.withType(PFlyTypes.BLUE.get()), PoBlocks.WATER_COMPOOPER.get().defaultBlockState()
+                        Ingredient.of(PoItems.FLY.get()), FlyItem.withType(FlyTypes.BLUE.get()), PoBlocks.WATER_COMPOOPER.get().defaultBlockState()
                 )
         ));
 

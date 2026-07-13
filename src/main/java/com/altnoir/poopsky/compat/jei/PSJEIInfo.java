@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.compat.jei;
 
-import com.altnoir.poopsky.init.PFlyTypes;
+import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
@@ -27,32 +27,32 @@ public class PSJEIInfo {
                 Component.translatable("jei.poopsky.maggots_seeds")
         );
         registration.addIngredientInfo(
-                FlyItem.withType(PFlyTypes.WHITE.get()),
+                FlyItem.withType(FlyTypes.WHITE.get()),
                 VanillaTypes.ITEM_STACK,
                 Component.translatable("jei.poopsky.fly_desc.white")
         );
         registration.addIngredientInfo(
-                FlyItem.withType(PFlyTypes.BLACK.get()),
+                FlyItem.withType(FlyTypes.BLACK.get()),
                 VanillaTypes.ITEM_STACK,
                 Component.translatable("jei.poopsky.fly_desc.black")
         );
         registration.addIngredientInfo(
-                FlyItem.withType(PFlyTypes.RED.get()),
+                FlyItem.withType(FlyTypes.RED.get()),
                 VanillaTypes.ITEM_STACK,
                 Component.translatable("jei.poopsky.fly_desc.red")
         );
         registration.addIngredientInfo(
-                FlyItem.withType(PFlyTypes.GREEN.get()),
+                FlyItem.withType(FlyTypes.GREEN.get()),
                 VanillaTypes.ITEM_STACK,
                 Component.translatable("jei.poopsky.fly_desc.green")
         );
         registration.addIngredientInfo(
-                FlyItem.withType(PFlyTypes.BLUE.get()),
+                FlyItem.withType(FlyTypes.BLUE.get()),
                 VanillaTypes.ITEM_STACK,
                 Component.translatable("jei.poopsky.fly_desc.blue")
         );
         registration.addIngredientInfo(
-                FlyItem.withType(PFlyTypes.DRAGON_FRUIT.get()),
+                FlyItem.withType(FlyTypes.DRAGON_FRUIT.get()),
                 VanillaTypes.ITEM_STACK,
                 Component.translatable("jei.poopsky.fly_desc.dragon_fruit")
         );

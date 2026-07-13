@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.impl.registrate;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.impl.type.PoToiletTypes;
+import com.altnoir.poopsky.init.ToiletTypes;
 import com.altnoir.poopsky.init.*;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateAdvancementProvider;
@@ -449,7 +449,7 @@ public final class AdvancementGen {
                 .save(provider, modId("chili"));
 
         var rainbowStack = new ItemStack(PoBlocks.HARD_TOILET.get());
-        rainbowStack.set(PoComponents.TOILET_TYPE.get(), PoToiletTypes.RAINBOW);
+        rainbowStack.set(PoComponents.TOILET_TYPE.get(), ToiletTypes.RAINBOW);
 
         Advancement.Builder.advancement()
                 .parent(summon_villager)
@@ -466,7 +466,7 @@ public final class AdvancementGen {
                 .addCriterion("rainbow_toilet", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
                         .of(PoBlocks.HARD_TOILET.get())
                         .hasComponents(DataComponentPredicate.builder()
-                                .expect(PoComponents.TOILET_TYPE.get(), PoToiletTypes.RAINBOW)
+                                .expect(PoComponents.TOILET_TYPE.get(), ToiletTypes.RAINBOW)
                                 .build())))
                 .save(provider, modId("rainbow_toilet"));
 

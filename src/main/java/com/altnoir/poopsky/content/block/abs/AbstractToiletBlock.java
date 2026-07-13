@@ -6,7 +6,7 @@ import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.entity.p.ToiletEntity;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.impl.sound.PoSoundEvents;
-import com.altnoir.poopsky.impl.type.PoToiletTypes;
+import com.altnoir.poopsky.init.ToiletTypes;
 import com.altnoir.poopsky.impl.util.toiletUtil;
 import com.altnoir.poopsky.init.*;
 import net.minecraft.core.BlockPos;
@@ -115,7 +115,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
 
     public AbstractToiletBlock(Properties properties) {
         super(properties);
-        PoToiletTypes.init();
+        ToiletTypes.init();
         this.registerDefaultState(
                 this.defaultBlockState()
                         .setValue(FACING, Direction.NORTH)

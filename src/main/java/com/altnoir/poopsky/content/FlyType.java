@@ -1,13 +1,13 @@
 package com.altnoir.poopsky.content;
 
-import com.altnoir.poopsky.init.PFlyTypes;
+import com.altnoir.poopsky.init.FlyTypes;
 import net.minecraft.network.chat.Component;
 
 import java.util.*;
 
 public class FlyType {
-    public static final List<String> FLY_TYPES = Arrays.stream(PFlyTypes.values())
-            .map(PFlyTypes::id).toList();
+    public static final List<String> FLY_TYPES = Arrays.stream(FlyTypes.values())
+            .map(FlyTypes::id).toList();
 
     public static Map<String, Type> getAll() {
         List<String> ids = FlyTypeManager.INSTANCE.getFlyTypes();
@@ -27,7 +27,7 @@ public class FlyType {
     }
 
     public static Type byId(String id) {
-        if (id == null || !FlyTypeManager.INSTANCE.isValid(id)) return PFlyTypes.NORMAL.get();
+        if (id == null || !FlyTypeManager.INSTANCE.isValid(id)) return FlyTypes.NORMAL.get();
         return new Type(id);
     }
 
