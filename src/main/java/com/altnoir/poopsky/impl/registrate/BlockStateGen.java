@@ -7,6 +7,8 @@ import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.block.p.PoopCandleCakeBlock;
 import com.altnoir.poopsky.content.block.p.PoopPieceBlock;
 import com.altnoir.poopsky.init.PoBlocks;
+import com.tterrag.registrate.AbstractRegistrate;
+import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -26,11 +28,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-public class BlockStateGen extends BlockStateProvider {
+public class BlockStateGen extends RegistrateBlockstateProvider {
     public static final String PARTICLE = "particle";
 
-    public BlockStateGen(PackOutput output, ExistingFileHelper exFileHelper) {
-        super(output, PoopSky.MOD_ID, exFileHelper);
+    public BlockStateGen(AbstractRegistrate<?> parent, PackOutput packOutput, ExistingFileHelper exFileHelper) {
+        super(parent, packOutput, exFileHelper);
     }
 
     @Override
