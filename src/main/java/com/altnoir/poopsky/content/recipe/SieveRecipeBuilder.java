@@ -11,6 +11,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -44,19 +45,23 @@ public final class SieveRecipeBuilder implements RecipeBuilder {
         return new SieveRecipeBuilder(input, processingTime);
     }
 
+    public static SieveRecipeBuilder sieve(TagKey<Item> tag, int processingTime) {
+        return new SieveRecipeBuilder(Ingredient.of(tag), processingTime);
+    }
+
     public SieveRecipeBuilder addOutput(ItemLike item) {
         return addOutput(item, 1);
     }
 
     public SieveRecipeBuilder addOutput(ItemLike item, float chance) {
-        return addOutput(item,1, chance);
+        return addOutput(item, 1, chance);
     }
 
     public SieveRecipeBuilder addOutput(ItemLike item, int count) {
-        return addOutput(item, count,1.0F);
+        return addOutput(item, count, 1.0F);
     }
 
-    public SieveRecipeBuilder addOutput(ItemLike item,int count, float chance) {
+    public SieveRecipeBuilder addOutput(ItemLike item, int count, float chance) {
         this.outputs.add(new SieveRecipe.ChanceItemStack(new ItemStack(item, count), chance));
         return this;
     }
@@ -78,6 +83,17 @@ public final class SieveRecipeBuilder implements RecipeBuilder {
             throw new IllegalStateException("Sieve recipe has no outputs");
         }
         return outputs.getFirst().stack().getItem();
+    }
+
+    @Override
+    public void save(@NotNull RecipeOutput recipeOutput) {
+        ItemStack[] items = input.getItems();
+        if (items.length > 0) {
+            ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(items[0].getItem());
+            save(recipeOutput, itemId.getPath());
+        } else {
+            RecipeBuilder.super.save(recipeOutput);
+        }
     }
 
     public void save(@NotNull RecipeOutput recipeOutput, @NotNull String id) {

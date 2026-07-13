@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:sieve/soul_blocks"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "sieve_stable": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:sieve_stable"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "sieve_stable"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "poopsky:sieve/soul_blocks"
+    ]
+  }
+}

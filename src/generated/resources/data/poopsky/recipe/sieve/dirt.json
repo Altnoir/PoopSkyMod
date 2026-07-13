@@ -1,0 +1,36 @@
+{
+  "type": "poopsky:sieve",
+  "input": {
+    "item": "minecraft:dirt"
+  },
+  "outputs": [
+    {
+      "chance": 1.0,
+      "item": {
+        "count": 1,
+        "id": "minecraft:wheat_seeds"
+      }
+    },
+    {
+      "chance": 0.75,
+      "item": {
+        "count": 1,
+        "id": "minecraft:vine"
+      }
+    },
+    {
+      "chance": 0.5,
+      "item": {
+        "count": 1,
+        "id": "minecraft:hanging_roots"
+      }
+    },
+    {
+      "chance": 0.25,
+      "item": {
+        "count": 1,
+        "id": "minecraft:glow_lichen"
+      }
+    }
+  ]
+}

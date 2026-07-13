@@ -109,28 +109,29 @@ public class PoItems {
     public static final ItemEntry<TimeBellItem> TIME_BELL = registerItem("time_bell",
             props -> new TimeBellItem(props.stacksTo(1)));
     public static final ItemEntry<Item> SPALL = registerItem("spall", Item::new);
-    public static final ItemEntry<UrineBottleItem> URINE_BOTTLE = registerItem("urine_bottle",
-            prop -> new UrineBottleItem(prop
-                    .craftRemainder(Items.GLASS_BOTTLE)
-                    .food(PFoods.URINE_BOTTLE)
-                    .stacksTo(18)
-            ));
+    public static final ItemEntry<SwordItem> SPALL_SWORD = registerItem("spall_sword",
+            prop -> new SwordItem(Tiers.STONE,
+                    prop.attributes(SwordItem.createAttributes(Tiers.STONE, 3, -2.4F))));
+
+    public static final ItemEntry<ShovelItem> SPALL_SHOVEL = registerItem("spall_shovel",
+            prop -> new ShovelItem(Tiers.STONE,
+                    prop.attributes(ShovelItem.createAttributes(Tiers.STONE, 1.5F, -3.0F))));
     public static final ItemEntry<PickaxeItem> SPALL_PICKAXE = registerItem("spall_pickaxe",
             prop -> new PickaxeItem(Tiers.STONE,
                     prop.attributes(PickaxeItem.createAttributes(Tiers.STONE, 1.0F, -2.8F))));
     public static final ItemEntry<AxeItem> SPALL_AXE = registerItem("spall_axe",
             prop -> new AxeItem(Tiers.STONE,
                     prop.attributes(AxeItem.createAttributes(Tiers.STONE, 6.0F, -3.2F))));
-    public static final ItemEntry<ShovelItem> SPALL_SHOVEL = registerItem("spall_shovel",
-            prop -> new ShovelItem(Tiers.STONE,
-                    prop.attributes(ShovelItem.createAttributes(Tiers.STONE, 1.5F, -3.0F))));
     public static final ItemEntry<HoeItem> SPALL_HOE = registerItem("spall_hoe",
             prop -> new HoeItem(Tiers.STONE,
                     prop.attributes(HoeItem.createAttributes(Tiers.STONE, -1.0F, -2.0F))));
-    public static final ItemEntry<SwordItem> SPALL_SWORD = registerItem("spall_sword",
-            prop -> new SwordItem(Tiers.STONE,
-                    prop.attributes(SwordItem.createAttributes(Tiers.STONE, 3, -2.4F))));
 
+    public static final ItemEntry<UrineBottleItem> URINE_BOTTLE = registerItem("urine_bottle",
+            prop -> new UrineBottleItem(prop
+                    .craftRemainder(Items.GLASS_BOTTLE)
+                    .food(PFoods.URINE_BOTTLE)
+                    .stacksTo(18)
+            ));
     public static final ItemEntry<BucketItem> URINE_BUCKET = PoFluids.URINE_BUCKET;
 
     public static final ItemEntry<DeferredSpawnEggItem> POOLIME_SPAWN_EGG = registerItem("poolime_spawn_egg",

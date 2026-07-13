@@ -33,24 +33,10 @@
       }
     },
     {
-      "chance": 0.75,
-      "item": {
-        "count": 1,
-        "id": "minecraft:vine"
-      }
-    },
-    {
       "chance": 0.5,
       "item": {
         "count": 1,
         "id": "minecraft:small_dripleaf"
-      }
-    },
-    {
-      "chance": 0.05,
-      "item": {
-        "count": 1,
-        "id": "minecraft:sniffer_egg"
       }
     }
   ],

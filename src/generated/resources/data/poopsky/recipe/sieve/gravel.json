@@ -1,0 +1,36 @@
+{
+  "type": "poopsky:sieve",
+  "input": {
+    "item": "minecraft:gravel"
+  },
+  "outputs": [
+    {
+      "chance": 1.0,
+      "item": {
+        "count": 1,
+        "id": "minecraft:flint"
+      }
+    },
+    {
+      "chance": 0.5,
+      "item": {
+        "count": 1,
+        "id": "minecraft:gunpowder"
+      }
+    },
+    {
+      "chance": 0.25,
+      "item": {
+        "count": 1,
+        "id": "minecraft:lapis_lazuli"
+      }
+    },
+    {
+      "chance": 0.01,
+      "item": {
+        "count": 1,
+        "id": "minecraft:sniffer_egg"
+      }
+    }
+  ]
+}

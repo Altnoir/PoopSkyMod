@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.impl.registrate;
+package com.altnoir.poopsky.impl.recipe;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.compat.PSMods;
@@ -623,23 +623,23 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .addOutput(Items.IRON_NUGGET, 8, 0.5F)
                 .addOutput(Items.RAW_IRON, 0.5F)
                 .unlockedBy(getItemName(PoBlocks.SIEVE.get()), has(PoBlocks.SIEVE.get()))
-                .save(createNotLoaded, "poop_block");
+                .save(createNotLoaded);
 
         SieveRecipeBuilder.sieve(PoBlocks.CHILI_POOP_BLOCK, 300)
                 .addOutput(Items.QUARTZ, 4)
                 .addOutput(Items.QUARTZ, 4, 0.5F)
                 .addOutput(Items.NETHER_WART, 2, 0.75F)
                 .addOutput(Items.MAGMA_CREAM, 0.5F)
-                .addOutput(Items.GHAST_TEAR, 0.2F)
+                .addOutput(Items.GHAST_TEAR, 0.1F)
                 .unlockedBy(getItemName(PoBlocks.SIEVE.get()), has(PoBlocks.SIEVE.get()))
-                .save(recipeOutput, "chili_poop_block");
+                .save(recipeOutput);
 
         SieveRecipeBuilder.sieve(PoBlocks.GOLDEN_POOP_BLOCK, 300)
                 .addOutput(Items.GOLD_NUGGET, 8)
                 .addOutput(Items.GOLD_NUGGET, 8, 0.75F)
                 .addOutput(Items.RAW_GOLD, 0.5F)
                 .unlockedBy(getItemName(PoBlocks.SIEVE.get()), has(PoBlocks.SIEVE.get()))
-                .save(recipeOutput, "golden_poop_block");
+                .save(recipeOutput);
 
         SieveRecipeBuilder.sieve(PoBlocks.RAW_POOP_BLOCK, 100)
                 .addOutput(Items.RAW_COPPER)
@@ -647,16 +647,14 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .addOutput(Items.REDSTONE, 0.5F)
                 .addOutput(Items.AMETHYST_SHARD, 0.25F)
                 .unlockedBy(getItemName(PoBlocks.SIEVE.get()), has(PoBlocks.SIEVE.get()))
-                .save(createNotLoaded, "raw_poop_block");
+                .save(createNotLoaded);
 
         SieveRecipeBuilder.sieve(PoBlocks.RAW_SAPLING_POOP_BLOCK, 100)
                 .addOutput(Items.SUNFLOWER).addOutput(Items.LILAC)
                 .addOutput(Items.ROSE_BUSH).addOutput(Items.PEONY)
-                .addOutput(Items.VINE, 0.75F)
                 .addOutput(Items.SMALL_DRIPLEAF, 0.5F)
-                .addOutput(Items.SNIFFER_EGG, 0.05F)
                 .unlockedBy(getItemName(PoBlocks.SIEVE.get()), has(PoBlocks.SIEVE.get()))
-                .save(recipeOutput, "raw_sapling_poop_block");
+                .save(recipeOutput);
 
         SieveRecipeBuilder.sieve(PoBlocks.RAW_SEA_POOP_BLOCK, 100)
                 .addOutput(Items.SEAGRASS, 2).addOutput(Items.SEAGRASS, 0.75F)
@@ -665,19 +663,48 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .addOutput(Items.NAUTILUS_SHELL, 0.09F)
                 .addOutput(Items.HEART_OF_THE_SEA, 0.01F)
                 .unlockedBy(getItemName(PoBlocks.SIEVE.get()), has(PoBlocks.SIEVE.get()))
-                .save(recipeOutput, "raw_sea_poop_block");
+                .save(recipeOutput);
 
         SieveRecipeBuilder.sieve(PoBlocks.RAW_WITHER_POOP_BLOCK, 100)
                 .addOutput(Items.COAL)
                 .addOutput(Items.NETHERITE_SCRAP, 0.1F)
                 .addOutput(Items.WITHER_SKELETON_SKULL, 0.005F)
                 .unlockedBy(getItemName(PoBlocks.SIEVE.get()), has(PoBlocks.SIEVE.get()))
-                .save(recipeOutput, "raw_wither_poop_block");
+                .save(recipeOutput);
         SieveRecipeBuilder.sieve(Blocks.CACTUS, 100)
                 .addOutput(PoItems.KING_OF_DRAGON_FRUIT.get())
                 .addOutput(PoItems.KING_OF_DRAGON_FRUIT.get(), 0.5F)
                 .unlockedBy(getItemName(PoBlocks.SIEVE.get()), has(PoBlocks.SIEVE.get()))
-                .save(recipeOutput, "cactus");
+                .save(recipeOutput);
+
+        SieveRecipeBuilder.sieve(Items.DIRT, 200)
+                .addOutput(Items.WHEAT_SEEDS)
+                .addOutput(Items.VINE, 0.75F)
+                .addOutput(Items.HANGING_ROOTS, 0.5F)
+                .addOutput(Items.GLOW_LICHEN, 0.25F)
+                .unlockedBy(getItemName(PoBlocks.SIEVE.get()), has(PoBlocks.SIEVE.get()))
+                .save(recipeOutput);
+        SieveRecipeBuilder.sieve(Items.GRAVEL, 200)
+                .addOutput(Items.FLINT)
+                .addOutput(Items.GUNPOWDER, 0.5F)
+                .addOutput(Items.LAPIS_LAZULI, 0.25F)
+                .addOutput(Items.SNIFFER_EGG, 0.01F)
+                .unlockedBy(getItemName(PoBlocks.SIEVE.get()), has(PoBlocks.SIEVE.get()))
+                .save(recipeOutput);
+        SieveRecipeBuilder.sieve(ItemTags.SAND, 200)
+                .addOutput(Items.CLAY)
+                .addOutput(Items.IRON_NUGGET, 4, 0.5F)
+                .addOutput(Items.GOLD_NUGGET, 4, 0.25F)
+                .addOutput(Items.TURTLE_EGG, 4, 0.01F)
+                .unlockedBy(getItemName(PoBlocks.SIEVE.get()), has(PoBlocks.SIEVE.get()))
+                .save(recipeOutput, "sand");
+        SieveRecipeBuilder.sieve(ItemTags.SOUL_FIRE_BASE_BLOCKS, 200)
+                .addOutput(Items.BONE, 4, 0.5F)
+                .addOutput(Items.NETHER_WART, 0.5F)
+                .addOutput(Items.GLOWSTONE_DUST, 0.5F)
+                .addOutput(Items.GHAST_TEAR, 0.25F)
+                .unlockedBy(getItemName(PoBlocks.SIEVE.get()), has(PoBlocks.SIEVE.get()))
+                .save(recipeOutput, "soul_blocks");
 
         // Create
         SieveRecipeBuilder.sieve(PoBlocks.POOP_BLOCK, 200)
@@ -785,6 +812,22 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
     }
 
     protected static void spallToolRecipes(RecipeOutput recipeOutput) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, PoItems.SPALL_SWORD)
+                .pattern("M")
+                .pattern("M")
+                .pattern("S")
+                .define('M', PoItems.SPALL)
+                .define('S', Items.STICK)
+                .unlockedBy(getItemName(PoItems.SPALL), has(PoItems.SPALL))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, PoItems.SPALL_SHOVEL)
+                .pattern("M")
+                .pattern("S")
+                .pattern("S")
+                .define('M', PoItems.SPALL)
+                .define('S', Items.STICK)
+                .unlockedBy(getItemName(PoItems.SPALL), has(PoItems.SPALL))
+                .save(recipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, PoItems.SPALL_PICKAXE)
                 .pattern("MMM")
                 .pattern(" S ")
@@ -801,26 +844,10 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .define('S', Items.STICK)
                 .unlockedBy(getItemName(PoItems.SPALL), has(PoItems.SPALL))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, PoItems.SPALL_SHOVEL)
-                .pattern("M")
-                .pattern("S")
-                .pattern("S")
-                .define('M', PoItems.SPALL)
-                .define('S', Items.STICK)
-                .unlockedBy(getItemName(PoItems.SPALL), has(PoItems.SPALL))
-                .save(recipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, PoItems.SPALL_HOE)
                 .pattern("MM")
                 .pattern(" S")
                 .pattern(" S")
-                .define('M', PoItems.SPALL)
-                .define('S', Items.STICK)
-                .unlockedBy(getItemName(PoItems.SPALL), has(PoItems.SPALL))
-                .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, PoItems.SPALL_SWORD)
-                .pattern("M")
-                .pattern("M")
-                .pattern("S")
                 .define('M', PoItems.SPALL)
                 .define('S', Items.STICK)
                 .unlockedBy(getItemName(PoItems.SPALL), has(PoItems.SPALL))

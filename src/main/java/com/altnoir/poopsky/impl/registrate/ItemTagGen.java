@@ -10,6 +10,7 @@ import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.Tags;
 
 public final class ItemTagGen {
@@ -126,6 +127,9 @@ public final class ItemTagGen {
                 .add(PoItems.OMEN_CHESTPLATE.get())
                 .add(PoItems.OMEN_LEGGINGS.get())
                 .add(PoItems.OMEN_BOOTS.get());
+
+        tag(ItemTags.STONE_TOOL_MATERIALS)
+                .add(Items.MOSSY_COBBLESTONE);
 
         tag(ItemTags.SWORDS).add(
                 PoItems.MILOS_SWORD.get(),

@@ -4,6 +4,7 @@ import com.altnoir.poopsky.impl.create.PDigestingRecipeGen;
 import com.altnoir.poopsky.impl.create.PHauntingRecipeGen;
 import com.altnoir.poopsky.impl.create.PWashingRecipeGen;
 import com.altnoir.poopsky.impl.damageType.DamageTypeTagsGen;
+import com.altnoir.poopsky.impl.recipe.RecipeGen;
 import com.altnoir.poopsky.impl.registrate.*;
 import com.altnoir.poopsky.impl.sound.SoundGen;
 import com.altnoir.poopsky.impl.type.FlyTypeGen;

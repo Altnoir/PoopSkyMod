@@ -1,27 +1,20 @@
 {
   "type": "poopsky:sieve",
   "input": {
-    "item": "poopsky:chili_poop_block"
+    "tag": "minecraft:soul_fire_base_blocks"
   },
   "outputs": [
     {
-      "chance": 1.0,
+      "chance": 0.5,
       "item": {
         "count": 4,
-        "id": "minecraft:quartz"
+        "id": "minecraft:bone"
       }
     },
     {
       "chance": 0.5,
       "item": {
-        "count": 4,
-        "id": "minecraft:quartz"
-      }
-    },
-    {
-      "chance": 0.75,
-      "item": {
-        "count": 2,
+        "count": 1,
         "id": "minecraft:nether_wart"
       }
     },
@@ -29,16 +22,15 @@
       "chance": 0.5,
       "item": {
         "count": 1,
-        "id": "minecraft:magma_cream"
+        "id": "minecraft:glowstone_dust"
       }
     },
     {
-      "chance": 0.1,
+      "chance": 0.25,
       "item": {
         "count": 1,
         "id": "minecraft:ghast_tear"
       }
     }
-  ],
-  "processingTime": 300
+  ]
 }

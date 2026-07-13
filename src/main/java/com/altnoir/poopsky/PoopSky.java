@@ -170,6 +170,10 @@ public class PoopSky {
         return ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, path);
     }
 
+    public static ResourceLocation locMc(String path) {
+        return ResourceLocation.withDefaultNamespace(path);
+    }
+
     public static PoRegistrate registrate() {
         return REGISTRATE;
     }
