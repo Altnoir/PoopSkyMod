@@ -5,7 +5,7 @@ import com.altnoir.poopsky.content.entity.p.PoolimeEntity;
 import com.altnoir.poopsky.impl.DataGenerators;
 import com.altnoir.poopsky.init.PoBlockEntityType;
 import com.altnoir.poopsky.init.PoEntityType;
-import com.altnoir.poopsky.init.PoNetworking;
+import com.altnoir.poopsky.impl.network.PoNetworking;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.level.levelgen.Heightmap;

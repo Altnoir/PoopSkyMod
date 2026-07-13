@@ -1,10 +1,6 @@
-package com.altnoir.poopsky.init;
+package com.altnoir.poopsky.impl.network;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.impl.network.PlugActionPayload;
-import com.altnoir.poopsky.impl.network.PlugDismountPayload;
-import com.altnoir.poopsky.impl.network.PlugInputPayload;
-import com.altnoir.poopsky.impl.network.TimeBellFreezePayload;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
 public class PoNetworking {
