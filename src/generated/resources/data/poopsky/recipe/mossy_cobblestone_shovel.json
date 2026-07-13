@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "M": {
+      "item": "minecraft:mossy_cobblestone"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "M",
+    "S",
+    "S"
+  ],
+  "result": {
+    "count": 1,
+    "id": "poopsky:mossy_cobblestone_shovel"
+  }
+}

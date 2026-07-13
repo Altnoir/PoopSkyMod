@@ -1,14 +1,14 @@
 package com.altnoir.poopsky.impl.registrate;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.compat.PSMods;
 import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.block.ToiletType;
 import com.altnoir.poopsky.content.item.PFlyTypes;
 import com.altnoir.poopsky.content.recipe.*;
-import com.altnoir.poopsky.compat.PSMods;
+import com.altnoir.poopsky.impl.PoToiletTypes;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
-import com.altnoir.poopsky.impl.PoToiletTypes;
 import com.simibubi.create.AllItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -185,6 +185,7 @@ public class RecipeGen extends RecipeProvider implements IConditionBuilder {
                 .define('P', PoItems.TOILET_PLUG)
                 .unlockedBy(getItemName(PoItems.OMINOUS_FILTHY_INGOT), has(PoItems.OMINOUS_FILTHY_INGOT))
                 .save(recipeOutput);
+        mossyCobblestoneToolRecipes(recipeOutput);
         // 盔甲
         omenSmithing(recipeOutput, Items.GOLDEN_CHESTPLATE, RecipeCategory.COMBAT, PoItems.OMEN_CHESTPLATE.get());
         omenSmithing(recipeOutput, Items.GOLDEN_LEGGINGS, RecipeCategory.COMBAT, PoItems.OMEN_LEGGINGS.get());
@@ -889,6 +890,49 @@ public class RecipeGen extends RecipeProvider implements IConditionBuilder {
                 )
                 .unlocks("has_ominous_filthy_ingot", has(PoItems.OMINOUS_FILTHY_INGOT))
                 .save(recipeOutput, PoopSky.MOD_ID + ":" + getItemName(resultItem) + "_smithing");
+    }
+
+    protected static void mossyCobblestoneToolRecipes(RecipeOutput recipeOutput) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, PoItems.MOSSY_COBBLESTONE_PICKAXE)
+                .pattern("MMM")
+                .pattern(" S ")
+                .pattern(" S ")
+                .define('M', Blocks.MOSSY_COBBLESTONE)
+                .define('S', Items.STICK)
+                .unlockedBy(getItemName(Blocks.MOSSY_COBBLESTONE), has(Blocks.MOSSY_COBBLESTONE))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, PoItems.MOSSY_COBBLESTONE_AXE)
+                .pattern("MM")
+                .pattern("MS")
+                .pattern(" S")
+                .define('M', Blocks.MOSSY_COBBLESTONE)
+                .define('S', Items.STICK)
+                .unlockedBy(getItemName(Blocks.MOSSY_COBBLESTONE), has(Blocks.MOSSY_COBBLESTONE))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, PoItems.MOSSY_COBBLESTONE_SHOVEL)
+                .pattern("M")
+                .pattern("S")
+                .pattern("S")
+                .define('M', Blocks.MOSSY_COBBLESTONE)
+                .define('S', Items.STICK)
+                .unlockedBy(getItemName(Blocks.MOSSY_COBBLESTONE), has(Blocks.MOSSY_COBBLESTONE))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, PoItems.MOSSY_COBBLESTONE_HOE)
+                .pattern("MM")
+                .pattern(" S")
+                .pattern(" S")
+                .define('M', Blocks.MOSSY_COBBLESTONE)
+                .define('S', Items.STICK)
+                .unlockedBy(getItemName(Blocks.MOSSY_COBBLESTONE), has(Blocks.MOSSY_COBBLESTONE))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, PoItems.MOSSY_COBBLESTONE_SWORD)
+                .pattern("M")
+                .pattern("M")
+                .pattern("S")
+                .define('M', Blocks.MOSSY_COBBLESTONE)
+                .define('S', Items.STICK)
+                .unlockedBy(getItemName(Blocks.MOSSY_COBBLESTONE), has(Blocks.MOSSY_COBBLESTONE))
+                .save(recipeOutput);
     }
 
     protected static void oreSmelting(RecipeOutput recipeOutput, List<ItemLike> ingredients, RecipeCategory category, ItemLike result, float experience, int cookingTime, String group) {
