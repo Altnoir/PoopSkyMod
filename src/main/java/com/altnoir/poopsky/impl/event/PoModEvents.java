@@ -18,7 +18,7 @@ import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 public class PoModEvents {
     public static void registerMod(IEventBus modEventBus) {
         modEventBus.addListener(DataGenerators::gatherData);
-        modEventBus.addListener(PoNetworking::register);
+        modEventBus.addListener(PoNetworking::registerNetworking);
         modEventBus.addListener(PoModEvents::registerAttributes);
         modEventBus.addListener(PoModEvents::registerSpawnPlacements);
         modEventBus.addListener(PoModEvents::registerCapabilities);

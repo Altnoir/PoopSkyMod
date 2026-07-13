@@ -24,7 +24,7 @@ public class PSKeyBoardInput {
         return Component.translatableWithFallback(keyMapping.saveString(), keyMapping.getTranslatedKeyMessage().getString());
     }
 
-    public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
+    public static void registerKeyMappings(RegisterKeyMappingsEvent event) {
         event.register(USE_PLUG_KEY);
         event.register(DISMOUNT_PLUG_KEY);
     }

@@ -62,15 +62,15 @@ public class PoopSkyClient {
 
     public static void registerMod(IEventBus modEventBus) {
         ToiletModelEventHandler.register(modEventBus);
-        modEventBus.addListener(PSKeyBoardInput::onRegisterKeyMappings);
+        modEventBus.addListener(PSKeyBoardInput::registerKeyMappings);
         modEventBus.addListener(ClientModEvents::registerLayers);
         modEventBus.addListener(ClientModEvents::registerItemProperties);
         modEventBus.addListener(ClientModEvents::registerRenderTypes);
         modEventBus.addListener(ClientModEvents::registerParticleProviders);
         modEventBus.addListener(ClientModEvents::registerRecipeBookCategories);
-        modEventBus.addListener(ClientModEvents::onRegisterBlockColors);
-        modEventBus.addListener(ClientModEvents::onRegisterItemColors);
-        modEventBus.addListener(ClientModEvents::onRegisterBlockRenderBuffers);
+        modEventBus.addListener(ClientModEvents::registerBlockColors);
+        modEventBus.addListener(ClientModEvents::registerItemColors);
+        modEventBus.addListener(ClientModEvents::registerBlockRenderBuffers);
         modEventBus.addListener(ClientModEvents::registerGuiOverlays);
         modEventBus.addListener(ClientModEvents::registerClientExtensions);
     }
@@ -133,7 +133,7 @@ public class PoopSkyClient {
             event.registerSpriteSet(PoParticles.LEAVES_PARTICLE.get(), LeavesParticle.provider());
         }
 
-        public static void onRegisterBlockColors(RegisterColorHandlersEvent.Block event) {
+        public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
             event.register((state, world, pos, tintIndex) -> {
                 if (tintIndex == 1) {
                     if (state.getValue(AbstractCompooperBlock.LEVEL) != AbstractCompooperBlock.MIN_LEVEL) {
@@ -147,11 +147,11 @@ public class PoopSkyClient {
             }, PoBlocks.WATER_COMPOOPER.get());
         }
 
-        public static void onRegisterItemColors(RegisterColorHandlersEvent.Item event) {
+        public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
             event.register((stack, tintIndex) -> tintIndex == 1 ? 0x3F76E4 : -1, PoBlocks.WATER_COMPOOPER.get());
         }
 
-        public static void onRegisterBlockRenderBuffers(net.neoforged.neoforge.client.event.RegisterRenderBuffersEvent event) {
+        public static void registerBlockRenderBuffers(net.neoforged.neoforge.client.event.RegisterRenderBuffersEvent event) {
             event.registerRenderBuffer(RenderType.translucent());
         }
 
