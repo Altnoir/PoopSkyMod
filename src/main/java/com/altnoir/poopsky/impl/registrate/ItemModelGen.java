@@ -99,11 +99,11 @@ public class ItemModelGen extends RegistrateItemModelProvider {
         generated(PoItems.OMINOUS_FILTHY_INGOT);
         generated(PoItems.OMEN_UPGRADE_SMITHING_TEMPLATE);
         bigSowordItem();
-        handheld(PoItems.MOSSY_COBBLESTONE_PICKAXE);
-        handheld(PoItems.MOSSY_COBBLESTONE_AXE);
-        handheld(PoItems.MOSSY_COBBLESTONE_SHOVEL);
-        handheld(PoItems.MOSSY_COBBLESTONE_HOE);
-        handheld(PoItems.MOSSY_COBBLESTONE_SWORD);
+        handheld(PoItems.SPALL_PICKAXE);
+        handheld(PoItems.SPALL_AXE);
+        handheld(PoItems.SPALL_SHOVEL);
+        handheld(PoItems.SPALL_HOE);
+        handheld(PoItems.SPALL_SWORD);
         trimmedArmorItem(PoItems.OMEN_HELMET);
         trimmedArmorItem(PoItems.OMEN_CHESTPLATE);
         trimmedArmorItem(PoItems.OMEN_LEGGINGS);

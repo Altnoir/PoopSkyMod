@@ -12,6 +12,7 @@ import com.altnoir.poopsky.content.worldgen.PoStructures;
 import com.altnoir.poopsky.content.worldgen.foliage.PoFoliagePlacerTypes;
 import com.altnoir.poopsky.impl.event.PoGameEvents;
 import com.altnoir.poopsky.impl.event.PoModEvents;
+import com.altnoir.poopsky.impl.lang.LangGen;
 import com.altnoir.poopsky.impl.registrate.AdvancementGen;
 import com.altnoir.poopsky.impl.registrate.EntityLootTableGen;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
@@ -80,6 +81,8 @@ public class PoopSky {
         AdvancementGen.register();
         PoSoundEvents.register();
         PoStats.register();
+
+        LangGen.register();
 
         PoFoliagePlacerTypes.register();
         PoStructures.register();

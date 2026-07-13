@@ -60,6 +60,7 @@ public class DataGenerators {
         generators.addProvider(event.includeClient(), new BlockStateGen(packOutput, existingFileHelper));
         generators.addProvider(event.includeClient(), new ItemModelGen(PoopSky.registrate(), packOutput, existingFileHelper));
         generators.addProvider(event.includeClient(), new ParticleGen(packOutput, existingFileHelper));
+        generators.addProvider(event.includeClient(), new SoundGen(packOutput, existingFileHelper));
 
         // Compat
         generators.addProvider(event.includeServer(), new PSDigestingRecipeGen(packOutput, lookupProvider));
@@ -67,3 +68,4 @@ public class DataGenerators {
         generators.addProvider(event.includeServer(), new PHauntingRecipeGen(packOutput, lookupProvider));
     }
 }
+

@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "poopsky:mossy_cobblestone_sword"
+        "recipe": "poopsky:spall_pickaxe"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "poopsky:mossy_cobblestone_sword"
+      "poopsky:spall_pickaxe"
     ]
   }
 }

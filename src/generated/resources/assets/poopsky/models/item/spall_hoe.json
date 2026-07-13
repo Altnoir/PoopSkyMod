@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "poopsky:item/mossy_cobblestone_shovel"
+    "layer0": "poopsky:item/spall_hoe"
   }
 }

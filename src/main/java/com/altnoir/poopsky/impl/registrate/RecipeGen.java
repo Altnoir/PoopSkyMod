@@ -893,7 +893,7 @@ public class RecipeGen extends RecipeProvider implements IConditionBuilder {
     }
 
     protected static void mossyCobblestoneToolRecipes(RecipeOutput recipeOutput) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, PoItems.MOSSY_COBBLESTONE_PICKAXE)
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, PoItems.SPALL_PICKAXE)
                 .pattern("MMM")
                 .pattern(" S ")
                 .pattern(" S ")
@@ -901,7 +901,7 @@ public class RecipeGen extends RecipeProvider implements IConditionBuilder {
                 .define('S', Items.STICK)
                 .unlockedBy(getItemName(Blocks.MOSSY_COBBLESTONE), has(Blocks.MOSSY_COBBLESTONE))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, PoItems.MOSSY_COBBLESTONE_AXE)
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, PoItems.SPALL_AXE)
                 .pattern("MM")
                 .pattern("MS")
                 .pattern(" S")
@@ -909,7 +909,7 @@ public class RecipeGen extends RecipeProvider implements IConditionBuilder {
                 .define('S', Items.STICK)
                 .unlockedBy(getItemName(Blocks.MOSSY_COBBLESTONE), has(Blocks.MOSSY_COBBLESTONE))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, PoItems.MOSSY_COBBLESTONE_SHOVEL)
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, PoItems.SPALL_SHOVEL)
                 .pattern("M")
                 .pattern("S")
                 .pattern("S")
@@ -917,7 +917,7 @@ public class RecipeGen extends RecipeProvider implements IConditionBuilder {
                 .define('S', Items.STICK)
                 .unlockedBy(getItemName(Blocks.MOSSY_COBBLESTONE), has(Blocks.MOSSY_COBBLESTONE))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, PoItems.MOSSY_COBBLESTONE_HOE)
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, PoItems.SPALL_HOE)
                 .pattern("MM")
                 .pattern(" S")
                 .pattern(" S")
@@ -925,7 +925,7 @@ public class RecipeGen extends RecipeProvider implements IConditionBuilder {
                 .define('S', Items.STICK)
                 .unlockedBy(getItemName(Blocks.MOSSY_COBBLESTONE), has(Blocks.MOSSY_COBBLESTONE))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, PoItems.MOSSY_COBBLESTONE_SWORD)
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, PoItems.SPALL_SWORD)
                 .pattern("M")
                 .pattern("M")
                 .pattern("S")

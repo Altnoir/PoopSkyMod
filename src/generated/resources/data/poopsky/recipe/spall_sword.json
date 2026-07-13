@@ -10,12 +10,12 @@
     }
   },
   "pattern": [
-    "MM",
-    "MS",
-    " S"
+    "M",
+    "M",
+    "S"
   ],
   "result": {
     "count": 1,
-    "id": "poopsky:mossy_cobblestone_axe"
+    "id": "poopsky:spall_sword"
   }
 }

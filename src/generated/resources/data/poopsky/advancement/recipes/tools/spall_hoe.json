@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "poopsky:mossy_cobblestone_shovel"
+        "recipe": "poopsky:spall_hoe"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "poopsky:mossy_cobblestone_shovel"
+      "poopsky:spall_hoe"
     ]
   }
 }
