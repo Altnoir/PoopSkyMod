@@ -1,7 +1,6 @@
 package com.altnoir.poopsky.impl.sound;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;

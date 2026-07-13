@@ -2,10 +2,10 @@ package com.altnoir.poopsky.content.entity.p;
 
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.client.sound.FlyBuzzSoundWrapper;
-import com.altnoir.poopsky.impl.type.PoDamageTypes;
+import com.altnoir.poopsky.impl.damageType.PoDamageTypes;
 import com.altnoir.poopsky.init.PoEntityType;
 import com.altnoir.poopsky.init.PoItems;
-import com.altnoir.poopsky.init.PoSoundEvents;
+import com.altnoir.poopsky.impl.sound.PoSoundEvents;
 import com.altnoir.poopsky.content.item.PFlyTypes;
 import com.altnoir.poopsky.content.item.p.FlyItem;
 import net.minecraft.core.BlockPos;

@@ -14,6 +14,7 @@ import com.altnoir.poopsky.impl.event.PoGameEvents;
 import com.altnoir.poopsky.impl.event.PoModEvents;
 import com.altnoir.poopsky.impl.lang.LangGen;
 import com.altnoir.poopsky.impl.registrate.*;
+import com.altnoir.poopsky.impl.sound.PoSoundEvents;
 import com.altnoir.poopsky.init.*;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;

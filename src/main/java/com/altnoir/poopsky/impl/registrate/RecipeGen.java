@@ -10,6 +10,7 @@ import com.altnoir.poopsky.impl.type.PoToiletTypes;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
 import com.simibubi.create.AllItems;
+import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
@@ -27,9 +28,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class RecipeGen extends RecipeProvider implements IConditionBuilder {
-    public RecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-        super(output, registries);
+public class RecipeGen extends RegistrateRecipeProvider implements IConditionBuilder {
+    public RecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> provider) {
+        super(PoopSky.registrate(), output, provider);
     }
 
     @Override
@@ -185,7 +186,7 @@ public class RecipeGen extends RecipeProvider implements IConditionBuilder {
                 .define('P', PoItems.TOILET_PLUG)
                 .unlockedBy(getItemName(PoItems.OMINOUS_FILTHY_INGOT), has(PoItems.OMINOUS_FILTHY_INGOT))
                 .save(recipeOutput);
-        mossyCobblestoneToolRecipes(recipeOutput);
+        spallToolRecipes(recipeOutput);
         // 盔甲
         omenSmithing(recipeOutput, Items.GOLDEN_CHESTPLATE, RecipeCategory.COMBAT, PoItems.OMEN_CHESTPLATE.get());
         omenSmithing(recipeOutput, Items.GOLDEN_LEGGINGS, RecipeCategory.COMBAT, PoItems.OMEN_LEGGINGS.get());
@@ -783,6 +784,49 @@ public class RecipeGen extends RecipeProvider implements IConditionBuilder {
                 .save(recipeOutput, PoopSky.loc(getItemName(toilet) + "_from_" + toiletType.id()));
     }
 
+    protected static void spallToolRecipes(RecipeOutput recipeOutput) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, PoItems.SPALL_PICKAXE)
+                .pattern("MMM")
+                .pattern(" S ")
+                .pattern(" S ")
+                .define('M', PoItems.SPALL)
+                .define('S', Items.STICK)
+                .unlockedBy(getItemName(PoItems.SPALL), has(PoItems.SPALL))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, PoItems.SPALL_AXE)
+                .pattern("MM")
+                .pattern("MS")
+                .pattern(" S")
+                .define('M', PoItems.SPALL)
+                .define('S', Items.STICK)
+                .unlockedBy(getItemName(PoItems.SPALL), has(PoItems.SPALL))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, PoItems.SPALL_SHOVEL)
+                .pattern("M")
+                .pattern("S")
+                .pattern("S")
+                .define('M', PoItems.SPALL)
+                .define('S', Items.STICK)
+                .unlockedBy(getItemName(PoItems.SPALL), has(PoItems.SPALL))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, PoItems.SPALL_HOE)
+                .pattern("MM")
+                .pattern(" S")
+                .pattern(" S")
+                .define('M', PoItems.SPALL)
+                .define('S', Items.STICK)
+                .unlockedBy(getItemName(PoItems.SPALL), has(PoItems.SPALL))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, PoItems.SPALL_SWORD)
+                .pattern("M")
+                .pattern("M")
+                .pattern("S")
+                .define('M', PoItems.SPALL)
+                .define('S', Items.STICK)
+                .unlockedBy(getItemName(PoItems.SPALL), has(PoItems.SPALL))
+                .save(recipeOutput);
+    }
+
     public void stairsRecipe(RecipeOutput recipeOutput, ItemLike output, ItemLike input) {
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 8)
                 .pattern("P  ")
@@ -892,49 +936,6 @@ public class RecipeGen extends RecipeProvider implements IConditionBuilder {
                 .save(recipeOutput, PoopSky.MOD_ID + ":" + getItemName(resultItem) + "_smithing");
     }
 
-    protected static void mossyCobblestoneToolRecipes(RecipeOutput recipeOutput) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, PoItems.SPALL_PICKAXE)
-                .pattern("MMM")
-                .pattern(" S ")
-                .pattern(" S ")
-                .define('M', Blocks.MOSSY_COBBLESTONE)
-                .define('S', Items.STICK)
-                .unlockedBy(getItemName(Blocks.MOSSY_COBBLESTONE), has(Blocks.MOSSY_COBBLESTONE))
-                .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, PoItems.SPALL_AXE)
-                .pattern("MM")
-                .pattern("MS")
-                .pattern(" S")
-                .define('M', Blocks.MOSSY_COBBLESTONE)
-                .define('S', Items.STICK)
-                .unlockedBy(getItemName(Blocks.MOSSY_COBBLESTONE), has(Blocks.MOSSY_COBBLESTONE))
-                .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, PoItems.SPALL_SHOVEL)
-                .pattern("M")
-                .pattern("S")
-                .pattern("S")
-                .define('M', Blocks.MOSSY_COBBLESTONE)
-                .define('S', Items.STICK)
-                .unlockedBy(getItemName(Blocks.MOSSY_COBBLESTONE), has(Blocks.MOSSY_COBBLESTONE))
-                .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, PoItems.SPALL_HOE)
-                .pattern("MM")
-                .pattern(" S")
-                .pattern(" S")
-                .define('M', Blocks.MOSSY_COBBLESTONE)
-                .define('S', Items.STICK)
-                .unlockedBy(getItemName(Blocks.MOSSY_COBBLESTONE), has(Blocks.MOSSY_COBBLESTONE))
-                .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, PoItems.SPALL_SWORD)
-                .pattern("M")
-                .pattern("M")
-                .pattern("S")
-                .define('M', Blocks.MOSSY_COBBLESTONE)
-                .define('S', Items.STICK)
-                .unlockedBy(getItemName(Blocks.MOSSY_COBBLESTONE), has(Blocks.MOSSY_COBBLESTONE))
-                .save(recipeOutput);
-    }
-
     protected static void oreSmelting(RecipeOutput recipeOutput, List<ItemLike> ingredients, RecipeCategory category, ItemLike result, float experience, int cookingTime, String group) {
         oreCooking(recipeOutput, RecipeSerializer.SMELTING_RECIPE, SmeltingRecipe::new, ingredients, category, result, experience, cookingTime, group, "_from_smelting");
     }
@@ -983,11 +984,11 @@ public class RecipeGen extends RecipeProvider implements IConditionBuilder {
         return PoopSky.MOD_ID + ":" + getItemName(result);
     }
 
-    protected static String getConversionRecipeName(ItemLike result, ItemLike input) {
+    public static String getConversionRecipeName(ItemLike result, ItemLike input) {
         return PoopSky.MOD_ID + ":" + getItemName(result) + "_from_" + getItemName(input);
     }
 
-    protected static String getModConversionRecipeName(ItemLike result, ItemLike input) {
+    public static String getModConversionRecipeName(ItemLike result, ItemLike input) {
         return getItemName(input) + "_to_" + getItemName(result);
     }
 }

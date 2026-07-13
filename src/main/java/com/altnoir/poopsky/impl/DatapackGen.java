@@ -3,7 +3,7 @@ package com.altnoir.poopsky.impl;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.worldgen.PoConfigureFeatures;
 import com.altnoir.poopsky.content.worldgen.PoPlacedFeatures;
-import com.altnoir.poopsky.impl.type.PoDamageTypes;
+import com.altnoir.poopsky.impl.damageType.PoDamageTypes;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;

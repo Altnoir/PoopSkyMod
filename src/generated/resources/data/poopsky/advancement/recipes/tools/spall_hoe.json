@@ -7,11 +7,11 @@
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "mossy_cobblestone": {
+    "spall": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:mossy_cobblestone"
+            "items": "poopsky:spall"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "mossy_cobblestone"
+      "spall"
     ]
   ],
   "rewards": {
