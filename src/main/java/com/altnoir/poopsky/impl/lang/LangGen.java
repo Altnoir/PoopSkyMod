@@ -231,6 +231,13 @@ public final class LangGen {
         addFlyType("dragon_fruit", "Dragon Fruit Fly");
         addFlyType("glowstone", "Glowstone Fly");
         addFlyType("ender", "End Fly");
+        addFlyType("zinc", "Zinc Fly");
+        addFlyType("certus", "Certus Quartz Fly");
+        addFlyType("sky_dust", "Sky Dust Fly");
+        addFlyType("osmium", "Osmium Fly");
+        addFlyType("tin", "Tin Fly");
+        addFlyType("lead", "Lead Fly");
+        addFlyType("uranium", "Uranium Fly");
     }
 
     private static void addFlyType(String key, String value) {

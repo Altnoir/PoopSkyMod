@@ -228,6 +228,13 @@
   "fly_type.poopsky.dragon_fruit": "Mouche fruit du dragon",
   "fly_type.poopsky.glowstone": "Mouche de pierre lumineuse",
   "fly_type.poopsky.ender": "Mouche de l’End",
+  "fly_type.poopsky.zinc": "Mouche de zinc",
+  "fly_type.poopsky.certus": "Mouche de quartz Certus",
+  "fly_type.poopsky.sky_dust": "Mouche de poussière céleste",
+  "fly_type.poopsky.osmium": "Mouche d’osmium",
+  "fly_type.poopsky.tin": "Mouche d’étain",
+  "fly_type.poopsky.lead": "Mouche de plomb",
+  "fly_type.poopsky.uranium": "Mouche d’uranium",
   "tooltip.poopsky.fly_type": "Type",
 
   "block.poopsky.toilet.oak": "chêne",

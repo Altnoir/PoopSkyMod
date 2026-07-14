@@ -228,6 +228,13 @@
   "fly_type.poopsky.dragon_fruit": "火龍果蒼蠅",
   "fly_type.poopsky.glowstone": "螢光石蒼蠅",
   "fly_type.poopsky.ender": "終界蒼蠅",
+  "fly_type.poopsky.zinc": "鋅蒼蠅",
+  "fly_type.poopsky.certus": "賽特斯石英蒼蠅",
+  "fly_type.poopsky.sky_dust": "天空塵蒼蠅",
+  "fly_type.poopsky.osmium": "鋨蒼蠅",
+  "fly_type.poopsky.tin": "錫蒼蠅",
+  "fly_type.poopsky.lead": "鉛蒼蠅",
+  "fly_type.poopsky.uranium": "鈾蒼蠅",
   "tooltip.poopsky.fly_type": "品種",
 
   "block.poopsky.toilet.oak": "橡木",

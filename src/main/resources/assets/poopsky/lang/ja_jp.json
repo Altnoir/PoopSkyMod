@@ -228,6 +228,13 @@
   "fly_type.poopsky.dragon_fruit": "ドラゴンフルーツハエ",
   "fly_type.poopsky.glowstone": "グロウストーンハエ",
   "fly_type.poopsky.ender": "エンダーハエ",
+  "fly_type.poopsky.zinc": "亜鉛ハエ",
+  "fly_type.poopsky.certus": "Certus Quartzハエ",
+  "fly_type.poopsky.sky_dust": "Sky Dustハエ",
+  "fly_type.poopsky.osmium": "オスミウムハエ",
+  "fly_type.poopsky.tin": "スズハエ",
+  "fly_type.poopsky.lead": "鉛ハエ",
+  "fly_type.poopsky.uranium": "ウランハエ",
   "tooltip.poopsky.fly_type": "種類",
 
   "block.poopsky.toilet.oak": "オーク",

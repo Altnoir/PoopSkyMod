@@ -228,6 +228,13 @@
   "fly_type.poopsky.dragon_fruit": "용과 파리",
   "fly_type.poopsky.glowstone": "발광석 파리",
   "fly_type.poopsky.ender": "엔더 파리",
+  "fly_type.poopsky.zinc": "아연 파리",
+  "fly_type.poopsky.certus": "서터스 석영 파리",
+  "fly_type.poopsky.sky_dust": "하늘 먼지 파리",
+  "fly_type.poopsky.osmium": "오스뮴 파리",
+  "fly_type.poopsky.tin": "주석 파리",
+  "fly_type.poopsky.lead": "납 파리",
+  "fly_type.poopsky.uranium": "우라늄 파리",
   "tooltip.poopsky.fly_type": "종류",
 
   "block.poopsky.toilet.oak": "참나무",

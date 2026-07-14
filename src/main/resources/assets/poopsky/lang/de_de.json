@@ -228,6 +228,13 @@
   "fly_type.poopsky.dragon_fruit": "Drachenfruchtfliege",
   "fly_type.poopsky.glowstone": "Leuchtsteinfliege",
   "fly_type.poopsky.ender": "Ender-Fliege",
+  "fly_type.poopsky.zinc": "Zinkfliege",
+  "fly_type.poopsky.certus": "Certusquarzfliege",
+  "fly_type.poopsky.sky_dust": "Himmelsstaubfliege",
+  "fly_type.poopsky.osmium": "Osmiumfliege",
+  "fly_type.poopsky.tin": "Zinnfliege",
+  "fly_type.poopsky.lead": "Bleifliege",
+  "fly_type.poopsky.uranium": "Uranfliege",
   "tooltip.poopsky.fly_type": "Typ",
 
   "block.poopsky.toilet.oak": "Eiche",

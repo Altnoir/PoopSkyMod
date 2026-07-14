@@ -228,6 +228,13 @@
   "fly_type.poopsky.dragon_fruit": "Муха драконьего фрукта",
   "fly_type.poopsky.glowstone": "Светокаменная муха",
   "fly_type.poopsky.ender": "Эндер-муха",
+  "fly_type.poopsky.zinc": "Цинковая муха",
+  "fly_type.poopsky.certus": "Муха истинного кварца",
+  "fly_type.poopsky.sky_dust": "Муха небесной пыли",
+  "fly_type.poopsky.osmium": "Осмиевая муха",
+  "fly_type.poopsky.tin": "Оловянная муха",
+  "fly_type.poopsky.lead": "Свинцовая муха",
+  "fly_type.poopsky.uranium": "Урановая муха",
   "tooltip.poopsky.fly_type": "Тип",
 
   "block.poopsky.toilet.oak": "Дубовый",
