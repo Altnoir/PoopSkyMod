@@ -20,7 +20,7 @@ public class PFlyRecipes {
                 .stream()
                 .filter(holder -> holder.value().matches(type.id()))
                 .findFirst()
-                .map(holder -> holder.value().result().copy())
+                .map(holder -> holder.value().resultStack())
                 .orElse(ItemStack.EMPTY);
     }
 

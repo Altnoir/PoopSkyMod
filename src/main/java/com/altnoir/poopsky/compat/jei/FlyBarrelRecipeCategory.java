@@ -71,7 +71,7 @@ public class FlyBarrelRecipeCategory implements IRecipeCategory<RecipeHolder<Fly
     public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<FlyBarrelRecipe> recipeHolder, IFocusGroup focuses) {
         var recipe = recipeHolder.value();
         builder.addSlot(RecipeIngredientRole.INPUT, INPUT_X, INPUT_Y).addItemStack(FlyItem.withType(FlyType.byId(recipe.flyTypeId())));
-        builder.addSlot(RecipeIngredientRole.OUTPUT, OUTPUT_X, INPUT_Y).addItemStack(recipe.result());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, OUTPUT_X, INPUT_Y).addItemStack(recipe.resultStack());
     }
 
     @Override
