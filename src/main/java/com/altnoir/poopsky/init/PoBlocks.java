@@ -102,6 +102,14 @@ public class PoBlocks {
                     .isRedstoneConductor(PoBlocks::always)
                     .isSuffocating(PoBlocks::always)
                     .instrument(NoteBlockInstrument.COW_BELL)));
+    public static final BlockEntry<FecalFarmlandBlock> FECAL_FARMLAND = registerBlock("fecal_farmland",
+            props -> new FecalFarmlandBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.FARMLAND)
+                    .randomTicks()),
+            (loot, block) -> loot.add(block, LootTable.lootTable()
+                    .withPool(LootPool.lootPool()
+                            .setRolls(ConstantValue.exactly(1.0F))
+                            .when(ExplosionCondition.survivesExplosion())
+                            .add(LootItem.lootTableItem(POOP_BLOCK.get())))));
     public static final BlockEntry<PoolimeMaggotsBlock> POOLIME_MAGGOTS_BLOCK = registerBlock("poolime_maggots_block",
             props -> new PoolimeMaggotsBlock(poopProperties(1.0F)
                     .randomTicks()

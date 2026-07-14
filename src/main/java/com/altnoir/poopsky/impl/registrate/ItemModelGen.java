@@ -111,6 +111,7 @@ public class ItemModelGen extends RegistrateItemModelProvider {
         flyItemWithOverrides();
         blockItem(PoBlocks.FLY_BARREL);
         blockItem(PoBlocks.BREEDING_CHEST);
+        blockItem(PoBlocks.FECAL_FARMLAND);
     }
 
     private void toiletPlugItem() {

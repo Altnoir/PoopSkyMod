@@ -38,6 +38,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         poopBlock();
         poopPiece();
         poolimeMaggotsBlock();
+        fecalFarmland();
         blockWithTranslucentRenderType(PoBlocks.POOLIME_BLOCK.get());
         PoBlocks.SIMPLE_MODEL_FAMILIES.forEach(this::blockFamily);
         blockWithItem(PoBlocks.CRACKED_POOP_BRICKS.get());
@@ -138,6 +139,20 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
                 .texture("up", modLoc("block/" + getBlockPath(PoBlocks.POOLIME_MAGGOTS_BLOCK.get())))
                 .texture(PARTICLE, modLoc("block/poop_block"));
         simpleBlockWithItem(PoBlocks.POOLIME_MAGGOTS_BLOCK.get(), model);
+    }
+
+    private void fecalFarmland() {
+        ModelFile dry = models().withExistingParent("fecal_farmland", mcLoc("block/template_farmland"))
+                .texture("dirt", modLoc("block/poop_block"))
+                .texture("top", mcLoc("block/farmland"));
+        ModelFile moist = models().withExistingParent("fecal_farmland_moist", mcLoc("block/template_farmland"))
+                .texture("dirt", modLoc("block/poop_block"))
+                .texture("top", mcLoc("block/farmland_moist"));
+
+        getVariantBuilder(PoBlocks.FECAL_FARMLAND.get())
+                .forAllStates(state -> ConfiguredModel.builder()
+                        .modelFile(state.getValue(FarmBlock.MOISTURE) == 0 ? dry : moist)
+                        .build());
     }
 
     private void registerPoopCake() {

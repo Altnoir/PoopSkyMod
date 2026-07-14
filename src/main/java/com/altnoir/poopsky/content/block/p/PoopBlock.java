@@ -1,11 +1,13 @@
 package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.init.PoParticles;
+import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.impl.sound.PoSoundEvents;
 import com.altnoir.poopsky.content.worldgen.PoConfigureFeatures;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
@@ -27,6 +29,7 @@ import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -41,6 +44,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.common.ItemAbilities;
+import net.neoforged.neoforge.common.ItemAbility;
 import org.jetbrains.annotations.NotNull;
 
 public class PoopBlock extends Block implements BonemealableBlock {
@@ -104,6 +109,16 @@ public class PoopBlock extends Block implements BonemealableBlock {
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
         return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
+    }
+
+    @Override
+    public BlockState getToolModifiedState(BlockState state, UseOnContext context, ItemAbility itemAbility, boolean simulate) {
+        if (itemAbility == ItemAbilities.HOE_TILL
+                && context.getClickedFace() != Direction.DOWN
+                && context.getLevel().getBlockState(context.getClickedPos().above()).isAir()) {
+            return PoBlocks.FECAL_FARMLAND.get().defaultBlockState();
+        }
+        return super.getToolModifiedState(state, context, itemAbility, simulate);
     }
 
     private static boolean doesEntityDoPoopBlockSlideEffects(Entity entity) {
