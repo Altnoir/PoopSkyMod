@@ -1,28 +1,16 @@
 {
   "variants": {
-    "moisture=0": {
+    "mode=default": {
       "model": "poopsky:block/poop_farmland"
     },
-    "moisture=1": {
-      "model": "poopsky:block/poop_farmland_moist"
+    "mode=enriched": {
+      "model": "poopsky:block/poop_farmland_enriched"
     },
-    "moisture=2": {
-      "model": "poopsky:block/poop_farmland_moist"
+    "mode=enriched_leak": {
+      "model": "poopsky:block/poop_farmland_enriched_leak"
     },
-    "moisture=3": {
-      "model": "poopsky:block/poop_farmland_moist"
-    },
-    "moisture=4": {
-      "model": "poopsky:block/poop_farmland_moist"
-    },
-    "moisture=5": {
-      "model": "poopsky:block/poop_farmland_moist"
-    },
-    "moisture=6": {
-      "model": "poopsky:block/poop_farmland_moist"
-    },
-    "moisture=7": {
-      "model": "poopsky:block/poop_farmland_moist"
+    "mode=leak": {
+      "model": "poopsky:block/poop_farmland_leak"
     }
   }
 }

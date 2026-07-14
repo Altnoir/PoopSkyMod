@@ -1,0 +1,631 @@
+﻿> Task :createMinecraftArtifacts UP-TO-DATE
+
+> Task :compileJava FAILED
+.\gradlew.bat : 閿欒: 璇诲彇C:\Users\24745\.gradle\caches\modules-2\files-2.1\curse.maven\farmers-delight-398521\8001010\afd53cc1ecfdb031492a696235afcf039b293734\farmers-delight-398521-8001010.jar鏃跺嚭閿? zip END header not found
+所在位置 行:1 字符: 1
++ .\gradlew.bat compileJava 2>&1 | Out-File -FilePath "F:\Minecraft\Mod ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (閿欒: 璇诲彇C:\User...eader not found:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\BreedingChestMenu.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.client.inventory
+package com.altnoir.poopsky.client.inventory;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\model\ToiletBakedModel.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.client.model
+package com.altnoir.poopsky.client.model;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\particle\LeavesParticle.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.client.particle
+package com.altnoir.poopsky.client.particle;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\renderer\TimeBellOverlay.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.client.renderer
+package com.altnoir.poopsky.client.renderer;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\sound\FlyBuzzSoundInstance.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.client.sound
+package com.altnoir.poopsky.client.sound;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\ToiletClientBlockExtensions.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.client
+package com.altnoir.poopsky.client;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\compat\create\content\kinetics\fan\processing\DigestingFanProcessingType.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.compat.create.content.kinetics.fan.processing
+package com.altnoir.poopsky.compat.create.content.kinetics.fan.processing;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\compat\create\content\logistics\PSItemAttributes.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.compat.create.content.logistics
+package com.altnoir.poopsky.compat.create.content.logistics;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\compat\create\CreatePlugin.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.compat.create
+package com.altnoir.poopsky.compat.create;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\compat\jei\AnalPressingRecipeCategory.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.compat.jei
+package com.altnoir.poopsky.compat.jei;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\compat\jei\create\animations\AnimatedUrineLiquid.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.compat.jei.create.animations
+package com.altnoir.poopsky.compat.jei.create.animations;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\compat\jei\create\FanDigestingCategory.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.compat.jei.create
+package com.altnoir.poopsky.compat.jei.create;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\compat\maid\ExtraMaidBrain.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.compat.maid
+package com.altnoir.poopsky.compat.maid;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\compat\maid\toilet\DefecateBehavior.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.compat.maid.toilet
+package com.altnoir.poopsky.compat.maid.toilet;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\compat\PoMods.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.compat
+package com.altnoir.poopsky.compat;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\Config.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky
+package com.altnoir.poopsky;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\block\abs\AbstractCompooperBlock.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.block.abs
+package com.altnoir.poopsky.content.block.abs;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\block\entity\BreedingChestBlockEntity.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.block.entity
+package com.altnoir.poopsky.content.block.entity;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\block\fluid\UrineLiquidBlock.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.block.fluid
+package com.altnoir.poopsky.content.block.fluid;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\block\p\BaseToiletLavaBlock.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.block.p
+package com.altnoir.poopsky.content.block.p;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\block\renderer\SieveBlockEntityRenderer.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.block.renderer
+package com.altnoir.poopsky.content.block.renderer;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\block\ToiletComponent.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.block
+package com.altnoir.poopsky.content.block;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\effect\FecalIncontinenceEffect.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.effect
+package com.altnoir.poopsky.content.effect;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\entity\model\FlyModel.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.entity.model
+package com.altnoir.poopsky.content.entity.model;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\entity\p\ChairEntity.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.entity.p
+package com.altnoir.poopsky.content.entity.p;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\entity\renderer\ChairRenderer.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.entity.renderer
+package com.altnoir.poopsky.content.entity.renderer;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\FlyType.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content
+package com.altnoir.poopsky.content;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\item\IFeedable.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.item
+package com.altnoir.poopsky.content.item;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\item\p\ChiliItem.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.item.p
+package com.altnoir.poopsky.content.item.p;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\recipe\AnalPressingRecipe.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.recipe
+package com.altnoir.poopsky.content.recipe;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\villager\PoVillagers.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.villager
+package com.altnoir.poopsky.content.villager;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\worldgen\foliage\PoFoliagePlacerTypes.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.worldgen.foliage
+package com.altnoir.poopsky.content.worldgen.foliage;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\worldgen\PoChunkGenerators.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.worldgen
+package com.altnoir.poopsky.content.worldgen;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\worldgen\structure\PoopIslandPiece.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.worldgen.structure
+package com.altnoir.poopsky.content.worldgen.structure;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\impl\create\PDigestingRecipeGen.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.impl.create
+package com.altnoir.poopsky.impl.create;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\impl\DataGenerators.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.impl
+package com.altnoir.poopsky.impl;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\impl\event\PoGameEvents.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.impl.event
+package com.altnoir.poopsky.impl.event;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\impl\lang\LangGen.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.impl.lang
+package com.altnoir.poopsky.impl.lang;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\impl\network\PlugActionPayload.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.impl.network
+package com.altnoir.poopsky.impl.network;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\impl\recipe\RecipeGen.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.impl.recipe
+package com.altnoir.poopsky.impl.recipe;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\impl\registrate\AdvancementGen.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.impl.registrate
+package com.altnoir.poopsky.impl.registrate;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\impl\sound\PoSoundEvents.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.impl.sound
+package com.altnoir.poopsky.impl.sound;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\impl\type\damageType\DamageTypeTagsGen.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.impl.type.damageType
+package com.altnoir.poopsky.impl.type.damageType;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\impl\type\FlyTypeGen.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.impl.type
+package com.altnoir.poopsky.impl.type;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\impl\util\ClientUtil.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.impl.util
+package com.altnoir.poopsky.impl.util;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\init\FlyTypes.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.init
+package com.altnoir.poopsky.init;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\mixin\BaseCoralPlantTypeBlockMixin.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.mixin
+package com.altnoir.poopsky.mixin;
+^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\BreedingChestScreen.java:11: 閿欒: 鏃犳硶璁块棶com.altnoir
+public class BreedingChestScreen extends AbstractContainerScreen<BreedingChestMenu> {
+       ^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\BreedingChestScreen.java:11: 閿欒: 鎵句笉鍒扮鍙?public class BreedingChestScreen extends AbstractContainerScreen<BreedingChestMenu> {
+                                         ^
+  绗﹀彿: 绫?AbstractContainerScreen
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\BreedingChestScreen.java:11: 閿欒: 鎵句笉鍒扮鍙?public class BreedingChestScreen extends AbstractContainerScreen<BreedingChestMenu> {
+                                                                 ^
+  绗﹀彿: 绫?BreedingChestMenu
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\BreedingChestScreen.java:12: 閿欒: 鎵句笉鍒扮鍙?    private static final ResourceLocation CONTAINER_BACKGROUND =
+                         ^
+  绗﹀彿:   绫?ResourceLocation
+  浣嶇疆: 绫?BreedingChestScreen
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\BreedingChestScreen.java:21: 閿欒: 鎵句笉鍒扮鍙?    public BreedingChestScreen(BreedingChestMenu menu, Inventory playerInventory, Component title) {
+                               ^
+  绗﹀彿:   绫?BreedingChestMenu
+  浣嶇疆: 绫?BreedingChestScreen
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\BreedingChestScreen.java:21: 閿欒: 鎵句笉鍒扮鍙?    public BreedingChestScreen(BreedingChestMenu menu, Inventory playerInventory, Component title) {
+                                                       ^
+  绗﹀彿:   绫?Inventory
+  浣嶇疆: 绫?BreedingChestScreen
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\BreedingChestScreen.java:21: 閿欒: 鎵句笉鍒扮鍙?    public BreedingChestScreen(BreedingChestMenu menu, Inventory playerInventory, Component title) {
+                                                                                  ^
+  绗﹀彿:   绫?Component
+  浣嶇疆: 绫?BreedingChestScreen
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\BreedingChestScreen.java:29: 閿欒: 鎵句笉鍒扮鍙?    protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
+                            ^
+  绗﹀彿:   绫?GuiGraphics
+  浣嶇疆: 绫?BreedingChestScreen
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\BreedingChestScreen.java:46: 閿欒: 鎵句笉鍒扮鍙?    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+                       ^
+  绗﹀彿:   绫?GuiGraphics
+  浣嶇疆: 绫?BreedingChestScreen
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:19: 閿欒: 鏃犳硶璁块棶com
+public class FlyBarrelMenu extends AbstractContainerMenu {
+       ^
+  ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:19: 閿欒: 鎵句笉鍒扮鍙?public class FlyBarrelMenu extends AbstractContainerMenu {
+                                   ^
+  绗﹀彿: 绫?AbstractContainerMenu
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:31: 閿欒: 鎵句笉鍒扮鍙?    private final Container flyBarrel;
+                  ^
+  绗﹀彿:   绫?Container
+  浣嶇疆: 绫?FlyBarrelMenu
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:32: 閿欒: 鎵句笉鍒扮鍙?    private final ContainerData data;
+                  ^
+  绗﹀彿:   绫?ContainerData
+  浣嶇疆: 绫?FlyBarrelMenu
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:34: 閿欒: 鎵句笉鍒扮鍙?    public FlyBarrelMenu(MenuType<FlyBarrelMenu> menuType, int containerId, Inventory playerInventory) {
+                         ^
+  绗﹀彿:   绫?MenuType
+  浣嶇疆: 绫?FlyBarrelMenu
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:34: 閿欒: 鎵句笉鍒扮鍙?    public FlyBarrelMenu(MenuType<FlyBarrelMenu> menuType, int containerId, Inventory playerInventory) {
+                                                                            ^
+  绗﹀彿:   绫?Inventory
+  浣嶇疆: 绫?FlyBarrelMenu
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:38: 閿欒: 鎵句笉鍒扮鍙?    public FlyBarrelMenu(int containerId, Inventory playerInventory, Container container, ContainerData 
+data) {
+                                          ^
+  绗﹀彿:   绫?Inventory
+  浣嶇疆: 绫?FlyBarrelMenu
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:38: 閿欒: 鎵句笉鍒扮鍙?    public FlyBarrelMenu(int containerId, Inventory playerInventory, Container container, ContainerData 
+data) {
+                                                                     ^
+  绗﹀彿:   绫?Container
+  浣嶇疆: 绫?FlyBarrelMenu
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:38: 閿欒: 鎵句笉鍒扮鍙?    public FlyBarrelMenu(int containerId, Inventory playerInventory, Container container, ContainerData 
+data) {
+
+[Incubating] Problems report is available at: file:///F:/Minecraft/ModDev/PoopSkyMod/build/reports/problems/problems-report.html
+                                                                                          ^
+  绗﹀彿:   绫?ContainerData
+  浣嶇疆: 绫?FlyBarrelMenu
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:42: 閿欒: 鎵句笉鍒扮鍙?    private FlyBarrelMenu(MenuType<FlyBarrelMenu> menuType, int containerId, Inventory playerInventory, 
+Container container, ContainerData data) {
+                          ^
+  绗﹀彿:   绫?MenuType
+  浣嶇疆: 绫?FlyBarrelMenu
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:42: 閿欒: 鎵句笉鍒扮鍙?    private FlyBarrelMenu(MenuType<FlyBarrelMenu> menuType, int containerId, Inventory playerInventory, 
+Container container, ContainerData data) {
+                                                                             ^
+  绗﹀彿:   绫?Inventory
+  浣嶇疆: 绫?FlyBarrelMenu
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:42: 閿欒: 鎵句笉鍒扮鍙?    private FlyBarrelMenu(MenuType<FlyBarrelMenu> menuType, int containerId, Inventory playerInventory, 
+Container container, ContainerData data) {
+                                                                                                        ^
+  绗﹀彿:   绫?Container
+  浣嶇疆: 绫?FlyBarrelMenu
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:42: 閿欒: 鎵句笉鍒扮鍙?    private FlyBarrelMenu(MenuType<FlyBarrelMenu> menuType, int containerId, Inventory playerInventory, 
+Container container, ContainerData data) {
+                                                                                                                             ^
+  绗﹀彿:   绫?ContainerData
+  浣嶇疆: 绫?FlyBarrelMenu
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:84: 閿欒: 鎵句笉鍒扮鍙?    public ItemStack quickMoveStack(Player player, int index) {
+                                    ^
+  绗﹀彿:   绫?Player
+  浣嶇疆: 绫?FlyBarrelMenu
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:84: 閿欒: 鎵句笉鍒扮鍙?    public ItemStack quickMoveStack(Player player, int index) {
+           ^
+  绗﹀彿:   绫?ItemStack
+  浣嶇疆: 绫?FlyBarrelMenu
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:129: 閿欒: 鎵句笉鍒扮鍙?    public boolean stillValid(Player player) {
+                              ^
+  绗﹀彿:   绫?Player
+  浣嶇疆: 绫?FlyBarrelMenu
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:134: 閿欒: 鎵句笉鍒扮鍙?    public void removed(Player player) {
+                        ^
+  绗﹀彿:   绫?Player
+  浣嶇疆: 绫?FlyBarrelMenu
+F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:139: 閿欒: 鎵句笉鍒扮鍙?    public Container getContainer() {
+           ^
+  绗﹀彿:   绫?Container
+  浣嶇疆: 绫?FlyBarrelMenu
+75 涓敊璇?
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava' (registered by plugin class 'org.gradle.api.plugins.JavaBasePlugin').
+> Compilation failed; see the compiler output below.
+  閿欒: 璇诲彇C:\Users\24745\.gradle\caches\modules-2\files-2.1\curse.maven\farmers-delight-398521\8001010\afd53cc1ecfdb031492a696235afcf039b293734\farmers-delight-398521-8001010.jar鏃跺嚭閿? zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\BreedingChestMenu.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.client.inventory
+  package com.altnoir.poopsky.client.inventory;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\model\ToiletBakedModel.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.client.model
+  package com.altnoir.poopsky.client.model;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\particle\LeavesParticle.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.client.particle
+  package com.altnoir.poopsky.client.particle;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\renderer\TimeBellOverlay.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.client.renderer
+  package com.altnoir.poopsky.client.renderer;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\sound\FlyBuzzSoundInstance.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.client.sound
+  package com.altnoir.poopsky.client.sound;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\ToiletClientBlockExtensions.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.client
+  package com.altnoir.poopsky.client;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\compat\create\content\kinetics\fan\processing\DigestingFanProcessingType.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.compat.create.content.kinetics.fan.processing
+  package com.altnoir.poopsky.compat.create.content.kinetics.fan.processing;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\compat\create\content\logistics\PSItemAttributes.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.compat.create.content.logistics
+  package com.altnoir.poopsky.compat.create.content.logistics;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\compat\create\CreatePlugin.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.compat.create
+  package com.altnoir.poopsky.compat.create;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\compat\jei\AnalPressingRecipeCategory.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.compat.jei
+  package com.altnoir.poopsky.compat.jei;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\compat\jei\create\animations\AnimatedUrineLiquid.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.compat.jei.create.animations
+  package com.altnoir.poopsky.compat.jei.create.animations;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\compat\jei\create\FanDigestingCategory.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.compat.jei.create
+  package com.altnoir.poopsky.compat.jei.create;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\compat\maid\ExtraMaidBrain.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.compat.maid
+  package com.altnoir.poopsky.compat.maid;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\compat\maid\toilet\DefecateBehavior.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.compat.maid.toilet
+  package com.altnoir.poopsky.compat.maid.toilet;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\compat\PoMods.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.compat
+  package com.altnoir.poopsky.compat;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\Config.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky
+  package com.altnoir.poopsky;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\block\abs\AbstractCompooperBlock.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.block.abs
+  package com.altnoir.poopsky.content.block.abs;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\block\entity\BreedingChestBlockEntity.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.block.entity
+  package com.altnoir.poopsky.content.block.entity;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\block\fluid\UrineLiquidBlock.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.block.fluid
+  package com.altnoir.poopsky.content.block.fluid;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\block\p\BaseToiletLavaBlock.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.block.p
+  package com.altnoir.poopsky.content.block.p;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\block\renderer\SieveBlockEntityRenderer.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.block.renderer
+  package com.altnoir.poopsky.content.block.renderer;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\block\ToiletComponent.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.block
+  package com.altnoir.poopsky.content.block;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\effect\FecalIncontinenceEffect.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.effect
+  package com.altnoir.poopsky.content.effect;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\entity\model\FlyModel.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.entity.model
+  package com.altnoir.poopsky.content.entity.model;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\entity\p\ChairEntity.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.entity.p
+  package com.altnoir.poopsky.content.entity.p;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\entity\renderer\ChairRenderer.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.entity.renderer
+  package com.altnoir.poopsky.content.entity.renderer;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\FlyType.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content
+  package com.altnoir.poopsky.content;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\item\IFeedable.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.item
+  package com.altnoir.poopsky.content.item;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\item\p\ChiliItem.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.item.p
+  package com.altnoir.poopsky.content.item.p;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\recipe\AnalPressingRecipe.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.recipe
+  package com.altnoir.poopsky.content.recipe;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\villager\PoVillagers.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.villager
+  package com.altnoir.poopsky.content.villager;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\worldgen\foliage\PoFoliagePlacerTypes.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.worldgen.foliage
+  package com.altnoir.poopsky.content.worldgen.foliage;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\worldgen\PoChunkGenerators.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.worldgen
+  package com.altnoir.poopsky.content.worldgen;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\worldgen\structure\PoopIslandPiece.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.worldgen.structure
+  package com.altnoir.poopsky.content.worldgen.structure;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\impl\create\PDigestingRecipeGen.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.impl.create
+  package com.altnoir.poopsky.impl.create;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\impl\DataGenerators.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.impl
+  package com.altnoir.poopsky.impl;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\impl\event\PoGameEvents.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.impl.event
+  package com.altnoir.poopsky.impl.event;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\impl\lang\LangGen.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.impl.lang
+  package com.altnoir.poopsky.impl.lang;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\impl\network\PlugActionPayload.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.impl.network
+  package com.altnoir.poopsky.impl.network;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\impl\recipe\RecipeGen.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.impl.recipe
+  package com.altnoir.poopsky.impl.recipe;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\impl\registrate\AdvancementGen.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.impl.registrate
+  package com.altnoir.poopsky.impl.registrate;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\impl\sound\PoSoundEvents.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.impl.sound
+  package com.altnoir.poopsky.impl.sound;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\impl\type\damageType\DamageTypeTagsGen.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.impl.type.damageType
+  package com.altnoir.poopsky.impl.type.damageType;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\impl\type\FlyTypeGen.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.impl.type
+  package com.altnoir.poopsky.impl.type;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\impl\util\ClientUtil.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.impl.util
+  package com.altnoir.poopsky.impl.util;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\init\FlyTypes.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.init
+  package com.altnoir.poopsky.init;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\mixin\BaseCoralPlantTypeBlockMixin.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.mixin
+  package com.altnoir.poopsky.mixin;
+  ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\BreedingChestScreen.java:11: 閿欒: 鏃犳硶璁块棶com.altnoir
+  public class BreedingChestScreen extends AbstractContainerScreen<BreedingChestMenu> {
+         ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:19: 閿欒: 鏃犳硶璁块棶com
+  public class FlyBarrelMenu extends AbstractContainerMenu {
+         ^
+    ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\BreedingChestScreen.java:12: 閿欒: 鎵句笉鍒扮鍙?      private static final ResourceLocation CONTAINER_BACKGROUND =
+                           ^
+    绗﹀彿:   绫?ResourceLocation
+    浣嶇疆: 绫?BreedingChestScreen
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\BreedingChestScreen.java:21: 閿欒: 鎵句笉鍒扮鍙?      public BreedingChestScreen(BreedingChestMenu menu, Inventory playerInventory, Component 
+title) {
+                                 ^
+    绗﹀彿:   绫?BreedingChestMenu
+    浣嶇疆: 绫?BreedingChestScreen
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\BreedingChestScreen.java:21: 閿欒: 鎵句笉鍒扮鍙?      public BreedingChestScreen(BreedingChestMenu menu, Inventory playerInventory, Component 
+title) {
+                                                         ^
+    绗﹀彿:   绫?Inventory
+    浣嶇疆: 绫?BreedingChestScreen
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\BreedingChestScreen.java:21: 閿欒: 鎵句笉鍒扮鍙?      public BreedingChestScreen(BreedingChestMenu menu, Inventory playerInventory, Component 
+title) {
+                                                                                    ^
+    绗﹀彿:   绫?Component
+    浣嶇疆: 绫?BreedingChestScreen
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\BreedingChestScreen.java:29: 閿欒: 鎵句笉鍒扮鍙?      protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
+                              ^
+    绗﹀彿:   绫?GuiGraphics
+    浣嶇疆: 绫?BreedingChestScreen
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\BreedingChestScreen.java:46: 閿欒: 鎵句笉鍒扮鍙?      public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+                         ^
+    绗﹀彿:   绫?GuiGraphics
+    浣嶇疆: 绫?BreedingChestScreen
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:31: 閿欒: 鎵句笉鍒扮鍙?      private final Container flyBarrel;
+                    ^
+    绗﹀彿:   绫?Container
+    浣嶇疆: 绫?FlyBarrelMenu
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:32: 閿欒: 鎵句笉鍒扮鍙?      private final ContainerData data;
+                    ^
+    绗﹀彿:   绫?ContainerData
+    浣嶇疆: 绫?FlyBarrelMenu
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:34: 閿欒: 鎵句笉鍒扮鍙?      public FlyBarrelMenu(MenuType<FlyBarrelMenu> menuType, int containerId, Inventory playerInventory) {
+                           ^
+    绗﹀彿:   绫?MenuType
+    浣嶇疆: 绫?FlyBarrelMenu
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:34: 閿欒: 鎵句笉鍒扮鍙?      public FlyBarrelMenu(MenuType<FlyBarrelMenu> menuType, int containerId, Inventory playerInventory) {
+                                                                              ^
+    绗﹀彿:   绫?Inventory
+    浣嶇疆: 绫?FlyBarrelMenu
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:38: 閿欒: 鎵句笉鍒扮鍙?      public FlyBarrelMenu(int containerId, Inventory playerInventory, Container container, ContainerData 
+data) {
+                                            ^
+    绗﹀彿:   绫?Inventory
+    浣嶇疆: 绫?FlyBarrelMenu
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:38: 閿欒: 鎵句笉鍒扮鍙?      public FlyBarrelMenu(int containerId, Inventory playerInventory, Container container, ContainerData 
+data) {
+                                                                       ^
+    绗﹀彿:   绫?Container
+    浣嶇疆: 绫?FlyBarrelMenu
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:38: 閿欒: 鎵句笉鍒扮鍙?      public FlyBarrelMenu(int containerId, Inventory playerInventory, Container container, ContainerData 
+data) {
+                                                                                            ^
+    绗﹀彿:   绫?ContainerData
+    浣嶇疆: 绫?FlyBarrelMenu
+2 actionable tasks: 1 executed, 1 up-to-date
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:42: 閿欒: 鎵句笉鍒扮鍙?      private FlyBarrelMenu(MenuType<FlyBarrelMenu> menuType, int containerId, Inventory playerInventory, 
+Container container, ContainerData data) {
+                            ^
+    绗﹀彿:   绫?MenuType
+    浣嶇疆: 绫?FlyBarrelMenu
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:42: 閿欒: 鎵句笉鍒扮鍙?      private FlyBarrelMenu(MenuType<FlyBarrelMenu> menuType, int containerId, Inventory playerInventory, 
+Container container, ContainerData data) {
+                                                                               ^
+    绗﹀彿:   绫?Inventory
+    浣嶇疆: 绫?FlyBarrelMenu
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:42: 閿欒: 鎵句笉鍒扮鍙?      private FlyBarrelMenu(MenuType<FlyBarrelMenu> menuType, int containerId, Inventory playerInventory, 
+Container container, ContainerData data) {
+                                                                                                          ^
+    绗﹀彿:   绫?Container
+    浣嶇疆: 绫?FlyBarrelMenu
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:42: 閿欒: 鎵句笉鍒扮鍙?      private FlyBarrelMenu(MenuType<FlyBarrelMenu> menuType, int containerId, Inventory playerInventory, 
+Container container, ContainerData data) {
+                                                                                                                               ^
+    绗﹀彿:   绫?ContainerData
+    浣嶇疆: 绫?FlyBarrelMenu
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:84: 閿欒: 鎵句笉鍒扮鍙?      public ItemStack quickMoveStack(Player player, int index) {
+                                      ^
+    绗﹀彿:   绫?Player
+    浣嶇疆: 绫?FlyBarrelMenu
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:84: 閿欒: 鎵句笉鍒扮鍙?      public ItemStack quickMoveStack(Player player, int index) {
+             ^
+    绗﹀彿:   绫?ItemStack
+    浣嶇疆: 绫?FlyBarrelMenu
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:129: 閿欒: 鎵句笉鍒扮鍙?      public boolean stillValid(Player player) {
+                                ^
+    绗﹀彿:   绫?Player
+    浣嶇疆: 绫?FlyBarrelMenu
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:134: 閿欒: 鎵句笉鍒扮鍙?      public void removed(Player player) {
+                          ^
+    绗﹀彿:   绫?Player
+    浣嶇疆: 绫?FlyBarrelMenu
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:139: 閿欒: 鎵句笉鍒扮鍙?      public Container getContainer() {
+             ^
+    绗﹀彿:   绫?Container
+    浣嶇疆: 绫?FlyBarrelMenu
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\BreedingChestScreen.java:11: 閿欒: 鎵句笉鍒扮鍙?  public class BreedingChestScreen extends AbstractContainerScreen<BreedingChestMenu> {
+                                           ^
+    绗﹀彿: 绫?AbstractContainerScreen
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\BreedingChestScreen.java:11: 閿欒: 鎵句笉鍒扮鍙?  public class BreedingChestScreen extends AbstractContainerScreen<BreedingChestMenu> {
+                                                                   ^
+    绗﹀彿: 绫?BreedingChestMenu
+  F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\client\inventory\FlyBarrelMenu.java:19: 閿欒: 鎵句笉鍒扮鍙?  public class FlyBarrelMenu extends AbstractContainerMenu {
+                                     ^
+    绗﹀彿: 绫?AbstractContainerMenu
+  75 涓敊璇?
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+BUILD FAILED in 2s

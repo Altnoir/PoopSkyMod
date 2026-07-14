@@ -1,6 +1,8 @@
 package com.altnoir.poopsky.impl.lang;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.content.FlyType;
+import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateLangProvider;
@@ -82,42 +84,26 @@ public final class LangGen {
     }
 
     private static void addToiletTypes() {
-        addToilet("oak", "Oak");
-        addToilet("spruce", "Spruce");
-        addToilet("birch", "Birch");
-        addToilet("jungle", "Jungle");
-        addToilet("acacia", "Acacia");
-        addToilet("cherry", "Cherry");
-        addToilet("dark_oak", "Dark Oak");
-        addToilet("bamboo", "Bamboo");
-        addToilet("crimson", "Crimson");
-        addToilet("warped", "Warped");
-        addToilet("tile", "Tile");
-        addToilet("dripstone", "Dripstone");
-        addToilet("brick", "Brick");
-        addToilet("smooth_quartz", "Smooth Quartz");
-        addToilet("rainbow", "Rainbow");
-        addToilet("iron", "Iron");
-        addToilet("gold", "Gold");
-        addToilet("copper", "Copper");
-        addToilet("exposed_copper", "Exposed Copper");
-        addToilet("exposed_cut_copper", "Exposed Cut Copper");
-        addToilet("weathered_copper", "Weathered Copper");
-        addToilet("oxidized_copper", "Oxidized Copper");
-        addToilet("cut_copper", "Cut Copper");
-        addToilet("exposed_chiseled_copper", "Exposed Chiseled Copper");
-        addToilet("weathered_chiseled_copper", "Weathered Chiseled Copper");
-        addToilet("oxidized_chiseled_copper", "Oxidized Chiseled Copper");
-        addToilet("weathered_cut_copper", "Weathered Cut Copper");
-        addToilet("oxidized_cut_copper", "Oxidized Cut Copper");
-        addToilet("chiseled_copper", "Chiseled Copper");
-        addToilet("amethyst", "Amethyst");
-        addToilet("lapis", "Lapis Lazuli");
-        addToilet("redstone", "Redstone");
-        addToilet("diamond", "Diamond");
-        addToilet("emerald", "Emerald");
-        addToilet("mangrove", "Mangrove");
-        addToilet("netherite", "Netherite");
+        for (ToiletType type : ToiletType.getAll().values()) {
+            String nameKey = type.nameKey();
+            if (nameKey != null && nameKey.startsWith("block.poopsky.toilet.")) {
+                String key = nameKey.substring("block.poopsky.toilet.".length());
+                String displayName = formatToiletName(key);
+                addToilet(key, displayName);
+            }
+        }
+    }
+
+    private static String formatToiletName(String key) {
+        StringBuilder sb = new StringBuilder();
+        String[] parts = key.split("_");
+        for (int i = 0; i < parts.length; i++) {
+            if (i > 0) sb.append(' ');
+            String part = parts[i];
+            sb.append(Character.toUpperCase(part.charAt(0)));
+            sb.append(part.substring(1));
+        }
+        return sb.toString();
     }
 
     private static void addToilet(String key, String value) {
@@ -205,32 +191,22 @@ public final class LangGen {
 
 
     private static void addFlyTypes() {
-        addFlyType("normal", "Normal Fly");
-        addFlyType("white", "White Fly");
-        addFlyType("black", "Black Fly");
-        addFlyType("green", "Green Fly");
-        addFlyType("yellow", "Yellow Fly");
-        addFlyType("blue", "Blue Fly");
-        addFlyType("red", "Red Fly");
-        addFlyType("brown", "Brown Fly");
-        addFlyType("gray", "Gray Fly");
-        addFlyType("light_gray", "Light Gray Fly");
-        addFlyType("light_blue", "Light Blue Fly");
-        addFlyType("lime", "Lime Fly");
-        addFlyType("magenta", "Magenta Fly");
-        addFlyType("cyan", "Cyan Fly");
-        addFlyType("pink", "Pink Fly");
-        addFlyType("orange", "Orange Fly");
-        addFlyType("purple", "Purple Fly");
-        addFlyType("iron", "Iron Fly");
-        addFlyType("copper", "Copper Fly");
-        addFlyType("gold", "Gold Fly");
-        addFlyType("emerald", "Emerald Fly");
-        addFlyType("diamond", "Diamond Fly");
-        addFlyType("netherite", "Netherite Fly");
-        addFlyType("dragon_fruit", "Dragon Fruit Fly");
-        addFlyType("glowstone", "Glowstone Fly");
-        addFlyType("ender", "End Fly");
+        for (String id : FlyType.FLY_TYPES) {
+            addFlyType(id, formatFlyTypeName(id));
+        }
+    }
+
+    private static String formatFlyTypeName(String id) {
+        StringBuilder sb = new StringBuilder();
+        String[] parts = id.split("_");
+        for (int i = 0; i < parts.length; i++) {
+            if (i > 0) sb.append(' ');
+            String part = parts[i];
+            sb.append(Character.toUpperCase(part.charAt(0)));
+            sb.append(part.substring(1));
+        }
+        sb.append(" Fly");
+        return sb.toString();
     }
 
     private static void addFlyType(String key, String value) {

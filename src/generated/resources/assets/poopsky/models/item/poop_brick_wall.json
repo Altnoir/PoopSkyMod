@@ -1,6 +1,3 @@
 {
-  "parent": "minecraft:block/wall_inventory",
-  "textures": {
-    "wall": "poopsky:block/poop_bricks"
-  }
+  "parent": "poopsky:block/poop_brick_wall_inventory"
 }

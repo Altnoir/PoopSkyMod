@@ -5,7 +5,6 @@ import com.altnoir.poopsky.content.FlyTypeManager;
 import com.altnoir.poopsky.content.ToiletTypeManager;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
-import com.altnoir.poopsky.content.block.p.PoopFarmlandBlock;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.content.villager.PVillagerBehaviors;
 import com.altnoir.poopsky.content.villager.PVillagerTrades;
@@ -34,7 +33,6 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
@@ -45,12 +43,10 @@ import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 import net.neoforged.neoforge.event.entity.EntityMountEvent;
-import net.neoforged.neoforge.event.entity.player.BonemealEvent;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
-import net.neoforged.neoforge.event.level.block.CropGrowEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 
@@ -68,8 +64,6 @@ public class PoGameEvents {
         gameEventBus.addListener(PoGameEvents::onEntityTick);
         gameEventBus.addListener(PoGameEvents::onFinalizeSpawn);
         gameEventBus.addListener(PoGameEvents::onCreateSpawnToilet);
-        gameEventBus.addListener(PoGameEvents::onCropGrow);
-        gameEventBus.addListener(PoGameEvents::onBonemeal);
     }
 
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
@@ -210,30 +204,5 @@ public class PoGameEvents {
             ChunkPos islandChunk = new ChunkPos(islandCenter);
             level.getChunk(islandChunk.x, islandChunk.z);
         }
-    }
-
-    public static void onCropGrow(CropGrowEvent.Post event) {
-        if (event.getLevel() instanceof ServerLevel level && level.getBlockState(event.getPos().below()).is(PoBlocks.POOP_FARMLAND.get())) {
-            PoopFarmlandBlock.scheduleHarvest(level, event.getPos().below());
-        }
-    }
-
-    public static void onBonemeal(BonemealEvent event) {
-        if (event.isCanceled()
-                || !(event.getState().getBlock() instanceof CropBlock cropBlock)
-                || !event.getLevel().getBlockState(event.getPos().below()).is(PoBlocks.POOP_FARMLAND.get())
-                || !event.isValidBonemealTarget()) {
-            return;
-        }
-
-        if (event.getLevel() instanceof ServerLevel level) {
-            if (cropBlock.isBonemealSuccess(level, level.random, event.getPos(), event.getState())) {
-                cropBlock.performBonemeal(level, level.random, event.getPos(), event.getState());
-            }
-            event.getStack().shrink(1);
-            PoopFarmlandBlock.scheduleHarvest(level, event.getPos().below());
-        }
-
-        event.setSuccessful(true);
     }
 }

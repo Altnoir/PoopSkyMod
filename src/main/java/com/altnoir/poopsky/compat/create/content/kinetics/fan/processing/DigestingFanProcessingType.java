@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.compat.create.content.kinetics.fan.processing;
 
-import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.compat.create.PSRecipeTypes;
+import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.init.PoParticles;
 import com.simibubi.create.content.kinetics.fan.processing.FanProcessingType;
 import com.simibubi.create.foundation.recipe.RecipeApplier;
@@ -65,11 +65,19 @@ public class DigestingFanProcessingType implements FanProcessingType {
         if (level.random.nextInt(8) != 0)
             return;
         Vector3f color = new Color(0x8B6914).asVectorF();
-        level.addParticle(new DustParticleOptions(color, 1), pos.x + (level.random.nextFloat() - .5f) * .5f,
-                pos.y + .5f, pos.z + (level.random.nextFloat() - .5f) * .5f, 0, 1 / 8f, 0);
+
+        level.addParticle(new DustParticleOptions(color, 1),
+                pos.x + (level.random.nextFloat() - .5f) * .5f,
+                pos.y + .5f,
+                pos.z + (level.random.nextFloat() - .5f) * .5f,
+                0, 1 / 8f, 0);
+
         if (level.random.nextInt(4) == 0) {
-            level.addParticle(PoParticles.POOP_PARTICLE.get(), pos.x + (level.random.nextFloat() - .5f) * .5f,
-                    pos.y + .5f, pos.z + (level.random.nextFloat() - .5f) * .5f, 0, -0.05, 0);
+            level.addParticle(PoParticles.POOP_PARTICLE.get(),
+                    pos.x + (level.random.nextFloat() - .5f) * .5f,
+                    pos.y + .5f,
+                    pos.z + (level.random.nextFloat() - .5f) * .5f,
+                    0, -0.05, 0);
         }
     }
 

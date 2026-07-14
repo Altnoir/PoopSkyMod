@@ -5,6 +5,7 @@ import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.block.p.PoopCandleCakeBlock;
+import com.altnoir.poopsky.content.block.p.PoopFarmlandBlock;
 import com.altnoir.poopsky.content.block.p.PoopPieceBlock;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
@@ -142,19 +143,27 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
     }
 
     private void poopFarmland() {
-        ModelFile dry = models().withExistingParent(getBlockPath(PoBlocks.POOP_FARMLAND.get()), mcLoc("block/template_farmland"))
+        String path = getBlockPath(PoBlocks.POOP_FARMLAND.get());
+        ModelFile defaultModel = models().withExistingParent(path, mcLoc("block/template_farmland"))
                 .texture("dirt", modLoc("block/poop_block"))
-                .texture("top", mcLoc("block/farmland"));
-
-        ModelFile moist = models().withExistingParent(getBlockPath(PoBlocks.POOP_FARMLAND.get()) + "_moist", mcLoc("block/template_farmland"))
+                .texture("top", modLoc("block/" + path));
+        ModelFile enrichedModel = models().withExistingParent(path + "_enriched", mcLoc("block/template_farmland"))
                 .texture("dirt", modLoc("block/poop_block"))
-                .texture("top", mcLoc("block/farmland_moist"));
+                .texture("top", modLoc("block/" + path + "_enriched"));
+        ModelFile leakModel = models().withExistingParent(path + "_leak", mcLoc("block/template_farmland"))
+                .texture("dirt", modLoc("block/poop_block"))
+                .texture("top", modLoc("block/" + path + "_leak"));
+        ModelFile enrichedLeakModel = models().withExistingParent(path + "_enriched_leak", mcLoc("block/template_farmland"))
+                .texture("dirt", modLoc("block/poop_block"))
+                .texture("top", modLoc("block/" + path + "_enriched_leak"));
 
         getVariantBuilder(PoBlocks.POOP_FARMLAND.get())
-                .forAllStates(state -> ConfiguredModel.builder()
-                        .modelFile(state.getValue(FarmBlock.MOISTURE) == 0 ? dry : moist)
-                        .build());
-        simpleBlockItem(PoBlocks.POOP_FARMLAND.get(), dry);
+                .partialState().with(PoopFarmlandBlock.MODE, PoopFarmlandBlock.FarmlandMode.DEFAULT).addModels(new ConfiguredModel(defaultModel))
+                .partialState().with(PoopFarmlandBlock.MODE, PoopFarmlandBlock.FarmlandMode.ENRICHED).addModels(new ConfiguredModel(enrichedModel))
+                .partialState().with(PoopFarmlandBlock.MODE, PoopFarmlandBlock.FarmlandMode.LEAK).addModels(new ConfiguredModel(leakModel))
+                .partialState().with(PoopFarmlandBlock.MODE, PoopFarmlandBlock.FarmlandMode.ENRICHED_LEAK).addModels(new ConfiguredModel(enrichedLeakModel));
+
+        simpleBlockItem(PoBlocks.POOP_FARMLAND.get(), defaultModel);
     }
 
     private void registerPoopCake() {
@@ -423,6 +432,11 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         wallBlock((WallBlock) wall, texture);
         simpleBlockItem(stairs, blockModel(stairs));
         simpleBlockItem(slab, blockModel(slab));
+        simpleBlockItem(wall, wallInventoryModel(wall));
+    }
+
+    private ModelFile wallInventoryModel(Block wall) {
+        return new ModelFile.UncheckedModelFile(PoopSky.MOD_ID + ":block/" + getBlockPath(wall) + "_inventory");
     }
 
     private ModelFile blockModel(Block block) {

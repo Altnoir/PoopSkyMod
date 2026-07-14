@@ -3,10 +3,8 @@ package com.altnoir.poopsky.impl.registrate;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.init.FlyTypes;
-import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
 import com.tterrag.registrate.providers.RegistrateItemModelProvider;
-import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.client.renderer.block.model.BlockModel.GuiLight;
 import net.minecraft.data.PackOutput;
@@ -17,7 +15,6 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.armortrim.TrimMaterials;
-import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.client.model.generators.loaders.SeparateTransformsModelBuilder;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -46,68 +43,15 @@ public class ItemModelGen extends RegistrateItemModelProvider {
 
     @Override
     protected void registerModels() {
-        generated(PoItems.POOP);
-        generated(PoItems.CHILI_POOP);
-        generated(PoItems.GOLDEN_POOP);
-        generated(PoItems.SEEDBED_CURSE);
-        generated(PoItems.FOLIUM_SENNAE);
-        generated(PoItems.POOP_BALL);
-        generated(PoItems.SAPLING_POOP_BALL);
-        generated(PoItems.SEA_POOP_BALL);
-        generated(PoItems.WITHER_POOP_BALL);
-        generated(PoItems.POOP_BREAD);
-        generated(PoItems.POOP_DUMPLINGS);
-        generated(PoItems.POOP_MOONCAKE);
-        generated(PoItems.CHILI_POOP_MOONCAKE);
-        generated(PoItems.GOLDEN_POOP_MOONCAKE);
-        generated(PoItems.POOP_SOUP);
-        generated(PoItems.POOP_VEGETABLE_STICKS);
-        generated(PoItems.POOBURGER_MEAT);
-        generated(PoItems.POOBURGER);
-        generated(PoItems.POOP_PASTA);
-        generated(PoItems.POODDING);
-        generated(PoItems.DRAGON_BREATH_CHILI);
-        generated(PoItems.KING_OF_DRAGON_FRUIT);
         toiletPlugItem();
-        generated(PoItems.SPALL);
-        generated(PoItems.LAWRENCE_MUSIC_DISC);
-        generated(PoItems.LIGHT_DANCE_MUSIC_DISC);
-        generated(PoItems.MOON_BOWL_MUSIC_DISC);
-        generated(PoItems.TOILET_PLUG_WAND);
-        generated(PoItems.URINE_BOTTLE);
-        generated(PoItems.URINE_BUCKET);
-        generated(PoItems.MAGGOTS_SEEDS);
-        generated(PoItems.ROUNDWORM);
-        generated(PoItems.BAKED_MAGGOTS);
-
-        generated(PoItems.FLY_CATCHER);
-        generated(PoItems.TIME_BELL);
-
-        wallItem(PoBlocks.CHILI_POOP_WALL, PoBlocks.CHILI_POOP_BLOCK);
-        wallItem(PoBlocks.GOLDEN_POOP_WALL, PoBlocks.GOLDEN_POOP_BLOCK);
-        wallItem(PoBlocks.POOP_BRICK_WALL, PoBlocks.POOP_BRICKS);
-        wallItem(PoBlocks.MOSSY_POOP_BRICK_WALL, PoBlocks.MOSSY_POOP_BRICKS);
-        wallItem(PoBlocks.DRIED_POOP_BLOCK_WALL, PoBlocks.DRIED_POOP_BLOCK);
-        wallItem(PoBlocks.SMOOTH_POOP_BLOCK_WALL, PoBlocks.SMOOTH_POOP_BLOCK);
-        wallItem(PoBlocks.CUT_POOP_BLOCK_WALL, PoBlocks.CUT_POOP_BLOCK);
-        wallItem(PoBlocks.TILE_BLOCK_WALL, PoBlocks.TILE_BLOCK);
-
-        withExistingParent(name(PoItems.POOLIME_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
-        withExistingParent(name(PoItems.FLY_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
-
-        generated(PoItems.OMINOUS_FILTHY_INGOT);
-        generated(PoItems.OMEN_UPGRADE_SMITHING_TEMPLATE);
         bigSowordItem();
-        handheld(PoItems.SPALL_PICKAXE);
-        handheld(PoItems.SPALL_AXE);
-        handheld(PoItems.SPALL_SHOVEL);
-        handheld(PoItems.SPALL_HOE);
-        handheld(PoItems.SPALL_SWORD);
         trimmedArmorItem(PoItems.OMEN_HELMET);
         trimmedArmorItem(PoItems.OMEN_CHESTPLATE);
         trimmedArmorItem(PoItems.OMEN_LEGGINGS);
         trimmedArmorItem(PoItems.OMEN_BOOTS);
-
+        withExistingParent(name(PoItems.POOLIME_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
+        withExistingParent(name(PoItems.FLY_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
+        generated(PoItems.URINE_BUCKET);
         flyItemWithOverrides();
     }
 
@@ -132,11 +76,6 @@ public class ItemModelGen extends RegistrateItemModelProvider {
     private void bigSowordItem() {
         this.withExistingParent(name(PoItems.MILOS_SWORD), modLoc("item/big_sword"))
                 .texture("layer0", itemTexture(PoItems.MILOS_SWORD));
-    }
-
-    private void wallItem(BlockEntry<? extends Block> block, BlockEntry<? extends Block> baseBlock) {
-        this.withExistingParent(name(block), mcLoc("block/wall_inventory"))
-                .texture("wall", modLoc("block/" + name(baseBlock)));
     }
 
     private void flyItemWithOverrides() {

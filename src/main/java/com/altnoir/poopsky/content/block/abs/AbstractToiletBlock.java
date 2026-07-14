@@ -6,7 +6,6 @@ import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.entity.p.ToiletEntity;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.impl.sound.PoSoundEvents;
-import com.altnoir.poopsky.init.ToiletTypes;
 import com.altnoir.poopsky.impl.util.toiletUtil;
 import com.altnoir.poopsky.init.*;
 import net.minecraft.core.BlockPos;
@@ -189,9 +188,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(
-            ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult
-    ) {
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (!stack.canPerformAction(ItemAbilities.FIRESTARTER_LIGHT)) {
             return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
         }
@@ -223,13 +220,13 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     }
 
     @Nullable
-    protected ItemInteractionResult handleVariantReplacement(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, ToiletType.Category acceptedCategory) {
+    protected ItemInteractionResult handleVariantReplacement(ItemStack stack, Level level, BlockPos pos, Player player, ToiletType.Category acceptedCategory) {
         if (!(stack.getItem() instanceof BlockItem blockItem)) {
             return null;
         }
 
         ToiletType newType = ToiletType.bySourceBlock(blockItem.getBlock());
-        if (newType == null || newType.category() != acceptedCategory) {
+        if (newType == null || newType == getToiletTypeOrDefault(level, pos) || newType.category() != acceptedCategory) {
             return null;
         }
 

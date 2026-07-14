@@ -2,6 +2,6 @@
   "parent": "minecraft:block/template_farmland",
   "textures": {
     "dirt": "poopsky:block/poop_block",
-    "top": "minecraft:block/farmland_moist"
+    "top": "poopsky:block/poop_farmland_enriched"
   }
 }

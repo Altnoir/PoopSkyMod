@@ -3,6 +3,6 @@
   "hardness": 10.0,
   "is_golden": false,
   "is_redstone": false,
-  "name_key": "block.poopsky.toilet.lapis",
+  "name_key": "block.poopsky.toilet.lapis_lazuli",
   "source_block": "minecraft:lapis_block"
 }

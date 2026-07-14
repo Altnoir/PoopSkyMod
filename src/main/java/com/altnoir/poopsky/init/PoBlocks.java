@@ -5,9 +5,9 @@ import com.altnoir.poopsky.content.SetToiletTypeFunction;
 import com.altnoir.poopsky.content.block.p.*;
 import com.altnoir.poopsky.content.item.p.CompooperBlockItem;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
+import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.impl.type.PoBlockSetType;
 import com.altnoir.poopsky.impl.type.PoWoodType;
-import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
@@ -103,7 +103,7 @@ public class PoBlocks {
                     .isSuffocating(PoBlocks::always)
                     .instrument(NoteBlockInstrument.COW_BELL)));
     public static final BlockEntry<PoopFarmlandBlock> POOP_FARMLAND = registerBlock("poop_farmland",
-            props -> new PoopFarmlandBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.FARMLAND)
+            props -> new PoopFarmlandBlock(BlockBehaviour.Properties.ofFullCopy(POOP_BLOCK.get())
                     .randomTicks()),
             (loot, block) -> loot.add(block, LootTable.lootTable()
                     .withPool(LootPool.lootPool()
@@ -568,10 +568,6 @@ public class PoBlocks {
                 })
                 .build()
                 .register();
-    }
-
-    public static <T extends Block> BlockEntry<T> registerBlockNoItem(String name, NonNullFunction<BlockBehaviour.Properties, T> factory) {
-        return registerBlockNoItem(name, factory, RegistrateBlockLootTables::dropSelf);
     }
 
     public static <T extends Block> BlockEntry<T> registerBlockNoItem(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {

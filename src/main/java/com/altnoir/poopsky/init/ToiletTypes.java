@@ -117,7 +117,7 @@ public final class ToiletTypes {
     public static final ToiletType WEATHERED_CUT_COPPER = ToiletType.register(Blocks.WEATHERED_CUT_COPPER, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.weathered_cut_copper");
     public static final ToiletType OXIDIZED_CUT_COPPER = ToiletType.register(Blocks.OXIDIZED_CUT_COPPER, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.oxidized_cut_copper");
     public static final ToiletType AMETHYST = ToiletType.register(Blocks.AMETHYST_BLOCK, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.amethyst");
-    public static final ToiletType LAPIS = ToiletType.register(Blocks.LAPIS_BLOCK, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.lapis");
+    public static final ToiletType LAPIS = ToiletType.register(Blocks.LAPIS_BLOCK, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.lapis_lazuli");
     public static final ToiletType REDSTONE = ToiletType.register(Blocks.REDSTONE_BLOCK, ToiletType.Category.HARD).redstone().nameKey("block.poopsky.toilet.redstone");
     public static final ToiletType DIAMOND = ToiletType.register(Blocks.DIAMOND_BLOCK, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.diamond");
     public static final ToiletType EMERALD = ToiletType.register(Blocks.EMERALD_BLOCK, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.emerald");
