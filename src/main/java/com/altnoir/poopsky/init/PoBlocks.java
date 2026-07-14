@@ -102,8 +102,8 @@ public class PoBlocks {
                     .isRedstoneConductor(PoBlocks::always)
                     .isSuffocating(PoBlocks::always)
                     .instrument(NoteBlockInstrument.COW_BELL)));
-    public static final BlockEntry<FecalFarmlandBlock> FECAL_FARMLAND = registerBlock("fecal_farmland",
-            props -> new FecalFarmlandBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.FARMLAND)
+    public static final BlockEntry<PoopFarmlandBlock> POOP_FARMLAND = registerBlock("poop_farmland",
+            props -> new PoopFarmlandBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.FARMLAND)
                     .randomTicks()),
             (loot, block) -> loot.add(block, LootTable.lootTable()
                     .withPool(LootPool.lootPool()

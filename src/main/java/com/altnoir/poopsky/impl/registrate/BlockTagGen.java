@@ -201,7 +201,7 @@ public final class BlockTagGen {
         tag(BlockTags.MINEABLE_WITH_SHOVEL)
                 .add(
                         PoBlocks.POOP_PIECE.get(),
-                        PoBlocks.FECAL_FARMLAND.get()
+                        PoBlocks.POOP_FARMLAND.get()
                 );
 
         tag(Tags.Blocks.VILLAGER_JOB_SITES)

@@ -5,7 +5,7 @@ import com.altnoir.poopsky.content.FlyTypeManager;
 import com.altnoir.poopsky.content.ToiletTypeManager;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
-import com.altnoir.poopsky.content.block.p.FecalFarmlandBlock;
+import com.altnoir.poopsky.content.block.p.PoopFarmlandBlock;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.content.villager.PVillagerBehaviors;
 import com.altnoir.poopsky.content.villager.PVillagerTrades;
@@ -213,15 +213,15 @@ public class PoGameEvents {
     }
 
     public static void onCropGrow(CropGrowEvent.Post event) {
-        if (event.getLevel() instanceof ServerLevel level && level.getBlockState(event.getPos().below()).is(PoBlocks.FECAL_FARMLAND.get())) {
-            FecalFarmlandBlock.scheduleHarvest(level, event.getPos().below());
+        if (event.getLevel() instanceof ServerLevel level && level.getBlockState(event.getPos().below()).is(PoBlocks.POOP_FARMLAND.get())) {
+            PoopFarmlandBlock.scheduleHarvest(level, event.getPos().below());
         }
     }
 
     public static void onBonemeal(BonemealEvent event) {
         if (event.isCanceled()
                 || !(event.getState().getBlock() instanceof CropBlock cropBlock)
-                || !event.getLevel().getBlockState(event.getPos().below()).is(PoBlocks.FECAL_FARMLAND.get())
+                || !event.getLevel().getBlockState(event.getPos().below()).is(PoBlocks.POOP_FARMLAND.get())
                 || !event.isValidBonemealTarget()) {
             return;
         }
@@ -231,7 +231,7 @@ public class PoGameEvents {
                 cropBlock.performBonemeal(level, level.random, event.getPos(), event.getState());
             }
             event.getStack().shrink(1);
-            FecalFarmlandBlock.scheduleHarvest(level, event.getPos().below());
+            PoopFarmlandBlock.scheduleHarvest(level, event.getPos().below());
         }
 
         event.setSuccessful(true);

@@ -116,7 +116,7 @@ public class PoopBlock extends Block implements BonemealableBlock {
         if (itemAbility == ItemAbilities.HOE_TILL
                 && context.getClickedFace() != Direction.DOWN
                 && context.getLevel().getBlockState(context.getClickedPos().above()).isAir()) {
-            return PoBlocks.FECAL_FARMLAND.get().defaultBlockState();
+            return PoBlocks.POOP_FARMLAND.get().defaultBlockState();
         }
         return super.getToolModifiedState(state, context, itemAbility, simulate);
     }

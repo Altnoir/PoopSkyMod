@@ -18,10 +18,10 @@ import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.ItemAbility;
 import org.jetbrains.annotations.Nullable;
 
-public class FecalFarmlandBlock extends FarmBlock {
+public class PoopFarmlandBlock extends FarmBlock {
     private static final int HARVEST_DELAY = 20;
 
-    public FecalFarmlandBlock(Properties properties) {
+    public PoopFarmlandBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(MOISTURE, MAX_MOISTURE));
     }
@@ -93,10 +93,10 @@ public class FecalFarmlandBlock extends FarmBlock {
 
     public static void scheduleHarvest(Level level, BlockPos farmlandPos) {
         if (!level.isClientSide
-                && level.getBlockState(farmlandPos).is(PoBlocks.FECAL_FARMLAND.get())
+                && level.getBlockState(farmlandPos).is(PoBlocks.POOP_FARMLAND.get())
                 && level.getBlockState(farmlandPos.below()).isAir()
                 && isMatureCrop(level, farmlandPos.above())) {
-            level.scheduleTick(farmlandPos, PoBlocks.FECAL_FARMLAND.get(), HARVEST_DELAY);
+            level.scheduleTick(farmlandPos, PoBlocks.POOP_FARMLAND.get(), HARVEST_DELAY);
         }
     }
 

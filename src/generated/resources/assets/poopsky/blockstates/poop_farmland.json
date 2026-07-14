@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "moisture=0": {
+      "model": "poopsky:block/poop_farmland"
+    },
+    "moisture=1": {
+      "model": "poopsky:block/poop_farmland_moist"
+    },
+    "moisture=2": {
+      "model": "poopsky:block/poop_farmland_moist"
+    },
+    "moisture=3": {
+      "model": "poopsky:block/poop_farmland_moist"
+    },
+    "moisture=4": {
+      "model": "poopsky:block/poop_farmland_moist"
+    },
+    "moisture=5": {
+      "model": "poopsky:block/poop_farmland_moist"
+    },
+    "moisture=6": {
+      "model": "poopsky:block/poop_farmland_moist"
+    },
+    "moisture=7": {
+      "model": "poopsky:block/poop_farmland_moist"
+    }
+  }
+}
