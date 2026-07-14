@@ -7,6 +7,7 @@ import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -23,20 +24,25 @@ public final class FlyBarrelRecipeBuilder implements RecipeBuilder {
     private static final String RECIPE_TYPE = PoRecipes.FLY_BARREL.folder();
 
     private final String flyTypeId;
-    private final ItemStack result;
+    private final FlyBarrelRecipe.Output result;
     private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
 
-    public FlyBarrelRecipeBuilder(String flyTypeId, ItemStack result) {
+    public FlyBarrelRecipeBuilder(String flyTypeId, FlyBarrelRecipe.Output result) {
         this.flyTypeId = flyTypeId;
         this.result = result;
     }
 
+    public static FlyBarrelRecipeBuilder flyBarrel(String flyTypeId, ResourceLocation result) {
+        return new FlyBarrelRecipeBuilder(flyTypeId, new FlyBarrelRecipe.Output(result, 1));
+    }
+
     public static FlyBarrelRecipeBuilder flyBarrel(String flyTypeId, ItemStack result) {
-        return new FlyBarrelRecipeBuilder(flyTypeId, result);
+        return new FlyBarrelRecipeBuilder(flyTypeId,
+                new FlyBarrelRecipe.Output(BuiltInRegistries.ITEM.getKey(result.getItem()), result.getCount()));
     }
 
     public static FlyBarrelRecipeBuilder flyBarrel(String flyTypeId, ItemLike result) {
-        return new FlyBarrelRecipeBuilder(flyTypeId, new ItemStack(result));
+        return flyBarrel(flyTypeId, BuiltInRegistries.ITEM.getKey(result.asItem()));
     }
 
     @Override
@@ -52,7 +58,7 @@ public final class FlyBarrelRecipeBuilder implements RecipeBuilder {
 
     @Override
     public @NotNull Item getResult() {
-        return result.getItem();
+        return BuiltInRegistries.ITEM.get(result.id());
     }
 
     public void save(@NotNull RecipeOutput recipeOutput, @NotNull String id) {
@@ -69,7 +75,7 @@ public final class FlyBarrelRecipeBuilder implements RecipeBuilder {
                 .requirements(AdvancementRequirements.Strategy.OR);
         criteria.forEach(advancementBuilder::addCriterion);
 
-        FlyBarrelRecipe recipe = new FlyBarrelRecipe(flyTypeId, result.copy());
+        FlyBarrelRecipe recipe = new FlyBarrelRecipe(flyTypeId, result);
         recipeOutput.accept(id, recipe, advancementBuilder.build(id.withPrefix("recipes/")));
     }
 

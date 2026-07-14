@@ -12,8 +12,10 @@ import com.altnoir.poopsky.init.ToiletTypes;
 import com.simibubi.create.AllItems;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -734,11 +736,15 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         RecipeOutput mekanism = recipeOutput.withConditions(modLoaded(PoMods.MEKANISM.id()));
 
         class FlyMap {
-            private final LinkedHashMap<FlyType.Type, ItemLike> items = new LinkedHashMap<>();
+            private final LinkedHashMap<FlyType.Type, ResourceLocation> items = new LinkedHashMap<>();
             private final HashMap<FlyType.Type, RecipeOutput> overrides = new HashMap<>();
             private FlyType.Type lastKey;
 
             FlyMap put(FlyType.Type type, ItemLike result) {
+                return put(type, BuiltInRegistries.ITEM.getKey(result.asItem()));
+            }
+
+            FlyMap put(FlyType.Type type, ResourceLocation result) {
                 items.put(type, result);
                 lastKey = type;
                 return this;
@@ -786,13 +792,13 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         // Create
         flyMap.put(FlyTypes.ZINC.get(), AllItems.RAW_ZINC).loaded(create);
         // AE2
-        flyMap.put(FlyTypes.CERTUS.get(), PoMods.AE2.itemStack("certus_quartz_crystal").getItem()).loaded(ae2);
-        flyMap.put(FlyTypes.SKY_DUST.get(), PoMods.AE2.itemStack("sky_dust").getItem()).loaded(ae2);
+        flyMap.put(FlyTypes.CERTUS.get(), PoMods.AE2.rl("certus_quartz_crystal")).loaded(ae2);
+        flyMap.put(FlyTypes.SKY_DUST.get(), PoMods.AE2.rl("sky_dust")).loaded(ae2);
         // MEK
-        flyMap.put(FlyTypes.OSMIUM.get(), PoMods.MEKANISM.itemStack("raw_osmium").getItem()).loaded(mekanism);
-        flyMap.put(FlyTypes.TIN.get(), PoMods.MEKANISM.itemStack("raw_tin").getItem()).loaded(mekanism);
-        flyMap.put(FlyTypes.LEAD.get(), PoMods.MEKANISM.itemStack("raw_lead").getItem()).loaded(mekanism);
-        flyMap.put(FlyTypes.URANIUM.get(), PoMods.MEKANISM.itemStack("raw_uranium").getItem()).loaded(mekanism);
+        flyMap.put(FlyTypes.OSMIUM.get(), PoMods.MEKANISM.rl("raw_osmium")).loaded(mekanism);
+        flyMap.put(FlyTypes.TIN.get(), PoMods.MEKANISM.rl("raw_tin")).loaded(mekanism);
+        flyMap.put(FlyTypes.LEAD.get(), PoMods.MEKANISM.rl("raw_lead")).loaded(mekanism);
+        flyMap.put(FlyTypes.URANIUM.get(), PoMods.MEKANISM.rl("raw_uranium")).loaded(mekanism);
 
         flyMap.saveAll();
     }
