@@ -40,6 +40,7 @@ public enum FlyTypes {
     TIN,
     LEAD,
     URANIUM,
+    FLUORITE,
     ;
 
     private final FlyType.Type flyType;

@@ -799,6 +799,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         flyMap.put(FlyTypes.TIN.get(), PoMods.MEKANISM.rl("raw_tin")).loaded(mekanism);
         flyMap.put(FlyTypes.LEAD.get(), PoMods.MEKANISM.rl("raw_lead")).loaded(mekanism);
         flyMap.put(FlyTypes.URANIUM.get(), PoMods.MEKANISM.rl("raw_uranium")).loaded(mekanism);
+        flyMap.put(FlyTypes.FLUORITE.get(), PoMods.MEKANISM.rl("fluorite_gem")).loaded(mekanism);
 
         flyMap.saveAll();
     }
@@ -850,7 +851,8 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 Breeding.of(FlyTypes.LIGHT_GRAY.get(), FlyTypes.IRON.get(), FlyTypes.TIN.get()).loaded(mekanism),
                 Breeding.of(FlyTypes.IRON.get(), FlyTypes.TIN.get(), FlyTypes.LEAD.get()).loaded(mekanism),
                 Breeding.of(FlyTypes.DIAMOND.get(), FlyTypes.LEAD.get(), FlyTypes.OSMIUM.get()).loaded(mekanism),
-                Breeding.of(FlyTypes.DRAGON_FRUIT.get(), FlyTypes.EMERALD.get(), FlyTypes.URANIUM.get()).loaded(mekanism)
+                Breeding.of(FlyTypes.DRAGON_FRUIT.get(), FlyTypes.EMERALD.get(), FlyTypes.URANIUM.get()).loaded(mekanism),
+                Breeding.of(FlyTypes.PURPLE.get(), FlyTypes.OSMIUM.get(), FlyTypes.FLUORITE.get()).loaded(mekanism)
         );
 
         for (Breeding recipe : breedingRecipes) {

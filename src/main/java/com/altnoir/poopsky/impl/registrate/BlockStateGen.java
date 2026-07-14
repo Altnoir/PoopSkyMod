@@ -21,10 +21,7 @@ import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 public class BlockStateGen extends RegistrateBlockstateProvider {
@@ -158,10 +155,10 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
                 .texture("top", modLoc("block/" + path + "_enriched_leak"));
 
         getVariantBuilder(PoBlocks.POOP_FARMLAND.get())
-                .partialState().with(PoopFarmlandBlock.MODE, PoopFarmlandBlock.FarmlandMode.DEFAULT).addModels(new ConfiguredModel(defaultModel))
-                .partialState().with(PoopFarmlandBlock.MODE, PoopFarmlandBlock.FarmlandMode.ENRICHED).addModels(new ConfiguredModel(enrichedModel))
-                .partialState().with(PoopFarmlandBlock.MODE, PoopFarmlandBlock.FarmlandMode.LEAK).addModels(new ConfiguredModel(leakModel))
-                .partialState().with(PoopFarmlandBlock.MODE, PoopFarmlandBlock.FarmlandMode.ENRICHED_LEAK).addModels(new ConfiguredModel(enrichedLeakModel));
+                .partialState().with(PoopFarmlandBlock.MODE, PoopFarmlandBlock.FarmMode.DEFAULT).addModels(new ConfiguredModel(defaultModel))
+                .partialState().with(PoopFarmlandBlock.MODE, PoopFarmlandBlock.FarmMode.ENRICHED).addModels(new ConfiguredModel(enrichedModel))
+                .partialState().with(PoopFarmlandBlock.MODE, PoopFarmlandBlock.FarmMode.LEAK).addModels(new ConfiguredModel(leakModel))
+                .partialState().with(PoopFarmlandBlock.MODE, PoopFarmlandBlock.FarmMode.ENRICHED_LEAK).addModels(new ConfiguredModel(enrichedLeakModel));
 
         simpleBlockItem(PoBlocks.POOP_FARMLAND.get(), defaultModel);
     }
@@ -408,7 +405,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         for (int i = 0; i < sortedEntries.size(); i++) {
             var entry = sortedEntries.get(i);
             String suffix = "_" + entry.getKey().id();
-            var overrideModel = new ModelFile.UncheckedModelFile(PoopSky.MOD_ID + ":block/" + blockPath + suffix);
+            var overrideModel = new ModelFile.UncheckedModelFile(modLoc("block/" + blockPath + suffix));
             itemBuilder.override()
                     .predicate(PoopSky.loc("toilet_type"), (float) i)
                     .model(overrideModel)
@@ -430,25 +427,31 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         stairsBlock((StairBlock) stairs, texture);
         slabBlock((SlabBlock) slab, texture, texture);
         wallBlock((WallBlock) wall, texture);
+
         simpleBlockItem(stairs, blockModel(stairs));
         simpleBlockItem(slab, blockModel(slab));
-        simpleBlockItem(wall, wallInventoryModel(wall));
+        simpleBlockItem(wall, wallItemModel(wall, block));
     }
 
-    private ModelFile wallInventoryModel(Block wall) {
-        return new ModelFile.UncheckedModelFile(PoopSky.MOD_ID + ":block/" + getBlockPath(wall) + "_inventory");
+    private ModelFile wallItemModel(Block wall, Block baseBlock) {
+        return models().withExistingParent(getItemPath(wall), mcLoc("block/wall_inventory"))
+                .texture("wall", modLoc("block/" + getBlockPath(baseBlock)));
     }
 
     private ModelFile blockModel(Block block) {
-        return new ModelFile.UncheckedModelFile(PoopSky.MOD_ID + ":block/" + getBlockPath(block));
+        return new ModelFile.UncheckedModelFile(modLoc("block/" + getBlockPath(block)));
     }
 
-    private String getBlockNameSpace(Block block) {
-        return getBlockKey(block).getNamespace();
+    private String getItemPath(Block block) {
+        return BuiltInRegistries.ITEM.getKey(block.asItem()).getPath();
     }
 
     private String getBlockPath(Block block) {
         return getBlockKey(block).getPath();
+    }
+
+    private String getBlockNameSpace(Block block) {
+        return getBlockKey(block).getNamespace();
     }
 
     private ResourceLocation getBlockKey(Block block) {
@@ -459,7 +462,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         String tex = toiletType.texture();
         if (tex != null) {
             String namespace = toiletType.sourceBlock() != null
-                    ? getBlockNameSpace(toiletType.sourceBlock())
+                    ? getBlockNameSpace(Objects.requireNonNull(toiletType.sourceBlock()))
                     : PoopSky.MOD_ID;
             return ResourceLocation.fromNamespaceAndPath(namespace, "block/" + tex);
         }

@@ -23,11 +23,11 @@ public class JinKeLaItem extends BoneMealItem {
         BlockState state = level.getBlockState(pos);
 
         if (state.is(PoBlocks.POOP_FARMLAND.get())) {
-            PoopFarmlandBlock.FarmlandMode mode = state.getValue(PoopFarmlandBlock.MODE);
+            PoopFarmlandBlock.FarmMode mode = state.getValue(PoopFarmlandBlock.MODE);
             if (!mode.isEnriched()) {
                 if (!level.isClientSide) {
-                    level.setBlock(pos, state.setValue(PoopFarmlandBlock.MODE, mode.withEnriched(true)), 3);
-                    level.playSound(null, pos, SoundEvents.BONE_MEAL_USE, SoundSource.BLOCKS, 1.0F, 1.0F);
+                    level.setBlockAndUpdate(pos, state.setValue(PoopFarmlandBlock.MODE, mode.withEnriched(true)));
+                    level.playSound(null, pos, SoundEvents.BONE_MEAL_USE, SoundSource.BLOCKS);
                     context.getItemInHand().consume(1, context.getPlayer());
                 }
                 return InteractionResult.sidedSuccess(level.isClientSide);

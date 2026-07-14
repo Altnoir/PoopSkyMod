@@ -198,6 +198,12 @@
       "predicate": {
         "poopsky:fly_type": 32.0
       }
+    },
+    {
+      "model": "poopsky:item/fly_fluorite",
+      "predicate": {
+        "poopsky:fly_type": 33.0
+      }
     }
   ],
   "textures": {

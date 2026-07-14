@@ -30,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collection;
 
 public class PoopFarmlandBlock extends FarmBlock {
-    public enum FarmlandMode implements StringRepresentable {
+    public enum FarmMode implements StringRepresentable {
         DEFAULT("default"),
         ENRICHED("enriched"),
         LEAK("leak"),
@@ -38,7 +38,7 @@ public class PoopFarmlandBlock extends FarmBlock {
 
         private final String name;
 
-        FarmlandMode(String name) {
+        FarmMode(String name) {
             this.name = name;
         }
 
@@ -50,7 +50,7 @@ public class PoopFarmlandBlock extends FarmBlock {
             return this == LEAK || this == ENRICHED_LEAK;
         }
 
-        public FarmlandMode withEnriched(boolean enriched) {
+        public FarmMode withEnriched(boolean enriched) {
             if (enriched) {
                 return this == LEAK ? ENRICHED_LEAK : ENRICHED;
             } else {
@@ -58,7 +58,7 @@ public class PoopFarmlandBlock extends FarmBlock {
             }
         }
 
-        public FarmlandMode withLeak(boolean leak) {
+        public FarmMode withLeak(boolean leak) {
             if (leak) {
                 return this == ENRICHED ? ENRICHED_LEAK : LEAK;
             } else {
@@ -77,13 +77,13 @@ public class PoopFarmlandBlock extends FarmBlock {
         }
     }
 
-    public static final EnumProperty<FarmlandMode> MODE = EnumProperty.create("mode", FarmlandMode.class);
+    public static final EnumProperty<FarmMode> MODE = EnumProperty.create("mode", FarmMode.class);
 
     public PoopFarmlandBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(MOISTURE, MAX_MOISTURE)
-                .setValue(MODE, FarmlandMode.DEFAULT));
+                .setValue(MODE, FarmMode.DEFAULT));
     }
 
     @Override
@@ -121,7 +121,7 @@ public class PoopFarmlandBlock extends FarmBlock {
         if (state.getValue(MOISTURE) < MAX_MOISTURE) {
             level.setBlock(pos, state.setValue(MOISTURE, MAX_MOISTURE), 2);
         }
-        FarmlandMode mode = state.getValue(MODE);
+        FarmMode mode = state.getValue(MODE);
         if (mode.isEnriched()) {
             tryEnrichedGrow(level, pos);
             cropDrop(level, pos);
@@ -136,7 +136,7 @@ public class PoopFarmlandBlock extends FarmBlock {
     @Override
     public @Nullable BlockState getToolModifiedState(BlockState state, UseOnContext context, ItemAbility itemAbility, boolean simulate) {
         if (itemAbility == ItemAbilities.SHOVEL_FLATTEN) {
-            FarmlandMode mode = state.getValue(MODE);
+            FarmMode mode = state.getValue(MODE);
             if (mode.isLeak()) {
                 return null;
             }
@@ -152,7 +152,7 @@ public class PoopFarmlandBlock extends FarmBlock {
             boolean applied = BoneMealItem.applyBonemeal(new ItemStack(PoItems.JINKELA.get()), level, cropPos, null);
             if (applied) {
                 BoneMealItem.addGrowthParticles(level, cropPos, 15);
-                level.playSound(null, cropPos, SoundEvents.BONE_MEAL_USE, SoundSource.BLOCKS, 1.0F, 1.0F);
+                level.playSound(null, cropPos, SoundEvents.BONE_MEAL_USE, SoundSource.BLOCKS);
             }
         }
     }
