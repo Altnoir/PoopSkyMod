@@ -1,0 +1,34 @@
+name: TODO / 待办
+description: (Collaborators only) Create a TODO task for this project./（仅限协作者）为这个项目创建一个待办任务。
+title: "[TODO] "
+labels: [ "todo" ]
+body:
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks/检查
+      description: |
+        Please check that you have done the following things before submitting./在提交之前，请检查您是否已完成以下操作。
+      options:
+        - label: I confirm that this TODO has not been submitted by others./我确认这个待办还没有被其他人提交过。
+          required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description/描述
+      description: |
+        What needs to be done? Please describe the task in detail./需要做什么？请详细描述任务。
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority/优先级
+      description: |
+        How important is this task?/这个任务有多重要？
+      options:
+        - "High/高"
+        - "Medium/中"
+        - "Low/低"
+    validations:
+      required: true

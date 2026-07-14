@@ -1,0 +1,32 @@
+name: TODO Restrict
+on:
+  issues:
+    types: [opened]
+jobs:
+  check-collaborator:
+    if: contains(github.event.issue.labels.*.name, 'todo')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if user is collaborator
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: permission } = await github.rest.repos.getCollaboratorPermissionLevel({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              username: context.actor,
+            });
+            if (permission.permission === 'read' || permission.permission === 'none') {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: 'This TODO template is only for collaborators. If you are not a collaborator, please do not use this template./此 TODO 模板仅限协作者使用。如果您不是协作者，请不要使用此模板。',
+              });
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                state: 'closed',
+              });
+            }
