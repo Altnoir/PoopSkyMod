@@ -146,6 +146,8 @@ public class PoItems {
     public static final ItemEntry<Item> MOON_BOWL_MUSIC_DISC = registerItem("music_disc_moon_bowl",
             props -> new Item(props.jukeboxPlayable(PoSoundEvents.MOON_BOWL_KEY).rarity(Rarity.RARE).stacksTo(1)));
 
+    public static final ItemEntry<Item> SALTPETER_SHARD = registerItem("saltpeter_shard", Item::new);
+
     public static final ItemEntry<FlyItem> FLY = registerItemNoModel("fly",
             props -> new FlyItem(props.stacksTo(88)));
 

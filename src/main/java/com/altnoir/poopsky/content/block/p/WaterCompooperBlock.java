@@ -1,9 +1,10 @@
 package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
-import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.content.item.p.FlyItem;
+import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoBlocks;
+import com.altnoir.poopsky.init.PoItems;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
@@ -81,6 +82,11 @@ public class WaterCompooperBlock extends AbstractCompooperBlock {
                 int count = stack.getCount();
 
                 catalyst(itemEntity, state, level, pos, count, FlyItem.withType(FlyTypes.BLUE.get()), FlyItem.withType(FlyTypes.NORMAL.get()));
+                level.playSound(null, pos, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 1.0F, 1.0F);
+            } else if (stack.getItem() == PoItems.SALTPETER_SHARD.get()) {
+                int count = stack.getCount();
+
+                catalyst(itemEntity, state, level, pos, count, new ItemStack(Items.SNOWBALL), new ItemStack(PoItems.SALTPETER_SHARD.get()));
                 level.playSound(null, pos, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 1.0F, 1.0F);
             }
         }

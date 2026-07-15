@@ -1,18 +1,14 @@
 package com.altnoir.poopsky.compat.jei;
 
-import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.content.ToiletType;
-import com.altnoir.poopsky.content.block.p.CompooperBlock;
-import com.altnoir.poopsky.init.FlyTypes;
-import com.altnoir.poopsky.content.item.p.FlyItem;
-import com.altnoir.poopsky.content.recipe.ToiletShapedRecipe;
 import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.compat.jei.create.FanDigestingCategory;
-import com.altnoir.poopsky.init.PoBlocks;
-import com.altnoir.poopsky.init.PoComponents;
-import com.altnoir.poopsky.init.PoItems;
-import com.altnoir.poopsky.init.PoRecipes;
+import com.altnoir.poopsky.content.ToiletType;
+import com.altnoir.poopsky.content.block.p.CompooperBlock;
+import com.altnoir.poopsky.content.item.p.FlyItem;
+import com.altnoir.poopsky.content.recipe.ToiletShapedRecipe;
+import com.altnoir.poopsky.impl.PoTags;
+import com.altnoir.poopsky.init.*;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -116,6 +112,9 @@ public class PSJEIPlugin implements IModPlugin {
                 ),
                 new CompooperRecipe(
                         Ingredient.of(Items.STICK), new ItemStack(Items.BREEZE_ROD), PoBlocks.POWDER_SNOW_COMPOOPER.get().defaultBlockState()
+                ),
+                new CompooperRecipe(
+                        Ingredient.of(PoItems.SALTPETER_SHARD.get()), new ItemStack(Items.SNOWBALL), PoBlocks.WATER_COMPOOPER.get().defaultBlockState()
                 ),
                 new CompooperRecipe(
                         Ingredient.of(PoItems.FLY.get()), FlyItem.withType(FlyTypes.BLUE.get()), PoBlocks.WATER_COMPOOPER.get().defaultBlockState()

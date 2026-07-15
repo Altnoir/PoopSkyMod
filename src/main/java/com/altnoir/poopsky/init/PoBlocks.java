@@ -17,6 +17,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -332,43 +333,35 @@ public class PoBlocks {
 
     public static final BlockEntry<AmethystBlock> SALTPETER_BLOCK = registerBlock("saltpeter_block",
             props -> new AmethystBlock(BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.COLOR_PURPLE)
+                    .mapColor(MapColor.COLOR_LIGHT_GRAY)
                     .strength(1.5F)
                     .sound(SoundType.AMETHYST)
                     .requiresCorrectToolForDrops()));
     public static final BlockEntry<SaltpeterClusterBlock> SALTPETER_CLUSTER = registerBlock("saltpeter_cluster",
-            props -> new SaltpeterClusterBlock(
-                    7.0F,
-                    3.0F,
-                    BlockBehaviour.Properties.of()
-                            .mapColor(MapColor.COLOR_PURPLE)
-                            .forceSolidOn()
-                            .noOcclusion()
-                            .sound(SoundType.AMETHYST_CLUSTER)
-                            .strength(1.5F)
-                            .lightLevel(p_152632_ -> 5)
-                            .pushReaction(PushReaction.DESTROY)));
+            props -> new SaltpeterClusterBlock(7.0F, 3.0F, BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_LIGHT_GRAY)
+                    .forceSolidOn()
+                    .noOcclusion()
+                    .sound(SoundType.AMETHYST_CLUSTER)
+                    .strength(1.5F)
+                    .lightLevel(p_152632_ -> 5)
+                    .pushReaction(PushReaction.DESTROY)),
+            (loot, block) -> loot.add(block, createSaltpeterClusterDrop(loot, block)));
     public static final BlockEntry<SaltpeterClusterBlock> LARGE_SALTPETER_BUD = registerBlock("large_saltpeter_bud",
-            props -> new SaltpeterClusterBlock(
-                    5.0F,
-                    3.0F,
-                    BlockBehaviour.Properties.ofFullCopy(SALTPETER_CLUSTER.get())
-                            .sound(SoundType.MEDIUM_AMETHYST_BUD)
-                            .lightLevel(p_152629_ -> 4)));
+            props -> new SaltpeterClusterBlock(5.0F, 3.0F, BlockBehaviour.Properties.ofFullCopy(SALTPETER_CLUSTER.get())
+                    .sound(SoundType.MEDIUM_AMETHYST_BUD)
+                    .lightLevel(p_152629_ -> 4)),
+            RegistrateBlockLootTables::dropWhenSilkTouch);
     public static final BlockEntry<SaltpeterClusterBlock> MEDIUM_SALTPETER_BUD = registerBlock("medium_saltpeter_bud",
-            props -> new SaltpeterClusterBlock(
-                    4.0F,
-                    3.0F,
-                    BlockBehaviour.Properties.ofFullCopy(SALTPETER_CLUSTER.get())
-                            .sound(SoundType.LARGE_AMETHYST_BUD)
-                            .lightLevel(p_152617_ -> 2)));
+            props -> new SaltpeterClusterBlock(4.0F, 3.0F, BlockBehaviour.Properties.ofFullCopy(SALTPETER_CLUSTER.get())
+                    .sound(SoundType.LARGE_AMETHYST_BUD)
+                    .lightLevel(p_152617_ -> 2)),
+            RegistrateBlockLootTables::dropWhenSilkTouch);
     public static final BlockEntry<SaltpeterClusterBlock> SMALL_SALTPETER_BUD = registerBlock("small_saltpeter_bud",
-            props -> new SaltpeterClusterBlock(
-                    3.0F,
-                    4.0F,
-                    BlockBehaviour.Properties.ofFullCopy(SALTPETER_CLUSTER.get())
-                            .sound(SoundType.SMALL_AMETHYST_BUD)
-                            .lightLevel(p_187409_ -> 1)));
+            props -> new SaltpeterClusterBlock(3.0F, 4.0F, BlockBehaviour.Properties.ofFullCopy(SALTPETER_CLUSTER.get())
+                    .sound(SoundType.SMALL_AMETHYST_BUD)
+                    .lightLevel(p_187409_ -> 1)),
+            RegistrateBlockLootTables::dropWhenSilkTouch);
 
     public static final BlockEntry<? extends LiquidBlock> URINE_LIQUID = PoFluids.URINE_LIQUID;
 
@@ -783,5 +776,16 @@ public class PoBlocks {
                         ));
         return MatchTool.toolMatches(ItemPredicate.Builder.item().of(Items.SHEARS))
                 .or(hasSilkTouch);
+    }
+
+    private static LootTable.Builder createSaltpeterClusterDrop(RegistrateBlockLootTables loot, Block block) {
+        var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
+        return loot.createSilkTouchDispatchTable(block,
+                LootItem.lootTableItem(PoItems.SALTPETER_SHARD.get())
+                        .apply(SetItemCountFunction.setCount(ConstantValue.exactly(4.0F)))
+                        .apply(ApplyBonusCount.addOreBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE)))
+                        .when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(ItemTags.CLUSTER_MAX_HARVESTABLES)))
+                        .otherwise(loot.applyExplosionDecay(block,
+                                LootItem.lootTableItem(PoItems.SALTPETER_SHARD.get()).apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))))));
     }
 }
