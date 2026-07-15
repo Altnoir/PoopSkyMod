@@ -127,6 +127,9 @@ public class PoItems {
             prop -> new HoeItem(Tiers.STONE,
                     prop.attributes(HoeItem.createAttributes(Tiers.STONE, -1.0F, -2.0F))));
 
+    public static final ItemEntry<Item> SALTPETER_SHARD = registerItem("saltpeter_shard", Item::new);
+    public static final ItemEntry<Item> UREA = registerItem("urea", Item::new);
+
     public static final ItemEntry<UrineBottleItem> URINE_BOTTLE = registerItem("urine_bottle",
             prop -> new UrineBottleItem(prop
                     .craftRemainder(Items.GLASS_BOTTLE)
@@ -134,19 +137,16 @@ public class PoItems {
                     .stacksTo(18)
             ));
     public static final ItemEntry<BucketItem> URINE_BUCKET = PoFluids.URINE_BUCKET;
-
-    public static final ItemEntry<DeferredSpawnEggItem> POOLIME_SPAWN_EGG = registerItemNoModel("poolime_spawn_egg",
-            prop -> new DeferredSpawnEggItem(PoEntityType.POOLIME, 0x7D5F36, 0x5E4228, prop));
-    public static final ItemEntry<DeferredSpawnEggItem> FLY_SPAWN_EGG = registerItemNoModel("fly_spawn_egg",
-            prop -> new DeferredSpawnEggItem(PoEntityType.FLY, 0x3B4346, 0x900D2D, prop));
     public static final ItemEntry<Item> LAWRENCE_MUSIC_DISC = registerItem("music_disc_lawrence",
             props -> new Item(props.jukeboxPlayable(PoSoundEvents.LAWRENCE_KEY).rarity(Rarity.RARE).stacksTo(1)));
     public static final ItemEntry<Item> LIGHT_DANCE_MUSIC_DISC = registerItem("music_disc_light_dance",
             props -> new Item(props.jukeboxPlayable(PoSoundEvents.LIGHT_DANCE_KEY).rarity(Rarity.RARE).stacksTo(1)));
     public static final ItemEntry<Item> MOON_BOWL_MUSIC_DISC = registerItem("music_disc_moon_bowl",
             props -> new Item(props.jukeboxPlayable(PoSoundEvents.MOON_BOWL_KEY).rarity(Rarity.RARE).stacksTo(1)));
-
-    public static final ItemEntry<Item> SALTPETER_SHARD = registerItem("saltpeter_shard", Item::new);
+    public static final ItemEntry<DeferredSpawnEggItem> POOLIME_SPAWN_EGG = registerItemNoModel("poolime_spawn_egg",
+            prop -> new DeferredSpawnEggItem(PoEntityType.POOLIME, 0x7D5F36, 0x5E4228, prop));
+    public static final ItemEntry<DeferredSpawnEggItem> FLY_SPAWN_EGG = registerItemNoModel("fly_spawn_egg",
+            prop -> new DeferredSpawnEggItem(PoEntityType.FLY, 0x3B4346, 0x900D2D, prop));
 
     public static final ItemEntry<FlyItem> FLY = registerItemNoModel("fly",
             props -> new FlyItem(props.stacksTo(88)));

@@ -7,6 +7,8 @@ import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.p.CompooperBlock;
 import com.altnoir.poopsky.content.entity.p.PoopTntEntity;
 import com.altnoir.poopsky.content.villager.PoVillagers;
+import com.altnoir.poopsky.impl.entity.EntityLootTableGen;
+import com.altnoir.poopsky.impl.entity.EntityTypeTagsGen;
 import com.altnoir.poopsky.worldgen.PoChunkGenerators;
 import com.altnoir.poopsky.worldgen.PoStructures;
 import com.altnoir.poopsky.worldgen.foliage.PoFoliagePlacerTypes;

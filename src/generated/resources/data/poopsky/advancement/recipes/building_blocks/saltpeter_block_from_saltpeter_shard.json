@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:saltpeter_block_from_saltpeter_shard"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "saltpeter_shard": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:saltpeter_shard"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "saltpeter_shard"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "poopsky:saltpeter_block_from_saltpeter_shard"
+    ]
+  }
+}

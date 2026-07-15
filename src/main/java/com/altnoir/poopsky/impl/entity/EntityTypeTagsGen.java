@@ -1,7 +1,8 @@
-package com.altnoir.poopsky.impl.registrate;
+package com.altnoir.poopsky.impl.entity;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.impl.PoTags;
+import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.init.PoEntityType;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateTagsProvider;

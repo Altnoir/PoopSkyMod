@@ -47,6 +47,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.ItemAbility;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class PoopBlock extends Block implements BonemealableBlock {
     public static final MapCodec<PoopBlock> CODEC = simpleCodec(PoopBlock::new);
@@ -112,9 +113,8 @@ public class PoopBlock extends Block implements BonemealableBlock {
     }
 
     @Override
-    public BlockState getToolModifiedState(BlockState state, UseOnContext context, ItemAbility itemAbility, boolean simulate) {
-        if (itemAbility == ItemAbilities.HOE_TILL
-                && context.getClickedFace() != Direction.DOWN
+    public @Nullable BlockState getToolModifiedState(BlockState state, UseOnContext context, ItemAbility itemAbility, boolean simulate) {
+        if (itemAbility == ItemAbilities.HOE_TILL && context.getClickedFace() != Direction.DOWN
                 && context.getLevel().getBlockState(context.getClickedPos().above()).isAir()) {
             return PoBlocks.POOP_FARMLAND.get().defaultBlockState();
         }

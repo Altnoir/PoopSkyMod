@@ -40,6 +40,7 @@
   "tooltip.poopsky.item.info_1": "§8分别右击两个不同的厕所方块以连接通道",
   "tooltip.poopsky.toilet_linker.info_1": "厕所①-维度ID：%1$s，坐标：%2$s, %3$s, %4$s",
   "tooltip.poopsky.toilet_linker.info_2": "厕所②-维度ID：%1$s，坐标：%2$s, %3$s, %4$s",
+  "tooltip.poopsky.jinkela.info": "§8肥料掺了金坷垃，一袋能顶俩袋撒",
 
   "tooltip.poopsky.poop_ball.info_1": "村民支援",
   "tooltip.poopsky.poop_ball.info_2": "粪便500KG",

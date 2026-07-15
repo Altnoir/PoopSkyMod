@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.content.item.p;
+package com.altnoir.poopsky.content.item;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.Minecraft;
@@ -9,8 +9,8 @@ import net.minecraft.world.item.TooltipFlag;
 
 import java.util.List;
 
-public class PSBaseItem extends Item {
-    public PSBaseItem(Properties properties) {
+public class PoBaseItem extends Item {
+    public PoBaseItem(Properties properties) {
         super(properties);
     }
 

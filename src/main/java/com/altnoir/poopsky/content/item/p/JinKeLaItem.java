@@ -3,13 +3,18 @@ package com.altnoir.poopsky.content.item.p;
 import com.altnoir.poopsky.content.block.p.PoopFarmlandBlock;
 import com.altnoir.poopsky.init.PoBlocks;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.BoneMealItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+
+import java.util.List;
 
 public class JinKeLaItem extends BoneMealItem {
     public JinKeLaItem(Properties properties) {
@@ -36,5 +41,10 @@ public class JinKeLaItem extends BoneMealItem {
         }
 
         return super.useOn(context);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+        tooltipComponents.add(Component.translatable("tooltip.poopsky.jinkela.info"));
     }
 }

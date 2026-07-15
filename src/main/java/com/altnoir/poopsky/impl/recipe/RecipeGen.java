@@ -132,6 +132,13 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .save(recipeOutput);
 
         // 杂项
+        offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.SALTPETER_BLOCK, PoItems.SALTPETER_SHARD);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PoItems.JINKELA)
+                .requires(PoItems.POOP)
+                .requires(PoItems.UREA)
+                .requires(PoItems.SALTPETER_SHARD)
+                .unlockedBy(getItemName(PoItems.UREA), has(PoItems.UREA))
+                .save(recipeOutput);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PoItems.TOILET_PLUG_WAND)
                 .requires(PoItems.TOILET_PLUG.get())
                 .requires(PoItems.POOP.get())
@@ -368,7 +375,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .save(recipeOutput);
 
         // 原版物品配方
-        offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, Blocks.CRAFTING_TABLE, PoItems.SPALL, 1);
+        offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, Blocks.CRAFTING_TABLE, PoItems.SPALL);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.GUNPOWDER)
                 .requires(PoItems.KING_OF_DRAGON_FRUIT)
                 .unlockedBy(getItemName(PoItems.KING_OF_DRAGON_FRUIT), has(PoItems.KING_OF_DRAGON_FRUIT))
@@ -985,6 +992,10 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .requires(output)
                 .unlockedBy(getItemName(output), has(output))
                 .save(recipeOutput, getConversionRecipeName(input, output));
+    }
+
+    public static void offer2x2CompactingRecipe(RecipeOutput recipeOutput, RecipeCategory category, ItemLike output, ItemLike input) {
+        offer2x2CompactingRecipe(recipeOutput, category, output, input, 1);
     }
 
     public static void offer2x2CompactingRecipe(RecipeOutput recipeOutput, RecipeCategory category, ItemLike output, ItemLike input, int count) {

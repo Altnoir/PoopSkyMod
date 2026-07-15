@@ -5,10 +5,11 @@ import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.entity.p.ToiletEntity;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
-import com.altnoir.poopsky.worldgen.PoConfigureFeatures;
+import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.impl.sound.PoSoundEvents;
 import com.altnoir.poopsky.impl.util.toiletUtil;
 import com.altnoir.poopsky.init.*;
+import com.altnoir.poopsky.worldgen.PoConfigureFeatures;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.dispenser.BlockSource;
@@ -391,11 +392,16 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
             }
         }
 
-        level.registryAccess()
-                .registry(Registries.CONFIGURED_FEATURE)
-                .flatMap(holder -> holder.getHolder(PoConfigureFeatures.SALTPETER_PATCH))
-                .ifPresent(reference -> reference.value().place(level, level.getChunkSource().getGenerator(), random, pos.above()));
+        if (state.getBlock() instanceof BaseToiletLavaBlock && state.getValue(BaseToiletLavaBlock.LAVA)) {
+            return;
+        }
 
+        if (level.getBlockState(pos.below()).is(PoTags.Blocks.POOP_BLOCKS)) {
+            level.registryAccess()
+                    .registry(Registries.CONFIGURED_FEATURE)
+                    .flatMap(holder -> holder.getHolder(PoConfigureFeatures.SALTPETER_PATCH))
+                    .ifPresent(reference -> reference.value().place(level, level.getChunkSource().getGenerator(), random, pos.above()));
+        }
     }
 
     @Override

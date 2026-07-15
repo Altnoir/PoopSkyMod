@@ -2,6 +2,7 @@ package com.altnoir.poopsky.content.item.p;
 
 import com.altnoir.poopsky.content.block.ToiletComponent;
 import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
+import com.altnoir.poopsky.content.item.PoBaseItem;
 import com.altnoir.poopsky.init.PoComponents;
 import com.altnoir.poopsky.impl.sound.PoSoundEvents;
 import net.minecraft.ChatFormatting;
@@ -29,7 +30,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.List;
 import java.util.Optional;
 
-public class ToiletLinkerItem extends PSBaseItem {
+public class ToiletLinkerItem extends PoBaseItem {
 
     public ToiletLinkerItem(Properties properties) {
         super(properties);
