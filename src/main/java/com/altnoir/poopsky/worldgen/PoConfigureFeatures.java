@@ -1,7 +1,7 @@
-package com.altnoir.poopsky.content.worldgen;
+package com.altnoir.poopsky.worldgen;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.content.worldgen.foliage.PoopMegaFoliagePlacer;
+import com.altnoir.poopsky.worldgen.foliage.PoopMegaFoliagePlacer;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.impl.util.PoFeatureUtil;
 import com.altnoir.poopsky.init.PoBlocks;

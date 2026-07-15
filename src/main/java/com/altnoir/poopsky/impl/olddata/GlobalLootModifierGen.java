@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.impl.registrate;
+package com.altnoir.poopsky.impl.olddata;
 
 import com.altnoir.poopsky.PoopSky;
 import net.minecraft.advancements.critereon.EntityPredicate;

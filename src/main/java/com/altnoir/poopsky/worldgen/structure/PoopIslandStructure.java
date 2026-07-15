@@ -1,7 +1,7 @@
-package com.altnoir.poopsky.content.worldgen.structure;
+package com.altnoir.poopsky.worldgen.structure;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.content.worldgen.PoStructures;
+import com.altnoir.poopsky.worldgen.PoStructures;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.Registries;

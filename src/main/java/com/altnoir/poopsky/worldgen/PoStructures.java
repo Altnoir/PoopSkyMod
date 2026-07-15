@@ -1,9 +1,9 @@
-package com.altnoir.poopsky.content.worldgen;
+package com.altnoir.poopsky.worldgen;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
-import com.altnoir.poopsky.content.worldgen.structure.PoopIslandPiece;
-import com.altnoir.poopsky.content.worldgen.structure.PoopIslandStructure;
+import com.altnoir.poopsky.worldgen.structure.PoopIslandPiece;
+import com.altnoir.poopsky.worldgen.structure.PoopIslandStructure;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.core.registries.Registries;

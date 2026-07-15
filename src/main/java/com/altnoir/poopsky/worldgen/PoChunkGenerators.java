@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.content.worldgen;
+package com.altnoir.poopsky.worldgen;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;

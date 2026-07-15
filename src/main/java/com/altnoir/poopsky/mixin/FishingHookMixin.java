@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.mixin;
 
-import com.altnoir.poopsky.impl.registrate.FishingLootGen;
+import com.altnoir.poopsky.impl.olddata.FishingLootGen;
 import com.altnoir.poopsky.init.PoFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;

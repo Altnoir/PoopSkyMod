@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.content.item.p;
 
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
-import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
+import com.altnoir.poopsky.init.PoBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -31,16 +31,13 @@ public class CompooperBlockItem extends BlockItem {
         ItemStack stack = context.getItemInHand();
         Player player = context.getPlayer();
 
-
         if (block instanceof AbstractToiletBlock && player != null && !player.isShiftKeyDown()) {
-            if (block instanceof BaseToiletLavaBlock && state.getValue(BaseToiletLavaBlock.LAVA)) {
-                return InteractionResult.PASS;
-            }
             if (!level.isClientSide && !stack.isEmpty()) {
                 level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.PLAYERS, 1.0F, 0.6F);
                 level.gameEvent(player, GameEvent.FLUID_PICKUP, pos);
 
-                var result = ItemUtils.createFilledResult(stack, player, new ItemStack(PoBlocks.URINE_COMPOOPER.get()));
+                Block resultBlock = block instanceof BaseToiletLavaBlock && state.getValue(BaseToiletLavaBlock.LAVA) ? PoBlocks.LAVA_COMPOOPER.get() : PoBlocks.URINE_COMPOOPER.get();
+                var result = ItemUtils.createFilledResult(stack, player, new ItemStack(resultBlock));
                 player.setItemInHand(context.getHand(), result);
             }
             return InteractionResult.SUCCESS;

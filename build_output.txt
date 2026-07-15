@@ -133,15 +133,15 @@ package com.altnoir.poopsky.content.villager;
 ^
   ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
 F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\worldgen\foliage\PoFoliagePlacerTypes.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.worldgen.foliage
-package com.altnoir.poopsky.content.worldgen.foliage;
+package com.altnoir.poopsky.worldgen.foliage;
 ^
   ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
 F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\worldgen\PoChunkGenerators.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.worldgen
-package com.altnoir.poopsky.content.worldgen;
+package com.altnoir.poopsky.worldgen;
 ^
   ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
 F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\worldgen\structure\PoopIslandPiece.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.worldgen.structure
-package com.altnoir.poopsky.content.worldgen.structure;
+package com.altnoir.poopsky.worldgen.structure;
 ^
   ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
 F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\impl\create\PDigestingRecipeGen.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.impl.create
@@ -443,15 +443,15 @@ Execution failed for task ':compileJava' (registered by plugin class 'org.gradle
   ^
     ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
   F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\worldgen\foliage\PoFoliagePlacerTypes.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.worldgen.foliage
-  package com.altnoir.poopsky.content.worldgen.foliage;
+  package com.altnoir.poopsky.worldgen.foliage;
   ^
     ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
   F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\worldgen\PoChunkGenerators.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.worldgen
-  package com.altnoir.poopsky.content.worldgen;
+  package com.altnoir.poopsky.worldgen;
   ^
     ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
   F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\content\worldgen\structure\PoopIslandPiece.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.content.worldgen.structure
-  package com.altnoir.poopsky.content.worldgen.structure;
+  package com.altnoir.poopsky.worldgen.structure;
   ^
     ZipException opening "farmers-delight-398521-8001010.jar": zip END header not found
   F:\Minecraft\ModDev\PoopSkyMod\src\main\java\com\altnoir\poopsky\impl\create\PDigestingRecipeGen.java:1: 閿欒: 鏃犳硶璁块棶com.altnoir.poopsky.impl.create

@@ -1,8 +1,8 @@
-package com.altnoir.poopsky.content.worldgen;
+package com.altnoir.poopsky.worldgen;
 
 import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.content.worldgen.structure.PoopIslandStructure;
+import com.altnoir.poopsky.worldgen.structure.PoopIslandStructure;
 import com.mojang.datafixers.util.Either;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
