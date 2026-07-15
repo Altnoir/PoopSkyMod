@@ -5,6 +5,7 @@ import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.entity.p.ToiletEntity;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
+import com.altnoir.poopsky.content.worldgen.PoConfigureFeatures;
 import com.altnoir.poopsky.impl.sound.PoSoundEvents;
 import com.altnoir.poopsky.impl.util.toiletUtil;
 import com.altnoir.poopsky.init.*;
@@ -389,6 +390,12 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
                 entity.hasImpulse = true;
             }
         }
+
+        level.registryAccess()
+                .registry(Registries.CONFIGURED_FEATURE)
+                .flatMap(holder -> holder.getHolder(PoConfigureFeatures.SALTPETER_PATCH))
+                .ifPresent(reference -> reference.value().place(level, level.getChunkSource().getGenerator(), random, pos.above()));
+
     }
 
     @Override

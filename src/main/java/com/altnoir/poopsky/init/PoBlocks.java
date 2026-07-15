@@ -321,7 +321,6 @@ public class PoBlocks {
     public static final BlockEntry<PoopLeavesBlock> POOP_LEAVES_GOLD = registerBlock("poop_leaves_gold",
             props -> new PoopLeavesBlock(0xFFD700, leavesProperties(MapColor.COLOR_YELLOW)),
             (loot, block) -> loot.add(block, createGoldLeavesDrops(loot, block)));
-
     public static final BlockEntry<PoopTreeBlock> POOP_SAPLING = registerBlock("poop_sapling",
             props -> new PoopTreeBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN)
                     .noCollission()
@@ -330,6 +329,46 @@ public class PoBlocks {
                     .sound(SoundType.MUD)
                     .offsetType(BlockBehaviour.OffsetType.XZ)
                     .pushReaction(PushReaction.DESTROY)));
+
+    public static final BlockEntry<AmethystBlock> SALTPETER_BLOCK = registerBlock("saltpeter_block",
+            props -> new AmethystBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_PURPLE)
+                    .strength(1.5F)
+                    .sound(SoundType.AMETHYST)
+                    .requiresCorrectToolForDrops()));
+    public static final BlockEntry<SaltpeterClusterBlock> SALTPETER_CLUSTER = registerBlock("saltpeter_cluster",
+            props -> new SaltpeterClusterBlock(
+                    7.0F,
+                    3.0F,
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.COLOR_PURPLE)
+                            .forceSolidOn()
+                            .noOcclusion()
+                            .sound(SoundType.AMETHYST_CLUSTER)
+                            .strength(1.5F)
+                            .lightLevel(p_152632_ -> 5)
+                            .pushReaction(PushReaction.DESTROY)));
+    public static final BlockEntry<SaltpeterClusterBlock> LARGE_SALTPETER_BUD = registerBlock("large_saltpeter_bud",
+            props -> new SaltpeterClusterBlock(
+                    5.0F,
+                    3.0F,
+                    BlockBehaviour.Properties.ofFullCopy(SALTPETER_CLUSTER.get())
+                            .sound(SoundType.MEDIUM_AMETHYST_BUD)
+                            .lightLevel(p_152629_ -> 4)));
+    public static final BlockEntry<SaltpeterClusterBlock> MEDIUM_SALTPETER_BUD = registerBlock("medium_saltpeter_bud",
+            props -> new SaltpeterClusterBlock(
+                    4.0F,
+                    3.0F,
+                    BlockBehaviour.Properties.ofFullCopy(SALTPETER_CLUSTER.get())
+                            .sound(SoundType.LARGE_AMETHYST_BUD)
+                            .lightLevel(p_152617_ -> 2)));
+    public static final BlockEntry<SaltpeterClusterBlock> SMALL_SALTPETER_BUD = registerBlock("small_saltpeter_bud",
+            props -> new SaltpeterClusterBlock(
+                    3.0F,
+                    4.0F,
+                    BlockBehaviour.Properties.ofFullCopy(SALTPETER_CLUSTER.get())
+                            .sound(SoundType.SMALL_AMETHYST_BUD)
+                            .lightLevel(p_187409_ -> 1)));
 
     public static final BlockEntry<? extends LiquidBlock> URINE_LIQUID = PoFluids.URINE_LIQUID;
 
@@ -578,9 +617,6 @@ public class PoBlocks {
                 .register();
     }
 
-    public static void register() {
-    }
-
     public static <T extends Block> BlockEntry<T> registerCompooperBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
         return REGISTRATE.block(name, factory)
                 .blockstate((ctx, prov) -> {
@@ -627,6 +663,10 @@ public class PoBlocks {
         return state -> state.getValue(BaseToiletLavaBlock.LAVA) ? LAVA_LIGHT_LEVEL : 0;
     }
 
+    public static void register() {
+    }
+
+    // Loot
     public static LootTable.Builder createToiletDrop(Block block) {
         return LootTable.lootTable()
                 .withPool(LootPool.lootPool()

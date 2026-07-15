@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
+import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
@@ -49,6 +50,11 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         blockWithItem(PoBlocks.POOP_LEAVES.get());
         blockWithItem(PoBlocks.POOP_LEAVES_GOLD.get());
         blockWithItem(PoBlocks.POOP_LEAVES_IRON.get());
+        blockWithItem(PoBlocks.SALTPETER_BLOCK.get());
+        clusterBlock(PoBlocks.SALTPETER_CLUSTER.get());
+        clusterBlock(PoBlocks.LARGE_SALTPETER_BUD.get());
+        clusterBlock(PoBlocks.MEDIUM_SALTPETER_BUD.get());
+        clusterBlock(PoBlocks.SMALL_SALTPETER_BUD.get());
         cubeBottomTop(PoBlocks.POOP_TNT.get());
         cubeBottomTopFace(PoBlocks.FLY_BARREL.get());
         cubeBottomTop(PoBlocks.BREEDING_CHEST.get(), PoBlocks.CUT_POOP_BLOCK.get());
@@ -252,6 +258,25 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         simpleBlockWithItem(block, model);
     }
 
+    private void clusterBlock(Block block) {
+        ModelFile model = models().withExistingParent(getBlockPath(block), mcLoc("block/cross")).renderType("cutout")
+                .texture("cross", modLoc("block/" + getBlockPath(block)));
+        getVariantBuilder(block)
+                .partialState().with(BlockStateProperties.FACING, Direction.DOWN)
+                .modelForState().modelFile(model).rotationX(180).addModel()
+                .partialState().with(BlockStateProperties.FACING, Direction.UP)
+                .modelForState().modelFile(model).addModel()
+                .partialState().with(BlockStateProperties.FACING, Direction.NORTH)
+                .modelForState().modelFile(model).rotationX(90).addModel()
+                .partialState().with(BlockStateProperties.FACING, Direction.SOUTH)
+                .modelForState().modelFile(model).rotationX(90).rotationY(180).addModel()
+                .partialState().with(BlockStateProperties.FACING, Direction.WEST)
+                .modelForState().modelFile(model).rotationX(90).rotationY(270).addModel()
+                .partialState().with(BlockStateProperties.FACING, Direction.EAST)
+                .modelForState().modelFile(model).rotationX(90).rotationY(90).addModel();
+        bushItem(block);
+    }
+
     private void cubeBottomTop(Block block) {
         cubeBottomTop(block, getBlockPath(block) + "_top", getBlockPath(block) + "_side", getBlockPath(block) + "_bottom");
     }
@@ -430,12 +455,17 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
 
         simpleBlockItem(stairs, blockModel(stairs));
         simpleBlockItem(slab, blockModel(slab));
-        simpleBlockItem(wall, wallItemModel(wall, block));
+        wallItemModel(wall, block);
     }
 
-    private ModelFile wallItemModel(Block wall, Block baseBlock) {
-        return models().withExistingParent(getItemPath(wall), mcLoc("block/wall_inventory"))
+    private ItemModelBuilder wallItemModel(Block wall, Block baseBlock) {
+        return itemModels().withExistingParent(getItemPath(wall), mcLoc("block/wall_inventory"))
                 .texture("wall", modLoc("block/" + getBlockPath(baseBlock)));
+    }
+
+    protected ItemModelBuilder bushItem(Block block) {
+        return itemModels().withExistingParent(getItemPath(block), mcLoc("item/generated"))
+                .texture("layer0", modLoc("block/" + getBlockPath(block)));
     }
 
     private ModelFile blockModel(Block block) {

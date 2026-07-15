@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "poopsky:block/large_saltpeter_bud",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "poopsky:block/large_saltpeter_bud",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "poopsky:block/large_saltpeter_bud",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "poopsky:block/large_saltpeter_bud",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "poopsky:block/large_saltpeter_bud"
+    },
+    "facing=west": {
+      "model": "poopsky:block/large_saltpeter_bud",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

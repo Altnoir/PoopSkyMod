@@ -163,7 +163,7 @@ public class ClientUtil {
     public static boolean isPoopSkyWorldType(WorldCreationUiState.WorldTypeEntry worldType) {
         return Optional.ofNullable(worldType.preset())
                 .flatMap(Holder::unwrapKey)
-                .filter(PHooks.POOPSKY::equals)
+                .filter(PoHooks.POOPSKY::equals)
                 .isPresent();
     }
 }

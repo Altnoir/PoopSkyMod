@@ -34,8 +34,4 @@ public enum PoMods {
     public boolean isLoaded() {
         return isLoaded;
     }
-
-    public ItemStack itemStack(String path) {
-        return new ItemStack(BuiltInRegistries.ITEM.get(rl(path)));
-    }
 }

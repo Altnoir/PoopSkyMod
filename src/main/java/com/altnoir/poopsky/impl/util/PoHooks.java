@@ -9,7 +9,7 @@ import net.minecraft.world.level.levelgen.presets.WorldPreset;
 import net.minecraft.world.level.levelgen.presets.WorldPresets;
 import net.neoforged.fml.ModList;
 
-public final class PHooks {
+public final class PoHooks {
     public static final ResourceKey<WorldPreset> POOPSKY = ResourceKey.create(Registries.WORLD_PRESET, PoopSky.loc("poopsky"));
 
     public static ResourceKey<WorldPreset> overrideDefaultWorldPreset() {

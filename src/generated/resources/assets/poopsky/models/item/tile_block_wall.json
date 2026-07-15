@@ -1,3 +1,6 @@
 {
-  "parent": "poopsky:block/tile_block_wall"
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "poopsky:block/tile_block"
+  }
 }

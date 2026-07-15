@@ -19,7 +19,7 @@ import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.impl.event.PSKeyBoardInput;
 import com.altnoir.poopsky.impl.network.PlugActionPayload;
 import com.altnoir.poopsky.impl.network.PlugDismountPayload;
-import com.altnoir.poopsky.impl.util.PHooks;
+import com.altnoir.poopsky.impl.util.PoHooks;
 import com.altnoir.poopsky.init.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.RecipeBookCategories;
@@ -200,7 +200,7 @@ public class PoopSkyClient {
                         originalDefaultWorldPreset = originalPreset;
                     }
                     if (originalDefaultWorldPreset.unwrapKey().equals(originalPreset.unwrapKey())) {
-                        var voidWorldPreset = uiState.getSettings().worldgenLoadContext().registryOrThrow(Registries.WORLD_PRESET).getHolder(PHooks.overrideDefaultWorldPreset()).orElse(null);
+                        var voidWorldPreset = uiState.getSettings().worldgenLoadContext().registryOrThrow(Registries.WORLD_PRESET).getHolder(PoHooks.overrideDefaultWorldPreset()).orElse(null);
                         uiState.setWorldType(new WorldCreationUiState.WorldTypeEntry(voidWorldPreset));
                     }
                 }

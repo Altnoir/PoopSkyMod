@@ -111,7 +111,7 @@ public class PoopFarmlandBlock extends FarmBlock {
     @Override
     protected @NotNull BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
         if (!level.isClientSide() && !level.getBlockTicks().hasScheduledTick(currentPos, this)) {
-            level.scheduleTick(currentPos, this, 10);
+            level.scheduleTick(currentPos, this, 4);
         }
         return super.updateShape(state, facing, facingState, level, currentPos, facingPos);
     }

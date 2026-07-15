@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "poopsky:block/large_saltpeter_bud"
+  }
+}

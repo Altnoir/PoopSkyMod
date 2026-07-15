@@ -1,9 +1,10 @@
 package com.altnoir.poopsky.content.worldgen;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.init.PoBlocks;
-import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.content.worldgen.foliage.PoopMegaFoliagePlacer;
+import com.altnoir.poopsky.impl.PoTags;
+import com.altnoir.poopsky.impl.util.PoFeatureUtil;
+import com.altnoir.poopsky.init.PoBlocks;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
@@ -44,6 +45,7 @@ public class PoConfigureFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> CHILI_POOP_VEGETATION = resourceKey("chili_poop_vegetation");
     public static final ResourceKey<ConfiguredFeature<?, ?>> CHILI_POOP_PATCH_BONEMEAL = resourceKey("chili_poop_patch_bonemeal");
     public static final ResourceKey<ConfiguredFeature<?, ?>> DRIED_POOP_PATCH = resourceKey("dried_poop_patch");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> SALTPETER_PATCH = resourceKey("saltpeter_patch");
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> RAW_SAPLING_POOP_VEGETATION = resourceKey("raw_sapling_poop_vegetation");
     public static final ResourceKey<ConfiguredFeature<?, ?>> RAW_SAPLING_POOP_PATCH_BONEMEAL = resourceKey("raw_sapling_poop_patch_bonemeal");
@@ -122,6 +124,18 @@ public class PoConfigureFeatures {
                                                 .add(Blocks.SUGAR_CANE.defaultBlockState(), 50)
                                                 .add(Blocks.CACTUS.defaultBlockState(), 20)
                                                 .add(Blocks.DEAD_BUSH.defaultBlockState(), 30)
+                                )))
+        );
+        register(context, SALTPETER_PATCH, Feature.RANDOM_PATCH,
+                PoFeatureUtil.simplePatchConfiguration(Feature.SIMPLE_BLOCK,
+                        new SimpleBlockConfiguration(
+                                new WeightedStateProvider(
+                                        SimpleWeightedRandomList.<BlockState>builder()
+                                                .add(PoBlocks.SALTPETER_CLUSTER.get().defaultBlockState(), 1)
+                                                .add(PoBlocks.LARGE_SALTPETER_BUD.get().defaultBlockState(), 9)
+                                                .add(PoBlocks.MEDIUM_SALTPETER_BUD.get().defaultBlockState(), 40)
+                                                .add(PoBlocks.SMALL_SALTPETER_BUD.get().defaultBlockState(), 100)
+
                                 )))
         );
 
