@@ -23,12 +23,21 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnorePr
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
+import net.minecraft.world.phys.AABB;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class PoopIslandPiece extends TemplateStructurePiece {
     private static final String ROTATION_KEY = "Rotation";
+    private static final int MAX_TREE_COUNT = 3;
+    private static final long TREE_SELECTION_SALT = 0x6B9D5F21A7C403L;
+    private static final long TREE_SALT = 0x1D2F7A4B9C3E5D6L;
+    private static final long TREE_VARIANT_SALT = 0x2F9A6C4D187B35EL;
+    private static final long POOLIME_SELECTION_SALT = 0x5A71C0FFEEBABEL;
+    private static final long POOLIME_SPAWN_SALT = 0x37A11D5EED12345L;
+    private static final double POOLIME_DUPLICATE_RADIUS = 2.0D;
 
     public PoopIslandPiece(StructureTemplateManager manager, ResourceLocation templateId, BlockPos pos, Rotation rotation) {
         super(PoStructures.POOP_ISLAND_PIECE.get(), 0, manager, templateId, templateId.toString(), placeSettings(rotation), pos);
@@ -53,68 +62,75 @@ public class PoopIslandPiece extends TemplateStructurePiece {
     }
 
     @Override
-    public void postProcess(
-            WorldGenLevel level,
-            StructureManager structureManager,
-            ChunkGenerator generator,
-            RandomSource random,
-            BoundingBox box,
-            ChunkPos chunkPos,
-            BlockPos pos
+    public void postProcess(WorldGenLevel level, StructureManager structureManager, ChunkGenerator generator,
+                            RandomSource random, BoundingBox box, ChunkPos chunkPos, BlockPos pos
     ) {
         super.postProcess(level, structureManager, generator, random, box, chunkPos, pos);
-        RandomSource islandRandom = RandomSource.create(BlockPos.asLong(this.templatePosition.getX(), this.templatePosition.getY(), this.templatePosition.getZ()));
-        placeRandomPoopTree(level, islandRandom, this.template, this.templatePosition, this.placeSettings, box);
-        spawnRandomPoolimes(level, islandRandom, this.template, this.templatePosition, this.placeSettings, box);
+        placeRandomPoopTree(level, this.template, this.templatePosition, this.placeSettings);
+        spawnRandomPoolimes(level, this.template, this.templatePosition, this.placeSettings, box);
     }
 
     @Override
     protected void handleDataMarker(String name, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox box) {
     }
 
-    public static void placeRandomPoopTree(WorldGenLevel level, RandomSource random, StructureTemplate template, BlockPos origin, StructurePlaceSettings settings, BoundingBox box) {
+    public static void placeRandomPoopTree(WorldGenLevel level, StructureTemplate template, BlockPos origin, StructurePlaceSettings settings) {
         List<StructureTemplate.StructureBlockInfo> treeMarkers = template.filterBlocks(origin, settings, Blocks.STRUCTURE_BLOCK)
                 .stream()
                 .filter(PoopIslandPiece::isTreeMarker)
+                .sorted(Comparator.comparingLong(blockInfo -> blockInfo.pos().asLong()))
                 .toList();
 
-        if (treeMarkers.isEmpty() || random.nextFloat() >= 0.7F) {
+        if (treeMarkers.isEmpty()) {
             return;
         }
 
-        BlockPos treePos = treeMarkers.get(random.nextInt(treeMarkers.size())).pos();
-        placePoopTree(level, random, treePos);
+        List<StructureTemplate.StructureBlockInfo> candidates = new ArrayList<>(treeMarkers);
+        RandomSource selectionRandom = RandomSource.create(featureSeed(level.getSeed(), origin, origin, TREE_SELECTION_SALT));
+        int treeCount = selectionRandom.nextIntBetweenInclusive(0, Math.min(MAX_TREE_COUNT, candidates.size()));
+        for (int index = 0; index < treeCount; index++) {
+            StructureTemplate.StructureBlockInfo treeMarker = candidates.remove(selectionRandom.nextInt(candidates.size()));
+            BlockPos treePos = treeMarker.pos();
+            RandomSource treeRandom = RandomSource.create(featureSeed(level.getSeed(), origin, treePos, TREE_SALT));
+            RandomSource variantRandom = RandomSource.create(featureSeed(level.getSeed(), origin, treePos, TREE_VARIANT_SALT));
+            placePoopTree(level, treeRandom, variantRandom, treePos);
+        }
     }
 
-    public static void spawnRandomPoolimes(WorldGenLevel level, RandomSource random, StructureTemplate template, BlockPos origin, StructurePlaceSettings settings, BoundingBox box) {
+    public static void spawnRandomPoolimes(WorldGenLevel level, StructureTemplate template, BlockPos origin, StructurePlaceSettings settings, BoundingBox box) {
         List<StructureTemplate.StructureBlockInfo> poolimeBlocks = new ArrayList<>(template.filterBlocks(origin, settings, PoBlocks.POOLIME_BLOCK.get())
                 .stream()
-                .filter(blockInfo -> box.isInside(blockInfo.pos().above()))
-                .filter(blockInfo -> level.getBlockState(blockInfo.pos().above()).canBeReplaced())
+                .sorted(Comparator.comparingLong(blockInfo -> blockInfo.pos().asLong()))
                 .toList());
 
         if (poolimeBlocks.isEmpty()) {
             return;
         }
 
-        int spawnCount = Math.min(poolimeBlocks.size(), random.nextIntBetweenInclusive(1, 3));
+        RandomSource selectionRandom = RandomSource.create(featureSeed(level.getSeed(), origin, origin, POOLIME_SELECTION_SALT));
+        int spawnCount = Math.min(poolimeBlocks.size(), selectionRandom.nextIntBetweenInclusive(1, 3));
         for (int index = 0; index < spawnCount; index++) {
-            BlockPos pos = poolimeBlocks.remove(random.nextInt(poolimeBlocks.size())).pos().above();
+            BlockPos pos = poolimeBlocks.remove(selectionRandom.nextInt(poolimeBlocks.size())).pos().above();
+            if (!box.isInside(pos) || !level.getBlockState(pos).canBeReplaced()) {
+                continue;
+            }
+
             PoolimeEntity poolime = PoEntityType.POOLIME.get().create(level.getLevel());
             if (poolime == null) {
                 continue;
             }
 
-            poolime.setSize(random.nextInt(3) + 1, true);
-            poolime.moveTo(pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D, random.nextFloat() * 360.0F, 0.0F);
-            if (level.noCollision(poolime, poolime.getBoundingBox())) {
+            RandomSource spawnRandom = RandomSource.create(featureSeed(level.getSeed(), origin, pos, POOLIME_SPAWN_SALT));
+            poolime.setSize(spawnRandom.nextInt(3) + 1, true);
+            poolime.moveTo(pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D, spawnRandom.nextFloat() * 360.0F, 0.0F);
+            if (level.noCollision(poolime, poolime.getBoundingBox()) && !hasNearbyPoolime(level, poolime)) {
                 level.addFreshEntity(poolime);
             }
         }
     }
 
-    private static void placePoopTree(WorldGenLevel level, RandomSource random, BlockPos basePos) {
-        int trunkHeight = random.nextIntBetweenInclusive(4, 5);
+    private static void placePoopTree(WorldGenLevel level, RandomSource shapeRandom, RandomSource variantRandom, BlockPos basePos) {
+        int trunkHeight = shapeRandom.nextIntBetweenInclusive(4, 5);
         for (int y = 0; y < trunkHeight; y++) {
             placeTreeBlock(level, basePos.above(y), PoBlocks.POOP_LOG.get().defaultBlockState());
         }
@@ -124,7 +140,7 @@ public class PoopIslandPiece extends TemplateStructurePiece {
             int radius = y == 1 ? 1 : 2;
             for (int x = -radius; x <= radius; x++) {
                 for (int z = -radius; z <= radius; z++) {
-                    if (Math.abs(x) == radius && Math.abs(z) == radius && random.nextBoolean()) {
+                    if (Math.abs(x) == radius && Math.abs(z) == radius && shapeRandom.nextBoolean()) {
                         continue;
                     }
 
@@ -142,6 +158,18 @@ public class PoopIslandPiece extends TemplateStructurePiece {
         if (level.getBlockState(pos).canBeReplaced()) {
             level.setBlock(pos, state, 2);
         }
+    }
+
+    private static boolean hasNearbyPoolime(WorldGenLevel level, PoolimeEntity poolime) {
+        AABB duplicateCheckArea = poolime.getBoundingBox().inflate(POOLIME_DUPLICATE_RADIUS);
+        return !level.getEntitiesOfClass(PoolimeEntity.class, duplicateCheckArea).isEmpty();
+    }
+
+    private static long featureSeed(long worldSeed, BlockPos origin, BlockPos featurePos, long salt) {
+        long seed = worldSeed ^ salt;
+        seed ^= BlockPos.asLong(origin.getX(), origin.getY(), origin.getZ());
+        seed = Long.rotateLeft(seed, 21) ^ BlockPos.asLong(featurePos.getX(), featurePos.getY(), featurePos.getZ());
+        return seed;
     }
 
     private static boolean isTreeMarker(StructureTemplate.StructureBlockInfo blockInfo) {
