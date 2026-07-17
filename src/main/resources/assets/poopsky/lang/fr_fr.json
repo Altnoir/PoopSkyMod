@@ -9,6 +9,7 @@
   "item.poopsky.sea_poop_ball": "Boule de crotte marine",
   "item.poopsky.wither_poop_ball": "Boule de crotte de Wither",
   "item.poopsky.spall": "Éclat",
+  "item.poopsky.saltpeter_shard": "Salpêtre",
   "item.poopsky.toilet_plug": "Ventouse de toilettes",
   "item.poopsky.urine_bottle": "Bouteille d’urine",
   "item.poopsky.urine_bucket": "Seau d’urine",
@@ -28,6 +29,7 @@
   "item.poopsky.omen_upgrade_smithing_template": "Gabarit de forge",
 
   "item.poopsky.time_bell": "Cloche du temps",
+  "item.poopsky.jinkela": "Jinkela",
   "message.poopsky.time_bell.frozen": "Temps du jeu gelé",
   "message.poopsky.time_bell.unfrozen": "Temps du jeu dégelé",
 
@@ -154,6 +156,11 @@
   "block.poopsky.raw_wither_poop_block": "Bloc de crotte brute de Wither",
 
   "block.poopsky.poop_sapling": "Pousse de crotte",
+  "block.poopsky.saltpeter_block": "Bloc de salpêtre",
+  "block.poopsky.saltpeter_cluster": "Amas de salpêtre",
+  "block.poopsky.large_saltpeter_bud": "Grand bourgeon de salpêtre",
+  "block.poopsky.medium_saltpeter_bud": "Bourgeon moyen de salpêtre",
+  "block.poopsky.small_saltpeter_bud": "Petit bourgeon de salpêtre",
   "block.poopsky.poop_leaves": "Feuilles de crotte",
   "block.poopsky.poop_leaves_iron": "Feuilles de crotte imprégnées de fer",
   "block.poopsky.poop_leaves_gold": "Feuilles de crotte imprégnées d’or",
@@ -390,6 +397,10 @@
   "subtitle.poopsky.pop.primed": "POP grésille",
   "subtitle.poopsky.item.toilet_linker.boop": "Baguette de ventouse : liaison",
   "subtitle.poopsky.item.toilet_linker.success": "Baguette de ventouse : lien établi",
+  "subtitle.poopsky.block.saltpeter.chime": "Le salpêtre tinte",
+  "subtitle.poopsky.block.toilet.lava_empty": "Toilettes : lave vidée",
+  "subtitle.poopsky.block.compooper.bucket_fill": "Le Compooper se remplit",
+  "subtitle.poopsky.item.jinkela.use": "Jinkela bruisse",
 
   "stat.poopsky.poop_stats": "Statistiques de défécation",
   "stat.poopsky.inspect_placer": "Inspections du placeur",

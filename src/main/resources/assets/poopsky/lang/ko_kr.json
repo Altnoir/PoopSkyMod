@@ -9,6 +9,7 @@
   "item.poopsky.sea_poop_ball": "바다 똥 공",
   "item.poopsky.wither_poop_ball": "위더 똥 공",
   "item.poopsky.spall": "암석 파편",
+  "item.poopsky.saltpeter_shard": "초석",
   "item.poopsky.toilet_plug": "변기 뚫어뻥",
   "item.poopsky.urine_bottle": "오줌 병",
   "item.poopsky.urine_bucket": "똥물 양동이",
@@ -28,6 +29,7 @@
   "item.poopsky.omen_upgrade_smithing_template": "대장장이 형판",
 
   "item.poopsky.time_bell": "시간의 방울",
+  "item.poopsky.jinkela": "진커라",
   "message.poopsky.time_bell.frozen": "시간이 멈췄습니다",
   "message.poopsky.time_bell.unfrozen": "시간이 다시 흐릅니다",
 
@@ -154,6 +156,11 @@
   "block.poopsky.raw_wither_poop_block": "원시 위더 똥 블록",
 
   "block.poopsky.poop_sapling": "똥 묘목",
+  "block.poopsky.saltpeter_block": "초석 블록",
+  "block.poopsky.saltpeter_cluster": "초석 군집",
+  "block.poopsky.large_saltpeter_bud": "큰 초석 싹",
+  "block.poopsky.medium_saltpeter_bud": "중간 초석 싹",
+  "block.poopsky.small_saltpeter_bud": "작은 초석 싹",
   "block.poopsky.poop_leaves": "똥 잎",
   "block.poopsky.poop_leaves_iron": "철 함유 똥 잎",
   "block.poopsky.poop_leaves_gold": "금 함유 똥 잎",
@@ -390,6 +397,10 @@
   "subtitle.poopsky.pop.primed": "POP: 치익",
   "subtitle.poopsky.item.toilet_linker.boop": "변기 연결기: 연결",
   "subtitle.poopsky.item.toilet_linker.success": "변기 연결기: 바인딩",
+  "subtitle.poopsky.block.saltpeter.chime": "초석이 울림",
+  "subtitle.poopsky.block.toilet.lava_empty": "변기: 용암 비움",
+  "subtitle.poopsky.block.compooper.bucket_fill": "퇴비통: 가득 참",
+  "subtitle.poopsky.item.jinkela.use": "진커라: 바스락거림",
 
   "stat.poopsky.poop_stats": "배변 횟수",
   "stat.poopsky.inspect_placer": "설치기 조사 횟수",

@@ -127,7 +127,9 @@ public class PoItems {
             prop -> new HoeItem(Tiers.STONE,
                     prop.attributes(HoeItem.createAttributes(Tiers.STONE, -1.0F, -2.0F))));
 
-    public static final ItemEntry<Item> SALTPETER_SHARD = registerItem("saltpeter_shard", Item::new);
+    public static final ItemEntry<Item> SALTPETER_SHARD = REGISTRATE.item("saltpeter_shard", Item::new)
+            .lang("Saltpeter")
+            .register();
     public static final ItemEntry<Item> UREA = registerItem("urea", Item::new);
 
     public static final ItemEntry<UrineBottleItem> URINE_BOTTLE = registerItem("urine_bottle",

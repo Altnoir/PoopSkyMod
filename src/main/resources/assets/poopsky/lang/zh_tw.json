@@ -9,6 +9,7 @@
   "item.poopsky.sea_poop_ball": "海洋糞便球",
   "item.poopsky.wither_poop_ball": "凋零糞便球",
   "item.poopsky.spall": "碎石",
+  "item.poopsky.saltpeter_shard": "硝石",
   "item.poopsky.toilet_plug": "廁所吸盤",
   "item.poopsky.urine_bottle": "尿瓶",
   "item.poopsky.urine_bucket": "糞水桶",
@@ -28,6 +29,7 @@
   "item.poopsky.omen_upgrade_smithing_template": "鍛造模板",
 
   "item.poopsky.time_bell": "屎濺之鈴",
+  "item.poopsky.jinkela": "金坷垃",
   "message.poopsky.time_bell.frozen": "已凍結遊戲時間",
   "message.poopsky.time_bell.unfrozen": "已解凍遊戲時間",
 
@@ -154,6 +156,11 @@
   "block.poopsky.raw_wither_poop_block": "粗凋零糞便塊",
 
   "block.poopsky.poop_sapling": "糞便樹苗",
+  "block.poopsky.saltpeter_block": "硝石塊",
+  "block.poopsky.saltpeter_cluster": "硝石簇",
+  "block.poopsky.large_saltpeter_bud": "大型硝石芽",
+  "block.poopsky.medium_saltpeter_bud": "中型硝石芽",
+  "block.poopsky.small_saltpeter_bud": "小型硝石芽",
   "block.poopsky.poop_leaves": "糞便樹葉",
   "block.poopsky.poop_leaves_iron": "含鐵的糞便樹葉",
   "block.poopsky.poop_leaves_gold": "含金的糞便樹葉",
@@ -390,6 +397,10 @@
   "subtitle.poopsky.pop.primed": "POP：嘶嘶作響",
   "subtitle.poopsky.item.toilet_linker.boop": "廁所連接杖：連接",
   "subtitle.poopsky.item.toilet_linker.success": "廁所連接杖：綁定",
+  "subtitle.poopsky.block.saltpeter.chime": "硝石：叮鈴",
+  "subtitle.poopsky.block.toilet.lava_empty": "廁所：熔岩排空",
+  "subtitle.poopsky.block.compooper.bucket_fill": "堆糞箱：盛滿",
+  "subtitle.poopsky.item.jinkela.use": "金坷垃：沙沙作響",
 
   "stat.poopsky.poop_stats": "排便數",
   "stat.poopsky.inspect_placer": "檢查放置器次數",

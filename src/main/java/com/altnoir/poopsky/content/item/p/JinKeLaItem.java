@@ -2,9 +2,9 @@ package com.altnoir.poopsky.content.item.p;
 
 import com.altnoir.poopsky.content.block.p.PoopFarmlandBlock;
 import com.altnoir.poopsky.init.PoBlocks;
+import com.altnoir.poopsky.impl.sound.PoSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.BoneMealItem;
@@ -32,7 +32,7 @@ public class JinKeLaItem extends BoneMealItem {
             if (!mode.isEnriched()) {
                 if (!level.isClientSide) {
                     level.setBlockAndUpdate(pos, state.setValue(PoopFarmlandBlock.MODE, mode.withEnriched(true)));
-                    level.playSound(null, pos, SoundEvents.BONE_MEAL_USE, SoundSource.BLOCKS);
+                    level.playSound(null, pos, PoSoundEvents.ITEM_JINKELA_USE.get(), SoundSource.BLOCKS);
                     context.getItemInHand().consume(1, context.getPlayer());
                 }
                 return InteractionResult.sidedSuccess(level.isClientSide);

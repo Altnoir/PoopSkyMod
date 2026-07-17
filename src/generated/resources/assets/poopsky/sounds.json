@@ -8,6 +8,24 @@
     ],
     "subtitle": "subtitle.poopsky.breeding_chest.work"
   },
+  "block.compooper.bucket_fill": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "item.bucket.fill"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.block.compooper.bucket_fill"
+  },
+  "block.compooper.bucket_fill_lava": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "item.bucket.fill_lava"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.block.compooper.bucket_fill"
+  },
   "block.compooper.maggots": {
     "sounds": [
       {
@@ -52,6 +70,24 @@
       }
     ],
     "subtitle": "subtitle.poopsky.block.poop_block.slide"
+  },
+  "block.saltpeter.chime": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.amethyst_block.chime"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.block.saltpeter.chime"
+  },
+  "block.toilet.lava_empty": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "item.bucket.empty_lava"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.block.toilet.lava_empty"
   },
   "entity.fly.ambient": {
     "sounds": [
@@ -217,6 +253,15 @@
       "poopsky:fart_2"
     ],
     "subtitle": "subtitle.poopsky.fart"
+  },
+  "item.jinkela.use": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "item.bone_meal.use"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.item.jinkela.use"
   },
   "item.toilet_linker.boop": {
     "sounds": [

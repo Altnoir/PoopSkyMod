@@ -9,6 +9,7 @@
   "item.poopsky.sea_poop_ball": "Морской какашечный шар",
   "item.poopsky.wither_poop_ball": "Визер-какашечный шар",
   "item.poopsky.spall": "Осколок",
+  "item.poopsky.saltpeter_shard": "Селитра",
   "item.poopsky.toilet_plug": "Вантуз",
   "item.poopsky.urine_bottle": "Бутыль мочи",
   "item.poopsky.urine_bucket": "Ведро с навозной жижей",
@@ -28,6 +29,7 @@
   "item.poopsky.omen_upgrade_smithing_template": "Кузнечный шаблон",
 
   "item.poopsky.time_bell": "Колокол времени",
+  "item.poopsky.jinkela": "Jinkela",
   "message.poopsky.time_bell.frozen": "Время заморожено",
   "message.poopsky.time_bell.unfrozen": "Время разморожено",
 
@@ -154,6 +156,11 @@
   "block.poopsky.raw_wither_poop_block": "Необработанный визер-какашечный блок",
 
   "block.poopsky.poop_sapling": "Какашечный саженец",
+  "block.poopsky.saltpeter_block": "Селитровый блок",
+  "block.poopsky.saltpeter_cluster": "Селитровое скопление",
+  "block.poopsky.large_saltpeter_bud": "Большая селитровая почка",
+  "block.poopsky.medium_saltpeter_bud": "Средняя селитровая почка",
+  "block.poopsky.small_saltpeter_bud": "Малая селитровая почка",
   "block.poopsky.poop_leaves": "Какашечная листва",
   "block.poopsky.poop_leaves_iron": "Железосодержащая какашечная листва",
   "block.poopsky.poop_leaves_gold": "Золотосодержащая какашечная листва",
@@ -390,6 +397,10 @@
   "subtitle.poopsky.pop.primed": "POP шипит",
   "subtitle.poopsky.item.toilet_linker.boop": "Соединитель унитазов: связь",
   "subtitle.poopsky.item.toilet_linker.success": "Соединитель унитазов: привязка",
+  "subtitle.poopsky.block.saltpeter.chime": "Селитра звенит",
+  "subtitle.poopsky.block.toilet.lava_empty": "Унитаз опустошает лаву",
+  "subtitle.poopsky.block.compooper.bucket_fill": "Компупер наполняется",
+  "subtitle.poopsky.item.jinkela.use": "Jinkela шуршит",
 
   "stat.poopsky.poop_stats": "Статистика каканья",
   "stat.poopsky.inspect_placer": "Осмотров размещателя",

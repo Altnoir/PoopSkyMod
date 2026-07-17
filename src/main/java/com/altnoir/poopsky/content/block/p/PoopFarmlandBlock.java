@@ -2,10 +2,10 @@ package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
+import com.altnoir.poopsky.impl.sound.PoSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
@@ -152,7 +152,7 @@ public class PoopFarmlandBlock extends FarmBlock {
             boolean applied = BoneMealItem.applyBonemeal(new ItemStack(PoItems.JINKELA.get()), level, cropPos, null);
             if (applied) {
                 BoneMealItem.addGrowthParticles(level, cropPos, 15);
-                level.playSound(null, cropPos, SoundEvents.BONE_MEAL_USE, SoundSource.BLOCKS);
+                level.playSound(null, cropPos, PoSoundEvents.ITEM_JINKELA_USE.get(), SoundSource.BLOCKS);
             }
         }
     }
@@ -188,7 +188,7 @@ public class PoopFarmlandBlock extends FarmBlock {
                         level.addFreshEntity(itemEntity);
                     });
 
-            level.playSound(null, abovePos, SoundEvents.BONE_MEAL_USE, SoundSource.BLOCKS);
+            level.playSound(null, abovePos, PoSoundEvents.ITEM_JINKELA_USE.get(), SoundSource.BLOCKS);
         }
     }
 

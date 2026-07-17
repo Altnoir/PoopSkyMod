@@ -5,6 +5,7 @@ import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
+import com.altnoir.poopsky.impl.sound.PoSoundEvents;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
@@ -51,7 +52,7 @@ public class WaterCompooperBlock extends AbstractCompooperBlock {
 
         if (i >= MAX_LEVEL) {
             if (stack.getItem() == Items.BUCKET) {
-                return BucketUse(stack, level, pos, player, hand, SoundEvents.BUCKET_FILL, Items.WATER_BUCKET.getDefaultInstance());
+                return BucketUse(stack, level, pos, player, hand, PoSoundEvents.BLOCK_COMPOOPER_BUCKET_FILL.get(), Items.WATER_BUCKET.getDefaultInstance());
             }
         } else if (potioncontents.is(Potions.WATER)) {
             return liquidBottleUse(stack, state, level, pos, player, hand, SoundEvents.BOTTLE_EMPTY);

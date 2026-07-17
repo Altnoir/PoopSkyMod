@@ -3,9 +3,9 @@ package com.altnoir.poopsky.content.item.p;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.init.PoBlocks;
+import com.altnoir.poopsky.impl.sound.PoSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -36,7 +36,7 @@ public class CompooperBlockItem extends BlockItem {
             if (!level.isClientSide && !stack.isEmpty()) {
                 boolean isLava = block instanceof BaseToiletLavaBlock && state.getValue(BaseToiletLavaBlock.LAVA);
 
-                SoundEvent soundEvent = isLava ? SoundEvents.BUCKET_FILL_LAVA : SoundEvents.BUCKET_FILL;
+                SoundEvent soundEvent = isLava ? PoSoundEvents.BLOCK_COMPOOPER_BUCKET_FILL_LAVA.get() : PoSoundEvents.BLOCK_COMPOOPER_BUCKET_FILL.get();
                 level.playSound(null, pos, soundEvent, SoundSource.PLAYERS, 1.0F, 0.6F);
                 level.gameEvent(player, GameEvent.FLUID_PICKUP, pos);
 

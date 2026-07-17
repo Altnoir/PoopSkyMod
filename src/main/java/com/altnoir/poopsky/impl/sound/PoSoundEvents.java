@@ -14,11 +14,15 @@ public class PoSoundEvents {
 
     public static final RegistryEntry<SoundEvent, SoundEvent> FART = registerSoundEvent("fart");
     public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_POOP_BLOCK_SLIDE = registerSoundEvent("block.poop_block.slide");
+    public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_SALTPETER_CHIME = registerSoundEvent("block.saltpeter.chime");
     public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_COMPOOPER_MAGGOTS = registerSoundEvent("block.compooper.maggots");
+    public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_COMPOOPER_BUCKET_FILL = registerSoundEvent("block.compooper.bucket_fill");
+    public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_COMPOOPER_BUCKET_FILL_LAVA = registerSoundEvent("block.compooper.bucket_fill_lava");
     public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_FLY_BARREL_OPEN = registerSoundEvent("block.fly_barrel.open");
     public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_FLY_BARREL_CLOSE = registerSoundEvent("block.fly_barrel.close");
     public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_FLY_BARREL_WORK = registerSoundEvent("block.fly_barrel.work");
     public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_BREEDING_CHEST_WORK = registerSoundEvent("block.breeding_chest.work");
+    public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_TOILET_LAVA_EMPTY = registerSoundEvent("block.toilet.lava_empty");
     public static final RegistryEntry<SoundEvent, SoundEvent> ENTITY_VILLAGER_WORK_COMPOOPER = registerSoundEvent("entity.villager.work_compooper");
     public static final RegistryEntry<SoundEvent, SoundEvent> ENTITY_VILLAGER_WORK_TOILET = registerSoundEvent("entity.villager.work_toilet");
     public static final RegistryEntry<SoundEvent, SoundEvent> ENTITY_POOLIME_ATTACK = registerSoundEvent("entity.poolime.attack");
@@ -44,6 +48,7 @@ public class PoSoundEvents {
 
     public static final RegistryEntry<SoundEvent, SoundEvent> ITEM_TOILET_LINKER_BOOP = registerSoundEvent("item.toilet_linker.boop");
     public static final RegistryEntry<SoundEvent, SoundEvent> ITEM_TOILET_LINKER_SUCCESS = registerSoundEvent("item.toilet_linker.success");
+    public static final RegistryEntry<SoundEvent, SoundEvent> ITEM_JINKELA_USE = registerSoundEvent("item.jinkela.use");
 
     private static RegistryEntry<SoundEvent, SoundEvent> registerSoundEvent(String name) {
         ResourceLocation id = PoopSky.loc(name);

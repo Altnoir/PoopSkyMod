@@ -2,6 +2,7 @@ package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.init.PoBlocks;
+import com.altnoir.poopsky.impl.sound.PoSoundEvents;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
@@ -43,7 +44,7 @@ public class LavaCompooperBlock extends AbstractCompooperBlock {
         int i = state.getValue(LEVEL);
 
         if (i == MAX_LEVEL && stack.getItem() == Items.BUCKET) {
-            return BucketUse(stack, level, pos, player, hand, SoundEvents.BUCKET_FILL, Items.LAVA_BUCKET.getDefaultInstance());
+            return BucketUse(stack, level, pos, player, hand, PoSoundEvents.BLOCK_COMPOOPER_BUCKET_FILL_LAVA.get(), Items.LAVA_BUCKET.getDefaultInstance());
         }
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }

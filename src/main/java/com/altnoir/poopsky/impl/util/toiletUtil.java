@@ -48,7 +48,7 @@ public class toiletUtil {
         if (!level.isClientSide && entity instanceof Player player && player.isShiftKeyDown() && isEntityCentered(pos, player) && !state.getValue(BaseToiletLavaBlock.LAVA)) {
             if (player.hasEffect(PoEffects.INTESTINAL_SPASM)) {
                 level.setBlock(pos, state.setValue(BaseToiletLavaBlock.LAVA, true), 3);
-                level.playSound(null, pos, SoundEvents.BUCKET_EMPTY_LAVA, SoundSource.PLAYERS, 1.0F, 1.0F);
+                level.playSound(null, pos, PoSoundEvents.BLOCK_TOILET_LAVA_EMPTY.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
                 player.removeEffect(PoEffects.INTESTINAL_SPASM);
                 player.causeFoodExhaustion(1.0F);
             } else {

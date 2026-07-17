@@ -331,8 +331,8 @@ public class PoBlocks {
                     .offsetType(BlockBehaviour.OffsetType.XZ)
                     .pushReaction(PushReaction.DESTROY)));
 
-    public static final BlockEntry<AmethystBlock> SALTPETER_BLOCK = registerBlock("saltpeter_block",
-            props -> new AmethystBlock(BlockBehaviour.Properties.of()
+    public static final BlockEntry<SaltpeterBlock> SALTPETER_BLOCK = registerBlock("saltpeter_block",
+            props -> new SaltpeterBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_LIGHT_GRAY)
                     .strength(1.5F)
                     .sound(SoundType.AMETHYST)

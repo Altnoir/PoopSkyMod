@@ -9,6 +9,7 @@
   "item.poopsky.sea_poop_ball": "海の糞ボール",
   "item.poopsky.wither_poop_ball": "ウィザーの糞ボール",
   "item.poopsky.spall": "岩屑",
+  "item.poopsky.saltpeter_shard": "硝石",
   "item.poopsky.toilet_plug": "ラバーカップ",
   "item.poopsky.urine_bottle": "尿の瓶",
   "item.poopsky.urine_bucket": "糞バケツ",
@@ -28,6 +29,7 @@
   "item.poopsky.omen_upgrade_smithing_template": "鍛冶テンプレート",
 
   "item.poopsky.time_bell": "時止めの鈴",
+  "item.poopsky.jinkela": "金坷垃",
   "message.poopsky.time_bell.frozen": "時間を停止しました",
   "message.poopsky.time_bell.unfrozen": "時間の停止を解除しました",
 
@@ -154,6 +156,11 @@
   "block.poopsky.raw_wither_poop_block": "ウィザーの原糞ブロック",
 
   "block.poopsky.poop_sapling": "糞の苗木",
+  "block.poopsky.saltpeter_block": "硝石ブロック",
+  "block.poopsky.saltpeter_cluster": "硝石の塊",
+  "block.poopsky.large_saltpeter_bud": "大きな硝石の芽",
+  "block.poopsky.medium_saltpeter_bud": "中くらいの硝石の芽",
+  "block.poopsky.small_saltpeter_bud": "小さな硝石の芽",
   "block.poopsky.poop_leaves": "糞の葉",
   "block.poopsky.poop_leaves_iron": "鉄を含む糞の葉",
   "block.poopsky.poop_leaves_gold": "金を含む糞の葉",
@@ -390,6 +397,10 @@
   "subtitle.poopsky.pop.primed": "ポップ：シューシュー",
   "subtitle.poopsky.item.toilet_linker.boop": "トイレリンカー：接続",
   "subtitle.poopsky.item.toilet_linker.success": "トイレリンカー：バインド",
+  "subtitle.poopsky.block.saltpeter.chime": "硝石が鳴る",
+  "subtitle.poopsky.block.toilet.lava_empty": "トイレ：溶岩を排出",
+  "subtitle.poopsky.block.compooper.bucket_fill": "コンポーパー：満たされる",
+  "subtitle.poopsky.item.jinkela.use": "金坷垃：さらさら",
 
   "stat.poopsky.poop_stats": "排便統計",
   "stat.poopsky.inspect_placer": "設置器調査回数",

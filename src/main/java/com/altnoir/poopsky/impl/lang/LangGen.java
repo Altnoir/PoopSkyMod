@@ -234,6 +234,10 @@ public final class LangGen {
         addSubtitle("pop.primed", "POP fizzes");
         addSubtitle("item.toilet_linker.boop", "Toilet Plug Wand links");
         addSubtitle("item.toilet_linker.success", "Toilet Plug Wand binds");
+        addSubtitle("block.saltpeter.chime", "Saltpeter chimes");
+        addSubtitle("block.toilet.lava_empty", "Toilet empties lava");
+        addSubtitle("block.compooper.bucket_fill", "Compooper fills");
+        addSubtitle("item.jinkela.use", "Jinkela rustles");
     }
 
     private static void addSubtitle(String key, String value) {
@@ -300,6 +304,7 @@ public final class LangGen {
         provider.add("tooltip.poopsky.poop_ball.info_2", "500KG Poop");
         provider.add("tooltip.poopsky.toilet_linker.info_1", "Toilet① - DimID: %1$s, Coordinates: %2$s, %3$s, %4$s");
         provider.add("tooltip.poopsky.toilet_linker.info_2", "Toilet② - DimID: %1$s, Coordinates: %2$s, %3$s, %4$s");
+        provider.add("tooltip.poopsky.jinkela.info", "§8Fertilizer mixed with Jinkela: one bag spreads like two");
         provider.add("tooltip.poopsky.toilet_type", "Type");
     }
 
