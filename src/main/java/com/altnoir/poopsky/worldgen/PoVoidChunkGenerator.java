@@ -46,6 +46,8 @@ import java.util.stream.Collectors;
 
 public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
     private static final int VIRTUAL_SURFACE_Y = 64;
+    private static final ResourceLocation STRONGHOLDS_STRUCTURE_SET = ResourceLocation.withDefaultNamespace("strongholds");
+    private static final ResourceLocation STRONGHOLD_STRUCTURE = ResourceLocation.withDefaultNamespace("stronghold");
 
     private static final Codec<List<ResourceKey<StructureSet>>> STRUCTURE_SET_KEYS_CODEC =
             Codec.either(ResourceLocation.CODEC.listOf(), ResourceLocation.CODEC).xmap(
@@ -259,7 +261,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
         Registry<StructureSet> registry = registries.registryOrThrow(Registries.STRUCTURE_SET);
 
         return registry.holders()
-                .filter(allowedStructureSets::contains)
+                .filter(this::isStructureSetAllowed)
                 .flatMap(holder -> holder.value().structures().stream())
                 .map(StructureSelectionEntry::structure)
                 .map(Holder::value)
@@ -274,6 +276,25 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
         Registry<Structure> structureRegistry = registries.registryOrThrow(Registries.STRUCTURE);
         Structure structure = structureRegistry.get(structureId);
         return structure != null && resolveAllowedStructures(registries).contains(structure);
+    }
+
+    private boolean isStructureSetAllowed(Holder<StructureSet> holder) {
+        return allowedStructureSets != null
+                && allowedStructureSets.contains(holder)
+                && (Config.strongholdGeneration || !isStrongholdStructureSet(holder));
+    }
+
+    private static boolean isStrongholdStructureSet(Holder<StructureSet> holder) {
+        return holder.unwrapKey()
+                .map(ResourceKey::location)
+                .filter(STRONGHOLDS_STRUCTURE_SET::equals)
+                .isPresent()
+                || holder.value().structures().stream()
+                .map(StructureSelectionEntry::structure)
+                .map(Holder::unwrapKey)
+                .flatMap(Optional::stream)
+                .map(ResourceKey::location)
+                .anyMatch(STRONGHOLD_STRUCTURE::equals);
     }
 
     @Nullable
@@ -316,10 +337,9 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
         ChunkPos chunkPos = chunk.getPos();
         SectionPos sectionPos = SectionPos.bottomOf(chunk);
         RandomState randomState = structureState.randomState();
-        AllowedStructureSets allowed = allowedStructureSets;
 
         for (Holder<StructureSet> structureSetHolder : structureState.possibleStructureSets()) {
-            if (!allowed.contains(structureSetHolder)) {
+            if (!isStructureSetAllowed(structureSetHolder)) {
                 continue;
             }
 

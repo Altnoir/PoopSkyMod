@@ -407,6 +407,8 @@
   "poopsky.configuration.plugTrades.tooltip": "Whether to disable Toilet Plug trading with villagers",
   "poopsky.configuration.setPoopskyDefault": "Default Dedicated Server World Type",
   "poopsky.configuration.setPoopskyDefault.tooltip": "Makes dedicated servers use the PoopSky world preset by default",
+  "poopsky.configuration.strongholdGeneration": "Generate Strongholds",
+  "poopsky.configuration.strongholdGeneration.tooltip": "Whether strongholds generate in PoopSky worlds",
   "poopsky.configuration.title": "%s Options",
   "poopsky.configuration.unlimitedFreeze": "Unlimited Freeze",
   "poopsky.configuration.unlimitedFreeze.tooltip": "Whether to enable unlimited freeze",

@@ -351,6 +351,8 @@ public final class LangGen {
         addConfig("setPoopskyDefault.tooltip", "Makes dedicated servers use the PoopSky world preset by default");
         addConfig("voidNetherGeneration", "Void Nether Generation");
         addConfig("voidNetherGeneration.tooltip", "Keeps the Nether empty when using the Poopsky custom void generator");
+        addConfig("strongholdGeneration", "Generate Strongholds");
+        addConfig("strongholdGeneration.tooltip", "Whether strongholds generate in PoopSky worlds");
         addConfig("plugTrades", "Disable Toilet Plug Trades");
         addConfig("plugTrades.tooltip", "Whether to disable Toilet Plug trading with villagers");
         addConfig("upgradeTemplate", "Disable Upgrade Template Trades");

@@ -9,6 +9,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 public class Config {
     public static boolean setPoopSkyDefault;
     public static boolean voidNetherGeneration;
+    public static boolean strongholdGeneration;
     public static boolean desperateWorld;
     public static boolean compooperCrafting;
     public static boolean lavaFluid;
@@ -29,6 +30,10 @@ public class Config {
             .comment("Whether the custom void generator should also keep the nether empty")
             .translation("poopsky.configuration.voidNetherGeneration")
             .define("voidNetherGeneration", true);
+    private static final ModConfigSpec.BooleanValue STRONGHOLD_GENERATION = BUILDER
+            .comment("Whether strongholds should generate in PoopSky worlds")
+            .translation("poopsky.configuration.strongholdGeneration")
+            .define("strongholdGeneration", true);
     private static final ModConfigSpec.BooleanValue DESPERATE_WORLD = BUILDER
             .comment("Whether to Enable the Desperate World (Enabling it will cause the device to lag)")
             .translation("poopsky.configuration.desperateWorld")
@@ -67,6 +72,7 @@ public class Config {
     static void onLoad(final ModConfigEvent event) {
         setPoopSkyDefault = SET_POOPSKY_DEFAULT.get();
         voidNetherGeneration = VOID_NETHER_GENERATION.get();
+        strongholdGeneration = STRONGHOLD_GENERATION.get();
         desperateWorld = DESPERATE_WORLD.get();
         compooperCrafting = COMPOOPER_CRAFTING.get();
         lavaFluid = LAVA_FLUID_BLOCK.get();

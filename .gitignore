@@ -19,6 +19,7 @@ out
 # gradle
 build
 .gradle
+build_output.txt
 
 # other
 eclipse
