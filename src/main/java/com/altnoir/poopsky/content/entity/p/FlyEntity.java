@@ -1,13 +1,13 @@
 package com.altnoir.poopsky.content.entity.p;
 
-import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.client.sound.FlyBuzzSoundWrapper;
+import com.altnoir.poopsky.content.item.p.FlyItem;
+import com.altnoir.poopsky.impl.PoTags;
+import com.altnoir.poopsky.impl.sound.PoSoundEvents;
 import com.altnoir.poopsky.impl.type.damageType.PoDamageTypes;
+import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoEntityType;
 import com.altnoir.poopsky.init.PoItems;
-import com.altnoir.poopsky.impl.sound.PoSoundEvents;
-import com.altnoir.poopsky.init.FlyTypes;
-import com.altnoir.poopsky.content.item.p.FlyItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -250,7 +250,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
     }
 
     public static boolean checkFlySpawnRules(EntityType<FlyEntity> fly, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
-        return MobSpawnType.ignoresLightRequirements(spawnType);
+        return MobSpawnType.isSpawner(spawnType);
     }
 
     @Override
