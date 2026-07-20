@@ -19,11 +19,13 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.grower.TreeGrower;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
@@ -37,10 +39,7 @@ import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
 import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
-import net.minecraft.world.level.storage.loot.predicates.ExplosionCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.world.level.storage.loot.predicates.MatchTool;
+import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
@@ -59,6 +58,9 @@ public class PoBlocks {
     private static final float HARD_STRENGTH = 10.0F;
     private static final float TOILET_RESISTANCE = 1200.0F;
     private static final int LAVA_LIGHT_LEVEL = 15;
+
+    protected static final float[] NORMAL_LEAVES_SAPLING_CHANCES;
+    private static final float[] NORMAL_LEAVES_STICK_CHANCES;
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
     public static final BlockEntry<PoopCakeBlock> POOP_CAKE = registerPoopBlock("poop_cake",
@@ -303,31 +305,47 @@ public class PoBlocks {
             props -> new RawWitherBlock(BlockBehaviour.Properties.ofFullCopy(RAW_POOP_BLOCK.get()).sound(SoundType.ROOTED_DIRT)));
 
     public static final BlockEntry<PoopLogBlock> POOP_LOG = registerPoopBlock("poop_log",
-            props -> new PoopLogBlock(logProperties(SoundType.STEM).randomTicks()),
+            props -> new PoopLogBlock(logProperties(MapColor.COLOR_BROWN, SoundType.STEM).randomTicks()),
             (loot, block) -> loot.add(block, createSpallOreDrops(loot, block)));
     public static final BlockEntry<PoopEmptyLogBlock> POOP_EMPTY_LOG = registerPoopBlock("poop_empty_log",
-            props -> new PoopEmptyLogBlock(logProperties(SoundType.BAMBOO_WOOD).noOcclusion()));
+            props -> new PoopEmptyLogBlock(logProperties(MapColor.COLOR_BROWN, SoundType.BAMBOO_WOOD).noOcclusion()));
     public static final BlockEntry<PoopLogBlock> STRIPPED_POOP_LOG = registerPoopBlock("stripped_poop_log",
-            props -> new PoopLogBlock(logProperties(SoundType.STEM).randomTicks()),
+            props -> new PoopLogBlock(logProperties(MapColor.COLOR_BROWN, SoundType.STEM).randomTicks()),
             (loot, block) -> loot.add(block, createSpallOreDrops(loot, block)));
     public static final BlockEntry<PoopEmptyLogBlock> STRIPPED_POOP_EMPTY_LOG = registerPoopBlock("stripped_poop_empty_log",
-            props -> new PoopEmptyLogBlock(logProperties(SoundType.BAMBOO_WOOD).noOcclusion()));
-
+            props -> new PoopEmptyLogBlock(logProperties(MapColor.COLOR_BROWN, SoundType.BAMBOO_WOOD).noOcclusion()));
+    public static final BlockEntry<LogBlock> GINKGO_LOG = registerBlock("ginkgo_log",
+            props -> new LogBlock(logProperties(MapColor.COLOR_YELLOW, SoundType.WOOD)));
+    public static final BlockEntry<LogBlock> STRIPPED_GINKGO_LOG = registerBlock("stripped_ginkgo_log",
+            props -> new LogBlock(logProperties(MapColor.COLOR_YELLOW, SoundType.WOOD)));
+    public static final BlockEntry<Block> GINKGO_PLANKS = registerBlock("ginkgo_planks",
+            props -> new Block(logProperties(MapColor.COLOR_YELLOW, SoundType.WOOD)));
     public static final BlockEntry<PoopLeavesBlock> POOP_LEAVES = registerPoopBlock("poop_leaves",
-            props -> new PoopLeavesBlock(0x5E4228, leavesProperties(MapColor.COLOR_BROWN)),
+            props -> new PoopLeavesBlock(0x5E4228, leavesProperties(MapColor.COLOR_BROWN, SoundType.SCULK_SENSOR)),
             (loot, block) -> loot.add(block, createLeavesDrops(loot, block, PoItems.POOP.get())));
     public static final BlockEntry<PoopLeavesBlock> POOP_LEAVES_IRON = registerPoopBlock("poop_leaves_iron",
-            props -> new PoopLeavesBlock(0xFFFFFF, leavesProperties(MapColor.TERRACOTTA_WHITE)),
+            props -> new PoopLeavesBlock(0xFFFFFF, leavesProperties(MapColor.TERRACOTTA_WHITE, SoundType.SCULK_SENSOR)),
             (loot, block) -> loot.add(block, createIronLeavesDrops(loot, block)));
     public static final BlockEntry<PoopLeavesBlock> POOP_LEAVES_GOLD = registerPoopBlock("poop_leaves_gold",
-            props -> new PoopLeavesBlock(0xFFD700, leavesProperties(MapColor.COLOR_YELLOW)),
+            props -> new PoopLeavesBlock(0xFFD700, leavesProperties(MapColor.COLOR_YELLOW, SoundType.SCULK_SENSOR)),
             (loot, block) -> loot.add(block, createGoldLeavesDrops(loot, block)));
+    public static final BlockEntry<LeavesBlock> GINKGO_LEAVES = registerBlock("ginkgo_leaves",
+            props -> new LeavesBlock(leavesProperties(MapColor.COLOR_YELLOW, SoundType.CHERRY_SAPLING)),
+            (loot, block) -> loot.add(block, createGinkgoLeavesDrops(loot, block)));
     public static final BlockEntry<PoopTreeBlock> POOP_SAPLING = registerPoopBlock("poop_sapling",
             props -> new PoopTreeBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN)
                     .noCollission()
                     .noOcclusion()
                     .instabreak()
                     .sound(SoundType.MUD)
+                    .offsetType(BlockBehaviour.OffsetType.XZ)
+                    .pushReaction(PushReaction.DESTROY)));
+    public static final BlockEntry<SaplingBlock> GINKGO_SAPLING = registerBlock("ginkgo_sapling",
+            props -> new SaplingBlock(TreeGrower.CHERRY, BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_YELLOW)
+                    .noCollission()
+                    .instabreak()
+                    .sound(SoundType.GRASS)
                     .offsetType(BlockBehaviour.OffsetType.XZ)
                     .pushReaction(PushReaction.DESTROY)));
 
@@ -440,6 +458,13 @@ public class PoBlocks {
                     .ignitedByLava()),
             (loot, block) -> loot.add(block, createToiletDrop(block)));
 
+    public static final BlockEntry<FlushToiletBlock> FLUSH_TOILET = registerBlock("flush_toilet",
+            props -> new FlushToiletBlock(BlockBehaviour.Properties.of()
+                    .mapColor(DyeColor.WHITE)
+                    .strength(HARDEN, TOILET_RESISTANCE)
+                    .isSuffocating(PoBlocks::always)
+                    .noOcclusion()));
+
     public record BlockFamily(
             BlockEntry<? extends Block> block,
             BlockEntry<StairBlock> stairs,
@@ -478,13 +503,12 @@ public class PoBlocks {
                 .requiresCorrectToolForDrops();
     }
 
-    private static BlockBehaviour.Properties logProperties(SoundType sound) {
-        return simpleProperties(MapColor.COLOR_BROWN, LOG, sound)
-                .instrument(NoteBlockInstrument.BASS);
+    private static BlockBehaviour.Properties logProperties(MapColor color, SoundType sound) {
+        return simpleProperties(color, LOG, sound).instrument(NoteBlockInstrument.BASS);
     }
 
-    private static BlockBehaviour.Properties leavesProperties(MapColor color) {
-        return simpleProperties(color, 0.2F, SoundType.SCULK_SENSOR)
+    private static BlockBehaviour.Properties leavesProperties(MapColor color, SoundType sound) {
+        return simpleProperties(color, 0.2F, sound)
                 .randomTicks()
                 .noOcclusion()
                 .isValidSpawn(Blocks::ocelotOrParrot)
@@ -753,6 +777,27 @@ public class PoBlocks {
         );
     }
 
+    private static LootTable.Builder createGinkgoLeavesDrops(RegistrateBlockLootTables loot, Block block) {
+        return createVanillaLeavesDrops(loot, block, PoBlocks.GINKGO_SAPLING.get());
+    }
+
+    private static LootTable.Builder createVanillaLeavesDrops(RegistrateBlockLootTables loot, Block block, Block sapling) {
+        var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
+        LootItemCondition.Builder hasShearsOrSilkTouch = hasShearsOrSilkTouch(loot);
+        return createShearsOrSilkTouchDispatchTable(loot, block,
+                ((LootPoolSingletonContainer.Builder<?>)
+                        loot.applyExplosionCondition(block, LootItem.lootTableItem(sapling)))
+                        .when(BonusLevelTableCondition.bonusLevelFlatChance(registrylookup.getOrThrow(Enchantments.FORTUNE), NORMAL_LEAVES_SAPLING_CHANCES))
+        ).withPool(LootPool.lootPool()
+                .setRolls(ConstantValue.exactly(1.0F))
+                .when(hasShearsOrSilkTouch.invert())
+                .add(((LootPoolSingletonContainer.Builder<?>)
+                        loot.applyExplosionDecay(block, LootItem.lootTableItem(Items.STICK)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))))
+                        .when(BonusLevelTableCondition.bonusLevelFlatChance(registrylookup.getOrThrow(Enchantments.FORTUNE), NORMAL_LEAVES_STICK_CHANCES)))
+        );
+    }
+
     private static LootTable.Builder createShearsOrSilkTouchDispatchTable(RegistrateBlockLootTables loot, Block block, LootPoolSingletonContainer.Builder<?> fallback) {
         LootItemCondition.Builder hasShearsOrSilkTouch = hasShearsOrSilkTouch(loot);
         return LootTable.lootTable()
@@ -787,5 +832,10 @@ public class PoBlocks {
                         .when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(ItemTags.CLUSTER_MAX_HARVESTABLES)))
                         .otherwise(loot.applyExplosionDecay(block,
                                 LootItem.lootTableItem(PoItems.SALTPETER_SHARD.get()).apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))))));
+    }
+
+    static {
+        NORMAL_LEAVES_SAPLING_CHANCES = new float[]{0.05F, 0.0625F, 0.083333336F, 0.1F};
+        NORMAL_LEAVES_STICK_CHANCES = new float[]{0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F};
     }
 }

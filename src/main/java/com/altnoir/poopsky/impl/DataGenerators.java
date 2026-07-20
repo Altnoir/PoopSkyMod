@@ -44,6 +44,7 @@ public class DataGenerators {
         generators.addProvider(event.includeServer(), new ToiletTypeGen(packOutput));
 
         DatapackGen datapackProvider = new DatapackGen(packOutput, lookupProvider);
+        generators.addProvider(event.includeServer(), new PaintingVariantTagsGen(packOutput, datapackProvider.getRegistryProvider(), existingFileHelper));
         DamageTypeTagsGen damageTypeTagsProvider = new DamageTypeTagsGen(packOutput, datapackProvider.getRegistryProvider(), existingFileHelper);
 
         generators.addProvider(event.includeServer(), datapackProvider);

@@ -38,6 +38,8 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         poopPiece();
         poopFarmland();
         poolimeMaggotsBlock();
+        registerPoopCake();
+        flushToilet();
         blockWithTranslucentRenderType(PoBlocks.POOLIME_BLOCK.get());
         PoBlocks.SIMPLE_MODEL_FAMILIES.forEach(this::blockFamily);
         blockWithItem(PoBlocks.CRACKED_POOP_BRICKS.get());
@@ -46,10 +48,11 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         blockWithItem(PoBlocks.RAW_SAPLING_POOP_BLOCK.get());
         blockWithItem(PoBlocks.RAW_SEA_POOP_BLOCK.get());
         blockWithItem(PoBlocks.RAW_WITHER_POOP_BLOCK.get());
-
         blockWithItem(PoBlocks.POOP_LEAVES.get());
         blockWithItem(PoBlocks.POOP_LEAVES_GOLD.get());
         blockWithItem(PoBlocks.POOP_LEAVES_IRON.get());
+        blockWithItem(PoBlocks.GINKGO_PLANKS.get());
+        blockWithItem(PoBlocks.GINKGO_LEAVES.get());
         blockWithItem(PoBlocks.SALTPETER_BLOCK.get());
         clusterBlock(PoBlocks.SALTPETER_CLUSTER.get());
         clusterBlock(PoBlocks.LARGE_SALTPETER_BUD.get());
@@ -59,7 +62,6 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         cubeBottomTopFace(PoBlocks.FLY_BARREL.get());
         cubeBottomTop(PoBlocks.BREEDING_CHEST.get(), PoBlocks.CUT_POOP_BLOCK.get());
         orientable(PoBlocks.PLACER.get());
-        registerPoopCake();
         cubeBottomTop(PoBlocks.MAGGOTS_BLOCK.get());
         blockWithItem(PoBlocks.ROUNDWORM_BLOCK.get());
 
@@ -354,6 +356,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         simpleBlockItem(block, horizontal);
     }
 
+
     private void registerToilet(BlockEntry<? extends Block> block, ToiletType.Category category, boolean hasLava) {
         Map<ToiletType, ResourceLocation> textures = new LinkedHashMap<>();
         for (ToiletType type : ToiletType.getByCategory(category).values()) {
@@ -436,6 +439,28 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
                     .model(overrideModel)
                     .end();
         }
+    }
+
+    private void flushToilet() {
+        Block block = PoBlocks.FLUSH_TOILET.get();
+        String path = getBlockPath(block);
+        ModelFile model = models().getExistingFile(modLoc("block/" + path));
+
+        getVariantBuilder(block).forAllStates(state -> {
+            Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
+            int yRot = switch (facing) {
+                case EAST -> 90;
+                case SOUTH -> 180;
+                case WEST -> 270;
+                default -> 0;
+            };
+            return ConfiguredModel.builder()
+                    .modelFile(model)
+                    .rotationY(yRot)
+                    .build();
+        });
+
+        simpleBlockItem(block, model);
     }
 
     private void blockWithItem(Block block) {

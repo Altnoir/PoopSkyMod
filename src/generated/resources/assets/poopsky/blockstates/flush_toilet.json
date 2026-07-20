@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "poopsky:block/flush_toilet",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "poopsky:block/flush_toilet"
+    },
+    "facing=south": {
+      "model": "poopsky:block/flush_toilet",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "poopsky:block/flush_toilet",
+      "y": 270
+    }
+  }
+}

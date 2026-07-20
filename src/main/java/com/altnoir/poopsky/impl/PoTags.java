@@ -8,6 +8,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.decoration.PaintingVariant;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
@@ -90,6 +91,13 @@ public class PoTags {
 
         private static TagKey<DamageType> create(String name) {
             return TagKey.create(Registries.DAMAGE_TYPE, PoopSky.loc(name));
+        }
+    }
+    public class PaintingVariantTags {
+        public static final TagKey<PaintingVariant> PLACEABLE = create("placeable");
+
+        private static TagKey<PaintingVariant> create(String name) {
+            return TagKey.create(Registries.PAINTING_VARIANT, ResourceLocation.withDefaultNamespace(name));
         }
     }
 }
