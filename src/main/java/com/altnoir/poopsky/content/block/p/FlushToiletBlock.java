@@ -3,12 +3,18 @@ package com.altnoir.poopsky.content.block.p;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -21,19 +27,20 @@ import java.util.Map;
 
 public class FlushToiletBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+    public static final BooleanProperty CLOSED = BooleanProperty.create("closed");
     public static final MapCodec<FlushToiletBlock> CODEC = simpleCodec(FlushToiletBlock::new);
 
     private static final VoxelShape NORTH_SHAPE = Shapes.or(
             Block.box(4, 0, 3, 12, 5, 13),
             Block.box(4, 5, 2, 12, 8, 13),
-            Block.box(4, 6, 12, 12, 16, 16),
-            Block.box(4, 8, 11, 12, 18, 12)
+            Block.box(4, 6, 12, 12, 16, 16)
     );
+
     private static final Map<Direction, VoxelShape> SHAPES = computeShapes(NORTH_SHAPE);
 
     public FlushToiletBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(CLOSED, false));
     }
 
     @Override
@@ -57,8 +64,21 @@ public class FlushToiletBlock extends BaseEntityBlock {
     }
 
     @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, net.minecraft.world.phys.BlockHitResult hitResult) {
+        if (!level.isClientSide) {
+            level.setBlockAndUpdate(pos, state.cycle(CLOSED));
+            if (state.getValue(CLOSED)) {
+                level.playSound(null, pos, SoundEvents.BAMBOO_WOOD_TRAPDOOR_CLOSE, SoundSource.BLOCKS, 0.5F, level.random.nextFloat() * 0.1F + 0.9F);
+            } else {
+                level.playSound(null, pos, SoundEvents.BAMBOO_WOOD_TRAPDOOR_OPEN, SoundSource.BLOCKS, 0.5F, level.random.nextFloat() * 0.1F + 0.9F);
+            }
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
+        builder.add(FACING, CLOSED);
     }
 
     @Override

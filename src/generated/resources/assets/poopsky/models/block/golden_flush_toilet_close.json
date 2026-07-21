@@ -1,0 +1,6 @@
+{
+  "parent": "poopsky:block/flush_toilet_close",
+  "textures": {
+    "toilet": "poopsky:block/golden_flush_toilet"
+  }
+}

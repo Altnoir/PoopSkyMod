@@ -84,7 +84,7 @@ public class PoModEvents {
         event.addPackFinders(
                 PoopSky.loc("resourcepacks/poopsky_pack"),
                 PackType.CLIENT_RESOURCES,
-                Component.translatable("pack.poopsky.pack.name"),
+                Component.translatable("pack.poopsky.name"),
                 PackSource.BUILT_IN,
                 false,
                 Pack.Position.TOP

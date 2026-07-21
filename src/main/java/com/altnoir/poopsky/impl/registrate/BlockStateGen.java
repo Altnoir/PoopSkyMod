@@ -34,7 +34,6 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         poopFarmland();
         poolimeMaggotsBlock();
         registerPoopCake();
-        flushToilet();
         blockWithTranslucentRenderType(PoBlocks.POOLIME_BLOCK.get());
         PoBlocks.SIMPLE_MODEL_FAMILIES.forEach(this::blockFamily);
         blockWithItem(PoBlocks.CRACKED_POOP_BRICKS.get());
@@ -63,6 +62,8 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
 
         registerToilet(PoBlocks.WOODEN_TOILET, ToiletType.Category.WOOD, false);
         registerToilet(PoBlocks.HARD_TOILET, ToiletType.Category.HARD, true);
+        flushToilet(PoBlocks.FLUSH_TOILET.get());
+        flushToilet(PoBlocks.GOLDEN_FLUSH_TOILET.get());
 
         fluidBlockWithItem(PoBlocks.URINE_LIQUID.get());
         makeCropBlock(PoBlocks.MAGGOTS.get(), "maggots_stage", "maggots_stage");
@@ -476,20 +477,31 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         }
     }
 
-    private void flushToilet() {
-        Block block = PoBlocks.FLUSH_TOILET.get();
+    private void flushToilet(Block block) {
         String path = getBlockPath(block);
-        ModelFile model = models().getExistingFile(modLoc("block/" + path));
+        ModelFile openModel;
+        ModelFile closeModel;
+
+        if (path.equals("flush_toilet")) {
+            openModel = models().getExistingFile(modLoc("block/" + path));
+            closeModel = models().getExistingFile(modLoc("block/" + path + "_close"));
+        } else {
+            var texture = modLoc("block/" + path);
+            openModel = models().withExistingParent(path, modLoc("block/flush_toilet")).texture("toilet", texture);
+            closeModel = models().withExistingParent(path + "_close", modLoc("block/flush_toilet_close")).texture("toilet", texture);
+        }
 
         getVariantBuilder(block).forAllStates(state -> {
             Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
+            boolean isClosed = state.getValue(FlushToiletBlock.CLOSED);
+            ModelFile model = isClosed ? closeModel : openModel;
             return ConfiguredModel.builder()
                     .modelFile(model)
                     .rotationY(horizontalRotation(facing))
                     .build();
         });
 
-        simpleBlockItem(block, model);
+        simpleBlockItem(block, openModel);
     }
 
     private void blockWithItem(Block block) {

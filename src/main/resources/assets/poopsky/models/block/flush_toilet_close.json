@@ -4,9 +4,9 @@
 	"parent": "block/block",
 	"render_type": "minecraft:cutout",
 	"textures": {
+		"particle": "poopsky:block/flush_toilet",
 		"toilet": "poopsky:block/flush_toilet",
-		"liquid": "poopsky:block/urine_liquid",
-		"particle": "#toilet"
+		"liquid": "poopsky:block/urine_liquid"
 	},
 	"elements": [
 		{
@@ -18,16 +18,16 @@
 		},
 		{
 			"name": "cover",
-			"from": [4, 8, 11],
-			"to": [12, 18, 12],
-			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8.5, 11.5]},
+			"from": [4, 8, 2],
+			"to": [12, 9, 12],
+			"rotation": {"angle": 0, "axis": "x", "origin": [8, 8.5, 11.5]},
 			"faces": {
-				"north": {"uv": [16, 0, 12, 5], "rotation": 180, "texture": "#toilet"},
-				"east": {"uv": [10, 15.5, 15, 16], "rotation": 270, "texture": "#toilet"},
-				"south": {"uv": [12, 5, 8, 0], "texture": "#toilet"},
-				"west": {"uv": [10, 15, 15, 15.5], "rotation": 90, "texture": "#toilet"},
-				"up": {"uv": [10, 14.5, 14, 15], "rotation": 180, "texture": "#toilet"},
-				"down": {"uv": [10, 14, 14, 14.5], "texture": "#toilet"}
+				"north": {"uv": [10, 14.5, 14, 15], "texture": "#toilet"},
+				"east": {"uv": [10, 15.5, 15, 16], "texture": "#toilet"},
+				"south": {"uv": [10, 14, 14, 14.5], "texture": "#toilet"},
+				"west": {"uv": [10, 15, 15, 15.5], "texture": "#toilet"},
+				"up": {"uv": [12, 5, 8, 0], "texture": "#toilet"},
+				"down": {"uv": [16, 0, 12, 5], "texture": "#toilet"}
 			}
 		},
 		{

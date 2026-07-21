@@ -486,7 +486,11 @@ public class PoBlocks {
             props -> new FlushToiletBlock(BlockBehaviour.Properties.of()
                     .mapColor(DyeColor.WHITE)
                     .strength(HARDEN, TOILET_RESISTANCE)
-                    .isSuffocating(PoBlocks::always)
+                    .noOcclusion()));
+    public static final BlockEntry<FlushToiletBlock> GOLDEN_FLUSH_TOILET = registerBlock("golden_flush_toilet",
+            props -> new FlushToiletBlock(BlockBehaviour.Properties.of()
+                    .mapColor(DyeColor.YELLOW)
+                    .strength(HARDEN, TOILET_RESISTANCE)
                     .noOcclusion()));
 
     public record BlockFamily(
