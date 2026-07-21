@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.impl.event;
 
+import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.entity.p.FlyEntity;
 import com.altnoir.poopsky.content.entity.p.PoolimeEntity;
 import com.altnoir.poopsky.impl.DataGenerators;
@@ -7,11 +8,16 @@ import com.altnoir.poopsky.init.PoBlockEntityType;
 import com.altnoir.poopsky.init.PoEntityType;
 import com.altnoir.poopsky.impl.network.PoNetworking;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 
@@ -22,6 +28,7 @@ public class PoModEvents {
         modEventBus.addListener(PoModEvents::registerAttributes);
         modEventBus.addListener(PoModEvents::registerSpawnPlacements);
         modEventBus.addListener(PoModEvents::registerCapabilities);
+        modEventBus.addListener(PoModEvents::packSetup);
     }
 
     public static void registerAttributes(EntityAttributeCreationEvent event) {
@@ -71,6 +78,16 @@ public class PoModEvents {
                     }
                     return blockEntity.getTopSideHandler();
                 }
+        );
+    }
+    public static void packSetup(AddPackFindersEvent event) {
+        event.addPackFinders(
+                PoopSky.loc("resourcepacks/poopsky_pack"),
+                PackType.CLIENT_RESOURCES,
+                Component.translatable("pack.poopsky.pack.name"),
+                PackSource.BUILT_IN,
+                false,
+                Pack.Position.TOP
         );
     }
 }

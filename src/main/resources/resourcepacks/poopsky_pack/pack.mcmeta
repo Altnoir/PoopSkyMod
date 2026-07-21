@@ -1,0 +1,9 @@
+{
+  "pack": {
+    "pack_format": 42,
+    "supported_formats": [15,999],
+    "min_format": [15],
+    "max_format": [999],
+    "description": "§6适用于直播/视频的文本和谐资源包§eby xia_bi418 on bilibili＆mcmod"
+  }
+}
