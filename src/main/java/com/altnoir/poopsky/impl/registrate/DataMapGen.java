@@ -40,6 +40,21 @@ public final class DataMapGen {
                 .add(PoBlocks.POOP_EMPTY_LOG.getId(), new FurnaceFuel(800), false)
                 .add(PoBlocks.STRIPPED_POOP_EMPTY_LOG.getId(), new FurnaceFuel(800), false)
                 .add(PoBlocks.POOP_PIECE.getId(), new FurnaceFuel(400), false)
-                .add(PoBlocks.STOOL.getId(), new FurnaceFuel(800), false);
+                .add(PoBlocks.STOOL.getId(), new FurnaceFuel(800), false)
+                .add(PoBlocks.GINKGO_SAPLING.getId(), new FurnaceFuel(100), false)
+                .add(PoBlocks.GINKGO_LOG.getId(), new FurnaceFuel(300), false)
+                .add(PoBlocks.STRIPPED_GINKGO_LOG.getId(), new FurnaceFuel(300), false)
+                .add(PoBlocks.GINKGO_WOOD.getId(), new FurnaceFuel(300), false)
+                .add(PoBlocks.STRIPPED_GINKGO_WOOD.getId(), new FurnaceFuel(300), false)
+                .add(PoBlocks.GINKGO_PLANKS.getId(), new FurnaceFuel(300), false)
+                .add(PoBlocks.GINKGO_STAIRS.getId(), new FurnaceFuel(300), false)
+                .add(PoBlocks.GINKGO_SLAB.getId(), new FurnaceFuel(150), false)
+                .add(PoBlocks.GINKGO_VERTICAL_SLAB.getId(), new FurnaceFuel(150), false)
+                .add(PoBlocks.GINKGO_BUTTON.getId(), new FurnaceFuel(100), false)
+                .add(PoBlocks.GINKGO_PRESSURE_PLATE.getId(), new FurnaceFuel(300), false)
+                .add(PoBlocks.GINKGO_FENCE.getId(), new FurnaceFuel(300), false)
+                .add(PoBlocks.GINKGO_FENCE_GATE.getId(), new FurnaceFuel(300), false)
+                .add(PoBlocks.GINKGO_DOOR.getId(), new FurnaceFuel(200), false)
+                .add(PoBlocks.GINKGO_TRAPDOOR.getId(), new FurnaceFuel(300), false);
     }
 }

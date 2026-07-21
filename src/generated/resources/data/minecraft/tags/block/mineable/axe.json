@@ -1,7 +1,18 @@
 {
   "values": [
+    "#poopsky:ginkgo_logs",
     "poopsky:wooden_toilet",
     "poopsky:fly_barrel",
-    "poopsky:maggots"
+    "poopsky:maggots",
+    "poopsky:ginkgo_planks",
+    "poopsky:ginkgo_stairs",
+    "poopsky:ginkgo_slab",
+    "poopsky:ginkgo_vertical_slab",
+    "poopsky:ginkgo_button",
+    "poopsky:ginkgo_pressure_plate",
+    "poopsky:ginkgo_fence",
+    "poopsky:ginkgo_fence_gate",
+    "poopsky:ginkgo_door",
+    "poopsky:ginkgo_trapdoor"
   ]
 }

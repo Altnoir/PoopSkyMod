@@ -1,5 +1,44 @@
 {
   "values": {
+    "poopsky:ginkgo_button": {
+      "burn_time": 100
+    },
+    "poopsky:ginkgo_door": {
+      "burn_time": 200
+    },
+    "poopsky:ginkgo_fence": {
+      "burn_time": 300
+    },
+    "poopsky:ginkgo_fence_gate": {
+      "burn_time": 300
+    },
+    "poopsky:ginkgo_log": {
+      "burn_time": 300
+    },
+    "poopsky:ginkgo_planks": {
+      "burn_time": 300
+    },
+    "poopsky:ginkgo_pressure_plate": {
+      "burn_time": 300
+    },
+    "poopsky:ginkgo_sapling": {
+      "burn_time": 100
+    },
+    "poopsky:ginkgo_slab": {
+      "burn_time": 150
+    },
+    "poopsky:ginkgo_stairs": {
+      "burn_time": 300
+    },
+    "poopsky:ginkgo_trapdoor": {
+      "burn_time": 300
+    },
+    "poopsky:ginkgo_vertical_slab": {
+      "burn_time": 150
+    },
+    "poopsky:ginkgo_wood": {
+      "burn_time": 300
+    },
     "poopsky:poop": {
       "burn_time": 200
     },
@@ -56,6 +95,12 @@
     },
     "poopsky:stool": {
       "burn_time": 800
+    },
+    "poopsky:stripped_ginkgo_log": {
+      "burn_time": 300
+    },
+    "poopsky:stripped_ginkgo_wood": {
+      "burn_time": 300
     },
     "poopsky:stripped_poop_empty_log": {
       "burn_time": 800

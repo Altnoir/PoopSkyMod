@@ -3,10 +3,7 @@ package com.altnoir.poopsky.impl.registrate;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
-import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
-import com.altnoir.poopsky.content.block.p.PoopCandleCakeBlock;
-import com.altnoir.poopsky.content.block.p.PoopFarmlandBlock;
-import com.altnoir.poopsky.content.block.p.PoopPieceBlock;
+import com.altnoir.poopsky.content.block.p.*;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -51,8 +48,9 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         blockWithItem(PoBlocks.POOP_LEAVES.get());
         blockWithItem(PoBlocks.POOP_LEAVES_GOLD.get());
         blockWithItem(PoBlocks.POOP_LEAVES_IRON.get());
-        blockWithItem(PoBlocks.GINKGO_PLANKS.get());
+        ginkgoWoodSet();
         blockWithItem(PoBlocks.GINKGO_LEAVES.get());
+        saplingBlock(PoBlocks.GINKGO_SAPLING.get());
         blockWithItem(PoBlocks.SALTPETER_BLOCK.get());
         clusterBlock(PoBlocks.SALTPETER_CLUSTER.get());
         clusterBlock(PoBlocks.LARGE_SALTPETER_BUD.get());
@@ -258,6 +256,71 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         ).renderType("translucent");
 
         simpleBlockWithItem(block, model);
+    }
+
+    private void ginkgoWoodSet() {
+        logBlock(PoBlocks.GINKGO_LOG.get());
+        logBlock(PoBlocks.STRIPPED_GINKGO_LOG.get());
+        axisBlock(PoBlocks.GINKGO_WOOD.get(), blockTexture(PoBlocks.GINKGO_LOG.get()), blockTexture(PoBlocks.GINKGO_LOG.get()));
+        axisBlock(PoBlocks.STRIPPED_GINKGO_WOOD.get(), blockTexture(PoBlocks.STRIPPED_GINKGO_LOG.get()), blockTexture(PoBlocks.STRIPPED_GINKGO_LOG.get()));
+        simpleBlockItem(PoBlocks.GINKGO_LOG.get(), blockModel(PoBlocks.GINKGO_LOG.get()));
+        simpleBlockItem(PoBlocks.STRIPPED_GINKGO_LOG.get(), blockModel(PoBlocks.STRIPPED_GINKGO_LOG.get()));
+        simpleBlockItem(PoBlocks.GINKGO_WOOD.get(), blockModel(PoBlocks.GINKGO_WOOD.get()));
+        simpleBlockItem(PoBlocks.STRIPPED_GINKGO_WOOD.get(), blockModel(PoBlocks.STRIPPED_GINKGO_WOOD.get()));
+
+        ResourceLocation planks = blockTexture(PoBlocks.GINKGO_PLANKS.get());
+        blockWithItem(PoBlocks.GINKGO_PLANKS.get());
+        stairsBlock(PoBlocks.GINKGO_STAIRS.get(), planks);
+        slabBlock(PoBlocks.GINKGO_SLAB.get(), planks, planks);
+        verticalSlabBlock(PoBlocks.GINKGO_VERTICAL_SLAB.get(), planks);
+        buttonBlock(PoBlocks.GINKGO_BUTTON.get(), planks);
+        pressurePlateBlock(PoBlocks.GINKGO_PRESSURE_PLATE.get(), planks);
+        fenceBlock(PoBlocks.GINKGO_FENCE.get(), planks);
+        fenceGateBlock(PoBlocks.GINKGO_FENCE_GATE.get(), planks);
+        doorBlockWithRenderType(PoBlocks.GINKGO_DOOR.get(), planks, planks, "cutout");
+        trapdoorBlockWithRenderType(PoBlocks.GINKGO_TRAPDOOR.get(), planks, true, "cutout");
+
+        simpleBlockItem(PoBlocks.GINKGO_STAIRS.get(), blockModel(PoBlocks.GINKGO_STAIRS.get()));
+        simpleBlockItem(PoBlocks.GINKGO_SLAB.get(), blockModel(PoBlocks.GINKGO_SLAB.get()));
+        ModelFile buttonInventory = models().withExistingParent(getBlockPath(PoBlocks.GINKGO_BUTTON.get()) + "_inventory", mcLoc("block/button_inventory"))
+                .texture("texture", planks);
+        simpleBlockItem(PoBlocks.GINKGO_BUTTON.get(), buttonInventory);
+        simpleBlockItem(PoBlocks.GINKGO_PRESSURE_PLATE.get(), blockModel(PoBlocks.GINKGO_PRESSURE_PLATE.get()));
+        simpleBlockItem(PoBlocks.GINKGO_FENCE.get(), models().withExistingParent(getBlockPath(PoBlocks.GINKGO_FENCE.get()) + "_inventory", mcLoc("block/fence_inventory"))
+                .texture("texture", planks));
+        simpleBlockItem(PoBlocks.GINKGO_FENCE_GATE.get(), blockModel(PoBlocks.GINKGO_FENCE_GATE.get()));
+        itemModels().withExistingParent(getItemPath(PoBlocks.GINKGO_DOOR.get()), mcLoc("item/generated"))
+                .texture("layer0", planks);
+        simpleBlockItem(PoBlocks.GINKGO_TRAPDOOR.get(), blockModel(PoBlocks.GINKGO_TRAPDOOR.get(), "_bottom"));
+    }
+
+    private void verticalSlabBlock(VerticalSlabBlock block, ResourceLocation texture) {
+        String path = getBlockPath(block);
+        ModelFile model = models().withExistingParent(path, mcLoc("block/block"))
+                .texture("particle", texture)
+                .texture("texture", texture)
+                .element().from(0, 0, 0).to(16, 16, 8)
+                .allFaces((face, builder) -> builder.texture("#texture"))
+                .end();
+
+        getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder()
+                .modelFile(model)
+                .rotationY(switch (state.getValue(VerticalSlabBlock.FACING)) {
+                    case EAST -> 90;
+                    case SOUTH -> 180;
+                    case WEST -> 270;
+                    default -> 0;
+                })
+                .uvLock(true)
+                .build());
+        simpleBlockItem(block, model);
+    }
+
+    private void saplingBlock(SaplingBlock block) {
+        String path = getBlockPath(block);
+        ModelFile model = models().cross(path, blockTexture(block)).renderType("cutout");
+        simpleBlock(block, model);
+        bushItem(block);
     }
 
     private void clusterBlock(Block block) {
@@ -495,6 +558,10 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
 
     private ModelFile blockModel(Block block) {
         return new ModelFile.UncheckedModelFile(modLoc("block/" + getBlockPath(block)));
+    }
+
+    private ModelFile blockModel(Block block, String suffix) {
+        return new ModelFile.UncheckedModelFile(modLoc("block/" + getBlockPath(block) + suffix));
     }
 
     private String getItemPath(Block block) {

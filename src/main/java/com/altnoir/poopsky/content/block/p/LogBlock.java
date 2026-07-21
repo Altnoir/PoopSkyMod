@@ -19,6 +19,7 @@ public class LogBlock extends RotatedPillarBlock {
             ImmutableMap.<Block, Block>builder()
                     .put(PoBlocks.POOP_LOG.get(), PoBlocks.STRIPPED_POOP_LOG.get())
                     .put(PoBlocks.GINKGO_LOG.get(), PoBlocks.STRIPPED_GINKGO_LOG.get())
+                    .put(PoBlocks.GINKGO_WOOD.get(), PoBlocks.STRIPPED_GINKGO_WOOD.get())
                     .build()
     );
 

@@ -5,6 +5,7 @@ import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.recipe.*;
+import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
@@ -228,6 +229,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         blockFamilyRecipes(recipeOutput, PoBlocks.MOSSY_POOP_BRICK_FAMILY);
 
         blockFamilyRecipes(recipeOutput, PoBlocks.TILE_BLOCK_FAMILY);
+        ginkgoWoodRecipes(recipeOutput);
 
         nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PoItems.POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PoBlocks.RAW_POOP_BLOCK);
         nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PoItems.SAPLING_POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PoBlocks.RAW_SAPLING_POOP_BLOCK);
@@ -930,6 +932,80 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .pattern("PPP")
                 .define('P', input)
                 .unlockedBy(getItemName(input), has(input))
+                .save(recipeOutput);
+    }
+
+    private void ginkgoWoodRecipes(RecipeOutput recipeOutput) {
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, PoBlocks.GINKGO_PLANKS, 4)
+                .requires(PoTags.Items.GINKGO_LOGS)
+                .unlockedBy("has_ginkgo_logs", has(PoTags.Items.GINKGO_LOGS))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.GINKGO_WOOD, 3)
+                .pattern("LL")
+                .pattern("LL")
+                .define('L', PoBlocks.GINKGO_LOG)
+                .unlockedBy(getItemName(PoBlocks.GINKGO_LOG), has(PoBlocks.GINKGO_LOG))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.STRIPPED_GINKGO_WOOD, 3)
+                .pattern("LL")
+                .pattern("LL")
+                .define('L', PoBlocks.STRIPPED_GINKGO_LOG)
+                .unlockedBy(getItemName(PoBlocks.STRIPPED_GINKGO_LOG), has(PoBlocks.STRIPPED_GINKGO_LOG))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.GINKGO_STAIRS, 4)
+                .pattern("P  ")
+                .pattern("PP ")
+                .pattern("PPP")
+                .define('P', PoBlocks.GINKGO_PLANKS)
+                .unlockedBy(getItemName(PoBlocks.GINKGO_PLANKS), has(PoBlocks.GINKGO_PLANKS))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.GINKGO_SLAB, 6)
+                .pattern("PPP")
+                .define('P', PoBlocks.GINKGO_PLANKS)
+                .unlockedBy(getItemName(PoBlocks.GINKGO_PLANKS), has(PoBlocks.GINKGO_PLANKS))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.GINKGO_VERTICAL_SLAB, 6)
+                .pattern("P")
+                .pattern("P")
+                .pattern("P")
+                .define('P', PoBlocks.GINKGO_PLANKS)
+                .unlockedBy(getItemName(PoBlocks.GINKGO_PLANKS), has(PoBlocks.GINKGO_PLANKS))
+                .save(recipeOutput);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, PoBlocks.GINKGO_BUTTON)
+                .requires(PoBlocks.GINKGO_PLANKS)
+                .unlockedBy(getItemName(PoBlocks.GINKGO_PLANKS), has(PoBlocks.GINKGO_PLANKS))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.GINKGO_PRESSURE_PLATE)
+                .pattern("PP")
+                .define('P', PoBlocks.GINKGO_PLANKS)
+                .unlockedBy(getItemName(PoBlocks.GINKGO_PLANKS), has(PoBlocks.GINKGO_PLANKS))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, PoBlocks.GINKGO_FENCE, 3)
+                .pattern("PSP")
+                .pattern("PSP")
+                .define('P', PoBlocks.GINKGO_PLANKS)
+                .define('S', Items.STICK)
+                .unlockedBy(getItemName(PoBlocks.GINKGO_PLANKS), has(PoBlocks.GINKGO_PLANKS))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.GINKGO_FENCE_GATE)
+                .pattern("SPS")
+                .pattern("SPS")
+                .define('P', PoBlocks.GINKGO_PLANKS)
+                .define('S', Items.STICK)
+                .unlockedBy(getItemName(PoBlocks.GINKGO_PLANKS), has(PoBlocks.GINKGO_PLANKS))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.GINKGO_DOOR, 3)
+                .pattern("PP")
+                .pattern("PP")
+                .pattern("PP")
+                .define('P', PoBlocks.GINKGO_PLANKS)
+                .unlockedBy(getItemName(PoBlocks.GINKGO_PLANKS), has(PoBlocks.GINKGO_PLANKS))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.GINKGO_TRAPDOOR, 2)
+                .pattern("PPP")
+                .pattern("PPP")
+                .define('P', PoBlocks.GINKGO_PLANKS)
+                .unlockedBy(getItemName(PoBlocks.GINKGO_PLANKS), has(PoBlocks.GINKGO_PLANKS))
                 .save(recipeOutput);
     }
 

@@ -33,6 +33,11 @@ public final class ItemTagGen {
         tag(PoTags.Items.TOILET_BLOCKS)
                 .add(PoBlocks.WOODEN_TOILET.get().asItem())
                 .add(PoBlocks.HARD_TOILET.get().asItem());
+        tag(PoTags.Items.GINKGO_LOGS)
+                .add(PoBlocks.GINKGO_LOG.asItem())
+                .add(PoBlocks.STRIPPED_GINKGO_LOG.asItem())
+                .add(PoBlocks.GINKGO_WOOD.asItem())
+                .add(PoBlocks.STRIPPED_GINKGO_WOOD.asItem());
         tag(PoTags.Items.CAN_COMPOSTABLE)
                 .add(PoItems.POOP.get())
                 .add(PoItems.POOP_BALL.get())
@@ -177,16 +182,28 @@ public final class ItemTagGen {
         tag(ItemTags.VILLAGER_PLANTABLE_SEEDS)
                 .add(PoItems.MAGGOTS_SEEDS.get());
         tag(ItemTags.SAPLINGS)
-                .add(PoBlocks.POOP_SAPLING.asItem());
+                .add(PoBlocks.POOP_SAPLING.asItem())
+                .add(PoBlocks.GINKGO_SAPLING.asItem());
         tag(ItemTags.LEAVES)
                 .add(PoBlocks.POOP_LEAVES.asItem())
                 .add(PoBlocks.POOP_LEAVES_IRON.asItem())
-                .add(PoBlocks.POOP_LEAVES_GOLD.asItem());
+                .add(PoBlocks.POOP_LEAVES_GOLD.asItem())
+                .add(PoBlocks.GINKGO_LEAVES.asItem());
         tag(ItemTags.LOGS)
                 .add(PoBlocks.POOP_LOG.asItem())
                 .add(PoBlocks.POOP_EMPTY_LOG.asItem())
                 .add(PoBlocks.STRIPPED_POOP_LOG.asItem())
                 .add(PoBlocks.STRIPPED_POOP_EMPTY_LOG.asItem());
+        tag(ItemTags.LOGS_THAT_BURN).addTag(PoTags.Items.GINKGO_LOGS);
+        tag(ItemTags.PLANKS).add(PoBlocks.GINKGO_PLANKS.asItem());
+        tag(ItemTags.WOODEN_STAIRS).add(PoBlocks.GINKGO_STAIRS.asItem());
+        tag(ItemTags.WOODEN_SLABS).add(PoBlocks.GINKGO_SLAB.asItem());
+        tag(ItemTags.WOODEN_BUTTONS).add(PoBlocks.GINKGO_BUTTON.asItem());
+        tag(ItemTags.WOODEN_PRESSURE_PLATES).add(PoBlocks.GINKGO_PRESSURE_PLATE.asItem());
+        tag(ItemTags.WOODEN_FENCES).add(PoBlocks.GINKGO_FENCE.asItem());
+        tag(ItemTags.FENCE_GATES).add(PoBlocks.GINKGO_FENCE_GATE.asItem());
+        tag(ItemTags.WOODEN_DOORS).add(PoBlocks.GINKGO_DOOR.asItem());
+        tag(ItemTags.WOODEN_TRAPDOORS).add(PoBlocks.GINKGO_TRAPDOOR.asItem());
         tag(ItemTags.STAIRS)
                 .add(PoBlocks.POOP_STAIRS.asItem())
                 .add(PoBlocks.CHILI_POOP_STAIRS.asItem())

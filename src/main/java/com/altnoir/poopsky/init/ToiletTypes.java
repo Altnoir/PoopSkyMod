@@ -17,6 +17,7 @@ public final class ToiletTypes {
     public static final ToiletType BAMBOO = ToiletType.register(Blocks.BAMBOO_PLANKS, ToiletType.Category.WOOD).nameKey("block.poopsky.toilet.bamboo");
     public static final ToiletType CRIMSON = ToiletType.register(Blocks.CRIMSON_PLANKS, ToiletType.Category.WOOD).nameKey("block.poopsky.toilet.crimson");
     public static final ToiletType WARPED = ToiletType.register(Blocks.WARPED_PLANKS, ToiletType.Category.WOOD).nameKey("block.poopsky.toilet.warped");
+    public static final ToiletType GINKGO = ToiletType.register(PoBlocks.GINKGO_PLANKS.get(), ToiletType.Category.WOOD).nameKey("block.poopsky.toilet.ginkgo");
 
     // ——— 石质厕所 ———
     public static final ToiletType TILE = ToiletType.register(PoBlocks.TILE_BLOCK.get(), ToiletType.Category.HARD).nameKey("block.poopsky.toilet.tile");

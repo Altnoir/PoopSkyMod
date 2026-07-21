@@ -27,6 +27,11 @@ public final class BlockTagGen {
         BlockTagGen.provider = provider;
         tag(PoTags.Blocks.POOP_BLOCK).add(PoBlocks.POOP_BLOCK.get());
         tag(PoTags.Blocks.CHILI_POOP_BLOCK).add(PoBlocks.CHILI_POOP_BLOCK.get());
+        tag(PoTags.Blocks.GINKGO_LOGS)
+                .add(PoBlocks.GINKGO_LOG.get())
+                .add(PoBlocks.STRIPPED_GINKGO_LOG.get())
+                .add(PoBlocks.GINKGO_WOOD.get())
+                .add(PoBlocks.STRIPPED_GINKGO_WOOD.get());
 
         tag(PoTags.Blocks.RAW_SAPLING_POOP_BLOCK)
                 .add(PoBlocks.RAW_POOP_BLOCK.get())
@@ -141,10 +146,23 @@ public final class BlockTagGen {
                 .add(PoBlocks.STRIPPED_POOP_LOG.get())
                 .add(PoBlocks.STRIPPED_POOP_EMPTY_LOG.get());
 
+        tag(BlockTags.LOGS_THAT_BURN).addTag(PoTags.Blocks.GINKGO_LOGS);
+        tag(BlockTags.PLANKS).add(PoBlocks.GINKGO_PLANKS.get());
+        tag(BlockTags.WOODEN_STAIRS).add(PoBlocks.GINKGO_STAIRS.get());
+        tag(BlockTags.WOODEN_SLABS).add(PoBlocks.GINKGO_SLAB.get());
+        tag(BlockTags.WOODEN_BUTTONS).add(PoBlocks.GINKGO_BUTTON.get());
+        tag(BlockTags.WOODEN_PRESSURE_PLATES).add(PoBlocks.GINKGO_PRESSURE_PLATE.get());
+        tag(BlockTags.WOODEN_FENCES).add(PoBlocks.GINKGO_FENCE.get());
+        tag(BlockTags.FENCE_GATES).add(PoBlocks.GINKGO_FENCE_GATE.get());
+        tag(BlockTags.WOODEN_DOORS).add(PoBlocks.GINKGO_DOOR.get());
+        tag(BlockTags.WOODEN_TRAPDOORS).add(PoBlocks.GINKGO_TRAPDOOR.get());
+        tag(BlockTags.SAPLINGS).add(PoBlocks.GINKGO_SAPLING.get());
+
         tag(BlockTags.LEAVES)
                 .add(PoBlocks.POOP_LEAVES.get())
                 .add(PoBlocks.POOP_LEAVES_IRON.get())
-                .add(PoBlocks.POOP_LEAVES_GOLD.get());
+                .add(PoBlocks.POOP_LEAVES_GOLD.get())
+                .add(PoBlocks.GINKGO_LEAVES.get());
 
         tag(BlockTags.FENCES).add(PoBlocks.POOP_FENCE.get());
         tag(BlockTags.FENCE_GATES).add(PoBlocks.POOP_FENCE_GATE.get());
@@ -163,9 +181,20 @@ public final class BlockTagGen {
 
         //工具标签
         tag(BlockTags.MINEABLE_WITH_AXE)
+                .addTag(PoTags.Blocks.GINKGO_LOGS)
                 .add(PoBlocks.WOODEN_TOILET.get())
                 .add(PoBlocks.FLY_BARREL.get())
-                .add(PoBlocks.MAGGOTS.get());
+                .add(PoBlocks.MAGGOTS.get())
+                .add(PoBlocks.GINKGO_PLANKS.get())
+                .add(PoBlocks.GINKGO_STAIRS.get())
+                .add(PoBlocks.GINKGO_SLAB.get())
+                .add(PoBlocks.GINKGO_VERTICAL_SLAB.get())
+                .add(PoBlocks.GINKGO_BUTTON.get())
+                .add(PoBlocks.GINKGO_PRESSURE_PLATE.get())
+                .add(PoBlocks.GINKGO_FENCE.get())
+                .add(PoBlocks.GINKGO_FENCE_GATE.get())
+                .add(PoBlocks.GINKGO_DOOR.get())
+                .add(PoBlocks.GINKGO_TRAPDOOR.get());
 
         var mineableWithPickaxe = tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(

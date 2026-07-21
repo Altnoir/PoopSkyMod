@@ -28,7 +28,9 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.grower.TreeGrower;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -315,11 +317,35 @@ public class PoBlocks {
     public static final BlockEntry<PoopEmptyLogBlock> STRIPPED_POOP_EMPTY_LOG = registerPoopBlock("stripped_poop_empty_log",
             props -> new PoopEmptyLogBlock(logProperties(MapColor.COLOR_BROWN, SoundType.BAMBOO_WOOD).noOcclusion()));
     public static final BlockEntry<LogBlock> GINKGO_LOG = registerBlock("ginkgo_log",
-            props -> new LogBlock(logProperties(MapColor.COLOR_YELLOW, SoundType.WOOD)));
+            props -> new LogBlock(logProperties(MapColor.COLOR_YELLOW, SoundType.WOOD).ignitedByLava()));
     public static final BlockEntry<LogBlock> STRIPPED_GINKGO_LOG = registerBlock("stripped_ginkgo_log",
-            props -> new LogBlock(logProperties(MapColor.COLOR_YELLOW, SoundType.WOOD)));
+            props -> new LogBlock(logProperties(MapColor.COLOR_YELLOW, SoundType.WOOD).ignitedByLava()));
+    public static final BlockEntry<LogBlock> GINKGO_WOOD = registerBlock("ginkgo_wood",
+            props -> new LogBlock(logProperties(MapColor.COLOR_YELLOW, SoundType.WOOD).ignitedByLava()));
+    public static final BlockEntry<LogBlock> STRIPPED_GINKGO_WOOD = registerBlock("stripped_ginkgo_wood",
+            props -> new LogBlock(logProperties(MapColor.COLOR_YELLOW, SoundType.WOOD).ignitedByLava()));
     public static final BlockEntry<Block> GINKGO_PLANKS = registerBlock("ginkgo_planks",
-            props -> new Block(logProperties(MapColor.COLOR_YELLOW, SoundType.WOOD)));
+            props -> new Block(logProperties(MapColor.COLOR_YELLOW, SoundType.WOOD).ignitedByLava()));
+    public static final BlockEntry<StairBlock> GINKGO_STAIRS = registerBlock("ginkgo_stairs",
+            props -> new StairBlock(GINKGO_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(GINKGO_PLANKS.get())));
+    public static final BlockEntry<SlabBlock> GINKGO_SLAB = registerBlock("ginkgo_slab",
+            props -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(GINKGO_PLANKS.get())),
+            (loot, block) -> loot.add(block, loot.createSlabItemTable(block)));
+    public static final BlockEntry<VerticalSlabBlock> GINKGO_VERTICAL_SLAB = registerBlock("ginkgo_vertical_slab",
+            props -> new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(GINKGO_PLANKS.get())));
+    public static final BlockEntry<ButtonBlock> GINKGO_BUTTON = registerBlock("ginkgo_button",
+            props -> new ButtonBlock(BlockSetType.OAK, 30, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_BUTTON)));
+    public static final BlockEntry<PressurePlateBlock> GINKGO_PRESSURE_PLATE = registerBlock("ginkgo_pressure_plate",
+            props -> new PressurePlateBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PRESSURE_PLATE)));
+    public static final BlockEntry<FenceBlock> GINKGO_FENCE = registerBlock("ginkgo_fence",
+            props -> new FenceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE).mapColor(MapColor.COLOR_YELLOW)));
+    public static final BlockEntry<FenceGateBlock> GINKGO_FENCE_GATE = registerBlock("ginkgo_fence_gate",
+            props -> new FenceGateBlock(WoodType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE_GATE).mapColor(MapColor.COLOR_YELLOW)));
+    public static final BlockEntry<DoorBlock> GINKGO_DOOR = registerBlock("ginkgo_door",
+            props -> new DoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_DOOR).mapColor(MapColor.COLOR_YELLOW)),
+            (loot, block) -> loot.add(block, loot.createDoorTable(block)));
+    public static final BlockEntry<TrapDoorBlock> GINKGO_TRAPDOOR = registerBlock("ginkgo_trapdoor",
+            props -> new TrapDoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_TRAPDOOR).mapColor(MapColor.COLOR_YELLOW)));
     public static final BlockEntry<PoopLeavesBlock> POOP_LEAVES = registerPoopBlock("poop_leaves",
             props -> new PoopLeavesBlock(0x5E4228, leavesProperties(MapColor.COLOR_BROWN, SoundType.SCULK_SENSOR)),
             (loot, block) -> loot.add(block, createLeavesDrops(loot, block, PoItems.POOP.get())));

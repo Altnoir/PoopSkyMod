@@ -66,6 +66,12 @@
       "predicate": {
         "poopsky:toilet_type": 10.0
       }
+    },
+    {
+      "model": "poopsky:block/wooden_toilet_ginkgo_planks",
+      "predicate": {
+        "poopsky:toilet_type": 11.0
+      }
     }
   ]
 }
