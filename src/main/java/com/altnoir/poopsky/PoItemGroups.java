@@ -65,6 +65,14 @@ public class PoItemGroups {
             })
             .build()).register();
 
+    public static final RegistryEntry<CreativeModeTab, CreativeModeTab> POOPSKY_DECORATIVE = REGISTRATE.generic("poopsky_decorative", Registries.CREATIVE_MODE_TAB, () -> CreativeModeTab.builder()
+            .title(Component.translatable("itemgroup.poopsky_decorative"))
+            .icon(PoBlocks.WOODEN_TOILET::asStack)
+            .displayItems((parameters, output) -> {
+                // 感觉不好分离出来
+            })
+            .build()).register();
+
     private static boolean createFly(String id) {
         return FlyTypes.ZINC.id().equals(id);
     }
