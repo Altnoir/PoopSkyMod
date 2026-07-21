@@ -30,5 +30,8 @@ public final class EntityTypeTagsGen {
 
         provider.addTag(EntityTypeTags.IGNORES_POISON_AND_REGEN)
                 .add(PoEntityType.POOLIME.get(), PoEntityType.FLY.get());
+
+        provider.addTag(EntityTypeTags.ARTHROPOD)
+                .add(PoEntityType.FLY.get());
     }
 }

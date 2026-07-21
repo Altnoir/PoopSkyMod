@@ -7,6 +7,8 @@
     "poopsky:mossy_poop_brick_slab",
     "poopsky:dried_poop_block_slab",
     "poopsky:smooth_poop_block_slab",
-    "poopsky:cut_poop_block_slab"
+    "poopsky:cut_poop_block_slab",
+    "poopsky:tile_block_slab",
+    "poopsky:ginkgo_slab"
   ]
 }

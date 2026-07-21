@@ -12,7 +12,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
@@ -20,7 +19,6 @@ import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.*;
-import java.util.function.Function;
 
 public class BlockStateGen extends RegistrateBlockstateProvider {
     public static final String PARTICLE = "particle";
@@ -71,16 +69,10 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
     }
 
     protected void makeCropBlock(CropBlock cropBlock, String model, String texture) {
-        Function<BlockState, ConfiguredModel[]> function = (state -> states(state, cropBlock, model, texture));
-
-        getVariantBuilder(cropBlock).forAllStates(function);
-    }
-
-    private ConfiguredModel[] states(BlockState state, CropBlock cropBlock, String model, String texture) {
-        ConfiguredModel[] models = new ConfiguredModel[1];
-        models[0] = new ConfiguredModel(models().crop(model + state.getValue(CropBlock.AGE),
-                PoopSky.loc("block/" + texture + state.getValue(CropBlock.AGE))).renderType("cutout"));
-        return models;
+        getVariantBuilder(cropBlock).forAllStates(state -> new ConfiguredModel[]{
+                new ConfiguredModel(models().crop(model + state.getValue(CropBlock.AGE),
+                        PoopSky.loc("block/" + texture + state.getValue(CropBlock.AGE))).renderType("cutout"))
+        });
     }
 
     private void poopBlock() {
@@ -263,10 +255,12 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         logBlock(PoBlocks.STRIPPED_GINKGO_LOG.get());
         axisBlock(PoBlocks.GINKGO_WOOD.get(), blockTexture(PoBlocks.GINKGO_LOG.get()), blockTexture(PoBlocks.GINKGO_LOG.get()));
         axisBlock(PoBlocks.STRIPPED_GINKGO_WOOD.get(), blockTexture(PoBlocks.STRIPPED_GINKGO_LOG.get()), blockTexture(PoBlocks.STRIPPED_GINKGO_LOG.get()));
-        simpleBlockItem(PoBlocks.GINKGO_LOG.get(), blockModel(PoBlocks.GINKGO_LOG.get()));
-        simpleBlockItem(PoBlocks.STRIPPED_GINKGO_LOG.get(), blockModel(PoBlocks.STRIPPED_GINKGO_LOG.get()));
-        simpleBlockItem(PoBlocks.GINKGO_WOOD.get(), blockModel(PoBlocks.GINKGO_WOOD.get()));
-        simpleBlockItem(PoBlocks.STRIPPED_GINKGO_WOOD.get(), blockModel(PoBlocks.STRIPPED_GINKGO_WOOD.get()));
+        simpleBlockItems(
+                PoBlocks.GINKGO_LOG.get(),
+                PoBlocks.STRIPPED_GINKGO_LOG.get(),
+                PoBlocks.GINKGO_WOOD.get(),
+                PoBlocks.STRIPPED_GINKGO_WOOD.get()
+        );
 
         ResourceLocation planks = blockTexture(PoBlocks.GINKGO_PLANKS.get());
         blockWithItem(PoBlocks.GINKGO_PLANKS.get());
@@ -280,15 +274,17 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         doorBlockWithRenderType(PoBlocks.GINKGO_DOOR.get(), planks, planks, "cutout");
         trapdoorBlockWithRenderType(PoBlocks.GINKGO_TRAPDOOR.get(), planks, true, "cutout");
 
-        simpleBlockItem(PoBlocks.GINKGO_STAIRS.get(), blockModel(PoBlocks.GINKGO_STAIRS.get()));
-        simpleBlockItem(PoBlocks.GINKGO_SLAB.get(), blockModel(PoBlocks.GINKGO_SLAB.get()));
+        simpleBlockItems(
+                PoBlocks.GINKGO_STAIRS.get(),
+                PoBlocks.GINKGO_SLAB.get(),
+                PoBlocks.GINKGO_PRESSURE_PLATE.get(),
+                PoBlocks.GINKGO_FENCE_GATE.get()
+        );
         ModelFile buttonInventory = models().withExistingParent(getBlockPath(PoBlocks.GINKGO_BUTTON.get()) + "_inventory", mcLoc("block/button_inventory"))
                 .texture("texture", planks);
         simpleBlockItem(PoBlocks.GINKGO_BUTTON.get(), buttonInventory);
-        simpleBlockItem(PoBlocks.GINKGO_PRESSURE_PLATE.get(), blockModel(PoBlocks.GINKGO_PRESSURE_PLATE.get()));
         simpleBlockItem(PoBlocks.GINKGO_FENCE.get(), models().withExistingParent(getBlockPath(PoBlocks.GINKGO_FENCE.get()) + "_inventory", mcLoc("block/fence_inventory"))
                 .texture("texture", planks));
-        simpleBlockItem(PoBlocks.GINKGO_FENCE_GATE.get(), blockModel(PoBlocks.GINKGO_FENCE_GATE.get()));
         itemModels().withExistingParent(getItemPath(PoBlocks.GINKGO_DOOR.get()), mcLoc("item/generated"))
                 .texture("layer0", planks);
         simpleBlockItem(PoBlocks.GINKGO_TRAPDOOR.get(), blockModel(PoBlocks.GINKGO_TRAPDOOR.get(), "_bottom"));
@@ -305,12 +301,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
 
         getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder()
                 .modelFile(model)
-                .rotationY(switch (state.getValue(VerticalSlabBlock.FACING)) {
-                    case EAST -> 90;
-                    case SOUTH -> 180;
-                    case WEST -> 270;
-                    default -> 0;
-                })
+                .rotationY(horizontalRotation(state.getValue(VerticalSlabBlock.FACING)))
                 .uvLock(true)
                 .build());
         simpleBlockItem(block, model);
@@ -372,12 +363,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
                 case UP -> 0;
                 default -> 90;
             };
-            int yRot = switch (facing) {
-                case SOUTH -> 180;
-                case WEST -> 270;
-                case EAST -> 90;
-                default -> 0;
-            };
+            int yRot = horizontalRotation(facing);
             return ConfiguredModel.builder().modelFile(model).rotationX(xRot).rotationY(yRot).build();
         });
 
@@ -407,12 +393,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
             return ConfiguredModel.builder()
                     .modelFile(facing.getAxis().isVertical() ? vertical : horizontal)
                     .rotationX(facing == Direction.DOWN ? 180 : 0)
-                    .rotationY(switch (facing) {
-                        case EAST -> 90;
-                        case SOUTH -> 180;
-                        case WEST -> 270;
-                        default -> 0;
-                    })
+                    .rotationY(horizontalRotation(facing))
                     .build();
         });
 
@@ -464,12 +445,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
             var facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
             var connection = state.getValue(AbstractToiletBlock.CONNECTION);
 
-            var yRot = switch (facing) {
-                case EAST -> 90;
-                case SOUTH -> 180;
-                case WEST -> 270;
-                default -> 0;
-            };
+            var yRot = horizontalRotation(facing);
 
             int offset = hasLava && state.getValue(BaseToiletLavaBlock.LAVA) ? 3 : 0;
             int extraYRot = connection == AbstractToiletBlock.ToiletState.BACK ? 180 : 0;
@@ -488,11 +464,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
 
         var itemBuilder = itemModels().getBuilder(getBlockPath(toilet)).parent(templateModels[0]);
         var sortedEntries = new ArrayList<>(textures.entrySet());
-        sortedEntries.sort((a, b) -> {
-            int ia = ToiletType.getIndex(a.getKey());
-            int ib = ToiletType.getIndex(b.getKey());
-            return Integer.compare(ia, ib);
-        });
+        sortedEntries.sort(Comparator.comparingInt(entry -> ToiletType.getIndex(entry.getKey())));
         for (int i = 0; i < sortedEntries.size(); i++) {
             var entry = sortedEntries.get(i);
             String suffix = "_" + entry.getKey().id();
@@ -511,15 +483,9 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
 
         getVariantBuilder(block).forAllStates(state -> {
             Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
-            int yRot = switch (facing) {
-                case EAST -> 90;
-                case SOUTH -> 180;
-                case WEST -> 270;
-                default -> 0;
-            };
             return ConfiguredModel.builder()
                     .modelFile(model)
-                    .rotationY(yRot)
+                    .rotationY(horizontalRotation(facing))
                     .build();
         });
 
@@ -528,6 +494,19 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
 
     private void blockWithItem(Block block) {
         simpleBlockWithItem(block, cubeAll(block));
+    }
+
+    private void simpleBlockItems(Block... blocks) {
+        Arrays.stream(blocks).forEach(block -> simpleBlockItem(block, blockModel(block)));
+    }
+
+    private int horizontalRotation(Direction direction) {
+        return switch (direction) {
+            case EAST -> 90;
+            case SOUTH -> 180;
+            case WEST -> 270;
+            default -> 0;
+        };
     }
 
     private void blockFamily(PoBlocks.BlockFamily family) {
