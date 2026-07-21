@@ -21,6 +21,7 @@ public final class ToiletTypes {
 
     // ——— 石质厕所 ———
     public static final ToiletType TILE = ToiletType.register(PoBlocks.TILE_BLOCK.get(), ToiletType.Category.HARD).nameKey("block.poopsky.toilet.tile");
+    public static final ToiletType WHITE_TILE = ToiletType.register(PoBlocks.WHITE_TILE_BLOCK.get(), ToiletType.Category.HARD).nameKey("block.poopsky.toilet.white_tile");
     public static final ToiletType STONE = ToiletType.register(Blocks.STONE, ToiletType.Category.HARD);
     public static final ToiletType COBBLESTONE = ToiletType.register(Blocks.COBBLESTONE, ToiletType.Category.HARD);
     public static final ToiletType MOSSY_COBBLESTONE = ToiletType.register(Blocks.MOSSY_COBBLESTONE, ToiletType.Category.HARD);

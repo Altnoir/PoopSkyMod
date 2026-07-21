@@ -232,7 +232,10 @@ public class PoBlocks {
 
     public static final BlockEntry<Block> TILE_BLOCK = registerBlock("tile_block",
             props -> new Block(hardenedProperties(MapColor.COLOR_LIGHT_BLUE, SoundType.STONE)));
+    public static final BlockEntry<Block> WHITE_TILE_BLOCK = registerBlock("white_tile_block",
+            props -> new Block(hardenedProperties(MapColor.CLAY, SoundType.STONE)));
     public static final BlockFamily TILE_BLOCK_FAMILY = registerBlockFamily("tile_block", TILE_BLOCK, true);
+    public static final BlockFamily WHITE_TILE_BLOCK_FAMILY = registerBlockFamily("white_tile_block", WHITE_TILE_BLOCK, true);
     public static final BlockEntry<StairBlock> TILE_BLOCK_STAIRS = TILE_BLOCK_FAMILY.stairs();
     public static final BlockEntry<SlabBlock> TILE_BLOCK_SLAB = TILE_BLOCK_FAMILY.slab();
     public static final BlockEntry<VerticalSlabBlock> TILE_BLOCK_VERTICAL_SLAB = TILE_BLOCK_FAMILY.verticalSlab();
