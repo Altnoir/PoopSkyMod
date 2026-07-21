@@ -2,6 +2,6 @@
   "parent": "minecraft:block/template_orientable_trapdoor_open",
   "render_type": "minecraft:cutout",
   "textures": {
-    "texture": "poopsky:block/ginkgo_planks"
+    "texture": "poopsky:block/ginkgo_trapdoor"
   }
 }

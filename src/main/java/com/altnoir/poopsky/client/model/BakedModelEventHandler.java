@@ -1,8 +1,11 @@
 package com.altnoir.poopsky.client.model;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.ToiletType;
+import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoBlocks;
+import com.altnoir.poopsky.init.PoItems;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -16,13 +19,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ToiletModelEventHandler {
+public class BakedModelEventHandler {
     private static final String[] WOOD_SUFFIXES = {"", "_n", "_ns"};
     private static final String[] LAVA_SUFFIXES = {"", "_n", "_ns", "_lava", "_lava_n", "_lava_ns"};
 
     public static void onRegisterAdditional(ModelEvent.RegisterAdditional event) {
         registerAllToiletModels(event, "wooden_toilet", ToiletType.Category.WOOD, false);
         registerAllToiletModels(event, "hard_toilet", ToiletType.Category.HARD, true);
+        registerFlyItemModels(event);
     }
 
     private static void registerAllToiletModels(ModelEvent.RegisterAdditional event, String blockPath, ToiletType.Category category, boolean hasLava) {
@@ -48,6 +52,14 @@ public class ToiletModelEventHandler {
         var models = event.getModels();
         wrapToiletModels(models, PoBlocks.WOODEN_TOILET.getId(), "wooden_toilet", ToiletType.Category.WOOD, false);
         wrapToiletModels(models, PoBlocks.HARD_TOILET.getId(), "hard_toilet", ToiletType.Category.HARD, true);
+        wrapFlyItemModel(models);
+    }
+
+    private static void registerFlyItemModels(ModelEvent.RegisterAdditional event) {
+        for (String id : FlyType.FLY_TYPES) {
+            String flyId = id.equals(FlyTypes.NORMAL.id()) ? "fly" : "fly_" + id;
+            event.register(new ModelResourceLocation(PoopSky.loc("item/" + flyId), ModelResourceLocation.STANDALONE_VARIANT));
+        }
     }
 
     private static void wrapToiletModels(Map<ModelResourceLocation, BakedModel> models, ResourceLocation blockId, String blockPath, ToiletType.Category category, boolean hasLava) {
@@ -102,12 +114,37 @@ public class ToiletModelEventHandler {
         return ResourceLocation.fromNamespaceAndPath(key.getNamespace(), "block/" + key.getPath());
     }
 
+    private static void wrapFlyItemModel(Map<ModelResourceLocation, BakedModel> models) {
+        Map<String, BakedModel> flyModels = FlyItemBakedModel.collectFlyModels(models);
+
+        if (flyModels.isEmpty()) return;
+
+        ResourceLocation flyModelLoc = PoopSky.loc("item/fly");
+        BakedModel defaultFlyModel = models.get(new ModelResourceLocation(flyModelLoc, ModelResourceLocation.STANDALONE_VARIANT));
+        if (defaultFlyModel == null) return;
+
+        FlyItemBakedModel wrapper = new FlyItemBakedModel(defaultFlyModel, flyModels);
+
+        List<ModelResourceLocation> toWrap = new ArrayList<>();
+        String flyIdStr = BuiltInRegistries.ITEM.getKey(PoItems.FLY.get()).toString();
+        for (var entry : models.keySet()) {
+            String entryStr = entry.toString();
+            if (entryStr.startsWith(flyIdStr + "#") || entryStr.equals(flyIdStr)) {
+                toWrap.add(entry);
+            }
+        }
+
+        for (ModelResourceLocation key : toWrap) {
+            models.put(key, wrapper);
+        }
+    }
+
     private static ResourceLocation blockKey(Block block) {
         return BuiltInRegistries.BLOCK.getKey(block);
     }
 
     public static void register(IEventBus modEventBus) {
-        modEventBus.addListener(ToiletModelEventHandler::onRegisterAdditional);
-        modEventBus.addListener(ToiletModelEventHandler::onModifyBakingResult);
+        modEventBus.addListener(BakedModelEventHandler::onRegisterAdditional);
+        modEventBus.addListener(BakedModelEventHandler::onModifyBakingResult);
     }
 }

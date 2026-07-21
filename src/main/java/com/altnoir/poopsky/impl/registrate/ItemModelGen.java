@@ -43,6 +43,7 @@ public class ItemModelGen extends RegistrateItemModelProvider {
 
     @Override
     protected void registerModels() {
+        flyItem();
         toiletPlugItem();
         bigSowordItem();
         trimmedArmorItem(PoItems.OMEN_HELMET);
@@ -52,7 +53,6 @@ public class ItemModelGen extends RegistrateItemModelProvider {
         withExistingParent(name(PoItems.POOLIME_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
         withExistingParent(name(PoItems.FLY_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
         generated(PoItems.URINE_BUCKET);
-        flyItemWithOverrides();
     }
 
     private void toiletPlugItem() {
@@ -78,22 +78,17 @@ public class ItemModelGen extends RegistrateItemModelProvider {
                 .texture("layer0", itemTexture(PoItems.MILOS_SWORD));
     }
 
-    private void flyItemWithOverrides() {
-        var flyBuilder = getBuilder("fly")
+    private void flyItem() {
+        getBuilder("fly")
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))
                 .texture("layer0", PoopSky.loc("item/fly"));
 
-        int index = 0;
         for (String id : FlyType.FLY_TYPES) {
-            String flyId = id.equals(FlyTypes.NORMAL.id()) ? "fly" : "fly_" + id;
+            if (id.equals(FlyTypes.NORMAL.id())) continue;
+            String flyId = "fly_" + id;
             getBuilder(flyId)
                     .parent(new ModelFile.UncheckedModelFile("item/generated"))
                     .texture("layer0", PoopSky.loc("item/" + flyId));
-            flyBuilder.override()
-                    .predicate(PoopSky.loc("fly_type"), (float) index)
-                    .model(new ModelFile.UncheckedModelFile(PoopSky.MOD_ID + ":item/" + flyId))
-                    .end();
-            index++;
         }
     }
 

@@ -2,7 +2,7 @@
   "parent": "minecraft:block/door_bottom_right_open",
   "render_type": "minecraft:cutout",
   "textures": {
-    "bottom": "poopsky:block/ginkgo_planks",
-    "top": "poopsky:block/ginkgo_planks"
+    "bottom": "poopsky:block/ginkgo_door_bottom",
+    "top": "poopsky:block/ginkgo_door_top"
   }
 }

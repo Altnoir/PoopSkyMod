@@ -271,8 +271,8 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         pressurePlateBlock(PoBlocks.GINKGO_PRESSURE_PLATE.get(), planks);
         fenceBlock(PoBlocks.GINKGO_FENCE.get(), planks);
         fenceGateBlock(PoBlocks.GINKGO_FENCE_GATE.get(), planks);
-        doorBlockWithRenderType(PoBlocks.GINKGO_DOOR.get(), planks, planks, "cutout");
-        trapdoorBlockWithRenderType(PoBlocks.GINKGO_TRAPDOOR.get(), planks, true, "cutout");
+        doorBlockWithRenderType(PoBlocks.GINKGO_DOOR.get(), ResourceLocation.parse(blockTexture(PoBlocks.GINKGO_DOOR.get()) + "_bottom"), ResourceLocation.parse(blockTexture(PoBlocks.GINKGO_DOOR.get()) + "_top"), "cutout");
+        trapdoorBlockWithRenderType(PoBlocks.GINKGO_TRAPDOOR.get(), blockTexture(PoBlocks.GINKGO_TRAPDOOR.get()), true, "cutout");
 
         simpleBlockItems(
                 PoBlocks.GINKGO_STAIRS.get(),
@@ -286,7 +286,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         simpleBlockItem(PoBlocks.GINKGO_FENCE.get(), models().withExistingParent(getBlockPath(PoBlocks.GINKGO_FENCE.get()) + "_inventory", mcLoc("block/fence_inventory"))
                 .texture("texture", planks));
         itemModels().withExistingParent(getItemPath(PoBlocks.GINKGO_DOOR.get()), mcLoc("item/generated"))
-                .texture("layer0", planks);
+                .texture("layer0", modLoc("item/" + getBlockPath(PoBlocks.GINKGO_DOOR.get())));
         simpleBlockItem(PoBlocks.GINKGO_TRAPDOOR.get(), blockModel(PoBlocks.GINKGO_TRAPDOOR.get(), "_bottom"));
     }
 

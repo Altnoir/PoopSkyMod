@@ -1,20 +1,18 @@
 package com.altnoir.poopsky;
 
 import com.altnoir.poopsky.client.ToiletClientBlockExtensions;
-import com.altnoir.poopsky.client.model.ToiletModelEventHandler;
+import com.altnoir.poopsky.client.model.BakedModelEventHandler;
 import com.altnoir.poopsky.client.particle.LeavesParticle;
 import com.altnoir.poopsky.client.particle.PoopParticle;
 import com.altnoir.poopsky.client.particle.ToiletParticle;
 import com.altnoir.poopsky.client.renderer.TimeBellOverlay;
 import com.altnoir.poopsky.client.renderer.ToiletHighlightRenderer;
 import com.altnoir.poopsky.client.renderer.ToiletPlugItemRenderer;
-import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.content.entity.model.FlyModel;
 import com.altnoir.poopsky.content.entity.model.ToiletPlugModel;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
-import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.impl.event.PSKeyBoardInput;
 import com.altnoir.poopsky.impl.network.PlugActionPayload;
@@ -62,7 +60,7 @@ public class PoopSkyClient {
     }
 
     public static void registerMod(IEventBus modEventBus) {
-        ToiletModelEventHandler.register(modEventBus);
+        BakedModelEventHandler.register(modEventBus);
         modEventBus.addListener(PSKeyBoardInput::registerKeyMappings);
         modEventBus.addListener(ClientModEvents::registerLayers);
         modEventBus.addListener(ClientModEvents::registerItemProperties);
@@ -104,12 +102,6 @@ public class PoopSkyClient {
 
         public static void registerItemProperties(FMLClientSetupEvent event) {
             event.enqueueWork(() -> {
-                ItemProperties.register(PoItems.FLY.get(), PoopSky.loc("fly_type"),
-                        (stack, level, entity, seed) -> {
-                            String id = stack.get(PoComponents.FLY_TYPE.get());
-                            return (float) FlyType.getIndex(id != null ? id : FlyTypes.NORMAL.id());
-                        });
-
                 for (Item item : PoItems.getAllItems()) {
                     if (item instanceof ToiletBlockItem && item != Items.AIR) {
                         ItemProperties.register(item, PoopSky.loc("toilet_type"),
