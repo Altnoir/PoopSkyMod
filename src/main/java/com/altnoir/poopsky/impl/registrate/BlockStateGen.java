@@ -30,7 +30,6 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
     @Override
     protected void registerStatesAndModels() {
         poopBlock();
-        verticalSlabFromTemplate(PoBlocks.POOP_VERTICAL_SLAB.get(), blockTexture(PoBlocks.POOP_BLOCK.get()));
         poopPiece();
         poopFarmland();
         poolimeMaggotsBlock();
@@ -97,6 +96,8 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
                         new ConfiguredModel(models().getExistingFile(modLoc("block/poop_block2")), 0, 0, false, 1),
                         new ConfiguredModel(models().getExistingFile(modLoc("block/poop_block3")), 0, 0, false, 2)
                 );
+        verticalSlabBlock(PoBlocks.POOP_VERTICAL_SLAB.get(), blockTexture(PoBlocks.POOP_BLOCK.get()));
+        simpleBlockItem(PoBlocks.POOP_VERTICAL_SLAB.get(), blockModel(PoBlocks.POOP_VERTICAL_SLAB.get()));
         simpleBlockItem(PoBlocks.POOP_BLOCK.get(), models().getExistingFile(modLoc("block/poop_block1")));
     }
 
@@ -310,19 +311,6 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
                 .uvLock(true)
                 .build());
         simpleBlockItem(block, model);
-    }
-
-    private void verticalSlabFromTemplate(Block block, ResourceLocation sideAndTop) {
-        String path = getBlockPath(block);
-        ModelFile model = models().withExistingParent(path, modLoc("block/vertical_slab"))
-                .texture("side", sideAndTop)
-                .texture("top", sideAndTop);
-
-        getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder()
-                .modelFile(model)
-                .rotationY(horizontalRotation(state.getValue(VerticalSlabBlock.FACING)))
-                .uvLock(true)
-                .build());
     }
 
     private void saplingBlock(SaplingBlock block) {
@@ -569,12 +557,11 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         blockWithItem(block);
         stairsBlock((StairBlock) stairs, texture);
         slabBlock((SlabBlock) slab, texture, texture);
-        verticalSlabFromTemplate(verticalSlab, texture);
+        verticalSlabBlock((VerticalSlabBlock) verticalSlab, texture);
         wallBlock((WallBlock) wall, texture);
 
         simpleBlockItem(stairs, blockModel(stairs));
         simpleBlockItem(slab, blockModel(slab));
-        simpleBlockItem(verticalSlab, blockModel(verticalSlab));
         wallItemModel(wall, block);
     }
 
