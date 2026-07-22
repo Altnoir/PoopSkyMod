@@ -1,0 +1,6 @@
+{
+  "parent": "poopsky:block/shit",
+  "textures": {
+    "shit": "poopsky:block/golden_shit"
+  }
+}

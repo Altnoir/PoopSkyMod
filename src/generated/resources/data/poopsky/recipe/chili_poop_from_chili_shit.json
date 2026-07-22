@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "poopsky:chili_shit"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "poopsky:chili_poop"
+  }
+}

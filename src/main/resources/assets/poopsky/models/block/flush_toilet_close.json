@@ -4,9 +4,9 @@
 	"parent": "block/block",
 	"render_type": "minecraft:cutout",
 	"textures": {
-		"particle": "poopsky:block/flush_toilet",
 		"toilet": "poopsky:block/flush_toilet",
-		"liquid": "poopsky:block/urine_liquid"
+		"liquid": "poopsky:block/urine_liquid",
+		"particle": "#toilet"
 	},
 	"elements": [
 		{

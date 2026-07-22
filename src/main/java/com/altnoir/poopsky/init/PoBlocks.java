@@ -91,6 +91,16 @@ public class PoBlocks {
 
     private static final Map<Block, BlockEntry<PoopCandleCakeBlock>> POOP_CANDLE_CAKES = registerPoopCandleCakes();
 
+    public static final BlockEntry<ShitBlock> SHIT = registerPoopBlock("shit",
+            props -> new ShitBlock(poopProperties(0.1F)
+                    .pushReaction(PushReaction.DESTROY)));
+    public static final BlockEntry<ShitBlock> CHILI_SHIT = registerPoopBlock("chili_shit",
+            props -> new ShitBlock(poopProperties(0.1F)
+                    .pushReaction(PushReaction.DESTROY)));
+    public static final BlockEntry<ShitBlock> GOLDEN_SHIT = registerPoopBlock("golden_shit",
+            props -> new ShitBlock(poopProperties(0.1F)
+                    .pushReaction(PushReaction.DESTROY)));
+
     public static final BlockEntry<PoopPieceBlock> POOP_PIECE = registerPoopBlock("poop_piece",
             props -> new PoopPieceBlock(poopProperties(0.1F)
                     .replaceable()

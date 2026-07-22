@@ -64,6 +64,9 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         registerToilet(PoBlocks.HARD_TOILET, ToiletType.Category.HARD, true);
         flushToilet(PoBlocks.FLUSH_TOILET.get());
         flushToilet(PoBlocks.GOLDEN_FLUSH_TOILET.get());
+        shitBlock(PoBlocks.SHIT.get());
+        shitBlock(PoBlocks.CHILI_SHIT.get());
+        shitBlock(PoBlocks.GOLDEN_SHIT.get());
 
         fluidBlockWithItem(PoBlocks.URINE_LIQUID.get());
         makeCropBlock(PoBlocks.MAGGOTS.get(), "maggots_stage", "maggots_stage");
@@ -502,6 +505,28 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         });
 
         simpleBlockItem(block, openModel);
+    }
+
+    private void shitBlock(Block block) {
+        String path = getBlockPath(block);
+        ModelFile model;
+
+        if (path.equals("shit")) {
+            model = models().getExistingFile(modLoc("block/" + path));
+        } else {
+            var texture = modLoc("block/" + path);
+            model = models().withExistingParent(path, modLoc("block/shit")).texture("shit", texture);
+        }
+
+        getVariantBuilder(block).forAllStates(state -> {
+            Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
+            return ConfiguredModel.builder()
+                    .modelFile(model)
+                    .rotationY(horizontalRotation(facing))
+                    .build();
+        });
+
+        simpleBlockItem(block, model);
     }
 
     private void blockWithItem(Block block) {

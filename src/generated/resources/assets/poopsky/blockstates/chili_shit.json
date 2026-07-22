@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "poopsky:block/chili_shit",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "poopsky:block/chili_shit"
+    },
+    "facing=south": {
+      "model": "poopsky:block/chili_shit",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "poopsky:block/chili_shit",
+      "y": 270
+    }
+  }
+}

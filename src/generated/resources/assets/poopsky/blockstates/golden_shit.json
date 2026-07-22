@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "poopsky:block/golden_shit",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "poopsky:block/golden_shit"
+    },
+    "facing=south": {
+      "model": "poopsky:block/golden_shit",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "poopsky:block/golden_shit",
+      "y": 270
+    }
+  }
+}
