@@ -24,6 +24,7 @@ public class PoTags {
 
         TagKey<Block> POOP_BLOCK = create("poop_block");
         TagKey<Block> CHILI_POOP_BLOCK = create("chili_poop_block");
+        TagKey<Block> GOLDEN_POOP_BLOCK = create("golden_poop_block");
         TagKey<Block> RAW_SAPLING_POOP_BLOCK = create("raw_sapling_poop_block");
         TagKey<Block> RAW_SEA_POOP_BLOCK = create("raw_sea_poop_block");
         TagKey<Block> RAW_WITHER_POOP_BLOCK = create("raw_wither_poop_block");

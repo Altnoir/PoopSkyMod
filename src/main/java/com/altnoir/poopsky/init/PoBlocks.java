@@ -61,8 +61,8 @@ public class PoBlocks {
     private static final float TOILET_RESISTANCE = 1200.0F;
     private static final int LAVA_LIGHT_LEVEL = 15;
 
-    protected static final float[] NORMAL_LEAVES_SAPLING_CHANCES;
-    private static final float[] NORMAL_LEAVES_STICK_CHANCES;
+    protected static final float[] LEAVES_SAPLING_CHANCES;
+    private static final float[] LEAVES_STICK_CHANCES;
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
     public static final BlockEntry<PoopCakeBlock> POOP_CAKE = registerPoopBlock("poop_cake",
@@ -838,14 +838,20 @@ public class PoBlocks {
         return createShearsOrSilkTouchDispatchTable(loot, block,
                 ((LootPoolSingletonContainer.Builder<?>)
                         loot.applyExplosionCondition(block, LootItem.lootTableItem(sapling)))
-                        .when(BonusLevelTableCondition.bonusLevelFlatChance(registrylookup.getOrThrow(Enchantments.FORTUNE), NORMAL_LEAVES_SAPLING_CHANCES))
+                        .when(BonusLevelTableCondition.bonusLevelFlatChance(registrylookup.getOrThrow(Enchantments.FORTUNE), LEAVES_SAPLING_CHANCES))
         ).withPool(LootPool.lootPool()
                 .setRolls(ConstantValue.exactly(1.0F))
                 .when(hasShearsOrSilkTouch.invert())
-                .add(((LootPoolSingletonContainer.Builder<?>)
-                        loot.applyExplosionDecay(block, LootItem.lootTableItem(Items.STICK)
-                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))))
-                        .when(BonusLevelTableCondition.bonusLevelFlatChance(registrylookup.getOrThrow(Enchantments.FORTUNE), NORMAL_LEAVES_STICK_CHANCES)))
+                .add(
+                        ((LootPoolSingletonContainer.Builder<?>)
+                                loot.applyExplosionDecay(block, LootItem.lootTableItem(Items.STICK)
+                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))))
+                                .when(BonusLevelTableCondition.bonusLevelFlatChance(registrylookup.getOrThrow(Enchantments.FORTUNE), LEAVES_STICK_CHANCES)))
+                .add(
+                        ((LootPoolSingletonContainer.Builder<?>)
+                                loot.applyExplosionDecay(block, LootItem.lootTableItem(Items.GOLDEN_APPLE)
+                                        .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))))
+                                .when(BonusLevelTableCondition.bonusLevelFlatChance(registrylookup.getOrThrow(Enchantments.FORTUNE), LEAVES_STICK_CHANCES)))
         );
     }
 
@@ -886,7 +892,7 @@ public class PoBlocks {
     }
 
     static {
-        NORMAL_LEAVES_SAPLING_CHANCES = new float[]{0.05F, 0.0625F, 0.083333336F, 0.1F};
-        NORMAL_LEAVES_STICK_CHANCES = new float[]{0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F};
+        LEAVES_SAPLING_CHANCES = new float[]{0.1F, 0.125F, 0.25F, 0.5F};
+        LEAVES_STICK_CHANCES = new float[]{0.05F, 0.075F, 0.1F, 0.125F, 0.25F};
     }
 }

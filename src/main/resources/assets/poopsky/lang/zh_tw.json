@@ -492,6 +492,7 @@
   "jei.poopsky.fly_desc.blue": "被水淹死取得",
   "jei.poopsky.fly_desc.dragon_fruit": "被餵食帝王火龍果取得",
   "jei.poopsky.urea": "把裝有糞水的堆糞桶放在營火上，等待轉變為裝有水的堆糞桶時獲得",
+  "jei.poopsky.saltpeter_cluster": "當含水時會變成冰",
   "create.item_attributes.can_be_digested": "可被化糞",
   "task.poopsky.defecate": "如廁",
   "task.poopsky.defecate.desc": "女僕會尋找周圍的廁所",

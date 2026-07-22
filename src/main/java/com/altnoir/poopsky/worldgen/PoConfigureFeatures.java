@@ -51,6 +51,8 @@ public class PoConfigureFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> POOP_PATCH_BONEMEAL = resourceKey("poop_patch_bonemeal");
     public static final ResourceKey<ConfiguredFeature<?, ?>> CHILI_POOP_VEGETATION = resourceKey("chili_poop_vegetation");
     public static final ResourceKey<ConfiguredFeature<?, ?>> CHILI_POOP_PATCH_BONEMEAL = resourceKey("chili_poop_patch_bonemeal");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> GOLDEN_POOP_VEGETATION = resourceKey("golden_poop_vegetation");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> GOLDEN_POOP_PATCH_BONEMEAL = resourceKey("golden_poop_patch_bonemeal");
     public static final ResourceKey<ConfiguredFeature<?, ?>> DRIED_POOP_PATCH = resourceKey("dried_poop_patch");
     public static final ResourceKey<ConfiguredFeature<?, ?>> SALTPETER_PATCH = resourceKey("saltpeter_patch");
 
@@ -145,6 +147,12 @@ public class PoConfigureFeatures {
         );
         register(context, CHILI_POOP_PATCH_BONEMEAL, Feature.VEGETATION_PATCH,
                 vegetationPatch(PoTags.Blocks.CHILI_POOP_BLOCK, PoBlocks.CHILI_POOP_BLOCK.get(), holdergetter.getOrThrow(CHILI_POOP_VEGETATION))
+        );
+        register(context, GOLDEN_POOP_VEGETATION, Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(BlockStateProvider.simple(PoBlocks.GINKGO_SAPLING.get()))
+        );
+        register(context, GOLDEN_POOP_PATCH_BONEMEAL, Feature.VEGETATION_PATCH,
+                vegetationPatch(PoTags.Blocks.GOLDEN_POOP_BLOCK, PoBlocks.GOLDEN_POOP_BLOCK.get(), holdergetter.getOrThrow(GOLDEN_POOP_VEGETATION))
         );
 
         register(context, DRIED_POOP_PATCH, Feature.RANDOM_PATCH,

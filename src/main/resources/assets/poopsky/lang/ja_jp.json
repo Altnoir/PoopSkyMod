@@ -492,6 +492,7 @@
   "jei.poopsky.fly_desc.blue": "溺死させると入手",
   "jei.poopsky.fly_desc.dragon_fruit": "キングドラゴンフルーツを与えて入手",
   "jei.poopsky.urea": "尿の入ったコンポーパーを焚き火の上に置き、水の入ったコンポーパーに変わるのを待つと入手できる",
+  "jei.poopsky.saltpeter_cluster": "水を含むと氷に変わる",
   "create.item_attributes.can_be_digested": "消化可能",
   "task.poopsky.defecate": "排泄",
   "task.poopsky.defecate.desc": "メイドは周囲のトイレを探します",

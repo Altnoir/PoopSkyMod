@@ -493,6 +493,7 @@
   "jei.poopsky.fly_desc.blue": "被水淹死获取蓝暗色蜜蜂",
   "jei.poopsky.fly_desc.dragon_fruit": "被喂食帝王火龙果获取火龙果暗色蜜蜂",
   "jei.poopsky.urea": "把装有巧克力的堆巧克力桶放在篝火上，等待转变为装有水的堆巧克力桶时获得",
+  "jei.poopsky.saltpeter_cluster": "当含水时会变成冰",
   "create.item_attributes.can_be_digested": "可被巧克力化",
   "task.poopsky.defecate": "出恭",
   "task.poopsky.defecate.desc": "女仆会寻找周围的巧克力礼盒",

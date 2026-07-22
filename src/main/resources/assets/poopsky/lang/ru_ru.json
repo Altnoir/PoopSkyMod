@@ -492,6 +492,7 @@
   "jei.poopsky.fly_desc.blue": "Получается при утоплении",
   "jei.poopsky.fly_desc.dragon_fruit": "Получается при кормлении королем драконьих фруктов",
   "jei.poopsky.urea": "Поместите компупер с мочой на костёр и дождитесь, пока он превратится в компупер с водой",
+  "jei.poopsky.saltpeter_cluster": "Превращается в лёд при заполнении водой",
   "create.item_attributes.can_be_digested": "Можно переварить",
   "task.poopsky.defecate": "Испражниться",
   "task.poopsky.defecate.desc": "Горничная будет искать унитазы поблизости",

@@ -64,5 +64,9 @@ public class PSJEIInfo {
                 PoItems.UREA.get(),
                 Component.translatable("jei.poopsky.urea")
         );
+        registration.addIngredientInfo(
+                PoBlocks.SALTPETER_CLUSTER.get(),
+                Component.translatable("jei.poopsky.saltpeter_cluster")
+        );
     }
 }
