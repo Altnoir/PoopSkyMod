@@ -48,8 +48,8 @@ public class IntroScreen extends Screen {
     private static final float TICKS_PER_SECOND = 20.0F;
     private static final float TITLE_FADE_START = 4.0F;
     private static final float TITLE_FADE_END = 7.5F;
-    private static final float TEXTURE_FADE_START = 8.3F;
-    private static final float TEXTURE_FADE_END = 9.8F;
+    private static final float TEXTURE_FADE_START = 8.0F;
+    private static final float TEXTURE_FADE_END = 9.5F;
     private static final float ICON_FADE_START = 2.0F;
     private static final float ICON_FADE_END = 4.0F;
     private static final float REFLECTION_START = 9.5F;
@@ -87,26 +87,20 @@ public class IntroScreen extends Screen {
     private SoundInstance sound;
     private TextureTarget titleMaskTarget;
     private TitleLayout titleLayout;
-    private boolean progressRequired;
-    private boolean progressRendered;
     private boolean loadingStarted;
     private boolean restartSoundNextTick;
     private boolean soundWasActive;
-    private boolean playbackStarted;
-    private boolean stopped;
 
     public IntroScreen() {
         super(Component.empty());
     }
 
-    public void startPlayback() {
-        if (this.playbackStarted || this.minecraft == null) return;
+    private void startPlayback() {
+        if (this.sound != null) return;
 
-        this.playbackStarted = true;
         this.minecraft.getMusicManager().stopPlaying();
         this.sound = new IntroSoundInstance(PoSoundEvents.POOPSKY_INTRO.get(), 0.0F);
         this.minecraft.getSoundManager().play(this.sound);
-        this.soundWasActive = false;
         KeyMapping.releaseAll();
     }
 
@@ -115,7 +109,7 @@ public class IntroScreen extends Screen {
     }
 
     public void resumePlaybackSound() {
-        if (this.canPlayIntroSound() && !this.isSoundActive()) {
+        if (this.canPlayIntroSound() && !this.minecraft.getSoundManager().isActive(this.sound)) {
             this.restartSoundNextTick = true;
         }
     }
@@ -149,22 +143,22 @@ public class IntroScreen extends Screen {
             boolean ready = IntroController.isReadyToFinish();
 
             if (!ready) {
-                this.startLoadingIfNeeded();
-            } else if (!this.progressRequired || this.completionSeconds() >= LOADING_COMPLETE_HOLD_DURATION) {
+                if (!this.loadingStarted) {
+                    this.loadingStarted = true;
+                    IntroController.onAnimationComplete();
+                }
+            } else if (!this.loadingStarted) {
+                this.transitionTicks = 0;
+            } else if (this.completionTicks < 0) {
+                this.completionTicks = 0;
+            } else if (this.completionTicks >= LOADING_COMPLETE_HOLD_DURATION * TICKS_PER_SECOND) {
                 this.transitionTicks = 0;
             }
         }
 
         if (this.transitionTicks >= 0
                 && this.transitionSeconds() >= FADE_TO_BLACK_DURATION + BLACK_REVEAL_DURATION) {
-            this.finishPlayback();
-        }
-    }
-
-    private void startLoadingIfNeeded() {
-        if (this.progressRendered && !this.loadingStarted) {
-            this.loadingStarted = true;
-            IntroController.onAnimationComplete();
+            this.minecraft.setScreen(null);
         }
     }
 
@@ -178,7 +172,7 @@ public class IntroScreen extends Screen {
             return;
         }
 
-        boolean active = this.isSoundActive();
+        boolean active = this.minecraft.getSoundManager().isActive(this.sound);
 
         if (active) {
             this.soundWasActive = true;
@@ -189,11 +183,7 @@ public class IntroScreen extends Screen {
     }
 
     private boolean canPlayIntroSound() {
-        return !this.stopped && this.playbackStarted && this.elapsedSeconds() < INTRO_DURATION;
-    }
-
-    private boolean isSoundActive() {
-        return this.sound != null && this.minecraft.getSoundManager().isActive(this.sound);
+        return this.sound != null && this.elapsedSeconds() < INTRO_DURATION;
     }
 
     private void restartPlaybackSound() {
@@ -201,9 +191,7 @@ public class IntroScreen extends Screen {
             return;
         }
 
-        if (this.sound != null) {
-            this.minecraft.getSoundManager().stop(this.sound);
-        }
+        this.minecraft.getSoundManager().stop(this.sound);
 
         this.sound = new IntroSoundInstance(PoSoundEvents.POOPSKY_INTRO.get(), this.elapsedSeconds());
 
@@ -255,17 +243,8 @@ public class IntroScreen extends Screen {
         if (yearAlpha > MIN_FONT_ALPHA) {
             this.drawYear(guiGraphics, yearAlpha);
         }
-        if (elapsed >= INTRO_DURATION && this.transitionTicks < 0
-                && (this.progressRequired || !IntroController.isReadyToFinish())) {
+        if (this.transitionTicks < 0 && this.loadingStarted) {
             this.drawLoadingText(guiGraphics);
-            this.progressRequired = true;
-            if (IntroController.isReadyToFinish()) {
-                if (this.completionTicks < 0) {
-                    this.completionTicks = 0;
-                }
-            } else {
-                this.progressRendered = true;
-            }
         }
 
         guiGraphics.pose().popPose();
@@ -290,10 +269,7 @@ public class IntroScreen extends Screen {
     public void removed() {
         GLFW.glfwSetInputMode(this.minecraft.getWindow().getWindow(), GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_NORMAL);
         this.stopPlayback();
-        if (this.titleMaskTarget != null) {
-            this.titleMaskTarget.destroyBuffers();
-            this.titleMaskTarget = null;
-        }
+        this.titleMaskTarget.destroyBuffers();
         IntroController.onScreenClosed(this);
     }
 
@@ -439,7 +415,7 @@ public class IntroScreen extends Screen {
     }
 
     private void drawTextureTiles(GuiGraphics guiGraphics, float elapsed) {
-        float scrollTime = Math.max(0.0F, elapsed - 7.0F);
+        float scrollTime = elapsed - 7.0F;
         int startX = Mth.floor(Mth.positiveModulo(TILE_START_X + TILE_SPEED_X * scrollTime, TILE_SIZE));
         int startY = Mth.floor(Mth.positiveModulo(TILE_START_Y + TILE_SPEED_Y * scrollTime, TILE_SIZE));
 
@@ -473,18 +449,12 @@ public class IntroScreen extends Screen {
         return Component.literal(text).withStyle(style -> style.withFont(FONT));
     }
 
-    private void finishPlayback() {
-        this.stopPlayback();
-        if (this.minecraft.screen == this) {
-            this.minecraft.setScreen(null);
-        }
-    }
-
     private void stopPlayback() {
-        if (this.stopped) return;
-        this.stopped = true;
         this.restartSoundNextTick = false;
-        this.minecraft.getSoundManager().stop(this.sound);
+        if (this.sound != null) {
+            this.minecraft.getSoundManager().stop(this.sound);
+            this.sound = null;
+        }
     }
 
     private float elapsedSeconds() {
@@ -492,21 +462,15 @@ public class IntroScreen extends Screen {
     }
 
     private float transitionSeconds() {
-        return this.transitionTicks < 0 ? 0.0F : this.transitionTicks / TICKS_PER_SECOND;
-    }
-
-    private float completionSeconds() {
-        return this.completionTicks < 0 ? 0.0F : this.completionTicks / TICKS_PER_SECOND;
+        return this.transitionTicks / TICKS_PER_SECOND;
     }
 
     private float elapsedSeconds(float partialTick) {
-        return (this.playbackTicks + Mth.clamp(partialTick, 0.0F, 1.0F)) / TICKS_PER_SECOND;
+        return (this.playbackTicks + partialTick) / TICKS_PER_SECOND;
     }
 
     private float transitionSeconds(float partialTick) {
-        return this.transitionTicks < 0
-                ? 0.0F
-                : (this.transitionTicks + Mth.clamp(partialTick, 0.0F, 1.0F)) / TICKS_PER_SECOND;
+        return (this.transitionTicks + partialTick) / TICKS_PER_SECOND;
     }
 
     private static float smooth(float time, float start, float end) {
@@ -535,7 +499,7 @@ public class IntroScreen extends Screen {
         private IntroSoundInstance(SoundEvent soundEvent, float startSeconds) {
             super(soundEvent.getLocation(), SoundSource.MUSIC, 1.0F, 1.0F, SoundInstance.createUnseededRandom(),
                     false, 0, SoundInstance.Attenuation.NONE, 0.0, 0.0, 0.0, true);
-            this.startSeconds = Math.max(0.0F, startSeconds);
+            this.startSeconds = startSeconds;
         }
 
         @Override

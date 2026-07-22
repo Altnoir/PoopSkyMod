@@ -16,14 +16,9 @@ import java.util.function.BooleanSupplier;
 public final class IntroController {
     private static final BooleanSupplier NOT_READY = () -> false;
 
-    private static IntroScreen activeScreen;
-    private static BooleanSupplier levelReady = NOT_READY;
-    private static Runnable finishConfiguration;
+    private static IntroSession session;
     private static boolean clientRuntimeReady = !PoMods.JEI.isLoaded();
-    private static boolean animationComplete;
-    private static boolean configurationReleased;
     private static boolean awaitingWorldCreation;
-    private static boolean ignoreNextLogout;
 
     private IntroController() {
     }
@@ -33,17 +28,18 @@ public final class IntroController {
     }
 
     public static void trackLevelReady(BooleanSupplier levelReady) {
-        IntroController.levelReady = levelReady;
+        if (session != null) {
+            session.levelReady = levelReady;
+        }
     }
 
     public static void start(Runnable finishConfiguration) {
-        if (activeScreen == null) {
-            prepareIntro();
-            activeScreen = new IntroScreen();
-            Minecraft.getInstance().setScreen(activeScreen);
+        if (session == null) {
+            session = createSession(false);
+            Minecraft.getInstance().setScreen(session.screen);
         }
 
-        IntroController.finishConfiguration = finishConfiguration;
+        session.finishConfiguration = finishConfiguration;
         releaseConfigurationIfReady();
     }
 
@@ -56,7 +52,7 @@ public final class IntroController {
     }
 
     public static void onScreenOpening(ScreenEvent.Opening event) {
-        if (activeScreen == null) {
+        if (session == null) {
             if (event.getCurrentScreen() instanceof CreateWorldScreen createWorldScreen
                     && ClientUtil.isPoopSkyWorldType(createWorldScreen.getUiState())) {
                 if (event.getNewScreen() instanceof GenericMessageScreen) {
@@ -72,13 +68,13 @@ public final class IntroController {
             }
         }
 
-        if (activeScreen == null) return;
+        if (session == null) return;
 
         if (event.getNewScreen() instanceof IntroReceivingScreen) {
-            activeScreen.resumePlaybackSound();
+            session.screen.resumePlaybackSound();
             event.setCanceled(true);
         } else if (event.getNewScreen() instanceof ProgressScreen) {
-            activeScreen.resumePlaybackSound();
+            session.screen.resumePlaybackSound();
             event.setCanceled(true);
         } else if (event.getNewScreen() instanceof LevelLoadingScreen) {
             event.setCanceled(true);
@@ -86,43 +82,34 @@ public final class IntroController {
     }
 
     public static void onLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
-        if (ignoreNextLogout) {
-            ignoreNextLogout = false;
-            if (activeScreen != null) {
-                activeScreen.resumePlaybackSound();
-            }
+        if (session != null && session.ignoreNextLogout) {
+            session.ignoreNextLogout = false;
+            session.screen.resumePlaybackSound();
             return;
         }
 
-        if (activeScreen != null) {
-            activeScreen.abort();
-            activeScreen = null;
+        if (session != null) {
+            session.screen.abort();
+            session = null;
         }
         awaitingWorldCreation = false;
-        levelReady = NOT_READY;
-        finishConfiguration = null;
     }
 
     public static void onSelectMusic(SelectMusicEvent event) {
-        if (activeScreen != null) {
+        if (session != null) {
             event.overrideMusic(null);
         }
     }
 
     public static void onScreenClosed(IntroScreen screen) {
-        if (activeScreen == screen) {
-            activeScreen = null;
+        if (session != null && session.screen == screen) {
+            session = null;
             awaitingWorldCreation = false;
-            ignoreNextLogout = false;
-            levelReady = NOT_READY;
-            finishConfiguration = null;
-            animationComplete = false;
-            configurationReleased = false;
         }
     }
 
     public static boolean isLevelReady() {
-        return activeScreen != null && levelReady.getAsBoolean();
+        return session != null && session.levelReady.getAsBoolean();
     }
 
     public static boolean isReadyToFinish() {
@@ -130,8 +117,10 @@ public final class IntroController {
     }
 
     public static void onAnimationComplete() {
-        animationComplete = true;
-        releaseConfigurationIfReady();
+        if (session != null) {
+            session.animationComplete = true;
+            releaseConfigurationIfReady();
+        }
     }
 
     public static int getLoadingProgress() {
@@ -146,27 +135,34 @@ public final class IntroController {
 
     private static void startForWorldCreation(ScreenEvent.Opening event) {
         awaitingWorldCreation = false;
-        ignoreNextLogout = true;
-        prepareIntro();
-        activeScreen = new IntroScreen();
-        event.setNewScreen(activeScreen);
+        session = createSession(true);
+        event.setNewScreen(session.screen);
     }
 
-    private static void prepareIntro() {
-        levelReady = NOT_READY;
-        finishConfiguration = null;
-        animationComplete = false;
-        configurationReleased = false;
+    private static IntroSession createSession(boolean ignoreNextLogout) {
         clientRuntimeReady = !PoMods.JEI.isLoaded();
+        return new IntroSession(new IntroScreen(), ignoreNextLogout);
     }
 
     private static void releaseConfigurationIfReady() {
-        if (!animationComplete || configurationReleased || finishConfiguration == null) return;
+        if (session == null || !session.animationComplete || session.finishConfiguration == null) return;
 
-        configurationReleased = true;
-        Runnable finish = finishConfiguration;
-        finishConfiguration = null;
+        Runnable finish = session.finishConfiguration;
+        session.finishConfiguration = null;
         finish.run();
+    }
+
+    private static final class IntroSession {
+        private final IntroScreen screen;
+        private BooleanSupplier levelReady = NOT_READY;
+        private Runnable finishConfiguration;
+        private boolean animationComplete;
+        private boolean ignoreNextLogout;
+
+        private IntroSession(IntroScreen screen, boolean ignoreNextLogout) {
+            this.screen = screen;
+            this.ignoreNextLogout = ignoreNextLogout;
+        }
     }
 
     private static final class IntroReceivingScreen extends ReceivingLevelScreen {
