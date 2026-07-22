@@ -491,6 +491,7 @@
   "jei.poopsky.fly_desc.green": "선인장으로 처치해 획득",
   "jei.poopsky.fly_desc.blue": "익사시켜 획득",
   "jei.poopsky.fly_desc.dragon_fruit": "용과의 왕을 먹여 획득",
+  "jei.poopsky.urea": "오줌이 든 콤푸퍼를 캠프파이어 위에 놓고 물이 든 콤푸퍼로 변할 때까지 기다리면 획득",
   "create.item_attributes.can_be_digested": "소화 가능",
   "task.poopsky.defecate": "배변",
   "task.poopsky.defecate.desc": "메이드가 주변의 변기를 찾습니다",

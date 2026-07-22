@@ -14,10 +14,7 @@ import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.ModelEvent;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BakedModelEventHandler {
     private static final String[] WOOD_SUFFIXES = {"", "_n", "_ns"};
@@ -52,6 +49,8 @@ public class BakedModelEventHandler {
         var models = event.getModels();
         wrapToiletModels(models, PoBlocks.WOODEN_TOILET.getId(), "wooden_toilet", ToiletType.Category.WOOD, false);
         wrapToiletModels(models, PoBlocks.HARD_TOILET.getId(), "hard_toilet", ToiletType.Category.HARD, true);
+        wrapToiletItemModel(models, PoBlocks.WOODEN_TOILET.get(), "wooden_toilet", ToiletType.Category.WOOD);
+        wrapToiletItemModel(models, PoBlocks.HARD_TOILET.get(), "hard_toilet", ToiletType.Category.HARD);
         wrapFlyItemModel(models);
     }
 
@@ -134,6 +133,41 @@ public class BakedModelEventHandler {
             }
         }
 
+        for (ModelResourceLocation key : toWrap) {
+            models.put(key, wrapper);
+        }
+    }
+
+    private static void wrapToiletItemModel(Map<ModelResourceLocation, BakedModel> models, Block block, String blockPath, ToiletType.Category category) {
+        Map<String, BakedModel> typeModels = new LinkedHashMap<>();
+        for (var entry : ToiletType.getByCategory(category).entrySet()) {
+            String typeId = entry.getKey();
+            ModelResourceLocation variantKey = new ModelResourceLocation(
+                    PoopSky.loc("block/" + blockPath + "_" + typeId),
+                    ModelResourceLocation.STANDALONE_VARIANT);
+            BakedModel variantModel = models.get(variantKey);
+            if (variantModel != null) {
+                typeModels.put(typeId, variantModel);
+            }
+        }
+        if (typeModels.isEmpty()) return;
+
+        ModelResourceLocation defaultKey = new ModelResourceLocation(
+                PoopSky.loc("block/" + blockPath),
+                ModelResourceLocation.STANDALONE_VARIANT);
+        BakedModel defaultModel = models.get(defaultKey);
+        if (defaultModel == null) return;
+
+        ToiletItemBakedModel wrapper = new ToiletItemBakedModel(defaultModel, typeModels);
+
+        String itemIdStr = BuiltInRegistries.ITEM.getKey(block.asItem()).toString();
+        List<ModelResourceLocation> toWrap = new ArrayList<>();
+        for (var entry : models.keySet()) {
+            String entryStr = entry.toString();
+            if (entryStr.startsWith(itemIdStr + "#inventory")) {
+                toWrap.add(entry);
+            }
+        }
         for (ModelResourceLocation key : toWrap) {
             models.put(key, wrapper);
         }

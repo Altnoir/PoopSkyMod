@@ -491,6 +491,7 @@
   "jei.poopsky.fly_desc.green": "サボテンで倒すと入手",
   "jei.poopsky.fly_desc.blue": "溺死させると入手",
   "jei.poopsky.fly_desc.dragon_fruit": "キングドラゴンフルーツを与えて入手",
+  "jei.poopsky.urea": "尿の入ったコンポーパーを焚き火の上に置き、水の入ったコンポーパーに変わるのを待つと入手できる",
   "create.item_attributes.can_be_digested": "消化可能",
   "task.poopsky.defecate": "排泄",
   "task.poopsky.defecate.desc": "メイドは周囲のトイレを探します",

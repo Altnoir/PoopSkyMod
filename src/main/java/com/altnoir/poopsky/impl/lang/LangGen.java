@@ -4,6 +4,7 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
+import com.altnoir.poopsky.init.PoPotions;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateLangProvider;
 
@@ -111,53 +112,53 @@ public final class LangGen {
     }
 
     private static void addPotions() {
-        addEffect("fecal_incontinence_potion", "Fecal Incontinence");
-        addEffect("long_fecal_incontinence_potion", "Fecal Incontinence");
-        addEffect("strong_fecal_incontinence_potion", "Fecal Incontinence");
-        addEffect("super_fecal_incontinence_potion", "Super Fecal Incontinence");
-        addEffect("on_the_verge_potion", "On the Verge");
-        addEffect("long_on_the_verge_potion", "On the Verge");
-        addEffect("strong_on_the_verge_potion", "On the Verge");
+        for (var entry : PoPotions.all()) {
+            String path = entry.getId().getPath();
+            String baseName = path.replace("_potion", "");
+            String potionName = potionDisplayName(baseName);
+            String arrowName = arrowDisplayName(baseName);
 
-        addTippedArrow("effect.fecal_incontinence_potion", "Fecal Incontinence");
-        addTippedArrow("effect.strong_fecal_incontinence_potion", "Strong Fecal Incontinence");
-        addTippedArrow("effect.super_fecal_incontinence_potion", "Super Fecal Incontinence");
-        addTippedArrow("effect.on_the_verge_potion", "On the Verge");
-        addTippedArrow("effect.strong_on_the_verge_potion", "Strong On the Verge");
-
-        addSplash("fecal_incontinence_potion", "Fecal Incontinence");
-        addLingering("fecal_incontinence_potion", "Fecal Incontinence");
-        addSplash("long_fecal_incontinence_potion", "Fecal Incontinence");
-        addLingering("long_fecal_incontinence_potion", "Fecal Incontinence");
-        addSplash("strong_fecal_incontinence_potion", "Fecal Incontinence");
-        addLingering("strong_fecal_incontinence_potion", "Fecal Incontinence");
-        addSplash("super_fecal_incontinence_potion", "Fecal Incontinence");
-        addLingering("super_fecal_incontinence_potion", "Fecal Incontinence");
-        addSplash("on_the_verge_potion", "On the Verge");
-        addLingering("on_the_verge_potion", "On the Verge");
-        addSplash("long_on_the_verge_potion", "On the Verge");
-        addLingering("long_on_the_verge_potion", "On the Verge");
-        addSplash("strong_on_the_verge_potion", "On the Verge");
-        addLingering("strong_on_the_verge_potion", "On the Verge");
-
-        addTippedArrow("effect.long_fecal_incontinence_potion", "Fecal Incontinence");
-        addTippedArrow("effect.long_on_the_verge_potion", "On the Verge");
+            provider.add("item.minecraft.potion.effect." + path, potionName);
+            provider.add("item.minecraft.splash_potion.effect." + path, potionName);
+            provider.add("item.minecraft.lingering_potion.effect." + path, potionName);
+            provider.add("item.minecraft.tipped_arrow.effect." + path, arrowName);
+        }
     }
 
-    private static void addEffect(String key, String value) {
-        provider.add("item.minecraft.potion.effect." + key, value);
+    private static String potionDisplayName(String baseName) {
+        String name = baseName;
+        if (name.startsWith("long_")) name = name.substring(5);
+        else if (name.startsWith("strong_")) name = name.substring(7);
+        else if (name.startsWith("super_")) name = name.substring(6);
+        return titleCase(name);
     }
 
-    private static void addTippedArrow(String key, String value) {
-        provider.add("item.minecraft.tipped_arrow." + key, value);
+    private static String arrowDisplayName(String baseName) {
+        String name = baseName.startsWith("long_") ? baseName.substring(5) : baseName;
+        return titleCase(name);
     }
 
-    private static void addSplash(String key, String value) {
-        provider.add("item.minecraft.splash_potion.effect." + key, value);
+    private static String titleCase(String snakeCase) {
+        String[] parts = snakeCase.split("_");
+        var sb = new StringBuilder();
+        for (int i = 0; i < parts.length; i++) {
+            if (i > 0) sb.append(" ");
+            String part = parts[i];
+            if (i == 0 || !isMinorWord(part)) {
+                sb.append(Character.toUpperCase(part.charAt(0)));
+                if (part.length() > 1) sb.append(part.substring(1));
+            } else {
+                sb.append(part);
+            }
+        }
+        return sb.toString();
     }
 
-    private static void addLingering(String key, String value) {
-        provider.add("item.minecraft.lingering_potion.effect." + key, value);
+    private static boolean isMinorWord(String word) {
+        return switch (word) {
+            case "the", "of", "a", "an", "in", "on", "at", "to", "for" -> true;
+            default -> false;
+        };
     }
 
     private static void addItemExtras() {
@@ -188,7 +189,6 @@ public final class LangGen {
         provider.add("message.poopsky.toilet_linker.4", "Cleared");
         provider.add("message.poopsky.toilet_plug.dismount", "Press %s to dismount Toilet Plug");
     }
-
 
     private static void addFlyTypes() {
         for (String id : FlyType.FLY_TYPES) {
@@ -341,6 +341,7 @@ public final class LangGen {
         provider.add("jei.poopsky.fly_desc.green", "Obtained by killing with cactus");
         provider.add("jei.poopsky.fly_desc.blue", "Obtained by drowning");
         provider.add("jei.poopsky.fly_desc.dragon_fruit", "Obtained by feeding King of Dragon Fruit");
+        provider.add("jei.poopsky.urea", "Place a urine-filled Compooper on a campfire and wait for it to turn into a water-filled Compooper");
     }
 
     private static void addCreate() {

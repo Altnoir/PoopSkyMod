@@ -60,5 +60,9 @@ public class PSJEIInfo {
                 PoBlocks.BREEDING_CHEST.get(),
                 Component.translatable("jei.poopsky.breeding_chest_desc")
         );
+        registration.addIngredientInfo(
+                PoItems.UREA.get(),
+                Component.translatable("jei.poopsky.urea")
+        );
     }
 }

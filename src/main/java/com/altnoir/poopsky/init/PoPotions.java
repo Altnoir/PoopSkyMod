@@ -9,8 +9,13 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.alchemy.Potion;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class PoPotions {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
+    private static final List<RegistryEntry<Potion, Potion>> ALL = new ArrayList<>();
 
     public static final RegistryEntry<Potion, Potion> FECAL_INCONTINENCE_POTION = registerPotion(
             "fecal_incontinence_potion",
@@ -45,9 +50,15 @@ public class PoPotions {
     );
 
     private static RegistryEntry<Potion, Potion> registerPotion(String name, NonNullSupplier<Potion> potion) {
-        return REGISTRATE.simple(name, Registries.POTION, potion);
+        RegistryEntry<Potion, Potion> entry = REGISTRATE.simple(name, Registries.POTION, potion);
+        ALL.add(entry);
+        return entry;
     }
 
     public static void register() {
+    }
+
+    public static List<RegistryEntry<Potion, Potion>> all() {
+        return Collections.unmodifiableList(ALL);
     }
 }

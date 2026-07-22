@@ -1,10 +1,10 @@
 package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
+import com.altnoir.poopsky.impl.sound.PoSoundEvents;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.init.PoParticles;
-import com.altnoir.poopsky.impl.sound.PoSoundEvents;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -165,6 +165,11 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
                 0.3, 0.1, 0.3,
                 0.02
         );
+
+        var vec3 = Vec3.atLowerCornerWithOffset(pos, 0.5, 0.5, 0.5).offsetRandom(level.random, 0.3F);
+        var itemEntity = new ItemEntity(level, vec3.x(), vec3.y(), vec3.z(), new ItemStack(PoItems.UREA.get(), 8));
+        itemEntity.setDefaultPickUpDelay();
+        level.addFreshEntity(itemEntity);
 
         BlockState compooperBlock = PoBlocks.WATER_COMPOOPER.get().defaultBlockState().setValue(LEVEL, MAX_LEVEL);
         level.setBlockAndUpdate(pos, compooperBlock);
