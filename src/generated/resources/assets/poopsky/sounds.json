@@ -89,6 +89,14 @@
     ],
     "subtitle": "subtitle.poopsky.block.toilet.lava_empty"
   },
+  "poopsky_intro": {
+    "sounds": [
+      {
+        "name": "poopsky:poopsky_intro",
+        "stream": true
+      }
+    ]
+  },
   "entity.fly.ambient": {
     "sounds": [
       {
