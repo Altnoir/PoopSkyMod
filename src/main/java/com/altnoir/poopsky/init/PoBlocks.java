@@ -242,9 +242,9 @@ public class PoBlocks {
 
     public static final BlockEntry<Block> TILE_BLOCK = registerBlock("tile_block",
             props -> new Block(hardenedProperties(MapColor.COLOR_LIGHT_BLUE, SoundType.STONE)));
+    public static final BlockFamily TILE_BLOCK_FAMILY = registerBlockFamily("tile_block", TILE_BLOCK, true);
     public static final BlockEntry<Block> WHITE_TILE_BLOCK = registerBlock("white_tile_block",
             props -> new Block(hardenedProperties(MapColor.CLAY, SoundType.STONE)));
-    public static final BlockFamily TILE_BLOCK_FAMILY = registerBlockFamily("tile_block", TILE_BLOCK, true);
     public static final BlockFamily WHITE_TILE_BLOCK_FAMILY = registerBlockFamily("white_tile_block", WHITE_TILE_BLOCK, true);
     public static final BlockEntry<StairBlock> TILE_BLOCK_STAIRS = TILE_BLOCK_FAMILY.stairs();
     public static final BlockEntry<SlabBlock> TILE_BLOCK_SLAB = TILE_BLOCK_FAMILY.slab();
@@ -499,11 +499,13 @@ public class PoBlocks {
             props -> new FlushToiletBlock(BlockBehaviour.Properties.of()
                     .mapColor(DyeColor.WHITE)
                     .strength(HARDEN, TOILET_RESISTANCE)
+                    .requiresCorrectToolForDrops()
                     .noOcclusion()));
     public static final BlockEntry<FlushToiletBlock> GOLDEN_FLUSH_TOILET = registerBlock("golden_flush_toilet",
             props -> new FlushToiletBlock(BlockBehaviour.Properties.of()
                     .mapColor(DyeColor.YELLOW)
                     .strength(HARDEN, TOILET_RESISTANCE)
+                    .requiresCorrectToolForDrops()
                     .noOcclusion()));
 
     public record BlockFamily(
@@ -520,7 +522,9 @@ public class PoBlocks {
 
     public static final List<BlockFamily> POOP_BUILDING_FAMILIES = List.of(POOP_FAMILY, CHILI_POOP_FAMILY, GOLDEN_POOP_FAMILY);
     public static final List<BlockFamily> HARDENED_POOP_FAMILIES = List.of(POOP_BRICK_FAMILY, MOSSY_POOP_BRICK_FAMILY, DRIED_POOP_BLOCK_FAMILY, SMOOTH_POOP_BLOCK_FAMILY, CUT_POOP_BLOCK_FAMILY);
-    public static final List<BlockFamily> SIMPLE_MODEL_FAMILIES = List.of(CHILI_POOP_FAMILY, GOLDEN_POOP_FAMILY, POOP_BRICK_FAMILY, MOSSY_POOP_BRICK_FAMILY, DRIED_POOP_BLOCK_FAMILY, SMOOTH_POOP_BLOCK_FAMILY, CUT_POOP_BLOCK_FAMILY, TILE_BLOCK_FAMILY);
+    public static final List<BlockFamily> SIMPLE_MODEL_FAMILIES = List.of(
+            CHILI_POOP_FAMILY, GOLDEN_POOP_FAMILY, POOP_BRICK_FAMILY, MOSSY_POOP_BRICK_FAMILY, DRIED_POOP_BLOCK_FAMILY, SMOOTH_POOP_BLOCK_FAMILY, CUT_POOP_BLOCK_FAMILY, TILE_BLOCK_FAMILY,
+            WHITE_TILE_BLOCK_FAMILY);
     public static final List<BlockFamily> WALL_TAG_FAMILIES = List.of(POOP_FAMILY, CHILI_POOP_FAMILY, GOLDEN_POOP_FAMILY, POOP_BRICK_FAMILY, MOSSY_POOP_BRICK_FAMILY, DRIED_POOP_BLOCK_FAMILY, SMOOTH_POOP_BLOCK_FAMILY, CUT_POOP_BLOCK_FAMILY, TILE_BLOCK_FAMILY);
 
     private static BlockBehaviour.Properties poopCakeProperties() {
