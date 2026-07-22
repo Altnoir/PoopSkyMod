@@ -37,6 +37,7 @@ public class IntroScreen extends Screen {
 
     private static final Component TITLE = titleText("poopsky");
     private static final Component YEAR = Component.literal("2026");
+    private static final Component LOADING_TEXT = Component.literal("Loading...");
 
     private static final float VIRTUAL_WIDTH = 1920.0F;
     private static final float VIRTUAL_HEIGHT = 1080.0F;
@@ -71,17 +72,14 @@ public class IntroScreen extends Screen {
     private static final float ICON_TOP = 500.0F;
     private static final float YEAR_WIDTH = 188.0F;
     private static final float YEAR_TEXT_Y = 761.0F;
+    private static final float LOADING_TEXT_Y = 946.0F;
+    private static final float LOADING_TEXT_SCALE = 2.0F;
 
     private static final int TILE_SIZE = 1024;
     private static final float TILE_START_X = 521.0F;
     private static final float TILE_START_Y = 790.0F;
     private static final float TILE_SPEED_X = -46.0F;
     private static final float TILE_SPEED_Y = -100.0F;
-
-    private static final float PROGRESS_BAR_WIDTH = 720.0F;
-    private static final float PROGRESS_BAR_HEIGHT = 12.0F;
-    private static final float PROGRESS_BAR_Y = 934.0F;
-    private static final float PROGRESS_TEXT_Y = 962.0F;
 
     private int playbackTicks;
     private int transitionTicks = -1;
@@ -259,7 +257,7 @@ public class IntroScreen extends Screen {
         }
         if (elapsed >= INTRO_DURATION && this.transitionTicks < 0
                 && (this.progressRequired || !IntroController.isReadyToFinish())) {
-            this.drawLoadingProgress(guiGraphics);
+            this.drawLoadingText(guiGraphics);
             this.progressRequired = true;
             if (IntroController.isReadyToFinish()) {
                 if (this.completionTicks < 0) {
@@ -319,24 +317,9 @@ public class IntroScreen extends Screen {
         this.drawScaledText(guiGraphics, YEAR, x, YEAR_TEXT_Y, scale, alphaColor(alpha));
     }
 
-    private void drawLoadingProgress(GuiGraphics guiGraphics) {
-        int progress = IntroController.getLoadingProgress();
-        int left = Mth.floor((VIRTUAL_WIDTH - PROGRESS_BAR_WIDTH) * 0.5F);
-        int top = Mth.floor(PROGRESS_BAR_Y);
-        int right = Mth.ceil(left + PROGRESS_BAR_WIDTH);
-        int bottom = Mth.ceil(top + PROGRESS_BAR_HEIGHT);
-        int fillRight = Mth.floor(left + PROGRESS_BAR_WIDTH * progress / 100.0F);
-
-        guiGraphics.fill(left - 2, top - 2, right + 2, bottom + 2, 0xA0000000);
-        guiGraphics.fill(left, top, right, bottom, 0xFF383838);
-        if (fillRight > left) {
-            guiGraphics.fill(left, top, fillRight, bottom, 0xFFFFFFFF);
-        }
-
-        Component progressText = Component.translatable("loading.progress", progress);
-        float textScale = 2.0F;
-        float textX = (VIRTUAL_WIDTH - this.font.width(progressText) * textScale) * 0.5F;
-        this.drawScaledText(guiGraphics, progressText, textX, PROGRESS_TEXT_Y, textScale, 0xFFFFFFFF);
+    private void drawLoadingText(GuiGraphics guiGraphics) {
+        float x = (VIRTUAL_WIDTH - this.font.width(LOADING_TEXT) * LOADING_TEXT_SCALE) * 0.5F;
+        this.drawScaledText(guiGraphics, LOADING_TEXT, x, LOADING_TEXT_Y, LOADING_TEXT_SCALE, 0xFFFFFFFF);
     }
 
     private void drawMaskedTexture(GuiGraphics guiGraphics, float elapsed, float alpha) {
