@@ -1,3 +1,7 @@
+import java.nio.charset.StandardCharsets
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption
+
 plugins {
     id 'idea'
     id 'java-library'
@@ -93,6 +97,72 @@ neoForge {
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+def LangReplacements = [
+        '空中厕所': '空中卫生间',
+        '大便失禁': '巧克力喷泉',
+        '恶兆污秽': '悦动甜蜜',
+        '马桶搋子': '魔女扫帚',
+        '食粪者': '小谗鬼',
+        '养粪人': '甜品师',
+        '一切屎于脚下': '一切食于脚下',
+        '屎': '巧克力',
+        '粪水': '巧克力液',
+        '化粪': '巧克力化',
+        '挑粪匠': '高能饮品',
+        '蛆块链': '曲块链',
+        '寄生虫': '花朵快快长',
+        '蛔虫': '白巧克力棒',
+        '苍蝇': '暗色蜜蜂',
+        '厕所': '巧克力礼盒',
+        '蛆': '牛奶巧克力',
+        '粪便': '巧克力',
+        '粪': '巧克力',
+        '大便': '精制巧克力',
+        '蝇': '蜂',
+        '忌讳': '甜蜜',
+        '肛气': '氨气',
+        '屁声': '排气声',
+        '如厕': '出恭',
+        '尿': '茶水'
+]
+
+def generateLang = tasks.register('generateLang') {
+    group = 'data generation'
+
+    def sourceFile = layout.projectDirectory.file('src/main/resources/assets/poopsky/lang/zh_cn.json')
+    def outputFile = layout.projectDirectory.file('src/main/resources/resourcepacks/poopsky_pack/assets/poopsky/lang/zh_cn.json')
+
+    inputs.file sourceFile
+    inputs.property 'replacements', LangReplacements.collect { source, replacement ->
+        "${source}\u0000${replacement}"
+    }
+    outputs.file outputFile
+
+    doLast {
+        def sourcePath = sourceFile.asFile.toPath()
+        def outputPath = outputFile.asFile.toPath()
+        Files.createDirectories(outputPath.parent)
+        Files.copy(sourcePath, outputPath, StandardCopyOption.REPLACE_EXISTING)
+
+        def content = Files.readString(outputPath, StandardCharsets.UTF_8)
+        if (content.startsWith('\uFEFF')) {
+            content = content.substring(1)
+        }
+        LangReplacements.each { source, replacement ->
+            content = content.replace(source, replacement)
+        }
+        Files.writeString(outputPath, content, StandardCharsets.UTF_8)
+    }
+}
+
+tasks.named('runData').configure {
+    dependsOn generateLang
+}
+
+tasks.named('processResources').configure {
+    dependsOn generateLang
+}
 
 configurations {
     runtimeClasspath.extendsFrom localRuntime
