@@ -2,6 +2,7 @@ package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.content.block.entity.FlushToiletBlockEntity;
 import com.altnoir.poopsky.content.entity.p.FlushToiletEntity;
+import com.altnoir.poopsky.impl.sound.PoSoundEvents;
 import com.altnoir.poopsky.init.PoEntityType;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -77,6 +78,17 @@ public class FlushToiletBlock extends BaseEntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        if (hitResult.getLocation().y - pos.getY() >= 0.6) {
+            if (!level.isClientSide) {
+                boolean closed = !state.getValue(CLOSED);
+                level.playSound(null, pos,
+                        closed ? PoSoundEvents.BLOCK_FLUSH_TOILET_CLOSE.get() : PoSoundEvents.BLOCK_FLUSH_TOILET_OPEN.get(),
+                        SoundSource.BLOCKS, 0.5F, level.random.nextFloat() * 0.1F + 0.9F);
+                level.setBlock(pos, state.setValue(CLOSED, closed), Block.UPDATE_CLIENTS);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+
         if (level.isClientSide) {
             return InteractionResult.SUCCESS;
         }
@@ -125,7 +137,7 @@ public class FlushToiletBlock extends BaseEntityBlock {
                 }
                 level.playSound(null, pos, SoundEvents.PISTON_EXTEND, SoundSource.BLOCKS, 0.25F, 1.0F);
             }
-            level.playSound(null, pos, powered ? SoundEvents.BAMBOO_WOOD_TRAPDOOR_CLOSE : SoundEvents.BAMBOO_WOOD_TRAPDOOR_OPEN, SoundSource.BLOCKS, 0.5F, level.random.nextFloat() * 0.1F + 0.9F);
+            level.playSound(null, pos, powered ? PoSoundEvents.BLOCK_FLUSH_TOILET_CLOSE.get() : PoSoundEvents.BLOCK_FLUSH_TOILET_OPEN.get(), SoundSource.BLOCKS, 0.5F, level.random.nextFloat() * 0.1F + 0.9F);
             level.setBlock(pos, state.setValue(CLOSED, powered), Block.UPDATE_CLIENTS);
         }
     }

@@ -517,7 +517,9 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
             model = models().getExistingFile(modLoc("block/" + path));
         } else {
             var texture = modLoc("block/" + path);
-            model = models().withExistingParent(path, modLoc("block/shit")).texture("shit", texture);
+            model = models().withExistingParent(path, modLoc("block/shit"))
+                    .texture(PARTICLE, texture)
+                    .texture("shit", texture);
         }
 
         getVariantBuilder(block).forAllStates(state -> {

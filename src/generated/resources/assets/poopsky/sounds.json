@@ -35,6 +35,24 @@
     ],
     "subtitle": "subtitle.poopsky.compooper.maggots"
   },
+  "block.flush_toilet.close": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.bamboo_wood_trapdoor.close"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.block.flush_toilet.close"
+  },
+  "block.flush_toilet.open": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.bamboo_wood_trapdoor.open"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.block.flush_toilet.open"
+  },
   "block.fly_barrel.close": {
     "sounds": [
       {

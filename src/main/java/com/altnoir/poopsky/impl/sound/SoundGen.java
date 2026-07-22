@@ -74,6 +74,18 @@ public class SoundGen extends SoundDefinitionsProvider {
                         sound(PoopSky.locMc("block.barrel.close"), SoundDefinition.SoundType.EVENT)
                 ));
 
+        add(PoSoundEvents.BLOCK_FLUSH_TOILET_OPEN, definition()
+                .subtitle("subtitle.poopsky.block.flush_toilet.open")
+                .with(
+                        sound(PoopSky.locMc("block.bamboo_wood_trapdoor.open"), SoundDefinition.SoundType.EVENT)
+                ));
+
+        add(PoSoundEvents.BLOCK_FLUSH_TOILET_CLOSE, definition()
+                .subtitle("subtitle.poopsky.block.flush_toilet.close")
+                .with(
+                        sound(PoopSky.locMc("block.bamboo_wood_trapdoor.close"), SoundDefinition.SoundType.EVENT)
+                ));
+
         add(PoSoundEvents.BLOCK_FLY_BARREL_WORK, definition()
                 .subtitle("subtitle.poopsky.fly_barrel.work")
                 .with(

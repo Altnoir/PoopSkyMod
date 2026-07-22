@@ -236,6 +236,8 @@ public final class LangGen {
         addSubtitle("item.toilet_linker.success", "Toilet Plug Wand binds");
         addSubtitle("block.saltpeter.chime", "Saltpeter chimes");
         addSubtitle("block.toilet.lava_empty", "Toilet empties lava");
+        addSubtitle("block.flush_toilet.open", "Toilet lid opens");
+        addSubtitle("block.flush_toilet.close", "Toilet lid closes");
         addSubtitle("block.compooper.bucket_fill", "Compooper fills");
         addSubtitle("item.jinkela.use", "Jinkela rustles");
     }
@@ -259,6 +261,7 @@ public final class LangGen {
         provider.add("death.attack.poop_ball", "%1$s died from Poop Ball");
         provider.add("death.attack.poop_ball.player", "%1$s was killed by %2$s by Poop Ball");
         provider.add("itemgroup.poopsky", "POOPSKY");
+        provider.add("pack.poopsky.name", "Cognitive Filter");
 
         // Effects
         provider.add("effect.poopsky.fecal_incontinence", "Fecal Incontinence");

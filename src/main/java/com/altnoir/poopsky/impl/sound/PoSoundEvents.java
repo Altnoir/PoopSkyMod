@@ -21,6 +21,8 @@ public class PoSoundEvents {
     public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_FLY_BARREL_OPEN = registerSoundEvent("block.fly_barrel.open");
     public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_FLY_BARREL_CLOSE = registerSoundEvent("block.fly_barrel.close");
     public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_FLY_BARREL_WORK = registerSoundEvent("block.fly_barrel.work");
+    public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_FLUSH_TOILET_OPEN = registerSoundEvent("block.flush_toilet.open");
+    public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_FLUSH_TOILET_CLOSE = registerSoundEvent("block.flush_toilet.close");
     public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_BREEDING_CHEST_WORK = registerSoundEvent("block.breeding_chest.work");
     public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_TOILET_LAVA_EMPTY = registerSoundEvent("block.toilet.lava_empty");
     public static final RegistryEntry<SoundEvent, SoundEvent> ENTITY_VILLAGER_WORK_COMPOOPER = registerSoundEvent("entity.villager.work_compooper");
