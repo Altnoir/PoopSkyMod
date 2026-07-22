@@ -39,6 +39,7 @@ public class PoSoundEvents {
     public static final RegistryEntry<SoundEvent, SoundEvent> ENTITY_FLY_HURT = registerSoundEvent("entity.fly.hurt");
     public static final RegistryEntry<SoundEvent, SoundEvent> ENTITY_FLY_DEATH = registerSoundEvent("entity.fly.death");
     public static final RegistryEntry<SoundEvent, SoundEvent> ENTITY_FLY_CAPTURE = registerSoundEvent("entity.fly.capture");
+    public static final RegistryEntry<SoundEvent, SoundEvent> POOPSKY_INTRO = registerSoundEvent("poopsky_intro");
     public static final RegistryEntry<SoundEvent, SoundEvent> LAWRENCE = registerSoundEvent("lawrence");
     public static final ResourceKey<JukeboxSong> LAWRENCE_KEY = registerJukeboxSong("lawrence");
     public static final RegistryEntry<SoundEvent, SoundEvent> LIGHT_DANCE = registerSoundEvent("light_dance");

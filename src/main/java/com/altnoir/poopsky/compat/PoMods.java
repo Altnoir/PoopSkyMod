@@ -1,14 +1,13 @@
 package com.altnoir.poopsky.compat;
 
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
 import net.neoforged.fml.loading.LoadingModList;
 
 import java.util.Locale;
 
 public enum PoMods {
     SABLE,
+    JEI,
     CREATE,
     SKYBLOCKBUILDER,
     TOUHOU_LITTLE_MAID,

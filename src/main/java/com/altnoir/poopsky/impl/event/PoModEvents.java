@@ -4,9 +4,9 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.entity.p.FlyEntity;
 import com.altnoir.poopsky.content.entity.p.PoolimeEntity;
 import com.altnoir.poopsky.impl.DataGenerators;
+import com.altnoir.poopsky.impl.network.PoNetworking;
 import com.altnoir.poopsky.init.PoBlockEntityType;
 import com.altnoir.poopsky.init.PoEntityType;
-import com.altnoir.poopsky.impl.network.PoNetworking;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
@@ -25,6 +25,7 @@ public class PoModEvents {
     public static void registerMod(IEventBus modEventBus) {
         modEventBus.addListener(DataGenerators::gatherData);
         modEventBus.addListener(PoNetworking::registerNetworking);
+        modEventBus.addListener(PoNetworking::registerConfigurationTasks);
         modEventBus.addListener(PoModEvents::registerAttributes);
         modEventBus.addListener(PoModEvents::registerSpawnPlacements);
         modEventBus.addListener(PoModEvents::registerCapabilities);

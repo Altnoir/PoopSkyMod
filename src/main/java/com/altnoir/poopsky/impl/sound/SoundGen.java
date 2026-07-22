@@ -199,6 +199,11 @@ public class SoundGen extends SoundDefinitionsProvider {
                         sound(PoopSky.locMc("item.bone_meal.use"), SoundDefinition.SoundType.EVENT)
                 ));
 
+        add(PoSoundEvents.POOPSKY_INTRO, definition()
+                .with(
+                        sound(PoopSky.loc("poopsky_intro")).stream()
+                ));
+
         add(PoSoundEvents.LAWRENCE, definition()
                 .with(
                         sound(PoopSky.loc("merry_christmas_mr_lawrence")).stream()
