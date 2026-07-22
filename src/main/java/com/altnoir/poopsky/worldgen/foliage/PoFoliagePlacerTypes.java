@@ -11,8 +11,8 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerTy
 public class PoFoliagePlacerTypes {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
-    public static final RegistryEntry<FoliagePlacerType<?>, FoliagePlacerType<PoopMegaFoliagePlacer>> POOP_MEGA_FOLIAGE_PLACER =
-            registerFoliagePlacer("poop_mega_foliage_placer", PoopMegaFoliagePlacer.CODEC);
+    public static final RegistryEntry<FoliagePlacerType<?>, FoliagePlacerType<RhombusFoliagePlacer>> RHOMBUS_FOLIAGE_PLACER =
+            registerFoliagePlacer("rhombus_foliage_placer", RhombusFoliagePlacer.CODEC);
 
     private static <T extends FoliagePlacer> RegistryEntry<FoliagePlacerType<?>, FoliagePlacerType<T>> registerFoliagePlacer(String name, MapCodec<T> codec) {
         return REGISTRATE.simple(name, Registries.FOLIAGE_PLACER_TYPE, () -> new FoliagePlacerType<>(codec));

@@ -19,14 +19,14 @@
       }
     },
     "foliage_placer": {
-      "type": "poopsky:poop_mega_foliage_placer",
+      "type": "poopsky:rhombus_foliage_placer",
       "crown_height": {
         "type": "minecraft:uniform",
         "max_inclusive": 17,
         "min_inclusive": 13
       },
-      "offset": 3,
-      "radius": 0
+      "offset": 1,
+      "radius": 4
     },
     "foliage_provider": {
       "type": "minecraft:weighted_state_provider",

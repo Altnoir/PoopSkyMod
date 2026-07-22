@@ -1,10 +1,10 @@
 package com.altnoir.poopsky.worldgen;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.worldgen.foliage.PoopMegaFoliagePlacer;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.impl.util.PoFeatureUtil;
 import com.altnoir.poopsky.init.PoBlocks;
+import com.altnoir.poopsky.worldgen.foliage.RhombusFoliagePlacer;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
@@ -29,17 +29,24 @@ import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConf
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.VegetationPatchConfiguration;
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.MegaPineFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.RandomSpreadFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 import net.minecraft.world.level.levelgen.feature.treedecorators.AlterGroundDecorator;
+import net.minecraft.world.level.levelgen.feature.treedecorators.BeehiveDecorator;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.GiantTrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
 import net.minecraft.world.level.levelgen.placement.CaveSurface;
 
+import java.util.List;
+
 public class PoConfigureFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> POOP_TREE = resourceKey("poop_tree");
     public static final ResourceKey<ConfiguredFeature<?, ?>> MEGA_POOP_TREE = resourceKey("mega_poop_tree");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> GINKGO_TREE = resourceKey("ginkgo_tree");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> MEGA_GINKGO_TREE = resourceKey("mega_ginkgo_tree");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> GINKGO_BEE_TREE = resourceKey("ginkgo_bee_tree");
     public static final ResourceKey<ConfiguredFeature<?, ?>> POOP_VEGETATION = resourceKey("poop_vegetation");
     public static final ResourceKey<ConfiguredFeature<?, ?>> POOP_PATCH_BONEMEAL = resourceKey("poop_patch_bonemeal");
     public static final ResourceKey<ConfiguredFeature<?, ?>> CHILI_POOP_VEGETATION = resourceKey("chili_poop_vegetation");
@@ -79,12 +86,36 @@ public class PoConfigureFeatures {
                                 .add(PoBlocks.POOP_LEAVES_GOLD.get().defaultBlockState(), 1)
                                 .build()),
 
-                        new PoopMegaFoliagePlacer(ConstantInt.of(0), ConstantInt.of(3), UniformInt.of(13, 17)),
+                        new RhombusFoliagePlacer(ConstantInt.of(4), ConstantInt.of(1), UniformInt.of(13, 17)),
                         new TwoLayersFeatureSize(1, 1, 2)
                 )
                         .decorators(ImmutableList.of(new AlterGroundDecorator(BlockStateProvider.simple(Blocks.MUD))))
                         .build()
         );
+
+        register(context, GINKGO_TREE, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
+                BlockStateProvider.simple(PoBlocks.GINKGO_LOG.get()),
+                new StraightTrunkPlacer(7, 2, 1),
+                BlockStateProvider.simple(PoBlocks.GINKGO_LEAVES.get()),
+                new RhombusFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), UniformInt.of(7, 8)),
+                new TwoLayersFeatureSize(2, 0, 2)
+        ).build());
+
+        register(context, MEGA_GINKGO_TREE, Feature.TREE, (new TreeConfiguration.TreeConfigurationBuilder(
+                BlockStateProvider.simple(PoBlocks.GINKGO_LOG.get()),
+                new GiantTrunkPlacer(13, 2, 14),
+                BlockStateProvider.simple(PoBlocks.GINKGO_LEAVES.get()),
+                new MegaPineFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0), UniformInt.of(13, 17)),
+                new TwoLayersFeatureSize(1, 1, 2))
+        ).build());
+
+        register(context, GINKGO_BEE_TREE, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
+                BlockStateProvider.simple(PoBlocks.GINKGO_LOG.get()),
+                new StraightTrunkPlacer(7, 2, 1),
+                BlockStateProvider.simple(PoBlocks.GINKGO_LEAVES.get()),
+                new RhombusFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), UniformInt.of(7, 8)),
+                new TwoLayersFeatureSize(2, 0, 2)
+        ).decorators(List.of(new BeehiveDecorator(0.05F))).build());
 
         register(context, POOP_VEGETATION, Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(
