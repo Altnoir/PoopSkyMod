@@ -30,6 +30,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
     @Override
     protected void registerStatesAndModels() {
         poopBlock();
+        verticalSlabFromTemplate(PoBlocks.POOP_VERTICAL_SLAB.get(), blockTexture(PoBlocks.POOP_BLOCK.get()));
         poopPiece();
         poopFarmland();
         poolimeMaggotsBlock();
@@ -311,6 +312,19 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         simpleBlockItem(block, model);
     }
 
+    private void verticalSlabFromTemplate(Block block, ResourceLocation sideAndTop) {
+        String path = getBlockPath(block);
+        ModelFile model = models().withExistingParent(path, modLoc("block/vertical_slab"))
+                .texture("side", sideAndTop)
+                .texture("top", sideAndTop);
+
+        getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder()
+                .modelFile(model)
+                .rotationY(horizontalRotation(state.getValue(VerticalSlabBlock.FACING)))
+                .uvLock(true)
+                .build());
+    }
+
     private void saplingBlock(SaplingBlock block) {
         String path = getBlockPath(block);
         ModelFile model = models().cross(path, blockTexture(block)).renderType("cutout");
@@ -547,24 +561,25 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
     }
 
     private void blockFamily(PoBlocks.BlockFamily family) {
-        blockFamily(family.block().get(), family.stairs().get(), family.slab().get(), family.wall().get());
+        blockFamily(family.block().get(), family.stairs().get(), family.slab().get(), family.verticalSlab().get(), family.wall().get());
     }
 
-    private void blockFamily(Block block, Block stairs, Block slab, Block wall) {
+    private void blockFamily(Block block, Block stairs, Block slab, Block verticalSlab, Block wall) {
         var texture = blockTexture(block);
         blockWithItem(block);
         stairsBlock((StairBlock) stairs, texture);
         slabBlock((SlabBlock) slab, texture, texture);
+        verticalSlabFromTemplate(verticalSlab, texture);
         wallBlock((WallBlock) wall, texture);
 
         simpleBlockItem(stairs, blockModel(stairs));
         simpleBlockItem(slab, blockModel(slab));
+        simpleBlockItem(verticalSlab, blockModel(verticalSlab));
         wallItemModel(wall, block);
     }
 
     private ItemModelBuilder wallItemModel(Block wall, Block baseBlock) {
-        return itemModels().withExistingParent(getItemPath(wall), mcLoc("block/wall_inventory"))
-                .texture("wall", modLoc("block/" + getBlockPath(baseBlock)));
+        return itemModels().withExistingParent(getItemPath(wall), mcLoc("block/wall_inventory")).texture("wall", modLoc("block/" + getBlockPath(baseBlock)));
     }
 
     protected ItemModelBuilder bushItem(Block block) {

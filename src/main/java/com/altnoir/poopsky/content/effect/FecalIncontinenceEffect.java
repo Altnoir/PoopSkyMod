@@ -1,5 +1,7 @@
 package com.altnoir.poopsky.content.effect;
 
+import com.altnoir.poopsky.content.entity.p.FlushToiletEntity;
+import com.altnoir.poopsky.content.entity.p.ToiletEntity;
 import com.altnoir.poopsky.init.PoEffects;
 import com.altnoir.poopsky.init.PoParticles;
 import com.altnoir.poopsky.impl.sound.PoSoundEvents;
@@ -44,6 +46,11 @@ public class FecalIncontinenceEffect extends MobEffect {
         float pitch = entity.getRandom().nextFloat() + 0.5F;
 
         if (!entity.level().isClientSide) {
+            var vehicle = entity.getVehicle();
+            if (vehicle instanceof ToiletEntity || vehicle instanceof FlushToiletEntity) {
+                return;
+            }
+
             var level = (ServerLevel) entity.level();
             BlockPos entityPos = entity.blockPosition();
 

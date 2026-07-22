@@ -84,7 +84,9 @@ public final class BlockTagGen {
         tag(PoTags.Blocks.TOILET_BLOCKS)
                 .add(
                         PoBlocks.WOODEN_TOILET.get(),
-                        PoBlocks.HARD_TOILET.get()
+                        PoBlocks.HARD_TOILET.get(),
+                        PoBlocks.FLUSH_TOILET.get(),
+                        PoBlocks.GOLDEN_FLUSH_TOILET.get()
                 );
 
         tag(PoTags.Blocks.POOP_TNT_DESTROY)
@@ -199,6 +201,8 @@ public final class BlockTagGen {
         var mineableWithPickaxe = tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(
                         PoBlocks.HARD_TOILET.get(),
+                        PoBlocks.FLUSH_TOILET.get(),
+                        PoBlocks.GOLDEN_FLUSH_TOILET.get(),
                         PoBlocks.BREEDING_CHEST.get(),
                         PoBlocks.POOP_LOG.get(),
                         PoBlocks.STRIPPED_POOP_LOG.get()
@@ -228,7 +232,10 @@ public final class BlockTagGen {
                         PoBlocks.RAW_POOP_BLOCK.get(),
                         PoBlocks.RAW_SAPLING_POOP_BLOCK.get(),
                         PoBlocks.RAW_SEA_POOP_BLOCK.get(),
-                        PoBlocks.RAW_WITHER_POOP_BLOCK.get()
+                        PoBlocks.RAW_WITHER_POOP_BLOCK.get(),
+                        PoBlocks.SHIT.get(),
+                        PoBlocks.CHILI_SHIT.get(),
+                        PoBlocks.GOLDEN_SHIT.get()
                 )
                 .addTag(PoTags.Blocks.POOP_BUILDING_BLOCKS);
 

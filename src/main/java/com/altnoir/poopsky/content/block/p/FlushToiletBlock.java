@@ -92,6 +92,13 @@ public class FlushToiletBlock extends BaseEntityBlock {
             return InteractionResult.SUCCESS;
         }
 
+        if (!level.getEntities(PoEntityType.FLUSH_TOILET.get(), new AABB(pos), e -> !e.getPassengers().isEmpty()).isEmpty()) {
+            if (level.getBlockEntity(pos) instanceof FlushToiletBlockEntity be) {
+                player.openMenu(be);
+            }
+            return InteractionResult.SUCCESS;
+        }
+
         FlushToiletEntity entity = getOrCreateFlushToiletEntity((ServerLevel) level, pos);
         if (entity != null) {
             player.startRiding(entity);

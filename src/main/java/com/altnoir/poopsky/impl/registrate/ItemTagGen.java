@@ -29,10 +29,15 @@ public final class ItemTagGen {
         tag(PoTags.Items.POOPS)
                 .add(PoItems.POOP.get())
                 .add(PoItems.CHILI_POOP.get())
-                .add(PoItems.GOLDEN_POOP.get());
+                .add(PoItems.GOLDEN_POOP.get())
+                .add(PoBlocks.SHIT.asItem())
+                .add(PoBlocks.CHILI_SHIT.asItem())
+                .add(PoBlocks.GOLDEN_SHIT.asItem());
         tag(PoTags.Items.TOILET_BLOCKS)
                 .add(PoBlocks.WOODEN_TOILET.get().asItem())
-                .add(PoBlocks.HARD_TOILET.get().asItem());
+                .add(PoBlocks.HARD_TOILET.get().asItem())
+                .add(PoBlocks.FLUSH_TOILET.get().asItem())
+                .add(PoBlocks.GOLDEN_FLUSH_TOILET.get().asItem());
         tag(PoTags.Items.GINKGO_LOGS)
                 .add(PoBlocks.GINKGO_LOG.asItem())
                 .add(PoBlocks.STRIPPED_GINKGO_LOG.asItem())
