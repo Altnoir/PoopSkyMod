@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.content.block.entity;
 
+import com.altnoir.poopsky.content.block.p.SieveBlock;
 import com.altnoir.poopsky.init.PoBlockEntityType;
 import com.altnoir.poopsky.init.PoRecipes;
 import com.altnoir.poopsky.content.recipe.SieveRecipe;
@@ -115,7 +116,7 @@ public class SieveBlockEntity extends BlockEntity {
     public static void tick(Level level, BlockPos pos, BlockState state, SieveBlockEntity be) {
         if (level.isClientSide) return;
 
-        boolean powered = level.hasNeighborSignal(pos);
+        boolean powered = state.getValue(SieveBlock.POWERED);
         be.autoMode = powered;
         if (!powered) return;
 

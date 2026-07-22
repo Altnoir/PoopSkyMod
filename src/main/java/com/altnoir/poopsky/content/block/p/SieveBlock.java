@@ -4,19 +4,24 @@ import com.altnoir.poopsky.init.PoBlockEntityType;
 import com.altnoir.poopsky.content.block.entity.SieveBlockEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -26,6 +31,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class SieveBlock extends BaseEntityBlock {
     protected static final MapCodec<SieveBlock> CODEC = simpleCodec(SieveBlock::new);
+    public static final BooleanProperty POWERED = BooleanProperty.create("powered");
 
     public static final VoxelShape SHAPE = Shapes.or(
             box(0, 14, 0, 16, 16, 16),
@@ -37,6 +43,7 @@ public class SieveBlock extends BaseEntityBlock {
 
     public SieveBlock(Properties properties) {
         super(properties);
+        this.registerDefaultState(this.stateDefinition.any().setValue(POWERED, false));
     }
 
     @Override
@@ -103,5 +110,24 @@ public class SieveBlock extends BaseEntityBlock {
     @Override
     protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
         return false;
+    }
+
+    @Override
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean moved) {
+        super.neighborChanged(state, level, pos, neighborBlock, neighborPos, moved);
+        boolean powered = level.hasNeighborSignal(pos);
+        if (powered != state.getValue(POWERED)) {
+            level.setBlock(pos, state.setValue(POWERED, powered), Block.UPDATE_CLIENTS);
+        }
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return this.defaultBlockState().setValue(POWERED, context.getLevel().hasNeighborSignal(context.getClickedPos()));
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(POWERED);
     }
 }

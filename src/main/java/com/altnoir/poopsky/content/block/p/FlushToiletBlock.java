@@ -1,12 +1,19 @@
 package com.altnoir.poopsky.content.block.p;
 
+import com.altnoir.poopsky.content.block.entity.FlushToiletBlockEntity;
+import com.altnoir.poopsky.content.entity.p.FlushToiletEntity;
+import com.altnoir.poopsky.init.PoEntityType;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
@@ -17,6 +24,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -28,6 +36,7 @@ import java.util.Map;
 public class FlushToiletBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty CLOSED = BooleanProperty.create("closed");
+    public static final BooleanProperty TRIGGERED = BooleanProperty.create("triggered");
     public static final MapCodec<FlushToiletBlock> CODEC = simpleCodec(FlushToiletBlock::new);
 
     private static final VoxelShape NORTH_SHAPE = Shapes.or(
@@ -40,7 +49,10 @@ public class FlushToiletBlock extends BaseEntityBlock {
 
     public FlushToiletBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(CLOSED, false));
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(FACING, Direction.NORTH)
+                .setValue(CLOSED, false)
+                .setValue(TRIGGERED, false));
     }
 
     @Override
@@ -55,30 +67,75 @@ public class FlushToiletBlock extends BaseEntityBlock {
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return null;
+        return new FlushToiletBlockEntity(blockPos, blockState);
     }
 
     @Override
-    public BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext context) {
-        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return this.defaultBlockState()
+                .setValue(FACING, context.getHorizontalDirection().getOpposite())
+                .setValue(TRIGGERED, context.getLevel().hasNeighborSignal(context.getClickedPos()));
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, net.minecraft.world.phys.BlockHitResult hitResult) {
-        if (!level.isClientSide) {
-            level.setBlockAndUpdate(pos, state.cycle(CLOSED));
-            if (state.getValue(CLOSED)) {
-                level.playSound(null, pos, SoundEvents.BAMBOO_WOOD_TRAPDOOR_CLOSE, SoundSource.BLOCKS, 0.5F, level.random.nextFloat() * 0.1F + 0.9F);
-            } else {
-                level.playSound(null, pos, SoundEvents.BAMBOO_WOOD_TRAPDOOR_OPEN, SoundSource.BLOCKS, 0.5F, level.random.nextFloat() * 0.1F + 0.9F);
-            }
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        if (level.isClientSide) {
+            return InteractionResult.SUCCESS;
         }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+
+        // Sneak-right-click from below: open GUI
+        if (player.isShiftKeyDown()) {
+            if (hitResult.getDirection() == Direction.DOWN) {
+                if (level.getBlockEntity(pos) instanceof FlushToiletBlockEntity be) {
+                    player.openMenu(be);
+                }
+                return InteractionResult.SUCCESS;
+            }
+
+            // Sneak-right-click on other faces: toggle lid
+            level.setBlockAndUpdate(pos, state.cycle(CLOSED));
+            SoundEvent sound = state.getValue(CLOSED) ? SoundEvents.BAMBOO_WOOD_TRAPDOOR_CLOSE : SoundEvents.BAMBOO_WOOD_TRAPDOOR_OPEN;
+            level.playSound(null, pos, sound, SoundSource.BLOCKS, 0.5F, level.random.nextFloat() * 0.1F + 0.9F);
+            return InteractionResult.SUCCESS;
+        }
+
+        // Right-click with lid closed: do nothing
+        if (state.getValue(CLOSED)) {
+            return InteractionResult.PASS;
+        }
+
+        // Right-click with lid open: sit
+        FlushToiletEntity entity = getOrCreateFlushToiletEntity((ServerLevel) level, pos);
+        if (entity != null) {
+            player.startRiding(entity);
+        }
+        return InteractionResult.SUCCESS;
+    }
+
+    @Nullable
+    private static FlushToiletEntity getOrCreateFlushToiletEntity(ServerLevel level, BlockPos pos) {
+        return level.getEntities(PoEntityType.FLUSH_TOILET.get(), new AABB(pos), e -> true)
+                .stream()
+                .findFirst()
+                .orElseGet(() -> PoEntityType.FLUSH_TOILET.get().spawn(level, pos, MobSpawnType.TRIGGERED));
+    }
+
+    @Override
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean moved) {
+        super.neighborChanged(state, level, pos, neighborBlock, neighborPos, moved);
+        boolean powered = level.hasNeighborSignal(pos);
+        if (powered != state.getValue(TRIGGERED)) {
+            if (powered && level.getBlockEntity(pos) instanceof FlushToiletBlockEntity be) {
+                be.clearContents();
+                level.playSound(null, pos, SoundEvents.PISTON_EXTEND, SoundSource.BLOCKS, 0.5F, 1.0F);
+            }
+            level.setBlock(pos, state.setValue(TRIGGERED, powered), Block.UPDATE_CLIENTS);
+        }
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, CLOSED);
+        builder.add(FACING, CLOSED, TRIGGERED);
     }
 
     @Override
