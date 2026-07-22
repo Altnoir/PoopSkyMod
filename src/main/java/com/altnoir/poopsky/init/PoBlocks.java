@@ -90,6 +90,14 @@ public class PoBlocks {
     };
 
     private static final Map<Block, BlockEntry<PoopCandleCakeBlock>> POOP_CANDLE_CAKES = registerPoopCandleCakes();
+    public static final BlockEntry<PoopPieceBlock> POOP_PIECE = registerPoopBlock("poop_piece",
+            props -> new PoopPieceBlock(poopProperties(0.1F)
+                    .replaceable()
+                    .randomTicks()
+                    .requiresCorrectToolForDrops()
+                    .isViewBlocking((state, getter, pos) -> state.getValue(PoopPieceBlock.LAYERS) >= 8)
+                    .pushReaction(PushReaction.DESTROY)),
+            (loot, block) -> loot.add(block, createPoopPieceDrop(loot, block, PoItems.POOP_BALL.get())));
 
     public static final BlockEntry<ShitBlock> SHIT = registerPoopBlock("shit",
             props -> new ShitBlock(poopProperties(0.1F)
@@ -101,14 +109,6 @@ public class PoBlocks {
             props -> new ShitBlock(poopProperties(0.1F)
                     .pushReaction(PushReaction.DESTROY)));
 
-    public static final BlockEntry<PoopPieceBlock> POOP_PIECE = registerPoopBlock("poop_piece",
-            props -> new PoopPieceBlock(poopProperties(0.1F)
-                    .replaceable()
-                    .randomTicks()
-                    .requiresCorrectToolForDrops()
-                    .isViewBlocking((state, getter, pos) -> state.getValue(PoopPieceBlock.LAYERS) >= 8)
-                    .pushReaction(PushReaction.DESTROY)),
-            (loot, block) -> loot.add(block, createPoopPieceDrop(loot, block, PoItems.POOP_BALL.get())));
     public static final BlockEntry<PoopBlock> POOP_BLOCK = registerPoopBlock("poop_block",
             props -> new PoopBlock(poopProperties()
                     .randomTicks()
@@ -523,9 +523,15 @@ public class PoBlocks {
     public static final List<BlockFamily> POOP_BUILDING_FAMILIES = List.of(POOP_FAMILY, CHILI_POOP_FAMILY, GOLDEN_POOP_FAMILY);
     public static final List<BlockFamily> HARDENED_POOP_FAMILIES = List.of(POOP_BRICK_FAMILY, MOSSY_POOP_BRICK_FAMILY, DRIED_POOP_BLOCK_FAMILY, SMOOTH_POOP_BLOCK_FAMILY, CUT_POOP_BLOCK_FAMILY);
     public static final List<BlockFamily> SIMPLE_MODEL_FAMILIES = List.of(
-            CHILI_POOP_FAMILY, GOLDEN_POOP_FAMILY, POOP_BRICK_FAMILY, MOSSY_POOP_BRICK_FAMILY, DRIED_POOP_BLOCK_FAMILY, SMOOTH_POOP_BLOCK_FAMILY, CUT_POOP_BLOCK_FAMILY, TILE_BLOCK_FAMILY,
-            WHITE_TILE_BLOCK_FAMILY);
-    public static final List<BlockFamily> WALL_TAG_FAMILIES = List.of(POOP_FAMILY, CHILI_POOP_FAMILY, GOLDEN_POOP_FAMILY, POOP_BRICK_FAMILY, MOSSY_POOP_BRICK_FAMILY, DRIED_POOP_BLOCK_FAMILY, SMOOTH_POOP_BLOCK_FAMILY, CUT_POOP_BLOCK_FAMILY, TILE_BLOCK_FAMILY);
+            CHILI_POOP_FAMILY, GOLDEN_POOP_FAMILY, POOP_BRICK_FAMILY, MOSSY_POOP_BRICK_FAMILY, DRIED_POOP_BLOCK_FAMILY, SMOOTH_POOP_BLOCK_FAMILY, CUT_POOP_BLOCK_FAMILY,
+            TILE_BLOCK_FAMILY, WHITE_TILE_BLOCK_FAMILY);
+    public static final List<BlockFamily> WALL_TAG_FAMILIES = withPoopFamily(SIMPLE_MODEL_FAMILIES);
+
+    private static List<BlockFamily> withPoopFamily(List<BlockFamily> input) {
+        var result = new java.util.ArrayList<>(input);
+        result.add(POOP_FAMILY);
+        return java.util.Collections.unmodifiableList(result);
+    }
 
     private static BlockBehaviour.Properties poopCakeProperties() {
         return BlockBehaviour.Properties.of()

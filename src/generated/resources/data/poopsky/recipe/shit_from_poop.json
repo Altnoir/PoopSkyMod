@@ -1,15 +1,16 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "minecraft:crafting_shapeless",
   "category": "building",
-  "key": {
-    "#": {
+  "ingredients": [
+    {
+      "item": "poopsky:poop"
+    },
+    {
+      "item": "poopsky:poop"
+    },
+    {
       "item": "poopsky:poop"
     }
-  },
-  "pattern": [
-    "###",
-    "###",
-    "###"
   ],
   "result": {
     "count": 1,

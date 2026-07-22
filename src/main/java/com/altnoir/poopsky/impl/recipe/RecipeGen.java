@@ -238,9 +238,9 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PoItems.MAGGOTS_SEEDS, RecipeCategory.BUILDING_BLOCKS, PoBlocks.MAGGOTS_BLOCK);
         nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PoItems.ROUNDWORM, RecipeCategory.BUILDING_BLOCKS, PoBlocks.ROUNDWORM_BLOCK);
 
-        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PoItems.POOP, RecipeCategory.BUILDING_BLOCKS, PoBlocks.SHIT);
-        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PoItems.CHILI_POOP, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CHILI_SHIT);
-        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PoItems.GOLDEN_POOP, RecipeCategory.BUILDING_BLOCKS, PoBlocks.GOLDEN_SHIT);
+        threeBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PoItems.POOP, RecipeCategory.BUILDING_BLOCKS, PoBlocks.SHIT);
+        threeBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PoItems.CHILI_POOP, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CHILI_SHIT);
+        threeBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PoItems.GOLDEN_POOP, RecipeCategory.BUILDING_BLOCKS, PoBlocks.GOLDEN_SHIT);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BLOCK)
                 .pattern("P")
@@ -1158,6 +1158,15 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
     protected static void nineBlockStorageRecipes(RecipeOutput recipeOutput, RecipeCategory unpackedCategory, ItemLike unpacked, RecipeCategory packedCategory, ItemLike packed, String packedName, String unpackedName) {
         ShapelessRecipeBuilder.shapeless(unpackedCategory, unpacked, 9).requires(packed).unlockedBy(getHasName(packed), has(packed)).save(recipeOutput, PoopSky.loc(unpackedName));
         ShapedRecipeBuilder.shaped(packedCategory, packed).define('#', unpacked).pattern("###").pattern("###").pattern("###").unlockedBy(getHasName(unpacked), has(unpacked)).save(recipeOutput, PoopSky.loc(packedName));
+    }
+
+    protected static void threeBlockStorageRecipes(RecipeOutput recipeOutput, RecipeCategory unpackedCategory, ItemLike unpacked, RecipeCategory packedCategory, ItemLike packed) {
+        threeBlockStorageRecipes(recipeOutput, unpackedCategory, unpacked, packedCategory, packed, getItemName(packed) + "_from_" + getItemName(unpacked), getItemName(unpacked) + "_from_" + getItemName(packed));
+    }
+
+    protected static void threeBlockStorageRecipes(RecipeOutput recipeOutput, RecipeCategory unpackedCategory, ItemLike unpacked, RecipeCategory packedCategory, ItemLike packed, String packedName, String unpackedName) {
+        ShapelessRecipeBuilder.shapeless(packedCategory, packed, 1).requires(unpacked, 3).unlockedBy(getHasName(unpacked), has(unpacked)).save(recipeOutput, PoopSky.loc(packedName));
+        ShapelessRecipeBuilder.shapeless(unpackedCategory, unpacked, 3).requires(packed).unlockedBy(getHasName(packed), has(packed)).save(recipeOutput, PoopSky.loc(unpackedName));
     }
 
     protected static String getConversionRecipeName(ItemLike result) {

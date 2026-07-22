@@ -95,9 +95,9 @@ public class PoConfigureFeatures {
 
         register(context, GINKGO_TREE, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
                 BlockStateProvider.simple(PoBlocks.GINKGO_LOG.get()),
-                new StraightTrunkPlacer(7, 2, 1),
+                new StraightTrunkPlacer(8, 2, 1),
                 BlockStateProvider.simple(PoBlocks.GINKGO_LEAVES.get()),
-                new RhombusFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), UniformInt.of(7, 8)),
+                new RhombusFoliagePlacer(ConstantInt.of(2), ConstantInt.of(1), UniformInt.of(7, 8)),
                 new TwoLayersFeatureSize(2, 0, 2)
         ).build());
 
@@ -111,9 +111,9 @@ public class PoConfigureFeatures {
 
         register(context, GINKGO_BEE_TREE, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
                 BlockStateProvider.simple(PoBlocks.GINKGO_LOG.get()),
-                new StraightTrunkPlacer(7, 2, 1),
+                new StraightTrunkPlacer(8, 2, 1),
                 BlockStateProvider.simple(PoBlocks.GINKGO_LEAVES.get()),
-                new RhombusFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), UniformInt.of(7, 8)),
+                new RhombusFoliagePlacer(ConstantInt.of(2), ConstantInt.of(1), UniformInt.of(7, 8)),
                 new TwoLayersFeatureSize(2, 0, 2)
         ).decorators(List.of(new BeehiveDecorator(0.05F))).build());
 

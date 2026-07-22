@@ -1,6 +1,5 @@
 {
   "values": [
-    "poopsky:poop_slab",
     "poopsky:chili_poop_slab",
     "poopsky:golden_poop_slab",
     "poopsky:poop_brick_slab",
@@ -9,6 +8,8 @@
     "poopsky:smooth_poop_block_slab",
     "poopsky:cut_poop_block_slab",
     "poopsky:tile_block_slab",
+    "poopsky:white_tile_block_slab",
+    "poopsky:poop_slab",
     "poopsky:ginkgo_slab"
   ]
 }
