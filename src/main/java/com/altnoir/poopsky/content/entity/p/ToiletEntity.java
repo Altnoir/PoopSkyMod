@@ -72,6 +72,10 @@ public class ToiletEntity extends Entity {
 
     @Override
     protected void removePassenger(Entity passenger) {
+        if (passenger instanceof LivingEntity living) {
+            living.setDeltaMovement(living.getDeltaMovement().add(0.0, 0.6, 0.0));
+            living.hasImpulse = true;
+        }
         super.removePassenger(passenger);
         if (!this.isRemoved()) {
             this.kill();

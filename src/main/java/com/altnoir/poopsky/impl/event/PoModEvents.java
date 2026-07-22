@@ -79,7 +79,13 @@ public class PoModEvents {
                     return blockEntity.getTopSideHandler();
                 }
         );
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                PoBlockEntityType.FLUSH_TOILET.get(),
+                (blockEntity, direction) -> blockEntity.getBottomHandler()
+        );
     }
+
     public static void packSetup(AddPackFindersEvent event) {
         event.addPackFinders(
                 PoopSky.loc("resourcepacks/poopsky_pack"),

@@ -133,6 +133,10 @@ public class FlushToiletEntity extends Entity {
 
     @Override
     protected void removePassenger(Entity passenger) {
+        if (passenger instanceof LivingEntity living) {
+            living.setDeltaMovement(living.getDeltaMovement().add(0.0, 0.4, 0.0));
+            living.hasImpulse = true;
+        }
         super.removePassenger(passenger);
         if (!this.isRemoved()) {
             this.kill();
@@ -142,10 +146,10 @@ public class FlushToiletEntity extends Entity {
     @Override
     protected void positionRider(Entity passenger, MoveFunction callback) {
         super.positionRider(passenger, callback);
-        if (passenger instanceof Player player) {
-            callback.accept(player, this.getX(), this.getY(), this.getZ());
+        if (passenger instanceof Player) {
+            callback.accept(passenger, this.getX(), this.getY() - 0.05, this.getZ());
         } else {
-            callback.accept(passenger, this.getX(), this.getY() + 0.45, this.getZ());
+            callback.accept(passenger, this.getX(), this.getY() + 0.4, this.getZ());
         }
     }
 }
