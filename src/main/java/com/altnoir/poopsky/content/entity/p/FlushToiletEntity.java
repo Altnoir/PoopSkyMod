@@ -62,7 +62,7 @@ public class FlushToiletEntity extends Entity {
 
         Entity passenger = this.getPassengers().getFirst();
         if (passenger instanceof LivingEntity livingEntity) {
-            this.setYRot(livingEntity.getYRot());
+            this.setYRot(this.level().getBlockState(this.blockPosition()).getValue(FlushToiletBlock.FACING).toYRot());
 
             boolean hasSpasm = livingEntity.hasEffect(PoEffects.INTESTINAL_SPASM);
             int interval = hasSpasm ? 2 : 20;

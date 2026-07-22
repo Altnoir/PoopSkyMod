@@ -238,6 +238,10 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PoItems.MAGGOTS_SEEDS, RecipeCategory.BUILDING_BLOCKS, PoBlocks.MAGGOTS_BLOCK);
         nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PoItems.ROUNDWORM, RecipeCategory.BUILDING_BLOCKS, PoBlocks.ROUNDWORM_BLOCK);
 
+        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PoItems.POOP, RecipeCategory.BUILDING_BLOCKS, PoBlocks.SHIT);
+        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PoItems.CHILI_POOP, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CHILI_SHIT);
+        nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PoItems.GOLDEN_POOP, RecipeCategory.BUILDING_BLOCKS, PoBlocks.GOLDEN_SHIT);
+
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BLOCK)
                 .pattern("P")
                 .pattern("P")

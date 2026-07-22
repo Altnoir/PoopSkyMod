@@ -45,7 +45,6 @@ public class FlushToiletBlockEntity extends BlockEntity implements MenuProvider 
         }
     };
 
-
     public FlushToiletBlockEntity(BlockPos pos, BlockState blockState) {
         super(PoBlockEntityType.FLUSH_TOILET.get(), pos, blockState);
     }

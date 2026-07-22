@@ -278,6 +278,11 @@ public final class LangGen {
         // Containers
         provider.add("container.poopsky.fly_barrel", "Fly Barrel");
         provider.add("container.poopsky.breeding_chest", "Breeding Box");
+        provider.add("container.poopsky.flush_toilet", "Flush Toilet");
+
+        // Painting
+        provider.add("painting.poopsky.poop.title", "Poop");
+        provider.add("painting.poopsky.poop.author", "yinianzhihai");
 
         // Entities
         provider.add("entity.minecraft.villager.poopsky.poopmaker", "Poopmaker");

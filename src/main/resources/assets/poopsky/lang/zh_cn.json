@@ -14,6 +14,7 @@
   "item.poopsky.urine_bottle": "尿瓶",
   "item.poopsky.urine_bucket": "粪水桶",
   "block.poopsky.urine_liquid": "粪水",
+  "item.poopsky.urea": "尿素",
 
   "item.poopsky.omen_helmet": "忌讳头盔",
   "item.poopsky.omen_chestplate": "忌讳胸甲",
@@ -94,6 +95,9 @@
   "effect.poopsky.bleeding": "出血",
   "effect.poopsky.moment_of_ptyme": "屎之刻",
 
+  "block.poopsky.shit": "大便",
+  "block.poopsky.chili_shit": "辣味大便",
+  "block.poopsky.golden_shit": "黄金大便",
   "block.poopsky.poop_piece": "粪便片",
   "block.poopsky.poop_block": "粪便块",
   "block.poopsky.poop_farmland": "粪便耕地",
@@ -226,6 +230,7 @@
   "block.poopsky.wooden_toilet": "木质厕所",
   "block.poopsky.rainbow_toilet": "彩虹厕所",
   "block.poopsky.flush_toilet": "马桶",
+  "block.poopsky.golden_flush_toilet": "黄金马桶",
 
   "fly_type.poopsky.normal": "普通苍蝇",
   "fly_type.poopsky.white": "白苍蝇",
@@ -421,6 +426,9 @@
   "subtitle.poopsky.block.compooper.bucket_fill": "堆粪桶：盛满",
   "subtitle.poopsky.item.jinkela.use": "金坷垃：沙沙作响",
 
+  "painting.poopsky.poop.title": "大便",
+  "painting.poopsky.poop.author": "一念之海",
+
   "stat.poopsky.poop_stats": "排便数",
   "stat.poopsky.inspect_placer": "搜查放置器次数",
   "container.placer": "放置器",
@@ -431,6 +439,7 @@
   "death.attack.poop_ball": "%1$s 被粪便球砸死了",
   "death.attack.poop_ball.player": "%1$s 被 %2$s 用粪便球砸死了",
   "itemgroup.poopsky": "空中厕所",
+  "pack.poopsky.name": "认知滤网",
 
   "tag.item.poopsky.compooper_saplings": "堆粪桶可产出树苗",
   "tag.item.poopsky.can_compooper": "可堆粪",
