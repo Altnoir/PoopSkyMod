@@ -3,7 +3,6 @@ package com.altnoir.poopsky.client.screen;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.client.IntroController;
 import com.altnoir.poopsky.impl.sound.PoSoundEvents;
-import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.KeyMapping;
@@ -52,6 +51,9 @@ public class IntroScreen extends Screen {
     private static final float WORLD_REVEAL_START = SHATTER_START + SHATTER_DURATION;
     private static final float LOADING_COMPLETE_HOLD_DURATION = WORLD_REVEAL_START + WORLD_REVEAL_DURATION;
     private static final float TICKS_PER_SECOND = 20.0F;
+    private static final int INTRO_TICKS = Mth.ceil(INTRO_DURATION * TICKS_PER_SECOND);
+    private static final int SHATTER_SOUND_TICK = Mth.ceil(SHATTER_START * TICKS_PER_SECOND);
+    private static final int COMPLETION_TICKS = Mth.ceil(LOADING_COMPLETE_HOLD_DURATION * TICKS_PER_SECOND);
     private static final float TITLE_FADE_START = 4.0F;
     private static final float TITLE_FADE_END = 7.5F;
     private static final float TEXTURE_FADE_START = 8.0F;
@@ -71,6 +73,9 @@ public class IntroScreen extends Screen {
     private static final int POOP_ROWS = 10;
     private static final float MIN_FONT_ALPHA = 4.0F / 255.0F;
     private static final float MIN_TEXTURE_ALPHA = 1.0F / 255.0F;
+    private static final int DEPTH_BUFFER_BIT = 0x00000100;
+    private static final int DEPTH_EQUAL = 0x0202;
+    private static final int DEPTH_LEQUAL = 0x0203;
 
     private static final float TITLE_LEFT = 494.0F;
     private static final float TITLE_TEXT_Y = 460.0F;
@@ -79,6 +84,7 @@ public class IntroScreen extends Screen {
     private static final float ICON_OFFSET_X = -25.0F;
     private static final float ICON_TOP = 500.0F;
     private static final float YEAR_WIDTH = 188.0F;
+    private static final float YEAR_X = (VIRTUAL_WIDTH - YEAR_WIDTH) * 0.5F;
     private static final float YEAR_TEXT_Y = 761.0F;
     private static final float LOADING_TEXT_Y = 946.0F;
     private static final float LOADING_TEXT_SCALE = 2.0F;
@@ -94,6 +100,13 @@ public class IntroScreen extends Screen {
     private SoundInstance sound;
     private TitleLayout titleLayout;
     private PoopScatter[] poopScatter;
+    private int maskLeft;
+    private int maskTop;
+    private int maskRight;
+    private int maskBottom;
+    private int loadingProgress = -1;
+    private Component loadingText = Component.empty();
+    private float loadingTextX;
     private boolean loadingStarted;
     private boolean restartSoundNextTick;
     private boolean soundWasActive;
@@ -123,13 +136,20 @@ public class IntroScreen extends Screen {
 
     @Override
     protected void init() {
-        this.titleLayout = createTitleLayout(this.font);
-        this.poopScatter = createPoopScatter(this.font, this.titleLayout);
+        if (this.titleLayout == null) {
+            this.titleLayout = createTitleLayout(this.font);
+            this.poopScatter = createPoopScatter(this.titleLayout);
+        }
+        float scale = Math.min(this.width / VIRTUAL_WIDTH, this.height / VIRTUAL_HEIGHT);
+        float offsetX = (this.width - VIRTUAL_WIDTH * scale) * 0.5F;
+        float offsetY = (this.height - VIRTUAL_HEIGHT * scale) * 0.5F;
+        this.maskLeft = Mth.floor(offsetX + (TITLE_LEFT - REFLECTION_OFFSET_X) * scale) - 1;
+        this.maskTop = Mth.floor(offsetY + (TITLE_TEXT_Y - REFLECTION_OFFSET_Y) * scale) - 1;
+        this.maskRight = Mth.ceil(offsetX + (TITLE_RIGHT + REFLECTION_OFFSET_X) * scale) + 1;
+        this.maskBottom = Mth.ceil(offsetY + (TITLE_TEXT_Y + this.titleLayout.height()
+                + REFLECTION_OFFSET_Y) * scale) + 1;
         this.minecraft.getTextureManager().getTexture(POOP_TEXTURE);
         this.minecraft.getTextureManager().getTexture(SKY_TEXTURE);
-        RenderTarget mainTarget = this.minecraft.getMainRenderTarget();
-        mainTarget.enableStencil();
-        mainTarget.bindWrite(true);
         GLFW.glfwSetInputMode(this.minecraft.getWindow().getWindow(), GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_HIDDEN);
         this.startPlayback();
     }
@@ -139,7 +159,7 @@ public class IntroScreen extends Screen {
         this.playbackTicks++;
         if (this.completionTicks >= 0) {
             this.completionTicks++;
-            if (this.completionTicks == Mth.ceil(SHATTER_START * TICKS_PER_SECOND)) {
+            if (this.completionTicks == SHATTER_SOUND_TICK) {
                 this.minecraft.getSoundManager().play(
                         SimpleSoundInstance.forUI(PoSoundEvents.FART.get(), 0.58F, 1.35F));
                 this.minecraft.getSoundManager().play(
@@ -148,20 +168,15 @@ public class IntroScreen extends Screen {
         }
 
         this.updatePlaybackSound();
-        float elapsed = this.elapsedSeconds();
 
-        if (this.completionTicks < 0 && elapsed >= INTRO_DURATION) {
-            boolean ready = IntroController.isReadyToFinish();
-
-            if (!this.loadingStarted) {
-                this.loadingStarted = true;
-            }
-            if (ready) {
+        if (this.completionTicks < 0 && this.playbackTicks >= INTRO_TICKS) {
+            this.loadingStarted = true;
+            if (IntroController.isReadyToFinish()) {
                 this.completionTicks = 0;
             }
         }
 
-        if (this.completionTicks >= LOADING_COMPLETE_HOLD_DURATION * TICKS_PER_SECOND) {
+        if (this.completionTicks >= COMPLETION_TICKS) {
             this.minecraft.setScreen(null);
         }
     }
@@ -187,7 +202,7 @@ public class IntroScreen extends Screen {
     }
 
     private boolean canPlayIntroSound() {
-        return this.sound != null && this.elapsedSeconds() < INTRO_DURATION;
+        return this.sound != null && this.playbackTicks < INTRO_TICKS;
     }
 
     private void restartPlaybackSound() {
@@ -197,7 +212,8 @@ public class IntroScreen extends Screen {
 
         this.minecraft.getSoundManager().stop(this.sound);
 
-        this.sound = new IntroSoundInstance(PoSoundEvents.POOPSKY_INTRO.get(), this.elapsedSeconds());
+        this.sound = new IntroSoundInstance(PoSoundEvents.POOPSKY_INTRO.get(),
+                this.playbackTicks / TICKS_PER_SECOND);
 
         this.minecraft.getSoundManager().play(this.sound);
         this.soundWasActive = false;
@@ -207,7 +223,6 @@ public class IntroScreen extends Screen {
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         float elapsed = this.elapsedSeconds(partialTick);
         float completion = this.completionSeconds(partialTick);
-        float textureTime = deceleratedTextureTime(elapsed, completion);
         if (completion >= WORLD_REVEAL_START) {
             float blackAlpha = 1.0F - smooth(
                     completion, WORLD_REVEAL_START, WORLD_REVEAL_START + WORLD_REVEAL_DURATION);
@@ -233,18 +248,18 @@ public class IntroScreen extends Screen {
                     0.0F);
         }
 
-        float titleAlpha = smooth(elapsed, TITLE_FADE_START, TITLE_FADE_END);
-        float textureAlpha = smooth(elapsed, TEXTURE_FADE_START, TEXTURE_FADE_END);
-        float iconAlpha = smooth(elapsed, ICON_FADE_START, ICON_FADE_END);
         float yearAlpha = smooth(elapsed, 9.5F, 12.0F)
                 * (1.0F - smooth(completion, SHATTER_START, SHATTER_START + 0.3F));
 
         if (completion >= SHATTER_START) {
             this.drawPoopScatter(guiGraphics, shatterTime);
         } else {
+            float textureTime = deceleratedTextureTime(elapsed, completion);
+            float textureAlpha = smooth(elapsed, TEXTURE_FADE_START, TEXTURE_FADE_END);
             if (textureAlpha > MIN_TEXTURE_ALPHA) {
                 this.drawTitleReflections(guiGraphics, elapsed, textureTime, textureAlpha);
             }
+            float titleAlpha = smooth(elapsed, TITLE_FADE_START, TITLE_FADE_END);
             if (titleAlpha > MIN_FONT_ALPHA) {
                 if (textureAlpha > MIN_TEXTURE_ALPHA) {
                     this.drawMaskedTitle(guiGraphics, textureTime, titleAlpha, textureAlpha);
@@ -256,15 +271,16 @@ public class IntroScreen extends Screen {
             if (glow > MIN_FONT_ALPHA) {
                 this.drawTitleGlyphs(guiGraphics, alphaColor(glow * 0.42F));
             }
-        }
-        if (completion < SHATTER_START && iconAlpha > MIN_TEXTURE_ALPHA) {
-            this.drawPoopIcon(guiGraphics, iconAlpha);
+            float iconAlpha = smooth(elapsed, ICON_FADE_START, ICON_FADE_END);
+            if (iconAlpha > MIN_TEXTURE_ALPHA) {
+                this.drawPoopIcon(guiGraphics, iconAlpha);
+            }
+            if (this.loadingStarted) {
+                this.drawLoadingText(guiGraphics, completion);
+            }
         }
         if (yearAlpha > MIN_FONT_ALPHA) {
             this.drawYear(guiGraphics, yearAlpha);
-        }
-        if (this.loadingStarted && completion < SHATTER_START) {
-            this.drawLoadingText(guiGraphics, completion);
         }
 
         guiGraphics.pose().popPose();
@@ -292,105 +308,93 @@ public class IntroScreen extends Screen {
     }
 
     private void drawPoopIcon(GuiGraphics guiGraphics, float alpha) {
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
         guiGraphics.setColor(1.0F, 1.0F, 1.0F, alpha);
         guiGraphics.blit(POOP_TEXTURE, Mth.floor(this.titleLayout.iconX()), Mth.floor(ICON_TOP),
                 Mth.floor(ICON_SIZE), Mth.floor(ICON_SIZE),
                 0.0F, 0.0F, 16, 16, 16, 16);
         guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.disableBlend();
     }
 
     private void drawYear(GuiGraphics guiGraphics, float alpha) {
-        float scale = YEAR_WIDTH / this.font.width(YEAR);
-        float x = (VIRTUAL_WIDTH - YEAR_WIDTH) * 0.5F;
-        this.drawScaledText(guiGraphics, YEAR, x, YEAR_TEXT_Y, scale, alphaColor(alpha));
+        this.drawScaledText(guiGraphics, YEAR, YEAR_X, YEAR_TEXT_Y,
+                this.titleLayout.yearScale(), alphaColor(alpha));
     }
 
     private void drawLoadingText(GuiGraphics guiGraphics, float completion) {
         int progress = completion >= 0.0F ? 100 : IntroController.getLoadingProgress();
-        Component text = Component.literal("Loading... " + progress + "%");
-        float x = (VIRTUAL_WIDTH - this.font.width(text) * LOADING_TEXT_SCALE) * 0.5F;
-        this.drawScaledText(guiGraphics, text, x, LOADING_TEXT_Y, LOADING_TEXT_SCALE, 0xFFFFFFFF);
+        if (progress != this.loadingProgress) {
+            this.loadingProgress = progress;
+            this.loadingText = Component.literal("Loading... " + progress + "%");
+            this.loadingTextX = (VIRTUAL_WIDTH - this.font.width(this.loadingText) * LOADING_TEXT_SCALE) * 0.5F;
+        }
+        this.drawScaledText(guiGraphics, this.loadingText, this.loadingTextX, LOADING_TEXT_Y,
+                LOADING_TEXT_SCALE, 0xFFFFFFFF);
     }
 
     private void drawMaskedTitle(GuiGraphics guiGraphics, float textureTime, float titleAlpha, float textureAlpha) {
-        if (!this.beginStencilMask(guiGraphics)) {
-            this.drawTitleGlyphs(guiGraphics, alphaColor(titleAlpha));
-            return;
-        }
+        this.beginDepthMask(guiGraphics);
         try {
-            this.drawTitleGlyphs(guiGraphics, 0xFF000000);
-            guiGraphics.flush();
-            this.beginStencilDrawing();
             this.drawTitleGlyphs(guiGraphics, alphaColor(titleAlpha));
             guiGraphics.flush();
+            this.beginDepthMaskedDrawing();
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
             this.drawTextureTiles(guiGraphics, textureTime, 1.0F, 1.0F, 1.0F, textureAlpha);
         } finally {
-            this.endStencilMask();
+            this.endDepthMask(guiGraphics);
         }
     }
 
-    private boolean beginStencilMask(GuiGraphics guiGraphics) {
-        RenderTarget mainTarget = this.minecraft.getMainRenderTarget();
-        if (!mainTarget.isStencilEnabled()) return false;
+    private void beginDepthMask(GuiGraphics guiGraphics) {
         guiGraphics.flush();
-        mainTarget.bindWrite(true);
-        org.lwjgl.opengl.GL11C.glEnable(2960);
-        RenderSystem.stencilMask(0xFF);
-        RenderSystem.clearStencil(0);
-        RenderSystem.clear(1024, Minecraft.ON_OSX);
-        RenderSystem.stencilFunc(519, 1, 0xFF);
-        RenderSystem.stencilOp(7680, 7680, 7681);
-        return true;
+        guiGraphics.enableScissor(this.maskLeft, this.maskTop, this.maskRight, this.maskBottom);
+        RenderSystem.depthMask(true);
+        RenderSystem.clearDepth(1.0D);
+        RenderSystem.clear(DEPTH_BUFFER_BIT, Minecraft.ON_OSX);
     }
 
-    private void beginStencilDrawing() {
-        RenderSystem.stencilMask(0x00);
-        RenderSystem.stencilFunc(514, 1, 0xFF);
-        RenderSystem.stencilOp(7680, 7680, 7680);
-    }
-
-    private void endStencilMask() {
-        RenderSystem.stencilMask(0xFF);
-        RenderSystem.stencilFunc(519, 0, 0xFF);
-        RenderSystem.stencilOp(7680, 7680, 7680);
-        org.lwjgl.opengl.GL11C.glDisable(2960);
-        RenderSystem.defaultBlendFunc();
+    private void beginDepthMaskedDrawing() {
         RenderSystem.enableDepthTest();
+        RenderSystem.depthMask(false);
+        RenderSystem.depthFunc(DEPTH_EQUAL);
+    }
+
+    private void endDepthMask(GuiGraphics guiGraphics) {
+        RenderSystem.depthMask(true);
+        RenderSystem.depthFunc(DEPTH_LEQUAL);
+        RenderSystem.defaultBlendFunc();
+        guiGraphics.disableScissor();
     }
 
     private void drawTitleReflections(GuiGraphics guiGraphics, float elapsed, float textureTime, float textureAlpha) {
         if (elapsed <= REFLECTION_START) return;
 
         float reflectionTime = elapsed - REFLECTION_START;
-        ReflectionMotion first = reflectionMotion(reflectionTime);
-        ReflectionMotion second = reflectionMotion(reflectionTime - REFLECTION_SECOND_DELAY);
-        if (first.visible()) {
-            this.drawReflectionPair(guiGraphics, textureTime, textureAlpha, -1.0F, first);
-        }
-        if (second.visible()) {
-            this.drawReflectionPair(guiGraphics, textureTime, textureAlpha, 1.0F, second);
-        }
+        this.drawReflectionPair(guiGraphics, textureTime, textureAlpha, -1.0F, reflectionTime);
+        this.drawReflectionPair(guiGraphics, textureTime, textureAlpha, 1.0F,
+                reflectionTime - REFLECTION_SECOND_DELAY);
     }
 
-    private void drawReflectionPair(GuiGraphics guiGraphics, float textureTime, float textureAlpha, float direction, ReflectionMotion motion) {
-        float horizontalOffset = direction * REFLECTION_OFFSET_X * motion.progress();
-        float verticalOffset = REFLECTION_OFFSET_Y * motion.progress();
-        if (!this.beginStencilMask(guiGraphics)) return;
+    private void drawReflectionPair(GuiGraphics guiGraphics, float textureTime, float textureAlpha,
+                                    float direction, float reflectionTime) {
+        if (reflectionTime <= 0.0F || reflectionTime >= REFLECTION_DURATION) return;
+
+        float linearProgress = reflectionTime / REFLECTION_DURATION;
+        float progress = (float) Mth.smoothstep(linearProgress);
+        float horizontalOffset = direction * REFLECTION_OFFSET_X * progress;
+        float verticalOffset = REFLECTION_OFFSET_Y * progress;
+        this.beginDepthMask(guiGraphics);
         try {
             this.drawReflectionGlyphs(guiGraphics, horizontalOffset, -verticalOffset, 0xFF000000);
             this.drawReflectionGlyphs(guiGraphics, -horizontalOffset, verticalOffset, 0xFF000000);
             guiGraphics.flush();
-            this.beginStencilDrawing();
+            this.beginDepthMaskedDrawing();
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
-            this.drawTextureTiles(guiGraphics, textureTime, REFLECTION_RED, REFLECTION_GREEN, REFLECTION_BLUE, textureAlpha * REFLECTION_ALPHA * motion.alpha());
+            this.drawTextureTiles(guiGraphics, textureTime, REFLECTION_RED, REFLECTION_GREEN, REFLECTION_BLUE,
+                    textureAlpha * REFLECTION_ALPHA * Mth.sin(linearProgress * Mth.PI));
         } finally {
-            this.endStencilMask();
+            this.endDepthMask(guiGraphics);
         }
     }
 
@@ -405,23 +409,16 @@ public class IntroScreen extends Screen {
 
         BufferBuilder builder = RenderSystem.renderThreadTesselator()
                 .begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+        float gravity = 190.0F * shatterTime * shatterTime;
         for (PoopScatter poop : this.poopScatter) {
             float centerX = poop.x() + poop.velocityX() * shatterTime;
-            float centerY = poop.y() + poop.velocityY() * shatterTime + 190.0F * shatterTime * shatterTime;
-            float halfSize = poop.size() * 0.5F;
+            float centerY = poop.y() + poop.velocityY() * shatterTime + gravity;
+            float halfSize = poop.halfSize();
             if (centerX + halfSize < 0.0F || centerX - halfSize > VIRTUAL_WIDTH
                     || centerY + halfSize < 0.0F || centerY - halfSize > VIRTUAL_HEIGHT) {
                 continue;
             }
-
-            float angle = poop.spin() * shatterTime;
-            float sin = Mth.sin(angle);
-            float cos = Mth.cos(angle);
-
-            this.addPoopVertex(builder, matrix, centerX, centerY, -halfSize, -halfSize, sin, cos, 0.0F, 0.0F);
-            this.addPoopVertex(builder, matrix, centerX, centerY, -halfSize, halfSize, sin, cos, 0.0F, 1.0F);
-            this.addPoopVertex(builder, matrix, centerX, centerY, halfSize, halfSize, sin, cos, 1.0F, 1.0F);
-            this.addPoopVertex(builder, matrix, centerX, centerY, halfSize, -halfSize, sin, cos, 1.0F, 0.0F);
+            addPoopQuad(builder, matrix, centerX, centerY, halfSize, poop.spin() * shatterTime);
         }
 
         MeshData mesh = builder.build();
@@ -431,13 +428,19 @@ public class IntroScreen extends Screen {
         RenderSystem.disableBlend();
     }
 
-    private void addPoopVertex(BufferBuilder builder, Matrix4f matrix, float centerX, float centerY,
-                               float offsetX, float offsetY, float sin, float cos,
-                               float u, float v) {
-        float x = centerX + offsetX * cos - offsetY * sin;
-        float y = centerY + offsetX * sin + offsetY * cos;
-        builder.addVertex(matrix, x, y, 0.0F)
-                .setUv(u, v);
+    private static void addPoopQuad(BufferBuilder builder, Matrix4f matrix, float centerX, float centerY,
+                                    float halfSize, float angle) {
+        float downY = halfSize * Mth.cos(angle);
+        float rightY = halfSize * Mth.sin(angle);
+        float downX = -rightY;
+        builder.addVertex(matrix, centerX - downY - downX, centerY - rightY - downY, 0.0F)
+                .setUv(0.0F, 0.0F);
+        builder.addVertex(matrix, centerX - downY + downX, centerY - rightY + downY, 0.0F)
+                .setUv(0.0F, 1.0F);
+        builder.addVertex(matrix, centerX + downY + downX, centerY + rightY + downY, 0.0F)
+                .setUv(1.0F, 1.0F);
+        builder.addVertex(matrix, centerX + downY - downX, centerY + rightY - downY, 0.0F)
+                .setUv(1.0F, 0.0F);
     }
 
     private void drawReflectionGlyphs(GuiGraphics guiGraphics, float offsetX, float offsetY, int color) {
@@ -452,11 +455,10 @@ public class IntroScreen extends Screen {
         float scrollTime = elapsed - 7.0F;
         int startX = Mth.floor(Mth.positiveModulo(TILE_START_X + TILE_SPEED_X * scrollTime, TILE_SIZE));
         int startY = Mth.floor(Mth.positiveModulo(TILE_START_Y + TILE_SPEED_Y * scrollTime, TILE_SIZE));
-        float titleHeight = this.font.lineHeight * this.titleLayout.scale();
         float minX = TITLE_LEFT - REFLECTION_OFFSET_X;
         float minY = TITLE_TEXT_Y - REFLECTION_OFFSET_Y;
         float maxX = TITLE_RIGHT + REFLECTION_OFFSET_X;
-        float maxY = TITLE_TEXT_Y + titleHeight + REFLECTION_OFFSET_Y;
+        float maxY = TITLE_TEXT_Y + this.titleLayout.height() + REFLECTION_OFFSET_Y;
 
         while (startX > minX) startX -= TILE_SIZE;
         while (startY > minY) startY -= TILE_SIZE;
@@ -489,17 +491,19 @@ public class IntroScreen extends Screen {
 
     private static TitleLayout createTitleLayout(Font font) {
         float scale = (TITLE_RIGHT - TITLE_LEFT) / font.width(TITLE);
+        float height = font.lineHeight * scale;
         float secondPLeft = TITLE_LEFT + font.width(titleText("poo")) * scale;
         float secondPWidth = font.width(titleText("p")) * scale;
         float iconX = secondPLeft + (secondPWidth - ICON_SIZE) * 0.5F + ICON_OFFSET_X;
-        return new TitleLayout(scale, iconX);
+        float yearScale = YEAR_WIDTH / font.width(YEAR);
+        return new TitleLayout(scale, height, iconX, yearScale);
     }
 
-    private static PoopScatter[] createPoopScatter(Font font, TitleLayout layout) {
+    private static PoopScatter[] createPoopScatter(TitleLayout layout) {
         PoopScatter[] poop = new PoopScatter[POOP_COLUMNS * POOP_ROWS];
         RandomSource random = RandomSource.create(0x44454C544152554EL);
         float width = TITLE_RIGHT - TITLE_LEFT;
-        float height = font.lineHeight * layout.scale();
+        float height = layout.height();
         float cellWidth = width / POOP_COLUMNS;
         float cellHeight = height / POOP_ROWS;
         int index = 0;
@@ -514,9 +518,9 @@ public class IntroScreen extends Screen {
                 float velocityX = outwardVelocity + Mth.lerp(random.nextFloat(), -92.0F, 92.0F);
                 float velocityY = Mth.lerp(random.nextFloat(), -105.0F, 138.0F);
                 float sizeRandom = random.nextFloat();
-                float size = 10.0F + sizeRandom * sizeRandom * 40.0F;
+                float halfSize = 5.0F + sizeRandom * sizeRandom * 20.0F;
                 float spin = Mth.lerp(random.nextFloat(), -5.2F, 5.2F);
-                poop[index++] = new PoopScatter(x, y, velocityX, velocityY, size, spin);
+                poop[index++] = new PoopScatter(x, y, velocityX, velocityY, halfSize, spin);
             }
         }
         return poop;
@@ -532,10 +536,6 @@ public class IntroScreen extends Screen {
             this.minecraft.getSoundManager().stop(this.sound);
             this.sound = null;
         }
-    }
-
-    private float elapsedSeconds() {
-        return this.playbackTicks / TICKS_PER_SECOND;
     }
 
     private float elapsedSeconds(float partialTick) {
@@ -562,29 +562,14 @@ public class IntroScreen extends Screen {
         return (float) Mth.smoothstep(progress);
     }
 
-    private static ReflectionMotion reflectionMotion(float time) {
-        if (time <= 0.0F || time >= REFLECTION_DURATION) return ReflectionMotion.NONE;
-        float progress = time / REFLECTION_DURATION;
-        float alpha = Mth.sin(progress * Mth.PI);
-        return new ReflectionMotion((float) Mth.smoothstep(progress), alpha);
-    }
-
     private static int alphaColor(float alpha) {
         return Mth.floor(Mth.clamp(alpha, 0.0F, 1.0F) * 255.0F) << 24 | 0xFFFFFF;
     }
 
-    private record TitleLayout(float scale, float iconX) {
+    private record TitleLayout(float scale, float height, float iconX, float yearScale) {
     }
 
-    private record PoopScatter(float x, float y, float velocityX, float velocityY, float size, float spin) {
-    }
-
-    private record ReflectionMotion(float progress, float alpha) {
-        private static final ReflectionMotion NONE = new ReflectionMotion(0.0F, 0.0F);
-
-        private boolean visible() {
-            return this.alpha > 0.0F;
-        }
+    private record PoopScatter(float x, float y, float velocityX, float velocityY, float halfSize, float spin) {
     }
 
     private static final class IntroSoundInstance extends SimpleSoundInstance {
