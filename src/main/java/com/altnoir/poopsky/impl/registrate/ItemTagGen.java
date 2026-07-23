@@ -150,6 +150,16 @@ public final class ItemTagGen {
         tag(ItemTags.LEG_ARMOR).add(PoItems.OMEN_LEGGINGS.get());
         tag(ItemTags.CHEST_ARMOR).add(PoItems.OMEN_CHESTPLATE.get());
         tag(ItemTags.HEAD_ARMOR).add(PoItems.OMEN_HELMET.get());
+        tag(ItemTags.EQUIPPABLE_ENCHANTABLE).add(
+                PoBlocks.SHIT.asItem(),
+                PoBlocks.CHILI_SHIT.asItem(),
+                PoBlocks.GOLDEN_SHIT.asItem()
+        );
+        tag(ItemTags.VANISHING_ENCHANTABLE).add(
+                PoBlocks.SHIT.asItem(),
+                PoBlocks.CHILI_SHIT.asItem(),
+                PoBlocks.GOLDEN_SHIT.asItem()
+        );
 
         tag(Tags.Items.MUSIC_DISCS)
                 .add(PoItems.LAWRENCE_MUSIC_DISC.get())

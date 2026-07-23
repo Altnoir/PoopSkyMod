@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.content.entity.p;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.content.block.p.ShitBlock;
 import com.altnoir.poopsky.impl.sound.PoSoundEvents;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoParticles;
@@ -62,8 +63,16 @@ public class PoolimeEntity extends Slime {
     }
 
     @Override
+    public boolean canAttack(LivingEntity target) {
+        return !ShitBlock.isWearing(target) && super.canAttack(target);
+    }
+
+    @Override
     protected void dealDamage(LivingEntity livingEntity) {
-        if (this.isAlive() && this.isWithinMeleeAttackRange(livingEntity) && this.hasLineOfSight(livingEntity)) {
+        if (!ShitBlock.isWearing(livingEntity)
+                && this.isAlive()
+                && this.isWithinMeleeAttackRange(livingEntity)
+                && this.hasLineOfSight(livingEntity)) {
             DamageSource damageSource = this.damageSources().mobAttack(this);
             if (livingEntity.hurt(damageSource, this.getAttackDamage())) {
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.POISON, 120, 0));

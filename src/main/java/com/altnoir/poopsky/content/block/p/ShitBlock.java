@@ -2,6 +2,10 @@ package com.altnoir.poopsky.content.block.p;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Equipable;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
@@ -21,7 +25,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class ShitBlock extends Block {
+public class ShitBlock extends Block implements Equipable {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     private static final VoxelShape NORTH_SHAPE = Shapes.or(
             Block.box(3, 0, 3, 13, 3, 13),
@@ -35,6 +39,16 @@ public class ShitBlock extends Block {
     public ShitBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
+    }
+
+    @Override
+    public EquipmentSlot getEquipmentSlot() {
+        return EquipmentSlot.HEAD;
+    }
+
+    public static boolean isWearing(LivingEntity entity) {
+        return entity.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof BlockItem blockItem
+                && blockItem.getBlock() instanceof ShitBlock;
     }
 
     @Override

@@ -53,6 +53,11 @@
 			}
 		}
 	],
+	"display": {
+		"head": {
+			"translation": [0, 14, 0]
+		}
+	},
 	"groups": [
 		{
 			"name": "group",
