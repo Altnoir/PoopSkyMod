@@ -227,6 +227,7 @@ public final class LangGen {
         addSubtitle("poolime.death", "Poolime dies");
         addSubtitle("poolime.hurt", "Poolime hurts");
         addSubtitle("poolime.squish", "Poolime squishes");
+        addSubtitle("poop_ball.throw", "Poop Ball flies");
         addSubtitle("fly.ambient", "Fly buzzes");
         addSubtitle("fly.hurt", "Fly hurts");
         addSubtitle("fly.death", "Fly dies");

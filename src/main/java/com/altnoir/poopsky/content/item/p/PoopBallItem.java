@@ -1,9 +1,9 @@
 package com.altnoir.poopsky.content.item.p;
 
 import com.altnoir.poopsky.content.entity.p.PoopBall;
+import com.altnoir.poopsky.impl.sound.PoSoundEvents;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -29,7 +29,7 @@ public class PoopBallItem extends Item implements ProjectileItem {
                 player.getX(),
                 player.getY(),
                 player.getZ(),
-                SoundEvents.SNOWBALL_THROW,
+                PoSoundEvents.ENTITY_POOP_BALL_THROW.get(),
                 SoundSource.NEUTRAL,
                 0.5F,
                 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F)

@@ -36,6 +36,7 @@ public class PoSoundEvents {
     public static final RegistryEntry<SoundEvent, SoundEvent> ENTITY_POOLIME_JUMP_SMALL = registerSoundEvent("entity.poolime.jump_small");
     public static final RegistryEntry<SoundEvent, SoundEvent> ENTITY_POOLIME_SQUISH = registerSoundEvent("entity.poolime.squish");
     public static final RegistryEntry<SoundEvent, SoundEvent> ENTITY_POOLIME_SQUISH_SMALL = registerSoundEvent("entity.poolime.squish_small");
+    public static final RegistryEntry<SoundEvent, SoundEvent> ENTITY_POOP_BALL_THROW = registerSoundEvent("entity.poop_ball.throw");
     public static final RegistryEntry<SoundEvent, SoundEvent> ENTITY_POP_PRIMED = registerSoundEvent("entity.pop.primed");
     public static final RegistryEntry<SoundEvent, SoundEvent> ENTITY_FLY_AMBIENT = registerSoundEvent("entity.fly.ambient");
     public static final RegistryEntry<SoundEvent, SoundEvent> ENTITY_FLY_HURT = registerSoundEvent("entity.fly.hurt");

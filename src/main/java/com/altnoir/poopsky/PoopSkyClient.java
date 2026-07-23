@@ -102,6 +102,8 @@ public class PoopSkyClient {
             event.registerRecipeCategoryFinder(PoRecipes.SIEVE.type().get(), recipe -> RecipeBookCategories.UNKNOWN);
             event.registerRecipeCategoryFinder(PoRecipes.FLY_BARREL.type().get(), recipe -> RecipeBookCategories.UNKNOWN);
             event.registerRecipeCategoryFinder(PoRecipes.BREEDING_CHEST.type().get(), recipe -> RecipeBookCategories.UNKNOWN);
+            event.registerRecipeCategoryFinder(PoRecipes.POP_EXPLOSION.type().get(), recipe -> RecipeBookCategories.UNKNOWN);
+            event.registerRecipeCategoryFinder(PoRecipes.ANAL_PRESSING.type().get(), recipe -> RecipeBookCategories.UNKNOWN);
         }
 
         public static void registerItemProperties(FMLClientSetupEvent event) {
