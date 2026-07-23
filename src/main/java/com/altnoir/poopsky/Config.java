@@ -63,7 +63,7 @@ public class Config {
             .comment("Client")
             .comment("Whether to Disable the freeze filter")
             .translation("poopsky.configuration.freezeFilter")
-            .define("freezeFilter", false);
+            .define("freezeFilter", true);
 
 
     static final ModConfigSpec SPEC = BUILDER.build();

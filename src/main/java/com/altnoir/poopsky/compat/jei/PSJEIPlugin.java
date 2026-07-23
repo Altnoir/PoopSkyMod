@@ -1,7 +1,6 @@
 package com.altnoir.poopsky.compat.jei;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.client.IntroController;
 import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.compat.jei.create.FanDigestingCategory;
 import com.altnoir.poopsky.content.ToiletType;
@@ -17,7 +16,6 @@ import mezz.jei.api.ingredients.subtypes.ISubtypeInterpreter;
 import mezz.jei.api.ingredients.subtypes.UidContext;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.registration.*;
-import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -39,16 +37,6 @@ public class PSJEIPlugin implements IModPlugin {
     @Override
     public ResourceLocation getPluginUid() {
         return PoopSky.loc("jei_plugin");
-    }
-
-    @Override
-    public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
-        IntroController.onJeiRuntimeAvailable();
-    }
-
-    @Override
-    public void onRuntimeUnavailable() {
-        IntroController.onJeiRuntimeUnavailable();
     }
 
     @Override

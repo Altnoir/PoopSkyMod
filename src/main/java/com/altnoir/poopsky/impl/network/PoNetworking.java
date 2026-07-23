@@ -1,7 +1,6 @@
 package com.altnoir.poopsky.impl.network;
 
 import com.altnoir.poopsky.PoopSky;
-import net.neoforged.neoforge.network.event.RegisterConfigurationTasksEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
 public class PoNetworking {
@@ -29,10 +28,6 @@ public class PoNetworking {
                 TimeBellFreezePayload.CODEC,
                 TimeBellFreezePayload::handle
         );
-        IntroHandshake.registerPayload(registrar);
-    }
-
-    public static void registerConfigurationTasks(RegisterConfigurationTasksEvent event) {
-        IntroHandshake.registerTask(event);
+        registrar.playToClient(IntroPayload.TYPE, IntroPayload.CODEC, IntroPayload::handle);
     }
 }
