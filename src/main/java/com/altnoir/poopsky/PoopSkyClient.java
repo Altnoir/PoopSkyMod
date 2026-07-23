@@ -45,6 +45,7 @@ import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.neoforged.neoforge.client.event.ViewportEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -79,6 +80,7 @@ public class PoopSkyClient {
     public static void registerGame(IEventBus modEventBus) {
         modEventBus.addListener(ClientGameEvents::onScreenOpen);
         modEventBus.addListener(ClientGameEvents::onClientTick);
+        modEventBus.addListener(ClientGameEvents::onComputeFov);
         modEventBus.addListener(ToiletHighlightRenderer::onRenderLevel);
         modEventBus.addListener(IntroController::onLoggingOut);
         modEventBus.addListener(IntroController::onSelectMusic);
@@ -203,6 +205,13 @@ public class PoopSkyClient {
                         uiState.setWorldType(new WorldCreationUiState.WorldTypeEntry(voidWorldPreset));
                     }
                 }
+            }
+        }
+
+        public static void onComputeFov(ViewportEvent.ComputeFov event) {
+            double multiplier = TimeBellOverlay.getFovMultiplier();
+            if (multiplier != 1.0) {
+                event.setFOV(Math.min(event.getFOV() * multiplier, TimeBellOverlay.MAX_FOV));
             }
         }
 

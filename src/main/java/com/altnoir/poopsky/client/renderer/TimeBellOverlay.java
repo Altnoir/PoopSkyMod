@@ -11,10 +11,14 @@ public final class TimeBellOverlay {
     private static final int VIGNETTE_STEPS = 12;
     private static final int SEPIA_COLOR = 0x70471F;
     private static final int FLASH_COLOR = 0xFFE8AF;
+    private static final float FOV_KICK_DURATION = 30.0F;
+    private static final float FOV_BOOST = 1.125F;
+    public static final double MAX_FOV = 180.0;
 
     private static volatile boolean frozen;
     private static float intensity;
     private static float flash;
+    private static float fovKickTimer;
 
     private TimeBellOverlay() {
     }
@@ -22,18 +26,20 @@ public final class TimeBellOverlay {
     public static void setFrozen(boolean value) {
         if (value && !frozen) {
             flash = 1.0F;
+            fovKickTimer = FOV_KICK_DURATION;
         }
         frozen = value;
     }
 
     public static void render(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
+        float deltaTicks = Math.min(deltaTracker.getRealtimeDeltaTicks(), 2.0F);
+        fovKickTimer = Math.max(0.0F, fovKickTimer - deltaTicks);
+
         if (!Config.freezeFilter) {
             intensity = 0.0F;
             flash = 0.0F;
             return;
         }
-
-        float deltaTicks = Math.min(deltaTracker.getRealtimeDeltaTicks(), 2.0F);
         intensity = Mth.clamp(
                 intensity + (frozen ? deltaTicks : -deltaTicks) / FADE_TICKS,
                 0.0F,
@@ -78,5 +84,14 @@ public final class TimeBellOverlay {
 
     private static int color(int rgb, float alpha) {
         return Mth.floor(Mth.clamp(alpha, 0.0F, 1.0F) * 255.0F) << 24 | rgb;
+    }
+
+    public static double getFovMultiplier() {
+        if (fovKickTimer <= 0.0F) return 1.0;
+        float progress = 1.0F - fovKickTimer / FOV_KICK_DURATION;
+        float raw = progress < 0.5F ? progress * 2.0F : (1.0F - progress) * 2.0F;
+        float t = 1.0F - raw;
+        float peaky = 1.0F - t * t * t;
+        return 1.0 + peaky * FOV_BOOST;
     }
 }

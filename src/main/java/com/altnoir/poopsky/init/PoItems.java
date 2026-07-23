@@ -85,7 +85,7 @@ public class PoItems {
     public static final ItemEntry<Item> OMINOUS_FILTHY_INGOT = registerItem("ominous_filthy_ingot", Item::new);
     public static final ItemEntry<MilosSwordItem> MILOS_SWORD = registerItemNoModel("milos_sword",
             prop -> new MilosSwordItem(PToolTiers.MILOS,
-                    prop.attributes(MilosSwordItem.createAttributes(PToolTiers.MILOS, 2, 1, -3.4F))
+                    prop.attributes(MilosSwordItem.createAttributes(PToolTiers.MILOS, 2, 1, -3.2F))
             ));
 
     public static final ItemEntry<OmenArmorItem> OMEN_HELMET = registerItemNoModel("omen_helmet",
