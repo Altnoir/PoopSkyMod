@@ -451,6 +451,8 @@
   "subtitle.poopsky.block.flush_toilet.close": "便器のふたが閉じる",
   "subtitle.poopsky.block.compooper.bucket_fill": "コンポーパー：満たされる",
   "subtitle.poopsky.item.jinkela.use": "金坷垃：さらさら",
+  "subtitle.poopsky.item.time_bell.open": "時の鐘：開始",
+  "subtitle.poopsky.item.time_bell.close": "時の鐘：停止",
   "painting.poopsky.poop.title": "大便",
   "painting.poopsky.poop.author": "一念之海",
 

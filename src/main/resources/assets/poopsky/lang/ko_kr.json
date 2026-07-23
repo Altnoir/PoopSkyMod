@@ -451,6 +451,8 @@
   "subtitle.poopsky.block.flush_toilet.close": "변기 뚜껑 닫힘",
   "subtitle.poopsky.block.compooper.bucket_fill": "퇴비통: 가득 참",
   "subtitle.poopsky.item.jinkela.use": "진커라: 바스락거림",
+  "subtitle.poopsky.item.time_bell.open": "시간의 종：시작",
+  "subtitle.poopsky.item.time_bell.close": "시간의 종：정지",
   "painting.poopsky.poop.title": "대변",
   "painting.poopsky.poop.author": "一念之海",
 

@@ -451,6 +451,8 @@
   "subtitle.poopsky.block.flush_toilet.close": "馬桶蓋：關閉",
   "subtitle.poopsky.block.compooper.bucket_fill": "堆糞箱：盛滿",
   "subtitle.poopsky.item.jinkela.use": "金坷垃：沙沙作響",
+  "subtitle.poopsky.item.time_bell.open": "時停鈴：啟動",
+  "subtitle.poopsky.item.time_bell.close": "時停鈴：停止",
   "painting.poopsky.poop.title": "大便",
   "painting.poopsky.poop.author": "一念之海",
 

@@ -451,6 +451,8 @@
   "subtitle.poopsky.block.flush_toilet.close": "Крышка унитаза закрывается",
   "subtitle.poopsky.block.compooper.bucket_fill": "Компупер наполняется",
   "subtitle.poopsky.item.jinkela.use": "Jinkela шуршит",
+  "subtitle.poopsky.item.time_bell.open": "Колокол времени звучит",
+  "subtitle.poopsky.item.time_bell.close": "Колокол времени затихает",
   "painting.poopsky.poop.title": "Какашка",
   "painting.poopsky.poop.author": "Yinianzhihai",
 

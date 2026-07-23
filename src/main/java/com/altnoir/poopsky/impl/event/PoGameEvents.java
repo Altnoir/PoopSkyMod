@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.impl.event;
 
+import com.altnoir.poopsky.content.item.p.TimeBellItem;
 import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.content.FlyTypeManager;
 import com.altnoir.poopsky.content.ToiletTypeManager;
@@ -51,6 +52,7 @@ import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -70,6 +72,7 @@ public class PoGameEvents {
         gameEventBus.addListener(PoGameEvents::onFinalizeSpawn);
         gameEventBus.addListener(PoGameEvents::onCreateSpawnToilet);
         gameEventBus.addListener(PoGameEvents::onPlayerLoggedIn);
+        gameEventBus.addListener(PoGameEvents::onServerTick);
     }
 
     public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
@@ -220,5 +223,10 @@ public class PoGameEvents {
             ChunkPos islandChunk = new ChunkPos(islandCenter);
             level.getChunk(islandChunk.x, islandChunk.z);
         }
+    }
+
+    public static void onServerTick(ServerTickEvent.Post event) {
+        TimeBellItem.tickPending(event.getServer());
+        TimeBellItem.freezeTick(event.getServer());
     }
 }

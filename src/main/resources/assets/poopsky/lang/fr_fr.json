@@ -451,6 +451,8 @@
   "subtitle.poopsky.block.flush_toilet.close": "Abattant des toilettes fermé",
   "subtitle.poopsky.block.compooper.bucket_fill": "Le Compooper se remplit",
   "subtitle.poopsky.item.jinkela.use": "Jinkela bruisse",
+  "subtitle.poopsky.item.time_bell.open": "Cloche temporelle sonne",
+  "subtitle.poopsky.item.time_bell.close": "Cloche temporelle s'estompe",
   "painting.poopsky.poop.title": "Étron",
   "painting.poopsky.poop.author": "一念之海",
 

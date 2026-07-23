@@ -290,6 +290,18 @@
     ],
     "subtitle": "subtitle.poopsky.item.jinkela.use"
   },
+  "item.time_bell.close": {
+    "sounds": [
+      "poopsky:the_world_close"
+    ],
+    "subtitle": "subtitle.poopsky.item.time_bell.close"
+  },
+  "item.time_bell.open": {
+    "sounds": [
+      "poopsky:the_world_open"
+    ],
+    "subtitle": "subtitle.poopsky.item.time_bell.open"
+  },
   "item.toilet_linker.boop": {
     "sounds": [
       {

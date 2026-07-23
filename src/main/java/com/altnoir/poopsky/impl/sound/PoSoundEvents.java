@@ -53,6 +53,8 @@ public class PoSoundEvents {
     public static final RegistryEntry<SoundEvent, SoundEvent> ITEM_TOILET_LINKER_BOOP = registerSoundEvent("item.toilet_linker.boop");
     public static final RegistryEntry<SoundEvent, SoundEvent> ITEM_TOILET_LINKER_SUCCESS = registerSoundEvent("item.toilet_linker.success");
     public static final RegistryEntry<SoundEvent, SoundEvent> ITEM_JINKELA_USE = registerSoundEvent("item.jinkela.use");
+    public static final RegistryEntry<SoundEvent, SoundEvent> ITEM_TIME_BELL_OPEN = registerSoundEvent("item.time_bell.open");
+    public static final RegistryEntry<SoundEvent, SoundEvent> ITEM_TIME_BELL_CLOSE = registerSoundEvent("item.time_bell.close");
 
     private static RegistryEntry<SoundEvent, SoundEvent> registerSoundEvent(String name) {
         ResourceLocation id = PoopSky.loc(name);

@@ -217,6 +217,18 @@ public class SoundGen extends SoundDefinitionsProvider {
                         sound(PoopSky.locMc("item.bone_meal.use"), SoundDefinition.SoundType.EVENT)
                 ));
 
+        add(PoSoundEvents.ITEM_TIME_BELL_OPEN, definition()
+                .subtitle("subtitle.poopsky.item.time_bell.open")
+                .with(
+                        sound(PoopSky.loc("the_world_open"))
+                ));
+
+        add(PoSoundEvents.ITEM_TIME_BELL_CLOSE, definition()
+                .subtitle("subtitle.poopsky.item.time_bell.close")
+                .with(
+                        sound(PoopSky.loc("the_world_close"))
+                ));
+
         add(PoSoundEvents.POOPSKY_INTRO, definition()
                 .with(
                         sound(PoopSky.loc("poopsky_intro")).stream()
