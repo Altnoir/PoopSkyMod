@@ -9,6 +9,7 @@ import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
+import com.altnoir.poopsky.init.ToiletTypes;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -23,30 +24,25 @@ import java.util.Set;
 public class PoItemGroups {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
-    public static final RegistryEntry<CreativeModeTab, CreativeModeTab> POOPSKY_TAB = REGISTRATE.generic("poopsky_tab", Registries.CREATIVE_MODE_TAB, () -> CreativeModeTab.builder()
+    public static final RegistryEntry<CreativeModeTab, CreativeModeTab> POOPSKY_TAB = REGISTRATE.generic("poopsky", Registries.CREATIVE_MODE_TAB, () -> CreativeModeTab.builder()
             .title(Component.translatable("itemgroup.poopsky"))
             .icon(PoBlocks.WOODEN_TOILET::asStack)
             .displayItems((parameters, output) -> {
                 PoItems.getAllItems().stream()
+                        .filter(item -> !PoBlocks.isDecorativeItem(item))
                         .filter(item -> !(item instanceof BlockItem))
                         .filter(item -> !(item instanceof FlyItem))
                         .forEach(output::accept);
 
-                Set<Block> skip = Set.of(
-                        PoBlocks.URINE_LIQUID.get(),
-                        PoBlocks.WATER_COMPOOPER.get(),
-                        PoBlocks.LAVA_COMPOOPER.get(),
-                        PoBlocks.POWDER_SNOW_COMPOOPER.get(),
-                        PoBlocks.URINE_COMPOOPER.get(),
-                        PoBlocks.ROUNDWORM_VINES_PLANT.get(),
-                        PoBlocks.WOODEN_TOILET.get(),
-                        PoBlocks.HARD_TOILET.get()
-                );
+                Set<Block> skip = Set.of(PoBlocks.URINE_LIQUID.get(), PoBlocks.WATER_COMPOOPER.get(), PoBlocks.LAVA_COMPOOPER.get(),
+                        PoBlocks.POWDER_SNOW_COMPOOPER.get(), PoBlocks.URINE_COMPOOPER.get(), PoBlocks.ROUNDWORM_VINES_PLANT.get(),
+                        PoBlocks.WOODEN_TOILET.get(), PoBlocks.HARD_TOILET.get());
                 PoItems.getAllItems().stream()
                         .filter(item -> item instanceof BlockItem)
                         .map(Item::getDefaultInstance)
                         .filter(stack -> stack.getItem() != Items.AIR)
                         .filter(stack -> !skip.contains(((BlockItem) stack.getItem()).getBlock()))
+                        .filter(stack -> !PoBlocks.isDecorativeItem(stack.getItem()))
                         .forEach(output::accept);
 
                 for (String id : FlyTypeManager.INSTANCE.getFlyTypes()) {
@@ -55,6 +51,18 @@ public class PoItemGroups {
                     if (mekFly(id) && !PoMods.MEKANISM.isLoaded()) continue;
                     output.accept(FlyItem.withType(id));
                 }
+                output.accept(ToiletBlockItem.withType(PoBlocks.WOODEN_TOILET.get(), ToiletTypes.OAK));
+                output.accept(ToiletBlockItem.withType(PoBlocks.HARD_TOILET.get(), ToiletTypes.WHITE_TILE));
+                output.accept(ToiletBlockItem.withType(PoBlocks.HARD_TOILET.get(), ToiletTypes.GOLD));
+            }).build()).register();
+
+    public static final RegistryEntry<CreativeModeTab, CreativeModeTab> POOPSKY_DECORATIVE = REGISTRATE.generic("poopsky_deco", Registries.CREATIVE_MODE_TAB, () -> CreativeModeTab.builder()
+            .title(Component.translatable("itemgroup.poopsky_deco"))
+            .icon(PoBlocks.WHITE_TILE_BLOCK::asStack)
+            .displayItems((parameters, output) -> {
+                PoItems.getAllItems().stream()
+                        .filter(item -> PoBlocks.isDecorativeItem(item) || PoBlocks.isAllTabItem(item))
+                        .forEach(output::accept);
 
                 for (var type : ToiletType.getByCategory(ToiletType.Category.WOOD).values()) {
                     output.accept(ToiletBlockItem.withType(PoBlocks.WOODEN_TOILET.get(), type));
@@ -62,16 +70,7 @@ public class PoItemGroups {
                 for (var type : ToiletType.getByCategory(ToiletType.Category.HARD).values()) {
                     output.accept(ToiletBlockItem.withType(PoBlocks.HARD_TOILET.get(), type));
                 }
-            })
-            .build()).register();
-
-    public static final RegistryEntry<CreativeModeTab, CreativeModeTab> POOPSKY_DECORATIVE = REGISTRATE.generic("poopsky_decorative", Registries.CREATIVE_MODE_TAB, () -> CreativeModeTab.builder()
-            .title(Component.translatable("itemgroup.poopsky_decorative"))
-            .icon(PoBlocks.WOODEN_TOILET::asStack)
-            .displayItems((parameters, output) -> {
-                // 感觉不好分离出来
-            })
-            .build()).register();
+            }).build()).register();
 
     private static boolean createFly(String id) {
         return FlyTypes.ZINC.id().equals(id);
