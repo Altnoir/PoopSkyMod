@@ -1,5 +1,7 @@
 package com.altnoir.poopsky.content.block.p;
 
+import com.altnoir.poopsky.fabric.port.util.ItemAbilities;
+import com.altnoir.poopsky.fabric.port.util.ItemAbility;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableMap;
@@ -18,8 +20,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.common.ItemAbilities;
-import net.neoforged.neoforge.common.ItemAbility;
+//import net.neoforged.neoforge.common.ItemAbilities;
+//import net.neoforged.neoforge.common.ItemAbility;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;

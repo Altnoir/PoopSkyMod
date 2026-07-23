@@ -3,6 +3,8 @@ package com.altnoir.poopsky.content.item.p;
 import com.altnoir.poopsky.content.entity.p.FlyEntity;
 import com.altnoir.poopsky.content.item.IFeedable;
 import com.altnoir.poopsky.init.FlyTypes;
+import com.altnoir.poopsky.init.PoEffects;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,6 +23,7 @@ public class ChiliItem extends Item implements IFeedable {
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity livingEntity) {
         super.finishUsingItem(stack, level, livingEntity);
         if (!level.isClientSide) {
+            livingEntity.addEffect(new MobEffectInstance(PoEffects.holder(PoEffects.INTESTINAL_SPASM), 9600));
             livingEntity.hurt(livingEntity.damageSources().inFire(), 1.0F);
             livingEntity.igniteForSeconds(3);
         }

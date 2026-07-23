@@ -46,16 +46,16 @@ public class toiletUtil {
 
     public static void lavaToiletStepOn(Level level, BlockPos pos, BlockState state, Entity entity, boolean isGolden) {
         if (!level.isClientSide && entity instanceof Player player && player.isShiftKeyDown() && isEntityCentered(pos, player) && !state.getValue(BaseToiletLavaBlock.LAVA)) {
-            if (player.hasEffect(PoEffects.INTESTINAL_SPASM)) {
+            if (player.hasEffect(PoEffects.holder(PoEffects.INTESTINAL_SPASM))) {
                 level.setBlock(pos, state.setValue(BaseToiletLavaBlock.LAVA, true), 3);
                 level.playSound(null, pos, PoSoundEvents.BLOCK_TOILET_LAVA_EMPTY.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
-                player.removeEffect(PoEffects.INTESTINAL_SPASM);
+                player.removeEffect(PoEffects.holder(PoEffects.INTESTINAL_SPASM));
                 player.causeFoodExhaustion(1.0F);
             } else {
-                boolean hasIncontinence = player.hasEffect(PoEffects.FECAL_INCONTINENCE);
+                boolean hasIncontinence = player.hasEffect(PoEffects.holder(PoEffects.FECAL_INCONTINENCE));
                 boolean isFire = hasIncontinence && !isGolden;
                 float pitchOffset = isGolden ? -0.5F : 0.5F;
-                var playerData = player.getPersistentData();
+                var playerData = player.getCustomData();
                 long lastPoopTime = playerData.getLong("poopTime");
                 canPoop(level, player, isFire, isGolden, 0.1F, pitchOffset, lastPoopTime,
                         time -> playerData.putLong("poopTime", time));
@@ -64,7 +64,7 @@ public class toiletUtil {
     }
 
     public static void canPoop(Level level, LivingEntity entity, boolean isFire, boolean isGolden, float yOffset, float pitchOffset, long lastPoopTime, LongConsumer poopTimeSetter) {
-        boolean hasIncontinence = entity.hasEffect(PoEffects.FECAL_INCONTINENCE);
+        boolean hasIncontinence = entity.hasEffect(PoEffects.holder(PoEffects.FECAL_INCONTINENCE));
 
         if (hasIncontinence) {
             onPoop(level, entity, isFire, isGolden, yOffset, pitchOffset);
@@ -108,7 +108,7 @@ public class toiletUtil {
             }
             var poop = new ItemEntity(level, livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), new ItemStack(poopItem));
             poop.setDefaultPickUpDelay();
-            if (livingEntity.hasEffect(PoEffects.FECAL_INCONTINENCE)) {
+            if (livingEntity.hasEffect(PoEffects.holder(PoEffects.FECAL_INCONTINENCE))) {
                 Vec3 backward = getBackwardDirection(livingEntity);
                 poop.setDeltaMovement(backward.x * 0.5F, 0.2F, backward.z * 0.5F);
             }

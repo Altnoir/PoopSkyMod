@@ -1,134 +1,43 @@
 package com.altnoir.poopsky.impl.registrate;
 
-import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.content.FlyType;
-import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoItems;
-import com.tterrag.registrate.providers.RegistrateItemModelProvider;
-import com.tterrag.registrate.util.entry.ItemEntry;
-import net.minecraft.client.renderer.block.model.BlockModel.GuiLight;
-import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.PackType;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
+import net.minecraft.data.models.BlockModelGenerators;
+import net.minecraft.data.models.ItemModelGenerators;
+import net.minecraft.data.models.model.ModelTemplates;
 import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ItemDisplayContext;
-import net.minecraft.world.item.armortrim.TrimMaterial;
-import net.minecraft.world.item.armortrim.TrimMaterials;
-import net.neoforged.neoforge.client.model.generators.ModelFile;
-import net.neoforged.neoforge.client.model.generators.loaders.SeparateTransformsModelBuilder;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.SpawnEggItem;
 
-import java.util.LinkedHashMap;
-
-public class ItemModelGen extends RegistrateItemModelProvider {
-    private static final LinkedHashMap<ResourceKey<TrimMaterial>, Float> trimMaterials = new LinkedHashMap<>();
-
-    static {
-        trimMaterials.put(TrimMaterials.QUARTZ, 0.1F);
-        trimMaterials.put(TrimMaterials.IRON, 0.2F);
-        trimMaterials.put(TrimMaterials.NETHERITE, 0.3F);
-        trimMaterials.put(TrimMaterials.REDSTONE, 0.4F);
-        trimMaterials.put(TrimMaterials.COPPER, 0.5F);
-        trimMaterials.put(TrimMaterials.GOLD, 0.6F);
-        trimMaterials.put(TrimMaterials.EMERALD, 0.7F);
-        trimMaterials.put(TrimMaterials.DIAMOND, 0.8F);
-        trimMaterials.put(TrimMaterials.LAPIS, 0.9F);
-        trimMaterials.put(TrimMaterials.AMETHYST, 1.0F);
-    }
-
-    public ItemModelGen(PackOutput output, ExistingFileHelper existingFileHelper) {
-        super(PoopSky.registrate(), output, existingFileHelper);
+public class ItemModelGen extends FabricModelProvider {
+    public ItemModelGen(FabricDataOutput output) {
+        super(output);
     }
 
     @Override
-    protected void registerModels() {
-        toiletPlugItem();
-        bigSowordItem();
-        trimmedArmorItem(PoItems.OMEN_HELMET);
-        trimmedArmorItem(PoItems.OMEN_CHESTPLATE);
-        trimmedArmorItem(PoItems.OMEN_LEGGINGS);
-        trimmedArmorItem(PoItems.OMEN_BOOTS);
-        withExistingParent(name(PoItems.POOLIME_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
-        withExistingParent(name(PoItems.FLY_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
-        generated(PoItems.URINE_BUCKET);
-        flyItemWithOverrides();
+    public void generateBlockStateModels(BlockModelGenerators generators) {
     }
 
-    private void toiletPlugItem() {
-        var baseModel = nested()
-                .parent(new ModelFile.UncheckedModelFile("builtin/entity"));
-
-        var guiModel = nested()
-                .parent(new ModelFile.UncheckedModelFile("item/generated"))
-                .texture("layer0", modLoc("item/toilet_plug"));
-
-        getBuilder("toilet_plug")
-                .guiLight(GuiLight.FRONT)
-                .customLoader(SeparateTransformsModelBuilder::begin)
-                .base(baseModel)
-                .perspective(ItemDisplayContext.GUI, guiModel)
-                .perspective(ItemDisplayContext.GROUND, guiModel)
-                .perspective(ItemDisplayContext.FIXED, guiModel)
-                .end();
+    @Override
+    public void generateItemModels(ItemModelGenerators generators) {
+        generateAll(generators);
     }
 
-    private void bigSowordItem() {
-        this.withExistingParent(name(PoItems.MILOS_SWORD), modLoc("item/big_sword"))
-                .texture("layer0", itemTexture(PoItems.MILOS_SWORD));
-    }
+    public static void generateAll(ItemModelGenerators generators) {
+        for (Item item : PoItems.getAllItems()) {
+            if (item instanceof BlockItem || item instanceof SpawnEggItem || item == PoItems.TOILET_PLUG.get()) continue;
 
-    private void flyItemWithOverrides() {
-        var flyBuilder = getBuilder("fly")
-                .parent(new ModelFile.UncheckedModelFile("item/generated"))
-                .texture("layer0", PoopSky.loc("item/fly"));
-
-        int index = 0;
-        for (String id : FlyType.FLY_TYPES) {
-            String flyId = id.equals(FlyTypes.NORMAL.id()) ? "fly" : "fly_" + id;
-            getBuilder(flyId)
-                    .parent(new ModelFile.UncheckedModelFile("item/generated"))
-                    .texture("layer0", PoopSky.loc("item/" + flyId));
-            flyBuilder.override()
-                    .predicate(PoopSky.loc("fly_type"), (float) index)
-                    .model(new ModelFile.UncheckedModelFile(PoopSky.MOD_ID + ":item/" + flyId))
-                    .end();
-            index++;
+            if (item instanceof ArmorItem armorItem) {
+                generators.generateArmorTrims(armorItem);
+            } else if (item instanceof DiggerItem || item instanceof SwordItem) {
+                generators.generateFlatItem(item, ModelTemplates.FLAT_HANDHELD_ITEM);
+            } else {
+                generators.generateFlatItem(item, ModelTemplates.FLAT_ITEM);
+            }
         }
-    }
-
-    private void trimmedArmorItem(ItemEntry<? extends ArmorItem> itemDeferredItem) {
-        ArmorItem armorItem = itemDeferredItem.get();
-        trimMaterials.forEach((trimMaterial, value) -> {
-            float trimValue = value;
-
-            String armorType = switch (armorItem.getEquipmentSlot()) {
-                case HEAD -> "helmet";
-                case CHEST -> "chestplate";
-                case LEGS -> "leggings";
-                case FEET -> "boots";
-                default -> "";
-            };
-
-            String armorItemPath = name(itemDeferredItem);
-            String trimPath = "trims/items/" + armorType + "_trim_" + trimMaterial.location().getPath();
-            String currentTrimName = armorItemPath + "_" + trimMaterial.location().getPath() + "_trim";
-            ResourceLocation trimResLoc = ResourceLocation.parse(trimPath); // minecraft namespace
-            ResourceLocation trimNameResLoc = modLoc(currentTrimName);
-
-            existingFileHelper.trackGenerated(trimResLoc, PackType.CLIENT_RESOURCES, ".png", "textures");
-
-            getBuilder(currentTrimName)
-                    .parent(new ModelFile.UncheckedModelFile("item/generated"))
-                    .texture("layer0", itemTexture(itemDeferredItem))
-                    .texture("layer1", trimResLoc);
-
-            this.withExistingParent(name(itemDeferredItem),
-                            mcLoc("item/generated"))
-                    .override()
-                    .model(new ModelFile.UncheckedModelFile(trimNameResLoc.getNamespace() + ":item/" + trimNameResLoc.getPath()))
-                    .predicate(mcLoc("trim_type"), trimValue).end()
-                    .texture("layer0", itemTexture(itemDeferredItem));
-        });
     }
 }

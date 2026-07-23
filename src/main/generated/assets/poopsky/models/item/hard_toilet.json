@@ -1,0 +1,623 @@
+{
+  "parent": "poopsky:block/hard_toilet",
+  "overrides": [
+    {
+      "model": "poopsky:block/hard_toilet_tile_block",
+      "predicate": {
+        "poopsky:toilet_type": 0.0
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_stone",
+      "predicate": {
+        "poopsky:toilet_type": 0.009803922
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_cobblestone",
+      "predicate": {
+        "poopsky:toilet_type": 0.019607844
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_mossy_cobblestone",
+      "predicate": {
+        "poopsky:toilet_type": 0.029411765
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_smooth_stone",
+      "predicate": {
+        "poopsky:toilet_type": 0.039215688
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_stone_bricks",
+      "predicate": {
+        "poopsky:toilet_type": 0.04901961
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_chiseled_stone_bricks",
+      "predicate": {
+        "poopsky:toilet_type": 0.05882353
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_mossy_stone_bricks",
+      "predicate": {
+        "poopsky:toilet_type": 0.068627454
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_granite",
+      "predicate": {
+        "poopsky:toilet_type": 0.078431375
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_polished_granite",
+      "predicate": {
+        "poopsky:toilet_type": 0.0882353
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_diorite",
+      "predicate": {
+        "poopsky:toilet_type": 0.09803922
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_polished_diorite",
+      "predicate": {
+        "poopsky:toilet_type": 0.10784314
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_andesite",
+      "predicate": {
+        "poopsky:toilet_type": 0.11764706
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_polished_andesite",
+      "predicate": {
+        "poopsky:toilet_type": 0.12745099
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_calcite",
+      "predicate": {
+        "poopsky:toilet_type": 0.13725491
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_dripstone_block",
+      "predicate": {
+        "poopsky:toilet_type": 0.14705883
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_deepslate",
+      "predicate": {
+        "poopsky:toilet_type": 0.15686275
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_cobbled_deepslate",
+      "predicate": {
+        "poopsky:toilet_type": 0.16666667
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_polished_deepslate",
+      "predicate": {
+        "poopsky:toilet_type": 0.1764706
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_deepslate_bricks",
+      "predicate": {
+        "poopsky:toilet_type": 0.18627451
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_deepslate_tiles",
+      "predicate": {
+        "poopsky:toilet_type": 0.19607843
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_tuff",
+      "predicate": {
+        "poopsky:toilet_type": 0.20588236
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_polished_tuff",
+      "predicate": {
+        "poopsky:toilet_type": 0.21568628
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_tuff_bricks",
+      "predicate": {
+        "poopsky:toilet_type": 0.2254902
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_bricks",
+      "predicate": {
+        "poopsky:toilet_type": 0.23529412
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_mud_bricks",
+      "predicate": {
+        "poopsky:toilet_type": 0.24509804
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_sandstone",
+      "predicate": {
+        "poopsky:toilet_type": 0.25490198
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_smooth_sandstone",
+      "predicate": {
+        "poopsky:toilet_type": 0.2647059
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_red_sandstone",
+      "predicate": {
+        "poopsky:toilet_type": 0.27450982
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_smooth_red_sandstone",
+      "predicate": {
+        "poopsky:toilet_type": 0.28431374
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_prismarine",
+      "predicate": {
+        "poopsky:toilet_type": 0.29411766
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_prismarine_bricks",
+      "predicate": {
+        "poopsky:toilet_type": 0.30392158
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_dark_prismarine",
+      "predicate": {
+        "poopsky:toilet_type": 0.3137255
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_netherrack",
+      "predicate": {
+        "poopsky:toilet_type": 0.32352942
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_nether_bricks",
+      "predicate": {
+        "poopsky:toilet_type": 0.33333334
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_red_nether_bricks",
+      "predicate": {
+        "poopsky:toilet_type": 0.34313726
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_smooth_basalt",
+      "predicate": {
+        "poopsky:toilet_type": 0.3529412
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_blackstone",
+      "predicate": {
+        "poopsky:toilet_type": 0.3627451
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_polished_blackstone",
+      "predicate": {
+        "poopsky:toilet_type": 0.37254903
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_polished_blackstone_bricks",
+      "predicate": {
+        "poopsky:toilet_type": 0.38235295
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_quartz_block",
+      "predicate": {
+        "poopsky:toilet_type": 0.39215687
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_smooth_quartz",
+      "predicate": {
+        "poopsky:toilet_type": 0.4019608
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_chiseled_quartz_block",
+      "predicate": {
+        "poopsky:toilet_type": 0.4117647
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_quartz_bricks",
+      "predicate": {
+        "poopsky:toilet_type": 0.42156863
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_end_stone",
+      "predicate": {
+        "poopsky:toilet_type": 0.43137255
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_end_stone_bricks",
+      "predicate": {
+        "poopsky:toilet_type": 0.44117647
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_purpur_block",
+      "predicate": {
+        "poopsky:toilet_type": 0.4509804
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 0.46078432
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_white_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 0.47058824
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_orange_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 0.48039216
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_magenta_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 0.49019608
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_light_blue_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 0.5
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_yellow_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 0.50980395
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_lime_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 0.51960784
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_pink_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 0.5294118
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_gray_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 0.5392157
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_light_gray_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 0.54901963
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_cyan_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 0.5588235
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_purple_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 0.5686275
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_blue_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 0.57843137
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_brown_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 0.5882353
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_green_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 0.5980392
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_red_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 0.60784316
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_black_terracotta",
+      "predicate": {
+        "poopsky:toilet_type": 0.61764705
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_white_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 0.627451
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_orange_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 0.6372549
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_magenta_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 0.64705884
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_light_blue_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 0.65686274
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_yellow_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 0.6666667
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_lime_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 0.6764706
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_pink_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 0.6862745
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_gray_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 0.6960784
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_light_gray_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 0.7058824
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_cyan_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 0.71568626
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_purple_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 0.7254902
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_blue_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 0.7352941
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_brown_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 0.74509805
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_green_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 0.75490195
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_red_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 0.7647059
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_black_concrete",
+      "predicate": {
+        "poopsky:toilet_type": 0.7745098
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_rainbow",
+      "predicate": {
+        "poopsky:toilet_type": 0.78431374
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_iron_block",
+      "predicate": {
+        "poopsky:toilet_type": 0.7941176
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_gold_block",
+      "predicate": {
+        "poopsky:toilet_type": 0.8039216
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_copper_block",
+      "predicate": {
+        "poopsky:toilet_type": 0.8137255
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_exposed_copper",
+      "predicate": {
+        "poopsky:toilet_type": 0.8235294
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_weathered_copper",
+      "predicate": {
+        "poopsky:toilet_type": 0.8333333
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_oxidized_copper",
+      "predicate": {
+        "poopsky:toilet_type": 0.84313726
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_chiseled_copper",
+      "predicate": {
+        "poopsky:toilet_type": 0.85294116
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_exposed_chiseled_copper",
+      "predicate": {
+        "poopsky:toilet_type": 0.8627451
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_weathered_chiseled_copper",
+      "predicate": {
+        "poopsky:toilet_type": 0.872549
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_oxidized_chiseled_copper",
+      "predicate": {
+        "poopsky:toilet_type": 0.88235295
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_cut_copper",
+      "predicate": {
+        "poopsky:toilet_type": 0.89215684
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_exposed_cut_copper",
+      "predicate": {
+        "poopsky:toilet_type": 0.9019608
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_weathered_cut_copper",
+      "predicate": {
+        "poopsky:toilet_type": 0.9117647
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_oxidized_cut_copper",
+      "predicate": {
+        "poopsky:toilet_type": 0.92156863
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_amethyst_block",
+      "predicate": {
+        "poopsky:toilet_type": 0.9313725
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_lapis_block",
+      "predicate": {
+        "poopsky:toilet_type": 0.9411765
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_redstone_block",
+      "predicate": {
+        "poopsky:toilet_type": 0.95098037
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_diamond_block",
+      "predicate": {
+        "poopsky:toilet_type": 0.9607843
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_emerald_block",
+      "predicate": {
+        "poopsky:toilet_type": 0.9705882
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_netherite_block",
+      "predicate": {
+        "poopsky:toilet_type": 0.98039216
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_obsidian",
+      "predicate": {
+        "poopsky:toilet_type": 0.99019605
+      }
+    },
+    {
+      "model": "poopsky:block/hard_toilet_crying_obsidian",
+      "predicate": {
+        "poopsky:toilet_type": 1.0
+      }
+    }
+  ]
+}

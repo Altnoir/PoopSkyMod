@@ -1,3 +1,4 @@
+/*
 package com.altnoir.poopsky.compat.create.content.kinetics.fan.processing;
 
 import com.altnoir.poopsky.compat.create.PSRecipeTypes;
@@ -35,3 +36,4 @@ public class DigestingRecipe extends StandardProcessingRecipe<SingleRecipeInput>
         return new Builder<>(DigestingRecipe::new, id);
     }
 }
+ */

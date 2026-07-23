@@ -6,15 +6,18 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.fabricmc.fabric.api.client.model.loading.v1.FabricBakedModelManager;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public class ToiletPlugItemRenderer extends BlockEntityWithoutLevelRenderer {
+    public static final ResourceLocation TWO_DIMENSIONAL_MODEL = PoopSky.loc("item/toilet_plug_inventory");
     private ToiletPlugModel<?> plugModel;
     private static final ResourceLocation TEXTURE = PoopSky.loc("textures/entity/toilet_plug.png");
     private static final float HAND_Y = 4.0F / 16.0F + 0.5F;
@@ -29,6 +32,13 @@ public class ToiletPlugItemRenderer extends BlockEntityWithoutLevelRenderer {
     public void renderByItem(@NotNull ItemStack stack, @NotNull ItemDisplayContext displayContext,
                              @NotNull PoseStack poseStack, @NotNull MultiBufferSource bufferSource,
                              int packedLight, int packedOverlay) {
+        if (displayContext == ItemDisplayContext.GUI
+                || displayContext == ItemDisplayContext.GROUND
+                || displayContext == ItemDisplayContext.FIXED) {
+            renderTwoDimensional(stack, displayContext, poseStack, bufferSource, packedLight, packedOverlay);
+            return;
+        }
+
         if (plugModel == null) {
             var entityModels = Minecraft.getInstance().getEntityModels();
             plugModel = new ToiletPlugModel<>(entityModels.bakeLayer(ToiletPlugModel.LAYER_LOCATION));
@@ -40,6 +50,31 @@ public class ToiletPlugItemRenderer extends BlockEntityWithoutLevelRenderer {
         VertexConsumer vertexConsumer = bufferSource.getBuffer(plugModel.renderType(TEXTURE));
         plugModel.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY);
 
+        poseStack.popPose();
+    }
+
+    private void renderTwoDimensional(
+            ItemStack stack,
+            ItemDisplayContext displayContext,
+            PoseStack poseStack,
+            MultiBufferSource bufferSource,
+            int packedLight,
+            int packedOverlay
+    ) {
+        Minecraft minecraft = Minecraft.getInstance();
+        BakedModel model = ((FabricBakedModelManager) minecraft.getModelManager()).getModel(TWO_DIMENSIONAL_MODEL);
+        poseStack.pushPose();
+        poseStack.translate(0.5F, 0.5F, 0.5F);
+        minecraft.getItemRenderer().render(
+                stack,
+                displayContext,
+                false,
+                poseStack,
+                bufferSource,
+                packedLight,
+                packedOverlay,
+                model
+        );
         poseStack.popPose();
     }
 

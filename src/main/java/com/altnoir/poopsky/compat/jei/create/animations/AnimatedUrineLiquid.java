@@ -1,3 +1,4 @@
+/*
 package com.altnoir.poopsky.compat.jei.create.animations;
 
 import com.altnoir.poopsky.init.PoBlocks;
@@ -28,3 +29,4 @@ public class AnimatedUrineLiquid extends AnimatedKinetics {
         matrixStack.popPose();
     }
 }
+ */

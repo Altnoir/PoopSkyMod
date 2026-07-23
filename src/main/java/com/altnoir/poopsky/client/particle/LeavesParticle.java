@@ -72,10 +72,6 @@ public class LeavesParticle extends TextureSheetParticle {
         }
     }
 
-    public static ParticleEngine.SpriteParticleRegistration<LeavesParticleOptions> provider() {
-        return Provider::new;
-    }
-
     public static class Provider implements ParticleProvider<LeavesParticleOptions> {
         private final SpriteSet sprites;
 

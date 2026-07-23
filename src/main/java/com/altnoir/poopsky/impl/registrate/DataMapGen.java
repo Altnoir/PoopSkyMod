@@ -1,45 +1,35 @@
 package com.altnoir.poopsky.impl.registrate;
 
-import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
-import com.tterrag.registrate.providers.ProviderType;
-import com.tterrag.registrate.providers.RegistrateDataMapProvider;
-import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel;
-import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps;
+import net.fabricmc.fabric.api.registry.FuelRegistry;
 
 public final class DataMapGen {
-    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
-
     private DataMapGen() {
     }
 
     public static void register() {
-        REGISTRATE.addDataGenerator(ProviderType.DATA_MAP, DataMapGen::generate);
-    }
-
-    private static void generate(RegistrateDataMapProvider provider) {
-        provider.builder(NeoForgeDataMaps.FURNACE_FUELS)
-                .add(PoItems.POOP.getId(), new FurnaceFuel(200), false)
-                .add(PoItems.POOP_BALL.getId(), new FurnaceFuel(400), false)
-                .add(PoBlocks.POOP_SAPLING.getId(), new FurnaceFuel(200), false)
-                .add(PoBlocks.POOP_LEAVES.getId(), new FurnaceFuel(200), false)
-                .add(PoBlocks.POOP_BLOCK.getId(), new FurnaceFuel(800), false)
-                .add(PoBlocks.POOP_STAIRS.getId(), new FurnaceFuel(800), false)
-                .add(PoBlocks.POOP_SLAB.getId(), new FurnaceFuel(400), false)
-                .add(PoBlocks.POOP_VERTICAL_SLAB.getId(), new FurnaceFuel(400), false)
-                .add(PoBlocks.POOP_BUTTON.getId(), new FurnaceFuel(200), false)
-                .add(PoBlocks.POOP_PRESSURE_PLATE.getId(), new FurnaceFuel(400), false)
-                .add(PoBlocks.POOP_FENCE.getId(), new FurnaceFuel(800), false)
-                .add(PoBlocks.POOP_FENCE_GATE.getId(), new FurnaceFuel(800), false)
-                .add(PoBlocks.POOP_WALL.getId(), new FurnaceFuel(800), false)
-                .add(PoBlocks.POOP_DOOR.getId(), new FurnaceFuel(800), false)
-                .add(PoBlocks.POOP_TRAPDOOR.getId(), new FurnaceFuel(800), false)
-                .add(PoBlocks.POOP_LOG.getId(), new FurnaceFuel(800), false)
-                .add(PoBlocks.STRIPPED_POOP_LOG.getId(), new FurnaceFuel(800), false)
-                .add(PoBlocks.POOP_EMPTY_LOG.getId(), new FurnaceFuel(800), false)
-                .add(PoBlocks.STRIPPED_POOP_EMPTY_LOG.getId(), new FurnaceFuel(800), false)
-                .add(PoBlocks.POOP_PIECE.getId(), new FurnaceFuel(400), false)
-                .add(PoBlocks.STOOL.getId(), new FurnaceFuel(800), false);
+        FuelRegistry fuels = FuelRegistry.INSTANCE;
+        fuels.add(PoItems.POOP.get(), 200);
+        fuels.add(PoItems.POOP_BALL.get(), 400);
+        fuels.add(PoBlocks.POOP_SAPLING.asItem(), 200);
+        fuels.add(PoBlocks.POOP_LEAVES.asItem(), 200);
+        fuels.add(PoBlocks.POOP_BLOCK.asItem(), 800);
+        fuels.add(PoBlocks.POOP_STAIRS.asItem(), 800);
+        fuels.add(PoBlocks.POOP_SLAB.asItem(), 400);
+        fuels.add(PoBlocks.POOP_VERTICAL_SLAB.asItem(), 400);
+        fuels.add(PoBlocks.POOP_BUTTON.asItem(), 200);
+        fuels.add(PoBlocks.POOP_PRESSURE_PLATE.asItem(), 400);
+        fuels.add(PoBlocks.POOP_FENCE.asItem(), 800);
+        fuels.add(PoBlocks.POOP_FENCE_GATE.asItem(), 800);
+        fuels.add(PoBlocks.POOP_WALL.asItem(), 800);
+        fuels.add(PoBlocks.POOP_DOOR.asItem(), 800);
+        fuels.add(PoBlocks.POOP_TRAPDOOR.asItem(), 800);
+        fuels.add(PoBlocks.POOP_LOG.asItem(), 800);
+        fuels.add(PoBlocks.STRIPPED_POOP_LOG.asItem(), 800);
+        fuels.add(PoBlocks.POOP_EMPTY_LOG.asItem(), 800);
+        fuels.add(PoBlocks.STRIPPED_POOP_EMPTY_LOG.asItem(), 800);
+        fuels.add(PoBlocks.POOP_PIECE.asItem(), 400);
+        fuels.add(PoBlocks.STOOL.asItem(), 800);
     }
 }

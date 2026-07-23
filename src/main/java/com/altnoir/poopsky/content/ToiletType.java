@@ -247,6 +247,20 @@ public class ToiletType implements Comparable<ToiletType> {
         return 0;
     }
 
+    public static int getCategoryIndex(ToiletType type) {
+        int index = 0;
+        for (ToiletType categoryType : getByCategory(type.category()).values()) {
+            if (categoryType.equals(type)) return index;
+            index++;
+        }
+        return 0;
+    }
+
+    public static float getCategoryModelValue(ToiletType type) {
+        int typeCount = getByCategory(type.category()).size();
+        return typeCount <= 1 ? 0.0F : getCategoryIndex(type) / (float) (typeCount - 1);
+    }
+
     // ─── Accessors ───
 
     /** 懒获取 sourceBlock，调用时才会从 Supplier 解析 */

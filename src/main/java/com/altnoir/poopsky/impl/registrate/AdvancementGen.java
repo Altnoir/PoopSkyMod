@@ -445,7 +445,7 @@ public final class AdvancementGen {
                         true,
                         false
                 )
-                .addCriterion("chili", EffectsChangedTrigger.TriggerInstance.hasEffects(MobEffectsPredicate.Builder.effects().and(PoEffects.INTESTINAL_SPASM)))
+                .addCriterion("chili", EffectsChangedTrigger.TriggerInstance.hasEffects(MobEffectsPredicate.Builder.effects().and(PoEffects.holder(PoEffects.INTESTINAL_SPASM))))
                 .save(provider, modId("chili"));
 
         var rainbowStack = new ItemStack(PoBlocks.HARD_TOILET.get());

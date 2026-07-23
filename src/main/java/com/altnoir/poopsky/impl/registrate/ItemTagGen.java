@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.impl.registrate;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.fabric.FabricatedTags;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
@@ -11,7 +12,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.neoforged.neoforge.common.Tags;
+//import net.neoforged.neoforge.common.Tags;
 
 public final class ItemTagGen {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
@@ -68,7 +69,7 @@ public final class ItemTagGen {
                 .add(PoBlocks.POOP_CAKE.asItem());
 
         // 原版Tags
-        tag(Tags.Items.FOODS)
+        tag(FabricatedTags.Items.FOODS)
                 .addTag(PoTags.Items.POOPS)
                 .add(PoItems.SAPLING_POOP_BALL.get())
                 .add(PoItems.BAKED_MAGGOTS.get())
@@ -90,7 +91,7 @@ public final class ItemTagGen {
                 .add(PoItems.URINE_BOTTLE.get())
                 .add(PoBlocks.POOP_CAKE.get().asItem());
 
-        tag(Tags.Items.FOODS_FOOD_POISONING)
+        tag(FabricatedTags.Items.FOODS_FOOD_POISONING)
                 .addTag(PoTags.Items.POOPS)
                 .add(PoItems.SAPLING_POOP_BALL.get())
                 .add(PoItems.POOP_BREAD.get())
@@ -113,13 +114,13 @@ public final class ItemTagGen {
                 .add(PoItems.ROUNDWORM.get())
                 .add(PoItems.BAKED_MAGGOTS.get())
                 .add(PoItems.POOBURGER_MEAT.get());
-        tag(Tags.Items.FOODS_RAW_MEAT)
+        tag(FabricatedTags.Items.FOODS_RAW_MEAT)
                 .add(PoItems.MAGGOTS_SEEDS.get())
                 .add(PoItems.ROUNDWORM.get());
-        tag(Tags.Items.FOODS_COOKED_MEAT)
+        tag(FabricatedTags.Items.FOODS_COOKED_MEAT)
                 .add(PoItems.BAKED_MAGGOTS.get());
 
-        tag(Tags.Items.GUNPOWDERS)
+        tag(FabricatedTags.Items.GUNPOWDERS)
                 .add(PoItems.KING_OF_DRAGON_FRUIT.get());
 
         tag(ItemTags.TRIMMABLE_ARMOR)
@@ -141,7 +142,7 @@ public final class ItemTagGen {
         tag(ItemTags.CHEST_ARMOR).add(PoItems.OMEN_CHESTPLATE.get());
         tag(ItemTags.HEAD_ARMOR).add(PoItems.OMEN_HELMET.get());
 
-        tag(Tags.Items.MUSIC_DISCS)
+        tag(FabricatedTags.Items.MUSIC_DISCS)
                 .add(PoItems.LAWRENCE_MUSIC_DISC.get())
                 .add(PoItems.LIGHT_DANCE_MUSIC_DISC.get())
                 .add(PoItems.MOON_BOWL_MUSIC_DISC.get());
@@ -151,7 +152,7 @@ public final class ItemTagGen {
                 .add(PoItems.POOP_PASTA.get());
         tag(PoTags.Items.SOUP)
                 .add(PoItems.POOP_SOUP.get());
-        tag(PoTags.Items.UPRIGHT_ON_BELT).replace(false)
+        tag(PoTags.Items.UPRIGHT_ON_BELT)
                 .add(PoItems.POOP_BREAD.get())
                 .add(PoItems.POOP_DUMPLINGS.get())
                 .add(PoItems.POOP_MOONCAKE.get())

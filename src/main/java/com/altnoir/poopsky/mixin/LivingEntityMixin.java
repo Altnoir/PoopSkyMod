@@ -33,7 +33,7 @@ public class LivingEntityMixin {
         LivingEntity self = (LivingEntity) (Object) this;
         float finalAmount = amount;
         if (poopSky$hasBleeding(self) && !damageSource.is(PoTags.DamageTypes.BYPASSES_BLEEDING)) {
-            float amplifier = (self.getEffect(PoEffects.BLEEDING).getAmplifier() + 1) * 0.1F;
+            float amplifier = (self.getEffect(PoEffects.holder(PoEffects.BLEEDING)).getAmplifier() + 1) * 0.1F;
             finalAmount = finalAmount * (1 + amplifier);
         }
         if (damageSource.getEntity() instanceof LivingEntity attacker && poopSky$hasCurse(attacker)) {
@@ -54,11 +54,11 @@ public class LivingEntityMixin {
 
     @Unique
     private boolean poopSky$hasCurse(LivingEntity self) {
-        return self.hasEffect(PoEffects.SEEDBED_CURSE);
+        return self.hasEffect(PoEffects.holder(PoEffects.SEEDBED_CURSE));
     }
 
     @Unique
     private boolean poopSky$hasBleeding(LivingEntity self) {
-        return self.hasEffect(PoEffects.BLEEDING);
+        return self.hasEffect(PoEffects.holder(PoEffects.BLEEDING));
     }
 }

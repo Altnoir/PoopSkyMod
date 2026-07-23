@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.ItemLike;
-import net.neoforged.neoforge.common.conditions.ICondition;
+//import net.neoforged.neoforge.common.conditions.ICondition;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -66,15 +66,15 @@ public class ToiletRecipeBuilder implements RecipeBuilder {
                     recipeOutput.accept(recipeId, recipe, advancement);
                 }
             }
-
-            @Override
-            public void accept(ResourceLocation recipeId, net.minecraft.world.item.crafting.Recipe<?> recipe, @Nullable net.minecraft.advancements.AdvancementHolder advancement, ICondition... conditions) {
-                if (recipe instanceof ShapedRecipe shaped) {
-                    recipeOutput.accept(recipeId, new ToiletShapedRecipe(shaped, toiletType), advancement, conditions);
-                } else {
-                    recipeOutput.accept(recipeId, recipe, advancement, conditions);
-                }
-            }
+//
+//            @Override
+//            public void accept(ResourceLocation recipeId, net.minecraft.world.item.crafting.Recipe<?> recipe, @Nullable net.minecraft.advancements.AdvancementHolder advancement, ICondition... conditions) {
+//                if (recipe instanceof ShapedRecipe shaped) {
+//                    recipeOutput.accept(recipeId, new ToiletShapedRecipe(shaped, toiletType), advancement, conditions);
+//                } else {
+//                    recipeOutput.accept(recipeId, recipe, advancement, conditions);
+//                }
+//            }
 
             @Override
             public Advancement.Builder advancement() {

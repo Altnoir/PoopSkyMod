@@ -25,18 +25,18 @@ public class MilosSwordItem extends SwordItem {
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (!target.getType().is(PoTags.EntityTypes.IGNORES_BLEEDING)) {
             if (attacker instanceof Player player && player.getAttackStrengthScale(0.0F) >= 1.0F) {
-                if (!target.hasEffect(PoEffects.BLEEDING)) {
-                    target.addEffect(new MobEffectInstance(PoEffects.BLEEDING, 200));
+                if (!target.hasEffect(PoEffects.holder(PoEffects.BLEEDING))) {
+                    target.addEffect(new MobEffectInstance(PoEffects.holder(PoEffects.BLEEDING), 200));
                 } else {
-                    int duration = target.getEffect(PoEffects.BLEEDING).getDuration() + 200;
-                    int amplifier = target.getEffect(PoEffects.BLEEDING).getAmplifier() + 1;
+                    int duration = target.getEffect(PoEffects.holder(PoEffects.BLEEDING)).getDuration() + 200;
+                    int amplifier = target.getEffect(PoEffects.holder(PoEffects.BLEEDING)).getAmplifier() + 1;
 
                     if (amplifier % 5 == 0) {
                         float baseDamage = (0.1F + 0.1F * (amplifier / 5.0F)) / (1.0F + 0.1F * amplifier);
                         float damage = target.getMaxHealth() * baseDamage;
                         target.hurt(target.damageSources().mobAttack(attacker), damage);
                     }
-                    target.addEffect(new MobEffectInstance(PoEffects.BLEEDING, duration, amplifier));
+                    target.addEffect(new MobEffectInstance(PoEffects.holder(PoEffects.BLEEDING), duration, amplifier));
                 }
             }
         }

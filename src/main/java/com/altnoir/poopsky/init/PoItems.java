@@ -2,6 +2,7 @@ package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.ToiletComponent;
+import com.altnoir.poopsky.content.entity.p.PoolimeEntity;
 import com.altnoir.poopsky.content.item.PArmorMaterials;
 import com.altnoir.poopsky.content.item.PFoods;
 import com.altnoir.poopsky.content.item.PToolTiers;
@@ -9,11 +10,12 @@ import com.altnoir.poopsky.content.item.p.*;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.impl.sound.PoSoundEvents;
 import com.tterrag.registrate.util.entry.ItemEntry;
+import com.tterrag.registrate.util.entry.RegistryEntry;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.*;
-import net.neoforged.neoforge.common.DeferredSpawnEggItem;
-import net.neoforged.neoforge.registries.DeferredHolder;
+//import net.neoforged.neoforge.common.DeferredSpawnEggItem;
+//import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +61,8 @@ public class PoItems {
     public static final ItemEntry<SimpleFeedableItem> POOBURGER_MEAT = registerItem("pooburger_meat",
             props -> new SimpleFeedableItem(props.food(PFoods.POOBURGER_MEAT).stacksTo(88)));
     public static final ItemEntry<SimpleFeedableItem> POOBURGER = registerItem("pooburger",
-            props -> new SimpleFeedableItem(props.food(PFoods.POOBURGER).stacksTo(88)));
+            props -> new SimpleFeedableItem(props.food(PFoods.POOBURGER).stacksTo(88),
+                    () -> PoEffects.holder(PoEffects.SEEDBED_CURSE), 3600, 0));
     public static final ItemEntry<SimpleFeedableItem> POOP_PASTA = registerItem("poop_pasta",
             props -> new SimpleFeedableItem(props.food(PFoods.POOP_PASTA).stacksTo(88)));
     public static final ItemEntry<SimpleFeedableItem> POODDING = registerItem("poodding",
@@ -75,7 +78,7 @@ public class PoItems {
                     .stacksTo(1)));
     public static final ItemEntry<ToiletLinkerItem> TOILET_PLUG_WAND = registerItem("toilet_plug_wand",
             props -> new ToiletLinkerItem(props.attributes(ToiletPlugItem.createWeaponAttributes())
-                    .component(PoComponents.TOILET_COMPONENT, ToiletComponent.EMPTY)
+                    .component(PoComponents.TOILET_COMPONENT.get(), ToiletComponent.EMPTY)
                     .stacksTo(1)));
     public static final ItemEntry<FeedableBlockItem> MAGGOTS_SEEDS = registerItem("maggots_seeds",
             props -> new FeedableBlockItem(PoBlocks.MAGGOTS.get(), new Item.Properties().food(PFoods.MAGGOTS_SEEDS).stacksTo(88)));
@@ -145,17 +148,17 @@ public class PoItems {
             props -> new Item(props.jukeboxPlayable(PoSoundEvents.LIGHT_DANCE_KEY).rarity(Rarity.RARE).stacksTo(1)));
     public static final ItemEntry<Item> MOON_BOWL_MUSIC_DISC = registerItem("music_disc_moon_bowl",
             props -> new Item(props.jukeboxPlayable(PoSoundEvents.MOON_BOWL_KEY).rarity(Rarity.RARE).stacksTo(1)));
-    public static final ItemEntry<DeferredSpawnEggItem> POOLIME_SPAWN_EGG = registerItemNoModel("poolime_spawn_egg",
-            prop -> new DeferredSpawnEggItem(PoEntityType.POOLIME, 0x7D5F36, 0x5E4228, prop));
-    public static final ItemEntry<DeferredSpawnEggItem> FLY_SPAWN_EGG = registerItemNoModel("fly_spawn_egg",
-            prop -> new DeferredSpawnEggItem(PoEntityType.FLY, 0x3B4346, 0x900D2D, prop));
+    public static final ItemEntry<SpawnEggItem> POOLIME_SPAWN_EGG = registerItemNoModel("poolime_spawn_egg",
+            prop -> new SpawnEggItem(PoEntityType.POOLIME.get(), 0x7D5F36, 0x5E4228, prop));
+    public static final ItemEntry<SpawnEggItem> FLY_SPAWN_EGG = registerItemNoModel("fly_spawn_egg",
+            prop -> new SpawnEggItem(PoEntityType.FLY.get(), 0x3B4346, 0x900D2D, prop));
 
     public static final ItemEntry<FlyItem> FLY = registerItemNoModel("fly",
             props -> new FlyItem(props.stacksTo(88)));
 
     public static List<Item> getAllItems() {
         var registrateItems = REGISTRATE.getAll(Registries.ITEM).stream()
-                .map(DeferredHolder::get)
+                .map(RegistryEntry::get)
                 .toList();
 
         return new ArrayList<>(registrateItems);

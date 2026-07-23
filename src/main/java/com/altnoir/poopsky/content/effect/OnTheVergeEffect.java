@@ -27,13 +27,13 @@ public class OnTheVergeEffect extends MobEffect {
         boolean result2 = false;
 
         if (!level.isClientSide) {
-            int duration = Objects.requireNonNull(livingEntity.getEffect(PoEffects.ON_THE_VERGE)).getDuration();
+            int duration = Objects.requireNonNull(livingEntity.getEffect(PoEffects.holder(PoEffects.ON_THE_VERGE))).getDuration();
             Vec3 vec3 = livingEntity.getDeltaMovement().add(new Vec3(0, 0.125, 0));
             boolean openTheDoor = false;
 
             if (livingEntity instanceof Player player) {
                 if (player.isShiftKeyDown()) {
-                    if (player.hasEffect(PoEffects.INTESTINAL_SPASM)) {
+                    if (player.hasEffect(PoEffects.holder(PoEffects.INTESTINAL_SPASM))) {
                         BlockPos pos = livingEntity.blockPosition().below();
                         BlockPos stonePos = pos.below();
                         BlockState state = level.getBlockState(pos);
@@ -69,10 +69,10 @@ public class OnTheVergeEffect extends MobEffect {
         }
 
         if (result) {
-            livingEntity.removeEffect(PoEffects.ON_THE_VERGE);
+            livingEntity.removeEffect(PoEffects.holder(PoEffects.ON_THE_VERGE));
         }
         if (result2) {
-            livingEntity.removeEffect(PoEffects.INTESTINAL_SPASM);
+            livingEntity.removeEffect(PoEffects.holder(PoEffects.INTESTINAL_SPASM));
         }
         return true;
     }

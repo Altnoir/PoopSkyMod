@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smoking",
+  "category": "food",
+  "cookingtime": 100,
+  "experience": 0.35,
+  "group": "maggots_seeds",
+  "ingredient": {
+    "item": "poopsky:maggots_seeds"
+  },
+  "result": {
+    "id": "poopsky:baked_maggots"
+  }
+}

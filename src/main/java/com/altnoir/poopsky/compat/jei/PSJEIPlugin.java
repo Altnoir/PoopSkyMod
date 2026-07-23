@@ -2,14 +2,14 @@ package com.altnoir.poopsky.compat.jei;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.compat.PoMods;
-import com.altnoir.poopsky.compat.jei.create.FanDigestingCategory;
+//import com.altnoir.poopsky.compat.jei.create.FanDigestingCategory;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.p.CompooperBlock;
 import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.content.recipe.ToiletShapedRecipe;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.init.*;
-import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
+//import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.ingredients.subtypes.ISubtypeInterpreter;
@@ -32,7 +32,7 @@ import java.util.stream.Stream;
 @JeiPlugin
 public class PSJEIPlugin implements IModPlugin {
     private static final ResourceLocation PS_JEI_TEXTURE = PoopSky.loc("textures/gui/jei/enr_jei.png");
-    private final List<CreateRecipeCategory<?>> createCategories = new ArrayList<>();
+//    private final List<CreateRecipeCategory<?>> createCategories = new ArrayList<>();
 
     @Override
     public ResourceLocation getPluginUid() {
@@ -53,11 +53,11 @@ public class PSJEIPlugin implements IModPlugin {
                 new POPExplosionRecipeCategory(registration.getJeiHelpers(), arrow),
                 new AnalPressingRecipeCategory(registration.getJeiHelpers(), arrow, plus));
 
-        if (PoMods.CREATE.isLoaded()) {
-            createCategories.clear();
-            createCategories.add(FanDigestingCategory.create());
-            registration.addRecipeCategories(createCategories.toArray(IRecipeCategory[]::new));
-        }
+//        if (PoMods.CREATE.isLoaded()) {
+//            createCategories.clear();
+//            createCategories.add(FanDigestingCategory.create());
+//            registration.addRecipeCategories(createCategories.toArray(IRecipeCategory[]::new));
+//        }
     }
 
     @Override
@@ -132,9 +132,9 @@ public class PSJEIPlugin implements IModPlugin {
 
         PSJEIInfo.register(registration);
 
-        if (PoMods.CREATE.isLoaded()) {
-            createCategories.forEach(category -> category.registerRecipes(registration));
-        }
+//        if (PoMods.CREATE.isLoaded()) {
+//            createCategories.forEach(category -> category.registerRecipes(registration));
+//        }
     }
 
     @Override
@@ -147,8 +147,8 @@ public class PSJEIPlugin implements IModPlugin {
         registration.addRecipeCatalyst(new ItemStack(PoItems.KING_OF_DRAGON_FRUIT.get()), AnalPressingRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(PoItems.DRAGON_BREATH_CHILI.get()), AnalPressingRecipeCategory.TYPE);
 
-        if (PoMods.CREATE.isLoaded()) {
-            createCategories.forEach(category -> category.registerCatalysts(registration));
-        }
+//        if (PoMods.CREATE.isLoaded()) {
+//            createCategories.forEach(category -> category.registerCatalysts(registration));
+//        }
     }
 }

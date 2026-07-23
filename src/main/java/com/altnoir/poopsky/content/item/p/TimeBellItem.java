@@ -3,6 +3,7 @@ package com.altnoir.poopsky.content.item.p;
 import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.init.PoEffects;
 import com.altnoir.poopsky.impl.network.TimeBellFreezePayload;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
@@ -15,7 +16,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.network.PacketDistributor;
+//import net.neoforged.neoforge.network.PacketDistributor;
 
 public class TimeBellItem extends Item {
     private static final int FREEZE_TICKS = 160;
@@ -34,7 +35,7 @@ public class TimeBellItem extends Item {
         if (!level.isClientSide && level.getServer() != null) {
             var server = level.getServer();
             if (server.tickRateManager().isFrozen()) {
-                player.removeEffect(PoEffects.MOMENT_OF_PTYME);
+                player.removeEffect(PoEffects.holder(PoEffects.MOMENT_OF_PTYME));
                 unfreeze(server, player);
             } else {
                 freeze(server, player);
@@ -52,7 +53,7 @@ public class TimeBellItem extends Item {
         broadcastFreezeState(server, true);
 
         if (!Config.unlimitedFreeze) {
-            player.addEffect(new MobEffectInstance(PoEffects.MOMENT_OF_PTYME, FREEZE_TICKS, 0, false, false));
+            player.addEffect(new MobEffectInstance(PoEffects.holder(PoEffects.MOMENT_OF_PTYME), FREEZE_TICKS, 0, false, false));
         }
         player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BELL_BLOCK, SoundSource.PLAYERS, 1.0F, 0.5F);
         player.displayClientMessage(Component.translatable("message.poopsky.time_bell.frozen"), true);
@@ -69,7 +70,7 @@ public class TimeBellItem extends Item {
 
     private static void broadcastFreezeState(MinecraftServer server, boolean frozen) {
         for (ServerPlayer serverPlayer : server.getPlayerList().getPlayers()) {
-            PacketDistributor.sendToPlayer(serverPlayer, new TimeBellFreezePayload(frozen));
+            ServerPlayNetworking.send(serverPlayer, new TimeBellFreezePayload(frozen));
         }
     }
 }

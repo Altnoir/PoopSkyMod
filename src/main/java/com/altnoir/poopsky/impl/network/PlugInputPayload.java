@@ -2,11 +2,11 @@ package com.altnoir.poopsky.impl.network;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record PlugInputPayload(
         boolean forward,
@@ -25,8 +25,8 @@ public record PlugInputPayload(
             PlugInputPayload::decode
     );
 
-    public static void handle(final PlugInputPayload payload, final IPayloadContext context) {
-        context.enqueueWork(() -> {
+    public static void handle(final PlugInputPayload payload, final ServerPlayNetworking.Context context) {
+        context.server().execute(() -> {
             if (context.player() instanceof ServerPlayer player && player.getVehicle() instanceof ToiletPlugEntity plug) {
                 plug.setInput(
                         payload.forward(),

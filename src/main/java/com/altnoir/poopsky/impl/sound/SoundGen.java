@@ -1,14 +1,16 @@
 package com.altnoir.poopsky.impl.sound;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.fabric.port.data.SoundDefinition;
+import com.altnoir.poopsky.fabric.port.data.SoundDefinitionsProvider;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.neoforged.neoforge.common.data.SoundDefinition;
-import net.neoforged.neoforge.common.data.SoundDefinitionsProvider;
+
+import java.util.concurrent.CompletableFuture;
 
 public class SoundGen extends SoundDefinitionsProvider {
-    public SoundGen(PackOutput output, ExistingFileHelper helper) {
-        super(output, PoopSky.MOD_ID, helper);
+    public SoundGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
+        super(output, registries, PoopSky.MOD_ID);
     }
 
     @Override

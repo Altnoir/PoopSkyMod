@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.impl.registrate;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.fabric.FabricatedTags;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.tterrag.registrate.providers.ProviderType;
@@ -10,7 +11,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.neoforged.neoforge.common.Tags;
+//import net.neoforged.neoforge.common.Tags;
 
 public final class BlockTagGen {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
@@ -209,7 +210,7 @@ public final class BlockTagGen {
                         PoBlocks.POOP_FARMLAND.get()
                 );
 
-        tag(Tags.Blocks.VILLAGER_JOB_SITES)
+        tag(FabricatedTags.Blocks.VILLAGER_JOB_SITES)
                 .add(
                         PoBlocks.COMPOOPER.get(),
                         PoBlocks.WATER_COMPOOPER.get(),

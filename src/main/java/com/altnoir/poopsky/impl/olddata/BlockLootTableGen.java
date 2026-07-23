@@ -1,14 +1,16 @@
 package com.altnoir.poopsky.impl.olddata;
 
 import com.altnoir.poopsky.init.PoBlocks;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.flag.FeatureFlags;
-import net.minecraft.world.level.block.Block;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.world.level.storage.loot.LootTable;
 
-import java.util.List;
 import java.util.Set;
+import java.util.function.BiConsumer;
 
 public class BlockLootTableGen extends BlockLootSubProvider {
     public BlockLootTableGen(HolderLookup.Provider registries) {
@@ -16,16 +18,14 @@ public class BlockLootTableGen extends BlockLootSubProvider {
     }
 
     @Override
-    protected void generate() {
+    public void generate() {
         this.add(PoBlocks.WOODEN_TOILET.get(), PoBlocks.createToiletDrop(PoBlocks.WOODEN_TOILET.get()));
         this.add(PoBlocks.HARD_TOILET.get(), PoBlocks.createToiletDrop(PoBlocks.HARD_TOILET.get()));
     }
 
     @Override
-    protected @NotNull Iterable<Block> getKnownBlocks() {
-        return List.of(
-                PoBlocks.WOODEN_TOILET.get(),
-                PoBlocks.HARD_TOILET.get()
-        );
+    public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> output) {
+        generate();
+        map.forEach(output);
     }
 }

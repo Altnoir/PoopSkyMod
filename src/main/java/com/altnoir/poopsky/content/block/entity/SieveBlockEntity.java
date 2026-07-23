@@ -1,5 +1,7 @@
 package com.altnoir.poopsky.content.block.entity;
 
+import com.altnoir.poopsky.fabric.port.itemhandler.ItemStackHandler;
+import com.altnoir.poopsky.fabric.port.itemhandler.RangedWrapper;
 import com.altnoir.poopsky.init.PoBlockEntityType;
 import com.altnoir.poopsky.init.PoRecipes;
 import com.altnoir.poopsky.content.recipe.SieveRecipe;
@@ -23,8 +25,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.neoforged.neoforge.items.wrapper.RangedWrapper;
+//import net.neoforged.neoforge.items.ItemStackHandler;
+//import net.neoforged.neoforge.items.wrapper.RangedWrapper;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;

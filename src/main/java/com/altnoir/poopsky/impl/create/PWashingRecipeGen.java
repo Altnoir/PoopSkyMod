@@ -1,3 +1,4 @@
+/*
 package com.altnoir.poopsky.impl.create;
 
 import com.altnoir.poopsky.PoopSky;
@@ -39,3 +40,4 @@ public class PWashingRecipeGen extends WashingRecipeGen implements IConditionBui
                         .output(result));
     }
 }
+ */

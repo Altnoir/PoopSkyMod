@@ -7,6 +7,7 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.MapCodec;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import net.fabricmc.fabric.api.entity.FakePlayer;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -37,7 +38,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.util.FakePlayer;
+//import net.neoforged.neoforge.common.util.FakePlayer;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
@@ -113,7 +114,7 @@ public class PlacerBlock extends BaseEntityBlock {
                     BlockState targetState = level.getBlockState(targetPos);
 
                     if (!level.isOutsideBuildHeight(targetPos) && targetState.canBeReplaced()) {
-                        FakePlayer fakePlayer = new FakePlayer(level, new GameProfile(UUID.randomUUID(), "Placer"));
+                        FakePlayer fakePlayer = FakePlayer.get(level, new GameProfile(UUID.randomUUID(), "Placer"));
 
                         fakePlayer.setPos(Vec3.atCenterOf(pos));
                         fakePlayer.setYRot(direction.toYRot());

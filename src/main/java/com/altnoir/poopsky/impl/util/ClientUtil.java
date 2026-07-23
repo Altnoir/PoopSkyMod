@@ -7,13 +7,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.ColorResolver;
 import net.minecraft.world.level.LightLayer;
@@ -23,7 +23,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.lighting.LevelLightEngine;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.neoforged.neoforge.client.model.data.ModelData;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4fStack;
 import org.joml.Vector3f;
@@ -58,14 +57,13 @@ public class ClientUtil {
 
         if (fluidState.isEmpty()) {
             MultiBufferSource.BufferSource buffers = mc.renderBuffers().bufferSource();
-            BakedModel model = mc.getBlockRenderer().getBlockModel(state);
-            ModelData modelData = model.getModelData(Dummy.INSTANCE, BlockPos.ZERO, state, ModelData.EMPTY);
             RenderSystem.setupGui3DDiffuseLighting(L1, L2);
-            Dummy.tempState = state;
-            for (RenderType renderType : model.getRenderTypes(state, RandomSource.create(), modelData)) {
-                mc.getBlockRenderer().renderBatched(state, BlockPos.ZERO, Dummy.INSTANCE, poseStack, buffers.getBuffer(renderType), false, RandomSource.create());
-            }
-            Dummy.tempState = AIR;
+            mc.getBlockRenderer().renderSingleBlock(
+                    state,
+                    poseStack,
+                    buffers,
+                    LightTexture.FULL_BRIGHT,
+                    OverlayTexture.NO_OVERLAY);
             buffers.endBatch();
         } else {
             RenderType renderType = ItemBlockRenderTypes.getRenderLayer(fluidState);

@@ -15,14 +15,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 
 public class ToiletHighlightRenderer {
-    public static void onRenderLevel(RenderLevelStageEvent event) {
-        if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS) {
-            return;
-        }
-
+    public static void onRenderLevel(WorldRenderContext context) {
         Minecraft mc = Minecraft.getInstance();
         Player player = mc.player;
         if (player == null) return;
@@ -47,18 +43,18 @@ public class ToiletHighlightRenderer {
 
         BlockPos pos = new BlockPos(comp.x1(), comp.y1(), comp.z1());
 
-        PoseStack poseStack = event.getPoseStack();
-        Camera camera = event.getCamera();
+        PoseStack poseStack = context.matrixStack();
+        if (poseStack == null) return;
+        Camera camera = context.camera();
         Vec3 cameraPos = camera.getPosition();
 
-        MultiBufferSource.BufferSource bufferSource = mc.renderBuffers().bufferSource();
+        MultiBufferSource bufferSource = context.consumers();
+        if (bufferSource == null) return;
         VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.lines());
 
         AABB aabb = new AABB(pos).move(-cameraPos.x, -cameraPos.y, -cameraPos.z);
         aabb = aabb.inflate(0.01D);
 
         LevelRenderer.renderLineBox(poseStack, vertexConsumer, aabb, 0.804F, 0.522F, 0.247F, 1.0F);
-
-        bufferSource.endBatch(RenderType.lines());
     }
 }

@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "poopsky:block/urine_liquid"
+    },
+    "level=1": {
+      "model": "poopsky:block/urine_liquid"
+    },
+    "level=10": {
+      "model": "poopsky:block/urine_liquid"
+    },
+    "level=11": {
+      "model": "poopsky:block/urine_liquid"
+    },
+    "level=12": {
+      "model": "poopsky:block/urine_liquid"
+    },
+    "level=13": {
+      "model": "poopsky:block/urine_liquid"
+    },
+    "level=14": {
+      "model": "poopsky:block/urine_liquid"
+    },
+    "level=15": {
+      "model": "poopsky:block/urine_liquid"
+    },
+    "level=2": {
+      "model": "poopsky:block/urine_liquid"
+    },
+    "level=3": {
+      "model": "poopsky:block/urine_liquid"
+    },
+    "level=4": {
+      "model": "poopsky:block/urine_liquid"
+    },
+    "level=5": {
+      "model": "poopsky:block/urine_liquid"
+    },
+    "level=6": {
+      "model": "poopsky:block/urine_liquid"
+    },
+    "level=7": {
+      "model": "poopsky:block/urine_liquid"
+    },
+    "level=8": {
+      "model": "poopsky:block/urine_liquid"
+    },
+    "level=9": {
+      "model": "poopsky:block/urine_liquid"
+    }
+  }
+}

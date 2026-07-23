@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "poopsky:block/small_saltpeter_bud"
+  }
+}

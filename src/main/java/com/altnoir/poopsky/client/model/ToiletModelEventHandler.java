@@ -1,113 +1,118 @@
 package com.altnoir.poopsky.client.model;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.client.renderer.ToiletPlugItemRenderer;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.init.PoBlocks;
+import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
+import net.fabricmc.fabric.api.client.model.loading.v1.ModelModifier;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.client.resources.model.BlockModelRotation;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.client.event.ModelEvent;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ToiletModelEventHandler {
+public final class ToiletModelEventHandler {
     private static final String[] WOOD_SUFFIXES = {"", "_n", "_ns"};
     private static final String[] LAVA_SUFFIXES = {"", "_n", "_ns", "_lava", "_lava_n", "_lava_ns"};
 
-    public static void onRegisterAdditional(ModelEvent.RegisterAdditional event) {
-        registerAllToiletModels(event, "wooden_toilet", ToiletType.Category.WOOD, false);
-        registerAllToiletModels(event, "hard_toilet", ToiletType.Category.HARD, true);
+    private ToiletModelEventHandler() {
     }
 
-    private static void registerAllToiletModels(ModelEvent.RegisterAdditional event, String blockPath, ToiletType.Category category, boolean hasLava) {
+    public static void register() {
+        ModelLoadingPlugin.register(context -> {
+            List<ResourceLocation> models = new ArrayList<>();
+            models.add(ToiletPlugItemRenderer.TWO_DIMENSIONAL_MODEL);
+            addAllToiletModels(models, "wooden_toilet", ToiletType.Category.WOOD, false);
+            addAllToiletModels(models, "hard_toilet", ToiletType.Category.HARD, true);
+            context.addModels(models);
+            context.modifyModelAfterBake().register(ModelModifier.WRAP_PHASE, ToiletModelEventHandler::wrapModel);
+        });
+    }
+
+    private static void addAllToiletModels(
+            List<ResourceLocation> models,
+            String blockPath,
+            ToiletType.Category category,
+            boolean hasLava
+    ) {
         String[] suffixes = hasLava ? LAVA_SUFFIXES : WOOD_SUFFIXES;
-        // 注册模板模型（无类型后缀，作为兜底）
         for (String suffix : suffixes) {
-            event.register(new ModelResourceLocation(
-                    PoopSky.loc("block/" + blockPath + suffix),
-                    ModelResourceLocation.STANDALONE_VARIANT));
+            models.add(PoopSky.loc("block/" + blockPath + suffix));
         }
-        // 注册每种材质的变种模型
         for (ToiletType type : ToiletType.getByCategory(category).values()) {
-            String typeSuffix = "_" + type.id();
-            for (String suffix : suffixes) {
-                event.register(new ModelResourceLocation(
-                        PoopSky.loc("block/" + blockPath + typeSuffix + suffix),
-                        ModelResourceLocation.STANDALONE_VARIANT));
-            }
+            models.add(PoopSky.loc("block/" + blockPath + "_" + type.id()));
         }
     }
 
-    public static void onModifyBakingResult(ModelEvent.ModifyBakingResult event) {
-        var models = event.getModels();
-        wrapToiletModels(models, PoBlocks.WOODEN_TOILET.getId(), "wooden_toilet", ToiletType.Category.WOOD, false);
-        wrapToiletModels(models, PoBlocks.HARD_TOILET.getId(), "hard_toilet", ToiletType.Category.HARD, true);
+    private static @Nullable BakedModel wrapModel(
+            @Nullable BakedModel original,
+            ModelModifier.AfterBake.Context context
+    ) {
+        if (original == null || context.topLevelId() == null) return original;
+
+        ResourceLocation modelId = context.topLevelId().id();
+        if (modelId.equals(PoBlocks.WOODEN_TOILET.getId())) {
+            return createModel(original, context, "wooden_toilet", ToiletType.Category.WOOD, false);
+        }
+        if (modelId.equals(PoBlocks.HARD_TOILET.getId())) {
+            return createModel(original, context, "hard_toilet", ToiletType.Category.HARD, true);
+        }
+        return original;
     }
 
-    private static void wrapToiletModels(Map<ModelResourceLocation, BakedModel> models, ResourceLocation blockId, String blockPath, ToiletType.Category category, boolean hasLava) {
-        String[] stateSuffixes = hasLava ? LAVA_SUFFIXES : WOOD_SUFFIXES;
-
-        Map<ToiletType, BakedModel[]> variantModels = new HashMap<>();
+    private static BakedModel createModel(
+            BakedModel original,
+            ModelModifier.AfterBake.Context context,
+            String blockPath,
+            ToiletType.Category category,
+            boolean hasLava
+    ) {
+        String[] suffixes = hasLava ? LAVA_SUFFIXES : WOOD_SUFFIXES;
+        BakedModel[] templateModels = bakeModels(context, blockPath, "", suffixes);
         Map<ToiletType, ResourceLocation> variantTextures = new HashMap<>();
-        BakedModel[] templateModels = new BakedModel[stateSuffixes.length];
-        for (int i = 0; i < stateSuffixes.length; i++) {
-            ResourceLocation modelLoc = PoopSky.loc("block/" + blockPath + stateSuffixes[i]);
-            ModelResourceLocation mrl = new ModelResourceLocation(modelLoc, ModelResourceLocation.STANDALONE_VARIANT);
-            templateModels[i] = models.get(mrl);
-        }
 
         for (ToiletType type : ToiletType.getByCategory(category).values()) {
-            String typeSuffix = "_" + type.id();
-            BakedModel[] typeModels = new BakedModel[stateSuffixes.length];
-            for (int i = 0; i < stateSuffixes.length; i++) {
-                ResourceLocation modelLoc = PoopSky.loc("block/" + blockPath + typeSuffix + stateSuffixes[i]);
-                ModelResourceLocation mrl = new ModelResourceLocation(modelLoc, ModelResourceLocation.STANDALONE_VARIANT);
-                typeModels[i] = models.get(mrl);
-            }
-            variantModels.put(type, typeModels);
             variantTextures.put(type, toiletTexture(type));
         }
 
-        List<ModelResourceLocation> toWrap = new ArrayList<>();
-        String blockIdStr = blockId.toString();
-        for (var entry : models.keySet()) {
-            String entryStr = entry.toString();
-            if (entryStr.startsWith(blockIdStr + "#") || entryStr.equals(blockIdStr)) {
-                toWrap.add(entry);
-            }
-        }
+        return new ToiletBakedModel(original, templateModels, variantTextures, hasLava);
+    }
 
-        for (ModelResourceLocation key : toWrap) {
-            models.compute(key, (k, original) -> new ToiletBakedModel(original, templateModels, variantModels, variantTextures, hasLava));
+    private static BakedModel[] bakeModels(
+            ModelModifier.AfterBake.Context context,
+            String blockPath,
+            String typeSuffix,
+            String[] stateSuffixes
+    ) {
+        BakedModel[] models = new BakedModel[stateSuffixes.length];
+        for (int i = 0; i < stateSuffixes.length; i++) {
+            ResourceLocation modelId = PoopSky.loc("block/" + blockPath + typeSuffix + stateSuffixes[i]);
+            models[i] = context.baker().bake(modelId, BlockModelRotation.X0_Y0);
         }
+        return models;
     }
 
     private static ResourceLocation toiletTexture(ToiletType toiletType) {
-        String tex = toiletType.texture();
-        if (tex != null) {
+        String texture = toiletType.texture();
+        if (texture != null) {
             String namespace = toiletType.sourceBlock() != null
                     ? blockKey(toiletType.sourceBlock()).getNamespace()
                     : PoopSky.MOD_ID;
-            return ResourceLocation.fromNamespaceAndPath(namespace, "block/" + tex);
+            return ResourceLocation.fromNamespaceAndPath(namespace, "block/" + texture);
         }
 
-        Block sourceBlock = toiletType.sourceBlock();
-        ResourceLocation key = blockKey(sourceBlock);
+        ResourceLocation key = blockKey(toiletType.sourceBlock());
         return ResourceLocation.fromNamespaceAndPath(key.getNamespace(), "block/" + key.getPath());
     }
 
     private static ResourceLocation blockKey(Block block) {
         return BuiltInRegistries.BLOCK.getKey(block);
-    }
-
-    public static void register(IEventBus modEventBus) {
-        modEventBus.addListener(ToiletModelEventHandler::onRegisterAdditional);
-        modEventBus.addListener(ToiletModelEventHandler::onModifyBakingResult);
     }
 }

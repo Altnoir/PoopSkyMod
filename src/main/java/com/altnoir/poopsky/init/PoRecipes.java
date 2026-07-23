@@ -2,13 +2,16 @@ package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.recipe.*;
+import com.tterrag.registrate.fabric.registry.DeferredHolder;
+import com.tterrag.registrate.fabric.registry.DeferredRegister;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
+//import net.neoforged.bus.api.IEventBus;
+//import net.neoforged.neoforge.registries.DeferredHolder;
+//import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
@@ -27,7 +30,7 @@ public class PoRecipes {
     @SuppressWarnings("unchecked")
     private static <S extends RecipeSerializer<?>, R extends Recipe<?>> RecipeEntry<S, R> register(String name, Supplier<? extends S> serializerSupplier) {
         var serializer = (DeferredHolder<RecipeSerializer<?>, S>) registerSerializer(name, serializerSupplier);
-        var type = (DeferredHolder<RecipeType<?>, RecipeType<R>>) (DeferredHolder<?, ?>) TYPES.register(name, () -> RecipeType.simple(PoopSky.loc(name)));
+        var type = (DeferredHolder<RecipeType<?>, RecipeType<R>>) (DeferredHolder<?, ?>) TYPES.register(name, () -> simple(PoopSky.loc(name)));
         return new RecipeEntry<>(serializer, type, name);
     }
 
@@ -41,8 +44,19 @@ public class PoRecipes {
             String folder) {
     }
 
-    public static void register(IEventBus eventBus) {
-        SERIALIZERS.register(eventBus);
-        TYPES.register(eventBus);
+    // port from https://github.com/neoforged/NeoForge/blob/1.21.1/patches/net/minecraft/world/item/crafting/RecipeType.java.patch
+    public static <T extends Recipe<?>> RecipeType<T> simple(final ResourceLocation name) {
+        final String toString = name.toString();
+        return new RecipeType<T>() {
+            @Override
+            public String toString() {
+                return toString;
+            }
+        };
+    }
+
+    public static void register() {
+        SERIALIZERS.register();
+        TYPES.register();
     }
 }

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "category": "food",
+  "cookingtime": 200,
+  "experience": 0.35,
+  "group": "roundworm",
+  "ingredient": {
+    "item": "poopsky:roundworm"
+  },
+  "result": {
+    "id": "minecraft:string"
+  }
+}

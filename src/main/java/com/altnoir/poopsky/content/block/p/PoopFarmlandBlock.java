@@ -1,5 +1,7 @@
 package com.altnoir.poopsky.content.block.p;
 
+import com.altnoir.poopsky.fabric.port.util.ItemAbilities;
+import com.altnoir.poopsky.fabric.port.util.ItemAbility;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.impl.sound.PoSoundEvents;
@@ -22,8 +24,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.neoforged.neoforge.common.ItemAbilities;
-import net.neoforged.neoforge.common.ItemAbility;
+//import net.neoforged.neoforge.common.ItemAbilities;
+//import net.neoforged.neoforge.common.ItemAbility;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -149,7 +151,7 @@ public class PoopFarmlandBlock extends FarmBlock {
         BlockPos cropPos = farmlandPos.above();
         BlockState cropState = level.getBlockState(cropPos);
         if (cropState.getBlock() instanceof CropBlock cropBlock && !cropBlock.isMaxAge(cropState)) {
-            boolean applied = BoneMealItem.applyBonemeal(new ItemStack(PoItems.JINKELA.get()), level, cropPos, null);
+            boolean applied = BoneMealItem.growCrop(new ItemStack(PoItems.JINKELA.get()), level, cropPos);
             if (applied) {
                 BoneMealItem.addGrowthParticles(level, cropPos, 15);
                 level.playSound(null, cropPos, PoSoundEvents.ITEM_JINKELA_USE.get(), SoundSource.BLOCKS);

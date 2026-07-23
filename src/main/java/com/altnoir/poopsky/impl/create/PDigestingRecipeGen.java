@@ -1,3 +1,4 @@
+/*
 package com.altnoir.poopsky.impl.create;
 
 import com.altnoir.poopsky.PoopSky;
@@ -37,3 +38,4 @@ public class PDigestingRecipeGen extends DigestingRecipeGen implements IConditio
         convert(Items.POWDER_SNOW_BUCKET, PoItems.URINE_BUCKET.get()).register(conditionalOutput);
     }
 }
+ */

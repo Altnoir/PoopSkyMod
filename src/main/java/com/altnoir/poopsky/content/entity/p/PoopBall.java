@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -89,7 +90,7 @@ public class PoopBall extends ThrowableItemProjectile {
 
                 BlockPos.betweenClosedStream(originPos.offset(-3, -1, -3), originPos.offset(3, 1, 3))
                         .forEach(targetPos -> {
-                            boolean applied = BoneMealItem.applyBonemeal(stack, level, targetPos, null)
+                            boolean applied = BoneMealItem.growCrop(stack, level, targetPos)
                                     || BoneMealItem.growWaterPlant(stack, level, targetPos, null);
 
                             if (applied) {
@@ -104,5 +105,10 @@ public class PoopBall extends ThrowableItemProjectile {
             this.level().broadcastEntityEvent(this, (byte) 3);
             this.discard();
         }
+    }
+
+    @Override
+    public CompoundTag getCustomData() {
+        return null;
     }
 }

@@ -5,6 +5,8 @@ import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.entity.p.ToiletEntity;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
+import com.altnoir.poopsky.fabric.port.util.ItemAbilities;
+import com.altnoir.poopsky.fabric.port.util.ParticleOptionUtils;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.impl.sound.PoSoundEvents;
 import com.altnoir.poopsky.impl.util.toiletUtil;
@@ -62,7 +64,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.common.ItemAbilities;
+//import net.neoforged.neoforge.common.ItemAbilities;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -146,7 +148,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, Player player) {
         return ToiletBlockItem.withType(this, getToiletTypeOrDefault(level, pos));
     }
 
@@ -168,7 +170,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
             return false;
         }
 
-        level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, particleState).setPos(pos),
+        level.sendParticles(ParticleOptionUtils.setBlockPos(new BlockParticleOption(ParticleTypes.BLOCK, particleState), pos),
                 entity.getX(), entity.getY(), entity.getZ(), numberOfParticles, 0.0, 0.0, 0.0, 0.15F);
         return true;
     }
@@ -336,9 +338,9 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
         if (!level.isClientSide && entity instanceof Player player) {
             if (player.isShiftKeyDown() && toiletUtil.isEntityCentered(pos, player)) {
-                var playerData = player.getPersistentData();
+                var playerData = player.getCustomData();
                 long lastPoopTime = playerData.getLong("poopTime");
-                toiletUtil.canPoop(level, player, player.hasEffect(PoEffects.INTESTINAL_SPASM), false, 0.1F, 0.5F, lastPoopTime,
+                toiletUtil.canPoop(level, player, player.hasEffect(PoEffects.holder(PoEffects.INTESTINAL_SPASM)), false, 0.1F, 0.5F, lastPoopTime,
                         time -> playerData.putLong("poopTime", time));
             }
         }

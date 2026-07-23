@@ -10,6 +10,7 @@ import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
 import com.tterrag.registrate.util.entry.RegistryEntry;
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
@@ -23,7 +24,7 @@ import java.util.Set;
 public class PoItemGroups {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
-    public static final RegistryEntry<CreativeModeTab, CreativeModeTab> POOPSKY_TAB = REGISTRATE.generic("poopsky_tab", Registries.CREATIVE_MODE_TAB, () -> CreativeModeTab.builder()
+    public static final RegistryEntry<CreativeModeTab, CreativeModeTab> POOPSKY_TAB = REGISTRATE.generic("poopsky_tab", Registries.CREATIVE_MODE_TAB, () -> FabricItemGroup.builder()
             .title(Component.translatable("itemgroup.poopsky"))
             .icon(PoBlocks.WOODEN_TOILET::asStack)
             .displayItems((parameters, output) -> {

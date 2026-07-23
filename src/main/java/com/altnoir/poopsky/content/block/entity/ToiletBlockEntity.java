@@ -4,9 +4,13 @@ import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.block.p.LavaToiletBlock;
+import com.altnoir.poopsky.fabric.port.fluidhandler.FluidStack;
+import com.altnoir.poopsky.fabric.port.fluidhandler.FluidTank;
+import com.altnoir.poopsky.fabric.port.fluidhandler.IFluidHandler;
 import com.altnoir.poopsky.init.PoBlockEntityType;
 import com.altnoir.poopsky.init.PoFluids;
 import com.altnoir.poopsky.init.ToiletTypes;
+import net.fabricmc.fabric.api.blockview.v2.RenderDataBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -23,12 +27,12 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.material.Fluids;
-import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+//import net.neoforged.neoforge.fluids.FluidStack;
+//import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+//import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import org.jetbrains.annotations.Nullable;
 
-public class ToiletBlockEntity extends BlockEntity {
+public class ToiletBlockEntity extends BlockEntity implements RenderDataBlockEntity {
     private BlockPos linkedPos;
     private String linkedDim;
     private ToiletType toiletType;
@@ -59,12 +63,17 @@ public class ToiletBlockEntity extends BlockEntity {
         return toiletType;
     }
 
+    @Override
+    public Object getRenderData() {
+        return toiletType;
+    }
+
     public void setToiletType(ToiletType toiletType) {
         this.toiletType = toiletType;
         this.setChanged();
         if (level instanceof ServerLevel serverLevel) {
             syncToiletModeToBlockState();
-            requestModelDataUpdate();
+            //requestModelDataUpdate();
             serverLevel.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
         }
     }
@@ -138,7 +147,7 @@ public class ToiletBlockEntity extends BlockEntity {
             }
         }
         if (level != null && level.isClientSide) {
-            requestModelDataUpdate();
+            //requestModelDataUpdate();
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
         }
     }
@@ -171,7 +180,7 @@ public class ToiletBlockEntity extends BlockEntity {
             }
         }
         if (level != null && level.isClientSide) {
-            requestModelDataUpdate();
+            //requestModelDataUpdate();
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
         }
     }

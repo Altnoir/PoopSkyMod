@@ -60,7 +60,7 @@ public class ToiletEntity extends Entity {
             this.setYRot(livingEntity.getYRot());
 
             float yOffset = livingEntity instanceof Player ? 0.55F : 0.05F;
-            toiletUtil.canPoop(level(), livingEntity, livingEntity.hasEffect(PoEffects.INTESTINAL_SPASM), goldenPoop, yOffset, 0.5F, poopTime,
+            toiletUtil.canPoop(level(), livingEntity, livingEntity.hasEffect(PoEffects.holder(PoEffects.INTESTINAL_SPASM)), goldenPoop, yOffset, 0.5F, poopTime,
                     time -> this.poopTime = time);
         }
     }

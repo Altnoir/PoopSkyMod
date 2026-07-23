@@ -4,6 +4,7 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.init.PoEntityType;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.init.PoItems;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -13,14 +14,13 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record PlugActionPayload() implements CustomPacketPayload {
     public static final CustomPacketPayload.Type<PlugActionPayload> TYPE = new CustomPacketPayload.Type<>(PoopSky.loc("use_plug"));
     public static final StreamCodec<FriendlyByteBuf, PlugActionPayload> CODEC = StreamCodec.unit(new PlugActionPayload());
 
-    public static void handle(final PlugActionPayload payload, final IPayloadContext context) {
-        context.enqueueWork(() -> {
+    public static void handle(final PlugActionPayload payload, final ServerPlayNetworking.Context context) {
+        context.server().execute(() -> {
             ServerPlayer player = (ServerPlayer) context.player();
 
             if (player.getVehicle() instanceof ToiletPlugEntity plug) {

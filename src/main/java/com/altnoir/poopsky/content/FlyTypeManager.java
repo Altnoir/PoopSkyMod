@@ -3,6 +3,7 @@ package com.altnoir.poopsky.content;
 import com.altnoir.poopsky.PoopSky;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.*;
+import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -14,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FlyTypeManager extends SimpleJsonResourceReloadListener {
+public class FlyTypeManager extends SimpleJsonResourceReloadListener implements IdentifiableResourceReloadListener {
     private static final Gson GSON = new GsonBuilder().create();
 
     public static final FlyTypeManager INSTANCE = new FlyTypeManager();
@@ -127,5 +128,10 @@ public class FlyTypeManager extends SimpleJsonResourceReloadListener {
 
     public boolean isValid(String id) {
         return flyTypes.contains(id);
+    }
+
+    @Override
+    public ResourceLocation getFabricId() {
+        return PoopSky.loc("fly_type");
     }
 }

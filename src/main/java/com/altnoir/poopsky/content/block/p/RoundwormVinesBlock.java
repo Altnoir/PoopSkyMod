@@ -54,7 +54,7 @@ public class RoundwormVinesBlock extends GrowingPlantHeadBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, Player player) {
         return new ItemStack(PoItems.ROUNDWORM.get());
     }
 

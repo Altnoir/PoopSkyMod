@@ -8,6 +8,8 @@ import com.altnoir.poopsky.impl.type.damageType.PoDamageTypes;
 import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoEntityType;
 import com.altnoir.poopsky.init.PoItems;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -37,8 +39,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+//import net.neoforged.api.distmarker.Dist;
+//import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -70,7 +72,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     private void initClient() {
         buzzSound = new FlyBuzzSoundWrapper(this);
     }

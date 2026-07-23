@@ -1,3 +1,4 @@
+/*
 package com.altnoir.poopsky.compat.create;
 
 import com.altnoir.poopsky.PoopSky;
@@ -22,3 +23,4 @@ public class CreatePlugin {
         TYPES.register(modEventBus);
     }
 }
+ */

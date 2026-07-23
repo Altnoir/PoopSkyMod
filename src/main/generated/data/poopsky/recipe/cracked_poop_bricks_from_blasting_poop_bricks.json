@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:blasting",
+  "category": "blocks",
+  "cookingtime": 100,
+  "experience": 0.1,
+  "group": "cracked_poop_bricks",
+  "ingredient": {
+    "item": "poopsky:poop_bricks"
+  },
+  "result": {
+    "id": "poopsky:cracked_poop_bricks"
+  }
+}

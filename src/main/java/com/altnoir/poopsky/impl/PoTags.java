@@ -2,6 +2,7 @@ package com.altnoir.poopsky.impl;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.compat.PoMods;
+import com.altnoir.poopsky.fabric.FabricatedTags;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
@@ -53,11 +54,11 @@ public class PoTags {
         }
 
         private static TagKey<Item> tag(String name) {
-            return ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", name));
+            return FabricatedTags.Items.create(ResourceLocation.fromNamespaceAndPath("c", name));
         }
 
         private static TagKey<Item> createCreate(String name) {
-            return ItemTags.create(ResourceLocation.fromNamespaceAndPath("create", name));
+            return FabricatedTags.Items.create(ResourceLocation.fromNamespaceAndPath("create", name));
         }
 
     }

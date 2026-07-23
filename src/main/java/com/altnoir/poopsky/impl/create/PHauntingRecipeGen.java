@@ -1,3 +1,4 @@
+/*
 package com.altnoir.poopsky.impl.create;
 
 import com.altnoir.poopsky.PoopSky;
@@ -24,3 +25,4 @@ public class PHauntingRecipeGen extends HauntingRecipeGen implements IConditionB
         convert(PoBlocks.POOLIME_BLOCK.get(), Blocks.ICE).register(conditionalOutput);
     }
 }
+ */

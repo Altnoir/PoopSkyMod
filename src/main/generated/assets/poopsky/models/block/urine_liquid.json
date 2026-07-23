@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "flow": "poopsky:block/urine_liquid_flowing",
+    "particle": "poopsky:block/urine_liquid",
+    "still": "poopsky:block/urine_liquid"
+  }
+}

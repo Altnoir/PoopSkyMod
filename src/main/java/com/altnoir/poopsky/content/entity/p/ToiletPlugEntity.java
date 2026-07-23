@@ -5,6 +5,9 @@ import com.altnoir.poopsky.init.PoEffects;
 import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.impl.network.PlugInputPayload;
 import com.google.common.collect.Lists;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.BlockUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -29,9 +32,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.network.PacketDistributor;
+//import net.neoforged.api.distmarker.Dist;
+//import net.neoforged.api.distmarker.OnlyIn;
+//import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
@@ -69,7 +72,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void ToiletPlugEntityClient() {
         TPFlySound = new TPFlySoundWrapper(this);
     }
@@ -231,7 +234,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
     private void moveByInput() {
         float MAX_SPEED = inputFast ? 0.35f : 0.2f;
         var driver = this.getControllingPassenger();
-        if (driver != null && driver.hasEffect(PoEffects.OMENER)) {
+        if (driver != null && driver.hasEffect(PoEffects.holder(PoEffects.OMENER))) {
             MAX_SPEED *= 2.0f;
         }
         if (this.isUnderWater()) {
@@ -356,7 +359,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
         this.inputFast = inputFast;
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     private void updateKeyStates() {
         var mc = Minecraft.getInstance();
 
@@ -371,7 +374,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
         if (isSprintingNow) inputFast = true;
         if (!isMoving()) inputFast = false;
 
-        PacketDistributor.sendToServer(new PlugInputPayload(
+        ClientPlayNetworking.send(new PlugInputPayload(
                 inputForward,
                 inputBackward,
                 inputLeft,
@@ -397,7 +400,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
     }
 
     @Override
-    protected Item getDropItem() {
+    public Item getDropItem() {
         return PoItems.TOILET_PLUG.get();
     }
 
@@ -428,7 +431,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
         return super.hurt(source, amount);
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     private void spawnParticles() {
         var speed = this.getDeltaMovement().length();
         if (speed > 0.1) {

@@ -2,7 +2,9 @@ package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.fluid.UrineLiquidBlock;
+import com.altnoir.poopsky.fabric.FabricatedRegistries;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
+import com.tterrag.registrate.fabric.SimpleFlowableFluid;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -23,27 +25,27 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.*;
-import net.neoforged.neoforge.common.SoundActions;
-import net.neoforged.neoforge.fluids.BaseFlowingFluid;
-import net.neoforged.neoforge.fluids.FluidType;
-import net.neoforged.neoforge.registries.NeoForgeRegistries;
+//import net.neoforged.neoforge.common.SoundActions;
+//import net.neoforged.neoforge.fluids.BaseFlowingFluid;
+//import net.neoforged.neoforge.fluids.FluidType;
+//import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 public final class PoFluids {
     public static final ResourceLocation URINE_STILL_TEXTURE = PoopSky.loc("block/urine_liquid");
     public static final ResourceLocation URINE_FLOWING_TEXTURE = PoopSky.loc("block/urine_liquid_flowing");
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
-    public static final RegistryEntry<FluidType, FluidType> URINE_FLUID_TYPE = REGISTRATE.simple(
-            "urine",
-            NeoForgeRegistries.Keys.FLUID_TYPES,
-            PoFluids::createUrineFluidType);
+//    public static final RegistryEntry<FluidType, FluidType> URINE_FLUID_TYPE = REGISTRATE.simple(
+//            "urine",
+//            FabricatedRegistries.Key.FLUID_TYPES,
+//            PoFluids::createUrineFluidType);
 
-    public static final FluidEntry<BaseFlowingFluid.Flowing> FLOWING_URINE = REGISTRATE
-            .fluid("urine", URINE_STILL_TEXTURE, URINE_FLOWING_TEXTURE, URINE_FLUID_TYPE, PoFluids::createFlowingUrine)
+    public static final FluidEntry<SimpleFlowableFluid.Flowing> FLOWING_URINE = REGISTRATE
+            .fluid("urine", URINE_STILL_TEXTURE, URINE_FLOWING_TEXTURE, PoFluids::createFlowingUrine)
             .source(PoFluids::createSourceUrine)
             .noBlock()
             .fluidProperties(properties -> properties
-                    .slopeFindDistance(2)
+                    //.slopeFindDistance(2)
                     .levelDecreasePerBlock(1)
                     .block(PoFluids.URINE_LIQUID))
             .setData(ProviderType.LANG, NonNullBiConsumer.noop())
@@ -68,38 +70,38 @@ public final class PoFluids {
     public static void register() {
     }
 
-    private static FluidType createUrineFluidType() {
-        return new FluidType(FluidType.Properties.create()
-                .descriptionId("block.poopsky.urine_liquid")
-                .fallDistanceModifier(0F)
-                .canExtinguish(true)
-                .supportsBoating(true)
-                .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL_LAVA)
-                .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY_LAVA)
-                .canHydrate(true)
-                .canDrown(true)
-                .canPushEntity(true)
-                .lightLevel(7)
-                .density(3000)
-                .viscosity(6000)
-        ) {
-            @Override
-            public boolean canConvertToSource(FluidState state, LevelReader reader, BlockPos pos) {
-                if (reader instanceof Level level) {
-                    return level.getGameRules().getBoolean(GameRules.RULE_WATER_SOURCE_CONVERSION);
-                }
-                return true;
-            }
-
-            @Override
-            public double motionScale(Entity entity) {
-                if (entity instanceof LivingEntity livingEntity && livingEntity.hasEffect(PoEffects.OMENER)) {
-                    return 0.014D;
-                }
-                return 0.0023D;
-            }
-        };
-    }
+//    private static FluidType createUrineFluidType() {
+//        return new FluidType(FluidType.Properties.create()
+//                .descriptionId("block.poopsky.urine_liquid")
+//                .fallDistanceModifier(0F)
+//                .canExtinguish(true)
+//                .supportsBoating(true)
+//                .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL_LAVA)
+//                .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY_LAVA)
+//                .canHydrate(true)
+//                .canDrown(true)
+//                .canPushEntity(true)
+//                .lightLevel(7)
+//                .density(3000)
+//                .viscosity(6000)
+//        ) {
+//            @Override
+//            public boolean canConvertToSource(FluidState state, LevelReader reader, BlockPos pos) {
+//                if (reader instanceof Level level) {
+//                    return level.getGameRules().getBoolean(GameRules.RULE_WATER_SOURCE_CONVERSION);
+//                }
+//                return true;
+//            }
+//
+//            @Override
+//            public double motionScale(Entity entity) {
+//                if (entity instanceof LivingEntity livingEntity && livingEntity.hasEffect(PoEffects.OMENER)) {
+//                    return 0.014D;
+//                }
+//                return 0.0023D;
+//            }
+//        };
+//    }
 
     private static BlockBehaviour.Properties urineLiquidProperties() {
         return BlockBehaviour.Properties.of()
@@ -115,8 +117,8 @@ public final class PoFluids {
                 .sound(SoundType.EMPTY);
     }
 
-    private static BaseFlowingFluid.Source createSourceUrine(BaseFlowingFluid.Properties properties) {
-        return new BaseFlowingFluid.Source(properties) {
+    private static SimpleFlowableFluid.Source createSourceUrine(SimpleFlowableFluid.Properties properties) {
+        return new SimpleFlowableFluid.Source(properties) {
             @Override
             public int getTickDelay(LevelReader level) {
                 return 10;
@@ -124,8 +126,8 @@ public final class PoFluids {
         };
     }
 
-    private static BaseFlowingFluid.Flowing createFlowingUrine(BaseFlowingFluid.Properties properties) {
-        return new BaseFlowingFluid.Flowing(properties) {
+    private static SimpleFlowableFluid.Flowing createFlowingUrine(SimpleFlowableFluid.Properties properties) {
+        return new SimpleFlowableFluid.Flowing(properties) {
             @Override
             public int getTickDelay(LevelReader level) {
                 return 10;

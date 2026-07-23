@@ -2,11 +2,7 @@ package com.altnoir.poopsky.content.recipe;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.init.PoRecipes;
-import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementRequirements;
-import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -18,9 +14,6 @@ import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 public final class AnalPressingRecipeBuilder implements RecipeBuilder {
     private static final String RECIPE_TYPE = PoRecipes.ANAL_PRESSING.folder();
 
@@ -28,7 +21,6 @@ public final class AnalPressingRecipeBuilder implements RecipeBuilder {
     private final Block output;
     private Block replaceTarget = Blocks.STONE;
     private int radius = 1;
-    private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
 
     public AnalPressingRecipeBuilder(Ingredient input, Block output) {
         this.input = input;
@@ -51,7 +43,6 @@ public final class AnalPressingRecipeBuilder implements RecipeBuilder {
 
     @Override
     public @NotNull RecipeBuilder unlockedBy(String name, Criterion<?> criterion) {
-        this.criteria.put(name, criterion);
         return this;
     }
 
@@ -72,23 +63,7 @@ public final class AnalPressingRecipeBuilder implements RecipeBuilder {
 
     @Override
     public void save(@NotNull RecipeOutput recipeOutput, @NotNull ResourceLocation id) {
-        ensureValid(id);
-        ResourceLocation advancementId = PoopSky.loc(id.getPath());
-
-        Advancement.Builder advancementBuilder = recipeOutput.advancement()
-                .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
-                .rewards(AdvancementRewards.Builder.recipe(id))
-                .requirements(AdvancementRequirements.Strategy.OR);
-
-        criteria.forEach(advancementBuilder::addCriterion);
-
         AnalPressingRecipe recipe = new AnalPressingRecipe(input, output, replaceTarget, radius);
-        recipeOutput.accept(id, recipe, advancementBuilder.build(advancementId.withPrefix("recipes/")));
-    }
-
-    private void ensureValid(ResourceLocation id) {
-        if (criteria.isEmpty()) {
-            throw new IllegalStateException("No way of obtaining recipe " + id);
-        }
+        recipeOutput.accept(id, recipe, null);
     }
 }

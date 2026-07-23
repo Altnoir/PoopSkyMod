@@ -14,7 +14,7 @@ import java.util.function.BooleanSupplier;
 public abstract class CreateWorldScreenWorldTabMixin {
     @Shadow
     @Final
-    CreateWorldScreen this$0;
+    CreateWorldScreen field_42182; // this$0
 
     @ModifyArg(
             method = "<init>",
@@ -25,6 +25,6 @@ public abstract class CreateWorldScreenWorldTabMixin {
             )
     )
     private BooleanSupplier poopsky$disableBonusChestForPoopSky(BooleanSupplier original) {
-        return () -> original.getAsBoolean() && !ClientUtil.isPoopSkyWorldType(this.this$0.getUiState());
+        return () -> original.getAsBoolean() && !ClientUtil.isPoopSkyWorldType(this.field_42182.getUiState());
     }
 }

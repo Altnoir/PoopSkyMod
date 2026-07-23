@@ -1,3 +1,4 @@
+/*
 package com.altnoir.poopsky.compat.jei.create;
 
 import com.altnoir.poopsky.PoopSky;
@@ -56,3 +57,4 @@ public class FanDigestingCategory extends ProcessingViaFanCategory.MultiOutput<D
         return level.getRecipeManager().getAllRecipesFor(PSRecipeTypes.DIGESTING.getType());
     }
 }
+ */

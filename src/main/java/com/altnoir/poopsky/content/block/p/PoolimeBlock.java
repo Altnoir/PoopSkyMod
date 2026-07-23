@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.content.block.p;
 
+import com.altnoir.poopsky.fabric.port.extension.IBlockExtension;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -8,7 +9,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.HalfTransparentBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.extensions.IBlockExtension;
 
 public class PoolimeBlock extends HalfTransparentBlock implements IBlockExtension {
     public PoolimeBlock(Properties properties) {

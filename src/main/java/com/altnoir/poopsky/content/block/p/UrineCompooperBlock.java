@@ -55,7 +55,7 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, Player player) {
         return new ItemStack(PoBlocks.COMPOOPER.get());
     }
 
@@ -178,9 +178,10 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         super.onRemove(state, level, pos, newState, movedByPiston);
-        if (!state.is(newState.getBlock())) {
-            level.invalidateCapabilities(pos);
-        }
+        // TODO: WTF?
+//        if (!state.is(newState.getBlock())) {
+//            level.invalidateCapabilities(pos);
+//        }
     }
 
     @Override

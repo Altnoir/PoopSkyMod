@@ -1,11 +1,13 @@
 package com.altnoir.poopsky.client.sound;
 
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+//import net.neoforged.api.distmarker.Dist;
+//import net.neoforged.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
+@Environment(EnvType.CLIENT)
 public class TPFlySoundWrapper {
     private final ToiletPlugEntity attachedInstance;
 

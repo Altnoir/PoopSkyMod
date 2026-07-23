@@ -1,5 +1,7 @@
 package com.altnoir.poopsky.content.block.p;
 
+import com.altnoir.poopsky.fabric.port.util.ItemAbilities;
+import com.altnoir.poopsky.fabric.port.util.ItemAbility;
 import com.altnoir.poopsky.init.PoParticles;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.impl.sound.PoSoundEvents;
@@ -44,8 +46,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.common.ItemAbilities;
-import net.neoforged.neoforge.common.ItemAbility;
+//import net.neoforged.neoforge.common.ItemAbilities;
+//import net.neoforged.neoforge.common.ItemAbility;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

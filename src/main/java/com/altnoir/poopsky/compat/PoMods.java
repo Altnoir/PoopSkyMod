@@ -1,9 +1,10 @@
 package com.altnoir.poopsky.compat;
 
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.fml.loading.LoadingModList;
+//import net.neoforged.fml.loading.LoadingModList;
 
 import java.util.Locale;
 
@@ -20,7 +21,7 @@ public enum PoMods {
 
     PoMods() {
         id = name().toLowerCase(Locale.ROOT);
-        isLoaded = LoadingModList.get().getModFileById(id) != null;
+        isLoaded = FabricLoader.getInstance().isModLoaded(id);
     }
 
     public String id() {

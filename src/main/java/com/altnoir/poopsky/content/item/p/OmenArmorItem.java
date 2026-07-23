@@ -2,7 +2,6 @@ package com.altnoir.poopsky.content.item.p;
 
 import com.altnoir.poopsky.content.item.PArmorMaterials;
 import com.altnoir.poopsky.init.PoEffects;
-import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -14,21 +13,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
-import java.util.Map;
 
 public class OmenArmorItem extends ArmorItem {
     private static final int BOOTS_SLOT = 0;
     private static final int LEGGINGS_SLOT = 1;
     private static final int CHESTPLATE_SLOT = 2;
     private static final int HELMET_SLOT = 3;
-    private static final Map<Holder<ArmorMaterial>, List<MobEffectInstance>> ARMOR_EFFECT =
-            (new ImmutableMap.Builder<Holder<ArmorMaterial>, List<MobEffectInstance>>())
-                    .put(PArmorMaterials.OMEN_ARMOR_MATERIAL, List.of(
-                                    new MobEffectInstance(PoEffects.OMENER, 160, 0, false, false),
-                                    new MobEffectInstance(MobEffects.HUNGER, 160, 1, false, false)
-                            )
-                    ).build();
-
     public OmenArmorItem(Holder<ArmorMaterial> material, Type type, Properties properties) {
         super(material, type, properties);
     }
@@ -41,13 +31,11 @@ public class OmenArmorItem extends ArmorItem {
     }
 
     private void evaluateArmorEffects(Player player) {
-        for (Map.Entry<Holder<ArmorMaterial>, List<MobEffectInstance>> entry : ARMOR_EFFECT.entrySet()) {
-            Holder<ArmorMaterial> mapArmorMaterial = entry.getKey();
-            List<MobEffectInstance> mapEffect = entry.getValue();
-
-            if (hasPlayerCorrectArmorOn(mapArmorMaterial, player)) {
-                addEffectToPlayer(player, mapEffect);
-            }
+        if (hasPlayerCorrectArmorOn(PArmorMaterials.OMEN_ARMOR_MATERIAL, player)) {
+            addEffectToPlayer(player, List.of(
+                    new MobEffectInstance(PoEffects.holder(PoEffects.OMENER), 160, 0, false, false),
+                    new MobEffectInstance(MobEffects.HUNGER, 160, 1, false, false)
+            ));
         }
     }
 

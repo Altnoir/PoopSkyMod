@@ -2,11 +2,7 @@ package com.altnoir.poopsky.content.recipe;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.init.PoRecipes;
-import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementRequirements;
-import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -20,9 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public final class SieveRecipeBuilder implements RecipeBuilder {
     private static final String RECIPE_TYPE = PoRecipes.SIEVE.folder();
@@ -30,7 +24,6 @@ public final class SieveRecipeBuilder implements RecipeBuilder {
     private final Ingredient input;
     private final int processingTime;
     private final List<SieveRecipe.ChanceItemStack> outputs = new ArrayList<>();
-    private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
 
     public SieveRecipeBuilder(Ingredient input, int processingTime) {
         this.input = input;
@@ -68,7 +61,6 @@ public final class SieveRecipeBuilder implements RecipeBuilder {
 
     @Override
     public @NotNull RecipeBuilder unlockedBy(String name, Criterion<?> criterion) {
-        this.criteria.put(name, criterion);
         return this;
     }
 
@@ -104,17 +96,8 @@ public final class SieveRecipeBuilder implements RecipeBuilder {
     @Override
     public void save(@NotNull RecipeOutput recipeOutput, @NotNull ResourceLocation id) {
         ensureValid(id);
-        ResourceLocation advancementId = PoopSky.loc(id.getPath());
-
-        Advancement.Builder advancementBuilder = recipeOutput.advancement()
-                .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
-                .rewards(AdvancementRewards.Builder.recipe(id))
-                .requirements(AdvancementRequirements.Strategy.OR);
-
-        criteria.forEach(advancementBuilder::addCriterion);
-
         SieveRecipe recipe = new SieveRecipe(input, List.copyOf(outputs), processingTime);
-        recipeOutput.accept(id, recipe, advancementBuilder.build(advancementId.withPrefix("recipes/")));
+        recipeOutput.accept(id, recipe, null);
     }
 
     public static ResourceLocation getDefaultRecipeId(ItemLike input) {
@@ -123,9 +106,6 @@ public final class SieveRecipeBuilder implements RecipeBuilder {
     }
 
     private void ensureValid(ResourceLocation id) {
-        if (criteria.isEmpty()) {
-            throw new IllegalStateException("No way of obtaining recipe " + id);
-        }
         if (outputs.isEmpty()) {
             throw new IllegalStateException("No outputs defined for recipe " + id);
         }

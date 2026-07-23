@@ -1,0 +1,55 @@
+{
+	"schemaVersion": 1,
+	"id": "poopsky",
+	"version": "${version}",
+	"name": "Poopsky",
+	"description": "It all began with a pile of poop",
+	"authors": [
+		"Altnoir", "lonelyicer", "Wulian233"
+	],
+	"contact": {
+		"sources": "https://github.com/Altnoir/PoopSkyMod"
+	},
+	"license": "MIT",
+	"icon": "assets/poopsky/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.altnoir.poopsky.PoopSky"
+		],
+		"client": [
+			"com.altnoir.poopsky.PoopSkyClient"
+		],
+		"fabric-datagen": [
+			"com.altnoir.poopsky.impl.DataGenerators"
+		],
+		"little_maid_extension": [
+			"com.altnoir.poopsky.compat.maid.MaidPlugin"
+		]
+	},
+	"mixins": [
+		"poopsky.mixins.json",
+		"poopsky.fabric.mixins.json"
+	],
+	"accessWidener": "poopsky.accesswidener",
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*",
+		"forgeconfigapiport": ">=21.1.6",
+		"farmersdelight": "*",
+		"registrate": "*",
+		"sablecompanion": "*"
+	},
+	"custom": {
+		"loom:injected_interfaces": {
+			"net/minecraft/class_2248": ["com/altnoir/poopsky/fabric/port/extension/IBlockExtension"],
+			"net/minecraft/class_2680": ["com/altnoir/poopsky/fabric/port/extension/IBlockStateExtension"],
+			"net/minecraft/class_2586": ["com/altnoir/poopsky/fabric/port/extension/IBlockEntityExtension"],
+			"net/minecraft/class_1792": ["com/altnoir/poopsky/fabric/port/extension/IItemExtension"],
+			"net/minecraft/class_1799": ["com/altnoir/poopsky/fabric/port/extension/IItemStackExtension"],
+			"net/minecraft/class_1297": ["com/altnoir/poopsky/fabric/port/extension/IEntityExtension"]
+		}
+	}
+}

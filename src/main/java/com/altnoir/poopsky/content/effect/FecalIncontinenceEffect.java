@@ -51,7 +51,7 @@ public class FecalIncontinenceEffect extends MobEffect {
 
             boolean dropPoop = BlockPos.betweenClosedStream(entityPos.offset(0, -1, 0), entityPos.offset(0, 1, 0))
                     .anyMatch(targetPos -> {
-                        boolean applied = BoneMealItem.applyBonemeal(new ItemStack(PoItems.POOP.get()), level, targetPos, null)
+                        boolean applied = BoneMealItem.growCrop(new ItemStack(PoItems.POOP.get()), level, targetPos)
                                 || BoneMealItem.growWaterPlant(new ItemStack(PoItems.POOP.get()), level, targetPos, null);
 
                         if (applied) {
@@ -61,7 +61,7 @@ public class FecalIncontinenceEffect extends MobEffect {
                         return applied;
                     });
 
-            if (entity.hasEffect(PoEffects.INTESTINAL_SPASM)) {
+            if (entity.hasEffect(PoEffects.holder(PoEffects.INTESTINAL_SPASM))) {
                 stack = PoItems.CHILI_POOP.get();
             } else if (toiletUtil.isGoldenToilet(level, entityPos.below())) {
                 stack = PoItems.GOLDEN_POOP.get();

@@ -1,3 +1,4 @@
+/*
 package com.altnoir.poopsky.compat.create;
 
 import com.altnoir.poopsky.PoopSky;
@@ -63,3 +64,4 @@ public enum PSRecipeTypes implements IRecipeTypeInfo {
                 DeferredRegister.create(BuiltInRegistries.RECIPE_TYPE, PoopSky.MOD_ID);
     }
 }
+ */

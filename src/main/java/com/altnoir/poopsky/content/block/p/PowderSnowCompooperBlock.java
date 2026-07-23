@@ -34,7 +34,7 @@ public class PowderSnowCompooperBlock extends AbstractCompooperBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, Player player) {
         return new ItemStack(PoBlocks.COMPOOPER.get());
     }
 

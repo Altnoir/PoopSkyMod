@@ -1,0 +1,26 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "poopsky:block/placer_vertical",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "poopsky:block/placer",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "poopsky:block/placer"
+    },
+    "facing=south": {
+      "model": "poopsky:block/placer",
+      "y": 180
+    },
+    "facing=up": {
+      "model": "poopsky:block/placer_vertical"
+    },
+    "facing=west": {
+      "model": "poopsky:block/placer",
+      "y": 270
+    }
+  }
+}

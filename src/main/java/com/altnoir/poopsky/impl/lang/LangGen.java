@@ -6,16 +6,28 @@ import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateLangProvider;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.CachedOutput;
 
-public final class LangGen {
+import java.util.concurrent.CompletableFuture;
+
+public final class LangGen extends RegistrateLangProvider {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
     private static RegistrateLangProvider provider; // 静态字段
 
-    private LangGen() {
+    public LangGen(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registries) {
+        super(REGISTRATE, output);
     }
 
     public static void register() {
         REGISTRATE.addDataGenerator(ProviderType.LANG, LangGen::generateEnUs);
+    }
+
+    @Override
+    public CompletableFuture<?> run(CachedOutput output) {
+        REGISTRATE.genData(ProviderType.LANG, this);
+        return super.run(output);
     }
 
     private static void generateEnUs(RegistrateLangProvider provider) {

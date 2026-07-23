@@ -8,6 +8,8 @@ import com.altnoir.poopsky.content.effect.PMobEffect;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -61,6 +63,11 @@ public class PoEffects {
 
     private static RegistryEntry<MobEffect, MobEffect> registerMobEffect(String name, NonNullSupplier<MobEffect> effect) {
         return REGISTRATE.simple(name, Registries.MOB_EFFECT, effect);
+    }
+
+    public static Holder<MobEffect> holder(RegistryEntry<MobEffect, MobEffect> effect) {
+        return BuiltInRegistries.MOB_EFFECT.getHolder(effect.getKey())
+                .orElseThrow(() -> new IllegalStateException("Unregistered mob effect: " + effect.getId()));
     }
 
     public static void register() {

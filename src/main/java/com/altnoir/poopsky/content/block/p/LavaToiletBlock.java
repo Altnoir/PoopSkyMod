@@ -22,7 +22,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.event.EventHooks;
+//import net.neoforged.neoforge.event.EventHooks;
 import org.jetbrains.annotations.NotNull;
 
 public class LavaToiletBlock extends BaseToiletLavaBlock {
@@ -109,8 +109,9 @@ public class LavaToiletBlock extends BaseToiletLavaBlock {
         ToiletType type = getToiletType(level, pos);
         if (type != null) {
             float hardness = type.hardness();
-            int i = EventHooks.doPlayerHarvestCheck(player, state, level, pos) ? 30 : 100;
-            return player.getDigSpeed(state, pos) / hardness / (float) i;
+            // TODO: don't need PlayerEvent.HarvestCheck, maybe?
+            int i = /*EventHooks.doPlayerHarvestCheck(player, state, level, pos) ? 30 :*/ 100;
+            return player.getDestroySpeed(state) / hardness / (float) i;
         }
         return super.getDestroyProgress(state, player, level, pos);
     }

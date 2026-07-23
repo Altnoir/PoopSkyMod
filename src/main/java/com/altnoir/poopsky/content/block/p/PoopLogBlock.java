@@ -1,5 +1,7 @@
 package com.altnoir.poopsky.content.block.p;
 
+import com.altnoir.poopsky.fabric.port.util.ItemAbilities;
+import com.altnoir.poopsky.fabric.port.util.ItemAbility;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.base.Suppliers;
@@ -13,8 +15,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.ItemAbility;
-import net.neoforged.neoforge.common.ItemAbilities;
+//import net.neoforged.neoforge.common.ItemAbility;
+//import net.neoforged.neoforge.common.ItemAbilities;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;

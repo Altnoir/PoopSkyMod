@@ -1,3 +1,4 @@
+/*
 package com.altnoir.poopsky.compat.create;
 
 import com.altnoir.poopsky.compat.create.content.kinetics.fan.processing.DigestingRecipe;
@@ -40,3 +41,4 @@ public abstract class DigestingRecipeGen extends StandardProcessingRecipeGen<Dig
         return PSRecipeTypes.DIGESTING;
     }
 }
+ */

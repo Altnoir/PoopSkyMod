@@ -29,6 +29,7 @@ public class PoEntityType {
                     .clientTrackingRange(10))
             .renderer(() -> PoolimeRenderer::new)
             .setData(ProviderType.LANG, NonNullBiConsumer.noop())
+            .attributes(PoolimeEntity::createAttributes)
             .register();
 
     public static final EntityEntry<FlyEntity> FLY = REGISTRATE.entity("fly", FlyEntity::new, MobCategory.CREATURE)
@@ -38,6 +39,7 @@ public class PoEntityType {
                     .clientTrackingRange(8))
             .renderer(() -> FlyRenderer::new)
             .setData(ProviderType.LANG, NonNullBiConsumer.noop())
+            .attributes(FlyEntity::createAttributes)
             .register();
 
     public static final EntityEntry<ChairEntity> STOOL = REGISTRATE.entity("stool_entity", ChairEntity::new, MobCategory.MISC)

@@ -1,3 +1,4 @@
+/*
 package com.altnoir.poopsky.compat.create.content.kinetics.fan.processing;
 
 import com.altnoir.poopsky.compat.create.PSRecipeTypes;
@@ -102,3 +103,4 @@ public class DigestingFanProcessingType implements FanProcessingType {
         }
     }
 }
+ */

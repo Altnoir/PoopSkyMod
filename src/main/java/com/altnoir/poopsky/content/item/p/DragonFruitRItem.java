@@ -52,11 +52,11 @@ public class DragonFruitRItem extends Item implements IFeedable {
         }
 
         if (!level.isClientSide) {
-            if (!livingEntity.hasEffect(PoEffects.ON_THE_VERGE)) {
-                livingEntity.addEffect(new MobEffectInstance(PoEffects.ON_THE_VERGE, 200));
+            if (!livingEntity.hasEffect(PoEffects.holder(PoEffects.ON_THE_VERGE))) {
+                livingEntity.addEffect(new MobEffectInstance(PoEffects.holder(PoEffects.ON_THE_VERGE), 200));
             } else {
-                int amplifier = livingEntity.getEffect(PoEffects.ON_THE_VERGE).getAmplifier() + 1;
-                livingEntity.addEffect(new MobEffectInstance(PoEffects.ON_THE_VERGE, 200, amplifier));
+                int amplifier = livingEntity.getEffect(PoEffects.holder(PoEffects.ON_THE_VERGE)).getAmplifier() + 1;
+                livingEntity.addEffect(new MobEffectInstance(PoEffects.holder(PoEffects.ON_THE_VERGE), 200, amplifier));
             }
             livingEntity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 200));
         }

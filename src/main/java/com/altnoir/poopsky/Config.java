@@ -1,11 +1,11 @@
 package com.altnoir.poopsky;
 
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.event.config.ModConfigEvent;
+//import net.neoforged.bus.api.SubscribeEvent;
+//import net.neoforged.fml.common.EventBusSubscriber;
+//import net.neoforged.fml.event.config.ModConfigEvent;
+import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeModConfigEvents;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
-@EventBusSubscriber(modid = PoopSky.MOD_ID)
 public class Config {
     public static boolean setPoopSkyDefault;
     public static boolean voidNetherGeneration;
@@ -68,18 +68,19 @@ public class Config {
 
     static final ModConfigSpec SPEC = BUILDER.build();
 
-    @SubscribeEvent
-    static void onLoad(final ModConfigEvent event) {
-        setPoopSkyDefault = SET_POOPSKY_DEFAULT.get();
-        voidNetherGeneration = VOID_NETHER_GENERATION.get();
-        strongholdGeneration = STRONGHOLD_GENERATION.get();
-        desperateWorld = DESPERATE_WORLD.get();
-        compooperCrafting = COMPOOPER_CRAFTING.get();
-        lavaFluid = LAVA_FLUID_BLOCK.get();
-        plugTrades = PLUG_TRADES.get();
-        upgradeTemplate = UPGRADE_TEMPLATE.get();
-        unlimitedFreeze = UNLIMITED_FREEZE.get();
+    static void onLoad() {
+        NeoForgeModConfigEvents.loading(PoopSky.MOD_ID).register(config -> {
+            setPoopSkyDefault = SET_POOPSKY_DEFAULT.get();
+            voidNetherGeneration = VOID_NETHER_GENERATION.get();
+            strongholdGeneration = STRONGHOLD_GENERATION.get();
+            desperateWorld = DESPERATE_WORLD.get();
+            compooperCrafting = COMPOOPER_CRAFTING.get();
+            lavaFluid = LAVA_FLUID_BLOCK.get();
+            plugTrades = PLUG_TRADES.get();
+            upgradeTemplate = UPGRADE_TEMPLATE.get();
+            unlimitedFreeze = UNLIMITED_FREEZE.get();
 
-        freezeFilter = FREEZE_FILTER.get();
+            freezeFilter = FREEZE_FILTER.get();
+        });
     }
 }

@@ -8,80 +8,90 @@ import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.content.villager.PVillagerBehaviors;
 import com.altnoir.poopsky.content.villager.PVillagerTrades;
+import com.altnoir.poopsky.fabric.FabricatedTags;
+import com.altnoir.poopsky.fabric.port.event.LevelEvents;
+import com.altnoir.poopsky.fabric.port.event.entity.EntityMountEvent;
+import com.altnoir.poopsky.fabric.port.event.entity.EntityTickEvents;
+import com.altnoir.poopsky.fabric.port.event.entity.FinalizeSpawnEvent;
+import com.altnoir.poopsky.fabric.port.event.entity.MobEffectEvents;
+import com.altnoir.poopsky.fabric.port.util.EffectApplicableResult;
 import com.altnoir.poopsky.worldgen.PoVoidChunkGenerator;
 import com.altnoir.poopsky.worldgen.structure.PoopIslandStructure;
 import com.altnoir.poopsky.init.*;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.fabric.api.event.player.UseItemCallback;
+import net.fabricmc.fabric.api.registry.FabricBrewingRecipeRegistryBuilder;
+import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.packs.PackType;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.item.alchemy.Potions;
-import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.ClipContext;
-import net.minecraft.world.level.GameRules;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
+import net.minecraft.world.level.storage.ServerLevelData;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.event.AddReloadListenerEvent;
-import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
-import net.neoforged.neoforge.event.entity.EntityMountEvent;
-import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
-import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
-import net.neoforged.neoforge.event.level.LevelEvent;
-import net.neoforged.neoforge.event.tick.EntityTickEvent;
-import net.neoforged.neoforge.event.village.VillagerTradesEvent;
+import org.jetbrains.annotations.Nullable;
+//import net.neoforged.bus.api.IEventBus;
+//import net.neoforged.neoforge.common.Tags;
+//import net.neoforged.neoforge.event.AddReloadListenerEvent;
+//import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
+//import net.neoforged.neoforge.event.entity.EntityMountEvent;
+//import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
+//import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
+//import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+//import net.neoforged.neoforge.event.level.LevelEvent;
+//import net.neoforged.neoforge.event.tick.EntityTickEvent;
+//import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 
 import java.util.Set;
 
 public class PoGameEvents {
-    public static void registerGame(IEventBus gameEventBus) {
-        gameEventBus.addListener(PoGameEvents::onRightClickBlock);
-        gameEventBus.addListener(PoGameEvents::onRightClickItem);
-        gameEventBus.addListener(PoGameEvents::onBrewingRecipeRegistry);
-        gameEventBus.addListener(PoGameEvents::onVillagerTrades);
-        gameEventBus.addListener(PoGameEvents::onEntityDismount);
-        gameEventBus.addListener(PoGameEvents::onMobEffectApplicable);
-        gameEventBus.addListener(PoGameEvents::onAddReloadListener);
-        gameEventBus.addListener(PoGameEvents::onEntityTick);
-        gameEventBus.addListener(PoGameEvents::onFinalizeSpawn);
-        gameEventBus.addListener(PoGameEvents::onCreateSpawnToilet);
+    public static void registerGame() {
+        UseBlockCallback.EVENT.register(PoGameEvents::onRightClickBlock);
+        UseItemCallback.EVENT.register(PoGameEvents::onRightClickItem);
+        FabricBrewingRecipeRegistryBuilder.BUILD.register(PoGameEvents::onBrewingRecipeRegistry);
+        onVillagerTrades();
+        EntityMountEvent.EVENT.register(PoGameEvents::onEntityDismount);
+        MobEffectEvents.APPLICABLE.register(PoGameEvents::onMobEffectApplicable);
+        onAddReloadListener();
+        EntityTickEvents.PRE.register(PoGameEvents::onEntityTick);
+        FinalizeSpawnEvent.EVENT.register(PoGameEvents::onFinalizeSpawn);
+        LevelEvents.CREATE_SPAWN_POSITION.register(PoGameEvents::onCreateSpawnToilet);
     }
 
-    public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
-        var level = event.getLevel();
-        var player = event.getEntity();
-        var pos = event.getPos();
-        var hand = event.getHand();
+    public static InteractionResult onRightClickBlock(Player player, Level level, InteractionHand hand, BlockHitResult hitResult) {
+        var pos = hitResult.getBlockPos();
         var heldItem = player.getItemInHand(hand);
 
-        if (!(heldItem.getItem() instanceof BottleItem) && !heldItem.is(Tags.Items.BUCKETS_EMPTY)) return;
-        if (!(level.getBlockState(pos).getBlock() instanceof AbstractToiletBlock abstractToiletBlock)) return;
+        if (!(heldItem.getItem() instanceof BottleItem) && !heldItem.is(FabricatedTags.Items.BUCKETS_EMPTY)) return InteractionResult.PASS;
+        if (!(level.getBlockState(pos).getBlock() instanceof AbstractToiletBlock abstractToiletBlock)) return InteractionResult.PASS;
         if (abstractToiletBlock instanceof BaseToiletLavaBlock && level.getBlockState(pos).getValue(BaseToiletLavaBlock.LAVA))
-            return;
+            return InteractionResult.PASS;
 
         if (!level.isClientSide) {
             SoundEvent sound;
             Item item;
-            if (heldItem.is(Tags.Items.BUCKETS_EMPTY)) {
+            if (heldItem.is(FabricatedTags.Items.BUCKETS_EMPTY)) {
                 sound = SoundEvents.BUCKET_FILL;
                 item = PoItems.URINE_BUCKET.get();
             } else {
@@ -96,14 +106,11 @@ public class PoGameEvents {
             player.setItemInHand(hand, result);
         }
 
-        event.setCancellationResult(InteractionResult.SUCCESS);
-        event.setCanceled(true);
+        return InteractionResult.SUCCESS;
     }
 
-    public static void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
-        ItemStack stack = event.getItemStack();
-        Player player = event.getEntity();
-        Level level = event.getLevel();
+    public static InteractionResultHolder<ItemStack> onRightClickItem(Player player, Level level, InteractionHand hand) {
+        ItemStack stack = player.getItemInHand(hand);
 
         if (!stack.isEmpty() && stack.getItem() instanceof BottleItem) {
             BlockHitResult blockhitresult = Item.getPlayerPOVHitResult(level, player, ClipContext.Fluid.SOURCE_ONLY);
@@ -115,18 +122,16 @@ public class PoGameEvents {
                     level.gameEvent(player, GameEvent.FLUID_PICKUP, blockpos);
 
                     ItemStack itemStack = ItemUtils.createFilledResult(stack, player, new ItemStack(PoItems.URINE_BOTTLE.get()));
-                    player.setItemInHand(event.getHand(), itemStack);
+                    player.setItemInHand(hand, itemStack);
                 }
 
-                event.setCancellationResult(InteractionResult.SUCCESS);
-                event.setCanceled(true);
+                return InteractionResultHolder.success(stack);
             }
         }
+        return InteractionResultHolder.pass(stack);
     }
 
-    public static void onBrewingRecipeRegistry(RegisterBrewingRecipesEvent event) {
-        PotionBrewing.Builder builder = event.getBuilder();
-
+    public static void onBrewingRecipeRegistry(PotionBrewing.Builder builder) {
         builder.addMix(Potions.AWKWARD, PoItems.FOLIUM_SENNAE.get(), PoPotions.FECAL_INCONTINENCE_POTION);
         builder.addMix(PoPotions.FECAL_INCONTINENCE_POTION, Items.REDSTONE, PoPotions.LONG_FECAL_INCONTINENCE_POTION);
         builder.addMix(PoPotions.FECAL_INCONTINENCE_POTION, Items.GLOWSTONE_DUST, PoPotions.STRONG_FECAL_INCONTINENCE_POTION);
@@ -137,28 +142,27 @@ public class PoGameEvents {
         builder.addMix(PoPotions.ON_THE_VGE_POTION, Items.GLOWSTONE_DUST, PoPotions.STRONG_ON_THE_VGE_POTION);
     }
 
-    public static void onVillagerTrades(VillagerTradesEvent event) {
-        PVillagerTrades.registerTrades(event.getType(), event.getTrades());
+    public static void onVillagerTrades() {
+        PVillagerTrades.registerTrades();
     }
 
-    public static void onEntityDismount(EntityMountEvent event) {
-        if (event.isDismounting() && event.getEntityBeingMounted() instanceof ToiletPlugEntity &&
-                event.getEntity() instanceof Player player && player.isShiftKeyDown()) {
-            event.setCanceled(true);
+    public static InteractionResult onEntityDismount(Entity entityMounting, Entity entityBeingMounted, Level level, boolean isMounting) {
+        if (!isMounting && entityBeingMounted instanceof ToiletPlugEntity &&
+                entityMounting instanceof Player player && player.isShiftKeyDown()) {
+            return InteractionResult.SUCCESS;
         }
+        return InteractionResult.PASS;
     }
 
-    public static void onMobEffectApplicable(MobEffectEvent.Applicable event) {
-        LivingEntity entity = event.getEntity();
-        MobEffectInstance effectInstance = event.getEffectInstance();
-
-        if (OMEN_EFFECTS.contains(effectInstance.getEffect()) && entity.hasEffect(PoEffects.OMENER)) {
+    public static EffectApplicableResult onMobEffectApplicable(LivingEntity entity, MobEffectInstance effectInstance) {
+        if (OMEN_EFFECTS.contains(effectInstance.getEffect()) && entity.hasEffect(PoEffects.holder(PoEffects.OMENER))) {
             if (!effectInstance.is(MobEffects.CONFUSION) && !entity.hasEffect(MobEffects.REGENERATION)) {
-                int amplifier = entity.getEffect(PoEffects.OMENER).getAmplifier();
+                int amplifier = entity.getEffect(PoEffects.holder(PoEffects.OMENER)).getAmplifier();
                 entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 40, amplifier + 1));
             }
-            event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
+            return EffectApplicableResult.DO_NOT_APPLY;
         }
+        return EffectApplicableResult.DEFAULT;
     }
 
     private static final Set<Holder<MobEffect>> OMEN_EFFECTS = Set.of(
@@ -167,42 +171,43 @@ public class PoGameEvents {
             MobEffects.CONFUSION
     );
 
-    public static void onAddReloadListener(AddReloadListenerEvent event) {
-        event.addListener(FlyTypeManager.INSTANCE);
-        event.addListener(ToiletTypeManager.INSTANCE);
+    public static void onAddReloadListener() {
+        ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(FlyTypeManager.INSTANCE);
+        ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(ToiletTypeManager.INSTANCE);
     }
 
-    public static void onEntityTick(EntityTickEvent.Pre event) {
-        Entity entity = event.getEntity();
-        if (!(entity instanceof Villager villager) || entity.level().isClientSide || entity.tickCount % 10 != 0) return;
+    public static InteractionResult onEntityTick(Entity entity) {
+        if (!(entity instanceof Villager villager) || entity.level().isClientSide || entity.tickCount % 10 != 0) return InteractionResult.PASS;
 
         PVillagerBehaviors.tickPoopTemptation(villager);
+        return InteractionResult.SUCCESS;
     }
 
-    public static void onFinalizeSpawn(FinalizeSpawnEvent event) {
-        if (event.getLevel().isClientSide() || !Config.desperateWorld) return;
-        Mob mob = event.getEntity();
+    public static void onFinalizeSpawn(Entity entity, ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
+        if (level.isClientSide() || !Config.desperateWorld) return;
+        Mob mob = (Mob) entity;
 
-        if (mob.hasEffect(PoEffects.FECAL_INCONTINENCE)) return;
-        mob.addEffect(new MobEffectInstance(PoEffects.FECAL_INCONTINENCE, MobEffectInstance.INFINITE_DURATION, 3));
+        if (mob.hasEffect(PoEffects.holder(PoEffects.FECAL_INCONTINENCE))) return;
+        mob.addEffect(new MobEffectInstance(PoEffects.holder(PoEffects.FECAL_INCONTINENCE), MobEffectInstance.INFINITE_DURATION, 3));
     }
 
-    public static void onCreateSpawnToilet(LevelEvent.CreateSpawnPosition event) {
-        if (event.getLevel() instanceof ServerLevel level && level.getChunkSource().getGenerator() instanceof PoVoidChunkGenerator) {
+    public static boolean onCreateSpawnToilet(LevelAccessor levelAccessor, ServerLevelData settings) {
+        if (levelAccessor instanceof ServerLevel level && level.getChunkSource().getGenerator() instanceof PoVoidChunkGenerator) {
             var rand = new XoroshiroRandomSource(level.getSeed());
             var pos = new BlockPos.MutableBlockPos(rand.nextIntBetweenInclusive(-200, 200), 87, rand.nextIntBetweenInclusive(-200, 200));
 
             level.setBlock(pos, PoBlocks.WOODEN_TOILET.get().defaultBlockState(), 2);
 
-            event.setCanceled(true);
             BlockPos spawn = level.getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, pos);
-            event.getSettings().setSpawn(spawn, 90.0F);
+            settings.setSpawn(spawn, 90.0F);
             level.getGameRules().getRule(GameRules.RULE_SPAWN_RADIUS).set(0, level.getServer());
 
             PoopIslandStructure.registerGuaranteedSpawn(level.getSeed(), spawn);
             BlockPos islandCenter = PoopIslandStructure.getGuaranteedSpawnIslandCenter(level.getSeed(), spawn);
             ChunkPos islandChunk = new ChunkPos(islandCenter);
             level.getChunk(islandChunk.x, islandChunk.z);
+            return true;
         }
+        return false;
     }
 }

@@ -1,4 +1,4 @@
-﻿# PoopSky
+# PoopSky
 
 > It all began with a pile of poop
 

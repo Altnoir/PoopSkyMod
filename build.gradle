@@ -1,183 +1,172 @@
 plugins {
-    id 'idea'
-    id 'java-library'
-    id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.141'
+	id 'net.fabricmc.fabric-loom-remap' version "1.17-SNAPSHOT"
+	id 'maven-publish'
 }
 
-tasks.named('wrapper', Wrapper).configure {
-    distributionType = Wrapper.DistributionType.BIN
-}
+version = project.mod_version
+group = project.maven_group
 
-version = mod_version
-group = mod_group_id
+base.archivesName = project.archive_name
 
 repositories {
-    mavenLocal()
-    maven { url = "https://maven.ryanhcode.dev/releases" } // Sable
-    maven { url = "https://maven.createmod.net" } // Create, Ponder, Flywheel
-    maven { url = "https://mvn.devos.one/snapshots" } // Registrate
-    maven { url = "https://maven.blamejared.com" } // JEI
-    maven { url = "https://cursemaven.com" }
-    // KubeJS, Rhino
-    maven {
-        url = "https://maven.latvian.dev/releases"
-        content {
-            includeGroup "dev.latvian.mods"
-            includeGroup "dev.latvian.apps"
-        }
-    }
+	flatDir {
+		dirs "libs"
+	}
 
-    // KubeJS depends on a project in here
-    maven {
-        url = "https://jitpack.io"
-        content {
-            includeGroup "com.github.rtyley"
-        }
-    }
+	maven {
+		name = 'ParchmentMC'
+		url = 'https://maven.parchmentmc.org'
+	}
+
+	maven {
+		url = "https://mvn.devos.one/snapshots/" // Create, Registrate, Milk Lib, Dripstone Fluid Lib
+	}
+	maven {
+		url = "https://mvn.devos.one/releases/" // Porting Lib
+	}
+	maven {
+		url = "https://maven.createmod.net/" // Flywheel, Ponder
+	}
+	maven {
+		url = "https://maven.jamieswhiteshirt.com/libs-release" // Reach Entity Attributes
+	}
+
+	maven {
+		name = "Fuzs Mod Resources"
+		url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
+	}
+	maven {
+		url = "https://maven.twelveiterations.com/repository/maven-public/"
+
+		content {
+			includeGroup "net.blay09.mods"
+		}
+	}
+	maven {
+		name = "Greenhouse Maven"
+		url = 'https://maven.greenhouse.lgbt/releases/'
+	}
+	maven {
+		url = "https://maven.ryanhcode.dev/releases"
+	}
+	maven {
+		name = "Modrinth"
+		url = "https://api.modrinth.com/maven"
+	}
+	maven {
+		url = "https://maven.blamejared.com" // JEI
+	}
+
+	maven {
+		url = "https://maven.gnomecraft.net/releases/"
+	}
+
+	// Add repositories to retrieve artifacts from in here.
+	// You should only use this when depending on other mods because
+	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
+	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
+	// for more information about repositories.
 }
 
-base {
-    archivesName = mod_id
+fabricApi {
+	configureDataGeneration {
+		modId = project.mod_id
+		client = true
+	}
 }
 
-// Mojang ships Java 21 to end users starting in 1.20.5, so mods should target Java 21.
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
-
-neoForge {
-    // Specify the version of NeoForge to use.
-    version = project.neo_version
-
-    parchment {
-        mappingsVersion = project.parchment_mappings_version
-        minecraftVersion = project.parchment_minecraft_version
-    }
-
-
-    runs {
-        client {
-            programArgument '--username'
-            programArgument 'Player####'
-            client()
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
-        }
-
-        server {
-            server()
-            programArgument '--nogui'
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
-        }
-
-        gameTestServer {
-            type = "gameTestServer"
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
-        }
-
-        data {
-            data()
-            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
-        }
-
-        // applies to all the run configs above
-        configureEach {
-            systemProperty 'forge.logging.markers', 'REGISTRIES'
-            logLevel = org.slf4j.event.Level.DEBUG
-        }
-    }
-
-    mods {
-        "${mod_id}" {
-            sourceSet(sourceSets.main)
-        }
-    }
-}
-
-sourceSets.main.resources { srcDir 'src/generated/resources' }
-
-configurations {
-    runtimeClasspath.extendsFrom localRuntime
+loom {
+	accessWidenerPath = file("src/main/resources/poopsky.accesswidener")
 }
 
 dependencies {
-    // JEI
-    compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
-    compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
-    localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
-    // Touhou Little Maid
-    implementation "curse.maven:touhou-little-maid-355044:7307724"
-    compileOnly files("libs/touhou_little_mad-0.1.2-alpha.jar")
-    // Create
-    implementation("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
-    implementation("net.createmod.ponder:Ponder-NeoForge-${minecraft_version}:${ponder_version}")
-    compileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-${minecraft_version}:${flywheel_version}")
-    runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-${minecraft_version}:${flywheel_version}")
-    implementation("com.tterrag.registrate:Registrate:${registrate_version}")
-    // Farmers Delight
-    compileOnly(("curse.maven:farmers-delight-398521:${farmersdelight_version}"))
-    localRuntime(("curse.maven:farmers-delight-398521:${farmersdelight_version}"))
-    // KubeJS (compileOnly - compat removed, keep for future use)
-    compileOnly("dev.latvian.mods:kubejs-neoforge:$kubejs_version")
-    // Sable Companion
-    jarJar(api("dev.ryanhcode.sable-companion:sable-companion-common-${minecraft_version}:[${sable_companion_version},)")) {
-        version {
-            prefer(sable_companion_version)
-        }
-    }
+	// To change the versions see the gradle.properties file
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings loom.layered {
+		officialMojangMappings()
+		parchment("org.parchmentmc.data:parchment-${project.minecraft_version}:${project.mappings_version}@zip")
+	}
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+	// Fabric API. This is technically optional, but you probably want it anyway.
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+	modApi "com.terraformersmc:modmenu:11.0.2"
+
+	modCompileOnly "com.google.code.findbugs:jsr305:3.0.2" // javax
+
+	modImplementation(include("local:Registrate-MC1.21.1-1.3.99+ab9fdc3-fabric:1.0.0"))
+	modImplementation("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${project.configapi_version}")
+
+	// JEI
+	modCompileOnly "mezz.jei:jei-${project.minecraft_version}-common-api:${project.jei_version}"
+	modCompileOnly "mezz.jei:jei-${project.minecraft_version}-fabric-api:${project.jei_version}"
+	modLocalRuntime "mezz.jei:jei-${project.minecraft_version}-fabric:${project.jei_version}"
+
+	// Farmers Delight
+	modImplementation("vectorwing:FarmersDelight:${project.farmersdelight_version}+refabricated") {
+		exclude(group: "net.fabricmc")
+	}
+
+	// Touhou Little Maid
+	modCompileOnly("maven.modrinth:touhoulittlemaid-orihime:${project.touhoulittlemaid_version}")
+
+	include(modApi("dev.ryanhcode.sable-companion:sable-companion-fabric-${project.minecraft_version}:${project.sable_companion_version}"))
 }
 
-// This block of code expands all declared replace properties in the specified resource targets.
-// A missing property will result in an error. Properties are expanded using ${} Groovy notation.
-var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
-    var replaceProperties = [
-            minecraft_version      : minecraft_version,
-            minecraft_version_range: minecraft_version_range,
-            neo_version            : neo_version,
-            neo_version_range      : neo_version_range,
-            loader_version_range   : loader_version_range,
-            mod_id                 : mod_id,
-            mod_name               : mod_name,
-            mod_license            : mod_license,
-            mod_version            : mod_version,
-            mod_authors            : mod_authors,
-            mod_description        : mod_description
-    ]
-    inputs.properties replaceProperties
-    expand replaceProperties
-    from "src/main/templates"
-    into "build/generated/sources/modMetadata"
-}
-// Include the output of "generateModMetadata" as an input directory for the build
-// this works with both building through Gradle and the IDE.
-sourceSets.main.resources.srcDir generateModMetadata
-// To avoid having to run "generateModMetadata" manually, make it run on every project reload
-neoForge.ideSyncTask generateModMetadata
+sourceSets.main.resources.setSrcDirs(["src/main/resources", "src/main/generated"])
 
-// Example configuration to allow publishing using the maven-publish plugin
-publishing {
-    publications {
-        register('mavenJava', MavenPublication) {
-            from components.java
-        }
-    }
-    repositories {
-        maven {
-            url = "file://${project.projectDir}/repo"
-        }
-    }
+processResources {
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+	def version = project.version
+	inputs.property "version", version
+
+	filesMatching("fabric.mod.json") {
+		expand "version": version
+	}
 }
 
 tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+	it.options.release = 21
 }
 
-tasks.withType(ProcessResources).configureEach {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+
+	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+	// if it is present.
+	// If you remove this line, sources will not be generated.
+	withSourcesJar()
+
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
 }
 
-// IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
-idea {
-    module {
-        downloadSources = true
-        downloadJavadoc = true
-    }
+jar {
+	def projectName = project.name
+	inputs.property "projectName", projectName
+}
+
+tasks.withType(Jar).configureEach {
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+// configure the maven publication
+publishing {
+	publications {
+		create("mavenJava", MavenPublication) {
+			from components.java
+		}
+	}
+
+	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
+	repositories {
+		// Add repositories to publish to here.
+		// Notice: This block does NOT have the same function as the block in the top level.
+		// The repositories here will be used for publishing your artifact, not for
+		// retrieving dependencies.
+	}
 }

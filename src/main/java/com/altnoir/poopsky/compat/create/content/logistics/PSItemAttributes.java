@@ -1,3 +1,4 @@
+/*
 package com.altnoir.poopsky.compat.create.content.logistics;
 
 import com.altnoir.poopsky.PoopSky;
@@ -37,3 +38,4 @@ public class PSItemAttributes {
         ITEM_ATTRIBUTE_TYPES.register(modEventBus);
     }
 }
+ */

@@ -2,11 +2,7 @@ package com.altnoir.poopsky.content.recipe;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.init.PoRecipes;
-import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementRequirements;
-import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -18,16 +14,12 @@ import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 public final class POPExplosionRecipeBuilder implements RecipeBuilder {
     private static final String RECIPE_TYPE = PoRecipes.POP_EXPLOSION.folder();
 
     private final Ingredient input;
     private final POPExplosionRecipe.Output output;
     private int radius = 0;
-    private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
 
     public POPExplosionRecipeBuilder(Ingredient input, POPExplosionRecipe.Output output) {
         this.input = input;
@@ -59,7 +51,6 @@ public final class POPExplosionRecipeBuilder implements RecipeBuilder {
 
     @Override
     public @NotNull RecipeBuilder unlockedBy(String name, Criterion<?> criterion) {
-        this.criteria.put(name, criterion);
         return this;
     }
 
@@ -80,18 +71,8 @@ public final class POPExplosionRecipeBuilder implements RecipeBuilder {
 
     @Override
     public void save(@NotNull RecipeOutput recipeOutput, @NotNull ResourceLocation id) {
-        ensureValid(id);
-        ResourceLocation advancementId = PoopSky.loc(id.getPath());
-
-        Advancement.Builder advancementBuilder = recipeOutput.advancement()
-                .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
-                .rewards(AdvancementRewards.Builder.recipe(id))
-                .requirements(AdvancementRequirements.Strategy.OR);
-
-        criteria.forEach(advancementBuilder::addCriterion);
-
         POPExplosionRecipe recipe = new POPExplosionRecipe(input, radius, output);
-        recipeOutput.accept(id, recipe, advancementBuilder.build(advancementId.withPrefix("recipes/")));
+        recipeOutput.accept(id, recipe, null);
     }
 
     public static ResourceLocation getDefaultRecipeId(ItemLike input) {
@@ -99,9 +80,4 @@ public final class POPExplosionRecipeBuilder implements RecipeBuilder {
         return PoopSky.loc(RECIPE_TYPE + "/" + itemId.getPath());
     }
 
-    private void ensureValid(ResourceLocation id) {
-        if (criteria.isEmpty()) {
-            throw new IllegalStateException("No way of obtaining recipe " + id);
-        }
-    }
 }
