@@ -79,7 +79,7 @@ public class PoGameEvents {
         if (!(overworld.getChunkSource().getGenerator() instanceof PoVoidChunkGenerator)) return;
         if (!IntroSavedData.get(overworld).markPlayed(player.getUUID(), player.getGameProfile().getName())) return;
 
-        PacketDistributor.sendToPlayer(player, new IntroPayload());
+        PacketDistributor.sendToPlayer(player, IntroPayload.INSTANCE);
     }
 
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {

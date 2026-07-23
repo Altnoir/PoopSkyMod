@@ -35,7 +35,7 @@ import java.util.concurrent.CompletionException;
 public class IntroScreen extends Screen {
     private static final ResourceLocation FONT = PoopSky.loc("poopsky_intro");
     private static final ResourceLocation POOP_TEXTURE = PoopSky.loc("textures/item/poop.png");
-    private static final ResourceLocation SKY_TEXTURE = PoopSky.loc("textures/gui/poopsky_intro/depth-blue.png");
+    private static final ResourceLocation SKY_TEXTURE = PoopSky.loc("textures/gui/poopsky_intro/depth_blue.png");
 
     private static final Component TITLE = titleText("poopsky");
     private static final Component YEAR = Component.literal("2026");
@@ -175,6 +175,9 @@ public class IntroScreen extends Screen {
                 this.completionTicks = 0;
             }
         }
+        if (this.loadingStarted && this.completionTicks < SHATTER_SOUND_TICK) {
+            this.updateLoadingText(this.completionTicks >= 0 ? 100 : IntroController.getLoadingProgress());
+        }
 
         if (this.completionTicks >= COMPLETION_TICKS) {
             this.minecraft.setScreen(null);
@@ -276,7 +279,7 @@ public class IntroScreen extends Screen {
                 this.drawPoopIcon(guiGraphics, iconAlpha);
             }
             if (this.loadingStarted) {
-                this.drawLoadingText(guiGraphics, completion);
+                this.drawLoadingText(guiGraphics);
             }
         }
         if (yearAlpha > MIN_FONT_ALPHA) {
@@ -320,13 +323,15 @@ public class IntroScreen extends Screen {
                 this.titleLayout.yearScale(), alphaColor(alpha));
     }
 
-    private void drawLoadingText(GuiGraphics guiGraphics, float completion) {
-        int progress = completion >= 0.0F ? 100 : IntroController.getLoadingProgress();
+    private void updateLoadingText(int progress) {
         if (progress != this.loadingProgress) {
             this.loadingProgress = progress;
             this.loadingText = Component.literal("Loading... " + progress + "%");
             this.loadingTextX = (VIRTUAL_WIDTH - this.font.width(this.loadingText) * LOADING_TEXT_SCALE) * 0.5F;
         }
+    }
+
+    private void drawLoadingText(GuiGraphics guiGraphics) {
         this.drawScaledText(guiGraphics, this.loadingText, this.loadingTextX, LOADING_TEXT_Y,
                 LOADING_TEXT_SCALE, 0xFFFFFFFF);
     }
