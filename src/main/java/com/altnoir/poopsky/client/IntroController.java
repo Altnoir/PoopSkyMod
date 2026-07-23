@@ -55,13 +55,12 @@ public final class IntroController {
             }
         }
 
-        if (session == null) return;
+        IntroSession activeSession = session;
+        if (activeSession == null) return;
 
-        if (event.getNewScreen() instanceof IntroReceivingScreen) {
-            session.screen.resumePlaybackSound();
-            event.setCanceled(true);
-        } else if (event.getNewScreen() instanceof ProgressScreen) {
-            session.screen.resumePlaybackSound();
+        if (event.getNewScreen() instanceof IntroReceivingScreen
+                || event.getNewScreen() instanceof ProgressScreen) {
+            activeSession.screen.resumePlaybackSound();
             event.setCanceled(true);
         } else if (event.getNewScreen() instanceof LevelLoadingScreen) {
             event.setCanceled(true);
@@ -69,14 +68,15 @@ public final class IntroController {
     }
 
     public static void onLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
-        if (session != null && session.ignoreNextLogout) {
-            session.ignoreNextLogout = false;
-            session.screen.resumePlaybackSound();
+        IntroSession activeSession = session;
+        if (activeSession != null && activeSession.ignoreNextLogout) {
+            activeSession.ignoreNextLogout = false;
+            activeSession.screen.resumePlaybackSound();
             return;
         }
 
-        if (session != null) {
-            session.screen.abort();
+        if (activeSession != null) {
+            activeSession.screen.abort();
             session = null;
         }
         awaitingWorldCreation = false;
@@ -89,23 +89,21 @@ public final class IntroController {
     }
 
     public static void onScreenClosed(IntroScreen screen) {
-        if (session != null && session.screen == screen) {
+        IntroSession activeSession = session;
+        if (activeSession != null && activeSession.screen == screen) {
             session = null;
             awaitingWorldCreation = false;
         }
     }
 
-    public static boolean isLevelReady() {
-        return session != null
-                && (Minecraft.getInstance().level != null || session.levelReady.getAsBoolean());
-    }
-
     public static boolean isReadyToFinish() {
-        return isLevelReady();
+        IntroSession activeSession = session;
+        return activeSession != null
+                && (Minecraft.getInstance().level != null || activeSession.levelReady.getAsBoolean());
     }
 
     public static int getLoadingProgress() {
-        if (isLevelReady()) return 100;
+        if (isReadyToFinish()) return 100;
 
         var progressListener = Minecraft.getInstance().getProgressListener();
         if (progressListener == null) {

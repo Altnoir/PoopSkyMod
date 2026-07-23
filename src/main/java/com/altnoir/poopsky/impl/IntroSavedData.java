@@ -43,24 +43,25 @@ public final class IntroSavedData extends SavedData {
     }
 
     public boolean markPlayed(UUID playerId, String playerName) {
-        if (this.playedPlayers.contains(playerId) || this.playedPlayerNames.contains(playerName)) return false;
-
-        this.playedPlayers.add(playerId);
-        this.playedPlayerNames.add(playerName);
-        this.setDirty();
-        return true;
+        boolean played = this.playedPlayers.contains(playerId) || this.playedPlayerNames.contains(playerName);
+        boolean changed = this.playedPlayers.add(playerId);
+        changed |= this.playedPlayerNames.add(playerName);
+        if (changed) {
+            this.setDirty();
+        }
+        return !played;
     }
 
     @Override
     public CompoundTag save(CompoundTag tag, HolderLookup.Provider registries) {
-        tag.put(PLAYED_PLAYERS_TAG, toList(this.playedPlayers.stream().map(UUID::toString).sorted().toList()));
-        tag.put(PLAYED_PLAYER_NAMES_TAG, toList(this.playedPlayerNames.stream().sorted().toList()));
+        tag.put(PLAYED_PLAYERS_TAG, toList(this.playedPlayers));
+        tag.put(PLAYED_PLAYER_NAMES_TAG, toList(this.playedPlayerNames));
         return tag;
     }
 
-    private static ListTag toList(Iterable<String> values) {
+    private static ListTag toList(Iterable<?> values) {
         ListTag list = new ListTag();
-        values.forEach(value -> list.add(StringTag.valueOf(value)));
+        values.forEach(value -> list.add(StringTag.valueOf(value.toString())));
         return list;
     }
 }
