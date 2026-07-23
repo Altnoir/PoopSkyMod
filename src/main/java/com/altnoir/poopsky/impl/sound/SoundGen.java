@@ -20,6 +20,12 @@ public class SoundGen extends SoundDefinitionsProvider {
                         sound(PoopSky.loc("fart_2"))
                 ));
 
+        add(PoSoundEvents.ENTITY_POOP_BALL_THROW, definition()
+                .subtitle("subtitle.poopsky.poop_ball.throw")
+                .with(
+                        sound(PoopSky.locMc("entity.snowball.throw"), SoundDefinition.SoundType.EVENT)
+                ));
+
         add(PoSoundEvents.ITEM_TOILET_LINKER_BOOP, definition()
                 .subtitle("subtitle.poopsky.item.toilet_linker.boop")
                 .with(

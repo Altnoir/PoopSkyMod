@@ -224,6 +224,15 @@
     ],
     "subtitle": "subtitle.poopsky.poolime.squish"
   },
+  "entity.poop_ball.throw": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.snowball.throw"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.poop_ball.throw"
+  },
   "entity.pop.primed": {
     "sounds": [
       {
