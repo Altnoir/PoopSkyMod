@@ -118,7 +118,7 @@ public class FlushToiletBlock extends BaseEntityBlock {
             return InteractionResult.SUCCESS;
         }
 
-        FlushToiletEntity entity = getOrCreateFlushToiletEntity((ServerLevel) level, pos);
+        FlushToiletEntity entity = getOrCreateFlushToiletEntity((ServerLevel) level, pos, state);
         if (entity != null) {
             player.startRiding(entity);
         }
@@ -126,11 +126,21 @@ public class FlushToiletBlock extends BaseEntityBlock {
     }
 
     @Nullable
-    private static FlushToiletEntity getOrCreateFlushToiletEntity(ServerLevel level, BlockPos pos) {
+    private static FlushToiletEntity getOrCreateFlushToiletEntity(ServerLevel level, BlockPos pos, BlockState state) {
         return level.getEntities(PoEntityType.FLUSH_TOILET.get(), new AABB(pos), e -> true)
                 .stream()
                 .findFirst()
-                .orElseGet(() -> PoEntityType.FLUSH_TOILET.get().spawn(level, pos, MobSpawnType.TRIGGERED));
+                .orElseGet(() -> {
+                    FlushToiletEntity entity = PoEntityType.FLUSH_TOILET.get().spawn(level, pos, MobSpawnType.TRIGGERED);
+                    if (entity != null) {
+                        Direction facing = state.getValue(FACING);
+                        float v = (float) 1 / 16;
+                        double offsetX = facing.getStepX() * v;
+                        double offsetZ = facing.getStepZ() * v;
+                        entity.setPos(entity.getX() + offsetX, entity.getY(), entity.getZ() + offsetZ);
+                    }
+                    return entity;
+                });
     }
 
     @Override
