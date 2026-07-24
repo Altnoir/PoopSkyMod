@@ -220,7 +220,7 @@ public class SoundGen extends SoundDefinitionsProvider {
         add(PoSoundEvents.ITEM_TIME_BELL_OPEN, definition()
                 .subtitle("subtitle.poopsky.item.time_bell.open")
                 .with(
-                        sound(PoopSky.loc("the_world_open"))
+                        sound(PoopSky.loc("the_world_open")).stream()
                 ));
 
         add(PoSoundEvents.ITEM_TIME_BELL_CLOSE, definition()

@@ -2,6 +2,7 @@ package com.altnoir.poopsky.impl.recipe;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.compat.PoMods;
+import com.altnoir.poopsky.compat.farmersdelight.FarmersDelightRecipeGen;
 import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.recipe.*;
@@ -546,6 +547,9 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         buildAnalPressingRecipes(recipeOutput);
         buildBreedingChestRecipes(recipeOutput);
         buildFlyBarrelRecipes(recipeOutput);
+
+        RecipeOutput fd = recipeOutput.withConditions(modLoaded(PoMods.FARMERSDELIGHT.id()));
+        FarmersDelightRecipeGen.buildRecipes(fd);
     }
 
     private void buildpopExplosionRecipes(RecipeOutput recipeOutput) {
@@ -575,17 +579,21 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
     }
 
     private void buildAnalPressingRecipes(RecipeOutput recipeOutput) {
-        record AnalPressing(Block input, Block output, Block replaceTarget) {
+        record AnalPressing(Block input, Block output, Block replaceTarget, int radius) {
             static AnalPressing of(Block input, Block output) {
-                return new AnalPressing(input, output, null);
+                return new AnalPressing(input, output, null, 1);
             }
 
             static AnalPressing ofDeepslate(Block input, Block output) {
-                return new AnalPressing(input, output, Blocks.DEEPSLATE);
+                return new AnalPressing(input, output, Blocks.DEEPSLATE, 1);
             }
 
             static AnalPressing ofNetherrack(Block input, Block output) {
-                return new AnalPressing(input, output, Blocks.NETHERRACK);
+                return new AnalPressing(input, output, Blocks.NETHERRACK, 1);
+            }
+
+            static AnalPressing ofNetherrack(Block input, Block output, int radius) {
+                return new AnalPressing(input, output, Blocks.NETHERRACK, radius);
             }
         }
         List<AnalPressing> recipes = List.of(
@@ -616,13 +624,16 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 AnalPressing.ofNetherrack(Blocks.RAW_GOLD_BLOCK, Blocks.NETHER_GOLD_ORE),
                 AnalPressing.ofNetherrack(Blocks.GOLD_BLOCK, Blocks.NETHER_GOLD_ORE),
                 AnalPressing.ofNetherrack(Blocks.QUARTZ_BLOCK, Blocks.NETHER_QUARTZ_ORE),
-                AnalPressing.ofNetherrack(Blocks.NETHERITE_BLOCK, Blocks.ANCIENT_DEBRIS)
+                AnalPressing.ofNetherrack(Blocks.NETHERITE_BLOCK, Blocks.ANCIENT_DEBRIS, 2)
         );
 
         for (AnalPressing entry : recipes) {
             var builder = AnalPressingRecipeBuilder.analPressing(entry.input(), entry.output());
             if (entry.replaceTarget() != null) {
                 builder.replaceTarget(entry.replaceTarget());
+            }
+            if (entry.radius() != 1) {
+                builder.radius(entry.radius());
             }
             builder.unlockedBy(getItemName(entry.output()), has(entry.input()))
                     .save(recipeOutput, getModConversionRecipeName(entry.input(), entry.output()));

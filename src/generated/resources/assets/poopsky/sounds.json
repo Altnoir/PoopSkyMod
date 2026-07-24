@@ -298,7 +298,10 @@
   },
   "item.time_bell.open": {
     "sounds": [
-      "poopsky:the_world_open"
+      {
+        "name": "poopsky:the_world_open",
+        "stream": true
+      }
     ],
     "subtitle": "subtitle.poopsky.item.time_bell.open"
   },

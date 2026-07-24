@@ -9,10 +9,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class PoopLeavesBlock extends LeavesBlock {
+public class ParticleLeavesBlock extends LeavesBlock {
     private final LeavesParticleOptions particleOption;
 
-    public PoopLeavesBlock(int particleColor, Properties properties) {
+    public ParticleLeavesBlock(int particleColor, Properties properties) {
         super(properties);
         this.particleOption = new LeavesParticleOptions(particleColor);
     }

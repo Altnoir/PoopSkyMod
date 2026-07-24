@@ -16,6 +16,7 @@
       "item": "poopsky:poop"
     }
   ],
+  "recipe_book_tab": "meals",
   "result": {
     "count": 1,
     "id": "poopsky:poop_vegetable_sticks"

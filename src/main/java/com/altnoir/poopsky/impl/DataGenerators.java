@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.impl;
 
-import com.altnoir.poopsky.impl.create.PDigestingRecipeGen;
-import com.altnoir.poopsky.impl.create.PHauntingRecipeGen;
-import com.altnoir.poopsky.impl.create.PWashingRecipeGen;
+import com.altnoir.poopsky.compat.create.datagen.PDigestingRecipeGen;
+import com.altnoir.poopsky.compat.create.datagen.PHauntingRecipeGen;
+import com.altnoir.poopsky.compat.create.datagen.PWashingRecipeGen;
 import com.altnoir.poopsky.impl.olddata.BlockLootTableGen;
 import com.altnoir.poopsky.impl.olddata.FishingLootGen;
 import com.altnoir.poopsky.impl.olddata.GlobalLootModifierGen;
@@ -63,4 +63,3 @@ public class DataGenerators {
         generators.addProvider(event.includeServer(), new PHauntingRecipeGen(packOutput, lookupProvider));
     }
 }
-

@@ -28,10 +28,6 @@ public class ToiletSensor extends Sensor<EntityMaid> {
     }
 
     private static boolean isToiletOccupied(ServerLevel level, BlockPos pos) {
-        var toilets = level.getEntities(PoEntityType.TOILET.get(), new AABB(pos), e -> true);
-        for (var toilet : toilets) {
-            if (!toilet.getPassengers().isEmpty()) return true;
-        }
         var flushToilets = level.getEntities(PoEntityType.FLUSH_TOILET.get(), new AABB(pos), e -> true);
         for (var flushToilet : flushToilets) {
             if (!flushToilet.getPassengers().isEmpty()) return true;
@@ -41,7 +37,7 @@ public class ToiletSensor extends Sensor<EntityMaid> {
 
     private static boolean isToiletAvailable(ServerLevel level, BlockPos pos) {
         var state = level.getBlockState(pos);
-        if (!state.is(PoTags.Blocks.TOILET_BLOCKS)) return false;
+        if (!state.is(PoTags.Blocks.FLUSH_TOILET_BLOCKS)) return false;
         if (state.getBlock() instanceof FlushToiletBlock && state.getValue(FlushToiletBlock.CLOSED)) return false;
         return !isToiletOccupied(level, pos);
     }

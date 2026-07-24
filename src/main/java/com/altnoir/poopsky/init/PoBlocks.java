@@ -338,20 +338,23 @@ public class PoBlocks {
             (loot, block) -> loot.add(block, loot.createDoorTable(block)));
     public static final BlockEntry<TrapDoorBlock> GINKGO_TRAPDOOR = registerDecorativeBlock("ginkgo_trapdoor", 64,
             props -> new TrapDoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_TRAPDOOR).mapColor(MapColor.COLOR_YELLOW)));
-    public static final BlockEntry<PoopLeavesBlock> POOP_LEAVES = registerAllTabBlock("poop_leaves", 88,
-            props -> new PoopLeavesBlock(0x5E4228, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
-                    .mapColor(MapColor.COLOR_BROWN)),
+    public static final BlockEntry<ParticleLeavesBlock> POOP_LEAVES = registerAllTabBlock("poop_leaves", 88,
+            props -> new ParticleLeavesBlock(0x5E4228, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .sound(SoundType.SCULK_SENSOR)),
             (loot, block) -> loot.add(block, createLeavesDrops(loot, block, PoItems.POOP.get())));
-    public static final BlockEntry<PoopLeavesBlock> POOP_LEAVES_IRON = registerBlock("poop_leaves_iron", 88,
-            props -> new PoopLeavesBlock(0xFFFFFF, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
-                    .mapColor(MapColor.TERRACOTTA_WHITE)),
+    public static final BlockEntry<ParticleLeavesBlock> POOP_LEAVES_IRON = registerBlock("poop_leaves_iron", 88,
+            props -> new ParticleLeavesBlock(0xFFFFFF, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
+                    .mapColor(MapColor.TERRACOTTA_WHITE)
+                    .sound(SoundType.SCULK_SENSOR)),
             (loot, block) -> loot.add(block, createIronLeavesDrops(loot, block)));
-    public static final BlockEntry<PoopLeavesBlock> POOP_LEAVES_GOLD = registerBlock("poop_leaves_gold", 88,
-            props -> new PoopLeavesBlock(0xFFD700, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
-                    .mapColor(MapColor.COLOR_YELLOW)),
+    public static final BlockEntry<ParticleLeavesBlock> POOP_LEAVES_GOLD = registerBlock("poop_leaves_gold", 88,
+            props -> new ParticleLeavesBlock(0xFFD700, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
+                    .mapColor(MapColor.COLOR_YELLOW)
+                    .sound(SoundType.SCULK_SENSOR)),
             (loot, block) -> loot.add(block, createGoldLeavesDrops(loot, block)));
     public static final BlockEntry<LeavesBlock> GINKGO_LEAVES = registerAllTabBlock("ginkgo_leaves", 64,
-            props -> new LeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
+            props -> new ParticleLeavesBlock(0xF0DB3E, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
                     .mapColor(MapColor.COLOR_YELLOW)),
             (loot, block) -> loot.add(block, createGinkgoLeavesDrops(loot, block)));
     public static final BlockEntry<PoopTreeBlock> POOP_SAPLING = registerAllTabBlock("poop_sapling", 88,

@@ -80,7 +80,7 @@ public class FlushToiletEntity extends Entity {
     protected void positionRider(Entity passenger, MoveFunction callback) {
         super.positionRider(passenger, callback);
         if (passenger instanceof Player) {
-            callback.accept(passenger, this.getX(), this.getY() - 0.05, this.getZ());
+            callback.accept(passenger, this.getX(), this.getY() - 0.15, this.getZ());
         } else {
             callback.accept(passenger, this.getX(), this.getY() + 0.4, this.getZ());
         }

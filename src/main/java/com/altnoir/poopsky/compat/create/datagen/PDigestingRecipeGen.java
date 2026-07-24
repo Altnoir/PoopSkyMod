@@ -1,9 +1,9 @@
-package com.altnoir.poopsky.impl.create;
+package com.altnoir.poopsky.compat.create.datagen;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.compat.create.DigestingRecipeGen;
+import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;

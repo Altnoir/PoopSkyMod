@@ -12,8 +12,8 @@ public final class TimeBellOverlay {
     private static final int SEPIA_COLOR = 0x70471F;
     private static final int FLASH_COLOR = 0xFFE8AF;
     private static final float FOV_KICK_DURATION = 30.0F;
-    private static final float FOV_BOOST = 1.125F;
-    public static final double MAX_FOV = 180.0;
+    private static final float FOV_BOOST = 1.25F;
+    public static final double MAX_FOV = 175.0;
 
     private static volatile boolean frozen;
     private static float intensity;

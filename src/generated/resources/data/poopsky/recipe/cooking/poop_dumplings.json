@@ -16,6 +16,7 @@
       "item": "poopsky:poop_ball"
     }
   ],
+  "recipe_book_tab": "meals",
   "result": {
     "count": 1,
     "id": "poopsky:poop_dumplings"

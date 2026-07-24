@@ -48,13 +48,6 @@ public class PoEntityType {
             .setData(ProviderType.LANG, NonNullBiConsumer.noop())
             .register();
 
-    public static final EntityEntry<ToiletEntity> TOILET = REGISTRATE.entity("toilet_entity", ToiletEntity::new, MobCategory.MISC)
-            .properties(properties -> properties
-                    .sized(0.75F, 1.0F))
-            .renderer(() -> ToiletRenderer::new)
-            .setData(ProviderType.LANG, NonNullBiConsumer.noop())
-            .register();
-
     public static final EntityEntry<FlushToiletEntity> FLUSH_TOILET = REGISTRATE.entity("flush_toilet_entity", FlushToiletEntity::new, MobCategory.MISC)
             .properties(properties -> properties
                     .sized(0.5F, 0.5F))

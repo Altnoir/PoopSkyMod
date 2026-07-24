@@ -84,7 +84,10 @@ public final class BlockTagGen {
         tag(PoTags.Blocks.TOILET_BLOCKS)
                 .add(
                         PoBlocks.WOODEN_TOILET.get(),
-                        PoBlocks.HARD_TOILET.get(),
+                        PoBlocks.HARD_TOILET.get()
+                );
+        tag(PoTags.Blocks.FLUSH_TOILET_BLOCKS)
+                .add(
                         PoBlocks.FLUSH_TOILET.get(),
                         PoBlocks.GOLDEN_FLUSH_TOILET.get()
                 );

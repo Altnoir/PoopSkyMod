@@ -7,7 +7,6 @@
   ],
   "type": "minecraft:crafting_shapeless",
   "category": "building",
-  "group": "fd_organic_compost",
   "ingredients": [
     {
       "tag": "minecraft:dirt"

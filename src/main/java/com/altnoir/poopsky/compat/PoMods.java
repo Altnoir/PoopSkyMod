@@ -9,6 +9,7 @@ public enum PoMods {
     SABLE,
     JEI,
     CREATE,
+    FARMERSDELIGHT,
     SKYBLOCKBUILDER,
     TOUHOU_LITTLE_MAID,
     AE2,

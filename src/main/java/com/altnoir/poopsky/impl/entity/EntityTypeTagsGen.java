@@ -24,9 +24,9 @@ public final class EntityTypeTagsGen {
                 .add(EntityType.IRON_GOLEM, EntityType.SNOW_GOLEM);
 
         provider.addTag(PoTags.EntityTypes.RETAIN_IN_SUB_LEVEL)
-                .add(PoEntityType.STOOL.get(), PoEntityType.TOILET.get());
+                .add(PoEntityType.STOOL.get(), PoEntityType.FLUSH_TOILET.get());
         provider.addTag(PoTags.EntityTypes.DESTROY_WITH_SUB_LEVEL)
-                .add(PoEntityType.STOOL.get(), PoEntityType.TOILET.get());
+                .add(PoEntityType.STOOL.get(), PoEntityType.FLUSH_TOILET.get());
 
         provider.addTag(EntityTypeTags.IGNORES_POISON_AND_REGEN)
                 .add(PoEntityType.POOLIME.get(), PoEntityType.FLY.get());

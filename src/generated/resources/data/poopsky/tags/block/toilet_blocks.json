@@ -1,8 +1,6 @@
 {
   "values": [
     "poopsky:wooden_toilet",
-    "poopsky:hard_toilet",
-    "poopsky:flush_toilet",
-    "poopsky:golden_flush_toilet"
+    "poopsky:hard_toilet"
   ]
 }

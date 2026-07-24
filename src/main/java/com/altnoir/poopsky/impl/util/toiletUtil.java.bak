@@ -24,13 +24,6 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
 import java.util.function.LongConsumer;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.core.registries.Registries;
-import java.util.Set;
-import net.minecraft.server.TickTask;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.level.block.entity.BlockEntity;
 
 public class toiletUtil {
     public static boolean isGoldenToilet(Level level, BlockPos pos) {
@@ -189,68 +182,5 @@ public class toiletUtil {
         if (isFire) return PoItems.CHILI_POOP.get();
         if (isGolden) return PoItems.GOLDEN_POOP.get();
         return PoItems.POOP.get();
-    }
-
-
-    public static boolean hasLinkedTarget(BlockEntity blockEntity) {
-        if (blockEntity instanceof ToiletBlockEntity be) {
-            return be.getLinkedPos() != null && be.getLinkedDim() != null && !be.getLinkedDim().isBlank();
-        } else if (blockEntity instanceof FlushToiletBlockEntity be) {
-            return be.getLinkedPos() != null && be.getLinkedDim() != null && !be.getLinkedDim().isBlank();
-        }
-        return false;
-    }
-
-    public static boolean tryTeleportFromFall(Level level, BlockPos pos, Entity entity, float fallDistance) {
-        if (fallDistance < 1.0F || !isEntityCentered(pos, entity)) {
-            return false;
-        }
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity != null && hasLinkedTarget(blockEntity)) {
-            teleportEntity(level, entity, blockEntity, fallDistance);
-            return true;
-        }
-        return false;
-    }
-
-    public static void teleportEntity(Level level, Entity entity, BlockEntity blockEntity, float fallDistance) {
-        // Get linked info from block entity
-        String linkedDim = null;
-        BlockPos linkedPos = null;
-        if (blockEntity instanceof ToiletBlockEntity be) {
-            linkedDim = be.getLinkedDim();
-            linkedPos = be.getLinkedPos();
-        } else if (blockEntity instanceof FlushToiletBlockEntity be) {
-            linkedDim = be.getLinkedDim();
-            linkedPos = be.getLinkedPos();
-        }
-        if (linkedDim == null || linkedPos == null) return;
-        
-        var server = level.getServer();
-        if (server == null) return;
-        
-        var targetDimension = ResourceLocation.tryParse(linkedDim);
-        if (targetDimension == null) return;
-        
-        var targetWorld = server.getLevel(ResourceKey.create(Registries.DIMENSION, targetDimension));
-        if (targetWorld == null) return;
-        
-        targetWorld.getChunk(linkedPos);
-        Vec3 destination = Vec3.atCenterOf(linkedPos).add(0.0, 0.5, 0.0);
-        
-        if (entity.isVehicle() && entity.getControllingPassenger() != null) {
-            entity.getControllingPassenger().teleportTo(targetWorld, destination.x, destination.y, destination.z, Set.of(), entity.getYRot(), entity.getXRot());
-        }
-        entity.teleportTo(targetWorld, destination.x, destination.y, destination.z, Set.of(), entity.getYRot(), entity.getXRot());
-        
-        var pitch = targetWorld.random.nextFloat() + 0.1F;
-        targetWorld.playSound(null, destination.x, destination.y, destination.z, SoundEvents.MUD_BREAK, SoundSource.PLAYERS, 1.0F, pitch);
-        
-        var bounce = Math.sqrt(2 * 0.08 * fallDistance) * 0.85;
-        server.tell(new TickTask(server.getTickCount() + 1, () -> {
-            entity.setDeltaMovement(entity.getDeltaMovement().x, bounce, entity.getDeltaMovement().z);
-            entity.hurtMarked = true;
-            entity.hasImpulse = true;
-        }));
     }
 }
