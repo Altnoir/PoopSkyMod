@@ -346,10 +346,7 @@
   },
   "poopsky_intro": {
     "sounds": [
-      {
-        "name": "poopsky:poopsky_intro",
-        "stream": true
-      }
+      "poopsky:poopsky_intro"
     ]
   }
 }

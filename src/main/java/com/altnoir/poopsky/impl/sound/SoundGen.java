@@ -231,7 +231,7 @@ public class SoundGen extends SoundDefinitionsProvider {
 
         add(PoSoundEvents.POOPSKY_INTRO, definition()
                 .with(
-                        sound(PoopSky.loc("poopsky_intro")).stream()
+                        sound(PoopSky.loc("poopsky_intro"))
                 ));
 
         add(PoSoundEvents.LAWRENCE, definition()

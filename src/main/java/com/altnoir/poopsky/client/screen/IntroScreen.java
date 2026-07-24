@@ -12,25 +12,15 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
-import net.minecraft.client.resources.sounds.Sound;
 import net.minecraft.client.resources.sounds.SoundInstance;
-import net.minecraft.client.sounds.AudioStream;
-import net.minecraft.client.sounds.SoundBufferLibrary;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import org.joml.Matrix4f;
 import org.lwjgl.glfw.GLFW;
-
-import javax.sound.sampled.AudioFormat;
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionException;
 
 public class IntroScreen extends Screen {
     private static final ResourceLocation FONT = PoopSky.loc("poopsky_intro");
@@ -55,19 +45,16 @@ public class IntroScreen extends Screen {
     private static final int SHATTER_SOUND_TICK = Mth.ceil(SHATTER_START * TICKS_PER_SECOND);
     private static final int COMPLETION_TICKS = Mth.ceil(LOADING_COMPLETE_HOLD_DURATION * TICKS_PER_SECOND);
     private static final float TITLE_FADE_START = 4.0F;
-    private static final float TITLE_FADE_END = 7.5F;
-    private static final float TEXTURE_FADE_START = 8.0F;
-    private static final float TEXTURE_FADE_END = 9.5F;
+    private static final float TITLE_FADE_END = 8.0F;
+    private static final float TEXTURE_FADE_START = 7.6F;
+    private static final float TEXTURE_FADE_END = 9.4F;
     private static final float ICON_FADE_START = 2.0F;
-    private static final float ICON_FADE_END = 4.0F;
+    private static final float ICON_FADE_END = 4.5F;
     private static final float REFLECTION_START = 9.5F;
     private static final float REFLECTION_DURATION = 3.2F;
     private static final float REFLECTION_SECOND_DELAY = 3.0F;
     private static final float REFLECTION_OFFSET_X = 26.0F;
     private static final float REFLECTION_OFFSET_Y = 30.0F;
-    private static final float REFLECTION_RED = 0.34F;
-    private static final float REFLECTION_GREEN = 0.52F;
-    private static final float REFLECTION_BLUE = 0.66F;
     private static final float REFLECTION_ALPHA = 0.32F;
     private static final int POOP_COLUMNS = 36;
     private static final int POOP_ROWS = 10;
@@ -108,8 +95,7 @@ public class IntroScreen extends Screen {
     private Component loadingText = Component.empty();
     private float loadingTextX;
     private boolean loadingStarted;
-    private boolean restartSoundNextTick;
-    private boolean soundWasActive;
+    private int completionSoundStage;
 
     public IntroScreen() {
         super(Component.empty());
@@ -119,9 +105,13 @@ public class IntroScreen extends Screen {
         if (this.sound != null) return;
 
         this.minecraft.getMusicManager().stopPlaying();
-        this.sound = new IntroSoundInstance(PoSoundEvents.POOPSKY_INTRO.get(), 0.0F);
-        this.minecraft.getSoundManager().play(this.sound);
+        this.playIntroSound();
         KeyMapping.releaseAll();
+    }
+
+    private void playIntroSound() {
+        this.sound = SimpleSoundInstance.forMusic(PoSoundEvents.POOPSKY_INTRO.get());
+        this.minecraft.getSoundManager().play(this.sound);
     }
 
     public void abort() {
@@ -129,8 +119,9 @@ public class IntroScreen extends Screen {
     }
 
     public void resumePlaybackSound() {
-        if (this.canPlayIntroSound() && !this.minecraft.getSoundManager().isActive(this.sound)) {
-            this.restartSoundNextTick = true;
+        if (this.sound != null && this.playbackTicks < INTRO_TICKS
+                && !this.minecraft.getSoundManager().isActive(this.sound)) {
+            this.playIntroSound();
         }
     }
 
@@ -159,15 +150,8 @@ public class IntroScreen extends Screen {
         this.playbackTicks++;
         if (this.completionTicks >= 0) {
             this.completionTicks++;
-            if (this.completionTicks == SHATTER_SOUND_TICK) {
-                this.minecraft.getSoundManager().play(
-                        SimpleSoundInstance.forUI(PoSoundEvents.FART.get(), 0.58F, 1.35F));
-                this.minecraft.getSoundManager().play(
-                        SimpleSoundInstance.forUI(PoSoundEvents.FART.get(), 1.05F, 0.8F));
-            }
+            this.updateCompletionSounds();
         }
-
-        this.updatePlaybackSound();
 
         if (this.completionTicks < 0 && this.playbackTicks >= INTRO_TICKS) {
             this.loadingStarted = true;
@@ -184,42 +168,20 @@ public class IntroScreen extends Screen {
         }
     }
 
-    private void updatePlaybackSound() {
-        if (this.restartSoundNextTick) {
-            this.restartSoundNextTick = false;
-            this.restartPlaybackSound();
-        }
+    private final RandomSource random = RandomSource.create();
+    private int nextExplosionTick = SHATTER_SOUND_TICK;
 
-        if (!this.canPlayIntroSound()) {
+    private void updateCompletionSounds() {
+        if (this.completionSoundStage >= 6 || this.completionTicks < this.nextExplosionTick) {
             return;
         }
+        float pitch = 0.78F + this.random.nextFloat() * 0.35F;
+        float volume = 0.85F + this.random.nextFloat() * 0.2F;
 
-        boolean active = this.minecraft.getSoundManager().isActive(this.sound);
+        this.minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.GENERIC_EXPLODE.value(), pitch, volume));
 
-        if (active) {
-            this.soundWasActive = true;
-        } else if (this.soundWasActive) {
-            this.soundWasActive = false;
-            this.restartSoundNextTick = true;
-        }
-    }
-
-    private boolean canPlayIntroSound() {
-        return this.sound != null && this.playbackTicks < INTRO_TICKS;
-    }
-
-    private void restartPlaybackSound() {
-        if (!this.canPlayIntroSound()) {
-            return;
-        }
-
-        this.minecraft.getSoundManager().stop(this.sound);
-
-        this.sound = new IntroSoundInstance(PoSoundEvents.POOPSKY_INTRO.get(),
-                this.playbackTicks / TICKS_PER_SECOND);
-
-        this.minecraft.getSoundManager().play(this.sound);
-        this.soundWasActive = false;
+        this.completionSoundStage++;
+        this.nextExplosionTick += 3;
     }
 
     @Override
@@ -311,11 +273,25 @@ public class IntroScreen extends Screen {
     }
 
     private void drawPoopIcon(GuiGraphics guiGraphics, float alpha) {
-        guiGraphics.setColor(1.0F, 1.0F, 1.0F, alpha);
-        guiGraphics.blit(POOP_TEXTURE, Mth.floor(this.titleLayout.iconX()), Mth.floor(ICON_TOP),
-                Mth.floor(ICON_SIZE), Mth.floor(ICON_SIZE),
-                0.0F, 0.0F, 16, 16, 16, 16);
-        guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+        guiGraphics.flush();
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
+        RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+        RenderSystem.setShaderTexture(0, POOP_TEXTURE);
+
+        float left = this.titleLayout.iconX();
+        float top = ICON_TOP;
+        float right = left + ICON_SIZE;
+        float bottom = top + ICON_SIZE;
+        int color = FastColor.ARGB32.colorFromFloat(alpha, 1.0F, 1.0F, 1.0F);
+        Matrix4f matrix = guiGraphics.pose().last().pose();
+        BufferBuilder builder = RenderSystem.renderThreadTesselator()
+                .begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
+        builder.addVertex(matrix, left, top, 0.0F).setUv(0.0F, 0.0F).setColor(color);
+        builder.addVertex(matrix, left, bottom, 0.0F).setUv(0.0F, 1.0F).setColor(color);
+        builder.addVertex(matrix, right, bottom, 0.0F).setUv(1.0F, 1.0F).setColor(color);
+        builder.addVertex(matrix, right, top, 0.0F).setUv(1.0F, 0.0F).setColor(color);
+        BufferUploader.drawWithShader(builder.buildOrThrow());
     }
 
     private void drawYear(GuiGraphics guiGraphics, float alpha) {
@@ -337,14 +313,21 @@ public class IntroScreen extends Screen {
     }
 
     private void drawMaskedTitle(GuiGraphics guiGraphics, float textureTime, float titleAlpha, float textureAlpha) {
+        this.drawMaskedTexture(guiGraphics,
+                () -> this.drawTitleGlyphs(guiGraphics, alphaColor(titleAlpha)),
+                textureTime, 1.0F, 1.0F, 1.0F, textureAlpha);
+    }
+
+    private void drawMaskedTexture(GuiGraphics guiGraphics, Runnable drawMask, float textureTime,
+                                   float red, float green, float blue, float alpha) {
         this.beginDepthMask(guiGraphics);
         try {
-            this.drawTitleGlyphs(guiGraphics, alphaColor(titleAlpha));
+            drawMask.run();
             guiGraphics.flush();
             this.beginDepthMaskedDrawing();
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
-            this.drawTextureTiles(guiGraphics, textureTime, 1.0F, 1.0F, 1.0F, textureAlpha);
+            this.drawTextureTiles(guiGraphics, textureTime, red, green, blue, alpha);
         } finally {
             this.endDepthMask(guiGraphics);
         }
@@ -388,19 +371,11 @@ public class IntroScreen extends Screen {
         float progress = (float) Mth.smoothstep(linearProgress);
         float horizontalOffset = direction * REFLECTION_OFFSET_X * progress;
         float verticalOffset = REFLECTION_OFFSET_Y * progress;
-        this.beginDepthMask(guiGraphics);
-        try {
-            this.drawReflectionGlyphs(guiGraphics, horizontalOffset, -verticalOffset, 0xFF000000);
-            this.drawReflectionGlyphs(guiGraphics, -horizontalOffset, verticalOffset, 0xFF000000);
-            guiGraphics.flush();
-            this.beginDepthMaskedDrawing();
-            RenderSystem.enableBlend();
-            RenderSystem.defaultBlendFunc();
-            this.drawTextureTiles(guiGraphics, textureTime, REFLECTION_RED, REFLECTION_GREEN, REFLECTION_BLUE,
-                    textureAlpha * REFLECTION_ALPHA * Mth.sin(linearProgress * Mth.PI));
-        } finally {
-            this.endDepthMask(guiGraphics);
-        }
+        this.drawMaskedTexture(guiGraphics, () -> {
+                    this.drawReflectionGlyphs(guiGraphics, horizontalOffset, -verticalOffset, 0xFF000000);
+                    this.drawReflectionGlyphs(guiGraphics, -horizontalOffset, verticalOffset, 0xFF000000);
+                }, textureTime, 0.34F, 0.52F, 0.66F,
+                textureAlpha * REFLECTION_ALPHA * Mth.sin(linearProgress * Mth.PI));
     }
 
     private void drawPoopScatter(GuiGraphics guiGraphics, float shatterTime) {
@@ -536,7 +511,6 @@ public class IntroScreen extends Screen {
     }
 
     private void stopPlayback() {
-        this.restartSoundNextTick = false;
         if (this.sound != null) {
             this.minecraft.getSoundManager().stop(this.sound);
             this.sound = null;
@@ -575,43 +549,5 @@ public class IntroScreen extends Screen {
     }
 
     private record PoopScatter(float x, float y, float velocityX, float velocityY, float halfSize, float spin) {
-    }
-
-    private static final class IntroSoundInstance extends SimpleSoundInstance {
-        private static final int SKIP_BUFFER_SIZE = 16_384;
-        private final float startSeconds;
-
-        private IntroSoundInstance(SoundEvent soundEvent, float startSeconds) {
-            super(soundEvent.getLocation(), SoundSource.MUSIC, 1.0F, 1.0F, SoundInstance.createUnseededRandom(),
-                    false, 0, SoundInstance.Attenuation.NONE, 0.0, 0.0, 0.0, true);
-            this.startSeconds = startSeconds;
-        }
-
-        @Override
-        public CompletableFuture<AudioStream> getStream(SoundBufferLibrary soundBuffers, Sound sound, boolean looping) {
-            return soundBuffers.getStream(sound.getPath(), looping)
-                    .thenApply(stream -> skipTo(stream, this.startSeconds));
-        }
-
-        private static AudioStream skipTo(AudioStream stream, float seconds) {
-            AudioFormat format = stream.getFormat();
-            long bytesToSkip = (long) (format.getFrameRate() * format.getFrameSize() * seconds);
-
-            try {
-                while (bytesToSkip > 0L) {
-                    ByteBuffer skipped = stream.read((int) Math.min(SKIP_BUFFER_SIZE, bytesToSkip));
-                    if (!skipped.hasRemaining()) break;
-                    bytesToSkip -= skipped.remaining();
-                }
-                return stream;
-            } catch (IOException exception) {
-                try {
-                    stream.close();
-                } catch (IOException suppressed) {
-                    exception.addSuppressed(suppressed);
-                }
-                throw new CompletionException(exception);
-            }
-        }
     }
 }
