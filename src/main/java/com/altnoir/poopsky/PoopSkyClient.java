@@ -45,7 +45,6 @@ import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
-import net.neoforged.neoforge.client.event.ViewportEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -74,7 +73,6 @@ public class PoopSkyClient {
         modEventBus.addListener(ClientModEvents::registerBlockRenderBuffers);
         modEventBus.addListener(ClientModEvents::registerGuiOverlays);
         modEventBus.addListener(ClientModEvents::registerClientExtensions);
-        modEventBus.addListener(IntroController::registerTransitionScreen);
     }
 
     public static void registerGame(IEventBus modEventBus) {
@@ -191,9 +189,6 @@ public class PoopSkyClient {
         public static Holder<WorldPreset> originalDefaultWorldPreset;
 
         public static void onScreenOpen(ScreenEvent.Opening event) {
-            IntroController.onScreenOpening(event);
-            if (event.isCanceled()) return;
-
             if (event.getNewScreen() instanceof CreateWorldScreen screen) {
                 var uiState = screen.getUiState();
                 var originalPreset = uiState.getWorldType().preset();

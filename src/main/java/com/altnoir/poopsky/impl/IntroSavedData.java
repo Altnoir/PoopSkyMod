@@ -43,13 +43,17 @@ public final class IntroSavedData extends SavedData {
     }
 
     public boolean markPlayed(UUID playerId, String playerName) {
-        boolean played = this.playedPlayers.contains(playerId) || this.playedPlayerNames.contains(playerName);
+        boolean played = this.hasPlayed(playerId, playerName);
         boolean changed = this.playedPlayers.add(playerId);
         changed |= this.playedPlayerNames.add(playerName);
         if (changed) {
             this.setDirty();
         }
         return !played;
+    }
+
+    public boolean hasPlayed(UUID playerId, String playerName) {
+        return this.playedPlayers.contains(playerId) || this.playedPlayerNames.contains(playerName);
     }
 
     @Override

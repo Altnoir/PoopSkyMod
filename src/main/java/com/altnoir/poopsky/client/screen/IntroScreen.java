@@ -36,14 +36,15 @@ public class IntroScreen extends Screen {
     private static final float SETTLE_DURATION = 1.4F;
     private static final float STILL_DURATION = 0.45F;
     private static final float SHATTER_START = SETTLE_DURATION + STILL_DURATION;
+    private static final float SHATTER_FADE_DURATION = 0.12F;
     private static final float SHATTER_DURATION = 2.25F;
     private static final float WORLD_REVEAL_DURATION = 1.2F;
     private static final float WORLD_REVEAL_START = SHATTER_START + SHATTER_DURATION;
-    private static final float LOADING_COMPLETE_HOLD_DURATION = WORLD_REVEAL_START + WORLD_REVEAL_DURATION;
+    private static final float COMPLETION_DURATION = WORLD_REVEAL_START + WORLD_REVEAL_DURATION;
     private static final float TICKS_PER_SECOND = 20.0F;
     private static final int INTRO_TICKS = Mth.ceil(INTRO_DURATION * TICKS_PER_SECOND);
     private static final int SHATTER_SOUND_TICK = Mth.ceil(SHATTER_START * TICKS_PER_SECOND);
-    private static final int COMPLETION_TICKS = Mth.ceil(LOADING_COMPLETE_HOLD_DURATION * TICKS_PER_SECOND);
+    private static final int COMPLETION_TICKS = Mth.ceil(COMPLETION_DURATION * TICKS_PER_SECOND);
     private static final float TITLE_FADE_START = 4.0F;
     private static final float TITLE_FADE_END = 8.0F;
     private static final float TEXTURE_FADE_START = 7.6F;
@@ -55,7 +56,7 @@ public class IntroScreen extends Screen {
     private static final float REFLECTION_SECOND_DELAY = 3.0F;
     private static final float REFLECTION_OFFSET_X = 26.0F;
     private static final float REFLECTION_OFFSET_Y = 30.0F;
-    private static final float REFLECTION_ALPHA = 0.32F;
+    private static final float REFLECTION_ALPHA = 0.55F;
     private static final int POOP_COLUMNS = 36;
     private static final int POOP_ROWS = 10;
     private static final float MIN_FONT_ALPHA = 4.0F / 255.0F;
@@ -73,8 +74,6 @@ public class IntroScreen extends Screen {
     private static final float YEAR_WIDTH = 188.0F;
     private static final float YEAR_X = (VIRTUAL_WIDTH - YEAR_WIDTH) * 0.5F;
     private static final float YEAR_TEXT_Y = 761.0F;
-    private static final float LOADING_TEXT_Y = 946.0F;
-    private static final float LOADING_TEXT_SCALE = 2.0F;
 
     private static final int TILE_SIZE = 1024;
     private static final float TILE_START_X = 521.0F;
@@ -91,10 +90,6 @@ public class IntroScreen extends Screen {
     private int maskTop;
     private int maskRight;
     private int maskBottom;
-    private int loadingProgress = -1;
-    private Component loadingText = Component.empty();
-    private float loadingTextX;
-    private boolean loadingStarted;
     private int completionSoundStage;
 
     public IntroScreen() {
@@ -116,13 +111,6 @@ public class IntroScreen extends Screen {
 
     public void abort() {
         this.stopPlayback();
-    }
-
-    public void resumePlaybackSound() {
-        if (this.sound != null && this.playbackTicks < INTRO_TICKS
-                && !this.minecraft.getSoundManager().isActive(this.sound)) {
-            this.playIntroSound();
-        }
     }
 
     @Override
@@ -154,17 +142,11 @@ public class IntroScreen extends Screen {
         }
 
         if (this.completionTicks < 0 && this.playbackTicks >= INTRO_TICKS) {
-            this.loadingStarted = true;
-            if (IntroController.isReadyToFinish()) {
-                this.completionTicks = 0;
-            }
-        }
-        if (this.loadingStarted && this.completionTicks < SHATTER_SOUND_TICK) {
-            this.updateLoadingText(this.completionTicks >= 0 ? 100 : IntroController.getLoadingProgress());
+            this.completionTicks = 0;
         }
 
         if (this.completionTicks >= COMPLETION_TICKS) {
-            this.minecraft.setScreen(null);
+            IntroController.finish(this);
         }
     }
 
@@ -189,6 +171,10 @@ public class IntroScreen extends Screen {
         float elapsed = this.elapsedSeconds(partialTick);
         float completion = this.completionSeconds(partialTick);
         if (completion >= WORLD_REVEAL_START) {
+            if (this.minecraft.level == null) {
+                guiGraphics.fill(0, 0, this.width, this.height, 0xFF000000);
+                return;
+            }
             float blackAlpha = 1.0F - smooth(
                     completion, WORLD_REVEAL_START, WORLD_REVEAL_START + WORLD_REVEAL_DURATION);
             guiGraphics.fill(0, 0, this.width, this.height, alphaColor(blackAlpha) & 0xFF000000);
@@ -215,11 +201,18 @@ public class IntroScreen extends Screen {
 
         float yearAlpha = smooth(elapsed, 9.5F, 12.0F)
                 * (1.0F - smooth(completion, SHATTER_START, SHATTER_START + 0.3F));
+        float textureTime = deceleratedTextureTime(elapsed, completion);
 
         if (completion >= SHATTER_START) {
-            this.drawPoopScatter(guiGraphics, shatterTime);
+            float scatterAlpha = smooth(shatterTime, 0.0F, SHATTER_FADE_DURATION);
+            float remainingTitleAlpha = 1.0F - scatterAlpha;
+            if (remainingTitleAlpha > MIN_TEXTURE_ALPHA) {
+                this.drawMaskedTitle(guiGraphics, textureTime, remainingTitleAlpha, remainingTitleAlpha);
+            }
+            if (scatterAlpha > MIN_TEXTURE_ALPHA) {
+                this.drawPoopScatter(guiGraphics, shatterTime, scatterAlpha);
+            }
         } else {
-            float textureTime = deceleratedTextureTime(elapsed, completion);
             float textureAlpha = smooth(elapsed, TEXTURE_FADE_START, TEXTURE_FADE_END);
             if (textureAlpha > MIN_TEXTURE_ALPHA) {
                 this.drawTitleReflections(guiGraphics, elapsed, textureTime, textureAlpha);
@@ -239,9 +232,6 @@ public class IntroScreen extends Screen {
             float iconAlpha = smooth(elapsed, ICON_FADE_START, ICON_FADE_END);
             if (iconAlpha > MIN_TEXTURE_ALPHA) {
                 this.drawPoopIcon(guiGraphics, iconAlpha);
-            }
-            if (this.loadingStarted) {
-                this.drawLoadingText(guiGraphics);
             }
         }
         if (yearAlpha > MIN_FONT_ALPHA) {
@@ -297,19 +287,6 @@ public class IntroScreen extends Screen {
     private void drawYear(GuiGraphics guiGraphics, float alpha) {
         this.drawScaledText(guiGraphics, YEAR, YEAR_X, YEAR_TEXT_Y,
                 this.titleLayout.yearScale(), alphaColor(alpha));
-    }
-
-    private void updateLoadingText(int progress) {
-        if (progress != this.loadingProgress) {
-            this.loadingProgress = progress;
-            this.loadingText = Component.literal("Loading... " + progress + "%");
-            this.loadingTextX = (VIRTUAL_WIDTH - this.font.width(this.loadingText) * LOADING_TEXT_SCALE) * 0.5F;
-        }
-    }
-
-    private void drawLoadingText(GuiGraphics guiGraphics) {
-        this.drawScaledText(guiGraphics, this.loadingText, this.loadingTextX, LOADING_TEXT_Y,
-                LOADING_TEXT_SCALE, 0xFFFFFFFF);
     }
 
     private void drawMaskedTitle(GuiGraphics guiGraphics, float textureTime, float titleAlpha, float textureAlpha) {
@@ -378,17 +355,18 @@ public class IntroScreen extends Screen {
                 textureAlpha * REFLECTION_ALPHA * Mth.sin(linearProgress * Mth.PI));
     }
 
-    private void drawPoopScatter(GuiGraphics guiGraphics, float shatterTime) {
+    private void drawPoopScatter(GuiGraphics guiGraphics, float shatterTime, float alpha) {
         guiGraphics.flush();
         Matrix4f matrix = guiGraphics.pose().last().pose();
 
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
         RenderSystem.setShaderTexture(0, POOP_TEXTURE);
 
         BufferBuilder builder = RenderSystem.renderThreadTesselator()
-                .begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+                .begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
+        int color = FastColor.ARGB32.colorFromFloat(alpha, 1.0F, 1.0F, 1.0F);
         float gravity = 190.0F * shatterTime * shatterTime;
         for (PoopScatter poop : this.poopScatter) {
             float centerX = poop.x() + poop.velocityX() * shatterTime;
@@ -398,7 +376,7 @@ public class IntroScreen extends Screen {
                     || centerY + halfSize < 0.0F || centerY - halfSize > VIRTUAL_HEIGHT) {
                 continue;
             }
-            addPoopQuad(builder, matrix, centerX, centerY, halfSize, poop.spin() * shatterTime);
+            addPoopQuad(builder, matrix, centerX, centerY, halfSize, poop.spin() * shatterTime, color);
         }
 
         MeshData mesh = builder.build();
@@ -409,18 +387,18 @@ public class IntroScreen extends Screen {
     }
 
     private static void addPoopQuad(BufferBuilder builder, Matrix4f matrix, float centerX, float centerY,
-                                    float halfSize, float angle) {
+                                    float halfSize, float angle, int color) {
         float downY = halfSize * Mth.cos(angle);
         float rightY = halfSize * Mth.sin(angle);
         float downX = -rightY;
         builder.addVertex(matrix, centerX - downY - downX, centerY - rightY - downY, 0.0F)
-                .setUv(0.0F, 0.0F);
+                .setUv(0.0F, 0.0F).setColor(color);
         builder.addVertex(matrix, centerX - downY + downX, centerY - rightY + downY, 0.0F)
-                .setUv(0.0F, 1.0F);
+                .setUv(0.0F, 1.0F).setColor(color);
         builder.addVertex(matrix, centerX + downY + downX, centerY + rightY + downY, 0.0F)
-                .setUv(1.0F, 1.0F);
+                .setUv(1.0F, 1.0F).setColor(color);
         builder.addVertex(matrix, centerX + downY - downX, centerY + rightY - downY, 0.0F)
-                .setUv(1.0F, 0.0F);
+                .setUv(1.0F, 0.0F).setColor(color);
     }
 
     private void drawReflectionGlyphs(GuiGraphics guiGraphics, float offsetX, float offsetY, int color) {

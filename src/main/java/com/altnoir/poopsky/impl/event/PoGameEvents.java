@@ -9,15 +9,12 @@ import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.content.item.p.TimeBellItem;
 import com.altnoir.poopsky.content.villager.PVillagerBehaviors;
 import com.altnoir.poopsky.content.villager.PVillagerTrades;
-import com.altnoir.poopsky.impl.IntroSavedData;
-import com.altnoir.poopsky.impl.network.IntroPayload;
 import com.altnoir.poopsky.init.*;
 import com.altnoir.poopsky.worldgen.PoVoidChunkGenerator;
 import com.altnoir.poopsky.worldgen.structure.PoopIslandStructure;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -48,13 +45,11 @@ import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
-import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.Set;
 
@@ -70,18 +65,7 @@ public class PoGameEvents {
         gameEventBus.addListener(PoGameEvents::onEntityTick);
         gameEventBus.addListener(PoGameEvents::onFinalizeSpawn);
         gameEventBus.addListener(PoGameEvents::onCreateSpawnToilet);
-        gameEventBus.addListener(PoGameEvents::onPlayerLoggedIn);
         gameEventBus.addListener(PoGameEvents::onServerTick);
-    }
-
-    public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
-        if (!(event.getEntity() instanceof ServerPlayer player)) return;
-
-        ServerLevel overworld = player.getServer().overworld();
-        if (!(overworld.getChunkSource().getGenerator() instanceof PoVoidChunkGenerator)) return;
-        if (!IntroSavedData.get(overworld).markPlayed(player.getUUID(), player.getGameProfile().getName())) return;
-
-        PacketDistributor.sendToPlayer(player, IntroPayload.INSTANCE);
     }
 
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
