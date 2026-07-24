@@ -7,6 +7,7 @@ import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.init.PoEntityType;
 import com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.MobSpawnType;
@@ -77,12 +78,18 @@ public class DefecateBehavior extends Behavior<EntityMaid> {
 
 
     private void rideFlushToilet(ServerLevel level, EntityMaid maid, BlockPos pos) {
-        if (level.getBlockState(pos).getValue(FlushToiletBlock.CLOSED)) return;
+        BlockState state = level.getBlockState(pos);
+        if (state.getValue(FlushToiletBlock.CLOSED)) return;
         List<FlushToiletEntity> entities = level.getEntities(PoEntityType.FLUSH_TOILET.get(), new AABB(pos), e -> true);
         FlushToiletEntity toiletEntity;
         if (entities.isEmpty()) {
             Entity entity = PoEntityType.FLUSH_TOILET.get().spawn(level, pos, MobSpawnType.TRIGGERED);
             if (!(entity instanceof FlushToiletEntity te)) return;
+            Direction facing = state.getValue(FlushToiletBlock.FACING);
+            float v = (float) 1 / 16;
+            double offsetX = facing.getStepX() * v;
+            double offsetZ = facing.getStepZ() * v;
+            te.setPos(te.getX() + offsetX, te.getY(), te.getZ() + offsetZ);
             toiletEntity = te;
         } else {
             toiletEntity = entities.getFirst();

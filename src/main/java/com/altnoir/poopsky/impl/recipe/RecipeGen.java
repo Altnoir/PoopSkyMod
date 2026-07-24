@@ -230,6 +230,11 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         blockFamilyRecipes(recipeOutput, PoBlocks.MOSSY_POOP_BRICK_FAMILY);
 
         blockFamilyRecipes(recipeOutput, PoBlocks.TILE_BLOCK_FAMILY);
+        blockFamilyRecipes(recipeOutput, PoBlocks.WHITE_TILE_BLOCK_FAMILY);
+        blockFamilyRecipes(recipeOutput, PoBlocks.LIGHT_GRAY_TILE_BLOCK_FAMILY);
+        blockFamilyRecipes(recipeOutput, PoBlocks.GRAY_TILE_BLOCK_FAMILY);
+        blockFamilyRecipes(recipeOutput, PoBlocks.LIGHT_BLUE_TILE_BLOCK_FAMILY);
+        blockFamilyRecipes(recipeOutput, PoBlocks.PINK_TILE_BLOCK_FAMILY);
         ginkgoWoodRecipes(recipeOutput);
 
         nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PoItems.POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PoBlocks.RAW_POOP_BLOCK);
@@ -455,61 +460,24 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.STOOL, PoBlocks.DRIED_POOP_BLOCK, 2);
 
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_PIECE, PoBlocks.POOP_BLOCK, 8);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_STAIRS, PoBlocks.POOP_BLOCK);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_SLAB, PoBlocks.POOP_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_VERTICAL_SLAB, PoBlocks.POOP_BLOCK, 2);
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_FENCE, PoBlocks.POOP_BLOCK, 2);
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_FENCE_GATE, PoBlocks.POOP_BLOCK);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_WALL, PoBlocks.POOP_BLOCK);
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_DOOR, PoBlocks.POOP_BLOCK);
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_TRAPDOOR, PoBlocks.POOP_BLOCK);
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_PRESSURE_PLATE, PoBlocks.POOP_BLOCK);
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BUTTON, PoBlocks.POOP_BLOCK, 4);
-
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CHILI_POOP_STAIRS, PoBlocks.CHILI_POOP_BLOCK);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CHILI_POOP_SLAB, PoBlocks.CHILI_POOP_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CHILI_POOP_VERTICAL_SLAB, PoBlocks.CHILI_POOP_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CHILI_POOP_WALL, PoBlocks.CHILI_POOP_BLOCK);
-
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.GOLDEN_POOP_STAIRS, PoBlocks.GOLDEN_POOP_BLOCK);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.GOLDEN_POOP_SLAB, PoBlocks.GOLDEN_POOP_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.GOLDEN_POOP_VERTICAL_SLAB, PoBlocks.GOLDEN_POOP_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.GOLDEN_POOP_WALL, PoBlocks.GOLDEN_POOP_BLOCK);
 
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BRICKS, PoBlocks.POOP_BLOCK);
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BRICK_STAIRS, PoBlocks.POOP_BLOCK);
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BRICK_SLAB, PoBlocks.POOP_BLOCK, 2);
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BRICK_VERTICAL_SLAB, PoBlocks.POOP_BLOCK, 2);
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BRICK_WALL, PoBlocks.POOP_BLOCK);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BRICK_STAIRS, PoBlocks.POOP_BRICKS);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BRICK_SLAB, PoBlocks.POOP_BRICKS, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BRICK_VERTICAL_SLAB, PoBlocks.POOP_BRICKS, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BRICK_WALL, PoBlocks.POOP_BRICKS);
-
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.MOSSY_POOP_BRICK_STAIRS, PoBlocks.MOSSY_POOP_BRICKS);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.MOSSY_POOP_BRICK_SLAB, PoBlocks.MOSSY_POOP_BRICKS, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.MOSSY_POOP_BRICK_VERTICAL_SLAB, PoBlocks.MOSSY_POOP_BRICKS, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.MOSSY_POOP_BRICK_WALL, PoBlocks.MOSSY_POOP_BRICKS);
-
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.DRIED_POOP_BLOCK_STAIRS, PoBlocks.DRIED_POOP_BLOCK);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.DRIED_POOP_BLOCK_SLAB, PoBlocks.DRIED_POOP_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.DRIED_POOP_BLOCK_VERTICAL_SLAB, PoBlocks.DRIED_POOP_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.DRIED_POOP_BLOCK_WALL, PoBlocks.DRIED_POOP_BLOCK);
 
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CUT_POOP_BLOCK, PoBlocks.DRIED_POOP_BLOCK);
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CUT_POOP_BLOCK_STAIRS, PoBlocks.DRIED_POOP_BLOCK);
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CUT_POOP_BLOCK_SLAB, PoBlocks.DRIED_POOP_BLOCK, 2);
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CUT_POOP_BLOCK_VERTICAL_SLAB, PoBlocks.DRIED_POOP_BLOCK, 2);
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CUT_POOP_BLOCK_WALL, PoBlocks.DRIED_POOP_BLOCK);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CUT_POOP_BLOCK_STAIRS, PoBlocks.CUT_POOP_BLOCK);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CUT_POOP_BLOCK_SLAB, PoBlocks.CUT_POOP_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CUT_POOP_BLOCK_VERTICAL_SLAB, PoBlocks.CUT_POOP_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CUT_POOP_BLOCK_WALL, PoBlocks.CUT_POOP_BLOCK);
-
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.SMOOTH_POOP_BLOCK_STAIRS, PoBlocks.SMOOTH_POOP_BLOCK);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.SMOOTH_POOP_BLOCK_SLAB, PoBlocks.SMOOTH_POOP_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.SMOOTH_POOP_BLOCK_VERTICAL_SLAB, PoBlocks.SMOOTH_POOP_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.SMOOTH_POOP_BLOCK_WALL, PoBlocks.SMOOTH_POOP_BLOCK);
 
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.STRIPPED_POOP_LOG, PoBlocks.POOP_LOG);
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_EMPTY_LOG, PoBlocks.POOP_LOG);
@@ -518,10 +486,6 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BLOCK, PoBlocks.POOP_EMPTY_LOG, 4);
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BLOCK, PoBlocks.STRIPPED_POOP_EMPTY_LOG, 4);
 
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.TILE_BLOCK_STAIRS, PoBlocks.TILE_BLOCK);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.TILE_BLOCK_SLAB, PoBlocks.TILE_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.TILE_BLOCK_VERTICAL_SLAB, PoBlocks.TILE_BLOCK, 2);
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.TILE_BLOCK_WALL, PoBlocks.TILE_BLOCK);
 
         // 厕所配方
         for (var entry : ToiletType.getByCategory(ToiletType.Category.WOOD).entrySet()) {
@@ -1029,6 +993,10 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         slabRecipe(recipeOutput, family.slab(), family.block());
         verticalSlabRecipe(recipeOutput, family.verticalSlab(), family.block());
         wallRecipe(recipeOutput, family.wall(), family.block());
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, family.stairs(), family.block());
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, family.slab(), family.block(), 2);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, family.verticalSlab(), family.block(), 2);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, family.wall(), family.block());
     }
 
     private void slabRecipe(RecipeOutput recipeOutput, ItemLike output, ItemLike input) {

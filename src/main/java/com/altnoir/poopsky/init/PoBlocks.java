@@ -162,27 +162,15 @@ public class PoBlocks {
     public static final BlockEntry<Block> MOSSY_POOP_BRICKS = registerDecorativeBlock("mossy_poop_bricks", 88,
             props -> new Block(hardenedProperties(MapColor.COLOR_GREEN, SoundType.FROGLIGHT)));
     public static final BlockFamily MOSSY_POOP_BRICK_FAMILY = registerBlockFamily("mossy_poop_brick", MOSSY_POOP_BRICKS, false);
-    public static final BlockEntry<StairBlock> MOSSY_POOP_BRICK_STAIRS = MOSSY_POOP_BRICK_FAMILY.stairs();
-    public static final BlockEntry<SlabBlock> MOSSY_POOP_BRICK_SLAB = MOSSY_POOP_BRICK_FAMILY.slab();
-    public static final BlockEntry<VerticalSlabBlock> MOSSY_POOP_BRICK_VERTICAL_SLAB = MOSSY_POOP_BRICK_FAMILY.verticalSlab();
-    public static final BlockEntry<WallBlock> MOSSY_POOP_BRICK_WALL = MOSSY_POOP_BRICK_FAMILY.wall();
 
     public static final BlockEntry<DriedPoopBlock> DRIED_POOP_BLOCK = registerAllTabBlock("dried_poop_block", 88,
             props -> new DriedPoopBlock(hardenedProperties(MapColor.COLOR_ORANGE, SoundType.TUFF)
                     .instrument(NoteBlockInstrument.COW_BELL)));
     public static final BlockFamily DRIED_POOP_BLOCK_FAMILY = registerBlockFamily("dried_poop_block", DRIED_POOP_BLOCK, false);
-    public static final BlockEntry<StairBlock> DRIED_POOP_BLOCK_STAIRS = DRIED_POOP_BLOCK_FAMILY.stairs();
-    public static final BlockEntry<SlabBlock> DRIED_POOP_BLOCK_SLAB = DRIED_POOP_BLOCK_FAMILY.slab();
-    public static final BlockEntry<VerticalSlabBlock> DRIED_POOP_BLOCK_VERTICAL_SLAB = DRIED_POOP_BLOCK_FAMILY.verticalSlab();
-    public static final BlockEntry<WallBlock> DRIED_POOP_BLOCK_WALL = DRIED_POOP_BLOCK_FAMILY.wall();
 
     public static final BlockEntry<Block> SMOOTH_POOP_BLOCK = registerDecorativeBlock("smooth_poop_block", 88,
             props -> new Block(hardenedProperties(MapColor.COLOR_ORANGE, SoundType.CALCITE)));
     public static final BlockFamily SMOOTH_POOP_BLOCK_FAMILY = registerBlockFamily("smooth_poop_block", SMOOTH_POOP_BLOCK, false);
-    public static final BlockEntry<StairBlock> SMOOTH_POOP_BLOCK_STAIRS = SMOOTH_POOP_BLOCK_FAMILY.stairs();
-    public static final BlockEntry<SlabBlock> SMOOTH_POOP_BLOCK_SLAB = SMOOTH_POOP_BLOCK_FAMILY.slab();
-    public static final BlockEntry<VerticalSlabBlock> SMOOTH_POOP_BLOCK_VERTICAL_SLAB = SMOOTH_POOP_BLOCK_FAMILY.verticalSlab();
-    public static final BlockEntry<WallBlock> SMOOTH_POOP_BLOCK_WALL = SMOOTH_POOP_BLOCK_FAMILY.wall();
 
     public static final BlockEntry<Block> CUT_POOP_BLOCK = registerDecorativeBlock("cut_poop_block", 88,
             props -> new Block(hardenedProperties(MapColor.COLOR_ORANGE, SoundType.POLISHED_TUFF)));
@@ -201,10 +189,7 @@ public class PoBlocks {
                     .isSuffocating(PoBlocks::always)
                     .instrument(NoteBlockInstrument.COW_BELL)));
     public static final BlockFamily CHILI_POOP_FAMILY = registerBlockFamily("chili_poop", CHILI_POOP_BLOCK, false);
-    public static final BlockEntry<StairBlock> CHILI_POOP_STAIRS = CHILI_POOP_FAMILY.stairs();
-    public static final BlockEntry<SlabBlock> CHILI_POOP_SLAB = CHILI_POOP_FAMILY.slab();
-    public static final BlockEntry<VerticalSlabBlock> CHILI_POOP_VERTICAL_SLAB = CHILI_POOP_FAMILY.verticalSlab();
-    public static final BlockEntry<WallBlock> CHILI_POOP_WALL = CHILI_POOP_FAMILY.wall();
+
     public static final BlockEntry<GoldenPoopBlock> GOLDEN_POOP_BLOCK = registerAllTabBlock("golden_poop_block", 88,
             props -> new GoldenPoopBlock(simpleProperties(MapColor.GOLD, 0.65F, SoundType.MUD)
                     .requiresCorrectToolForDrops()
@@ -214,10 +199,6 @@ public class PoBlocks {
                     .isSuffocating(PoBlocks::always)
                     .instrument(NoteBlockInstrument.BELL)));
     public static final BlockFamily GOLDEN_POOP_FAMILY = registerBlockFamily("golden_poop", GOLDEN_POOP_BLOCK, false);
-    public static final BlockEntry<StairBlock> GOLDEN_POOP_STAIRS = GOLDEN_POOP_FAMILY.stairs();
-    public static final BlockEntry<SlabBlock> GOLDEN_POOP_SLAB = GOLDEN_POOP_FAMILY.slab();
-    public static final BlockEntry<VerticalSlabBlock> GOLDEN_POOP_VERTICAL_SLAB = GOLDEN_POOP_FAMILY.verticalSlab();
-    public static final BlockEntry<WallBlock> GOLDEN_POOP_WALL = GOLDEN_POOP_FAMILY.wall();
 
     public static final BlockEntry<Block> TILE_BLOCK = registerDecorativeBlock("tile_block", 64,
             props -> new Block(hardenedProperties(MapColor.COLOR_LIGHT_BLUE, SoundType.STONE)));
@@ -225,10 +206,18 @@ public class PoBlocks {
     public static final BlockEntry<Block> WHITE_TILE_BLOCK = registerDecorativeBlock("white_tile_block", 64,
             props -> new Block(hardenedProperties(MapColor.CLAY, SoundType.STONE)));
     public static final BlockFamily WHITE_TILE_BLOCK_FAMILY = registerBlockFamily("white_tile_block", WHITE_TILE_BLOCK, true);
-    public static final BlockEntry<StairBlock> TILE_BLOCK_STAIRS = TILE_BLOCK_FAMILY.stairs();
-    public static final BlockEntry<SlabBlock> TILE_BLOCK_SLAB = TILE_BLOCK_FAMILY.slab();
-    public static final BlockEntry<VerticalSlabBlock> TILE_BLOCK_VERTICAL_SLAB = TILE_BLOCK_FAMILY.verticalSlab();
-    public static final BlockEntry<WallBlock> TILE_BLOCK_WALL = TILE_BLOCK_FAMILY.wall();
+    public static final BlockEntry<Block> LIGHT_GRAY_TILE_BLOCK = registerDecorativeBlock("light_gray_tile_block", 64,
+            props -> new Block(hardenedProperties(MapColor.CLAY, SoundType.STONE)));
+    public static final BlockFamily LIGHT_GRAY_TILE_BLOCK_FAMILY = registerBlockFamily("light_gray_tile_block", LIGHT_GRAY_TILE_BLOCK, true);
+    public static final BlockEntry<Block> GRAY_TILE_BLOCK = registerDecorativeBlock("gray_tile_block", 64,
+            props -> new Block(hardenedProperties(MapColor.CLAY, SoundType.STONE)));
+    public static final BlockFamily GRAY_TILE_BLOCK_FAMILY = registerBlockFamily("gray_tile_block", GRAY_TILE_BLOCK, true);
+    public static final BlockEntry<Block> LIGHT_BLUE_TILE_BLOCK = registerDecorativeBlock("light_blue_tile_block", 64,
+            props -> new Block(hardenedProperties(MapColor.CLAY, SoundType.STONE)));
+    public static final BlockFamily LIGHT_BLUE_TILE_BLOCK_FAMILY = registerBlockFamily("light_blue_tile_block", LIGHT_BLUE_TILE_BLOCK, true);
+    public static final BlockEntry<Block> PINK_TILE_BLOCK = registerDecorativeBlock("pink_tile_block", 64,
+            props -> new Block(hardenedProperties(MapColor.CLAY, SoundType.STONE)));
+    public static final BlockFamily PINK_TILE_BLOCK_FAMILY = registerBlockFamily("pink_tile_block", PINK_TILE_BLOCK, true);
 
     public static final BlockEntry<CompooperBlock> COMPOOPER = registerCompooperBlock("compooper",
             props -> new CompooperBlock(simpleProperties(MapColor.COLOR_BROWN, 0.6F, SoundType.METAL)
@@ -473,7 +462,7 @@ public class PoBlocks {
     public static final List<BlockFamily> HARDENED_POOP_FAMILIES = List.of(POOP_BRICK_FAMILY, MOSSY_POOP_BRICK_FAMILY, DRIED_POOP_BLOCK_FAMILY, SMOOTH_POOP_BLOCK_FAMILY, CUT_POOP_BLOCK_FAMILY);
     public static final List<BlockFamily> SIMPLE_MODEL_FAMILIES = List.of(
             CHILI_POOP_FAMILY, GOLDEN_POOP_FAMILY, POOP_BRICK_FAMILY, MOSSY_POOP_BRICK_FAMILY, DRIED_POOP_BLOCK_FAMILY, SMOOTH_POOP_BLOCK_FAMILY, CUT_POOP_BLOCK_FAMILY,
-            TILE_BLOCK_FAMILY, WHITE_TILE_BLOCK_FAMILY);
+            TILE_BLOCK_FAMILY, WHITE_TILE_BLOCK_FAMILY, LIGHT_GRAY_TILE_BLOCK_FAMILY, GRAY_TILE_BLOCK_FAMILY, LIGHT_BLUE_TILE_BLOCK_FAMILY, PINK_TILE_BLOCK_FAMILY);
     public static final List<BlockFamily> WALL_TAG_FAMILIES = withPoopFamily(SIMPLE_MODEL_FAMILIES);
 
     private enum TabPlacement {

@@ -9,6 +9,10 @@
     "poopsky:cut_poop_block_stairs",
     "poopsky:tile_block_stairs",
     "poopsky:white_tile_block_stairs",
+    "poopsky:light_gray_tile_block_stairs",
+    "poopsky:gray_tile_block_stairs",
+    "poopsky:light_blue_tile_block_stairs",
+    "poopsky:pink_tile_block_stairs",
     "poopsky:poop_stairs",
     "poopsky:ginkgo_stairs"
   ]

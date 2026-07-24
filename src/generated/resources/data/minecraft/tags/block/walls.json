@@ -9,6 +9,10 @@
     "poopsky:cut_poop_block_wall",
     "poopsky:tile_block_wall",
     "poopsky:white_tile_block_wall",
+    "poopsky:light_gray_tile_block_wall",
+    "poopsky:gray_tile_block_wall",
+    "poopsky:light_blue_tile_block_wall",
+    "poopsky:pink_tile_block_wall",
     "poopsky:poop_wall"
   ]
 }
