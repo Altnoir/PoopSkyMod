@@ -78,7 +78,7 @@ public class FlushToiletBlock extends BaseEntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (hitResult.getLocation().y - pos.getY() >= 0.6) {
+        if (state.getValue(CLOSED) || hitResult.getLocation().y - pos.getY() >= 0.6) {
             if (!level.isClientSide) {
                 boolean closed = !state.getValue(CLOSED);
                 level.playSound(null, pos,

@@ -108,6 +108,14 @@
 				"up": {"uv": [4, 5, 0, 0], "texture": "#toilet"},
 				"down": {"uv": [8, 0, 4, 5], "texture": "#toilet"}
 			}
+		},
+		{
+			"name": "cover_backing",
+			"from": [6, 10, 11.05],
+			"to": [10, 16, 11.95],
+			"faces": {
+				"north": {"uv": [0, 11, 4, 16], "texture": "#toilet"}
+			}
 		}
 	],
 	"groups": [
@@ -117,7 +125,7 @@
 			"origin": [8, 8, 8],
 			"scope": 0,
 			"color": 0,
-			"children": [1, 2, 3, 4, 5, 6, 7, 8]
+			"children": [1, 2, 3, 4, 5, 6, 7, 8, 9]
 		}
 	]
 }

@@ -138,9 +138,6 @@ public final class BlockTagGen {
                 .add(PoBlocks.STRIPPED_POOP_EMPTY_LOG.get());
 
         PoBlocks.WALL_TAG_FAMILIES.forEach(family -> tag(BlockTags.WALLS).add(family.wall().get()));
-        tag(BlockTags.FLOWERS)
-                .add(PoBlocks.POOP_LEAVES.get())
-                .addTag(PoTags.Blocks.POOP_BUILDING_BLOCKS);
 
         tag(BlockTags.LOGS)
                 .add(PoBlocks.POOP_LOG.get())
@@ -235,7 +232,11 @@ public final class BlockTagGen {
                         PoBlocks.RAW_WITHER_POOP_BLOCK.get(),
                         PoBlocks.SHIT.get(),
                         PoBlocks.CHILI_SHIT.get(),
-                        PoBlocks.GOLDEN_SHIT.get()
+                        PoBlocks.GOLDEN_SHIT.get(),
+                        PoBlocks.GINKGO_LEAVES.get(),
+                        PoBlocks.POOP_LEAVES.get(),
+                        PoBlocks.POOP_LEAVES_GOLD.get(),
+                        PoBlocks.POOP_LEAVES_IRON.get()
                 )
                 .addTag(PoTags.Blocks.POOP_BUILDING_BLOCKS);
 
