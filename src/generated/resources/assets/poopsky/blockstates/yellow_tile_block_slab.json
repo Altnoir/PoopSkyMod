@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "poopsky:block/yellow_tile_block_slab"
+    },
+    "type=double": {
+      "model": "poopsky:block/yellow_tile_block"
+    },
+    "type=top": {
+      "model": "poopsky:block/yellow_tile_block_slab_top"
+    }
+  }
+}

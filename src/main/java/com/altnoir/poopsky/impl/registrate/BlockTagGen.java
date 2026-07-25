@@ -208,6 +208,8 @@ public final class BlockTagGen {
                         PoBlocks.STRIPPED_POOP_LOG.get()
                 );
         PoBlocks.TILE_BLOCK_FAMILY.blocks().forEach(block -> mineableWithPickaxe.add(block.get()));
+        PoBlocks.COLORED_TILE_BLOCK_FAMILIES.forEach(family ->
+                family.blocks().forEach(block -> mineableWithPickaxe.add(block.get())));
         mineableWithPickaxe.add(
                 PoBlocks.SIEVE.get(),
                 PoBlocks.PLACER.get(),

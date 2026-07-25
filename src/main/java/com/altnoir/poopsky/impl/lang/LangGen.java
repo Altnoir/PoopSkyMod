@@ -262,6 +262,7 @@ public final class LangGen {
         provider.add("death.attack.poop_ball", "%1$s died from Poop Ball");
         provider.add("death.attack.poop_ball.player", "%1$s was killed by %2$s by Poop Ball");
         provider.add("itemgroup.poopsky", "POOPSKY");
+        provider.add("itemgroup.poopsky_deco", "PoopSky Builder Block");
         provider.add("pack.poopsky.name", "Cognitive Filter");
 
         // Effects

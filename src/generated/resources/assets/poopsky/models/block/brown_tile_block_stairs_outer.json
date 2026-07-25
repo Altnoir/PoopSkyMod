@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "poopsky:block/brown_tile_block",
+    "side": "poopsky:block/brown_tile_block",
+    "top": "poopsky:block/brown_tile_block"
+  }
+}

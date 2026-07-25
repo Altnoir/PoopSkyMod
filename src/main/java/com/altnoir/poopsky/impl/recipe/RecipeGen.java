@@ -230,11 +230,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         blockFamilyRecipes(recipeOutput, PoBlocks.MOSSY_POOP_BRICK_FAMILY);
 
         blockFamilyRecipes(recipeOutput, PoBlocks.TILE_BLOCK_FAMILY);
-        blockFamilyRecipes(recipeOutput, PoBlocks.WHITE_TILE_BLOCK_FAMILY);
-        blockFamilyRecipes(recipeOutput, PoBlocks.LIGHT_GRAY_TILE_BLOCK_FAMILY);
-        blockFamilyRecipes(recipeOutput, PoBlocks.GRAY_TILE_BLOCK_FAMILY);
-        blockFamilyRecipes(recipeOutput, PoBlocks.LIGHT_BLUE_TILE_BLOCK_FAMILY);
-        blockFamilyRecipes(recipeOutput, PoBlocks.PINK_TILE_BLOCK_FAMILY);
+        PoBlocks.COLORED_TILE_BLOCK_FAMILIES.forEach(family -> blockFamilyRecipes(recipeOutput, family));
         ginkgoWoodRecipes(recipeOutput);
 
         nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PoItems.POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PoBlocks.RAW_POOP_BLOCK);
