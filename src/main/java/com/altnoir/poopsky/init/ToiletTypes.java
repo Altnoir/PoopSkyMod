@@ -20,8 +20,22 @@ public final class ToiletTypes {
     public static final ToiletType GINKGO = ToiletType.register(PoBlocks.GINKGO_PLANKS.get(), ToiletType.Category.WOOD).nameKey("block.poopsky.toilet.ginkgo");
 
     // ——— 石质厕所 ———
-    public static final ToiletType TILE = ToiletType.register(PoBlocks.TILE_BLOCK.get(), ToiletType.Category.HARD).nameKey("block.poopsky.toilet.tile");
     public static final ToiletType WHITE_TILE = ToiletType.register(PoBlocks.WHITE_TILE_BLOCK.get(), ToiletType.Category.HARD).nameKey("block.poopsky.toilet.white_tile");
+    public static final ToiletType LIGHT_GRAY_TILE = ToiletType.register(PoBlocks.LIGHT_GRAY_TILE_BLOCK.get(), ToiletType.Category.HARD).nameKey("block.poopsky.toilet.light_gray_tile");
+    public static final ToiletType GRAY_TILE = ToiletType.register(PoBlocks.GRAY_TILE_BLOCK.get(), ToiletType.Category.HARD).nameKey("block.poopsky.toilet.gray_tile");
+    public static final ToiletType BLACK_TILE = ToiletType.register(PoBlocks.BLACK_TILE_BLOCK.get(), ToiletType.Category.HARD).nameKey("block.poopsky.toilet.black_tile");
+    public static final ToiletType BROWN_TILE = ToiletType.register(PoBlocks.BROWN_TILE_BLOCK.get(), ToiletType.Category.HARD).nameKey("block.poopsky.toilet.brown_tile");
+    public static final ToiletType RED_TILE = ToiletType.register(PoBlocks.RED_TILE_BLOCK.get(), ToiletType.Category.HARD).nameKey("block.poopsky.toilet.red_tile");
+    public static final ToiletType ORANGE_TILE = ToiletType.register(PoBlocks.ORANGE_TILE_BLOCK.get(), ToiletType.Category.HARD).nameKey("block.poopsky.toilet.orange_tile");
+    public static final ToiletType YELLOW_TILE = ToiletType.register(PoBlocks.YELLOW_TILE_BLOCK.get(), ToiletType.Category.HARD).nameKey("block.poopsky.toilet.yellow_tile");
+    public static final ToiletType LIME_TILE = ToiletType.register(PoBlocks.LIME_TILE_BLOCK.get(), ToiletType.Category.HARD).nameKey("block.poopsky.toilet.lime_tile");
+    public static final ToiletType GREEN_TILE = ToiletType.register(PoBlocks.GREEN_TILE_BLOCK.get(), ToiletType.Category.HARD).nameKey("block.poopsky.toilet.green_tile");
+    public static final ToiletType CYAN_TILE = ToiletType.register(PoBlocks.CYAN_TILE_BLOCK.get(), ToiletType.Category.HARD).nameKey("block.poopsky.toilet.cyan_tile");
+    public static final ToiletType LIGHT_BLUE_TILE = ToiletType.register(PoBlocks.LIGHT_BLUE_TILE_BLOCK.get(), ToiletType.Category.HARD).nameKey("block.poopsky.toilet.light_blue_tile");
+    public static final ToiletType BLUE_TILE = ToiletType.register(PoBlocks.BLUE_TILE_BLOCK.get(), ToiletType.Category.HARD).nameKey("block.poopsky.toilet.blue_tile");
+    public static final ToiletType PURPLE_TILE = ToiletType.register(PoBlocks.PURPLE_TILE_BLOCK.get(), ToiletType.Category.HARD).nameKey("block.poopsky.toilet.purple_tile");
+    public static final ToiletType MAGENTA_TILE = ToiletType.register(PoBlocks.MAGENTA_TILE_BLOCK.get(), ToiletType.Category.HARD).nameKey("block.poopsky.toilet.magenta_tile");
+    public static final ToiletType PINK_TILE = ToiletType.register(PoBlocks.PINK_TILE_BLOCK.get(), ToiletType.Category.HARD).nameKey("block.poopsky.toilet.pink_tile");
     public static final ToiletType STONE = ToiletType.register(Blocks.STONE, ToiletType.Category.HARD);
     public static final ToiletType COBBLESTONE = ToiletType.register(Blocks.COBBLESTONE, ToiletType.Category.HARD);
     public static final ToiletType MOSSY_COBBLESTONE = ToiletType.register(Blocks.MOSSY_COBBLESTONE, ToiletType.Category.HARD);
@@ -129,6 +143,7 @@ public final class ToiletTypes {
 
     private ToiletTypes() {
     }
+
     public static void init() {
     }
 }

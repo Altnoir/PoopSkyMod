@@ -1,6 +1,6 @@
 {
   "parent": "poopsky:block/toilet_lava",
   "textures": {
-    "toilet": "poopsky:block/tile_block"
+    "toilet": "poopsky:block/white_tile_block"
   }
 }

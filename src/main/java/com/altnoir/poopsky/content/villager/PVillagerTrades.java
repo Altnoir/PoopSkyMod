@@ -76,7 +76,7 @@ public class PVillagerTrades {
 
             trades.get(5).add((entity, random) -> new MerchantOffer(
                     new ItemCost(Items.EMERALD, 1),
-                    new ItemStack(PoBlocks.TILE_BLOCK, 4), 128, 10, 0.25f)
+                    new ItemStack(PoBlocks.WHITE_TILE_BLOCK, 4), 128, 10, 0.25f)
             );
             trades.get(5).add((entity, random) -> new MerchantOffer(
                     new ItemCost(Items.EMERALD, 12),

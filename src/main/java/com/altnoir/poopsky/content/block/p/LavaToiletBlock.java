@@ -2,8 +2,8 @@ package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
-import com.altnoir.poopsky.init.ToiletTypes;
 import com.altnoir.poopsky.impl.util.toiletUtil;
+import com.altnoir.poopsky.init.ToiletTypes;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -62,7 +62,7 @@ public class LavaToiletBlock extends BaseToiletLavaBlock {
 
     @Override
     public ToiletType getDefaultToiletType() {
-        return ToiletTypes.TILE;
+        return ToiletTypes.WHITE_TILE;
     }
 
     @Override

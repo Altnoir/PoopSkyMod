@@ -280,7 +280,7 @@
   "block.poopsky.toilet.crimson": "绯红木",
   "block.poopsky.toilet.warped": "诡异木",
   "block.poopsky.toilet.ginkgo": "银杏木",
-  "block.poopsky.toilet.tile": "瓷砖",
+  "block.poopsky.toilet.white_tile": "白色瓷砖",
   "block.poopsky.toilet.dripstone": "滴水石",
   "block.poopsky.toilet.brick": "红砖",
   "block.poopsky.toilet.smooth_quartz": "平滑石英",
@@ -305,7 +305,6 @@
   "block.poopsky.toilet.diamond": "钻石",
   "block.poopsky.toilet.emerald": "绿宝石",
   "block.poopsky.toilet.netherite": "下界合金",
-  "block.poopsky.toilet.white_tile": "白色瓷砖",
   "tooltip.poopsky.toilet_type": "类型",
 
   "item.poopsky.fly": "苍蝇",

@@ -21,7 +21,8 @@ public class PaintingVariantTagsGen extends PaintingVariantTagsProvider {
     protected void addTags(HolderLookup.Provider provider) {
         tag(PaintingVariantTags.PLACEABLE)
                 .add(
-                        PoPainting.POOP
+                        PoPainting.POOP,
+                        PoPainting.TOILET
                 );
     }
 }

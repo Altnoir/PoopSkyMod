@@ -48,6 +48,7 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import java.util.*;
 import java.util.function.ToIntFunction;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class PoBlocks {
     private static final float POOP = 0.5F;
@@ -200,57 +201,54 @@ public class PoBlocks {
                     .instrument(NoteBlockInstrument.BELL)));
     public static final BlockFamily GOLDEN_POOP_FAMILY = registerBlockFamily("golden_poop", GOLDEN_POOP_BLOCK, false);
 
-    public static final BlockEntry<Block> TILE_BLOCK = registerDecorativeBlock("tile_block", 64,
-            props -> new Block(hardenedProperties(MapColor.COLOR_LIGHT_BLUE, SoundType.STONE)));
-    public static final BlockFamily TILE_BLOCK_FAMILY = registerBlockFamily("tile_block", TILE_BLOCK, true);
     public static final BlockEntry<Block> WHITE_TILE_BLOCK = registerDecorativeBlock("white_tile_block", 64,
             props -> new Block(hardenedProperties(DyeColor.WHITE.getMapColor(), SoundType.STONE)));
     public static final BlockFamily WHITE_TILE_BLOCK_FAMILY = registerBlockFamily("white_tile_block", WHITE_TILE_BLOCK, true);
-    public static final BlockEntry<Block> ORANGE_TILE_BLOCK = registerDecorativeBlock("orange_tile_block", 64,
-            props -> new Block(hardenedProperties(DyeColor.ORANGE.getMapColor(), SoundType.STONE)));
-    public static final BlockFamily ORANGE_TILE_BLOCK_FAMILY = registerBlockFamily("orange_tile_block", ORANGE_TILE_BLOCK, true);
-    public static final BlockEntry<Block> MAGENTA_TILE_BLOCK = registerDecorativeBlock("magenta_tile_block", 64,
-            props -> new Block(hardenedProperties(DyeColor.MAGENTA.getMapColor(), SoundType.STONE)));
-    public static final BlockFamily MAGENTA_TILE_BLOCK_FAMILY = registerBlockFamily("magenta_tile_block", MAGENTA_TILE_BLOCK, true);
-    public static final BlockEntry<Block> LIGHT_BLUE_TILE_BLOCK = registerDecorativeBlock("light_blue_tile_block", 64,
-            props -> new Block(hardenedProperties(DyeColor.LIGHT_BLUE.getMapColor(), SoundType.STONE)));
-    public static final BlockFamily LIGHT_BLUE_TILE_BLOCK_FAMILY = registerBlockFamily("light_blue_tile_block", LIGHT_BLUE_TILE_BLOCK, true);
-    public static final BlockEntry<Block> YELLOW_TILE_BLOCK = registerDecorativeBlock("yellow_tile_block", 64,
-            props -> new Block(hardenedProperties(DyeColor.YELLOW.getMapColor(), SoundType.STONE)));
-    public static final BlockFamily YELLOW_TILE_BLOCK_FAMILY = registerBlockFamily("yellow_tile_block", YELLOW_TILE_BLOCK, true);
-    public static final BlockEntry<Block> LIME_TILE_BLOCK = registerDecorativeBlock("lime_tile_block", 64,
-            props -> new Block(hardenedProperties(DyeColor.LIME.getMapColor(), SoundType.STONE)));
-    public static final BlockFamily LIME_TILE_BLOCK_FAMILY = registerBlockFamily("lime_tile_block", LIME_TILE_BLOCK, true);
-    public static final BlockEntry<Block> PINK_TILE_BLOCK = registerDecorativeBlock("pink_tile_block", 64,
-            props -> new Block(hardenedProperties(DyeColor.PINK.getMapColor(), SoundType.STONE)));
-    public static final BlockFamily PINK_TILE_BLOCK_FAMILY = registerBlockFamily("pink_tile_block", PINK_TILE_BLOCK, true);
     public static final BlockEntry<Block> LIGHT_GRAY_TILE_BLOCK = registerDecorativeBlock("light_gray_tile_block", 64,
             props -> new Block(hardenedProperties(DyeColor.LIGHT_GRAY.getMapColor(), SoundType.STONE)));
     public static final BlockFamily LIGHT_GRAY_TILE_BLOCK_FAMILY = registerBlockFamily("light_gray_tile_block", LIGHT_GRAY_TILE_BLOCK, true);
     public static final BlockEntry<Block> GRAY_TILE_BLOCK = registerDecorativeBlock("gray_tile_block", 64,
             props -> new Block(hardenedProperties(DyeColor.GRAY.getMapColor(), SoundType.STONE)));
     public static final BlockFamily GRAY_TILE_BLOCK_FAMILY = registerBlockFamily("gray_tile_block", GRAY_TILE_BLOCK, true);
-    public static final BlockEntry<Block> CYAN_TILE_BLOCK = registerDecorativeBlock("cyan_tile_block", 64,
-            props -> new Block(hardenedProperties(DyeColor.CYAN.getMapColor(), SoundType.STONE)));
-    public static final BlockFamily CYAN_TILE_BLOCK_FAMILY = registerBlockFamily("cyan_tile_block", CYAN_TILE_BLOCK, true);
-    public static final BlockEntry<Block> PURPLE_TILE_BLOCK = registerDecorativeBlock("purple_tile_block", 64,
-            props -> new Block(hardenedProperties(DyeColor.PURPLE.getMapColor(), SoundType.STONE)));
-    public static final BlockFamily PURPLE_TILE_BLOCK_FAMILY = registerBlockFamily("purple_tile_block", PURPLE_TILE_BLOCK, true);
-    public static final BlockEntry<Block> BLUE_TILE_BLOCK = registerDecorativeBlock("blue_tile_block", 64,
-            props -> new Block(hardenedProperties(DyeColor.BLUE.getMapColor(), SoundType.STONE)));
-    public static final BlockFamily BLUE_TILE_BLOCK_FAMILY = registerBlockFamily("blue_tile_block", BLUE_TILE_BLOCK, true);
-    public static final BlockEntry<Block> BROWN_TILE_BLOCK = registerDecorativeBlock("brown_tile_block", 64,
-            props -> new Block(hardenedProperties(DyeColor.BROWN.getMapColor(), SoundType.STONE)));
-    public static final BlockFamily BROWN_TILE_BLOCK_FAMILY = registerBlockFamily("brown_tile_block", BROWN_TILE_BLOCK, true);
-    public static final BlockEntry<Block> GREEN_TILE_BLOCK = registerDecorativeBlock("green_tile_block", 64,
-            props -> new Block(hardenedProperties(DyeColor.GREEN.getMapColor(), SoundType.STONE)));
-    public static final BlockFamily GREEN_TILE_BLOCK_FAMILY = registerBlockFamily("green_tile_block", GREEN_TILE_BLOCK, true);
-    public static final BlockEntry<Block> RED_TILE_BLOCK = registerDecorativeBlock("red_tile_block", 64,
-            props -> new Block(hardenedProperties(DyeColor.RED.getMapColor(), SoundType.STONE)));
-    public static final BlockFamily RED_TILE_BLOCK_FAMILY = registerBlockFamily("red_tile_block", RED_TILE_BLOCK, true);
     public static final BlockEntry<Block> BLACK_TILE_BLOCK = registerDecorativeBlock("black_tile_block", 64,
             props -> new Block(hardenedProperties(DyeColor.BLACK.getMapColor(), SoundType.STONE)));
     public static final BlockFamily BLACK_TILE_BLOCK_FAMILY = registerBlockFamily("black_tile_block", BLACK_TILE_BLOCK, true);
+    public static final BlockEntry<Block> BROWN_TILE_BLOCK = registerDecorativeBlock("brown_tile_block", 64,
+            props -> new Block(hardenedProperties(DyeColor.BROWN.getMapColor(), SoundType.STONE)));
+    public static final BlockFamily BROWN_TILE_BLOCK_FAMILY = registerBlockFamily("brown_tile_block", BROWN_TILE_BLOCK, true);
+    public static final BlockEntry<Block> RED_TILE_BLOCK = registerDecorativeBlock("red_tile_block", 64,
+            props -> new Block(hardenedProperties(DyeColor.RED.getMapColor(), SoundType.STONE)));
+    public static final BlockFamily RED_TILE_BLOCK_FAMILY = registerBlockFamily("red_tile_block", RED_TILE_BLOCK, true);
+    public static final BlockEntry<Block> ORANGE_TILE_BLOCK = registerDecorativeBlock("orange_tile_block", 64,
+            props -> new Block(hardenedProperties(DyeColor.ORANGE.getMapColor(), SoundType.STONE)));
+    public static final BlockFamily ORANGE_TILE_BLOCK_FAMILY = registerBlockFamily("orange_tile_block", ORANGE_TILE_BLOCK, true);
+    public static final BlockEntry<Block> YELLOW_TILE_BLOCK = registerDecorativeBlock("yellow_tile_block", 64,
+            props -> new Block(hardenedProperties(DyeColor.YELLOW.getMapColor(), SoundType.STONE)));
+    public static final BlockFamily YELLOW_TILE_BLOCK_FAMILY = registerBlockFamily("yellow_tile_block", YELLOW_TILE_BLOCK, true);
+    public static final BlockEntry<Block> LIME_TILE_BLOCK = registerDecorativeBlock("lime_tile_block", 64,
+            props -> new Block(hardenedProperties(DyeColor.LIME.getMapColor(), SoundType.STONE)));
+    public static final BlockFamily LIME_TILE_BLOCK_FAMILY = registerBlockFamily("lime_tile_block", LIME_TILE_BLOCK, true);
+    public static final BlockEntry<Block> GREEN_TILE_BLOCK = registerDecorativeBlock("green_tile_block", 64,
+            props -> new Block(hardenedProperties(DyeColor.GREEN.getMapColor(), SoundType.STONE)));
+    public static final BlockFamily GREEN_TILE_BLOCK_FAMILY = registerBlockFamily("green_tile_block", GREEN_TILE_BLOCK, true);
+    public static final BlockEntry<Block> CYAN_TILE_BLOCK = registerDecorativeBlock("cyan_tile_block", 64,
+            props -> new Block(hardenedProperties(DyeColor.CYAN.getMapColor(), SoundType.STONE)));
+    public static final BlockFamily CYAN_TILE_BLOCK_FAMILY = registerBlockFamily("cyan_tile_block", CYAN_TILE_BLOCK, true);
+    public static final BlockEntry<Block> LIGHT_BLUE_TILE_BLOCK = registerDecorativeBlock("light_blue_tile_block", 64,
+            props -> new Block(hardenedProperties(DyeColor.LIGHT_BLUE.getMapColor(), SoundType.STONE)));
+    public static final BlockFamily LIGHT_BLUE_TILE_BLOCK_FAMILY = registerBlockFamily("light_blue_tile_block", LIGHT_BLUE_TILE_BLOCK, true);
+    public static final BlockEntry<Block> BLUE_TILE_BLOCK = registerDecorativeBlock("blue_tile_block", 64,
+            props -> new Block(hardenedProperties(DyeColor.BLUE.getMapColor(), SoundType.STONE)));
+    public static final BlockFamily BLUE_TILE_BLOCK_FAMILY = registerBlockFamily("blue_tile_block", BLUE_TILE_BLOCK, true);
+    public static final BlockEntry<Block> PURPLE_TILE_BLOCK = registerDecorativeBlock("purple_tile_block", 64,
+            props -> new Block(hardenedProperties(DyeColor.PURPLE.getMapColor(), SoundType.STONE)));
+    public static final BlockFamily PURPLE_TILE_BLOCK_FAMILY = registerBlockFamily("purple_tile_block", PURPLE_TILE_BLOCK, true);
+    public static final BlockEntry<Block> MAGENTA_TILE_BLOCK = registerDecorativeBlock("magenta_tile_block", 64,
+            props -> new Block(hardenedProperties(DyeColor.MAGENTA.getMapColor(), SoundType.STONE)));
+    public static final BlockFamily MAGENTA_TILE_BLOCK_FAMILY = registerBlockFamily("magenta_tile_block", MAGENTA_TILE_BLOCK, true);
+    public static final BlockEntry<Block> PINK_TILE_BLOCK = registerDecorativeBlock("pink_tile_block", 64,
+            props -> new Block(hardenedProperties(DyeColor.PINK.getMapColor(), SoundType.STONE)));
+    public static final BlockFamily PINK_TILE_BLOCK_FAMILY = registerBlockFamily("pink_tile_block", PINK_TILE_BLOCK, true);
 
     public static final BlockEntry<CompooperBlock> COMPOOPER = registerCompooperBlock("compooper",
             props -> new CompooperBlock(simpleProperties(MapColor.COLOR_BROWN, 0.6F, SoundType.METAL)
@@ -493,16 +491,14 @@ public class PoBlocks {
 
     public static final List<BlockFamily> HARDENED_POOP_FAMILIES = List.of(POOP_BRICK_FAMILY, MOSSY_POOP_BRICK_FAMILY, DRIED_POOP_BLOCK_FAMILY, SMOOTH_POOP_BLOCK_FAMILY, CUT_POOP_BLOCK_FAMILY);
     public static final List<BlockFamily> COLORED_TILE_BLOCK_FAMILIES = List.of(
-            WHITE_TILE_BLOCK_FAMILY, ORANGE_TILE_BLOCK_FAMILY, MAGENTA_TILE_BLOCK_FAMILY, LIGHT_BLUE_TILE_BLOCK_FAMILY,
-            YELLOW_TILE_BLOCK_FAMILY, LIME_TILE_BLOCK_FAMILY, PINK_TILE_BLOCK_FAMILY, LIGHT_GRAY_TILE_BLOCK_FAMILY,
-            GRAY_TILE_BLOCK_FAMILY, CYAN_TILE_BLOCK_FAMILY, PURPLE_TILE_BLOCK_FAMILY, BLUE_TILE_BLOCK_FAMILY,
-            BROWN_TILE_BLOCK_FAMILY, GREEN_TILE_BLOCK_FAMILY, RED_TILE_BLOCK_FAMILY, BLACK_TILE_BLOCK_FAMILY);
-    public static final List<BlockFamily> SIMPLE_MODEL_FAMILIES = List.of(
-            CHILI_POOP_FAMILY, GOLDEN_POOP_FAMILY, POOP_BRICK_FAMILY, MOSSY_POOP_BRICK_FAMILY, DRIED_POOP_BLOCK_FAMILY, SMOOTH_POOP_BLOCK_FAMILY, CUT_POOP_BLOCK_FAMILY,
-            TILE_BLOCK_FAMILY, WHITE_TILE_BLOCK_FAMILY, ORANGE_TILE_BLOCK_FAMILY, MAGENTA_TILE_BLOCK_FAMILY, LIGHT_BLUE_TILE_BLOCK_FAMILY,
-            YELLOW_TILE_BLOCK_FAMILY, LIME_TILE_BLOCK_FAMILY, PINK_TILE_BLOCK_FAMILY, LIGHT_GRAY_TILE_BLOCK_FAMILY, GRAY_TILE_BLOCK_FAMILY,
-            CYAN_TILE_BLOCK_FAMILY, PURPLE_TILE_BLOCK_FAMILY, BLUE_TILE_BLOCK_FAMILY, BROWN_TILE_BLOCK_FAMILY, GREEN_TILE_BLOCK_FAMILY,
-            RED_TILE_BLOCK_FAMILY, BLACK_TILE_BLOCK_FAMILY);
+            WHITE_TILE_BLOCK_FAMILY, LIGHT_GRAY_TILE_BLOCK_FAMILY, GRAY_TILE_BLOCK_FAMILY, BLACK_TILE_BLOCK_FAMILY,
+            BROWN_TILE_BLOCK_FAMILY, RED_TILE_BLOCK_FAMILY, ORANGE_TILE_BLOCK_FAMILY, YELLOW_TILE_BLOCK_FAMILY,
+            LIME_TILE_BLOCK_FAMILY, GREEN_TILE_BLOCK_FAMILY, CYAN_TILE_BLOCK_FAMILY, LIGHT_BLUE_TILE_BLOCK_FAMILY,
+            BLUE_TILE_BLOCK_FAMILY, PURPLE_TILE_BLOCK_FAMILY, MAGENTA_TILE_BLOCK_FAMILY, PINK_TILE_BLOCK_FAMILY);
+    public static final List<BlockFamily> SIMPLE_MODEL_FAMILIES = Stream.of(
+            List.of(CHILI_POOP_FAMILY, GOLDEN_POOP_FAMILY, POOP_BRICK_FAMILY, MOSSY_POOP_BRICK_FAMILY, DRIED_POOP_BLOCK_FAMILY, SMOOTH_POOP_BLOCK_FAMILY, CUT_POOP_BLOCK_FAMILY),
+            COLORED_TILE_BLOCK_FAMILIES
+    ).flatMap(List::stream).toList();
     public static final List<BlockFamily> WALL_TAG_FAMILIES = withPoopFamily(SIMPLE_MODEL_FAMILIES);
 
     private enum TabPlacement {

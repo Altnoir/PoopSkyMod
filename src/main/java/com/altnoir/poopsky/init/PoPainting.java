@@ -13,9 +13,11 @@ public class PoPainting {
     public static final List<ResourceKey<PaintingVariant>> PAINTING_VARIANTS = new ArrayList<>();
 
     public static final ResourceKey<PaintingVariant> POOP = create("poop");
+    public static final ResourceKey<PaintingVariant> TOILET = create("toilet");
 
     public static void bootstrap(BootstrapContext<PaintingVariant> context) {
         register(context, POOP, 2, 2);
+        register(context, TOILET, 4, 3);
     }
 
     private static void register(BootstrapContext<PaintingVariant> context, ResourceKey<PaintingVariant> key, int width, int height) {
