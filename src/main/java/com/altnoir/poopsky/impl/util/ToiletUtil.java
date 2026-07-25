@@ -1,14 +1,22 @@
 package com.altnoir.poopsky.impl.util;
 
 import com.altnoir.poopsky.content.ToiletType;
+import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.entity.FlushToiletBlockEntity;
 import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
+import com.altnoir.poopsky.content.block.p.FlushToiletBlock;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.impl.sound.PoSoundEvents;
 import com.altnoir.poopsky.init.*;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.TickTask;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -18,21 +26,16 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
-import java.util.function.LongConsumer;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.core.registries.Registries;
 import java.util.Set;
-import net.minecraft.server.TickTask;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import java.util.function.LongConsumer;
 
-public class toiletUtil {
+public class ToiletUtil {
     public static boolean isGoldenToilet(Level level, BlockPos pos) {
         if (level.getBlockEntity(pos) instanceof ToiletBlockEntity be) {
             ToiletType type = be.getToiletType();
@@ -202,7 +205,7 @@ public class toiletUtil {
     }
 
     public static boolean tryTeleportFromFall(Level level, BlockPos pos, Entity entity, float fallDistance) {
-        if (fallDistance < 1.0F || !isEntityCentered(pos, entity)) {
+        if (fallDistance < 1.0F || !isEntityInToiletPit(level, pos, entity)) {
             return false;
         }
         BlockEntity blockEntity = level.getBlockEntity(pos);
@@ -210,6 +213,32 @@ public class toiletUtil {
             teleportEntity(level, entity, blockEntity, fallDistance);
             return true;
         }
+        return false;
+    }
+
+    private static boolean isEntityInToiletPit(Level level, BlockPos pos, Entity entity) {
+        BlockState state = level.getBlockState(pos);
+        double offsetX = entity.getX() - (pos.getX() + 0.5);
+        double offsetZ = entity.getZ() - (pos.getZ() + 0.5);
+
+        if (state.getBlock() instanceof FlushToiletBlock) {
+            if (state.getValue(FlushToiletBlock.CLOSED)) {
+                return false;
+            }
+
+            Direction facing = state.getValue(FlushToiletBlock.FACING);
+            double forward = offsetX * facing.getStepX() + offsetZ * facing.getStepZ();
+            double sideways = Math.abs(offsetX * facing.getStepZ() - offsetZ * facing.getStepX());
+            return sideways <= 2.0 / 16.0 && forward >= -1.0 / 16.0 && forward <= 4.0 / 16.0;
+        }
+
+        if (state.getBlock() instanceof AbstractToiletBlock) {
+            Direction facing = state.getValue(AbstractToiletBlock.FACING);
+            double forward = offsetX * facing.getStepX() + offsetZ * facing.getStepZ();
+            double sideways = Math.abs(offsetX * facing.getStepZ() - offsetZ * facing.getStepX());
+            return sideways <= 3.0 / 16.0 && Math.abs(forward) <= 7.0 / 16.0;
+        }
+
         return false;
     }
 
@@ -236,7 +265,7 @@ public class toiletUtil {
         if (targetWorld == null) return;
         
         targetWorld.getChunk(linkedPos);
-        Vec3 destination = Vec3.atCenterOf(linkedPos).add(0.0, 0.5, 0.0);
+        Vec3 destination = getToiletPitDestination(targetWorld, linkedPos);
         
         if (entity.isVehicle() && entity.getControllingPassenger() != null) {
             entity.getControllingPassenger().teleportTo(targetWorld, destination.x, destination.y, destination.z, Set.of(), entity.getYRot(), entity.getXRot());
@@ -252,5 +281,21 @@ public class toiletUtil {
             entity.hurtMarked = true;
             entity.hasImpulse = true;
         }));
+    }
+
+    private static Vec3 getToiletPitDestination(Level level, BlockPos pos) {
+        BlockState state = level.getBlockState(pos);
+        if (state.getBlock() instanceof FlushToiletBlock) {
+            Direction facing = state.getValue(FlushToiletBlock.FACING);
+            return Vec3.atBottomCenterOf(pos).add(
+                    facing.getStepX() * 3.0 / 32.0,
+                    0.5,
+                    facing.getStepZ() * 3.0 / 32.0
+            );
+        }
+        if (state.getBlock() instanceof AbstractToiletBlock) {
+            return Vec3.atBottomCenterOf(pos).add(0.0, 1.0, 0.0);
+        }
+        return Vec3.atBottomCenterOf(pos).add(0.0, 1.0, 0.0);
     }
 }

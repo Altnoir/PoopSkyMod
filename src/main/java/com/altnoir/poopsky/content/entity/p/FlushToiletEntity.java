@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.entity.p;
 
 import com.altnoir.poopsky.content.block.p.FlushToiletBlock;
-import com.altnoir.poopsky.impl.util.toiletUtil;
+import com.altnoir.poopsky.impl.util.ToiletUtil;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoEffects;
 import net.minecraft.nbt.CompoundTag;
@@ -55,7 +55,7 @@ public class FlushToiletEntity extends Entity {
 
             boolean hasSpasm = livingEntity.hasEffect(PoEffects.INTESTINAL_SPASM);
             boolean isGolden = state.is(PoBlocks.GOLDEN_FLUSH_TOILET.get());
-            toiletUtil.containerPoop(level(), blockPosition(), livingEntity, hasSpasm, isGolden, poopTime, time -> this.poopTime = time);
+            ToiletUtil.containerPoop(level(), blockPosition(), livingEntity, hasSpasm, isGolden, poopTime, time -> this.poopTime = time);
         }
     }
 

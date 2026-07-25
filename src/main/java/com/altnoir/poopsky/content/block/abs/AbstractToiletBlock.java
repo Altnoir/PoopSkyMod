@@ -6,7 +6,7 @@ import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.impl.sound.PoSoundEvents;
-import com.altnoir.poopsky.impl.util.toiletUtil;
+import com.altnoir.poopsky.impl.util.ToiletUtil;
 import com.altnoir.poopsky.init.*;
 import com.altnoir.poopsky.worldgen.PoConfigureFeatures;
 import net.minecraft.core.BlockPos;
@@ -258,7 +258,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
                 poopAnvil(level, pos, entity);
             }
 
-            if (toiletUtil.tryTeleportFromFall(level, pos, entity, fallDistance)) {
+            if (ToiletUtil.tryTeleportFromFall(level, pos, entity, fallDistance)) {
                 return;
             }
         }
@@ -270,7 +270,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     }
 
     private void poopAnvil(Level level, BlockPos pos, Entity entity) {
-        Item poopItem = toiletUtil.isGoldenToilet(level, pos) ? PoItems.GOLDEN_POOP.get() : PoItems.POOP.get();
+        Item poopItem = ToiletUtil.isGoldenToilet(level, pos) ? PoItems.GOLDEN_POOP.get() : PoItems.POOP.get();
         var poop = new ItemEntity(level, entity.getX(), entity.getY() + 0.1, entity.getZ(), new ItemStack(poopItem, ANVIL_POOP_COUNT));
         poop.setDefaultPickUpDelay();
         level.addFreshEntity(poop);
@@ -279,10 +279,10 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
         if (!level.isClientSide && entity instanceof Player player) {
-            if (player.isShiftKeyDown() && toiletUtil.isEntityCentered(pos, player)) {
+            if (player.isShiftKeyDown() && ToiletUtil.isEntityCentered(pos, player)) {
                 var playerData = player.getPersistentData();
                 long lastPoopTime = playerData.getLong("poopTime");
-                toiletUtil.canPoop(level, player, player.hasEffect(PoEffects.INTESTINAL_SPASM), false, 0.1F, 0.5F, lastPoopTime,
+                ToiletUtil.canPoop(level, player, player.hasEffect(PoEffects.INTESTINAL_SPASM), false, 0.1F, 0.5F, lastPoopTime,
                         time -> playerData.putLong("poopTime", time));
             }
         }
@@ -405,7 +405,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
 
     private void explodeToilet(ServerLevel level, BlockPos pos) {
         BlockPos above = pos.above();
-        Item poopItem = toiletUtil.isGoldenToilet(level, pos) ? PoItems.GOLDEN_POOP.get() : PoItems.POOP.get();
+        Item poopItem = ToiletUtil.isGoldenToilet(level, pos) ? PoItems.GOLDEN_POOP.get() : PoItems.POOP.get();
         level.explode(null, pos.getX() + 0.5, pos.getY() + TOILET_USE_Y, pos.getZ() + 0.5, EXPLOSION_POWER, Level.ExplosionInteraction.BLOCK);
         if (level.getBlockState(above).is(Blocks.FIRE)) {
             level.setBlock(above, Blocks.AIR.defaultBlockState(), 3);

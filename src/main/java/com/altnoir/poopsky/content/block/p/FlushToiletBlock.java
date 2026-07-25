@@ -3,7 +3,7 @@ package com.altnoir.poopsky.content.block.p;
 import com.altnoir.poopsky.content.block.entity.FlushToiletBlockEntity;
 import com.altnoir.poopsky.content.entity.p.FlushToiletEntity;
 import com.altnoir.poopsky.impl.sound.PoSoundEvents;
-import com.altnoir.poopsky.impl.util.toiletUtil;
+import com.altnoir.poopsky.impl.util.ToiletUtil;
 import com.altnoir.poopsky.init.PoEntityType;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -81,7 +81,7 @@ public class FlushToiletBlock extends BaseEntityBlock {
     @Override
     public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
         if (!level.isClientSide) {
-            if (toiletUtil.tryTeleportFromFall(level, pos, entity, fallDistance)) {
+            if (ToiletUtil.tryTeleportFromFall(level, pos, entity, fallDistance)) {
                 return;
             }
         }
