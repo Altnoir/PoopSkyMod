@@ -144,7 +144,7 @@ public abstract class AbstractCompooperBlock extends Block {
                 || (state.is(Blocks.SOUL_CAMPFIRE) && state.getValue(CampfireBlock.LIT));
     }
 
-    protected boolean isEntityInsideContent(BlockPos pos, BlockState state, Entity entity) {
+    protected static boolean isEntityInsideContent(BlockPos pos, BlockState state, Entity entity) {
         double height = getLiquidHeight(state);
         return entity.getY() < (double) pos.getY() + height && entity.getBoundingBox().maxY > (double) pos.getY() + 0.125;
     }
@@ -192,7 +192,7 @@ public abstract class AbstractCompooperBlock extends Block {
         }
     }
 
-    private double getLiquidHeight(BlockState state) {
+    private static double getLiquidHeight(BlockState state) {
         int i = state.getValue(LEVEL);
         return switch (i) {
             case 3 -> 0.9375;

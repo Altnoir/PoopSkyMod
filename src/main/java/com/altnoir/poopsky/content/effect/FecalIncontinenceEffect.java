@@ -1,11 +1,12 @@
 package com.altnoir.poopsky.content.effect;
 
+import com.altnoir.poopsky.content.block.p.CompooperBlock;
 import com.altnoir.poopsky.content.entity.p.FlushToiletEntity;
-import com.altnoir.poopsky.init.PoEffects;
-import com.altnoir.poopsky.init.PoParticles;
 import com.altnoir.poopsky.impl.sound.PoSoundEvents;
-import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.impl.util.toiletUtil;
+import com.altnoir.poopsky.init.PoEffects;
+import com.altnoir.poopsky.init.PoItems;
+import com.altnoir.poopsky.init.PoParticles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
@@ -16,6 +17,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BoneMealItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 
 public class FecalIncontinenceEffect extends MobEffect {
@@ -27,7 +30,7 @@ public class FecalIncontinenceEffect extends MobEffect {
     @Override
     public boolean applyEffectTick(LivingEntity entity, int amplifier) {
         int chance = entity.getRandom().nextInt(Math.max(1, 20 - amplifier * 5));
-        if (amplifier >= 3 && entity instanceof Player player && player.isShiftKeyDown()) {
+        if (amplifier >= 1 && entity instanceof Player player && player.isShiftKeyDown()) {
             player.causeFoodExhaustion(0.1F * (amplifier + 2));
             fecalIncontinence(player, amplifier);
         } else if (chance == 0) {
@@ -52,6 +55,19 @@ public class FecalIncontinenceEffect extends MobEffect {
 
             var level = (ServerLevel) entity.level();
             BlockPos entityPos = entity.blockPosition();
+
+            BlockState compooperState = level.getBlockState(entityPos);
+            if (compooperState.getBlock() instanceof CompooperBlock) {
+                BlockState state = level.getBlockState(entityPos);
+                int pl = state.getValue(CompooperBlock.POOP_LEVEL);
+                if (pl < 7 && CompooperBlock.isEntityInsideContent(entityPos, entity)) {
+                    BlockState newState = state.setValue(CompooperBlock.POOP_LEVEL, pl + 1);
+                    level.setBlockAndUpdate(entityPos, newState);
+                    level.gameEvent(GameEvent.BLOCK_CHANGE, entityPos, GameEvent.Context.of(entity, newState));
+                    level.levelEvent(1500, entityPos, 1);
+                    return;
+                }
+            }
 
             Item stack = PoItems.POOP.get();
 

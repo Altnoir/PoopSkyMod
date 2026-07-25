@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.block.p;
 
-import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
+import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
 import com.mojang.serialization.MapCodec;
 import it.unimi.dsi.fastutil.objects.Object2FloatMap;
@@ -411,6 +411,10 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
             CompooperBlock.empty(null, this.state, this.level, this.pos);
             this.changed = true;
         }
+    }
+
+    public static boolean isEntityInsideContent(BlockPos pos, Entity entity) {
+        return entity.getY() < (double) pos.getY() + 0.9375 && entity.getBoundingBox().maxY > (double) pos.getY() + 0.125;
     }
 
     public static float getValue(ItemStack stack) {
