@@ -91,6 +91,8 @@ public final class BlockTagGen {
                         PoBlocks.FLUSH_TOILET.get(),
                         PoBlocks.GOLDEN_FLUSH_TOILET.get()
                 );
+        PoBlocks.COLORED_TILE_BLOCK_FAMILIES.forEach(family ->
+                family.blocks().forEach(block -> tag(PoTags.Blocks.TILE_BLOCKS).add(block.get())));
 
         tag(PoTags.Blocks.POOP_TNT_DESTROY)
                 .addTag(BlockTags.FLOWERS)

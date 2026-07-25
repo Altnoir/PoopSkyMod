@@ -43,6 +43,20 @@ public final class ItemTagGen {
                 .add(PoBlocks.STRIPPED_GINKGO_LOG.asItem())
                 .add(PoBlocks.GINKGO_WOOD.asItem())
                 .add(PoBlocks.STRIPPED_GINKGO_WOOD.asItem());
+
+        var tileBlocks = tag(PoTags.Items.TILE_BLOCKS);
+        var tileStairs = tag(PoTags.Items.TILE_STAIRS);
+        var tileSlabs = tag(PoTags.Items.TILE_SLABS);
+        var tileVerticalSlabs = tag(PoTags.Items.TILE_VERTICAL_SLABS);
+        var tileWalls = tag(PoTags.Items.TILE_WALLS);
+        PoBlocks.COLORED_TILE_BLOCK_FAMILIES.forEach(family -> {
+            tileBlocks.add(family.block().get().asItem());
+            tileStairs.add(family.stairs().get().asItem());
+            tileSlabs.add(family.slab().get().asItem());
+            tileVerticalSlabs.add(family.verticalSlab().get().asItem());
+            tileWalls.add(family.wall().get().asItem());
+        });
+
         tag(PoTags.Items.CAN_COMPOSTABLE)
                 .add(PoItems.POOP.get())
                 .add(PoItems.POOP_BALL.get())

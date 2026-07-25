@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "D": {
+      "item": "minecraft:pink_dye"
+    },
+    "T": {
+      "tag": "poopsky:tile_slabs"
+    }
+  },
+  "pattern": [
+    "TTT",
+    "TDT",
+    "TTT"
+  ],
+  "result": {
+    "count": 8,
+    "id": "poopsky:pink_tile_block_slab"
+  }
+}

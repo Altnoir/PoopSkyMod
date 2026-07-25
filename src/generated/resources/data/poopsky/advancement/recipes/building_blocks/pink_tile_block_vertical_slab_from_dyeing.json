@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:pink_tile_block_vertical_slab_from_dyeing"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "pink_dye": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:pink_dye"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "pink_dye"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "poopsky:pink_tile_block_vertical_slab_from_dyeing"
+    ]
+  }
+}

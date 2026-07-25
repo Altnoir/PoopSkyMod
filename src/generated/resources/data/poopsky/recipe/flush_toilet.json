@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": {
+      "item": "minecraft:quartz_block"
+    },
+    "P": {
+      "item": "poopsky:poop"
+    }
+  },
+  "pattern": [
+    "BP",
+    "BB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "poopsky:flush_toilet"
+  }
+}

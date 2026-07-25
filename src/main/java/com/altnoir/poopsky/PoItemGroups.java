@@ -58,7 +58,7 @@ public class PoItemGroups {
 
     public static final RegistryEntry<CreativeModeTab, CreativeModeTab> POOPSKY_DECORATIVE = REGISTRATE.generic("poopsky_deco", Registries.CREATIVE_MODE_TAB, () -> CreativeModeTab.builder()
             .title(Component.translatable("itemgroup.poopsky_deco"))
-            .icon(PoBlocks.WHITE_TILE_BLOCK::asStack)
+            .icon(PoBlocks.BROWN_TILE_BLOCK::asStack)
             .displayItems((parameters, output) -> {
                 PoItems.getAllItems().stream()
                         .filter(item -> PoBlocks.isDecorativeItem(item) || PoBlocks.isAllTabItem(item))
