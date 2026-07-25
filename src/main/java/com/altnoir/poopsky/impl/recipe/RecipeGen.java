@@ -60,8 +60,8 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         oreSmelting(recipeOutput, SMOOTH_POOP_LIST, RecipeCategory.BUILDING_BLOCKS, PoBlocks.SMOOTH_POOP_BLOCK, 0.1F, 200, "smooth_poop_block");
         oreBlasting(recipeOutput, SMOOTH_POOP_LIST, RecipeCategory.BUILDING_BLOCKS, PoBlocks.SMOOTH_POOP_BLOCK, 0.1F, 100, "smooth_poop_block");
 
-        oreSmelting(recipeOutput, TILE_BLOCK_LIST, RecipeCategory.BUILDING_BLOCKS, PoBlocks.WHITE_TILE_BLOCK, 0.1F, 200, "tile_block");
-        oreBlasting(recipeOutput, TILE_BLOCK_LIST, RecipeCategory.BUILDING_BLOCKS, PoBlocks.WHITE_TILE_BLOCK, 0.1F, 100, "tile_block");
+        oreSmelting(recipeOutput, TILE_BLOCK_LIST, RecipeCategory.BUILDING_BLOCKS, PoBlocks.BROWN_TILE_BLOCK, 0.1F, 200, "tile_block");
+        oreBlasting(recipeOutput, TILE_BLOCK_LIST, RecipeCategory.BUILDING_BLOCKS, PoBlocks.BROWN_TILE_BLOCK, 0.1F, 100, "tile_block");
 
         oreCooking(recipeOutput, List.of(PoItems.POOP.get()), RecipeCategory.MISC, Items.COCOA_BEANS, 0.35F, 600, "cocoa_beans");
         oreSmelting(recipeOutput, ROUNDWORM_LIST, RecipeCategory.MISC, Items.STRING, 0.35F, 200, "roundworm");
