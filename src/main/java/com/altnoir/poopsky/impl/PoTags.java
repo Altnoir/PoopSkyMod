@@ -34,6 +34,8 @@ public class PoTags {
         TagKey<Block> POOP_TNT_REPLACEABLE = create("poop_tnt_replaceable");
         TagKey<Block> CONVERTABLE_TO_MOSS = create("convertable_to_moss");
 
+        TagKey<Block> FLY_LOVE = create("fly_love");
+
         // Compat
         TagKey<Block> FAN_PROCESSING_CATALYSTS_DIGESTING = create("fan_processing_catalysts/digesting");
 

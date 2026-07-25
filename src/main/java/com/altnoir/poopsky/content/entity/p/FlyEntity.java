@@ -345,7 +345,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
         public boolean canContinueToUse() {
             return this.targetPos != null
                     && !this.fly.getNavigation().isDone()
-                    && this.fly.level().getBlockState(this.targetPos).is(PoTags.Blocks.TOILET_BLOCKS)
+                    && this.fly.level().getBlockState(this.targetPos).is(PoTags.Blocks.FLY_LOVE)
                     && this.fly.blockPosition().distSqr(this.targetPos) > 4.0;
         }
 
@@ -376,7 +376,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
             BlockPos nearest = null;
             double nearestDistance = Double.MAX_VALUE;
             for (BlockPos pos : BlockPos.withinManhattan(origin, SEARCH_RADIUS, VERTICAL_SEARCH_RADIUS, SEARCH_RADIUS)) {
-                if (!this.fly.level().getBlockState(pos).is(PoTags.Blocks.TOILET_BLOCKS)) {
+                if (!this.fly.level().getBlockState(pos).is(PoTags.Blocks.FLY_LOVE)) {
                     continue;
                 }
                 double distance = origin.distSqr(pos);

@@ -97,6 +97,14 @@ public final class BlockTagGen {
                 .addTag(BlockTags.LEAVES);
         tag(PoTags.Blocks.POOP_TNT_REPLACEABLE).addTag(BlockTags.MOSS_REPLACEABLE);
 
+        tag(PoTags.Blocks.FLY_LOVE)
+                .add(
+                        PoBlocks.SHIT.get(),
+                        PoBlocks.CHILI_SHIT.get(),
+                        PoBlocks.GOLDEN_SHIT.get()
+                )
+                .addTag(PoTags.Blocks.TOILET_BLOCKS);
+
         //基础标签
         tag(BlockTags.MOSS_REPLACEABLE)
                 .add(PoBlocks.POOP_BLOCK.get())
