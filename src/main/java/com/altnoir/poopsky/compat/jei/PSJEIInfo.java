@@ -65,6 +65,10 @@ public class PSJEIInfo {
                 Component.translatable("jei.poopsky.urea")
         );
         registration.addIngredientInfo(
+                PoItems.SALTPETER_SHARD.get(),
+                Component.translatable("jei.poopsky.saltpeter_shard")
+        );
+        registration.addIngredientInfo(
                 PoBlocks.SALTPETER_CLUSTER.get(),
                 Component.translatable("jei.poopsky.saltpeter_cluster")
         );

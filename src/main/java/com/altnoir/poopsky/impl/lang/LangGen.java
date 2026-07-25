@@ -344,6 +344,7 @@ public final class LangGen {
         provider.add("jei.poopsky.fly_desc.blue", "Obtained by drowning");
         provider.add("jei.poopsky.fly_desc.dragon_fruit", "Obtained by feeding King of Dragon Fruit");
         provider.add("jei.poopsky.urea", "Place a urine-filled Compooper on a campfire and wait for it to turn into a water-filled Compooper");
+        provider.add("jei.poopsky.saltpeter_shard", "Obtained by mining saltpeter clusters.\nPlacing a poop block below a toilet has a chance to spawn saltpeter clusters nearby");
         provider.add("jei.poopsky.saltpeter_cluster", "Turns into ice when waterlogged");
     }
 
