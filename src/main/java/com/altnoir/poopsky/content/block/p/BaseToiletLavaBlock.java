@@ -2,8 +2,8 @@ package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
+import com.altnoir.poopsky.impl.util.ToiletUtil;
 import com.altnoir.poopsky.init.ToiletTypes;
-import com.altnoir.poopsky.impl.util.toiletUtil;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -52,7 +52,7 @@ public class BaseToiletLavaBlock extends AbstractToiletBlock {
 
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
-        toiletUtil.lavaToiletStepOn(level, pos, state, entity, false);
+        ToiletUtil.lavaToiletStepOn(level, pos, state, entity, false);
     }
 
     @Override
