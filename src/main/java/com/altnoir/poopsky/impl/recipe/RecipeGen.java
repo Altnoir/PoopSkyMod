@@ -13,12 +13,14 @@ import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.init.ToiletTypes;
 import com.simibubi.create.AllItems;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
+import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
@@ -230,6 +232,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         blockFamilyRecipes(recipeOutput, PoBlocks.MOSSY_POOP_BRICK_FAMILY);
 
         PoBlocks.COLORED_TILE_BLOCK_FAMILIES.forEach(family -> blockFamilyRecipes(recipeOutput, family));
+        tileBlockDyeingRecipes(recipeOutput);
         ginkgoWoodRecipes(recipeOutput);
 
         nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PoItems.POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PoBlocks.RAW_POOP_BLOCK);
@@ -494,12 +497,26 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         ToiletRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.HARD_TOILET, ToiletTypes.RAINBOW)
                 .pattern(" P ")
                 .pattern("RGB")
-                .define('P', PoItems.POOP.get())
+                .define('P', PoItems.POOP)
                 .define('R', Blocks.RED_CONCRETE)
                 .define('G', Blocks.GREEN_CONCRETE)
                 .define('B', Blocks.BLUE_CONCRETE)
-                .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP.get()))
+                .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP))
                 .save(recipeOutput, PoopSky.loc("hard_toilet_from_rainbow"));
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.FLUSH_TOILET)
+                .pattern("BP")
+                .pattern("BB")
+                .define('P', PoItems.POOP)
+                .define('B', Blocks.QUARTZ_BLOCK)
+                .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.GOLDEN_FLUSH_TOILET)
+                .pattern("BP")
+                .pattern("BB")
+                .define('P', PoItems.POOP)
+                .define('B', Blocks.GOLD_BLOCK)
+                .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP))
+                .save(recipeOutput);
 
         buildSieveRecipes(recipeOutput);
         buildpopExplosionRecipes(recipeOutput);
@@ -993,6 +1010,37 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, family.verticalSlab(), family.block(), 2);
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, family.wall(), family.block());
     }
+
+    private static void tileBlockDyeingRecipes(RecipeOutput recipeOutput) {
+        var families = PoBlocks.COLORED_TILE_BLOCK_FAMILIES;
+        for (int i = 0; i < families.size(); i++) {
+            Item dye = DYES.get(i);
+            var family = families.get(i);
+            tileDyeRecipe(recipeOutput, dye, family.block(), PoTags.Items.TILE_BLOCKS);
+            tileDyeRecipe(recipeOutput, dye, family.stairs(), PoTags.Items.TILE_STAIRS);
+            tileDyeRecipe(recipeOutput, dye, family.slab(), PoTags.Items.TILE_SLABS);
+            tileDyeRecipe(recipeOutput, dye, family.verticalSlab(), PoTags.Items.TILE_VERTICAL_SLABS);
+            tileDyeRecipe(recipeOutput, dye, family.wall(), PoTags.Items.TILE_WALLS);
+        }
+    }
+
+    private static void tileDyeRecipe(RecipeOutput recipeOutput, Item dye, BlockEntry<?> block, TagKey<Item> inputTag) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, block.get(), 8)
+                .pattern("TTT")
+                .pattern("TDT")
+                .pattern("TTT")
+                .define('T', inputTag)
+                .define('D', dye)
+                .unlockedBy(getItemName(dye), has(dye))
+                .save(recipeOutput, PoopSky.loc(getItemName(block.get()) + "_from_dyeing"));
+    }
+
+    private static final List<Item> DYES = List.of(
+            Items.WHITE_DYE, Items.LIGHT_GRAY_DYE, Items.GRAY_DYE, Items.BLACK_DYE,
+            Items.BROWN_DYE, Items.RED_DYE, Items.ORANGE_DYE, Items.YELLOW_DYE,
+            Items.LIME_DYE, Items.GREEN_DYE, Items.CYAN_DYE, Items.LIGHT_BLUE_DYE,
+            Items.BLUE_DYE, Items.PURPLE_DYE, Items.MAGENTA_DYE, Items.PINK_DYE
+    );
 
     private void slabRecipe(RecipeOutput recipeOutput, ItemLike output, ItemLike input) {
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 6)

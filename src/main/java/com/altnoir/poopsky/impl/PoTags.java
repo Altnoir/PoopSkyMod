@@ -22,6 +22,7 @@ public class PoTags {
         TagKey<Block> MAGGOTS_BLOCKS = create("maggots_blocks");
         TagKey<Block> EMPTY_LOGS = create("empty_logs");
         TagKey<Block> GINKGO_LOGS = create("ginkgo_logs");
+        TagKey<Block> TILE_BLOCKS = create("tile_blocks");
 
         TagKey<Block> POOP_BLOCK = create("poop_block");
         TagKey<Block> CHILI_POOP_BLOCK = create("chili_poop_block");
@@ -49,6 +50,11 @@ public class PoTags {
         TagKey<Item> TOILET_BLOCKS = create("toilet_blocks");
         TagKey<Item> CAN_COMPOSTABLE = create("can_compooper");
         TagKey<Item> GINKGO_LOGS = create("ginkgo_logs");
+        TagKey<Item> TILE_BLOCKS = create("tile_blocks");
+        TagKey<Item> TILE_STAIRS = create("tile_stairs");
+        TagKey<Item> TILE_SLABS = create("tile_slabs");
+        TagKey<Item> TILE_VERTICAL_SLABS = create("tile_vertical_slabs");
+        TagKey<Item> TILE_WALLS = create("tile_walls");
 
         TagKey<Item> PASTA = tag("foods/pasta");
         TagKey<Item> SOUP = tag("foods/soup");

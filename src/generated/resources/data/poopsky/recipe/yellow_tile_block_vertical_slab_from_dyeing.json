@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "D": {
+      "item": "minecraft:yellow_dye"
+    },
+    "T": {
+      "tag": "poopsky:tile_vertical_slabs"
+    }
+  },
+  "pattern": [
+    "TTT",
+    "TDT",
+    "TTT"
+  ],
+  "result": {
+    "count": 8,
+    "id": "poopsky:yellow_tile_block_vertical_slab"
+  }
+}

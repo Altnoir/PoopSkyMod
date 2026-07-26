@@ -241,6 +241,8 @@ public final class LangGen {
         addSubtitle("block.flush_toilet.close", "Toilet lid closes");
         addSubtitle("block.compooper.bucket_fill", "Compooper fills");
         addSubtitle("item.jinkela.use", "Jinkela rustles");
+        addSubtitle("item.time_bell.open", "Time Bell activates");
+        addSubtitle("item.time_bell.close", "Time Bell deactivates");
     }
 
     private static void addSubtitle(String key, String value) {
@@ -352,6 +354,7 @@ public final class LangGen {
         provider.add("jei.poopsky.fly_desc.blue", "Obtained by drowning");
         provider.add("jei.poopsky.fly_desc.dragon_fruit", "Obtained by feeding King of Dragon Fruit");
         provider.add("jei.poopsky.urea", "Place a urine-filled Compooper on a campfire and wait for it to turn into a water-filled Compooper");
+        provider.add("jei.poopsky.saltpeter_shard", "Obtained by mining saltpeter clusters.\nPlacing a poop block below a toilet has a chance to spawn saltpeter clusters nearby");
         provider.add("jei.poopsky.saltpeter_cluster", "Turns into ice when waterlogged");
     }
 

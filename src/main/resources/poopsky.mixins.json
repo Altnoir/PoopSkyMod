@@ -10,7 +10,8 @@
     "LivingEntityMixin",
     "NoiseBasedChunkGeneratorMixin",
     "TradeWithVillagerMixin",
-    "VillagerMixin"
+    "VillagerMixin",
+    "FungusBlockMixin"
   ],
   "client": [
     "ClientPacketListenerMixin",

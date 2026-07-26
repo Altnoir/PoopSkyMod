@@ -9,12 +9,15 @@ import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.content.item.p.TimeBellItem;
 import com.altnoir.poopsky.content.villager.PVillagerBehaviors;
 import com.altnoir.poopsky.content.villager.PVillagerTrades;
+import com.altnoir.poopsky.impl.IntroSavedData;
 import com.altnoir.poopsky.init.*;
 import com.altnoir.poopsky.worldgen.PoVoidChunkGenerator;
 import com.altnoir.poopsky.worldgen.structure.PoopIslandStructure;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -45,6 +48,7 @@ import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
@@ -65,6 +69,7 @@ public class PoGameEvents {
         gameEventBus.addListener(PoGameEvents::onEntityTick);
         gameEventBus.addListener(PoGameEvents::onFinalizeSpawn);
         gameEventBus.addListener(PoGameEvents::onCreateSpawnToilet);
+        gameEventBus.addListener(PoGameEvents::onPlayerLoggedIn);
         gameEventBus.addListener(PoGameEvents::onServerTick);
     }
 
@@ -204,6 +209,21 @@ public class PoGameEvents {
             BlockPos islandCenter = PoopIslandStructure.getGuaranteedSpawnIslandCenter(level.getSeed(), spawn);
             ChunkPos islandChunk = new ChunkPos(islandCenter);
             level.getChunk(islandChunk.x, islandChunk.z);
+        }
+    }
+
+    public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer player)) return;
+
+        ServerLevel overworld = player.getServer().overworld();
+        if (!(overworld.getChunkSource().getGenerator() instanceof PoVoidChunkGenerator)) return;
+
+        boolean firstJoin = IntroSavedData.get(overworld)
+                .markPlayed(player.getUUID(), player.getGameProfile().getName());
+        if (firstJoin && "zh_cn".equalsIgnoreCase(player.getLanguage())) {
+            player.sendSystemMessage(Component.literal(
+                    "温馨提示：如果您正在直播或录制，可在资源包中启用空中厕所的“认知滤网”资源包"
+            ));
         }
     }
 
