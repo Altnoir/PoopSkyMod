@@ -1,6 +1,7 @@
 package com.altnoir.poopsky;
 
 import com.altnoir.poopsky.client.IntroController;
+import com.altnoir.poopsky.client.PoAnimationController;
 import com.altnoir.poopsky.client.ToiletClientBlockExtensions;
 import com.altnoir.poopsky.client.model.BakedModelEventHandler;
 import com.altnoir.poopsky.client.particle.LeavesParticle;
@@ -82,6 +83,7 @@ public class PoopSkyClient {
         modEventBus.addListener(ToiletHighlightRenderer::onRenderLevel);
         modEventBus.addListener(IntroController::onLoggingOut);
         modEventBus.addListener(IntroController::onSelectMusic);
+        modEventBus.addListener(PoAnimationController::onLoggingOut);
     }
 
     public static class ClientModEvents {

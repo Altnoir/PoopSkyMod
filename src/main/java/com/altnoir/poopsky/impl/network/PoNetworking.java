@@ -29,6 +29,11 @@ public class PoNetworking {
                 TimeBellFreezePayload.CODEC,
                 TimeBellFreezePayload::handle
         );
+        registrar.playToClient(
+                PlayAnimationPayload.TYPE,
+                PlayAnimationPayload.CODEC,
+                PlayAnimationPayload::handle
+        );
         IntroHandshake.registerPayloads(registrar);
     }
 

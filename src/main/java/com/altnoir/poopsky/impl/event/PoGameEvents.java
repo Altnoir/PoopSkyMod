@@ -10,6 +10,7 @@ import com.altnoir.poopsky.content.item.p.TimeBellItem;
 import com.altnoir.poopsky.content.villager.PVillagerBehaviors;
 import com.altnoir.poopsky.content.villager.PVillagerTrades;
 import com.altnoir.poopsky.impl.IntroSavedData;
+import com.altnoir.poopsky.impl.command.PoCommands;
 import com.altnoir.poopsky.init.*;
 import com.altnoir.poopsky.worldgen.PoVoidChunkGenerator;
 import com.altnoir.poopsky.worldgen.structure.PoopIslandStructure;
@@ -70,6 +71,7 @@ public class PoGameEvents {
         gameEventBus.addListener(PoGameEvents::onFinalizeSpawn);
         gameEventBus.addListener(PoGameEvents::onCreateSpawnToilet);
         gameEventBus.addListener(PoGameEvents::onPlayerLoggedIn);
+        gameEventBus.addListener(PoCommands::register);
         gameEventBus.addListener(PoGameEvents::onServerTick);
     }
 

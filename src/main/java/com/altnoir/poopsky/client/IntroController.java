@@ -15,10 +15,19 @@ public final class IntroController {
     }
 
     public static void start(Runnable finishConfiguration) {
+        start(finishConfiguration, true);
+    }
+
+    public static void play() {
+        start(() -> {
+        }, false);
+    }
+
+    private static void start(Runnable finishConfiguration, boolean restorePreviousScreen) {
         if (activeScreen != null) return;
 
         Minecraft minecraft = Minecraft.getInstance();
-        IntroController.previousScreen = minecraft.screen;
+        IntroController.previousScreen = restorePreviousScreen ? minecraft.screen : null;
         IntroController.finishConfiguration = finishConfiguration;
         activeScreen = new IntroScreen();
         minecraft.setScreen(activeScreen);
@@ -34,9 +43,7 @@ public final class IntroController {
         finishConfiguration = null;
 
         finish.run();
-        if (returnScreen != null) {
-            Minecraft.getInstance().setScreen(returnScreen);
-        }
+        Minecraft.getInstance().setScreen(returnScreen);
     }
 
     public static void onLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
