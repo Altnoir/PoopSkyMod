@@ -1,49 +1,28 @@
 package com.altnoir.poopsky.impl.creative;
 
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.LinkedHashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
+import java.util.function.Supplier;
 
 public final class PoCreativeTabSection {
-    private final ResourceKey<CreativeModeTab> tab;
-    private final ResourceLocation id;
     private final Component title;
     private final @Nullable ResourceLocation bannerSprite;
-    private final Set<ResourceLocation> itemIds = new LinkedHashSet<>();
+    private final List<Supplier<ItemStack>> entries = new ArrayList<>();
 
-    public PoCreativeTabSection(ResourceKey<CreativeModeTab> tab, ResourceLocation id, Component title) {
-        this(tab, id, title, null);
+    public PoCreativeTabSection(Component title) {
+        this(title, null);
     }
 
-    public PoCreativeTabSection(
-            ResourceKey<CreativeModeTab> tab,
-            ResourceLocation id,
-            Component title,
-            @Nullable ResourceLocation bannerSprite
-    ) {
-        this.tab = tab;
-        this.id = id;
+    public PoCreativeTabSection(Component title, @Nullable ResourceLocation bannerSprite) {
         this.title = title;
         this.bannerSprite = bannerSprite;
-    }
-
-    public ResourceKey<CreativeModeTab> tab() {
-        return tab;
-    }
-
-    public ResourceLocation id() {
-        return id;
     }
 
     public Component title() {
@@ -54,15 +33,23 @@ public final class PoCreativeTabSection {
         return Optional.ofNullable(bannerSprite);
     }
 
-    public void add(ResourceLocation itemId) {
-        itemIds.add(itemId);
+    public void add(ItemLike item) {
+        add(() -> item.asItem().getDefaultInstance());
+    }
+
+    public void add(Supplier<ItemStack> stack) {
+        entries.add(stack);
+    }
+
+    public void clear() {
+        entries.clear();
     }
 
     public List<ItemStack> itemStacks() {
-        return itemIds.stream()
-                .map(BuiltInRegistries.ITEM::get)
-                .filter(item -> item != Items.AIR)
-                .map(Item::getDefaultInstance)
+        return entries.stream()
+                .map(Supplier::get)
+                .filter(stack -> !stack.isEmpty())
+                .map(ItemStack::copy)
                 .toList();
     }
 }

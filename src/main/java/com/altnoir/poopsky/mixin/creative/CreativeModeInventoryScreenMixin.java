@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(CreativeModeInventoryScreen.class)
-public abstract class CreativeModeInventoryScreenMixin extends AbstractContainerScreen {
+public abstract class CreativeModeInventoryScreenMixin extends AbstractContainerScreen<CreativeModeInventoryScreen.ItemPickerMenu> {
     @Shadow
     private static CreativeModeTab selectedTab;
 
@@ -25,13 +25,7 @@ public abstract class CreativeModeInventoryScreenMixin extends AbstractContainer
     }
 
     @Inject(method = "renderBg", at = @At("TAIL"))
-    private void poopsky$renderSectionHeadings(
-            GuiGraphics graphics,
-            float partialTick,
-            int mouseX,
-            int mouseY,
-            CallbackInfo ci
-    ) {
+    private void poopsky$renderSectionHeadings(GuiGraphics graphics, float partialTick, int mouseX, int mouseY, CallbackInfo ci) {
         if (selectedTab instanceof PoSectionedCreativeModeTab sectionedTab) {
             PoSectionedCreativeTabRenderer.render(
                     graphics,

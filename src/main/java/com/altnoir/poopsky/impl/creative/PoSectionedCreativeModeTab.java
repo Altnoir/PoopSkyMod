@@ -19,7 +19,6 @@ public final class PoSectionedCreativeModeTab extends CreativeModeTab {
 
     private final List<PoCreativeTabSection> sections;
     private final Runnable populator;
-    private boolean populated;
     private Collection<ItemStack> displayItems = List.of();
     private Set<ItemStack> searchItems = ItemStackLinkedSet.createTypeAndComponentsSet();
     private List<SectionLayout> sectionLayouts = List.of();
@@ -37,10 +36,8 @@ public final class PoSectionedCreativeModeTab extends CreativeModeTab {
 
     @Override
     public void buildContents(ItemDisplayParameters parameters) {
-        if (!populated) {
-            populator.run();
-            populated = true;
-        }
+        sections.forEach(PoCreativeTabSection::clear);
+        populator.run();
 
         List<ItemStack> newDisplayItems = new ArrayList<>();
         Set<ItemStack> newSearchItems = ItemStackLinkedSet.createTypeAndComponentsSet();
@@ -48,14 +45,10 @@ public final class PoSectionedCreativeModeTab extends CreativeModeTab {
         List<SectionLayout> newLayouts = new ArrayList<>();
 
         for (PoCreativeTabSection section : sections) {
-            List<ItemStack> enabledItems = new ArrayList<>();
-            for (ItemStack stack : section.itemStacks()) {
-                if (stack.getItem().isEnabled(parameters.enabledFeatures()) && seenDisplayItems.add(stack)) {
-                    enabledItems.add(stack);
-                    newSearchItems.add(stack);
-                }
-            }
-
+            List<ItemStack> enabledItems = section.itemStacks().stream()
+                    .filter(stack -> stack.getItem().isEnabled(parameters.enabledFeatures()))
+                    .filter(seenDisplayItems::add)
+                    .toList();
             if (enabledItems.isEmpty()) {
                 continue;
             }
@@ -64,6 +57,7 @@ public final class PoSectionedCreativeModeTab extends CreativeModeTab {
             newLayouts.add(new SectionLayout(section.title(), section.bannerSprite().orElse(null), headingRow));
             addEmptyRow(newDisplayItems);
             newDisplayItems.addAll(enabledItems);
+            newSearchItems.addAll(enabledItems);
             padToCompleteRow(newDisplayItems);
         }
 
