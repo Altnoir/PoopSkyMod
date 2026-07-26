@@ -241,6 +241,8 @@ public final class LangGen {
         addSubtitle("block.flush_toilet.close", "Toilet lid closes");
         addSubtitle("block.compooper.bucket_fill", "Compooper fills");
         addSubtitle("item.jinkela.use", "Jinkela rustles");
+        addSubtitle("item.time_bell.open", "Time Bell activates");
+        addSubtitle("item.time_bell.close", "Time Bell deactivates");
     }
 
     private static void addSubtitle(String key, String value) {

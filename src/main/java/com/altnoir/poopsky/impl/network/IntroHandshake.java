@@ -67,18 +67,7 @@ public final class IntroHandshake {
         private static final StreamCodec<FriendlyByteBuf, FinishedPayload> CODEC = StreamCodec.unit(INSTANCE);
 
         private static void handle(FinishedPayload payload, IPayloadContext context) {
-            context.enqueueWork(() -> {
-                var server = ServerLifecycleHooks.getCurrentServer();
-                if (server != null
-                        && server.overworld().getChunkSource().getGenerator() instanceof PoVoidChunkGenerator
-                        && context.listener() instanceof ServerConfigurationPacketListenerImpl listener) {
-                    GameProfile profile = listener.getOwner();
-                    if (profile.getId() != null) {
-                        IntroSavedData.get(server.overworld()).markPlayed(profile.getId(), profile.getName());
-                    }
-                }
-                context.finishCurrentTask(TASK_TYPE);
-            });
+            context.enqueueWork(() -> context.finishCurrentTask(TASK_TYPE));
         }
 
         @Override

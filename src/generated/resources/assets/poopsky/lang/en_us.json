@@ -556,6 +556,8 @@
   "subtitle.poopsky.fly_barrel.open": "Fly Barrel opens",
   "subtitle.poopsky.fly_barrel.work": "Fly Barrel buzzes",
   "subtitle.poopsky.item.jinkela.use": "Jinkela rustles",
+  "subtitle.poopsky.item.time_bell.close": "Time Bell deactivates",
+  "subtitle.poopsky.item.time_bell.open": "Time Bell activates",
   "subtitle.poopsky.item.toilet_linker.boop": "Toilet Plug Wand links",
   "subtitle.poopsky.item.toilet_linker.success": "Toilet Plug Wand binds",
   "subtitle.poopsky.poolime.attack": "Poolime attacks",
