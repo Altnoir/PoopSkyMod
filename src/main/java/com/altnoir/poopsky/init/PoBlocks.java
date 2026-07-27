@@ -358,7 +358,7 @@ public class PoBlocks {
             (loot, block) -> loot.add(block, loot.createDoorTable(block)));
     public static final BlockEntry<TrapDoorBlock> GINKGO_TRAPDOOR = registerDecorativeBlock("ginkgo_trapdoor", 64,
             props -> new TrapDoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_TRAPDOOR).mapColor(MapColor.COLOR_YELLOW)));
-    public static final BlockEntry<ParticleLeavesBlock> POOP_LEAVES = registerAllTabBlock("poop_leaves", 88,
+    public static final BlockEntry<ParticleLeavesBlock> POOP_LEAVES = registerBlock("poop_leaves", 88,
             props -> new ParticleLeavesBlock(0x5E4228, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
                     .mapColor(MapColor.COLOR_BROWN)
                     .sound(SoundType.SCULK_SENSOR)),
@@ -373,11 +373,11 @@ public class PoBlocks {
                     .mapColor(MapColor.COLOR_YELLOW)
                     .sound(SoundType.SCULK_SENSOR)),
             (loot, block) -> loot.add(block, createGoldLeavesDrops(loot, block)));
-    public static final BlockEntry<LeavesBlock> GINKGO_LEAVES = registerAllTabBlock("ginkgo_leaves", 64,
+    public static final BlockEntry<LeavesBlock> GINKGO_LEAVES = registerBlock("ginkgo_leaves", 64,
             props -> new ParticleLeavesBlock(0xF0DB3E, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
                     .mapColor(MapColor.COLOR_YELLOW)),
             (loot, block) -> loot.add(block, createGinkgoLeavesDrops(loot, block)));
-    public static final BlockEntry<PoopTreeBlock> POOP_SAPLING = registerAllTabBlock("poop_sapling", 88,
+    public static final BlockEntry<PoopTreeBlock> POOP_SAPLING = registerBlock("poop_sapling", 88,
             props -> new PoopTreeBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN)
                     .noCollission()
                     .noOcclusion()
@@ -385,7 +385,7 @@ public class PoBlocks {
                     .sound(SoundType.MUD)
                     .offsetType(BlockBehaviour.OffsetType.XZ)
                     .pushReaction(PushReaction.DESTROY)));
-    public static final BlockEntry<SaplingBlock> GINKGO_SAPLING = registerAllTabBlock("ginkgo_sapling", 64,
+    public static final BlockEntry<SaplingBlock> GINKGO_SAPLING = registerBlock("ginkgo_sapling", 64,
             props -> new SaplingBlock(PoTreeGrower.GINKGO, BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_YELLOW)
                     .noCollission()
