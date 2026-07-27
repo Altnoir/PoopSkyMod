@@ -41,6 +41,7 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.NeoForgeMod;
+import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.neoforge.fluids.FluidInteractionRegistry;
 import org.slf4j.Logger;
 
@@ -169,6 +170,10 @@ public class PoopSky {
                     Blocks.DEEPSLATE.defaultBlockState()));
         });
         PoStats.init();
+    }
+
+    private void reload(final AddReloadListenerEvent event) {
+        // 用于/Reload命令, 比如fly
     }
 
     public static ResourceLocation loc(String path) {

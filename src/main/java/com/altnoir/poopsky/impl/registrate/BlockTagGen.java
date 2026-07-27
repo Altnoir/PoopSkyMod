@@ -97,7 +97,9 @@ public final class BlockTagGen {
         tag(PoTags.Blocks.POOP_TNT_DESTROY)
                 .addTag(BlockTags.FLOWERS)
                 .addTag(BlockTags.LEAVES);
-        tag(PoTags.Blocks.POOP_TNT_REPLACEABLE).addTag(BlockTags.MOSS_REPLACEABLE);
+        tag(PoTags.Blocks.POOP_TNT_REPLACEABLE)
+                .addTag(PoTags.Blocks.POOP_BLOCKS)
+                .addTag(BlockTags.MOSS_REPLACEABLE);
 
         tag(PoTags.Blocks.FLY_LOVE)
                 .add(
