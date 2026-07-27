@@ -95,11 +95,10 @@ public final class BlockTagGen {
                 family.blocks().forEach(block -> tag(PoTags.Blocks.TILE_BLOCKS).add(block.get())));
 
         tag(PoTags.Blocks.POOP_TNT_DESTROY)
+                .addTag(PoTags.Blocks.POOP_BLOCKS)
                 .addTag(BlockTags.FLOWERS)
                 .addTag(BlockTags.LEAVES);
-        tag(PoTags.Blocks.POOP_TNT_REPLACEABLE)
-                .addTag(PoTags.Blocks.POOP_BLOCKS)
-                .addTag(BlockTags.MOSS_REPLACEABLE);
+        tag(PoTags.Blocks.POOP_TNT_REPLACEABLE).addTag(BlockTags.MOSS_REPLACEABLE);
 
         tag(PoTags.Blocks.FLY_LOVE)
                 .add(
