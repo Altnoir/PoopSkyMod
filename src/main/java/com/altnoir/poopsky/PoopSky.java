@@ -28,10 +28,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.item.BoneMealItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
@@ -44,7 +41,6 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.NeoForgeMod;
-import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.neoforge.fluids.FluidInteractionRegistry;
 import org.slf4j.Logger;
 
@@ -116,6 +112,9 @@ public class PoopSky {
             DispenserBlock.registerProjectileBehavior(PoItems.POOP_BALL);
             DispenserBlock.registerProjectileBehavior(PoItems.SEA_POOP_BALL);
             DispenserBlock.registerProjectileBehavior(PoItems.WITHER_POOP_BALL);
+            DispenserBlock.registerBehavior(PoBlocks.SHIT.asItem(), ArmorItem.DISPENSE_ITEM_BEHAVIOR);
+            DispenserBlock.registerBehavior(PoBlocks.CHILI_SHIT.asItem(), ArmorItem.DISPENSE_ITEM_BEHAVIOR);
+            DispenserBlock.registerBehavior(PoBlocks.GOLDEN_SHIT.asItem(), ArmorItem.DISPENSE_ITEM_BEHAVIOR);
             DispenserBlock.registerBehavior(PoItems.POOP.get(), new OptionalDispenseItemBehavior() {
                 @Override
                 protected ItemStack execute(BlockSource blockSource, ItemStack item) {
@@ -170,9 +169,6 @@ public class PoopSky {
                     Blocks.DEEPSLATE.defaultBlockState()));
         });
         PoStats.init();
-    }
-    private void reload(final AddReloadListenerEvent event) {
-      // 用于/Reload命令, 比如fly
     }
 
     public static ResourceLocation loc(String path) {

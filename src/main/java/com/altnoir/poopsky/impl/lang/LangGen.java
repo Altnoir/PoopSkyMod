@@ -290,6 +290,8 @@ public final class LangGen {
         // Painting
         provider.add("painting.poopsky.poop.title", "Poop");
         provider.add("painting.poopsky.poop.author", "yinianzhihai");
+        provider.add("painting.poopsky.toilet.title", "Within Reach");
+        provider.add("painting.poopsky.toilet.author", "EE克");
 
         // Entities
         provider.add("entity.minecraft.villager.poopsky.poopmaker", "Poopmaker");

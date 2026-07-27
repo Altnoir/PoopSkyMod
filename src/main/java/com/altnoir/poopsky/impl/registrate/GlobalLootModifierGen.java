@@ -6,7 +6,6 @@ import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.FishingHookPredicate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
@@ -36,7 +35,7 @@ public final class GlobalLootModifierGen extends GlobalLootModifierProvider {
                 new AddTableLootModifier(
                         new LootItemCondition[]{
                                 LootTableIdCondition.builder(
-                                        ResourceLocation.withDefaultNamespace("gameplay/fishing")
+                                        PoopSky.locMc("gameplay/fishing")
                                 ).build(),
                                 LootItemEntityPropertyCondition.hasProperties(
                                         LootContext.EntityTarget.THIS,

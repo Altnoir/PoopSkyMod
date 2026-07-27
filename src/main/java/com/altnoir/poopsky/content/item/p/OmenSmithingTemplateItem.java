@@ -70,22 +70,22 @@ public class OmenSmithingTemplateItem extends SmithingTemplateItem {
     static {
         TITLE_FORMAT = ChatFormatting.GRAY;
         DESCRIPTION_FORMAT = ChatFormatting.BLUE;
-        INGREDIENTS_TITLE = Component.translatable(Util.makeDescriptionId("item", ResourceLocation.withDefaultNamespace("smithing_template.ingredients"))).withStyle(TITLE_FORMAT);
-        APPLIES_TO_TITLE = Component.translatable(Util.makeDescriptionId("item", ResourceLocation.withDefaultNamespace("smithing_template.applies_to"))).withStyle(TITLE_FORMAT);
+        INGREDIENTS_TITLE = Component.translatable(Util.makeDescriptionId("item", PoopSky.locMc("smithing_template.ingredients"))).withStyle(TITLE_FORMAT);
+        APPLIES_TO_TITLE = Component.translatable(Util.makeDescriptionId("item", PoopSky.locMc("smithing_template.applies_to"))).withStyle(TITLE_FORMAT);
         OMEN_UPGRADE = Component.translatable(Util.makeDescriptionId("upgrade", PoopSky.loc("omen_upgrade"))).withStyle(TITLE_FORMAT);
         OMEN_UPGRADE_APPLIES_TO = Component.translatable(Util.makeDescriptionId("item", PoopSky.loc("smithing_template.omen_upgrade.applies_to"))).withStyle(DESCRIPTION_FORMAT);
         OMEN_UPGRADE_INGREDIENTS = Component.translatable(Util.makeDescriptionId("item", PoopSky.loc("smithing_template.omen_upgrade.ingredients"))).withStyle(DESCRIPTION_FORMAT);
         OMEN_UPGRADE_BASE_SLOT_DESCRIPTION = Component.translatable(Util.makeDescriptionId("item", PoopSky.loc("smithing_template.omen_upgrade.base_slot_description")));
         OMEN_UPGRADE_ADDITIONS_SLOT_DESCRIPTION = Component.translatable(Util.makeDescriptionId("item", PoopSky.loc("smithing_template.omen_upgrade.additions_slot_description")));
-        EMPTY_SLOT_HELMET = ResourceLocation.withDefaultNamespace("item/empty_armor_slot_helmet");
-        EMPTY_SLOT_CHESTPLATE = ResourceLocation.withDefaultNamespace("item/empty_armor_slot_chestplate");
-        EMPTY_SLOT_LEGGINGS = ResourceLocation.withDefaultNamespace("item/empty_armor_slot_leggings");
-        EMPTY_SLOT_BOOTS = ResourceLocation.withDefaultNamespace("item/empty_armor_slot_boots");
-        EMPTY_SLOT_HOE = ResourceLocation.withDefaultNamespace("item/empty_slot_hoe");
-        EMPTY_SLOT_AXE = ResourceLocation.withDefaultNamespace("item/empty_slot_axe");
-        EMPTY_SLOT_SWORD = ResourceLocation.withDefaultNamespace("item/empty_slot_sword");
-        EMPTY_SLOT_SHOVEL = ResourceLocation.withDefaultNamespace("item/empty_slot_shovel");
-        EMPTY_SLOT_PICKAXE = ResourceLocation.withDefaultNamespace("item/empty_slot_pickaxe");
-        EMPTY_SLOT_INGOT = ResourceLocation.withDefaultNamespace("item/empty_slot_ingot");
+        EMPTY_SLOT_HELMET = PoopSky.locMc("item/empty_armor_slot_helmet");
+        EMPTY_SLOT_CHESTPLATE = PoopSky.locMc("item/empty_armor_slot_chestplate");
+        EMPTY_SLOT_LEGGINGS = PoopSky.locMc("item/empty_armor_slot_leggings");
+        EMPTY_SLOT_BOOTS = PoopSky.locMc("item/empty_armor_slot_boots");
+        EMPTY_SLOT_HOE = PoopSky.locMc("item/empty_slot_hoe");
+        EMPTY_SLOT_AXE = PoopSky.locMc("item/empty_slot_axe");
+        EMPTY_SLOT_SWORD = PoopSky.locMc("item/empty_slot_sword");
+        EMPTY_SLOT_SHOVEL = PoopSky.locMc("item/empty_slot_shovel");
+        EMPTY_SLOT_PICKAXE = PoopSky.locMc("item/empty_slot_pickaxe");
+        EMPTY_SLOT_INGOT = PoopSky.locMc("item/empty_slot_ingot");
     }
 }
