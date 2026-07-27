@@ -756,6 +756,26 @@ public class PoBlocks {
     }
 
     public static void register() {
+        BuiltInRegistries.BLOCK.addAlias(
+                PoopSky.loc("tile_block"),
+                PoopSky.loc("cyan_tile_block")
+        );
+        BuiltInRegistries.BLOCK.addAlias(
+                PoopSky.loc("tile_block_stairs"),
+                PoopSky.loc("cyan_tile_block_stairs")
+        );
+        BuiltInRegistries.BLOCK.addAlias(
+                PoopSky.loc("tile_block_slab"),
+                PoopSky.loc("cyan_tile_block_slab")
+        );
+        BuiltInRegistries.BLOCK.addAlias(
+                PoopSky.loc("tile_block_vertical_slab"),
+                PoopSky.loc("cyan_tile_block_vertical_slab")
+        );
+        BuiltInRegistries.BLOCK.addAlias(
+                PoopSky.loc("tile_block_wall"),
+                PoopSky.loc("cyan_tile_block_wall")
+        );
     }
 
     // Loot
@@ -959,3 +979,5 @@ public class PoBlocks {
         LEAVES_STICK_CHANCES = new float[]{0.05F, 0.075F, 0.1F, 0.125F, 0.25F};
     }
 }
+
+

@@ -71,8 +71,8 @@ public class PoGameEvents {
         gameEventBus.addListener(PoGameEvents::onFinalizeSpawn);
         gameEventBus.addListener(PoGameEvents::onCreateSpawnToilet);
         gameEventBus.addListener(PoGameEvents::onPlayerLoggedIn);
-        gameEventBus.addListener(PoCommands::register);
         gameEventBus.addListener(PoGameEvents::onServerTick);
+        gameEventBus.addListener(PoCommands::register);
     }
 
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
