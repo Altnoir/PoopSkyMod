@@ -10,12 +10,9 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-
-import java.util.Optional;
 
 @SuppressWarnings("unchecked")
 public enum PSRecipeTypes implements IRecipeTypeInfo {
@@ -50,10 +47,6 @@ public enum PSRecipeTypes implements IRecipeTypeInfo {
     @Override
     public <I extends RecipeInput, R extends Recipe<I>> RecipeType<R> getType() {
         return (RecipeType<R>) typeObject.get();
-    }
-
-    public <I extends RecipeInput, R extends Recipe<I>> Optional<net.minecraft.world.item.crafting.RecipeHolder<R>> find(I inv, Level world) {
-        return world.getRecipeManager().getRecipeFor(getType(), inv, world);
     }
 
     private static class Registers {

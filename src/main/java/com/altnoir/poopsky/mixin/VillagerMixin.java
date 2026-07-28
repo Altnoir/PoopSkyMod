@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -27,7 +28,7 @@ public class VillagerMixin {
     )
     public Set<Map.Entry<Item, Integer>> redirectEntrySet(Map<Item, Integer> item) {
         if (item == Villager.FOOD_POINTS) {
-            Map<Item, Integer> FoodPoints = new java.util.HashMap<>(item);
+            Map<Item, Integer> FoodPoints = new HashMap<>(item);
             FoodPoints.put(PoItems.POOP.get(), 1);
             return FoodPoints.entrySet();
         }

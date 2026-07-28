@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -80,8 +81,8 @@ public record AnalPressingRecipe(Ingredient input, Block output, Block replaceTa
         public static final StreamCodec<RegistryFriendlyByteBuf, AnalPressingRecipe> STREAM_CODEC =
                 StreamCodec.composite(
                         Ingredient.CONTENTS_STREAM_CODEC, AnalPressingRecipe::input,
-                        ByteBufCodecs.registry(net.minecraft.core.registries.Registries.BLOCK), AnalPressingRecipe::output,
-                        ByteBufCodecs.registry(net.minecraft.core.registries.Registries.BLOCK), AnalPressingRecipe::replaceTarget,
+                        ByteBufCodecs.registry(Registries.BLOCK), AnalPressingRecipe::output,
+                        ByteBufCodecs.registry(Registries.BLOCK), AnalPressingRecipe::replaceTarget,
                         ByteBufCodecs.VAR_INT, AnalPressingRecipe::radius,
                         AnalPressingRecipe::new);
 

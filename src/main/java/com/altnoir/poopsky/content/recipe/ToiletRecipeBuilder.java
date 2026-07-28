@@ -2,6 +2,7 @@ package com.altnoir.poopsky.content.recipe;
 
 import com.altnoir.poopsky.content.ToiletType;
 import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -9,6 +10,7 @@ import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.common.conditions.ICondition;
@@ -59,7 +61,7 @@ public class ToiletRecipeBuilder implements RecipeBuilder {
     public void save(RecipeOutput recipeOutput, ResourceLocation id) {
         delegate.save(new RecipeOutput() {
             @Override
-            public void accept(ResourceLocation recipeId, net.minecraft.world.item.crafting.Recipe<?> recipe, @Nullable net.minecraft.advancements.AdvancementHolder advancement) {
+            public void accept(ResourceLocation recipeId, Recipe<?> recipe, @Nullable AdvancementHolder advancement) {
                 if (recipe instanceof ShapedRecipe shaped) {
                     recipeOutput.accept(recipeId, new ToiletShapedRecipe(shaped, toiletType), advancement);
                 } else {
@@ -68,7 +70,7 @@ public class ToiletRecipeBuilder implements RecipeBuilder {
             }
 
             @Override
-            public void accept(ResourceLocation recipeId, net.minecraft.world.item.crafting.Recipe<?> recipe, @Nullable net.minecraft.advancements.AdvancementHolder advancement, ICondition... conditions) {
+            public void accept(ResourceLocation recipeId, Recipe<?> recipe, @Nullable AdvancementHolder advancement, ICondition... conditions) {
                 if (recipe instanceof ShapedRecipe shaped) {
                     recipeOutput.accept(recipeId, new ToiletShapedRecipe(shaped, toiletType), advancement, conditions);
                 } else {

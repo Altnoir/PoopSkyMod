@@ -12,8 +12,6 @@ import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -34,15 +32,6 @@ public final class FlyBarrelRecipeBuilder implements RecipeBuilder {
 
     public static FlyBarrelRecipeBuilder flyBarrel(String flyTypeId, ResourceLocation result) {
         return new FlyBarrelRecipeBuilder(flyTypeId, new FlyBarrelRecipe.Output(result, 1));
-    }
-
-    public static FlyBarrelRecipeBuilder flyBarrel(String flyTypeId, ItemStack result) {
-        return new FlyBarrelRecipeBuilder(flyTypeId,
-                new FlyBarrelRecipe.Output(BuiltInRegistries.ITEM.getKey(result.getItem()), result.getCount()));
-    }
-
-    public static FlyBarrelRecipeBuilder flyBarrel(String flyTypeId, ItemLike result) {
-        return flyBarrel(flyTypeId, BuiltInRegistries.ITEM.getKey(result.asItem()));
     }
 
     @Override

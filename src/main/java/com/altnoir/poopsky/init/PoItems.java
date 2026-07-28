@@ -11,6 +11,8 @@ import com.altnoir.poopsky.impl.sound.PoSoundEvents;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -40,30 +42,18 @@ public class PoItems {
     public static final ItemEntry<WitherPoopBallItem> WITHER_POOP_BALL = registerItem("wither_poop_ball",
             props -> new WitherPoopBallItem(props.stacksTo(88)));
 
-    public static final ItemEntry<SimpleFeedableItem> POOP_MOONCAKE = registerItem("poop_mooncake",
-            props -> new SimpleFeedableItem(props.food(PFoods.POOP_MOONCAKE).stacksTo(88)));
-    public static final ItemEntry<SimpleFeedableItem> CHILI_POOP_MOONCAKE = registerItem("chili_poop_mooncake",
-            props -> new SimpleFeedableItem(props.food(PFoods.CHILI_POOP_MOONCAKE).stacksTo(88)));
-    public static final ItemEntry<SimpleFeedableItem> GOLDEN_POOP_MOONCAKE = registerItem("golden_poop_mooncake",
-            props -> new SimpleFeedableItem(props.food(PFoods.GOLDEN_POOP_MOONCAKE).stacksTo(88)));
-    public static final ItemEntry<SimpleFeedableItem> BAKED_MAGGOTS = registerItem("baked_maggots",
-            props -> new SimpleFeedableItem(props.food(PFoods.BAKED_MAGGOTS).stacksTo(88)));
-    public static final ItemEntry<SimpleFeedableItem> POOP_BREAD = registerItem("poop_bread",
-            props -> new SimpleFeedableItem(props.food(PFoods.POOP_BREAD).stacksTo(88)));
-    public static final ItemEntry<SimpleFeedableItem> POOP_DUMPLINGS = registerItem("poop_dumplings",
-            props -> new SimpleFeedableItem(props.food(PFoods.POOP_DUMPLINGS).stacksTo(88)));
-    public static final ItemEntry<SimpleFeedableItem> POOP_SOUP = registerItem("poop_soup",
-            props -> new SimpleFeedableItem(props.food(PFoods.POOP_SOUP).stacksTo(88)));
-    public static final ItemEntry<SimpleFeedableItem> POOP_VEGETABLE_STICKS = registerItem("poop_vegetable_sticks",
-            props -> new SimpleFeedableItem(props.food(PFoods.POOP_VEGETABLE_STICKS).stacksTo(88)));
-    public static final ItemEntry<SimpleFeedableItem> POOBURGER_MEAT = registerItem("pooburger_meat",
-            props -> new SimpleFeedableItem(props.food(PFoods.POOBURGER_MEAT).stacksTo(88)));
-    public static final ItemEntry<SimpleFeedableItem> POOBURGER = registerItem("pooburger",
-            props -> new SimpleFeedableItem(props.food(PFoods.POOBURGER).stacksTo(88)));
-    public static final ItemEntry<SimpleFeedableItem> POOP_PASTA = registerItem("poop_pasta",
-            props -> new SimpleFeedableItem(props.food(PFoods.POOP_PASTA).stacksTo(88)));
-    public static final ItemEntry<SimpleFeedableItem> POODDING = registerItem("poodding",
-            props -> new SimpleFeedableItem(props.food(PFoods.POODDING).stacksTo(88)));
+    public static final ItemEntry<SimpleFeedableItem> POOP_MOONCAKE = registerFood("poop_mooncake", PFoods.POOP_MOONCAKE);
+    public static final ItemEntry<SimpleFeedableItem> CHILI_POOP_MOONCAKE = registerFood("chili_poop_mooncake", PFoods.CHILI_POOP_MOONCAKE);
+    public static final ItemEntry<SimpleFeedableItem> GOLDEN_POOP_MOONCAKE = registerFood("golden_poop_mooncake", PFoods.GOLDEN_POOP_MOONCAKE);
+    public static final ItemEntry<SimpleFeedableItem> BAKED_MAGGOTS = registerFood("baked_maggots", PFoods.BAKED_MAGGOTS);
+    public static final ItemEntry<SimpleFeedableItem> POOP_BREAD = registerFood("poop_bread", PFoods.POOP_BREAD);
+    public static final ItemEntry<SimpleFeedableItem> POOP_DUMPLINGS = registerFood("poop_dumplings", PFoods.POOP_DUMPLINGS);
+    public static final ItemEntry<SimpleFeedableItem> POOP_SOUP = registerFood("poop_soup", PFoods.POOP_SOUP);
+    public static final ItemEntry<SimpleFeedableItem> POOP_VEGETABLE_STICKS = registerFood("poop_vegetable_sticks", PFoods.POOP_VEGETABLE_STICKS);
+    public static final ItemEntry<SimpleFeedableItem> POOBURGER_MEAT = registerFood("pooburger_meat", PFoods.POOBURGER_MEAT);
+    public static final ItemEntry<SimpleFeedableItem> POOBURGER = registerFood("pooburger", PFoods.POOBURGER);
+    public static final ItemEntry<SimpleFeedableItem> POOP_PASTA = registerFood("poop_pasta", PFoods.POOP_PASTA);
+    public static final ItemEntry<SimpleFeedableItem> POODDING = registerFood("poodding", PFoods.POODDING);
 
     public static final ItemEntry<ChiliItem> DRAGON_BREATH_CHILI = registerItem("dragon_breath_chili",
             props -> new ChiliItem(props.food(PFoods.DRAGON_BREATH_CHILI)));
@@ -139,12 +129,9 @@ public class PoItems {
                     .stacksTo(18)
             ));
     public static final ItemEntry<BucketItem> URINE_BUCKET = PoFluids.URINE_BUCKET;
-    public static final ItemEntry<Item> LAWRENCE_MUSIC_DISC = registerItem("music_disc_lawrence",
-            props -> new Item(props.jukeboxPlayable(PoSoundEvents.LAWRENCE_KEY).rarity(Rarity.RARE).stacksTo(1)));
-    public static final ItemEntry<Item> LIGHT_DANCE_MUSIC_DISC = registerItem("music_disc_light_dance",
-            props -> new Item(props.jukeboxPlayable(PoSoundEvents.LIGHT_DANCE_KEY).rarity(Rarity.RARE).stacksTo(1)));
-    public static final ItemEntry<Item> MOON_BOWL_MUSIC_DISC = registerItem("music_disc_moon_bowl",
-            props -> new Item(props.jukeboxPlayable(PoSoundEvents.MOON_BOWL_KEY).rarity(Rarity.RARE).stacksTo(1)));
+    public static final ItemEntry<Item> LAWRENCE_MUSIC_DISC = registerMusicDisc("music_disc_lawrence", PoSoundEvents.LAWRENCE_KEY);
+    public static final ItemEntry<Item> LIGHT_DANCE_MUSIC_DISC = registerMusicDisc("music_disc_light_dance", PoSoundEvents.LIGHT_DANCE_KEY);
+    public static final ItemEntry<Item> MOON_BOWL_MUSIC_DISC = registerMusicDisc("music_disc_moon_bowl", PoSoundEvents.MOON_BOWL_KEY);
     public static final ItemEntry<DeferredSpawnEggItem> POOLIME_SPAWN_EGG = registerItemNoModel("poolime_spawn_egg",
             prop -> new DeferredSpawnEggItem(PoEntityType.POOLIME, 0x7D5F36, 0x5E4228, prop));
     public static final ItemEntry<DeferredSpawnEggItem> FLY_SPAWN_EGG = registerItemNoModel("fly_spawn_egg",
@@ -163,6 +150,17 @@ public class PoItems {
 
     private static <T extends Item> ItemEntry<T> registerItem(String name, NonNullFunction<Item.Properties, T> factory) {
         return REGISTRATE.item(name, factory).register();
+    }
+
+    private static ItemEntry<SimpleFeedableItem> registerFood(String name, FoodProperties food) {
+        return registerItem(name, props -> new SimpleFeedableItem(props.food(food).stacksTo(88)));
+    }
+
+    private static ItemEntry<Item> registerMusicDisc(String name, ResourceKey<JukeboxSong> song) {
+        return registerItem(name,
+                props -> new Item(props.jukeboxPlayable(song)
+                        .rarity(Rarity.RARE)
+                        .stacksTo(1)));
     }
 
     private static <T extends Item> ItemEntry<T> registerHandheldItem(String name, NonNullFunction<Item.Properties, T> factory) {

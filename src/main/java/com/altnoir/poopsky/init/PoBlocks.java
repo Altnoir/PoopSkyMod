@@ -58,8 +58,8 @@ public class PoBlocks {
     private static final float HARD_STRENGTH = 10.0F;
     private static final float TOILET_RESISTANCE = 1200.0F;
     private static final int LAVA_LIGHT_LEVEL = 15;
-    protected static final float[] LEAVES_SAPLING_CHANCES;
-    protected static final float[] LEAVES_STICK_CHANCES;
+    protected static final float[] LEAVES_SAPLING_CHANCES = {0.1F, 0.125F, 0.25F, 0.5F};
+    protected static final float[] LEAVES_STICK_CHANCES = {0.05F, 0.075F, 0.1F, 0.125F, 0.25F};
     private static final List<BlockEntry<? extends Block>> DECORATIVE_BLOCKS = new ArrayList<>();
     private static final List<BlockEntry<? extends Block>> ALL_TAB_BLOCKS = new ArrayList<>();
 
@@ -79,15 +79,9 @@ public class PoBlocks {
                     .pushReaction(PushReaction.DESTROY)),
             (loot, block) -> loot.add(block, createPoopPieceDrop(loot, block, PoItems.POOP_BALL.get())));
 
-    public static final BlockEntry<ShitBlock> SHIT = registerBlock("shit", 88,
-            props -> new ShitBlock(poopProperties(0.1F)
-                    .pushReaction(PushReaction.DESTROY)));
-    public static final BlockEntry<ShitBlock> CHILI_SHIT = registerBlock("chili_shit", 88,
-            props -> new ShitBlock(poopProperties(0.1F)
-                    .pushReaction(PushReaction.DESTROY)));
-    public static final BlockEntry<ShitBlock> GOLDEN_SHIT = registerBlock("golden_shit", 88,
-            props -> new ShitBlock(poopProperties(0.1F)
-                    .pushReaction(PushReaction.DESTROY)));
+    public static final BlockEntry<ShitBlock> SHIT = registerShitBlock("shit");
+    public static final BlockEntry<ShitBlock> CHILI_SHIT = registerShitBlock("chili_shit");
+    public static final BlockEntry<ShitBlock> GOLDEN_SHIT = registerShitBlock("golden_shit");
 
     public static final BlockEntry<PoopBlock> POOP_BLOCK = registerAllTabBlock("poop_block", 88,
             props -> new PoopBlock(poopProperties()
@@ -201,54 +195,39 @@ public class PoBlocks {
                     .instrument(NoteBlockInstrument.BELL)));
     public static final BlockFamily GOLDEN_POOP_FAMILY = registerBlockFamily("golden_poop", GOLDEN_POOP_BLOCK, false);
 
-    public static final BlockEntry<Block> WHITE_TILE_BLOCK = registerDecorativeBlock("white_tile_block", 64,
-            props -> new Block(hardenedProperties(DyeColor.WHITE.getMapColor(), SoundType.STONE)));
-    public static final BlockFamily WHITE_TILE_BLOCK_FAMILY = registerBlockFamily("white_tile_block", WHITE_TILE_BLOCK, true);
-    public static final BlockEntry<Block> LIGHT_GRAY_TILE_BLOCK = registerDecorativeBlock("light_gray_tile_block", 64,
-            props -> new Block(hardenedProperties(DyeColor.LIGHT_GRAY.getMapColor(), SoundType.STONE)));
-    public static final BlockFamily LIGHT_GRAY_TILE_BLOCK_FAMILY = registerBlockFamily("light_gray_tile_block", LIGHT_GRAY_TILE_BLOCK, true);
-    public static final BlockEntry<Block> GRAY_TILE_BLOCK = registerDecorativeBlock("gray_tile_block", 64,
-            props -> new Block(hardenedProperties(DyeColor.GRAY.getMapColor(), SoundType.STONE)));
-    public static final BlockFamily GRAY_TILE_BLOCK_FAMILY = registerBlockFamily("gray_tile_block", GRAY_TILE_BLOCK, true);
-    public static final BlockEntry<Block> BLACK_TILE_BLOCK = registerDecorativeBlock("black_tile_block", 64,
-            props -> new Block(hardenedProperties(DyeColor.BLACK.getMapColor(), SoundType.STONE)));
-    public static final BlockFamily BLACK_TILE_BLOCK_FAMILY = registerBlockFamily("black_tile_block", BLACK_TILE_BLOCK, true);
-    public static final BlockEntry<Block> BROWN_TILE_BLOCK = registerDecorativeBlock("brown_tile_block", 64,
-            props -> new Block(hardenedProperties(DyeColor.BROWN.getMapColor(), SoundType.STONE)));
-    public static final BlockFamily BROWN_TILE_BLOCK_FAMILY = registerBlockFamily("brown_tile_block", BROWN_TILE_BLOCK, true);
-    public static final BlockEntry<Block> RED_TILE_BLOCK = registerDecorativeBlock("red_tile_block", 64,
-            props -> new Block(hardenedProperties(DyeColor.RED.getMapColor(), SoundType.STONE)));
-    public static final BlockFamily RED_TILE_BLOCK_FAMILY = registerBlockFamily("red_tile_block", RED_TILE_BLOCK, true);
-    public static final BlockEntry<Block> ORANGE_TILE_BLOCK = registerDecorativeBlock("orange_tile_block", 64,
-            props -> new Block(hardenedProperties(DyeColor.ORANGE.getMapColor(), SoundType.STONE)));
-    public static final BlockFamily ORANGE_TILE_BLOCK_FAMILY = registerBlockFamily("orange_tile_block", ORANGE_TILE_BLOCK, true);
-    public static final BlockEntry<Block> YELLOW_TILE_BLOCK = registerDecorativeBlock("yellow_tile_block", 64,
-            props -> new Block(hardenedProperties(DyeColor.YELLOW.getMapColor(), SoundType.STONE)));
-    public static final BlockFamily YELLOW_TILE_BLOCK_FAMILY = registerBlockFamily("yellow_tile_block", YELLOW_TILE_BLOCK, true);
-    public static final BlockEntry<Block> LIME_TILE_BLOCK = registerDecorativeBlock("lime_tile_block", 64,
-            props -> new Block(hardenedProperties(DyeColor.LIME.getMapColor(), SoundType.STONE)));
-    public static final BlockFamily LIME_TILE_BLOCK_FAMILY = registerBlockFamily("lime_tile_block", LIME_TILE_BLOCK, true);
-    public static final BlockEntry<Block> GREEN_TILE_BLOCK = registerDecorativeBlock("green_tile_block", 64,
-            props -> new Block(hardenedProperties(DyeColor.GREEN.getMapColor(), SoundType.STONE)));
-    public static final BlockFamily GREEN_TILE_BLOCK_FAMILY = registerBlockFamily("green_tile_block", GREEN_TILE_BLOCK, true);
-    public static final BlockEntry<Block> CYAN_TILE_BLOCK = registerDecorativeBlock("cyan_tile_block", 64,
-            props -> new Block(hardenedProperties(DyeColor.CYAN.getMapColor(), SoundType.STONE)));
-    public static final BlockFamily CYAN_TILE_BLOCK_FAMILY = registerBlockFamily("cyan_tile_block", CYAN_TILE_BLOCK, true);
-    public static final BlockEntry<Block> LIGHT_BLUE_TILE_BLOCK = registerDecorativeBlock("light_blue_tile_block", 64,
-            props -> new Block(hardenedProperties(DyeColor.LIGHT_BLUE.getMapColor(), SoundType.STONE)));
-    public static final BlockFamily LIGHT_BLUE_TILE_BLOCK_FAMILY = registerBlockFamily("light_blue_tile_block", LIGHT_BLUE_TILE_BLOCK, true);
-    public static final BlockEntry<Block> BLUE_TILE_BLOCK = registerDecorativeBlock("blue_tile_block", 64,
-            props -> new Block(hardenedProperties(DyeColor.BLUE.getMapColor(), SoundType.STONE)));
-    public static final BlockFamily BLUE_TILE_BLOCK_FAMILY = registerBlockFamily("blue_tile_block", BLUE_TILE_BLOCK, true);
-    public static final BlockEntry<Block> PURPLE_TILE_BLOCK = registerDecorativeBlock("purple_tile_block", 64,
-            props -> new Block(hardenedProperties(DyeColor.PURPLE.getMapColor(), SoundType.STONE)));
-    public static final BlockFamily PURPLE_TILE_BLOCK_FAMILY = registerBlockFamily("purple_tile_block", PURPLE_TILE_BLOCK, true);
-    public static final BlockEntry<Block> MAGENTA_TILE_BLOCK = registerDecorativeBlock("magenta_tile_block", 64,
-            props -> new Block(hardenedProperties(DyeColor.MAGENTA.getMapColor(), SoundType.STONE)));
-    public static final BlockFamily MAGENTA_TILE_BLOCK_FAMILY = registerBlockFamily("magenta_tile_block", MAGENTA_TILE_BLOCK, true);
-    public static final BlockEntry<Block> PINK_TILE_BLOCK = registerDecorativeBlock("pink_tile_block", 64,
-            props -> new Block(hardenedProperties(DyeColor.PINK.getMapColor(), SoundType.STONE)));
-    public static final BlockFamily PINK_TILE_BLOCK_FAMILY = registerBlockFamily("pink_tile_block", PINK_TILE_BLOCK, true);
+    private static final Map<DyeColor, ColoredTile> COLORED_TILES = registerColoredTiles();
+    public static final BlockEntry<Block> WHITE_TILE_BLOCK = coloredTile(DyeColor.WHITE).block();
+    public static final BlockEntry<Block> LIGHT_GRAY_TILE_BLOCK = coloredTile(DyeColor.LIGHT_GRAY).block();
+    public static final BlockEntry<Block> GRAY_TILE_BLOCK = coloredTile(DyeColor.GRAY).block();
+    public static final BlockEntry<Block> BLACK_TILE_BLOCK = coloredTile(DyeColor.BLACK).block();
+    public static final BlockEntry<Block> BROWN_TILE_BLOCK = coloredTile(DyeColor.BROWN).block();
+    public static final BlockEntry<Block> RED_TILE_BLOCK = coloredTile(DyeColor.RED).block();
+    public static final BlockEntry<Block> ORANGE_TILE_BLOCK = coloredTile(DyeColor.ORANGE).block();
+    public static final BlockEntry<Block> YELLOW_TILE_BLOCK = coloredTile(DyeColor.YELLOW).block();
+    public static final BlockEntry<Block> LIME_TILE_BLOCK = coloredTile(DyeColor.LIME).block();
+    public static final BlockEntry<Block> GREEN_TILE_BLOCK = coloredTile(DyeColor.GREEN).block();
+    public static final BlockEntry<Block> CYAN_TILE_BLOCK = coloredTile(DyeColor.CYAN).block();
+    public static final BlockEntry<Block> LIGHT_BLUE_TILE_BLOCK = coloredTile(DyeColor.LIGHT_BLUE).block();
+    public static final BlockEntry<Block> BLUE_TILE_BLOCK = coloredTile(DyeColor.BLUE).block();
+    public static final BlockEntry<Block> PURPLE_TILE_BLOCK = coloredTile(DyeColor.PURPLE).block();
+    public static final BlockEntry<Block> MAGENTA_TILE_BLOCK = coloredTile(DyeColor.MAGENTA).block();
+    public static final BlockEntry<Block> PINK_TILE_BLOCK = coloredTile(DyeColor.PINK).block();
+    public static final BlockFamily WHITE_TILE_BLOCK_FAMILY = coloredTile(DyeColor.WHITE).family();
+    public static final BlockFamily LIGHT_GRAY_TILE_BLOCK_FAMILY = coloredTile(DyeColor.LIGHT_GRAY).family();
+    public static final BlockFamily GRAY_TILE_BLOCK_FAMILY = coloredTile(DyeColor.GRAY).family();
+    public static final BlockFamily BLACK_TILE_BLOCK_FAMILY = coloredTile(DyeColor.BLACK).family();
+    public static final BlockFamily BROWN_TILE_BLOCK_FAMILY = coloredTile(DyeColor.BROWN).family();
+    public static final BlockFamily RED_TILE_BLOCK_FAMILY = coloredTile(DyeColor.RED).family();
+    public static final BlockFamily ORANGE_TILE_BLOCK_FAMILY = coloredTile(DyeColor.ORANGE).family();
+    public static final BlockFamily YELLOW_TILE_BLOCK_FAMILY = coloredTile(DyeColor.YELLOW).family();
+    public static final BlockFamily LIME_TILE_BLOCK_FAMILY = coloredTile(DyeColor.LIME).family();
+    public static final BlockFamily GREEN_TILE_BLOCK_FAMILY = coloredTile(DyeColor.GREEN).family();
+    public static final BlockFamily CYAN_TILE_BLOCK_FAMILY = coloredTile(DyeColor.CYAN).family();
+    public static final BlockFamily LIGHT_BLUE_TILE_BLOCK_FAMILY = coloredTile(DyeColor.LIGHT_BLUE).family();
+    public static final BlockFamily BLUE_TILE_BLOCK_FAMILY = coloredTile(DyeColor.BLUE).family();
+    public static final BlockFamily PURPLE_TILE_BLOCK_FAMILY = coloredTile(DyeColor.PURPLE).family();
+    public static final BlockFamily MAGENTA_TILE_BLOCK_FAMILY = coloredTile(DyeColor.MAGENTA).family();
+    public static final BlockFamily PINK_TILE_BLOCK_FAMILY = coloredTile(DyeColor.PINK).family();
 
     public static final BlockEntry<CompooperBlock> COMPOOPER = registerCompooperBlock("compooper",
             props -> new CompooperBlock(simpleProperties(MapColor.COLOR_BROWN, 0.6F, SoundType.METAL)
@@ -267,7 +246,7 @@ public class PoBlocks {
             props -> new WaterCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get())),
             (loot, block) -> loot.dropOther(block, COMPOOPER.get()));
     public static final BlockEntry<LavaCompooperBlock> LAVA_COMPOOPER = registerBlock("lava_compooper",
-            props -> new LavaCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()).lightLevel(state -> 15)),
+            props -> new LavaCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()).lightLevel(state -> LAVA_LIGHT_LEVEL)),
             (loot, block) -> loot.dropOther(block, COMPOOPER.get()));
     public static final BlockEntry<PowderSnowCompooperBlock> POWDER_SNOW_COMPOOPER = registerBlock("powder_snow_compooper",
             props -> new PowderSnowCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get())),
@@ -464,18 +443,8 @@ public class PoBlocks {
                     .ignitedByLava()),
             (loot, block) -> loot.add(block, createToiletDrop(block)));
 
-    public static final BlockEntry<FlushToiletBlock> FLUSH_TOILET = registerAllTabBlock("flush_toilet", 64,
-            props -> new FlushToiletBlock(BlockBehaviour.Properties.of()
-                    .mapColor(DyeColor.WHITE)
-                    .strength(HARDEN, TOILET_RESISTANCE)
-                    .requiresCorrectToolForDrops()
-                    .noOcclusion()));
-    public static final BlockEntry<FlushToiletBlock> GOLDEN_FLUSH_TOILET = registerAllTabBlock("golden_flush_toilet", 64,
-            props -> new FlushToiletBlock(BlockBehaviour.Properties.of()
-                    .mapColor(DyeColor.YELLOW)
-                    .strength(HARDEN, TOILET_RESISTANCE)
-                    .requiresCorrectToolForDrops()
-                    .noOcclusion()));
+    public static final BlockEntry<FlushToiletBlock> FLUSH_TOILET = registerFlushToilet("flush_toilet", DyeColor.WHITE);
+    public static final BlockEntry<FlushToiletBlock> GOLDEN_FLUSH_TOILET = registerFlushToilet("golden_flush_toilet", DyeColor.YELLOW);
 
     public record BlockFamily(
             BlockEntry<? extends Block> block,
@@ -487,6 +456,9 @@ public class PoBlocks {
         public List<BlockEntry<? extends Block>> blocks() {
             return List.of(block, stairs, slab, verticalSlab, wall);
         }
+    }
+
+    private record ColoredTile(BlockEntry<Block> block, BlockFamily family) {
     }
 
     public static final List<BlockFamily> HARDENED_POOP_FAMILIES = List.of(POOP_BRICK_FAMILY, MOSSY_POOP_BRICK_FAMILY, DRIED_POOP_BLOCK_FAMILY, SMOOTH_POOP_BLOCK_FAMILY, CUT_POOP_BLOCK_FAMILY);
@@ -501,12 +473,6 @@ public class PoBlocks {
     ).flatMap(List::stream).toList();
     public static final List<BlockFamily> WALL_TAG_FAMILIES = withPoopFamily(SIMPLE_MODEL_FAMILIES);
 
-    private enum TabPlacement {
-        MAIN,
-        DECORATIVE,
-        BOTH
-    }
-
     public static boolean isDecorativeItem(Item item) {
         return DECORATIVE_BLOCKS.stream().anyMatch(entry -> entry.asItem() == item);
     }
@@ -516,9 +482,22 @@ public class PoBlocks {
     }
 
     private static List<BlockFamily> withPoopFamily(List<BlockFamily> input) {
-        var result = new java.util.ArrayList<>(input);
-        result.add(POOP_FAMILY);
-        return java.util.Collections.unmodifiableList(result);
+        return Stream.concat(input.stream(), Stream.of(POOP_FAMILY)).toList();
+    }
+
+    private static BlockEntry<ShitBlock> registerShitBlock(String name) {
+        return registerBlock(name, 88,
+                props -> new ShitBlock(poopProperties(0.1F)
+                        .pushReaction(PushReaction.DESTROY)));
+    }
+
+    private static BlockEntry<FlushToiletBlock> registerFlushToilet(String name, DyeColor color) {
+        return registerAllTabBlock(name, 64,
+                props -> new FlushToiletBlock(BlockBehaviour.Properties.of()
+                        .mapColor(color)
+                        .strength(HARDEN, TOILET_RESISTANCE)
+                        .requiresCorrectToolForDrops()
+                        .noOcclusion()));
     }
 
     private static BlockBehaviour.Properties poopCakeProperties() {
@@ -598,6 +577,26 @@ public class PoBlocks {
         return Collections.unmodifiableMap(candleCakes);
     }
 
+    private static Map<DyeColor, ColoredTile> registerColoredTiles() {
+        List<DyeColor> colors = List.of(
+                DyeColor.WHITE, DyeColor.LIGHT_GRAY, DyeColor.GRAY, DyeColor.BLACK,
+                DyeColor.BROWN, DyeColor.RED, DyeColor.ORANGE, DyeColor.YELLOW,
+                DyeColor.LIME, DyeColor.GREEN, DyeColor.CYAN, DyeColor.LIGHT_BLUE,
+                DyeColor.BLUE, DyeColor.PURPLE, DyeColor.MAGENTA, DyeColor.PINK);
+        Map<DyeColor, ColoredTile> tiles = new EnumMap<>(DyeColor.class);
+        for (DyeColor color : colors) {
+            String name = color.getName() + "_tile_block";
+            BlockEntry<Block> block = registerDecorativeBlock(name, 64,
+                    props -> new Block(hardenedProperties(color.getMapColor(), SoundType.STONE)));
+            tiles.put(color, new ColoredTile(block, registerBlockFamily(name, block, true)));
+        }
+        return Collections.unmodifiableMap(tiles);
+    }
+
+    private static ColoredTile coloredTile(DyeColor color) {
+        return Objects.requireNonNull(COLORED_TILES.get(color), "Missing colored tile for " + color.getName());
+    }
+
     private static BlockEntry<PoopCandleCakeBlock> registerPoopCandleCake(Block candle) {
         if (!(candle instanceof CandleBlock)) {
             throw new IllegalArgumentException("Expected candle block: " + candle);
@@ -624,20 +623,8 @@ public class PoBlocks {
         return candleCake == null ? null : candleCake.get().defaultBlockState();
     }
 
-    public static boolean neverSuffocate(BlockState state, BlockGetter world, BlockPos pos) {
-        return false;
-    }
-
-    public static boolean never(BlockState state, BlockGetter world, BlockPos pos) {
-        return false;
-    }
-
-    public static boolean always(BlockState state, BlockGetter blockGetter, BlockPos pos) {
+    private static boolean always(BlockState state, BlockGetter level, BlockPos pos) {
         return true;
-    }
-
-    public static boolean neverBlockVision(BlockState state, BlockGetter world, BlockPos pos) {
-        return false;
     }
 
     public static <T extends Block> BlockEntry<T> registerBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory) {
@@ -717,38 +704,19 @@ public class PoBlocks {
     }
 
     private static BlockFamily registerBlockFamily(String name, BlockEntry<? extends Block> base, boolean defaultBlockItem) {
-        return registerBlockFamily(name, base, defaultBlockItem, TabPlacement.DECORATIVE);
-    }
-
-    private static BlockFamily registerBlockFamily(String name, BlockEntry<? extends Block> base, boolean defaultBlockItem, TabPlacement placement) {
+        int stackSize = defaultBlockItem ? 64 : 88;
         return new BlockFamily(
                 base,
-                registerFamilyBlock(name + "_stairs", props -> new StairBlock(base.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(base.get())), defaultBlockItem, placement),
-                registerFamilyBlock(name + "_slab", props -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(base.get())), defaultBlockItem, placement, (loot, block) -> loot.add(block, loot.createSlabItemTable(block))),
-                registerFamilyBlock(name + "_vertical_slab", props -> new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(base.get())), defaultBlockItem, placement),
-                registerFamilyBlock(name + "_wall", props -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(base.get())), defaultBlockItem, placement)
+                registerDecorativeBlock(name + "_stairs", stackSize,
+                        props -> new StairBlock(base.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(base.get()))),
+                registerDecorativeBlock(name + "_slab", stackSize,
+                        props -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(base.get())),
+                        (loot, block) -> loot.add(block, loot.createSlabItemTable(block))),
+                registerDecorativeBlock(name + "_vertical_slab", stackSize,
+                        props -> new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(base.get()))),
+                registerDecorativeBlock(name + "_wall", stackSize,
+                        props -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(base.get())))
         );
-    }
-
-    private static <T extends Block> BlockEntry<T> registerFamilyBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, boolean defaultBlockItem) {
-        return registerFamilyBlock(name, factory, defaultBlockItem, TabPlacement.DECORATIVE, RegistrateBlockLootTables::dropSelf);
-    }
-
-    private static <T extends Block> BlockEntry<T> registerFamilyBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, boolean defaultBlockItem, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
-        return registerFamilyBlock(name, factory, defaultBlockItem, TabPlacement.DECORATIVE, loot);
-    }
-
-    private static <T extends Block> BlockEntry<T> registerFamilyBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, boolean defaultBlockItem, TabPlacement placement) {
-        return registerFamilyBlock(name, factory, defaultBlockItem, placement, RegistrateBlockLootTables::dropSelf);
-    }
-
-    private static <T extends Block> BlockEntry<T> registerFamilyBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, boolean defaultBlockItem, TabPlacement placement, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
-        int stackSize = defaultBlockItem ? 64 : 88;
-        return switch (placement) {
-            case MAIN -> registerBlock(name, stackSize, factory, loot);
-            case DECORATIVE -> registerDecorativeBlock(name, stackSize, factory, loot);
-            case BOTH -> registerAllTabBlock(name, stackSize, factory, loot);
-        };
     }
 
     private static ToIntFunction<BlockState> lavaLightLevel() {
@@ -829,14 +797,7 @@ public class PoBlocks {
 
     private static LootTable.Builder createPoopPieceDrop(RegistrateBlockLootTables loot, Block block, Item item) {
         var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
-        LootItemCondition.Builder hasSilkTouch = MatchTool.toolMatches(
-                ItemPredicate.Builder.item()
-                        .withSubPredicate(
-                                ItemSubPredicates.ENCHANTMENTS,
-                                ItemEnchantmentsPredicate.enchantments(
-                                        List.of(new EnchantmentPredicate(registrylookup.getOrThrow(Enchantments.SILK_TOUCH), MinMaxBounds.Ints.atLeast(1)))
-                                )
-                        ));
+        LootItemCondition.Builder hasSilkTouch = hasSilkTouch(loot);
 
         LootPoolEntryContainer.Builder<?> nonSilkTouch = AlternativesEntry.alternatives(
                 IntStream.rangeClosed(1, 8)
@@ -878,18 +839,18 @@ public class PoBlocks {
     }
 
     private static LootTable.Builder createIronLeavesDrops(RegistrateBlockLootTables loot, Block block) {
-        var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
-        return createShearsOrSilkTouchDispatchTable(loot, block,
-                LootItem.lootTableItem(Items.IRON_NUGGET)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 3.0F)))
-                        .apply(ApplyBonusCount.addUniformBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE))));
+        return createNuggetLeavesDrops(loot, block, Items.IRON_NUGGET, 3.0F);
     }
 
     private static LootTable.Builder createGoldLeavesDrops(RegistrateBlockLootTables loot, Block block) {
+        return createNuggetLeavesDrops(loot, block, Items.GOLD_NUGGET, 2.0F);
+    }
+
+    private static LootTable.Builder createNuggetLeavesDrops(RegistrateBlockLootTables loot, Block block, Item nugget, float maxCount) {
         var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
         return createShearsOrSilkTouchDispatchTable(loot, block,
-                LootItem.lootTableItem(Items.GOLD_NUGGET)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
+                LootItem.lootTableItem(nugget)
+                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, maxCount)))
                         .apply(ApplyBonusCount.addUniformBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE))));
     }
 
@@ -950,8 +911,13 @@ public class PoBlocks {
     }
 
     private static LootItemCondition.Builder hasShearsOrSilkTouch(RegistrateBlockLootTables loot) {
+        return MatchTool.toolMatches(ItemPredicate.Builder.item().of(Items.SHEARS))
+                .or(hasSilkTouch(loot));
+    }
+
+    private static LootItemCondition.Builder hasSilkTouch(RegistrateBlockLootTables loot) {
         var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
-        LootItemCondition.Builder hasSilkTouch = MatchTool.toolMatches(
+        return MatchTool.toolMatches(
                 ItemPredicate.Builder.item()
                         .withSubPredicate(
                                 ItemSubPredicates.ENCHANTMENTS,
@@ -959,8 +925,6 @@ public class PoBlocks {
                                         List.of(new EnchantmentPredicate(registrylookup.getOrThrow(Enchantments.SILK_TOUCH), MinMaxBounds.Ints.atLeast(1)))
                                 )
                         ));
-        return MatchTool.toolMatches(ItemPredicate.Builder.item().of(Items.SHEARS))
-                .or(hasSilkTouch);
     }
 
     private static LootTable.Builder createSaltpeterClusterDrop(RegistrateBlockLootTables loot, Block block) {
@@ -974,10 +938,6 @@ public class PoBlocks {
                                 LootItem.lootTableItem(PoItems.SALTPETER_SHARD.get()).apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))))));
     }
 
-    static {
-        LEAVES_SAPLING_CHANCES = new float[]{0.1F, 0.125F, 0.25F, 0.5F};
-        LEAVES_STICK_CHANCES = new float[]{0.05F, 0.075F, 0.1F, 0.125F, 0.25F};
-    }
 }
 
 
