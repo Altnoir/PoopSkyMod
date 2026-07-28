@@ -123,8 +123,12 @@ public final class BlockTagGen {
         PoBlocks.getPoopCandleCakes().values().forEach(candleCake ->
                 tag(BlockTags.CANDLE_CAKES).add(candleCake.get()));
         tag(BlockTags.CLIMBABLE)
-                .add(PoBlocks.ROUNDWORM_VINES.get())
-                .add(PoBlocks.ROUNDWORM_VINES_PLANT.get());
+                .add(
+                        PoBlocks.ROUNDWORM_VINES.get(),
+                        PoBlocks.ROUNDWORM_VINES_PLANT.get(),
+                        PoBlocks.CHILI_VINES.get(),
+                        PoBlocks.CHILI_VINES_PLANT.get()
+                );
         tag(BlockTags.FALL_DAMAGE_RESETTING)
                 .add(PoBlocks.ROUNDWORM_VINES.get())
                 .add(PoBlocks.ROUNDWORM_VINES_PLANT.get());

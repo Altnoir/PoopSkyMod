@@ -215,8 +215,10 @@
   "block.poopsky.poop_cake": "粪便蛋糕",
   "block.poopsky.maggots_block": "蛆块",
   "block.poopsky.roundworm_block": "蛔虫块",
-  "block.poopsky.roundworm_vines": "蛔虫藤",
-  "block.poopsky.roundworm_vines_plant": "蛔虫藤",
+  "block.poopsky.roundworm_vines": "蛔虫柱",
+  "block.poopsky.roundworm_vines_plant": "蛔虫柱",
+  "block.poopsky.chili_vines": "龙息辣椒藤蔓",
+  "block.poopsky.chili_vines_plant": "龙息辣椒藤蔓植株",
 
   "block.poopsky.urine": "尿",
   "block.poopsky.toilet_block": "厕所",

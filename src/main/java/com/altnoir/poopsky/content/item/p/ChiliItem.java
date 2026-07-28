@@ -7,14 +7,15 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
 
-public class ChiliItem extends Item implements IFeedable {
-    public ChiliItem(Properties properties) {
-        super(properties);
+public class ChiliItem extends ItemNameBlockItem implements IFeedable {
+    public ChiliItem(Block block, Properties properties) {
+        super(block, properties);
     }
 
     @Override

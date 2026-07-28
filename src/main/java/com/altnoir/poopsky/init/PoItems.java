@@ -56,7 +56,7 @@ public class PoItems {
     public static final ItemEntry<SimpleFeedableItem> POODDING = registerFood("poodding", PFoods.POODDING);
 
     public static final ItemEntry<ChiliItem> DRAGON_BREATH_CHILI = registerItem("dragon_breath_chili",
-            props -> new ChiliItem(props.food(PFoods.DRAGON_BREATH_CHILI)));
+            props -> new ChiliItem(PoBlocks.CHILI_VINES.get(), props.food(PFoods.DRAGON_BREATH_CHILI)));
     public static final ItemEntry<DragonFruitRItem> KING_OF_DRAGON_FRUIT = registerItem("king_of_dragon_fruit",
             props -> new DragonFruitRItem(props.food(PFoods.KING_OF_DRAGON_FRUIT)));
 

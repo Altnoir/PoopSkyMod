@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "poopsky:chili_vines_plant",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "chili": "true"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "poopsky:dragon_breath_chili"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "poopsky:blocks/chili_vines_plant"
+}

@@ -2,6 +2,7 @@ package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.SetToiletTypeFunction;
+import com.altnoir.poopsky.content.block.ChiliVines;
 import com.altnoir.poopsky.content.block.PoTreeGrower;
 import com.altnoir.poopsky.content.block.p.*;
 import com.altnoir.poopsky.content.item.p.CompooperBlockItem;
@@ -428,6 +429,20 @@ public class PoBlocks {
                             .noCollission()),
             PoBlocks::createRoundwormVinesPlantLoot);
 
+    public static final BlockEntry<ChiliVinesBlock> CHILI_VINES = registerBlockNoItem("chili_vines",
+            props -> new ChiliVinesBlock(
+                    plantProperties(MapColor.PLANT, SoundType.CAVE_VINES)
+                            .lightLevel(ChiliVines.emission(1))
+                            .noCollission()),
+            (loot, block) -> loot.add(block, createChiliVinesDrop(block)));
+
+    public static final BlockEntry<ChiliVinesPlantBlock> CHILI_VINES_PLANT = registerBlockNoItem("chili_vines_plant",
+            props -> new ChiliVinesPlantBlock(
+                    plantProperties(MapColor.PLANT, SoundType.CAVE_VINES)
+                            .lightLevel(ChiliVines.emission(1))
+                            .noCollission()),
+            (loot, block) -> loot.add(block, createChiliVinesDrop(block)));
+
     // Toilet
     public static final BlockEntry<ToiletBlock> WOODEN_TOILET = registerToiletBlock("wooden_toilet",
             props -> new ToiletBlock(toiletProperties(MapColor.WOOD, WOODEN_STRENGTH, SoundType.WOOD, NoteBlockInstrument.BASS)
@@ -784,6 +799,15 @@ public class PoBlocks {
                                 .apply(ApplyBonusCount.addBonusBinomialDistributionCount(registrylookup.getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3))
                         ))
         );
+    }
+
+    private static LootTable.Builder createChiliVinesDrop(Block block) {
+        return LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .add(LootItem.lootTableItem(PoItems.DRAGON_BREATH_CHILI.get()))
+                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                                .setProperties(StatePropertiesPredicate.Builder.properties()
+                                        .hasProperty(ChiliVines.CHILI, true))));
     }
 
     public static LootTable.Builder createToiletDrop(Block block) {

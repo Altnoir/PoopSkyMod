@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "chili=false": {
+      "model": "poopsky:block/chili_vines"
+    },
+    "chili=true": {
+      "model": "poopsky:block/chili_vines_chili"
+    }
+  }
+}

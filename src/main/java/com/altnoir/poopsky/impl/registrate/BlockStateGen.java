@@ -2,6 +2,7 @@ package com.altnoir.poopsky.impl.registrate;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.ToiletType;
+import com.altnoir.poopsky.content.block.ChiliVines;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.p.*;
 import com.altnoir.poopsky.init.PoBlocks;
@@ -59,6 +60,8 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         orientable(PoBlocks.PLACER.get());
         cubeBottomTop(PoBlocks.MAGGOTS_BLOCK.get());
         blockWithItem(PoBlocks.ROUNDWORM_BLOCK.get());
+        chiliVines(PoBlocks.CHILI_VINES.get());
+        chiliVines(PoBlocks.CHILI_VINES_PLANT.get());
 
         registerToilet(PoBlocks.WOODEN_TOILET, ToiletType.Category.WOOD, false);
         registerToilet(PoBlocks.HARD_TOILET, ToiletType.Category.HARD, true);
@@ -406,6 +409,18 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         simpleBlockItem(block, horizontal);
     }
 
+    private void chiliVines(Block block) {
+        ModelFile chiliVinesPlantModel = models().withExistingParent(getBlockPath(block), mcLoc("block/cross"))
+                .texture("cross", modLoc("block/" + getBlockPath(block))).renderType("cutout");
+        ModelFile chiliVinesPlantChiliModel = models().withExistingParent(getBlockPath(block) + "_chili", mcLoc("block/cross"))
+                .texture("cross", modLoc("block/" + getBlockPath(block) + "_chili")).renderType("cutout");
+
+        getVariantBuilder(block)
+                .partialState().with(ChiliVines.CHILI, false)
+                .modelForState().modelFile(chiliVinesPlantModel).addModel()
+                .partialState().with(ChiliVines.CHILI, true)
+                .modelForState().modelFile(chiliVinesPlantChiliModel).addModel();
+    }
 
     private void registerToilet(BlockEntry<? extends Block> block, ToiletType.Category category, boolean hasLava) {
         Map<ToiletType, ResourceLocation> textures = new LinkedHashMap<>();
@@ -437,7 +452,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
             ResourceLocation tex = entry.getValue();
             String suffix = "_" + type.id();
             itemModels.put(type, models().withExistingParent(blockPath + suffix, modLoc("block/toilet")).texture("toilet", tex));
-            // 生成 _n (FRONT/BACK) 和 _ns (BOTH) 变种模型，供 ToiletBakedModel 直接加载
+            // 鐢熸垚 _n (FRONT/BACK) 鍜?_ns (BOTH) 鍙樼妯″瀷锛屼緵 ToiletBakedModel 鐩存帴鍔犺浇
             models().withExistingParent(blockPath + suffix + "_n", modLoc("block/toilet_n")).texture("toilet", tex);
             models().withExistingParent(blockPath + suffix + "_ns", modLoc("block/toilet_ns")).texture("toilet", tex);
             if (hasLava) {
