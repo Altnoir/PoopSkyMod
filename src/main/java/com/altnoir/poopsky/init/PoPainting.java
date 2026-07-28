@@ -14,10 +14,12 @@ public class PoPainting {
 
     public static final ResourceKey<PaintingVariant> POOP = create("poop");
     public static final ResourceKey<PaintingVariant> TOILET = create("toilet");
+    public static final ResourceKey<PaintingVariant> VIP = create("vip");
 
     public static void bootstrap(BootstrapContext<PaintingVariant> context) {
         register(context, POOP, 2, 2);
         register(context, TOILET, 4, 3);
+        register(context, VIP, 3, 2);
     }
 
     private static void register(BootstrapContext<PaintingVariant> context, ResourceKey<PaintingVariant> key, int width, int height) {
