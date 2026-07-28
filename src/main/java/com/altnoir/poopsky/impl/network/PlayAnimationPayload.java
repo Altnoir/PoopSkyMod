@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.impl.network;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.client.PoAnimationController;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -14,9 +15,7 @@ public record PlayAnimationPayload(PoAnimation animation) implements CustomPacke
     );
 
     public static void handle(PlayAnimationPayload payload, IPayloadContext context) {
-        context.enqueueWork(() ->
-                com.altnoir.poopsky.client.PoAnimationController.play(payload.animation())
-        );
+        context.enqueueWork(() -> PoAnimationController.play(payload.animation()));
     }
 
     private static void encode(FriendlyByteBuf buffer, PlayAnimationPayload payload) {

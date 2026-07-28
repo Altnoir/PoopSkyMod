@@ -12,6 +12,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.TicketType;
 import net.minecraft.sounds.SoundSource;
@@ -138,7 +139,7 @@ public class ToiletLinkerItem extends PoBaseItem {
         }
     }
 
-    private Optional<ServerLevel> getLevelFromKey(net.minecraft.server.MinecraftServer server, String dimStr) {
+    private Optional<ServerLevel> getLevelFromKey(MinecraftServer server, String dimStr) {
         if (dimStr.isEmpty()) return Optional.empty();
         ResourceLocation loc = ResourceLocation.tryParse(dimStr);
         if (loc == null) return Optional.empty();

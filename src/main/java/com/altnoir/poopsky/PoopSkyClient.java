@@ -153,7 +153,7 @@ public class PoopSkyClient {
             event.register((stack, tintIndex) -> tintIndex == 1 ? 0x3F76E4 : -1, PoBlocks.WATER_COMPOOPER.get());
         }
 
-        public static void registerBlockRenderBuffers(net.neoforged.neoforge.client.event.RegisterRenderBuffersEvent event) {
+        public static void registerBlockRenderBuffers(RegisterRenderBuffersEvent event) {
             event.registerRenderBuffer(RenderType.translucent());
         }
 
