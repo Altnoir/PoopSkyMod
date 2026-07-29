@@ -11,12 +11,13 @@ import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.init.ToiletTypes;
 import com.tterrag.registrate.util.entry.RegistryEntry;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.flag.FeatureFlagSet;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.block.Block;
 
 import java.util.Set;
@@ -30,7 +31,7 @@ public class PoItemGroups {
             .displayItems((parameters, output) -> {
                 PoItems.getAllItems().stream()
                         .filter(item -> !PoBlocks.isDecorativeItem(item))
-                        .filter(item -> !(item instanceof BlockItem))
+                        .filter(item -> !(item instanceof BlockItem && !(item instanceof ItemNameBlockItem)))
                         .filter(item -> !(item instanceof FlyItem))
                         .forEach(output::accept);
 
@@ -54,6 +55,27 @@ public class PoItemGroups {
                 output.accept(ToiletBlockItem.withType(PoBlocks.WOODEN_TOILET.get(), ToiletTypes.OAK));
                 output.accept(ToiletBlockItem.withType(PoBlocks.HARD_TOILET.get(), ToiletTypes.WHITE_TILE));
                 output.accept(ToiletBlockItem.withType(PoBlocks.HARD_TOILET.get(), ToiletTypes.GOLD));
+                output.accept(ToiletBlockItem.withType(PoBlocks.HARD_TOILET.get(), ToiletTypes.REDSTONE));
+                output.accept(ToiletBlockItem.withType(PoBlocks.HARD_TOILET.get(), ToiletTypes.OBSIDIAN));
+
+                parameters.holders()
+                        .lookup(Registries.POTION)
+                        .ifPresent(
+                                potion -> {
+                                    potionEffectTypes(
+                                            output, potion, Items.TIPPED_ARROW, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS, parameters.enabledFeatures()
+                                    );
+                                    potionEffectTypes(
+                                            output, potion, Items.POTION, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS, parameters.enabledFeatures()
+                                    );
+                                    potionEffectTypes(
+                                            output, potion, Items.SPLASH_POTION, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS, parameters.enabledFeatures()
+                                    );
+                                    potionEffectTypes(
+                                            output, potion, Items.LINGERING_POTION, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS, parameters.enabledFeatures()
+                                    );
+                                }
+                        );
             }).build()).register();
 
     public static final RegistryEntry<CreativeModeTab, CreativeModeTab> POOPSKY_DECORATIVE = REGISTRATE.generic("poopsky_deco", Registries.CREATIVE_MODE_TAB, () -> CreativeModeTab.builder()
@@ -82,6 +104,16 @@ public class PoItemGroups {
 
     private static boolean mekFly(String id) {
         return FlyTypes.OSMIUM.id().equals(id) || FlyTypes.TIN.id().equals(id) || FlyTypes.LEAD.id().equals(id) || FlyTypes.URANIUM.id().equals(id) || FlyTypes.FLUORITE.id().equals(id);
+    }
+
+    private static void potionEffectTypes(
+            CreativeModeTab.Output output, HolderLookup<Potion> potions, Item item, CreativeModeTab.TabVisibility tabVisibility, FeatureFlagSet requiredFeatures
+    ) {
+        potions.listElements()
+                .filter(reference -> reference.value().isEnabled(requiredFeatures))
+                .filter(reference -> reference.key().location().getNamespace().equals(PoopSky.MOD_ID))
+                .map(reference -> PotionContents.createItemStack(item, reference))
+                .forEach(itemStack -> output.accept(itemStack, tabVisibility));
     }
 
     public static void register() {

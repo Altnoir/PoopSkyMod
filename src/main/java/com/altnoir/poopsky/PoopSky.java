@@ -23,6 +23,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -146,6 +147,23 @@ public class PoopSky {
                     return item;
                 }
             });
+            DispenseItemBehavior dispenseitembehavior1 = new DefaultDispenseItemBehavior() {
+                private final DefaultDispenseItemBehavior defaultDispenseItemBehavior = new DefaultDispenseItemBehavior();
+
+                @Override
+                public ItemStack execute(BlockSource p_338850_, ItemStack p_338251_) {
+                    DispensibleContainerItem dispensiblecontaineritem = (DispensibleContainerItem) p_338251_.getItem();
+                    BlockPos blockpos = p_338850_.pos().relative(p_338850_.state().getValue(DispenserBlock.FACING));
+                    Level level = p_338850_.level();
+                    if (dispensiblecontaineritem.emptyContents(null, level, blockpos, null, p_338251_)) {
+                        dispensiblecontaineritem.checkExtraContent(null, level, p_338251_, blockpos);
+                        return this.consumeWithRemainder(p_338850_, p_338251_, new ItemStack(Items.BUCKET));
+                    } else {
+                        return this.defaultDispenseItemBehavior.dispense(p_338850_, p_338251_);
+                    }
+                }
+            };
+            DispenserBlock.registerBehavior(PoItems.URINE_BUCKET.get(), dispenseitembehavior1);
 
             AbstractToiletBlock.dispenserToiletExplosion(Items.FLINT_AND_STEEL, (toilet, level, pos, stack) -> {
                 stack.hurtAndBreak(1, level, null, p -> {
