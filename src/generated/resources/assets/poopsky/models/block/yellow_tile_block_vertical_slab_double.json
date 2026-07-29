@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "poopsky:block/yellow_tile_block"
+  }
+}

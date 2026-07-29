@@ -112,7 +112,8 @@ public class PoBlocks {
     public static final BlockEntry<SlabBlock> POOP_SLAB = registerDecorativeBlock("poop_slab", 88,
             props -> new SlabBlock(poopProperties()));
     public static final BlockEntry<VerticalSlabBlock> POOP_VERTICAL_SLAB = registerDecorativeBlock("poop_vertical_slab", 88,
-            props -> new VerticalSlabBlock(poopProperties()));
+            props -> new VerticalSlabBlock(poopProperties()),
+            PoBlocks::createVerticalSlabDrops);
     public static final BlockEntry<ButtonBlock> POOP_BUTTON = registerDecorativeBlock("poop_button", 88,
             props -> new ButtonBlock(PoBlockSetType.POOP, 200, poopProperties().noCollission()));
     public static final BlockEntry<PressurePlateBlock> POOP_PRESSURE_PLATE = registerDecorativeBlock("poop_pressure_plate", 88,
@@ -324,7 +325,8 @@ public class PoBlocks {
             props -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(GINKGO_PLANKS.get())),
             (loot, block) -> loot.add(block, loot.createSlabItemTable(block)));
     public static final BlockEntry<VerticalSlabBlock> GINKGO_VERTICAL_SLAB = registerDecorativeBlock("ginkgo_vertical_slab", 64,
-            props -> new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(GINKGO_PLANKS.get())));
+            props -> new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(GINKGO_PLANKS.get())),
+            PoBlocks::createVerticalSlabDrops);
     public static final BlockEntry<ButtonBlock> GINKGO_BUTTON = registerDecorativeBlock("ginkgo_button", 64,
             props -> new ButtonBlock(BlockSetType.OAK, 30, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_BUTTON)));
     public static final BlockEntry<PressurePlateBlock> GINKGO_PRESSURE_PLATE = registerDecorativeBlock("ginkgo_pressure_plate", 64,
@@ -728,7 +730,7 @@ public class PoBlocks {
                         props -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(base.get())),
                         (loot, block) -> loot.add(block, loot.createSlabItemTable(block))),
                 registerDecorativeBlock(name + "_vertical_slab", stackSize,
-                        props -> new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(base.get()))),
+                        props -> new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(base.get())), PoBlocks::createVerticalSlabDrops),
                 registerDecorativeBlock(name + "_wall", stackSize,
                         props -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(base.get())))
         );
@@ -962,6 +964,16 @@ public class PoBlocks {
                                 LootItem.lootTableItem(PoItems.SALTPETER_SHARD.get()).apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))))));
     }
 
+    private static void createVerticalSlabDrops(RegistrateBlockLootTables loot, VerticalSlabBlock block) {
+        loot.add(block, LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .add(loot.applyExplosionDecay(block, LootItem.lootTableItem(block)
+                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))
+                                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                                                .setProperties(StatePropertiesPredicate.Builder.properties()
+                                                        .hasProperty(VerticalSlabBlock.DOUBLE, true))))))));
+    }
 }
 
 

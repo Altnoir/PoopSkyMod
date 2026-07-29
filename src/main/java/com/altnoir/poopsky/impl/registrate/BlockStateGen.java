@@ -307,12 +307,16 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
                 .element().from(0, 0, 0).to(16, 16, 8)
                 .allFaces((face, builder) -> builder.texture("#texture"))
                 .end();
+        ModelFile doubleModel = models().cubeAll(path + "_double", texture);
 
-        getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder()
-                .modelFile(model)
-                .rotationY(horizontalRotation(state.getValue(VerticalSlabBlock.FACING)))
-                .uvLock(true)
-                .build());
+        getVariantBuilder(block).forAllStates(state -> {
+            boolean isDouble = state.getValue(VerticalSlabBlock.DOUBLE);
+            return ConfiguredModel.builder()
+                    .modelFile(isDouble ? doubleModel : model)
+                    .rotationY(isDouble ? 0 : horizontalRotation(state.getValue(VerticalSlabBlock.FACING)))
+                    .uvLock(true)
+                    .build();
+        });
         simpleBlockItem(block, model);
     }
 

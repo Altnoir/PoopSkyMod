@@ -1,42 +1,74 @@
 {
   "variants": {
-    "facing=east,waterlogged=false": {
+    "double=false,facing=east,waterlogged=false": {
       "model": "poopsky:block/smooth_poop_block_vertical_slab",
       "uvlock": true,
       "y": 90
     },
-    "facing=east,waterlogged=true": {
+    "double=false,facing=east,waterlogged=true": {
       "model": "poopsky:block/smooth_poop_block_vertical_slab",
       "uvlock": true,
       "y": 90
     },
-    "facing=north,waterlogged=false": {
+    "double=false,facing=north,waterlogged=false": {
       "model": "poopsky:block/smooth_poop_block_vertical_slab",
       "uvlock": true
     },
-    "facing=north,waterlogged=true": {
+    "double=false,facing=north,waterlogged=true": {
       "model": "poopsky:block/smooth_poop_block_vertical_slab",
       "uvlock": true
     },
-    "facing=south,waterlogged=false": {
+    "double=false,facing=south,waterlogged=false": {
       "model": "poopsky:block/smooth_poop_block_vertical_slab",
       "uvlock": true,
       "y": 180
     },
-    "facing=south,waterlogged=true": {
+    "double=false,facing=south,waterlogged=true": {
       "model": "poopsky:block/smooth_poop_block_vertical_slab",
       "uvlock": true,
       "y": 180
     },
-    "facing=west,waterlogged=false": {
+    "double=false,facing=west,waterlogged=false": {
       "model": "poopsky:block/smooth_poop_block_vertical_slab",
       "uvlock": true,
       "y": 270
     },
-    "facing=west,waterlogged=true": {
+    "double=false,facing=west,waterlogged=true": {
       "model": "poopsky:block/smooth_poop_block_vertical_slab",
       "uvlock": true,
       "y": 270
+    },
+    "double=true,facing=east,waterlogged=false": {
+      "model": "poopsky:block/smooth_poop_block_vertical_slab_double",
+      "uvlock": true
+    },
+    "double=true,facing=east,waterlogged=true": {
+      "model": "poopsky:block/smooth_poop_block_vertical_slab_double",
+      "uvlock": true
+    },
+    "double=true,facing=north,waterlogged=false": {
+      "model": "poopsky:block/smooth_poop_block_vertical_slab_double",
+      "uvlock": true
+    },
+    "double=true,facing=north,waterlogged=true": {
+      "model": "poopsky:block/smooth_poop_block_vertical_slab_double",
+      "uvlock": true
+    },
+    "double=true,facing=south,waterlogged=false": {
+      "model": "poopsky:block/smooth_poop_block_vertical_slab_double",
+      "uvlock": true
+    },
+    "double=true,facing=south,waterlogged=true": {
+      "model": "poopsky:block/smooth_poop_block_vertical_slab_double",
+      "uvlock": true
+    },
+    "double=true,facing=west,waterlogged=false": {
+      "model": "poopsky:block/smooth_poop_block_vertical_slab_double",
+      "uvlock": true
+    },
+    "double=true,facing=west,waterlogged=true": {
+      "model": "poopsky:block/smooth_poop_block_vertical_slab_double",
+      "uvlock": true
     }
   }
 }
