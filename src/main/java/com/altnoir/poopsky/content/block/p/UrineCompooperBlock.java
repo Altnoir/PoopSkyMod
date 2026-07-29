@@ -1,10 +1,10 @@
 package com.altnoir.poopsky.content.block.p;
 
+import com.altnoir.poopsky.content.block.CompooperType;
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.impl.sound.PoSoundEvents;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
-import com.altnoir.poopsky.init.PoParticles;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -91,13 +91,18 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
 
     @Override
     protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        if (level.isClientSide || !this.isEntityInsideContent(pos, state, entity)) {
+        if (level.isClientSide || !isEntityInsideContent(pos, state, entity)) {
             return;
         }
 
         if (entity instanceof LivingEntity livingEntity) {
             livingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200));
             livingEntity.addEffect(new MobEffectInstance(MobEffects.POISON, 200));
+        }
+
+        // Recipe-based processing
+        if (entity instanceof ItemEntity itemEntity) {
+            processRecipe(CompooperType.URINE, itemEntity, state, level, pos, SoundEvents.GENERIC_SPLASH);
         }
     }
 
@@ -108,50 +113,12 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
             itementity.setDefaultPickUpDelay();
             level.addFreshEntity(itementity);
 
-            if (level instanceof ServerLevel serverLevel) {
-                serverLevel.sendParticles(
-                        PoParticles.POOP_PARTICLE.get(),
-                        pos.getX() + 0.5,
-                        pos.getY() + 0.9375,
-                        pos.getZ() + 0.5,
-                        8,
-                        0.5,
-                        0.2,
-                        0.5,
-                        0.1
-                );
-            }
+            spawnExtractParticles((ServerLevel) level, pos);
         }
-
-        empty(entity, state, level, pos);
-        level.playSound(null, pos, SoundEvents.PLAYER_SPLASH, SoundSource.BLOCKS, 0.5F, 1.0F);
     }
 
-    @Override
-    protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
-        if (!level.isClientSide && state.getValue(LEVEL) == MAX_LEVEL && isHot((ServerLevel) level, pos)) {
-            level.scheduleTick(pos, this, 80);
-        }
-        super.onPlace(state, level, pos, oldState, movedByPiston);
-    }
-
-    @Override
-    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
-        if (!level.isClientSide && neighborPos.equals(pos.below()) && state.getValue(LEVEL) == MAX_LEVEL && isHot((ServerLevel) level, pos)) {
-            level.scheduleTick(pos, this, 80);
-        }
-        super.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston);
-    }
-
-    @Override
-    protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (state.getValue(LEVEL) != MAX_LEVEL || !isHot(level, pos)) {
-            return;
-        }
-
-        level.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1.0F, 1.0F);
-
-        var waterColor = level.getBiome(pos).value().getWaterColor();
+    private static void spawnExtractParticles(ServerLevel level, BlockPos pos) {
+        int waterColor = 0x3F76E4;
         var red = (waterColor >> 16 & 0xFF) / 255.0F;
         var green = (waterColor >> 8 & 0xFF) / 255.0F;
         var blue = (waterColor & 0xFF) / 255.0F;
@@ -252,17 +219,11 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
             return side == Direction.DOWN ? new int[]{0} : new int[0];
         }
 
-        /**
-         * Returns {@code true} if automation can insert the given item in the given slot from the given side.
-         */
         @Override
         public boolean canPlaceItemThroughFace(int index, ItemStack itemStack, @Nullable Direction direction) {
             return false;
         }
 
-        /**
-         * Returns {@code true} if automation can extract the given item in the given slot from the given side.
-         */
         @Override
         public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
             return !this.changed && direction == Direction.DOWN && stack.is(PoItems.MAGGOTS_SEEDS.get());
@@ -281,3 +242,6 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
         level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(entity, blockstate));
     }
 }
+
+
+

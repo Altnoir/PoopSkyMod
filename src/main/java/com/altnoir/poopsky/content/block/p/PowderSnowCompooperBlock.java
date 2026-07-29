@@ -1,11 +1,11 @@
 package com.altnoir.poopsky.content.block.p;
 
+import com.altnoir.poopsky.content.block.CompooperType;
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -50,18 +50,21 @@ public class PowderSnowCompooperBlock extends AbstractCompooperBlock {
 
     @Override
     protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        if (this.isEntityInsideContent(pos, state, entity)) {
+        if (isEntityInsideContent(pos, state, entity)) {
             if (entity instanceof ItemEntity itemEntity) {
                 ItemStack stack = itemEntity.getItem();
-                if (stack.is(Items.STICK)) {
-                    int count = stack.getCount();
 
-                    catalyst(itemEntity, state, level, pos, count, new ItemStack(Items.BREEZE_ROD), new ItemStack(Items.STICK));
-                    level.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.FIREWORK_ROCKET_BLAST, SoundSource.BLOCKS, 1.0F, 1.2F);
-                } else if (stack.is(Items.BREEZE_ROD)) {
+                // Try recipe-based processing first
+                if (processRecipe(CompooperType.POWDER_SNOW, itemEntity, state, level, pos, SoundEvents.FIREWORK_ROCKET_BLAST)) {
+                    return;
+                }
+
+                // Special behaviors that are not recipe-based
+                if (stack.is(Items.BREEZE_ROD)) {
                     entity.setDeltaMovement(entity.getDeltaMovement().x, entity.getGravity() + 0.1, entity.getDeltaMovement().z);
                 }
             }
         }
     }
 }
+

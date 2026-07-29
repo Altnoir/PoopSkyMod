@@ -17,16 +17,13 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
-import com.altnoir.poopsky.content.recipe.CompooperRecipe;
-
-public class CompooperRecipeCategory implements IRecipeCategory<RecipeHolder<CompooperRecipe>> {
-    public static final RecipeType<RecipeHolder<CompooperRecipe>> TYPE =
-            RecipeType.createRecipeHolderType(PoopSky.loc("compooper"));
+public class CompooperDisplayRecipeCategory implements IRecipeCategory<CompooperDisplayRecipe> {
+    public static final RecipeType<CompooperDisplayRecipe> TYPE =
+            RecipeType.create(PoopSky.MOD_ID, "compooper_display", CompooperDisplayRecipe.class);
 
     private static final int WIDTH = 140;
     private static final int HEIGHT = 48;
@@ -38,7 +35,7 @@ public class CompooperRecipeCategory implements IRecipeCategory<RecipeHolder<Com
 
     private final IModIdHelper modIdHelper;
 
-    public CompooperRecipeCategory(IJeiHelpers helpers, IDrawable arrow) {
+    public CompooperDisplayRecipeCategory(IJeiHelpers helpers, IDrawable arrow) {
         var helper = helpers.getGuiHelper();
 
         this.icon = helper.createDrawableItemStack(new ItemStack(PoBlocks.COMPOOPER.get()));
@@ -49,7 +46,7 @@ public class CompooperRecipeCategory implements IRecipeCategory<RecipeHolder<Com
     }
 
     @Override
-    public RecipeType<RecipeHolder<CompooperRecipe>> getRecipeType() {
+    public RecipeType<CompooperDisplayRecipe> getRecipeType() {
         return TYPE;
     }
 
@@ -74,44 +71,35 @@ public class CompooperRecipeCategory implements IRecipeCategory<RecipeHolder<Com
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<CompooperRecipe> recipeHolder, IFocusGroup focuses) {
-        CompooperRecipe recipe = recipeHolder.value();
-        builder.addSlot(RecipeIngredientRole.INPUT, 4, 18).addItemStack(recipe.input());
+    public void setRecipe(IRecipeLayoutBuilder builder, CompooperDisplayRecipe recipe, IFocusGroup focuses) {
+        if (!recipe.input().isEmpty()) {
+            builder.addSlot(RecipeIngredientRole.INPUT, 4, 18).addItemStack(recipe.input());
+        }
         builder.addSlot(RecipeIngredientRole.OUTPUT, 120, 18).addItemStack(recipe.output());
     }
 
     @Override
-    public void draw(RecipeHolder<CompooperRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
-        CompooperRecipe recipe = recipeHolder.value();
-        BlockState state = getFluidBlockState(recipe.fluidType());
+    public void draw(CompooperDisplayRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+        BlockState state = recipe.compooperState();
 
-        this.slot.draw(guiGraphics, 3, 17);
-        this.arrow.draw(guiGraphics, 28, 18);
+        if (!recipe.input().isEmpty()) {
+            this.slot.draw(guiGraphics, 3, 17);
+            this.arrow.draw(guiGraphics, 28, 18);
+        }
         ClientUtil.renderBlock(guiGraphics, state, 70, 18, 10, 20f);
         this.arrow.draw(guiGraphics, 90, 18);
         this.slot.draw(guiGraphics, 119, 17);
     }
 
     @Override
-    public void getTooltip(ITooltipBuilder tooltip, RecipeHolder<CompooperRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
-        CompooperRecipe recipe = recipeHolder.value();
+    public void getTooltip(ITooltipBuilder tooltip, CompooperDisplayRecipe recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
         if (54 < mouseX && mouseX < 86 && 10 < mouseY && mouseY < 42) {
-            BlockState state = getFluidBlockState(recipe.fluidType());
+            BlockState state = recipe.compooperState();
             Block block = state.getBlock();
             String modId = BuiltInRegistries.BLOCK.getKey(block).getNamespace();
 
             tooltip.add(Component.translatable(block.getDescriptionId()));
             tooltip.add(Component.literal(this.modIdHelper.getFormattedModNameForModId(modId)));
         }
-    }
-
-    private static BlockState getFluidBlockState(String fluidType) {
-        return switch (fluidType) {
-            case "water" -> PoBlocks.WATER_COMPOOPER.get().defaultBlockState();
-            case "lava" -> PoBlocks.LAVA_COMPOOPER.get().defaultBlockState();
-            case "powder_snow" -> PoBlocks.POWDER_SNOW_COMPOOPER.get().defaultBlockState();
-            case "urine" -> PoBlocks.URINE_COMPOOPER.get().defaultBlockState();
-            default -> Blocks.COMPOSTER.defaultBlockState();
-        };
     }
 }

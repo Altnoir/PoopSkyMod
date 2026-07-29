@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "compooper": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:compooper"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:compooper/powder_snow/stick_to_breeze_rod"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "compooper"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "poopsky:compooper/powder_snow/stick_to_breeze_rod"
+    ]
+  }
+}

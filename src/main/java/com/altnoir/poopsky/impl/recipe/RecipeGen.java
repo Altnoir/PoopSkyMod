@@ -5,6 +5,8 @@ import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.compat.farmersdelight.FarmersDelightRecipeGen;
 import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.ToiletType;
+import com.altnoir.poopsky.content.block.CompooperType;
+import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.content.recipe.*;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.init.FlyTypes;
@@ -68,7 +70,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         oreCooking(recipeOutput, List.of(PoItems.POOP.get()), RecipeCategory.MISC, Items.COCOA_BEANS, 0.35F, 600, "cocoa_beans");
         oreSmelting(recipeOutput, ROUNDWORM_LIST, RecipeCategory.MISC, Items.STRING, 0.35F, 200, "roundworm");
         oreCooking(recipeOutput, ROUNDWORM_LIST, RecipeCategory.MISC, Items.STRING, 0.35F, 200, "roundworm");
-        // 食物
+        // 椋熺墿
         oreSmelting(recipeOutput, MAGGOTS_LIST, RecipeCategory.BUILDING_BLOCKS, PoItems.BAKED_MAGGOTS, 0.35F, 200, "maggots_seeds");
         oreCooking(recipeOutput, RecipeSerializer.SMOKING_RECIPE, SmokingRecipe::new, MAGGOTS_LIST, RecipeCategory.BUILDING_BLOCKS, PoItems.BAKED_MAGGOTS, 0.35F, 100, "maggots_seeds", "_from_smoking");
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PoItems.POOP_BREAD)
@@ -135,7 +137,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .unlockedBy(getItemName(PoItems.MAGGOTS_SEEDS), has(PoItems.MAGGOTS_SEEDS))
                 .save(recipeOutput);
 
-        // 杂项
+        // 鏉傞」
         offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.SALTPETER_BLOCK, PoItems.SALTPETER_SHARD);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PoItems.JINKELA)
                 .requires(PoItems.POOP)
@@ -201,13 +203,13 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .unlockedBy(getItemName(PoItems.OMINOUS_FILTHY_INGOT), has(PoItems.OMINOUS_FILTHY_INGOT))
                 .save(recipeOutput);
         spallToolRecipes(recipeOutput);
-        // 盔甲
+        // 鐩旂敳
         omenSmithing(recipeOutput, Items.GOLDEN_CHESTPLATE, RecipeCategory.COMBAT, PoItems.OMEN_CHESTPLATE.get());
         omenSmithing(recipeOutput, Items.GOLDEN_LEGGINGS, RecipeCategory.COMBAT, PoItems.OMEN_LEGGINGS.get());
         omenSmithing(recipeOutput, Items.GOLDEN_HELMET, RecipeCategory.COMBAT, PoItems.OMEN_HELMET.get());
         omenSmithing(recipeOutput, Items.GOLDEN_BOOTS, RecipeCategory.COMBAT, PoItems.OMEN_BOOTS.get());
 
-        // 建筑
+        // 寤虹瓚
         offer2x2CompactingRecipe(recipeOutput, PoBlocks.POOP_BLOCK, PoItems.POOP);
         blockFamilyRecipes(recipeOutput, PoBlocks.POOP_FAMILY);
 
@@ -384,7 +386,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .unlockedBy(getItemName(PoBlocks.MAGGOTS_BLOCK), has(PoBlocks.MAGGOTS_BLOCK))
                 .save(recipeOutput);
 
-        // 原版物品配方
+        // 鍘熺増鐗╁搧閰嶆柟
         offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, Blocks.CRAFTING_TABLE, PoItems.SPALL);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.GUNPOWDER)
                 .requires(PoItems.KING_OF_DRAGON_FRUIT)
@@ -454,7 +456,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         //create1x2ShapelessFrom(recipeOutput, Blocks.TUFF, Blocks.ANDESITE, PSItems.SPALL);
         //create1x2ShapelessFrom(recipeOutput, Blocks.CALCITE, Blocks.DIORITE, PSItems.SPALL);
 
-        // 切石配方
+        // 鍒囩煶閰嶆柟
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.STOOL, PoBlocks.DRIED_POOP_BLOCK, 2);
 
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_PIECE, PoBlocks.POOP_BLOCK, 8);
@@ -485,7 +487,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BLOCK, PoBlocks.STRIPPED_POOP_EMPTY_LOG, 4);
 
 
-        // 厕所配方
+        // 鍘曟墍閰嶆柟
         for (var entry : ToiletType.getByCategory(ToiletType.Category.WOOD).entrySet()) {
             toiletRecipes(recipeOutput, PoBlocks.WOODEN_TOILET, entry.getValue().sourceBlock(), entry.getValue());
         }
@@ -519,6 +521,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .save(recipeOutput);
 
         buildSieveRecipes(recipeOutput);
+        buildCompooperRecipes(recipeOutput);
         buildpopExplosionRecipes(recipeOutput);
         buildAnalPressingRecipes(recipeOutput);
         buildBreedingChestRecipes(recipeOutput);
@@ -863,6 +866,30 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         }
     }
 
+
+    private void buildCompooperRecipes(RecipeOutput recipeOutput) {
+        // Water Compooper recipes
+        CompooperRecipeBuilder.compooper(CompooperType.WATER.id(), FlyItem.withType(FlyTypes.NORMAL.get()), FlyItem.withType(FlyTypes.BLUE.get()))
+                .unlockedBy(getItemName(PoBlocks.COMPOOPER.get()), has(PoBlocks.COMPOOPER.get()))
+                .save(recipeOutput, "fly_normal_to_blue");
+
+        CompooperRecipeBuilder.compooper(CompooperType.WATER.id(), PoItems.SALTPETER_SHARD.get(), Items.SNOWBALL)
+                .unlockedBy(getItemName(PoBlocks.COMPOOPER.get()), has(PoBlocks.COMPOOPER.get()))
+                .save(recipeOutput, "saltpeter_to_snowball");
+
+        // Lava Compooper recipes
+        CompooperRecipeBuilder.compooper(CompooperType.LAVA.id(), Items.STICK, Items.BLAZE_ROD)
+                .unlockedBy(getItemName(PoBlocks.COMPOOPER.get()), has(PoBlocks.COMPOOPER.get()))
+                .save(recipeOutput, "stick_to_blaze_rod");
+
+        // Powder Snow Compooper recipes
+        CompooperRecipeBuilder.compooper(CompooperType.POWDER_SNOW.id(), Items.STICK, Items.BREEZE_ROD)
+                .unlockedBy(getItemName(PoBlocks.COMPOOPER.get()), has(PoBlocks.COMPOOPER.get()))
+                .save(recipeOutput, "stick_to_breeze_rod");
+
+        // Urine Compooper recipes can be added here
+    }
+
     private void toiletRecipes(RecipeOutput recipeOutput, ItemLike toilet, ItemLike block, ToiletType toiletType) {
         ToiletRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, toilet, toiletType)
                 .pattern("P")
@@ -1203,3 +1230,9 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         return getItemName(input) + "_to_" + getItemName(result);
     }
 }
+
+
+
+
+
+

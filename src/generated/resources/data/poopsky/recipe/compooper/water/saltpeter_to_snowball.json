@@ -1,0 +1,12 @@
+{
+  "type": "poopsky:compooper",
+  "fluid_type": "water",
+  "input": {
+    "count": 1,
+    "id": "poopsky:saltpeter_shard"
+  },
+  "output": {
+    "count": 1,
+    "id": "minecraft:snowball"
+  }
+}
