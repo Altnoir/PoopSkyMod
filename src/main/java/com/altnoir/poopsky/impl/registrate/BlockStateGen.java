@@ -452,7 +452,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
             ResourceLocation tex = entry.getValue();
             String suffix = "_" + type.id();
             itemModels.put(type, models().withExistingParent(blockPath + suffix, modLoc("block/toilet")).texture("toilet", tex));
-            // 鐢熸垚 _n (FRONT/BACK) 鍜?_ns (BOTH) 鍙樼妯″瀷锛屼緵 ToiletBakedModel 鐩存帴鍔犺浇
+            // 生成 _n (FRONT/BACK) 和 _ns (BOTH) 变体模型，供 ToiletBakedModel 直接加载
             models().withExistingParent(blockPath + suffix + "_n", modLoc("block/toilet_n")).texture("toilet", tex);
             models().withExistingParent(blockPath + suffix + "_ns", modLoc("block/toilet_ns")).texture("toilet", tex);
             if (hasLava) {
