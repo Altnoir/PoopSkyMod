@@ -317,7 +317,13 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
                     .uvLock(true)
                     .build();
         });
-        simpleBlockItem(block, model);
+
+        itemModels().withExistingParent(getItemPath(block), mcLoc("block/block"))
+                .texture("particle", texture)
+                .texture("texture", texture)
+                .element().from(0, 0, 4).to(16, 16, 12)
+                .allFaces((face, builder) -> builder.texture("#texture"))
+                .end();
     }
 
     private void saplingBlock(SaplingBlock block) {

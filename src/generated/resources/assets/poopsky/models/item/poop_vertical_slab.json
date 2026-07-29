@@ -1,3 +1,41 @@
 {
-  "parent": "poopsky:block/poop_vertical_slab"
+  "parent": "poopsky:block/poop_vertical_slab",
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "texture": "#texture"
+        },
+        "east": {
+          "texture": "#texture"
+        },
+        "north": {
+          "texture": "#texture"
+        },
+        "south": {
+          "texture": "#texture"
+        },
+        "up": {
+          "texture": "#texture"
+        },
+        "west": {
+          "texture": "#texture"
+        }
+      },
+      "from": [
+        0,
+        0,
+        4
+      ],
+      "to": [
+        16,
+        16,
+        12
+      ]
+    }
+  ],
+  "textures": {
+    "particle": "poopsky:block/poop_block",
+    "texture": "poopsky:block/poop_block"
+  }
 }

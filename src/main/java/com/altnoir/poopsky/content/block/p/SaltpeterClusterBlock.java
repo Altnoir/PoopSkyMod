@@ -1,11 +1,12 @@
 package com.altnoir.poopsky.content.block.p;
 
-import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.impl.sound.PoSoundEvents;
+import com.altnoir.poopsky.init.PoBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
@@ -25,7 +26,12 @@ public class SaltpeterClusterBlock extends AmethystClusterBlock implements Bonem
 
     @Override
     protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        level.setBlockAndUpdate(pos, Blocks.ICE.defaultBlockState());
+        Direction facing = state.getValue(BlockStateProperties.FACING);
+        if (level.getBlockState(pos.relative(facing.getOpposite())).is(BlockTags.ICE)) {
+            level.setBlockAndUpdate(pos, Blocks.POWDER_SNOW.defaultBlockState());
+        } else {
+            level.setBlockAndUpdate(pos, Blocks.ICE.defaultBlockState());
+        }
     }
 
     @Override

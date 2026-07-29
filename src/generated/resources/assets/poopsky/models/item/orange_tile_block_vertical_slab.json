@@ -1,3 +1,41 @@
 {
-  "parent": "poopsky:block/orange_tile_block_vertical_slab"
+  "parent": "minecraft:block/block",
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "texture": "#texture"
+        },
+        "east": {
+          "texture": "#texture"
+        },
+        "north": {
+          "texture": "#texture"
+        },
+        "south": {
+          "texture": "#texture"
+        },
+        "up": {
+          "texture": "#texture"
+        },
+        "west": {
+          "texture": "#texture"
+        }
+      },
+      "from": [
+        0,
+        0,
+        4
+      ],
+      "to": [
+        16,
+        16,
+        12
+      ]
+    }
+  ],
+  "textures": {
+    "particle": "poopsky:block/orange_tile_block",
+    "texture": "poopsky:block/orange_tile_block"
+  }
 }
