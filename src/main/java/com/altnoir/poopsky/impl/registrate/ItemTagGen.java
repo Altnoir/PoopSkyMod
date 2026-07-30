@@ -219,11 +219,18 @@ public final class ItemTagGen {
                 .add(PoBlocks.POOP_LEAVES_GOLD.asItem())
                 .add(PoBlocks.GINKGO_LEAVES.asItem());
         tag(ItemTags.LOGS)
-                .add(PoBlocks.POOP_LOG.asItem())
-                .add(PoBlocks.POOP_EMPTY_LOG.asItem())
-                .add(PoBlocks.STRIPPED_POOP_LOG.asItem())
-                .add(PoBlocks.STRIPPED_POOP_EMPTY_LOG.asItem())
-                .addTag(PoTags.Items.GINKGO_LOGS);
+                .add(
+                        PoBlocks.POOP_LOG.asItem(),
+                        PoBlocks.POOP_WOOD.asItem(),
+                        PoBlocks.POOP_EMPTY_LOG.asItem(),
+                        PoBlocks.STRIPPED_POOP_LOG.asItem(),
+                        PoBlocks.STRIPPED_POOP_WOOD.asItem(),
+                        PoBlocks.STRIPPED_POOP_EMPTY_LOG.asItem(),
+                        PoBlocks.GINKGO_LOG.asItem(),
+                        PoBlocks.GINKGO_WOOD.asItem(),
+                        PoBlocks.STRIPPED_GINKGO_LOG.asItem(),
+                        PoBlocks.STRIPPED_GINKGO_WOOD.asItem()
+                );
         tag(ItemTags.LOGS_THAT_BURN).addTag(PoTags.Items.GINKGO_LOGS);
         tag(ItemTags.PLANKS).add(PoBlocks.GINKGO_PLANKS.asItem());
         tag(ItemTags.WOODEN_STAIRS).add(PoBlocks.GINKGO_STAIRS.asItem());

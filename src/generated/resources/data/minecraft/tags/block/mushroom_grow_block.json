@@ -6,8 +6,10 @@
     "poopsky:raw_sea_poop_block",
     "poopsky:raw_wither_poop_block",
     "poopsky:poop_log",
+    "poopsky:poop_wood",
     "poopsky:poop_empty_log",
     "poopsky:stripped_poop_log",
+    "poopsky:stripped_poop_wood",
     "poopsky:stripped_poop_empty_log"
   ]
 }

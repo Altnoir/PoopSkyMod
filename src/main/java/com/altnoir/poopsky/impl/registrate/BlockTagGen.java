@@ -151,18 +151,21 @@ public final class BlockTagGen {
                 .add(PoBlocks.RAW_SEA_POOP_BLOCK.get())
                 .add(PoBlocks.RAW_WITHER_POOP_BLOCK.get())
                 .add(PoBlocks.POOP_LOG.get())
+                .add(PoBlocks.POOP_WOOD.get())
                 .add(PoBlocks.POOP_EMPTY_LOG.get())
                 .add(PoBlocks.STRIPPED_POOP_LOG.get())
+                .add(PoBlocks.STRIPPED_POOP_WOOD.get())
                 .add(PoBlocks.STRIPPED_POOP_EMPTY_LOG.get());
 
         PoBlocks.WALL_TAG_FAMILIES.forEach(family -> tag(BlockTags.WALLS).add(family.wall().get()));
 
         tag(BlockTags.LOGS)
                 .add(PoBlocks.POOP_LOG.get())
+                .add(PoBlocks.POOP_WOOD.get())
                 .add(PoBlocks.POOP_EMPTY_LOG.get())
                 .add(PoBlocks.STRIPPED_POOP_LOG.get())
+                .add(PoBlocks.STRIPPED_POOP_WOOD.get())
                 .add(PoBlocks.STRIPPED_POOP_EMPTY_LOG.get());
-
         tag(BlockTags.LOGS_THAT_BURN).addTag(PoTags.Blocks.GINKGO_LOGS);
         tag(BlockTags.PLANKS).add(PoBlocks.GINKGO_PLANKS.get());
         tag(BlockTags.WOODEN_STAIRS).add(PoBlocks.GINKGO_STAIRS.get());
@@ -198,7 +201,6 @@ public final class BlockTagGen {
 
         //工具标签
         tag(BlockTags.MINEABLE_WITH_AXE)
-                .addTag(PoTags.Blocks.GINKGO_LOGS)
                 .add(PoBlocks.WOODEN_TOILET.get())
                 .add(PoBlocks.FLY_BARREL.get())
                 .add(PoBlocks.MAGGOTS.get())
@@ -220,7 +222,9 @@ public final class BlockTagGen {
                         PoBlocks.GOLDEN_FLUSH_TOILET.get(),
                         PoBlocks.BREEDING_CHEST.get(),
                         PoBlocks.POOP_LOG.get(),
-                        PoBlocks.STRIPPED_POOP_LOG.get()
+                        PoBlocks.POOP_WOOD.get(),
+                        PoBlocks.STRIPPED_POOP_LOG.get(),
+                        PoBlocks.STRIPPED_POOP_WOOD.get()
                 );
         PoBlocks.COLORED_TILE_BLOCK_FAMILIES.forEach(family ->
                 family.blocks().forEach(block -> mineableWithPickaxe.add(block.get())));

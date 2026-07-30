@@ -32,7 +32,7 @@ public class PSJEIPlugin implements IModPlugin {
     private final List<CreateRecipeCategory<?>> createCategories = new ArrayList<>();
 
     @Override
-    public ResourceLocation getPluginUid() {
+    public @NotNull ResourceLocation getPluginUid() {
         return PoopSky.loc("jei_plugin");
     }
 
