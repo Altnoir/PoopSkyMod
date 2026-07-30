@@ -3,7 +3,10 @@ package com.altnoir.poopsky.content.block.p;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableMap;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -17,7 +20,6 @@ import java.util.function.Supplier;
 public class LogBlock extends RotatedPillarBlock {
     protected static final Supplier<Map<Block, Block>> STRIPPABLES = Suppliers.memoize(() ->
             ImmutableMap.<Block, Block>builder()
-                    .put(PoBlocks.POOP_LOG.get(), PoBlocks.STRIPPED_POOP_LOG.get())
                     .put(PoBlocks.GINKGO_LOG.get(), PoBlocks.STRIPPED_GINKGO_LOG.get())
                     .put(PoBlocks.GINKGO_WOOD.get(), PoBlocks.STRIPPED_GINKGO_WOOD.get())
                     .build()
@@ -36,5 +38,20 @@ public class LogBlock extends RotatedPillarBlock {
             }
         }
         return super.getToolModifiedState(state, context, itemAbility, simulate);
+    }
+
+    @Override
+    public boolean isFlammable(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+        return true;
+    }
+
+    @Override
+    public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+        return 5;
+    }
+
+    @Override
+    public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+        return 5;
     }
 }

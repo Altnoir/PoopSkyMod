@@ -47,8 +47,6 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         blockWithItem(PoBlocks.POOP_LEAVES_GOLD.get());
         blockWithItem(PoBlocks.POOP_LEAVES_IRON.get());
         ginkgoWoodSet();
-        blockWithItem(PoBlocks.GINKGO_LEAVES.get());
-        saplingBlock(PoBlocks.GINKGO_SAPLING.get());
         blockWithItem(PoBlocks.SALTPETER_BLOCK.get());
         clusterBlock(PoBlocks.SALTPETER_CLUSTER.get());
         clusterBlock(PoBlocks.LARGE_SALTPETER_BUD.get());
@@ -282,6 +280,8 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         fenceGateBlock(PoBlocks.GINKGO_FENCE_GATE.get(), planks);
         doorBlockWithRenderType(PoBlocks.GINKGO_DOOR.get(), ResourceLocation.parse(blockTexture(PoBlocks.GINKGO_DOOR.get()) + "_bottom"), ResourceLocation.parse(blockTexture(PoBlocks.GINKGO_DOOR.get()) + "_top"), "cutout");
         trapdoorBlockWithRenderType(PoBlocks.GINKGO_TRAPDOOR.get(), blockTexture(PoBlocks.GINKGO_TRAPDOOR.get()), true, "cutout");
+        blockWithItem(PoBlocks.GINKGO_LEAVES.get());
+        saplingBlock(PoBlocks.GINKGO_SAPLING.get());
 
         simpleBlockItems(
                 PoBlocks.GINKGO_STAIRS.get(),

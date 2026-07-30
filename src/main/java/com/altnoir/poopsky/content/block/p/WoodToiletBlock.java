@@ -17,10 +17,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class ToiletBlock extends AbstractToiletBlock {
-    public static final MapCodec<ToiletBlock> CODEC = simpleCodec(ToiletBlock::new);
+public class WoodToiletBlock extends AbstractToiletBlock {
+    public static final MapCodec<WoodToiletBlock> CODEC = simpleCodec(WoodToiletBlock::new);
 
-    public ToiletBlock(Properties properties) {
+    public WoodToiletBlock(Properties properties) {
         super(properties);
     }
 
@@ -48,12 +48,12 @@ public class ToiletBlock extends AbstractToiletBlock {
 
     @Override
     public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
-        return 5;
+        return 20;
     }
 
     @Override
     public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
-        return 20;
+        return 5;
     }
 
     @Override

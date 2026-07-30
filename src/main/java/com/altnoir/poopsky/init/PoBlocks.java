@@ -302,39 +302,45 @@ public class PoBlocks {
     public static final BlockEntry<PoopLogBlock> POOP_LOG = registerAllTabBlock("poop_log", 88,
             props -> new PoopLogBlock(logProperties(MapColor.COLOR_BROWN, SoundType.STEM).randomTicks()),
             (loot, block) -> loot.add(block, createSpallOreDrops(loot, block)));
+    public static final BlockEntry<PoopLogBlock> POOP_WOOD = registerAllTabBlock("poop_wood", 88,
+            props -> new PoopLogBlock(logProperties(MapColor.COLOR_BROWN, SoundType.STEM).randomTicks()),
+            (loot, block) -> loot.add(block, createSpallOreDrops(loot, block)));
     public static final BlockEntry<PoopEmptyLogBlock> POOP_EMPTY_LOG = registerAllTabBlock("poop_empty_log", 88,
             props -> new PoopEmptyLogBlock(logProperties(MapColor.COLOR_BROWN, SoundType.BAMBOO_WOOD).noOcclusion()));
     public static final BlockEntry<PoopLogBlock> STRIPPED_POOP_LOG = registerAllTabBlock("stripped_poop_log", 88,
+            props -> new PoopLogBlock(logProperties(MapColor.COLOR_BROWN, SoundType.STEM).randomTicks()),
+            (loot, block) -> loot.add(block, createSpallOreDrops(loot, block)));
+    public static final BlockEntry<PoopLogBlock> STRIPPED_POOP_WOOD = registerAllTabBlock("stripped_poop_wood", 88,
             props -> new PoopLogBlock(logProperties(MapColor.COLOR_BROWN, SoundType.STEM).randomTicks()),
             (loot, block) -> loot.add(block, createSpallOreDrops(loot, block)));
     public static final BlockEntry<PoopEmptyLogBlock> STRIPPED_POOP_EMPTY_LOG = registerAllTabBlock("stripped_poop_empty_log", 88,
             props -> new PoopEmptyLogBlock(logProperties(MapColor.COLOR_BROWN, SoundType.BAMBOO_WOOD).noOcclusion()));
     public static final BlockEntry<LogBlock> GINKGO_LOG = registerDecorativeBlock("ginkgo_log", 64,
             props -> new LogBlock(logProperties(MapColor.COLOR_YELLOW, SoundType.WOOD).ignitedByLava()));
-    public static final BlockEntry<LogBlock> STRIPPED_GINKGO_LOG = registerDecorativeBlock("stripped_ginkgo_log", 64,
-            props -> new LogBlock(logProperties(MapColor.COLOR_YELLOW, SoundType.WOOD).ignitedByLava()));
     public static final BlockEntry<LogBlock> GINKGO_WOOD = registerDecorativeBlock("ginkgo_wood", 64,
+            props -> new LogBlock(logProperties(MapColor.COLOR_YELLOW, SoundType.WOOD).ignitedByLava()));
+    public static final BlockEntry<LogBlock> STRIPPED_GINKGO_LOG = registerDecorativeBlock("stripped_ginkgo_log", 64,
             props -> new LogBlock(logProperties(MapColor.COLOR_YELLOW, SoundType.WOOD).ignitedByLava()));
     public static final BlockEntry<LogBlock> STRIPPED_GINKGO_WOOD = registerDecorativeBlock("stripped_ginkgo_wood", 64,
             props -> new LogBlock(logProperties(MapColor.COLOR_YELLOW, SoundType.WOOD).ignitedByLava()));
-    public static final BlockEntry<Block> GINKGO_PLANKS = registerDecorativeBlock("ginkgo_planks", 64,
-            props -> new Block(logProperties(MapColor.COLOR_YELLOW, SoundType.WOOD).ignitedByLava()));
-    public static final BlockEntry<StairBlock> GINKGO_STAIRS = registerDecorativeBlock("ginkgo_stairs", 64,
-            props -> new StairBlock(GINKGO_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(GINKGO_PLANKS.get())));
-    public static final BlockEntry<SlabBlock> GINKGO_SLAB = registerDecorativeBlock("ginkgo_slab", 64,
-            props -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(GINKGO_PLANKS.get())),
+    public static final BlockEntry<FlamPlanksBlock> GINKGO_PLANKS = registerDecorativeBlock("ginkgo_planks", 64,
+            props -> new FlamPlanksBlock(logProperties(MapColor.COLOR_YELLOW, SoundType.WOOD).ignitedByLava()));
+    public static final BlockEntry<FlamStairBlock> GINKGO_STAIRS = registerDecorativeBlock("ginkgo_stairs", 64,
+            props -> new FlamStairBlock(GINKGO_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(GINKGO_PLANKS.get())));
+    public static final BlockEntry<FlamSlabBlock> GINKGO_SLAB = registerDecorativeBlock("ginkgo_slab", 64,
+            props -> new FlamSlabBlock(BlockBehaviour.Properties.ofFullCopy(GINKGO_PLANKS.get())),
             (loot, block) -> loot.add(block, loot.createSlabItemTable(block)));
-    public static final BlockEntry<VerticalSlabBlock> GINKGO_VERTICAL_SLAB = registerDecorativeBlock("ginkgo_vertical_slab", 64,
-            props -> new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(GINKGO_PLANKS.get())),
+    public static final BlockEntry<FlamVerticalSlabBlock> GINKGO_VERTICAL_SLAB = registerDecorativeBlock("ginkgo_vertical_slab", 64,
+            props -> new FlamVerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(GINKGO_PLANKS.get())),
             PoBlocks::createVerticalSlabDrops);
     public static final BlockEntry<ButtonBlock> GINKGO_BUTTON = registerDecorativeBlock("ginkgo_button", 64,
             props -> new ButtonBlock(BlockSetType.OAK, 30, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_BUTTON)));
     public static final BlockEntry<PressurePlateBlock> GINKGO_PRESSURE_PLATE = registerDecorativeBlock("ginkgo_pressure_plate", 64,
             props -> new PressurePlateBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PRESSURE_PLATE)));
-    public static final BlockEntry<FenceBlock> GINKGO_FENCE = registerDecorativeBlock("ginkgo_fence", 64,
-            props -> new FenceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE).mapColor(MapColor.COLOR_YELLOW)));
-    public static final BlockEntry<FenceGateBlock> GINKGO_FENCE_GATE = registerDecorativeBlock("ginkgo_fence_gate", 64,
-            props -> new FenceGateBlock(WoodType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE_GATE).mapColor(MapColor.COLOR_YELLOW)));
+    public static final BlockEntry<FlamFenceBlock> GINKGO_FENCE = registerDecorativeBlock("ginkgo_fence", 64,
+            props -> new FlamFenceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE).mapColor(MapColor.COLOR_YELLOW)));
+    public static final BlockEntry<FlamFenceGateBlock> GINKGO_FENCE_GATE = registerDecorativeBlock("ginkgo_fence_gate", 64,
+            props -> new FlamFenceGateBlock(WoodType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE_GATE).mapColor(MapColor.COLOR_YELLOW)));
     public static final BlockEntry<DoorBlock> GINKGO_DOOR = registerDecorativeBlock("ginkgo_door", 64,
             props -> new DoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_DOOR).mapColor(MapColor.COLOR_YELLOW)),
             (loot, block) -> loot.add(block, loot.createDoorTable(block)));
@@ -446,8 +452,8 @@ public class PoBlocks {
             (loot, block) -> loot.add(block, createChiliVinesDrop(block)));
 
     // Toilet
-    public static final BlockEntry<ToiletBlock> WOODEN_TOILET = registerToiletBlock("wooden_toilet",
-            props -> new ToiletBlock(toiletProperties(MapColor.WOOD, WOODEN_STRENGTH, SoundType.WOOD, NoteBlockInstrument.BASS)
+    public static final BlockEntry<WoodToiletBlock> WOODEN_TOILET = registerToiletBlock("wooden_toilet",
+            props -> new WoodToiletBlock(toiletProperties(MapColor.WOOD, WOODEN_STRENGTH, SoundType.WOOD, NoteBlockInstrument.BASS)
                     .randomTicks()
                     .ignitedByLava()),
             (loot, block) -> loot.add(block, createToiletDrop(block)));

@@ -31,6 +31,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
+import vectorwing.farmersdelight.common.registry.ModItems;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -311,6 +312,18 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .requires(PoBlocks.STRIPPED_POOP_EMPTY_LOG)
                 .unlockedBy(getItemName(PoBlocks.POOP_LOG), has(PoBlocks.POOP_LOG))
                 .save(recipeOutput, getConversionRecipeName(PoBlocks.POOP_BLOCK, PoBlocks.STRIPPED_POOP_EMPTY_LOG));
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_WOOD, 3)
+                .pattern("LL")
+                .pattern("LL")
+                .define('L', PoBlocks.POOP_LOG)
+                .unlockedBy(getItemName(PoBlocks.POOP_LOG), has(PoBlocks.POOP_LOG))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.STRIPPED_POOP_WOOD, 3)
+                .pattern("LL")
+                .pattern("LL")
+                .define('L', PoBlocks.STRIPPED_POOP_LOG)
+                .unlockedBy(getItemName(PoBlocks.STRIPPED_POOP_LOG), has(PoBlocks.STRIPPED_POOP_LOG))
+                .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_PIECE, 3)
                 .pattern("PP")
@@ -618,6 +631,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
     private void buildSieveRecipes(RecipeOutput recipeOutput) {
         RecipeOutput createLoaded = recipeOutput.withConditions(modLoaded(PoMods.CREATE.id()));
         RecipeOutput createNotLoaded = recipeOutput.withConditions(not(modLoaded(PoMods.CREATE.id())));
+        RecipeOutput fdLoaded = recipeOutput.withConditions(modLoaded(PoMods.FARMERSDELIGHT.id()));
 
         SieveRecipeBuilder.sieve(PoBlocks.POOP_BLOCK, 200)
                 .addOutput(Items.IRON_NUGGET, 8)
@@ -727,6 +741,20 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .addOutput(Items.AMETHYST_SHARD, 0.25F)
                 .unlockedBy(getItemName(PoBlocks.SIEVE.get()), has(PoBlocks.SIEVE.get()))
                 .save(createLoaded, "raw_poop_block_has_create");
+        // FarmersDelight
+        SieveRecipeBuilder.sieve(ModItems.ORGANIC_COMPOST.get(), 200)
+                .addOutput(Items.DIRT)
+                .addOutput(ModItems.TREE_BARK.get(), 2, 0.5F)
+                .addOutput(ModItems.STRAW.get(), 2, 0.5F)
+                .unlockedBy(getItemName(PoBlocks.SIEVE.get()), has(PoBlocks.SIEVE.get()))
+                .save(fdLoaded, "orgenic_compost_has_farmersdelight");
+        SieveRecipeBuilder.sieve(ModItems.RICH_SOIL.get(), 200)
+                .addOutput(ModItems.ONION.get(), 0.5F)
+                .addOutput(ModItems.TOMATO_SEEDS.get(), 0.5F)
+                .addOutput(ModItems.CABBAGE_SEEDS.get(), 0.5F)
+                .addOutput(ModItems.RICE.get(), 0.5F)
+                .unlockedBy(getItemName(PoBlocks.SIEVE.get()), has(PoBlocks.SIEVE.get()))
+                .save(fdLoaded, "rich_soil_has_farmersdelight");
     }
 
     private void buildFlyBarrelRecipes(RecipeOutput recipeOutput) {
@@ -1098,8 +1126,8 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
     }
 
     private static void offer2x2CompactingRecipe(RecipeOutput recipeOutput, RecipeCategory packedCategory,
-                                                  RecipeCategory unpackedCategory, ItemLike packed, ItemLike unpacked,
-                                                  int packedCount, int unpackedCount) {
+                                                 RecipeCategory unpackedCategory, ItemLike packed, ItemLike unpacked,
+                                                 int packedCount, int unpackedCount) {
         ShapedRecipeBuilder.shaped(packedCategory, packed, packedCount)
                 .define('#', unpacked)
                 .pattern("##")
