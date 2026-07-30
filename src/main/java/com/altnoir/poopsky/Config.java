@@ -10,6 +10,7 @@ public class Config {
     public static boolean setPoopSkyDefault;
     public static boolean voidNetherGeneration;
     public static boolean strongholdGeneration;
+    public static boolean skyFlushToilet;
     public static boolean desperateWorld;
     public static boolean compooperCrafting;
     public static boolean lavaFluid;
@@ -34,6 +35,10 @@ public class Config {
             .comment("Whether strongholds should generate in PoopSky worlds")
             .translation("poopsky.configuration.strongholdGeneration")
             .define("strongholdGeneration", true);
+    private static final ModConfigSpec.BooleanValue SKY_FLUSH_TOILET = BUILDER
+            .comment("Whether to replace the spawn toilet with a flush toilet")
+            .translation("poopsky.configuration.skyFlushToilet")
+            .define("skyFlushToilet", false);
     private static final ModConfigSpec.BooleanValue DESPERATE_WORLD = BUILDER
             .comment("Whether to Enable the Desperate World (Enabling it will cause the device to lag)")
             .translation("poopsky.configuration.desperateWorld")
@@ -65,7 +70,6 @@ public class Config {
             .translation("poopsky.configuration.freezeFilter")
             .define("freezeFilter", true);
 
-
     static final ModConfigSpec SPEC = BUILDER.build();
 
     @SubscribeEvent
@@ -73,6 +77,7 @@ public class Config {
         setPoopSkyDefault = SET_POOPSKY_DEFAULT.get();
         voidNetherGeneration = VOID_NETHER_GENERATION.get();
         strongholdGeneration = STRONGHOLD_GENERATION.get();
+        skyFlushToilet = SKY_FLUSH_TOILET.get();
         desperateWorld = DESPERATE_WORLD.get();
         compooperCrafting = COMPOOPER_CRAFTING.get();
         lavaFluid = LAVA_FLUID_BLOCK.get();

@@ -371,6 +371,8 @@ public final class LangGen {
         addConfig("lavaFluid.tooltip", "Disables underground lava lakes during PoopSky world generation");
         addConfig("compooperCrafting", "Keep Liquid When Crafting Sticks");
         addConfig("compooperCrafting.tooltip", "Prevents liquid in the compooper from being consumed when crafting sticks");
+        addConfig("skyFlushToilet", "SKY Flush Toilet");
+        addConfig("skyFlushToilet.tooltip", "Replaces the spawn toilet with a flush toilet");
         addConfig("desperateWorld", "Desperate World");
         addConfig("desperateWorld.tooltip", "Enables Desperate World generation. This can cause lag");
         addConfig("setPoopskyDefault", "Default Dedicated Server World Type");

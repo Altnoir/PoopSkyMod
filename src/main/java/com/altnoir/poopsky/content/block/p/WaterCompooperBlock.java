@@ -68,9 +68,6 @@ public class WaterCompooperBlock extends AbstractCompooperBlock {
 
         if (entity.isOnFire()) {
             entity.clearFire();
-            if (entity.mayInteract(level, pos)) {
-                lowerFillLevel(state, level, pos);
-            }
             return;
         }
 

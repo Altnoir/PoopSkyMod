@@ -200,7 +200,7 @@ public class PoGameEvents {
         if (event.getLevel() instanceof ServerLevel level && level.getChunkSource().getGenerator() instanceof PoVoidChunkGenerator) {
             BlockPos pos = PoVoidChunkGenerator.defaultSpawnPosition(level.getSeed());
 
-            level.setBlock(pos, PoBlocks.WOODEN_TOILET.get().defaultBlockState(), 2);
+            level.setBlock(pos, Config.skyFlushToilet ? PoBlocks.FLUSH_TOILET.get().defaultBlockState() : PoBlocks.WOODEN_TOILET.get().defaultBlockState(), 2);
 
             event.setCanceled(true);
             BlockPos spawn = level.getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, pos);

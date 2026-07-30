@@ -142,7 +142,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
             GenerationStep.Carving step
     ) {
         if (generateNormal) {
-            super.applyCarvers( level, seed, randomState, biomeManager, structureManager, chunk, step);
+            super.applyCarvers(level, seed, randomState, biomeManager, structureManager, chunk, step);
         }
     }
 
@@ -162,9 +162,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
 
     @Override
     public int getBaseHeight(int x, int z, Heightmap.Types type, LevelHeightAccessor level, RandomState randomState) {
-        return generateNormal
-                ? super.getBaseHeight(x, z, type, level, randomState)
-                : virtualSurfaceY(level);
+        return generateNormal ? super.getBaseHeight(x, z, type, level, randomState) : virtualSurfaceY(level);
     }
 
     @Override
@@ -179,11 +177,8 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
 
         for (int index = 0; index < states.length; index++) {
             int y = minY + index;
-            states[index] = y == minY
-                    ? Blocks.BEDROCK.defaultBlockState()
-                    : y == surfaceY - 1
-                    ? Blocks.GRASS_BLOCK.defaultBlockState()
-                    : Blocks.DIRT.defaultBlockState();
+            BlockState groundY = y == (surfaceY - 1) ? Blocks.GRASS_BLOCK.defaultBlockState() : Blocks.DIRT.defaultBlockState();
+            states[index] = y == minY ? Blocks.BEDROCK.defaultBlockState() : groundY;
         }
 
         return new NoiseColumn(minY, states);
@@ -367,7 +362,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
         );
     }
 
-    private void placeStructuresOnly( WorldGenLevel level, ChunkAccess chunk, StructureManager structureManager) {
+    private void placeStructuresOnly(WorldGenLevel level, ChunkAccess chunk, StructureManager structureManager) {
         ChunkPos chunkPos = chunk.getPos();
 
         if (SharedConstants.debugVoidTerrain(chunkPos) || !structureManager.shouldGenerateStructures()) {
@@ -429,7 +424,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
         } catch (ReportedException exception) {
             throw exception;
         } catch (Exception exception) {
-            CrashReport report = CrashReport.forThrowable(exception,"Void biome decoration");
+            CrashReport report = CrashReport.forThrowable(exception, "Void biome decoration");
 
             report.addCategory("Generation")
                     .setDetail("CenterX", chunkPos.x)
