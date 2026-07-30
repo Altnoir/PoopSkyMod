@@ -15,6 +15,13 @@
     "S"
   ],
   "result": {
+    "components": {
+      "minecraft:enchantments": {
+        "levels": {
+          "minecraft:looting": 1
+        }
+      }
+    },
     "count": 1,
     "id": "poopsky:spall_sword"
   }

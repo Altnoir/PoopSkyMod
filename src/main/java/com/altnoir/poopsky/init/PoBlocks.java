@@ -777,7 +777,7 @@ public class PoBlocks {
         loot.add(block, loot.applyExplosionDecay(block,
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()
-                                .add(LootItem.lootTableItem(Items.WHEAT_SEEDS).when(grownCondition).otherwise(LootItem.lootTableItem(PoItems.MAGGOTS_SEEDS.get())))
+                                .add(LootItem.lootTableItem(Items.BEETROOT_SEEDS).when(grownCondition).otherwise(LootItem.lootTableItem(PoItems.MAGGOTS_SEEDS.get())))
                                 .add(LootItem.lootTableItem(Items.SWEET_BERRIES).when(grownCondition).otherwise(LootItem.lootTableItem(PoItems.MAGGOTS_SEEDS.get())))
                                 .add(LootItem.lootTableItem(Items.CARROT).when(grownCondition).otherwise(LootItem.lootTableItem(PoItems.MAGGOTS_SEEDS.get())))
                                 .add(LootItem.lootTableItem(Items.POTATO).when(grownCondition).otherwise(LootItem.lootTableItem(PoItems.MAGGOTS_SEEDS.get()))))

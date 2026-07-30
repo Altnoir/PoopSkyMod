@@ -16,16 +16,23 @@ import com.altnoir.poopsky.init.ToiletTypes;
 import com.simibubi.create.AllItems;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -37,12 +44,17 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class RecipeGen extends RegistrateRecipeProvider implements IConditionBuilder {
+    private final CompletableFuture<HolderLookup.Provider> registriesFuture;
+    private HolderLookup.Provider registries;
+
     public RecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> provider) {
         super(PoopSky.registrate(), output, provider);
+        this.registriesFuture = provider;
     }
 
     @Override
     protected void buildRecipes(RecipeOutput recipeOutput) {
+        this.registries = this.registriesFuture.join();
         buildCookingRecipes(recipeOutput);
         buildFoodRecipes(recipeOutput);
         buildItemRecipes(recipeOutput);
@@ -915,44 +927,25 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .save(recipeOutput, PoopSky.loc(getItemName(toilet) + "_from_" + toiletType.id()));
     }
 
-    private static void spallToolRecipes(RecipeOutput recipeOutput) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, PoItems.SPALL_SWORD)
-                .pattern("M")
-                .pattern("M")
-                .pattern("S")
-                .define('M', PoItems.SPALL)
-                .define('S', Items.STICK)
-                .unlockedBy(getItemName(PoItems.SPALL), has(PoItems.SPALL))
-                .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, PoItems.SPALL_SHOVEL)
-                .pattern("M")
-                .pattern("S")
-                .pattern("S")
-                .define('M', PoItems.SPALL)
-                .define('S', Items.STICK)
-                .unlockedBy(getItemName(PoItems.SPALL), has(PoItems.SPALL))
-                .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, PoItems.SPALL_PICKAXE)
-                .pattern("MMM")
-                .pattern(" S ")
-                .pattern(" S ")
-                .define('M', PoItems.SPALL)
-                .define('S', Items.STICK)
-                .unlockedBy(getItemName(PoItems.SPALL), has(PoItems.SPALL))
-                .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, PoItems.SPALL_AXE)
-                .pattern("MM")
-                .pattern("MS")
-                .pattern(" S")
-                .define('M', PoItems.SPALL)
-                .define('S', Items.STICK)
-                .unlockedBy(getItemName(PoItems.SPALL), has(PoItems.SPALL))
-                .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, PoItems.SPALL_HOE)
-                .pattern("MM")
-                .pattern(" S")
-                .pattern(" S")
-                .define('M', PoItems.SPALL)
+    private void spallToolRecipes(RecipeOutput recipeOutput) {
+        var enchantment = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
+        spallEnchantedRecipe(recipeOutput, enchantment.getOrThrow(Enchantments.LOOTING), PoItems.SPALL_SWORD.get(), RecipeCategory.COMBAT, "M", "M", "S");
+        spallEnchantedRecipe(recipeOutput, enchantment.getOrThrow(Enchantments.EFFICIENCY), PoItems.SPALL_SHOVEL.get(), RecipeCategory.TOOLS, "M", "S", "S");
+        spallEnchantedRecipe(recipeOutput, enchantment.getOrThrow(Enchantments.FORTUNE), PoItems.SPALL_PICKAXE.get(), RecipeCategory.TOOLS, "MMM", " S ", " S ");
+        spallEnchantedRecipe(recipeOutput, enchantment.getOrThrow(Enchantments.SILK_TOUCH), PoItems.SPALL_AXE.get(), RecipeCategory.TOOLS, "MM", "MS", " S");
+        spallEnchantedRecipe(recipeOutput, enchantment.getOrThrow(Enchantments.UNBREAKING), PoItems.SPALL_HOE.get(), RecipeCategory.TOOLS, "MM", " S", " S");
+    }
+
+    private void spallEnchantedRecipe(RecipeOutput recipeOutput, Holder<Enchantment> enchantment, ItemLike item, RecipeCategory category, String... patterns) {
+        ItemEnchantments.Mutable enchants = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
+        enchants.set(enchantment, 1);
+        ItemStack stack = new ItemStack(item);
+        stack.set(DataComponents.ENCHANTMENTS, enchants.toImmutable());
+        ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(category, stack);
+        for (String pattern : patterns) {
+            builder.pattern(pattern);
+        }
+        builder.define('M', PoItems.SPALL)
                 .define('S', Items.STICK)
                 .unlockedBy(getItemName(PoItems.SPALL), has(PoItems.SPALL))
                 .save(recipeOutput);
