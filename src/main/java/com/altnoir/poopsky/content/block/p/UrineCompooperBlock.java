@@ -242,6 +242,3 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
         level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(entity, blockstate));
     }
 }
-
-
-

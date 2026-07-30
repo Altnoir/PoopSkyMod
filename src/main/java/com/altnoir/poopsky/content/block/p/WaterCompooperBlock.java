@@ -75,10 +75,7 @@ public class WaterCompooperBlock extends AbstractCompooperBlock {
         }
 
         if (entity instanceof ItemEntity itemEntity) {
-            if (processRecipe(CompooperType.WATER, itemEntity, state, level, pos, SoundEvents.GENERIC_SPLASH)) {
-                return;
-            }
+            processRecipe(CompooperType.WATER, itemEntity, state, level, pos, SoundEvents.GENERIC_SPLASH);
         }
     }
 }
-

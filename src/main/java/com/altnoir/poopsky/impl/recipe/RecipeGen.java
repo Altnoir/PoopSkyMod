@@ -32,8 +32,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -44,35 +42,38 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
 
     @Override
     protected void buildRecipes(RecipeOutput recipeOutput) {
-        List<ItemLike> POOP_LIST = List.of(PoBlocks.POOP_BLOCK);
-        List<ItemLike> POOP_BRICK_LIST = List.of(PoBlocks.POOP_BRICKS);
-        List<ItemLike> SMOOTH_POOP_LIST = List.of(PoBlocks.DRIED_POOP_BLOCK);
-        List<ItemLike> TILE_BLOCK_LIST = List.of(PoBlocks.POOLIME_BLOCK);
-        List<ItemLike> MAGGOTS_LIST = List.of(PoItems.MAGGOTS_SEEDS);
-        List<ItemLike> ROUNDWORM_LIST = List.of(PoItems.ROUNDWORM);
+        buildCookingRecipes(recipeOutput);
+        buildFoodRecipes(recipeOutput);
+        buildItemRecipes(recipeOutput);
+        buildBuildingRecipes(recipeOutput);
+        buildVanillaRecipes(recipeOutput);
+        buildStonecuttingRecipes(recipeOutput);
+        buildToiletRecipes(recipeOutput);
+        buildCustomRecipes(recipeOutput);
+    }
 
+    private void buildCookingRecipes(RecipeOutput recipeOutput) {
         shapeless1x1Recipe(recipeOutput, Blocks.CRIMSON_NYLIUM, Blocks.CRIMSON_FUNGUS, Blocks.NETHERRACK);
         shapeless1x1Recipe(recipeOutput, Blocks.WARPED_NYLIUM, Blocks.WARPED_FUNGUS, Blocks.NETHERRACK);
         shapeless1x1Recipe(recipeOutput, Blocks.SLIME_BLOCK, Items.LIME_DYE, PoBlocks.POOLIME_BLOCK);
 
-        oreSmelting(recipeOutput, POOP_LIST, RecipeCategory.BUILDING_BLOCKS, PoBlocks.DRIED_POOP_BLOCK, 0.1F, 200, "dried_poop_block");
-        oreBlasting(recipeOutput, POOP_LIST, RecipeCategory.BUILDING_BLOCKS, PoBlocks.DRIED_POOP_BLOCK, 0.1F, 100, "dried_poop_block");
+        smelting(recipeOutput, PoBlocks.POOP_BLOCK, RecipeCategory.BUILDING_BLOCKS, PoBlocks.DRIED_POOP_BLOCK, 0.1F, 200, "dried_poop_block");
+        blasting(recipeOutput, PoBlocks.POOP_BLOCK, RecipeCategory.BUILDING_BLOCKS, PoBlocks.DRIED_POOP_BLOCK, 0.1F, 100, "dried_poop_block");
+        smelting(recipeOutput, PoBlocks.POOP_BRICKS, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CRACKED_POOP_BRICKS, 0.1F, 200, "cracked_poop_bricks");
+        blasting(recipeOutput, PoBlocks.POOP_BRICKS, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CRACKED_POOP_BRICKS, 0.1F, 100, "cracked_poop_bricks");
+        smelting(recipeOutput, PoBlocks.DRIED_POOP_BLOCK, RecipeCategory.BUILDING_BLOCKS, PoBlocks.SMOOTH_POOP_BLOCK, 0.1F, 200, "smooth_poop_block");
+        blasting(recipeOutput, PoBlocks.DRIED_POOP_BLOCK, RecipeCategory.BUILDING_BLOCKS, PoBlocks.SMOOTH_POOP_BLOCK, 0.1F, 100, "smooth_poop_block");
+        smelting(recipeOutput, PoBlocks.POOLIME_BLOCK, RecipeCategory.BUILDING_BLOCKS, PoBlocks.BROWN_TILE_BLOCK, 0.1F, 200, "tile_block");
+        blasting(recipeOutput, PoBlocks.POOLIME_BLOCK, RecipeCategory.BUILDING_BLOCKS, PoBlocks.BROWN_TILE_BLOCK, 0.1F, 100, "tile_block");
+        campfireCooking(recipeOutput, PoItems.POOP, RecipeCategory.MISC, Items.COCOA_BEANS, 0.35F, 600, "cocoa_beans");
+        smelting(recipeOutput, PoItems.ROUNDWORM, RecipeCategory.MISC, Items.STRING, 0.35F, 200, "roundworm");
+        campfireCooking(recipeOutput, PoItems.ROUNDWORM, RecipeCategory.MISC, Items.STRING, 0.35F, 200, "roundworm");
+        smelting(recipeOutput, PoItems.MAGGOTS_SEEDS, RecipeCategory.BUILDING_BLOCKS, PoItems.BAKED_MAGGOTS, 0.35F, 200, "maggots_seeds");
+        cooking(recipeOutput, RecipeSerializer.SMOKING_RECIPE, SmokingRecipe::new, PoItems.MAGGOTS_SEEDS,
+                RecipeCategory.BUILDING_BLOCKS, PoItems.BAKED_MAGGOTS, 0.35F, 100, "maggots_seeds", "_from_smoking");
+    }
 
-        oreSmelting(recipeOutput, POOP_BRICK_LIST, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CRACKED_POOP_BRICKS, 0.1F, 200, "cracked_poop_bricks");
-        oreBlasting(recipeOutput, POOP_BRICK_LIST, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CRACKED_POOP_BRICKS, 0.1F, 100, "cracked_poop_bricks");
-
-        oreSmelting(recipeOutput, SMOOTH_POOP_LIST, RecipeCategory.BUILDING_BLOCKS, PoBlocks.SMOOTH_POOP_BLOCK, 0.1F, 200, "smooth_poop_block");
-        oreBlasting(recipeOutput, SMOOTH_POOP_LIST, RecipeCategory.BUILDING_BLOCKS, PoBlocks.SMOOTH_POOP_BLOCK, 0.1F, 100, "smooth_poop_block");
-
-        oreSmelting(recipeOutput, TILE_BLOCK_LIST, RecipeCategory.BUILDING_BLOCKS, PoBlocks.BROWN_TILE_BLOCK, 0.1F, 200, "tile_block");
-        oreBlasting(recipeOutput, TILE_BLOCK_LIST, RecipeCategory.BUILDING_BLOCKS, PoBlocks.BROWN_TILE_BLOCK, 0.1F, 100, "tile_block");
-
-        oreCooking(recipeOutput, List.of(PoItems.POOP.get()), RecipeCategory.MISC, Items.COCOA_BEANS, 0.35F, 600, "cocoa_beans");
-        oreSmelting(recipeOutput, ROUNDWORM_LIST, RecipeCategory.MISC, Items.STRING, 0.35F, 200, "roundworm");
-        oreCooking(recipeOutput, ROUNDWORM_LIST, RecipeCategory.MISC, Items.STRING, 0.35F, 200, "roundworm");
-        // 椋熺墿
-        oreSmelting(recipeOutput, MAGGOTS_LIST, RecipeCategory.BUILDING_BLOCKS, PoItems.BAKED_MAGGOTS, 0.35F, 200, "maggots_seeds");
-        oreCooking(recipeOutput, RecipeSerializer.SMOKING_RECIPE, SmokingRecipe::new, MAGGOTS_LIST, RecipeCategory.BUILDING_BLOCKS, PoItems.BAKED_MAGGOTS, 0.35F, 100, "maggots_seeds", "_from_smoking");
+    private void buildFoodRecipes(RecipeOutput recipeOutput) {
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PoItems.POOP_BREAD)
                 .pattern("PMP")
                 .define('P', PoItems.POOP)
@@ -136,8 +137,9 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .define('P', PoItems.POOP)
                 .unlockedBy(getItemName(PoItems.MAGGOTS_SEEDS), has(PoItems.MAGGOTS_SEEDS))
                 .save(recipeOutput);
+    }
 
-        // 鏉傞」
+    private void buildItemRecipes(RecipeOutput recipeOutput) {
         offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.SALTPETER_BLOCK, PoItems.SALTPETER_SHARD);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PoItems.JINKELA)
                 .requires(PoItems.POOP)
@@ -203,13 +205,14 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .unlockedBy(getItemName(PoItems.OMINOUS_FILTHY_INGOT), has(PoItems.OMINOUS_FILTHY_INGOT))
                 .save(recipeOutput);
         spallToolRecipes(recipeOutput);
-        // 鐩旂敳
+        // 盔甲
         omenSmithing(recipeOutput, Items.GOLDEN_CHESTPLATE, RecipeCategory.COMBAT, PoItems.OMEN_CHESTPLATE.get());
         omenSmithing(recipeOutput, Items.GOLDEN_LEGGINGS, RecipeCategory.COMBAT, PoItems.OMEN_LEGGINGS.get());
         omenSmithing(recipeOutput, Items.GOLDEN_HELMET, RecipeCategory.COMBAT, PoItems.OMEN_HELMET.get());
         omenSmithing(recipeOutput, Items.GOLDEN_BOOTS, RecipeCategory.COMBAT, PoItems.OMEN_BOOTS.get());
+    }
 
-        // 寤虹瓚
+    private void buildBuildingRecipes(RecipeOutput recipeOutput) {
         offer2x2CompactingRecipe(recipeOutput, PoBlocks.POOP_BLOCK, PoItems.POOP);
         blockFamilyRecipes(recipeOutput, PoBlocks.POOP_FAMILY);
 
@@ -385,8 +388,9 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .define('M', PoBlocks.MAGGOTS_BLOCK)
                 .unlockedBy(getItemName(PoBlocks.MAGGOTS_BLOCK), has(PoBlocks.MAGGOTS_BLOCK))
                 .save(recipeOutput);
+    }
 
-        // 鍘熺増鐗╁搧閰嶆柟
+    private void buildVanillaRecipes(RecipeOutput recipeOutput) {
         offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, Blocks.CRAFTING_TABLE, PoItems.SPALL);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.GUNPOWDER)
                 .requires(PoItems.KING_OF_DRAGON_FRUIT)
@@ -421,31 +425,11 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .define('S', Items.STICK)
                 .unlockedBy(getItemName(PoItems.POOP_BALL), has(PoItems.POOP_BALL))
                 .save(recipeOutput, getConversionRecipeName(Items.TORCH) + "_from_poop_ball");
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Blocks.TUBE_CORAL_BLOCK)
-                .requires(PoBlocks.POOP_BLOCK)
-                .requires(Blocks.TUBE_CORAL).requires(Blocks.TUBE_CORAL_FAN)
-                .unlockedBy(getItemName(Blocks.TUBE_CORAL), has(Blocks.TUBE_CORAL))
-                .save(recipeOutput, getConversionRecipeName(Blocks.TUBE_CORAL_BLOCK));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Blocks.BRAIN_CORAL_BLOCK)
-                .requires(PoBlocks.POOP_BLOCK)
-                .requires(Blocks.BRAIN_CORAL).requires(Blocks.BRAIN_CORAL_FAN)
-                .unlockedBy(getItemName(Blocks.BRAIN_CORAL), has(Blocks.BRAIN_CORAL))
-                .save(recipeOutput, getConversionRecipeName(Blocks.BRAIN_CORAL_BLOCK));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Blocks.BUBBLE_CORAL_BLOCK)
-                .requires(PoBlocks.POOP_BLOCK)
-                .requires(Blocks.BUBBLE_CORAL).requires(Blocks.BUBBLE_CORAL_FAN)
-                .unlockedBy(getItemName(Blocks.BUBBLE_CORAL), has(Blocks.BUBBLE_CORAL))
-                .save(recipeOutput, getConversionRecipeName(Blocks.BUBBLE_CORAL_BLOCK));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Blocks.FIRE_CORAL_BLOCK)
-                .requires(PoBlocks.POOP_BLOCK)
-                .requires(Blocks.FIRE_CORAL).requires(Blocks.FIRE_CORAL_FAN)
-                .unlockedBy(getItemName(Blocks.FIRE_CORAL), has(Blocks.FIRE_CORAL))
-                .save(recipeOutput, getConversionRecipeName(Blocks.FIRE_CORAL_BLOCK));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Blocks.HORN_CORAL_BLOCK)
-                .requires(PoBlocks.POOP_BLOCK)
-                .requires(Blocks.HORN_CORAL).requires(Blocks.HORN_CORAL_FAN)
-                .unlockedBy(getItemName(Blocks.HORN_CORAL), has(Blocks.HORN_CORAL))
-                .save(recipeOutput, getConversionRecipeName(Blocks.HORN_CORAL_BLOCK));
+        coralBlockRecipe(recipeOutput, Blocks.TUBE_CORAL_BLOCK, Blocks.TUBE_CORAL, Blocks.TUBE_CORAL_FAN);
+        coralBlockRecipe(recipeOutput, Blocks.BRAIN_CORAL_BLOCK, Blocks.BRAIN_CORAL, Blocks.BRAIN_CORAL_FAN);
+        coralBlockRecipe(recipeOutput, Blocks.BUBBLE_CORAL_BLOCK, Blocks.BUBBLE_CORAL, Blocks.BUBBLE_CORAL_FAN);
+        coralBlockRecipe(recipeOutput, Blocks.FIRE_CORAL_BLOCK, Blocks.FIRE_CORAL, Blocks.FIRE_CORAL_FAN);
+        coralBlockRecipe(recipeOutput, Blocks.HORN_CORAL_BLOCK, Blocks.HORN_CORAL, Blocks.HORN_CORAL_FAN);
 
         offerCompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, Blocks.MOSSY_COBBLESTONE, PoItems.SPALL);
         create1x2ShapelessFrom(recipeOutput, Blocks.GRASS_BLOCK, Blocks.DIRT, Blocks.MOSS_BLOCK);
@@ -455,8 +439,18 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         create1x2ShapelessFrom(recipeOutput, Blocks.DIRT, Blocks.MUD, PoItems.POOP.get());
         //create1x2ShapelessFrom(recipeOutput, Blocks.TUFF, Blocks.ANDESITE, PSItems.SPALL);
         //create1x2ShapelessFrom(recipeOutput, Blocks.CALCITE, Blocks.DIORITE, PSItems.SPALL);
+    }
 
-        // 鍒囩煶閰嶆柟
+    private static void coralBlockRecipe(RecipeOutput recipeOutput, Block result, Block coral, Block coralFan) {
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, result)
+                .requires(PoBlocks.POOP_BLOCK)
+                .requires(coral)
+                .requires(coralFan)
+                .unlockedBy(getItemName(coral), has(coral))
+                .save(recipeOutput, getConversionRecipeName(result));
+    }
+
+    private void buildStonecuttingRecipes(RecipeOutput recipeOutput) {
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.STOOL, PoBlocks.DRIED_POOP_BLOCK, 2);
 
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_PIECE, PoBlocks.POOP_BLOCK, 8);
@@ -485,9 +479,9 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.STRIPPED_POOP_EMPTY_LOG, PoBlocks.POOP_EMPTY_LOG);
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BLOCK, PoBlocks.POOP_EMPTY_LOG, 4);
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BLOCK, PoBlocks.STRIPPED_POOP_EMPTY_LOG, 4);
+    }
 
-
-        // 鍘曟墍閰嶆柟
+    private void buildToiletRecipes(RecipeOutput recipeOutput) {
         for (var entry : ToiletType.getByCategory(ToiletType.Category.WOOD).entrySet()) {
             toiletRecipes(recipeOutput, PoBlocks.WOODEN_TOILET, entry.getValue().sourceBlock(), entry.getValue());
         }
@@ -519,10 +513,12 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .define('B', Blocks.GOLD_BLOCK)
                 .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP))
                 .save(recipeOutput);
+    }
 
+    private void buildCustomRecipes(RecipeOutput recipeOutput) {
         buildSieveRecipes(recipeOutput);
         buildCompooperRecipes(recipeOutput);
-        buildpopExplosionRecipes(recipeOutput);
+        buildPopExplosionRecipes(recipeOutput);
         buildAnalPressingRecipes(recipeOutput);
         buildBreedingChestRecipes(recipeOutput);
         buildFlyBarrelRecipes(recipeOutput);
@@ -531,7 +527,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         FarmersDelightRecipeGen.buildRecipes(fd);
     }
 
-    private void buildpopExplosionRecipes(RecipeOutput recipeOutput) {
+    private void buildPopExplosionRecipes(RecipeOutput recipeOutput) {
         record PopExplosionEntry(ItemLike input, ItemLike output, int radius) {
             static PopExplosionEntry of(ItemLike input, ItemLike output) {
                 return new PopExplosionEntry(input, output, 0);
@@ -738,73 +734,65 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         RecipeOutput ae2 = recipeOutput.withConditions(modLoaded(PoMods.AE2.id()));
         RecipeOutput mekanism = recipeOutput.withConditions(modLoaded(PoMods.MEKANISM.id()));
 
-        class FlyMap {
-            private final LinkedHashMap<FlyType.Type, ResourceLocation> items = new LinkedHashMap<>();
-            private final HashMap<FlyType.Type, RecipeOutput> overrides = new HashMap<>();
-            private FlyType.Type lastKey;
-
-            FlyMap put(FlyType.Type type, ItemLike result) {
-                return put(type, BuiltInRegistries.ITEM.getKey(result.asItem()));
+        record FlyBarrelEntry(FlyType.Type type, ResourceLocation result, RecipeOutput output) {
+            static FlyBarrelEntry of(FlyType.Type type, ItemLike result) {
+                return of(type, result, null);
             }
 
-            FlyMap put(FlyType.Type type, ResourceLocation result) {
-                items.put(type, result);
-                lastKey = type;
-                return this;
+            static FlyBarrelEntry of(FlyType.Type type, ItemLike result, RecipeOutput output) {
+                return new FlyBarrelEntry(type, BuiltInRegistries.ITEM.getKey(result.asItem()), output);
             }
 
-            void loaded(RecipeOutput output) {
-                if (lastKey != null) overrides.put(lastKey, output);
-            }
-
-            void saveAll() {
-                items.forEach((type, result) -> FlyBarrelRecipeBuilder.flyBarrel(type.id(), result)
-                        .unlockedBy(getHasName(PoBlocks.FLY_BARREL.get()), has(PoBlocks.FLY_BARREL.get()))
-                        .save(overrides.getOrDefault(type, recipeOutput), type.id()));
+            static FlyBarrelEntry of(FlyType.Type type, ResourceLocation result, RecipeOutput output) {
+                return new FlyBarrelEntry(type, result, output);
             }
         }
 
-        var flyMap = new FlyMap();
-        flyMap.put(FlyTypes.NORMAL.get(), PoItems.MAGGOTS_SEEDS);
-        flyMap.put(FlyTypes.WHITE.get(), Items.BONE_MEAL);
-        flyMap.put(FlyTypes.LIGHT_GRAY.get(), Items.QUARTZ);
-        flyMap.put(FlyTypes.GRAY.get(), Items.GRAVEL);
-        flyMap.put(FlyTypes.BLACK.get(), Items.WITHER_ROSE);
-        flyMap.put(FlyTypes.BROWN.get(), Items.COCOA_BEANS);
-        flyMap.put(FlyTypes.RED.get(), Items.REDSTONE);
-        flyMap.put(FlyTypes.ORANGE.get(), Items.TORCHFLOWER);
-        flyMap.put(FlyTypes.YELLOW.get(), Items.GLOW_BERRIES);
-        flyMap.put(FlyTypes.LIME.get(), Items.SEA_PICKLE);
-        flyMap.put(FlyTypes.GREEN.get(), Items.CACTUS);
-        flyMap.put(FlyTypes.CYAN.get(), Items.PRISMARINE_SHARD);
-        flyMap.put(FlyTypes.LIGHT_BLUE.get(), Items.PRISMARINE_CRYSTALS);
-        flyMap.put(FlyTypes.BLUE.get(), Items.LAPIS_LAZULI);
-        flyMap.put(FlyTypes.PURPLE.get(), Items.AMETHYST_SHARD);
-        flyMap.put(FlyTypes.MAGENTA.get(), Items.CHORUS_FRUIT);
-        flyMap.put(FlyTypes.PINK.get(), Items.PINK_PETALS);
-        // More
-        flyMap.put(FlyTypes.IRON.get(), Items.RAW_IRON);
-        flyMap.put(FlyTypes.COPPER.get(), Items.RAW_COPPER);
-        flyMap.put(FlyTypes.GOLD.get(), Items.RAW_GOLD);
-        flyMap.put(FlyTypes.EMERALD.get(), Items.EMERALD);
-        flyMap.put(FlyTypes.DIAMOND.get(), Items.DIAMOND);
-        flyMap.put(FlyTypes.NETHERITE.get(), Items.NETHERITE_SCRAP);
-        flyMap.put(FlyTypes.DRAGON_FRUIT.get(), Items.GUNPOWDER);
-        flyMap.put(FlyTypes.GLOWSTONE.get(), Items.GLOWSTONE_DUST);
-        flyMap.put(FlyTypes.ENDER.get(), Items.ENDER_PEARL);
-        // Create
-        flyMap.put(FlyTypes.ZINC.get(), AllItems.RAW_ZINC).loaded(create);
-        // AE2
-        flyMap.put(FlyTypes.CERTUS.get(), PoMods.AE2.rl("certus_quartz_crystal")).loaded(ae2);
-        flyMap.put(FlyTypes.SKY_DUST.get(), PoMods.AE2.rl("sky_dust")).loaded(ae2);
-        // MEK
-        flyMap.put(FlyTypes.OSMIUM.get(), PoMods.MEKANISM.rl("raw_osmium")).loaded(mekanism);
-        flyMap.put(FlyTypes.TIN.get(), PoMods.MEKANISM.rl("raw_tin")).loaded(mekanism);
-        flyMap.put(FlyTypes.LEAD.get(), PoMods.MEKANISM.rl("raw_lead")).loaded(mekanism);
-        flyMap.put(FlyTypes.URANIUM.get(), PoMods.MEKANISM.rl("raw_uranium")).loaded(mekanism);
-        flyMap.put(FlyTypes.FLUORITE.get(), PoMods.MEKANISM.rl("fluorite_gem")).loaded(mekanism);
+        List<FlyBarrelEntry> recipes = List.of(
+                FlyBarrelEntry.of(FlyTypes.NORMAL.get(), PoItems.MAGGOTS_SEEDS),
+                FlyBarrelEntry.of(FlyTypes.WHITE.get(), Items.BONE_MEAL),
+                FlyBarrelEntry.of(FlyTypes.LIGHT_GRAY.get(), Items.QUARTZ),
+                FlyBarrelEntry.of(FlyTypes.GRAY.get(), Items.GRAVEL),
+                FlyBarrelEntry.of(FlyTypes.BLACK.get(), Items.WITHER_ROSE),
+                FlyBarrelEntry.of(FlyTypes.BROWN.get(), Items.COCOA_BEANS),
+                FlyBarrelEntry.of(FlyTypes.RED.get(), Items.REDSTONE),
+                FlyBarrelEntry.of(FlyTypes.ORANGE.get(), Items.TORCHFLOWER),
+                FlyBarrelEntry.of(FlyTypes.YELLOW.get(), Items.GLOW_BERRIES),
+                FlyBarrelEntry.of(FlyTypes.LIME.get(), Items.SEA_PICKLE),
+                FlyBarrelEntry.of(FlyTypes.GREEN.get(), Items.CACTUS),
+                FlyBarrelEntry.of(FlyTypes.CYAN.get(), Items.PRISMARINE_SHARD),
+                FlyBarrelEntry.of(FlyTypes.LIGHT_BLUE.get(), Items.PRISMARINE_CRYSTALS),
+                FlyBarrelEntry.of(FlyTypes.BLUE.get(), Items.LAPIS_LAZULI),
+                FlyBarrelEntry.of(FlyTypes.PURPLE.get(), Items.AMETHYST_SHARD),
+                FlyBarrelEntry.of(FlyTypes.MAGENTA.get(), Items.CHORUS_FRUIT),
+                FlyBarrelEntry.of(FlyTypes.PINK.get(), Items.PINK_PETALS),
+                FlyBarrelEntry.of(FlyTypes.IRON.get(), Items.RAW_IRON),
+                FlyBarrelEntry.of(FlyTypes.COPPER.get(), Items.RAW_COPPER),
+                FlyBarrelEntry.of(FlyTypes.GOLD.get(), Items.RAW_GOLD),
+                FlyBarrelEntry.of(FlyTypes.EMERALD.get(), Items.EMERALD),
+                FlyBarrelEntry.of(FlyTypes.DIAMOND.get(), Items.DIAMOND),
+                FlyBarrelEntry.of(FlyTypes.NETHERITE.get(), Items.NETHERITE_SCRAP),
+                FlyBarrelEntry.of(FlyTypes.DRAGON_FRUIT.get(), Items.GUNPOWDER),
+                FlyBarrelEntry.of(FlyTypes.GLOWSTONE.get(), Items.GLOWSTONE_DUST),
+                FlyBarrelEntry.of(FlyTypes.ENDER.get(), Items.ENDER_PEARL),
+                // Create
+                FlyBarrelEntry.of(FlyTypes.ZINC.get(), AllItems.RAW_ZINC, create),
+                // AE2
+                FlyBarrelEntry.of(FlyTypes.CERTUS.get(), PoMods.AE2.rl("certus_quartz_crystal"), ae2),
+                FlyBarrelEntry.of(FlyTypes.SKY_DUST.get(), PoMods.AE2.rl("sky_dust"), ae2),
+                // MEK
+                FlyBarrelEntry.of(FlyTypes.OSMIUM.get(), PoMods.MEKANISM.rl("raw_osmium"), mekanism),
+                FlyBarrelEntry.of(FlyTypes.TIN.get(), PoMods.MEKANISM.rl("raw_tin"), mekanism),
+                FlyBarrelEntry.of(FlyTypes.LEAD.get(), PoMods.MEKANISM.rl("raw_lead"), mekanism),
+                FlyBarrelEntry.of(FlyTypes.URANIUM.get(), PoMods.MEKANISM.rl("raw_uranium"), mekanism),
+                FlyBarrelEntry.of(FlyTypes.FLUORITE.get(), PoMods.MEKANISM.rl("fluorite_gem"), mekanism)
+        );
 
-        flyMap.saveAll();
+        for (FlyBarrelEntry recipe : recipes) {
+            FlyBarrelRecipeBuilder.flyBarrel(recipe.type().id(), recipe.result())
+                    .unlockedBy(getHasName(PoBlocks.FLY_BARREL), has(PoBlocks.FLY_BARREL))
+                    .save(recipe.output() != null ? recipe.output() : recipeOutput, recipe.type().id());
+        }
     }
 
     private void buildBreedingChestRecipes(RecipeOutput recipeOutput) {
@@ -834,7 +822,6 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 Breeding.of(FlyTypes.WHITE.get(), FlyTypes.GRAY.get(), FlyTypes.LIGHT_GRAY.get()),
                 Breeding.of(FlyTypes.WHITE.get(), FlyTypes.GREEN.get(), FlyTypes.LIME.get()),
                 Breeding.of(FlyTypes.WHITE.get(), FlyTypes.RED.get(), FlyTypes.PINK.get()),
-                // More
                 Breeding.of(FlyTypes.PURPLE.get(), FlyTypes.CYAN.get(), FlyTypes.ENDER.get()),
                 Breeding.of(FlyTypes.GREEN.get(), FlyTypes.YELLOW.get(), FlyTypes.DRAGON_FRUIT.get()),
                 Breeding.of(FlyTypes.DRAGON_FRUIT.get(), FlyTypes.YELLOW.get(), FlyTypes.GLOWSTONE.get()),
@@ -900,7 +887,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .save(recipeOutput, PoopSky.loc(getItemName(toilet) + "_from_" + toiletType.id()));
     }
 
-    protected static void spallToolRecipes(RecipeOutput recipeOutput) {
+    private static void spallToolRecipes(RecipeOutput recipeOutput) {
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, PoItems.SPALL_SWORD)
                 .pattern("M")
                 .pattern("M")
@@ -943,7 +930,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .save(recipeOutput);
     }
 
-    public void stairsRecipe(RecipeOutput recipeOutput, ItemLike output, ItemLike input) {
+    private void stairsRecipe(RecipeOutput recipeOutput, ItemLike output, ItemLike input) {
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 8)
                 .pattern("P  ")
                 .pattern("PP ")
@@ -1096,7 +1083,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .save(recipeOutput);
     }
 
-    public static void offerCompactingRecipe(RecipeOutput recipeOutput, RecipeCategory category, ItemLike output, ItemLike input) {
+    private static void offerCompactingRecipe(RecipeOutput recipeOutput, RecipeCategory category, ItemLike output, ItemLike input) {
         ShapedRecipeBuilder.shaped(category, output)
                 .define('#', input)
                 .pattern("###")
@@ -1106,28 +1093,30 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .save(recipeOutput, getConversionRecipeName(output) + "_from_compacting");
     }
 
-    public static void offer2x2CompactingRecipe(RecipeOutput recipeOutput, ItemLike output, ItemLike input) {
+    private static void offer2x2CompactingRecipe(RecipeOutput recipeOutput, ItemLike output, ItemLike input) {
         offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, RecipeCategory.MISC, output, input, 1, 4);
     }
 
-    public static void offer2x2CompactingRecipe(RecipeOutput recipeOutput, RecipeCategory category, RecipeCategory category2, ItemLike output, ItemLike input, int count, int count2) {
-        ShapedRecipeBuilder.shaped(category, output, count)
-                .define('#', input)
+    private static void offer2x2CompactingRecipe(RecipeOutput recipeOutput, RecipeCategory packedCategory,
+                                                  RecipeCategory unpackedCategory, ItemLike packed, ItemLike unpacked,
+                                                  int packedCount, int unpackedCount) {
+        ShapedRecipeBuilder.shaped(packedCategory, packed, packedCount)
+                .define('#', unpacked)
                 .pattern("##")
                 .pattern("##")
-                .unlockedBy(getItemName(input), has(input))
-                .save(recipeOutput, getConversionRecipeName(output, input));
-        ShapelessRecipeBuilder.shapeless(category2, input, count2)
-                .requires(output)
-                .unlockedBy(getItemName(output), has(output))
-                .save(recipeOutput, getConversionRecipeName(input, output));
+                .unlockedBy(getItemName(unpacked), has(unpacked))
+                .save(recipeOutput, getConversionRecipeName(packed, unpacked));
+        ShapelessRecipeBuilder.shapeless(unpackedCategory, unpacked, unpackedCount)
+                .requires(packed)
+                .unlockedBy(getItemName(packed), has(packed))
+                .save(recipeOutput, getConversionRecipeName(unpacked, packed));
     }
 
-    public static void offer2x2CompactingRecipe(RecipeOutput recipeOutput, RecipeCategory category, ItemLike output, ItemLike input) {
+    private static void offer2x2CompactingRecipe(RecipeOutput recipeOutput, RecipeCategory category, ItemLike output, ItemLike input) {
         offer2x2CompactingRecipe(recipeOutput, category, output, input, 1);
     }
 
-    public static void offer2x2CompactingRecipe(RecipeOutput recipeOutput, RecipeCategory category, ItemLike output, ItemLike input, int count) {
+    private static void offer2x2CompactingRecipe(RecipeOutput recipeOutput, RecipeCategory category, ItemLike output, ItemLike input, int count) {
         ShapedRecipeBuilder.shaped(category, output, count)
                 .define('#', input)
                 .pattern("##")
@@ -1150,14 +1139,14 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .save(recipeOutput, getConversionRecipeName(output, input2));
     }
 
-    protected static void shapeless1x1Recipe(RecipeOutput recipeOutput, ItemLike result, ItemLike input, ItemLike input1) {
+    private static void shapeless1x1Recipe(RecipeOutput recipeOutput, ItemLike result, ItemLike input, ItemLike input1) {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, result)
                 .requires(input1).requires(input)
                 .unlockedBy(getItemName(input), has(input))
                 .save(recipeOutput, getConversionRecipeName(result));
     }
 
-    protected static void omenSmithing(RecipeOutput recipeOutput, Item ingredientItem, RecipeCategory category, Item resultItem) {
+    private static void omenSmithing(RecipeOutput recipeOutput, Item ingredientItem, RecipeCategory category, Item resultItem) {
         SmithingTransformRecipeBuilder.smithing(
                         Ingredient.of(PoItems.OMEN_UPGRADE_SMITHING_TEMPLATE), Ingredient.of(ingredientItem), Ingredient.of(PoItems.OMINOUS_FILTHY_INGOT), category, resultItem
                 )
@@ -1165,38 +1154,47 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .save(recipeOutput, PoopSky.MOD_ID + ":" + getItemName(resultItem) + "_smithing");
     }
 
-    protected static void oreSmelting(RecipeOutput recipeOutput, List<ItemLike> ingredients, RecipeCategory category, ItemLike result, float experience, int cookingTime, String group) {
-        oreCooking(recipeOutput, RecipeSerializer.SMELTING_RECIPE, SmeltingRecipe::new, ingredients, category, result, experience, cookingTime, group, "_from_smelting");
+    private static void smelting(RecipeOutput recipeOutput, ItemLike ingredient, RecipeCategory category,
+                                 ItemLike result, float experience, int cookingTime, String group) {
+        cooking(recipeOutput, RecipeSerializer.SMELTING_RECIPE, SmeltingRecipe::new, ingredient,
+                category, result, experience, cookingTime, group, "_from_smelting");
     }
 
-    protected static void oreBlasting(RecipeOutput recipeOutput, List<ItemLike> ingredients, RecipeCategory category, ItemLike result, float experience, int cookingTime, String group) {
-        oreCooking(recipeOutput, RecipeSerializer.BLASTING_RECIPE, BlastingRecipe::new, ingredients, category, result, experience, cookingTime, group, "_from_blasting");
+    private static void blasting(RecipeOutput recipeOutput, ItemLike ingredient, RecipeCategory category,
+                                 ItemLike result, float experience, int cookingTime, String group) {
+        cooking(recipeOutput, RecipeSerializer.BLASTING_RECIPE, BlastingRecipe::new, ingredient,
+                category, result, experience, cookingTime, group, "_from_blasting");
     }
 
-    protected static void oreCooking(RecipeOutput recipeOutput, List<ItemLike> ingredients, RecipeCategory category, ItemLike result, float experience, int cookingTime, String group) {
-        oreCooking(recipeOutput, RecipeSerializer.CAMPFIRE_COOKING_RECIPE, CampfireCookingRecipe::new, ingredients, category, result, experience, cookingTime, group, "_from_campfire_cooking");
+    private static void campfireCooking(RecipeOutput recipeOutput, ItemLike ingredient, RecipeCategory category,
+                                        ItemLike result, float experience, int cookingTime, String group) {
+        cooking(recipeOutput, RecipeSerializer.CAMPFIRE_COOKING_RECIPE, CampfireCookingRecipe::new, ingredient,
+                category, result, experience, cookingTime, group, "_from_campfire_cooking");
     }
 
-    protected static <T extends AbstractCookingRecipe> void oreCooking(RecipeOutput recipeOutput, RecipeSerializer<T> serializer, AbstractCookingRecipe.Factory<T> recipeFactory, List<ItemLike> ingredients, RecipeCategory category, ItemLike result, float experience, int cookingTime, String group, String suffix) {
-        for (ItemLike itemlike : ingredients) {
-            SimpleCookingRecipeBuilder.generic(Ingredient.of(itemlike), category, result, experience, cookingTime, serializer, recipeFactory)
-                    .group(group)
-                    .unlockedBy(getHasName(itemlike), has(itemlike))
-                    .save(recipeOutput, PoopSky.MOD_ID + ":" + getItemName(result) + suffix + "_" + getItemName(itemlike));
-        }
+    private static <T extends AbstractCookingRecipe> void cooking(
+            RecipeOutput recipeOutput, RecipeSerializer<T> serializer, AbstractCookingRecipe.Factory<T> recipeFactory,
+            ItemLike ingredient, RecipeCategory category, ItemLike result, float experience, int cookingTime,
+            String group, String suffix) {
+        SimpleCookingRecipeBuilder.generic(
+                        Ingredient.of(ingredient), category, result, experience, cookingTime, serializer, recipeFactory
+                )
+                .group(group)
+                .unlockedBy(getHasName(ingredient), has(ingredient))
+                .save(recipeOutput, PoopSky.loc(getItemName(result) + suffix + "_" + getItemName(ingredient)));
     }
 
-    protected static void stonecutterResult(RecipeOutput recipeOutput, RecipeCategory category, ItemLike result, ItemLike material) {
+    private static void stonecutterResult(RecipeOutput recipeOutput, RecipeCategory category, ItemLike result, ItemLike material) {
         stonecutterResult(recipeOutput, category, result, material, 1);
     }
 
-    protected static void stonecutterResult(RecipeOutput recipeOutput, RecipeCategory category, ItemLike result, ItemLike material, int resultCount) {
+    private static void stonecutterResult(RecipeOutput recipeOutput, RecipeCategory category, ItemLike result, ItemLike material, int resultCount) {
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), category, result, resultCount)
                 .unlockedBy(getHasName(material), has(material))
                 .save(recipeOutput, getConversionRecipeName(result, material) + "_stonecutting");
     }
 
-    protected static void copySmithingTemplate(RecipeOutput recipeOutput, ItemLike template, ItemLike baseItem, ItemLike item) {
+    private static void copySmithingTemplate(RecipeOutput recipeOutput, ItemLike template, ItemLike baseItem, ItemLike item) {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, template, 2).define('#', item).define('C', baseItem).define('S', template).pattern("#S#").pattern("#C#").pattern("###").unlockedBy(getHasName(template), has(template)).save(recipeOutput);
     }
 
@@ -1204,21 +1202,21 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         nineBlockStorageRecipes(recipeOutput, unpackedCategory, unpacked, packedCategory, packed, getItemName(packed) + "_from_" + getItemName(unpacked), getItemName(unpacked) + "_from_" + getItemName(packed));
     }
 
-    protected static void nineBlockStorageRecipes(RecipeOutput recipeOutput, RecipeCategory unpackedCategory, ItemLike unpacked, RecipeCategory packedCategory, ItemLike packed, String packedName, String unpackedName) {
+    private static void nineBlockStorageRecipes(RecipeOutput recipeOutput, RecipeCategory unpackedCategory, ItemLike unpacked, RecipeCategory packedCategory, ItemLike packed, String packedName, String unpackedName) {
         ShapelessRecipeBuilder.shapeless(unpackedCategory, unpacked, 9).requires(packed).unlockedBy(getHasName(packed), has(packed)).save(recipeOutput, PoopSky.loc(unpackedName));
         ShapedRecipeBuilder.shaped(packedCategory, packed).define('#', unpacked).pattern("###").pattern("###").pattern("###").unlockedBy(getHasName(unpacked), has(unpacked)).save(recipeOutput, PoopSky.loc(packedName));
     }
 
-    protected static void threeBlockStorageRecipes(RecipeOutput recipeOutput, RecipeCategory unpackedCategory, ItemLike unpacked, RecipeCategory packedCategory, ItemLike packed) {
+    private static void threeBlockStorageRecipes(RecipeOutput recipeOutput, RecipeCategory unpackedCategory, ItemLike unpacked, RecipeCategory packedCategory, ItemLike packed) {
         threeBlockStorageRecipes(recipeOutput, unpackedCategory, unpacked, packedCategory, packed, getItemName(packed) + "_from_" + getItemName(unpacked), getItemName(unpacked) + "_from_" + getItemName(packed));
     }
 
-    protected static void threeBlockStorageRecipes(RecipeOutput recipeOutput, RecipeCategory unpackedCategory, ItemLike unpacked, RecipeCategory packedCategory, ItemLike packed, String packedName, String unpackedName) {
+    private static void threeBlockStorageRecipes(RecipeOutput recipeOutput, RecipeCategory unpackedCategory, ItemLike unpacked, RecipeCategory packedCategory, ItemLike packed, String packedName, String unpackedName) {
         ShapelessRecipeBuilder.shapeless(packedCategory, packed, 1).requires(unpacked, 3).unlockedBy(getHasName(unpacked), has(unpacked)).save(recipeOutput, PoopSky.loc(packedName));
         ShapelessRecipeBuilder.shapeless(unpackedCategory, unpacked, 3).requires(packed).unlockedBy(getHasName(packed), has(packed)).save(recipeOutput, PoopSky.loc(unpackedName));
     }
 
-    protected static String getConversionRecipeName(ItemLike result) {
+    private static String getConversionRecipeName(ItemLike result) {
         return PoopSky.MOD_ID + ":" + getItemName(result);
     }
 
@@ -1226,13 +1224,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         return PoopSky.MOD_ID + ":" + getItemName(result) + "_from_" + getItemName(input);
     }
 
-    public static String getModConversionRecipeName(ItemLike result, ItemLike input) {
+    private static String getModConversionRecipeName(ItemLike result, ItemLike input) {
         return getItemName(input) + "_to_" + getItemName(result);
     }
 }
-
-
-
-
-
-
