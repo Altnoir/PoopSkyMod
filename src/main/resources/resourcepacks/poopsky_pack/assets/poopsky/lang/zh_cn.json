@@ -603,7 +603,7 @@
   "poopsky.configuration.compooperCrafting": "巧克力桶合成时保留内容物",
   "poopsky.configuration.compooperCrafting.tooltip": "用堆巧克力桶合成时不消耗桶内内容物",
   "poopsky.configuration.skyFlushToilet": "空中马桶",
-  "poopsky.configuration.skyFlushToilet.tooltip": "替换空中厕所世界预设里的默认厕所",
+  "poopsky.configuration.skyFlushToilet.tooltip": "替换空中卫生间世界预设里的默认巧克力礼盒",
   "poopsky.configuration.desperateWorld": "绝望世界",
   "poopsky.configuration.desperateWorld.tooltip": "启用绝望世界生成。开启后可能造成卡顿",
   "poopsky.configuration.setPoopskyDefault": "启用默认空岛世界类型",
