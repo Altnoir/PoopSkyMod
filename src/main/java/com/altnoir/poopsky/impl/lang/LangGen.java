@@ -343,6 +343,8 @@ public final class LangGen {
         provider.add("jei.poopsky.sea_poop_ball", "Obtained by fishing in Poop Liquid with a chance");
         provider.add("jei.poopsky.sapling_poop_ball", "Sapling Poop Balls are obtained from the Compooper. Eating one grants a sapling.");
         provider.add("jei.poopsky.maggots_seeds", "A Compooper filled with poop can produce Maggots");
+        provider.add("jei.poopsky.cactus", "Cactus");
+        provider.add("jei.poopsky.sugar_cane", "Sugar Cane");
         provider.add("jei.poopsky.fly_desc.white", "Obtained by killing with Ascarid");
         provider.add("jei.poopsky.fly_desc.black", "Obtained by lightning strike");
         provider.add("jei.poopsky.fly_desc.red", "Obtained by feeding chili");

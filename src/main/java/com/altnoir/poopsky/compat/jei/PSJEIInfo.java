@@ -1,12 +1,13 @@
 package com.altnoir.poopsky.compat.jei;
 
-import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.content.item.p.FlyItem;
+import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Items;
 
 public class PSJEIInfo {
     public static void register(IRecipeRegistration registration) {
@@ -25,6 +26,14 @@ public class PSJEIInfo {
         registration.addIngredientInfo(
                 PoItems.MAGGOTS_SEEDS.get(),
                 Component.translatable("jei.poopsky.maggots_seeds")
+        );
+        registration.addIngredientInfo(
+                Items.CACTUS,
+                Component.translatable("jei.poopsky.cactus")
+        );
+        registration.addIngredientInfo(
+                Items.SUGAR_CANE,
+                Component.translatable("jei.poopsky.sugar_cane")
         );
         registration.addIngredientInfo(
                 FlyItem.withType(FlyTypes.WHITE.get()),

@@ -4,7 +4,6 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.compat.jei.create.FanDigestingCategory;
 import com.altnoir.poopsky.content.ToiletType;
-import com.altnoir.poopsky.content.block.p.CompooperBlock;
 import com.altnoir.poopsky.content.recipe.ToiletShapedRecipe;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoComponents;
@@ -45,7 +44,6 @@ public class PSJEIPlugin implements IModPlugin {
 
         registration.addRecipeCategories(
                 new CompooperRecipeCategory(registration.getJeiHelpers(), arrow),
-                new CompooperDisplayRecipeCategory(registration.getJeiHelpers(), arrow),
                 new SieveRecipeCategory(registration.getJeiHelpers(), arrow),
                 new FlyBarrelRecipeCategory(registration.getJeiHelpers(), arrow),
                 new BreedingChestRecipeCategory(registration.getJeiHelpers(), arrow),
@@ -101,19 +99,6 @@ public class PSJEIPlugin implements IModPlugin {
         Level level = Minecraft.getInstance().level;
         RecipeManager recipeManager = level.getRecipeManager();
 
-        registration.addRecipes(CompooperDisplayRecipeCategory.TYPE, List.of(
-                new CompooperDisplayRecipe(
-                        ItemStack.EMPTY,
-                        new ItemStack(PoItems.MAGGOTS_SEEDS.get()),
-                        PoBlocks.URINE_COMPOOPER.get().defaultBlockState()
-                ),
-                new CompooperDisplayRecipe(
-                        new ItemStack(PoItems.POOP.get()),
-                        new ItemStack(PoItems.SAPLING_POOP_BALL.get()),
-                        PoBlocks.COMPOOPER.get().defaultBlockState().setValue(CompooperBlock.POOP_LEVEL, CompooperBlock.READY)
-                )
-        ));
-
         // Load other recipes
         registration.addRecipes(CompooperRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PoRecipes.COMPOOPER.type().get()));
         registration.addRecipes(SieveRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PoRecipes.SIEVE.type().get()));
@@ -132,14 +117,10 @@ public class PSJEIPlugin implements IModPlugin {
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(new ItemStack(PoBlocks.COMPOOPER.get()), CompooperRecipeCategory.TYPE);
-        registration.addRecipeCatalyst(new ItemStack(PoBlocks.URINE_COMPOOPER.get()), CompooperDisplayRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(PoBlocks.URINE_COMPOOPER.get()), CompooperRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(PoBlocks.WATER_COMPOOPER.get()), CompooperRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(PoBlocks.POWDER_SNOW_COMPOOPER.get()), CompooperRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(PoBlocks.LAVA_COMPOOPER.get()), CompooperRecipeCategory.TYPE);
-
-        // Also add catalysts for display recipes
-        registration.addRecipeCatalyst(new ItemStack(PoBlocks.COMPOOPER.get()), CompooperDisplayRecipeCategory.TYPE);
-        registration.addRecipeCatalyst(new ItemStack(PoBlocks.URINE_COMPOOPER.get()), CompooperDisplayRecipeCategory.TYPE);
 
         registration.addRecipeCatalyst(new ItemStack(PoBlocks.SIEVE.get()), SieveRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(PoBlocks.FLY_BARREL.get()), FlyBarrelRecipeCategory.TYPE);
