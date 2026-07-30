@@ -13,13 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
-import java.util.Optional;
-
-public record CompooperRecipe(
-        String fluidType,
-        ItemStack input,
-        ItemStack output
-) implements Recipe<SingleRecipeInput> {
+public record CompooperRecipe(String fluidType, ItemStack input, ItemStack output) implements Recipe<SingleRecipeInput> {
 
     @Override
     public boolean matches(SingleRecipeInput recipeInput, Level level) {

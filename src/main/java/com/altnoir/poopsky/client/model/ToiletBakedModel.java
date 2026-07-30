@@ -7,7 +7,6 @@ import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
@@ -18,6 +17,7 @@ import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.neoforged.neoforge.client.model.BakedModelWrapper;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import net.neoforged.neoforge.client.model.data.ModelProperty;
 import org.jetbrains.annotations.Nullable;
@@ -28,10 +28,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ToiletBakedModel implements BakedModel {
+public class ToiletBakedModel extends BakedModelWrapper<BakedModel> {
     public static final ModelProperty<ToiletType> TOILET_TYPE_PROPERTY = new ModelProperty<>();
 
-    private final BakedModel defaultModel;
     private final BakedModel[] templateModels;
     private final boolean hasLava;
     private final Map<ToiletType, BakedModel[]> variantModels;
@@ -44,7 +43,7 @@ public class ToiletBakedModel implements BakedModel {
             Map<ToiletType, ResourceLocation> variantTextures,
             boolean hasLava
     ) {
-        this.defaultModel = defaultModel;
+        super(defaultModel);
         this.templateModels = templateModels;
         this.variantModels = variantModels;
         this.variantTextures = variantTextures;
@@ -63,7 +62,7 @@ public class ToiletBakedModel implements BakedModel {
     }
 
     private BakedModel selectModel(@Nullable BlockState state, ModelData modelData) {
-        if (state == null) return defaultModel;
+        if (state == null) return originalModel;
         int index = getStateIndex(state);
 
         ToiletType type = modelData.get(TOILET_TYPE_PROPERTY);
@@ -77,7 +76,7 @@ public class ToiletBakedModel implements BakedModel {
         if (templateModels != null && index < templateModels.length && templateModels[index] != null) {
             return templateModels[index];
         }
-        return defaultModel;
+        return originalModel;
     }
 
     private TextureAtlasSprite getVariantSprite(ToiletType type) {
@@ -90,12 +89,12 @@ public class ToiletBakedModel implements BakedModel {
 
     private BakedModel selectParticleModel(ModelData modelData) {
         ToiletType type = modelData.get(TOILET_TYPE_PROPERTY);
-        if (type == null || !variantModels.containsKey(type)) return defaultModel;
+        if (type == null || !variantModels.containsKey(type)) return originalModel;
         BakedModel[] models = variantModels.get(type);
         if (models != null && models.length > 0 && models[0] != null) {
             return models[0];
         }
-        return defaultModel;
+        return originalModel;
     }
 
     private int getYRotation(BlockState state) {
@@ -239,11 +238,6 @@ public class ToiletBakedModel implements BakedModel {
     }
 
     @Override
-    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction face, RandomSource random) {
-        return defaultModel.getQuads(state, face, random, ModelData.EMPTY, null);
-    }
-
-    @Override
     public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction face, RandomSource random, ModelData modelData, @Nullable RenderType renderType) {
         BakedModel selected = selectModel(state, modelData);
         int yRot = getYRotation(state);
@@ -254,39 +248,10 @@ public class ToiletBakedModel implements BakedModel {
     }
 
     @Override
-    public boolean useAmbientOcclusion() {
-        return defaultModel.useAmbientOcclusion();
-    }
-
-    @Override
-    public boolean isGui3d() {
-        return defaultModel.isGui3d();
-    }
-
-    @Override
-    public boolean usesBlockLight() {
-        return defaultModel.usesBlockLight();
-    }
-
-    @Override
-    public boolean isCustomRenderer() {
-        return defaultModel.isCustomRenderer();
-    }
-
-    @Override
-    public TextureAtlasSprite getParticleIcon() {
-        return defaultModel.getParticleIcon(ModelData.EMPTY);
-    }
-
-    @Override
     public TextureAtlasSprite getParticleIcon(ModelData modelData) {
         ToiletType type = modelData.get(TOILET_TYPE_PROPERTY);
         TextureAtlasSprite sprite = type != null ? getVariantSprite(type) : null;
         return sprite != null ? sprite : selectParticleModel(modelData).getParticleIcon(modelData);
     }
 
-    @Override
-    public ItemOverrides getOverrides() {
-        return defaultModel.getOverrides();
-    }
 }

@@ -73,7 +73,7 @@ public class ShitBlock extends Block implements Equipable {
 
     @Override
     protected BlockState mirror(BlockState state, Mirror mirror) {
-        return state.rotate(mirror.getRotation(state.getValue(FACING)));
+        return state.setValue(FACING, mirror.mirror(state.getValue(FACING)));
     }
 
     private static Map<Direction, VoxelShape> computeShapes(VoxelShape northShape) {
