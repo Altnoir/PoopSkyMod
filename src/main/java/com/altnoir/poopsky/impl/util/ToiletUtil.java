@@ -293,9 +293,7 @@ public class ToiletUtil {
                     facing.getStepZ() * 3.0 / 32.0
             );
         }
-        if (state.getBlock() instanceof AbstractToiletBlock) {
-            return Vec3.atBottomCenterOf(pos).add(0.0, 1.0, 0.0);
-        }
+        state.getBlock();
         return Vec3.atBottomCenterOf(pos).add(0.0, 1.0, 0.0);
     }
 }

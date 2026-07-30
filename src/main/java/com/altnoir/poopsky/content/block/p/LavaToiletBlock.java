@@ -87,7 +87,7 @@ public class LavaToiletBlock extends BaseToiletLavaBlock {
     }
 
     public BlockState applyVariant(BlockState state, ToiletType toiletType) {
-        if (toiletType != null && toiletType.category() == ToiletType.Category.HARD) {
+        if (toiletType.category() == ToiletType.Category.HARD) {
             ToiletMode mode = toiletType.isRedstone() ? ToiletMode.REDSTONE : ToiletMode.DEFAULT;
             return state.setValue(TOILET_MODE, mode);
         }

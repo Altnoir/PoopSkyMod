@@ -64,13 +64,13 @@ public class ItemModelGen extends RegistrateItemModelProvider {
                 .texture("layer0", modLoc("item/toilet_plug"));
 
         getBuilder("toilet_plug")
-                .guiLight(GuiLight.FRONT)
                 .customLoader(SeparateTransformsModelBuilder::begin)
                 .base(baseModel)
                 .perspective(ItemDisplayContext.GUI, guiModel)
                 .perspective(ItemDisplayContext.GROUND, guiModel)
                 .perspective(ItemDisplayContext.FIXED, guiModel)
-                .end();
+                .end()
+                .guiLight(GuiLight.FRONT);
     }
 
     private void bigSowordItem() {
