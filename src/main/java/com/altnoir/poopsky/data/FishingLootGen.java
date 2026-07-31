@@ -1,6 +1,7 @@
-package com.altnoir.poopsky.impl.registrate;
+package com.altnoir.poopsky.data;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.init.PoItems;
 import com.tterrag.registrate.providers.ProviderType;
 import net.minecraft.core.registries.Registries;

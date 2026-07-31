@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.impl.entity;
+package com.altnoir.poopsky.data.entity;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.impl.PoTags;

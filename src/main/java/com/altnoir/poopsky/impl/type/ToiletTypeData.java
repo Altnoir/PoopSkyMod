@@ -15,10 +15,10 @@ import net.minecraft.world.level.block.Block;
 import java.nio.file.Path;
 import java.util.concurrent.CompletableFuture;
 
-public class ToiletTypeGen implements DataProvider {
+public class ToiletTypeData implements DataProvider {
     private final PackOutput.PathProvider pathProvider;
 
-    public ToiletTypeGen(PackOutput packOutput) {
+    public ToiletTypeData(PackOutput packOutput) {
         this.pathProvider = packOutput.createPathProvider(
                 PackOutput.Target.DATA_PACK,
                 PoopSky.MOD_ID + "_data/toilet_type"

@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.impl.recipe;
+package com.altnoir.poopsky.data.recipe;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.compat.PoMods;

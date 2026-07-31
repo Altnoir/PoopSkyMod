@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.item.p;
 
 import com.altnoir.poopsky.content.entity.p.SeaPoopBall;
-import com.altnoir.poopsky.impl.sound.PoSoundEvents;
+import com.altnoir.poopsky.data.sound.PoSoundEvents;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
 import net.minecraft.sounds.SoundSource;

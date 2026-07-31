@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.impl.sound;
+package com.altnoir.poopsky.data.sound;
 
 import com.altnoir.poopsky.PoopSky;
 import net.minecraft.data.PackOutput;

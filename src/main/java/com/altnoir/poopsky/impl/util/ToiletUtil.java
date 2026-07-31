@@ -7,7 +7,7 @@ import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.block.p.FlushToiletBlock;
 import com.altnoir.poopsky.impl.PoTags;
-import com.altnoir.poopsky.impl.sound.PoSoundEvents;
+import com.altnoir.poopsky.data.sound.PoSoundEvents;
 import com.altnoir.poopsky.init.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

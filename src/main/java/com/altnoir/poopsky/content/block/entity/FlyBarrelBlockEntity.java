@@ -4,7 +4,7 @@ import com.altnoir.poopsky.client.inventory.FlyBarrelMenu;
 import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.init.PoBlockEntityType;
 import com.altnoir.poopsky.content.recipe.PFlyRecipes;
-import com.altnoir.poopsky.impl.sound.PoSoundEvents;
+import com.altnoir.poopsky.data.sound.PoSoundEvents;
 import com.altnoir.poopsky.content.item.p.FlyItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;

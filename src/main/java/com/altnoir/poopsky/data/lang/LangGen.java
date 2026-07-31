@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.impl.lang;
+package com.altnoir.poopsky.data.lang;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.FlyType;

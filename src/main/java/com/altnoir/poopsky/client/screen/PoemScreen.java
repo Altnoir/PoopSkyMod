@@ -2,7 +2,7 @@ package com.altnoir.poopsky.client.screen;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.client.PoAnimationController;
-import com.altnoir.poopsky.impl.sound.PoSoundEvents;
+import com.altnoir.poopsky.data.sound.PoSoundEvents;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.math.Axis;

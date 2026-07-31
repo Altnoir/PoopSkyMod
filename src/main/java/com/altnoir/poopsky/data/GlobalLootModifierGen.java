@@ -1,6 +1,7 @@
-package com.altnoir.poopsky.impl.registrate;
+package com.altnoir.poopsky.data;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.tterrag.registrate.providers.ProviderType;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.FishingHookPredicate;

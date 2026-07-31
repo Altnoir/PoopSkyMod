@@ -2,7 +2,7 @@ package com.altnoir.poopsky.client.screen;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.client.IntroController;
-import com.altnoir.poopsky.impl.sound.PoSoundEvents;
+import com.altnoir.poopsky.data.sound.PoSoundEvents;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.KeyMapping;

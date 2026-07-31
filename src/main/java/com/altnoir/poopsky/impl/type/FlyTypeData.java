@@ -11,10 +11,10 @@ import net.minecraft.data.PackOutput;
 import java.nio.file.Path;
 import java.util.concurrent.CompletableFuture;
 
-public class FlyTypeGen implements DataProvider {
+public class FlyTypeData implements DataProvider {
     private final Path outputPath;
 
-    public FlyTypeGen(PackOutput packOutput) {
+    public FlyTypeData(PackOutput packOutput) {
         this.outputPath = packOutput.createPathProvider(PackOutput.Target.DATA_PACK, PoopSky.MOD_ID + "_data")
                 .json(PoopSky.loc("fly_types"));
     }
