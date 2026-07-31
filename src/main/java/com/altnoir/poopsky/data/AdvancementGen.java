@@ -58,6 +58,35 @@ public final class AdvancementGen {
                 .addCriterion("poop_block_slide", SlideDownBlockTrigger.TriggerInstance.slidesDownBlock(PoBlocks.POOP_BLOCK.get()))
                 .save(provider, modId("poop_block_slide"));
 
+        AdvancementHolder saltpeter_cluster = Advancement.Builder.advancement()
+                .parent(root)
+                .display(
+                        PoBlocks.SALTPETER_CLUSTER.get(),
+                        Component.translatable("advancements.poopsky.saltpeter_cluster.title"),
+                        Component.translatable("advancements.poopsky.saltpeter_cluster.description"),
+                        null,
+                        AdvancementType.TASK,
+                        true,
+                        true,
+                        false
+                )
+                .addCriterion("saltpeter_cluster", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.SALTPETER_SHARD.get()))
+                .save(provider, modId("saltpeter_cluster"));
+        Advancement.Builder.advancement()
+                .parent(saltpeter_cluster)
+                .display(
+                        Blocks.POWDER_SNOW,
+                        Component.translatable("advancements.poopsky.powder_snow.title"),
+                        Component.translatable("advancements.poopsky.powder_snow.description"),
+                        null,
+                        AdvancementType.TASK,
+                        true,
+                        true,
+                        false
+                )
+                .addCriterion("powder_snow", InventoryChangeTrigger.TriggerInstance.hasItems(Items.POWDER_SNOW_BUCKET))
+                .save(provider, modId("powder_snow"));
+
         AdvancementHolder poop_sapling = Advancement.Builder.advancement()
                 .parent(root)
                 .display(
@@ -157,6 +186,34 @@ public final class AdvancementGen {
                 )
                 .addCriterion("poop_ball", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.POOP_BALL.get()))
                 .save(provider, modId("poop_ball"));
+        AdvancementHolder poolime_block = Advancement.Builder.advancement()
+                .parent(poop_ball)
+                .display(
+                        PoBlocks.POOLIME_BLOCK.get(),
+                        Component.translatable("advancements.poopsky.poolime_block.title"),
+                        Component.translatable("advancements.poopsky.poolime_block.description"),
+                        null,
+                        AdvancementType.TASK,
+                        true,
+                        true,
+                        false
+                )
+                .addCriterion("poolime_block", InventoryChangeTrigger.TriggerInstance.hasItems(PoBlocks.POOLIME_BLOCK.get()))
+                .save(provider, modId("poolime_block"));
+        Advancement.Builder.advancement()
+                .parent(poolime_block)
+                .display(
+                        PoBlocks.BROWN_TILE_BLOCK.get(),
+                        Component.translatable("advancements.poopsky.brown_tile_block.title"),
+                        Component.translatable("advancements.poopsky.brown_tile_block.description"),
+                        null,
+                        AdvancementType.TASK,
+                        true,
+                        true,
+                        false
+                )
+                .addCriterion("brown_tile_block", InventoryChangeTrigger.TriggerInstance.hasItems(PoBlocks.BROWN_TILE_BLOCK.get()))
+                .save(provider, modId("brown_tile_block"));
         Advancement.Builder.advancement()
                 .parent(poop_ball)
                 .display(

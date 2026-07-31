@@ -1,0 +1,33 @@
+{
+  "parent": "poopsky:saltpeter_cluster",
+  "criteria": {
+    "powder_snow": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:powder_snow_bucket"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.poopsky.powder_snow.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:powder_snow_bucket"
+    },
+    "title": {
+      "translate": "advancements.poopsky.powder_snow.title"
+    }
+  },
+  "requirements": [
+    [
+      "powder_snow"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

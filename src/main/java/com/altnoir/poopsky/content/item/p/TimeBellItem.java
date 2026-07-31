@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.content.item.p;
 
 import com.altnoir.poopsky.Config;
-import com.altnoir.poopsky.impl.network.TimeBellFreezePayload;
 import com.altnoir.poopsky.data.sound.PoSoundEvents;
+import com.altnoir.poopsky.impl.network.TimeBellFreezePayload;
 import com.altnoir.poopsky.init.PoEffects;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -47,12 +47,7 @@ public class TimeBellItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
         ItemStack stack = player.getItemInHand(usedHand);
         player.startUsingItem(usedHand);
-
-        // Client: play sound locally so it can be stopped if released early
-        if (level.isClientSide) {
-            level.playLocalSound(player.getX(), player.getY(), player.getZ(),
-                    PoSoundEvents.ITEM_TIME_BELL_OPEN.get(), SoundSource.PLAYERS, 1.0F, 1.0F, false);
-        }
+        player.level().playSound(null, player, PoSoundEvents.ITEM_TIME_BELL_OPEN.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
 
         return InteractionResultHolder.consume(stack);
     }
@@ -95,12 +90,8 @@ public class TimeBellItem extends Item {
 
         int usedTicks = this.getUseDuration(stack, livingEntity) - timeLeft;
 
-        // Released early — stop the sound on client
-        if (usedTicks < DELAY_TICKS && level.isClientSide) {
-            Minecraft.getInstance().getSoundManager().stop(
-                    PoSoundEvents.ITEM_TIME_BELL_OPEN.get().getLocation(),
-                    SoundSource.PLAYERS
-            );
+        if (usedTicks < DELAY_TICKS) {
+            Minecraft.getInstance().getSoundManager().stop(PoSoundEvents.ITEM_TIME_BELL_OPEN.get().getLocation(), SoundSource.PLAYERS);
         }
     }
 

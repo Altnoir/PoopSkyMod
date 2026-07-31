@@ -154,7 +154,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
 
     private void buildItemRecipes(RecipeOutput recipeOutput) {
         offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.SALTPETER_BLOCK, PoItems.SALTPETER_SHARD);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PoItems.JINKELA)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PoItems.JINKELA, 4)
                 .requires(PoItems.POOP)
                 .requires(PoItems.UREA)
                 .requires(PoItems.SALTPETER_SHARD)
@@ -476,7 +476,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
     }
 
     private void buildStonecuttingRecipes(RecipeOutput recipeOutput) {
-        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.STOOL, PoBlocks.DRIED_POOP_BLOCK, 2);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.STOOL, PoBlocks.DRIED_POOP_BLOCK, 4);
 
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_PIECE, PoBlocks.POOP_BLOCK, 8);
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_FENCE, PoBlocks.POOP_BLOCK, 2);

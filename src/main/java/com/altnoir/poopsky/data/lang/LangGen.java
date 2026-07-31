@@ -41,6 +41,9 @@ public final class LangGen {
 
     private static void addAdvancements() {
         addAdvancement("root", "POOPSKY", "It all began with a pile of poop");
+        addAdvancement("poop_block_slide", "Master of Poop Sliding", "Slide on a poop block");
+        addAdvancement("saltpeter_cluster", "Potassium Nitrate", "Place a Poop Block below a Toilet, and Saltpeter Clusters will randomly grow around it\nSaltpeter Clusters can be matured with Poop");
+        addAdvancement("powder_snow", "Chemical Ice Making", "When Saltpeter Clusters are waterlogged, they freeze. When attached to ice and waterlogged, they turn into Powder Snow");
         addAdvancement("poop_sapling", "Fecalith", "Grow a Poop Block to obtain a Poop Sapling");
         addAdvancement("sapling", "Going Green", "Obtain a Sapling Poop Ball from composting, then use it");
         addAdvancement("maggots", "Maggotchain", "Obtain Maggots from a Compooper filled with poop\nMaggots can be planted as crops and crafted into blocks");
@@ -59,7 +62,8 @@ public final class LangGen {
         addAdvancement("poolime_maggots_block", "Poolime Maggot Block", "Craft a Poolime Maggot Block using Poop Blocks");
         addAdvancement("pooop_tnt", "POP", "A special TNT that can crush cobblestone and gravel, with partial destructive power");
         addAdvancement("poop_ball", "Jinkela!", "Kill a Poolime to obtain a Poop Ball");
-        addAdvancement("poop_block_slide", "Master of Poop Sliding", "Slide on a poop block");
+        addAdvancement("poolime_block", "Artificial Slime Block", "Crafted from Poop Balls, can be dyed to become Slime Blocks");
+        addAdvancement("brown_tile_block", "Clean and Sanitary", "Smelt Poolime Blocks to obtain Brown Tiles, which can be dyed into other color variants");
         addAdvancement("pointed_dripstone", "Artificial Dirt", "Place a solid block under a Poop Block, then place a Pointed Dripstone under the solid block and wait for it to naturally turn into Dirt");
         addAdvancement("roundworm", "Parasite", "Roundworms can be grown with bone meal just like glow berries");
         addAdvancement("sea_poop_ball", "A Crappy Catch", "Fish in Poop Liquid to obtain a Sea Poop Ball");
@@ -353,7 +357,7 @@ public final class LangGen {
         provider.add("jei.poopsky.fly_desc.dragon_fruit", "Obtained by feeding King of Dragon Fruit");
         provider.add("jei.poopsky.urea", "Place a urine-filled Compooper on a campfire and wait for it to turn into a water-filled Compooper");
         provider.add("jei.poopsky.saltpeter_shard", "Obtained by mining saltpeter clusters.\nPlacing a poop block below a toilet has a chance to spawn saltpeter clusters nearby");
-        provider.add("jei.poopsky.saltpeter_cluster", "Turns into ice when waterlogged");
+        provider.add("jei.poopsky.saltpeter_cluster", "When waterlogged, it turns into ice. When attached to ice and waterlogged, it turns into Powder Snow");
     }
 
     private static void addCreate() {
