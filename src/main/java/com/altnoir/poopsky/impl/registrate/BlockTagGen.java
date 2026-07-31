@@ -160,12 +160,24 @@ public final class BlockTagGen {
         PoBlocks.WALL_TAG_FAMILIES.forEach(family -> tag(BlockTags.WALLS).add(family.wall().get()));
 
         tag(BlockTags.LOGS)
-                .add(PoBlocks.POOP_LOG.get())
-                .add(PoBlocks.POOP_WOOD.get())
-                .add(PoBlocks.POOP_EMPTY_LOG.get())
+                .add(
+                        PoBlocks.POOP_LOG.get(),
+                        PoBlocks.POOP_WOOD.get(),
+                        PoBlocks.POOP_EMPTY_LOG.get(),
+                        PoBlocks.STRIPPED_POOP_LOG.get(),
+                        PoBlocks.STRIPPED_POOP_WOOD.get(),
+                        PoBlocks.STRIPPED_POOP_EMPTY_LOG.get(),
+                        PoBlocks.GINKGO_LOG.get(),
+                        PoBlocks.GINKGO_WOOD.get(),
+                        PoBlocks.STRIPPED_GINKGO_LOG.get(),
+                        PoBlocks.STRIPPED_GINKGO_WOOD.get()
+                );
+        tag(Tags.Blocks.STRIPPED_LOGS)
                 .add(PoBlocks.STRIPPED_POOP_LOG.get())
+                .add(PoBlocks.STRIPPED_GINKGO_LOG.get());
+        tag(Tags.Blocks.STRIPPED_WOODS)
                 .add(PoBlocks.STRIPPED_POOP_WOOD.get())
-                .add(PoBlocks.STRIPPED_POOP_EMPTY_LOG.get());
+                .add(PoBlocks.STRIPPED_GINKGO_WOOD.get());
         tag(BlockTags.LOGS_THAT_BURN).addTag(PoTags.Blocks.GINKGO_LOGS);
         tag(BlockTags.PLANKS).add(PoBlocks.GINKGO_PLANKS.get());
         tag(BlockTags.WOODEN_STAIRS).add(PoBlocks.GINKGO_STAIRS.get());

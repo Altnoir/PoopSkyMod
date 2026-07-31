@@ -7,10 +7,12 @@ import com.altnoir.poopsky.init.PoItems;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateItemTagsProvider;
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
 
 public final class ItemTagGen {
@@ -33,16 +35,9 @@ public final class ItemTagGen {
                 .add(PoBlocks.SHIT.asItem())
                 .add(PoBlocks.CHILI_SHIT.asItem())
                 .add(PoBlocks.GOLDEN_SHIT.asItem());
-        tag(PoTags.Items.TOILET_BLOCKS)
-                .add(PoBlocks.WOODEN_TOILET.get().asItem())
-                .add(PoBlocks.HARD_TOILET.get().asItem())
-                .add(PoBlocks.FLUSH_TOILET.get().asItem())
-                .add(PoBlocks.GOLDEN_FLUSH_TOILET.get().asItem());
-        tag(PoTags.Items.GINKGO_LOGS)
-                .add(PoBlocks.GINKGO_LOG.asItem())
-                .add(PoBlocks.STRIPPED_GINKGO_LOG.asItem())
-                .add(PoBlocks.GINKGO_WOOD.asItem())
-                .add(PoBlocks.STRIPPED_GINKGO_WOOD.asItem());
+        copy(PoTags.Blocks.TOILET_BLOCKS, PoTags.Items.TOILET_BLOCKS);
+        copy(PoTags.Blocks.FLUSH_TOILET_BLOCKS, PoTags.Items.FLUSH_TOILET_BLOCKS);
+        copy(PoTags.Blocks.GINKGO_LOGS, PoTags.Items.GINKGO_LOGS);
 
         var tileBlocks = tag(PoTags.Items.TILE_BLOCKS);
         var tileStairs = tag(PoTags.Items.TILE_STAIRS);
@@ -93,26 +88,30 @@ public final class ItemTagGen {
 
         // 原版Tags
         tag(Tags.Items.FOODS)
-                .addTag(PoTags.Items.POOPS)
-                .add(PoItems.SAPLING_POOP_BALL.get())
-                .add(PoItems.BAKED_MAGGOTS.get())
-                .add(PoItems.MAGGOTS_SEEDS.get())
-                .add(PoItems.ROUNDWORM.get())
-                .add(PoItems.POOP_BREAD.get())
-                .add(PoItems.POOP_DUMPLINGS.get())
-                .add(PoItems.POOP_MOONCAKE.get())
-                .add(PoItems.CHILI_POOP_MOONCAKE.get())
-                .add(PoItems.GOLDEN_POOP_MOONCAKE.get())
-                .add(PoItems.POOP_SOUP.get())
-                .add(PoItems.POOP_VEGETABLE_STICKS.get())
-                .add(PoItems.POOBURGER_MEAT.get())
-                .add(PoItems.POOBURGER.get())
-                .add(PoItems.POOP_PASTA.get())
-                .add(PoItems.POODDING.get())
-                .add(PoItems.DRAGON_BREATH_CHILI.get())
-                .add(PoItems.KING_OF_DRAGON_FRUIT.get())
-                .add(PoItems.URINE_BOTTLE.get())
-                .add(PoBlocks.POOP_CAKE.get().asItem());
+                .add(
+                        PoItems.POOP.get(),
+                        PoItems.CHILI_POOP.get(),
+                        PoItems.GOLDEN_POOP.get(),
+                        PoItems.SAPLING_POOP_BALL.get(),
+                        PoItems.BAKED_MAGGOTS.get(),
+                        PoItems.MAGGOTS_SEEDS.get(),
+                        PoItems.ROUNDWORM.get(),
+                        PoItems.POOP_BREAD.get(),
+                        PoItems.POOP_DUMPLINGS.get(),
+                        PoItems.POOP_MOONCAKE.get(),
+                        PoItems.CHILI_POOP_MOONCAKE.get(),
+                        PoItems.GOLDEN_POOP_MOONCAKE.get(),
+                        PoItems.POOP_SOUP.get(),
+                        PoItems.POOP_VEGETABLE_STICKS.get(),
+                        PoItems.POOBURGER_MEAT.get(),
+                        PoItems.POOBURGER.get(),
+                        PoItems.POOP_PASTA.get(),
+                        PoItems.POODDING.get(),
+                        PoItems.DRAGON_BREATH_CHILI.get(),
+                        PoItems.KING_OF_DRAGON_FRUIT.get(),
+                        PoItems.URINE_BOTTLE.get(),
+                        PoBlocks.POOP_CAKE.get().asItem()
+                );
 
         tag(Tags.Items.FOODS_FOOD_POISONING)
                 .addTag(PoTags.Items.POOPS)
@@ -218,19 +217,10 @@ public final class ItemTagGen {
                 .add(PoBlocks.POOP_LEAVES_IRON.asItem())
                 .add(PoBlocks.POOP_LEAVES_GOLD.asItem())
                 .add(PoBlocks.GINKGO_LEAVES.asItem());
-        tag(ItemTags.LOGS)
-                .add(
-                        PoBlocks.POOP_LOG.asItem(),
-                        PoBlocks.POOP_WOOD.asItem(),
-                        PoBlocks.POOP_EMPTY_LOG.asItem(),
-                        PoBlocks.STRIPPED_POOP_LOG.asItem(),
-                        PoBlocks.STRIPPED_POOP_WOOD.asItem(),
-                        PoBlocks.STRIPPED_POOP_EMPTY_LOG.asItem(),
-                        PoBlocks.GINKGO_LOG.asItem(),
-                        PoBlocks.GINKGO_WOOD.asItem(),
-                        PoBlocks.STRIPPED_GINKGO_LOG.asItem(),
-                        PoBlocks.STRIPPED_GINKGO_WOOD.asItem()
-                );
+
+        copy(BlockTags.LOGS, ItemTags.LOGS);
+        copy(Tags.Blocks.STRIPPED_LOGS, Tags.Items.STRIPPED_LOGS);
+        copy(Tags.Blocks.STRIPPED_WOODS, Tags.Items.STRIPPED_WOODS);
         tag(ItemTags.LOGS_THAT_BURN).addTag(PoTags.Items.GINKGO_LOGS);
         tag(ItemTags.PLANKS).add(PoBlocks.GINKGO_PLANKS.asItem());
         tag(ItemTags.WOODEN_STAIRS).add(PoBlocks.GINKGO_STAIRS.asItem());
@@ -270,5 +260,9 @@ public final class ItemTagGen {
 
     private static IntrinsicHolderTagsProvider.IntrinsicTagAppender<Item> tag(TagKey<Item> tag) {
         return provider.addTag(tag);
+    }
+
+    private static void copy(TagKey<Block> blockTag, TagKey<Item> itemTag) {
+        provider.copy(blockTag, itemTag);
     }
 }

@@ -48,6 +48,7 @@ public class PoTags {
     public interface Items {
         TagKey<Item> POOPS = create("poops");
         TagKey<Item> TOILET_BLOCKS = create("toilet_blocks");
+        TagKey<Item> FLUSH_TOILET_BLOCKS = create("flush_toilet_blocks");
         TagKey<Item> CAN_COMPOSTABLE = create("can_compooper");
         TagKey<Item> GINKGO_LOGS = create("ginkgo_logs");
         TagKey<Item> TILE_BLOCKS = create("tile_blocks");
