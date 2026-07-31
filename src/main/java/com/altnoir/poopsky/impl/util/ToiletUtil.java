@@ -6,8 +6,8 @@ import com.altnoir.poopsky.content.block.entity.FlushToiletBlockEntity;
 import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.block.p.FlushToiletBlock;
-import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.data.sound.PoSoundEvents;
+import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.init.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -135,7 +135,7 @@ public class ToiletUtil {
                 poopTimeSetter.accept(gameTime);
                 return;
             }
-            player.awardStat(PoStats.POOP_STATS.get());
+            player.awardStat(PoStats.POOP_STATS.get(), 3);
             player.causeFoodExhaustion(hasIncontinence ? 0.2F : 4.0F);
         }
 
@@ -254,27 +254,27 @@ public class ToiletUtil {
             linkedPos = be.getLinkedPos();
         }
         if (linkedDim == null || linkedPos == null) return;
-        
+
         var server = level.getServer();
         if (server == null) return;
-        
+
         var targetDimension = ResourceLocation.tryParse(linkedDim);
         if (targetDimension == null) return;
-        
+
         var targetWorld = server.getLevel(ResourceKey.create(Registries.DIMENSION, targetDimension));
         if (targetWorld == null) return;
-        
+
         targetWorld.getChunk(linkedPos);
         Vec3 destination = getToiletPitDestination(targetWorld, linkedPos);
-        
+
         if (entity.isVehicle() && entity.getControllingPassenger() != null) {
             entity.getControllingPassenger().teleportTo(targetWorld, destination.x, destination.y, destination.z, Set.of(), entity.getYRot(), entity.getXRot());
         }
         entity.teleportTo(targetWorld, destination.x, destination.y, destination.z, Set.of(), entity.getYRot(), entity.getXRot());
-        
+
         var pitch = targetWorld.random.nextFloat() + 0.1F;
         targetWorld.playSound(null, destination.x, destination.y, destination.z, SoundEvents.MUD_BREAK, SoundSource.PLAYERS, 1.0F, pitch);
-        
+
         var bounce = Math.sqrt(2 * 0.08 * fallDistance) * 0.85;
         server.tell(new TickTask(server.getTickCount() + 1, () -> {
             entity.setDeltaMovement(entity.getDeltaMovement().x, bounce, entity.getDeltaMovement().z);

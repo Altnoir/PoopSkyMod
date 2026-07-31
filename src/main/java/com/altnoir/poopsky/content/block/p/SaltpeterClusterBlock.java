@@ -36,10 +36,20 @@ public class SaltpeterClusterBlock extends AmethystClusterBlock implements Bonem
 
     @Override
     protected BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+        isDone((Level) level, pos, state);
+        return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
+    }
+
+    @Override
+    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
+        isDone(level, pos, state);
+        super.onPlace(state, level, pos, oldState, movedByPiston);
+    }
+
+    private void isDone(Level level, BlockPos pos, BlockState state) {
         if (!level.isClientSide() && state.is(PoBlocks.SALTPETER_CLUSTER.get()) && state.getValue(BlockStateProperties.WATERLOGGED)) {
             level.scheduleTick(pos, this, 4);
         }
-        return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
     }
 
     @Override
