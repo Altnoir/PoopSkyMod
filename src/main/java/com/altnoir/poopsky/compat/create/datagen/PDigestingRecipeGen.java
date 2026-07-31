@@ -34,6 +34,5 @@ public class PDigestingRecipeGen extends DigestingRecipeGen implements IConditio
         convert(Items.BREAD, PoItems.POOP_BREAD.get()).register(conditionalOutput);
         convert(Items.CAKE, PoBlocks.POOP_CAKE.get()).register(conditionalOutput);
         convert(Items.POPPY, Items.WITHER_ROSE).register(conditionalOutput);
-        convert(Items.POWDER_SNOW_BUCKET, PoItems.URINE_BUCKET.get()).register(conditionalOutput);
     }
 }
