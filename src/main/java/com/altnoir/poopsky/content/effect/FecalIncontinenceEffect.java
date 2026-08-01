@@ -93,8 +93,14 @@ public class FecalIncontinenceEffect extends MobEffect {
             if (!dropPoop) {
                 var poop = new ItemEntity(level, entity.getX(), entity.getY() + 0.1, entity.getZ(), finalStack);
 
-                if (amplifier > 1) {
-                    entity.setDeltaMovement(entity.getDeltaMovement().add(new Vec3(0, 0.125, 0)));
+                if (amplifier >= 1) {
+                    if (entity.isFallFlying()) {
+                        Vec3 look = entity.getLookAngle();
+                        double speed = 0.5 + amplifier * 0.025;
+                        entity.push(look.x * speed, look.y * speed, look.z * speed);
+                    } else {
+                        entity.setDeltaMovement(entity.getDeltaMovement().add(new Vec3(0, 0.125, 0)));
+                    }
                     entity.fallDistance = 0;
                     entity.hurtMarked = true;
                 }
