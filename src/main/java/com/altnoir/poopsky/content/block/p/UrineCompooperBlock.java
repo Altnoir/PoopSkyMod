@@ -5,6 +5,7 @@ import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.data.sound.PoSoundEvents;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
+import com.altnoir.poopsky.init.PoParticles;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -89,6 +90,31 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
         }
     }
 
+    public static void extractProduce(Entity entity, BlockState state, Level level, BlockPos pos) {
+        if (!level.isClientSide) {
+            var vec3 = Vec3.atLowerCornerWithOffset(pos, 0.5, 1.01, 0.5).offsetRandom(level.random, 0.7F);
+            var itementity = new ItemEntity(level, vec3.x(), vec3.y(), vec3.z(), new ItemStack(PoItems.MAGGOTS_SEEDS.get()));
+            itementity.setDefaultPickUpDelay();
+            level.addFreshEntity(itementity);
+            if (level instanceof ServerLevel serverLevel) {
+                serverLevel.sendParticles(
+                        PoParticles.POOP_PARTICLE.get(),
+                        pos.getX() + 0.5,
+                        pos.getY() + 0.9375,
+                        pos.getZ() + 0.5,
+                        8,
+                        0.5,
+                        0.2,
+                        0.5,
+                        0.1
+                );
+            }
+        }
+
+        empty(entity, state, level, pos);
+        level.playSound(null, pos, SoundEvents.PLAYER_SPLASH, SoundSource.BLOCKS, 0.5F, 1.0F);
+    }
+
     @Override
     protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if (level.isClientSide || !isEntityInsideContent(pos, state, entity)) {
@@ -106,19 +132,33 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
         }
     }
 
-    public static void extractProduce(Entity entity, BlockState state, Level level, BlockPos pos) {
-        if (!level.isClientSide) {
-            var vec3 = Vec3.atLowerCornerWithOffset(pos, 0.5, 1.01, 0.5).offsetRandom(level.random, 0.7F);
-            var itementity = new ItemEntity(level, vec3.x(), vec3.y(), vec3.z(), new ItemStack(PoItems.MAGGOTS_SEEDS.get()));
-            itementity.setDefaultPickUpDelay();
-            level.addFreshEntity(itementity);
-
-            spawnExtractParticles((ServerLevel) level, pos);
+    @Override
+    protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
+        if (!level.isClientSide && state.getValue(LEVEL) == MAX_LEVEL && isHot((ServerLevel) level, pos)) {
+            level.scheduleTick(pos, this, 80);
         }
+        super.onPlace(state, level, pos, oldState, movedByPiston);
     }
 
-    private static void spawnExtractParticles(ServerLevel level, BlockPos pos) {
-        int waterColor = 0x3F76E4;
+    @Override
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
+        if (!level.isClientSide && neighborPos.equals(pos.below()) && state.getValue(LEVEL) == MAX_LEVEL && isHot((ServerLevel) level, pos)) {
+            level.scheduleTick(pos, this, 80);
+        }
+        super.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston);
+    }
+
+    @Override
+    protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        if (state.getValue(LEVEL) != MAX_LEVEL || !isHot(level, pos)) {
+            return;
+        }
+        purification(level, pos);
+        super.tick(state, level, pos, random);
+    }
+
+    private static void purification(ServerLevel level, BlockPos pos) {
+        int waterColor = level.getBiome(pos).value().getWaterColor();
         var red = (waterColor >> 16 & 0xFF) / 255.0F;
         var green = (waterColor >> 8 & 0xFF) / 255.0F;
         var blue = (waterColor & 0xFF) / 255.0F;
@@ -132,6 +172,7 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
                 0.3, 0.1, 0.3,
                 0.02
         );
+        level.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1.0F, 1.0F);
 
         var vec3 = Vec3.atLowerCornerWithOffset(pos, 0.5, 0.5, 0.5).offsetRandom(level.random, 0.3F);
         var itemEntity = new ItemEntity(level, vec3.x(), vec3.y(), vec3.z(), new ItemStack(PoItems.UREA.get(), 8));
