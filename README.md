@@ -1,77 +1,25 @@
-﻿# PoopSky
+﻿![Cover.png](Cover.png)
 
-> It all began with a pile of poop
+# PoopSky
 
-A Minecraft mod for NeoForge 1.21.1 that adds a variety of poop-themed blocks, items, entities, world generation, and more.
+[![GitHub Release](https://img.shields.io/github/v/release/Altnoir/PoopSkyMod)](https://github.com/Altnoir/PoopSkyMod/releases/)
+[![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/Altnoir/PoopSkyMod/total)](https://github.com/Altnoir/PoopSkyMod/releases/latest)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Altnoir/PoopSkyMod/build.yml)](https://github.com/Altnoir/PoopSkyMod/actions/workflows/build.yml)
 
-## Features
+A Minecraft mod that introduces many new Poop and items.
 
-### Blocks
-- **Poop Blocks** — Raw Poop Block, Poop Block, Poolime Poop Block, Dried Poop Block, Golden Poop Block, Chili Poop Block
-- **Building Blocks** — Poop Bricks, Poop Brick Slab, Poop Brick Stairs, Poop Brick Wall, Vertical Slab
-- **Poop Trees** — Poop Log, Poop Empty Log, Poop Leaves, Poop Leaves (Gold/Iron variants), Raw Sapling Block
-- **Toilets** — Toilet, Rainbow Toilet, Golden Toilet, Lava Toilet, colorful Concrete Toilets
-- **Compooper** — Compooper, Water Compooper, Lava Compooper, Powder Snow Compooper, Urine Compooper
-- **Machines** — Breeding Chest, Fly Barrel, Sieve, Placer
-- **Other** — POP, Poop Cake, Poop Candle Cake, Poolime Block, Maggots Block, Roundworm Vines, Chair, Raw Sea Block, Raw Wither Block
+## Build
 
-### Items
-- **Food** — Poop, Poop Bread, Poop Soup, Poop Pasta, Poop Dumplings, Poop Mooncake, Poop Vegetable Sticks, Pooburger, Pooburger Meat, Poodding
-- **Weapons & Tools** — Milos Sword, various Poop Balls (Poop Ball, Sea Poop Ball, Wither Poop Ball, Sapling Ball)
-- **Armor** — Omen Armor (Helmet, Chestplate, Leggings, Boots) with full trim support
-- **Equipment** — Fly Item, Time Bell, Urine Bottle, Toilet Linker, Toilet Plug
-- **Templates** — Omen Upgrade Smithing Template
+1. Use [IntelliJ IDEA](https://www.jetbrains.com/idea/) & [JDK 21](https://adoptium.net/temurin/releases/?os=any&version=21)
+2. Run `gradlew runData`
+3. Run `gradlew runClient`
 
-### Entities
-- **Poolime** — A friendly slime-like creature
-- **Fly** — A rideable flying entity
-- **Chair** — Sittable chair entity
-- **Toilet** — Rideable toilet with plug system
-- **Projectiles** — Poop Ball, Sea Poop Ball, Wither Poop Ball
-- **POP** — Explosive poop projectile
+## Download
 
-### Fluids
-- **Urine** — Custom fluid with interactions with Water, Lava, and Poop Blocks
+(TBD)
 
-### World Generation
-- **Poop Islands** — Custom floating island structures
-- **Poop Trees** — Custom tree generation with mega foliage
-- **Void Chunk Generator** — Custom void world type
+## Credits
 
-### Villagers
-- Custom villager profession with unique trades and behaviors
-
-### Recipes
-- **Sieve** — Process blocks through sieving
-- **POP Explosion** — Explosion-based crafting
-- **Fly Barrel** — Fly-type output recipes
-- **Breeding Chest** — Fly mutation recipes
-- **Anal Pressing** — Area block conversion recipes
-- **Toilet Shaped** — Toilet crafting recipes that preserve toilet type data
-
-## Mod Compatibility
-
-- **Create** — Custom fan processing recipes, kinetic and logistics integration
-- **JEI** — Full recipe category support for all custom recipes
-- **Touhou Little Maid** — Maid toilet interaction plugin
-- **KubeJS** — Scripting support (compile-only)
-
-## Dependencies
-
-| Dependency         | Version | Required |
-|--------------------|---------|----------|
-| Sable              | 1.6.0   | Optional |
-| Create             | 6.0.8+  | Optional |
-| JEI                | 19.27+  | Optional |
-| Touhou Little Maid | —       | Optional |
-
-## License
-
-[code](LICENSE-CODE): MIT
-[art](LICENSE-ART): CC-BY-NC 4.0
-
-## Authors
-
-- **Altnoir**
-- **lonelyicer**
-- **Wulian233**
+- [Create](https://github.com/Creators-of-Create/Create/)
+- [Just Enough Items](https://github.com/mezz/JustEnoughItems)
+- [Registrate](https://github.com/tterrag1098/Registrate)
