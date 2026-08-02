@@ -6,6 +6,7 @@ import com.altnoir.poopsky.init.PoBlocks;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -17,6 +18,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
@@ -50,19 +52,28 @@ public class PowderSnowCompooperBlock extends AbstractCompooperBlock {
 
     @Override
     protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        if (isEntityInsideContent(pos, state, entity)) {
-            if (entity instanceof ItemEntity itemEntity) {
-                ItemStack stack = itemEntity.getItem();
+        if (level.isClientSide || !isEntityInsideContent(pos, state, entity)) {
+            return;
+        }
+        if (entity.isOnFire()) {
+            entity.clearFire();
+            level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 1.0F);
+            if (entity.mayInteract(level, pos)) {
+                BlockState newState = PoBlocks.WATER_COMPOOPER.get().defaultBlockState().setValue(LEVEL, 2);
+                level.setBlockAndUpdate(pos, newState);
+                level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(newState));
+            }
+            return;
+        }
+        if (entity instanceof ItemEntity itemEntity) {
+            ItemStack stack = itemEntity.getItem();
 
-                // Try recipe-based processing first
-                if (processRecipe(CompooperType.POWDER_SNOW, itemEntity, state, level, pos, SoundEvents.FIREWORK_ROCKET_BLAST)) {
-                    return;
-                }
+            if (processRecipe(CompooperType.POWDER_SNOW, itemEntity, state, level, pos, SoundEvents.FIREWORK_ROCKET_BLAST)) {
+                return;
+            }
 
-                // Special behaviors that are not recipe-based
-                if (stack.is(Items.BREEZE_ROD)) {
-                    entity.setDeltaMovement(entity.getDeltaMovement().x, entity.getGravity() + 0.1, entity.getDeltaMovement().z);
-                }
+            if (stack.is(Items.BREEZE_ROD)) {
+                entity.setDeltaMovement(entity.getDeltaMovement().x, entity.getGravity() + 0.1, entity.getDeltaMovement().z);
             }
         }
     }

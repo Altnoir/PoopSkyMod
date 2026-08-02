@@ -155,7 +155,12 @@ public final class ItemTagGen {
         tag(ItemTags.STONE_TOOL_MATERIALS)
                 .add(Items.MOSSY_COBBLESTONE);
 
+        tag(ItemTags.HOES).add(PoItems.SPALL_HOE.get());
+        tag(ItemTags.AXES).add(PoItems.SPALL_AXE.get());
+        tag(ItemTags.PICKAXES).add(PoItems.SPALL_PICKAXE.get());
+        tag(ItemTags.SHOVELS).add(PoItems.SPALL_SHOVEL.get());
         tag(ItemTags.SWORDS).add(
+                PoItems.SPALL_SWORD.get(),
                 PoItems.MILOS_SWORD.get(),
                 PoItems.TOILET_PLUG.get(),
                 PoItems.TOILET_PLUG_WAND.get()
