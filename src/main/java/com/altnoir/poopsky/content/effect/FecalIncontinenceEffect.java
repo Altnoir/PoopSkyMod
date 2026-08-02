@@ -56,32 +56,37 @@ public class FecalIncontinenceEffect extends MobEffect {
             var level = (ServerLevel) entity.level();
             BlockPos entityPos = entity.blockPosition();
 
-            BlockState compooperState = level.getBlockState(entityPos);
-            if (compooperState.getBlock() instanceof CompooperBlock) {
-                BlockState state = level.getBlockState(entityPos);
-                int pl = state.getValue(CompooperBlock.POOP_LEVEL);
-                if (pl < 7 && CompooperBlock.isEntityInsideContent(entityPos, entity)) {
-                    BlockState newState = state.setValue(CompooperBlock.POOP_LEVEL, pl + 1);
-                    level.setBlockAndUpdate(entityPos, newState);
-                    level.gameEvent(GameEvent.BLOCK_CHANGE, entityPos, GameEvent.Context.of(entity, newState));
-                    level.levelEvent(1500, entityPos, 1);
-                    return;
+            if (!entity.hasEffect(PoEffects.INTESTINAL_SPASM)) {
+                BlockState compooperState = level.getBlockState(entityPos);
+                if (compooperState.getBlock() instanceof CompooperBlock) {
+                    BlockState state = level.getBlockState(entityPos);
+                    int pl = state.getValue(CompooperBlock.POOP_LEVEL);
+                    if (pl < 7 && CompooperBlock.isEntityInsideContent(entityPos, entity)) {
+                        BlockState newState = state.setValue(CompooperBlock.POOP_LEVEL, pl + 1);
+                        level.setBlockAndUpdate(entityPos, newState);
+                        level.gameEvent(GameEvent.BLOCK_CHANGE, entityPos, GameEvent.Context.of(entity, newState));
+                        level.levelEvent(1500, entityPos, 1);
+                        return;
+                    }
                 }
             }
 
             Item stack = PoItems.POOP.get();
 
-            boolean dropPoop = BlockPos.betweenClosedStream(entityPos.offset(0, -1, 0), entityPos.offset(0, 1, 0))
-                    .anyMatch(targetPos -> {
-                        boolean applied = BoneMealItem.applyBonemeal(new ItemStack(PoItems.POOP.get()), level, targetPos, null)
-                                || BoneMealItem.growWaterPlant(new ItemStack(PoItems.POOP.get()), level, targetPos, null);
+            boolean dropPoop = false;
+            if (!entity.hasEffect(PoEffects.INTESTINAL_SPASM)) {
+                dropPoop = BlockPos.betweenClosedStream(entityPos.offset(0, -1, 0), entityPos.offset(0, 1, 0))
+                        .anyMatch(targetPos -> {
+                            boolean applied = BoneMealItem.applyBonemeal(new ItemStack(PoItems.POOP.get()), level, targetPos, null)
+                                    || BoneMealItem.growWaterPlant(new ItemStack(PoItems.POOP.get()), level, targetPos, null);
 
-                        if (applied) {
-                            BoneMealItem.addGrowthParticles(level, targetPos, 15);
-                            level.levelEvent(1505, entityPos, 15);
-                        }
-                        return applied;
-                    });
+                            if (applied) {
+                                BoneMealItem.addGrowthParticles(level, targetPos, 15);
+                                level.levelEvent(1505, entityPos, 15);
+                            }
+                            return applied;
+                        });
+            }
 
             if (entity.hasEffect(PoEffects.INTESTINAL_SPASM)) {
                 stack = PoItems.CHILI_POOP.get();
