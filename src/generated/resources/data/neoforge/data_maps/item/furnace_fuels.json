@@ -93,6 +93,9 @@
     "poopsky:poop_wall": {
       "burn_time": 800
     },
+    "poopsky:shit": {
+      "burn_time": 600
+    },
     "poopsky:stool": {
       "burn_time": 800
     },

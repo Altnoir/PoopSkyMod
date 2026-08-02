@@ -22,6 +22,7 @@ public final class DataMapGen {
     private static void generate(RegistrateDataMapProvider provider) {
         provider.builder(NeoForgeDataMaps.FURNACE_FUELS)
                 .add(PoItems.POOP.getId(), new FurnaceFuel(200), false)
+                .add(PoBlocks.SHIT.getId(), new FurnaceFuel(600), false)
                 .add(PoItems.POOP_BALL.getId(), new FurnaceFuel(400), false)
                 .add(PoBlocks.POOP_SAPLING.getId(), new FurnaceFuel(200), false)
                 .add(PoBlocks.POOP_LEAVES.getId(), new FurnaceFuel(200), false)
