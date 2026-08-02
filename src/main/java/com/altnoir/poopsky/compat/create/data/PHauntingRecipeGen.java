@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.compat.create.datagen;
+package com.altnoir.poopsky.compat.create.data;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.compat.PoMods;
@@ -22,6 +22,5 @@ public class PHauntingRecipeGen extends HauntingRecipeGen implements IConditionB
         RecipeOutput conditionalOutput = p_recipeOutput.withConditions(modLoaded(PoMods.CREATE.id()));
 
         convert(PoBlocks.POOLIME_BLOCK.get(), Blocks.ICE).register(conditionalOutput);
-        convert(PoBlocks.CHILI_POOP_BLOCK.get(), Blocks.NETHERRACK).register(conditionalOutput);
     }
 }

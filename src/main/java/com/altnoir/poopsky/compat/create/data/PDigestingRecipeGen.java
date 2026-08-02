@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.compat.create.datagen;
+package com.altnoir.poopsky.compat.create.data;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.compat.PoMods;

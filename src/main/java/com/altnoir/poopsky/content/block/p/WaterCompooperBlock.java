@@ -70,6 +70,9 @@ public class WaterCompooperBlock extends AbstractCompooperBlock {
         if (entity.isOnFire()) {
             entity.clearFire();
             level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 1.0F);
+            if (entity.mayInteract(level, pos)) {
+                lowerFillLevel(state, level, pos);
+            }
             return;
         }
 

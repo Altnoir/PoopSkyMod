@@ -5,6 +5,7 @@ import com.altnoir.poopsky.content.entity.p.FlushToiletEntity;
 import com.altnoir.poopsky.data.sound.PoSoundEvents;
 import com.altnoir.poopsky.impl.util.ToiletUtil;
 import com.altnoir.poopsky.init.PoEntityType;
+import com.altnoir.poopsky.init.PoItems;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -91,6 +92,9 @@ public class FlushToiletBlock extends BaseEntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        if (player.getMainHandItem().is(PoItems.TOILET_PLUG_WAND.get())) {
+            return InteractionResult.PASS;
+        }
         if (level.isClientSide) {
             return InteractionResult.SUCCESS;
         }

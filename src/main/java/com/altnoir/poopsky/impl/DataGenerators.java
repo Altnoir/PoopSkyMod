@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.impl;
 
-import com.altnoir.poopsky.compat.create.datagen.PDigestingRecipeGen;
-import com.altnoir.poopsky.compat.create.datagen.PHauntingRecipeGen;
-import com.altnoir.poopsky.compat.create.datagen.PWashingRecipeGen;
+import com.altnoir.poopsky.compat.create.data.PDigestingRecipeGen;
+import com.altnoir.poopsky.compat.create.data.PHauntingRecipeGen;
+import com.altnoir.poopsky.compat.create.data.PWashingRecipeGen;
 import com.altnoir.poopsky.data.recipe.RecipeGen;
 import com.altnoir.poopsky.data.BlockStateGen;
 import com.altnoir.poopsky.data.ItemModelGen;
