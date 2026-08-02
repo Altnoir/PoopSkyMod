@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.content.block.p;
 
+import com.altnoir.poopsky.data.sound.PoSoundEvents;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
-import com.altnoir.poopsky.data.sound.PoSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -105,7 +105,9 @@ public class PoopFarmlandBlock extends FarmBlock {
             level.setBlockAndUpdate(pos, PoBlocks.POOP_BLOCK.get().defaultBlockState());
             return;
         }
-        cropDrop(level, pos);
+        if (state.getValue(MODE).isLeak()) {
+            cropDrop(level, pos);
+        }
     }
 
     @Override
@@ -124,6 +126,8 @@ public class PoopFarmlandBlock extends FarmBlock {
         FarmMode mode = state.getValue(MODE);
         if (mode.isEnriched()) {
             tryEnrichedGrow(level, pos);
+        }
+        if (mode.isLeak()) {
             cropDrop(level, pos);
         }
     }
