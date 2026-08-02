@@ -244,8 +244,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
 
         simpleBlock(block, blockModel);
 
-        itemModels()
-                .withExistingParent(getBlockPath(block), mcLoc("item/generated"))
+        itemModels().withExistingParent(getBlockPath(block), mcLoc("item/generated"))
                 .texture("layer0", modLoc("block/" + getBlockPath(block)));
     }
 
@@ -294,8 +293,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         simpleBlockItem(PoBlocks.GINKGO_BUTTON.get(), buttonInventory);
         simpleBlockItem(PoBlocks.GINKGO_FENCE.get(), models().withExistingParent(getBlockPath(PoBlocks.GINKGO_FENCE.get()) + "_inventory", mcLoc("block/fence_inventory"))
                 .texture("texture", planks));
-        itemModels().withExistingParent(getItemPath(PoBlocks.GINKGO_DOOR.get()), mcLoc("item/generated"))
-                .texture("layer0", modLoc("item/" + getBlockPath(PoBlocks.GINKGO_DOOR.get())));
+        generatedItem(PoBlocks.GINKGO_DOOR.get(), "item");
         simpleBlockItem(PoBlocks.GINKGO_TRAPDOOR.get(), blockModel(PoBlocks.GINKGO_TRAPDOOR.get(), "_bottom"));
     }
 
@@ -330,7 +328,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         String path = getBlockPath(block);
         ModelFile model = models().cross(path, blockTexture(block)).renderType("cutout");
         simpleBlock(block, model);
-        bushItem(block);
+        generatedItem(block);
     }
 
     private void clusterBlock(Block block) {
@@ -349,7 +347,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
                 .modelForState().modelFile(model).rotationX(90).rotationY(270).addModel()
                 .partialState().with(BlockStateProperties.FACING, Direction.EAST)
                 .modelForState().modelFile(model).rotationX(90).rotationY(90).addModel();
-        bushItem(block);
+        generatedItem(block);
     }
 
     private void cubeBottomTop(Block block) {
@@ -531,7 +529,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
                     .build();
         });
 
-        simpleBlockItem(block, openModel);
+        generatedItem(block, "item");
     }
 
     private void shitBlock(Block block) {
@@ -555,7 +553,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
                     .build();
         });
 
-        simpleBlockItem(block, model);
+        generatedItem(block, "item");
     }
 
     private void blockWithItem(Block block) {
@@ -596,9 +594,13 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         return itemModels().withExistingParent(getItemPath(wall), mcLoc("block/wall_inventory")).texture("wall", modLoc("block/" + getBlockPath(baseBlock)));
     }
 
-    protected ItemModelBuilder bushItem(Block block) {
+    protected ItemModelBuilder generatedItem(Block block) {
+        return generatedItem(block, "block");
+    }
+
+    protected ItemModelBuilder generatedItem(Block block, String name) {
         return itemModels().withExistingParent(getItemPath(block), mcLoc("item/generated"))
-                .texture("layer0", modLoc("block/" + getBlockPath(block)));
+                .texture("layer0", modLoc(name + "/" + getBlockPath(block)));
     }
 
     private ModelFile blockModel(Block block) {

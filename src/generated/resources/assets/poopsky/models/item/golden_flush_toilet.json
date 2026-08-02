@@ -1,3 +1,6 @@
 {
-  "parent": "poopsky:block/golden_flush_toilet"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "poopsky:item/golden_flush_toilet"
+  }
 }
