@@ -8,15 +8,18 @@ import com.altnoir.poopsky.content.block.p.*;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import net.minecraft.client.renderer.block.model.BlockModel.GuiLight;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.client.model.generators.loaders.SeparateTransformsModelBuilder;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.*;
@@ -553,7 +556,20 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
                     .build();
         });
 
-        generatedItem(block, "item");
+        String itemPath = getItemPath(block);
+        var baseModel = itemModels().nested()
+                .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                .texture("layer0", modLoc("item/" + itemPath));
+        var blockModel = itemModels().nested()
+                .parent(new ModelFile.UncheckedModelFile(modLoc("block/" + path)));
+
+        itemModels().getBuilder(itemPath)
+                .customLoader(SeparateTransformsModelBuilder::begin)
+                .base(baseModel)
+                .perspective(ItemDisplayContext.HEAD, blockModel)
+                .perspective(ItemDisplayContext.GROUND, blockModel)
+                .end()
+                .guiLight(GuiLight.FRONT);
     }
 
     private void blockWithItem(Block block) {
