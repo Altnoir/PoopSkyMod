@@ -1,6 +1,18 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "poopsky:item/shit"
+  "base": {
+    "parent": "minecraft:item/generated",
+    "textures": {
+      "layer0": "poopsky:item/shit"
+    }
+  },
+  "gui_light": "front",
+  "loader": "neoforge:separate_transforms",
+  "perspectives": {
+    "ground": {
+      "parent": "poopsky:block/shit"
+    },
+    "head": {
+      "parent": "poopsky:block/shit"
+    }
   }
 }
