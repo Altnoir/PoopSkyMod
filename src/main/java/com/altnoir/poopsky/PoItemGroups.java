@@ -5,6 +5,8 @@ import com.altnoir.poopsky.content.FlyTypeManager;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
+import com.altnoir.poopsky.impl.creative.PoCreativeTabSection;
+import com.altnoir.poopsky.impl.creative.PoSectionedCreativeModeTab;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoBlocks;
@@ -15,7 +17,11 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.flag.FeatureFlagSet;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemNameBlockItem;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.block.Block;
@@ -25,74 +31,126 @@ import java.util.Set;
 public class PoItemGroups {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
-    public static final RegistryEntry<CreativeModeTab, CreativeModeTab> POOPSKY_TAB = REGISTRATE.generic("poopsky", Registries.CREATIVE_MODE_TAB, () -> CreativeModeTab.builder()
-            .title(Component.translatable("itemgroup.poopsky"))
-            .icon(PoBlocks.WOODEN_TOILET::asStack)
-            .displayItems((parameters, output) -> {
-                PoItems.getAllItems().stream()
-                        .filter(item -> !PoBlocks.isDecorativeItem(item))
-                        .filter(item -> !(item instanceof BlockItem && !(item instanceof ItemNameBlockItem)))
-                        .filter(item -> !(item instanceof FlyItem))
-                        .forEach(output::accept);
+    private static final PoCreativeTabSection BASIC_ITEMS = section("itemGroup.poopsky.section.basic");
+    private static final PoCreativeTabSection BASIC_BLOCKS = section("itemGroup.poopsky.section.basic_blocks");
+    private static final PoCreativeTabSection BASIC_TOILETS = section("itemGroup.poopsky.section.basic_toilets");
+    private static final PoCreativeTabSection BASIC_FLIES = section("itemGroup.poopsky.section.basic_flies");
 
-                Set<Block> skip = Set.of(PoBlocks.URINE_LIQUID.get(), PoBlocks.WATER_COMPOOPER.get(), PoBlocks.LAVA_COMPOOPER.get(),
-                        PoBlocks.POWDER_SNOW_COMPOOPER.get(), PoBlocks.URINE_COMPOOPER.get(), PoBlocks.ROUNDWORM_VINES_PLANT.get(),
-                        PoBlocks.WOODEN_TOILET.get(), PoBlocks.HARD_TOILET.get());
-                PoItems.getAllItems().stream()
-                        .filter(item -> item instanceof BlockItem)
-                        .map(Item::getDefaultInstance)
-                        .filter(stack -> stack.getItem() != Items.AIR)
-                        .filter(stack -> !skip.contains(((BlockItem) stack.getItem()).getBlock()))
-                        .filter(stack -> !PoBlocks.isDecorativeItem(stack.getItem()))
-                        .forEach(output::accept);
+    private static final PoCreativeTabSection DECO_POOP = section("itemGroup.poopsky_deco.section.poop");
+    private static final PoCreativeTabSection DECO_TILE = section("itemGroup.poopsky_deco.section.tile");
+    private static final PoCreativeTabSection DECO_WOOD = section("itemGroup.poopsky_deco.section.wood");
+    private static final PoCreativeTabSection DECO_TOILETS = section("itemGroup.poopsky_deco.section.toilets");
 
-                for (String id : FlyTypeManager.INSTANCE.getFlyTypes()) {
-                    if (createFly(id) && !PoMods.CREATE.isLoaded()) continue;
-                    if (ae2Fly(id) && !PoMods.AE2.isLoaded()) continue;
-                    if (mekFly(id) && !PoMods.MEKANISM.isLoaded()) continue;
-                    output.accept(FlyItem.withType(id));
-                }
-                output.accept(ToiletBlockItem.withType(PoBlocks.WOODEN_TOILET.get(), ToiletTypes.OAK));
-                output.accept(ToiletBlockItem.withType(PoBlocks.HARD_TOILET.get(), ToiletTypes.WHITE_TILE));
-                output.accept(ToiletBlockItem.withType(PoBlocks.HARD_TOILET.get(), ToiletTypes.GOLD));
-                output.accept(ToiletBlockItem.withType(PoBlocks.HARD_TOILET.get(), ToiletTypes.REDSTONE));
-                output.accept(ToiletBlockItem.withType(PoBlocks.HARD_TOILET.get(), ToiletTypes.OBSIDIAN));
+    public static final RegistryEntry<CreativeModeTab, CreativeModeTab> POOPSKY_TAB =
+            REGISTRATE.generic("poopsky", Registries.CREATIVE_MODE_TAB, () ->
+                    PoSectionedCreativeModeTab.configure(
+                            CreativeModeTab.builder()
+                                    .title(Component.translatable("itemgroup.poopsky"))
+                                    .icon(PoBlocks.WOODEN_TOILET::asStack),
+                            PoItemGroups::populateBasicSections,
+                            BASIC_ITEMS,
+                            BASIC_BLOCKS,
+                            BASIC_TOILETS,
+                            BASIC_FLIES
+                    ).build()
+            ).register();
 
-                parameters.holders()
-                        .lookup(Registries.POTION)
-                        .ifPresent(
-                                potion -> {
-                                    potionEffectTypes(
-                                            output, potion, Items.TIPPED_ARROW, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS, parameters.enabledFeatures()
-                                    );
-                                    potionEffectTypes(
-                                            output, potion, Items.POTION, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS, parameters.enabledFeatures()
-                                    );
-                                    potionEffectTypes(
-                                            output, potion, Items.SPLASH_POTION, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS, parameters.enabledFeatures()
-                                    );
-                                    potionEffectTypes(
-                                            output, potion, Items.LINGERING_POTION, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS, parameters.enabledFeatures()
-                                    );
-                                }
-                        );
-            }).build()).register();
+    public static final RegistryEntry<CreativeModeTab, CreativeModeTab> POOPSKY_DECORATIVE =
+            REGISTRATE.generic("poopsky_deco", Registries.CREATIVE_MODE_TAB, () ->
+                    PoSectionedCreativeModeTab.configure(
+                            CreativeModeTab.builder()
+                                    .title(Component.translatable("itemgroup.poopsky_deco"))
+                                    .icon(PoBlocks.BROWN_TILE_BLOCK::asStack),
+                            parameters -> populateDecorativeSections(),
+                            DECO_POOP,
+                            DECO_TILE,
+                            DECO_WOOD,
+                            DECO_TOILETS
+                    ).build()
+            ).register();
 
-    public static final RegistryEntry<CreativeModeTab, CreativeModeTab> POOPSKY_DECORATIVE = REGISTRATE.generic("poopsky_deco", Registries.CREATIVE_MODE_TAB, () -> CreativeModeTab.builder()
-            .title(Component.translatable("itemgroup.poopsky_deco"))
-            .icon(PoBlocks.BROWN_TILE_BLOCK::asStack)
-            .displayItems((parameters, output) -> {
-                PoItems.getAllItems().stream()
-                        .filter(item -> PoBlocks.isDecorativeItem(item) || PoBlocks.isAllTabItem(item))
-                        .forEach(output::accept);
+    private static void populateBasicSections(CreativeModeTab.ItemDisplayParameters parameters) {
+        PoItems.getAllItems().stream()
+                .filter(item -> !PoBlocks.isDecorativeItem(item))
+                .filter(item -> !(item instanceof BlockItem && !(item instanceof ItemNameBlockItem)))
+                .filter(item -> !(item instanceof FlyItem))
+                .forEach(BASIC_ITEMS::add);
 
-                for (var type : ToiletType.getByCategory(ToiletType.Category.WOOD).values()) {
-                    output.accept(ToiletBlockItem.withType(PoBlocks.WOODEN_TOILET.get(), type));
-                }
-                for (var type : ToiletType.getByCategory(ToiletType.Category.HARD).values()) {
-                    output.accept(ToiletBlockItem.withType(PoBlocks.HARD_TOILET.get(), type));
-                }
-            }).build()).register();
+        Set<Block> skip = Set.of(
+                PoBlocks.URINE_LIQUID.get(),
+                PoBlocks.WATER_COMPOOPER.get(),
+                PoBlocks.LAVA_COMPOOPER.get(),
+                PoBlocks.POWDER_SNOW_COMPOOPER.get(),
+                PoBlocks.URINE_COMPOOPER.get(),
+                PoBlocks.ROUNDWORM_VINES_PLANT.get(),
+                PoBlocks.WOODEN_TOILET.get(),
+                PoBlocks.HARD_TOILET.get()
+        );
+        PoItems.getAllItems().stream()
+                .filter(item -> item instanceof BlockItem)
+                .filter(item -> item != Items.AIR)
+                .filter(item -> !skip.contains(((BlockItem) item).getBlock()))
+                .filter(item -> !PoBlocks.isDecorativeItem(item))
+                .forEach(BASIC_BLOCKS::add);
+
+        BASIC_TOILETS.add(() -> ToiletBlockItem.withType(PoBlocks.WOODEN_TOILET.get(), ToiletTypes.OAK));
+        BASIC_TOILETS.add(() -> ToiletBlockItem.withType(PoBlocks.HARD_TOILET.get(), ToiletTypes.WHITE_TILE));
+        BASIC_TOILETS.add(() -> ToiletBlockItem.withType(PoBlocks.HARD_TOILET.get(), ToiletTypes.GOLD));
+        BASIC_TOILETS.add(() -> ToiletBlockItem.withType(PoBlocks.HARD_TOILET.get(), ToiletTypes.REDSTONE));
+        BASIC_TOILETS.add(() -> ToiletBlockItem.withType(PoBlocks.HARD_TOILET.get(), ToiletTypes.OBSIDIAN));
+
+        for (String id : FlyTypeManager.INSTANCE.getFlyTypes()) {
+            if (createFly(id) && !PoMods.CREATE.isLoaded()) {
+                continue;
+            }
+            if (ae2Fly(id) && !PoMods.AE2.isLoaded()) {
+                continue;
+            }
+            if (mekFly(id) && !PoMods.MEKANISM.isLoaded()) {
+                continue;
+            }
+            BASIC_FLIES.add(() -> FlyItem.withType(id));
+        }
+
+        parameters.holders()
+                .lookup(Registries.POTION)
+                .ifPresent(potions -> {
+                    potionEffectTypes(BASIC_ITEMS, potions, Items.TIPPED_ARROW, parameters.enabledFeatures());
+                    potionEffectTypes(BASIC_ITEMS, potions, Items.POTION, parameters.enabledFeatures());
+                    potionEffectTypes(BASIC_ITEMS, potions, Items.SPLASH_POTION, parameters.enabledFeatures());
+                    potionEffectTypes(BASIC_ITEMS, potions, Items.LINGERING_POTION, parameters.enabledFeatures());
+                });
+    }
+
+    private static void populateDecorativeSections() {
+        PoItems.getAllItems().stream()
+                .filter(item -> PoBlocks.isDecorativeItem(item) || PoBlocks.isAllTabItem(item))
+                .forEach(PoItemGroups::addDecorativeItem);
+
+        for (var type : ToiletType.getByCategory(ToiletType.Category.WOOD).values()) {
+            DECO_TOILETS.add(() -> ToiletBlockItem.withType(PoBlocks.WOODEN_TOILET.get(), type));
+        }
+        for (var type : ToiletType.getByCategory(ToiletType.Category.HARD).values()) {
+            DECO_TOILETS.add(() -> ToiletBlockItem.withType(PoBlocks.HARD_TOILET.get(), type));
+        }
+    }
+
+    private static void addDecorativeItem(Item item) {
+        String name = item.builtInRegistryHolder().key().location().getPath();
+        if (name.contains("tile")) {
+            DECO_TILE.add(item);
+        } else if (name.contains("ginkgo_")) {
+            DECO_WOOD.add(item);
+        } else if (name.endsWith("flush_toilet")) {
+            DECO_TOILETS.add(item);
+        } else {
+            DECO_POOP.add(item);
+        }
+    }
+
+    private static PoCreativeTabSection section(String translationKey) {
+        return new PoCreativeTabSection(Component.translatable(translationKey));
+    }
 
     private static boolean createFly(String id) {
         return FlyTypes.ZINC.id().equals(id);
@@ -107,13 +165,13 @@ public class PoItemGroups {
     }
 
     private static void potionEffectTypes(
-            CreativeModeTab.Output output, HolderLookup<Potion> potions, Item item, CreativeModeTab.TabVisibility tabVisibility, FeatureFlagSet requiredFeatures
+            PoCreativeTabSection section, HolderLookup<Potion> potions, Item item, FeatureFlagSet requiredFeatures
     ) {
         potions.listElements()
                 .filter(reference -> reference.value().isEnabled(requiredFeatures))
                 .filter(reference -> reference.key().location().getNamespace().equals(PoopSky.MOD_ID))
                 .map(reference -> PotionContents.createItemStack(item, reference))
-                .forEach(itemStack -> output.accept(itemStack, tabVisibility));
+                .forEach(section::add);
     }
 
     public static void register() {
