@@ -282,7 +282,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
             if (player.isShiftKeyDown() && ToiletUtil.isEntityCentered(pos, player)) {
                 var playerData = player.getCustomData();
                 long lastPoopTime = playerData.getLong("poopTime");
-                ToiletUtil.canPoop(level, player, player.hasEffect(PoEffects.INTESTINAL_SPASM), false, 0.1F, 0.5F, lastPoopTime,
+                ToiletUtil.canPoop(level, player, player.hasEffect(PoEffects.holder(PoEffects.INTESTINAL_SPASM)), false, 0.1F, 0.5F, lastPoopTime,
                         time -> playerData.putLong("poopTime", time));
             }
         }

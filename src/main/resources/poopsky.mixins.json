@@ -6,6 +6,7 @@
   "mixins": [
     "BaseCoralPlantTypeBlockMixin",
     "CarvedPumpkinBlockMixin",
+    "FarmlandPlantBlockMixin",
     "FishingHookMixin",
     "FungusBlockMixin",
     "LivingEntityMixin",
@@ -15,8 +16,8 @@
   ],
   "client": [
     "ClientPacketListenerMixin",
-    "CreativeModeInventoryScreenMixin",
     "CreateWorldScreenWorldTabMixin",
+    "CreativeModeInventoryScreenMixin",
     "WorldCreationUiStateMixin"
   ],
   "injectors": {

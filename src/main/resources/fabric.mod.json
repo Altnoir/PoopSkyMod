@@ -36,9 +36,7 @@
 	],
 	"accessWidener": "poopsky.accesswidener",
 	"depends": {
-		"fabricloader": ">=0.16.0",
-		"java": ">=21",
-		"minecraft": "~1.21.1",
+		"minecraft": "1.21.1",
 		"fabric-api": "*",
 		"forgeconfigapiport": ">=21.1.6"
 	},

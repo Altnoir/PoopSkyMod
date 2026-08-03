@@ -144,7 +144,6 @@ public class PoopSkyClient implements ClientModInitializer {
                 PoBlocks.GINKGO_SAPLING.get(),
                 PoBlocks.GINKGO_LEAVES.get(),
                 PoBlocks.SIEVE.get(),
-                PoBlocks.POOLIME_BLOCK.get(),
                 PoBlocks.MAGGOTS.get(),
                 PoBlocks.SALTPETER_CLUSTER.get(),
                 PoBlocks.LARGE_SALTPETER_BUD.get(),
@@ -157,7 +156,9 @@ public class PoopSkyClient implements ClientModInitializer {
                 PoBlocks.FLUSH_TOILET.get(),
                 PoBlocks.GOLDEN_FLUSH_TOILET.get());
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.translucent(),
-                PoBlocks.STOOL.get(), PoBlocks.WATER_COMPOOPER.get());
+                PoBlocks.STOOL.get(),
+                PoBlocks.WATER_COMPOOPER.get(),
+                PoBlocks.POOLIME_BLOCK.get());
         BlockRenderLayerMap.INSTANCE.putBlock(PoFluids.URINE_LIQUID.get(), RenderType.translucent());
         BlockRenderLayerMap.INSTANCE.putFluids(RenderType.translucent(),
                 PoFluids.URINE.get(), PoFluids.FLOWING_URINE.get());

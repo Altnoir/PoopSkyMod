@@ -17,6 +17,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 public class PoFabricated {
 
     public static void init() {
+        FabricatedToolActions.register();
         registerSpawnPlacements();
         registerLookups();
     }

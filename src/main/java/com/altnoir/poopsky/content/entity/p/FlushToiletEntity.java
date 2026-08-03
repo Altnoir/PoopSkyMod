@@ -53,7 +53,7 @@ public class FlushToiletEntity extends Entity {
         if (passenger instanceof LivingEntity livingEntity) {
             this.setYRot(state.getValue(FlushToiletBlock.FACING).toYRot());
 
-            boolean hasSpasm = livingEntity.hasEffect(PoEffects.INTESTINAL_SPASM);
+            boolean hasSpasm = livingEntity.hasEffect(PoEffects.holder(PoEffects.INTESTINAL_SPASM));
             boolean isGolden = state.is(PoBlocks.GOLDEN_FLUSH_TOILET.get());
             ToiletUtil.containerPoop(level(), blockPosition(), livingEntity, hasSpasm, isGolden, poopTime, time -> this.poopTime = time);
         }
