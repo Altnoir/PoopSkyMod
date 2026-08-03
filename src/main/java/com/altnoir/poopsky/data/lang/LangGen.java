@@ -271,7 +271,6 @@ public final class LangGen {
         provider.add("itemgroup.poopsky_deco", "PoopSky Builder Block");
         provider.add("itemGroup.poopsky.section.basic", "Basic Items");
         provider.add("itemGroup.poopsky.section.basic_blocks", "Functional Blocks");
-        provider.add("itemGroup.poopsky.section.basic_toilets", "Toilets");
         provider.add("itemGroup.poopsky.section.basic_flies", "Flies");
         provider.add("itemGroup.poopsky_deco.section.poop", "Poop Building Blocks");
         provider.add("itemGroup.poopsky_deco.section.tile", "Tiles");

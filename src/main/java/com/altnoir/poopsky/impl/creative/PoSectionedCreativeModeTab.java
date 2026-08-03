@@ -1,12 +1,10 @@
 package com.altnoir.poopsky.impl.creative;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackLinkedSet;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,17 +22,13 @@ public final class PoSectionedCreativeModeTab extends CreativeModeTab {
     private Set<ItemStack> searchItems = ItemStackLinkedSet.createTypeAndComponentsSet();
     private List<SectionLayout> sectionLayouts = List.of();
 
-    private PoSectionedCreativeModeTab(
-            Builder builder, List<PoCreativeTabSection> sections, Consumer<ItemDisplayParameters> populator
-    ) {
+    private PoSectionedCreativeModeTab(Builder builder, List<PoCreativeTabSection> sections, Consumer<ItemDisplayParameters> populator) {
         super(builder);
         this.sections = List.copyOf(sections);
         this.populator = populator;
     }
 
-    public static Builder configure(
-            Builder builder, Consumer<ItemDisplayParameters> populator, PoCreativeTabSection... sections
-    ) {
+    public static Builder configure(Builder builder, Consumer<ItemDisplayParameters> populator, PoCreativeTabSection... sections) {
         List<PoCreativeTabSection> sectionList = List.of(sections);
         return builder.withTabFactory(tabBuilder -> new PoSectionedCreativeModeTab(tabBuilder, sectionList, populator));
     }
@@ -59,7 +53,7 @@ public final class PoSectionedCreativeModeTab extends CreativeModeTab {
             }
 
             int headingRow = newDisplayItems.size() / COLUMNS;
-            newLayouts.add(new SectionLayout(section.title(), section.bannerSprite().orElse(null), headingRow));
+            newLayouts.add(new SectionLayout(section.title(), headingRow));
             addEmptyRow(newDisplayItems);
             newDisplayItems.addAll(enabledItems);
             newSearchItems.addAll(enabledItems);
@@ -116,6 +110,6 @@ public final class PoSectionedCreativeModeTab extends CreativeModeTab {
         }
     }
 
-    public record SectionLayout(Component title, @Nullable ResourceLocation bannerSprite, int headingRow) {
+    public record SectionLayout(Component title, int headingRow) {
     }
 }

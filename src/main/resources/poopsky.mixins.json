@@ -7,18 +7,16 @@
     "BaseCoralPlantTypeBlockMixin",
     "CarvedPumpkinBlockMixin",
     "FishingHookMixin",
+    "FungusBlockMixin",
     "LivingEntityMixin",
     "NoiseBasedChunkGeneratorMixin",
     "TradeWithVillagerMixin",
-    "VillagerMixin",
-    "FungusBlockMixin"
+    "VillagerMixin"
   ],
   "client": [
     "ClientPacketListenerMixin",
     "CreateWorldScreenWorldTabMixin",
-    "WorldCreationUiStateMixin",
-    "creative.CreativeModeInventoryScreenMixin",
-    "creative.CustomCreativeSlotMixin"
+    "WorldCreationUiStateMixin"
   ],
   "injectors": {
     "defaultRequire": 1
