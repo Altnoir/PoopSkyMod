@@ -7,7 +7,7 @@ import com.altnoir.poopsky.fabric.port.itemhandler.ItemStackHandler;
 import com.altnoir.poopsky.fabric.port.itemhandler.RangedWrapper;
 import com.altnoir.poopsky.init.PoBlockEntityType;
 import com.altnoir.poopsky.content.recipe.PFlyRecipes;
-import com.altnoir.poopsky.impl.sound.PoSoundEvents;
+import com.altnoir.poopsky.data.sound.PoSoundEvents;
 import com.altnoir.poopsky.content.item.p.FlyItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;

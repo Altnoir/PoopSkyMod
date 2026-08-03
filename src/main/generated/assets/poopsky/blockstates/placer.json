@@ -1,24 +1,46 @@
 {
   "variants": {
-    "facing=down": {
+    "facing=down,triggered=false": {
       "model": "poopsky:block/placer_vertical",
       "x": 180
     },
-    "facing=east": {
+    "facing=down,triggered=true": {
+      "model": "poopsky:block/placer_vertical",
+      "x": 180
+    },
+    "facing=east,triggered=false": {
       "model": "poopsky:block/placer",
       "y": 90
     },
-    "facing=north": {
+    "facing=east,triggered=true": {
+      "model": "poopsky:block/placer",
+      "y": 90
+    },
+    "facing=north,triggered=false": {
       "model": "poopsky:block/placer"
     },
-    "facing=south": {
+    "facing=north,triggered=true": {
+      "model": "poopsky:block/placer"
+    },
+    "facing=south,triggered=false": {
       "model": "poopsky:block/placer",
       "y": 180
     },
-    "facing=up": {
+    "facing=south,triggered=true": {
+      "model": "poopsky:block/placer",
+      "y": 180
+    },
+    "facing=up,triggered=false": {
       "model": "poopsky:block/placer_vertical"
     },
-    "facing=west": {
+    "facing=up,triggered=true": {
+      "model": "poopsky:block/placer_vertical"
+    },
+    "facing=west,triggered=false": {
+      "model": "poopsky:block/placer",
+      "y": 270
+    },
+    "facing=west,triggered=true": {
       "model": "poopsky:block/placer",
       "y": 270
     }

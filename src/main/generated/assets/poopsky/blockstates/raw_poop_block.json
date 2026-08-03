@@ -6,8 +6,7 @@
         "weight": 3
       },
       {
-        "model": "poopsky:block/raw_poop_block1",
-        "weight": 1
+        "model": "poopsky:block/raw_poop_block1"
       }
     ]
   }

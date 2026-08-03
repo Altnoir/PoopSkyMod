@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "poopsky:block/stripped_ginkgo_wood_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "poopsky:block/stripped_ginkgo_wood"
+    },
+    "axis=z": {
+      "model": "poopsky:block/stripped_ginkgo_wood_horizontal",
+      "x": 90
+    }
+  }
+}

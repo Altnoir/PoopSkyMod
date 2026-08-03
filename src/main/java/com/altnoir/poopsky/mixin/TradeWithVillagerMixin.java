@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -19,7 +20,7 @@ public class TradeWithVillagerMixin {
     )
     private Set<Item> redirectFoodPointsKeySet(Map<Item, Integer> item) {
         if (item == Villager.FOOD_POINTS) {
-            Set<Item> originalKeys = new java.util.HashSet<>(item.keySet());
+            Set<Item> originalKeys = new HashSet<>(item.keySet());
             originalKeys.add(PoItems.POOP.get());
             return originalKeys;
         }

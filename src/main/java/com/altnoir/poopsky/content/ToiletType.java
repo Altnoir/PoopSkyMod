@@ -11,6 +11,7 @@ import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import org.jetbrains.annotations.Nullable;
@@ -146,16 +147,7 @@ public class ToiletType implements Comparable<ToiletType> {
             ToiletType::id
     );
 
-    // ─── JSON 数据格式的序列化 ───
-
-    public static final Codec<Category> CATEGORY_CODEC = Codec.STRING.xmap(
-            s -> switch (s) {
-                case "wood" -> Category.WOOD;
-                case "hard" -> Category.HARD;
-                default -> Category.HARD;
-            },
-            c -> c == Category.WOOD ? "wood" : "hard"
-    );
+    public static final Codec<Category> CATEGORY_CODEC = StringRepresentable.fromValues(Category::values);
 
     /**
      * 从 JsonElement 解析一个 ToiletType 并注册到 REGISTRY
@@ -327,7 +319,19 @@ public class ToiletType implements Comparable<ToiletType> {
         return Integer.compare(getIndex(this), getIndex(other));
     }
 
-    public enum Category {
-        WOOD, HARD
+    public enum Category implements StringRepresentable {
+        WOOD("wood"),
+        HARD("hard");
+
+        private final String name;
+
+        Category(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String getSerializedName() {
+            return this.name;
+        }
     }
 }

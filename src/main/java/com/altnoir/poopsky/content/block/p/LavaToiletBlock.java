@@ -2,8 +2,8 @@ package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
+import com.altnoir.poopsky.impl.util.ToiletUtil;
 import com.altnoir.poopsky.init.ToiletTypes;
-import com.altnoir.poopsky.impl.util.toiletUtil;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -62,7 +62,7 @@ public class LavaToiletBlock extends BaseToiletLavaBlock {
 
     @Override
     public ToiletType getDefaultToiletType() {
-        return ToiletTypes.TILE;
+        return ToiletTypes.WHITE_TILE;
     }
 
     @Override
@@ -73,8 +73,8 @@ public class LavaToiletBlock extends BaseToiletLavaBlock {
 
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
-        boolean isGolden = toiletUtil.isGoldenToilet(level, pos);
-        toiletUtil.lavaToiletStepOn(level, pos, state, entity, isGolden);
+        boolean isGolden = ToiletUtil.isGoldenToilet(level, pos);
+        ToiletUtil.lavaToiletStepOn(level, pos, state, entity, isGolden);
     }
 
     @Override
@@ -87,7 +87,7 @@ public class LavaToiletBlock extends BaseToiletLavaBlock {
     }
 
     public BlockState applyVariant(BlockState state, ToiletType toiletType) {
-        if (toiletType != null && toiletType.category() == ToiletType.Category.HARD) {
+        if (toiletType.category() == ToiletType.Category.HARD) {
             ToiletMode mode = toiletType.isRedstone() ? ToiletMode.REDSTONE : ToiletMode.DEFAULT;
             return state.setValue(TOILET_MODE, mode);
         }

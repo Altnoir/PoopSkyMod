@@ -1,0 +1,15 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "ae2"
+      ]
+    }
+  ],
+  "type": "poopsky:breeding_chest",
+  "chance": 0.2,
+  "parent1": "light_blue",
+  "parent2": "diamond",
+  "result": "certus"
+}

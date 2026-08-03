@@ -1,3 +1,6 @@
 {
-  "parent": "poopsky:block/saltpeter_cluster"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "poopsky:block/saltpeter_cluster"
+  }
 }

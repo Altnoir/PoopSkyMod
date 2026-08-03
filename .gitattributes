@@ -7,3 +7,9 @@
 # These are Windows script files and should use crlf
 *.bat           text eol=crlf
 
+src/main/generated/**/.cache/cache text eol=lf
+src/main/generated/**/*.json text eol=lf
+src/main/generated/** linguist-generated=true
+src/main/resources/resourcepacks/poopsky_pack/assets/** linguist-generated=true
+*.java text eol=lf charset=utf-8
+

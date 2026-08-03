@@ -1,0 +1,139 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "block": "poopsky:roundworm_vines_plant",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "seeds": "true"
+                  }
+                }
+              ],
+              "name": "minecraft:pumpkin_seeds"
+            },
+            {
+              "type": "minecraft:item",
+              "name": "poopsky:roundworm"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "block": "poopsky:roundworm_vines_plant",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "seeds": "true"
+                  }
+                }
+              ],
+              "name": "minecraft:melon_seeds"
+            },
+            {
+              "type": "minecraft:item",
+              "name": "poopsky:roundworm"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "block": "poopsky:roundworm_vines_plant",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "seeds": "true"
+                  }
+                }
+              ],
+              "name": "minecraft:frogspawn"
+            },
+            {
+              "type": "minecraft:item",
+              "name": "poopsky:roundworm"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "block": "poopsky:roundworm_vines_plant",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "seeds": "true"
+                  }
+                }
+              ],
+              "name": "minecraft:beetroot_seeds"
+            },
+            {
+              "type": "minecraft:item",
+              "name": "poopsky:roundworm"
+            }
+          ]
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "poopsky:roundworm_vines_plant",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "seeds": "true"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 3.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            },
+            {
+              "enchantment": "minecraft:fortune",
+              "formula": "minecraft:binomial_with_bonus_count",
+              "function": "minecraft:apply_bonus",
+              "parameters": {
+                "extra": 3,
+                "probability": 0.5714286
+              }
+            }
+          ],
+          "name": "poopsky:roundworm"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "poopsky:blocks/roundworm_vines_plant"
+}

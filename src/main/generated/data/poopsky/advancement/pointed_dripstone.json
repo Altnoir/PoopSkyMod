@@ -1,0 +1,33 @@
+{
+  "parent": "poopsky:poop_sapling",
+  "criteria": {
+    "pointed_dripstone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:pointed_dripstone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.poopsky.pointed_dripstone.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:pointed_dripstone"
+    },
+    "title": {
+      "translate": "advancements.poopsky.pointed_dripstone.title"
+    }
+  },
+  "requirements": [
+    [
+      "pointed_dripstone"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

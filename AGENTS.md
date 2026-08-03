@@ -42,29 +42,27 @@ PoopSkyMod/
     │   ├── impl/                        # 事件、网络、datagen、标签、工具与 Registrate 扩展
     │   │   ├── network/                 # CustomPacketPayload 与 PoNetworking
     │   │   ├── registrate/              # PoRegistrate 及各类 Datagen provider
-    │   │   ├── olddata/                 # 尚未迁移到 Registrate 的 datagen provider
     │   │   └── type/                    # 苍蝇/厕所类型与伤害类型数据
-│   │   ├── mixin/                        # Mixin 注入
+    │   ├── mixin/                        # Mixin 注入
     │   └── worldgen/                    # 虚空区块生成、特征、结构与树叶生成器
-│   └── resources/
-│       ├── poopsky.mixins.json           # Mixin 配置
-│       ├── META-INF/accesstransformer.cfg
-│       ├── assets/poopsky/               # 客户端资源
-│       │   ├── blockstates/
-│       │   ├── lang/                     # 本地化 JSON
-│       │   ├── models/
-│       │   ├── sounds/
-│       │   ├── textures/
-│       │   ├── icon.png
-│       │   └── sounds.json
-│       └── data/                         # 手写数据包资源
-│           ├── farmersdelight/recipe/    # Farmer's Delight 兼容配方
-│           ├── minecraft/tags/           # 原版命名空间标签
-│           └── poopsky/
-│               ├── jukebox_song/
-│               ├── recipes/
-│               ├── structure/
-│               └── worldgen/
+    └── resources/
+        ├── poopsky.mixins.json           # Mixin 配置
+        ├── META-INF/accesstransformer.cfg
+        ├── assets/poopsky/               # 客户端资源
+        │   ├── blockstates/
+        │   ├── lang/                     # 本地化 JSON
+        │   ├── models/
+        │   ├── sounds/
+        │   ├── textures/
+        │   ├── icon.png
+        │   └── sounds.json
+        └── data/                         # 手写数据包资源
+            ├── minecraft/tags/           # 原版命名空间标签
+            └── poopsky/
+                ├── jukebox_song/
+                ├── recipes/
+                ├── structure/
+                └── worldgen/
 ```
 
 ## 依赖模组
@@ -376,13 +374,6 @@ PY
 
 数据生成器入口：`impl/DataGenerators.java`，由 `PoModEvents` 订阅 `GatherDataEvent`。输出目录为 `src/generated/resources/`，手写资源目录为 `src/main/resources/`。
 
-包含的 Provider：
-
-- Registrate provider：`BlockStateGen`、`ItemModelGen`、`BlockTagGen`、`ItemTagGen`、`FluidTagsGen`、`EntityTypeTagsGen`、`EntityLootTableGen`、`AdvancementGen`、`DataMapGen`、`LangGen`。
-- 服务端数据：`RecipeGen`、`FlyTypeGen`、`ToiletTypeGen`、`DatapackGen`、`DamageTypeTagsGen`、`GlobalLootModifierGen`。
-- `impl/olddata/` 中仍有 `BlockLootTableGen`、`FishingLootGen`、`ParticleGen` 等旧 provider；修改前先确认数据已迁移到 Registrate hook 还是仍由它们生成。
-- Create 兼容配方：`PDigestingRecipeGen`、`PWashingRecipeGen`、`PHauntingRecipeGen`。
-
 ### 运行数据生成
 
 ```bash
@@ -413,14 +404,8 @@ if (ModList.get().isLoaded(PoMods.CREATE.id())) {
 # 运行服务端
 ./gradlew runServer
 
-# 运行数据生成
-./gradlew runData
-
 # 构建模组
 ./gradlew build
-
-# 刷新依赖
-./gradlew --refresh-dependencies
 ```
 
 ## NeoForge 1.21.1 开发规则
@@ -515,13 +500,13 @@ if (ModList.get().isLoaded(PoMods.CREATE.id())) {
 
 1.21.1 中许多方块行为**不是** `Block` 类的可重写方法，而是在 `BlockBehaviour.Properties` 中设置的。不要尝试在 `Block` 子类中 `@Override` 这些方法，它们不存在：
 
-| 属性   | Properties 方法                          | 说明                            |
-|------|----------------------------------------|-------------------------------|
+| 属性     | Properties 方法                        | 说明                                              |
+|----------|----------------------------------------|---------------------------------------------------|
 | 红石导通 | `.isRedstoneConductor(Blocks::always)` | 默认基于碰撞箱判断，不完整方块需手动设为 `always` |
-| 视线阻挡 | `.isViewBlocking(Blocks::never)`       | 控制方块是否阻挡视线                    |
-| 有效刷怪 | `.isValidSpawn(Blocks::always)`        | 控制方块上是否可刷怪                    |
-| 可被替换 | `.isReplacementReplaceable()`          | 控制方块是否可被替换                    |
-| 信号源  | `.isSignalSource()`                    | 控制方块是否为红石信号源                  |
+| 视线阻挡 | `.isViewBlocking(Blocks::never)`       | 控制方块是否阻挡视线                              |
+| 有效刷怪 | `.isValidSpawn(Blocks::always)`        | 控制方块上是否可刷怪                              |
+| 可被替换 | `.isReplacementReplaceable()`          | 控制方块是否可被替换                              |
+| 信号源   | `.isSignalSource()`                    | 控制方块是否为红石信号源                          |
 
 **常见陷阱**：不完整碰撞箱的方块（如 `PoopBlock`）默认无法被红石充能，因为默认 `isRedstoneConductor` 依赖 `isCollisionShapeFullBlock()`。必须显式设置 `.isRedstoneConductor(Blocks::always)`。
 

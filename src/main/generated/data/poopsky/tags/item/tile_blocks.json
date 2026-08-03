@@ -1,0 +1,20 @@
+{
+  "values": [
+    "poopsky:white_tile_block",
+    "poopsky:light_gray_tile_block",
+    "poopsky:gray_tile_block",
+    "poopsky:black_tile_block",
+    "poopsky:brown_tile_block",
+    "poopsky:red_tile_block",
+    "poopsky:orange_tile_block",
+    "poopsky:yellow_tile_block",
+    "poopsky:lime_tile_block",
+    "poopsky:green_tile_block",
+    "poopsky:cyan_tile_block",
+    "poopsky:light_blue_tile_block",
+    "poopsky:blue_tile_block",
+    "poopsky:purple_tile_block",
+    "poopsky:magenta_tile_block",
+    "poopsky:pink_tile_block"
+  ]
+}

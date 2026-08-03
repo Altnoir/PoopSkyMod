@@ -1,0 +1,33 @@
+{
+  "parent": "poopsky:poop_ball",
+  "criteria": {
+    "poolime_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:poolime_block"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.poopsky.poolime_block.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "poopsky:poolime_block"
+    },
+    "title": {
+      "translate": "advancements.poopsky.poolime_block.title"
+    }
+  },
+  "requirements": [
+    [
+      "poolime_block"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -3,13 +3,10 @@ package com.altnoir.poopsky.content.block.abs;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
-import com.altnoir.poopsky.content.entity.p.ToiletEntity;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
-import com.altnoir.poopsky.fabric.port.util.ItemAbilities;
-import com.altnoir.poopsky.fabric.port.util.ParticleOptionUtils;
 import com.altnoir.poopsky.impl.PoTags;
-import com.altnoir.poopsky.impl.sound.PoSoundEvents;
-import com.altnoir.poopsky.impl.util.toiletUtil;
+import com.altnoir.poopsky.data.sound.PoSoundEvents;
+import com.altnoir.poopsky.impl.util.ToiletUtil;
 import com.altnoir.poopsky.init.*;
 import com.altnoir.poopsky.worldgen.PoConfigureFeatures;
 import net.minecraft.core.BlockPos;
@@ -20,21 +17,15 @@ import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.TickTask;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -60,15 +51,13 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-//import net.neoforged.neoforge.common.ItemAbilities;
+import com.altnoir.poopsky.fabric.port.util.ItemAbilities;
+import com.altnoir.poopsky.fabric.port.util.ParticleOptionUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Set;
 
 public abstract class AbstractToiletBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
@@ -176,22 +165,6 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (!player.getMainHandItem().isEmpty()) {
-            return InteractionResult.PASS;
-        }
-
-        if (!level.isClientSide) {
-            ToiletEntity entity = getOrCreateToiletEntity((ServerLevel) level, pos);
-            if (entity != null) {
-                entity.setGoldenPoop(toiletUtil.isGoldenToilet(level, pos));
-                player.startRiding(entity);
-            }
-        }
-        return InteractionResult.sidedSuccess(level.isClientSide);
-    }
-
-    @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (!stack.canPerformAction(ItemAbilities.FIRESTARTER_LIGHT)) {
             return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
@@ -205,14 +178,6 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
         consumeFireStarter(stack, player, hand);
         player.awardStat(Stats.ITEM_USED.get(item));
         return ItemInteractionResult.sidedSuccess(level.isClientSide);
-    }
-
-    @Nullable
-    private ToiletEntity getOrCreateToiletEntity(ServerLevel level, BlockPos pos) {
-        return level.getEntities(PoEntityType.TOILET.get(), new AABB(pos), e -> true)
-                .stream()
-                .findFirst()
-                .orElseGet(() -> PoEntityType.TOILET.get().spawn(level, pos, MobSpawnType.TRIGGERED));
     }
 
     private void consumeFireStarter(ItemStack stack, Player player, InteractionHand hand) {
@@ -280,10 +245,6 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     @Override
     public void onRemove(BlockState oldState, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!oldState.is(newState.getBlock())) {
-            if (level.getBlockEntity(pos) instanceof ToiletBlockEntity toilet) {
-                toilet.clearLinkedBlock();
-            }
-            level.getEntities(PoEntityType.TOILET.get(), new AABB(pos), e -> true).forEach(Entity::kill);
             if (!level.isClientSide) {
                 updateAdjacentConnections(level, pos, oldState);
             }
@@ -298,29 +259,11 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
                 poopAnvil(level, pos, entity);
             }
 
-            if (tryTeleportFromFall(level, pos, entity, fallDistance)) {
+            if (ToiletUtil.tryTeleportFromFall(level, pos, entity, fallDistance)) {
                 return;
             }
-            super.fallOn(level, blockState, pos, entity, fallDistance);
         }
         super.fallOn(level, blockState, pos, entity, fallDistance);
-    }
-
-    private boolean tryTeleportFromFall(Level level, BlockPos pos, Entity entity, float fallDistance) {
-        if (fallDistance < MIN_TELEPORT_FALL_DISTANCE || !toiletUtil.isEntityCentered(pos, entity)) {
-            return false;
-        }
-
-        if (level.getBlockEntity(pos) instanceof ToiletBlockEntity blockEntity && hasLinkedTarget(blockEntity)) {
-            teleportEntity(level, entity, blockEntity, fallDistance);
-            return true;
-        }
-
-        return false;
-    }
-
-    private boolean hasLinkedTarget(ToiletBlockEntity blockEntity) {
-        return blockEntity.getLinkedPos() != null && blockEntity.getLinkedDim() != null && !blockEntity.getLinkedDim().isBlank();
     }
 
     protected boolean isAnvil(BlockState state) {
@@ -328,7 +271,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     }
 
     private void poopAnvil(Level level, BlockPos pos, Entity entity) {
-        Item poopItem = toiletUtil.isGoldenToilet(level, pos) ? PoItems.GOLDEN_POOP.get() : PoItems.POOP.get();
+        Item poopItem = ToiletUtil.isGoldenToilet(level, pos) ? PoItems.GOLDEN_POOP.get() : PoItems.POOP.get();
         var poop = new ItemEntity(level, entity.getX(), entity.getY() + 0.1, entity.getZ(), new ItemStack(poopItem, ANVIL_POOP_COUNT));
         poop.setDefaultPickUpDelay();
         level.addFreshEntity(poop);
@@ -337,44 +280,15 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
         if (!level.isClientSide && entity instanceof Player player) {
-            if (player.isShiftKeyDown() && toiletUtil.isEntityCentered(pos, player)) {
+            if (player.isShiftKeyDown() && ToiletUtil.isEntityCentered(pos, player)) {
                 var playerData = player.getCustomData();
                 long lastPoopTime = playerData.getLong("poopTime");
-                toiletUtil.canPoop(level, player, player.hasEffect(PoEffects.holder(PoEffects.INTESTINAL_SPASM)), false, 0.1F, 0.5F, lastPoopTime,
+                ToiletUtil.canPoop(level, player, player.hasEffect(PoEffects.INTESTINAL_SPASM), false, 0.1F, 0.5F, lastPoopTime,
                         time -> playerData.putLong("poopTime", time));
             }
         }
     }
 
-    public void teleportEntity(Level level, Entity entity, ToiletBlockEntity blockEntity, float fallDistance) {
-        var server = level.getServer();
-        if (server == null) return;
-
-        var targetDimension = ResourceLocation.tryParse(blockEntity.getLinkedDim());
-        if (targetDimension == null) return;
-
-        var targetWorld = server.getLevel(ResourceKey.create(Registries.DIMENSION, targetDimension));
-        if (targetWorld == null) return;
-
-        var targetPos = blockEntity.getLinkedPos();
-        targetWorld.getChunk(targetPos);
-        Vec3 destination = Vec3.atCenterOf(targetPos).add(0.0, 0.5, 0.0);
-
-        if (entity.isVehicle() && entity.getControllingPassenger() != null) {
-            entity.getControllingPassenger().teleportTo(targetWorld, destination.x, destination.y, destination.z, Set.of(), entity.getYRot(), entity.getXRot());
-        }
-        entity.teleportTo(targetWorld, destination.x, destination.y, destination.z, Set.of(), entity.getYRot(), entity.getXRot());
-
-        var pitch = targetWorld.random.nextFloat() + 0.1F;
-        targetWorld.playSound(null, destination.x, destination.y, destination.z, SoundEvents.MUD_BREAK, SoundSource.PLAYERS, 1.0F, pitch);
-
-        var bounce = Math.sqrt(2 * 0.08 * fallDistance) * 0.85;
-        server.tell(new TickTask(server.getTickCount() + 1, () -> {
-            entity.setDeltaMovement(entity.getDeltaMovement().x, bounce, entity.getDeltaMovement().z);
-            entity.hurtMarked = true;
-            entity.hasImpulse = true;
-        }));
-    }
 
     @Override
     protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
@@ -492,7 +406,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
 
     private void explodeToilet(ServerLevel level, BlockPos pos) {
         BlockPos above = pos.above();
-        Item poopItem = toiletUtil.isGoldenToilet(level, pos) ? PoItems.GOLDEN_POOP.get() : PoItems.POOP.get();
+        Item poopItem = ToiletUtil.isGoldenToilet(level, pos) ? PoItems.GOLDEN_POOP.get() : PoItems.POOP.get();
         level.explode(null, pos.getX() + 0.5, pos.getY() + TOILET_USE_Y, pos.getZ() + 0.5, EXPLOSION_POWER, Level.ExplosionInteraction.BLOCK);
         if (level.getBlockState(above).is(Blocks.FIRE)) {
             level.setBlock(above, Blocks.AIR.defaultBlockState(), 3);

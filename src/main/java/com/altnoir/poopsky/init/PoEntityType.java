@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
+
 import com.altnoir.poopsky.content.entity.p.*;
 import com.altnoir.poopsky.content.entity.renderer.*;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
@@ -49,10 +50,10 @@ public class PoEntityType {
             .setData(ProviderType.LANG, NonNullBiConsumer.noop())
             .register();
 
-    public static final EntityEntry<ToiletEntity> TOILET = REGISTRATE.entity("toilet_entity", ToiletEntity::new, MobCategory.MISC)
+    public static final EntityEntry<FlushToiletEntity> FLUSH_TOILET = REGISTRATE.entity("flush_toilet_entity", FlushToiletEntity::new, MobCategory.MISC)
             .properties(properties -> properties
-                    .sized(0.75F, 1.0F))
-            .renderer(() -> ToiletRenderer::new)
+                    .sized(0.5F, 0.5F))
+            .renderer(() -> FlushToiletRenderer::new)
             .setData(ProviderType.LANG, NonNullBiConsumer.noop())
             .register();
 
@@ -70,3 +71,4 @@ public class PoEntityType {
     public static void register() {
     }
 }
+

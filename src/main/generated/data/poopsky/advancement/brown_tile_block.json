@@ -1,0 +1,33 @@
+{
+  "parent": "poopsky:poolime_block",
+  "criteria": {
+    "brown_tile_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:brown_tile_block"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.poopsky.brown_tile_block.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "poopsky:brown_tile_block"
+    },
+    "title": {
+      "translate": "advancements.poopsky.brown_tile_block.title"
+    }
+  },
+  "requirements": [
+    [
+      "brown_tile_block"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

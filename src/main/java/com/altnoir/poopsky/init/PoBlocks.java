@@ -2,6 +2,8 @@ package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.SetToiletTypeFunction;
+import com.altnoir.poopsky.content.block.ChiliVines;
+import com.altnoir.poopsky.content.block.PoTreeGrower;
 import com.altnoir.poopsky.content.block.p.*;
 import com.altnoir.poopsky.content.item.p.CompooperBlockItem;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
@@ -19,6 +21,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -26,7 +29,9 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -37,19 +42,14 @@ import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
 import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
-import net.minecraft.world.level.storage.loot.predicates.ExplosionCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.world.level.storage.loot.predicates.MatchTool;
+import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.ToIntFunction;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class PoBlocks {
     private static final float POOP = 0.5F;
@@ -59,35 +59,19 @@ public class PoBlocks {
     private static final float HARD_STRENGTH = 10.0F;
     private static final float TOILET_RESISTANCE = 1200.0F;
     private static final int LAVA_LIGHT_LEVEL = 15;
+    protected static final float[] LEAVES_SAPLING_CHANCES = {0.1F, 0.125F, 0.25F, 0.5F};
+    protected static final float[] LEAVES_STICK_CHANCES = {0.05F, 0.075F, 0.1F, 0.125F, 0.25F};
+    private static final List<BlockEntry<? extends Block>> DECORATIVE_BLOCKS = new ArrayList<>();
+    private static final List<BlockEntry<? extends Block>> ALL_TAB_BLOCKS = new ArrayList<>();
+
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
-    public static final BlockEntry<PoopCakeBlock> POOP_CAKE = registerPoopBlock("poop_cake",
+    public static final BlockEntry<PoopCakeBlock> POOP_CAKE = registerBlock("poop_cake", 88,
             props -> new PoopCakeBlock(poopCakeProperties()),
             (loot, block) -> loot.add(block, BlockLootSubProvider.noDrop()));
 
-    private static final Block[] POOP_CAKE_CANDLES = {
-            Blocks.CANDLE,
-            Blocks.WHITE_CANDLE,
-            Blocks.ORANGE_CANDLE,
-            Blocks.MAGENTA_CANDLE,
-            Blocks.LIGHT_BLUE_CANDLE,
-            Blocks.YELLOW_CANDLE,
-            Blocks.LIME_CANDLE,
-            Blocks.PINK_CANDLE,
-            Blocks.GRAY_CANDLE,
-            Blocks.LIGHT_GRAY_CANDLE,
-            Blocks.CYAN_CANDLE,
-            Blocks.PURPLE_CANDLE,
-            Blocks.BLUE_CANDLE,
-            Blocks.BROWN_CANDLE,
-            Blocks.GREEN_CANDLE,
-            Blocks.RED_CANDLE,
-            Blocks.BLACK_CANDLE
-    };
-
     private static final Map<Block, BlockEntry<PoopCandleCakeBlock>> POOP_CANDLE_CAKES = registerPoopCandleCakes();
-
-    public static final BlockEntry<PoopPieceBlock> POOP_PIECE = registerPoopBlock("poop_piece",
+    public static final BlockEntry<PoopPieceBlock> POOP_PIECE = registerBlock("poop_piece", 88,
             props -> new PoopPieceBlock(poopProperties(0.1F)
                     .replaceable()
                     .randomTicks()
@@ -95,7 +79,12 @@ public class PoBlocks {
                     .isViewBlocking((state, getter, pos) -> state.getValue(PoopPieceBlock.LAYERS) >= 8)
                     .pushReaction(PushReaction.DESTROY)),
             (loot, block) -> loot.add(block, createPoopPieceDrop(loot, block, PoItems.POOP_BALL.get())));
-    public static final BlockEntry<PoopBlock> POOP_BLOCK = registerPoopBlock("poop_block",
+
+    public static final BlockEntry<ShitBlock> SHIT = registerShitBlock("shit");
+    public static final BlockEntry<ShitBlock> CHILI_SHIT = registerShitBlock("chili_shit");
+    public static final BlockEntry<ShitBlock> GOLDEN_SHIT = registerShitBlock("golden_shit");
+
+    public static final BlockEntry<PoopBlock> POOP_BLOCK = registerAllTabBlock("poop_block", 88,
             props -> new PoopBlock(poopProperties()
                     .randomTicks()
                     .speedFactor(0.4F)
@@ -103,7 +92,7 @@ public class PoBlocks {
                     .isRedstoneConductor(PoBlocks::always)
                     .isSuffocating(PoBlocks::always)
                     .instrument(NoteBlockInstrument.COW_BELL)));
-    public static final BlockEntry<PoopFarmlandBlock> POOP_FARMLAND = registerPoopBlock("poop_farmland",
+    public static final BlockEntry<PoopFarmlandBlock> POOP_FARMLAND = registerBlock("poop_farmland", 88,
             props -> new PoopFarmlandBlock(BlockBehaviour.Properties.ofFullCopy(POOP_BLOCK.get())
                     .randomTicks()),
             (loot, block) -> loot.add(block, LootTable.lootTable()
@@ -111,54 +100,55 @@ public class PoBlocks {
                             .setRolls(ConstantValue.exactly(1.0F))
                             .when(ExplosionCondition.survivesExplosion())
                             .add(LootItem.lootTableItem(POOP_BLOCK.get())))));
-    public static final BlockEntry<PoolimeMaggotsBlock> POOLIME_MAGGOTS_BLOCK = registerPoopBlock("poolime_maggots_block",
+    public static final BlockEntry<PoolimeMaggotsBlock> POOLIME_MAGGOTS_BLOCK = registerBlock("poolime_maggots_block", 88,
             props -> new PoolimeMaggotsBlock(poopProperties(1.0F)
                     .randomTicks()
                     .speedFactor(0.4F)
                     .isValidSpawn(Blocks::always)
                     .instrument(NoteBlockInstrument.COW_BELL)));
-    public static final BlockEntry<StairBlock> POOP_STAIRS = registerPoopBlock("poop_stairs",
+    public static final BlockEntry<StairBlock> POOP_STAIRS = registerDecorativeBlock("poop_stairs", 88,
             props -> new StairBlock(POOP_BLOCK.get().defaultBlockState(), poopProperties()));
 
-    public static final BlockEntry<SlabBlock> POOP_SLAB = registerPoopBlock("poop_slab",
+    public static final BlockEntry<SlabBlock> POOP_SLAB = registerDecorativeBlock("poop_slab", 88,
             props -> new SlabBlock(poopProperties()));
-    public static final BlockEntry<VerticalSlabBlock> POOP_VERTICAL_SLAB = registerPoopBlock("poop_vertical_slab",
-            props -> new VerticalSlabBlock(poopProperties()));
-    public static final BlockEntry<ButtonBlock> POOP_BUTTON = registerPoopBlock("poop_button",
+    public static final BlockEntry<VerticalSlabBlock> POOP_VERTICAL_SLAB = registerDecorativeBlock("poop_vertical_slab", 88,
+            props -> new VerticalSlabBlock(poopProperties()),
+            PoBlocks::createVerticalSlabDrops);
+    public static final BlockEntry<ButtonBlock> POOP_BUTTON = registerDecorativeBlock("poop_button", 88,
             props -> new ButtonBlock(PoBlockSetType.POOP, 200, poopProperties().noCollission()));
-    public static final BlockEntry<PressurePlateBlock> POOP_PRESSURE_PLATE = registerPoopBlock("poop_pressure_plate",
+    public static final BlockEntry<PressurePlateBlock> POOP_PRESSURE_PLATE = registerDecorativeBlock("poop_pressure_plate", 88,
             props -> new PressurePlateBlock(PoBlockSetType.POOP, poopProperties().noCollission()));
-    public static final BlockEntry<FenceBlock> POOP_FENCE = registerPoopBlock("poop_fence",
+    public static final BlockEntry<FenceBlock> POOP_FENCE = registerDecorativeBlock("poop_fence", 88,
             props -> new FenceBlock(poopProperties()));
-    public static final BlockEntry<FenceGateBlock> POOP_FENCE_GATE = registerPoopBlock("poop_fence_gate",
+    public static final BlockEntry<FenceGateBlock> POOP_FENCE_GATE = registerDecorativeBlock("poop_fence_gate", 88,
             props -> new FenceGateBlock(PoWoodType.POOP, poopProperties()));
-    public static final BlockEntry<WallBlock> POOP_WALL = registerPoopBlock("poop_wall",
+    public static final BlockEntry<WallBlock> POOP_WALL = registerDecorativeBlock("poop_wall", 88,
             props -> new WallBlock(poopProperties()));
     public static final BlockFamily POOP_FAMILY = new BlockFamily(POOP_BLOCK, POOP_STAIRS, POOP_SLAB, POOP_VERTICAL_SLAB, POOP_WALL);
 
-    public static final BlockEntry<DoorBlock> POOP_DOOR = registerPoopBlock("poop_door",
+    public static final BlockEntry<DoorBlock> POOP_DOOR = registerDecorativeBlock("poop_door", 88,
             props -> new DoorBlock(PoBlockSetType.POOP, poopProperties()
                     .noOcclusion()
                     .pushReaction(PushReaction.DESTROY)),
             (loot, block) -> loot.add(block, loot.createDoorTable(block)));
-    public static final BlockEntry<TrapDoorBlock> POOP_TRAPDOOR = registerPoopBlock("poop_trapdoor",
+    public static final BlockEntry<TrapDoorBlock> POOP_TRAPDOOR = registerDecorativeBlock("poop_trapdoor", 88,
             props -> new TrapDoorBlock(PoBlockSetType.POOP, poopProperties()
                     .noOcclusion()
                     .isValidSpawn(Blocks::never)));
 
-    public static final BlockEntry<ChairBlock> STOOL = registerPoopBlock("stool",
+    public static final BlockEntry<ChairBlock> STOOL = registerBlock("stool", 88,
             props -> new ChairBlock(poopProperties()
                     .pushReaction(PushReaction.DESTROY)
                     .noOcclusion()));
-    public static final BlockEntry<PoolimeBlock> POOLIME_BLOCK = registerPoopBlock("poolime_block",
+    public static final BlockEntry<PoolimeBlock> POOLIME_BLOCK = registerBlock("poolime_block", 88,
             props -> new PoolimeBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN)
                     .friction(0.8F)
                     .sound(SoundType.SLIME_BLOCK)
                     .noOcclusion()));
 
-    public static final BlockEntry<Block> POOP_BRICKS = registerPoopBlock("poop_bricks",
+    public static final BlockEntry<Block> POOP_BRICKS = registerDecorativeBlock("poop_bricks", 88,
             props -> new Block(hardenedProperties(MapColor.COLOR_BROWN, SoundType.FROGLIGHT)));
-    public static final BlockEntry<Block> CRACKED_POOP_BRICKS = registerPoopBlock("cracked_poop_bricks",
+    public static final BlockEntry<Block> CRACKED_POOP_BRICKS = registerDecorativeBlock("cracked_poop_bricks", 88,
             props -> new Block(BlockBehaviour.Properties.ofFullCopy(POOP_BRICKS.get())));
     public static final BlockFamily POOP_BRICK_FAMILY = registerBlockFamily("poop_brick", POOP_BRICKS, false);
     public static final BlockEntry<StairBlock> POOP_BRICK_STAIRS = POOP_BRICK_FAMILY.stairs();
@@ -166,15 +156,28 @@ public class PoBlocks {
     public static final BlockEntry<VerticalSlabBlock> POOP_BRICK_VERTICAL_SLAB = POOP_BRICK_FAMILY.verticalSlab();
     public static final BlockEntry<WallBlock> POOP_BRICK_WALL = POOP_BRICK_FAMILY.wall();
 
-    public static final BlockEntry<Block> MOSSY_POOP_BRICKS = registerPoopBlock("mossy_poop_bricks",
+    public static final BlockEntry<Block> MOSSY_POOP_BRICKS = registerDecorativeBlock("mossy_poop_bricks", 88,
             props -> new Block(hardenedProperties(MapColor.COLOR_GREEN, SoundType.FROGLIGHT)));
     public static final BlockFamily MOSSY_POOP_BRICK_FAMILY = registerBlockFamily("mossy_poop_brick", MOSSY_POOP_BRICKS, false);
-    public static final BlockEntry<StairBlock> MOSSY_POOP_BRICK_STAIRS = MOSSY_POOP_BRICK_FAMILY.stairs();
-    public static final BlockEntry<SlabBlock> MOSSY_POOP_BRICK_SLAB = MOSSY_POOP_BRICK_FAMILY.slab();
-    public static final BlockEntry<VerticalSlabBlock> MOSSY_POOP_BRICK_VERTICAL_SLAB = MOSSY_POOP_BRICK_FAMILY.verticalSlab();
-    public static final BlockEntry<WallBlock> MOSSY_POOP_BRICK_WALL = MOSSY_POOP_BRICK_FAMILY.wall();
 
-    public static final BlockEntry<ChiliPoopBlock> CHILI_POOP_BLOCK = registerPoopBlock("chili_poop_block",
+    public static final BlockEntry<DriedPoopBlock> DRIED_POOP_BLOCK = registerAllTabBlock("dried_poop_block", 88,
+            props -> new DriedPoopBlock(hardenedProperties(MapColor.COLOR_ORANGE, SoundType.TUFF)
+                    .instrument(NoteBlockInstrument.COW_BELL)));
+    public static final BlockFamily DRIED_POOP_BLOCK_FAMILY = registerBlockFamily("dried_poop_block", DRIED_POOP_BLOCK, false);
+
+    public static final BlockEntry<Block> SMOOTH_POOP_BLOCK = registerDecorativeBlock("smooth_poop_block", 88,
+            props -> new Block(hardenedProperties(MapColor.COLOR_ORANGE, SoundType.CALCITE)));
+    public static final BlockFamily SMOOTH_POOP_BLOCK_FAMILY = registerBlockFamily("smooth_poop_block", SMOOTH_POOP_BLOCK, false);
+
+    public static final BlockEntry<Block> CUT_POOP_BLOCK = registerDecorativeBlock("cut_poop_block", 88,
+            props -> new Block(hardenedProperties(MapColor.COLOR_ORANGE, SoundType.POLISHED_TUFF)));
+    public static final BlockFamily CUT_POOP_BLOCK_FAMILY = registerBlockFamily("cut_poop_block", CUT_POOP_BLOCK, false);
+    public static final BlockEntry<StairBlock> CUT_POOP_BLOCK_STAIRS = CUT_POOP_BLOCK_FAMILY.stairs();
+    public static final BlockEntry<SlabBlock> CUT_POOP_BLOCK_SLAB = CUT_POOP_BLOCK_FAMILY.slab();
+    public static final BlockEntry<VerticalSlabBlock> CUT_POOP_BLOCK_VERTICAL_SLAB = CUT_POOP_BLOCK_FAMILY.verticalSlab();
+    public static final BlockEntry<WallBlock> CUT_POOP_BLOCK_WALL = CUT_POOP_BLOCK_FAMILY.wall();
+
+    public static final BlockEntry<ChiliPoopBlock> CHILI_POOP_BLOCK = registerAllTabBlock("chili_poop_block", 88,
             props -> new ChiliPoopBlock(poopProperties()
                     .requiresCorrectToolForDrops()
                     .speedFactor(0.4F)
@@ -183,11 +186,8 @@ public class PoBlocks {
                     .isSuffocating(PoBlocks::always)
                     .instrument(NoteBlockInstrument.COW_BELL)));
     public static final BlockFamily CHILI_POOP_FAMILY = registerBlockFamily("chili_poop", CHILI_POOP_BLOCK, false);
-    public static final BlockEntry<StairBlock> CHILI_POOP_STAIRS = CHILI_POOP_FAMILY.stairs();
-    public static final BlockEntry<SlabBlock> CHILI_POOP_SLAB = CHILI_POOP_FAMILY.slab();
-    public static final BlockEntry<VerticalSlabBlock> CHILI_POOP_VERTICAL_SLAB = CHILI_POOP_FAMILY.verticalSlab();
-    public static final BlockEntry<WallBlock> CHILI_POOP_WALL = CHILI_POOP_FAMILY.wall();
-    public static final BlockEntry<GoldenPoopBlock> GOLDEN_POOP_BLOCK = registerPoopBlock("golden_poop_block",
+
+    public static final BlockEntry<GoldenPoopBlock> GOLDEN_POOP_BLOCK = registerAllTabBlock("golden_poop_block", 88,
             props -> new GoldenPoopBlock(simpleProperties(MapColor.GOLD, 0.65F, SoundType.MUD)
                     .requiresCorrectToolForDrops()
                     .speedFactor(0.4F)
@@ -196,43 +196,40 @@ public class PoBlocks {
                     .isSuffocating(PoBlocks::always)
                     .instrument(NoteBlockInstrument.BELL)));
     public static final BlockFamily GOLDEN_POOP_FAMILY = registerBlockFamily("golden_poop", GOLDEN_POOP_BLOCK, false);
-    public static final BlockEntry<StairBlock> GOLDEN_POOP_STAIRS = GOLDEN_POOP_FAMILY.stairs();
-    public static final BlockEntry<SlabBlock> GOLDEN_POOP_SLAB = GOLDEN_POOP_FAMILY.slab();
-    public static final BlockEntry<VerticalSlabBlock> GOLDEN_POOP_VERTICAL_SLAB = GOLDEN_POOP_FAMILY.verticalSlab();
-    public static final BlockEntry<WallBlock> GOLDEN_POOP_WALL = GOLDEN_POOP_FAMILY.wall();
 
-    public static final BlockEntry<DriedPoopBlock> DRIED_POOP_BLOCK = registerPoopBlock("dried_poop_block",
-            props -> new DriedPoopBlock(hardenedProperties(MapColor.COLOR_ORANGE, SoundType.TUFF)
-                    .instrument(NoteBlockInstrument.COW_BELL)));
-    public static final BlockFamily DRIED_POOP_BLOCK_FAMILY = registerBlockFamily("dried_poop_block", DRIED_POOP_BLOCK, false);
-    public static final BlockEntry<StairBlock> DRIED_POOP_BLOCK_STAIRS = DRIED_POOP_BLOCK_FAMILY.stairs();
-    public static final BlockEntry<SlabBlock> DRIED_POOP_BLOCK_SLAB = DRIED_POOP_BLOCK_FAMILY.slab();
-    public static final BlockEntry<VerticalSlabBlock> DRIED_POOP_BLOCK_VERTICAL_SLAB = DRIED_POOP_BLOCK_FAMILY.verticalSlab();
-    public static final BlockEntry<WallBlock> DRIED_POOP_BLOCK_WALL = DRIED_POOP_BLOCK_FAMILY.wall();
-
-    public static final BlockEntry<Block> SMOOTH_POOP_BLOCK = registerPoopBlock("smooth_poop_block",
-            props -> new Block(hardenedProperties(MapColor.COLOR_ORANGE, SoundType.CALCITE)));
-    public static final BlockFamily SMOOTH_POOP_BLOCK_FAMILY = registerBlockFamily("smooth_poop_block", SMOOTH_POOP_BLOCK, false);
-    public static final BlockEntry<StairBlock> SMOOTH_POOP_BLOCK_STAIRS = SMOOTH_POOP_BLOCK_FAMILY.stairs();
-    public static final BlockEntry<SlabBlock> SMOOTH_POOP_BLOCK_SLAB = SMOOTH_POOP_BLOCK_FAMILY.slab();
-    public static final BlockEntry<VerticalSlabBlock> SMOOTH_POOP_BLOCK_VERTICAL_SLAB = SMOOTH_POOP_BLOCK_FAMILY.verticalSlab();
-    public static final BlockEntry<WallBlock> SMOOTH_POOP_BLOCK_WALL = SMOOTH_POOP_BLOCK_FAMILY.wall();
-
-    public static final BlockEntry<Block> CUT_POOP_BLOCK = registerPoopBlock("cut_poop_block",
-            props -> new Block(hardenedProperties(MapColor.COLOR_ORANGE, SoundType.POLISHED_TUFF)));
-    public static final BlockFamily CUT_POOP_BLOCK_FAMILY = registerBlockFamily("cut_poop_block", CUT_POOP_BLOCK, false);
-    public static final BlockEntry<StairBlock> CUT_POOP_BLOCK_STAIRS = CUT_POOP_BLOCK_FAMILY.stairs();
-    public static final BlockEntry<SlabBlock> CUT_POOP_BLOCK_SLAB = CUT_POOP_BLOCK_FAMILY.slab();
-    public static final BlockEntry<VerticalSlabBlock> CUT_POOP_BLOCK_VERTICAL_SLAB = CUT_POOP_BLOCK_FAMILY.verticalSlab();
-    public static final BlockEntry<WallBlock> CUT_POOP_BLOCK_WALL = CUT_POOP_BLOCK_FAMILY.wall();
-
-    public static final BlockEntry<Block> TILE_BLOCK = registerBlock("tile_block",
-            props -> new Block(hardenedProperties(MapColor.COLOR_LIGHT_BLUE, SoundType.STONE)));
-    public static final BlockFamily TILE_BLOCK_FAMILY = registerBlockFamily("tile_block", TILE_BLOCK, true);
-    public static final BlockEntry<StairBlock> TILE_BLOCK_STAIRS = TILE_BLOCK_FAMILY.stairs();
-    public static final BlockEntry<SlabBlock> TILE_BLOCK_SLAB = TILE_BLOCK_FAMILY.slab();
-    public static final BlockEntry<VerticalSlabBlock> TILE_BLOCK_VERTICAL_SLAB = TILE_BLOCK_FAMILY.verticalSlab();
-    public static final BlockEntry<WallBlock> TILE_BLOCK_WALL = TILE_BLOCK_FAMILY.wall();
+    private static final Map<DyeColor, ColoredTile> COLORED_TILES = registerColoredTiles();
+    public static final BlockEntry<Block> WHITE_TILE_BLOCK = coloredTile(DyeColor.WHITE).block();
+    public static final BlockEntry<Block> LIGHT_GRAY_TILE_BLOCK = coloredTile(DyeColor.LIGHT_GRAY).block();
+    public static final BlockEntry<Block> GRAY_TILE_BLOCK = coloredTile(DyeColor.GRAY).block();
+    public static final BlockEntry<Block> BLACK_TILE_BLOCK = coloredTile(DyeColor.BLACK).block();
+    public static final BlockEntry<Block> BROWN_TILE_BLOCK = coloredTile(DyeColor.BROWN).block();
+    public static final BlockEntry<Block> RED_TILE_BLOCK = coloredTile(DyeColor.RED).block();
+    public static final BlockEntry<Block> ORANGE_TILE_BLOCK = coloredTile(DyeColor.ORANGE).block();
+    public static final BlockEntry<Block> YELLOW_TILE_BLOCK = coloredTile(DyeColor.YELLOW).block();
+    public static final BlockEntry<Block> LIME_TILE_BLOCK = coloredTile(DyeColor.LIME).block();
+    public static final BlockEntry<Block> GREEN_TILE_BLOCK = coloredTile(DyeColor.GREEN).block();
+    public static final BlockEntry<Block> CYAN_TILE_BLOCK = coloredTile(DyeColor.CYAN).block();
+    public static final BlockEntry<Block> LIGHT_BLUE_TILE_BLOCK = coloredTile(DyeColor.LIGHT_BLUE).block();
+    public static final BlockEntry<Block> BLUE_TILE_BLOCK = coloredTile(DyeColor.BLUE).block();
+    public static final BlockEntry<Block> PURPLE_TILE_BLOCK = coloredTile(DyeColor.PURPLE).block();
+    public static final BlockEntry<Block> MAGENTA_TILE_BLOCK = coloredTile(DyeColor.MAGENTA).block();
+    public static final BlockEntry<Block> PINK_TILE_BLOCK = coloredTile(DyeColor.PINK).block();
+    public static final BlockFamily WHITE_TILE_BLOCK_FAMILY = coloredTile(DyeColor.WHITE).family();
+    public static final BlockFamily LIGHT_GRAY_TILE_BLOCK_FAMILY = coloredTile(DyeColor.LIGHT_GRAY).family();
+    public static final BlockFamily GRAY_TILE_BLOCK_FAMILY = coloredTile(DyeColor.GRAY).family();
+    public static final BlockFamily BLACK_TILE_BLOCK_FAMILY = coloredTile(DyeColor.BLACK).family();
+    public static final BlockFamily BROWN_TILE_BLOCK_FAMILY = coloredTile(DyeColor.BROWN).family();
+    public static final BlockFamily RED_TILE_BLOCK_FAMILY = coloredTile(DyeColor.RED).family();
+    public static final BlockFamily ORANGE_TILE_BLOCK_FAMILY = coloredTile(DyeColor.ORANGE).family();
+    public static final BlockFamily YELLOW_TILE_BLOCK_FAMILY = coloredTile(DyeColor.YELLOW).family();
+    public static final BlockFamily LIME_TILE_BLOCK_FAMILY = coloredTile(DyeColor.LIME).family();
+    public static final BlockFamily GREEN_TILE_BLOCK_FAMILY = coloredTile(DyeColor.GREEN).family();
+    public static final BlockFamily CYAN_TILE_BLOCK_FAMILY = coloredTile(DyeColor.CYAN).family();
+    public static final BlockFamily LIGHT_BLUE_TILE_BLOCK_FAMILY = coloredTile(DyeColor.LIGHT_BLUE).family();
+    public static final BlockFamily BLUE_TILE_BLOCK_FAMILY = coloredTile(DyeColor.BLUE).family();
+    public static final BlockFamily PURPLE_TILE_BLOCK_FAMILY = coloredTile(DyeColor.PURPLE).family();
+    public static final BlockFamily MAGENTA_TILE_BLOCK_FAMILY = coloredTile(DyeColor.MAGENTA).family();
+    public static final BlockFamily PINK_TILE_BLOCK_FAMILY = coloredTile(DyeColor.PINK).family();
 
     public static final BlockEntry<CompooperBlock> COMPOOPER = registerCompooperBlock("compooper",
             props -> new CompooperBlock(simpleProperties(MapColor.COLOR_BROWN, 0.6F, SoundType.METAL)
@@ -251,7 +248,7 @@ public class PoBlocks {
             props -> new WaterCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get())),
             (loot, block) -> loot.dropOther(block, COMPOOPER.get()));
     public static final BlockEntry<LavaCompooperBlock> LAVA_COMPOOPER = registerBlock("lava_compooper",
-            props -> new LavaCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()).lightLevel(state -> 15)),
+            props -> new LavaCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()).lightLevel(state -> LAVA_LIGHT_LEVEL)),
             (loot, block) -> loot.dropOther(block, COMPOOPER.get()));
     public static final BlockEntry<PowderSnowCompooperBlock> POWDER_SNOW_COMPOOPER = registerBlock("powder_snow_compooper",
             props -> new PowderSnowCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get())),
@@ -278,7 +275,7 @@ public class PoBlocks {
                     .isValidSpawn(Blocks::never)
                     .noOcclusion()));
 
-    public static final BlockEntry<PoopTntBlock> POOP_TNT = registerPoopBlock("poop_tnt",
+    public static final BlockEntry<PoopTntBlock> POOP_TNT = registerBlock("poop_tnt", 88,
             props -> new PoopTntBlock(simpleProperties(MapColor.FIRE, 0.0F, SoundType.GRASS)
                     .ignitedByLava()
                     .pushReaction(PushReaction.DESTROY)));
@@ -290,44 +287,98 @@ public class PoBlocks {
                     .requiresCorrectToolForDrops()
                     .noOcclusion()));
 
-    public static final BlockEntry<Block> RAW_POOP_BLOCK = registerPoopBlock("raw_poop_block",
+    public static final BlockEntry<Block> RAW_POOP_BLOCK = registerBlock("raw_poop_block", 88,
             props -> new Block(simpleProperties(MapColor.COLOR_BROWN, 0.65F, SoundType.MUD)
                     .randomTicks()
                     .isValidSpawn(Blocks::always)
                     .instrument(NoteBlockInstrument.COW_BELL)));
-    public static final BlockEntry<RawSaplingBlock> RAW_SAPLING_POOP_BLOCK = registerPoopBlock("raw_sapling_poop_block",
+    public static final BlockEntry<RawSaplingBlock> RAW_SAPLING_POOP_BLOCK = registerBlock("raw_sapling_poop_block", 88,
             props -> new RawSaplingBlock(BlockBehaviour.Properties.ofFullCopy(RAW_POOP_BLOCK.get()).sound(SoundType.ROOTED_DIRT)));
-    public static final BlockEntry<RawSeaBlock> RAW_SEA_POOP_BLOCK = registerPoopBlock("raw_sea_poop_block",
+    public static final BlockEntry<RawSeaBlock> RAW_SEA_POOP_BLOCK = registerBlock("raw_sea_poop_block", 88,
             props -> new RawSeaBlock(BlockBehaviour.Properties.ofFullCopy(RAW_POOP_BLOCK.get()).sound(SoundType.ROOTED_DIRT)));
-    public static final BlockEntry<RawWitherBlock> RAW_WITHER_POOP_BLOCK = registerPoopBlock("raw_wither_poop_block",
+    public static final BlockEntry<RawWitherBlock> RAW_WITHER_POOP_BLOCK = registerBlock("raw_wither_poop_block", 88,
             props -> new RawWitherBlock(BlockBehaviour.Properties.ofFullCopy(RAW_POOP_BLOCK.get()).sound(SoundType.ROOTED_DIRT)));
 
-    public static final BlockEntry<PoopLogBlock> POOP_LOG = registerPoopBlock("poop_log",
-            props -> new PoopLogBlock(logProperties(SoundType.STEM).randomTicks()),
+    public static final BlockEntry<PoopLogBlock> POOP_LOG = registerAllTabBlock("poop_log", 88,
+            props -> new PoopLogBlock(logProperties(MapColor.COLOR_BROWN, SoundType.STEM).randomTicks()),
             (loot, block) -> loot.add(block, createSpallOreDrops(loot, block)));
-    public static final BlockEntry<PoopEmptyLogBlock> POOP_EMPTY_LOG = registerPoopBlock("poop_empty_log",
-            props -> new PoopEmptyLogBlock(logProperties(SoundType.BAMBOO_WOOD).noOcclusion()));
-    public static final BlockEntry<PoopLogBlock> STRIPPED_POOP_LOG = registerPoopBlock("stripped_poop_log",
-            props -> new PoopLogBlock(logProperties(SoundType.STEM).randomTicks()),
+    public static final BlockEntry<PoopLogBlock> POOP_WOOD = registerAllTabBlock("poop_wood", 88,
+            props -> new PoopLogBlock(logProperties(MapColor.COLOR_BROWN, SoundType.STEM).randomTicks()),
             (loot, block) -> loot.add(block, createSpallOreDrops(loot, block)));
-    public static final BlockEntry<PoopEmptyLogBlock> STRIPPED_POOP_EMPTY_LOG = registerPoopBlock("stripped_poop_empty_log",
-            props -> new PoopEmptyLogBlock(logProperties(SoundType.BAMBOO_WOOD).noOcclusion()));
-
-    public static final BlockEntry<PoopLeavesBlock> POOP_LEAVES = registerPoopBlock("poop_leaves",
-            props -> new PoopLeavesBlock(0x5E4228, leavesProperties(MapColor.COLOR_BROWN)),
+    public static final BlockEntry<PoopEmptyLogBlock> POOP_EMPTY_LOG = registerAllTabBlock("poop_empty_log", 88,
+            props -> new PoopEmptyLogBlock(logProperties(MapColor.COLOR_BROWN, SoundType.BAMBOO_WOOD).noOcclusion()));
+    public static final BlockEntry<PoopLogBlock> STRIPPED_POOP_LOG = registerAllTabBlock("stripped_poop_log", 88,
+            props -> new PoopLogBlock(logProperties(MapColor.COLOR_BROWN, SoundType.STEM).randomTicks()),
+            (loot, block) -> loot.add(block, createSpallOreDrops(loot, block)));
+    public static final BlockEntry<PoopLogBlock> STRIPPED_POOP_WOOD = registerAllTabBlock("stripped_poop_wood", 88,
+            props -> new PoopLogBlock(logProperties(MapColor.COLOR_BROWN, SoundType.STEM).randomTicks()),
+            (loot, block) -> loot.add(block, createSpallOreDrops(loot, block)));
+    public static final BlockEntry<PoopEmptyLogBlock> STRIPPED_POOP_EMPTY_LOG = registerAllTabBlock("stripped_poop_empty_log", 88,
+            props -> new PoopEmptyLogBlock(logProperties(MapColor.COLOR_BROWN, SoundType.BAMBOO_WOOD).noOcclusion()));
+    public static final BlockEntry<LogBlock> GINKGO_LOG = registerDecorativeBlock("ginkgo_log", 64,
+            props -> new LogBlock(logProperties(MapColor.COLOR_YELLOW, SoundType.WOOD).ignitedByLava()));
+    public static final BlockEntry<LogBlock> GINKGO_WOOD = registerDecorativeBlock("ginkgo_wood", 64,
+            props -> new LogBlock(logProperties(MapColor.COLOR_YELLOW, SoundType.WOOD).ignitedByLava()));
+    public static final BlockEntry<LogBlock> STRIPPED_GINKGO_LOG = registerDecorativeBlock("stripped_ginkgo_log", 64,
+            props -> new LogBlock(logProperties(MapColor.COLOR_YELLOW, SoundType.WOOD).ignitedByLava()));
+    public static final BlockEntry<LogBlock> STRIPPED_GINKGO_WOOD = registerDecorativeBlock("stripped_ginkgo_wood", 64,
+            props -> new LogBlock(logProperties(MapColor.COLOR_YELLOW, SoundType.WOOD).ignitedByLava()));
+    public static final BlockEntry<FlamPlanksBlock> GINKGO_PLANKS = registerDecorativeBlock("ginkgo_planks", 64,
+            props -> new FlamPlanksBlock(logProperties(MapColor.COLOR_YELLOW, SoundType.WOOD).ignitedByLava()));
+    public static final BlockEntry<FlamStairBlock> GINKGO_STAIRS = registerDecorativeBlock("ginkgo_stairs", 64,
+            props -> new FlamStairBlock(GINKGO_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(GINKGO_PLANKS.get())));
+    public static final BlockEntry<FlamSlabBlock> GINKGO_SLAB = registerDecorativeBlock("ginkgo_slab", 64,
+            props -> new FlamSlabBlock(BlockBehaviour.Properties.ofFullCopy(GINKGO_PLANKS.get())),
+            (loot, block) -> loot.add(block, loot.createSlabItemTable(block)));
+    public static final BlockEntry<FlamVerticalSlabBlock> GINKGO_VERTICAL_SLAB = registerDecorativeBlock("ginkgo_vertical_slab", 64,
+            props -> new FlamVerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(GINKGO_PLANKS.get())),
+            PoBlocks::createVerticalSlabDrops);
+    public static final BlockEntry<ButtonBlock> GINKGO_BUTTON = registerDecorativeBlock("ginkgo_button", 64,
+            props -> new ButtonBlock(BlockSetType.OAK, 30, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_BUTTON)));
+    public static final BlockEntry<PressurePlateBlock> GINKGO_PRESSURE_PLATE = registerDecorativeBlock("ginkgo_pressure_plate", 64,
+            props -> new PressurePlateBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PRESSURE_PLATE)));
+    public static final BlockEntry<FlamFenceBlock> GINKGO_FENCE = registerDecorativeBlock("ginkgo_fence", 64,
+            props -> new FlamFenceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE).mapColor(MapColor.COLOR_YELLOW)));
+    public static final BlockEntry<FlamFenceGateBlock> GINKGO_FENCE_GATE = registerDecorativeBlock("ginkgo_fence_gate", 64,
+            props -> new FlamFenceGateBlock(WoodType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE_GATE).mapColor(MapColor.COLOR_YELLOW)));
+    public static final BlockEntry<DoorBlock> GINKGO_DOOR = registerDecorativeBlock("ginkgo_door", 64,
+            props -> new DoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_DOOR).mapColor(MapColor.COLOR_YELLOW)),
+            (loot, block) -> loot.add(block, loot.createDoorTable(block)));
+    public static final BlockEntry<TrapDoorBlock> GINKGO_TRAPDOOR = registerDecorativeBlock("ginkgo_trapdoor", 64,
+            props -> new TrapDoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_TRAPDOOR).mapColor(MapColor.COLOR_YELLOW)));
+    public static final BlockEntry<ParticleLeavesBlock> POOP_LEAVES = registerBlock("poop_leaves", 88,
+            props -> new ParticleLeavesBlock(0x5E4228, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .sound(SoundType.SCULK_SENSOR)),
             (loot, block) -> loot.add(block, createLeavesDrops(loot, block, PoItems.POOP.get())));
-    public static final BlockEntry<PoopLeavesBlock> POOP_LEAVES_IRON = registerPoopBlock("poop_leaves_iron",
-            props -> new PoopLeavesBlock(0xFFFFFF, leavesProperties(MapColor.TERRACOTTA_WHITE)),
+    public static final BlockEntry<ParticleLeavesBlock> POOP_LEAVES_IRON = registerBlock("poop_leaves_iron", 88,
+            props -> new ParticleLeavesBlock(0xFFFFFF, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
+                    .mapColor(MapColor.TERRACOTTA_WHITE)
+                    .sound(SoundType.SCULK_SENSOR)),
             (loot, block) -> loot.add(block, createIronLeavesDrops(loot, block)));
-    public static final BlockEntry<PoopLeavesBlock> POOP_LEAVES_GOLD = registerPoopBlock("poop_leaves_gold",
-            props -> new PoopLeavesBlock(0xFFD700, leavesProperties(MapColor.COLOR_YELLOW)),
+    public static final BlockEntry<ParticleLeavesBlock> POOP_LEAVES_GOLD = registerBlock("poop_leaves_gold", 88,
+            props -> new ParticleLeavesBlock(0xFFD700, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
+                    .mapColor(MapColor.COLOR_YELLOW)
+                    .sound(SoundType.SCULK_SENSOR)),
             (loot, block) -> loot.add(block, createGoldLeavesDrops(loot, block)));
-    public static final BlockEntry<PoopTreeBlock> POOP_SAPLING = registerPoopBlock("poop_sapling",
+    public static final BlockEntry<LeavesBlock> GINKGO_LEAVES = registerBlock("ginkgo_leaves", 64,
+            props -> new ParticleLeavesBlock(0xF0DB3E, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
+                    .mapColor(MapColor.COLOR_YELLOW)),
+            (loot, block) -> loot.add(block, createGinkgoLeavesDrops(loot, block)));
+    public static final BlockEntry<PoopTreeBlock> POOP_SAPLING = registerBlock("poop_sapling", 88,
             props -> new PoopTreeBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN)
                     .noCollission()
                     .noOcclusion()
                     .instabreak()
                     .sound(SoundType.MUD)
+                    .offsetType(BlockBehaviour.OffsetType.XZ)
+                    .pushReaction(PushReaction.DESTROY)));
+    public static final BlockEntry<SaplingBlock> GINKGO_SAPLING = registerBlock("ginkgo_sapling", 64,
+            props -> new SaplingBlock(PoTreeGrower.GINKGO, BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_YELLOW)
+                    .noCollission()
+                    .instabreak()
+                    .sound(SoundType.GRASS)
                     .offsetType(BlockBehaviour.OffsetType.XZ)
                     .pushReaction(PushReaction.DESTROY)));
 
@@ -365,34 +416,15 @@ public class PoBlocks {
 
     public static final BlockEntry<? extends LiquidBlock> URINE_LIQUID = PoFluids.URINE_LIQUID;
 
-    public static final BlockEntry<Block> MAGGOTS_BLOCK = registerPoopBlock("maggots_block",
+    public static final BlockEntry<Block> MAGGOTS_BLOCK = registerBlock("maggots_block", 88,
             props -> new Block(simpleProperties(MapColor.TERRACOTTA_WHITE, POOP, SoundType.WEEPING_VINES)));
-    public static final BlockEntry<Block> ROUNDWORM_BLOCK = registerPoopBlock("roundworm_block",
+    public static final BlockEntry<Block> ROUNDWORM_BLOCK = registerBlock("roundworm_block", 88,
             props -> new Block(simpleProperties(MapColor.TERRACOTTA_WHITE, POOP, SoundType.TWISTING_VINES)));
     public static final BlockEntry<MaggotsBlock> MAGGOTS = registerBlockNoItem("maggots",
             props -> new MaggotsBlock(plantProperties(MapColor.COLOR_YELLOW, SoundType.CROP)
                     .noCollission()
                     .randomTicks()),
-            (loot, block) -> {
-                LootItemCondition.Builder grownCondition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
-                        .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, CropBlock.MAX_AGE));
-                var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
-                loot.add(block, loot.applyExplosionDecay(block,
-                        LootTable.lootTable()
-                                .withPool(LootPool.lootPool()
-                                        .add(LootItem.lootTableItem(Items.WHEAT_SEEDS).when(grownCondition).otherwise(LootItem.lootTableItem(PoItems.MAGGOTS_SEEDS.get())))
-                                        .add(LootItem.lootTableItem(Items.SWEET_BERRIES).when(grownCondition).otherwise(LootItem.lootTableItem(PoItems.MAGGOTS_SEEDS.get())))
-                                        .add(LootItem.lootTableItem(Items.CARROT).when(grownCondition).otherwise(LootItem.lootTableItem(PoItems.MAGGOTS_SEEDS.get())))
-                                        .add(LootItem.lootTableItem(Items.POTATO).when(grownCondition).otherwise(LootItem.lootTableItem(PoItems.MAGGOTS_SEEDS.get())))
-                                )
-                                .withPool(LootPool.lootPool()
-                                        .when(grownCondition)
-                                        .add(LootItem.lootTableItem(PoItems.MAGGOTS_SEEDS.get())
-                                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))
-                                                .apply(ApplyBonusCount.addBonusBinomialDistributionCount(registrylookup.getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3)))
-                                )
-                ));
-            });
+            PoBlocks::createMaggotsLoot);
     public static final BlockEntry<RoundwormVinesBlock> ROUNDWORM_VINES = registerBlockNoItem("roundworm_vines",
             props -> new RoundwormVinesBlock(
                     plantProperties(MapColor.TERRACOTTA_WHITE, SoundType.TWISTING_VINES)
@@ -403,42 +435,39 @@ public class PoBlocks {
             props -> new RoundwormVinesPlantBlock(
                     plantProperties(MapColor.TERRACOTTA_WHITE, SoundType.TWISTING_VINES)
                             .noCollission()),
-            (loot, block) -> {
-                LootItemCondition.Builder seedsCondition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
-                        .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(RoundwormVinesPlantBlock.SEEDS, true));
-                var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
-                loot.add(block, LootTable.lootTable()
-                        .withPool(LootPool.lootPool()
-                                .add(LootItem.lootTableItem(Items.PUMPKIN_SEEDS).when(seedsCondition).otherwise(LootItem.lootTableItem(PoItems.ROUNDWORM.get())))
-                                .add(LootItem.lootTableItem(Items.MELON_SEEDS).when(seedsCondition).otherwise(LootItem.lootTableItem(PoItems.ROUNDWORM.get())))
-                                .add(LootItem.lootTableItem(Items.FROGSPAWN).when(seedsCondition).otherwise(LootItem.lootTableItem(PoItems.ROUNDWORM.get())))
-                                .add(LootItem.lootTableItem(Items.BEETROOT_SEEDS).when(seedsCondition).otherwise(LootItem.lootTableItem(PoItems.ROUNDWORM.get())))
-                        )
-                        .withPool(LootPool.lootPool()
-                                .when(seedsCondition)
-                                .add(LootItem.lootTableItem(PoItems.ROUNDWORM.get())
-                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))
-                                        .apply(ApplyBonusCount.addBonusBinomialDistributionCount(registrylookup.getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3)))
-                        )
-                );
-            });
+            PoBlocks::createRoundwormVinesPlantLoot);
+
+    public static final BlockEntry<ChiliVinesBlock> CHILI_VINES = registerBlockNoItem("chili_vines",
+            props -> new ChiliVinesBlock(
+                    plantProperties(MapColor.PLANT, SoundType.CAVE_VINES)
+                            .lightLevel(ChiliVines.emission(1))
+                            .noCollission()),
+            (loot, block) -> loot.add(block, createChiliVinesDrop(block)));
+
+    public static final BlockEntry<ChiliVinesPlantBlock> CHILI_VINES_PLANT = registerBlockNoItem("chili_vines_plant",
+            props -> new ChiliVinesPlantBlock(
+                    plantProperties(MapColor.PLANT, SoundType.CAVE_VINES)
+                            .lightLevel(ChiliVines.emission(1))
+                            .noCollission()),
+            (loot, block) -> loot.add(block, createChiliVinesDrop(block)));
 
     // Toilet
-    public static final BlockEntry<ToiletBlock> WOODEN_TOILET = registerToiletBlock(
-            "wooden_toilet",
-            props -> new ToiletBlock(toiletProperties(MapColor.WOOD, WOODEN_STRENGTH, SoundType.WOOD, NoteBlockInstrument.BASS)
+    public static final BlockEntry<WoodToiletBlock> WOODEN_TOILET = registerToiletBlock("wooden_toilet",
+            props -> new WoodToiletBlock(toiletProperties(MapColor.WOOD, WOODEN_STRENGTH, SoundType.WOOD, NoteBlockInstrument.BASS)
                     .randomTicks()
                     .ignitedByLava()),
             (loot, block) -> loot.add(block, createToiletDrop(block)));
 
-    public static final BlockEntry<LavaToiletBlock> HARD_TOILET = registerToiletBlock(
-            "hard_toilet",
+    public static final BlockEntry<LavaToiletBlock> HARD_TOILET = registerToiletBlock("hard_toilet",
             props -> new LavaToiletBlock(toiletProperties(MapColor.STONE, HARD_STRENGTH, SoundType.STONE, NoteBlockInstrument.BASEDRUM)
                     .lightLevel(lavaLightLevel())
                     .requiresCorrectToolForDrops()
                     .randomTicks()
                     .ignitedByLava()),
             (loot, block) -> loot.add(block, createToiletDrop(block)));
+
+    public static final BlockEntry<FlushToiletBlock> FLUSH_TOILET = registerFlushToilet("flush_toilet", DyeColor.WHITE);
+    public static final BlockEntry<FlushToiletBlock> GOLDEN_FLUSH_TOILET = registerFlushToilet("golden_flush_toilet", DyeColor.YELLOW);
 
     public record BlockFamily(
             BlockEntry<? extends Block> block,
@@ -452,10 +481,47 @@ public class PoBlocks {
         }
     }
 
-    public static final List<BlockFamily> POOP_BUILDING_FAMILIES = List.of(POOP_FAMILY, CHILI_POOP_FAMILY, GOLDEN_POOP_FAMILY);
+    private record ColoredTile(BlockEntry<Block> block, BlockFamily family) {
+    }
+
     public static final List<BlockFamily> HARDENED_POOP_FAMILIES = List.of(POOP_BRICK_FAMILY, MOSSY_POOP_BRICK_FAMILY, DRIED_POOP_BLOCK_FAMILY, SMOOTH_POOP_BLOCK_FAMILY, CUT_POOP_BLOCK_FAMILY);
-    public static final List<BlockFamily> SIMPLE_MODEL_FAMILIES = List.of(CHILI_POOP_FAMILY, GOLDEN_POOP_FAMILY, POOP_BRICK_FAMILY, MOSSY_POOP_BRICK_FAMILY, DRIED_POOP_BLOCK_FAMILY, SMOOTH_POOP_BLOCK_FAMILY, CUT_POOP_BLOCK_FAMILY, TILE_BLOCK_FAMILY);
-    public static final List<BlockFamily> WALL_TAG_FAMILIES = List.of(POOP_FAMILY, CHILI_POOP_FAMILY, GOLDEN_POOP_FAMILY, POOP_BRICK_FAMILY, MOSSY_POOP_BRICK_FAMILY, DRIED_POOP_BLOCK_FAMILY, SMOOTH_POOP_BLOCK_FAMILY, CUT_POOP_BLOCK_FAMILY, TILE_BLOCK_FAMILY);
+    public static final List<BlockFamily> COLORED_TILE_BLOCK_FAMILIES = List.of(
+            WHITE_TILE_BLOCK_FAMILY, LIGHT_GRAY_TILE_BLOCK_FAMILY, GRAY_TILE_BLOCK_FAMILY, BLACK_TILE_BLOCK_FAMILY,
+            BROWN_TILE_BLOCK_FAMILY, RED_TILE_BLOCK_FAMILY, ORANGE_TILE_BLOCK_FAMILY, YELLOW_TILE_BLOCK_FAMILY,
+            LIME_TILE_BLOCK_FAMILY, GREEN_TILE_BLOCK_FAMILY, CYAN_TILE_BLOCK_FAMILY, LIGHT_BLUE_TILE_BLOCK_FAMILY,
+            BLUE_TILE_BLOCK_FAMILY, PURPLE_TILE_BLOCK_FAMILY, MAGENTA_TILE_BLOCK_FAMILY, PINK_TILE_BLOCK_FAMILY);
+    public static final List<BlockFamily> SIMPLE_MODEL_FAMILIES = Stream.of(
+            List.of(CHILI_POOP_FAMILY, GOLDEN_POOP_FAMILY, POOP_BRICK_FAMILY, MOSSY_POOP_BRICK_FAMILY, DRIED_POOP_BLOCK_FAMILY, SMOOTH_POOP_BLOCK_FAMILY, CUT_POOP_BLOCK_FAMILY),
+            COLORED_TILE_BLOCK_FAMILIES
+    ).flatMap(List::stream).toList();
+    public static final List<BlockFamily> WALL_TAG_FAMILIES = withPoopFamily(SIMPLE_MODEL_FAMILIES);
+
+    public static boolean isDecorativeItem(Item item) {
+        return DECORATIVE_BLOCKS.stream().anyMatch(entry -> entry.asItem() == item);
+    }
+
+    public static boolean isAllTabItem(Item item) {
+        return ALL_TAB_BLOCKS.stream().anyMatch(entry -> entry.asItem() == item);
+    }
+
+    private static List<BlockFamily> withPoopFamily(List<BlockFamily> input) {
+        return Stream.concat(input.stream(), Stream.of(POOP_FAMILY)).toList();
+    }
+
+    private static BlockEntry<ShitBlock> registerShitBlock(String name) {
+        return registerBlock(name, 88,
+                props -> new ShitBlock(poopProperties(0.1F)
+                        .pushReaction(PushReaction.DESTROY)));
+    }
+
+    private static BlockEntry<FlushToiletBlock> registerFlushToilet(String name, DyeColor color) {
+        return registerAllTabBlock(name, 64,
+                props -> new FlushToiletBlock(BlockBehaviour.Properties.of()
+                        .mapColor(color)
+                        .strength(HARDEN, TOILET_RESISTANCE)
+                        .requiresCorrectToolForDrops()
+                        .noOcclusion()));
+    }
 
     private static BlockBehaviour.Properties poopCakeProperties() {
         return BlockBehaviour.Properties.of()
@@ -478,21 +544,8 @@ public class PoBlocks {
                 .requiresCorrectToolForDrops();
     }
 
-    private static BlockBehaviour.Properties logProperties(SoundType sound) {
-        return simpleProperties(MapColor.COLOR_BROWN, LOG, sound)
-                .instrument(NoteBlockInstrument.BASS);
-    }
-
-    private static BlockBehaviour.Properties leavesProperties(MapColor color) {
-        return simpleProperties(color, 0.2F, SoundType.SCULK_SENSOR)
-                .randomTicks()
-                .noOcclusion()
-                .isValidSpawn(Blocks::ocelotOrParrot)
-                .isSuffocating(PoBlocks::neverSuffocate)
-                .isViewBlocking(PoBlocks::neverBlockVision)
-                .ignitedByLava()
-                .pushReaction(PushReaction.DESTROY)
-                .isRedstoneConductor(PoBlocks::never);
+    private static BlockBehaviour.Properties logProperties(MapColor color, SoundType sound) {
+        return simpleProperties(color, LOG, sound).instrument(NoteBlockInstrument.BASS);
     }
 
     private static BlockBehaviour.Properties plantProperties(MapColor color, SoundType sound) {
@@ -522,10 +575,49 @@ public class PoBlocks {
 
     private static Map<Block, BlockEntry<PoopCandleCakeBlock>> registerPoopCandleCakes() {
         Map<Block, BlockEntry<PoopCandleCakeBlock>> candleCakes = new LinkedHashMap<>();
+        Block[] POOP_CAKE_CANDLES = {
+                Blocks.CANDLE,
+                Blocks.WHITE_CANDLE,
+                Blocks.ORANGE_CANDLE,
+                Blocks.MAGENTA_CANDLE,
+                Blocks.LIGHT_BLUE_CANDLE,
+                Blocks.YELLOW_CANDLE,
+                Blocks.LIME_CANDLE,
+                Blocks.PINK_CANDLE,
+                Blocks.GRAY_CANDLE,
+                Blocks.LIGHT_GRAY_CANDLE,
+                Blocks.CYAN_CANDLE,
+                Blocks.PURPLE_CANDLE,
+                Blocks.BLUE_CANDLE,
+                Blocks.BROWN_CANDLE,
+                Blocks.GREEN_CANDLE,
+                Blocks.RED_CANDLE,
+                Blocks.BLACK_CANDLE
+        };
         for (Block candle : POOP_CAKE_CANDLES) {
             candleCakes.put(candle, registerPoopCandleCake(candle));
         }
         return Collections.unmodifiableMap(candleCakes);
+    }
+
+    private static Map<DyeColor, ColoredTile> registerColoredTiles() {
+        List<DyeColor> colors = List.of(
+                DyeColor.WHITE, DyeColor.LIGHT_GRAY, DyeColor.GRAY, DyeColor.BLACK,
+                DyeColor.BROWN, DyeColor.RED, DyeColor.ORANGE, DyeColor.YELLOW,
+                DyeColor.LIME, DyeColor.GREEN, DyeColor.CYAN, DyeColor.LIGHT_BLUE,
+                DyeColor.BLUE, DyeColor.PURPLE, DyeColor.MAGENTA, DyeColor.PINK);
+        Map<DyeColor, ColoredTile> tiles = new EnumMap<>(DyeColor.class);
+        for (DyeColor color : colors) {
+            String name = color.getName() + "_tile_block";
+            BlockEntry<Block> block = registerDecorativeBlock(name, 64,
+                    props -> new Block(hardenedProperties(color.getMapColor(), SoundType.STONE)));
+            tiles.put(color, new ColoredTile(block, registerBlockFamily(name, block, true)));
+        }
+        return Collections.unmodifiableMap(tiles);
+    }
+
+    private static ColoredTile coloredTile(DyeColor color) {
+        return Objects.requireNonNull(COLORED_TILES.get(color), "Missing colored tile for " + color.getName());
     }
 
     private static BlockEntry<PoopCandleCakeBlock> registerPoopCandleCake(Block candle) {
@@ -554,52 +646,52 @@ public class PoBlocks {
         return candleCake == null ? null : candleCake.get().defaultBlockState();
     }
 
-    public static boolean neverSuffocate(BlockState state, BlockGetter world, BlockPos pos) {
-        return false;
-    }
-
-    public static boolean never(BlockState state, BlockGetter world, BlockPos pos) {
-        return false;
-    }
-
-    public static boolean always(BlockState state, BlockGetter blockGetter, BlockPos pos) {
+    private static boolean always(BlockState state, BlockGetter level, BlockPos pos) {
         return true;
     }
 
-    public static boolean neverBlockVision(BlockState state, BlockGetter world, BlockPos pos) {
-        return false;
-    }
-
-    public static <T extends Block> BlockEntry<T> registerPoopBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory) {
-        return registerPoopBlock(name, factory, RegistrateBlockLootTables::dropSelf);
-    }
-
-    public static <T extends Block> BlockEntry<T> registerPoopBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
-        return REGISTRATE.block(name, factory)
-                .blockstate((ctx, prov) -> {
-                })
-                .loot(loot)
-                .item((b, p) -> new BlockItem(b, p.stacksTo(88)))
-                .model((ctx, prov) -> {
-                })
-                .build()
-                .register();
-    }
-
     public static <T extends Block> BlockEntry<T> registerBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory) {
-        return registerBlock(name, factory, RegistrateBlockLootTables::dropSelf);
+        return registerBlock(name, 64, factory, RegistrateBlockLootTables::dropSelf);
     }
 
     public static <T extends Block> BlockEntry<T> registerBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
+        return registerBlock(name, 64, factory, loot);
+    }
+
+    public static <T extends Block> BlockEntry<T> registerBlock(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory) {
+        return registerBlock(name, stackSize, factory, RegistrateBlockLootTables::dropSelf);
+    }
+
+    public static <T extends Block> BlockEntry<T> registerBlock(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
         return REGISTRATE.block(name, factory)
                 .blockstate((ctx, prov) -> {
                 })
                 .loot(loot)
-                .item()
+                .item((b, p) -> new BlockItem(b, p.stacksTo(stackSize)))
                 .model((ctx, prov) -> {
                 })
                 .build()
                 .register();
+    }
+
+    public static <T extends Block> BlockEntry<T> registerDecorativeBlock(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory) {
+        return registerDecorativeBlock(name, stackSize, factory, RegistrateBlockLootTables::dropSelf);
+    }
+
+    public static <T extends Block> BlockEntry<T> registerDecorativeBlock(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
+        BlockEntry<T> entry = registerBlock(name, stackSize, factory, loot);
+        DECORATIVE_BLOCKS.add(entry);
+        return entry;
+    }
+
+    public static <T extends Block> BlockEntry<T> registerAllTabBlock(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory) {
+        return registerAllTabBlock(name, stackSize, factory, RegistrateBlockLootTables::dropSelf);
+    }
+
+    public static <T extends Block> BlockEntry<T> registerAllTabBlock(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
+        BlockEntry<T> entry = registerBlock(name, stackSize, factory, loot);
+        ALL_TAB_BLOCKS.add(entry);
+        return entry;
     }
 
     public static <T extends Block> BlockEntry<T> registerBlockNoItem(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
@@ -635,21 +727,19 @@ public class PoBlocks {
     }
 
     private static BlockFamily registerBlockFamily(String name, BlockEntry<? extends Block> base, boolean defaultBlockItem) {
+        int stackSize = defaultBlockItem ? 64 : 88;
         return new BlockFamily(
                 base,
-                registerFamilyBlock(name + "_stairs", props -> new StairBlock(base.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(base.get())), defaultBlockItem),
-                registerFamilyBlock(name + "_slab", props -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(base.get())), defaultBlockItem, (loot, block) -> loot.add(block, loot.createSlabItemTable(block))),
-                registerFamilyBlock(name + "_vertical_slab", props -> new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(base.get())), defaultBlockItem),
-                registerFamilyBlock(name + "_wall", props -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(base.get())), defaultBlockItem)
+                registerDecorativeBlock(name + "_stairs", stackSize,
+                        props -> new StairBlock(base.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(base.get()))),
+                registerDecorativeBlock(name + "_slab", stackSize,
+                        props -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(base.get())),
+                        (loot, block) -> loot.add(block, loot.createSlabItemTable(block))),
+                registerDecorativeBlock(name + "_vertical_slab", stackSize,
+                        props -> new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(base.get())), PoBlocks::createVerticalSlabDrops),
+                registerDecorativeBlock(name + "_wall", stackSize,
+                        props -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(base.get())))
         );
-    }
-
-    private static <T extends Block> BlockEntry<T> registerFamilyBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, boolean defaultBlockItem) {
-        return registerFamilyBlock(name, factory, defaultBlockItem, RegistrateBlockLootTables::dropSelf);
-    }
-
-    private static <T extends Block> BlockEntry<T> registerFamilyBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, boolean defaultBlockItem, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
-        return defaultBlockItem ? registerBlock(name, factory, loot) : registerPoopBlock(name, factory, loot);
     }
 
     private static ToIntFunction<BlockState> lavaLightLevel() {
@@ -657,9 +747,77 @@ public class PoBlocks {
     }
 
     public static void register() {
+        BuiltInRegistries.BLOCK.addAlias(
+                PoopSky.loc("tile_block"),
+                PoopSky.loc("cyan_tile_block")
+        );
+        BuiltInRegistries.BLOCK.addAlias(
+                PoopSky.loc("tile_block_stairs"),
+                PoopSky.loc("cyan_tile_block_stairs")
+        );
+        BuiltInRegistries.BLOCK.addAlias(
+                PoopSky.loc("tile_block_slab"),
+                PoopSky.loc("cyan_tile_block_slab")
+        );
+        BuiltInRegistries.BLOCK.addAlias(
+                PoopSky.loc("tile_block_vertical_slab"),
+                PoopSky.loc("cyan_tile_block_vertical_slab")
+        );
+        BuiltInRegistries.BLOCK.addAlias(
+                PoopSky.loc("tile_block_wall"),
+                PoopSky.loc("cyan_tile_block_wall")
+        );
     }
 
     // Loot
+    private static void createMaggotsLoot(RegistrateBlockLootTables loot, MaggotsBlock block) {
+        LootItemCondition.Builder grownCondition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, CropBlock.MAX_AGE));
+        var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
+        loot.add(block, loot.applyExplosionDecay(block,
+                LootTable.lootTable()
+                        .withPool(LootPool.lootPool()
+                                .add(LootItem.lootTableItem(Items.BEETROOT_SEEDS).when(grownCondition).otherwise(LootItem.lootTableItem(PoItems.MAGGOTS_SEEDS.get())))
+                                .add(LootItem.lootTableItem(Items.SWEET_BERRIES).when(grownCondition).otherwise(LootItem.lootTableItem(PoItems.MAGGOTS_SEEDS.get())))
+                                .add(LootItem.lootTableItem(Items.CARROT).when(grownCondition).otherwise(LootItem.lootTableItem(PoItems.MAGGOTS_SEEDS.get())))
+                                .add(LootItem.lootTableItem(Items.POTATO).when(grownCondition).otherwise(LootItem.lootTableItem(PoItems.MAGGOTS_SEEDS.get()))))
+                        .withPool(LootPool.lootPool()
+                                .when(grownCondition)
+                                .add(LootItem.lootTableItem(PoItems.MAGGOTS_SEEDS.get())
+                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))
+                                        .apply(ApplyBonusCount.addBonusBinomialDistributionCount(registrylookup.getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3))
+                                ))
+        ));
+    }
+
+    private static void createRoundwormVinesPlantLoot(RegistrateBlockLootTables loot, RoundwormVinesPlantBlock block) {
+        LootItemCondition.Builder seedsCondition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(RoundwormVinesPlantBlock.SEEDS, true));
+        var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
+        loot.add(block, LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .add(LootItem.lootTableItem(Items.PUMPKIN_SEEDS).when(seedsCondition).otherwise(LootItem.lootTableItem(PoItems.ROUNDWORM.get())))
+                        .add(LootItem.lootTableItem(Items.MELON_SEEDS).when(seedsCondition).otherwise(LootItem.lootTableItem(PoItems.ROUNDWORM.get())))
+                        .add(LootItem.lootTableItem(Items.FROGSPAWN).when(seedsCondition).otherwise(LootItem.lootTableItem(PoItems.ROUNDWORM.get())))
+                        .add(LootItem.lootTableItem(Items.BEETROOT_SEEDS).when(seedsCondition).otherwise(LootItem.lootTableItem(PoItems.ROUNDWORM.get()))))
+                .withPool(LootPool.lootPool()
+                        .when(seedsCondition)
+                        .add(LootItem.lootTableItem(PoItems.ROUNDWORM.get())
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))
+                                .apply(ApplyBonusCount.addBonusBinomialDistributionCount(registrylookup.getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3))
+                        ))
+        );
+    }
+
+    private static LootTable.Builder createChiliVinesDrop(Block block) {
+        return LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .add(LootItem.lootTableItem(PoItems.DRAGON_BREATH_CHILI.get()))
+                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                                .setProperties(StatePropertiesPredicate.Builder.properties()
+                                        .hasProperty(ChiliVines.CHILI, true))));
+    }
+
     public static LootTable.Builder createToiletDrop(Block block) {
         return LootTable.lootTable()
                 .withPool(LootPool.lootPool()
@@ -671,14 +829,7 @@ public class PoBlocks {
 
     private static LootTable.Builder createPoopPieceDrop(RegistrateBlockLootTables loot, Block block, Item item) {
         var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
-        LootItemCondition.Builder hasSilkTouch = MatchTool.toolMatches(
-                ItemPredicate.Builder.item()
-                        .withSubPredicate(
-                                ItemSubPredicates.ENCHANTMENTS,
-                                ItemEnchantmentsPredicate.enchantments(
-                                        List.of(new EnchantmentPredicate(registrylookup.getOrThrow(Enchantments.SILK_TOUCH), MinMaxBounds.Ints.atLeast(1)))
-                                )
-                        ));
+        LootItemCondition.Builder hasSilkTouch = hasSilkTouch(loot);
 
         LootPoolEntryContainer.Builder<?> nonSilkTouch = AlternativesEntry.alternatives(
                 IntStream.rangeClosed(1, 8)
@@ -720,18 +871,18 @@ public class PoBlocks {
     }
 
     private static LootTable.Builder createIronLeavesDrops(RegistrateBlockLootTables loot, Block block) {
-        var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
-        return createShearsOrSilkTouchDispatchTable(loot, block,
-                LootItem.lootTableItem(Items.IRON_NUGGET)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 3.0F)))
-                        .apply(ApplyBonusCount.addUniformBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE))));
+        return createNuggetLeavesDrops(loot, block, Items.IRON_NUGGET, 3.0F);
     }
 
     private static LootTable.Builder createGoldLeavesDrops(RegistrateBlockLootTables loot, Block block) {
+        return createNuggetLeavesDrops(loot, block, Items.GOLD_NUGGET, 2.0F);
+    }
+
+    private static LootTable.Builder createNuggetLeavesDrops(RegistrateBlockLootTables loot, Block block, Item nugget, float maxCount) {
         var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
         return createShearsOrSilkTouchDispatchTable(loot, block,
-                LootItem.lootTableItem(Items.GOLD_NUGGET)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
+                LootItem.lootTableItem(nugget)
+                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, maxCount)))
                         .apply(ApplyBonusCount.addUniformBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE))));
     }
 
@@ -753,6 +904,33 @@ public class PoBlocks {
         );
     }
 
+    private static LootTable.Builder createGinkgoLeavesDrops(RegistrateBlockLootTables loot, Block block) {
+        return createVanillaLeavesDrops(loot, block, PoBlocks.GINKGO_SAPLING.get());
+    }
+
+    private static LootTable.Builder createVanillaLeavesDrops(RegistrateBlockLootTables loot, Block block, Block sapling) {
+        var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
+        LootItemCondition.Builder hasShearsOrSilkTouch = hasShearsOrSilkTouch(loot);
+        return createShearsOrSilkTouchDispatchTable(loot, block,
+                ((LootPoolSingletonContainer.Builder<?>)
+                        loot.applyExplosionCondition(block, LootItem.lootTableItem(sapling)))
+                        .when(BonusLevelTableCondition.bonusLevelFlatChance(registrylookup.getOrThrow(Enchantments.FORTUNE), LEAVES_SAPLING_CHANCES))
+        ).withPool(LootPool.lootPool()
+                .setRolls(ConstantValue.exactly(1.0F))
+                .when(hasShearsOrSilkTouch.invert())
+                .add(
+                        ((LootPoolSingletonContainer.Builder<?>)
+                                loot.applyExplosionDecay(block, LootItem.lootTableItem(Items.STICK)
+                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))))
+                                .when(BonusLevelTableCondition.bonusLevelFlatChance(registrylookup.getOrThrow(Enchantments.FORTUNE), LEAVES_STICK_CHANCES)))
+                .add(
+                        ((LootPoolSingletonContainer.Builder<?>)
+                                loot.applyExplosionDecay(block, LootItem.lootTableItem(Items.GOLDEN_APPLE)
+                                        .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))))
+                                .when(BonusLevelTableCondition.bonusLevelFlatChance(registrylookup.getOrThrow(Enchantments.FORTUNE), LEAVES_STICK_CHANCES)))
+        );
+    }
+
     private static LootTable.Builder createShearsOrSilkTouchDispatchTable(RegistrateBlockLootTables loot, Block block, LootPoolSingletonContainer.Builder<?> fallback) {
         LootItemCondition.Builder hasShearsOrSilkTouch = hasShearsOrSilkTouch(loot);
         return LootTable.lootTable()
@@ -765,8 +943,13 @@ public class PoBlocks {
     }
 
     private static LootItemCondition.Builder hasShearsOrSilkTouch(RegistrateBlockLootTables loot) {
+        return MatchTool.toolMatches(ItemPredicate.Builder.item().of(Items.SHEARS))
+                .or(hasSilkTouch(loot));
+    }
+
+    private static LootItemCondition.Builder hasSilkTouch(RegistrateBlockLootTables loot) {
         var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
-        LootItemCondition.Builder hasSilkTouch = MatchTool.toolMatches(
+        return MatchTool.toolMatches(
                 ItemPredicate.Builder.item()
                         .withSubPredicate(
                                 ItemSubPredicates.ENCHANTMENTS,
@@ -774,8 +957,6 @@ public class PoBlocks {
                                         List.of(new EnchantmentPredicate(registrylookup.getOrThrow(Enchantments.SILK_TOUCH), MinMaxBounds.Ints.atLeast(1)))
                                 )
                         ));
-        return MatchTool.toolMatches(ItemPredicate.Builder.item().of(Items.SHEARS))
-                .or(hasSilkTouch);
     }
 
     private static LootTable.Builder createSaltpeterClusterDrop(RegistrateBlockLootTables loot, Block block) {
@@ -788,4 +969,17 @@ public class PoBlocks {
                         .otherwise(loot.applyExplosionDecay(block,
                                 LootItem.lootTableItem(PoItems.SALTPETER_SHARD.get()).apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))))));
     }
+
+    private static void createVerticalSlabDrops(RegistrateBlockLootTables loot, VerticalSlabBlock block) {
+        loot.add(block, LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .add(loot.applyExplosionDecay(block, LootItem.lootTableItem(block)
+                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))
+                                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                                                .setProperties(StatePropertiesPredicate.Builder.properties()
+                                                        .hasProperty(VerticalSlabBlock.DOUBLE, true))))))));
+    }
 }
+
+

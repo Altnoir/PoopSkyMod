@@ -1,0 +1,33 @@
+{
+  "parent": "poopsky:poop_ball",
+  "criteria": {
+    "wither_poop_ball": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:wither_poop_ball"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.poopsky.wither_poop_ball.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "poopsky:wither_poop_ball"
+    },
+    "title": {
+      "translate": "advancements.poopsky.wither_poop_ball.title"
+    }
+  },
+  "requirements": [
+    [
+      "wither_poop_ball"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

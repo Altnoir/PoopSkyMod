@@ -35,6 +35,24 @@
     ],
     "subtitle": "subtitle.poopsky.compooper.maggots"
   },
+  "block.flush_toilet.close": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.bamboo_wood_trapdoor.close"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.block.flush_toilet.close"
+  },
+  "block.flush_toilet.open": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.bamboo_wood_trapdoor.open"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.block.flush_toilet.open"
+  },
   "block.fly_barrel.close": {
     "sounds": [
       {
@@ -206,6 +224,15 @@
     ],
     "subtitle": "subtitle.poopsky.poolime.squish"
   },
+  "entity.poop_ball.throw": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.snowball.throw"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.poop_ball.throw"
+  },
   "entity.pop.primed": {
     "sounds": [
       {
@@ -263,6 +290,21 @@
     ],
     "subtitle": "subtitle.poopsky.item.jinkela.use"
   },
+  "item.time_bell.close": {
+    "sounds": [
+      "poopsky:the_world_close"
+    ],
+    "subtitle": "subtitle.poopsky.item.time_bell.close"
+  },
+  "item.time_bell.open": {
+    "sounds": [
+      {
+        "name": "poopsky:the_world_open",
+        "stream": true
+      }
+    ],
+    "subtitle": "subtitle.poopsky.item.time_bell.open"
+  },
   "item.toilet_linker.boop": {
     "sounds": [
       {
@@ -303,6 +345,11 @@
         "name": "poopsky:moon_bowl",
         "stream": true
       }
+    ]
+  },
+  "poopsky_intro": {
+    "sounds": [
+      "poopsky:poopsky_intro"
     ]
   }
 }

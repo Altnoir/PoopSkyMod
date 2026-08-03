@@ -1,9 +1,10 @@
 package com.altnoir.poopsky.content.entity.p;
 
 import com.altnoir.poopsky.client.sound.FlyBuzzSoundWrapper;
+import com.altnoir.poopsky.content.block.p.ShitBlock;
 import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.impl.PoTags;
-import com.altnoir.poopsky.impl.sound.PoSoundEvents;
+import com.altnoir.poopsky.data.sound.PoSoundEvents;
 import com.altnoir.poopsky.impl.type.damageType.PoDamageTypes;
 import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoEntityType;
@@ -29,6 +30,7 @@ import net.minecraft.world.entity.ai.control.FlyingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.player.Player;
@@ -83,6 +85,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
         this.goalSelector.addGoal(0, new FloatGoal(this)); // 防止溺水
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.4)); // 受到伤害时逃跑
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0)); // 繁殖行为
+        this.goalSelector.addGoal(3, new AttractedByShitGoal(this, 1.25));
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, itemStack -> itemStack.is(PoTags.Items.POOPS), false));
         this.goalSelector.addGoal(4, new FlyToToiletGoal(this, 1.1)); // 主动寻找厕所
         this.goalSelector.addGoal(5, new FollowParentGoal(this, 1.25)); // 跟随父母
@@ -261,6 +264,59 @@ public class FlyEntity extends Animal implements FlyingAnimal {
         builder.define(DATA_FLAGS_ID, (byte) 0);
     }
 
+    private static class AttractedByShitGoal extends Goal {
+        private static final double STOP_DISTANCE_SQR = 6.25;
+        private static final TargetingConditions TARGETING = TargetingConditions.forNonCombat()
+                .range(12.0)
+                .ignoreLineOfSight()
+                .selector(ShitBlock::isWearing);
+
+        private final FlyEntity fly;
+        private final double speedModifier;
+        @Nullable
+        private Player player;
+
+        private AttractedByShitGoal(FlyEntity fly, double speedModifier) {
+            this.fly = fly;
+            this.speedModifier = speedModifier;
+            this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
+        }
+
+        @Override
+        public boolean canUse() {
+            this.player = this.fly.level().getNearestPlayer(TARGETING, this.fly);
+            return this.player != null;
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return this.player != null && TARGETING.test(this.fly, this.player);
+        }
+
+        @Override
+        public void stop() {
+            this.player = null;
+            this.fly.getNavigation().stop();
+        }
+
+        @Override
+        public void tick() {
+            if (this.player == null) {
+                return;
+            }
+            this.fly.getLookControl().setLookAt(
+                    this.player,
+                    this.fly.getMaxHeadYRot() + 20,
+                    this.fly.getMaxHeadXRot()
+            );
+            if (this.fly.distanceToSqr(this.player) < STOP_DISTANCE_SQR) {
+                this.fly.getNavigation().stop();
+            } else {
+                this.fly.getNavigation().moveTo(this.player, this.speedModifier);
+            }
+        }
+    }
+
     private static class FlyToToiletGoal extends Goal {
         private static final int SEARCH_RADIUS = 12;
         private static final int VERTICAL_SEARCH_RADIUS = 6;
@@ -291,7 +347,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
         public boolean canContinueToUse() {
             return this.targetPos != null
                     && !this.fly.getNavigation().isDone()
-                    && this.fly.level().getBlockState(this.targetPos).is(PoTags.Blocks.TOILET_BLOCKS)
+                    && this.fly.level().getBlockState(this.targetPos).is(PoTags.Blocks.FLY_LOVE)
                     && this.fly.blockPosition().distSqr(this.targetPos) > 4.0;
         }
 
@@ -322,7 +378,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
             BlockPos nearest = null;
             double nearestDistance = Double.MAX_VALUE;
             for (BlockPos pos : BlockPos.withinManhattan(origin, SEARCH_RADIUS, VERTICAL_SEARCH_RADIUS, SEARCH_RADIUS)) {
-                if (!this.fly.level().getBlockState(pos).is(PoTags.Blocks.TOILET_BLOCKS)) {
+                if (!this.fly.level().getBlockState(pos).is(PoTags.Blocks.FLY_LOVE)) {
                     continue;
                 }
                 double distance = origin.distSqr(pos);

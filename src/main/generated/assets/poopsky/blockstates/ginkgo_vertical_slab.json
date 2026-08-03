@@ -1,0 +1,74 @@
+{
+  "variants": {
+    "double=false,facing=east,waterlogged=false": {
+      "model": "poopsky:block/ginkgo_vertical_slab",
+      "uvlock": true,
+      "y": 90
+    },
+    "double=false,facing=east,waterlogged=true": {
+      "model": "poopsky:block/ginkgo_vertical_slab",
+      "uvlock": true,
+      "y": 90
+    },
+    "double=false,facing=north,waterlogged=false": {
+      "model": "poopsky:block/ginkgo_vertical_slab",
+      "uvlock": true
+    },
+    "double=false,facing=north,waterlogged=true": {
+      "model": "poopsky:block/ginkgo_vertical_slab",
+      "uvlock": true
+    },
+    "double=false,facing=south,waterlogged=false": {
+      "model": "poopsky:block/ginkgo_vertical_slab",
+      "uvlock": true,
+      "y": 180
+    },
+    "double=false,facing=south,waterlogged=true": {
+      "model": "poopsky:block/ginkgo_vertical_slab",
+      "uvlock": true,
+      "y": 180
+    },
+    "double=false,facing=west,waterlogged=false": {
+      "model": "poopsky:block/ginkgo_vertical_slab",
+      "uvlock": true,
+      "y": 270
+    },
+    "double=false,facing=west,waterlogged=true": {
+      "model": "poopsky:block/ginkgo_vertical_slab",
+      "uvlock": true,
+      "y": 270
+    },
+    "double=true,facing=east,waterlogged=false": {
+      "model": "poopsky:block/ginkgo_vertical_slab_double",
+      "uvlock": true
+    },
+    "double=true,facing=east,waterlogged=true": {
+      "model": "poopsky:block/ginkgo_vertical_slab_double",
+      "uvlock": true
+    },
+    "double=true,facing=north,waterlogged=false": {
+      "model": "poopsky:block/ginkgo_vertical_slab_double",
+      "uvlock": true
+    },
+    "double=true,facing=north,waterlogged=true": {
+      "model": "poopsky:block/ginkgo_vertical_slab_double",
+      "uvlock": true
+    },
+    "double=true,facing=south,waterlogged=false": {
+      "model": "poopsky:block/ginkgo_vertical_slab_double",
+      "uvlock": true
+    },
+    "double=true,facing=south,waterlogged=true": {
+      "model": "poopsky:block/ginkgo_vertical_slab_double",
+      "uvlock": true
+    },
+    "double=true,facing=west,waterlogged=false": {
+      "model": "poopsky:block/ginkgo_vertical_slab_double",
+      "uvlock": true
+    },
+    "double=true,facing=west,waterlogged=true": {
+      "model": "poopsky:block/ginkgo_vertical_slab_double",
+      "uvlock": true
+    }
+  }
+}

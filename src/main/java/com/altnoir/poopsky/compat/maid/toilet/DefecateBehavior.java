@@ -1,18 +1,20 @@
 package com.altnoir.poopsky.compat.maid.toilet;
 
 import com.altnoir.poopsky.compat.maid.MaidPlugin;
-import com.altnoir.poopsky.content.entity.p.ToiletEntity;
-import com.altnoir.poopsky.init.PoEntityType;
+import com.altnoir.poopsky.content.block.p.FlushToiletBlock;
+import com.altnoir.poopsky.content.entity.p.FlushToiletEntity;
 import com.altnoir.poopsky.impl.PoTags;
-import com.altnoir.poopsky.impl.util.toiletUtil;
+import com.altnoir.poopsky.init.PoEntityType;
 import com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.behavior.Behavior;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.WalkTarget;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
 
@@ -43,11 +45,7 @@ public class DefecateBehavior extends Behavior<EntityMaid> {
             return;
         }
 
-        if (maid.getVehicle() instanceof ToiletEntity toiletEntity) {
-            if (toiletEntity.isRemoved() && !level.getBlockState(toiletEntity.blockPosition()).is(PoTags.Blocks.TOILET_BLOCKS)) {
-                maid.stopRiding();
-                maid.getBrain().eraseMemory(MaidPlugin.TOILET_MEMORY.get());
-            }
+        if (maid.getVehicle() instanceof FlushToiletEntity) {
             return;
         }
 
@@ -57,7 +55,7 @@ public class DefecateBehavior extends Behavior<EntityMaid> {
             if (!pos.closerThan(maid.blockPosition(), 30)) {
                 return;
             }
-            if (!level.getBlockState(pos).is(PoTags.Blocks.TOILET_BLOCKS)) {
+            if (!level.getBlockState(pos).is(PoTags.Blocks.FLUSH_TOILET_BLOCKS)) {
                 maid.getBrain().eraseMemory(MaidPlugin.TOILET_MEMORY.get());
                 return;
             }
@@ -72,25 +70,32 @@ public class DefecateBehavior extends Behavior<EntityMaid> {
     }
 
     private void rideToilet(ServerLevel level, EntityMaid maid, BlockPos pos) {
-        var state = level.getBlockState(pos);
-        if (!state.is(PoTags.Blocks.TOILET_BLOCKS)) {
-            return;
-        }
+        BlockState state = level.getBlockState(pos);
+        if (!state.is(PoTags.Blocks.FLUSH_TOILET_BLOCKS)) return;
+        if (!(state.getBlock() instanceof FlushToiletBlock)) return;
+        rideFlushToilet(level, maid, pos);
+    }
 
-        List<ToiletEntity> entities = level.getEntities(PoEntityType.TOILET.get(), new AABB(pos), e -> true);
-        ToiletEntity toiletEntity;
+
+    private void rideFlushToilet(ServerLevel level, EntityMaid maid, BlockPos pos) {
+        BlockState state = level.getBlockState(pos);
+        if (state.getValue(FlushToiletBlock.CLOSED)) return;
+        List<FlushToiletEntity> entities = level.getEntities(PoEntityType.FLUSH_TOILET.get(), new AABB(pos), e -> true);
+        FlushToiletEntity toiletEntity;
         if (entities.isEmpty()) {
-            Entity entity = PoEntityType.TOILET.get().spawn(level, pos, MobSpawnType.TRIGGERED);
-            if (!(entity instanceof ToiletEntity te)) {
-                return;
-            }
+            Entity entity = PoEntityType.FLUSH_TOILET.get().spawn(level, pos, MobSpawnType.TRIGGERED);
+            if (!(entity instanceof FlushToiletEntity te)) return;
+            Direction facing = state.getValue(FlushToiletBlock.FACING);
+            float v = (float) 1 / 16;
+            double offsetX = facing.getStepX() * v;
+            double offsetZ = facing.getStepZ() * v;
+            te.setPos(te.getX() + offsetX, te.getY(), te.getZ() + offsetZ);
             toiletEntity = te;
         } else {
             toiletEntity = entities.getFirst();
         }
 
         if (toiletEntity.getPassengers().isEmpty()) {
-            toiletEntity.setGoldenPoop(toiletUtil.isGoldenToilet(level, pos));
             maid.startRiding(toiletEntity);
         }
     }
@@ -102,7 +107,7 @@ public class DefecateBehavior extends Behavior<EntityMaid> {
 
     @Override
     protected void stop(@NotNull ServerLevel level, @NotNull EntityMaid maid, long gameTime) {
-        if (maid.getVehicle() instanceof ToiletEntity) {
+        if (maid.getVehicle() instanceof FlushToiletEntity) {
             maid.stopRiding();
         }
         maid.getBrain().eraseMemory(MaidPlugin.TOILET_MEMORY.get());

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "cyan_tile_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:cyan_tile_block"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:cyan_tile_block_stairs"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "cyan_tile_block"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "poopsky:cyan_tile_block_stairs"
+    ]
+  }
+}

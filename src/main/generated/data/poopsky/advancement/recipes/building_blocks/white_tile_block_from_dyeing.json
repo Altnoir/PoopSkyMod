@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:white_tile_block_from_dyeing"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "white_dye": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:white_dye"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "white_dye"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "poopsky:white_tile_block_from_dyeing"
+    ]
+  }
+}

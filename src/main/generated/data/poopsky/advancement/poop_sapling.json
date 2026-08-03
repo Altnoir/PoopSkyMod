@@ -1,0 +1,33 @@
+{
+  "parent": "poopsky:root",
+  "criteria": {
+    "poop_sapling": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:poop_sapling"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.poopsky.poop_sapling.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "poopsky:poop_sapling"
+    },
+    "title": {
+      "translate": "advancements.poopsky.poop_sapling.title"
+    }
+  },
+  "requirements": [
+    [
+      "poop_sapling"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

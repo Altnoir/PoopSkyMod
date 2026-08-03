@@ -1,0 +1,28 @@
+{
+  "values": [
+    "poopsky:chili_poop_wall",
+    "poopsky:golden_poop_wall",
+    "poopsky:poop_brick_wall",
+    "poopsky:mossy_poop_brick_wall",
+    "poopsky:dried_poop_block_wall",
+    "poopsky:smooth_poop_block_wall",
+    "poopsky:cut_poop_block_wall",
+    "poopsky:white_tile_block_wall",
+    "poopsky:light_gray_tile_block_wall",
+    "poopsky:gray_tile_block_wall",
+    "poopsky:black_tile_block_wall",
+    "poopsky:brown_tile_block_wall",
+    "poopsky:red_tile_block_wall",
+    "poopsky:orange_tile_block_wall",
+    "poopsky:yellow_tile_block_wall",
+    "poopsky:lime_tile_block_wall",
+    "poopsky:green_tile_block_wall",
+    "poopsky:cyan_tile_block_wall",
+    "poopsky:light_blue_tile_block_wall",
+    "poopsky:blue_tile_block_wall",
+    "poopsky:purple_tile_block_wall",
+    "poopsky:magenta_tile_block_wall",
+    "poopsky:pink_tile_block_wall",
+    "poopsky:poop_wall"
+  ]
+}

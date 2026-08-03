@@ -10,61 +10,67 @@
     {
       "model": "poopsky:block/wooden_toilet_spruce_planks",
       "predicate": {
-        "poopsky:toilet_type": 0.1
+        "poopsky:toilet_type": 1.0
       }
     },
     {
       "model": "poopsky:block/wooden_toilet_birch_planks",
       "predicate": {
-        "poopsky:toilet_type": 0.2
+        "poopsky:toilet_type": 2.0
       }
     },
     {
       "model": "poopsky:block/wooden_toilet_jungle_planks",
       "predicate": {
-        "poopsky:toilet_type": 0.3
+        "poopsky:toilet_type": 3.0
       }
     },
     {
       "model": "poopsky:block/wooden_toilet_acacia_planks",
       "predicate": {
-        "poopsky:toilet_type": 0.4
+        "poopsky:toilet_type": 4.0
       }
     },
     {
       "model": "poopsky:block/wooden_toilet_cherry_planks",
       "predicate": {
-        "poopsky:toilet_type": 0.5
+        "poopsky:toilet_type": 5.0
       }
     },
     {
       "model": "poopsky:block/wooden_toilet_dark_oak_planks",
       "predicate": {
-        "poopsky:toilet_type": 0.6
+        "poopsky:toilet_type": 6.0
       }
     },
     {
       "model": "poopsky:block/wooden_toilet_mangrove_planks",
       "predicate": {
-        "poopsky:toilet_type": 0.7
+        "poopsky:toilet_type": 7.0
       }
     },
     {
       "model": "poopsky:block/wooden_toilet_bamboo_planks",
       "predicate": {
-        "poopsky:toilet_type": 0.8
+        "poopsky:toilet_type": 8.0
       }
     },
     {
       "model": "poopsky:block/wooden_toilet_crimson_planks",
       "predicate": {
-        "poopsky:toilet_type": 0.9
+        "poopsky:toilet_type": 9.0
       }
     },
     {
       "model": "poopsky:block/wooden_toilet_warped_planks",
       "predicate": {
-        "poopsky:toilet_type": 1.0
+        "poopsky:toilet_type": 10.0
+      }
+    },
+    {
+      "model": "poopsky:block/wooden_toilet_ginkgo_planks",
+      "predicate": {
+        "poopsky:toilet_type": 11.0
       }
     }
   ]

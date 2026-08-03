@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:white_tile_block_slab"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "white_tile_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:white_tile_block"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "white_tile_block"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "poopsky:white_tile_block_slab"
+    ]
+  }
+}

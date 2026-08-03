@@ -1,0 +1,34 @@
+{
+  "parent": "poopsky:maggots",
+  "criteria": {
+    "poolime_maggots_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:poolime_maggots_block"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.poopsky.poolime_maggots_block.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "poopsky:poolime_maggots_block"
+    },
+    "title": {
+      "translate": "advancements.poopsky.poolime_maggots_block.title"
+    }
+  },
+  "requirements": [
+    [
+      "poolime_maggots_block"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

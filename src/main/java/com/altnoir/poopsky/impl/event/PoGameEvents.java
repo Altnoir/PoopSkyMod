@@ -15,18 +15,24 @@ import com.altnoir.poopsky.fabric.port.event.entity.EntityTickEvents;
 import com.altnoir.poopsky.fabric.port.event.entity.FinalizeSpawnEvent;
 import com.altnoir.poopsky.fabric.port.event.entity.MobEffectEvents;
 import com.altnoir.poopsky.fabric.port.util.EffectApplicableResult;
+import com.altnoir.poopsky.impl.IntroSavedData;
+import com.altnoir.poopsky.content.item.p.TimeBellItem;
 import com.altnoir.poopsky.worldgen.PoVoidChunkGenerator;
 import com.altnoir.poopsky.worldgen.structure.PoopIslandStructure;
 import com.altnoir.poopsky.init.*;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.registry.FabricBrewingRecipeRegistryBuilder;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.PackType;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -46,7 +52,6 @@ import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
 import net.minecraft.world.level.storage.ServerLevelData;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -77,6 +82,8 @@ public class PoGameEvents {
         EntityTickEvents.PRE.register(PoGameEvents::onEntityTick);
         FinalizeSpawnEvent.EVENT.register(PoGameEvents::onFinalizeSpawn);
         LevelEvents.CREATE_SPAWN_POSITION.register(PoGameEvents::onCreateSpawnToilet);
+        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> onPlayerLoggedIn(handler.player));
+        ServerTickEvents.END_SERVER_TICK.register(PoGameEvents::onServerTick);
     }
 
     public static InteractionResult onRightClickBlock(Player player, Level level, InteractionHand hand, BlockHitResult hitResult) {
@@ -193,10 +200,11 @@ public class PoGameEvents {
 
     public static boolean onCreateSpawnToilet(LevelAccessor levelAccessor, ServerLevelData settings) {
         if (levelAccessor instanceof ServerLevel level && level.getChunkSource().getGenerator() instanceof PoVoidChunkGenerator) {
-            var rand = new XoroshiroRandomSource(level.getSeed());
-            var pos = new BlockPos.MutableBlockPos(rand.nextIntBetweenInclusive(-200, 200), 87, rand.nextIntBetweenInclusive(-200, 200));
+            BlockPos pos = PoVoidChunkGenerator.defaultSpawnPosition(level.getSeed());
 
-            level.setBlock(pos, PoBlocks.WOODEN_TOILET.get().defaultBlockState(), 2);
+            level.setBlock(pos, Config.skyFlushToilet
+                    ? PoBlocks.FLUSH_TOILET.get().defaultBlockState()
+                    : PoBlocks.WOODEN_TOILET.get().defaultBlockState(), 2);
 
             BlockPos spawn = level.getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, pos);
             settings.setSpawn(spawn, 90.0F);
@@ -209,5 +217,23 @@ public class PoGameEvents {
             return true;
         }
         return false;
+    }
+
+    public static void onPlayerLoggedIn(ServerPlayer player) {
+        ServerLevel overworld = player.getServer().overworld();
+        if (!(overworld.getChunkSource().getGenerator() instanceof PoVoidChunkGenerator)) return;
+
+        boolean firstJoin = IntroSavedData.get(overworld)
+                .markPlayed(player.getUUID(), player.getGameProfile().getName());
+        if (firstJoin && "zh_cn".equalsIgnoreCase(player.clientInformation().language())) {
+            player.sendSystemMessage(Component.literal(
+                    "温馨提示：如果您正在直播或录制，可在资源包中启用空中厕所的“认知滤网”资源包"
+            ));
+        }
+    }
+
+    public static void onServerTick(net.minecraft.server.MinecraftServer server) {
+        TimeBellItem.tickPending(server);
+        TimeBellItem.freezeTick(server);
     }
 }

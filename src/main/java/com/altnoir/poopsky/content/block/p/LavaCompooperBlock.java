@@ -1,12 +1,12 @@
 package com.altnoir.poopsky.content.block.p;
 
+import com.altnoir.poopsky.content.block.CompooperType;
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
+import com.altnoir.poopsky.data.sound.PoSoundEvents;
 import com.altnoir.poopsky.init.PoBlocks;
-import com.altnoir.poopsky.impl.sound.PoSoundEvents;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -51,16 +51,17 @@ public class LavaCompooperBlock extends AbstractCompooperBlock {
 
     @Override
     protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        if (this.isEntityInsideContent(pos, state, entity)) {
+        if (isEntityInsideContent(pos, state, entity)) {
             if (entity instanceof ItemEntity itemEntity) {
                 ItemStack stack = itemEntity.getItem();
-                if (stack.is(Items.STICK)) {
-                    int count = stack.getCount();
 
-                    catalyst(itemEntity, state, level, pos, count, new ItemStack(Items.BLAZE_ROD), new ItemStack(Items.STICK));
-                    level.playSound(null, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), SoundEvents.FIREWORK_ROCKET_BLAST, SoundSource.BLOCKS, 1.0F, 0.8F);
+                // Try recipe-based processing first
+                if (processRecipe(CompooperType.LAVA, itemEntity, state, level, pos, SoundEvents.FIREWORK_ROCKET_BLAST)) {
+                    return;
+                }
 
-                } else if (stack.is(Items.BLAZE_ROD)) {
+                // Special behaviors that are not recipe-based
+                if (stack.is(Items.BLAZE_ROD)) {
                     entity.setDeltaMovement(entity.getDeltaMovement().x, entity.getGravity() + 0.1, entity.getDeltaMovement().z);
                 } else {
                     entity.lavaHurt();

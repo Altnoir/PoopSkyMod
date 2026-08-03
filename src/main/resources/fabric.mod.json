@@ -2,7 +2,7 @@
 	"schemaVersion": 1,
 	"id": "poopsky",
 	"version": "${version}",
-	"name": "Poopsky",
+	"name": "PoopSky",
 	"description": "It all began with a pile of poop",
 	"authors": [
 		"Altnoir", "lonelyicer", "Wulian233"
@@ -33,14 +33,11 @@
 	],
 	"accessWidener": "poopsky.accesswidener",
 	"depends": {
-		"fabricloader": ">=0.19.3",
-		"minecraft": "~1.21.1",
+		"fabricloader": ">=0.16.0",
 		"java": ">=21",
+		"minecraft": "~1.21.1",
 		"fabric-api": "*",
-		"forgeconfigapiport": ">=21.1.6",
-		"farmersdelight": "*",
-		"registrate": "*",
-		"sablecompanion": "*"
+		"forgeconfigapiport": ">=21.1.6"
 	},
 	"custom": {
 		"loom:injected_interfaces": {

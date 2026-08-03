@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "closed=false,facing=east": {
+      "model": "poopsky:block/golden_flush_toilet",
+      "y": 90
+    },
+    "closed=false,facing=north": {
+      "model": "poopsky:block/golden_flush_toilet"
+    },
+    "closed=false,facing=south": {
+      "model": "poopsky:block/golden_flush_toilet",
+      "y": 180
+    },
+    "closed=false,facing=west": {
+      "model": "poopsky:block/golden_flush_toilet",
+      "y": 270
+    },
+    "closed=true,facing=east": {
+      "model": "poopsky:block/golden_flush_toilet_close",
+      "y": 90
+    },
+    "closed=true,facing=north": {
+      "model": "poopsky:block/golden_flush_toilet_close"
+    },
+    "closed=true,facing=south": {
+      "model": "poopsky:block/golden_flush_toilet_close",
+      "y": 180
+    },
+    "closed=true,facing=west": {
+      "model": "poopsky:block/golden_flush_toilet_close",
+      "y": 270
+    }
+  }
+}

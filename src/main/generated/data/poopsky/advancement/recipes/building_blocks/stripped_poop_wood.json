@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:stripped_poop_wood"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "stripped_poop_log": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:stripped_poop_log"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "stripped_poop_log"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "poopsky:stripped_poop_wood"
+    ]
+  }
+}

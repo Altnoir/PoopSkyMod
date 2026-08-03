@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "poopsky:block/shit",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "poopsky:block/shit"
+    },
+    "facing=south": {
+      "model": "poopsky:block/shit",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "poopsky:block/shit",
+      "y": 270
+    }
+  }
+}

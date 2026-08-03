@@ -6,6 +6,7 @@ import com.altnoir.poopsky.init.PoBlocks;
 import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
@@ -51,7 +52,7 @@ public class PoopEmptyLogBlock extends EmptyRotatedPillarBlock {
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (stack.is(Items.SHEARS) && !state.getValue(ARROW)) {
             level.setBlockAndUpdate(pos, state.setValue(ARROW, true));
-            level.playSound(null, pos, net.minecraft.sounds.SoundEvents.SHEEP_SHEAR, SoundSource.BLOCKS, 1.0F, 1.0F);
+            level.playSound(null, pos, SoundEvents.SHEEP_SHEAR, SoundSource.BLOCKS, 1.0F, 1.0F);
             stack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }

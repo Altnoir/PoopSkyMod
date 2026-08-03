@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:orange_tile_block_stairs"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "orange_tile_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:orange_tile_block"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "orange_tile_block"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "poopsky:orange_tile_block_stairs"
+    ]
+  }
+}

@@ -2,9 +2,9 @@ package com.altnoir.poopsky.content.effect;
 
 import com.altnoir.poopsky.init.PoEffects;
 import com.altnoir.poopsky.init.PoParticles;
-import com.altnoir.poopsky.impl.sound.PoSoundEvents;
+import com.altnoir.poopsky.data.sound.PoSoundEvents;
 import com.altnoir.poopsky.init.PoItems;
-import com.altnoir.poopsky.impl.util.toiletUtil;
+import com.altnoir.poopsky.impl.util.ToiletUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
@@ -63,7 +63,7 @@ public class FecalIncontinenceEffect extends MobEffect {
 
             if (entity.hasEffect(PoEffects.holder(PoEffects.INTESTINAL_SPASM))) {
                 stack = PoItems.CHILI_POOP.get();
-            } else if (toiletUtil.isGoldenToilet(level, entityPos.below())) {
+            } else if (ToiletUtil.isGoldenToilet(level, entityPos.below())) {
                 stack = PoItems.GOLDEN_POOP.get();
             }
 

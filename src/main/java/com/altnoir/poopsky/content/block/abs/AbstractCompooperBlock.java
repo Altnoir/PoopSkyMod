@@ -1,6 +1,8 @@
 package com.altnoir.poopsky.content.block.abs;
 
 import com.altnoir.poopsky.Config;
+import com.altnoir.poopsky.content.block.CompooperType;
+import com.altnoir.poopsky.content.recipe.PCompooperRecipes;
 import com.altnoir.poopsky.init.PoBlocks;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -84,7 +86,6 @@ public abstract class AbstractCompooperBlock extends Block {
     protected ItemInteractionResult BucketUse(ItemStack stack, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, float pitch, ItemStack item) {
         var newState = defaultBlockState().setValue(LEVEL, MIN_LEVEL);
         setBlock(newState, level, pos, player, sound, pitch);
-        //if (!player.getAbilities().instabuild) // 检测玩家是否有无限的方块
         ItemStack itemStack = ItemUtils.createFilledResult(stack, player, item);
         player.setItemInHand(hand, itemStack);
 
@@ -144,7 +145,7 @@ public abstract class AbstractCompooperBlock extends Block {
                 || (state.is(Blocks.SOUL_CAMPFIRE) && state.getValue(CampfireBlock.LIT));
     }
 
-    protected boolean isEntityInsideContent(BlockPos pos, BlockState state, Entity entity) {
+    protected static boolean isEntityInsideContent(BlockPos pos, BlockState state, Entity entity) {
         double height = getLiquidHeight(state);
         return entity.getY() < (double) pos.getY() + height && entity.getBoundingBox().maxY > (double) pos.getY() + 0.125;
     }
@@ -192,7 +193,32 @@ public abstract class AbstractCompooperBlock extends Block {
         }
     }
 
-    private double getLiquidHeight(BlockState state) {
+    /**
+     * Process recipe-based item transformation for compooper blocks.
+     *
+     * @param fluidType  The fluid type identifier string
+     * @param itemEntity The item entity in the compooper
+     * @param state      Current block state
+     * @param level      The level
+     * @param pos        Block position
+     * @param sound      Sound to play on successful conversion
+     * @return true if a recipe was found and applied
+     */
+    protected boolean processRecipe(CompooperType fluidType, ItemEntity itemEntity, BlockState state, Level level, BlockPos pos, SoundEvent sound) {
+        ItemStack stack = itemEntity.getItem();
+        ItemStack result = PCompooperRecipes.getResult(level, fluidType.id(), stack);
+
+        if (!result.isEmpty()) {
+            int count = stack.getCount();
+            catalyst(itemEntity, state, level, pos, count, result, stack.copyWithCount(1));
+            level.playSound(null, pos, sound, SoundSource.BLOCKS, 1.0F, 1.0F);
+            return true;
+        }
+
+        return false;
+    }
+
+    private static double getLiquidHeight(BlockState state) {
         int i = state.getValue(LEVEL);
         return switch (i) {
             case 3 -> 0.9375;

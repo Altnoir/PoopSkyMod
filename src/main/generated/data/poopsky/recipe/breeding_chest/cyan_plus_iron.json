@@ -1,0 +1,15 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "create"
+      ]
+    }
+  ],
+  "type": "poopsky:breeding_chest",
+  "chance": 0.2,
+  "parent1": "cyan",
+  "parent2": "iron",
+  "result": "zinc"
+}

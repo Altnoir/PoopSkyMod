@@ -1,6 +1,9 @@
 package com.altnoir.poopsky;
 
-import com.altnoir.poopsky.client.model.ToiletModelEventHandler;
+import com.altnoir.poopsky.client.IntroController;
+import com.altnoir.poopsky.client.PoAnimationController;
+import com.altnoir.poopsky.client.creative.PoSectionedCreativeTabRenderer;
+import com.altnoir.poopsky.client.model.BakedModelEventHandler;
 import com.altnoir.poopsky.client.particle.LeavesParticle;
 import com.altnoir.poopsky.client.particle.PoopParticle;
 import com.altnoir.poopsky.client.particle.ToiletParticle;
@@ -19,19 +22,19 @@ import com.altnoir.poopsky.fabric.PoFabricated;
 import com.altnoir.poopsky.impl.event.PSKeyBoardInput;
 import com.altnoir.poopsky.impl.network.PlugActionPayload;
 import com.altnoir.poopsky.impl.network.PlugDismountPayload;
-import com.altnoir.poopsky.impl.network.PoNetworking;
-import com.altnoir.poopsky.impl.util.PoHooks;
 import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoComponents;
 import com.altnoir.poopsky.init.PoFluids;
 import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.init.PoParticles;
+import com.altnoir.poopsky.init.PoWorldPreset;
 import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.client.ConfigScreenFactoryRegistry;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
@@ -43,6 +46,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
 import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;
 import net.minecraft.client.renderer.BiomeColors;
@@ -62,7 +66,7 @@ public class PoopSkyClient implements ClientModInitializer {
 
         PoFabricated.clientInit();
 
-        ToiletModelEventHandler.register();
+        BakedModelEventHandler.register();
         registerLayers();
         registerItemProperties();
         registerParticles();
@@ -73,7 +77,17 @@ public class PoopSkyClient implements ClientModInitializer {
 
         HudRenderCallback.EVENT.register(TimeBellOverlay::render);
         WorldRenderEvents.AFTER_TRANSLUCENT.register(ToiletHighlightRenderer::onRenderLevel);
-        ScreenEvents.AFTER_INIT.register((client, screen, width, height) -> ClientGameEvents.onScreenOpen(screen));
+        ScreenEvents.AFTER_INIT.register((client, screen, width, height) -> {
+            ClientGameEvents.onScreenOpen(screen);
+            if (screen instanceof CreativeModeInventoryScreen creativeScreen) {
+                ScreenEvents.afterRender(screen).register((renderedScreen, graphics, mouseX, mouseY, tickDelta) ->
+                        PoSectionedCreativeTabRenderer.onRender(creativeScreen, graphics));
+            }
+        });
+        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> {
+            IntroController.onLoggingOut();
+            PoAnimationController.onLoggingOut();
+        });
         ClientTickEvents.START_CLIENT_TICK.register(ClientGameEvents::onClientTick);
     }
 
@@ -177,7 +191,7 @@ public class PoopSkyClient implements ClientModInitializer {
             Holder<WorldPreset> voidWorldPreset = uiState.getSettings()
                     .worldgenLoadContext()
                     .registryOrThrow(Registries.WORLD_PRESET)
-                    .getHolder(PoHooks.overrideDefaultWorldPreset())
+                    .getHolder(PoWorldPreset.overrideDefaultWorldPreset())
                     .orElse(null);
             if (voidWorldPreset != null) {
                 uiState.setWorldType(new WorldCreationUiState.WorldTypeEntry(voidWorldPreset));
@@ -185,6 +199,7 @@ public class PoopSkyClient implements ClientModInitializer {
         }
 
         public static void onClientTick(Minecraft minecraft) {
+            IntroController.tick();
             if (minecraft.player == null || minecraft.level == null) return;
 
             boolean isRidingPlug = minecraft.player.getVehicle() instanceof ToiletPlugEntity;

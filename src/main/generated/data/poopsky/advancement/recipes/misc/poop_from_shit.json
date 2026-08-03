@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_shit": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:shit"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:poop_from_shit"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_shit"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "poopsky:poop_from_shit"
+    ]
+  }
+}

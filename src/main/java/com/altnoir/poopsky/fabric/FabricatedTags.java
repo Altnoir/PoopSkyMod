@@ -12,6 +12,8 @@ import net.minecraft.world.level.block.Block;
 public class FabricatedTags {
     public static class Blocks {
         public static final TagKey<Block> VILLAGER_JOB_SITES = ConventionalBlockTags.VILLAGER_JOB_SITES;
+        public static final TagKey<Block> STRIPPED_LOGS = ConventionalBlockTags.STRIPPED_LOGS;
+        public static final TagKey<Block> STRIPPED_WOODS = ConventionalBlockTags.STRIPPED_WOODS;
     }
 
     public static class Items {
@@ -26,6 +28,8 @@ public class FabricatedTags {
         public static final TagKey<Item> GUNPOWDERS = ConventionalItemTags.GUNPOWDERS;
 
         public static final TagKey<Item> MUSIC_DISCS = ConventionalItemTags.MUSIC_DISCS;
+        public static final TagKey<Item> STRIPPED_LOGS = ConventionalItemTags.STRIPPED_LOGS;
+        public static final TagKey<Item> STRIPPED_WOODS = ConventionalItemTags.STRIPPED_WOODS;
 
 
         public static TagKey<Item> create(ResourceLocation resourceLocation) {

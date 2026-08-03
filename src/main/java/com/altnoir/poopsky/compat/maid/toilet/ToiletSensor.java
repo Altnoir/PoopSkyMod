@@ -1,9 +1,9 @@
 package com.altnoir.poopsky.compat.maid.toilet;
 
 import com.altnoir.poopsky.compat.maid.MaidPlugin;
-import com.altnoir.poopsky.content.entity.p.ToiletEntity;
-import com.altnoir.poopsky.init.PoEntityType;
+import com.altnoir.poopsky.content.block.p.FlushToiletBlock;
 import com.altnoir.poopsky.impl.PoTags;
+import com.altnoir.poopsky.init.PoEntityType;
 import com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -11,7 +11,6 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.Sensor;
 import net.minecraft.world.phys.AABB;
 
-import java.util.List;
 import java.util.Set;
 
 public class ToiletSensor extends Sensor<EntityMaid> {
@@ -29,13 +28,18 @@ public class ToiletSensor extends Sensor<EntityMaid> {
     }
 
     private static boolean isToiletOccupied(ServerLevel level, BlockPos pos) {
-        List<ToiletEntity> entities = level.getEntities(PoEntityType.TOILET.get(), new AABB(pos), e -> true);
-        for (ToiletEntity toilet : entities) {
-            if (!toilet.getPassengers().isEmpty()) {
-                return true;
-            }
+        var flushToilets = level.getEntities(PoEntityType.FLUSH_TOILET.get(), new AABB(pos), e -> true);
+        for (var flushToilet : flushToilets) {
+            if (!flushToilet.getPassengers().isEmpty()) return true;
         }
         return false;
+    }
+
+    private static boolean isToiletAvailable(ServerLevel level, BlockPos pos) {
+        var state = level.getBlockState(pos);
+        if (!state.is(PoTags.Blocks.FLUSH_TOILET_BLOCKS)) return false;
+        if (state.getBlock() instanceof FlushToiletBlock && state.getValue(FlushToiletBlock.CLOSED)) return false;
+        return !isToiletOccupied(level, pos);
     }
 
     public static BlockPos findToilet(ServerLevel level, BlockPos centerPos) {
@@ -52,7 +56,7 @@ public class ToiletSensor extends Sensor<EntityMaid> {
 
                         mutablePos.set(centerPos.getX() + dx, centerPos.getY() + dy, centerPos.getZ() + dz);
 
-                        if (level.getBlockState(mutablePos).is(PoTags.Blocks.TOILET_BLOCKS) && !isToiletOccupied(level, mutablePos)) {
+                        if (isToiletAvailable(level, mutablePos)) {
                             return mutablePos.immutable();
                         }
                     }

@@ -35,6 +35,11 @@ public class PoBlockEntityType {
             .validBlock(PoBlocks.BREEDING_CHEST)
             .register();
 
+    public static final BlockEntityEntry<FlushToiletBlockEntity> FLUSH_TOILET = REGISTRATE
+            .<FlushToiletBlockEntity>blockEntity("flush_toilet", (type, pos, state) -> new FlushToiletBlockEntity(pos, state))
+            .validBlocks(PoBlocks.FLUSH_TOILET, PoBlocks.GOLDEN_FLUSH_TOILET)
+            .register();
+
     public static void register() {
     }
 }

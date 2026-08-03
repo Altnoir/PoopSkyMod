@@ -1,11 +1,12 @@
 package com.altnoir.poopsky.content.block.p;
 
+import com.altnoir.poopsky.data.sound.PoSoundEvents;
 import com.altnoir.poopsky.init.PoBlocks;
-import com.altnoir.poopsky.impl.sound.PoSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
@@ -25,15 +26,30 @@ public class SaltpeterClusterBlock extends AmethystClusterBlock implements Bonem
 
     @Override
     protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        level.setBlockAndUpdate(pos, Blocks.ICE.defaultBlockState());
+        Direction facing = state.getValue(BlockStateProperties.FACING);
+        if (level.getBlockState(pos.relative(facing.getOpposite())).is(BlockTags.ICE)) {
+            level.setBlockAndUpdate(pos, Blocks.POWDER_SNOW.defaultBlockState());
+        } else {
+            level.setBlockAndUpdate(pos, Blocks.ICE.defaultBlockState());
+        }
     }
 
     @Override
     protected BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+        isDone((Level) level, pos, state);
+        return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
+    }
+
+    @Override
+    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
+        isDone(level, pos, state);
+        super.onPlace(state, level, pos, oldState, movedByPiston);
+    }
+
+    private void isDone(Level level, BlockPos pos, BlockState state) {
         if (!level.isClientSide() && state.is(PoBlocks.SALTPETER_CLUSTER.get()) && state.getValue(BlockStateProperties.WATERLOGGED)) {
             level.scheduleTick(pos, this, 4);
         }
-        return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
     }
 
     @Override

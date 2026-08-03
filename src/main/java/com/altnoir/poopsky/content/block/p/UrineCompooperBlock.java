@@ -1,10 +1,11 @@
 package com.altnoir.poopsky.content.block.p;
 
+import com.altnoir.poopsky.content.block.CompooperType;
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
+import com.altnoir.poopsky.data.sound.PoSoundEvents;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.init.PoParticles;
-import com.altnoir.poopsky.impl.sound.PoSoundEvents;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -89,25 +90,12 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
         }
     }
 
-    @Override
-    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        if (level.isClientSide || !this.isEntityInsideContent(pos, state, entity)) {
-            return;
-        }
-
-        if (entity instanceof LivingEntity livingEntity) {
-            livingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200));
-            livingEntity.addEffect(new MobEffectInstance(MobEffects.POISON, 200));
-        }
-    }
-
     public static void extractProduce(Entity entity, BlockState state, Level level, BlockPos pos) {
         if (!level.isClientSide) {
             var vec3 = Vec3.atLowerCornerWithOffset(pos, 0.5, 1.01, 0.5).offsetRandom(level.random, 0.7F);
             var itementity = new ItemEntity(level, vec3.x(), vec3.y(), vec3.z(), new ItemStack(PoItems.MAGGOTS_SEEDS.get()));
             itementity.setDefaultPickUpDelay();
             level.addFreshEntity(itementity);
-
             if (level instanceof ServerLevel serverLevel) {
                 serverLevel.sendParticles(
                         PoParticles.POOP_PARTICLE.get(),
@@ -125,6 +113,23 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
 
         empty(entity, state, level, pos);
         level.playSound(null, pos, SoundEvents.PLAYER_SPLASH, SoundSource.BLOCKS, 0.5F, 1.0F);
+    }
+
+    @Override
+    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        if (level.isClientSide || !isEntityInsideContent(pos, state, entity)) {
+            return;
+        }
+
+        if (entity instanceof LivingEntity livingEntity) {
+            livingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200));
+            livingEntity.addEffect(new MobEffectInstance(MobEffects.POISON, 200));
+        }
+
+        // Recipe-based processing
+        if (entity instanceof ItemEntity itemEntity) {
+            processRecipe(CompooperType.URINE, itemEntity, state, level, pos, SoundEvents.GENERIC_SPLASH);
+        }
     }
 
     @Override
@@ -148,10 +153,12 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
         if (state.getValue(LEVEL) != MAX_LEVEL || !isHot(level, pos)) {
             return;
         }
+        purification(level, pos);
+        super.tick(state, level, pos, random);
+    }
 
-        level.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1.0F, 1.0F);
-
-        var waterColor = level.getBiome(pos).value().getWaterColor();
+    private static void purification(ServerLevel level, BlockPos pos) {
+        int waterColor = level.getBiome(pos).value().getWaterColor();
         var red = (waterColor >> 16 & 0xFF) / 255.0F;
         var green = (waterColor >> 8 & 0xFF) / 255.0F;
         var blue = (waterColor & 0xFF) / 255.0F;
@@ -165,6 +172,12 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
                 0.3, 0.1, 0.3,
                 0.02
         );
+        level.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1.0F, 1.0F);
+
+        var vec3 = Vec3.atLowerCornerWithOffset(pos, 0.5, 0.5, 0.5).offsetRandom(level.random, 0.3F);
+        var itemEntity = new ItemEntity(level, vec3.x(), vec3.y(), vec3.z(), new ItemStack(PoItems.UREA.get(), 8));
+        itemEntity.setDefaultPickUpDelay();
+        level.addFreshEntity(itemEntity);
 
         BlockState compooperBlock = PoBlocks.WATER_COMPOOPER.get().defaultBlockState().setValue(LEVEL, MAX_LEVEL);
         level.setBlockAndUpdate(pos, compooperBlock);
@@ -248,17 +261,11 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
             return side == Direction.DOWN ? new int[]{0} : new int[0];
         }
 
-        /**
-         * Returns {@code true} if automation can insert the given item in the given slot from the given side.
-         */
         @Override
         public boolean canPlaceItemThroughFace(int index, ItemStack itemStack, @Nullable Direction direction) {
             return false;
         }
 
-        /**
-         * Returns {@code true} if automation can extract the given item in the given slot from the given side.
-         */
         @Override
         public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
             return !this.changed && direction == Direction.DOWN && stack.is(PoItems.MAGGOTS_SEEDS.get());

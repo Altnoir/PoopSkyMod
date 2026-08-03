@@ -1,0 +1,40 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "farmersdelight"
+      ]
+    }
+  ],
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:organic_compost_from_poop"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "poop": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:poop"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "poop"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "poopsky:organic_compost_from_poop"
+    ]
+  }
+}

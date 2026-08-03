@@ -8,21 +8,24 @@ import com.altnoir.poopsky.content.entity.p.PoopTntEntity;
 import com.altnoir.poopsky.content.villager.PoVillagers;
 import com.altnoir.poopsky.fabric.PoFabricated;
 import com.altnoir.poopsky.fabric.port.fluidhandler.FluidInteractionRegistry;
-import com.altnoir.poopsky.impl.entity.EntityLootTableGen;
-import com.altnoir.poopsky.impl.entity.EntityTypeTagsGen;
+import com.altnoir.poopsky.data.*;
+import com.altnoir.poopsky.data.entity.EntityLootTableGen;
+import com.altnoir.poopsky.data.entity.EntityTypeTagsGen;
+import com.altnoir.poopsky.data.lang.LangGen;
+import com.altnoir.poopsky.data.sound.PoSoundEvents;
 import com.altnoir.poopsky.impl.network.PoNetworking;
-import com.altnoir.poopsky.impl.olddata.GlobalLootModifierGen;
+import com.altnoir.poopsky.impl.command.PoCommands;
 import com.altnoir.poopsky.worldgen.PoChunkGenerators;
 import com.altnoir.poopsky.worldgen.PoStructures;
 import com.altnoir.poopsky.worldgen.foliage.PoFoliagePlacerTypes;
 import com.altnoir.poopsky.impl.event.PoGameEvents;
-import com.altnoir.poopsky.impl.lang.LangGen;
 import com.altnoir.poopsky.impl.registrate.*;
-import com.altnoir.poopsky.impl.sound.PoSoundEvents;
 import com.altnoir.poopsky.init.*;
 import com.mojang.logging.LogUtils;
 import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeConfigRegistry;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -31,10 +34,13 @@ import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.BoneMealItem;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.DispensibleContainerItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -70,6 +76,7 @@ public class PoopSky implements ModInitializer {
         PoEntityType.register();
         PoBlockEntityType.register();
         EntityLootTableGen.register();
+        FishingLootGen.register();
         GlobalLootModifierGen.register();
         PoLootFunctions.register();
         PoVillagers.register();
@@ -95,6 +102,7 @@ public class PoopSky implements ModInitializer {
         commonSetup();
 
         PoNetworking.registerNetworking();
+        PoCommands.register();
 
         PoFabricated.init();
         PoGameEvents.registerGame();
@@ -102,6 +110,10 @@ public class PoopSky implements ModInitializer {
         if (FabricLoader.getInstance().isModLoaded(PoMods.TOUHOU_LITTLE_MAID.id())) {
             MaidPlugin.registry();
         }
+        FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(container ->
+                ResourceManagerHelper.registerBuiltinResourcePack(
+                        loc("poopsky_pack"), container, Component.translatable("pack.poopsky.name"),
+                        ResourcePackActivationType.NORMAL));
         NeoForgeConfigRegistry.INSTANCE.register(MOD_ID, ModConfig.Type.COMMON, Config.SPEC);
         Config.onLoad();
     }
@@ -111,6 +123,9 @@ public class PoopSky implements ModInitializer {
         DispenserBlock.registerProjectileBehavior(PoItems.POOP_BALL);
         DispenserBlock.registerProjectileBehavior(PoItems.SEA_POOP_BALL);
         DispenserBlock.registerProjectileBehavior(PoItems.WITHER_POOP_BALL);
+        DispenserBlock.registerBehavior(PoBlocks.SHIT.asItem(), ArmorItem.DISPENSE_ITEM_BEHAVIOR);
+        DispenserBlock.registerBehavior(PoBlocks.CHILI_SHIT.asItem(), ArmorItem.DISPENSE_ITEM_BEHAVIOR);
+        DispenserBlock.registerBehavior(PoBlocks.GOLDEN_SHIT.asItem(), ArmorItem.DISPENSE_ITEM_BEHAVIOR);
         DispenserBlock.registerBehavior(PoItems.POOP.get(), new OptionalDispenseItemBehavior() {
             @Override
             protected ItemStack execute(BlockSource blockSource, ItemStack item) {
@@ -139,6 +154,21 @@ public class PoopSky implements ModInitializer {
                 level.gameEvent(null, GameEvent.ENTITY_PLACE, pos);
                 item.shrink(1);
                 return item;
+            }
+        });
+        DispenserBlock.registerBehavior(PoItems.URINE_BUCKET.get(), new DefaultDispenseItemBehavior() {
+            private final DefaultDispenseItemBehavior fallback = new DefaultDispenseItemBehavior();
+
+            @Override
+            public ItemStack execute(BlockSource source, ItemStack stack) {
+                DispensibleContainerItem container = (DispensibleContainerItem) stack.getItem();
+                BlockPos pos = source.pos().relative(source.state().getValue(DispenserBlock.FACING));
+                Level level = source.level();
+                if (container.emptyContents(null, level, pos, null)) {
+                    container.checkExtraContent(null, level, stack, pos);
+                    return this.consumeWithRemainder(source, stack, new ItemStack(Items.BUCKET));
+                }
+                return this.fallback.dispense(source, stack);
             }
         });
 

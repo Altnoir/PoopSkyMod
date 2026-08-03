@@ -18,8 +18,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.*;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeManager;
 import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.block.Blocks;
@@ -34,20 +34,19 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureSet;
 import net.minecraft.world.level.levelgen.structure.StructureSet.StructureSelectionEntry;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
-import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
     private static final int VIRTUAL_SURFACE_Y = 64;
-    private static final ResourceLocation STRONGHOLDS_STRUCTURE_SET = ResourceLocation.withDefaultNamespace("strongholds");
-    private static final ResourceLocation STRONGHOLD_STRUCTURE = ResourceLocation.withDefaultNamespace("stronghold");
+    private static final int SPAWN_STRUCTURE_PROTECTION_RADIUS = 50;
+    private static final ResourceLocation STRONGHOLDS_STRUCTURE_SET = PoopSky.locMc("strongholds");
+    private static final ResourceLocation STRONGHOLD_STRUCTURE = PoopSky.locMc("stronghold");
 
     private static final Codec<List<ResourceKey<StructureSet>>> STRUCTURE_SET_KEYS_CODEC =
             Codec.either(ResourceLocation.CODEC.listOf(), ResourceLocation.CODEC).xmap(
@@ -143,7 +142,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
             GenerationStep.Carving step
     ) {
         if (generateNormal) {
-            super.applyCarvers( level, seed, randomState, biomeManager, structureManager, chunk, step);
+            super.applyCarvers(level, seed, randomState, biomeManager, structureManager, chunk, step);
         }
     }
 
@@ -163,9 +162,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
 
     @Override
     public int getBaseHeight(int x, int z, Heightmap.Types type, LevelHeightAccessor level, RandomState randomState) {
-        return generateNormal
-                ? super.getBaseHeight(x, z, type, level, randomState)
-                : virtualSurfaceY(level);
+        return generateNormal ? super.getBaseHeight(x, z, type, level, randomState) : virtualSurfaceY(level);
     }
 
     @Override
@@ -180,11 +177,8 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
 
         for (int index = 0; index < states.length; index++) {
             int y = minY + index;
-            states[index] = y == minY
-                    ? Blocks.BEDROCK.defaultBlockState()
-                    : y == surfaceY - 1
-                    ? Blocks.GRASS_BLOCK.defaultBlockState()
-                    : Blocks.DIRT.defaultBlockState();
+            BlockState groundY = y == (surfaceY - 1) ? Blocks.GRASS_BLOCK.defaultBlockState() : Blocks.DIRT.defaultBlockState();
+            states[index] = y == minY ? Blocks.BEDROCK.defaultBlockState() : groundY;
         }
 
         return new NoiseColumn(minY, states);
@@ -198,10 +192,10 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
             ChunkAccess chunk,
             StructureTemplateManager templateManager
     ) {
-        if (generateNormal || allowedStructureSets == null) {
-            super.createStructures(registries, structureState, structureManager, chunk, templateManager);
-        } else {
-            createAllowedStructures(registries, structureState, structureManager, chunk, templateManager);
+        super.createStructures(registries, structureState, structureManager, chunk, templateManager);
+
+        if (!generateNormal) {
+            filterStructureStarts(registries, structureState.getLevelSeed(), chunk);
         }
 
         if (!generateNormal && settings.is(ResourceLocation.parse("minecraft:overworld")) && isStructureAllowed(registries, PoopSky.loc("poop_island"))) {
@@ -333,92 +327,42 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
         return pos.distSqr(second.getFirst()) < pos.distSqr(first.getFirst()) ? second : first;
     }
 
-    private void createAllowedStructures(RegistryAccess registries, ChunkGeneratorStructureState structureState, StructureManager structureManager, ChunkAccess chunk, StructureTemplateManager templateManager) {
-        ChunkPos chunkPos = chunk.getPos();
-        SectionPos sectionPos = SectionPos.bottomOf(chunk);
-        RandomState randomState = structureState.randomState();
+    private void filterStructureStarts(RegistryAccess registries, long seed, ChunkAccess chunk) {
+        Set<Structure> allowedStructures = resolveAllowedStructures(registries);
+        boolean protectSpawn = settings.is(ResourceLocation.parse("minecraft:overworld"));
+        BlockPos spawn = protectSpawn ? defaultSpawnPosition(seed) : BlockPos.ZERO;
 
-        for (Holder<StructureSet> structureSetHolder : structureState.possibleStructureSets()) {
-            if (!isStructureSetAllowed(structureSetHolder)) {
-                continue;
-            }
+        for (Map.Entry<Structure, StructureStart> entry : List.copyOf(chunk.getAllStarts().entrySet())) {
+            StructureStart start = entry.getValue();
+            boolean disallowed = allowedStructureSets != null && !allowedStructures.contains(entry.getKey());
+            boolean intersectsSpawnProtection = protectSpawn
+                    && start.isValid()
+                    && intersectsSpawnProtection(start.getBoundingBox(), spawn);
 
-            StructureSet structureSet = structureSetHolder.value();
-            StructurePlacement placement = structureSet.placement();
-            List<StructureSelectionEntry> entries = structureSet.structures();
-
-            boolean hasExistingStart = false;
-            for (StructureSelectionEntry entry : entries) {
-                StructureStart start = structureManager.getStartForStructure(sectionPos, entry.structure().value(), chunk);
-                if (start != null && start.isValid()) {
-                    hasExistingStart = true;
-                    break;
-                }
-            }
-
-            if (hasExistingStart || !placement.isStructureChunk(structureState, chunkPos.x, chunkPos.z)) {
-                continue;
-            }
-
-            if (entries.size() == 1) {
-                tryGenerateStructure(entries.getFirst(), structureManager, registries, randomState, templateManager, structureState.getLevelSeed(), chunk, chunkPos, sectionPos);
-                continue;
-            }
-
-            ArrayList<StructureSelectionEntry> shuffledEntries = new ArrayList<>(entries);
-            WorldgenRandom random = new WorldgenRandom(new LegacyRandomSource(0L));
-            random.setLargeFeatureSeed(structureState.getLevelSeed(), chunkPos.x, chunkPos.z);
-            int totalWeight = 0;
-
-            for (StructureSelectionEntry entry : shuffledEntries) {
-                totalWeight += entry.weight();
-            }
-
-            while (!shuffledEntries.isEmpty()) {
-                int targetWeight = random.nextInt(totalWeight);
-                int index = 0;
-
-                for (StructureSelectionEntry entry : shuffledEntries) {
-                    targetWeight -= entry.weight();
-                    if (targetWeight < 0) {
-                        break;
-                    }
-
-                    index++;
-                }
-
-                StructureSelectionEntry entry = shuffledEntries.get(index);
-                if (tryGenerateStructure(entry, structureManager, registries, randomState, templateManager, structureState.getLevelSeed(), chunk, chunkPos, sectionPos)) {
-                    break;
-                }
-
-                shuffledEntries.remove(index);
-                totalWeight -= entry.weight();
+            if (disallowed || intersectsSpawnProtection) {
+                chunk.setStartForStructure(entry.getKey(), StructureStart.INVALID_START);
             }
         }
     }
 
-    private boolean tryGenerateStructure(StructureSelectionEntry structureSelectionEntry, StructureManager structureManager,
-        RegistryAccess registries, RandomState randomState,
-        StructureTemplateManager templateManager, long seed,
-        ChunkAccess chunk, ChunkPos chunkPos, SectionPos sectionPos
-    ) {
-        Structure structure = structureSelectionEntry.structure().value();
-        StructureStart existingStart = structureManager.getStartForStructure(sectionPos, structure, chunk);
-        int references = existingStart != null ? existingStart.getReferences() : 0;
-        HolderSet<Biome> biomes = structure.biomes();
-        Predicate<Holder<Biome>> biomePredicate = biomes::contains;
-        StructureStart start = structure.generate(registries, this, this.biomeSource, randomState, templateManager, seed, chunkPos, references, chunk, biomePredicate);
-
-        if (start.isValid()) {
-            structureManager.setStartForStructure(sectionPos, structure, start, chunk);
-            return true;
-        }
-
-        return false;
+    private static boolean intersectsSpawnProtection(BoundingBox box, BlockPos spawn) {
+        int nearestX = Math.clamp(spawn.getX(), box.minX(), box.maxX());
+        int nearestZ = Math.clamp(spawn.getZ(), box.minZ(), box.maxZ());
+        long deltaX = nearestX - spawn.getX();
+        long deltaZ = nearestZ - spawn.getZ();
+        return deltaX * deltaX + deltaZ * deltaZ <= (long) SPAWN_STRUCTURE_PROTECTION_RADIUS * SPAWN_STRUCTURE_PROTECTION_RADIUS;
     }
 
-    private void placeStructuresOnly( WorldGenLevel level, ChunkAccess chunk, StructureManager structureManager) {
+    public static BlockPos defaultSpawnPosition(long seed) {
+        RandomSource random = new XoroshiroRandomSource(seed);
+        return new BlockPos(
+                random.nextIntBetweenInclusive(-200, 200),
+                87,
+                random.nextIntBetweenInclusive(-200, 200)
+        );
+    }
+
+    private void placeStructuresOnly(WorldGenLevel level, ChunkAccess chunk, StructureManager structureManager) {
         ChunkPos chunkPos = chunk.getPos();
 
         if (SharedConstants.debugVoidTerrain(chunkPos) || !structureManager.shouldGenerateStructures()) {
@@ -480,7 +424,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
         } catch (ReportedException exception) {
             throw exception;
         } catch (Exception exception) {
-            CrashReport report = CrashReport.forThrowable(exception,"Void biome decoration");
+            CrashReport report = CrashReport.forThrowable(exception, "Void biome decoration");
 
             report.addCategory("Generation")
                     .setDetail("CenterX", chunkPos.x)

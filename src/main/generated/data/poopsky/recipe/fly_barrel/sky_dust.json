@@ -1,0 +1,16 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "ae2"
+      ]
+    }
+  ],
+  "type": "poopsky:fly_barrel",
+  "fly_type": "sky_dust",
+  "result": {
+    "count": 1,
+    "id": "ae2:sky_dust"
+  }
+}

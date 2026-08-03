@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "poopsky:block/light_blue_tile_block",
+    "side": "poopsky:block/light_blue_tile_block",
+    "top": "poopsky:block/light_blue_tile_block"
+  }
+}

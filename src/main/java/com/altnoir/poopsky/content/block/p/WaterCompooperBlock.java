@@ -1,11 +1,9 @@
 package com.altnoir.poopsky.content.block.p;
 
+import com.altnoir.poopsky.content.block.CompooperType;
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
-import com.altnoir.poopsky.content.item.p.FlyItem;
-import com.altnoir.poopsky.init.FlyTypes;
+import com.altnoir.poopsky.data.sound.PoSoundEvents;
 import com.altnoir.poopsky.init.PoBlocks;
-import com.altnoir.poopsky.init.PoItems;
-import com.altnoir.poopsky.impl.sound.PoSoundEvents;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
@@ -65,12 +63,13 @@ public class WaterCompooperBlock extends AbstractCompooperBlock {
 
     @Override
     protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        if (level.isClientSide || !this.isEntityInsideContent(pos, state, entity)) {
+        if (level.isClientSide || !isEntityInsideContent(pos, state, entity)) {
             return;
         }
 
         if (entity.isOnFire()) {
             entity.clearFire();
+            level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 1.0F);
             if (entity.mayInteract(level, pos)) {
                 lowerFillLevel(state, level, pos);
             }
@@ -78,18 +77,7 @@ public class WaterCompooperBlock extends AbstractCompooperBlock {
         }
 
         if (entity instanceof ItemEntity itemEntity) {
-            ItemStack stack = itemEntity.getItem();
-            if (FlyItem.isFlyItem(stack) && FlyItem.getFlyType(stack).equals(FlyTypes.NORMAL.get())) {
-                int count = stack.getCount();
-
-                catalyst(itemEntity, state, level, pos, count, FlyItem.withType(FlyTypes.BLUE.get()), FlyItem.withType(FlyTypes.NORMAL.get()));
-                level.playSound(null, pos, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 1.0F, 1.0F);
-            } else if (stack.getItem() == PoItems.SALTPETER_SHARD.get()) {
-                int count = stack.getCount();
-
-                catalyst(itemEntity, state, level, pos, count, new ItemStack(Items.SNOWBALL), new ItemStack(PoItems.SALTPETER_SHARD.get()));
-                level.playSound(null, pos, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 1.0F, 1.0F);
-            }
+            processRecipe(CompooperType.WATER, itemEntity, state, level, pos, SoundEvents.GENERIC_SPLASH);
         }
     }
 }

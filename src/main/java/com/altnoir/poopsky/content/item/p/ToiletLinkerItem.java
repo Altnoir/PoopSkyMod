@@ -1,16 +1,18 @@
 package com.altnoir.poopsky.content.item.p;
 
 import com.altnoir.poopsky.content.block.ToiletComponent;
+import com.altnoir.poopsky.content.block.entity.FlushToiletBlockEntity;
 import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.content.item.PoBaseItem;
+import com.altnoir.poopsky.data.sound.PoSoundEvents;
 import com.altnoir.poopsky.init.PoComponents;
-import com.altnoir.poopsky.impl.sound.PoSoundEvents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.TicketType;
 import net.minecraft.sounds.SoundSource;
@@ -25,13 +27,13 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 import java.util.Optional;
 
 public class ToiletLinkerItem extends PoBaseItem {
-
     public ToiletLinkerItem(Properties properties) {
         super(properties);
     }
@@ -55,23 +57,19 @@ public class ToiletLinkerItem extends PoBaseItem {
         Level level = context.getLevel();
         Player player = context.getPlayer();
         if (player == null) return InteractionResult.PASS;
-
         ItemStack stack = context.getItemInHand();
-
         if (player.isShiftKeyDown()) {
             resetComponent(stack, player);
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
-
         BlockPos pos = context.getClickedPos();
-        if (!(level.getBlockEntity(pos) instanceof ToiletBlockEntity)) {
+        var be = level.getBlockEntity(pos);
+        if (!(be instanceof ToiletBlockEntity || be instanceof FlushToiletBlockEntity)) {
             return InteractionResult.PASS;
         }
-
         if (level.isClientSide) {
             return InteractionResult.SUCCESS;
         }
-
         executeBindingLogic((ServerLevel) level, pos, player, stack);
         return InteractionResult.SUCCESS;
     }
@@ -85,9 +83,8 @@ public class ToiletLinkerItem extends PoBaseItem {
     private void executeBindingLogic(ServerLevel level, BlockPos pos, Player player, ItemStack stack) {
         ToiletComponent comp = stack.getOrDefault(PoComponents.TOILET_COMPONENT.get(), ToiletComponent.EMPTY);
         String dimKey = level.dimension().location().toString();
-
         if (comp.level1().isEmpty()) {
-            // 绑定第一端
+            // Bind first endpoint
             stack.set(PoComponents.TOILET_COMPONENT.get(), new ToiletComponent(
                     dimKey, comp.level2(),
                     pos.getX(), pos.getY(), pos.getZ(),
@@ -97,7 +94,7 @@ public class ToiletLinkerItem extends PoBaseItem {
             player.displayClientMessage(Component.translatable("message.poopsky.toilet_linker.1"), true);
             level.playSound(null, pos, PoSoundEvents.ITEM_TOILET_LINKER_BOOP.get(), SoundSource.PLAYERS, 1.0F, pitch);
         } else if (comp.level2().isEmpty()) {
-            // 暂存第二端的数据
+            // Temporarily store second endpoint data
             ToiletComponent fullComp = new ToiletComponent(
                     comp.level1(), dimKey,
                     comp.x1(), comp.y1(), comp.z1(),
@@ -109,41 +106,43 @@ public class ToiletLinkerItem extends PoBaseItem {
 
     private void linkToilets(ItemStack stack, ServerLevel currentLevel, Player player, ToiletComponent comp) {
         var server = currentLevel.getServer();
-
         ServerLevel level1 = getLevelFromKey(server, comp.level1()).orElse(currentLevel);
         ServerLevel level2 = getLevelFromKey(server, comp.level2()).orElse(currentLevel);
-
         BlockPos pos1 = new BlockPos(comp.x1(), comp.y1(), comp.z1());
         BlockPos pos2 = new BlockPos(comp.x2(), comp.y2(), comp.z2());
-
-        if (level1.getBlockEntity(pos1) instanceof ToiletBlockEntity toilet1 &&
-                level2.getBlockEntity(pos2) instanceof ToiletBlockEntity toilet2) {
-
-            toilet1.setLinkedPos(pos2, level2);
-            toilet2.setLinkedPos(pos1, level1);
-            toilet1.setChanged();
-            toilet2.setChanged();
-
+        if (isLinkableToilet(level1.getBlockEntity(pos1)) && isLinkableToilet(level2.getBlockEntity(pos2))) {
+            setToiletLink(level1.getBlockEntity(pos1), pos2, level2);
+            setToiletLink(level2.getBlockEntity(pos2), pos1, level1);
+            // Mark both block entities as changed
+            if (level1.getBlockEntity(pos1) instanceof BlockEntity be1) be1.setChanged();
+            if (level2.getBlockEntity(pos2) instanceof BlockEntity be2) be2.setChanged();
             level1.getChunkSource().addRegionTicket(TicketType.PORTAL, new ChunkPos(pos1), 1, pos1);
             level2.getChunkSource().addRegionTicket(TicketType.PORTAL, new ChunkPos(pos2), 1, pos2);
-
             notifyBlockUpdate(level1, pos1);
             notifyBlockUpdate(level2, pos2);
-
             player.displayClientMessage(Component.translatable("message.poopsky.toilet_linker.3").withStyle(ChatFormatting.GREEN), true);
             stack.set(PoComponents.TOILET_COMPONENT.get(), ToiletComponent.EMPTY);
-
             var pitch = level2.random.nextFloat() + 0.3F;
             level2.playSound(null, pos2, PoSoundEvents.ITEM_TOILET_LINKER_SUCCESS.get(), SoundSource.BLOCKS, 1.0F, pitch);
         }
     }
 
-    private Optional<ServerLevel> getLevelFromKey(net.minecraft.server.MinecraftServer server, String dimStr) {
-        if (dimStr.isEmpty()) return Optional.empty();
+    private static boolean isLinkableToilet(Object be) {
+        return be instanceof ToiletBlockEntity || be instanceof FlushToiletBlockEntity;
+    }
 
+    private static void setToiletLink(Object be, BlockPos targetPos, ServerLevel targetLevel) {
+        if (be instanceof ToiletBlockEntity tbe) {
+            tbe.setLinkedPos(targetPos, targetLevel);
+        } else if (be instanceof FlushToiletBlockEntity fbe) {
+            fbe.setLinkedPos(targetPos, targetLevel);
+        }
+    }
+
+    private Optional<ServerLevel> getLevelFromKey(MinecraftServer server, String dimStr) {
+        if (dimStr.isEmpty()) return Optional.empty();
         ResourceLocation loc = ResourceLocation.tryParse(dimStr);
         if (loc == null) return Optional.empty();
-
         ResourceKey<Level> registryKey = ResourceKey.create(Registries.DIMENSION, loc);
         return Optional.ofNullable(server.getLevel(registryKey));
     }
@@ -163,7 +162,6 @@ public class ToiletLinkerItem extends PoBaseItem {
     public void appendShiftTooltip(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         var comp = stack.get(PoComponents.TOILET_COMPONENT.get());
         if (comp == null) return;
-
         if (!comp.level1().isEmpty()) {
             tooltipComponents.add(Component.translatable("tooltip.poopsky.toilet_linker.info_1", comp.level1(), comp.x1(), comp.y1(), comp.z1()).withStyle(ChatFormatting.GRAY));
         }

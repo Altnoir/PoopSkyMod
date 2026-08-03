@@ -1,11 +1,11 @@
 package com.altnoir.poopsky.impl.util;
 
-import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.content.block.p.PoopTntBlock;
+import com.altnoir.poopsky.content.recipe.POPExplosionRecipe;
+import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoParticles;
 import com.altnoir.poopsky.init.PoRecipes;
-import com.altnoir.poopsky.content.recipe.POPExplosionRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;

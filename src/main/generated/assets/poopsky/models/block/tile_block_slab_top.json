@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab_top",
-  "textures": {
-    "bottom": "poopsky:block/tile_block",
-    "side": "poopsky:block/tile_block",
-    "top": "poopsky:block/tile_block"
-  }
-}

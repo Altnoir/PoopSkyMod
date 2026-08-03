@@ -3,6 +3,8 @@ accessWidener v2 named
 accessible method net/minecraft/core/particles/SimpleParticleType <init> (Z)V
 accessible method net/minecraft/world/entity/vehicle/VehicleEntity getDropItem ()Lnet/minecraft/world/item/Item;
 accessible method net/minecraft/world/item/Item getPlayerPOVHitResult (Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/ClipContext$Fluid;)Lnet/minecraft/world/phys/BlockHitResult;
+accessible method net/minecraft/world/item/CreativeModeTab <init> (Lnet/minecraft/world/item/CreativeModeTab$Row;ILnet/minecraft/world/item/CreativeModeTab$Type;Lnet/minecraft/network/chat/Component;Ljava/util/function/Supplier;Lnet/minecraft/world/item/CreativeModeTab$DisplayItemsGenerator;)V
+accessible method net/minecraft/client/renderer/block/model/ItemOverrides <init> ()V
 accessible method net/minecraft/world/level/block/FireBlock getBurnOdds (Lnet/minecraft/world/level/block/state/BlockState;)I
 accessible method net/minecraft/world/level/block/FireBlock getIgniteOdds (Lnet/minecraft/world/level/block/state/BlockState;)I
 accessible method net/minecraft/world/level/block/state/properties/BlockSetType register (Lnet/minecraft/world/level/block/state/properties/BlockSetType;)Lnet/minecraft/world/level/block/state/properties/BlockSetType;
@@ -14,6 +16,22 @@ accessible field net/minecraft/world/item/AxeItem STRIPPABLES Ljava/util/Map;
 accessible field net/minecraft/world/item/ShovelItem FLATTENABLES Ljava/util/Map;
 accessible field net/minecraft/world/entity/Mob targetSelector Lnet/minecraft/world/entity/ai/goal/GoalSelector;
 accessible field net/minecraft/world/item/crafting/ShapedRecipe pattern Lnet/minecraft/world/item/crafting/ShapedRecipePattern;
+accessible field net/minecraft/client/gui/screens/inventory/CreativeModeInventoryScreen selectedTab Lnet/minecraft/world/item/CreativeModeTab;
+accessible field net/minecraft/client/gui/screens/inventory/CreativeModeInventoryScreen scrollOffs F
+accessible field net/minecraft/world/item/CreativeModeTab$Builder row Lnet/minecraft/world/item/CreativeModeTab$Row;
+accessible field net/minecraft/world/item/CreativeModeTab$Builder column I
+accessible field net/minecraft/world/item/CreativeModeTab$Builder displayName Lnet/minecraft/network/chat/Component;
+accessible field net/minecraft/world/item/CreativeModeTab$Builder iconGenerator Ljava/util/function/Supplier;
+accessible field net/minecraft/world/item/CreativeModeTab$Builder displayItemsGenerator Lnet/minecraft/world/item/CreativeModeTab$DisplayItemsGenerator;
+accessible field net/minecraft/world/item/CreativeModeTab$Builder canScroll Z
+accessible field net/minecraft/world/item/CreativeModeTab$Builder showTitle Z
+accessible field net/minecraft/world/item/CreativeModeTab$Builder alignedRight Z
+accessible field net/minecraft/world/item/CreativeModeTab$Builder type Lnet/minecraft/world/item/CreativeModeTab$Type;
+accessible field net/minecraft/world/item/CreativeModeTab$Builder backgroundTexture Lnet/minecraft/resources/ResourceLocation;
+accessible field net/minecraft/world/item/CreativeModeTab canScroll Z
+accessible field net/minecraft/world/item/CreativeModeTab showTitle Z
+accessible field net/minecraft/world/item/CreativeModeTab alignedRight Z
+accessible field net/minecraft/world/item/CreativeModeTab backgroundTexture Lnet/minecraft/resources/ResourceLocation;
 
 accessible class net/minecraft/client/gui/screens/worldselection/CreateWorldScreen$WorldTab
 accessible class net/minecraft/data/tags/IntrinsicHolderTagsProvider$IntrinsicTagAppender

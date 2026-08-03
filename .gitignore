@@ -32,6 +32,7 @@ bin/
 
 run/
 /src/main/generated/.cache/
+*.bak
 
 # java
 

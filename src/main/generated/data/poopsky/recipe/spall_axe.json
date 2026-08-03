@@ -15,6 +15,13 @@
     " S"
   ],
   "result": {
+    "components": {
+      "minecraft:enchantments": {
+        "levels": {
+          "minecraft:silk_touch": 1
+        }
+      }
+    },
     "count": 1,
     "id": "poopsky:spall_axe"
   }
