@@ -20,11 +20,12 @@ public final class PoSectionedCreativeTabRenderer {
 
     public static void onRender(CreativeModeInventoryScreen screen, GuiGraphics graphics) {
         if (CreativeModeInventoryScreen.selectedTab instanceof PoSectionedCreativeModeTab tab) {
-            render(graphics, tab, screen.scrollOffs);
+            render(graphics, tab, screen.scrollOffs, screen.leftPos, screen.topPos);
         }
     }
 
-    private static void render(GuiGraphics graphics, PoSectionedCreativeModeTab tab, float scrollOffset) {
+    private static void render(GuiGraphics graphics, PoSectionedCreativeModeTab tab, float scrollOffset,
+                               int leftPos, int topPos) {
         int firstVisibleRow = tab.visibleStartRow(scrollOffset);
         Font font = Minecraft.getInstance().font;
 
@@ -33,18 +34,19 @@ public final class PoSectionedCreativeTabRenderer {
             if (visibleRow < 0 || visibleRow >= VISIBLE_ROWS) {
                 continue;
             }
-            int y = GRID_TOP + visibleRow * ROW_HEIGHT;
-            renderBanner(graphics, y);
-            graphics.drawString(font, section.title(), GRID_LEFT + 7, y + 5, TEXT_HIGHLIGHT, false);
+            int x = leftPos + GRID_LEFT;
+            int y = topPos + GRID_TOP + visibleRow * ROW_HEIGHT;
+            renderBanner(graphics, x, y);
+            graphics.drawString(font, section.title(), x + 7, y + 5, TEXT_HIGHLIGHT, false);
         }
     }
 
-    private static void renderBanner(GuiGraphics graphics, int top) {
-        graphics.fill(GRID_LEFT, top, GRID_LEFT + GRID_WIDTH, top + ROW_HEIGHT, BACKGROUND);
-        graphics.fill(GRID_LEFT, top, GRID_LEFT + 1, top + ROW_HEIGHT, BORDER_MUTED);
-        graphics.fill(GRID_LEFT + GRID_WIDTH - 1, top, GRID_LEFT + GRID_WIDTH, top + ROW_HEIGHT, BORDER_MUTED);
-        graphics.fill(GRID_LEFT + 1, top, GRID_LEFT + GRID_WIDTH, top + 1, BORDER_PRIMARY);
-        graphics.fill(GRID_LEFT + 1, top + ROW_HEIGHT - 1, GRID_LEFT + GRID_WIDTH, top + ROW_HEIGHT, BORDER_MUTED);
+    private static void renderBanner(GuiGraphics graphics, int left, int top) {
+        graphics.fill(left, top, left + GRID_WIDTH, top + ROW_HEIGHT, BACKGROUND);
+        graphics.fill(left, top, left + 1, top + ROW_HEIGHT, BORDER_MUTED);
+        graphics.fill(left + GRID_WIDTH - 1, top, left + GRID_WIDTH, top + ROW_HEIGHT, BORDER_MUTED);
+        graphics.fill(left + 1, top, left + GRID_WIDTH, top + 1, BORDER_PRIMARY);
+        graphics.fill(left + 1, top + ROW_HEIGHT - 1, left + GRID_WIDTH, top + ROW_HEIGHT, BORDER_MUTED);
     }
 
     private PoSectionedCreativeTabRenderer() {

@@ -57,6 +57,7 @@ public final class TimeBellOverlay {
             float flashAlpha = flash * flash * 0.2F;
             guiGraphics.fill(0, 0, width, height, color(FLASH_COLOR, flashAlpha));
         }
+        guiGraphics.flush();
     }
 
     private static void drawVignette(GuiGraphics guiGraphics, int width, int height, float alpha) {

@@ -115,7 +115,7 @@ public class PoopSkyClient implements ClientModInitializer {
                             && toiletItem.getBlock() instanceof AbstractToiletBlock toiletBlock) {
                         type = toiletBlock.getDefaultToiletType();
                     }
-                    return type == null ? 0.0F : ToiletType.getCategoryModelValue(type);
+                    return type == null ? 0.0F : ToiletType.getCategoryIndex(type);
                 });
     }
 
@@ -149,9 +149,23 @@ public class PoopSkyClient implements ClientModInitializer {
                 PoBlocks.POOP_DOOR.get(),
                 PoBlocks.POOP_TRAPDOOR.get(),
                 PoBlocks.POOP_SAPLING.get(),
+                PoBlocks.GINKGO_DOOR.get(),
+                PoBlocks.GINKGO_TRAPDOOR.get(),
+                PoBlocks.GINKGO_SAPLING.get(),
+                PoBlocks.GINKGO_LEAVES.get(),
                 PoBlocks.SIEVE.get(),
+                PoBlocks.POOLIME_BLOCK.get(),
+                PoBlocks.MAGGOTS.get(),
+                PoBlocks.SALTPETER_CLUSTER.get(),
+                PoBlocks.LARGE_SALTPETER_BUD.get(),
+                PoBlocks.MEDIUM_SALTPETER_BUD.get(),
+                PoBlocks.SMALL_SALTPETER_BUD.get(),
                 PoBlocks.ROUNDWORM_VINES.get(),
-                PoBlocks.ROUNDWORM_VINES_PLANT.get());
+                PoBlocks.ROUNDWORM_VINES_PLANT.get(),
+                PoBlocks.CHILI_VINES.get(),
+                PoBlocks.CHILI_VINES_PLANT.get(),
+                PoBlocks.FLUSH_TOILET.get(),
+                PoBlocks.GOLDEN_FLUSH_TOILET.get());
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.translucent(),
                 PoBlocks.STOOL.get(), PoBlocks.WATER_COMPOOPER.get());
         BlockRenderLayerMap.INSTANCE.putBlock(PoFluids.URINE_LIQUID.get(), RenderType.translucent());

@@ -18,6 +18,8 @@ accessible field net/minecraft/world/entity/Mob targetSelector Lnet/minecraft/wo
 accessible field net/minecraft/world/item/crafting/ShapedRecipe pattern Lnet/minecraft/world/item/crafting/ShapedRecipePattern;
 accessible field net/minecraft/client/gui/screens/inventory/CreativeModeInventoryScreen selectedTab Lnet/minecraft/world/item/CreativeModeTab;
 accessible field net/minecraft/client/gui/screens/inventory/CreativeModeInventoryScreen scrollOffs F
+accessible field net/minecraft/client/gui/screens/inventory/AbstractContainerScreen leftPos I
+accessible field net/minecraft/client/gui/screens/inventory/AbstractContainerScreen topPos I
 accessible field net/minecraft/world/item/CreativeModeTab$Builder row Lnet/minecraft/world/item/CreativeModeTab$Row;
 accessible field net/minecraft/world/item/CreativeModeTab$Builder column I
 accessible field net/minecraft/world/item/CreativeModeTab$Builder displayName Lnet/minecraft/network/chat/Component;

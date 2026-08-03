@@ -89,11 +89,13 @@ public final class BakedModelEventHandler {
                                                 String blockPath, ToiletType.Category category, boolean hasLava) {
         String[] suffixes = hasLava ? LAVA_SUFFIXES : WOOD_SUFFIXES;
         BakedModel[] templateModels = bakeModels(context, blockPath, "", suffixes);
+        Map<ToiletType, BakedModel[]> variantModels = new HashMap<>();
         Map<ToiletType, ResourceLocation> variantTextures = new HashMap<>();
         for (ToiletType type : ToiletType.getByCategory(category).values()) {
+            variantModels.put(type, bakeModels(context, blockPath, "_" + type.id(), suffixes));
             variantTextures.put(type, toiletTexture(type));
         }
-        return new ToiletBakedModel(original, templateModels, variantTextures, hasLava);
+        return new ToiletBakedModel(original, templateModels, variantModels, variantTextures, hasLava);
     }
 
     private static BakedModel createToiletItemModel(BakedModel original, ModelModifier.AfterBake.Context context,

@@ -34,6 +34,7 @@ public class ToiletBakedModel implements BakedModel, FabricBakedModel {
     private final BakedModel defaultModel;
     private final BakedModel[] templateModels;
     private final boolean hasLava;
+    private final Map<ToiletType, BakedModel[]> variantModels;
     private final Map<ToiletType, ResourceLocation> variantTextures;
     private final Map<ToiletType, TypedModel> typedModels = new HashMap<>();
     private final TypedModel fallbackModel = new TypedModel(null);
@@ -41,11 +42,13 @@ public class ToiletBakedModel implements BakedModel, FabricBakedModel {
     public ToiletBakedModel(
             BakedModel defaultModel,
             BakedModel[] templateModels,
+            Map<ToiletType, BakedModel[]> variantModels,
             Map<ToiletType, ResourceLocation> variantTextures,
             boolean hasLava
     ) {
         this.defaultModel = defaultModel;
         this.templateModels = templateModels;
+        this.variantModels = variantModels;
         this.variantTextures = variantTextures;
         this.hasLava = hasLava;
         for (ToiletType type : variantTextures.keySet()) {
@@ -68,6 +71,10 @@ public class ToiletBakedModel implements BakedModel, FabricBakedModel {
         if (state == null) return defaultModel;
         int index = getStateIndex(state);
 
+        BakedModel[] typedModels = variantModels.get(type);
+        if (typedModels != null && index < typedModels.length && typedModels[index] != null) {
+            return typedModels[index];
+        }
         if (templateModels != null && index < templateModels.length && templateModels[index] != null) {
             return templateModels[index];
         }

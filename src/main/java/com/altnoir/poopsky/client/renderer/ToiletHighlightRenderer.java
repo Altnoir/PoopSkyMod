@@ -54,8 +54,7 @@ public class ToiletHighlightRenderer {
         Camera camera = context.camera();
         Vec3 cameraPos = camera.getPosition();
 
-        MultiBufferSource bufferSource = context.consumers();
-        if (bufferSource == null) return;
+        MultiBufferSource.BufferSource bufferSource = mc.renderBuffers().bufferSource();
         VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.lines());
 
         BlockState state = player.level().getBlockState(pos);
@@ -68,6 +67,7 @@ public class ToiletHighlightRenderer {
                 pos.getY() - cameraPos.y,
                 pos.getZ() - cameraPos.z,
                 0.804F, 0.522F, 0.247F, 1.0F);
+        bufferSource.endBatch(RenderType.lines());
     }
 
     private static VoxelShape getFlushToiletLidShape(BlockState state) {
