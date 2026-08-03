@@ -1,12 +1,12 @@
 package com.altnoir.poopsky.content.block.entity;
 
-import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.client.inventory.BreedingChestMenu;
 import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.item.p.FlyItem;
-import com.altnoir.poopsky.init.PoBlockEntityType;
 import com.altnoir.poopsky.content.recipe.PFlyRecipes;
 import com.altnoir.poopsky.data.sound.PoSoundEvents;
+import com.altnoir.poopsky.impl.PoTags;
+import com.altnoir.poopsky.init.PoBlockEntityType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;

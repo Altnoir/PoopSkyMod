@@ -2,8 +2,8 @@ package com.altnoir.poopsky.compat.jei.create;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.compat.create.PSRecipeTypes;
-import com.altnoir.poopsky.compat.jei.create.animations.AnimatedUrineLiquid;
 import com.altnoir.poopsky.compat.create.content.kinetics.fan.processing.DigestingRecipe;
+import com.altnoir.poopsky.compat.jei.create.animations.AnimatedUrineLiquid;
 import com.altnoir.poopsky.init.PoItems;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;

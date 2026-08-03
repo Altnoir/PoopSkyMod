@@ -1,9 +1,9 @@
 package com.altnoir.poopsky.content.item.p;
 
 import com.altnoir.poopsky.content.FlyType;
+import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoComponents;
 import com.altnoir.poopsky.init.PoItems;
-import com.altnoir.poopsky.init.FlyTypes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;

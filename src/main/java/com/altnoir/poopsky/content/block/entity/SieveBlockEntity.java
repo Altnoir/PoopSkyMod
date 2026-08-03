@@ -1,9 +1,9 @@
 package com.altnoir.poopsky.content.block.entity;
 
 import com.altnoir.poopsky.content.block.p.SieveBlock;
+import com.altnoir.poopsky.content.recipe.SieveRecipe;
 import com.altnoir.poopsky.init.PoBlockEntityType;
 import com.altnoir.poopsky.init.PoRecipes;
-import com.altnoir.poopsky.content.recipe.SieveRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.BlockParticleOption;

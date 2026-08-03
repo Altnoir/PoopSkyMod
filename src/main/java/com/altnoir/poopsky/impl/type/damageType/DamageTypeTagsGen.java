@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.impl.type.damageType;
 
-import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.impl.PoTags;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;

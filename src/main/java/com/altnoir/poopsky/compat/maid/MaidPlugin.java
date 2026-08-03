@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.compat.maid;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.compat.maid.toilet.ToiletSensor;
 import com.altnoir.poopsky.compat.maid.toilet.DefecateTask;
+import com.altnoir.poopsky.compat.maid.toilet.ToiletSensor;
 import com.github.tartaricacid.touhoulittlemaid.api.ILittleMaid;
 import com.github.tartaricacid.touhoulittlemaid.api.LittleMaidExtension;
 import com.github.tartaricacid.touhoulittlemaid.entity.ai.brain.ExtraMaidBrainManager;

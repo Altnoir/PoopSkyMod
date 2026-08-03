@@ -1,12 +1,7 @@
 package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.client.inventory.BreedingChestMenu;
-import com.altnoir.poopsky.client.inventory.BreedingChestScreen;
-import com.altnoir.poopsky.client.inventory.FlyBarrelMenu;
-import com.altnoir.poopsky.client.inventory.FlyBarrelScreen;
-import com.altnoir.poopsky.client.inventory.FlushToiletMenu;
-import com.altnoir.poopsky.client.inventory.FlushToiletScreen;
+import com.altnoir.poopsky.client.inventory.*;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.tterrag.registrate.builders.MenuBuilder;
 import com.tterrag.registrate.util.entry.MenuEntry;

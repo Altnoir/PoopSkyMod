@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.client.inventory;
 
-import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.content.item.p.FlyItem;
+import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.init.PoMenuTypes;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
