@@ -377,7 +377,7 @@
                 },
                 {
                   "type": "minecraft:item",
-                  "name": "poopsky:poop_block"
+                  "name": "minecraft:air"
                 }
               ],
               "conditions": [

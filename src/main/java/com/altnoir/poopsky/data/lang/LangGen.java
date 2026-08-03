@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.data.lang;
 
+import com.altnoir.poopsky.PoItemGroups;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.ToiletType;
@@ -7,6 +8,8 @@ import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.init.PoPotions;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateLangProvider;
+
+import java.util.Map;
 
 public final class LangGen {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
@@ -30,6 +33,7 @@ public final class LangGen {
         addMessages();
         addSubtitles();
         addStats();
+        addItemGroups();
         addMisc();
         addTags();
         addTooltips();
@@ -260,6 +264,23 @@ public final class LangGen {
         provider.add("stat.poopsky.poop_stat", "Poop Stat");
     }
 
+    private static void addItemGroups() {
+        Map<String, String> labels = Map.of(
+                PoItemGroups.POOPSKY_TAB_KEY, "POOPSKY",
+                PoItemGroups.POOPSKY_DECO_TAB_KEY, "PoopSky Builder Block",
+                PoItemGroups.TS_ITEMS.translationKey(), "Basic Items",
+                PoItemGroups.TS_BLOCKS.translationKey(), "Functional Blocks",
+                PoItemGroups.TS_FLIES.translationKey(), "Flies",
+                PoItemGroups.TS_POTIONS.translationKey(), "Potions",
+                PoItemGroups.TS_DECO_MATERIALS.translationKey(), "Building Blocks",
+                PoItemGroups.TS_DECO_TILES.translationKey(), "Tiles",
+                PoItemGroups.TS_DECO_TOILETS.translationKey(), "Toilets"
+        );
+        for (String key : PoItemGroups.translationKeys()) {
+            provider.add(key, labels.get(key));
+        }
+    }
+
     private static void addMisc() {
         provider.add("container.placer", "Placer");
         provider.add("generator.poopsky.poopsky", "PoopSky");
@@ -267,15 +288,6 @@ public final class LangGen {
         provider.add("death.attack.roundworm.player", "%1$s was killed by %2$s by Roundworm");
         provider.add("death.attack.poop_ball", "%1$s died from Poop Ball");
         provider.add("death.attack.poop_ball.player", "%1$s was killed by %2$s by Poop Ball");
-        provider.add("itemgroup.poopsky", "POOPSKY");
-        provider.add("itemgroup.poopsky_deco", "PoopSky Builder Block");
-        provider.add("itemGroup.poopsky.section.basic", "Basic Items");
-        provider.add("itemGroup.poopsky.section.basic_blocks", "Functional Blocks");
-        provider.add("itemGroup.poopsky.section.basic_flies", "Flies");
-        provider.add("itemGroup.poopsky_deco.section.poop", "Poop Building Blocks");
-        provider.add("itemGroup.poopsky_deco.section.tile", "Tiles");
-        provider.add("itemGroup.poopsky_deco.section.wood", "Wood Building Blocks");
-        provider.add("itemGroup.poopsky_deco.section.toilets", "Toilets");
         provider.add("pack.poopsky.name", "Cognitive Filter");
 
         // Effects

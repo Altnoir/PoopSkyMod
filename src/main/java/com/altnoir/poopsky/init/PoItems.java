@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.PoItemGroups;
 import com.altnoir.poopsky.content.block.ToiletComponent;
 import com.altnoir.poopsky.content.item.PArmorMaterials;
 import com.altnoir.poopsky.content.item.PFoods;
@@ -19,6 +20,10 @@ import java.util.List;
 
 public class PoItems {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
+
+    static {
+        REGISTRATE.defaultCreativeSection(PoItemGroups.TS_ITEMS);
+    }
 
     public static final ItemEntry<PoopItem> POOP = registerItem("poop",
             props -> new PoopItem(props.food(PFoods.POOP).stacksTo(88)));
