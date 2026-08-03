@@ -115,6 +115,11 @@ public class PoBlocks {
                     .speedFactor(0.4F)
                     .isValidSpawn(Blocks::always)
                     .instrument(NoteBlockInstrument.COW_BELL)));
+    public static final BlockEntry<PoolimeBlock> POOLIME_BLOCK = registerBlock("poolime_block", 88,
+            props -> new PoolimeBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN)
+                    .friction(0.8F)
+                    .sound(SoundType.SLIME_BLOCK)
+                    .noOcclusion()));
 
     public static final BlockEntry<StairBlock> POOP_STAIRS = registerDecoMaterialBlock("poop_stairs", 88,
             props -> new StairBlock(POOP_BLOCK.get().defaultBlockState(), poopProperties()));
@@ -145,16 +150,6 @@ public class PoBlocks {
             props -> new TrapDoorBlock(PoBlockSetType.POOP, poopProperties()
                     .noOcclusion()
                     .isValidSpawn(Blocks::never)));
-
-    public static final BlockEntry<ChairBlock> STOOL = registerBlock("stool", 88,
-            props -> new ChairBlock(poopProperties()
-                    .pushReaction(PushReaction.DESTROY)
-                    .noOcclusion()));
-    public static final BlockEntry<PoolimeBlock> POOLIME_BLOCK = registerBlock("poolime_block", 88,
-            props -> new PoolimeBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN)
-                    .friction(0.8F)
-                    .sound(SoundType.SLIME_BLOCK)
-                    .noOcclusion()));
 
     public static final BlockEntry<Block> POOP_BRICKS = registerDecoMaterialBlock("poop_bricks", 88,
             props -> new Block(hardenedProperties(MapColor.COLOR_BROWN, SoundType.FROGLIGHT)));
@@ -241,6 +236,10 @@ public class PoBlocks {
     public static final BlockFamily MAGENTA_TILE_BLOCK_FAMILY = coloredTile(DyeColor.MAGENTA).family();
     public static final BlockFamily PINK_TILE_BLOCK_FAMILY = coloredTile(DyeColor.PINK).family();
 
+    public static final BlockEntry<ChairBlock> STOOL = registerBlock("stool", 88,
+            props -> new ChairBlock(poopProperties()
+                    .pushReaction(PushReaction.DESTROY)
+                    .noOcclusion()));
     public static final BlockEntry<CompooperBlock> COMPOOPER = registerCompooperBlock("compooper",
             props -> new CompooperBlock(simpleProperties(MapColor.COLOR_BROWN, 0.6F, SoundType.METAL)
                     .noOcclusion()
@@ -613,8 +612,7 @@ public class PoBlocks {
         Map<DyeColor, ColoredTile> tiles = new EnumMap<>(DyeColor.class);
         for (DyeColor color : colors) {
             String name = color.getName() + "_tile_block";
-            BlockEntry<Block> block = registerTileBlock(name, 64,
-                    props -> new Block(hardenedProperties(color.getMapColor(), SoundType.STONE)));
+            BlockEntry<Block> block = registerTileBlock(name, 64, props -> new Block(hardenedProperties(color.getMapColor(), SoundType.STONE)));
             tiles.put(color, new ColoredTile(block, registerTileBlockFamily(name, block)));
         }
         return Collections.unmodifiableMap(tiles);
