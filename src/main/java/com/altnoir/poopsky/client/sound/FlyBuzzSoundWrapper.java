@@ -4,8 +4,6 @@ import com.altnoir.poopsky.content.entity.p.FlyEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
-//import net.neoforged.api.distmarker.Dist;
-//import net.neoforged.api.distmarker.OnlyIn;
 
 @Environment(EnvType.CLIENT)
 public class FlyBuzzSoundWrapper {

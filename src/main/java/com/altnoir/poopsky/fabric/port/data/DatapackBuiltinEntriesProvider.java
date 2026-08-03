@@ -5,13 +5,14 @@
 
 package com.altnoir.poopsky.fabric.port.data;
 
-import java.util.Set;
-import java.util.concurrent.CompletableFuture;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.registries.RegistriesDatapackGenerator;
 import net.minecraft.data.registries.RegistryPatchGenerator;
+
+import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Fabric-side port of NeoForge's datapack builtin entries provider.

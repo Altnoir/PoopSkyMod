@@ -20,7 +20,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 
 public class PowderSnowCompooperBlock extends AbstractCompooperBlock {
     public static final MapCodec<PowderSnowCompooperBlock> CODEC = simpleCodec(PowderSnowCompooperBlock::new);

@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.compat.jei;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.content.recipe.AnalPressingRecipe;
+import com.altnoir.poopsky.init.PoItems;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.ITooltipBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;

@@ -2,10 +2,11 @@ package com.altnoir.poopsky.client.renderer;
 
 import com.altnoir.poopsky.content.block.ToiletComponent;
 import com.altnoir.poopsky.content.block.p.FlushToiletBlock;
-import com.altnoir.poopsky.init.PoComponents;
 import com.altnoir.poopsky.content.item.p.ToiletLinkerItem;
+import com.altnoir.poopsky.init.PoComponents;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -15,13 +16,12 @@ import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 
 public class ToiletHighlightRenderer {
     public static void onRenderLevel(WorldRenderContext context) {

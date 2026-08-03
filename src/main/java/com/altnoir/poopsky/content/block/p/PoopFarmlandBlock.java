@@ -1,10 +1,10 @@
 package com.altnoir.poopsky.content.block.p;
 
+import com.altnoir.poopsky.data.sound.PoSoundEvents;
 import com.altnoir.poopsky.fabric.port.util.ItemAbilities;
 import com.altnoir.poopsky.fabric.port.util.ItemAbility;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
-import com.altnoir.poopsky.data.sound.PoSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -24,8 +24,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-//import net.neoforged.neoforge.common.ItemAbilities;
-//import net.neoforged.neoforge.common.ItemAbility;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

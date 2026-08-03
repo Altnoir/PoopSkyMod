@@ -27,9 +27,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.material.Fluids;
-//import net.neoforged.neoforge.fluids.FluidStack;
-//import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-//import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import org.jetbrains.annotations.Nullable;
 
 public class ToiletBlockEntity extends BlockEntity implements RenderDataBlockEntity {
@@ -73,7 +70,6 @@ public class ToiletBlockEntity extends BlockEntity implements RenderDataBlockEnt
         this.setChanged();
         if (level instanceof ServerLevel serverLevel) {
             syncToiletModeToBlockState();
-            //requestModelDataUpdate();
             serverLevel.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
         }
     }
@@ -147,7 +143,6 @@ public class ToiletBlockEntity extends BlockEntity implements RenderDataBlockEnt
             }
         }
         if (level != null && level.isClientSide) {
-            //requestModelDataUpdate();
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
         }
     }

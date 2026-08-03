@@ -3,8 +3,8 @@ package com.altnoir.poopsky.content.entity.p;
 import com.altnoir.poopsky.client.sound.FlyBuzzSoundWrapper;
 import com.altnoir.poopsky.content.block.p.ShitBlock;
 import com.altnoir.poopsky.content.item.p.FlyItem;
-import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.data.sound.PoSoundEvents;
+import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.impl.type.damageType.PoDamageTypes;
 import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoEntityType;
@@ -41,8 +41,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
-//import net.neoforged.api.distmarker.Dist;
-//import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

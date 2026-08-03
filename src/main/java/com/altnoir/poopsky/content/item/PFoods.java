@@ -1,6 +1,5 @@
 package com.altnoir.poopsky.content.item;
 
-import com.altnoir.poopsky.init.PoEffects;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;

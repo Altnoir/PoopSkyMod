@@ -1,9 +1,9 @@
 package com.altnoir.poopsky.content.entity.p;
 
 import com.altnoir.poopsky.client.sound.TPFlySoundWrapper;
+import com.altnoir.poopsky.impl.network.PlugInputPayload;
 import com.altnoir.poopsky.init.PoEffects;
 import com.altnoir.poopsky.init.PoItems;
-import com.altnoir.poopsky.impl.network.PlugInputPayload;
 import com.google.common.collect.Lists;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -32,9 +32,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-//import net.neoforged.api.distmarker.Dist;
-//import net.neoforged.api.distmarker.OnlyIn;
-//import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;

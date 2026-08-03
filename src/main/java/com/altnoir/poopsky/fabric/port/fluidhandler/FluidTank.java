@@ -1,8 +1,9 @@
 package com.altnoir.poopsky.fabric.port.fluidhandler;
 
-import java.util.function.Predicate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+
+import java.util.function.Predicate;
 
 public class FluidTank implements IFluidHandler, IFluidTank {
     protected Predicate<FluidStack> validator;

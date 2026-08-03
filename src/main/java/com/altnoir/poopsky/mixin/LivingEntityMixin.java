@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.mixin;
 
-import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.content.item.p.TimeBellItem;
+import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.init.PoEffects;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;

@@ -1,9 +1,9 @@
 package com.altnoir.poopsky.content.item.p;
 
+import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.entity.p.FlyEntity;
 import com.altnoir.poopsky.data.sound.PoSoundEvents;
 import com.altnoir.poopsky.init.FlyTypes;
-import com.altnoir.poopsky.content.FlyType;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;

@@ -1,8 +1,9 @@
 package com.altnoir.poopsky.compat.jei;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.init.PoBlocks;
+import com.altnoir.poopsky.content.recipe.CompooperRecipe;
 import com.altnoir.poopsky.impl.util.ClientUtil;
+import com.altnoir.poopsky.init.PoBlocks;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.ITooltipBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -21,8 +22,6 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-
-import com.altnoir.poopsky.content.recipe.CompooperRecipe;
 
 public class CompooperRecipeCategory implements IRecipeCategory<RecipeHolder<CompooperRecipe>> {
     public static final RecipeType<RecipeHolder<CompooperRecipe>> TYPE =

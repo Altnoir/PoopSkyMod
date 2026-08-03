@@ -1,25 +1,19 @@
 package com.altnoir.poopsky.fabric.mixin;
 
 import com.altnoir.poopsky.fabric.port.extension.IBlockExtension;
-import com.llamalad7.mixinextras.sugar.Local;
-
-import net.minecraft.core.BlockPos;
-
-import net.minecraft.core.dispenser.BlockSource;
-
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.DispenserBlock;
-
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-
 import com.llamalad7.mixinextras.expression.Definition;
 import com.llamalad7.mixinextras.expression.Expression;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-
+import com.llamalad7.mixinextras.sugar.Local;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.dispenser.BlockSource;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.TntBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(targets = "net/minecraft/core/dispenser/DispenseItemBehavior$8")
 public class DispenseItemBehaviorMixin {

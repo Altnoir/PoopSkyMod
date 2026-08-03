@@ -23,7 +23,6 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 
 public class WaterCompooperBlock extends AbstractCompooperBlock {
     public static final MapCodec<WaterCompooperBlock> CODEC = simpleCodec(WaterCompooperBlock::new);

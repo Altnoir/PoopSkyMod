@@ -5,9 +5,6 @@
 
 package com.altnoir.poopsky.fabric.port.data;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.CachedOutput;
@@ -15,6 +12,10 @@ import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.storage.loot.LootTable;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Fabric-side replacement for NeoForge's global loot modifier provider.

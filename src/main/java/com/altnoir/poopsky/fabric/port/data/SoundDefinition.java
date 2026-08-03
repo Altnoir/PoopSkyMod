@@ -9,11 +9,12 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.Nullable;
 
 /** Contains the data used to serialize one entry in {@code sounds.json}. */
 public final class SoundDefinition {

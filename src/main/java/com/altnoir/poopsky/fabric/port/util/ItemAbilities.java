@@ -1,13 +1,14 @@
 package com.altnoir.poopsky.fabric.port.util;
 
 import com.google.common.collect.Sets;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
+
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ItemAbilities {
     /**

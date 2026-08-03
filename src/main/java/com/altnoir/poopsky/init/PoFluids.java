@@ -2,7 +2,6 @@ package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.fluid.UrineLiquidBlock;
-import com.altnoir.poopsky.fabric.FabricatedRegistries;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.tterrag.registrate.fabric.SimpleFlowableFluid;
 import com.tterrag.registrate.providers.ProviderType;
@@ -12,33 +11,21 @@ import com.tterrag.registrate.util.entry.FluidEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.BucketItem;
-import net.minecraft.world.level.GameRules;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.*;
-//import net.neoforged.neoforge.common.SoundActions;
-//import net.neoforged.neoforge.fluids.BaseFlowingFluid;
-//import net.neoforged.neoforge.fluids.FluidType;
-//import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 
 public final class PoFluids {
     public static final ResourceLocation URINE_STILL_TEXTURE = PoopSky.loc("block/urine_liquid");
     public static final ResourceLocation URINE_FLOWING_TEXTURE = PoopSky.loc("block/urine_liquid_flowing");
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
-
-//    public static final RegistryEntry<FluidType, FluidType> URINE_FLUID_TYPE = REGISTRATE.simple(
-//            "urine",
-//            FabricatedRegistries.Key.FLUID_TYPES,
-//            PoFluids::createUrineFluidType);
 
     public static final FluidEntry<SimpleFlowableFluid.Flowing> FLOWING_URINE = REGISTRATE
             .fluid("urine", URINE_STILL_TEXTURE, URINE_FLOWING_TEXTURE, PoFluids::createFlowingUrine)

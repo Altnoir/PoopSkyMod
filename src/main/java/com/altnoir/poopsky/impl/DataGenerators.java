@@ -1,32 +1,22 @@
 package com.altnoir.poopsky.impl;
 
-//import com.altnoir.poopsky.impl.create.PDigestingRecipeGen;
-//import com.altnoir.poopsky.impl.create.PHauntingRecipeGen;
-//import com.altnoir.poopsky.impl.create.PWashingRecipeGen;
-import com.altnoir.poopsky.impl.olddata.BlockLootTableGen;
 import com.altnoir.poopsky.data.BlockStateGen;
 import com.altnoir.poopsky.data.PaintingVariantTagsGen;
 import com.altnoir.poopsky.data.ParticleGen;
 import com.altnoir.poopsky.data.recipe.RecipeGen;
 import com.altnoir.poopsky.data.sound.SoundGen;
-import com.altnoir.poopsky.impl.type.damageType.DamageTypeTagsGen;
-import com.altnoir.poopsky.impl.registrate.*;
+import com.altnoir.poopsky.impl.olddata.BlockLootTableGen;
+import com.altnoir.poopsky.impl.registrate.SpecialModelGen;
 import com.altnoir.poopsky.impl.type.FlyTypeData;
 import com.altnoir.poopsky.impl.type.ToiletTypeData;
+import com.altnoir.poopsky.impl.type.damageType.DamageTypeTagsGen;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-//import net.neoforged.bus.api.SubscribeEvent;
-//import net.neoforged.neoforge.common.data.ExistingFileHelper;
-//import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 public class DataGenerators implements DataGeneratorEntrypoint {
     @Override

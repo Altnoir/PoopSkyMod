@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.entity.renderer;
 
-import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.content.entity.p.PoopTntEntity;
+import com.altnoir.poopsky.init.PoBlocks;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;

@@ -2,10 +2,10 @@ package com.altnoir.poopsky.impl;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.fabric.port.data.DatapackBuiltinEntriesProvider;
-import com.altnoir.poopsky.worldgen.PoConfigureFeatures;
-import com.altnoir.poopsky.worldgen.PoPlacedFeatures;
 import com.altnoir.poopsky.impl.type.damageType.PoDamageTypes;
 import com.altnoir.poopsky.init.PoPainting;
+import com.altnoir.poopsky.worldgen.PoConfigureFeatures;
+import com.altnoir.poopsky.worldgen.PoPlacedFeatures;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;

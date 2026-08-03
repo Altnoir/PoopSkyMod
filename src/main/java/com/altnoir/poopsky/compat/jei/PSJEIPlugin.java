@@ -1,17 +1,16 @@
 package com.altnoir.poopsky.compat.jei;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.compat.PoMods;
-//import com.altnoir.poopsky.compat.jei.create.FanDigestingCategory;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.recipe.ToiletShapedRecipe;
-import com.altnoir.poopsky.init.*;
-//import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
+import com.altnoir.poopsky.init.PoBlocks;
+import com.altnoir.poopsky.init.PoComponents;
+import com.altnoir.poopsky.init.PoItems;
+import com.altnoir.poopsky.init.PoRecipes;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.ingredients.subtypes.ISubtypeInterpreter;
 import mezz.jei.api.ingredients.subtypes.UidContext;
-import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.registration.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
@@ -19,9 +18,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @JeiPlugin
 public class PSJEIPlugin implements IModPlugin {

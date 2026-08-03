@@ -2,20 +2,17 @@ package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.ToiletComponent;
-import com.altnoir.poopsky.content.entity.p.PoolimeEntity;
 import com.altnoir.poopsky.content.item.PArmorMaterials;
 import com.altnoir.poopsky.content.item.PFoods;
 import com.altnoir.poopsky.content.item.PToolTiers;
 import com.altnoir.poopsky.content.item.p.*;
-import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.data.sound.PoSoundEvents;
+import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.*;
-//import net.neoforged.neoforge.common.DeferredSpawnEggItem;
-//import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.ArrayList;
 import java.util.List;

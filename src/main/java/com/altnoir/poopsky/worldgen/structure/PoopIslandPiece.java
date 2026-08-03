@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.worldgen.structure;
 
-import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.content.entity.p.PoolimeEntity;
+import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoEntityType;
 import com.altnoir.poopsky.worldgen.PoStructures;
 import net.minecraft.core.BlockPos;

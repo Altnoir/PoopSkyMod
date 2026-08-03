@@ -1,9 +1,7 @@
 package com.altnoir.poopsky.impl.network;
 
-import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.fabric.FabricatedNetworking;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-//import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
 public class PoNetworking {
     private static final String VERSION = "1";

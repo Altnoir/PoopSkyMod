@@ -1,16 +1,13 @@
 package com.altnoir.poopsky.content.villager;
 
 import com.altnoir.poopsky.Config;
+import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.init.ToiletTypes;
-import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.world.entity.npc.VillagerProfession;
-import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
@@ -19,8 +16,6 @@ import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 public class PVillagerTrades {

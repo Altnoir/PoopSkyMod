@@ -1,17 +1,13 @@
 package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.ToiletComponent;
 import com.tterrag.registrate.fabric.registry.DeferredHolder;
 import com.tterrag.registrate.fabric.registry.DeferredRegister;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.util.ExtraCodecs;
-//import net.neoforged.bus.api.IEventBus;
-//import net.neoforged.neoforge.registries.DeferredHolder;
-//import net.neoforged.neoforge.registries.DeferredRegister;
-
-import com.altnoir.poopsky.content.ToiletType;
 
 public final class PoComponents {
     public static final DeferredRegister.DataComponents COMPONENTS = DeferredRegister.createDataComponents(PoopSky.MOD_ID);
