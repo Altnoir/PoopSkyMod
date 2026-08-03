@@ -45,8 +45,10 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.function.BiFunction;
 import java.util.function.ToIntFunction;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -61,10 +63,21 @@ public class PoBlocks {
     private static final int LAVA_LIGHT_LEVEL = 15;
     protected static final float[] LEAVES_SAPLING_CHANCES = {0.1F, 0.125F, 0.25F, 0.5F};
     protected static final float[] LEAVES_STICK_CHANCES = {0.05F, 0.075F, 0.1F, 0.125F, 0.25F};
-    private static final List<BlockEntry<? extends Block>> DECORATIVE_BLOCKS = new ArrayList<>();
-    private static final List<BlockEntry<? extends Block>> ALL_TAB_BLOCKS = new ArrayList<>();
 
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
+
+    private enum BlockTab {
+        BASIC_BLOCKS,
+        DECO_MATERIALS,
+        DECO_TILE,
+        NO_TAB
+    }
+
+    private static final EnumMap<BlockTab, Set<BlockEntry<? extends Block>>> TAB_ITEMS = new EnumMap<>(BlockTab.class);
+
+    public static final BlockEntry<ShitBlock> SHIT = registerShitBlock("shit");
+    public static final BlockEntry<ShitBlock> CHILI_SHIT = registerShitBlock("chili_shit");
+    public static final BlockEntry<ShitBlock> GOLDEN_SHIT = registerShitBlock("golden_shit");
 
     public static final BlockEntry<PoopCakeBlock> POOP_CAKE = registerBlock("poop_cake", 88,
             props -> new PoopCakeBlock(poopCakeProperties()),
@@ -80,11 +93,7 @@ public class PoBlocks {
                     .pushReaction(PushReaction.DESTROY)),
             (loot, block) -> loot.add(block, createPoopPieceDrop(loot, block, PoItems.POOP_BALL.get())));
 
-    public static final BlockEntry<ShitBlock> SHIT = registerShitBlock("shit");
-    public static final BlockEntry<ShitBlock> CHILI_SHIT = registerShitBlock("chili_shit");
-    public static final BlockEntry<ShitBlock> GOLDEN_SHIT = registerShitBlock("golden_shit");
-
-    public static final BlockEntry<PoopBlock> POOP_BLOCK = registerAllTabBlock("poop_block", 88,
+    public static final BlockEntry<PoopBlock> POOP_BLOCK = registerPoopBlock("poop_block", 88,
             props -> new PoopBlock(poopProperties()
                     .randomTicks()
                     .speedFactor(0.4F)
@@ -106,32 +115,33 @@ public class PoBlocks {
                     .speedFactor(0.4F)
                     .isValidSpawn(Blocks::always)
                     .instrument(NoteBlockInstrument.COW_BELL)));
-    public static final BlockEntry<StairBlock> POOP_STAIRS = registerDecorativeBlock("poop_stairs", 88,
+
+    public static final BlockEntry<StairBlock> POOP_STAIRS = registerDecoMaterialBlock("poop_stairs", 88,
             props -> new StairBlock(POOP_BLOCK.get().defaultBlockState(), poopProperties()));
 
-    public static final BlockEntry<SlabBlock> POOP_SLAB = registerDecorativeBlock("poop_slab", 88,
+    public static final BlockEntry<SlabBlock> POOP_SLAB = registerDecoMaterialBlock("poop_slab", 88,
             props -> new SlabBlock(poopProperties()));
-    public static final BlockEntry<VerticalSlabBlock> POOP_VERTICAL_SLAB = registerDecorativeBlock("poop_vertical_slab", 88,
+    public static final BlockEntry<VerticalSlabBlock> POOP_VERTICAL_SLAB = registerDecoMaterialBlock("poop_vertical_slab", 88,
             props -> new VerticalSlabBlock(poopProperties()),
             PoBlocks::createVerticalSlabDrops);
-    public static final BlockEntry<ButtonBlock> POOP_BUTTON = registerDecorativeBlock("poop_button", 88,
+    public static final BlockEntry<ButtonBlock> POOP_BUTTON = registerDecoMaterialBlock("poop_button", 88,
             props -> new ButtonBlock(PoBlockSetType.POOP, 200, poopProperties().noCollission()));
-    public static final BlockEntry<PressurePlateBlock> POOP_PRESSURE_PLATE = registerDecorativeBlock("poop_pressure_plate", 88,
+    public static final BlockEntry<PressurePlateBlock> POOP_PRESSURE_PLATE = registerDecoMaterialBlock("poop_pressure_plate", 88,
             props -> new PressurePlateBlock(PoBlockSetType.POOP, poopProperties().noCollission()));
-    public static final BlockEntry<FenceBlock> POOP_FENCE = registerDecorativeBlock("poop_fence", 88,
+    public static final BlockEntry<FenceBlock> POOP_FENCE = registerDecoMaterialBlock("poop_fence", 88,
             props -> new FenceBlock(poopProperties()));
-    public static final BlockEntry<FenceGateBlock> POOP_FENCE_GATE = registerDecorativeBlock("poop_fence_gate", 88,
+    public static final BlockEntry<FenceGateBlock> POOP_FENCE_GATE = registerDecoMaterialBlock("poop_fence_gate", 88,
             props -> new FenceGateBlock(PoWoodType.POOP, poopProperties()));
-    public static final BlockEntry<WallBlock> POOP_WALL = registerDecorativeBlock("poop_wall", 88,
+    public static final BlockEntry<WallBlock> POOP_WALL = registerDecoMaterialBlock("poop_wall", 88,
             props -> new WallBlock(poopProperties()));
     public static final BlockFamily POOP_FAMILY = new BlockFamily(POOP_BLOCK, POOP_STAIRS, POOP_SLAB, POOP_VERTICAL_SLAB, POOP_WALL);
 
-    public static final BlockEntry<DoorBlock> POOP_DOOR = registerDecorativeBlock("poop_door", 88,
+    public static final BlockEntry<DoorBlock> POOP_DOOR = registerDecoMaterialBlock("poop_door", 88,
             props -> new DoorBlock(PoBlockSetType.POOP, poopProperties()
                     .noOcclusion()
                     .pushReaction(PushReaction.DESTROY)),
             (loot, block) -> loot.add(block, loot.createDoorTable(block)));
-    public static final BlockEntry<TrapDoorBlock> POOP_TRAPDOOR = registerDecorativeBlock("poop_trapdoor", 88,
+    public static final BlockEntry<TrapDoorBlock> POOP_TRAPDOOR = registerDecoMaterialBlock("poop_trapdoor", 88,
             props -> new TrapDoorBlock(PoBlockSetType.POOP, poopProperties()
                     .noOcclusion()
                     .isValidSpawn(Blocks::never)));
@@ -146,9 +156,9 @@ public class PoBlocks {
                     .sound(SoundType.SLIME_BLOCK)
                     .noOcclusion()));
 
-    public static final BlockEntry<Block> POOP_BRICKS = registerDecorativeBlock("poop_bricks", 88,
+    public static final BlockEntry<Block> POOP_BRICKS = registerDecoMaterialBlock("poop_bricks", 88,
             props -> new Block(hardenedProperties(MapColor.COLOR_BROWN, SoundType.FROGLIGHT)));
-    public static final BlockEntry<Block> CRACKED_POOP_BRICKS = registerDecorativeBlock("cracked_poop_bricks", 88,
+    public static final BlockEntry<Block> CRACKED_POOP_BRICKS = registerDecoMaterialBlock("cracked_poop_bricks", 88,
             props -> new Block(BlockBehaviour.Properties.ofFullCopy(POOP_BRICKS.get())));
     public static final BlockFamily POOP_BRICK_FAMILY = registerBlockFamily("poop_brick", POOP_BRICKS, false);
     public static final BlockEntry<StairBlock> POOP_BRICK_STAIRS = POOP_BRICK_FAMILY.stairs();
@@ -156,20 +166,20 @@ public class PoBlocks {
     public static final BlockEntry<VerticalSlabBlock> POOP_BRICK_VERTICAL_SLAB = POOP_BRICK_FAMILY.verticalSlab();
     public static final BlockEntry<WallBlock> POOP_BRICK_WALL = POOP_BRICK_FAMILY.wall();
 
-    public static final BlockEntry<Block> MOSSY_POOP_BRICKS = registerDecorativeBlock("mossy_poop_bricks", 88,
+    public static final BlockEntry<Block> MOSSY_POOP_BRICKS = registerDecoMaterialBlock("mossy_poop_bricks", 88,
             props -> new Block(hardenedProperties(MapColor.COLOR_GREEN, SoundType.FROGLIGHT)));
     public static final BlockFamily MOSSY_POOP_BRICK_FAMILY = registerBlockFamily("mossy_poop_brick", MOSSY_POOP_BRICKS, false);
 
-    public static final BlockEntry<DriedPoopBlock> DRIED_POOP_BLOCK = registerAllTabBlock("dried_poop_block", 88,
+    public static final BlockEntry<DriedPoopBlock> DRIED_POOP_BLOCK = registerPoopBlock("dried_poop_block", 88,
             props -> new DriedPoopBlock(hardenedProperties(MapColor.COLOR_ORANGE, SoundType.TUFF)
                     .instrument(NoteBlockInstrument.COW_BELL)));
     public static final BlockFamily DRIED_POOP_BLOCK_FAMILY = registerBlockFamily("dried_poop_block", DRIED_POOP_BLOCK, false);
 
-    public static final BlockEntry<Block> SMOOTH_POOP_BLOCK = registerDecorativeBlock("smooth_poop_block", 88,
+    public static final BlockEntry<Block> SMOOTH_POOP_BLOCK = registerDecoMaterialBlock("smooth_poop_block", 88,
             props -> new Block(hardenedProperties(MapColor.COLOR_ORANGE, SoundType.CALCITE)));
     public static final BlockFamily SMOOTH_POOP_BLOCK_FAMILY = registerBlockFamily("smooth_poop_block", SMOOTH_POOP_BLOCK, false);
 
-    public static final BlockEntry<Block> CUT_POOP_BLOCK = registerDecorativeBlock("cut_poop_block", 88,
+    public static final BlockEntry<Block> CUT_POOP_BLOCK = registerDecoMaterialBlock("cut_poop_block", 88,
             props -> new Block(hardenedProperties(MapColor.COLOR_ORANGE, SoundType.POLISHED_TUFF)));
     public static final BlockFamily CUT_POOP_BLOCK_FAMILY = registerBlockFamily("cut_poop_block", CUT_POOP_BLOCK, false);
     public static final BlockEntry<StairBlock> CUT_POOP_BLOCK_STAIRS = CUT_POOP_BLOCK_FAMILY.stairs();
@@ -177,7 +187,7 @@ public class PoBlocks {
     public static final BlockEntry<VerticalSlabBlock> CUT_POOP_BLOCK_VERTICAL_SLAB = CUT_POOP_BLOCK_FAMILY.verticalSlab();
     public static final BlockEntry<WallBlock> CUT_POOP_BLOCK_WALL = CUT_POOP_BLOCK_FAMILY.wall();
 
-    public static final BlockEntry<ChiliPoopBlock> CHILI_POOP_BLOCK = registerAllTabBlock("chili_poop_block", 88,
+    public static final BlockEntry<ChiliPoopBlock> CHILI_POOP_BLOCK = registerPoopBlock("chili_poop_block", 88,
             props -> new ChiliPoopBlock(poopProperties()
                     .requiresCorrectToolForDrops()
                     .speedFactor(0.4F)
@@ -187,7 +197,7 @@ public class PoBlocks {
                     .instrument(NoteBlockInstrument.COW_BELL)));
     public static final BlockFamily CHILI_POOP_FAMILY = registerBlockFamily("chili_poop", CHILI_POOP_BLOCK, false);
 
-    public static final BlockEntry<GoldenPoopBlock> GOLDEN_POOP_BLOCK = registerAllTabBlock("golden_poop_block", 88,
+    public static final BlockEntry<GoldenPoopBlock> GOLDEN_POOP_BLOCK = registerPoopBlock("golden_poop_block", 88,
             props -> new GoldenPoopBlock(simpleProperties(MapColor.GOLD, 0.65F, SoundType.MUD)
                     .requiresCorrectToolForDrops()
                     .speedFactor(0.4F)
@@ -244,16 +254,16 @@ public class PoBlocks {
                             .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
                                     .setProperties(StatePropertiesPredicate.Builder.properties()
                                             .hasProperty(CompooperBlock.POOP_LEVEL, CompooperBlock.READY))))));
-    public static final BlockEntry<WaterCompooperBlock> WATER_COMPOOPER = registerBlock("water_compooper",
+    public static final BlockEntry<WaterCompooperBlock> WATER_COMPOOPER = registerBlockNoTab("water_compooper", 64,
             props -> new WaterCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get())),
             (loot, block) -> loot.dropOther(block, COMPOOPER.get()));
-    public static final BlockEntry<LavaCompooperBlock> LAVA_COMPOOPER = registerBlock("lava_compooper",
+    public static final BlockEntry<LavaCompooperBlock> LAVA_COMPOOPER = registerBlockNoTab("lava_compooper", 64,
             props -> new LavaCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()).lightLevel(state -> LAVA_LIGHT_LEVEL)),
             (loot, block) -> loot.dropOther(block, COMPOOPER.get()));
-    public static final BlockEntry<PowderSnowCompooperBlock> POWDER_SNOW_COMPOOPER = registerBlock("powder_snow_compooper",
+    public static final BlockEntry<PowderSnowCompooperBlock> POWDER_SNOW_COMPOOPER = registerBlockNoTab("powder_snow_compooper", 64,
             props -> new PowderSnowCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get())),
             (loot, block) -> loot.dropOther(block, COMPOOPER.get()));
-    public static final BlockEntry<UrineCompooperBlock> URINE_COMPOOPER = registerBlock("urine_compooper",
+    public static final BlockEntry<UrineCompooperBlock> URINE_COMPOOPER = registerBlockNoTab("urine_compooper", 64,
             props -> new UrineCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()).randomTicks()),
             (loot, block) -> loot.add(block, LootTable.lootTable()
                     .withPool(LootPool.lootPool()
@@ -299,52 +309,52 @@ public class PoBlocks {
     public static final BlockEntry<RawWitherBlock> RAW_WITHER_POOP_BLOCK = registerBlock("raw_wither_poop_block", 88,
             props -> new RawWitherBlock(BlockBehaviour.Properties.ofFullCopy(RAW_POOP_BLOCK.get()).sound(SoundType.ROOTED_DIRT)));
 
-    public static final BlockEntry<PoopLogBlock> POOP_LOG = registerAllTabBlock("poop_log", 88,
+    public static final BlockEntry<PoopLogBlock> POOP_LOG = registerPoopBlock("poop_log", 88,
             props -> new PoopLogBlock(logProperties(MapColor.COLOR_BROWN, SoundType.STEM).randomTicks()),
             (loot, block) -> loot.add(block, createSpallOreDrops(loot, block)));
-    public static final BlockEntry<PoopLogBlock> POOP_WOOD = registerAllTabBlock("poop_wood", 88,
+    public static final BlockEntry<PoopLogBlock> POOP_WOOD = registerDecoMaterialBlock("poop_wood", 88,
             props -> new PoopLogBlock(logProperties(MapColor.COLOR_BROWN, SoundType.STEM).randomTicks()),
             (loot, block) -> loot.add(block, createSpallOreDrops(loot, block)));
-    public static final BlockEntry<PoopEmptyLogBlock> POOP_EMPTY_LOG = registerAllTabBlock("poop_empty_log", 88,
+    public static final BlockEntry<PoopEmptyLogBlock> POOP_EMPTY_LOG = registerPoopBlock("poop_empty_log", 88,
             props -> new PoopEmptyLogBlock(logProperties(MapColor.COLOR_BROWN, SoundType.BAMBOO_WOOD).noOcclusion()));
-    public static final BlockEntry<PoopLogBlock> STRIPPED_POOP_LOG = registerAllTabBlock("stripped_poop_log", 88,
+    public static final BlockEntry<PoopLogBlock> STRIPPED_POOP_LOG = registerPoopBlock("stripped_poop_log", 88,
             props -> new PoopLogBlock(logProperties(MapColor.COLOR_BROWN, SoundType.STEM).randomTicks()),
             (loot, block) -> loot.add(block, createSpallOreDrops(loot, block)));
-    public static final BlockEntry<PoopLogBlock> STRIPPED_POOP_WOOD = registerAllTabBlock("stripped_poop_wood", 88,
+    public static final BlockEntry<PoopLogBlock> STRIPPED_POOP_WOOD = registerDecoMaterialBlock("stripped_poop_wood", 88,
             props -> new PoopLogBlock(logProperties(MapColor.COLOR_BROWN, SoundType.STEM).randomTicks()),
             (loot, block) -> loot.add(block, createSpallOreDrops(loot, block)));
-    public static final BlockEntry<PoopEmptyLogBlock> STRIPPED_POOP_EMPTY_LOG = registerAllTabBlock("stripped_poop_empty_log", 88,
+    public static final BlockEntry<PoopEmptyLogBlock> STRIPPED_POOP_EMPTY_LOG = registerPoopBlock("stripped_poop_empty_log", 88,
             props -> new PoopEmptyLogBlock(logProperties(MapColor.COLOR_BROWN, SoundType.BAMBOO_WOOD).noOcclusion()));
-    public static final BlockEntry<LogBlock> GINKGO_LOG = registerDecorativeBlock("ginkgo_log", 64,
+    public static final BlockEntry<LogBlock> GINKGO_LOG = registerDecoMaterialBlock("ginkgo_log", 64,
             props -> new LogBlock(logProperties(MapColor.COLOR_YELLOW, SoundType.WOOD).ignitedByLava()));
-    public static final BlockEntry<LogBlock> GINKGO_WOOD = registerDecorativeBlock("ginkgo_wood", 64,
+    public static final BlockEntry<LogBlock> GINKGO_WOOD = registerDecoMaterialBlock("ginkgo_wood", 64,
             props -> new LogBlock(logProperties(MapColor.COLOR_YELLOW, SoundType.WOOD).ignitedByLava()));
-    public static final BlockEntry<LogBlock> STRIPPED_GINKGO_LOG = registerDecorativeBlock("stripped_ginkgo_log", 64,
+    public static final BlockEntry<LogBlock> STRIPPED_GINKGO_LOG = registerDecoMaterialBlock("stripped_ginkgo_log", 64,
             props -> new LogBlock(logProperties(MapColor.COLOR_YELLOW, SoundType.WOOD).ignitedByLava()));
-    public static final BlockEntry<LogBlock> STRIPPED_GINKGO_WOOD = registerDecorativeBlock("stripped_ginkgo_wood", 64,
+    public static final BlockEntry<LogBlock> STRIPPED_GINKGO_WOOD = registerDecoMaterialBlock("stripped_ginkgo_wood", 64,
             props -> new LogBlock(logProperties(MapColor.COLOR_YELLOW, SoundType.WOOD).ignitedByLava()));
-    public static final BlockEntry<FlamPlanksBlock> GINKGO_PLANKS = registerDecorativeBlock("ginkgo_planks", 64,
+    public static final BlockEntry<FlamPlanksBlock> GINKGO_PLANKS = registerDecoMaterialBlock("ginkgo_planks", 64,
             props -> new FlamPlanksBlock(logProperties(MapColor.COLOR_YELLOW, SoundType.WOOD).ignitedByLava()));
-    public static final BlockEntry<FlamStairBlock> GINKGO_STAIRS = registerDecorativeBlock("ginkgo_stairs", 64,
+    public static final BlockEntry<FlamStairBlock> GINKGO_STAIRS = registerDecoMaterialBlock("ginkgo_stairs", 64,
             props -> new FlamStairBlock(GINKGO_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(GINKGO_PLANKS.get())));
-    public static final BlockEntry<FlamSlabBlock> GINKGO_SLAB = registerDecorativeBlock("ginkgo_slab", 64,
+    public static final BlockEntry<FlamSlabBlock> GINKGO_SLAB = registerDecoMaterialBlock("ginkgo_slab", 64,
             props -> new FlamSlabBlock(BlockBehaviour.Properties.ofFullCopy(GINKGO_PLANKS.get())),
             (loot, block) -> loot.add(block, loot.createSlabItemTable(block)));
-    public static final BlockEntry<FlamVerticalSlabBlock> GINKGO_VERTICAL_SLAB = registerDecorativeBlock("ginkgo_vertical_slab", 64,
+    public static final BlockEntry<FlamVerticalSlabBlock> GINKGO_VERTICAL_SLAB = registerDecoMaterialBlock("ginkgo_vertical_slab", 64,
             props -> new FlamVerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(GINKGO_PLANKS.get())),
             PoBlocks::createVerticalSlabDrops);
-    public static final BlockEntry<ButtonBlock> GINKGO_BUTTON = registerDecorativeBlock("ginkgo_button", 64,
+    public static final BlockEntry<ButtonBlock> GINKGO_BUTTON = registerDecoMaterialBlock("ginkgo_button", 64,
             props -> new ButtonBlock(BlockSetType.OAK, 30, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_BUTTON)));
-    public static final BlockEntry<PressurePlateBlock> GINKGO_PRESSURE_PLATE = registerDecorativeBlock("ginkgo_pressure_plate", 64,
+    public static final BlockEntry<PressurePlateBlock> GINKGO_PRESSURE_PLATE = registerDecoMaterialBlock("ginkgo_pressure_plate", 64,
             props -> new PressurePlateBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PRESSURE_PLATE)));
-    public static final BlockEntry<FlamFenceBlock> GINKGO_FENCE = registerDecorativeBlock("ginkgo_fence", 64,
+    public static final BlockEntry<FlamFenceBlock> GINKGO_FENCE = registerDecoMaterialBlock("ginkgo_fence", 64,
             props -> new FlamFenceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE).mapColor(MapColor.COLOR_YELLOW)));
-    public static final BlockEntry<FlamFenceGateBlock> GINKGO_FENCE_GATE = registerDecorativeBlock("ginkgo_fence_gate", 64,
+    public static final BlockEntry<FlamFenceGateBlock> GINKGO_FENCE_GATE = registerDecoMaterialBlock("ginkgo_fence_gate", 64,
             props -> new FlamFenceGateBlock(WoodType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE_GATE).mapColor(MapColor.COLOR_YELLOW)));
-    public static final BlockEntry<DoorBlock> GINKGO_DOOR = registerDecorativeBlock("ginkgo_door", 64,
+    public static final BlockEntry<DoorBlock> GINKGO_DOOR = registerDecoMaterialBlock("ginkgo_door", 64,
             props -> new DoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_DOOR).mapColor(MapColor.COLOR_YELLOW)),
             (loot, block) -> loot.add(block, loot.createDoorTable(block)));
-    public static final BlockEntry<TrapDoorBlock> GINKGO_TRAPDOOR = registerDecorativeBlock("ginkgo_trapdoor", 64,
+    public static final BlockEntry<TrapDoorBlock> GINKGO_TRAPDOOR = registerDecoMaterialBlock("ginkgo_trapdoor", 64,
             props -> new TrapDoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_TRAPDOOR).mapColor(MapColor.COLOR_YELLOW)));
     public static final BlockEntry<ParticleLeavesBlock> POOP_LEAVES = registerBlock("poop_leaves", 88,
             props -> new ParticleLeavesBlock(0x5E4228, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
@@ -420,6 +430,7 @@ public class PoBlocks {
             props -> new Block(simpleProperties(MapColor.TERRACOTTA_WHITE, POOP, SoundType.WEEPING_VINES)));
     public static final BlockEntry<Block> ROUNDWORM_BLOCK = registerBlock("roundworm_block", 88,
             props -> new Block(simpleProperties(MapColor.TERRACOTTA_WHITE, POOP, SoundType.TWISTING_VINES)));
+
     public static final BlockEntry<MaggotsBlock> MAGGOTS = registerBlockNoItem("maggots",
             props -> new MaggotsBlock(plantProperties(MapColor.COLOR_YELLOW, SoundType.CROP)
                     .noCollission()
@@ -496,14 +507,6 @@ public class PoBlocks {
     ).flatMap(List::stream).toList();
     public static final List<BlockFamily> WALL_TAG_FAMILIES = withPoopFamily(SIMPLE_MODEL_FAMILIES);
 
-    public static boolean isDecorativeItem(Item item) {
-        return DECORATIVE_BLOCKS.stream().anyMatch(entry -> entry.asItem() == item);
-    }
-
-    public static boolean isAllTabItem(Item item) {
-        return ALL_TAB_BLOCKS.stream().anyMatch(entry -> entry.asItem() == item);
-    }
-
     private static List<BlockFamily> withPoopFamily(List<BlockFamily> input) {
         return Stream.concat(input.stream(), Stream.of(POOP_FAMILY)).toList();
     }
@@ -515,7 +518,7 @@ public class PoBlocks {
     }
 
     private static BlockEntry<FlushToiletBlock> registerFlushToilet(String name, DyeColor color) {
-        return registerAllTabBlock(name, 64,
+        return registerBlock(name, 64,
                 props -> new FlushToiletBlock(BlockBehaviour.Properties.of()
                         .mapColor(color)
                         .strength(HARDEN, TOILET_RESISTANCE)
@@ -556,7 +559,8 @@ public class PoBlocks {
                 .pushReaction(PushReaction.DESTROY);
     }
 
-    private static BlockBehaviour.Properties toiletProperties(MapColor color, float strength, SoundType sound, NoteBlockInstrument instrument) {
+    private static BlockBehaviour.Properties toiletProperties(MapColor color, float strength, SoundType
+            sound, NoteBlockInstrument instrument) {
         return BlockBehaviour.Properties.of()
                 .mapColor(color)
                 .instrument(instrument)
@@ -609,9 +613,9 @@ public class PoBlocks {
         Map<DyeColor, ColoredTile> tiles = new EnumMap<>(DyeColor.class);
         for (DyeColor color : colors) {
             String name = color.getName() + "_tile_block";
-            BlockEntry<Block> block = registerDecorativeBlock(name, 64,
+            BlockEntry<Block> block = registerTileBlock(name, 64,
                     props -> new Block(hardenedProperties(color.getMapColor(), SoundType.STONE)));
-            tiles.put(color, new ColoredTile(block, registerBlockFamily(name, block, true)));
+            tiles.put(color, new ColoredTile(block, registerTileBlockFamily(name, block)));
         }
         return Collections.unmodifiableMap(tiles);
     }
@@ -641,7 +645,7 @@ public class PoBlocks {
         return POOP_CANDLE_CAKES;
     }
 
-    public static BlockState getPoopCandleCake(CandleBlock candle) {
+    public static @Nullable BlockState getPoopCandleCake(CandleBlock candle) {
         BlockEntry<PoopCandleCakeBlock> candleCake = POOP_CANDLE_CAKES.get(candle);
         return candleCake == null ? null : candleCake.get().defaultBlockState();
     }
@@ -650,94 +654,122 @@ public class PoBlocks {
         return true;
     }
 
-    public static <T extends Block> BlockEntry<T> registerBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory) {
+    public static <T extends
+            Block> BlockEntry<T> registerBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory) {
         return registerBlock(name, 64, factory, RegistrateBlockLootTables::dropSelf);
     }
 
-    public static <T extends Block> BlockEntry<T> registerBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
+    public static <T extends
+            Block> BlockEntry<T> registerBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
         return registerBlock(name, 64, factory, loot);
     }
 
-    public static <T extends Block> BlockEntry<T> registerBlock(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory) {
+    public static <T extends Block> BlockEntry<T> registerBlock(String name, int stackSize, NonNullFunction<
+            BlockBehaviour.Properties, T> factory) {
         return registerBlock(name, stackSize, factory, RegistrateBlockLootTables::dropSelf);
     }
 
-    public static <T extends Block> BlockEntry<T> registerBlock(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
+    public static <T extends Block> BlockEntry<T> registerBlock(String name, int stackSize, NonNullFunction<
+            BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
+        return registerBlockWithItem(name, stackSize, factory, loot, BlockItem::new, BlockTab.BASIC_BLOCKS);
+    }
+
+    public static <T extends Block> BlockEntry<T> registerDecoMaterialBlock(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory) {
+        return registerDecoMaterialBlock(name, stackSize, factory, RegistrateBlockLootTables::dropSelf);
+    }
+
+    public static <T extends Block> BlockEntry<T> registerDecoMaterialBlock(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
+        return registerBlockWithItem(name, stackSize, factory, loot, BlockItem::new, BlockTab.DECO_MATERIALS);
+    }
+
+    public static <T extends Block> BlockEntry<T> registerPoopBlock(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory) {
+        return registerPoopBlock(name, stackSize, factory, RegistrateBlockLootTables::dropSelf);
+    }
+
+    public static <T extends Block> BlockEntry<T> registerPoopBlock(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
+        return registerBlockWithItem(name, stackSize, factory, loot, BlockItem::new, BlockTab.BASIC_BLOCKS, BlockTab.DECO_MATERIALS);
+    }
+
+    public static <T extends Block> BlockEntry<T> registerTileBlock(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory) {
+        return registerTileBlock(name, stackSize, factory, RegistrateBlockLootTables::dropSelf);
+    }
+
+    public static <T extends Block> BlockEntry<T> registerTileBlock(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
+        return registerBlockWithItem(name, stackSize, factory, loot, BlockItem::new, BlockTab.DECO_TILE);
+    }
+
+    public static <T extends
+            Block> BlockEntry<T> registerBlockNoItem(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
         return REGISTRATE.block(name, factory)
                 .blockstate((ctx, prov) -> {
                 })
                 .loot(loot)
-                .item((b, p) -> new BlockItem(b, p.stacksTo(stackSize)))
+                .register();
+    }
+
+    public static <T extends Block> BlockEntry<T> registerBlockNoTab(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
+        return registerBlockWithItem(name, stackSize, factory, loot, BlockItem::new, BlockTab.NO_TAB);
+    }
+
+    private static <T extends Block> BlockEntry<T> registerBlockWithItem(
+            String name,
+            int stackSize,
+            NonNullFunction<BlockBehaviour.Properties, T> factory,
+            NonNullBiConsumer<RegistrateBlockLootTables, T> loot,
+            BiFunction<Block, Item.Properties, ? extends BlockItem> itemFactory,
+            BlockTab... tabs
+    ) {
+        BlockEntry<T> entry = REGISTRATE.block(name, factory)
+                .blockstate((ctx, prov) -> {
+                })
+                .loot(loot)
+                .item((b, p) -> itemFactory.apply(b, p.stacksTo(stackSize)))
                 .model((ctx, prov) -> {
                 })
                 .build()
                 .register();
-    }
-
-    public static <T extends Block> BlockEntry<T> registerDecorativeBlock(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory) {
-        return registerDecorativeBlock(name, stackSize, factory, RegistrateBlockLootTables::dropSelf);
-    }
-
-    public static <T extends Block> BlockEntry<T> registerDecorativeBlock(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
-        BlockEntry<T> entry = registerBlock(name, stackSize, factory, loot);
-        DECORATIVE_BLOCKS.add(entry);
+        for (BlockTab tab : tabs) {
+            TAB_ITEMS.computeIfAbsent(tab, ignored -> new HashSet<>()).add(entry);
+        }
         return entry;
-    }
-
-    public static <T extends Block> BlockEntry<T> registerAllTabBlock(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory) {
-        return registerAllTabBlock(name, stackSize, factory, RegistrateBlockLootTables::dropSelf);
-    }
-
-    public static <T extends Block> BlockEntry<T> registerAllTabBlock(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
-        BlockEntry<T> entry = registerBlock(name, stackSize, factory, loot);
-        ALL_TAB_BLOCKS.add(entry);
-        return entry;
-    }
-
-    public static <T extends Block> BlockEntry<T> registerBlockNoItem(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
-        return REGISTRATE.block(name, factory)
-                .blockstate((ctx, prov) -> {
-                })
-                .loot(loot)
-                .register();
     }
 
     public static <T extends Block> BlockEntry<T> registerCompooperBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
-        return REGISTRATE.block(name, factory)
-                .blockstate((ctx, prov) -> {
-                })
-                .loot(loot)
-                .item((b, p) -> new CompooperBlockItem(b, new Item.Properties()))
-                .model((ctx, prov) -> {
-                })
-                .build()
-                .register();
+        return registerBlockWithItem(name, 64, factory, loot, CompooperBlockItem::new, BlockTab.BASIC_BLOCKS);
     }
 
     public static <T extends Block> BlockEntry<T> registerToiletBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
-        return REGISTRATE.block(name, factory)
-                .blockstate((ctx, prov) -> {
-                })
-                .loot(loot)
-                .item((b, p) -> new ToiletBlockItem(b, p.stacksTo(88)))
-                .model((ctx, prov) -> {
-                })
-                .build()
-                .register();
+        return registerBlockWithItem(name, 88, factory, loot, ToiletBlockItem::new, BlockTab.BASIC_BLOCKS);
     }
 
     private static BlockFamily registerBlockFamily(String name, BlockEntry<? extends Block> base, boolean defaultBlockItem) {
         int stackSize = defaultBlockItem ? 64 : 88;
         return new BlockFamily(
                 base,
-                registerDecorativeBlock(name + "_stairs", stackSize,
+                registerDecoMaterialBlock(name + "_stairs", stackSize,
                         props -> new StairBlock(base.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(base.get()))),
-                registerDecorativeBlock(name + "_slab", stackSize,
+                registerDecoMaterialBlock(name + "_slab", stackSize,
                         props -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(base.get())),
                         (loot, block) -> loot.add(block, loot.createSlabItemTable(block))),
-                registerDecorativeBlock(name + "_vertical_slab", stackSize,
+                registerDecoMaterialBlock(name + "_vertical_slab", stackSize,
                         props -> new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(base.get())), PoBlocks::createVerticalSlabDrops),
-                registerDecorativeBlock(name + "_wall", stackSize,
+                registerDecoMaterialBlock(name + "_wall", stackSize,
+                        props -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(base.get())))
+        );
+    }
+
+    private static BlockFamily registerTileBlockFamily(String name, BlockEntry<? extends Block> base) {
+        int stackSize = 64;
+        return new BlockFamily(
+                base,
+                registerTileBlock(name + "_stairs", stackSize,
+                        props -> new StairBlock(base.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(base.get()))),
+                registerTileBlock(name + "_slab", stackSize,
+                        props -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(base.get())),
+                        (loot, block) -> loot.add(block, loot.createSlabItemTable(block))),
+                registerTileBlock(name + "_vertical_slab", stackSize,
+                        props -> new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(base.get())), PoBlocks::createVerticalSlabDrops),
+                registerTileBlock(name + "_wall", stackSize,
                         props -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(base.get())))
         );
     }
@@ -790,7 +822,8 @@ public class PoBlocks {
         ));
     }
 
-    private static void createRoundwormVinesPlantLoot(RegistrateBlockLootTables loot, RoundwormVinesPlantBlock block) {
+    private static void createRoundwormVinesPlantLoot
+            (RegistrateBlockLootTables loot, RoundwormVinesPlantBlock block) {
         LootItemCondition.Builder seedsCondition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
                 .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(RoundwormVinesPlantBlock.SEEDS, true));
         var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
@@ -878,7 +911,8 @@ public class PoBlocks {
         return createNuggetLeavesDrops(loot, block, Items.GOLD_NUGGET, 2.0F);
     }
 
-    private static LootTable.Builder createNuggetLeavesDrops(RegistrateBlockLootTables loot, Block block, Item nugget, float maxCount) {
+    private static LootTable.Builder createNuggetLeavesDrops
+            (RegistrateBlockLootTables loot, Block block, Item nugget, float maxCount) {
         var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
         return createShearsOrSilkTouchDispatchTable(loot, block,
                 LootItem.lootTableItem(nugget)
@@ -908,7 +942,8 @@ public class PoBlocks {
         return createVanillaLeavesDrops(loot, block, PoBlocks.GINKGO_SAPLING.get());
     }
 
-    private static LootTable.Builder createVanillaLeavesDrops(RegistrateBlockLootTables loot, Block block, Block sapling) {
+    private static LootTable.Builder createVanillaLeavesDrops
+            (RegistrateBlockLootTables loot, Block block, Block sapling) {
         var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
         LootItemCondition.Builder hasShearsOrSilkTouch = hasShearsOrSilkTouch(loot);
         return createShearsOrSilkTouchDispatchTable(loot, block,
@@ -931,7 +966,8 @@ public class PoBlocks {
         );
     }
 
-    private static LootTable.Builder createShearsOrSilkTouchDispatchTable(RegistrateBlockLootTables loot, Block block, LootPoolSingletonContainer.Builder<?> fallback) {
+    private static LootTable.Builder createShearsOrSilkTouchDispatchTable
+            (RegistrateBlockLootTables loot, Block block, LootPoolSingletonContainer.Builder<?> fallback) {
         LootItemCondition.Builder hasShearsOrSilkTouch = hasShearsOrSilkTouch(loot);
         return LootTable.lootTable()
                 .withPool(LootPool.lootPool()
@@ -979,6 +1015,26 @@ public class PoBlocks {
                                         .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
                                                 .setProperties(StatePropertiesPredicate.Builder.properties()
                                                         .hasProperty(VerticalSlabBlock.DOUBLE, true))))))));
+    }
+
+    public static boolean isDecoMaterialItem(Item item) {
+        return isInTab(item, BlockTab.DECO_MATERIALS);
+    }
+
+    public static boolean isDecoTileItem(Item item) {
+        return isInTab(item, BlockTab.DECO_TILE);
+    }
+
+    public static boolean isBasicBlockItem(Item item) {
+        return isInTab(item, BlockTab.BASIC_BLOCKS);
+    }
+
+    public static boolean isNoTabItem(Item item) {
+        return isInTab(item, BlockTab.NO_TAB);
+    }
+
+    private static boolean isInTab(Item item, BlockTab tab) {
+        return TAB_ITEMS.getOrDefault(tab, Set.of()).stream().anyMatch(entry -> entry.asItem() == item);
     }
 }
 

@@ -9,11 +9,17 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public final class PoCreativeTabSection {
+    private final String translationKey;
     private final Component title;
     private final List<Supplier<ItemStack>> entries = new ArrayList<>();
 
-    public PoCreativeTabSection(Component title) {
-        this.title = title;
+    public PoCreativeTabSection(String translationKey) {
+        this.translationKey = translationKey;
+        this.title = Component.translatable(translationKey);
+    }
+
+    public String translationKey() {
+        return translationKey;
     }
 
     public Component title() {

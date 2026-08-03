@@ -16,36 +16,41 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.flag.FeatureFlagSet;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionContents;
-import net.minecraft.world.level.block.Block;
 
 import java.util.List;
-import java.util.Set;
 
 public class PoItemGroups {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
-    private static final PoCreativeTabSection BASIC_ITEMS = section("itemGroup.poopsky.section.basic");
-    private static final PoCreativeTabSection BASIC_BLOCKS = section("itemGroup.poopsky.section.basic_blocks");
-    private static final PoCreativeTabSection BASIC_FLIES = section("itemGroup.poopsky.section.basic_flies");
+    public static final String POOPSKY_TAB_KEY = "itemgroup.poopsky";
+    public static final String POOPSKY_DECO_TAB_KEY = "itemgroup.poopsky_deco";
 
-    private static final PoCreativeTabSection DECO_POOP = section("itemGroup.poopsky_deco.section.poop");
-    private static final PoCreativeTabSection DECO_WOOD = section("itemGroup.poopsky_deco.section.wood");
-    private static final PoCreativeTabSection DECO_TILE = section("itemGroup.poopsky_deco.section.tile");
-    private static final PoCreativeTabSection DECO_TOILETS = section("itemGroup.poopsky_deco.section.toilets");
+    public static final PoCreativeTabSection TS_ITEMS = section("itemGroup.poopsky.section.items");
+    public static final PoCreativeTabSection TS_BLOCKS = section("itemGroup.poopsky.section.blocks");
+    public static final PoCreativeTabSection TS_FLIES = section("itemGroup.poopsky.section.flies");
+    public static final PoCreativeTabSection TS_POTIONS = section("itemGroup.poopsky.section.potions");
+
+    public static final PoCreativeTabSection TS_DECO_MATERIALS = section("itemGroup.poopsky_deco.section.materials");
+    public static final PoCreativeTabSection TS_DECO_TILES = section("itemGroup.poopsky_deco.section.tiles");
+    public static final PoCreativeTabSection TS_DECO_TOILETS = section("itemGroup.poopsky_deco.section.toilets");
 
     public static final RegistryEntry<CreativeModeTab, CreativeModeTab> POOPSKY_TAB =
             REGISTRATE.generic("poopsky", Registries.CREATIVE_MODE_TAB, () ->
                     PoSectionedCreativeModeTab.configure(
                             CreativeModeTab.builder()
-                                    .title(Component.translatable("itemgroup.poopsky"))
+                                    .title(Component.translatable(POOPSKY_TAB_KEY))
                                     .icon(PoBlocks.WOODEN_TOILET::asStack),
                             PoItemGroups::populateBasicSections,
-                            BASIC_ITEMS,
-                            BASIC_BLOCKS,
-                            BASIC_FLIES
+                            TS_ITEMS,
+                            TS_BLOCKS,
+                            TS_FLIES,
+                            TS_POTIONS
                     ).build()
             ).register();
 
@@ -53,45 +58,35 @@ public class PoItemGroups {
             REGISTRATE.generic("poopsky_deco", Registries.CREATIVE_MODE_TAB, () ->
                     PoSectionedCreativeModeTab.configure(
                             CreativeModeTab.builder()
-                                    .title(Component.translatable("itemgroup.poopsky_deco"))
+                                    .title(Component.translatable(POOPSKY_DECO_TAB_KEY))
                                     .icon(PoBlocks.BROWN_TILE_BLOCK::asStack),
                             parameters -> populateDecorativeSections(),
-                            DECO_POOP,
-                            DECO_WOOD,
-                            DECO_TILE,
-                            DECO_TOILETS
+                            TS_DECO_MATERIALS,
+                            TS_DECO_TILES,
+                            TS_DECO_TOILETS
                     ).build()
             ).register();
 
     private static void populateBasicSections(CreativeModeTab.ItemDisplayParameters parameters) {
-        Set<Block> skippedBlocks = Set.of(
-                PoBlocks.URINE_LIQUID.get(),
-                PoBlocks.WATER_COMPOOPER.get(),
-                PoBlocks.LAVA_COMPOOPER.get(),
-                PoBlocks.POWDER_SNOW_COMPOOPER.get(),
-                PoBlocks.URINE_COMPOOPER.get(),
-                PoBlocks.ROUNDWORM_VINES_PLANT.get(),
-                PoBlocks.WOODEN_TOILET.get(),
-                PoBlocks.HARD_TOILET.get(),
-                PoBlocks.FLUSH_TOILET.get(),
-                PoBlocks.GOLDEN_FLUSH_TOILET.get()
-        );
         for (Item item : PoItems.getAllItems()) {
-            if (item == Items.AIR || item instanceof FlyItem || PoBlocks.isDecorativeItem(item)) {
+            if (item == Items.AIR || item instanceof FlyItem) {
                 continue;
             }
-            if (item instanceof BlockItem blockItem && !(item instanceof ItemNameBlockItem)) {
-                if (!skippedBlocks.contains(blockItem.getBlock())) {
-                    BASIC_BLOCKS.add(item);
-                }
+            if (PoBlocks.isNoTabItem(item)) {
+                continue;
+            }
+            if (item instanceof BlockItem && PoBlocks.isBasicBlockItem(item)) {
+                TS_BLOCKS.add(item);
+            } else if (PoBlocks.isDecoMaterialItem(item) || PoBlocks.isDecoTileItem(item)) {
+                continue;
             } else {
-                BASIC_ITEMS.add(item);
+                TS_ITEMS.add(item);
             }
         }
 
         for (String id : FlyTypeManager.INSTANCE.getFlyTypes()) {
             if (isFlyVisible(id)) {
-                BASIC_FLIES.add(() -> FlyItem.withType(id));
+                TS_FLIES.add(() -> FlyItem.withType(id));
             }
         }
 
@@ -102,33 +97,41 @@ public class PoItemGroups {
     }
 
     private static void populateDecorativeSections() {
-        PoItems.getAllItems().stream()
-                .filter(item -> PoBlocks.isDecorativeItem(item) || PoBlocks.isAllTabItem(item))
-                .forEach(PoItemGroups::addDecorativeItem);
+        for (Item item : PoItems.getAllItems()) {
+            if (item instanceof BlockItem && PoBlocks.isDecoMaterialItem(item)) {
+                TS_DECO_MATERIALS.add(item);
+            }
+        }
+        for (Item item : PoItems.getAllItems()) {
+            if (item instanceof BlockItem && PoBlocks.isDecoTileItem(item)) {
+                TS_DECO_TILES.add(item);
+            }
+        }
 
         for (var type : ToiletType.getByCategory(ToiletType.Category.WOOD).values()) {
-            DECO_TOILETS.add(() -> ToiletBlockItem.withType(PoBlocks.WOODEN_TOILET.get(), type));
+            TS_DECO_TOILETS.add(() -> ToiletBlockItem.withType(PoBlocks.WOODEN_TOILET.get(), type));
         }
         for (var type : ToiletType.getByCategory(ToiletType.Category.HARD).values()) {
-            DECO_TOILETS.add(() -> ToiletBlockItem.withType(PoBlocks.HARD_TOILET.get(), type));
-        }
-    }
-
-    private static void addDecorativeItem(Item item) {
-        String name = item.builtInRegistryHolder().key().location().getPath();
-        if (name.contains("tile")) {
-            DECO_TILE.add(item);
-        } else if (name.contains("ginkgo_")) {
-            DECO_WOOD.add(item);
-        } else if (name.endsWith("flush_toilet")) {
-            DECO_TOILETS.add(item);
-        } else {
-            DECO_POOP.add(item);
+            TS_DECO_TOILETS.add(() -> ToiletBlockItem.withType(PoBlocks.HARD_TOILET.get(), type));
         }
     }
 
     private static PoCreativeTabSection section(String translationKey) {
-        return new PoCreativeTabSection(Component.translatable(translationKey));
+        return new PoCreativeTabSection(translationKey);
+    }
+
+    public static List<String> translationKeys() {
+        return List.of(
+                POOPSKY_TAB_KEY,
+                POOPSKY_DECO_TAB_KEY,
+                TS_ITEMS.translationKey(),
+                TS_BLOCKS.translationKey(),
+                TS_FLIES.translationKey(),
+                TS_POTIONS.translationKey(),
+                TS_DECO_MATERIALS.translationKey(),
+                TS_DECO_TILES.translationKey(),
+                TS_DECO_TOILETS.translationKey()
+        );
     }
 
     private static boolean isFlyVisible(String id) {
@@ -150,7 +153,7 @@ public class PoItemGroups {
                 .filter(reference -> reference.value().isEnabled(requiredFeatures))
                 .filter(reference -> reference.key().location().getNamespace().equals(PoopSky.MOD_ID))
                 .map(reference -> PotionContents.createItemStack(item, reference))
-                .forEach(BASIC_ITEMS::add);
+                .forEach(TS_POTIONS::add);
     }
 
     public static void register() {
