@@ -20,6 +20,7 @@ public final class PoSectionedCreativeModeTab extends CreativeModeTab {
     private final Consumer<ItemDisplayParameters> populator;
     private Collection<ItemStack> displayItems = List.of();
     private Set<ItemStack> searchItems = ItemStackLinkedSet.createTypeAndComponentsSet();
+    private List<ItemStack> layoutItems = List.of();
     private List<SectionLayout> sectionLayouts = List.of();
 
     private PoSectionedCreativeModeTab(Builder builder, List<PoCreativeTabSection> sections, Consumer<ItemDisplayParameters> populator) {
@@ -47,10 +48,12 @@ public final class PoSectionedCreativeModeTab extends CreativeModeTab {
         List<ItemStack> newDisplayItems = new ArrayList<>();
         Set<ItemStack> newSearchItems = ItemStackLinkedSet.createTypeAndComponentsSet();
         Set<ItemStack> seenDisplayItems = ItemStackLinkedSet.createTypeAndComponentsSet();
+        List<ItemStack> newLayoutItems = new ArrayList<>();
         List<SectionLayout> newLayouts = new ArrayList<>();
 
         for (PoCreativeTabSection section : sections) {
             List<ItemStack> enabledItems = section.itemStacks().stream()
+                    .filter(stack -> !stack.isEmpty())
                     .filter(stack -> stack.getItem().isEnabled(parameters.enabledFeatures()))
                     .filter(seenDisplayItems::add)
                     .toList();
@@ -58,16 +61,18 @@ public final class PoSectionedCreativeModeTab extends CreativeModeTab {
                 continue;
             }
 
-            int headingRow = newDisplayItems.size() / COLUMNS;
+            int headingRow = newLayoutItems.size() / COLUMNS;
             newLayouts.add(new SectionLayout(section.title(), headingRow));
-            addEmptyRow(newDisplayItems);
+            addEmptyRow(newLayoutItems);
             newDisplayItems.addAll(enabledItems);
+            newLayoutItems.addAll(enabledItems);
             newSearchItems.addAll(enabledItems);
-            padToCompleteRow(newDisplayItems);
+            padToCompleteRow(newLayoutItems);
         }
 
         displayItems = List.copyOf(newDisplayItems);
         searchItems = newSearchItems;
+        layoutItems = List.copyOf(newLayoutItems);
         sectionLayouts = List.copyOf(newLayouts);
     }
 
@@ -95,8 +100,12 @@ public final class PoSectionedCreativeModeTab extends CreativeModeTab {
         return sectionLayouts;
     }
 
+    public Collection<ItemStack> layoutItems() {
+        return layoutItems;
+    }
+
     public int visibleStartRow(float scrollOffset) {
-        int hiddenRows = Math.max(Mth.positiveCeilDiv(displayItems.size(), COLUMNS) - VISIBLE_ROWS, 0);
+        int hiddenRows = Math.max(Mth.positiveCeilDiv(layoutItems.size(), COLUMNS) - VISIBLE_ROWS, 0);
         return Math.max((int) (scrollOffset * hiddenRows + 0.5F), 0);
     }
 

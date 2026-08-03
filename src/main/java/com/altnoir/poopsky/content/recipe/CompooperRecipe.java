@@ -52,6 +52,11 @@ public record CompooperRecipe(String fluidType, ItemStack input, ItemStack outpu
         return PoRecipes.COMPOOPER.serializer().get();
     }
 
+    @Override
+    public boolean isSpecial() {
+        return true;
+    }
+
     public boolean matchesFluid(String type) {
         return this.fluidType.equals(type);
     }

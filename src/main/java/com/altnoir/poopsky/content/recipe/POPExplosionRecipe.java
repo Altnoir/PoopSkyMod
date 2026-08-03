@@ -107,6 +107,11 @@ public record POPExplosionRecipe(Ingredient input, int radius, Output output) im
         return PoRecipes.POP_EXPLOSION.serializer().get();
     }
 
+    @Override
+    public boolean isSpecial() {
+        return true;
+    }
+
     public static class Serializer implements RecipeSerializer<POPExplosionRecipe> {
 
         public static final MapCodec<POPExplosionRecipe> CODEC = RecordCodecBuilder.mapCodec(instance ->

@@ -56,6 +56,11 @@ public record SieveRecipe(Ingredient input, List<ChanceItemStack> outputs, int p
         return PoRecipes.SIEVE.serializer().get();
     }
 
+    @Override
+    public boolean isSpecial() {
+        return true;
+    }
+
     public List<ItemStack> rollOutputs(RandomSource random) {
         List<ItemStack> rolledOutputs = new ArrayList<>();
         for (ChanceItemStack entry : outputs) {

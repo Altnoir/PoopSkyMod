@@ -114,8 +114,8 @@ public class PoopSky implements ModInitializer {
                 ResourceManagerHelper.registerBuiltinResourcePack(
                         loc("poopsky_pack"), container, Component.translatable("pack.poopsky.name"),
                         ResourcePackActivationType.NORMAL));
-        NeoForgeConfigRegistry.INSTANCE.register(MOD_ID, ModConfig.Type.COMMON, Config.SPEC);
         Config.onLoad();
+        NeoForgeConfigRegistry.INSTANCE.register(MOD_ID, ModConfig.Type.COMMON, Config.SPEC);
     }
 
     private void commonSetup() {

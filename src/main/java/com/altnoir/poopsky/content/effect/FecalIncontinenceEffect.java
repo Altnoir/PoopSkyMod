@@ -1,10 +1,12 @@
 package com.altnoir.poopsky.content.effect;
 
-import com.altnoir.poopsky.init.PoEffects;
-import com.altnoir.poopsky.init.PoParticles;
+import com.altnoir.poopsky.content.block.p.CompooperBlock;
+import com.altnoir.poopsky.content.entity.p.FlushToiletEntity;
 import com.altnoir.poopsky.data.sound.PoSoundEvents;
-import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.impl.util.ToiletUtil;
+import com.altnoir.poopsky.init.PoEffects;
+import com.altnoir.poopsky.init.PoItems;
+import com.altnoir.poopsky.init.PoParticles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
@@ -15,6 +17,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BoneMealItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 
 public class FecalIncontinenceEffect extends MobEffect {
@@ -26,7 +30,7 @@ public class FecalIncontinenceEffect extends MobEffect {
     @Override
     public boolean applyEffectTick(LivingEntity entity, int amplifier) {
         int chance = entity.getRandom().nextInt(Math.max(1, 20 - amplifier * 5));
-        if (amplifier >= 3 && entity instanceof Player player && player.isShiftKeyDown()) {
+        if (amplifier >= 1 && entity instanceof Player player && player.isShiftKeyDown()) {
             player.causeFoodExhaustion(0.1F * (amplifier + 2));
             fecalIncontinence(player, amplifier);
         } else if (chance == 0) {
@@ -44,22 +48,43 @@ public class FecalIncontinenceEffect extends MobEffect {
         float pitch = entity.getRandom().nextFloat() + 0.5F;
 
         if (!entity.level().isClientSide) {
+            if (entity.getVehicle() instanceof FlushToiletEntity) {
+                return;
+            }
+
             var level = (ServerLevel) entity.level();
             BlockPos entityPos = entity.blockPosition();
 
+            if (!entity.hasEffect(PoEffects.holder(PoEffects.INTESTINAL_SPASM))) {
+                BlockState compooperState = level.getBlockState(entityPos);
+                if (compooperState.getBlock() instanceof CompooperBlock) {
+                    int poopLevel = compooperState.getValue(CompooperBlock.POOP_LEVEL);
+                    if (poopLevel < 7 && CompooperBlock.isEntityInsideContent(entityPos, entity)) {
+                        BlockState newState = compooperState.setValue(CompooperBlock.POOP_LEVEL, poopLevel + 1);
+                        level.setBlockAndUpdate(entityPos, newState);
+                        level.gameEvent(GameEvent.BLOCK_CHANGE, entityPos, GameEvent.Context.of(entity, newState));
+                        level.levelEvent(1500, entityPos, 1);
+                        return;
+                    }
+                }
+            }
+
             Item stack = PoItems.POOP.get();
 
-            boolean dropPoop = BlockPos.betweenClosedStream(entityPos.offset(0, -1, 0), entityPos.offset(0, 1, 0))
-                    .anyMatch(targetPos -> {
-                        boolean applied = BoneMealItem.growCrop(new ItemStack(PoItems.POOP.get()), level, targetPos)
-                                || BoneMealItem.growWaterPlant(new ItemStack(PoItems.POOP.get()), level, targetPos, null);
+            boolean dropPoop = false;
+            if (!entity.hasEffect(PoEffects.holder(PoEffects.INTESTINAL_SPASM))) {
+                dropPoop = BlockPos.betweenClosedStream(entityPos.offset(0, -1, 0), entityPos.offset(0, 1, 0))
+                        .anyMatch(targetPos -> {
+                            boolean applied = BoneMealItem.growCrop(new ItemStack(PoItems.POOP.get()), level, targetPos)
+                                    || BoneMealItem.growWaterPlant(new ItemStack(PoItems.POOP.get()), level, targetPos, null);
 
-                        if (applied) {
-                            BoneMealItem.addGrowthParticles(level, targetPos, 15);
-                            level.levelEvent(1505, entityPos, 15);
-                        }
-                        return applied;
-                    });
+                            if (applied) {
+                                BoneMealItem.addGrowthParticles(level, targetPos, 15);
+                                level.levelEvent(1505, entityPos, 15);
+                            }
+                            return applied;
+                        });
+            }
 
             if (entity.hasEffect(PoEffects.holder(PoEffects.INTESTINAL_SPASM))) {
                 stack = PoItems.CHILI_POOP.get();
@@ -71,8 +96,14 @@ public class FecalIncontinenceEffect extends MobEffect {
             if (!dropPoop) {
                 var poop = new ItemEntity(level, entity.getX(), entity.getY() + 0.1, entity.getZ(), finalStack);
 
-                if (amplifier > 1) {
-                    entity.setDeltaMovement(entity.getDeltaMovement().add(new Vec3(0, 0.125, 0)));
+                if (amplifier >= 1) {
+                    if (entity.isFallFlying()) {
+                        Vec3 look = entity.getLookAngle();
+                        double speed = 0.5 + amplifier * 0.025;
+                        entity.push(look.x * speed, look.y * speed, look.z * speed);
+                    } else {
+                        entity.setDeltaMovement(entity.getDeltaMovement().add(new Vec3(0, 0.125, 0)));
+                    }
                     entity.fallDistance = 0;
                     entity.hurtMarked = true;
                 }

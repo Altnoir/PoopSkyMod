@@ -107,7 +107,7 @@ public class PoItems {
     public static final ItemEntry<SmithingTemplateItem> OMEN_UPGRADE_SMITHING_TEMPLATE = registerItem("omen_upgrade_smithing_template",
             props -> OmenSmithingTemplateItem.createOmenUpgradeTemplate());
 
-    public static final ItemEntry<FlyCatcherItem> FLY_CATCHER = registerItem("fly_catcher",
+    public static final ItemEntry<FlyCatcherItem> FLY_CATCHER = registerHandheldItem("fly_catcher",
             props -> new FlyCatcherItem(props.stacksTo(1).durability(88)));
     public static final ItemEntry<TimeBellItem> TIME_BELL = registerItem("time_bell",
             props -> new TimeBellItem(props.stacksTo(1)));

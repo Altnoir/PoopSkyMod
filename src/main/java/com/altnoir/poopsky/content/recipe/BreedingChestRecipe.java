@@ -55,6 +55,11 @@ public record BreedingChestRecipe(String parent1, String parent2, String result,
     }
 
     @Override
+    public boolean isSpecial() {
+        return true;
+    }
+
+    @Override
     public RecipeType<?> getType() {
         return PoRecipes.BREEDING_CHEST.type().get();
     }

@@ -57,6 +57,11 @@ public record FlyBarrelRecipe(String flyTypeId, Output result) implements Recipe
     }
 
     @Override
+    public boolean isSpecial() {
+        return true;
+    }
+
+    @Override
     public RecipeType<?> getType() {
         return PoRecipes.FLY_BARREL.type().get();
     }

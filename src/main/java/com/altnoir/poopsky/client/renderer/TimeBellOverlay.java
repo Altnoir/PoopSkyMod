@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.client.renderer;
 
 import com.altnoir.poopsky.Config;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.util.Mth;
@@ -50,6 +51,9 @@ public final class TimeBellOverlay {
         int width = guiGraphics.guiWidth();
         int height = guiGraphics.guiHeight();
 
+        RenderSystem.disableDepthTest();
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
         guiGraphics.fill(0, 0, width, height, color(SEPIA_COLOR, intensity * 0.38F));
         drawVignette(guiGraphics, width, height, intensity);
 
@@ -58,6 +62,8 @@ public final class TimeBellOverlay {
             guiGraphics.fill(0, 0, width, height, color(FLASH_COLOR, flashAlpha));
         }
         guiGraphics.flush();
+        RenderSystem.disableBlend();
+        RenderSystem.enableDepthTest();
     }
 
     private static void drawVignette(GuiGraphics guiGraphics, int width, int height, float alpha) {

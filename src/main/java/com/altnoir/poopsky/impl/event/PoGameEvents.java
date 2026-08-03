@@ -156,7 +156,7 @@ public class PoGameEvents {
     public static InteractionResult onEntityDismount(Entity entityMounting, Entity entityBeingMounted, Level level, boolean isMounting) {
         if (!isMounting && entityBeingMounted instanceof ToiletPlugEntity &&
                 entityMounting instanceof Player player && player.isShiftKeyDown()) {
-            return InteractionResult.SUCCESS;
+            return InteractionResult.FAIL;
         }
         return InteractionResult.PASS;
     }

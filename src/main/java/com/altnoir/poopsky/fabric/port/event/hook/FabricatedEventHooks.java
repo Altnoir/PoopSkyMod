@@ -15,12 +15,7 @@ import net.minecraft.world.level.storage.ServerLevelData;
 public class FabricatedEventHooks {
     public static boolean canMountEntity(Entity entityMounting, Entity entityBeingMounted, boolean isMounting) {
         InteractionResult result = EntityMountEvent.EVENT.invoker().onEntityMount(entityMounting, entityBeingMounted, entityMounting.level(), isMounting);
-        if (result == InteractionResult.PASS) {
-            entityMounting.absMoveTo(entityMounting.getX(), entityMounting.getY(), entityMounting.getZ(), entityMounting.yRotO, entityMounting.xRotO);
-            return false;
-        } else {
-            return true;
-        }
+        return result != InteractionResult.FAIL;
     }
 
     public static boolean fireEntityTickPre(Entity entity) {

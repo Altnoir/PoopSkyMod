@@ -31,7 +31,9 @@ public class ItemModelGen extends FabricModelProvider {
         for (Item item : PoItems.getAllItems()) {
             if (item instanceof BlockItem || item instanceof SpawnEggItem || item == PoItems.TOILET_PLUG.get()) continue;
 
-            if (item instanceof ArmorItem armorItem) {
+            if (item == PoItems.FLY_CATCHER.get()) {
+                generators.generateFlatItem(item, ModelTemplates.FLAT_HANDHELD_ITEM);
+            } else if (item instanceof ArmorItem armorItem) {
                 generators.generateArmorTrims(armorItem);
             } else if (item instanceof DiggerItem || item instanceof SwordItem) {
                 generators.generateFlatItem(item, ModelTemplates.FLAT_HANDHELD_ITEM);

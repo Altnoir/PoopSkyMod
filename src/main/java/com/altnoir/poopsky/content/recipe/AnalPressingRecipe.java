@@ -57,6 +57,11 @@ public record AnalPressingRecipe(Ingredient input, Block output, Block replaceTa
         return PoRecipes.ANAL_PRESSING.serializer().get();
     }
 
+    @Override
+    public boolean isSpecial() {
+        return true;
+    }
+
     public void applyConversion(Level level, BlockPos centerPos) {
         for (int dx = -radius; dx <= radius; dx++) {
             for (int dz = -radius; dz <= radius; dz++) {
