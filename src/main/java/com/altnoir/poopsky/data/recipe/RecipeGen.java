@@ -38,6 +38,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
+import org.jetbrains.annotations.NotNull;
 import vectorwing.farmersdelight.common.registry.ModItems;
 
 import java.util.List;
@@ -53,7 +54,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
     }
 
     @Override
-    protected void buildRecipes(RecipeOutput recipeOutput) {
+    protected void buildRecipes(@NotNull RecipeOutput recipeOutput) {
         this.registries = this.registriesFuture.join();
         buildCookingRecipes(recipeOutput);
         buildFoodRecipes(recipeOutput);
@@ -62,7 +63,16 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         buildVanillaRecipes(recipeOutput);
         buildStonecuttingRecipes(recipeOutput);
         buildToiletRecipes(recipeOutput);
-        buildCustomRecipes(recipeOutput);
+
+        buildSieveRecipes(recipeOutput);
+        buildCompooperRecipes(recipeOutput);
+        buildPopExplosionRecipes(recipeOutput);
+        buildAnalPressingRecipes(recipeOutput);
+        buildBreedingChestRecipes(recipeOutput);
+        buildFlyBarrelRecipes(recipeOutput);
+
+        RecipeOutput fd = recipeOutput.withConditions(modLoaded(PoMods.FARMERSDELIGHT.id()));
+        FarmersDelightRecipeGen.buildRecipes(fd);
     }
 
     private void buildCookingRecipes(RecipeOutput recipeOutput) {
@@ -524,6 +534,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .define('B', Blocks.BLUE_CONCRETE)
                 .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP))
                 .save(recipeOutput, PoopSky.loc("hard_toilet_from_rainbow"));
+
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.FLUSH_TOILET)
                 .pattern("BP")
                 .pattern("BB")
@@ -540,17 +551,6 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .save(recipeOutput);
     }
 
-    private void buildCustomRecipes(RecipeOutput recipeOutput) {
-        buildSieveRecipes(recipeOutput);
-        buildCompooperRecipes(recipeOutput);
-        buildPopExplosionRecipes(recipeOutput);
-        buildAnalPressingRecipes(recipeOutput);
-        buildBreedingChestRecipes(recipeOutput);
-        buildFlyBarrelRecipes(recipeOutput);
-
-        RecipeOutput fd = recipeOutput.withConditions(modLoaded(PoMods.FARMERSDELIGHT.id()));
-        FarmersDelightRecipeGen.buildRecipes(fd);
-    }
 
     private void buildPopExplosionRecipes(RecipeOutput recipeOutput) {
         record PopExplosionEntry(ItemLike input, ItemLike output, int radius) {
@@ -638,6 +638,11 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
             builder.unlockedBy(getItemName(entry.output()), has(entry.input()))
                     .save(recipeOutput, getModConversionRecipeName(entry.input(), entry.output()));
         }
+
+        AnalPressingRecipeBuilder.analPressing(Blocks.COAL_BLOCK, Blocks.WITHER_SKELETON_SKULL)
+                .replaceTarget(Blocks.SKELETON_SKULL)
+                .unlockedBy(getItemName(Blocks.COAL_BLOCK), has(Blocks.WITHER_SKELETON_SKULL))
+                .save(recipeOutput);
     }
 
     private void buildSieveRecipes(RecipeOutput recipeOutput) {
@@ -895,26 +900,23 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
 
 
     private void buildCompooperRecipes(RecipeOutput recipeOutput) {
-        // Water Compooper recipes
         CompooperRecipeBuilder.compooper(CompooperType.WATER.id(), FlyItem.withType(FlyTypes.NORMAL.get()), FlyItem.withType(FlyTypes.BLUE.get()))
                 .unlockedBy(getItemName(PoBlocks.COMPOOPER.get()), has(PoBlocks.COMPOOPER.get()))
                 .save(recipeOutput, "fly_normal_to_blue");
-
         CompooperRecipeBuilder.compooper(CompooperType.WATER.id(), PoItems.SALTPETER_SHARD.get(), Items.SNOWBALL)
                 .unlockedBy(getItemName(PoBlocks.COMPOOPER.get()), has(PoBlocks.COMPOOPER.get()))
-                .save(recipeOutput, "saltpeter_to_snowball");
+                .save(recipeOutput);
+        CompooperRecipeBuilder.compooper(CompooperType.WATER.id(), PoItems.OMEN_UPGRADE_SMITHING_TEMPLATE.get(), Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE)
+                .unlockedBy(getItemName(PoBlocks.COMPOOPER.get()), has(PoBlocks.COMPOOPER.get()))
+                .save(recipeOutput);
 
-        // Lava Compooper recipes
         CompooperRecipeBuilder.compooper(CompooperType.LAVA.id(), Items.STICK, Items.BLAZE_ROD)
                 .unlockedBy(getItemName(PoBlocks.COMPOOPER.get()), has(PoBlocks.COMPOOPER.get()))
-                .save(recipeOutput, "stick_to_blaze_rod");
+                .save(recipeOutput);
 
-        // Powder Snow Compooper recipes
         CompooperRecipeBuilder.compooper(CompooperType.POWDER_SNOW.id(), Items.STICK, Items.BREEZE_ROD)
                 .unlockedBy(getItemName(PoBlocks.COMPOOPER.get()), has(PoBlocks.COMPOOPER.get()))
-                .save(recipeOutput, "stick_to_breeze_rod");
-
-        // Urine Compooper recipes can be added here
+                .save(recipeOutput);
     }
 
     private void toiletRecipes(RecipeOutput recipeOutput, ItemLike toilet, ItemLike block, ToiletType toiletType) {

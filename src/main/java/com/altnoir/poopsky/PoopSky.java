@@ -26,12 +26,14 @@ import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -196,15 +198,42 @@ public class PoopSky {
     }
 
     public static ResourceLocation loc(String path) {
-        return ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, path);
+        return modloc(PoopSky.MOD_ID, path);
     }
 
-    public static ResourceLocation locMc(String path) {
+    public static ResourceLocation modloc(String namespace, String path) {
+        return ResourceLocation.fromNamespaceAndPath(namespace, path);
+    }
+
+    public static ResourceLocation mcloc(String path) {
         return ResourceLocation.withDefaultNamespace(path);
+    }
+
+    public static String getItemPath(Item item) {
+        return getItemKey(item).getPath();
+    }
+
+    public static String getItemNameSpace(Item item) {
+        return getItemKey(item).getNamespace();
+    }
+
+    public static ResourceLocation getItemKey(Item item) {
+        return BuiltInRegistries.ITEM.getKey(item);
+    }
+
+    public static String getBlockPath(Block block) {
+        return getBlockKey(block).getPath();
+    }
+
+    public static String getBlockNameSpace(Block block) {
+        return getBlockKey(block).getNamespace();
+    }
+
+    public static ResourceLocation getBlockKey(Block block) {
+        return BuiltInRegistries.BLOCK.getKey(block);
     }
 
     public static PoRegistrate registrate() {
         return REGISTRATE;
     }
-
 }

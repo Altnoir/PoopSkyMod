@@ -1,0 +1,8 @@
+{
+  "type": "poopsky:anal_pressing",
+  "input": {
+    "item": "minecraft:coal_block"
+  },
+  "output": "minecraft:wither_skeleton_skull",
+  "replace_target": "minecraft:skeleton_skull"
+}

@@ -36,7 +36,7 @@ public final class GlobalLootModifierGen extends GlobalLootModifierProvider {
                 new AddTableLootModifier(
                         new LootItemCondition[]{
                                 LootTableIdCondition.builder(
-                                        PoopSky.locMc("gameplay/fishing")
+                                        PoopSky.mcloc("gameplay/fishing")
                                 ).build(),
                                 LootItemEntityPropertyCondition.hasProperties(
                                         LootContext.EntityTarget.THIS,

@@ -10,7 +10,6 @@ import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.client.renderer.block.model.BlockModel.GuiLight;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
@@ -628,19 +627,15 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
     }
 
     private String getItemPath(Block block) {
-        return BuiltInRegistries.ITEM.getKey(block.asItem()).getPath();
+        return PoopSky.getItemPath(block.asItem());
     }
 
     private String getBlockPath(Block block) {
-        return getBlockKey(block).getPath();
+        return PoopSky.getBlockKey(block).getPath();
     }
 
     private String getBlockNameSpace(Block block) {
-        return getBlockKey(block).getNamespace();
-    }
-
-    private ResourceLocation getBlockKey(Block block) {
-        return BuiltInRegistries.BLOCK.getKey(block);
+        return PoopSky.getBlockKey(block).getNamespace();
     }
 
     private ResourceLocation toiletTexture(ToiletType toiletType) {
@@ -649,11 +644,11 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
             String namespace = toiletType.sourceBlock() != null
                     ? getBlockNameSpace(Objects.requireNonNull(toiletType.sourceBlock()))
                     : PoopSky.MOD_ID;
-            return ResourceLocation.fromNamespaceAndPath(namespace, "block/" + tex);
+            return PoopSky.modloc(namespace, "block/" + tex);
         }
         Block sourceBlock = toiletType.sourceBlock();
         String key = getBlockNameSpace(sourceBlock);
         String path = getBlockPath(sourceBlock);
-        return ResourceLocation.fromNamespaceAndPath(key, "block/" + path);
+        return PoopSky.modloc(key, "block/" + path);
     }
 }

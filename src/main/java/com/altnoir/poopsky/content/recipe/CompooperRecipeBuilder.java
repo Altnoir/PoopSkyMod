@@ -68,8 +68,8 @@ public final class CompooperRecipeBuilder implements RecipeBuilder {
 
     @Override
     public void save(@NotNull RecipeOutput recipeOutput) {
-        ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(input.getItem());
-        save(recipeOutput, itemId.getPath());
+        String itemId = PoopSky.getItemPath(output.getItem());
+        save(recipeOutput, itemId);
     }
 
     public void save(@NotNull RecipeOutput recipeOutput, @NotNull String id) {

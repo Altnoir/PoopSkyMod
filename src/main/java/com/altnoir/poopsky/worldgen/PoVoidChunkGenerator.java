@@ -45,8 +45,8 @@ import java.util.stream.Collectors;
 public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
     private static final int VIRTUAL_SURFACE_Y = 64;
     private static final int SPAWN_STRUCTURE_PROTECTION_RADIUS = 50;
-    private static final ResourceLocation STRONGHOLDS_STRUCTURE_SET = PoopSky.locMc("strongholds");
-    private static final ResourceLocation STRONGHOLD_STRUCTURE = PoopSky.locMc("stronghold");
+    private static final ResourceLocation STRONGHOLDS_STRUCTURE_SET = PoopSky.mcloc("strongholds");
+    private static final ResourceLocation STRONGHOLD_STRUCTURE = PoopSky.mcloc("stronghold");
 
     private static final Codec<List<ResourceKey<StructureSet>>> STRUCTURE_SET_KEYS_CODEC =
             Codec.either(ResourceLocation.CODEC.listOf(), ResourceLocation.CODEC).xmap(

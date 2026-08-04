@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "poopsky:compooper/powder_snow/stick_to_breeze_rod"
+        "recipe": "poopsky:compooper/water/netherite_upgrade_smithing_template"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "poopsky:compooper/powder_snow/stick_to_breeze_rod"
+      "poopsky:compooper/water/netherite_upgrade_smithing_template"
     ]
   }
 }

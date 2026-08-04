@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "poopsky:compooper/water/saltpeter_to_snowball"
+        "recipe": "poopsky:compooper/powder_snow/breeze_rod"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "poopsky:compooper/water/saltpeter_to_snowball"
+      "poopsky:compooper/powder_snow/breeze_rod"
     ]
   }
 }
