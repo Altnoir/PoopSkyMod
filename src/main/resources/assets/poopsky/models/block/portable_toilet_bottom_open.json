@@ -1,0 +1,87 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench",
+	"render_type": "minecraft:cutout",
+	"texture_size": [64, 64],
+	"textures": {
+		"toilet": "poopsky:block/portable_toilet_bottom",
+		"particle": "#toilet"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 2, 16],
+			"faces": {
+				"north": {"uv": [11.5, 0, 15.5, 0.5], "texture": "#toilet"},
+				"east": {"uv": [11.5, 0.5, 15.5, 1], "texture": "#toilet"},
+				"south": {"uv": [11.5, 0, 15.5, 0.5], "texture": "#toilet"},
+				"west": {"uv": [11.5, 0.5, 15.5, 1], "texture": "#toilet"},
+				"up": {"uv": [4, 4, 0, 0], "texture": "#toilet"},
+				"down": {"uv": [4, 4, 0, 8], "texture": "#toilet"}
+			}
+		},
+		{
+			"from": [1, 2, 6],
+			"to": [15, 5, 15],
+			"faces": {
+				"north": {"uv": [4, 11, 7.5, 11.75], "texture": "#toilet"},
+				"up": {"uv": [11.5, 9.75, 8, 7.5], "texture": "#toilet"}
+			}
+		},
+		{
+			"from": [15, 2, -15],
+			"to": [16, 16, 1],
+			"rotation": {"angle": 0, "axis": "y", "origin": [15.5, 16, 0.5]},
+			"faces": {
+				"north": {"uv": [7.75, 7.5, 8, 11], "texture": "#toilet"},
+				"east": {"uv": [4, 7.5, 8, 11], "texture": "#toilet"},
+				"west": {"uv": [0, 8, 4, 11.5], "texture": "#toilet"},
+				"down": {"uv": [8, 10.75, 4, 11], "rotation": 270, "texture": "#toilet"}
+			}
+		},
+		{
+			"from": [0, 2, 15],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [4, 0, 8, 3.5], "texture": "#toilet"},
+				"east": {"uv": [8, 0, 8.25, 3.5], "texture": "#toilet"},
+				"south": {"uv": [4, 3.75, 8, 7.25], "texture": "#toilet"},
+				"west": {"uv": [8, 0, 8.25, 3.5], "texture": "#toilet"}
+			}
+		},
+		{
+			"from": [15, 2, 1],
+			"to": [16, 16, 15],
+			"faces": {
+				"east": {"uv": [8, 0, 11.5, 3.5], "texture": "#toilet"},
+				"west": {"uv": [8, 3.75, 11.5, 7.25], "texture": "#toilet"},
+				"up": {"uv": [13, 11.5, 13.25, 11.25], "texture": "#toilet"}
+			}
+		},
+		{
+			"from": [0, 2, 1],
+			"to": [1, 16, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
+			"faces": {
+				"north": {"uv": [8, 3.75, 7.75, 7.25], "texture": "#toilet"},
+				"east": {"uv": [11.5, 3.75, 8, 7.25], "texture": "#toilet"},
+				"west": {"uv": [11.5, 0, 8, 3.5], "texture": "#toilet"},
+				"up": {"uv": [13.25, 11.5, 13, 11.25], "texture": "#toilet"}
+			}
+		}
+	],
+	"groups": [
+		0,
+		1,
+		{
+			"name": "door",
+			"origin": [15.5, 8.5, 0.5],
+			"scope": 0,
+			"color": 0,
+			"children": [2]
+		},
+		3,
+		4,
+		5
+	]
+}
