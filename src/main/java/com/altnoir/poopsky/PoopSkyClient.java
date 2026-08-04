@@ -7,6 +7,7 @@ import com.altnoir.poopsky.client.model.BakedModelEventHandler;
 import com.altnoir.poopsky.client.particle.LeavesParticle;
 import com.altnoir.poopsky.client.particle.PoopParticle;
 import com.altnoir.poopsky.client.particle.ToiletParticle;
+import com.altnoir.poopsky.client.renderer.ContextualShitItemRenderer;
 import com.altnoir.poopsky.client.renderer.TimeBellOverlay;
 import com.altnoir.poopsky.client.renderer.ToiletHighlightRenderer;
 import com.altnoir.poopsky.client.renderer.ToiletPlugItemRenderer;
@@ -167,6 +168,9 @@ public class PoopSkyClient implements ClientModInitializer {
     private static void registerItemRenderers() {
         ToiletPlugItemRenderer renderer = new ToiletPlugItemRenderer();
         BuiltinItemRendererRegistry.INSTANCE.register(PoItems.TOILET_PLUG.get(), renderer::renderByItem);
+        BuiltinItemRendererRegistry.INSTANCE.register(PoBlocks.SHIT.asItem(), new ContextualShitItemRenderer("shit"));
+        BuiltinItemRendererRegistry.INSTANCE.register(PoBlocks.CHILI_SHIT.asItem(), new ContextualShitItemRenderer("chili_shit"));
+        BuiltinItemRendererRegistry.INSTANCE.register(PoBlocks.GOLDEN_SHIT.asItem(), new ContextualShitItemRenderer("golden_shit"));
     }
 
     private static void registerFluidRenderers() {

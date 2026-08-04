@@ -50,6 +50,7 @@ public class SpecialModelGen implements DataProvider {
         generateToilet(output, writes, "wooden_toilet", ToiletType.Category.WOOD, false);
         generateToilet(output, writes, "hard_toilet", ToiletType.Category.HARD, true);
         generateMissingBlockItems(output, writes);
+        generateContextualShitItems(output, writes);
 
         return CompletableFuture.allOf(writes.toArray(CompletableFuture[]::new));
     }
@@ -329,6 +330,15 @@ public class SpecialModelGen implements DataProvider {
         writeFlatItem(output, writes, "roundworm");
         writeItemParent(output, writes, "fly_spawn_egg", "minecraft:item/template_spawn_egg");
         writeItemParent(output, writes, "poolime_spawn_egg", "minecraft:item/template_spawn_egg");
+    }
+
+    private void generateContextualShitItems(CachedOutput output, List<CompletableFuture<?>> writes) {
+        for (String path : List.of("shit", "chili_shit", "golden_shit")) {
+            JsonObject item = parent("minecraft:builtin/entity");
+            item.addProperty("gui_light", "front");
+            writeModel(output, writes, "item/" + path, item);
+            writeFlatItem(output, writes, path + "_flat", "poopsky:item/" + path);
+        }
     }
 
     private void writeToiletModel(

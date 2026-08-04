@@ -21,6 +21,8 @@ import java.util.*;
 public final class BakedModelEventHandler {
     private static final String[] WOOD_SUFFIXES = {"", "_n", "_ns"};
     private static final String[] LAVA_SUFFIXES = {"", "_n", "_ns", "_lava", "_lava_n", "_lava_ns"};
+    private static final List<String> SHIT_MODEL_PATHS = List.of("shit", "chili_shit", "golden_shit");
+    private static final Map<ResourceLocation, BakedModel> CONTEXTUAL_ITEM_MODELS = new HashMap<>();
 
     private BakedModelEventHandler() {
     }
@@ -32,6 +34,7 @@ public final class BakedModelEventHandler {
             addAllToiletModels(models, "wooden_toilet", ToiletType.Category.WOOD, false);
             addAllToiletModels(models, "hard_toilet", ToiletType.Category.HARD, true);
             addFlyItemModels(models);
+            addContextualShitModels(models);
             context.addModels(models);
             context.modifyModelAfterBake().register(ModelModifier.WRAP_PHASE, BakedModelEventHandler::wrapModel);
         });
@@ -57,6 +60,13 @@ public final class BakedModelEventHandler {
         }
     }
 
+    private static void addContextualShitModels(List<ResourceLocation> models) {
+        for (String path : SHIT_MODEL_PATHS) {
+            models.add(PoopSky.loc("item/" + path + "_flat"));
+            models.add(PoopSky.loc("block/" + path));
+        }
+    }
+
     private static @Nullable BakedModel wrapModel(@Nullable BakedModel original,
                                                    ModelModifier.AfterBake.Context context) {
         if (original == null || context.topLevelId() == null) {
@@ -64,6 +74,10 @@ public final class BakedModelEventHandler {
         }
 
         ResourceLocation modelId = context.topLevelId().id();
+        if (isContextualShitModel(modelId)) {
+            CONTEXTUAL_ITEM_MODELS.put(modelId, original);
+            return original;
+        }
         boolean inventoryModel = context.topLevelId().toString().endsWith("#inventory");
         if (modelId.equals(PoBlocks.WOODEN_TOILET.getId())) {
             return inventoryModel
@@ -79,6 +93,17 @@ public final class BakedModelEventHandler {
             return createFlyItemModel(original, context);
         }
         return original;
+    }
+
+    public static @Nullable BakedModel getContextualShitModel(String path, boolean blockModel) {
+        String modelPath = blockModel ? "block/" + path : "item/" + path + "_flat";
+        return CONTEXTUAL_ITEM_MODELS.get(PoopSky.loc(modelPath));
+    }
+
+    private static boolean isContextualShitModel(ResourceLocation modelId) {
+        String path = modelId.getPath();
+        return SHIT_MODEL_PATHS.stream().anyMatch(name ->
+                path.equals("block/" + name) || path.equals("item/" + name + "_flat"));
     }
 
     private static BakedModel createBlockModel(BakedModel original, ModelModifier.AfterBake.Context context,
