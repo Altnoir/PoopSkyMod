@@ -388,6 +388,7 @@ public class PoBlocks {
                     .mapColor(MapColor.COLOR_YELLOW)
                     .noCollission()
                     .instabreak()
+                    .randomTicks()
                     .sound(SoundType.GRASS)
                     .offsetType(BlockBehaviour.OffsetType.XZ)
                     .pushReaction(PushReaction.DESTROY)));
