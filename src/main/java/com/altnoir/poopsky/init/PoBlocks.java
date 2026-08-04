@@ -379,6 +379,7 @@ public class PoBlocks {
                     .noCollission()
                     .noOcclusion()
                     .instabreak()
+                    .randomTicks()
                     .sound(SoundType.MUD)
                     .offsetType(BlockBehaviour.OffsetType.XZ)
                     .pushReaction(PushReaction.DESTROY)));
