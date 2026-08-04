@@ -136,7 +136,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, Player player) {
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
         return ToiletBlockItem.withType(this, getToiletTypeOrDefault(level, pos));
     }
 

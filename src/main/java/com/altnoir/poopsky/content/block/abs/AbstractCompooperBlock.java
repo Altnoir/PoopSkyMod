@@ -20,6 +20,7 @@ import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CampfireBlock;
@@ -47,6 +48,11 @@ public abstract class AbstractCompooperBlock extends Block {
 
     public AbstractCompooperBlock(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
+        return new ItemStack(PoBlocks.COMPOOPER.get());
     }
 
     @Override

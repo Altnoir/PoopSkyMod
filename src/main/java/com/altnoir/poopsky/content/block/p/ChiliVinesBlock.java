@@ -60,7 +60,7 @@ public class ChiliVinesBlock extends GrowingPlantHeadBlock implements Bonemealab
     }
 
     @Override
-    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, Player player) {
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
         return new ItemStack(PoItems.DRAGON_BREATH_CHILI.get());
     }
 

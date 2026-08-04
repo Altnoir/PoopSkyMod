@@ -7,8 +7,10 @@ import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
+import net.fabricmc.fabric.api.client.model.loading.v1.FabricBakedModelManager;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelModifier;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.BlockModelRotation;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -22,7 +24,6 @@ public final class BakedModelEventHandler {
     private static final String[] WOOD_SUFFIXES = {"", "_n", "_ns"};
     private static final String[] LAVA_SUFFIXES = {"", "_n", "_ns", "_lava", "_lava_n", "_lava_ns"};
     private static final List<String> SHIT_MODEL_PATHS = List.of("shit", "chili_shit", "golden_shit");
-    private static final Map<ResourceLocation, BakedModel> CONTEXTUAL_ITEM_MODELS = new HashMap<>();
 
     private BakedModelEventHandler() {
     }
@@ -74,10 +75,6 @@ public final class BakedModelEventHandler {
         }
 
         ResourceLocation modelId = context.topLevelId().id();
-        if (isContextualShitModel(modelId)) {
-            CONTEXTUAL_ITEM_MODELS.put(modelId, original);
-            return original;
-        }
         boolean inventoryModel = context.topLevelId().toString().endsWith("#inventory");
         if (modelId.equals(PoBlocks.WOODEN_TOILET.getId())) {
             return inventoryModel
@@ -97,13 +94,8 @@ public final class BakedModelEventHandler {
 
     public static @Nullable BakedModel getContextualShitModel(String path, boolean blockModel) {
         String modelPath = blockModel ? "block/" + path : "item/" + path + "_flat";
-        return CONTEXTUAL_ITEM_MODELS.get(PoopSky.loc(modelPath));
-    }
-
-    private static boolean isContextualShitModel(ResourceLocation modelId) {
-        String path = modelId.getPath();
-        return SHIT_MODEL_PATHS.stream().anyMatch(name ->
-                path.equals("block/" + name) || path.equals("item/" + name + "_flat"));
+        FabricBakedModelManager modelManager = (FabricBakedModelManager) Minecraft.getInstance().getModelManager();
+        return modelManager.getModel(PoopSky.loc(modelPath));
     }
 
     private static BakedModel createBlockModel(BakedModel original, ModelModifier.AfterBake.Context context,
