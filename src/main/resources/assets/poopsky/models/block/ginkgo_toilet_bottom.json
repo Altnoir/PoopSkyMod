@@ -1,0 +1,7 @@
+{
+	"parent": "poopsky:block/ginkgo_toilet_bottom",
+	"textures": {
+		"toilet": "poopsky:block/ginkgo_toilet_bottom",
+		"particle": "#toilet"
+	}
+}

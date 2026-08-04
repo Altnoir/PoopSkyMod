@@ -479,6 +479,14 @@ public class PoBlocks {
     public static final BlockEntry<FlushToiletBlock> FLUSH_TOILET = registerFlushToilet("flush_toilet", DyeColor.WHITE);
     public static final BlockEntry<FlushToiletBlock> GOLDEN_FLUSH_TOILET = registerFlushToilet("golden_flush_toilet", DyeColor.YELLOW);
 
+    public static final BlockEntry<PortableToiletBlock> PORTABLE_TOILET = registerBlock("portable_toilet", 8,
+            props -> new PortableToiletBlock(BlockBehaviour.Properties.of()
+                    .mapColor(DyeColor.WHITE)
+                    .strength(HARDEN, HARD_STRENGTH)
+                    .sound(SoundType.NETHERITE_BLOCK)
+                    .noOcclusion()),
+            (loot, block) -> loot.add(block, loot.createDoorTable(block)));
+
     public record BlockFamily(
             BlockEntry<? extends Block> block,
             BlockEntry<StairBlock> stairs,
@@ -520,7 +528,7 @@ public class PoBlocks {
         return registerBlock(name, 64,
                 props -> new FlushToiletBlock(BlockBehaviour.Properties.of()
                         .mapColor(color)
-                        .strength(HARDEN, TOILET_RESISTANCE)
+                        .strength(HARDEN, HARD_STRENGTH)
                         .requiresCorrectToolForDrops()
                         .noOcclusion()));
     }

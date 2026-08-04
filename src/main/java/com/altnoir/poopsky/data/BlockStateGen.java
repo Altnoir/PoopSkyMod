@@ -15,6 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
@@ -67,6 +68,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         registerToilet(PoBlocks.HARD_TOILET, ToiletType.Category.HARD, true);
         flushToilet(PoBlocks.FLUSH_TOILET.get());
         flushToilet(PoBlocks.GOLDEN_FLUSH_TOILET.get());
+        portableToilet(PoBlocks.PORTABLE_TOILET.get());
         shitBlock(PoBlocks.SHIT.get());
         shitBlock(PoBlocks.CHILI_SHIT.get());
         shitBlock(PoBlocks.GOLDEN_SHIT.get());
@@ -505,6 +507,28 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
                     .model(overrideModel)
                     .end();
         }
+    }
+
+    private void portableToilet(Block block) {
+        String path = getBlockPath(block);
+        ModelFile bottom = models().getExistingFile(modLoc("block/" + path + "_bottom"));
+        ModelFile top = models().getExistingFile(modLoc("block/" + path + "_top"));
+        ModelFile bottomOpen = models().getExistingFile(modLoc("block/" + path + "_bottom_open"));
+        ModelFile topOpen = models().getExistingFile(modLoc("block/" + path + "_top_open"));
+
+        getVariantBuilder(block).forAllStates(state -> {
+            boolean open = state.getValue(PortableToiletBlock.OPEN);
+            boolean upper = state.getValue(PortableToiletBlock.HALF) == DoubleBlockHalf.UPPER;
+            ModelFile model = upper
+                    ? (open ? topOpen : top)
+                    : (open ? bottomOpen : bottom);
+            return ConfiguredModel.builder()
+                    .modelFile(model)
+                    .rotationY(horizontalRotation(state.getValue(PortableToiletBlock.FACING)))
+                    .build();
+        });
+
+        generatedItem(block, "item");
     }
 
     private void flushToilet(Block block) {

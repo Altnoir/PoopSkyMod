@@ -1,0 +1,75 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench",
+	"texture_size": [64, 64],
+	"textures": {
+		"toilet": "poopsky:block/portable_toilet_top",
+		"particle": "#toilet"
+	},
+	"elements": [
+		{
+			"from": [-0.5, 14, -0.5],
+			"to": [16.5, 16, 16.5],
+			"faces": {
+				"north": {"uv": [8.25, 0, 12.5, 0.5], "texture": "#toilet"},
+				"east": {"uv": [8.25, 0.5, 12.5, 1], "texture": "#toilet"},
+				"south": {"uv": [8.25, 0, 12.5, 0.5], "texture": "#toilet"},
+				"west": {"uv": [8.25, 0.5, 12.5, 1], "texture": "#toilet"},
+				"up": {"uv": [4.25, 4.25, 0, 0], "texture": "#toilet"},
+				"down": {"uv": [0, 0, 4.25, 4.25], "texture": "#toilet"}
+			}
+		},
+		{
+			"from": [15, 0, -15],
+			"to": [16, 14, 1],
+			"rotation": {"angle": 0, "axis": "y", "origin": [15.5, 0, 0.5]},
+			"faces": {
+				"north": {"uv": [3.75, 4.25, 4, 7.75], "texture": "#toilet"},
+				"east": {"uv": [0, 4.25, 4, 7.75], "texture": "#toilet"},
+				"west": {"uv": [0, 4.25, 4, 7.75], "texture": "#toilet"},
+				"up": {"uv": [4, 8, 0, 7.75], "rotation": 90, "texture": "#toilet"},
+				"down": {"uv": [4, 8, 0, 8.25], "rotation": 270, "texture": "#toilet"}
+			}
+		},
+		{
+			"from": [0, 0, 15],
+			"to": [16, 14, 16],
+			"faces": {
+				"north": {"uv": [4.25, 0, 8.25, 3.5], "texture": "#toilet"},
+				"east": {"uv": [8, 3.5, 8.25, 7], "texture": "#toilet"},
+				"south": {"uv": [4.25, 3.5, 8.25, 7], "texture": "#toilet"},
+				"west": {"uv": [4.25, 3.5, 4.5, 7], "texture": "#toilet"}
+			}
+		},
+		{
+			"from": [15, 0, 1],
+			"to": [16, 14, 15],
+			"faces": {
+				"east": {"uv": [4, 7, 7.5, 10.5], "texture": "#toilet"},
+				"west": {"uv": [7.5, 7, 11, 10.5], "texture": "#toilet"}
+			}
+		},
+		{
+			"from": [0, 0, 1],
+			"to": [1, 14, 15],
+			"faces": {
+				"north": {"uv": [4, 7, 4.25, 10.5], "texture": "#toilet"},
+				"east": {"uv": [11, 7, 7.5, 10.5], "texture": "#toilet"},
+				"west": {"uv": [7.5, 7, 4, 10.5], "texture": "#toilet"}
+			}
+		}
+	],
+	"groups": [
+		0,
+		{
+			"name": "door",
+			"origin": [15.5, 8.5, 0.5],
+			"scope": 0,
+			"color": 0,
+			"children": [1]
+		},
+		2,
+		3,
+		4
+	]
+}
