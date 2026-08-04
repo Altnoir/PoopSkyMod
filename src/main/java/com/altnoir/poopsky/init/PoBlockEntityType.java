@@ -2,7 +2,6 @@ package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.entity.*;
-import com.altnoir.poopsky.content.block.renderer.SieveBlockEntityRenderer;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 
@@ -17,7 +16,6 @@ public class PoBlockEntityType {
     public static final BlockEntityEntry<SieveBlockEntity> SIEVE_BLOCK_ENTITY = REGISTRATE
             .<SieveBlockEntity>blockEntity("sieve_block_entity", (type, pos, state) -> new SieveBlockEntity(pos, state))
             .validBlock(PoBlocks.SIEVE)
-            .renderer(() -> SieveBlockEntityRenderer::new)
             .register();
 
     public static final BlockEntityEntry<PlacerBlockEntity> PLACER_BLOCK_ENTITY = REGISTRATE

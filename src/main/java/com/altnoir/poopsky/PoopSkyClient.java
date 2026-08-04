@@ -15,6 +15,7 @@ import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
+import com.altnoir.poopsky.content.block.renderer.SieveBlockEntityRenderer;
 import com.altnoir.poopsky.content.entity.model.FlyModel;
 import com.altnoir.poopsky.content.entity.model.ToiletPlugModel;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
@@ -59,6 +60,7 @@ public class PoopSkyClient implements ClientModInitializer {
 
         BakedModelEventHandler.register();
         registerLayers();
+        registerBlockEntityRenderers();
         registerItemProperties();
         registerParticles();
         registerColors();
@@ -85,6 +87,10 @@ public class PoopSkyClient implements ClientModInitializer {
     private static void registerLayers() {
         EntityModelLayerRegistry.registerModelLayer(ToiletPlugModel.LAYER_LOCATION, ToiletPlugModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(FlyModel.LAYER_LOCATION, FlyModel::createBodyLayer);
+    }
+
+    private static void registerBlockEntityRenderers() {
+        BlockEntityRendererRegistry.register(PoBlockEntityType.SIEVE_BLOCK_ENTITY.get(), SieveBlockEntityRenderer::new);
     }
 
     private static void registerItemProperties() {
@@ -129,7 +135,7 @@ public class PoopSkyClient implements ClientModInitializer {
             }
             return -1;
         }, PoBlocks.WATER_COMPOOPER.get());
-        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex == 1 ? 0x3F76E4 : -1,
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex == 1 ? 0xFF3F76E4 : -1,
                 PoBlocks.WATER_COMPOOPER.get());
     }
 

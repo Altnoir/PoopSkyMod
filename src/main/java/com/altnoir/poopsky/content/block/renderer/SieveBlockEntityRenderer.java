@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
@@ -33,13 +32,7 @@ public class SieveBlockEntityRenderer implements BlockEntityRenderer<SieveBlockE
         poseStack.translate(0.5D, y, 0.5D);
         poseStack.scale(ITEM_SCALE, ITEM_SCALE, ITEM_SCALE);
 
-        Minecraft minecraft = Minecraft.getInstance();
-        if (stack.getItem() instanceof BlockItem blockItem) {
-            poseStack.translate(-0.5F, -0.5F, -0.5F);
-            minecraft.getBlockRenderer().renderSingleBlock(blockItem.getBlock().defaultBlockState(), poseStack, bufferSource, packedLight, packedOverlay);
-        } else {
-            minecraft.getItemRenderer().renderStatic(stack, ItemDisplayContext.FIXED, packedLight, OverlayTexture.NO_OVERLAY, poseStack, bufferSource, blockEntity.getLevel(), 0);
-        }
+        Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemDisplayContext.FIXED, packedLight, OverlayTexture.NO_OVERLAY, poseStack, bufferSource, blockEntity.getLevel(), 0);
 
         poseStack.popPose();
     }

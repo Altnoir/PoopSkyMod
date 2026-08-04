@@ -2,8 +2,8 @@ package com.altnoir.poopsky.compat.jei;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.recipe.CompooperRecipe;
-import com.altnoir.poopsky.impl.util.ClientUtil;
 import com.altnoir.poopsky.init.PoBlocks;
+import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.ITooltipBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -86,7 +86,12 @@ public class CompooperRecipeCategory implements IRecipeCategory<RecipeHolder<Com
 
         this.slot.draw(guiGraphics, 3, 17);
         this.arrow.draw(guiGraphics, 28, 18);
-        ClientUtil.renderBlock(guiGraphics, state, 70, 18, 10, 20f);
+        PoseStack poseStack = guiGraphics.pose();
+        poseStack.pushPose();
+        poseStack.translate(54.0F, 10.0F, 0.0F);
+        poseStack.scale(2.0F, 2.0F, 1.0F);
+        guiGraphics.renderItem(new ItemStack(state.getBlock()), 0, 0);
+        poseStack.popPose();
         this.arrow.draw(guiGraphics, 90, 18);
         this.slot.draw(guiGraphics, 119, 17);
     }
