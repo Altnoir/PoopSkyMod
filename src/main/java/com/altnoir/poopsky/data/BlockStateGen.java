@@ -68,6 +68,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         registerToilet(PoBlocks.HARD_TOILET, ToiletType.Category.HARD, true);
         flushToilet(PoBlocks.FLUSH_TOILET.get());
         flushToilet(PoBlocks.GOLDEN_FLUSH_TOILET.get());
+        portableToilet(PoBlocks.GINKGO_TOILET.get());
         portableToilet(PoBlocks.PORTABLE_TOILET.get());
         shitBlock(PoBlocks.SHIT.get());
         shitBlock(PoBlocks.CHILI_SHIT.get());

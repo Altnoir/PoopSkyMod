@@ -1,5 +1,5 @@
 {
-	"parent": "poopsky:block/portable_toilet_bottom",
+	"parent": "poopsky:block/portable_toilet_bottom_open",
 	"textures": {
 		"toilet": "poopsky:block/ginkgo_toilet_bottom",
 		"particle": "poopsky:block/ginkgo_planks"
