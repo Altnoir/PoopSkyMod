@@ -214,24 +214,29 @@ public final class BlockTagGen {
 
         //工具标签
         tag(BlockTags.MINEABLE_WITH_AXE)
-                .add(PoBlocks.WOODEN_TOILET.get())
-                .add(PoBlocks.FLY_BARREL.get())
-                .add(PoBlocks.MAGGOTS.get())
-                .add(PoBlocks.GINKGO_PLANKS.get())
-                .add(PoBlocks.GINKGO_STAIRS.get())
-                .add(PoBlocks.GINKGO_SLAB.get())
-                .add(PoBlocks.GINKGO_VERTICAL_SLAB.get())
-                .add(PoBlocks.GINKGO_BUTTON.get())
-                .add(PoBlocks.GINKGO_PRESSURE_PLATE.get())
-                .add(PoBlocks.GINKGO_FENCE.get())
-                .add(PoBlocks.GINKGO_FENCE_GATE.get())
-                .add(PoBlocks.GINKGO_DOOR.get())
-                .add(PoBlocks.GINKGO_TRAPDOOR.get());
+                .add(
+                        PoBlocks.WOODEN_TOILET.get(),
+                        PoBlocks.FLY_BARREL.get(),
+                        PoBlocks.FLY_BARREL.get(),
+                        PoBlocks.MAGGOTS.get(),
+                        PoBlocks.GINKGO_PLANKS.get(),
+                        PoBlocks.GINKGO_STAIRS.get(),
+                        PoBlocks.GINKGO_SLAB.get(),
+                        PoBlocks.GINKGO_VERTICAL_SLAB.get(),
+                        PoBlocks.GINKGO_BUTTON.get(),
+                        PoBlocks.GINKGO_PRESSURE_PLATE.get(),
+                        PoBlocks.GINKGO_FENCE.get(),
+                        PoBlocks.GINKGO_FENCE_GATE.get(),
+                        PoBlocks.GINKGO_DOOR.get(),
+                        PoBlocks.GINKGO_TRAPDOOR.get(),
+                        PoBlocks.GINKGO_TOILET.get()
+                );
 
         var mineableWithPickaxe = tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(
                         PoBlocks.HARD_TOILET.get(),
                         PoBlocks.FLUSH_TOILET.get(),
+                        PoBlocks.PORTABLE_TOILET.get(),
                         PoBlocks.GOLDEN_FLUSH_TOILET.get(),
                         PoBlocks.BREEDING_CHEST.get(),
                         PoBlocks.POOP_LOG.get(),

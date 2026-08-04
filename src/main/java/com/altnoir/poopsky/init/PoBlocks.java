@@ -481,6 +481,13 @@ public class PoBlocks {
     public static final BlockEntry<FlushToiletBlock> FLUSH_TOILET = registerFlushToilet("flush_toilet", DyeColor.WHITE);
     public static final BlockEntry<FlushToiletBlock> GOLDEN_FLUSH_TOILET = registerFlushToilet("golden_flush_toilet", DyeColor.YELLOW);
 
+    public static final BlockEntry<PortableToiletBlock> GINKGO_TOILET = registerBlock("ginkgo_toilet", 8,
+            props -> new PortableToiletBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_YELLOW)
+                    .strength(LOG, HARD_STRENGTH)
+                    .sound(SoundType.WOOD)
+                    .noOcclusion()),
+            (loot, block) -> loot.add(block, loot.createDoorTable(block)));
     public static final BlockEntry<PortableToiletBlock> PORTABLE_TOILET = registerBlock("portable_toilet", 8,
             props -> new PortableToiletBlock(BlockBehaviour.Properties.of()
                     .mapColor(DyeColor.WHITE)
