@@ -110,7 +110,7 @@ public class PoTags {
         public static final TagKey<PaintingVariant> PLACEABLE = create("placeable");
 
         private static TagKey<PaintingVariant> create(String name) {
-            return TagKey.create(Registries.PAINTING_VARIANT, PoopSky.locMc(name));
+            return TagKey.create(Registries.PAINTING_VARIANT, PoopSky.mcloc(name));
         }
     }
 }

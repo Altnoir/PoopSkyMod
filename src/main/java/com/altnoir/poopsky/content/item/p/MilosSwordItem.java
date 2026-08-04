@@ -16,7 +16,7 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 
 public class MilosSwordItem extends SwordItem {
-    public static final ResourceLocation BASE_INTERACTION_RANGE_ID = PoopSky.locMc("base_interaction_range");
+    public static final ResourceLocation BASE_INTERACTION_RANGE_ID = PoopSky.mcloc("base_interaction_range");
 
     public MilosSwordItem(Tier tier, Properties properties) {
         super(tier, properties);

@@ -640,6 +640,11 @@ public class RecipeGen extends FabricRecipeProvider {
             builder.unlockedBy(getItemName(entry.output()), has(entry.input()))
                     .save(recipeOutput, getModConversionRecipeName(entry.input(), entry.output()));
         }
+
+        AnalPressingRecipeBuilder.analPressing(Blocks.COAL_BLOCK, Blocks.WITHER_SKELETON_SKULL)
+                .replaceTarget(Blocks.SKELETON_SKULL)
+                .unlockedBy(getItemName(Blocks.COAL_BLOCK), has(Blocks.WITHER_SKELETON_SKULL))
+                .save(recipeOutput);
     }
 
     private void buildSieveRecipes(RecipeOutput recipeOutput) {
@@ -877,26 +882,24 @@ public class RecipeGen extends FabricRecipeProvider {
 
 
     private void buildCompooperRecipes(RecipeOutput recipeOutput) {
-        // Water Compooper recipes
         CompooperRecipeBuilder.compooper(CompooperType.WATER.id(), FlyItem.withType(FlyTypes.NORMAL.get()), FlyItem.withType(FlyTypes.BLUE.get()))
                 .unlockedBy(getItemName(PoBlocks.COMPOOPER.get()), has(PoBlocks.COMPOOPER.get()))
                 .save(recipeOutput, "fly_normal_to_blue");
 
         CompooperRecipeBuilder.compooper(CompooperType.WATER.id(), PoItems.SALTPETER_SHARD.get(), Items.SNOWBALL)
                 .unlockedBy(getItemName(PoBlocks.COMPOOPER.get()), has(PoBlocks.COMPOOPER.get()))
-                .save(recipeOutput, "saltpeter_to_snowball");
+                .save(recipeOutput);
+        CompooperRecipeBuilder.compooper(CompooperType.WATER.id(), PoItems.OMEN_UPGRADE_SMITHING_TEMPLATE.get(), Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE)
+                .unlockedBy(getItemName(PoBlocks.COMPOOPER.get()), has(PoBlocks.COMPOOPER.get()))
+                .save(recipeOutput);
 
-        // Lava Compooper recipes
         CompooperRecipeBuilder.compooper(CompooperType.LAVA.id(), Items.STICK, Items.BLAZE_ROD)
                 .unlockedBy(getItemName(PoBlocks.COMPOOPER.get()), has(PoBlocks.COMPOOPER.get()))
-                .save(recipeOutput, "stick_to_blaze_rod");
+                .save(recipeOutput);
 
-        // Powder Snow Compooper recipes
         CompooperRecipeBuilder.compooper(CompooperType.POWDER_SNOW.id(), Items.STICK, Items.BREEZE_ROD)
                 .unlockedBy(getItemName(PoBlocks.COMPOOPER.get()), has(PoBlocks.COMPOOPER.get()))
-                .save(recipeOutput, "stick_to_breeze_rod");
-
-        // Urine Compooper recipes can be added here
+                .save(recipeOutput);
     }
 
     private void toiletRecipes(RecipeOutput recipeOutput, ItemLike toilet, ItemLike block, ToiletType toiletType) {

@@ -56,6 +56,12 @@ public final class AnalPressingRecipeBuilder implements RecipeBuilder {
         return output.asItem();
     }
 
+    @Override
+    public void save(RecipeOutput recipeOutput) {
+        String itemId = PoopSky.getItemPath(output.asItem());
+        save(recipeOutput, itemId);
+    }
+
     public void save(@NotNull RecipeOutput recipeOutput, @NotNull String id) {
         ResourceLocation recipeId = PoopSky.loc(RECIPE_TYPE + "/" + id);
         save(recipeOutput, recipeId);

@@ -1,0 +1,12 @@
+{
+  "type": "poopsky:compooper",
+  "fluid_type": "water",
+  "input": {
+    "count": 1,
+    "id": "poopsky:omen_upgrade_smithing_template"
+  },
+  "output": {
+    "count": 1,
+    "id": "minecraft:netherite_upgrade_smithing_template"
+  }
+}
