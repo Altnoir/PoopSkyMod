@@ -197,14 +197,10 @@ public class PoopSkyClient implements ClientModInitializer {
             }
             if (!originalDefaultWorldPreset.unwrapKey().equals(originalPreset.unwrapKey())) return;
 
-            Holder<WorldPreset> voidWorldPreset = uiState.getSettings()
+            uiState.getSettings()
                     .worldgenLoadContext()
                     .registryOrThrow(Registries.WORLD_PRESET)
-                    .getHolder(PoWorldPreset.overrideDefaultWorldPreset())
-                    .orElse(null);
-            if (voidWorldPreset != null) {
-                uiState.setWorldType(new WorldCreationUiState.WorldTypeEntry(voidWorldPreset));
-            }
+                    .getHolder(PoWorldPreset.overrideDefaultWorldPreset()).ifPresent(voidWorldPreset -> uiState.setWorldType(new WorldCreationUiState.WorldTypeEntry(voidWorldPreset)));
         }
 
         public static void onClientTick(Minecraft minecraft) {

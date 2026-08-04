@@ -17,31 +17,17 @@ public final class ContextualShitItemRenderer implements BuiltinItemRendererRegi
     }
 
     @Override
-    public void render(
-            ItemStack stack,
-            ItemDisplayContext context,
-            PoseStack poseStack,
-            MultiBufferSource bufferSource,
-            int packedLight,
-            int packedOverlay
-    ) {
+    public void render(ItemStack stack, ItemDisplayContext context, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         boolean useBlockModel = context == ItemDisplayContext.HEAD || context == ItemDisplayContext.GROUND;
         BakedModel model = BakedModelEventHandler.getContextualShitModel(modelPath, useBlockModel);
         if (model == null) {
             return;
         }
 
-        boolean leftHand = context == ItemDisplayContext.FIRST_PERSON_LEFT_HAND
-                || context == ItemDisplayContext.THIRD_PERSON_LEFT_HAND;
-        Minecraft.getInstance().getItemRenderer().render(
-                stack,
-                context,
-                leftHand,
-                poseStack,
-                bufferSource,
-                packedLight,
-                packedOverlay,
-                model
-        );
+        boolean leftHand = context == ItemDisplayContext.FIRST_PERSON_LEFT_HAND || context == ItemDisplayContext.THIRD_PERSON_LEFT_HAND;
+        poseStack.pushPose();
+        poseStack.translate(0.5F, 0.5F, 0.5F);
+        Minecraft.getInstance().getItemRenderer().render(stack, context, leftHand, poseStack, bufferSource, packedLight, packedOverlay, model);
+        poseStack.popPose();
     }
 }

@@ -100,7 +100,7 @@ public class CompooperRecipeCategory implements IRecipeCategory<RecipeHolder<Com
             String modId = BuiltInRegistries.BLOCK.getKey(block).getNamespace();
 
             tooltip.add(Component.translatable(block.getDescriptionId()));
-            tooltip.add(Component.literal(this.modIdHelper.getFormattedModNameForModId(modId)));
+            tooltip.add(this.modIdHelper.getFormattedModNameComponentForModId(modId));
         }
     }
 

@@ -40,7 +40,6 @@ public abstract class LivingEntityMixin extends Entity {
         }
     }
 
-    @SuppressWarnings("InvalidInjectorMethodSignature")
     @Inject(
             method = "checkFallDamage",
             at = @At(

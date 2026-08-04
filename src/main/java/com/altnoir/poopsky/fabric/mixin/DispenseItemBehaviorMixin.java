@@ -23,19 +23,14 @@ public class DispenseItemBehaviorMixin {
     @Expression("blockState.getBlock() instanceof TntBlock")
     @WrapOperation(method = "execute", at = @At("MIXINEXTRAS:EXPRESSION"))
     private boolean checkFlammable(Object object, Operation<Boolean> original, BlockSource source, @Local BlockPos blockPos, @Local BlockState blockState) {
-        if (blockState.getBlock() instanceof IBlockExtension block) {
-            return block.isFlammable(blockState, source.level(), blockPos, source.state().getValue(DispenserBlock.FACING).getOpposite());
-        }
+        IBlockExtension block = blockState.getBlock();
+        return block.isFlammable(blockState, source.level(), blockPos, source.state().getValue(DispenserBlock.FACING).getOpposite());
 
-        return original.call(object);
     }
 
     @WrapOperation(method = "execute", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/TntBlock;explode(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V"))
     private void onCaughtFire(Level level, BlockPos pos, Operation<Void> original, BlockSource source, @Local BlockState blockState) {
-        if (blockState.getBlock() instanceof IBlockExtension block) {
-            block.onCaughtFire(blockState, level, pos, source.state().getValue(DispenserBlock.FACING).getOpposite(), null);
-        } else {
-            original.call(level, pos);
-        }
+        IBlockExtension block = blockState.getBlock();
+        block.onCaughtFire(blockState, level, pos, source.state().getValue(DispenserBlock.FACING).getOpposite(), null);
     }
 }

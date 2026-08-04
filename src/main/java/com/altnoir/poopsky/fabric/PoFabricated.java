@@ -53,6 +53,4 @@ public class PoFabricated {
             return ((BreedingChestBlockEntity) blockEntity).getTopSideHandler();
         }, PoBlockEntityType.BREEDING_CHEST.get());
     }
-
-
 }

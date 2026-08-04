@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-/** Generates the state-dependent models that vanilla's model helpers cannot describe. */
 public class SpecialModelGen implements DataProvider {
     private static final String[] WOOD_TOILET_SUFFIXES = {"", "_n", "_ns"};
     private static final String[] HARD_TOILET_SUFFIXES = {"", "_n", "_ns", "_lava", "_lava_n", "_lava_ns"};
@@ -341,15 +340,8 @@ public class SpecialModelGen implements DataProvider {
         }
     }
 
-    private void writeToiletModel(
-            CachedOutput output,
-            List<CompletableFuture<?>> writes,
-            String name,
-            String suffix,
-            String texture
-    ) {
-        String templateSuffix = suffix.startsWith("_lava") ? suffix : suffix;
-        JsonObject model = parent("poopsky:block/toilet" + templateSuffix);
+    private void writeToiletModel(CachedOutput output, List<CompletableFuture<?>> writes, String name, String suffix, String texture) {
+        JsonObject model = parent("poopsky:block/toilet" + suffix);
         textures(model).addProperty("toilet", texture);
         writeModel(output, writes, "block/" + name, model);
     }
@@ -366,12 +358,7 @@ public class SpecialModelGen implements DataProvider {
         return id.getNamespace() + ":block/" + id.getPath();
     }
 
-    private void writeSimpleBlockWithItem(
-            CachedOutput output,
-            List<CompletableFuture<?>> writes,
-            String name,
-            JsonObject model
-    ) {
+    private void writeSimpleBlockWithItem(CachedOutput output, List<CompletableFuture<?>> writes, String name, JsonObject model) {
         writeModel(output, writes, "block/" + name, model);
         writeBlockState(output, writes, name, singleVariant(variant("poopsky:block/" + name)));
         writeItemParent(output, writes, name, "poopsky:block/" + name);
@@ -381,42 +368,22 @@ public class SpecialModelGen implements DataProvider {
         writeFlatItem(output, writes, name, "poopsky:item/" + name);
     }
 
-    private void writeFlatItem(
-            CachedOutput output,
-            List<CompletableFuture<?>> writes,
-            String name,
-            String texture
-    ) {
+    private void writeFlatItem(CachedOutput output, List<CompletableFuture<?>> writes, String name, String texture) {
         JsonObject model = parent("minecraft:item/generated");
         textures(model).addProperty("layer0", texture);
         writeModel(output, writes, "item/" + name, model);
     }
 
-    private void writeItemParent(
-            CachedOutput output,
-            List<CompletableFuture<?>> writes,
-            String name,
-            String parent
-    ) {
+    private void writeItemParent(CachedOutput output, List<CompletableFuture<?>> writes, String name, String parent) {
         writeModel(output, writes, "item/" + name, parent(parent));
     }
 
-    private void writeModel(
-            CachedOutput output,
-            List<CompletableFuture<?>> writes,
-            String path,
-            JsonObject model
-    ) {
+    private void writeModel(CachedOutput output, List<CompletableFuture<?>> writes, String path, JsonObject model) {
         ResourceLocation id = PoopSky.loc(path);
         writes.add(DataProvider.saveStable(output, model, models.json(id)));
     }
 
-    private void writeBlockState(
-            CachedOutput output,
-            List<CompletableFuture<?>> writes,
-            String path,
-            JsonObject blockState
-    ) {
+    private void writeBlockState(CachedOutput output, List<CompletableFuture<?>> writes, String path, JsonObject blockState) {
         ResourceLocation id = PoopSky.loc(path);
         writes.add(DataProvider.saveStable(output, blockState, blockStates.json(id)));
     }
