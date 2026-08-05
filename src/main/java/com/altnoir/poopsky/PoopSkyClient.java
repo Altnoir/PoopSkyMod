@@ -43,6 +43,8 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
@@ -58,6 +60,7 @@ import org.jetbrains.annotations.NotNull;
 @Mod(value = PoopSky.MOD_ID, dist = Dist.CLIENT)
 public class PoopSkyClient {
     public PoopSkyClient(IEventBus modEventBus, ModContainer modContainer) {
+        modContainer.registerConfig(ModConfig.Type.CLIENT, ClientConfig.CLIENT_SPEC);
         modContainer.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
 
         var gameEventBus = NeoForge.EVENT_BUS;
@@ -68,6 +71,7 @@ public class PoopSkyClient {
     public static void registerMod(IEventBus modEventBus) {
         BakedModelEventHandler.register(modEventBus);
         modEventBus.addListener(PSKeyBoardInput::registerKeyMappings);
+        modEventBus.addListener(ClientModEvents::modLoad);
         modEventBus.addListener(ClientModEvents::registerLayers);
         modEventBus.addListener(ClientModEvents::registerFluidRenderTypes);
         modEventBus.addListener(ClientModEvents::registerItemProperties);
@@ -93,6 +97,10 @@ public class PoopSkyClient {
     }
 
     public static class ClientModEvents {
+        public static void modLoad(final ModConfigEvent event) {
+            ClientConfig.onLoad(event.getConfig());
+        }
+
         public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
             event.registerLayerDefinition(ToiletPlugModel.LAYER_LOCATION, ToiletPlugModel::createBodyLayer);
             event.registerLayerDefinition(FlyModel.LAYER_LOCATION, FlyModel::createBodyLayer);

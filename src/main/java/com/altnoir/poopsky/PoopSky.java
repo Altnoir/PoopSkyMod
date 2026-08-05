@@ -101,6 +101,7 @@ public class PoopSky {
         var gameEventBus = NeoForge.EVENT_BUS;
         PoModEvents.registerMod(modEventBus);
         PoGameEvents.registerGame(gameEventBus);
+        modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
 
         if (ModList.get().isLoaded(PoMods.TOUHOU_LITTLE_MAID.id())) {
             MaidPlugin.registry(modEventBus);
@@ -108,7 +109,6 @@ public class PoopSky {
         if (ModList.get().isLoaded(PoMods.CREATE.id())) {
             CreatePlugin.register(modEventBus);
         }
-        modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

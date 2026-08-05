@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.impl.event;
 
+import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.entity.p.FlyEntity;
 import com.altnoir.poopsky.content.entity.p.PoolimeEntity;
@@ -15,6 +16,7 @@ import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
@@ -26,12 +28,17 @@ public class PoModEvents {
         modEventBus.addListener(DataGenerators::gatherData);
         modEventBus.addListener(PoNetworking::registerNetworking);
         modEventBus.addListener(PoNetworking::registerConfigurationTasks);
+        modEventBus.addListener(PoModEvents::modLoad);
         modEventBus.addListener(PoModEvents::registerAttributes);
         modEventBus.addListener(PoModEvents::registerSpawnPlacements);
         modEventBus.addListener(PoModEvents::registerCapabilities);
         modEventBus.addListener(PoModEvents::packSetup);
     }
-
+    public static void modLoad(final ModConfigEvent event) {
+        if (event instanceof ModConfigEvent.Loading || event instanceof ModConfigEvent.Reloading) {
+            Config.onLoad(event.getConfig());
+        }
+    }
     public static void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(PoEntityType.POOLIME.get(), PoolimeEntity.createAttributes().build());
         event.put(PoEntityType.FLY.get(), FlyEntity.createAttributes().build());

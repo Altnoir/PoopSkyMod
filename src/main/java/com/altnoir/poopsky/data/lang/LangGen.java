@@ -313,6 +313,8 @@ public final class LangGen {
         // Painting
         provider.add("painting.poopsky.poop.title", "Poop");
         provider.add("painting.poopsky.poop.author", "yinianzhihai");
+        provider.add("painting.poopsky.poop_king.title", "Poop King");
+        provider.add("painting.poopsky.poop_king.author", "Xiris");
         provider.add("painting.poopsky.toilet.title", "Within Reach");
         provider.add("painting.poopsky.toilet.author", "EEK");
         provider.add("painting.poopsky.vip.title", "Membership-based Restaurant");
@@ -390,32 +392,40 @@ public final class LangGen {
 
     private static void addConfigs() {
         addConfig("title", "%s Options");
-        addConfig("lavaFluid", "Disable Underground Lava Lakes");
-        addConfig("lavaFluid.tooltip", "Disables underground lava lakes during PoopSky world generation");
-        addConfig("compooperCrafting", "Keep Liquid When Crafting Sticks");
-        addConfig("compooperCrafting.tooltip", "Prevents liquid in the compooper from being consumed when crafting sticks");
-        addConfig("skyFlushToilet", "SKY Flush Toilet");
-        addConfig("skyFlushToilet.tooltip", "Replaces the spawn toilet with a flush toilet");
-        addConfig("desperateWorld", "Desperate World");
-        addConfig("desperateWorld.tooltip", "Enables Desperate World generation. This can cause lag");
+        addConfig("world", "World");
         addConfig("setPoopskyDefault", "Default Dedicated Server World Type");
         addConfig("setPoopskyDefault.tooltip", "Makes dedicated servers use the PoopSky world preset by default");
         addConfig("voidNetherGeneration", "Void Nether Generation");
         addConfig("voidNetherGeneration.tooltip", "Keeps the Nether empty when using the Poopsky custom void generator");
         addConfig("strongholdGeneration", "Generate Strongholds");
         addConfig("strongholdGeneration.tooltip", "Whether strongholds generate in PoopSky worlds");
+        addConfig("skyFlushToilet", "SKY Flush Toilet");
+        addConfig("skyFlushToilet.tooltip", "Replaces the spawn toilet with a flush toilet");
+        addConfig("desperateWorld", "Desperate World");
+        addConfig("desperateWorld.tooltip", "Enables Desperate World generation. This can cause lag");
+        addConfig("lavaFluid", "Disable Underground Lava Lakes");
+        addConfig("lavaFluid.tooltip", "Disables underground lava lakes during PoopSky world generation");
+
+        addConfig("crafting", "Crafting");
+        addConfig("compooperCrafting", "Keep Liquid When Crafting Sticks");
+        addConfig("compooperCrafting.tooltip", "Prevents liquid in the compooper from being consumed when crafting sticks");
+
+        addConfig("trades", "Trades");
         addConfig("plugTrades", "Disable Toilet Plug Trades");
         addConfig("plugTrades.tooltip", "Whether to disable Toilet Plug trading with villagers");
         addConfig("upgradeTemplate", "Disable Upgrade Template Trades");
         addConfig("upgradeTemplate.tooltip", "Whether to disable upgrade template trading");
+
+        addConfig("timeStop", "Time Stop");
         addConfig("unlimitedFreeze", "Unlimited Freeze");
         addConfig("unlimitedFreeze.tooltip", "Whether to enable unlimited freeze");
         addConfig("freezeFilter", "Freeze Filter");
         addConfig("freezeFilter.tooltip", "Whether to disable freeze filter");
+
         addConfig("introAnimation", "Play Intro Animation");
         addConfig("introAnimation.tooltip", "Whether to play the intro animation when entering a PoopSky world for the first time");
         addConfig("introText", "Intro Text");
-        addConfig("introYear", "Intro Year");
+        addConfig("introYear", "Intro Number");
     }
 
     private static void addConfig(String key, String value) {

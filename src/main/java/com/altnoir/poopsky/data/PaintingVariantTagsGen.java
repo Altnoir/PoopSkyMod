@@ -22,6 +22,7 @@ public class PaintingVariantTagsGen extends PaintingVariantTagsProvider {
         tag(PaintingVariantTags.PLACEABLE)
                 .add(
                         PoPainting.POOP,
+                        PoPainting.POOP_KING,
                         PoPainting.TOILET,
                         PoPainting.VIP
                 );
