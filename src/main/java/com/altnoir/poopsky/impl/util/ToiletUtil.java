@@ -208,7 +208,7 @@ public class ToiletUtil {
     }
 
     public static boolean tryTeleportFromFall(Level level, BlockPos pos, Entity entity, float fallDistance) {
-        if (fallDistance <= 1.0F || !isEntityInToiletPit(level, pos, entity)) {
+        if (fallDistance < 0.875F || !isEntityInToiletPit(level, pos, entity)) {
             return false;
         }
         if (isEndToilet(level, pos)) {

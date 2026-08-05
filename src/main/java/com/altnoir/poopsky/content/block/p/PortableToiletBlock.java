@@ -146,9 +146,9 @@ public class PortableToiletBlock extends Block {
     }
 
     private static boolean isInSeatArea(BlockState state, BlockPos pos, BlockHitResult hitResult) {
-        double localX = hitResult.getLocation().x - pos.getX();
-        double localY = hitResult.getLocation().y - pos.getY();
-        double localZ = hitResult.getLocation().z - pos.getZ();
+        double localX = (hitResult.getLocation().x - pos.getX()) * 16.0;
+        double localY = (hitResult.getLocation().y - pos.getY()) * 16.0;
+        double localZ = (hitResult.getLocation().z - pos.getZ()) * 16.0;
         double modelX;
         double modelZ;
         switch (state.getValue(FACING)) {
@@ -204,14 +204,7 @@ public class PortableToiletBlock extends Block {
     }
 
     @Override
-    protected BlockState updateShape(
-            BlockState state,
-            Direction facing,
-            BlockState facingState,
-            LevelAccessor level,
-            BlockPos currentPos,
-            BlockPos facingPos
-    ) {
+    protected BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
         DoubleBlockHalf half = state.getValue(HALF);
         if (facing.getAxis() != Direction.Axis.Y || half == DoubleBlockHalf.LOWER != (facing == Direction.UP)) {
             return half == DoubleBlockHalf.LOWER && facing == Direction.DOWN && !state.canSurvive(level, currentPos)
@@ -249,37 +242,34 @@ public class PortableToiletBlock extends Block {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
-            if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
-                serverPlayer.setRespawnPosition(level.dimension(), pos, player.getYRot(), false, true);
+        if (state.getValue(HALF) == DoubleBlockHalf.LOWER) {
+            if (isInSeatArea(state, pos, hitResult)) {
+                if (!level.isClientSide) {
+                    Component message = Component.literal("Portable Toilet seat placeholder");
+                    level.players().forEach(p -> p.displayClientMessage(message, false));
+                }
+                return InteractionResult.sidedSuccess(level.isClientSide);
             }
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-
-        if (isInSeatArea(state, pos, hitResult)) {
-            if (!level.isClientSide) {
-                Component message = Component.literal("Portable Toilet seat placeholder");
-                level.players().forEach(p -> p.displayClientMessage(message, false));
+        } else {
+            if (player instanceof ServerPlayer serverPlayer) {
+                if (serverPlayer.getRespawnDimension() != level.dimension() || !pos.equals(serverPlayer.getRespawnPosition())) {
+                    serverPlayer.setRespawnPosition(level.dimension(), pos, player.getYRot(), false, true);
+                }
             }
-            return InteractionResult.sidedSuccess(level.isClientSide);
         }
+        setOpen(level, pos, state, !state.getValue(OPEN));
 
-        boolean open = !state.getValue(OPEN);
-        level.setBlock(pos, state.setValue(OPEN, open), 10);
-        BlockPos above = pos.above();
-        BlockState aboveState = level.getBlockState(above);
-        if (aboveState.is(this) && aboveState.getValue(HALF) == DoubleBlockHalf.UPPER) {
-            level.setBlock(above, aboveState.setValue(OPEN, open), 10);
-        }
-        level.playSound(
-                null,
-                pos,
-                open ? SoundEvents.WOODEN_DOOR_OPEN : SoundEvents.WOODEN_DOOR_CLOSE,
-                SoundSource.BLOCKS,
-                1.0F,
-                level.getRandom().nextFloat() * 0.1F + 0.9F
-        );
         return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    private void setOpen(Level level, BlockPos pos, BlockState state, boolean open) {
+        level.setBlock(pos, state.setValue(OPEN, open), 10);
+        BlockPos otherPos = state.getValue(HALF) == DoubleBlockHalf.UPPER ? pos.below() : pos.above();
+        BlockState otherState = level.getBlockState(otherPos);
+        if (otherState.is(this) && otherState.getValue(HALF) != state.getValue(HALF)) {
+            level.setBlock(otherPos, otherState.setValue(OPEN, open), 10);
+        }
+        level.playSound(null, pos, open ? SoundEvents.WOODEN_DOOR_OPEN : SoundEvents.WOODEN_DOOR_CLOSE, SoundSource.BLOCKS, 1.0F, level.getRandom().nextFloat() * 0.1F + 0.9F);
     }
 
     @Override
@@ -288,18 +278,17 @@ public class PortableToiletBlock extends Block {
     }
 
     @Override
+    protected VoxelShape getInteractionShape(BlockState state, BlockGetter level, BlockPos pos) {
+        return Shapes.block();
+    }
+
+    @Override
     protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return getPortableToiletShape(state);
     }
 
     @Override
-    public Optional<ServerPlayer.RespawnPosAngle> getRespawnPosition(
-            BlockState state,
-            EntityType<?> type,
-            LevelReader level,
-            BlockPos pos,
-            float orientation
-    ) {
+    public Optional<ServerPlayer.RespawnPosAngle> getRespawnPosition(BlockState state, EntityType<?> type, LevelReader level, BlockPos pos, float orientation) {
         if (state.getValue(HALF) != DoubleBlockHalf.UPPER) {
             return Optional.empty();
         }
