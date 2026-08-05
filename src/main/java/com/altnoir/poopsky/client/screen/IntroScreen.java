@@ -27,9 +27,6 @@ public class IntroScreen extends Screen {
     private static final ResourceLocation POOP_TEXTURE = PoopSky.loc("textures/item/poop.png");
     private static final ResourceLocation SKY_TEXTURE = PoopSky.loc("textures/gui/poopsky_intro/depth_blue.png");
 
-    private static final Component TITLE = titleText("poopsky");
-    private static final Component YEAR = Component.literal("2026");
-
     private static final float VIRTUAL_WIDTH = 1920.0F;
     private static final float VIRTUAL_HEIGHT = 1080.0F;
     private static final float INTRO_DURATION = 17.0F;
@@ -82,6 +79,8 @@ public class IntroScreen extends Screen {
     private static final float TILE_SPEED_Y = -100.0F;
 
     private int playbackTicks;
+    private final Component title;
+    private final Component year;
     private int completionTicks = -1;
     private SoundInstance sound;
     private TitleLayout titleLayout;
@@ -92,8 +91,10 @@ public class IntroScreen extends Screen {
     private int maskBottom;
     private int completionSoundStage;
 
-    public IntroScreen() {
+    public IntroScreen(String title, String year) {
         super(Component.empty());
+        this.title = titleText(title == null || title.isBlank() ? "poopsky" : title);
+        this.year = titleText(year == null || year.isBlank() ? "2026" : year);
     }
 
     private void startPlayback() {
@@ -116,7 +117,7 @@ public class IntroScreen extends Screen {
     @Override
     protected void init() {
         if (this.titleLayout == null) {
-            this.titleLayout = createTitleLayout(this.font);
+            this.titleLayout = createTitleLayout(this.font, this.title, this.year);
             this.poopScatter = createPoopScatter(this.titleLayout);
         }
         float scale = Math.min(this.width / VIRTUAL_WIDTH, this.height / VIRTUAL_HEIGHT);
@@ -259,7 +260,7 @@ public class IntroScreen extends Screen {
     }
 
     private void drawTitleGlyphs(GuiGraphics guiGraphics, int color) {
-        this.drawScaledText(guiGraphics, TITLE, TITLE_LEFT, TITLE_TEXT_Y, this.titleLayout.scale(), color);
+        this.drawScaledText(guiGraphics, this.title, TITLE_LEFT, TITLE_TEXT_Y, this.titleLayout.scale(), color);
     }
 
     private void drawPoopIcon(GuiGraphics guiGraphics, float alpha) {
@@ -285,7 +286,7 @@ public class IntroScreen extends Screen {
     }
 
     private void drawYear(GuiGraphics guiGraphics, float alpha) {
-        this.drawScaledText(guiGraphics, YEAR, YEAR_X, YEAR_TEXT_Y,
+        this.drawScaledText(guiGraphics, this.year, YEAR_X, YEAR_TEXT_Y,
                 this.titleLayout.yearScale(), alphaColor(alpha));
     }
 
@@ -447,13 +448,19 @@ public class IntroScreen extends Screen {
         guiGraphics.pose().popPose();
     }
 
-    private static TitleLayout createTitleLayout(Font font) {
-        float scale = (TITLE_RIGHT - TITLE_LEFT) / font.width(TITLE);
+    private static TitleLayout createTitleLayout(Font font, Component title, Component year) {
+        int titleWidth = Math.max(font.width(title), 1);
+        float scale = (TITLE_RIGHT - TITLE_LEFT) / titleWidth;
         float height = font.lineHeight * scale;
-        float secondPLeft = TITLE_LEFT + font.width(titleText("poo")) * scale;
-        float secondPWidth = font.width(titleText("p")) * scale;
-        float iconX = secondPLeft + (secondPWidth - ICON_SIZE) * 0.5F + ICON_OFFSET_X;
-        float yearScale = YEAR_WIDTH / font.width(YEAR);
+        float iconX;
+        if (title.getString().equals("poopsky")) {
+            float secondPLeft = TITLE_LEFT + font.width(titleText("poo")) * scale;
+            float secondPWidth = font.width(titleText("p")) * scale;
+            iconX = secondPLeft + (secondPWidth - ICON_SIZE) * 0.5F + ICON_OFFSET_X;
+        } else {
+            iconX = (VIRTUAL_WIDTH - ICON_SIZE) * 0.5F + ICON_OFFSET_X;
+        }
+        float yearScale = YEAR_WIDTH / Math.max(font.width(year), 1);
         return new TitleLayout(scale, height, iconX, yearScale);
     }
 

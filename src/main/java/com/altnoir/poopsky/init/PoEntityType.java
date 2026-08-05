@@ -66,7 +66,26 @@ public class PoEntityType {
             .setData(ProviderType.LANG, NonNullBiConsumer.noop())
             .register();
 
+    public static final EntityEntry<GinkgoBoatEntity> GINKGO_BOAT = REGISTRATE
+            .entity("ginkgo_boat", GinkgoBoatEntity::new, MobCategory.MISC)
+            .properties(properties -> properties
+                    .sized(1.375F, 0.5625F)
+                    .eyeHeight(0.5625F)
+                    .clientTrackingRange(10))
+            .renderer(() -> GinkgoBoatRenderer.provider(false))
+            .lang("Ginkgo Boat")
+            .register();
+
+    public static final EntityEntry<GinkgoChestBoatEntity> GINKGO_CHEST_BOAT = REGISTRATE
+            .entity("ginkgo_chest_boat", GinkgoChestBoatEntity::new, MobCategory.MISC)
+            .properties(properties -> properties
+                    .sized(1.375F, 0.5625F)
+                    .eyeHeight(0.5625F)
+                    .clientTrackingRange(10))
+            .renderer(() -> GinkgoBoatRenderer.provider(true))
+            .lang("Ginkgo Boat with Chest")
+            .register();
+
     public static void register() {
     }
 }
-

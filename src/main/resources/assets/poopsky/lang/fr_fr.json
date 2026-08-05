@@ -185,6 +185,10 @@
   "block.poopsky.ginkgo_fence_gate": "Portillon en ginkgo",
   "block.poopsky.ginkgo_door": "Porte en ginkgo",
   "block.poopsky.ginkgo_trapdoor": "Trappe en ginkgo",
+  "item.poopsky.ginkgo_boat": "Bateau en ginkgo",
+  "item.poopsky.ginkgo_chest_boat": "Bateau de stockage en ginkgo",
+  "entity.poopsky.ginkgo_boat": "Bateau en ginkgo",
+  "entity.poopsky.ginkgo_chest_boat": "Bateau de stockage en ginkgo",
   "block.poopsky.stool": "Tabouret de crotte",
   "block.poopsky.poolime_block": "Bloc de Poolime",
   "block.poopsky.poolime_maggots_block": "Bloc d’asticots de Poolime",
@@ -230,6 +234,8 @@
   "block.poopsky.rainbow_toilet": "Toilettes arc-en-ciel",
   "block.poopsky.flush_toilet": "Toilettes à chasse d’eau",
   "block.poopsky.golden_flush_toilet": "Toilettes dorées",
+  "block.poopsky.ginkgo_toilet": "Toilettes en ginkgo",
+  "block.poopsky.portable_toilet": "Toilettes portables",
 
   "fly_type.poopsky.normal": "Mouche normale",
   "fly_type.poopsky.white": "Mouche blanche",
@@ -634,5 +640,9 @@
   "poopsky.configuration.unlimitedFreeze": "Gel illimité",
   "poopsky.configuration.unlimitedFreeze.tooltip": "Détermine si le gel illimité est activé",
   "poopsky.configuration.freezeFilter": "Filtre de gel",
-  "poopsky.configuration.freezeFilter.tooltip": "Détermine si le filtre de gel est désactivé"
+  "poopsky.configuration.freezeFilter.tooltip": "Détermine si le filtre de gel est désactivé",
+  "poopsky.configuration.introAnimation": "Lire l’animation d’introduction",
+  "poopsky.configuration.introAnimation.tooltip": "Lit l’animation lors de la première entrée dans un monde PoopSky",
+  "poopsky.configuration.introText": "Texte d’introduction",
+  "poopsky.configuration.introYear": "Année d’introduction"
 }

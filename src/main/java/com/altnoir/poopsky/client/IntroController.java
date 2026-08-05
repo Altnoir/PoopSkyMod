@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.client;
 
+import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.client.screen.IntroScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -24,12 +25,16 @@ public final class IntroController {
     }
 
     private static void start(Runnable finishConfiguration, boolean restorePreviousScreen) {
+        if (!Config.introAnimation) {
+            finishConfiguration.run();
+            return;
+        }
         if (activeScreen != null) return;
 
         Minecraft minecraft = Minecraft.getInstance();
         IntroController.previousScreen = restorePreviousScreen ? minecraft.screen : null;
         IntroController.finishConfiguration = finishConfiguration;
-        activeScreen = new IntroScreen();
+        activeScreen = new IntroScreen(Config.introText, Config.introYear);
         minecraft.setScreen(activeScreen);
     }
 

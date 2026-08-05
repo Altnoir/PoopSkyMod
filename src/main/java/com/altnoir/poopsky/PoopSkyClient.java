@@ -16,6 +16,7 @@ import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.content.entity.model.FlyModel;
 import com.altnoir.poopsky.content.entity.model.ToiletPlugModel;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
+import com.altnoir.poopsky.content.entity.renderer.GinkgoBoatRenderer;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.impl.event.PSKeyBoardInput;
 import com.altnoir.poopsky.impl.network.PlugActionPayload;
@@ -25,8 +26,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.RecipeBookCategories;
 import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
 import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;
+import net.minecraft.client.model.BoatModel;
+import net.minecraft.client.model.ChestBoatModel;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.Holder;
@@ -65,6 +69,7 @@ public class PoopSkyClient {
         BakedModelEventHandler.register(modEventBus);
         modEventBus.addListener(PSKeyBoardInput::registerKeyMappings);
         modEventBus.addListener(ClientModEvents::registerLayers);
+        modEventBus.addListener(ClientModEvents::registerFluidRenderTypes);
         modEventBus.addListener(ClientModEvents::registerItemProperties);
         modEventBus.addListener(ClientModEvents::registerRenderTypes);
         modEventBus.addListener(ClientModEvents::registerParticleProviders);
@@ -91,6 +96,15 @@ public class PoopSkyClient {
         public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
             event.registerLayerDefinition(ToiletPlugModel.LAYER_LOCATION, ToiletPlugModel::createBodyLayer);
             event.registerLayerDefinition(FlyModel.LAYER_LOCATION, FlyModel::createBodyLayer);
+            event.registerLayerDefinition(GinkgoBoatRenderer.BOAT_LAYER, BoatModel::createBodyModel);
+            event.registerLayerDefinition(GinkgoBoatRenderer.CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel);
+        }
+
+        public static void registerFluidRenderTypes(FMLClientSetupEvent event) {
+            event.enqueueWork(() -> {
+                ItemBlockRenderTypes.setRenderLayer(PoFluids.URINE.get(), RenderType.translucent());
+                ItemBlockRenderTypes.setRenderLayer(PoFluids.FLOWING_URINE.get(), RenderType.translucent());
+            });
         }
 
         public static void registerGuiOverlays(RegisterGuiLayersEvent event) {

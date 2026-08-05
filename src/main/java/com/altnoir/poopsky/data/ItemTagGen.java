@@ -229,6 +229,8 @@ public final class ItemTagGen {
         copy(Tags.Blocks.STRIPPED_WOODS, Tags.Items.STRIPPED_WOODS);
         tag(ItemTags.LOGS_THAT_BURN).addTag(PoTags.Items.GINKGO_LOGS);
         tag(ItemTags.PLANKS).add(PoBlocks.GINKGO_PLANKS.asItem());
+        tag(ItemTags.BOATS).add(PoItems.GINKGO_BOAT.get());
+        tag(ItemTags.CHEST_BOATS).add(PoItems.GINKGO_CHEST_BOAT.get());
         tag(ItemTags.WOODEN_STAIRS).add(PoBlocks.GINKGO_STAIRS.asItem());
         tag(ItemTags.WOODEN_SLABS).add(PoBlocks.GINKGO_SLAB.asItem());
         tag(ItemTags.WOODEN_BUTTONS).add(PoBlocks.GINKGO_BUTTON.asItem());

@@ -185,6 +185,10 @@
   "block.poopsky.ginkgo_fence_gate": "イチョウのフェンスゲート",
   "block.poopsky.ginkgo_door": "イチョウのドア",
   "block.poopsky.ginkgo_trapdoor": "イチョウのトラップドア",
+  "item.poopsky.ginkgo_boat": "イチョウのボート",
+  "item.poopsky.ginkgo_chest_boat": "チェスト付きのイチョウのボート",
+  "entity.poopsky.ginkgo_boat": "イチョウのボート",
+  "entity.poopsky.ginkgo_chest_boat": "チェスト付きのイチョウのボート",
   "block.poopsky.stool": "糞のスツール",
   "block.poopsky.poolime_block": "プーライムブロック",
   "block.poopsky.poolime_maggots_block": "プーライムの蛆ブロック",
@@ -230,6 +234,8 @@
   "block.poopsky.rainbow_toilet": "虹色のトイレ",
   "block.poopsky.flush_toilet": "水洗トイレ",
   "block.poopsky.golden_flush_toilet": "黄金のトイレ",
+  "block.poopsky.ginkgo_toilet": "イチョウのトイレ",
+  "block.poopsky.portable_toilet": "携帯トイレ",
 
   "fly_type.poopsky.normal": "ノーマルハエ",
   "fly_type.poopsky.white": "白ハエ",
@@ -634,5 +640,9 @@
   "poopsky.configuration.unlimitedFreeze": "無制限の時間停止",
   "poopsky.configuration.unlimitedFreeze.tooltip": "無制限の時間停止を有効にするかどうか",
   "poopsky.configuration.freezeFilter": "時間停止フィルター",
-  "poopsky.configuration.freezeFilter.tooltip": "時間停止フィルターを無効にするかどうか"
+  "poopsky.configuration.freezeFilter.tooltip": "時間停止フィルターを無効にするかどうか",
+  "poopsky.configuration.introAnimation": "イントロアニメーションを再生",
+  "poopsky.configuration.introAnimation.tooltip": "PoopSkyワールドに初めて入るときにイントロアニメーションを再生します",
+  "poopsky.configuration.introText": "イントロテキスト",
+  "poopsky.configuration.introYear": "イントロの年"
 }

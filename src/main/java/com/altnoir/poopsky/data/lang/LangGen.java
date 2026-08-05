@@ -412,6 +412,10 @@ public final class LangGen {
         addConfig("unlimitedFreeze.tooltip", "Whether to enable unlimited freeze");
         addConfig("freezeFilter", "Freeze Filter");
         addConfig("freezeFilter.tooltip", "Whether to disable freeze filter");
+        addConfig("introAnimation", "Play Intro Animation");
+        addConfig("introAnimation.tooltip", "Whether to play the intro animation when entering a PoopSky world for the first time");
+        addConfig("introText", "Intro Text");
+        addConfig("introYear", "Intro Year");
     }
 
     private static void addConfig(String key, String value) {

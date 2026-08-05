@@ -185,6 +185,10 @@
   "block.poopsky.ginkgo_fence_gate": "Ginkgoholzzauntor",
   "block.poopsky.ginkgo_door": "Ginkgoholztür",
   "block.poopsky.ginkgo_trapdoor": "Ginkgoholzfalltür",
+  "item.poopsky.ginkgo_boat": "Ginkgoholzboot",
+  "item.poopsky.ginkgo_chest_boat": "Ginkgoholztruhenboot",
+  "entity.poopsky.ginkgo_boat": "Ginkgoholzboot",
+  "entity.poopsky.ginkgo_chest_boat": "Ginkgoholztruhenboot",
   "block.poopsky.stool": "Kackhocker",
   "block.poopsky.poolime_block": "Kackschleimblock",
   "block.poopsky.poolime_maggots_block": "Kackschleim-Madenblock",
@@ -230,6 +234,8 @@
   "block.poopsky.rainbow_toilet": "Regenbogentoilette",
   "block.poopsky.flush_toilet": "Spültoilette",
   "block.poopsky.golden_flush_toilet": "Goldene Toilette",
+  "block.poopsky.ginkgo_toilet": "Ginkgoholztoilette",
+  "block.poopsky.portable_toilet": "Tragbare Toilette",
 
   "fly_type.poopsky.normal": "Normale Fliege",
   "fly_type.poopsky.white": "Weiße Fliege",
@@ -634,5 +640,9 @@
   "poopsky.configuration.unlimitedFreeze": "Unbegrenztes Einfrieren",
   "poopsky.configuration.unlimitedFreeze.tooltip": "Aktiviert unbegrenztes Einfrieren der Zeit",
   "poopsky.configuration.freezeFilter": "Einfrierfilter",
-  "poopsky.configuration.freezeFilter.tooltip": "Deaktiviert den Einfrierfilter"
+  "poopsky.configuration.freezeFilter.tooltip": "Deaktiviert den Einfrierfilter",
+  "poopsky.configuration.introAnimation": "Introanimation abspielen",
+  "poopsky.configuration.introAnimation.tooltip": "Spielt die Introanimation beim ersten Betreten einer PoopSky-Welt ab",
+  "poopsky.configuration.introText": "Introtext",
+  "poopsky.configuration.introYear": "Introjahr"
 }

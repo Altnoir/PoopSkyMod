@@ -19,6 +19,9 @@ public class Config {
     public static boolean unlimitedFreeze;
 
     public static boolean freezeFilter;
+    public static boolean introAnimation = true;
+    public static String introText = "poopsky";
+    public static String introYear = "2026";
 
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
@@ -69,6 +72,16 @@ public class Config {
             .comment("Whether to Disable the freeze filter")
             .translation("poopsky.configuration.freezeFilter")
             .define("freezeFilter", true);
+    private static final ModConfigSpec.BooleanValue INTRO_ANIMATION = BUILDER
+            .comment("Whether to play the intro animation when entering a PoopSky world for the first time")
+            .translation("poopsky.configuration.introAnimation")
+            .define("introAnimation", true);
+    private static final ModConfigSpec.ConfigValue<String> INTRO_TEXT = BUILDER
+            .translation("poopsky.configuration.introText")
+            .define("introText", "poopsky");
+    private static final ModConfigSpec.ConfigValue<String> INTRO_YEAR = BUILDER
+            .translation("poopsky.configuration.introYear")
+            .define("introYear", "2026");
 
     static final ModConfigSpec SPEC = BUILDER.build();
 
@@ -86,5 +99,8 @@ public class Config {
         unlimitedFreeze = UNLIMITED_FREEZE.get();
 
         freezeFilter = FREEZE_FILTER.get();
+        introAnimation = INTRO_ANIMATION.get();
+        introText = INTRO_TEXT.get();
+        introYear = INTRO_YEAR.get();
     }
 }
