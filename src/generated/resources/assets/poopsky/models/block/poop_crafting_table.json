@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/slab",
   "textures": {
-    "bottom": "poopsky:block/poop_bricks",
+    "bottom": "poopsky:block/poop_block",
     "side": "poopsky:block/poop_crafting_table_side",
     "top": "poopsky:block/poop_crafting_table_top"
   }

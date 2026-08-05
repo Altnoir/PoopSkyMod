@@ -138,6 +138,12 @@ public class PFoods {
             .build();
     public static final FoodProperties KING_OF_DRAGON_FRUIT = new FoodProperties.Builder()
             .nutrition(4).saturationModifier(0.3F).fast().alwaysEdible().build();
+    public static final FoodProperties FASTING_PILL = new FoodProperties.Builder()
+            .nutrition(0)
+            .saturationModifier(0.0F)
+            .alwaysEdible()
+            .effect(() -> new MobEffectInstance(MobEffects.SATURATION, 24000), 1.0F)
+            .build();
 
     public static final FoodProperties URINE_BOTTLE = new FoodProperties.Builder().build();
 }

@@ -178,7 +178,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         String path = getBlockPath(PoBlocks.POOP_CRAFTING_TABLE.get());
         ModelFile model = models().slab(path,
                 modLoc("block/poop_crafting_table_side"),
-                modLoc("block/poop_bricks"),
+                modLoc("block/poop_block"),
                 modLoc("block/poop_crafting_table_top")
         );
         simpleBlockWithItem(PoBlocks.POOP_CRAFTING_TABLE.get(), model);

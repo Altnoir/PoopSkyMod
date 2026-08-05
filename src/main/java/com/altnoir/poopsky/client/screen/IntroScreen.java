@@ -15,7 +15,6 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -24,7 +23,7 @@ import org.lwjgl.glfw.GLFW;
 
 public class IntroScreen extends Screen {
     private static final ResourceLocation FONT = PoopSky.loc("poopsky_intro");
-    private static final ResourceLocation POOP_TEXTURE = PoopSky.loc("textures/item/poop.png");
+    private static final ResourceLocation POOP_TEXTURE = PoopSky.loc("textures/item/shit.png");
     private static final ResourceLocation SKY_TEXTURE = PoopSky.loc("textures/gui/poopsky_intro/depth_blue.png");
 
     private static final float VIRTUAL_WIDTH = 1920.0F;
@@ -161,7 +160,7 @@ public class IntroScreen extends Screen {
         float pitch = 0.78F + this.random.nextFloat() * 0.35F;
         float volume = 0.85F + this.random.nextFloat() * 0.2F;
 
-        this.minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.GENERIC_EXPLODE.value(), pitch, volume));
+        this.minecraft.getSoundManager().play(SimpleSoundInstance.forUI(PoSoundEvents.FART.value(), pitch, volume));
 
         this.completionSoundStage++;
         this.nextExplosionTick += 3;

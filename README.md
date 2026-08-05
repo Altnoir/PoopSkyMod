@@ -31,6 +31,11 @@ A Minecraft mod that introduces many new Poop and items.
 - [Modrinth](https://modrinth.com/mod/poopsky)
 - [Curseforge](https://www.curseforge.com/minecraft/mc-mods/poopsky)
 
+## LICENSE
+
+- [CODE](LICENSE-CODE)
+- [ART](LICENSE-ART)
+
 ## Credits
 
 - [Create](https://github.com/Creators-of-Create/Create/)
