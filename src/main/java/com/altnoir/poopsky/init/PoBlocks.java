@@ -237,9 +237,9 @@ public class PoBlocks {
     public static final BlockFamily PINK_TILE_BLOCK_FAMILY = coloredTile(DyeColor.PINK).family();
 
     public static final BlockEntry<ChairBlock> STOOL = registerBlock("stool", 88,
-            props -> new ChairBlock(poopProperties()
-                    .pushReaction(PushReaction.DESTROY)
-                    .noOcclusion()));
+            props -> new ChairBlock(poopProperties().pushReaction(PushReaction.DESTROY).noOcclusion()));
+    public static final BlockEntry<PoopCraftingTableBlock> POOP_CRAFTING_TABLE = registerBlock("poop_crafting_table", 88,
+            props -> new PoopCraftingTableBlock(poopProperties().noOcclusion()));
     public static final BlockEntry<CompooperBlock> COMPOOPER = registerCompooperBlock("compooper",
             props -> new CompooperBlock(simpleProperties(MapColor.COLOR_BROWN, 0.6F, SoundType.METAL)
                     .noOcclusion()

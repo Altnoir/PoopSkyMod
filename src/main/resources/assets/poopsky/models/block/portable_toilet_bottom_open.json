@@ -5,7 +5,7 @@
 	"texture_size": [64, 64],
 	"textures": {
 		"toilet": "poopsky:block/portable_toilet_bottom",
-		"particle": "#toilet"
+		"particle": "poopsky:block/portable_toilet_particle"
 	},
 	"elements": [
 		{

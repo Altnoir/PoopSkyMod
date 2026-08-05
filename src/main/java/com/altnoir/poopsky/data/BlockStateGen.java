@@ -36,6 +36,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         poopBlock();
         poopPiece();
         poopFarmland();
+        poopCraftingTable();
         poolimeMaggotsBlock();
         registerPoopCake();
         blockWithTranslucentRenderType(PoBlocks.POOLIME_BLOCK.get());
@@ -171,6 +172,16 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
                 .partialState().with(PoopFarmlandBlock.MODE, PoopFarmlandBlock.FarmMode.ENRICHED_LEAK).addModels(new ConfiguredModel(enrichedLeakModel));
 
         simpleBlockItem(PoBlocks.POOP_FARMLAND.get(), defaultModel);
+    }
+
+    private void poopCraftingTable() {
+        String path = getBlockPath(PoBlocks.POOP_CRAFTING_TABLE.get());
+        ModelFile model = models().slab(path,
+                modLoc("block/poop_crafting_table_side"),
+                modLoc("block/poop_bricks"),
+                modLoc("block/poop_crafting_table_top")
+        );
+        simpleBlockWithItem(PoBlocks.POOP_CRAFTING_TABLE.get(), model);
     }
 
     private void registerPoopCake() {

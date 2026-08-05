@@ -9,6 +9,7 @@ import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.content.item.p.TimeBellItem;
 import com.altnoir.poopsky.content.villager.PVillagerBehaviors;
 import com.altnoir.poopsky.content.villager.PVillagerTrades;
+import com.altnoir.poopsky.client.inventory.PoopCraftingMenu;
 import com.altnoir.poopsky.impl.IntroSavedData;
 import com.altnoir.poopsky.impl.command.PoCommands;
 import com.altnoir.poopsky.init.*;
@@ -72,7 +73,16 @@ public class PoGameEvents {
         gameEventBus.addListener(PoGameEvents::onCreateSpawnToilet);
         gameEventBus.addListener(PoGameEvents::onPlayerLoggedIn);
         gameEventBus.addListener(PoGameEvents::onServerTick);
+        gameEventBus.addListener(PoGameEvents::onItemCrafted);
         gameEventBus.addListener(PoCommands::register);
+    }
+
+    public static void onItemCrafted(PlayerEvent.ItemCraftedEvent event) {
+        if (event.getEntity() instanceof Player player
+                && !player.level().isClientSide
+                && player.containerMenu instanceof PoopCraftingMenu menu) {
+            menu.consumeCraftingTable();
+        }
     }
 
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {

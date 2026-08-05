@@ -3,15 +3,15 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "poopsky:crafting_table_from_spall"
+        "recipe": "poopsky:poop_crafting_table_from_poop_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "spall": {
+    "poop_slab": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:spall"
+            "items": "poopsky:poop_slab"
           }
         ]
       },
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "spall"
+      "poop_slab"
     ]
   ],
   "rewards": {
     "recipes": [
-      "poopsky:crafting_table_from_spall"
+      "poopsky:poop_crafting_table_from_poop_slab"
     ]
   }
 }

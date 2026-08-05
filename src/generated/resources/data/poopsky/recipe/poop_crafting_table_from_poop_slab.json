@@ -3,7 +3,7 @@
   "category": "building",
   "key": {
     "#": {
-      "item": "poopsky:spall"
+      "item": "poopsky:poop_slab"
     }
   },
   "pattern": [
@@ -11,7 +11,7 @@
     "##"
   ],
   "result": {
-    "count": 1,
-    "id": "minecraft:crafting_table"
+    "count": 8,
+    "id": "poopsky:poop_crafting_table"
   }
 }
