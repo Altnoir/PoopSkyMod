@@ -79,8 +79,8 @@ public final class ToiletTypes {
     public static final ToiletType SMOOTH_QUARTZ = ToiletType.register(Blocks.SMOOTH_QUARTZ, ToiletType.Category.HARD).texture("quartz_block_bottom").nameKey("block.poopsky.toilet.smooth_quartz");
     public static final ToiletType CHISELED_QUARTZ_BLOCK = ToiletType.register(Blocks.CHISELED_QUARTZ_BLOCK, ToiletType.Category.HARD);
     public static final ToiletType UARTZ_BRICKS = ToiletType.register(Blocks.QUARTZ_BRICKS, ToiletType.Category.HARD);
-    public static final ToiletType END_STONE = ToiletType.register(Blocks.END_STONE, ToiletType.Category.HARD);
-    public static final ToiletType END_STONE_BRICK = ToiletType.register(Blocks.END_STONE_BRICKS, ToiletType.Category.HARD);
+    public static final ToiletType END_STONE = ToiletType.register(Blocks.END_STONE, ToiletType.Category.HARD).end();
+    public static final ToiletType END_STONE_BRICK = ToiletType.register(Blocks.END_STONE_BRICKS, ToiletType.Category.HARD).end();
     public static final ToiletType PURPUR_BLOCK = ToiletType.register(Blocks.PURPUR_BLOCK, ToiletType.Category.HARD);
     // ——— 彩色石质厕所 ———
     public static final ToiletType TERRACOTTA = ToiletType.register(Blocks.TERRACOTTA, ToiletType.Category.HARD);

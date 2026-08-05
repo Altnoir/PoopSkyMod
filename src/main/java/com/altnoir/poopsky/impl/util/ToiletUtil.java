@@ -16,6 +16,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.TickTask;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -28,6 +29,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.EndPlatformFeature;
+import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.ItemStackHandler;
@@ -205,8 +208,12 @@ public class ToiletUtil {
     }
 
     public static boolean tryTeleportFromFall(Level level, BlockPos pos, Entity entity, float fallDistance) {
-        if (fallDistance < 1.0F || !isEntityInToiletPit(level, pos, entity)) {
+        if (fallDistance <= 1.0F || !isEntityInToiletPit(level, pos, entity)) {
             return false;
+        }
+        if (isEndToilet(level, pos)) {
+            teleportThroughEndPortal(level, entity);
+            return true;
         }
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity != null && hasLinkedTarget(blockEntity)) {
@@ -214,6 +221,52 @@ public class ToiletUtil {
             return true;
         }
         return false;
+    }
+
+    private static boolean isEndToilet(Level level, BlockPos pos) {
+        if (!(level.getBlockState(pos).getBlock() instanceof AbstractToiletBlock toilet)) {
+            return false;
+        }
+        return toilet.getToiletTypeOrDefault(level, pos).isEnd();
+    }
+
+    private static void teleportThroughEndPortal(Level level, Entity entity) {
+        if (!(level instanceof ServerLevel serverLevel)) {
+            return;
+        }
+
+        ResourceKey<Level> targetKey = level.dimension() == Level.END ? Level.OVERWORLD : Level.END;
+        ServerLevel targetLevel = serverLevel.getServer().getLevel(targetKey);
+        if (targetLevel == null) {
+            return;
+        }
+
+        float yRot = entity.getYRot();
+        Vec3 destination;
+        if (targetKey == Level.END) {
+            BlockPos spawnPos = ServerLevel.END_SPAWN_POINT;
+            destination = spawnPos.getBottomCenter();
+            EndPlatformFeature.createEndPlatform(targetLevel, BlockPos.containing(destination).below(), true);
+            yRot = Direction.WEST.toYRot();
+            if (entity instanceof ServerPlayer) {
+                destination = destination.subtract(0.0, 1.0, 0.0);
+            }
+        } else {
+            if (entity instanceof ServerPlayer serverPlayer) {
+                entity.changeDimension(serverPlayer.findRespawnPositionAndUseSpawnBlock(false, DimensionTransition.DO_NOTHING));
+                return;
+            }
+            destination = entity.adjustSpawnLocation(targetLevel, targetLevel.getSharedSpawnPos()).getBottomCenter();
+        }
+
+        entity.changeDimension(new DimensionTransition(
+                targetLevel,
+                destination,
+                entity.getDeltaMovement(),
+                yRot,
+                entity.getXRot(),
+                DimensionTransition.PLAY_PORTAL_SOUND.then(DimensionTransition.PLACE_PORTAL_TICKET)
+        ));
     }
 
     private static boolean isEntityInToiletPit(Level level, BlockPos pos, Entity entity) {
@@ -236,7 +289,7 @@ public class ToiletUtil {
             Direction facing = state.getValue(AbstractToiletBlock.FACING);
             double forward = offsetX * facing.getStepX() + offsetZ * facing.getStepZ();
             double sideways = Math.abs(offsetX * facing.getStepZ() - offsetZ * facing.getStepX());
-            return sideways <= 3.0 / 16.0 && Math.abs(forward) <= 7.0 / 16.0;
+            return sideways <= 3.0 / 16.0 && Math.abs(forward) <= 8.0 / 16.0;
         }
 
         return false;

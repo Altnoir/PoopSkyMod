@@ -4,6 +4,7 @@
     "translate": "block.poopsky.rainbow_toilet"
   },
   "hardness": 10.0,
+  "is_end": false,
   "is_golden": true,
   "is_redstone": false,
   "name_key": "block.poopsky.toilet.rainbow",

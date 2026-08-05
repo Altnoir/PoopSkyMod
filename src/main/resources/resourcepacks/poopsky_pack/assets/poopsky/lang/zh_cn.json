@@ -629,7 +629,7 @@
   "poopsky.configuration.strongholdGeneration": "生成末地要塞",
   "poopsky.configuration.strongholdGeneration.tooltip": "是否在空中卫生间世界中生成末地要塞结构",
   "poopsky.configuration.lavaFluid": "禁用地下熔岩湖",
-  "poopsky.configuration.lavaFluid.tooltip": "在空中卫生间世界生成中禁用地下熔岩湖",
+  "poopsky.configuration.lavaFluid.tooltip": "在世界生成中禁用地下熔岩湖",
   "poopsky.configuration.skyFlushToilet": "空中马桶",
   "poopsky.configuration.skyFlushToilet.tooltip": "替换空中卫生间世界预设里的默认巧克力礼盒",
   "poopsky.configuration.desperateWorld": "绝望世界",

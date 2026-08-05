@@ -470,8 +470,8 @@ public class PoBlocks {
                     .ignitedByLava()),
             (loot, block) -> loot.add(block, createToiletDrop(block)));
 
-    public static final BlockEntry<LavaToiletBlock> HARD_TOILET = registerToiletBlock("hard_toilet",
-            props -> new LavaToiletBlock(toiletProperties(MapColor.STONE, HARD_STRENGTH, SoundType.STONE, NoteBlockInstrument.BASEDRUM)
+    public static final BlockEntry<HardToiletBlock> HARD_TOILET = registerToiletBlock("hard_toilet",
+            props -> new HardToiletBlock(toiletProperties(MapColor.STONE, HARD_STRENGTH, SoundType.STONE, NoteBlockInstrument.BASEDRUM)
                     .lightLevel(lavaLightLevel())
                     .requiresCorrectToolForDrops()
                     .randomTicks()

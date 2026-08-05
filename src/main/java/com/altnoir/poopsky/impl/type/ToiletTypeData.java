@@ -70,6 +70,9 @@ public class ToiletTypeData implements DataProvider {
         // is_golden
         json.addProperty("is_golden", type.isGolden());
 
+        // is_end
+        json.addProperty("is_end", type.isEnd());
+
         // name_key (始终写出，用于自定义名称或默认指向源方块翻译键)
         json.addProperty("name_key", type.nameKey());
 

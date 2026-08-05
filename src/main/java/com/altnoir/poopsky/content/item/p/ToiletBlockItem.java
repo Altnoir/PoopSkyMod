@@ -2,7 +2,7 @@ package com.altnoir.poopsky.content.item.p;
 
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
-import com.altnoir.poopsky.content.block.p.LavaToiletBlock;
+import com.altnoir.poopsky.content.block.p.HardToiletBlock;
 import com.altnoir.poopsky.content.block.p.WoodToiletBlock;
 import com.altnoir.poopsky.init.PoComponents;
 import net.minecraft.ChatFormatting;
@@ -49,7 +49,7 @@ public class ToiletBlockItem extends BlockItem {
         if (type == null) return state;
 
         Block block = getBlock();
-        if (block instanceof LavaToiletBlock lava) {
+        if (block instanceof HardToiletBlock lava) {
             return lava.applyVariant(state, type);
         } else if (block instanceof WoodToiletBlock) {
             return state;

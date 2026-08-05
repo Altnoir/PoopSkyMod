@@ -25,8 +25,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.event.EventHooks;
 import org.jetbrains.annotations.NotNull;
 
-public class LavaToiletBlock extends BaseToiletLavaBlock {
-    public static final MapCodec<LavaToiletBlock> CODEC = simpleCodec(LavaToiletBlock::new);
+public class HardToiletBlock extends BaseToiletLavaBlock {
+    public static final MapCodec<HardToiletBlock> CODEC = simpleCodec(HardToiletBlock::new);
 
     public enum ToiletMode implements StringRepresentable {
         DEFAULT("default"),
@@ -46,7 +46,7 @@ public class LavaToiletBlock extends BaseToiletLavaBlock {
 
     public static final EnumProperty<ToiletMode> TOILET_MODE = EnumProperty.create("toilet_mode", ToiletMode.class);
 
-    public LavaToiletBlock(Properties properties) {
+    public HardToiletBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(FACING, Direction.NORTH)

@@ -101,6 +101,10 @@ public class PVillagerTrades {
                     new ItemStack(Items.EMERALD, 3), 88, 5, 0.1f)
             );
             trades.get(1).add((entity, random) -> new MerchantOffer(
+                    new ItemCost(PoBlocks.MAGGOTS_BLOCK, 8),
+                    new ItemStack(Items.EMERALD, 8), 88, 5, 0.1f)
+            );
+            trades.get(1).add((entity, random) -> new MerchantOffer(
                     new ItemCost(PoItems.URINE_BOTTLE, 1),
                     new ItemStack(Items.EMERALD, 2), 88, 5, 0.1f)
             );

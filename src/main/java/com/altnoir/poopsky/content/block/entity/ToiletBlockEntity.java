@@ -3,7 +3,7 @@ package com.altnoir.poopsky.content.block.entity;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
-import com.altnoir.poopsky.content.block.p.LavaToiletBlock;
+import com.altnoir.poopsky.content.block.p.HardToiletBlock;
 import com.altnoir.poopsky.init.PoBlockEntityType;
 import com.altnoir.poopsky.init.PoFluids;
 import com.altnoir.poopsky.init.ToiletTypes;
@@ -73,11 +73,11 @@ public class ToiletBlockEntity extends BlockEntity {
         if (level == null) return;
         BlockState state = getBlockState();
         boolean shouldBeRedstone = toiletType != null && toiletType.isRedstone();
-        if (state.getBlock() instanceof LavaToiletBlock) {
-            LavaToiletBlock.ToiletMode currentMode = state.getValue(LavaToiletBlock.TOILET_MODE);
-            LavaToiletBlock.ToiletMode targetMode = shouldBeRedstone ? LavaToiletBlock.ToiletMode.REDSTONE : LavaToiletBlock.ToiletMode.DEFAULT;
+        if (state.getBlock() instanceof HardToiletBlock) {
+            HardToiletBlock.ToiletMode currentMode = state.getValue(HardToiletBlock.TOILET_MODE);
+            HardToiletBlock.ToiletMode targetMode = shouldBeRedstone ? HardToiletBlock.ToiletMode.REDSTONE : HardToiletBlock.ToiletMode.DEFAULT;
             if (currentMode != targetMode) {
-                level.setBlock(getBlockPos(), state.setValue(LavaToiletBlock.TOILET_MODE, targetMode), 3);
+                level.setBlock(getBlockPos(), state.setValue(HardToiletBlock.TOILET_MODE, targetMode), 3);
             }
         }
     }
