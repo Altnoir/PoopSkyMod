@@ -150,6 +150,12 @@ public class PoItems {
             props -> new Item(props.jukeboxPlayable(PoSoundEvents.LIGHT_DANCE_KEY).rarity(Rarity.RARE).stacksTo(1)));
     public static final ItemEntry<Item> MOON_BOWL_MUSIC_DISC = registerItem("music_disc_moon_bowl",
             props -> new Item(props.jukeboxPlayable(PoSoundEvents.MOON_BOWL_KEY).rarity(Rarity.RARE).stacksTo(1)));
+    public static final ItemEntry<GinkgoBoatItem> GINKGO_BOAT = registerItem("ginkgo_boat",
+            props -> new GinkgoBoatItem(false, PoEntityType.GINKGO_BOAT, props.stacksTo(1)));
+    public static final ItemEntry<GinkgoBoatItem> GINKGO_CHEST_BOAT = REGISTRATE
+            .item("ginkgo_chest_boat", props -> new GinkgoBoatItem(true, PoEntityType.GINKGO_CHEST_BOAT, props.stacksTo(1)))
+            .lang("Ginkgo Boat with Chest")
+            .register();
     public static final ItemEntry<SpawnEggItem> POOLIME_SPAWN_EGG = registerItemNoModel("poolime_spawn_egg",
             prop -> new SpawnEggItem(PoEntityType.POOLIME.get(), 0x7D5F36, 0x5E4228, prop));
     public static final ItemEntry<SpawnEggItem> FLY_SPAWN_EGG = registerItemNoModel("fly_spawn_egg",

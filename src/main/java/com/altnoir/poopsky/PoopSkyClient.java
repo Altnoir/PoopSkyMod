@@ -19,6 +19,7 @@ import com.altnoir.poopsky.content.block.renderer.SieveBlockEntityRenderer;
 import com.altnoir.poopsky.content.entity.model.FlyModel;
 import com.altnoir.poopsky.content.entity.model.ToiletPlugModel;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
+import com.altnoir.poopsky.content.entity.renderer.GinkgoBoatRenderer;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.fabric.PoFabricated;
 import com.altnoir.poopsky.impl.event.PSKeyBoardInput;
@@ -41,6 +42,8 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
 import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;
+import net.minecraft.client.model.BoatModel;
+import net.minecraft.client.model.ChestBoatModel;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -87,6 +90,8 @@ public class PoopSkyClient implements ClientModInitializer {
     private static void registerLayers() {
         EntityModelLayerRegistry.registerModelLayer(ToiletPlugModel.LAYER_LOCATION, ToiletPlugModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(FlyModel.LAYER_LOCATION, FlyModel::createBodyLayer);
+        EntityModelLayerRegistry.registerModelLayer(GinkgoBoatRenderer.BOAT_LAYER, BoatModel::createBodyModel);
+        EntityModelLayerRegistry.registerModelLayer(GinkgoBoatRenderer.CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel);
     }
 
     private static void registerBlockEntityRenderers() {

@@ -16,6 +16,7 @@
     "VillagerMixin"
   ],
   "client": [
+    "BoatRendererAccessor",
     "ClientPacketListenerMixin",
     "CreateWorldScreenWorldTabMixin",
     "CreativeModeInventoryScreenMixin",
