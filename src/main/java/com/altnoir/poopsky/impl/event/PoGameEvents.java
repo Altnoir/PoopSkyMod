@@ -1,15 +1,17 @@
 package com.altnoir.poopsky.impl.event;
 
 import com.altnoir.poopsky.Config;
+import com.altnoir.poopsky.client.inventory.PoopCraftingMenu;
 import com.altnoir.poopsky.content.FlyTypeManager;
+import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.ToiletTypeManager;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
+import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.content.item.p.TimeBellItem;
 import com.altnoir.poopsky.content.villager.PVillagerBehaviors;
 import com.altnoir.poopsky.content.villager.PVillagerTrades;
-import com.altnoir.poopsky.client.inventory.PoopCraftingMenu;
 import com.altnoir.poopsky.impl.IntroSavedData;
 import com.altnoir.poopsky.impl.command.PoCommands;
 import com.altnoir.poopsky.init.*;
@@ -210,7 +212,7 @@ public class PoGameEvents {
         if (event.getLevel() instanceof ServerLevel level && level.getChunkSource().getGenerator() instanceof PoVoidChunkGenerator) {
             BlockPos pos = PoVoidChunkGenerator.defaultSpawnPosition(level.getSeed());
 
-            level.setBlock(pos, Config.skyFlushToilet ? PoBlocks.FLUSH_TOILET.get().defaultBlockState() : PoBlocks.WOODEN_TOILET.get().defaultBlockState(), 2);
+            placeSpawnToilet(level, pos);
 
             event.setCanceled(true);
             BlockPos spawn = level.getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, pos);
@@ -221,6 +223,23 @@ public class PoGameEvents {
             BlockPos islandCenter = PoopIslandStructure.getGuaranteedSpawnIslandCenter(level.getSeed(), spawn);
             ChunkPos islandChunk = new ChunkPos(islandCenter);
             level.getChunk(islandChunk.x, islandChunk.z);
+        }
+    }
+
+    private static void placeSpawnToilet(ServerLevel level, BlockPos pos) {
+        switch (Config.spawnToiletMode) {
+            case WOODEN_TOILET -> level.setBlock(pos, PoBlocks.WOODEN_TOILET.get().defaultBlockState(), 2);
+            case SKY_FLUSH_TOILET -> level.setBlock(pos, PoBlocks.FLUSH_TOILET.get().defaultBlockState(), 2);
+            case RANDOM_TOILET -> {
+                ToiletType[] pool = ToiletType.getByCategory(ToiletType.Category.HARD)
+                        .values()
+                        .toArray(ToiletType[]::new);
+                ToiletType type = pool[level.random.nextInt(pool.length)];
+                level.setBlock(pos, PoBlocks.HARD_TOILET.get().defaultBlockState(), 2);
+                if (level.getBlockEntity(pos) instanceof ToiletBlockEntity blockEntity) {
+                    blockEntity.setToiletType(type);
+                }
+            }
         }
     }
 
