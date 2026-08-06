@@ -1,5 +1,5 @@
 {
-  "parent": "poopsky:summon_villager",
+  "parent": "poopsky:compooper",
   "criteria": {
     "rainbow_toilet": {
       "conditions": {

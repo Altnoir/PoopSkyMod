@@ -16,6 +16,7 @@
     "description": {
       "translate": "advancements.poopsky.brown_tile_block.description"
     },
+    "frame": "challenge",
     "icon": {
       "count": 1,
       "id": "poopsky:brown_tile_block"

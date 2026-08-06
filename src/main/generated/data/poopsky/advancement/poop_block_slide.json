@@ -1,5 +1,5 @@
 {
-  "parent": "poopsky:root",
+  "parent": "poopsky:poop_block",
   "criteria": {
     "poop_block_slide": {
       "conditions": {

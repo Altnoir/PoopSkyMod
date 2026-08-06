@@ -309,6 +309,7 @@ public final class LangGen {
         provider.add("container.poopsky.fly_barrel", "Fly Barrel");
         provider.add("container.poopsky.breeding_chest", "Breeding Box");
         provider.add("container.poopsky.flush_toilet", "Flush Toilet");
+        provider.add("container.poopsky.portable_toilet", "Portable Toilet");
 
         // Painting
         provider.add("painting.poopsky.poop.title", "Poop");

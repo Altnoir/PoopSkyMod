@@ -124,7 +124,6 @@ public class PoopFarmlandBlock extends FarmBlock {
         FarmMode mode = state.getValue(MODE);
         if (mode.isEnriched()) {
             tryEnrichedGrow(level, pos);
-            cropDrop(level, pos);
         }
     }
 

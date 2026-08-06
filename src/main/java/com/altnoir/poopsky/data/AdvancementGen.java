@@ -43,8 +43,22 @@ public final class AdvancementGen {
                 .requirements(AdvancementRequirements.Strategy.OR)
                 .save(provider, modId("root"));
 
-        Advancement.Builder.advancement()
+        AdvancementHolder poop_block = Advancement.Builder.advancement()
                 .parent(root)
+                .display(
+                        PoBlocks.POOP_BLOCK.get(),
+                        Component.translatable("advancements.poopsky.poop_block.title"),
+                        Component.translatable("advancements.poopsky.poop_block.description"),
+                        null,
+                        AdvancementType.TASK,
+                        true,
+                        true,
+                        false
+                )
+                .addCriterion("poop_block", InventoryChangeTrigger.TriggerInstance.hasItems(PoBlocks.POOP_BLOCK.get()))
+                .save(provider, modId("poop_block"));
+        Advancement.Builder.advancement()
+                .parent(poop_block)
                 .display(
                         PoBlocks.POOP_BLOCK.get(),
                         Component.translatable("advancements.poopsky.poop_block_slide.title"),
@@ -58,8 +72,23 @@ public final class AdvancementGen {
                 .addCriterion("poop_block_slide", SlideDownBlockTrigger.TriggerInstance.slidesDownBlock(PoBlocks.POOP_BLOCK.get()))
                 .save(provider, modId("poop_block_slide"));
 
+        AdvancementHolder poop_crafting_table = Advancement.Builder.advancement()
+                .parent(poop_block)
+                .display(
+                        PoBlocks.POOP_CRAFTING_TABLE.get(),
+                        Component.translatable("advancements.poopsky.poop_crafting_table.title"),
+                        Component.translatable("advancements.poopsky.poop_crafting_table.description"),
+                        null,
+                        AdvancementType.TASK,
+                        true,
+                        true,
+                        false
+                )
+                .addCriterion("poop_crafting_table", InventoryChangeTrigger.TriggerInstance.hasItems(PoBlocks.POOP_CRAFTING_TABLE.get()))
+                .save(provider, modId("poop_crafting_table"));
+
         AdvancementHolder saltpeter_cluster = Advancement.Builder.advancement()
-                .parent(root)
+                .parent(poop_block)
                 .display(
                         PoBlocks.SALTPETER_CLUSTER.get(),
                         Component.translatable("advancements.poopsky.saltpeter_cluster.title"),
@@ -88,7 +117,7 @@ public final class AdvancementGen {
                 .save(provider, modId("powder_snow"));
 
         AdvancementHolder poop_sapling = Advancement.Builder.advancement()
-                .parent(root)
+                .parent(poop_block)
                 .display(
                         PoBlocks.POOP_SAPLING.get(),
                         Component.translatable("advancements.poopsky.poop_sapling.title"),
@@ -102,7 +131,7 @@ public final class AdvancementGen {
                 .addCriterion("poop_sapling", InventoryChangeTrigger.TriggerInstance.hasItems(PoBlocks.POOP_SAPLING.get()))
                 .save(provider, modId("poop_sapling"));
         Advancement.Builder.advancement()
-                .parent(poop_sapling)
+                .parent(poop_crafting_table)
                 .display(
                         Blocks.POINTED_DRIPSTONE,
                         Component.translatable("advancements.poopsky.pointed_dripstone.title"),
@@ -117,7 +146,7 @@ public final class AdvancementGen {
                 .save(provider, modId("pointed_dripstone"));
 
         AdvancementHolder compooper = Advancement.Builder.advancement()
-                .parent(poop_sapling)
+                .parent(poop_crafting_table)
                 .display(
                         PoBlocks.COMPOOPER.get(),
                         Component.translatable("advancements.poopsky.compooper.title"),
@@ -130,6 +159,145 @@ public final class AdvancementGen {
                 )
                 .addCriterion("compooper", InventoryChangeTrigger.TriggerInstance.hasItems(PoBlocks.COMPOOPER.get()))
                 .save(provider, modId("compooper"));
+        AdvancementHolder toilet_plug = Advancement.Builder.advancement()
+                .parent(compooper)
+                .display(
+                        PoItems.TOILET_PLUG,
+                        Component.translatable("advancements.poopsky.toilet_plug.title"),
+                        Component.translatable("advancements.poopsky.toilet_plug.description"),
+                        null,
+                        AdvancementType.TASK,
+                        true,
+                        true,
+                        false
+                )
+                .addCriterion("toilet_plug", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.TOILET_PLUG.get()))
+                .save(provider, modId("toilet_plug"));
+        Advancement.Builder.advancement()
+                .parent(toilet_plug)
+                .display(
+                        PoBlocks.PLACER,
+                        Component.translatable("advancements.poopsky.placer.title"),
+                        Component.translatable("advancements.poopsky.placer.description"),
+                        null,
+                        AdvancementType.TASK,
+                        true,
+                        true,
+                        false
+                )
+                .addCriterion("placer", InventoryChangeTrigger.TriggerInstance.hasItems(PoBlocks.PLACER.get()))
+                .save(provider, modId("placer"));
+        Advancement.Builder.advancement()
+                .parent(compooper)
+                .display(
+                        PoItems.OMEN_CHESTPLATE,
+                        Component.translatable("advancements.poopsky.omen_armor.title"),
+                        Component.translatable("advancements.poopsky.omen_armor.description"),
+                        null,
+                        AdvancementType.CHALLENGE,
+                        true,
+                        true,
+                        false
+                )
+                .requirements(AdvancementRequirements.Strategy.OR)
+                .addCriterion("omen_helmet", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.OMEN_HELMET))
+                .addCriterion("omen_chestplate", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.OMEN_CHESTPLATE))
+                .addCriterion("omen_leggings", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.OMEN_LEGGINGS))
+                .addCriterion("omen_boots", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.OMEN_BOOTS))
+                .save(provider, modId("omen_armor"));
+
+        AdvancementHolder chili = Advancement.Builder.advancement()
+                .parent(compooper)
+                .display(
+                        PoItems.DRAGON_BREATH_CHILI,
+                        Component.translatable("advancements.poopsky.chili.title"),
+                        Component.translatable("advancements.poopsky.chili.description"),
+                        null,
+                        AdvancementType.GOAL,
+                        true,
+                        true,
+                        false
+                )
+                .addCriterion("chili", EffectsChangedTrigger.TriggerInstance.hasEffects(MobEffectsPredicate.Builder.effects().and(PoEffects.INTESTINAL_SPASM)))
+                .save(provider, modId("chili"));
+        Advancement.Builder.advancement()
+                .parent(chili)
+                .display(
+                        PoBlocks.DRIED_POOP_BLOCK,
+                        Component.translatable("advancements.poopsky.dried_poop_block.title"),
+                        Component.translatable("advancements.poopsky.dried_poop_block.description"),
+                        null,
+                        AdvancementType.TASK,
+                        true,
+                        true,
+                        false
+                )
+                .addCriterion("dried_poop_block", InventoryChangeTrigger.TriggerInstance.hasItems(PoBlocks.DRIED_POOP_BLOCK.get()))
+                .save(provider, modId("dried_poop_block"));
+        AdvancementHolder chili_poop = Advancement.Builder.advancement()
+                .parent(chili)
+                .display(
+                        PoItems.CHILI_POOP,
+                        Component.translatable("advancements.poopsky.chili_poop.title"),
+                        Component.translatable("advancements.poopsky.chili_poop.description"),
+                        null,
+                        AdvancementType.TASK,
+                        true,
+                        true,
+                        false
+                )
+                .addCriterion("chili_poop", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.CHILI_POOP.get()))
+                .save(provider, modId("chili_poop"));
+        AdvancementHolder chili_poop_block = Advancement.Builder.advancement()
+                .parent(chili_poop)
+                .display(
+                        PoBlocks.CHILI_POOP_BLOCK,
+                        Component.translatable("advancements.poopsky.chili_poop_block.title"),
+                        Component.translatable("advancements.poopsky.chili_poop_block.description"),
+                        null,
+                        AdvancementType.TASK,
+                        true,
+                        true,
+                        false
+                )
+                .addCriterion("chili_poop_block", InventoryChangeTrigger.TriggerInstance.hasItems(PoBlocks.CHILI_POOP_BLOCK.get()))
+                .save(provider, modId("chili_poop_block"));
+        Advancement.Builder.advancement()
+                .parent(chili_poop_block)
+                .display(
+                        PoBlocks.FLUSH_TOILET,
+                        Component.translatable("advancements.poopsky.flush_toilet.title"),
+                        Component.translatable("advancements.poopsky.flush_toilet.description"),
+                        null,
+                        AdvancementType.TASK,
+                        true,
+                        true,
+                        false
+                )
+                .addCriterion("flush_toilet", InventoryChangeTrigger.TriggerInstance.hasItems(PoBlocks.FLUSH_TOILET.get()))
+                .save(provider, modId("flush_toilet"));
+        var rainbowStack = new ItemStack(PoBlocks.HARD_TOILET.get());
+        rainbowStack.set(PoComponents.TOILET_TYPE.get(), ToiletTypes.RAINBOW);
+
+        Advancement.Builder.advancement()
+                .parent(compooper)
+                .display(
+                        rainbowStack,
+                        Component.translatable("advancements.poopsky.rainbow_toilet.title"),
+                        Component.translatable("advancements.poopsky.rainbow_toilet.description"),
+                        null,
+                        AdvancementType.CHALLENGE,
+                        true,
+                        true,
+                        false
+                )
+                .addCriterion("rainbow_toilet", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
+                        .of(PoBlocks.HARD_TOILET.get())
+                        .hasComponents(DataComponentPredicate.builder()
+                                .expect(PoComponents.TOILET_TYPE.get(), ToiletTypes.RAINBOW)
+                                .build())))
+                .save(provider, modId("rainbow_toilet"));
+
         AdvancementHolder urine_compooper = Advancement.Builder.advancement()
                 .parent(compooper)
                 .display(
@@ -207,7 +375,7 @@ public final class AdvancementGen {
                         Component.translatable("advancements.poopsky.brown_tile_block.title"),
                         Component.translatable("advancements.poopsky.brown_tile_block.description"),
                         null,
-                        AdvancementType.TASK,
+                        AdvancementType.CHALLENGE,
                         true,
                         true,
                         false
@@ -443,104 +611,6 @@ public final class AdvancementGen {
                 )
                 .addCriterion("summon_villager", SummonedEntityTrigger.TriggerInstance.summonedEntity(EntityPredicate.Builder.entity().of(EntityType.VILLAGER)))
                 .save(provider, modId("summon_villager"));
-        AdvancementHolder toilet_plug = Advancement.Builder.advancement()
-                .parent(summon_villager)
-                .display(
-                        PoItems.TOILET_PLUG,
-                        Component.translatable("advancements.poopsky.toilet_plug.title"),
-                        Component.translatable("advancements.poopsky.toilet_plug.description"),
-                        null,
-                        AdvancementType.TASK,
-                        true,
-                        true,
-                        false
-                )
-                .addCriterion("toilet_plug", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.TOILET_PLUG.get()))
-                .save(provider, modId("toilet_plug"));
-        Advancement.Builder.advancement()
-                .parent(toilet_plug)
-                .display(
-                        PoBlocks.PLACER,
-                        Component.translatable("advancements.poopsky.placer.title"),
-                        Component.translatable("advancements.poopsky.placer.description"),
-                        null,
-                        AdvancementType.TASK,
-                        true,
-                        true,
-                        false
-                )
-                .addCriterion("placer", InventoryChangeTrigger.TriggerInstance.hasItems(PoBlocks.PLACER.get()))
-                .save(provider, modId("placer"));
-        Advancement.Builder.advancement()
-                .parent(summon_villager)
-                .display(
-                        PoItems.OMEN_CHESTPLATE,
-                        Component.translatable("advancements.poopsky.omen_armor.title"),
-                        Component.translatable("advancements.poopsky.omen_armor.description"),
-                        null,
-                        AdvancementType.CHALLENGE,
-                        true,
-                        true,
-                        false
-                )
-                .requirements(AdvancementRequirements.Strategy.OR)
-                .addCriterion("omen_helmet", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.OMEN_HELMET))
-                .addCriterion("omen_chestplate", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.OMEN_CHESTPLATE))
-                .addCriterion("omen_leggings", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.OMEN_LEGGINGS))
-                .addCriterion("omen_boots", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.OMEN_BOOTS))
-                .save(provider, modId("omen_armor"));
-
-        AdvancementHolder chili = Advancement.Builder.advancement()
-                .parent(summon_villager)
-                .display(
-                        PoItems.DRAGON_BREATH_CHILI,
-                        Component.translatable("advancements.poopsky.chili.title"),
-                        Component.translatable("advancements.poopsky.chili.description"),
-                        null,
-                        AdvancementType.GOAL,
-                        true,
-                        true,
-                        false
-                )
-                .addCriterion("chili", EffectsChangedTrigger.TriggerInstance.hasEffects(MobEffectsPredicate.Builder.effects().and(PoEffects.INTESTINAL_SPASM)))
-                .save(provider, modId("chili"));
-
-        var rainbowStack = new ItemStack(PoBlocks.HARD_TOILET.get());
-        rainbowStack.set(PoComponents.TOILET_TYPE.get(), ToiletTypes.RAINBOW);
-
-        Advancement.Builder.advancement()
-                .parent(summon_villager)
-                .display(
-                        rainbowStack,
-                        Component.translatable("advancements.poopsky.rainbow_toilet.title"),
-                        Component.translatable("advancements.poopsky.rainbow_toilet.description"),
-                        null,
-                        AdvancementType.CHALLENGE,
-                        true,
-                        true,
-                        false
-                )
-                .addCriterion("rainbow_toilet", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
-                        .of(PoBlocks.HARD_TOILET.get())
-                        .hasComponents(DataComponentPredicate.builder()
-                                .expect(PoComponents.TOILET_TYPE.get(), ToiletTypes.RAINBOW)
-                                .build())))
-                .save(provider, modId("rainbow_toilet"));
-
-        Advancement.Builder.advancement()
-                .parent(chili)
-                .display(
-                        PoItems.CHILI_POOP,
-                        Component.translatable("advancements.poopsky.chili_poop.title"),
-                        Component.translatable("advancements.poopsky.chili_poop.description"),
-                        null,
-                        AdvancementType.TASK,
-                        true,
-                        true,
-                        false
-                )
-                .addCriterion("chili_poop", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.CHILI_POOP.get()))
-                .save(provider, modId("chili_poop"));
     }
 
     private static String modId(String path) {

@@ -1,11 +1,11 @@
 {
-  "parent": "poopsky:poop_block",
+  "parent": "poopsky:root",
   "criteria": {
-    "saltpeter_cluster": {
+    "poop_block": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:saltpeter_shard"
+            "items": "poopsky:poop_block"
           }
         ]
       },
@@ -14,19 +14,19 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.poopsky.saltpeter_cluster.description"
+      "translate": "advancements.poopsky.poop_block.description"
     },
     "icon": {
       "count": 1,
-      "id": "poopsky:saltpeter_cluster"
+      "id": "poopsky:poop_block"
     },
     "title": {
-      "translate": "advancements.poopsky.saltpeter_cluster.title"
+      "translate": "advancements.poopsky.poop_block.title"
     }
   },
   "requirements": [
     [
-      "saltpeter_cluster"
+      "poop_block"
     ]
   ],
   "sends_telemetry_event": true
