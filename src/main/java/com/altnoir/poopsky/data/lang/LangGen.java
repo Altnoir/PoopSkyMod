@@ -399,8 +399,11 @@ public final class LangGen {
         addConfig("voidNetherGeneration.tooltip", "Keeps the Nether empty when using the Poopsky custom void generator");
         addConfig("strongholdGeneration", "Generate Strongholds");
         addConfig("strongholdGeneration.tooltip", "Whether strongholds generate in PoopSky worlds");
-        addConfig("skyFlushToilet", "SKY Flush Toilet");
-        addConfig("skyFlushToilet.tooltip", "Replaces the spawn toilet with a flush toilet");
+        addConfig("spawnToiletMode", "Spawn Toilet Mode");
+        addConfig("spawnToiletMode.tooltip", "Which toilet to generate at the PoopSky world spawn. RANDOM_TOILET selects a random HARD toilet variant");
+        addConfig("spawnToiletMode.wooden_toilet", "Wooden Toilet");
+        addConfig("spawnToiletMode.sky_flush_toilet", "Sky Flush Toilet");
+        addConfig("spawnToiletMode.random_toilet", "Random Hard Toilet");
         addConfig("desperateWorld", "Desperate World");
         addConfig("desperateWorld.tooltip", "Enables Desperate World generation. This can cause lag");
         addConfig("lavaFluid", "Disable Underground Lava Lakes");
