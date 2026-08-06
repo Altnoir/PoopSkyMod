@@ -97,6 +97,7 @@ public final class ItemTagGen {
                         PoItems.BAKED_MAGGOTS.get(),
                         PoItems.MAGGOTS_SEEDS.get(),
                         PoItems.ROUNDWORM.get(),
+                        PoItems.FASTING_PILL.get(),
                         PoItems.POOP_BREAD.get(),
                         PoItems.POOP_DUMPLINGS.get(),
                         PoItems.POOP_MOONCAKE.get(),
@@ -204,6 +205,7 @@ public final class ItemTagGen {
                 .add(PoItems.POODDING.get())
                 .add(PoItems.DRAGON_BREATH_CHILI.get())
                 .add(PoItems.KING_OF_DRAGON_FRUIT.get())
+                .add(PoItems.FASTING_PILL.get())
                 .add(PoItems.URINE_BOTTLE.get())
                 .add(PoBlocks.POOP_CAKE.get().asItem());
 

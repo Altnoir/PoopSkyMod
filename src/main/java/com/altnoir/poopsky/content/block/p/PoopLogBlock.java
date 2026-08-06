@@ -8,6 +8,8 @@ import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.UseOnContext;
@@ -47,6 +49,7 @@ public class PoopLogBlock extends RotatedPillarBlock {
         }
         if (allSolid) {
             level.setBlockAndUpdate(pos, Blocks.COAL_BLOCK.defaultBlockState());
+            level.playSound(null, pos, SoundEvents.BONE_BLOCK_PLACE, SoundSource.BLOCKS, 1.0F, 1.0F);
         }
     }
 

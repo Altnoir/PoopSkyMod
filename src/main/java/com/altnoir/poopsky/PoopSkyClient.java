@@ -26,6 +26,7 @@ import com.altnoir.poopsky.impl.event.PSKeyBoardInput;
 import com.altnoir.poopsky.impl.network.PlugActionPayload;
 import com.altnoir.poopsky.impl.network.PlugDismountPayload;
 import com.altnoir.poopsky.init.*;
+import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeConfigRegistry;
 import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.client.ConfigScreenFactoryRegistry;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
@@ -51,12 +52,15 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.levelgen.presets.WorldPreset;
+import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 
 public class PoopSkyClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         PSKeyBoardInput.register();
+        ClientConfig.onLoad();
+        NeoForgeConfigRegistry.INSTANCE.register(PoopSky.MOD_ID, ModConfig.Type.CLIENT, ClientConfig.CLIENT_SPEC);
         ConfigScreenFactoryRegistry.INSTANCE.register(PoopSky.MOD_ID, ConfigurationScreen::new);
 
         PoFabricated.clientInit();
@@ -165,6 +169,8 @@ public class PoopSkyClient implements ClientModInitializer {
                 PoBlocks.ROUNDWORM_VINES_PLANT.get(),
                 PoBlocks.CHILI_VINES.get(),
                 PoBlocks.CHILI_VINES_PLANT.get(),
+                PoBlocks.GINKGO_TOILET.get(),
+                PoBlocks.PORTABLE_TOILET.get(),
                 PoBlocks.FLUSH_TOILET.get(),
                 PoBlocks.GOLDEN_FLUSH_TOILET.get());
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.translucent(),

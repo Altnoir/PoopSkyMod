@@ -11,6 +11,7 @@
     "FungusBlockMixin",
     "LivingEntityMixin",
     "NoiseBasedChunkGeneratorMixin",
+    "ResultSlotMixin",
     "ServerPlayerMixin",
     "TradeWithVillagerMixin",
     "VillagerMixin"

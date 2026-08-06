@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.init;
 
-import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.PoItemGroups;
+import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.ToiletComponent;
 import com.altnoir.poopsky.content.item.PArmorMaterials;
 import com.altnoir.poopsky.content.item.PFoods;
@@ -160,6 +160,9 @@ public class PoItems {
             prop -> new SpawnEggItem(PoEntityType.POOLIME.get(), 0x7D5F36, 0x5E4228, prop));
     public static final ItemEntry<SpawnEggItem> FLY_SPAWN_EGG = registerItemNoModel("fly_spawn_egg",
             prop -> new SpawnEggItem(PoEntityType.FLY.get(), 0x3B4346, 0x900D2D, prop));
+
+    public static final ItemEntry<SimpleFeedableItem> FASTING_PILL = registerItem("fasting_pill",
+            props -> new SimpleFeedableItem(props.food(PFoods.FASTING_PILL).stacksTo(88)));
 
     public static final ItemEntry<FlyItem> FLY = registerItemNoModel("fly",
             props -> new FlyItem(props.stacksTo(88)));

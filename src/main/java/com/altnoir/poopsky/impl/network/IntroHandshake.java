@@ -2,7 +2,7 @@ package com.altnoir.poopsky.impl.network;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.client.IntroController;
-import com.altnoir.poopsky.impl.IntroSavedData;
+import com.altnoir.poopsky.impl.PoAnimationSavedData;
 import com.altnoir.poopsky.worldgen.PoVoidChunkGenerator;
 import com.mojang.authlib.GameProfile;
 import net.fabricmc.fabric.api.client.networking.v1.ClientConfigurationNetworking;
@@ -48,8 +48,8 @@ public final class IntroHandshake {
         }
 
         GameProfile profile = listener.getOwner();
-        if (profile.getId() == null
-                || IntroSavedData.get(server.overworld()).hasPlayed(profile.getId(), profile.getName())) {
+        if (profile.getId() == null || PoAnimationSavedData.get(server.overworld())
+                .hasPlayed(PoAnimation.INTRO, profile.getId(), profile.getName())) {
             return;
         }
         ((FabricServerConfigurationNetworkHandler) listener).addTask(new Task());

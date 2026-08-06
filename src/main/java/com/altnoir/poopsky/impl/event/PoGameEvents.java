@@ -16,7 +16,9 @@ import com.altnoir.poopsky.fabric.port.event.entity.EntityTickEvents;
 import com.altnoir.poopsky.fabric.port.event.entity.FinalizeSpawnEvent;
 import com.altnoir.poopsky.fabric.port.event.entity.MobEffectEvents;
 import com.altnoir.poopsky.fabric.port.util.EffectApplicableResult;
-import com.altnoir.poopsky.impl.IntroSavedData;
+import com.altnoir.poopsky.impl.PoAnimationSavedData;
+import com.altnoir.poopsky.impl.network.PoAnimation;
+import com.altnoir.poopsky.impl.util.ToiletUtil;
 import com.altnoir.poopsky.init.*;
 import com.altnoir.poopsky.worldgen.PoVoidChunkGenerator;
 import com.altnoir.poopsky.worldgen.structure.PoopIslandStructure;
@@ -71,6 +73,8 @@ public class PoGameEvents {
         FinalizeSpawnEvent.EVENT.register(PoGameEvents::onFinalizeSpawn);
         LevelEvents.CREATE_SPAWN_POSITION.register(PoGameEvents::onCreateSpawnToilet);
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> onPlayerLoggedIn(handler.player));
+        ServerPlayConnectionEvents.DISCONNECT.register((handler, server) ->
+                ToiletUtil.clearPendingEndToiletTeleport(handler.player));
         ServerTickEvents.END_SERVER_TICK.register(PoGameEvents::onServerTick);
     }
 
@@ -211,8 +215,8 @@ public class PoGameEvents {
         ServerLevel overworld = player.getServer().overworld();
         if (!(overworld.getChunkSource().getGenerator() instanceof PoVoidChunkGenerator)) return;
 
-        boolean firstJoin = IntroSavedData.get(overworld)
-                .markPlayed(player.getUUID(), player.getGameProfile().getName());
+        boolean firstJoin = PoAnimationSavedData.get(overworld)
+                .markPlayed(PoAnimation.INTRO, player.getUUID(), player.getGameProfile().getName());
         if (firstJoin && "zh_cn".equalsIgnoreCase(player.clientInformation().language())) {
             player.sendSystemMessage(Component.literal(
                     "温馨提示：如果您正在直播或录制，可在资源包中启用空中厕所的“认知滤网”资源包"

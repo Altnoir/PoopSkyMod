@@ -30,12 +30,22 @@ public class PoNetworking {
                 PlayAnimationPayload.TYPE,
                 PlayAnimationPayload.CODEC
         );
+        FabricatedNetworking.registerS2CPacket(
+                PlayAnimationAndWaitPayload.TYPE,
+                PlayAnimationAndWaitPayload.CODEC
+        );
+        FabricatedNetworking.registerC2SPacket(
+                AnimationFinishedPayload.TYPE,
+                AnimationFinishedPayload.CODEC,
+                AnimationFinishedPayload::handle
+        );
         IntroHandshake.register();
     }
 
     public static void registerClientReceivers() {
         ClientPlayNetworking.registerGlobalReceiver(TimeBellFreezePayload.TYPE, TimeBellFreezePayload::handle);
         ClientPlayNetworking.registerGlobalReceiver(PlayAnimationPayload.TYPE, PlayAnimationPayload::handle);
+        ClientPlayNetworking.registerGlobalReceiver(PlayAnimationAndWaitPayload.TYPE, PlayAnimationAndWaitPayload::handle);
         IntroHandshake.registerClient();
     }
 }

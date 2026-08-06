@@ -4,6 +4,7 @@
   "item.poopsky.golden_poop": "Goldene Kacke",
   "item.poopsky.seedbed_curse": "Fluch der Brutstätte",
   "item.poopsky.folium_sennae": "Sennesblatt",
+  "item.poopsky.fasting_pill": "Fastenpille",
   "item.poopsky.poop_ball": "Kackball",
   "item.poopsky.sapling_poop_ball": "Setzlings-Kackball",
   "item.poopsky.sea_poop_ball": "Meeres-Kackball",
@@ -15,7 +16,6 @@
   "item.poopsky.urine_bucket": "Jaucheeimer",
   "block.poopsky.urine_liquid": "Jauche",
   "item.poopsky.urea": "Harnstoff",
-
   "item.poopsky.omen_helmet": "Omen-Helm",
   "item.poopsky.omen_chestplate": "Omen-Brustpanzer",
   "item.poopsky.omen_leggings": "Omen-Beinschutz",
@@ -28,12 +28,10 @@
   "item.poopsky.spall_sword": "Bruchsteinschwert",
   "item.poopsky.ominous_filthy_ingot": "Ominöser Schmutzbarren",
   "item.poopsky.omen_upgrade_smithing_template": "Schmiedevorlage",
-
   "item.poopsky.time_bell": "Zeitglocke",
   "item.poopsky.jinkela": "Jinkela",
   "message.poopsky.time_bell.frozen": "Zeit wurde eingefroren",
   "message.poopsky.time_bell.unfrozen": "Zeit wurde aufgetaut",
-
   "item.poopsky.toilet_plug_wand": "Toilettenverbinder",
   "message.poopsky.toilet_linker.1": "Toilette ① verbinden",
   "message.poopsky.toilet_linker.2": "Toilette ② verbinden",
@@ -44,10 +42,8 @@
   "tooltip.poopsky.toilet_linker.info_1": "Toilette① - Dimensions-ID: %1$s, Koordinaten: %2$s, %3$s, %4$s",
   "tooltip.poopsky.toilet_linker.info_2": "Toilette② - Dimensions-ID: %1$s, Koordinaten: %2$s, %3$s, %4$s",
   "tooltip.poopsky.jinkela.info": "§8Dünger mit Jinkela: Ein Sack reicht wie zwei",
-
   "tooltip.poopsky.poop_ball.info_1": "Dorfbewohner-Unterstützung",
   "tooltip.poopsky.poop_ball.info_2": "500 kg Kacke",
-
   "item.poopsky.poolime_spawn_egg": "Kackschleim-Spawn-Ei",
   "item.poopsky.fly_spawn_egg": "Fliegen-Spawn-Ei",
   "item.poopsky.music_disc_lawrence": "Schallplatte",
@@ -56,7 +52,6 @@
   "item.poopsky.music_disc_light_dance.desc": "Sakanakushon - Light Dance",
   "item.poopsky.music_disc_moon_bowl": "Schallplatte",
   "item.poopsky.music_disc_moon_bowl.desc": "Sakanakushon - Moon Bowl",
-
   "item.minecraft.potion.effect.fecal_incontinence_potion": "Trank der Stuhlinkontinenz",
   "item.minecraft.splash_potion.effect.fecal_incontinence_potion": "Wurftrank der Stuhlinkontinenz",
   "item.minecraft.lingering_potion.effect.fecal_incontinence_potion": "Verweiltrank der Stuhlinkontinenz",
@@ -78,7 +73,6 @@
   "item.minecraft.potion.effect.strong_on_the_verge_potion": "Starker Trank der Grenzerfahrung",
   "item.minecraft.splash_potion.effect.strong_on_the_verge_potion": "Starker Wurftrank der Grenzerfahrung",
   "item.minecraft.lingering_potion.effect.strong_on_the_verge_potion": "Starker Verweiltrank der Grenzerfahrung",
-
   "item.minecraft.tipped_arrow.effect.fecal_incontinence_potion": "Pfeil der Stuhlinkontinenz",
   "item.minecraft.tipped_arrow.effect.long_fecal_incontinence_potion": "Pfeil der Stuhlinkontinenz",
   "item.minecraft.tipped_arrow.effect.strong_fecal_incontinence_potion": "Pfeil der Stuhlinkontinenz",
@@ -86,7 +80,6 @@
   "item.minecraft.tipped_arrow.effect.on_the_verge_potion": "Pfeil der Grenzerfahrung",
   "item.minecraft.tipped_arrow.effect.long_on_the_verge_potion": "Pfeil der Grenzerfahrung",
   "item.minecraft.tipped_arrow.effect.strong_on_the_verge_potion": "Pfeil der Grenzerfahrung",
-
   "effect.poopsky.fecal_incontinence": "Stuhlinkontinenz",
   "effect.poopsky.intestinal_spasm": "Darmkrampf",
   "effect.poopsky.on_the_verge": "Grenzerfahrung",
@@ -94,7 +87,6 @@
   "effect.poopsky.seedbed_curse": "Saatbettfluch",
   "effect.poopsky.bleeding": "Blutung",
   "effect.poopsky.moment_of_ptyme": "Moment der Kacke",
-
   "block.poopsky.shit": "Kackhaufen",
   "block.poopsky.chili_shit": "Scharfer Kackhaufen",
   "block.poopsky.golden_shit": "Goldener Kackhaufen",
@@ -111,7 +103,6 @@
   "block.poopsky.poop_wall": "Kackmauer",
   "block.poopsky.poop_door": "Kacktür",
   "block.poopsky.poop_trapdoor": "Kackfalltür",
-
   "block.poopsky.poop_bricks": "Kackziegel",
   "block.poopsky.cracked_poop_bricks": "Rissige Kackziegel",
   "block.poopsky.poop_brick_stairs": "Kackziegeltreppe",
@@ -148,12 +139,10 @@
   "block.poopsky.cut_poop_block_slab": "Gemeißelte Kackstufe",
   "block.poopsky.cut_poop_block_vertical_slab": "Vertikale gemeißelte Kackstufe",
   "block.poopsky.cut_poop_block_wall": "Gemeißelte Kackmauer",
-
   "block.poopsky.raw_poop_block": "Roher Kackblock",
   "block.poopsky.raw_sapling_poop_block": "Roher Setzlings-Kackblock",
   "block.poopsky.raw_sea_poop_block": "Roher Meeres-Kackblock",
   "block.poopsky.raw_wither_poop_block": "Roher Wither-Kackblock",
-
   "block.poopsky.poop_sapling": "Kacksetzling",
   "block.poopsky.saltpeter_block": "Salpeterblock",
   "block.poopsky.saltpeter_cluster": "Salpeterhaufen",
@@ -192,6 +181,7 @@
   "block.poopsky.stool": "Kackhocker",
   "block.poopsky.poolime_block": "Kackschleimblock",
   "block.poopsky.poolime_maggots_block": "Kackschleim-Madenblock",
+  "block.poopsky.poop_crafting_table": "Kackwerkbank",
   "block.poopsky.compooper": "Kompooper",
   "block.poopsky.water_compooper": "Wasser-Kompooper",
   "block.poopsky.lava_compooper": "Lava-Kompooper",
@@ -200,7 +190,6 @@
   "block.poopsky.placer": "Platzierer",
   "block.poopsky.sieve_stable": "Sieb",
   "block.poopsky.poop_tnt": "POP",
-
   "item.poopsky.dragon_breath_chili": "Drachenatem-Chili",
   "item.poopsky.king_of_dragon_fruit": "Königliche Drachenfrucht",
   "item.poopsky.roundworm": "Spulwurm",
@@ -225,7 +214,6 @@
   "block.poopsky.roundworm_vines_plant": "Spulwurmsäule",
   "block.poopsky.chili_vines": "Drachenatem-Chiliranken",
   "block.poopsky.chili_vines_plant": "Drachenatem-Chilirankenpflanze",
-
   "block.poopsky.urine": "Urin",
   "block.poopsky.toilet_block": "Toilette",
   "block.poopsky.toilet_format": "%s-Toilette",
@@ -236,7 +224,6 @@
   "block.poopsky.golden_flush_toilet": "Goldene Toilette",
   "block.poopsky.ginkgo_toilet": "Ginkgoholztoilette",
   "block.poopsky.portable_toilet": "Tragbare Toilette",
-
   "fly_type.poopsky.normal": "Normale Fliege",
   "fly_type.poopsky.white": "Weiße Fliege",
   "fly_type.poopsky.black": "Schwarze Fliege",
@@ -272,7 +259,6 @@
   "fly_type.poopsky.uranium": "Uranfliege",
   "fly_type.poopsky.fluorite": "Fluoritfliege",
   "tooltip.poopsky.fly_type": "Typ",
-
   "block.poopsky.toilet.oak": "Eiche",
   "block.poopsky.toilet.spruce": "Fichte",
   "block.poopsky.toilet.birch": "Birke",
@@ -326,7 +312,6 @@
   "block.poopsky.toilet.emerald": "Smaragd",
   "block.poopsky.toilet.netherite": "Netherit",
   "tooltip.poopsky.toilet_type": "Typ",
-
   "item.poopsky.fly": "Fliege",
   "item.poopsky.fly_catcher": "Fliegenklatsche",
   "block.poopsky.fly_barrel": "Fliegennest",
@@ -431,7 +416,6 @@
   "container.poopsky.fly_barrel": "Fliegennest",
   "container.poopsky.breeding_chest": "Zuchtbox",
   "container.poopsky.flush_toilet": "Toilette",
-
   "entity.minecraft.villager.poopsky.poopmaker": "Kackmacher",
   "entity.minecraft.villager.poopsky.gastronome": "Gastronom",
   "entity.minecraft.villager.poopmaker": "Kackmacher",
@@ -441,20 +425,17 @@
   "entity.poopsky.poolime": "Kackschleim",
   "entity.poopsky.fly": "Fliege",
   "entity.poopsky.poop_tnt": "POP",
-
   "key.category.poopsky": "POOPSKY",
   "key.poopsky.use_plug": "Pümpel beschwören",
   "key.poopsky.dismount_plug": "Vom Pümpel absteigen",
   "key.poopsky.up": "Aufwärts",
   "key.poopsky.down": "Abwärts",
   "message.poopsky.toilet_plug.dismount": "Drücke %s, um vom Pümpel abzusteigen",
-
   "upgrade.poopsky.omen_upgrade": "Omen-Aufwertung",
   "item.poopsky.smithing_template.omen_upgrade.applies_to": "Goldausrüstung",
   "item.poopsky.smithing_template.omen_upgrade.ingredients": "Ominöser Schmutzbarren",
   "item.poopsky.smithing_template.omen_upgrade.base_slot_description": "Lege Goldausrüstung hinein",
   "item.poopsky.smithing_template.omen_upgrade.additions_slot_description": "Lege einen ominösen Schmutzbarren hinein",
-
   "advancements.poopsky.root.title": "POOPSKY",
   "advancements.poopsky.root.description": "Alles begann mit einem Haufen Kacke",
   "advancements.poopsky.poop_block_slide.title": "Meister der Kackrutschbahn",
@@ -525,7 +506,6 @@
   "advancements.poopsky.rainbow_toilet.description": "Kaufe eine Regenbogentoilette vom Kackmacher",
   "advancements.poopsky.chili_poop.title": "Scharfe Kacke",
   "advancements.poopsky.chili_poop.description": "Unter der Wirkung von Darmkrampf kannst du scharfe Kacke ausscheiden\nDer hergestellte scharfe Kackblock kann mit Knochenmehl gezüchtet werden",
-
   "subtitle.poopsky.fart": "Furzgeräusch",
   "subtitle.poopsky.poop_ball.throw": "Kackball fliegt",
   "subtitle.poopsky.block.poop_block.slide": "Kackblock: Rutschen",
@@ -555,14 +535,14 @@
   "subtitle.poopsky.item.jinkela.use": "Jinkela raschelt",
   "subtitle.poopsky.item.time_bell.open": "Zeitglocke: aktiviert",
   "subtitle.poopsky.item.time_bell.close": "Zeitglocke: deaktiviert",
-
   "painting.poopsky.poop.title": "Kacke",
   "painting.poopsky.poop.author": "一念之海",
+  "painting.poopsky.poop_king.title": "Kotkönig",
+  "painting.poopsky.poop_king.author": "Xiris",
   "painting.poopsky.toilet.title": "Die erste Enttäuschung",
   "painting.poopsky.toilet.author": "EE克",
   "painting.poopsky.vip.title": "Mitgliederrestaurant",
   "painting.poopsky.vip.author": "EE克",
-
   "stat.poopsky.poop_stats": "Kack-Statistiken",
   "stat.poopsky.inspect_placer": "Platzierer-Inspektionen",
   "container.placer": "Platzierer",
@@ -582,7 +562,6 @@
   "itemGroup.poopsky_deco.section.tiles": "Fliesen",
   "itemGroup.poopsky_deco.section.toilets": "Toiletten",
   "pack.poopsky.name": "Kognitionsfilter",
-
   "tag.item.poopsky.compooper_saplings": "Kompooper kann Setzlinge produzieren",
   "tag.item.poopsky.can_compooper": "Kompostierbar",
   "jei.category.poopsky.compooper": "Kompooper",
@@ -617,28 +596,35 @@
   "create.item_attributes.can_be_digested": "Verdaubar",
   "task.poopsky.defecate": "Defäkieren",
   "task.poopsky.defecate.desc": "Das Dienstmädchen sucht nach Toiletten in der Nähe",
-
   "poopsky.configuration.title": "%s Konfiguration",
-  "poopsky.configuration.lavaFluid": "Unterirdische Lavaseen deaktivieren",
-  "poopsky.configuration.lavaFluid.tooltip": "Deaktiviert unterirdische Lavaseen bei der PoopSky-Weltgenerierung",
-  "poopsky.configuration.compooperCrafting": "Flüssigkeit beim Stab-Herstellen erhalten",
-  "poopsky.configuration.compooperCrafting.tooltip": "Verhindert den Verbrauch von Flüssigkeit im Kompooper beim Herstellen von Stäben",
-  "poopsky.configuration.skyFlushToilet": "PoopSky-Spültoilette",
-  "poopsky.configuration.skyFlushToilet.tooltip": "Ersetzt die Standardtoilette der PoopSky-Weltvoreinstellung durch eine Spültoilette",
-  "poopsky.configuration.desperateWorld": "Verzweiflungswelt",
-  "poopsky.configuration.desperateWorld.tooltip": "Aktiviert die Generierung der Verzweiflungswelt. Kann zu Lag führen",
+  "poopsky.configuration.world": "Welt",
   "poopsky.configuration.setPoopskyDefault": "Standard-Server-Welttyp",
   "poopsky.configuration.setPoopskyDefault.tooltip": "Verwendet die PoopSky-Weltvoreinstellung als Standard auf dedizierten Servern",
   "poopsky.configuration.voidNetherGeneration": "Leere Nether-Generierung",
   "poopsky.configuration.voidNetherGeneration.tooltip": "Hält den Nether leer, wenn der benutzerdefinierte PoopSky-Leerengenerator verwendet wird",
   "poopsky.configuration.strongholdGeneration": "Festungen generieren",
   "poopsky.configuration.strongholdGeneration.tooltip": "Legt fest, ob Festungen in PoopSky-Welten generiert werden",
+  "poopsky.configuration.lavaFluid": "Unterirdische Lavaseen deaktivieren",
+  "poopsky.configuration.lavaFluid.tooltip": "Deaktiviert unterirdische Lavaseen bei der PoopSky-Weltgenerierung",
+  "poopsky.configuration.skyFlushToilet": "PoopSky-Spültoilette",
+  "poopsky.configuration.skyFlushToilet.tooltip": "Ersetzt die Standardtoilette der PoopSky-Weltvoreinstellung durch eine Spültoilette",
+  "poopsky.configuration.desperateWorld": "Verzweiflungswelt",
+  "poopsky.configuration.desperateWorld.tooltip": "Aktiviert die Generierung der Verzweiflungswelt. Kann zu Lag führen",
+  "poopsky.configuration.crafting": "Herstellung",
+  "poopsky.configuration.compooperCrafting": "Flüssigkeit beim Stab-Herstellen erhalten",
+  "poopsky.configuration.compooperCrafting.tooltip": "Verhindert den Verbrauch von Flüssigkeit im Kompooper beim Herstellen von Stäben",
+  "poopsky.configuration.trades": "Handel",
   "poopsky.configuration.plugTrades": "Pümpel-Handel deaktivieren",
   "poopsky.configuration.plugTrades.tooltip": "Deaktiviert den Pümpel-Handel mit Dorfbewohnern",
   "poopsky.configuration.upgradeTemplate": "Aufwertungsvorlagen-Handel deaktivieren",
   "poopsky.configuration.upgradeTemplate.tooltip": "Deaktiviert den Handel mit Aufwertungsvorlagen",
+  "poopsky.configuration.timeStop": "Zeitstopp",
   "poopsky.configuration.unlimitedFreeze": "Unbegrenztes Einfrieren",
   "poopsky.configuration.unlimitedFreeze.tooltip": "Aktiviert unbegrenztes Einfrieren der Zeit",
   "poopsky.configuration.freezeFilter": "Einfrierfilter",
-  "poopsky.configuration.freezeFilter.tooltip": "Deaktiviert den Einfrierfilter"
+  "poopsky.configuration.freezeFilter.tooltip": "Deaktiviert den Einfrierfilter",
+  "poopsky.configuration.introAnimation": "Introanimation abspielen",
+  "poopsky.configuration.introAnimation.tooltip": "Spielt die Introanimation beim ersten Betreten einer PoopSky-Welt ab",
+  "poopsky.configuration.introText": "Introtext",
+  "poopsky.configuration.introYear": "Introjahr"
 }

@@ -193,6 +193,8 @@ public class PoopFarmlandBlock extends FarmBlock {
     }
 
     private static boolean notFarmland(BlockState aboveState) {
-        return aboveState.getBlock() instanceof TorchflowerCropBlock || aboveState.getBlock() instanceof PitcherCropBlock;
+        return aboveState.getBlock() instanceof TorchflowerCropBlock
+                || aboveState.getBlock() instanceof PitcherCropBlock
+                || aboveState.getBlock() instanceof StemBlock;
     }
 }

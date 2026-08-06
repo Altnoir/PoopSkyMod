@@ -308,12 +308,12 @@ public class RecipeGen extends FabricRecipeProvider {
                 .pattern("PP")
                 .pattern("PP")
                 .pattern("PP")
-                .define('P', PoBlocks.POOP_BLOCK)
+                .define('P', PoBlocks.POOP_VERTICAL_SLAB)
                 .unlockedBy(getItemName(PoBlocks.POOP_BLOCK), has(PoBlocks.POOP_BLOCK))
                 .save(recipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_TRAPDOOR, 2)
-                .pattern("PP")
-                .pattern("PP")
+                .pattern("PPP")
+                .pattern("PPP")
                 .define('P', PoBlocks.POOP_SLAB)
                 .unlockedBy(getItemName(PoBlocks.POOP_BLOCK), has(PoBlocks.POOP_BLOCK))
                 .save(recipeOutput);
@@ -350,6 +350,8 @@ public class RecipeGen extends FabricRecipeProvider {
                 .requires(PoItems.POOP)
                 .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP))
                 .save(recipeOutput);
+
+        offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_CRAFTING_TABLE, PoBlocks.POOP_SLAB, 8);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.COMPOOPER)
                 .pattern("S S")
@@ -418,7 +420,6 @@ public class RecipeGen extends FabricRecipeProvider {
     }
 
     private void buildVanillaRecipes(RecipeOutput recipeOutput) {
-        offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, Blocks.CRAFTING_TABLE, PoItems.SPALL);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.GUNPOWDER)
                 .requires(PoItems.KING_OF_DRAGON_FRUIT)
                 .unlockedBy(getItemName(PoItems.KING_OF_DRAGON_FRUIT), has(PoItems.KING_OF_DRAGON_FRUIT))
@@ -479,6 +480,8 @@ public class RecipeGen extends FabricRecipeProvider {
 
     private void buildStonecuttingRecipes(RecipeOutput recipeOutput) {
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.STOOL, PoBlocks.DRIED_POOP_BLOCK, 4);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_CRAFTING_TABLE, PoBlocks.POOP_BLOCK, 4);
+        stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_CRAFTING_TABLE, PoBlocks.POOP_SLAB, 2);
 
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_PIECE, PoBlocks.POOP_BLOCK, 8);
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_FENCE, PoBlocks.POOP_BLOCK, 2);

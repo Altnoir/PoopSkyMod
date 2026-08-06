@@ -4,6 +4,7 @@
   "item.poopsky.golden_poop": "金の糞",
   "item.poopsky.seedbed_curse": "温床の呪い",
   "item.poopsky.folium_sennae": "センナの葉",
+  "item.poopsky.fasting_pill": "辟穀丹",
   "item.poopsky.poop_ball": "糞のボール",
   "item.poopsky.sapling_poop_ball": "苗木の糞ボール",
   "item.poopsky.sea_poop_ball": "海の糞ボール",
@@ -15,7 +16,6 @@
   "item.poopsky.urine_bucket": "糞バケツ",
   "block.poopsky.urine_liquid": "糞液",
   "item.poopsky.urea": "尿素",
-
   "item.poopsky.omen_helmet": "忌避の兜",
   "item.poopsky.omen_chestplate": "忌避の胸当て",
   "item.poopsky.omen_leggings": "忌避の脚甲",
@@ -28,12 +28,10 @@
   "item.poopsky.spall_sword": "砕石の剣",
   "item.poopsky.ominous_filthy_ingot": "不吉な汚穢のインゴット",
   "item.poopsky.omen_upgrade_smithing_template": "鍛冶テンプレート",
-
   "item.poopsky.time_bell": "時止めの鈴",
   "item.poopsky.jinkela": "金坷垃",
   "message.poopsky.time_bell.frozen": "時間を停止しました",
   "message.poopsky.time_bell.unfrozen": "時間の停止を解除しました",
-
   "item.poopsky.toilet_plug_wand": "トイレリンカー",
   "message.poopsky.toilet_linker.1": "トイレ①を接続",
   "message.poopsky.toilet_linker.2": "トイレ②を接続",
@@ -44,10 +42,8 @@
   "tooltip.poopsky.toilet_linker.info_1": "トイレ①-ディメンションID：%1$s、座標：%2$s, %3$s, %4$s",
   "tooltip.poopsky.toilet_linker.info_2": "トイレ②-ディメンションID：%1$s、座標：%2$s, %3$s, %4$s",
   "tooltip.poopsky.jinkela.info": "§8肥料に金坷垃を混ぜれば、一袋で二袋分まける",
-
   "tooltip.poopsky.poop_ball.info_1": "村人支援",
   "tooltip.poopsky.poop_ball.info_2": "500KGの糞",
-
   "item.poopsky.poolime_spawn_egg": "プーライムのスポーンエッグ",
   "item.poopsky.fly_spawn_egg": "ハエのスポーンエッグ",
   "item.poopsky.music_disc_lawrence": "音楽レコード",
@@ -56,7 +52,6 @@
   "item.poopsky.music_disc_light_dance.desc": "サカナクション - ライトダンス",
   "item.poopsky.music_disc_moon_bowl": "音楽レコード",
   "item.poopsky.music_disc_moon_bowl.desc": "サカナクション - 月の椀",
-
   "item.minecraft.potion.effect.fecal_incontinence_potion": "便失禁のポーション",
   "item.minecraft.splash_potion.effect.fecal_incontinence_potion": "スプラッシュ便失禁のポーション",
   "item.minecraft.lingering_potion.effect.fecal_incontinence_potion": "残留便失禁のポーション",
@@ -78,7 +73,6 @@
   "item.minecraft.potion.effect.strong_on_the_verge_potion": "強力寸前のポーション",
   "item.minecraft.splash_potion.effect.strong_on_the_verge_potion": "スプラッシュ強力寸前のポーション",
   "item.minecraft.lingering_potion.effect.strong_on_the_verge_potion": "残留強力寸前のポーション",
-
   "item.minecraft.tipped_arrow.effect.fecal_incontinence_potion": "便失禁の矢",
   "item.minecraft.tipped_arrow.effect.long_fecal_incontinence_potion": "便失禁の矢",
   "item.minecraft.tipped_arrow.effect.strong_fecal_incontinence_potion": "便失禁の矢",
@@ -86,7 +80,6 @@
   "item.minecraft.tipped_arrow.effect.on_the_verge_potion": "寸前の矢",
   "item.minecraft.tipped_arrow.effect.long_on_the_verge_potion": "寸前の矢",
   "item.minecraft.tipped_arrow.effect.strong_on_the_verge_potion": "寸前の矢",
-
   "effect.poopsky.fecal_incontinence": "便失禁",
   "effect.poopsky.intestinal_spasm": "腸の痙攣",
   "effect.poopsky.on_the_verge": "寸前",
@@ -94,7 +87,6 @@
   "effect.poopsky.seedbed_curse": "温床の呪い",
   "effect.poopsky.bleeding": "出血",
   "effect.poopsky.moment_of_ptyme": "糞の刻",
-
   "block.poopsky.shit": "大便",
   "block.poopsky.chili_shit": "辛い大便",
   "block.poopsky.golden_shit": "黄金の大便",
@@ -111,7 +103,6 @@
   "block.poopsky.poop_wall": "糞の壁",
   "block.poopsky.poop_door": "糞のドア",
   "block.poopsky.poop_trapdoor": "糞のトラップドア",
-
   "block.poopsky.poop_bricks": "糞レンガ",
   "block.poopsky.cracked_poop_bricks": "ひび割れた糞レンガ",
   "block.poopsky.poop_brick_stairs": "糞レンガの階段",
@@ -148,12 +139,10 @@
   "block.poopsky.cut_poop_block_slab": "カット糞のハーフブロック",
   "block.poopsky.cut_poop_block_vertical_slab": "カット糞の縦ハーフブロック",
   "block.poopsky.cut_poop_block_wall": "カット糞の壁",
-
   "block.poopsky.raw_poop_block": "原糞ブロック",
   "block.poopsky.raw_sapling_poop_block": "苗木の原糞ブロック",
   "block.poopsky.raw_sea_poop_block": "海の原糞ブロック",
   "block.poopsky.raw_wither_poop_block": "ウィザーの原糞ブロック",
-
   "block.poopsky.poop_sapling": "糞の苗木",
   "block.poopsky.saltpeter_block": "硝石ブロック",
   "block.poopsky.saltpeter_cluster": "硝石の塊",
@@ -192,6 +181,7 @@
   "block.poopsky.stool": "糞のスツール",
   "block.poopsky.poolime_block": "プーライムブロック",
   "block.poopsky.poolime_maggots_block": "プーライムの蛆ブロック",
+  "block.poopsky.poop_crafting_table": "糞の作業台",
   "block.poopsky.compooper": "コンポーパー",
   "block.poopsky.water_compooper": "水入りコンポーパー",
   "block.poopsky.lava_compooper": "溶岩入りコンポーパー",
@@ -200,7 +190,6 @@
   "block.poopsky.placer": "設置器",
   "block.poopsky.sieve_stable": "篩",
   "block.poopsky.poop_tnt": "ポップ",
-
   "item.poopsky.dragon_breath_chili": "ドラゴンブレスチリ",
   "item.poopsky.king_of_dragon_fruit": "帝王ドラゴンフルーツ",
   "item.poopsky.roundworm": "回虫",
@@ -225,7 +214,6 @@
   "block.poopsky.roundworm_vines_plant": "回虫の柱",
   "block.poopsky.chili_vines": "ドラゴンブレスチリのツタ",
   "block.poopsky.chili_vines_plant": "ドラゴンブレスチリのツタの株",
-
   "block.poopsky.urine": "尿",
   "block.poopsky.toilet_block": "トイレ",
   "block.poopsky.toilet_format": "%sのトイレ",
@@ -236,7 +224,6 @@
   "block.poopsky.golden_flush_toilet": "黄金のトイレ",
   "block.poopsky.ginkgo_toilet": "イチョウのトイレ",
   "block.poopsky.portable_toilet": "携帯トイレ",
-
   "fly_type.poopsky.normal": "ノーマルハエ",
   "fly_type.poopsky.white": "白ハエ",
   "fly_type.poopsky.black": "黒ハエ",
@@ -272,7 +259,6 @@
   "fly_type.poopsky.uranium": "ウランハエ",
   "fly_type.poopsky.fluorite": "蛍石ハエ",
   "tooltip.poopsky.fly_type": "種類",
-
   "block.poopsky.toilet.oak": "オーク",
   "block.poopsky.toilet.spruce": "トウヒ",
   "block.poopsky.toilet.birch": "シラカバ",
@@ -326,7 +312,6 @@
   "block.poopsky.toilet.emerald": "エメラルド",
   "block.poopsky.toilet.netherite": "ネザライト",
   "tooltip.poopsky.toilet_type": "種類",
-
   "item.poopsky.fly": "ハエ",
   "item.poopsky.fly_catcher": "捕虫網",
   "block.poopsky.fly_barrel": "ハエの巣",
@@ -431,7 +416,6 @@
   "container.poopsky.fly_barrel": "ハエの巣",
   "container.poopsky.breeding_chest": "繁殖箱",
   "container.poopsky.flush_toilet": "トイレ",
-
   "entity.minecraft.villager.poopsky.poopmaker": "糞作り職人",
   "entity.minecraft.villager.poopsky.gastronome": "美食家",
   "entity.minecraft.villager.poopmaker": "糞作り職人",
@@ -441,20 +425,17 @@
   "entity.poopsky.poolime": "プーライム",
   "entity.poopsky.fly": "ハエ",
   "entity.poopsky.poop_tnt": "ポップ",
-
   "key.category.poopsky": "プープスカイ",
   "key.poopsky.use_plug": "ラバーカップを召喚",
   "key.poopsky.dismount_plug": "ラバーカップから降りる",
   "key.poopsky.up": "上昇",
   "key.poopsky.down": "下降",
   "message.poopsky.toilet_plug.dismount": "%sを押してラバーカップから降りる",
-
   "upgrade.poopsky.omen_upgrade": "忌避アップグレード",
   "item.poopsky.smithing_template.omen_upgrade.applies_to": "金装備",
   "item.poopsky.smithing_template.omen_upgrade.ingredients": "不吉な汚穢のインゴット",
   "item.poopsky.smithing_template.omen_upgrade.base_slot_description": "金装備を入れる",
   "item.poopsky.smithing_template.omen_upgrade.additions_slot_description": "不吉な汚穢のインゴットを入れる",
-
   "advancements.poopsky.root.title": "プープスカイ",
   "advancements.poopsky.root.description": "すべては一山の糞から始まった",
   "advancements.poopsky.poop_block_slide.title": "糞滑りの達人",
@@ -525,7 +506,6 @@
   "advancements.poopsky.rainbow_toilet.description": "糞作り職人から虹色のトイレを購入する",
   "advancements.poopsky.chili_poop.title": "辛い糞",
   "advancements.poopsky.chili_poop.description": "腸の痙攣状態の時、辛い糞を排泄できる\n作成した辛い糞ブロックは骨粉で成長させられる",
-
   "subtitle.poopsky.fart": "屁の音",
   "subtitle.poopsky.poop_ball.throw": "糞便球が飛ぶ",
   "subtitle.poopsky.block.poop_block.slide": "糞ブロックを滑る",
@@ -555,14 +535,14 @@
   "subtitle.poopsky.item.jinkela.use": "金坷垃：さらさら",
   "subtitle.poopsky.item.time_bell.open": "時止めの鈴：起動",
   "subtitle.poopsky.item.time_bell.close": "時止めの鈴：停止",
-
   "painting.poopsky.poop.title": "大便",
   "painting.poopsky.poop.author": "一念之海",
+  "painting.poopsky.poop_king.title": "うんち王",
+  "painting.poopsky.poop_king.author": "Xiris",
   "painting.poopsky.toilet.title": "初めての失望",
   "painting.poopsky.toilet.author": "EE克",
   "painting.poopsky.vip.title": "会員制レストラン",
   "painting.poopsky.vip.author": "EE克",
-
   "stat.poopsky.poop_stats": "排便統計",
   "stat.poopsky.inspect_placer": "設置器調査回数",
   "container.placer": "設置器",
@@ -582,7 +562,6 @@
   "itemGroup.poopsky_deco.section.tiles": "タイル",
   "itemGroup.poopsky_deco.section.toilets": "トイレ",
   "pack.poopsky.name": "認知フィルター",
-
   "tag.item.poopsky.compooper_saplings": "コンポーパー用苗木",
   "tag.item.poopsky.can_compooper": "堆肥化可能",
   "jei.category.poopsky.compooper": "コンポーパー",
@@ -617,28 +596,35 @@
   "create.item_attributes.can_be_digested": "消化可能",
   "task.poopsky.defecate": "排泄",
   "task.poopsky.defecate.desc": "メイドは周囲のトイレを探します",
-
   "poopsky.configuration.title": "%s 設定",
-  "poopsky.configuration.lavaFluid": "地下溶岩湖を無効化",
-  "poopsky.configuration.lavaFluid.tooltip": "プープスカイワールド生成時に地下溶岩湖を無効にする",
-  "poopsky.configuration.compooperCrafting": "棒作成時に液体を保持",
-  "poopsky.configuration.compooperCrafting.tooltip": "棒を作成する際にコンポーパー内の液体が消費されないようにする",
-  "poopsky.configuration.skyFlushToilet": "プープスカイの水洗トイレ",
-  "poopsky.configuration.skyFlushToilet.tooltip": "プープスカイのワールドプリセットにあるデフォルトのトイレを水洗トイレに置き換える",
-  "poopsky.configuration.desperateWorld": "絶望の世界",
-  "poopsky.configuration.desperateWorld.tooltip": "絶望の世界生成を有効にします。ラグの原因になる可能性があります",
+  "poopsky.configuration.world": "ワールド",
   "poopsky.configuration.setPoopskyDefault": "デフォルトのサーバーワールドタイプ",
   "poopsky.configuration.setPoopskyDefault.tooltip": "専用サーバーでデフォルトのワールドプリセットをプープスカイにする",
   "poopsky.configuration.voidNetherGeneration": "虚無のネザー生成",
   "poopsky.configuration.voidNetherGeneration.tooltip": "プープスカイのカスタム虚無生成器を使用する際、ネザーも空のままにする",
   "poopsky.configuration.strongholdGeneration": "要塞を生成",
   "poopsky.configuration.strongholdGeneration.tooltip": "プープスカイのワールドに要塞を生成するかどうか",
+  "poopsky.configuration.lavaFluid": "地下溶岩湖を無効化",
+  "poopsky.configuration.lavaFluid.tooltip": "プープスカイワールド生成時に地下溶岩湖を無効にする",
+  "poopsky.configuration.skyFlushToilet": "プープスカイの水洗トイレ",
+  "poopsky.configuration.skyFlushToilet.tooltip": "プープスカイのワールドプリセットにあるデフォルトのトイレを水洗トイレに置き換える",
+  "poopsky.configuration.desperateWorld": "絶望の世界",
+  "poopsky.configuration.desperateWorld.tooltip": "絶望の世界生成を有効にします。ラグの原因になる可能性があります",
+  "poopsky.configuration.crafting": "クラフト",
+  "poopsky.configuration.compooperCrafting": "棒作成時に液体を保持",
+  "poopsky.configuration.compooperCrafting.tooltip": "棒を作成する際にコンポーパー内の液体が消費されないようにする",
+  "poopsky.configuration.trades": "取引",
   "poopsky.configuration.plugTrades": "ラバーカップの取引を無効化",
   "poopsky.configuration.plugTrades.tooltip": "村人とのラバーカップ取引を無効にするかどうか",
   "poopsky.configuration.upgradeTemplate": "アップグレードテンプレートの取引を無効化",
   "poopsky.configuration.upgradeTemplate.tooltip": "アップグレードテンプレートの取引を無効にするかどうか",
+  "poopsky.configuration.timeStop": "時間停止",
   "poopsky.configuration.unlimitedFreeze": "無制限の時間停止",
   "poopsky.configuration.unlimitedFreeze.tooltip": "無制限の時間停止を有効にするかどうか",
   "poopsky.configuration.freezeFilter": "時間停止フィルター",
-  "poopsky.configuration.freezeFilter.tooltip": "時間停止フィルターを無効にするかどうか"
+  "poopsky.configuration.freezeFilter.tooltip": "時間停止フィルターを無効にするかどうか",
+  "poopsky.configuration.introAnimation": "イントロアニメーションを再生",
+  "poopsky.configuration.introAnimation.tooltip": "PoopSkyワールドに初めて入るときにイントロアニメーションを再生します",
+  "poopsky.configuration.introText": "イントロテキスト",
+  "poopsky.configuration.introYear": "イントロの年"
 }

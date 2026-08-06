@@ -4,6 +4,7 @@
   "item.poopsky.golden_poop": "Crotte dorée",
   "item.poopsky.seedbed_curse": "Malédiction du terreau",
   "item.poopsky.folium_sennae": "Feuille de séné",
+  "item.poopsky.fasting_pill": "Pilule de jeûne",
   "item.poopsky.poop_ball": "Boule de crotte",
   "item.poopsky.sapling_poop_ball": "Boule de crotte de pousse",
   "item.poopsky.sea_poop_ball": "Boule de crotte marine",
@@ -15,7 +16,6 @@
   "item.poopsky.urine_bucket": "Seau d’urine",
   "block.poopsky.urine_liquid": "Liquide d’urine",
   "item.poopsky.urea": "Urée",
-
   "item.poopsky.omen_helmet": "Casque de mangeur de fumier",
   "item.poopsky.omen_chestplate": "Plastron de mangeur de fumier",
   "item.poopsky.omen_leggings": "Jambières de mangeur de fumier",
@@ -28,12 +28,10 @@
   "item.poopsky.spall_sword": "Épée en éclats de pierre",
   "item.poopsky.ominous_filthy_ingot": "Lingot souillé de mauvais augure",
   "item.poopsky.omen_upgrade_smithing_template": "Gabarit de forge",
-
   "item.poopsky.time_bell": "Cloche du temps",
   "item.poopsky.jinkela": "Jinkela",
   "message.poopsky.time_bell.frozen": "Temps du jeu gelé",
   "message.poopsky.time_bell.unfrozen": "Temps du jeu dégelé",
-
   "item.poopsky.toilet_plug_wand": "Baguette de ventouse",
   "message.poopsky.toilet_linker.1": "Lier toilettes ①",
   "message.poopsky.toilet_linker.2": "Lier toilettes ②",
@@ -44,10 +42,8 @@
   "tooltip.poopsky.toilet_linker.info_1": "Toilettes① - DimID : %1$s, Coordonnées : %2$s, %3$s, %4$s",
   "tooltip.poopsky.toilet_linker.info_2": "Toilettes② - DimID : %1$s, Coordonnées : %2$s, %3$s, %4$s",
   "tooltip.poopsky.jinkela.info": "§8Engrais mélangé avec du Jinkela : un sac en vaut deux",
-
   "tooltip.poopsky.poop_ball.info_1": "Soutien villageois",
   "tooltip.poopsky.poop_ball.info_2": "500 kg de crotte",
-
   "item.poopsky.poolime_spawn_egg": "Œuf d’apparition de Poolime",
   "item.poopsky.fly_spawn_egg": "Œuf d’apparition de mouche",
   "item.poopsky.music_disc_lawrence": "Disque de musique",
@@ -56,7 +52,6 @@
   "item.poopsky.music_disc_light_dance.desc": "Sakanaction - Light Dance",
   "item.poopsky.music_disc_moon_bowl": "Disque de musique",
   "item.poopsky.music_disc_moon_bowl.desc": "Sakanaction - Moon Bowl",
-
   "item.minecraft.potion.effect.fecal_incontinence_potion": "Potion d'incontinence fécale",
   "item.minecraft.splash_potion.effect.fecal_incontinence_potion": "Potion jetable d'incontinence fécale",
   "item.minecraft.lingering_potion.effect.fecal_incontinence_potion": "Potion persistante d’incontinence fécale",
@@ -78,7 +73,6 @@
   "item.minecraft.potion.effect.strong_on_the_verge_potion": "Potion sur le point",
   "item.minecraft.splash_potion.effect.strong_on_the_verge_potion": "Potion jetable sur le point",
   "item.minecraft.lingering_potion.effect.strong_on_the_verge_potion": "Potion persistante sur le point",
-
   "item.minecraft.tipped_arrow.effect.fecal_incontinence_potion": "Flèche d’incontinence fécale",
   "item.minecraft.tipped_arrow.effect.long_fecal_incontinence_potion": "Flèche d’incontinence fécale",
   "item.minecraft.tipped_arrow.effect.strong_fecal_incontinence_potion": "Flèche d’incontinence fécale",
@@ -86,7 +80,6 @@
   "item.minecraft.tipped_arrow.effect.on_the_verge_potion": "Flèche sur le point",
   "item.minecraft.tipped_arrow.effect.long_on_the_verge_potion": "Flèche sur le point",
   "item.minecraft.tipped_arrow.effect.strong_on_the_verge_potion": "Flèche sur le point",
-
   "effect.poopsky.fecal_incontinence": "Incontinence fécale",
   "effect.poopsky.intestinal_spasm": "Spasme intestinal",
   "effect.poopsky.on_the_verge": "Sur le point",
@@ -94,7 +87,6 @@
   "effect.poopsky.seedbed_curse": "Malédiction du lit de semence",
   "effect.poopsky.bleeding": "Saignement",
   "effect.poopsky.moment_of_ptyme": "Moment de Ptyme",
-
   "block.poopsky.shit": "Étron",
   "block.poopsky.chili_shit": "Étron pimenté",
   "block.poopsky.golden_shit": "Étron doré",
@@ -111,7 +103,6 @@
   "block.poopsky.poop_wall": "Muret en crotte",
   "block.poopsky.poop_door": "Porte en crotte",
   "block.poopsky.poop_trapdoor": "Trappe en crotte",
-
   "block.poopsky.poop_bricks": "Briques de crotte",
   "block.poopsky.cracked_poop_bricks": "Briques de crotte fissurées",
   "block.poopsky.poop_brick_stairs": "Escaliers en briques de crotte",
@@ -148,12 +139,10 @@
   "block.poopsky.cut_poop_block_slab": "Dalle en bloc de crotte taillée",
   "block.poopsky.cut_poop_block_vertical_slab": "Dalle verticale en bloc de crotte taillée",
   "block.poopsky.cut_poop_block_wall": "Muret en bloc de crotte taillée",
-
   "block.poopsky.raw_poop_block": "Bloc de crotte brute",
   "block.poopsky.raw_sapling_poop_block": "Bloc de crotte brute de pousse",
   "block.poopsky.raw_sea_poop_block": "Bloc de crotte brute marine",
   "block.poopsky.raw_wither_poop_block": "Bloc de crotte brute de Wither",
-
   "block.poopsky.poop_sapling": "Pousse de crotte",
   "block.poopsky.saltpeter_block": "Bloc de salpêtre",
   "block.poopsky.saltpeter_cluster": "Amas de salpêtre",
@@ -192,6 +181,7 @@
   "block.poopsky.stool": "Tabouret de crotte",
   "block.poopsky.poolime_block": "Bloc de Poolime",
   "block.poopsky.poolime_maggots_block": "Bloc d’asticots de Poolime",
+  "block.poopsky.poop_crafting_table": "Établi de crotte",
   "block.poopsky.compooper": "Compooper",
   "block.poopsky.water_compooper": "Compooper d’eau",
   "block.poopsky.lava_compooper": "Compooper de lave",
@@ -200,7 +190,6 @@
   "block.poopsky.placer": "Placeur",
   "block.poopsky.sieve_stable": "Tamis",
   "block.poopsky.poop_tnt": "POP",
-
   "item.poopsky.dragon_breath_chili": "Piment au souffle de dragon",
   "item.poopsky.king_of_dragon_fruit": "Roi des fruits du dragon",
   "item.poopsky.roundworm": "Ascaris",
@@ -225,7 +214,6 @@
   "block.poopsky.roundworm_vines_plant": "Colonne d’ascaris",
   "block.poopsky.chili_vines": "Lianes de piment au souffle de dragon",
   "block.poopsky.chili_vines_plant": "Plante de lianes de piment au souffle de dragon",
-
   "block.poopsky.urine": "Urine",
   "block.poopsky.toilet_block": "Toilettes",
   "block.poopsky.toilet_format": "Toilettes en %s",
@@ -236,7 +224,6 @@
   "block.poopsky.golden_flush_toilet": "Toilettes dorées",
   "block.poopsky.ginkgo_toilet": "Toilettes en ginkgo",
   "block.poopsky.portable_toilet": "Toilettes portables",
-
   "fly_type.poopsky.normal": "Mouche normale",
   "fly_type.poopsky.white": "Mouche blanche",
   "fly_type.poopsky.black": "Mouche noire",
@@ -272,7 +259,6 @@
   "fly_type.poopsky.uranium": "Mouche d’uranium",
   "fly_type.poopsky.fluorite": "Mouche de fluorite",
   "tooltip.poopsky.fly_type": "Type",
-
   "block.poopsky.toilet.oak": "chêne",
   "block.poopsky.toilet.spruce": "sapin",
   "block.poopsky.toilet.birch": "bouleau",
@@ -326,7 +312,6 @@
   "block.poopsky.toilet.emerald": "émeraude",
   "block.poopsky.toilet.netherite": "netherite",
   "tooltip.poopsky.toilet_type": "Type",
-
   "item.poopsky.fly": "Mouche",
   "item.poopsky.fly_catcher": "Attrape-mouches",
   "block.poopsky.fly_barrel": "Nid de mouches",
@@ -431,7 +416,6 @@
   "container.poopsky.fly_barrel": "Nid de mouches",
   "container.poopsky.breeding_chest": "Boîte d’élevage",
   "container.poopsky.flush_toilet": "Toilettes",
-
   "entity.minecraft.villager.poopsky.poopmaker": "Excrémentier",
   "entity.minecraft.villager.poopsky.gastronome": "Gastronome",
   "entity.minecraft.villager.poopmaker": "Excrémentier",
@@ -441,20 +425,17 @@
   "entity.poopsky.poolime": "Poolime",
   "entity.poopsky.fly": "Mouche",
   "entity.poopsky.poop_tnt": "POP",
-
   "key.category.poopsky": "POOPSKY",
   "key.poopsky.use_plug": "Invoquer la ventouse",
   "key.poopsky.dismount_plug": "Descendre de la ventouse",
   "key.poopsky.up": "Monter",
   "key.poopsky.down": "Descendre",
   "message.poopsky.toilet_plug.dismount": "Appuyez sur %s pour descendre de la ventouse",
-
   "upgrade.poopsky.omen_upgrade": "Amélioration de mauvais augure",
   "item.poopsky.smithing_template.omen_upgrade.applies_to": "Équipement en or",
   "item.poopsky.smithing_template.omen_upgrade.ingredients": "Lingot souillé de mauvais augure",
   "item.poopsky.smithing_template.omen_upgrade.base_slot_description": "Placez un équipement en or",
   "item.poopsky.smithing_template.omen_upgrade.additions_slot_description": "Placez un lingot souillé de mauvais augure",
-
   "advancements.poopsky.root.title": "POOPSKY",
   "advancements.poopsky.root.description": "Tout a commencé avec un tas de crotte",
   "advancements.poopsky.poop_block_slide.title": "Maître de la glissade crottique",
@@ -525,7 +506,6 @@
   "advancements.poopsky.rainbow_toilet.description": "Achetez des toilettes arc-en-ciel à un excrémentier",
   "advancements.poopsky.chili_poop.title": "Crotte pimentée",
   "advancements.poopsky.chili_poop.description": "Sous l’effet de spasme intestinal, vous pouvez déféquer de la crotte pimentée\nLe bloc de crotte pimentée fabriqué peut pousser avec de la poudre d’os",
-
   "subtitle.poopsky.fart": "Bruit de pet",
   "subtitle.poopsky.poop_ball.throw": "Boule de crotte lancée",
   "subtitle.poopsky.block.poop_block.slide": "Glissement sur un bloc de crotte",
@@ -555,14 +535,14 @@
   "subtitle.poopsky.item.jinkela.use": "Jinkela bruisse",
   "subtitle.poopsky.item.time_bell.open": "Cloche du temps : activation",
   "subtitle.poopsky.item.time_bell.close": "Cloche du temps : désactivation",
-
   "painting.poopsky.poop.title": "Étron",
   "painting.poopsky.poop.author": "一念之海",
+  "painting.poopsky.poop_king.title": "Roi du caca",
+  "painting.poopsky.poop_king.author": "Xiris",
   "painting.poopsky.toilet.title": "Première déception",
   "painting.poopsky.toilet.author": "EE克",
   "painting.poopsky.vip.title": "Restaurant réservé aux membres",
   "painting.poopsky.vip.author": "EE克",
-
   "stat.poopsky.poop_stats": "Statistiques de défécation",
   "stat.poopsky.inspect_placer": "Inspections du placeur",
   "container.placer": "Placeur",
@@ -582,7 +562,6 @@
   "itemGroup.poopsky_deco.section.tiles": "Carrelage",
   "itemGroup.poopsky_deco.section.toilets": "Toilettes",
   "pack.poopsky.name": "Filtre cognitif",
-
   "tag.item.poopsky.compooper_saplings": "Le Compooper peut produire des pousses",
   "tag.item.poopsky.can_compooper": "Compostable",
   "jei.category.poopsky.compooper": "Compooper",
@@ -617,28 +596,35 @@
   "create.item_attributes.can_be_digested": "Peut être digéré",
   "task.poopsky.defecate": "Déféquer",
   "task.poopsky.defecate.desc": "La servante cherchera des toilettes autour d’elle",
-
   "poopsky.configuration.title": "Options de %s",
-  "poopsky.configuration.lavaFluid": "Désactiver les lacs de lave souterrains",
-  "poopsky.configuration.lavaFluid.tooltip": "Désactive les lacs de lave souterrains pendant la génération du monde PoopSky",
-  "poopsky.configuration.compooperCrafting": "Conserver le liquide lors de la fabrication de bâtons",
-  "poopsky.configuration.compooperCrafting.tooltip": "Empêche le liquide du compooper d’être consommé lors de la fabrication de bâtons",
-  "poopsky.configuration.skyFlushToilet": "Toilettes à chasse d’eau PoopSky",
-  "poopsky.configuration.skyFlushToilet.tooltip": "Remplace les toilettes par défaut du préréglage de monde PoopSky par des toilettes à chasse d’eau",
-  "poopsky.configuration.desperateWorld": "Monde désespéré",
-  "poopsky.configuration.desperateWorld.tooltip": "Active la génération du monde désespéré. Cela peut provoquer du lag",
+  "poopsky.configuration.world": "Monde",
   "poopsky.configuration.setPoopskyDefault": "Type de monde serveur par défaut",
   "poopsky.configuration.setPoopskyDefault.tooltip": "Définit le préréglage de monde PoopSky par défaut pour les serveurs dédiés",
   "poopsky.configuration.voidNetherGeneration": "Génération du Nether vide",
   "poopsky.configuration.voidNetherGeneration.tooltip": "Garde le Nether vide lors de l’utilisation du générateur de vide personnalisé PoopSky",
   "poopsky.configuration.strongholdGeneration": "Générer les forteresses",
   "poopsky.configuration.strongholdGeneration.tooltip": "Détermine si les forteresses sont générées dans les mondes PoopSky",
+  "poopsky.configuration.lavaFluid": "Désactiver les lacs de lave souterrains",
+  "poopsky.configuration.lavaFluid.tooltip": "Désactive les lacs de lave souterrains pendant la génération du monde PoopSky",
+  "poopsky.configuration.skyFlushToilet": "Toilettes à chasse d’eau PoopSky",
+  "poopsky.configuration.skyFlushToilet.tooltip": "Remplace les toilettes par défaut du préréglage de monde PoopSky par des toilettes à chasse d’eau",
+  "poopsky.configuration.desperateWorld": "Monde désespéré",
+  "poopsky.configuration.desperateWorld.tooltip": "Active la génération du monde désespéré. Cela peut provoquer du lag",
+  "poopsky.configuration.crafting": "Fabrication",
+  "poopsky.configuration.compooperCrafting": "Conserver le liquide lors de la fabrication de bâtons",
+  "poopsky.configuration.compooperCrafting.tooltip": "Empêche le liquide du compooper d’être consommé lors de la fabrication de bâtons",
+  "poopsky.configuration.trades": "Commerce",
   "poopsky.configuration.plugTrades": "Désactiver les échanges de ventouse",
   "poopsky.configuration.plugTrades.tooltip": "Détermine si les échanges de ventouse avec les villageois sont désactivés",
   "poopsky.configuration.upgradeTemplate": "Désactiver les échanges de gabarits d’amélioration",
   "poopsky.configuration.upgradeTemplate.tooltip": "Détermine si les échanges de gabarits d’amélioration sont désactivés",
+  "poopsky.configuration.timeStop": "Arrêt du temps",
   "poopsky.configuration.unlimitedFreeze": "Gel illimité",
   "poopsky.configuration.unlimitedFreeze.tooltip": "Détermine si le gel illimité est activé",
   "poopsky.configuration.freezeFilter": "Filtre de gel",
-  "poopsky.configuration.freezeFilter.tooltip": "Détermine si le filtre de gel est désactivé"
+  "poopsky.configuration.freezeFilter.tooltip": "Détermine si le filtre de gel est désactivé",
+  "poopsky.configuration.introAnimation": "Lire l’animation d’introduction",
+  "poopsky.configuration.introAnimation.tooltip": "Lit l’animation lors de la première entrée dans un monde PoopSky",
+  "poopsky.configuration.introText": "Texte d’introduction",
+  "poopsky.configuration.introYear": "Année d’introduction"
 }

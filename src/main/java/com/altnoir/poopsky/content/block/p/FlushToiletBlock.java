@@ -43,13 +43,23 @@ public class FlushToiletBlock extends BaseEntityBlock {
     public static final BooleanProperty CLOSED = BooleanProperty.create("closed");
     public static final MapCodec<FlushToiletBlock> CODEC = simpleCodec(FlushToiletBlock::new);
 
-    private static final VoxelShape NORTH_SHAPE = Shapes.or(
+    private static final VoxelShape NORTH_BASE_SHAPE = Shapes.or(
             Block.box(4, 0, 3, 12, 5, 13),
             Block.box(4, 5, 2, 12, 8, 13),
-            Block.box(4, 6, 12, 12, 16, 16)
+            Block.box(3.9, 5.9, 11.9, 12.1, 16.1, 16.1)
+    );
+    private static final VoxelShape NORTH_OPEN_SHAPE = Shapes.or(
+            NORTH_BASE_SHAPE,
+            Block.box(4, 8, 11, 12, 18, 12)
+    );
+    private static final VoxelShape NORTH_CLOSED_SHAPE = Shapes.or(
+            NORTH_BASE_SHAPE,
+            Block.box(4, 8, 2, 12, 9, 12)
     );
 
-    private static final Map<Direction, VoxelShape> SHAPES = computeShapes(NORTH_SHAPE);
+    private static final Map<Direction, VoxelShape> OPEN_SHAPES = computeShapes(NORTH_OPEN_SHAPE);
+    private static final Map<Direction, VoxelShape> CLOSED_SHAPES = computeShapes(NORTH_CLOSED_SHAPE);
+    private static final Map<Direction, VoxelShape> COLLISION_SHAPES = computeShapes(NORTH_BASE_SHAPE);
 
     public FlushToiletBlock(Properties properties) {
         super(properties);
@@ -95,36 +105,76 @@ public class FlushToiletBlock extends BaseEntityBlock {
         if (player.getMainHandItem().is(PoItems.TOILET_PLUG_WAND.get())) {
             return InteractionResult.PASS;
         }
-        if (level.isClientSide) {
-            return InteractionResult.SUCCESS;
+        if (state.getValue(CLOSED) && !isInLidArea(state, pos, hitResult)) {
+            return InteractionResult.PASS;
         }
 
-        if (!state.getValue(CLOSED) && player.isShiftKeyDown()) {
-            if (level.getBlockEntity(pos) instanceof FlushToiletBlockEntity be) {
-                player.openMenu(be);
+        if (!level.isClientSide) {
+            if (state.getValue(CLOSED)) {
+                toggleClosed(level, pos, state);
+            } else if (isInLidArea(state, pos, hitResult)) {
+                toggleClosed(level, pos, state);
+            } else if (player.isShiftKeyDown()) {
+                openMenu(level, pos, player);
+            } else if (!level.getEntities(PoEntityType.FLUSH_TOILET.get(), new AABB(pos), e -> !e.getPassengers().isEmpty()).isEmpty()) {
+                openMenu(level, pos, player);
+            } else {
+                FlushToiletEntity entity = getOrCreateFlushToiletEntity((ServerLevel) level, pos, state);
+                if (entity != null) {
+                    player.startRiding(entity);
+                }
             }
-            return InteractionResult.SUCCESS;
         }
-        if (state.getValue(CLOSED) || hitResult.getLocation().y - pos.getY() >= 0.51) {
-            boolean closed = !state.getValue(CLOSED);
-            level.playSound(null, pos,
-                    closed ? PoSoundEvents.BLOCK_FLUSH_TOILET_CLOSE.get() : PoSoundEvents.BLOCK_FLUSH_TOILET_OPEN.get(),
-                    SoundSource.BLOCKS, 0.5F, level.random.nextFloat() * 0.1F + 0.9F);
-            level.setBlock(pos, state.setValue(CLOSED, closed), Block.UPDATE_CLIENTS);
-            return InteractionResult.SUCCESS;
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    private void toggleClosed(Level level, BlockPos pos, BlockState state) {
+        boolean closed = !state.getValue(CLOSED);
+        level.playSound(null, pos,
+                closed ? PoSoundEvents.BLOCK_FLUSH_TOILET_CLOSE.get() : PoSoundEvents.BLOCK_FLUSH_TOILET_OPEN.get(),
+                SoundSource.BLOCKS, 0.5F, level.random.nextFloat() * 0.1F + 0.9F);
+        level.setBlock(pos, state.setValue(CLOSED, closed), Block.UPDATE_CLIENTS);
+    }
+
+    private void openMenu(Level level, BlockPos pos, Player player) {
+        if (level.getBlockEntity(pos) instanceof FlushToiletBlockEntity be) {
+            player.openMenu(be);
         }
-        if (!state.getValue(CLOSED) && !level.getEntities(PoEntityType.FLUSH_TOILET.get(), new AABB(pos), e -> !e.getPassengers().isEmpty()).isEmpty()) {
-            if (level.getBlockEntity(pos) instanceof FlushToiletBlockEntity be) {
-                player.openMenu(be);
+    }
+
+    private static boolean isInLidArea(BlockState state, BlockPos pos, BlockHitResult hitResult) {
+        double localX = (hitResult.getLocation().x - pos.getX()) * 16.0;
+        double localY = (hitResult.getLocation().y - pos.getY()) * 16.0;
+        double localZ = (hitResult.getLocation().z - pos.getZ()) * 16.0;
+        double modelX;
+        double modelZ;
+        switch (state.getValue(FACING)) {
+            case SOUTH -> {
+                modelX = 16.0 - localX;
+                modelZ = 16.0 - localZ;
             }
-            return InteractionResult.SUCCESS;
+            case EAST -> {
+                modelX = localZ;
+                modelZ = 16.0 - localX;
+            }
+            case WEST -> {
+                modelX = 16.0 - localZ;
+                modelZ = localX;
+            }
+            default -> {
+                modelX = localX;
+                modelZ = localZ;
+            }
         }
 
-        FlushToiletEntity entity = getOrCreateFlushToiletEntity((ServerLevel) level, pos, state);
-        if (entity != null) {
-            player.startRiding(entity);
+        if (state.getValue(CLOSED)) {
+            return modelX >= 4.0 && modelX <= 12.0
+                    && localY >= 8.0 && localY <= 9.0
+                    && modelZ >= 2.0 && modelZ <= 12.0;
         }
-        return InteractionResult.SUCCESS;
+        return modelX >= 4.0 && modelX <= 12.0
+                && localY >= 8.0 && localY <= 18.0
+                && modelZ >= 11.0 && modelZ <= 12.0;
     }
 
     @Nullable
@@ -188,7 +238,17 @@ public class FlushToiletBlock extends BaseEntityBlock {
 
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return SHAPES.get(state.getValue(FACING));
+        return (state.getValue(CLOSED) ? CLOSED_SHAPES : OPEN_SHAPES).get(state.getValue(FACING));
+    }
+
+    @Override
+    protected VoxelShape getInteractionShape(BlockState state, BlockGetter level, BlockPos pos) {
+        return Shapes.block();
+    }
+
+    @Override
+    protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return COLLISION_SHAPES.get(state.getValue(FACING));
     }
 
     private static Map<Direction, VoxelShape> computeShapes(VoxelShape northShape) {

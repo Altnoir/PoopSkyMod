@@ -212,7 +212,7 @@ public final class BlockTagGen {
         tag(BlockTags.MAINTAINS_FARMLAND)
                 .add(PoBlocks.MAGGOTS.get());
 
-        //工具标签
+        // 工具标签
         tag(BlockTags.MINEABLE_WITH_AXE)
                 .add(
                         PoBlocks.WOODEN_TOILET.get(),
@@ -265,7 +265,10 @@ public final class BlockTagGen {
         PoBlocks.HARDENED_POOP_FAMILIES.stream().skip(1).forEach(family -> family.blocks().forEach(block -> mineableWithPickaxe.add(block.get())));
 
         tag(BlockTags.MINEABLE_WITH_HOE)
-                .add(PoBlocks.MAGGOTS_BLOCK.get(),
+                .add(
+                        PoBlocks.STOOL.get(),
+                        PoBlocks.POOP_CRAFTING_TABLE.get(),
+                        PoBlocks.MAGGOTS_BLOCK.get(),
                         PoBlocks.ROUNDWORM_BLOCK.get(),
                         PoBlocks.RAW_POOP_BLOCK.get(),
                         PoBlocks.RAW_SAPLING_POOP_BLOCK.get(),
