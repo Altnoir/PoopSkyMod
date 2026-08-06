@@ -1,13 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "poopsky:poop_piece"
-      },
-      "trigger": "minecraft:recipe_unlocked"
-    },
-    "poop_slab": {
+    "has_poop_slab": {
       "conditions": {
         "items": [
           {
@@ -16,17 +10,23 @@
         ]
       },
       "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:poop_piece_from_poop_slab_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
       "has_the_recipe",
-      "poop_slab"
+      "has_poop_slab"
     ]
   ],
   "rewards": {
     "recipes": [
-      "poopsky:poop_piece"
+      "poopsky:poop_piece_from_poop_slab_stonecutting"
     ]
   }
 }

@@ -243,6 +243,9 @@ public class IntroScreen extends Screen {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
+            IntroController.finish(this);
+        }
         return true;
     }
 

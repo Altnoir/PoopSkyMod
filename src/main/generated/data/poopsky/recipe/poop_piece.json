@@ -3,14 +3,14 @@
   "category": "building",
   "key": {
     "P": {
-      "item": "poopsky:poop_block"
+      "item": "poopsky:poop_slab"
     }
   },
   "pattern": [
-    "PP"
+    "PPP"
   ],
   "result": {
-    "count": 3,
+    "count": 6,
     "id": "poopsky:poop_piece"
   }
 }

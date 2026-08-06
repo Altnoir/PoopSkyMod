@@ -2,13 +2,12 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "poopsky:poop_slab"
+    "P": {
+      "item": "poopsky:poop_block"
     }
   },
   "pattern": [
-    "##",
-    "##"
+    "PP"
   ],
   "result": {
     "count": 8,
