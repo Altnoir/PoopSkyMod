@@ -2,6 +2,7 @@ package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.entity.*;
+import com.altnoir.poopsky.content.block.renderer.MaggotsChunkLoaderBlockEntityRenderer;
 import com.altnoir.poopsky.content.block.renderer.SieveBlockEntityRenderer;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
@@ -28,6 +29,7 @@ public class PoBlockEntityType {
     public static final BlockEntityEntry<MaggotsChunkLoaderBlockEntity> MAGGOTS_CHUNK_LOADER = REGISTRATE
             .<MaggotsChunkLoaderBlockEntity>blockEntity("maggots_chunk_loader", (type, pos, state) -> new MaggotsChunkLoaderBlockEntity(pos, state))
             .validBlock(PoBlocks.MAGGOTS_CHUNK_LOADER)
+            .renderer(() -> MaggotsChunkLoaderBlockEntityRenderer::new)
             .register();
 
     public static final BlockEntityEntry<FlyBarrelBlockEntity> FLY_BARREL = REGISTRATE

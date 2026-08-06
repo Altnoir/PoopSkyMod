@@ -54,12 +54,13 @@ public class MaggotsChunkLoaderBlock extends BaseEntityBlock {
     protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
         if (level instanceof ServerLevel serverLevel) {
             boolean powered = level.hasNeighborSignal(pos);
-            if (state.getValue(POWERED) != powered) {
+            boolean poweredChanged = state.getValue(POWERED) != powered;
+            if (poweredChanged) {
                 state = state.setValue(POWERED, powered);
                 level.setBlock(pos, state, Block.UPDATE_ALL);
             }
-            if (level.getBlockEntity(pos) instanceof MaggotsChunkLoaderBlockEntity blockEntity) {
-                blockEntity.refreshLoading(serverLevel, state);
+            if (!powered && level.getBlockEntity(pos) instanceof MaggotsChunkLoaderBlockEntity blockEntity) {
+                blockEntity.refreshLoading(serverLevel, state, 0);
             }
         }
     }
