@@ -651,6 +651,8 @@
   "poopsky.configuration.freezeFilter.tooltip": "是否禁用时停滤镜",
   "poopsky.configuration.introAnimation": "播放开场动画",
   "poopsky.configuration.introAnimation.tooltip": "首次进入空中厕所世界时是否播放开场动画",
+  "poopsky.configuration.endAnimation": "止厕之殇",
+  "poopsky.configuration.endAnimation.tooltip": "首次通过末地厕所时是否播放止厕之殇",
   "poopsky.configuration.introText": "开场动画文字",
   "poopsky.configuration.introYear": "开场动画数字"
 }

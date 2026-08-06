@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.client;
 
+import com.altnoir.poopsky.ClientConfig;
 import com.altnoir.poopsky.client.screen.PoemScreen;
 import com.altnoir.poopsky.impl.network.PoAnimation;
 import net.minecraft.client.Minecraft;
@@ -20,7 +21,13 @@ public final class PoAnimationController {
     public static void play(PoAnimation animation, Runnable finished) {
         switch (animation) {
             case INTRO -> IntroController.play();
-            case POEM -> playPoem(finished);
+            case POEM -> {
+                if (ClientConfig.endAnimation) {
+                    playPoem(finished);
+                } else {
+                    finished.run();
+                }
+            }
         }
     }
 

@@ -555,6 +555,8 @@
   "poopsky.configuration.crafting": "Crafting",
   "poopsky.configuration.desperateWorld": "Desperate World",
   "poopsky.configuration.desperateWorld.tooltip": "Enables Desperate World generation. This can cause lag",
+  "poopsky.configuration.endAnimation": "Toilet End Poem",
+  "poopsky.configuration.endAnimation.tooltip": "Whether to play the Toilet End Poem before traveling through an End Toilet for the first time",
   "poopsky.configuration.freezeFilter": "Freeze Filter",
   "poopsky.configuration.freezeFilter.tooltip": "Whether to disable freeze filter",
   "poopsky.configuration.introAnimation": "Play Intro Animation",
