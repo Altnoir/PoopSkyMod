@@ -15,7 +15,9 @@ public final class PoMenuTypes {
     public static final MenuEntry<BreedingChestMenu> BREEDING_CHEST = REGISTRATE.menu("breeding_chest",
             (MenuBuilder.MenuFactory<BreedingChestMenu>) BreedingChestMenu::new, () -> BreedingChestScreen::new).register();
 
-    
+    public static final MenuEntry<PortableToiletMenu> PORTABLE_TOILET = REGISTRATE.menu("portable_toilet",
+            (MenuBuilder.MenuFactory<PortableToiletMenu>) PortableToiletMenu::new, () -> PortableToiletScreen::new).register();
+
     public static final MenuEntry<FlushToiletMenu> FLUSH_TOILET = REGISTRATE.menu("flush_toilet",
             (MenuBuilder.MenuFactory<FlushToiletMenu>) FlushToiletMenu::new, () -> FlushToiletScreen::new).register();
 

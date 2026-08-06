@@ -434,6 +434,7 @@
   "container.poopsky.fly_barrel": "파리 둥지",
   "container.poopsky.breeding_chest": "번식 상자",
   "container.poopsky.flush_toilet": "변기",
+  "container.poopsky.portable_toilet": "휴대용 화장실",
 
   "entity.minecraft.villager.poopsky.poopmaker": "똥 제조 전문가",
   "entity.minecraft.villager.poopsky.gastronome": "미식가",

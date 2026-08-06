@@ -434,6 +434,7 @@
   "container.poopsky.fly_barrel": "Fliegennest",
   "container.poopsky.breeding_chest": "Zuchtbox",
   "container.poopsky.flush_toilet": "Toilette",
+  "container.poopsky.portable_toilet": "Tragbare Toilette",
 
   "entity.minecraft.villager.poopsky.poopmaker": "Kackmacher",
   "entity.minecraft.villager.poopsky.gastronome": "Gastronom",

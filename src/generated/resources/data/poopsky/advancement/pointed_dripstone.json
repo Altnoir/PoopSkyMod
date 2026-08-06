@@ -1,5 +1,5 @@
 {
-  "parent": "poopsky:poop_sapling",
+  "parent": "poopsky:poop_crafting_table",
   "criteria": {
     "pointed_dripstone": {
       "conditions": {

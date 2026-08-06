@@ -66,6 +66,10 @@ public class PSJEIInfo {
                 Component.translatable("jei.poopsky.fly_desc.dragon_fruit")
         );
         registration.addIngredientInfo(
+                PoBlocks.POOP_FARMLAND.get(),
+                Component.translatable("jei.poopsky.poop_farmland")
+        );
+        registration.addIngredientInfo(
                 PoBlocks.BREEDING_CHEST.get(),
                 Component.translatable("jei.poopsky.breeding_chest_desc")
         );

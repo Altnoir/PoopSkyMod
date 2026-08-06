@@ -434,6 +434,7 @@
   "container.poopsky.fly_barrel": "ハエの巣",
   "container.poopsky.breeding_chest": "繁殖箱",
   "container.poopsky.flush_toilet": "トイレ",
+  "container.poopsky.portable_toilet": "ポータブルトイレ",
 
   "entity.minecraft.villager.poopsky.poopmaker": "糞作り職人",
   "entity.minecraft.villager.poopsky.gastronome": "美食家",

@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.content.block.p;
 
+import com.altnoir.poopsky.client.inventory.PortableToiletMenu;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -8,9 +9,12 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -18,6 +22,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.piston.PistonMovingBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.*;
@@ -36,6 +41,7 @@ public class PortableToiletBlock extends Block {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
+    private static final Component CONTAINER_TITLE = Component.translatable("container.poopsky.portable_toilet");
 
     private static final Direction[] SHAPE_DIRECTIONS = {
             Direction.NORTH,
@@ -93,15 +99,7 @@ public class PortableToiletBlock extends Block {
         return shapes;
     }
 
-    private static VoxelShape boxForFacing(
-            Direction facing,
-            double fromX,
-            double fromY,
-            double fromZ,
-            double toX,
-            double toY,
-            double toZ
-    ) {
+    private static VoxelShape boxForFacing(Direction facing, double fromX, double fromY, double fromZ, double toX, double toY, double toZ) {
         double x1 = fromX;
         double z1 = fromZ;
         double x2 = toX;
@@ -211,9 +209,11 @@ public class PortableToiletBlock extends Block {
                     ? Blocks.AIR.defaultBlockState()
                     : super.updateShape(state, facing, facingState, level, currentPos, facingPos);
         }
-        return facingState.is(this) && facingState.getValue(HALF) != half
-                ? facingState.setValue(HALF, half)
-                : Blocks.AIR.defaultBlockState();
+        if (facingState.is(this) && facingState.getValue(HALF) != half) {
+            return facingState.setValue(HALF, half);
+        }
+        return facingState.is(Blocks.MOVING_PISTON) || isMatchingMovingHalf(state, level, facingPos)
+                ? state : Blocks.AIR.defaultBlockState();
     }
 
     @Override
@@ -233,11 +233,20 @@ public class PortableToiletBlock extends Block {
 
     @Override
     protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+        if (state.getValue(HALF) == DoubleBlockHalf.LOWER) {
+            return true;
+        }
         BlockPos below = pos.below();
         BlockState belowState = level.getBlockState(below);
-        return state.getValue(HALF) == DoubleBlockHalf.LOWER
-                ? belowState.isFaceSturdy(level, below, Direction.UP)
-                : belowState.is(this);
+        return belowState.is(this) || belowState.is(Blocks.MOVING_PISTON) || isMatchingMovingHalf(state, level, below);
+    }
+
+    private static boolean isMatchingMovingHalf(BlockState state, BlockGetter level, BlockPos partnerPos) {
+        if (level.getBlockEntity(partnerPos) instanceof PistonMovingBlockEntity moving) {
+            BlockState moved = moving.getMovedState();
+            return moved.is(state.getBlock()) && moved.getValue(HALF) != state.getValue(HALF);
+        }
+        return false;
     }
 
     @Override
@@ -245,21 +254,24 @@ public class PortableToiletBlock extends Block {
         if (state.getValue(HALF) == DoubleBlockHalf.LOWER) {
             if (isInSeatArea(state, pos, hitResult)) {
                 if (!level.isClientSide) {
-                    Component message = Component.literal("Portable Toilet seat placeholder");
-                    level.players().forEach(p -> p.displayClientMessage(message, false));
+                    player.openMenu(state.getMenuProvider(level, pos));
                 }
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
-        } else {
-            if (player instanceof ServerPlayer serverPlayer) {
-                if (serverPlayer.getRespawnDimension() != level.dimension() || !pos.equals(serverPlayer.getRespawnPosition())) {
-                    serverPlayer.setRespawnPosition(level.dimension(), pos, player.getYRot(), false, true);
-                }
+        } else if (player instanceof ServerPlayer serverPlayer) {
+            if (serverPlayer.getRespawnDimension() != level.dimension() || !pos.equals(serverPlayer.getRespawnPosition())) {
+                serverPlayer.setRespawnPosition(level.dimension(), pos, player.getYRot(), false, true);
             }
         }
         setOpen(level, pos, state, !state.getValue(OPEN));
 
         return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    @Override
+    protected MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
+        return new SimpleMenuProvider((containerId, inventory, player) ->
+                new PortableToiletMenu(containerId, inventory, ContainerLevelAccess.create(level, pos)), CONTAINER_TITLE);
     }
 
     private void setOpen(Level level, BlockPos pos, BlockState state, boolean open) {
@@ -297,6 +309,22 @@ public class PortableToiletBlock extends Block {
     }
 
     @Override
+    public boolean isStickyBlock(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public boolean canStickTo(BlockState state, BlockState other) {
+        if (state.is(this) && other.is(this) && state.getValue(HALF) != other.getValue(HALF)) {
+            return true;
+        }
+        if (state.is(this) || other.is(this)) {
+            return false;
+        }
+        return super.canStickTo(state, other);
+    }
+
+    @Override
     protected BlockState rotate(BlockState state, Rotation rotation) {
         return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
     }
@@ -308,9 +336,6 @@ public class PortableToiletBlock extends Block {
 
     @Override
     protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
-        return switch (pathComputationType) {
-            case LAND, AIR -> state.getValue(OPEN);
-            case WATER -> false;
-        };
+        return false;
     }
 }

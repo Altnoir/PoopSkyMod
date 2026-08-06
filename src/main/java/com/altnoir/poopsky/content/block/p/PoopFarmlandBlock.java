@@ -127,9 +127,6 @@ public class PoopFarmlandBlock extends FarmBlock {
         if (mode.isEnriched()) {
             tryEnrichedGrow(level, pos);
         }
-        if (mode.isLeak()) {
-            cropDrop(level, pos);
-        }
     }
 
     @Override

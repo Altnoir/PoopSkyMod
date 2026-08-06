@@ -6,7 +6,6 @@ import com.altnoir.poopsky.content.block.entity.FlushToiletBlockEntity;
 import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.block.p.FlushToiletBlock;
-import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.impl.PoAnimationSavedData;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.impl.network.PlayAnimationAndWaitPayload;
@@ -220,13 +219,13 @@ public class ToiletUtil {
         if (fallDistance < 0.875F || !isEntityInToiletPit(level, pos, entity)) {
             return false;
         }
-        if (isEndToilet(level, pos)) {
-            teleportThroughEndPortal(level, pos, entity);
-            return true;
-        }
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity != null && hasLinkedTarget(blockEntity)) {
             teleportEntity(level, entity, blockEntity, fallDistance);
+            return true;
+        }
+        if (isEndToilet(level, pos)) {
+            teleportThroughEndPortal(level, pos, entity);
             return true;
         }
         return false;

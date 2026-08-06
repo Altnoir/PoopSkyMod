@@ -343,6 +343,7 @@
   "container.poopsky.breeding_chest": "Breeding Box",
   "container.poopsky.flush_toilet": "Flush Toilet",
   "container.poopsky.fly_barrel": "Fly Barrel",
+  "container.poopsky.portable_toilet": "Portable Toilet",
   "create.item_attributes.can_be_digested": "Can be digested",
   "death.attack.poop_ball": "%1$s died from Poop Ball",
   "death.attack.poop_ball.player": "%1$s was killed by %2$s by Poop Ball",

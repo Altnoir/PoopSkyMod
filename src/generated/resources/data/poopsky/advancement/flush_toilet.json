@@ -1,11 +1,11 @@
 {
-  "parent": "poopsky:poop_block",
+  "parent": "poopsky:chili_poop_block",
   "criteria": {
-    "saltpeter_cluster": {
+    "flush_toilet": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:saltpeter_shard"
+            "items": "poopsky:flush_toilet"
           }
         ]
       },
@@ -14,19 +14,19 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.poopsky.saltpeter_cluster.description"
+      "translate": "advancements.poopsky.flush_toilet.description"
     },
     "icon": {
       "count": 1,
-      "id": "poopsky:saltpeter_cluster"
+      "id": "poopsky:flush_toilet"
     },
     "title": {
-      "translate": "advancements.poopsky.saltpeter_cluster.title"
+      "translate": "advancements.poopsky.flush_toilet.title"
     }
   },
   "requirements": [
     [
-      "saltpeter_cluster"
+      "flush_toilet"
     ]
   ],
   "sends_telemetry_event": true
