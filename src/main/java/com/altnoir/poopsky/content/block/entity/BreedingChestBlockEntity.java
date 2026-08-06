@@ -40,14 +40,20 @@ public class BreedingChestBlockEntity extends BlockEntity implements MenuProvide
     public static final int TOTAL_SLOTS = 6;
 
     private static final int BASE_TICK_INTERVAL = 1200; // 基础繁殖间隔（tick）
-    private static final int SCAN_INTERVAL = 160;         // 环境扫描间隔（tick）
+    private static final int SCAN_INTERVAL = 80;         // 环境扫描间隔（tick）
     private static final int SCAN_RANGE = 2;             // 扫描范围（5x5x5）
 
+    private static final int SCAN_EDGE = SCAN_RANGE * 2 + 1;
+    private static final int SCAN_BLOCKS_PER_TICK = 10;
+    private static final int TOTAL_SCAN_BLOCKS = SCAN_EDGE * SCAN_EDGE * SCAN_EDGE;
     private int progress = 0;
     private int currentInterval = BASE_TICK_INTERVAL;
     private int currentPoopBonus = 0;
     private int currentMaggotsBonus = 0;
     private int scanCooldown = 0;
+    private int scanIndex = -1;
+    private int scanPoop;
+    private int scanMaggots;
 
     private final ContainerData data = new ContainerData() {
         @Override
@@ -148,12 +154,17 @@ public class BreedingChestBlockEntity extends BlockEntity implements MenuProvide
         // 所有输出槽满则停止
         if (be.areOutputsFull()) return;
 
-        // 每 SCAN_INTERVAL tick 扫描一次周边环境（5x5x5）
-        if (be.scanCooldown <= 0) {
-            be.scanNeighbors(level, pos);
-            be.scanCooldown = SCAN_INTERVAL;
+        if (be.scanIndex >= 0) {
+            be.continueScan(level, pos);
         }
-        be.scanCooldown--;
+
+        if (be.scanIndex < 0 && be.scanCooldown <= 0) {
+            be.scanCooldown = SCAN_INTERVAL;
+            be.startScan();
+            be.continueScan(level, pos);
+        } else {
+            be.scanCooldown--;
+        }
 
         // 检查粪便数量是否满足当前产量需求
         int neededFeces = 1 + be.currentMaggotsBonus;
@@ -178,22 +189,37 @@ public class BreedingChestBlockEntity extends BlockEntity implements MenuProvide
         be.setChanged();
     }
 
-    private void scanNeighbors(Level level, BlockPos pos) {
-        int poop = 0;
-        int maggots = 0;
-        int r = SCAN_RANGE;
-        for (BlockPos checkPos : BlockPos.betweenClosed(pos.offset(-r, -r, -r), pos.offset(r, r, r))) {
-            if (checkPos.equals(pos)) continue;
-            BlockState state = level.getBlockState(checkPos);
-            if (state.is(PoTags.Blocks.POOP_BLOCKS)) {
-                poop++;
+    private void startScan() {
+        scanIndex = 0;
+        scanPoop = 0;
+        scanMaggots = 0;
+    }
+
+    private void continueScan(Level level, BlockPos pos) {
+        int checked = 0;
+        while (checked < SCAN_BLOCKS_PER_TICK && scanIndex < TOTAL_SCAN_BLOCKS) {
+            int index = scanIndex++;
+            int dz = index % SCAN_EDGE - SCAN_RANGE;
+            int dy = (index / SCAN_EDGE) % SCAN_EDGE - SCAN_RANGE;
+            int dx = index / (SCAN_EDGE * SCAN_EDGE) - SCAN_RANGE;
+            BlockPos checkPos = pos.offset(dx, dy, dz);
+            if (!checkPos.equals(pos)) {
+                BlockState state = level.getBlockState(checkPos);
+                if (state.is(PoTags.Blocks.POOP_BLOCKS)) {
+                    scanPoop++;
+                }
+                if (state.is(PoTags.Blocks.MAGGOTS_BLOCKS)) {
+                    scanMaggots++;
+                }
             }
-            if (state.is(PoTags.Blocks.MAGGOTS_BLOCKS)) {
-                maggots++;
-            }
+            checked++;
         }
-        this.currentPoopBonus = poop;
-        this.currentMaggotsBonus = maggots;
+
+        if (scanIndex >= TOTAL_SCAN_BLOCKS) {
+            scanIndex = -1;
+            currentPoopBonus = scanPoop;
+            currentMaggotsBonus = scanMaggots;
+        }
     }
 
     private boolean areOutputsFull() {

@@ -16,6 +16,7 @@ import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.renderer.SieveBlockEntityRenderer;
+import com.altnoir.poopsky.content.block.renderer.MaggotsChunkLoaderBlockEntityRenderer;
 import com.altnoir.poopsky.content.entity.model.FlyModel;
 import com.altnoir.poopsky.content.entity.model.ToiletPlugModel;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
@@ -87,6 +88,7 @@ public class PoopSkyClient implements ClientModInitializer {
         ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> {
             IntroController.onLoggingOut();
             PoAnimationController.onLoggingOut();
+            MaggotsChunkLoaderBlockEntityRenderer.clearGlowStates();
         });
         ClientTickEvents.START_CLIENT_TICK.register(ClientGameEvents::onClientTick);
     }
@@ -100,6 +102,8 @@ public class PoopSkyClient implements ClientModInitializer {
 
     private static void registerBlockEntityRenderers() {
         BlockEntityRendererRegistry.register(PoBlockEntityType.SIEVE_BLOCK_ENTITY.get(), SieveBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.register(PoBlockEntityType.MAGGOTS_CHUNK_LOADER.get(),
+                MaggotsChunkLoaderBlockEntityRenderer::new);
     }
 
     private static void registerItemProperties() {
