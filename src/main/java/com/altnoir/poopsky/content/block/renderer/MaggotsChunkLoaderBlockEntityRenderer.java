@@ -36,7 +36,7 @@ public class MaggotsChunkLoaderBlockEntityRenderer implements BlockEntityRendere
         BlockPos pos = blockEntity.getBlockPos();
         GlowKey key = new GlowKey(level.dimension(), pos);
         GlowState state = GLOW_STATES.computeIfAbsent(key, p -> new GlowState());
-        state.update(time, radius < 0 ? 0.0F : 0.1F + radius * 0.1F, radius < 0 ? 0.0F : 1.0F);
+        state.update(time, radius < 0 ? 0.0F : 0.1F + radius * 0.2F, radius < 0 ? 0.0F : 1.0F);
 
         float glow = state.scale;
         float alphaFactor = state.alpha;
@@ -52,8 +52,9 @@ public class MaggotsChunkLoaderBlockEntityRenderer implements BlockEntityRendere
         VertexConsumer consumer = bufferSource.getBuffer(RenderType.lightning());
 
         renderGlowBox(poseStack, consumer, -glow, 1.0F + glow, alpha * 0.25F);
-        renderGlowBox(poseStack, consumer, -glow * 0.65F, 1.0F + glow * 0.65F, alpha * 0.45F);
-        renderGlowBox(poseStack, consumer, -glow * 0.35F, 1.0F + glow * 0.35F, alpha);
+        renderGlowBox(poseStack, consumer, -glow * 0.75F, 1.0F + glow * 0.75F, alpha * 0.5F);
+        renderGlowBox(poseStack, consumer, -glow * 0.5F, 1.0F + glow * 0.5F, alpha * 0.75F);
+        renderGlowBox(poseStack, consumer, -glow * 0.25F, 1.0F + glow * 0.25F, alpha);
     }
 
     public static void clearGlowStates() {
