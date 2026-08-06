@@ -427,6 +427,8 @@ public final class LangGen {
 
         addConfig("introAnimation", "Play Intro Animation");
         addConfig("introAnimation.tooltip", "Whether to play the intro animation when entering a PoopSky world for the first time");
+        addConfig("endAnimation", "Toilet End Poem");
+        addConfig("endAnimation.tooltip", "Whether to play the Toilet End Poem before traveling through an End Toilet for the first time");
         addConfig("introText", "Intro Text");
         addConfig("introYear", "Intro Number");
     }

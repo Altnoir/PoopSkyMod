@@ -249,6 +249,7 @@ public final class BlockTagGen {
         mineableWithPickaxe.add(
                 PoBlocks.SIEVE.get(),
                 PoBlocks.PLACER.get(),
+                PoBlocks.MAGGOTS_CHUNK_LOADER.get(),
                 PoBlocks.SALTPETER_BLOCK.get(),
                 PoBlocks.SALTPETER_CLUSTER.get(),
                 PoBlocks.LARGE_SALTPETER_BUD.get(),

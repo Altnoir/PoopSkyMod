@@ -19,7 +19,13 @@ public final class PoAnimationController {
     public static void play(PoAnimation animation, Runnable finished) {
         switch (animation) {
             case INTRO -> IntroController.play();
-            case POEM -> playPoem(finished);
+            case POEM -> {
+                if (ClientConfig.endAnimation) {
+                    playPoem(finished);
+                } else {
+                    finished.run();
+                }
+            }
         }
     }
 

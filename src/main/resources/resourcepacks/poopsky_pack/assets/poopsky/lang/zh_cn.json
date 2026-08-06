@@ -222,6 +222,7 @@
   "item.poopsky.poodding": "“布丁”",
   "block.poopsky.poop_cake": "巧克力蛋糕",
   "block.poopsky.maggots_block": "牛奶巧克力块",
+  "block.poopsky.maggots_chunk_loader": "牛奶巧克力块加载器",
   "block.poopsky.roundworm_block": "白巧克力棒块",
   "block.poopsky.roundworm_vines": "白巧克力棒柱",
   "block.poopsky.roundworm_vines_plant": "白巧克力棒柱",
@@ -654,6 +655,8 @@
   "poopsky.configuration.freezeFilter.tooltip": "是否禁用时停滤镜",
   "poopsky.configuration.introAnimation": "播放开场动画",
   "poopsky.configuration.introAnimation.tooltip": "首次进入空中卫生间世界时是否播放开场动画",
+  "poopsky.configuration.endAnimation": "止厕之殇",
+  "poopsky.configuration.endAnimation.tooltip": "首次通过末地巧克力礼盒时是否播放止厕之殇",
   "poopsky.configuration.introText": "开场动画文字",
   "poopsky.configuration.introYear": "开场动画数字"
 }

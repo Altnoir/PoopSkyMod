@@ -23,6 +23,11 @@ public class PoBlockEntityType {
             .validBlock(PoBlocks.PLACER)
             .register();
 
+    public static final BlockEntityEntry<MaggotsChunkLoaderBlockEntity> MAGGOTS_CHUNK_LOADER = REGISTRATE
+            .<MaggotsChunkLoaderBlockEntity>blockEntity("maggots_chunk_loader", (type, pos, state) -> new MaggotsChunkLoaderBlockEntity(pos, state))
+            .validBlock(PoBlocks.MAGGOTS_CHUNK_LOADER)
+            .register();
+
     public static final BlockEntityEntry<FlyBarrelBlockEntity> FLY_BARREL = REGISTRATE
             .<FlyBarrelBlockEntity>blockEntity("fly_barrel", (type, pos, state) -> new FlyBarrelBlockEntity(pos, state))
             .validBlock(PoBlocks.FLY_BARREL)

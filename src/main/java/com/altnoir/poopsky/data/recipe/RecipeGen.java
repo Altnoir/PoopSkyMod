@@ -369,6 +369,16 @@ public class RecipeGen extends FabricRecipeProvider {
                 .define('P', PoItems.TOILET_PLUG)
                 .unlockedBy(getItemName(PoItems.TOILET_PLUG), has(PoItems.TOILET_PLUG))
                 .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.MAGGOTS_CHUNK_LOADER)
+                .pattern("GGG")
+                .pattern("GMG")
+                .pattern("ORO")
+                .define('G', Blocks.GLASS)
+                .define('M', PoBlocks.MAGGOTS_BLOCK)
+                .define('O', Blocks.OBSIDIAN)
+                .define('R', Items.REDSTONE)
+                .unlockedBy(getItemName(PoBlocks.MAGGOTS_BLOCK), has(PoBlocks.MAGGOTS_BLOCK))
+                .save(recipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.SIEVE)
                 .pattern("SAS")
                 .pattern("S S")
