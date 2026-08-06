@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.data.sound;
+package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
@@ -13,6 +13,16 @@ public class PoSoundEvents {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
     public static final RegistryEntry<SoundEvent, SoundEvent> FART = registerSoundEvent("fart");
+    public static final RegistryEntry<SoundEvent, SoundEvent> POOPSKY_INTRO = registerSoundEvent("poopsky_intro");
+    public static final RegistryEntry<SoundEvent, SoundEvent> THEME = registerSoundEvent("theme");
+    public static final ResourceKey<JukeboxSong> THEME_KEY = registerJukeboxSong("theme");
+    public static final RegistryEntry<SoundEvent, SoundEvent> LAWRENCE = registerSoundEvent("lawrence");
+    public static final ResourceKey<JukeboxSong> LAWRENCE_KEY = registerJukeboxSong("lawrence");
+    public static final RegistryEntry<SoundEvent, SoundEvent> LIGHT_DANCE = registerSoundEvent("light_dance");
+    public static final ResourceKey<JukeboxSong> LIGHT_DANCE_KEY = registerJukeboxSong("light_dance");
+    public static final RegistryEntry<SoundEvent, SoundEvent> MOON_BOWL = registerSoundEvent("moon_bowl");
+    public static final ResourceKey<JukeboxSong> MOON_BOWL_KEY = registerJukeboxSong("moon_bowl");
+
     public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_POOP_BLOCK_SLIDE = registerSoundEvent("block.poop_block.slide");
     public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_SALTPETER_CHIME = registerSoundEvent("block.saltpeter.chime");
     public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_COMPOOPER_MAGGOTS = registerSoundEvent("block.compooper.maggots");
@@ -42,13 +52,6 @@ public class PoSoundEvents {
     public static final RegistryEntry<SoundEvent, SoundEvent> ENTITY_FLY_HURT = registerSoundEvent("entity.fly.hurt");
     public static final RegistryEntry<SoundEvent, SoundEvent> ENTITY_FLY_DEATH = registerSoundEvent("entity.fly.death");
     public static final RegistryEntry<SoundEvent, SoundEvent> ENTITY_FLY_CAPTURE = registerSoundEvent("entity.fly.capture");
-    public static final RegistryEntry<SoundEvent, SoundEvent> POOPSKY_INTRO = registerSoundEvent("poopsky_intro");
-    public static final RegistryEntry<SoundEvent, SoundEvent> LAWRENCE = registerSoundEvent("lawrence");
-    public static final ResourceKey<JukeboxSong> LAWRENCE_KEY = registerJukeboxSong("lawrence");
-    public static final RegistryEntry<SoundEvent, SoundEvent> LIGHT_DANCE = registerSoundEvent("light_dance");
-    public static final ResourceKey<JukeboxSong> LIGHT_DANCE_KEY = registerJukeboxSong("light_dance");
-    public static final RegistryEntry<SoundEvent, SoundEvent> MOON_BOWL = registerSoundEvent("moon_bowl");
-    public static final ResourceKey<JukeboxSong> MOON_BOWL_KEY = registerJukeboxSong("moon_bowl");
 
     public static final RegistryEntry<SoundEvent, SoundEvent> ITEM_TOILET_LINKER_BOOP = registerSoundEvent("item.toilet_linker.boop");
     public static final RegistryEntry<SoundEvent, SoundEvent> ITEM_TOILET_LINKER_SUCCESS = registerSoundEvent("item.toilet_linker.success");

@@ -351,5 +351,13 @@
     "sounds": [
       "poopsky:poopsky_intro"
     ]
+  },
+  "theme": {
+    "sounds": [
+      {
+        "name": "poopsky:theme",
+        "stream": true
+      }
+    ]
   }
 }

@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.data.sound;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.common.data.SoundDefinition;
@@ -219,34 +220,25 @@ public class SoundGen extends SoundDefinitionsProvider {
 
         add(PoSoundEvents.ITEM_TIME_BELL_OPEN, definition()
                 .subtitle("subtitle.poopsky.item.time_bell.open")
-                .with(
-                        sound(PoopSky.loc("the_world_open")).stream()
-                ));
+                .with(sound(PoopSky.loc("the_world_open")).stream()));
 
         add(PoSoundEvents.ITEM_TIME_BELL_CLOSE, definition()
                 .subtitle("subtitle.poopsky.item.time_bell.close")
-                .with(
-                        sound(PoopSky.loc("the_world_close"))
-                ));
+                .with(sound(PoopSky.loc("the_world_close"))));
 
         add(PoSoundEvents.POOPSKY_INTRO, definition()
-                .with(
-                        sound(PoopSky.loc("poopsky_intro"))
-                ));
+                .with(sound(PoopSky.loc("poopsky_intro"))));
+
+        add(PoSoundEvents.THEME, definition()
+                .with(sound(PoopSky.loc("theme")).stream()));
 
         add(PoSoundEvents.LAWRENCE, definition()
-                .with(
-                        sound(PoopSky.loc("merry_christmas_mr_lawrence")).stream()
-                ));
+                .with(sound(PoopSky.loc("merry_christmas_mr_lawrence")).stream()));
 
         add(PoSoundEvents.LIGHT_DANCE, definition()
-                .with(
-                        sound(PoopSky.loc("light_dance")).stream()
-                ));
+                .with(sound(PoopSky.loc("light_dance")).stream()));
 
         add(PoSoundEvents.MOON_BOWL, definition()
-                .with(
-                        sound(PoopSky.loc("moon_bowl")).stream()
-                ));
+                .with(sound(PoopSky.loc("moon_bowl")).stream()));
     }
 }

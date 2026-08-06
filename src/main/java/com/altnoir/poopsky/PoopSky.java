@@ -11,7 +11,7 @@ import com.altnoir.poopsky.data.*;
 import com.altnoir.poopsky.data.entity.EntityLootTableGen;
 import com.altnoir.poopsky.data.entity.EntityTypeTagsGen;
 import com.altnoir.poopsky.data.lang.LangGen;
-import com.altnoir.poopsky.data.sound.PoSoundEvents;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.impl.event.PoGameEvents;
 import com.altnoir.poopsky.impl.event.PoModEvents;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;

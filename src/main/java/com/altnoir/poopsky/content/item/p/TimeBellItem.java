@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.item.p;
 
 import com.altnoir.poopsky.Config;
-import com.altnoir.poopsky.data.sound.PoSoundEvents;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.impl.network.TimeBellFreezePayload;
 import com.altnoir.poopsky.init.PoEffects;
 import net.minecraft.client.Minecraft;

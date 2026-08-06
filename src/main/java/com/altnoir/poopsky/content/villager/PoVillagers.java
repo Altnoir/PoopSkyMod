@@ -2,7 +2,7 @@ package com.altnoir.poopsky.content.villager;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
-import com.altnoir.poopsky.data.sound.PoSoundEvents;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.google.common.collect.ImmutableList;

@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.item.p;
 
 import com.altnoir.poopsky.content.block.p.PoopFarmlandBlock;
-import com.altnoir.poopsky.data.sound.PoSoundEvents;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.init.PoBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;

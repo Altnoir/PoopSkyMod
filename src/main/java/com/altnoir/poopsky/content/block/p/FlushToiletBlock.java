@@ -2,7 +2,7 @@ package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.content.block.entity.FlushToiletBlockEntity;
 import com.altnoir.poopsky.content.entity.p.FlushToiletEntity;
-import com.altnoir.poopsky.data.sound.PoSoundEvents;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.impl.util.ToiletUtil;
 import com.altnoir.poopsky.init.PoEntityType;
 import com.altnoir.poopsky.init.PoItems;

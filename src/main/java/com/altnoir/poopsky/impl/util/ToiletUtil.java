@@ -6,7 +6,7 @@ import com.altnoir.poopsky.content.block.entity.FlushToiletBlockEntity;
 import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.block.p.FlushToiletBlock;
-import com.altnoir.poopsky.data.sound.PoSoundEvents;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.impl.PoAnimationSavedData;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.impl.network.PlayAnimationAndWaitPayload;

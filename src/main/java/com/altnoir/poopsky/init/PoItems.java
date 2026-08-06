@@ -7,7 +7,6 @@ import com.altnoir.poopsky.content.item.PArmorMaterials;
 import com.altnoir.poopsky.content.item.PFoods;
 import com.altnoir.poopsky.content.item.PToolTiers;
 import com.altnoir.poopsky.content.item.p.*;
-import com.altnoir.poopsky.data.sound.PoSoundEvents;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
