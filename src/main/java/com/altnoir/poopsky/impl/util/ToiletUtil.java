@@ -7,7 +7,10 @@ import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.block.p.FlushToiletBlock;
 import com.altnoir.poopsky.data.sound.PoSoundEvents;
+import com.altnoir.poopsky.impl.PoAnimationSavedData;
 import com.altnoir.poopsky.impl.PoTags;
+import com.altnoir.poopsky.impl.network.PlayAnimationAndWaitPayload;
+import com.altnoir.poopsky.impl.network.PoAnimation;
 import com.altnoir.poopsky.init.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -34,11 +37,17 @@ import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.network.PacketDistributor;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import java.util.function.LongConsumer;
 
 public class ToiletUtil {
+    private static final Map<UUID, PendingEndToiletTeleport> PENDING_END_TOILET_TELEPORTS = new HashMap<>();
+
     public static boolean isGoldenToilet(Level level, BlockPos pos) {
         if (level.getBlockEntity(pos) instanceof ToiletBlockEntity be) {
             ToiletType type = be.getToiletType();
@@ -212,7 +221,7 @@ public class ToiletUtil {
             return false;
         }
         if (isEndToilet(level, pos)) {
-            teleportThroughEndPortal(level, entity);
+            teleportThroughEndPortal(level, pos, entity);
             return true;
         }
         BlockEntity blockEntity = level.getBlockEntity(pos);
@@ -230,7 +239,7 @@ public class ToiletUtil {
         return toilet.getToiletTypeOrDefault(level, pos).isEnd();
     }
 
-    private static void teleportThroughEndPortal(Level level, Entity entity) {
+    private static void teleportThroughEndPortal(Level level, BlockPos toiletPos, Entity entity) {
         if (!(level instanceof ServerLevel serverLevel)) {
             return;
         }
@@ -238,6 +247,10 @@ public class ToiletUtil {
         ResourceKey<Level> targetKey = level.dimension() == Level.END ? Level.OVERWORLD : Level.END;
         ServerLevel targetLevel = serverLevel.getServer().getLevel(targetKey);
         if (targetLevel == null) {
+            return;
+        }
+
+        if (entity instanceof ServerPlayer player && beginEndToiletPoem(player, toiletPos)) {
             return;
         }
 
@@ -267,6 +280,46 @@ public class ToiletUtil {
                 entity.getXRot(),
                 DimensionTransition.PLAY_PORTAL_SOUND.then(DimensionTransition.PLACE_PORTAL_TICKET)
         ));
+    }
+
+    private static boolean beginEndToiletPoem(ServerPlayer player, BlockPos toiletPos) {
+        PoAnimationSavedData data = PoAnimationSavedData.get(player.getServer().overworld());
+        if (data.hasPlayed(PoAnimation.POEM, player.getUUID(), player.getGameProfile().getName())) {
+            return false;
+        }
+        PendingEndToiletTeleport pending = new PendingEndToiletTeleport(
+                player.level().dimension(),
+                toiletPos.immutable()
+        );
+        if (PENDING_END_TOILET_TELEPORTS.putIfAbsent(player.getUUID(), pending) == null) {
+            PacketDistributor.sendToPlayer(player, new PlayAnimationAndWaitPayload(PoAnimation.POEM));
+        }
+        return true;
+    }
+
+    public static void finishPendingEndToiletTeleport(ServerPlayer player) {
+        PendingEndToiletTeleport pending = PENDING_END_TOILET_TELEPORTS.remove(player.getUUID());
+        if (pending == null
+                || !pending.sourceDimension().equals(player.level().dimension())
+                || !player.isAlive()
+                || !isEndToilet(player.level(), pending.toiletPos())
+                || !isEntityInToiletPit(player.level(), pending.toiletPos(), player)) {
+            return;
+        }
+
+        PoAnimationSavedData.get(player.getServer().overworld()).markPlayed(
+                PoAnimation.POEM,
+                player.getUUID(),
+                player.getGameProfile().getName()
+        );
+        teleportThroughEndPortal(player.level(), pending.toiletPos(), player);
+    }
+
+    public static void clearPendingEndToiletTeleport(ServerPlayer player) {
+        PENDING_END_TOILET_TELEPORTS.remove(player.getUUID());
+    }
+
+    private record PendingEndToiletTeleport(ResourceKey<Level> sourceDimension, BlockPos toiletPos) {
     }
 
     private static boolean isEntityInToiletPit(Level level, BlockPos pos, Entity entity) {

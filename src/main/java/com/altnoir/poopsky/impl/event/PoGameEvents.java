@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.impl.event;
 
 import com.altnoir.poopsky.Config;
+import com.altnoir.poopsky.client.inventory.PoopCraftingMenu;
 import com.altnoir.poopsky.content.FlyTypeManager;
 import com.altnoir.poopsky.content.ToiletTypeManager;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
@@ -9,9 +10,10 @@ import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.content.item.p.TimeBellItem;
 import com.altnoir.poopsky.content.villager.PVillagerBehaviors;
 import com.altnoir.poopsky.content.villager.PVillagerTrades;
-import com.altnoir.poopsky.client.inventory.PoopCraftingMenu;
-import com.altnoir.poopsky.impl.IntroSavedData;
+import com.altnoir.poopsky.impl.PoAnimationSavedData;
 import com.altnoir.poopsky.impl.command.PoCommands;
+import com.altnoir.poopsky.impl.network.PoAnimation;
+import com.altnoir.poopsky.impl.util.ToiletUtil;
 import com.altnoir.poopsky.init.*;
 import com.altnoir.poopsky.worldgen.PoVoidChunkGenerator;
 import com.altnoir.poopsky.worldgen.structure.PoopIslandStructure;
@@ -72,6 +74,7 @@ public class PoGameEvents {
         gameEventBus.addListener(PoGameEvents::onFinalizeSpawn);
         gameEventBus.addListener(PoGameEvents::onCreateSpawnToilet);
         gameEventBus.addListener(PoGameEvents::onPlayerLoggedIn);
+        gameEventBus.addListener(PoGameEvents::onPlayerLoggedOut);
         gameEventBus.addListener(PoGameEvents::onServerTick);
         gameEventBus.addListener(PoGameEvents::onItemCrafted);
         gameEventBus.addListener(PoCommands::register);
@@ -230,12 +233,18 @@ public class PoGameEvents {
         ServerLevel overworld = player.getServer().overworld();
         if (!(overworld.getChunkSource().getGenerator() instanceof PoVoidChunkGenerator)) return;
 
-        boolean firstJoin = IntroSavedData.get(overworld)
-                .markPlayed(player.getUUID(), player.getGameProfile().getName());
+        boolean firstJoin = PoAnimationSavedData.get(overworld)
+                .markPlayed(PoAnimation.INTRO, player.getUUID(), player.getGameProfile().getName());
         if (firstJoin && "zh_cn".equalsIgnoreCase(player.getLanguage())) {
             player.sendSystemMessage(Component.literal(
                     "温馨提示：如果您正在直播或录制，可在资源包中启用空中厕所的“认知滤网”资源包"
             ));
+        }
+    }
+
+    public static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) {
+            ToiletUtil.clearPendingEndToiletTeleport(player);
         }
     }
 
