@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.data.sound;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.fabric.port.data.SoundDefinition;
 import com.altnoir.poopsky.fabric.port.data.SoundDefinitionsProvider;
 import net.minecraft.core.HolderLookup;

@@ -4,7 +4,7 @@ import com.altnoir.poopsky.client.inventory.FlyBarrelMenu;
 import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.content.recipe.PFlyRecipes;
-import com.altnoir.poopsky.data.sound.PoSoundEvents;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.fabric.port.itemhandler.IItemHandler;
 import com.altnoir.poopsky.fabric.port.itemhandler.ItemStackHandler;
 import com.altnoir.poopsky.fabric.port.itemhandler.RangedWrapper;

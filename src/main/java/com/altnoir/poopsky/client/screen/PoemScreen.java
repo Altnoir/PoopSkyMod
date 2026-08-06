@@ -2,7 +2,7 @@ package com.altnoir.poopsky.client.screen;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.client.PoAnimationController;
-import com.altnoir.poopsky.data.sound.PoSoundEvents;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.math.Axis;
@@ -39,7 +39,7 @@ public class PoemScreen extends Screen {
     private static final int TITLE_HOLD_TICKS = 10;
     private static final int TITLE_ROTATION_TICKS = 30;
     private static final int SCROLL_START_TICK = TITLE_HOLD_TICKS + TITLE_ROTATION_TICKS;
-    private static final Music POEM_MUSIC = new Music(PoSoundEvents.MOON_BOWL, 0, 0, true);
+    private static final Music POEM_MUSIC = new Music(PoSoundEvents.THEME, 0, 0, true);
 
     private final List<FormattedCharSequence> lines = new ArrayList<>();
     private final IntSet speedupModifiers = new IntOpenHashSet();
