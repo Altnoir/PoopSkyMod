@@ -84,14 +84,6 @@ public class PoBlocks {
             (loot, block) -> loot.add(block, BlockLootSubProvider.noDrop()));
 
     private static final Map<Block, BlockEntry<PoopCandleCakeBlock>> POOP_CANDLE_CAKES = registerPoopCandleCakes();
-    public static final BlockEntry<PoopPieceBlock> POOP_PIECE = registerBlock("poop_piece", 88,
-            props -> new PoopPieceBlock(poopProperties(0.1F)
-                    .replaceable()
-                    .randomTicks()
-                    .requiresCorrectToolForDrops()
-                    .isViewBlocking((state, getter, pos) -> state.getValue(PoopPieceBlock.LAYERS) >= 8)
-                    .pushReaction(PushReaction.DESTROY)),
-            (loot, block) -> loot.add(block, createPoopPieceDrop(loot, block, PoItems.POOP_BALL.get())));
 
     public static final BlockEntry<PoopBlock> POOP_BLOCK = registerPoopBlock("poop_block",
             props -> new PoopBlock(poopProperties()
@@ -129,10 +121,14 @@ public class PoBlocks {
     public static final BlockEntry<VerticalSlabBlock> POOP_VERTICAL_SLAB = registerDecoMaterialBlock("poop_vertical_slab", 88,
             props -> new VerticalSlabBlock(poopProperties()),
             PoBlocks::createVerticalSlabDrops);
-    public static final BlockEntry<ButtonBlock> POOP_BUTTON = registerDecoMaterialBlock("poop_button", 88,
-            props -> new ButtonBlock(PoBlockSetType.POOP, 200, poopProperties().noCollission()));
-    public static final BlockEntry<PressurePlateBlock> POOP_PRESSURE_PLATE = registerDecoMaterialBlock("poop_pressure_plate", 88,
-            props -> new PressurePlateBlock(PoBlockSetType.POOP, poopProperties().noCollission()));
+    public static final BlockEntry<PoopPieceBlock> POOP_PIECE = registerDecoMaterialBlock("poop_piece", 88,
+            props -> new PoopPieceBlock(poopProperties(0.1F)
+                    .replaceable()
+                    .randomTicks()
+                    .requiresCorrectToolForDrops()
+                    .isViewBlocking((state, getter, pos) -> state.getValue(PoopPieceBlock.LAYERS) >= 8)
+                    .pushReaction(PushReaction.DESTROY)),
+            (loot, block) -> loot.add(block, createPoopPieceDrop(loot, block, PoItems.POOP_BALL.get())));
     public static final BlockEntry<FenceBlock> POOP_FENCE = registerDecoMaterialBlock("poop_fence", 88,
             props -> new FenceBlock(poopProperties()));
     public static final BlockEntry<FenceGateBlock> POOP_FENCE_GATE = registerDecoMaterialBlock("poop_fence_gate", 88,
@@ -150,6 +146,10 @@ public class PoBlocks {
             props -> new TrapDoorBlock(PoBlockSetType.POOP, poopProperties()
                     .noOcclusion()
                     .isValidSpawn(Blocks::never)));
+    public static final BlockEntry<PressurePlateBlock> POOP_PRESSURE_PLATE = registerDecoMaterialBlock("poop_pressure_plate", 88,
+            props -> new PressurePlateBlock(PoBlockSetType.POOP, poopProperties().noCollission()));
+    public static final BlockEntry<ButtonBlock> POOP_BUTTON = registerDecoMaterialBlock("poop_button", 88,
+            props -> new ButtonBlock(PoBlockSetType.POOP, 200, poopProperties().noCollission()));
 
     public static final BlockEntry<Block> POOP_BRICKS = registerDecoMaterialBlock("poop_bricks", 88,
             props -> new Block(hardenedProperties(MapColor.COLOR_BROWN, SoundType.FROGLIGHT)));
