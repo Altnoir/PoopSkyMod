@@ -60,6 +60,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         cubeBottomTopFace(PoBlocks.FLY_BARREL.get());
         cubeBottomTop(PoBlocks.BREEDING_CHEST.get(), PoBlocks.CUT_POOP_BLOCK.get());
         orientable(PoBlocks.PLACER.get());
+        maggotsChunkLoader();
         cubeBottomTop(PoBlocks.MAGGOTS_BLOCK.get());
         blockWithItem(PoBlocks.ROUNDWORM_BLOCK.get());
         chiliVines(PoBlocks.CHILI_VINES.get());
@@ -84,6 +85,16 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
                 new ConfiguredModel(models().crop(model + state.getValue(CropBlock.AGE),
                         PoopSky.loc("block/" + texture + state.getValue(CropBlock.AGE))).renderType("cutout"))
         });
+    }
+
+    private void maggotsChunkLoader() {
+        Block block = PoBlocks.MAGGOTS_CHUNK_LOADER.get();
+        ModelFile inactive = models().cubeAll(getBlockPath(block), mcLoc("block/beacon"));
+        ModelFile active = models().cubeAll(getBlockPath(block) + "_powered", mcLoc("block/redstone_block"));
+        getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder()
+                .modelFile(state.getValue(MaggotsChunkLoaderBlock.POWERED) ? active : inactive)
+                .build());
+        simpleBlockItem(block, inactive);
     }
 
     private void poopBlock() {

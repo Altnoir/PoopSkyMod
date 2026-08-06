@@ -34,6 +34,16 @@ public class PoNetworking {
                 PlayAnimationPayload.CODEC,
                 PlayAnimationPayload::handle
         );
+        registrar.playToClient(
+                PlayAnimationAndWaitPayload.TYPE,
+                PlayAnimationAndWaitPayload.CODEC,
+                PlayAnimationAndWaitPayload::handle
+        );
+        registrar.playToServer(
+                AnimationFinishedPayload.TYPE,
+                AnimationFinishedPayload.CODEC,
+                AnimationFinishedPayload::handle
+        );
         IntroHandshake.registerPayloads(registrar);
     }
 
