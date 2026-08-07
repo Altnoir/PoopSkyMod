@@ -11,6 +11,7 @@ public enum PoMods {
     CREATE,
     FARMERSDELIGHT,
     SKYBLOCKBUILDER,
+    MODERNUI,
     TOUHOU_LITTLE_MAID,
     AE2,
     MEKANISM;

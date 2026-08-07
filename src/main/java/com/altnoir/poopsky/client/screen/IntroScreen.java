@@ -2,15 +2,20 @@ package com.altnoir.poopsky.client.screen;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.client.IntroController;
+import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.init.PoSoundEvents;
+import com.mojang.blaze3d.font.GlyphInfo;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.font.FontSet;
+import net.minecraft.client.gui.font.glyphs.BakedGlyph;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.network.chat.Component;
@@ -65,7 +70,8 @@ public class IntroScreen extends Screen {
     private static final float TITLE_TEXT_Y = 460.0F;
     private static final float TITLE_RIGHT = 1448.0F;
     private static final float ICON_SIZE = 88.0F;
-    private static final float ICON_OFFSET_X = -25.0F;
+    private static final float MODERN_UI_ICON_OFFSET_X = 8.0F;
+    private static final float MODERN_UI_ICON_OFFSET_Y = 60.0F;
     private static final float ICON_TOP = 500.0F;
     private static final float YEAR_WIDTH = 188.0F;
     private static final float YEAR_X = (VIRTUAL_WIDTH - YEAR_WIDTH) * 0.5F;
@@ -273,7 +279,7 @@ public class IntroScreen extends Screen {
         RenderSystem.setShaderTexture(0, POOP_TEXTURE);
 
         float left = this.titleLayout.iconX();
-        float top = ICON_TOP;
+        float top = this.titleLayout.iconY();
         float right = left + ICON_SIZE;
         float bottom = top + ICON_SIZE;
         int color = FastColor.ARGB32.colorFromFloat(alpha, 1.0F, 1.0F, 1.0F);
@@ -446,24 +452,61 @@ public class IntroScreen extends Screen {
         guiGraphics.pose().pushPose();
         guiGraphics.pose().translate(x, y, 0.0F);
         guiGraphics.pose().scale(scale, scale, 1.0F);
-        guiGraphics.drawString(this.font, text, 0, 0, color, false);
+        this.drawVanillaText(guiGraphics, text.getString(), color);
         guiGraphics.pose().popPose();
     }
 
+    private void drawVanillaText(GuiGraphics guiGraphics, String text, int color) {
+        FontSet fontSet = this.font.getFontSet(FONT);
+        Matrix4f matrix = guiGraphics.pose().last().pose();
+        float red = (color >> 16 & 255) / 255.0F;
+        float green = (color >> 8 & 255) / 255.0F;
+        float blue = (color & 255) / 255.0F;
+        float alpha = (color >>> 24) / 255.0F;
+        float x = 0.0F;
+
+        for (int offset = 0; offset < text.length(); ) {
+            int codePoint = text.codePointAt(offset);
+            GlyphInfo glyphInfo = fontSet.getGlyphInfo(codePoint, false);
+            BakedGlyph glyph = fontSet.getGlyph(codePoint);
+            VertexConsumer consumer = guiGraphics.bufferSource().getBuffer(glyph.renderType(Font.DisplayMode.NORMAL));
+            glyph.render(false, x, 0.0F, matrix, consumer, red, green, blue, alpha, LightTexture.FULL_BRIGHT);
+            x += glyphInfo.getAdvance(false);
+            offset += Character.charCount(codePoint);
+        }
+    }
+
     private static TitleLayout createTitleLayout(Font font, Component title, Component year) {
-        int titleWidth = Math.max(font.width(title), 1);
+        float titleWidth = Math.max(measureVanillaText(font, title.getString()), 1.0F);
         float scale = (TITLE_RIGHT - TITLE_LEFT) / titleWidth;
         float height = font.lineHeight * scale;
         float iconX;
+        float iconY = ICON_TOP;
         if (title.getString().equals("poopsky")) {
-            float secondPLeft = TITLE_LEFT + font.width(titleText("poo")) * scale;
-            float secondPWidth = font.width(titleText("p")) * scale;
-            iconX = secondPLeft + (secondPWidth - ICON_SIZE) * 0.5F + ICON_OFFSET_X;
+            FontSet fontSet = font.getFontSet(FONT);
+            BakedGlyph secondP = fontSet.getGlyph('p');
+            float secondPCenter = measureVanillaText(font, "poo") + (secondP.left + secondP.right) * 0.5F;
+            iconX = TITLE_LEFT + secondPCenter * scale - ICON_SIZE * 0.5F;
+            if (PoMods.MODERNUI.isLoaded()) {
+                iconX += MODERN_UI_ICON_OFFSET_X;
+                iconY += MODERN_UI_ICON_OFFSET_Y;
+            }
         } else {
-            iconX = (VIRTUAL_WIDTH - ICON_SIZE) * 0.5F + ICON_OFFSET_X;
+            iconX = (VIRTUAL_WIDTH - ICON_SIZE) * 0.5F;
         }
-        float yearScale = YEAR_WIDTH / Math.max(font.width(year), 1);
-        return new TitleLayout(scale, height, iconX, yearScale);
+        float yearScale = YEAR_WIDTH / Math.max(measureVanillaText(font, year.getString()), 1.0F);
+        return new TitleLayout(scale, height, iconX, iconY, yearScale);
+    }
+
+    private static float measureVanillaText(Font font, String text) {
+        FontSet fontSet = font.getFontSet(FONT);
+        float width = 0.0F;
+        for (int offset = 0; offset < text.length(); ) {
+            int codePoint = text.codePointAt(offset);
+            width += fontSet.getGlyphInfo(codePoint, false).getAdvance(false);
+            offset += Character.charCount(codePoint);
+        }
+        return width;
     }
 
     private static PoopScatter[] createPoopScatter(TitleLayout layout) {
@@ -532,7 +575,7 @@ public class IntroScreen extends Screen {
         return Mth.floor(Mth.clamp(alpha, 0.0F, 1.0F) * 255.0F) << 24 | 0xFFFFFF;
     }
 
-    private record TitleLayout(float scale, float height, float iconX, float yearScale) {
+    private record TitleLayout(float scale, float height, float iconX, float iconY, float yearScale) {
     }
 
     private record PoopScatter(float x, float y, float velocityX, float velocityY, float halfSize, float spin) {

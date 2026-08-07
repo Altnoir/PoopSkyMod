@@ -39,3 +39,6 @@ accessible field net/minecraft/world/item/CreativeModeTab backgroundTexture Lnet
 accessible class net/minecraft/client/gui/screens/worldselection/CreateWorldScreen$WorldTab
 accessible class net/minecraft/data/tags/IntrinsicHolderTagsProvider$IntrinsicTagAppender
 accessible class net/minecraft/client/particle/ParticleEngine$SpriteParticleRegistration
+accessible method net/minecraft/client/gui/Font getFontSet (Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/client/gui/font/FontSet;
+accessible field net/minecraft/client/gui/font/glyphs/BakedGlyph left F
+accessible field net/minecraft/client/gui/font/glyphs/BakedGlyph right F

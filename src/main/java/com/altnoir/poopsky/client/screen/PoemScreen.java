@@ -5,18 +5,24 @@ import com.altnoir.poopsky.client.PoAnimationController;
 import com.altnoir.poopsky.init.PoSoundEvents;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import it.unimi.dsi.fastutil.ints.IntSet;
 import net.minecraft.client.GameNarrator;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.font.FontSet;
+import net.minecraft.client.gui.font.glyphs.BakedGlyph;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.Music;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
+import org.joml.Matrix4f;
 
 import java.io.BufferedReader;
 import java.io.Reader;
@@ -105,14 +111,13 @@ public class PoemScreen extends Screen {
         boolean scrolling = this.playbackTicks >= SCROLL_START_TICK;
 
         guiGraphics.pose().pushPose();
+        guiGraphics.pose().translate(this.width / 2.0F, this.height / 2.0F, 0.0F);
         if (scrolling) {
-            guiGraphics.pose().translate(this.width, this.height, 0.0F);
-            guiGraphics.pose().scale(-1.0F, -1.0F, 1.0F);
+            guiGraphics.pose().mulPose(Axis.ZP.rotationDegrees(180.0F));
         } else {
-            guiGraphics.pose().translate(this.width / 2.0F, this.height / 2.0F, 0.0F);
             guiGraphics.pose().mulPose(Axis.ZP.rotationDegrees(rotation));
-            guiGraphics.pose().translate(-this.width / 2.0F, -this.height / 2.0F, 0.0F);
         }
+        guiGraphics.pose().translate(-this.width / 2.0F, -this.height / 2.0F, 0.0F);
         guiGraphics.pose().translate(0.0F, offset, 0.0F);
 
         guiGraphics.blit(
@@ -132,12 +137,13 @@ public class PoemScreen extends Screen {
         if (scrolling) {
             for (FormattedCharSequence line : this.lines) {
                 if (lineY + offset + 20.0F > 0.0F && lineY + offset < this.height) {
-                    guiGraphics.drawString(this.font, line, contentLeft, lineY, 0xFFFFFFFF);
+                    this.drawVanillaLine(guiGraphics, line, contentLeft, lineY, 0xFFFFFFFF);
                 }
                 lineY += 12;
             }
         }
 
+        guiGraphics.flush();
         guiGraphics.pose().popPose();
     }
 
@@ -220,6 +226,37 @@ public class PoemScreen extends Screen {
         guiGraphics.blit(VIGNETTE_LOCATION, 0, 0, 0, 0.0F, 0.0F, this.width, this.height, this.width, this.height);
         RenderSystem.disableBlend();
         RenderSystem.defaultBlendFunc();
+    }
+
+    private void drawVanillaLine(GuiGraphics guiGraphics, FormattedCharSequence line,
+                                 float startX, float y, int color) {
+        Matrix4f matrix = guiGraphics.pose().last().pose();
+        float alpha = (color >>> 24) / 255.0F;
+        float defaultRed = (color >> 16 & 255) / 255.0F;
+        float defaultGreen = (color >> 8 & 255) / 255.0F;
+        float defaultBlue = (color & 255) / 255.0F;
+        float[] x = {startX};
+
+        line.accept((index, style, codePoint) -> {
+            FontSet fontSet = this.font.getFontSet(style.getFont());
+            boolean bold = style.isBold();
+            BakedGlyph glyph = fontSet.getGlyph(codePoint);
+            VertexConsumer consumer = guiGraphics.bufferSource().getBuffer(
+                    glyph.renderType(Font.DisplayMode.NORMAL));
+            float red = defaultRed;
+            float green = defaultGreen;
+            float blue = defaultBlue;
+            if (style.getColor() != null) {
+                int textColor = style.getColor().getValue();
+                red = (textColor >> 16 & 255) / 255.0F;
+                green = (textColor >> 8 & 255) / 255.0F;
+                blue = (textColor & 255) / 255.0F;
+            }
+            glyph.render(style.isItalic(), x[0], y, matrix, consumer,
+                    red, green, blue, alpha, LightTexture.FULL_BRIGHT);
+            x[0] += fontSet.getGlyphInfo(codePoint, false).getAdvance(bold);
+            return true;
+        });
     }
 
     private void finish() {
