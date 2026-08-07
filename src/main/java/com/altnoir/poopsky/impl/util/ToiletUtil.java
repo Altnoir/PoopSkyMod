@@ -183,7 +183,7 @@ public class ToiletUtil {
                 return true;
             }
         }
-        if (!current.is(PoTags.Items.POOPS)) {
+        if (!current.is(PoTags.Items.FLUSH_TOILET_SAVE)) {
             handler.setStackInSlot(0, stack.copy());
             return true;
         }
@@ -220,13 +220,20 @@ public class ToiletUtil {
             return false;
         }
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity != null && hasLinkedTarget(blockEntity)) {
-            teleportEntity(level, entity, blockEntity, fallDistance);
+        boolean hasLinked = blockEntity != null && hasLinkedTarget(blockEntity);
+        boolean isEnd = isEndToilet(level, pos);
+        if (!hasLinked && !isEnd) {
+            return false;
+        }
+        if (entity.isOnPortalCooldown()) {
+            entity.setPortalCooldown();
             return true;
         }
-        if (isEndToilet(level, pos)) {
-            teleportThroughEndPortal(level, pos, entity);
-            return true;
+        if (hasLinked) {
+            return teleportEntity(level, entity, blockEntity, fallDistance);
+        }
+        if (isEnd) {
+            return teleportThroughEndPortal(level, pos, entity);
         }
         return false;
     }
@@ -238,19 +245,19 @@ public class ToiletUtil {
         return toilet.getToiletTypeOrDefault(level, pos).isEnd();
     }
 
-    private static void teleportThroughEndPortal(Level level, BlockPos toiletPos, Entity entity) {
+    private static boolean teleportThroughEndPortal(Level level, BlockPos toiletPos, Entity entity) {
         if (!(level instanceof ServerLevel serverLevel)) {
-            return;
+            return false;
         }
 
         ResourceKey<Level> targetKey = level.dimension() == Level.END ? Level.OVERWORLD : Level.END;
         ServerLevel targetLevel = serverLevel.getServer().getLevel(targetKey);
         if (targetLevel == null) {
-            return;
+            return false;
         }
 
         if (entity instanceof ServerPlayer player && beginEndToiletPoem(player, toiletPos)) {
-            return;
+            return true;
         }
 
         float yRot = entity.getYRot();
@@ -265,20 +272,21 @@ public class ToiletUtil {
             }
         } else {
             if (entity instanceof ServerPlayer serverPlayer) {
-                entity.changeDimension(serverPlayer.findRespawnPositionAndUseSpawnBlock(false, DimensionTransition.DO_NOTHING));
-                return;
+                entity.setPortalCooldown();
+                return entity.changeDimension(serverPlayer.findRespawnPositionAndUseSpawnBlock(false, DimensionTransition.DO_NOTHING)) != null;
             }
             destination = entity.adjustSpawnLocation(targetLevel, targetLevel.getSharedSpawnPos()).getBottomCenter();
         }
 
-        entity.changeDimension(new DimensionTransition(
+        entity.setPortalCooldown();
+        return entity.changeDimension(new DimensionTransition(
                 targetLevel,
                 destination,
                 entity.getDeltaMovement(),
                 yRot,
                 entity.getXRot(),
                 DimensionTransition.PLAY_PORTAL_SOUND.then(DimensionTransition.PLACE_PORTAL_TICKET)
-        ));
+        )) != null;
     }
 
     private static boolean beginEndToiletPoem(ServerPlayer player, BlockPos toiletPos) {
@@ -347,7 +355,7 @@ public class ToiletUtil {
         return false;
     }
 
-    public static void teleportEntity(Level level, Entity entity, BlockEntity blockEntity, float fallDistance) {
+    public static boolean teleportEntity(Level level, Entity entity, BlockEntity blockEntity, float fallDistance) {
         // Get linked info from block entity
         String linkedDim = null;
         BlockPos linkedPos = null;
@@ -358,24 +366,34 @@ public class ToiletUtil {
             linkedDim = be.getLinkedDim();
             linkedPos = be.getLinkedPos();
         }
-        if (linkedDim == null || linkedPos == null) return;
+        if (linkedDim == null || linkedPos == null) return false;
 
         var server = level.getServer();
-        if (server == null) return;
+        if (server == null) return false;
 
         var targetDimension = ResourceLocation.tryParse(linkedDim);
-        if (targetDimension == null) return;
+        if (targetDimension == null) return false;
 
         var targetWorld = server.getLevel(ResourceKey.create(Registries.DIMENSION, targetDimension));
-        if (targetWorld == null) return;
+        if (targetWorld == null) return false;
 
         targetWorld.getChunk(linkedPos);
         Vec3 destination = getToiletPitDestination(targetWorld, linkedPos);
 
-        if (entity.isVehicle() && entity.getControllingPassenger() != null) {
-            entity.getControllingPassenger().teleportTo(targetWorld, destination.x, destination.y, destination.z, Set.of(), entity.getYRot(), entity.getXRot());
+        var passenger = entity.isVehicle() ? entity.getControllingPassenger() : null;
+        if (passenger != null) {
+            passenger.setPortalCooldown();
         }
-        entity.teleportTo(targetWorld, destination.x, destination.y, destination.z, Set.of(), entity.getYRot(), entity.getXRot());
+        entity.setPortalCooldown();
+
+        boolean teleported = true;
+        if (passenger != null) {
+            teleported &= passenger.teleportTo(targetWorld, destination.x, destination.y, destination.z, Set.of(), entity.getYRot(), entity.getXRot());
+        }
+        teleported &= entity.teleportTo(targetWorld, destination.x, destination.y, destination.z, Set.of(), entity.getYRot(), entity.getXRot());
+        if (!teleported) {
+            return false;
+        }
 
         var pitch = targetWorld.random.nextFloat() + 0.1F;
         targetWorld.playSound(null, destination.x, destination.y, destination.z, SoundEvents.MUD_BREAK, SoundSource.PLAYERS, 1.0F, pitch);
@@ -386,6 +404,7 @@ public class ToiletUtil {
             entity.hurtMarked = true;
             entity.hasImpulse = true;
         }));
+        return true;
     }
 
     private static Vec3 getToiletPitDestination(Level level, BlockPos pos) {

@@ -4,8 +4,9 @@
 	"render_type": "minecraft:cutout",
 	"texture_size": [64, 64],
 	"textures": {
+		"bottom": "poopsky:block/portable_toilet_particle",
 		"toilet": "poopsky:block/portable_toilet_bottom",
-		"particle": "poopsky:block/portable_toilet_particle"
+		"particle": "#bottom"
 	},
 	"elements": [
 		{
@@ -17,7 +18,7 @@
 				"south": {"uv": [11.5, 0, 15.5, 0.5], "texture": "#toilet"},
 				"west": {"uv": [11.5, 0.5, 15.5, 1], "texture": "#toilet"},
 				"up": {"uv": [4, 4, 0, 0], "texture": "#toilet"},
-				"down": {"uv": [4, 4, 0, 8], "texture": "#toilet"}
+				"down": {"uv": [16, 0, 0, 16], "texture": "#bottom"}
 			}
 		},
 		{
@@ -35,7 +36,7 @@
 			"faces": {
 				"north": {"uv": [4, 7.5, 8, 11], "texture": "#toilet"},
 				"east": {"uv": [4, 7.5, 4.25, 11], "texture": "#toilet"},
-				"south": {"uv": [0, 8, 4, 11.5], "texture": "#toilet"},
+				"south": {"uv": [0, 4, 4, 7.5], "texture": "#toilet"},
 				"west": {"uv": [7.75, 7.5, 8, 11], "texture": "#toilet"},
 				"down": {"uv": [8, 10.75, 4, 11], "texture": "#toilet"}
 			}

@@ -43,6 +43,6 @@ public class PVillagerBehaviors {
     }
 
     private static boolean isHoldingPoop(Player player) {
-        return player.getMainHandItem().is(PoTags.Items.POOPS) || player.getOffhandItem().is(PoTags.Items.POOPS);
+        return player.getMainHandItem().is(PoTags.Items.VILLAGER_LIKE) || player.getOffhandItem().is(PoTags.Items.VILLAGER_LIKE);
     }
 }

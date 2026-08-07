@@ -30,12 +30,17 @@ public final class ItemTagGen {
     private static void generate(RegistrateItemTagsProvider provider) {
         ItemTagGen.provider = provider;
         tag(PoTags.Items.POOPS)
-                .add(PoItems.POOP.get())
-                .add(PoItems.CHILI_POOP.get())
-                .add(PoItems.GOLDEN_POOP.get())
-                .add(PoBlocks.SHIT.asItem())
-                .add(PoBlocks.CHILI_SHIT.asItem())
-                .add(PoBlocks.GOLDEN_SHIT.asItem());
+                .add(
+                        PoItems.POOP.get(),
+                        PoItems.CHILI_POOP.get(),
+                        PoItems.GOLDEN_POOP.get()
+                );
+        tag(PoTags.Items.SHITS)
+                .add(
+                        PoBlocks.SHIT.asItem(),
+                        PoBlocks.CHILI_SHIT.asItem(),
+                        PoBlocks.GOLDEN_SHIT.asItem()
+                );
         copy(PoTags.Blocks.TOILET_BLOCKS, PoTags.Items.TOILET_BLOCKS);
         copy(PoTags.Blocks.FLUSH_TOILET_BLOCKS, PoTags.Items.FLUSH_TOILET_BLOCKS);
         copy(PoTags.Blocks.GINKGO_LOGS, PoTags.Items.GINKGO_LOGS);
@@ -52,6 +57,10 @@ public final class ItemTagGen {
             tileVerticalSlabs.add(family.verticalSlab().get().asItem());
             tileWalls.add(family.wall().get().asItem());
         });
+
+        tag(PoTags.Items.FLUSH_TOILET_SAVE).addTag(PoTags.Items.POOPS).addTag(PoTags.Items.SHITS);
+        tag(PoTags.Items.FLY_LIKE).addTag(PoTags.Items.FLUSH_TOILET_SAVE);
+        tag(PoTags.Items.VILLAGER_LIKE).addTag(PoTags.Items.FLUSH_TOILET_SAVE);
 
         tag(PoTags.Items.CAN_COMPOSTABLE)
                 .add(PoItems.POOP.get())
@@ -172,22 +181,20 @@ public final class ItemTagGen {
         tag(ItemTags.LEG_ARMOR).add(PoItems.OMEN_LEGGINGS.get());
         tag(ItemTags.CHEST_ARMOR).add(PoItems.OMEN_CHESTPLATE.get());
         tag(ItemTags.HEAD_ARMOR).add(PoItems.OMEN_HELMET.get());
-        tag(ItemTags.EQUIPPABLE_ENCHANTABLE).add(
-                PoBlocks.SHIT.asItem(),
-                PoBlocks.CHILI_SHIT.asItem(),
-                PoBlocks.GOLDEN_SHIT.asItem()
-        );
-        tag(ItemTags.VANISHING_ENCHANTABLE).add(
-                PoBlocks.SHIT.asItem(),
-                PoBlocks.CHILI_SHIT.asItem(),
-                PoBlocks.GOLDEN_SHIT.asItem()
-        );
+        tag(ItemTags.EQUIPPABLE_ENCHANTABLE).addTag(PoTags.Items.SHITS);
+        tag(ItemTags.VANISHING_ENCHANTABLE).addTag(PoTags.Items.SHITS);
 
         tag(Tags.Items.MUSIC_DISCS)
                 .add(PoItems.LAWRENCE_MUSIC_DISC.get())
                 .add(PoItems.LIGHT_DANCE_MUSIC_DISC.get())
                 .add(PoItems.MOON_BOWL_MUSIC_DISC.get());
 
+        tag(PoTags.Items.POOP_MOONCAKES)
+                .add(
+                        PoItems.POOP_MOONCAKE.get(),
+                        PoItems.CHILI_POOP_MOONCAKE.get(),
+                        PoItems.GOLDEN_POOP_MOONCAKE.get()
+                );
         tag(PoTags.Items.PASTA)
                 .add(PoItems.ROUNDWORM.get())
                 .add(PoItems.POOP_PASTA.get());

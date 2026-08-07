@@ -3,18 +3,19 @@
   "category": "building",
   "key": {
     "B": {
-      "item": "minecraft:quartz_block"
+      "item": "minecraft:iron_ingot"
     },
     "P": {
       "item": "poopsky:poop"
     }
   },
   "pattern": [
-    "PB",
-    "B "
+    "B",
+    "B",
+    "P"
   ],
   "result": {
     "count": 1,
-    "id": "poopsky:flush_toilet"
+    "id": "poopsky:portable_toilet"
   }
 }

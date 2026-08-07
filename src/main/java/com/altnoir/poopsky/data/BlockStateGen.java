@@ -89,12 +89,9 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
 
     private void maggotsChunkLoader() {
         Block block = PoBlocks.MAGGOTS_CHUNK_LOADER.get();
-        ModelFile inactive = models().cubeAll(getBlockPath(block), mcLoc("block/beacon"));
-        ModelFile active = models().cubeAll(getBlockPath(block) + "_powered", mcLoc("block/redstone_block"));
-        getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder()
-                .modelFile(state.getValue(MaggotsChunkLoaderBlock.POWERED) ? active : inactive)
-                .build());
-        simpleBlockItem(block, inactive);
+        ModelFile model = models().getExistingFile(modLoc("block/" + getBlockPath(block)));
+        getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder().modelFile(model).build());
+        simpleBlockItem(block, model);
     }
 
     private void poopBlock() {

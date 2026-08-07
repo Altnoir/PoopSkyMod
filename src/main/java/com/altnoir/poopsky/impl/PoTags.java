@@ -47,6 +47,7 @@ public class PoTags {
 
     public interface Items {
         TagKey<Item> POOPS = create("poops");
+        TagKey<Item> SHITS = create("shits");
         TagKey<Item> TOILET_BLOCKS = create("toilet_blocks");
         TagKey<Item> FLUSH_TOILET_BLOCKS = create("flush_toilet_blocks");
         TagKey<Item> CAN_COMPOSTABLE = create("can_compooper");
@@ -57,6 +58,11 @@ public class PoTags {
         TagKey<Item> TILE_VERTICAL_SLABS = create("tile_vertical_slabs");
         TagKey<Item> TILE_WALLS = create("tile_walls");
 
+        TagKey<Item> FLUSH_TOILET_SAVE = create("flush_toilet_save");
+        TagKey<Item> FLY_LIKE = create("fly_like");
+        TagKey<Item> VILLAGER_LIKE = create("villager_like");
+
+        TagKey<Item> POOP_MOONCAKES = create("poop_mooncakes");
         TagKey<Item> PASTA = tag("foods/pasta");
         TagKey<Item> SOUP = tag("foods/soup");
 
@@ -106,6 +112,7 @@ public class PoTags {
             return TagKey.create(Registries.DAMAGE_TYPE, PoopSky.loc(name));
         }
     }
+
     public class PaintingVariantTags {
         public static final TagKey<PaintingVariant> PLACEABLE = create("placeable");
 

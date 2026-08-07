@@ -276,13 +276,6 @@ public class PoBlocks {
             props -> new PlacerBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
                     .instrument(NoteBlockInstrument.BASEDRUM)
                     .requiresCorrectToolForDrops().strength(3.5F)));
-    public static final BlockEntry<MaggotsChunkLoaderBlock> MAGGOTS_CHUNK_LOADER = registerBlock("maggots_chunk_loader",
-            props -> new MaggotsChunkLoaderBlock(BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.TERRACOTTA_WHITE)
-                    .strength(5.0F, 1200.0F)
-                    .sound(SoundType.GLASS)
-                    .requiresCorrectToolForDrops()
-                    .lightLevel(state -> state.getValue(MaggotsChunkLoaderBlock.POWERED) ? 7 : 0)));
     public static final BlockEntry<SieveBlock> SIEVE = registerBlock("sieve_stable",
             props -> new SieveBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.STONE)
@@ -302,6 +295,13 @@ public class PoBlocks {
             props -> new BreedingChestBlock(simpleProperties(MapColor.COLOR_BROWN, 1.0F, SoundType.POLISHED_TUFF)
                     .requiresCorrectToolForDrops()
                     .noOcclusion()));
+    public static final BlockEntry<MaggotsChunkLoaderBlock> MAGGOTS_CHUNK_LOADER = registerBlock("maggots_chunk_loader",
+            props -> new MaggotsChunkLoaderBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_WHITE)
+                    .strength(3.0F)
+                    .sound(SoundType.WEEPING_VINES)
+                    .requiresCorrectToolForDrops()
+                    .lightLevel(state -> state.getValue(MaggotsChunkLoaderBlock.POWERED) ? 7 : 0)));
 
     public static final BlockEntry<Block> RAW_POOP_BLOCK = registerBlock("raw_poop_block", 88,
             props -> new Block(simpleProperties(MapColor.COLOR_BROWN, 0.65F, SoundType.MUD)

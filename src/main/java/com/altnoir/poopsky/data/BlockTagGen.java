@@ -268,6 +268,8 @@ public final class BlockTagGen {
         tag(BlockTags.MINEABLE_WITH_HOE)
                 .add(
                         PoBlocks.STOOL.get(),
+                        PoBlocks.POOP_PIECE.get(),
+                        PoBlocks.POOP_FARMLAND.get(),
                         PoBlocks.POOP_CRAFTING_TABLE.get(),
                         PoBlocks.MAGGOTS_BLOCK.get(),
                         PoBlocks.ROUNDWORM_BLOCK.get(),
@@ -284,12 +286,6 @@ public final class BlockTagGen {
                         PoBlocks.POOP_LEAVES_IRON.get()
                 )
                 .addTag(PoTags.Blocks.POOP_BUILDING_BLOCKS);
-
-        tag(BlockTags.MINEABLE_WITH_SHOVEL)
-                .add(
-                        PoBlocks.POOP_PIECE.get(),
-                        PoBlocks.POOP_FARMLAND.get()
-                );
 
         tag(Tags.Blocks.VILLAGER_JOB_SITES)
                 .add(

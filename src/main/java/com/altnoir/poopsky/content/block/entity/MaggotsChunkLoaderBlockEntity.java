@@ -32,15 +32,12 @@ public class MaggotsChunkLoaderBlockEntity extends BlockEntity {
 
     private static final int STRUCTURE_SCAN_INTERVAL = 80;
     private static final int BLOCKS_PER_TICK = 10;
-    private static final int SCAN_EDGE = 9;
-    private static final int SCAN_RADIUS = SCAN_EDGE / 2;
-    private static final int TOTAL_SCAN_BLOCKS = SCAN_EDGE * SCAN_EDGE * SCAN_EDGE;
+    private static final int[] REQUIRED_COUNTS = {9, 25, 49, 81};
+    private static final BlockPos[][] SHELL_OFFSETS = buildShellOffsets();
 
+    private int scanStage = -1;
     private int scanIndex = -1;
-    private int scanCount3;
-    private int scanCount5;
-    private int scanCount7;
-    private int scanCount9;
+    private int scanCount;
     private int loadedRadius = -1;
     private boolean ticketsInitialized;
 
@@ -48,49 +45,81 @@ public class MaggotsChunkLoaderBlockEntity extends BlockEntity {
         super(PoBlockEntityType.MAGGOTS_CHUNK_LOADER.get(), pos, state);
     }
 
+    private static BlockPos[][] buildShellOffsets() {
+        return new BlockPos[][]{
+                buildShell(3),
+                buildShell(5),
+                buildShell(7),
+                buildShell(9)
+        };
+    }
+
+    private static BlockPos[] buildShell(int edge) {
+        int radius = (edge - 1) / 2;
+        int size = edge * edge * edge - (edge - 2) * (edge - 2) * (edge - 2);
+        BlockPos[] positions = new BlockPos[size];
+        int index = 0;
+        for (int dx = -radius; dx <= radius; dx++) {
+            for (int dy = -radius; dy <= radius; dy++) {
+                for (int dz = -radius; dz <= radius; dz++) {
+                    if (Math.max(Math.max(Math.abs(dx), Math.abs(dy)), Math.abs(dz)) == radius) {
+                        positions[index++] = new BlockPos(dx, dy, dz);
+                    }
+                }
+            }
+        }
+        return positions;
+    }
+
     public static void tick(Level level, BlockState state, MaggotsChunkLoaderBlockEntity blockEntity) {
         if (!(level instanceof ServerLevel serverLevel)) {
             return;
         }
 
-        if (serverLevel.getGameTime() % STRUCTURE_SCAN_INTERVAL == 0L && blockEntity.scanIndex < 0) {
+        if (serverLevel.getGameTime() % STRUCTURE_SCAN_INTERVAL == 0L && blockEntity.scanStage < 0) {
             blockEntity.startScan();
         }
 
-        if (blockEntity.scanIndex >= 0) {
+        if (blockEntity.scanStage >= 0) {
             blockEntity.continueScan(serverLevel, state);
         }
     }
 
     private void startScan() {
+        scanStage = 0;
         scanIndex = 0;
-        scanCount3 = 0;
-        scanCount5 = 0;
-        scanCount7 = 0;
-        scanCount9 = 0;
+        scanCount = 0;
     }
 
     private void continueScan(ServerLevel level, BlockState state) {
         int checked = 0;
-        while (checked < BLOCKS_PER_TICK && scanIndex < TOTAL_SCAN_BLOCKS) {
-            int index = scanIndex++;
-            int dz = index % SCAN_EDGE - SCAN_RADIUS;
-            int dy = (index / SCAN_EDGE) % SCAN_EDGE - SCAN_RADIUS;
-            int dx = index / (SCAN_EDGE * SCAN_EDGE) - SCAN_RADIUS;
-
-            if (level.getBlockState(worldPosition.offset(dx, dy, dz)).is(PoBlocks.MAGGOTS_BLOCK.get())) {
-                int distance = Math.max(Math.max(Math.abs(dx), Math.abs(dy)), Math.abs(dz));
-                if (distance == 4) scanCount9++;
-                if (distance == 3) scanCount7++;
-                if (distance == 2) scanCount5++;
-                if (distance == 1) scanCount3++;
+        while (checked < BLOCKS_PER_TICK && scanStage >= 0) {
+            BlockPos[] shell = SHELL_OFFSETS[scanStage];
+            while (checked < BLOCKS_PER_TICK && scanIndex < shell.length) {
+                BlockPos offset = shell[scanIndex++];
+                if (level.getBlockState(worldPosition.offset(offset)).is(PoBlocks.MAGGOTS_BLOCK.get())) {
+                    scanCount++;
+                }
+                checked++;
             }
-            checked++;
-        }
 
-        if (scanIndex >= TOTAL_SCAN_BLOCKS) {
-            scanIndex = -1;
-            refreshLoading(level, state, levelFromCounts(scanCount3, scanCount5, scanCount7, scanCount9));
+            if (scanIndex >= shell.length) {
+                if (scanCount < REQUIRED_COUNTS[scanStage]) {
+                    int structureLevel = scanStage;
+                    scanStage = -1;
+                    refreshLoading(level, state, structureLevel);
+                    return;
+                }
+
+                scanStage++;
+                scanIndex = 0;
+                scanCount = 0;
+                if (scanStage >= SHELL_OFFSETS.length) {
+                    scanStage = -1;
+                    refreshLoading(level, state, MAX_STRUCTURE_LEVEL);
+                    return;
+                }
+            }
         }
     }
 
@@ -119,37 +148,34 @@ public class MaggotsChunkLoaderBlockEntity extends BlockEntity {
         return loadedRadius;
     }
 
-    private static int levelFromCounts(int count3, int count5, int count7, int count9) {
-        if (count9 >= 81) return 4;
-        if (count7 >= 49) return 3;
-        if (count5 >= 25) return 2;
-        if (count3 >= 9) return 1;
-        return 0;
-    }
-
     public static int getStructureLevel(ServerLevel level, BlockPos loaderPos) {
-        int count3 = 0;
-        int count5 = 0;
-        int count7 = 0;
-        int count9 = 0;
-
-        for (int dx = -4; dx <= 4; dx++) {
-            for (int dy = -4; dy <= 4; dy++) {
-                for (int dz = -4; dz <= 4; dz++) {
-                    if (!level.getBlockState(loaderPos.offset(dx, dy, dz)).is(PoBlocks.MAGGOTS_BLOCK.get())) {
-                        continue;
-                    }
-
-                    int distance = Math.max(Math.max(Math.abs(dx), Math.abs(dy)), Math.abs(dz));
-                    if (distance == 4) count9++;
-                    if (distance == 3) count7++;
-                    if (distance == 2) count5++;
-                    if (distance == 1) count3++;
-                }
-            }
+        int count3 = countShell(level, loaderPos, 0);
+        if (count3 < REQUIRED_COUNTS[0]) {
+            return 0;
         }
 
-        return levelFromCounts(count3, count5, count7, count9);
+        int count5 = countShell(level, loaderPos, 1);
+        if (count5 < REQUIRED_COUNTS[1]) {
+            return 1;
+        }
+
+        int count7 = countShell(level, loaderPos, 2);
+        if (count7 < REQUIRED_COUNTS[2]) {
+            return 2;
+        }
+
+        int count9 = countShell(level, loaderPos, 3);
+        return count9 >= REQUIRED_COUNTS[3] ? 4 : 3;
+    }
+
+    private static int countShell(ServerLevel level, BlockPos loaderPos, int stage) {
+        int count = 0;
+        for (BlockPos offset : SHELL_OFFSETS[stage]) {
+            if (level.getBlockState(loaderPos.offset(offset)).is(PoBlocks.MAGGOTS_BLOCK.get())) {
+                count++;
+            }
+        }
+        return count;
     }
 
     public void releaseAllChunks(ServerLevel level) {

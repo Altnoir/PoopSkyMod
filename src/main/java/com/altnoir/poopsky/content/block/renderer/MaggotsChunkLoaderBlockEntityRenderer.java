@@ -20,6 +20,12 @@ import java.util.Map;
 
 public class MaggotsChunkLoaderBlockEntityRenderer implements BlockEntityRenderer<MaggotsChunkLoaderBlockEntity> {
     private static final float GLOW_SMOOTHING = 0.25F;
+    private static final float MODEL_MIN_X = 3.0F / 16.0F;
+    private static final float MODEL_MIN_Y = 3.0F / 16.0F;
+    private static final float MODEL_MIN_Z = 3.0F / 16.0F;
+    private static final float MODEL_MAX_X = 13.0F / 16.0F;
+    private static final float MODEL_MAX_Y = 14.0F / 16.0F;
+    private static final float MODEL_MAX_Z = 13.0F / 16.0F;
     private static final Map<GlowKey, GlowState> GLOW_STATES = new HashMap<>();
 
     public MaggotsChunkLoaderBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
@@ -53,10 +59,26 @@ public class MaggotsChunkLoaderBlockEntityRenderer implements BlockEntityRendere
         float alpha = alphaFactor * (0.10F + 0.06F * pulse);
         VertexConsumer consumer = bufferSource.getBuffer(RenderType.lightning());
 
-        renderGlowBox(poseStack, consumer, -glow, 1.0F + glow, alpha * 0.25F);
-        renderGlowBox(poseStack, consumer, -glow * 0.75F, 1.0F + glow * 0.75F, alpha * 0.5F);
-        renderGlowBox(poseStack, consumer, -glow * 0.5F, 1.0F + glow * 0.5F, alpha * 0.75F);
-        renderGlowBox(poseStack, consumer, -glow * 0.25F, 1.0F + glow * 0.25F, alpha);
+        renderGlowBox(poseStack, consumer,
+                MODEL_MIN_X - glow, MODEL_MAX_X + glow,
+                MODEL_MIN_Y - glow, MODEL_MAX_Y + glow,
+                MODEL_MIN_Z - glow, MODEL_MAX_Z + glow,
+                alpha * 0.25F);
+        renderGlowBox(poseStack, consumer,
+                MODEL_MIN_X - glow * 0.75F, MODEL_MAX_X + glow * 0.75F,
+                MODEL_MIN_Y - glow * 0.75F, MODEL_MAX_Y + glow * 0.75F,
+                MODEL_MIN_Z - glow * 0.75F, MODEL_MAX_Z + glow * 0.75F,
+                alpha * 0.5F);
+        renderGlowBox(poseStack, consumer,
+                MODEL_MIN_X - glow * 0.5F, MODEL_MAX_X + glow * 0.5F,
+                MODEL_MIN_Y - glow * 0.5F, MODEL_MAX_Y + glow * 0.5F,
+                MODEL_MIN_Z - glow * 0.5F, MODEL_MAX_Z + glow * 0.5F,
+                alpha * 0.75F);
+        renderGlowBox(poseStack, consumer,
+                MODEL_MIN_X - glow * 0.25F, MODEL_MAX_X + glow * 0.25F,
+                MODEL_MIN_Y - glow * 0.25F, MODEL_MAX_Y + glow * 0.25F,
+                MODEL_MIN_Z - glow * 0.25F, MODEL_MAX_Z + glow * 0.25F,
+                alpha);
     }
 
     public static void onLevelUnload(LevelEvent.Unload event) {
@@ -91,15 +113,19 @@ public class MaggotsChunkLoaderBlockEntityRenderer implements BlockEntityRendere
         }
     }
 
-    private static void renderGlowBox(PoseStack poseStack, VertexConsumer consumer, float min, float max, float alpha) {
+    private static void renderGlowBox(PoseStack poseStack, VertexConsumer consumer,
+                                      float minX, float maxX,
+                                      float minY, float maxY,
+                                      float minZ, float maxZ,
+                                      float alpha) {
         PoseStack.Pose pose = poseStack.last();
 
-        renderQuad(pose, consumer, min, min, min, max, min, min, max, min, max, min, min, max, alpha);
-        renderQuad(pose, consumer, min, max, max, max, max, max, max, max, min, min, max, min, alpha);
-        renderQuad(pose, consumer, min, min, min, min, min, max, min, max, max, min, max, min, alpha);
-        renderQuad(pose, consumer, max, min, max, max, min, min, max, max, min, max, max, max, alpha);
-        renderQuad(pose, consumer, max, min, min, min, min, min, min, max, min, max, max, min, alpha);
-        renderQuad(pose, consumer, min, min, max, max, min, max, max, max, max, min, max, max, alpha);
+        renderQuad(pose, consumer, minX, minY, minZ, maxX, minY, minZ, maxX, minY, maxZ, minX, minY, maxZ, alpha);
+        renderQuad(pose, consumer, minX, maxY, maxZ, maxX, maxY, maxZ, maxX, maxY, minZ, minX, maxY, minZ, alpha);
+        renderQuad(pose, consumer, minX, minY, minZ, minX, minY, maxZ, minX, maxY, maxZ, minX, maxY, minZ, alpha);
+        renderQuad(pose, consumer, maxX, minY, maxZ, maxX, minY, minZ, maxX, maxY, minZ, maxX, maxY, maxZ, alpha);
+        renderQuad(pose, consumer, maxX, minY, minZ, minX, minY, minZ, minX, maxY, minZ, maxX, maxY, minZ, alpha);
+        renderQuad(pose, consumer, minX, minY, maxZ, maxX, minY, maxZ, maxX, maxY, maxZ, minX, maxY, maxZ, alpha);
     }
 
     private static void renderQuad(PoseStack.Pose pose, VertexConsumer consumer,
