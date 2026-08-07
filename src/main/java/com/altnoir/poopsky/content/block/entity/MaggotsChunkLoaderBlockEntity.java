@@ -1,10 +1,9 @@
 package com.altnoir.poopsky.content.block.entity;
 
-import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.p.MaggotsChunkLoaderBlock;
+import com.altnoir.poopsky.impl.MaggotsChunkLoaderSavedData;
 import com.altnoir.poopsky.init.PoBlockEntityType;
 import com.altnoir.poopsky.init.PoBlocks;
-import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -12,24 +11,12 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.world.chunk.TicketController;
-import net.neoforged.neoforge.common.world.chunk.TicketHelper;
-import net.neoforged.neoforge.common.world.chunk.TicketSet;
-
-import java.util.Map;
 
 public class MaggotsChunkLoaderBlockEntity extends BlockEntity {
     public static final int MAX_STRUCTURE_LEVEL = 4;
-    private static final int MAX_LOADED_RADIUS = MAX_STRUCTURE_LEVEL - 1;
-    public static final TicketController TICKET_CONTROLLER = new TicketController(
-            PoopSky.loc("maggots_chunk_loader"),
-            MaggotsChunkLoaderBlockEntity::validateTickets
-    );
-
     private static final int STRUCTURE_SCAN_INTERVAL = 80;
     private static final int BLOCKS_PER_TICK = 10;
     private static final int SCAN_EDGE = 9;
@@ -101,7 +88,7 @@ public class MaggotsChunkLoaderBlockEntity extends BlockEntity {
         }
 
         boolean wasActive = loadedRadius >= 0;
-        updateTickets(level, ticketsInitialized ? loadedRadius : -1, desiredRadius);
+        updateTickets(level, desiredRadius);
         loadedRadius = desiredRadius;
         ticketsInitialized = true;
         setChanged();
@@ -153,60 +140,17 @@ public class MaggotsChunkLoaderBlockEntity extends BlockEntity {
     }
 
     public void releaseAllChunks(ServerLevel level) {
-        ChunkPos center = new ChunkPos(worldPosition);
         if (loadedRadius >= 0) {
             level.playSound(null, worldPosition, SoundEvents.BEACON_DEACTIVATE, SoundSource.BLOCKS, 1.0F, 1.0F);
         }
-        int cleanupRadius = Math.max(loadedRadius, MAX_LOADED_RADIUS);
-        for (int offsetX = -cleanupRadius; offsetX <= cleanupRadius; offsetX++) {
-            for (int offsetZ = -cleanupRadius; offsetZ <= cleanupRadius; offsetZ++) {
-                TICKET_CONTROLLER.forceChunk(level, worldPosition, center.x + offsetX, center.z + offsetZ, false, true);
-            }
-        }
+        MaggotsChunkLoaderSavedData.get(level).update(level, worldPosition, -1);
         loadedRadius = -1;
         ticketsInitialized = true;
         setChanged();
     }
 
-    private void updateTickets(ServerLevel level, int oldRadius, int newRadius) {
-        ChunkPos center = new ChunkPos(worldPosition);
-        int maxRadius = Math.max(oldRadius, newRadius);
-        for (int offsetX = -maxRadius; offsetX <= maxRadius; offsetX++) {
-            for (int offsetZ = -maxRadius; offsetZ <= maxRadius; offsetZ++) {
-                boolean wasLoaded = inRadius(offsetX, offsetZ, oldRadius);
-                boolean shouldLoad = inRadius(offsetX, offsetZ, newRadius);
-                if (wasLoaded != shouldLoad) {
-                    TICKET_CONTROLLER.forceChunk(level, worldPosition, center.x + offsetX, center.z + offsetZ, shouldLoad, true);
-                }
-            }
-        }
-    }
-
-    private static boolean inRadius(int offsetX, int offsetZ, int radius) {
-        return radius >= 0 && Math.abs(offsetX) <= radius && Math.abs(offsetZ) <= radius;
-    }
-
-    private static void validateTickets(ServerLevel level, TicketHelper helper) {
-        for (Map.Entry<BlockPos, TicketSet> entry : helper.getBlockTickets().entrySet()) {
-            BlockPos owner = entry.getKey();
-            BlockState state = level.getBlockState(owner);
-            if (!state.is(PoBlocks.MAGGOTS_CHUNK_LOADER.get()) || !level.hasNeighborSignal(owner)) {
-                helper.removeAllTickets(owner);
-                continue;
-            }
-
-            int radius = getStructureLevel(level, owner) - 1;
-            ChunkPos center = new ChunkPos(owner);
-            for (long chunk : new LongOpenHashSet(entry.getValue().nonTicking())) {
-                helper.removeTicket(owner, chunk, false);
-            }
-            for (long chunk : new LongOpenHashSet(entry.getValue().ticking())) {
-                ChunkPos chunkPos = new ChunkPos(chunk);
-                if (!inRadius(chunkPos.x - center.x, chunkPos.z - center.z, radius)) {
-                    helper.removeTicket(owner, chunk, true);
-                }
-            }
-        }
+    private void updateTickets(ServerLevel level, int newRadius) {
+        MaggotsChunkLoaderSavedData.get(level).update(level, worldPosition, newRadius);
     }
 
     @Override

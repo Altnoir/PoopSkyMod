@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.client;
 
+import com.altnoir.poopsky.ClientConfig;
 import com.altnoir.poopsky.client.screen.PoemScreen;
 import com.altnoir.poopsky.impl.network.PoAnimation;
 import net.minecraft.client.Minecraft;

@@ -21,6 +21,7 @@
     "LivingEntityMixin",
     "MinecraftServerMixin",
     "MobMixin",
+    "PistonStructureResolverMixin",
     "ServerLevelMixin",
     "TntBlockMixin"
   ],

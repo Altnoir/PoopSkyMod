@@ -61,6 +61,11 @@ public interface IBlockExtension {
         return state.getBlock() == Blocks.SLIME_BLOCK || state.getBlock() == Blocks.HONEY_BLOCK;
     }
 
+    default boolean canStickTo(BlockState state, BlockState other) {
+        return !(state.is(Blocks.HONEY_BLOCK) && other.is(Blocks.SLIME_BLOCK))
+                && !(state.is(Blocks.SLIME_BLOCK) && other.is(Blocks.HONEY_BLOCK));
+    }
+
     /**
      * Chance that fire will spread and consume this block.
      * 300 being a 100% chance, 0, being a 0% chance.

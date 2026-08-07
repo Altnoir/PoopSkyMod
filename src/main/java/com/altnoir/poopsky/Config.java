@@ -1,15 +1,28 @@
 package com.altnoir.poopsky;
 
 import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeModConfigEvents;
+import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.TranslatableEnum;
 
 public class Config {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
-    public enum SpawnToiletMode {
-        WOODEN_TOILET,
-        SKY_FLUSH_TOILET,
-        RANDOM_TOILET
+    public enum SpawnToiletMode implements TranslatableEnum {
+        WOODEN_TOILET("poopsky.configuration.spawnToiletMode.wooden_toilet"),
+        SKY_FLUSH_TOILET("poopsky.configuration.spawnToiletMode.sky_flush_toilet"),
+        RANDOM_TOILET("poopsky.configuration.spawnToiletMode.random_toilet");
+
+        private final String translationKey;
+
+        SpawnToiletMode(String translationKey) {
+            this.translationKey = translationKey;
+        }
+
+        @Override
+        public Component getTranslatedName() {
+            return Component.translatable(this.translationKey);
+        }
     }
 
     public static boolean setPoopSkyDefault;

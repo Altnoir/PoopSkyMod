@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.client.inventory.PortableToiletMenu;
+import com.altnoir.poopsky.fabric.port.extension.IBlockExtension;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -11,7 +12,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
@@ -34,7 +34,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.Nullable;
 
-public class PortableToiletBlock extends Block {
+public class PortableToiletBlock extends Block implements IBlockExtension {
     public static final MapCodec<PortableToiletBlock> CODEC = simpleCodec(PortableToiletBlock::new);
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
@@ -298,15 +298,6 @@ public class PortableToiletBlock extends Block {
     }
 
     @Override
-    public Optional<ServerPlayer.RespawnPosAngle> getRespawnPosition(BlockState state, EntityType<?> type, LevelReader level, BlockPos pos, float orientation) {
-        if (state.getValue(HALF) != DoubleBlockHalf.UPPER) {
-            return Optional.empty();
-        }
-        BlockPos respawnPos = pos.below().relative(state.getValue(FACING));
-        return Optional.of(ServerPlayer.RespawnPosAngle.of(Vec3.atBottomCenterOf(respawnPos), pos));
-    }
-
-    @Override
     public boolean isStickyBlock(BlockState state) {
         return true;
     }
@@ -319,7 +310,8 @@ public class PortableToiletBlock extends Block {
         if (state.is(this) || other.is(this)) {
             return false;
         }
-        return super.canStickTo(state, other);
+        return !(state.is(Blocks.HONEY_BLOCK) && other.is(Blocks.SLIME_BLOCK))
+                && !(state.is(Blocks.SLIME_BLOCK) && other.is(Blocks.HONEY_BLOCK));
     }
 
     @Override
