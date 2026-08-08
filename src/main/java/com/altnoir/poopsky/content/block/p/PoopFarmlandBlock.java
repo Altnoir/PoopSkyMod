@@ -1,8 +1,9 @@
 package com.altnoir.poopsky.content.block.p;
 
-import com.altnoir.poopsky.init.PoSoundEvents;
+import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -174,6 +175,12 @@ public class PoopFarmlandBlock extends FarmBlock {
         int maxAge = minAge == 0 ? possibleValues.size() - 1 : possibleValues.size();
 
         if (!notFarmland(aboveState) && !belowState.isCollisionShapeFullBlock(level, belowPos) && age == maxAge) {
+            BlockState topState = level.getBlockState(abovePos.above());
+            IntegerProperty topAgeProp = (IntegerProperty) topState.getBlock().getStateDefinition().getProperty("age");
+            if (topAgeProp != null && !topState.is(PoTags.Blocks.POOP_FARMLAND_AUTO)) {
+                return;
+            }
+
             BlockState newState;
             if (aboveState.getBlock() instanceof SweetBerryBushBlock) {
                 newState = aboveState.setValue(ageProp, minAge + 1);

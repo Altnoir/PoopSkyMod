@@ -80,6 +80,11 @@ public class MaggotsChunkLoaderBlockEntity extends BlockEntity {
             blockEntity.startScan();
         }
 
+        if (serverLevel.getGameTime() % STRUCTURE_SCAN_INTERVAL == 0L && blockEntity.loadedRadius >= 0) {
+            float pitch = 0.6F + blockEntity.loadedRadius * 0.3F;
+            serverLevel.playSound(null, blockEntity.worldPosition, SoundEvents.BEACON_AMBIENT, SoundSource.BLOCKS, 1.0F, pitch);
+        }
+
         if (blockEntity.scanStage >= 0) {
             blockEntity.continueScan(serverLevel, state);
         }

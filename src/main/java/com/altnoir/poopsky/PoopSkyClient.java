@@ -8,12 +8,12 @@ import com.altnoir.poopsky.client.model.BakedModelEventHandler;
 import com.altnoir.poopsky.client.particle.LeavesParticle;
 import com.altnoir.poopsky.client.particle.PoopParticle;
 import com.altnoir.poopsky.client.particle.ToiletParticle;
-import com.altnoir.poopsky.content.block.renderer.MaggotsChunkLoaderBlockEntityRenderer;
 import com.altnoir.poopsky.client.renderer.TimeBellOverlay;
 import com.altnoir.poopsky.client.renderer.ToiletHighlightRenderer;
 import com.altnoir.poopsky.client.renderer.ToiletPlugItemRenderer;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
+import com.altnoir.poopsky.content.block.renderer.MaggotsChunkLoaderBlockEntityRenderer;
 import com.altnoir.poopsky.content.entity.model.FlyModel;
 import com.altnoir.poopsky.content.entity.model.ToiletPlugModel;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
@@ -181,6 +181,7 @@ public class PoopSkyClient {
         public static void registerBlockRenderBuffers(RegisterRenderBuffersEvent event) {
             event.registerRenderBuffer(RenderType.translucent());
             event.registerRenderBuffer(RenderType.lightning());
+            event.registerRenderBuffer(PoRenderTypes.chunkLoaderGlow());
         }
 
         public static void registerClientExtensions(RegisterClientExtensionsEvent event) {

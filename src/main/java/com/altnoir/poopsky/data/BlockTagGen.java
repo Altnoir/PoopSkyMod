@@ -12,6 +12,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
+import vectorwing.farmersdelight.common.registry.ModBlocks;
 
 public final class BlockTagGen {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
@@ -108,6 +109,9 @@ public final class BlockTagGen {
                         PoBlocks.GOLDEN_SHIT.get()
                 )
                 .addTag(PoTags.Blocks.TOILET_BLOCKS);
+
+        tag(PoTags.Blocks.POOP_FARMLAND_AUTO)
+                .add(ModBlocks.TOMATO_CROP_ON_ROPE.get());
 
         //基础标签
         tag(BlockTags.MOSS_REPLACEABLE)
