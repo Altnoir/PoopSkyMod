@@ -413,6 +413,7 @@ public class PoBlocks {
                     .sound(SoundType.AMETHYST_CLUSTER)
                     .strength(1.5F)
                     .lightLevel(p_152632_ -> 5)
+                    .randomTicks()
                     .pushReaction(PushReaction.DESTROY)),
             (loot, block) -> loot.add(block, createSaltpeterClusterDrop(loot, block)));
     public static final BlockEntry<SaltpeterClusterBlock> LARGE_SALTPETER_BUD = registerBlock("large_saltpeter_bud",
@@ -1058,4 +1059,3 @@ public class PoBlocks {
         return TAB_ITEMS.getOrDefault(tab, Set.of()).stream().anyMatch(entry -> entry.asItem() == item);
     }
 }
-

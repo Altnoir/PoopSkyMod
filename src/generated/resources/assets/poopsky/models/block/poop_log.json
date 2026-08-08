@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "poopsky:block/poop_log_top",
+    "side": "poopsky:block/poop_log"
+  }
+}

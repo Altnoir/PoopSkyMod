@@ -27,8 +27,7 @@ public class MaggotsChunkLoaderBlockEntityRenderer implements BlockEntityRendere
     private static final float MODEL_MAX_Y = 14.0F / 16.0F;
     private static final float MODEL_MAX_Z = 13.0F / 16.0F;
     private static final float MIN_GLOW_SCALE = 0.1F;
-    private static final float MAX_GLOW_SCALE = MIN_GLOW_SCALE
-            + (MaggotsChunkLoaderBlockEntity.MAX_STRUCTURE_LEVEL - 1) * 0.2F;
+    private static final float MAX_GLOW_SCALE = MIN_GLOW_SCALE + (MaggotsChunkLoaderBlockEntity.MAX_STRUCTURE_LEVEL - 1) * 0.2F;
     private static final Map<GlowKey, GlowState> GLOW_STATES = new HashMap<>();
 
     public MaggotsChunkLoaderBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
@@ -61,20 +60,22 @@ public class MaggotsChunkLoaderBlockEntityRenderer implements BlockEntityRendere
         float pulse = (Mth.sin((level.getGameTime() + partialTick) * 0.22F) + 1.0F) * 0.5F;
         float alpha = alphaFactor * (0.25F + 0.15F * pulse);
         VertexConsumer consumer = bufferSource.getBuffer(PoRenderTypes.chunkLoaderGlow());
-        float scaleRed = 0.8F - glow;
-        float outerGreen = 0.25F, outerBlue = 0.5F;
-        float innerGreen = 0.75F, innerBlue = 0.75F;
+        float progress = Mth.clamp((glow - MIN_GLOW_SCALE) / (MAX_GLOW_SCALE - MIN_GLOW_SCALE), 0.0F, 1.0F);
         for (int layer = 0; layer < 4; layer++) {
             float layerScale = 1.0F - layer * 0.25F;
             float layerAlpha = alpha * (0.25F + layer * 0.25F);
-            float t = layer / 3.0F;
-            float green = Mth.lerp(t, outerGreen, innerGreen);
-            float blue = Mth.lerp(t, outerBlue, innerBlue);
+            float saturation = 0.25F + layer * 0.25F;
+            float pinkRed = Mth.lerp(saturation, 1.0F, 1.0F);
+            float pinkGreen = Mth.lerp(saturation, 0.98F, 0.55F);
+            float pinkBlue = Mth.lerp(saturation, 0.92F, 0.80F);
+            float red = Mth.lerp(progress, pinkRed, 1.0F);
+            float green = Mth.lerp(progress, pinkGreen, 0.98F);
+            float blue = Mth.lerp(progress, pinkBlue, 0.92F);
             renderGlowBox(poseStack, consumer,
                     MODEL_MIN_X - glow * layerScale, MODEL_MAX_X + glow * layerScale,
                     MODEL_MIN_Y - glow * layerScale, MODEL_MAX_Y + glow * layerScale,
                     MODEL_MIN_Z - glow * layerScale, MODEL_MAX_Z + glow * layerScale,
-                    layerAlpha, scaleRed, green, blue);
+                    layerAlpha, red, green, blue);
         }
     }
 

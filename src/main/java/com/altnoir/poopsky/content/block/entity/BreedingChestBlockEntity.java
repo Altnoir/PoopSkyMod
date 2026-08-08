@@ -205,10 +205,10 @@ public class BreedingChestBlockEntity extends BlockEntity implements MenuProvide
             BlockPos checkPos = pos.offset(dx, dy, dz);
             if (!checkPos.equals(pos)) {
                 BlockState state = level.getBlockState(checkPos);
-                if (state.is(PoTags.Blocks.POOP_BLOCKS)) {
+                if (state.is(PoTags.Blocks.BREEDING_CHEST_ACCELERATOR)) {
                     scanPoop++;
                 }
-                if (state.is(PoTags.Blocks.MAGGOTS_BLOCKS)) {
+                if (state.is(PoTags.Blocks.BREEDING_CHEST_PARALLELISM)) {
                     scanMaggots++;
                 }
             }

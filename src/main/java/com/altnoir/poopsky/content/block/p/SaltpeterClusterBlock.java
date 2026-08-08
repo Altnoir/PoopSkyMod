@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.block.p;
 
-import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.init.PoBlocks;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -22,6 +22,14 @@ import net.minecraft.world.phys.BlockHitResult;
 public class SaltpeterClusterBlock extends AmethystClusterBlock implements BonemealableBlock {
     public SaltpeterClusterBlock(float height, float aabbOffset, Properties properties) {
         super(height, aabbOffset, properties);
+    }
+
+    @Override
+    protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        if (state.is(PoBlocks.SALTPETER_CLUSTER.get()) || !state.canSurvive(level, pos)) {
+            return;
+        }
+        level.setBlock(pos, getGrowthState(state), 2);
     }
 
     @Override

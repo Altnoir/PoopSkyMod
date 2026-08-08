@@ -1,8 +1,0 @@
-{
-  "parent": "block/slab",
-  "textures": {
-    "bottom": "poopsky:block/poop_block_maggots",
-    "side": "poopsky:block/poop_block_maggots",
-    "top": "poopsky:block/poop_block_maggots"
-  }
-}

@@ -40,6 +40,7 @@ public class PSJEIPlugin implements IModPlugin {
     public void registerCategories(IRecipeCategoryRegistration registration) {
         var helper = registration.getJeiHelpers().getGuiHelper();
         var arrow = helper.createDrawable(PS_JEI_TEXTURE, 0, 18, 22, 15);
+        var arrow2 = helper.createDrawable(PS_JEI_TEXTURE, 0, 33, 22, 15);
         var plus = helper.createDrawable(PS_JEI_TEXTURE, 22, 18, 13, 13);
 
         registration.addRecipeCategories(
@@ -47,7 +48,7 @@ public class PSJEIPlugin implements IModPlugin {
                 new SieveRecipeCategory(registration.getJeiHelpers(), arrow),
                 new FlyBarrelRecipeCategory(registration.getJeiHelpers(), arrow),
                 new BreedingChestRecipeCategory(registration.getJeiHelpers(), arrow),
-                new POPExplosionRecipeCategory(registration.getJeiHelpers(), arrow),
+                new POPExplosionRecipeCategory(registration.getJeiHelpers(), arrow,arrow2),
                 new AnalPressingRecipeCategory(registration.getJeiHelpers(), arrow, plus));
 
         if (PoMods.CREATE.isLoaded()) {

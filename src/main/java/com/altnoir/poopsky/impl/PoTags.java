@@ -19,7 +19,6 @@ public class PoTags {
         TagKey<Block> FLUSH_TOILET_BLOCKS = create("flush_toilet_blocks");
         TagKey<Block> POOP_BLOCKS = create("poop_blocks");
         TagKey<Block> POOP_BUILDING_BLOCKS = create("poop_building_blocks");
-        TagKey<Block> MAGGOTS_BLOCKS = create("maggots_blocks");
         TagKey<Block> EMPTY_LOGS = create("empty_logs");
         TagKey<Block> GINKGO_LOGS = create("ginkgo_logs");
         TagKey<Block> TILE_BLOCKS = create("tile_blocks");
@@ -33,10 +32,12 @@ public class PoTags {
         TagKey<Block> WATER_BLOCK = create("water_block");
         TagKey<Block> POOP_TNT_DESTROY = create("poop_tnt_destroy");
         TagKey<Block> POOP_TNT_REPLACEABLE = create("poop_tnt_replaceable");
-        TagKey<Block> CONVERTABLE_TO_MOSS = create("convertable_to_moss");
 
+        TagKey<Block> BREEDING_CHEST_ACCELERATOR = create("breeding_chest_accelerator");
+        TagKey<Block> BREEDING_CHEST_PARALLELISM = create("breeding_chest_parallelism");
         TagKey<Block> FLY_LOVE = create("fly_love");
         TagKey<Block> POOP_FARMLAND_AUTO = create("poop_farmland_auto");
+        TagKey<Block> MAGGOTS_CHUNK_LOADER_BASE_BLOCKS = create("maggots_chunk_loader_base_blocks");
         // Compat
         TagKey<Block> FAN_PROCESSING_CATALYSTS_DIGESTING = create("fan_processing_catalysts/digesting");
 
@@ -48,6 +49,7 @@ public class PoTags {
     public interface Items {
         TagKey<Item> POOPS = create("poops");
         TagKey<Item> SHITS = create("shits");
+        TagKey<Item> POOP_BLOCKS = create("poop_blocks");
         TagKey<Item> TOILET_BLOCKS = create("toilet_blocks");
         TagKey<Item> FLUSH_TOILET_BLOCKS = create("flush_toilet_blocks");
         TagKey<Item> CAN_COMPOSTABLE = create("can_compooper");
@@ -59,6 +61,8 @@ public class PoTags {
         TagKey<Item> TILE_WALLS = create("tile_walls");
 
         TagKey<Item> FLUSH_TOILET_SAVE = create("flush_toilet_save");
+        TagKey<Item> BREEDING_CHEST_ACCELERATOR = create("breeding_chest_accelerator");
+        TagKey<Item> BREEDING_CHEST_PARALLELISM = create("breeding_chest_parallelism");
         TagKey<Item> FLY_LIKE = create("fly_like");
         TagKey<Item> VILLAGER_LIKE = create("villager_like");
 

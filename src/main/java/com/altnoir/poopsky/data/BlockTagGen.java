@@ -27,6 +27,7 @@ public final class BlockTagGen {
 
     private static void generate(RegistrateTagsProvider.IntrinsicImpl<Block> provider) {
         BlockTagGen.provider = provider;
+
         tag(PoTags.Blocks.POOP_BLOCK).add(PoBlocks.POOP_BLOCK.get());
         tag(PoTags.Blocks.CHILI_POOP_BLOCK).add(PoBlocks.CHILI_POOP_BLOCK.get());
         tag(PoTags.Blocks.GINKGO_LOGS)
@@ -54,7 +55,9 @@ public final class BlockTagGen {
                 .add(PoBlocks.POOP_BLOCK.get())
                 .add(PoBlocks.CHILI_POOP_BLOCK.get())
                 .add(PoBlocks.GOLDEN_POOP_BLOCK.get());
-        tag(PoTags.Blocks.MAGGOTS_BLOCKS)
+        tag(PoTags.Blocks.BREEDING_CHEST_ACCELERATOR)
+                .addTag(PoTags.Blocks.POOP_BLOCKS);
+        tag(PoTags.Blocks.BREEDING_CHEST_PARALLELISM)
                 .add(PoBlocks.MAGGOTS_BLOCK.get());
         var poopBuildingBlocks = tag(PoTags.Blocks.POOP_BUILDING_BLOCKS)
                 .add(
@@ -112,6 +115,9 @@ public final class BlockTagGen {
 
         tag(PoTags.Blocks.POOP_FARMLAND_AUTO)
                 .add(ModBlocks.TOMATO_CROP_ON_ROPE.get());
+
+        tag(PoTags.Blocks.MAGGOTS_CHUNK_LOADER_BASE_BLOCKS)
+                .add(PoBlocks.MAGGOTS_BLOCK.get());
 
         //基础标签
         tag(BlockTags.MOSS_REPLACEABLE)

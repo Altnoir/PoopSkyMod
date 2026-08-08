@@ -35,6 +35,7 @@ public final class ItemTagGen {
                         PoItems.CHILI_POOP.get(),
                         PoItems.GOLDEN_POOP.get()
                 );
+        copy(PoTags.Blocks.POOP_BLOCKS, PoTags.Items.POOP_BLOCKS);
         tag(PoTags.Items.SHITS)
                 .add(
                         PoBlocks.SHIT.asItem(),
@@ -59,6 +60,8 @@ public final class ItemTagGen {
         });
 
         tag(PoTags.Items.FLUSH_TOILET_SAVE).addTag(PoTags.Items.POOPS).addTag(PoTags.Items.SHITS);
+        copy(PoTags.Blocks.BREEDING_CHEST_ACCELERATOR, PoTags.Items.BREEDING_CHEST_ACCELERATOR);
+        copy(PoTags.Blocks.BREEDING_CHEST_PARALLELISM, PoTags.Items.BREEDING_CHEST_PARALLELISM);
         tag(PoTags.Items.FLY_LIKE).addTag(PoTags.Items.FLUSH_TOILET_SAVE);
         tag(PoTags.Items.VILLAGER_LIKE).addTag(PoTags.Items.FLUSH_TOILET_SAVE);
 

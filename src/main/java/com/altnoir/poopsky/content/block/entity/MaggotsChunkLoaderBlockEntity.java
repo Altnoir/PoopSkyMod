@@ -2,6 +2,7 @@ package com.altnoir.poopsky.content.block.entity;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.p.MaggotsChunkLoaderBlock;
+import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.init.PoBlockEntityType;
 import com.altnoir.poopsky.init.PoBlocks;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
@@ -102,7 +103,7 @@ public class MaggotsChunkLoaderBlockEntity extends BlockEntity {
             BlockPos[] shell = SHELL_OFFSETS[scanStage];
             while (checked < BLOCKS_PER_TICK && scanIndex < shell.length) {
                 BlockPos offset = shell[scanIndex++];
-                if (level.getBlockState(worldPosition.offset(offset)).is(PoBlocks.MAGGOTS_BLOCK.get())) {
+                if (level.getBlockState(worldPosition.offset(offset)).is(PoTags.Blocks.MAGGOTS_CHUNK_LOADER_BASE_BLOCKS)) {
                     scanCount++;
                 }
                 checked++;
@@ -176,7 +177,7 @@ public class MaggotsChunkLoaderBlockEntity extends BlockEntity {
     private static int countShell(ServerLevel level, BlockPos loaderPos, int stage) {
         int count = 0;
         for (BlockPos offset : SHELL_OFFSETS[stage]) {
-            if (level.getBlockState(loaderPos.offset(offset)).is(PoBlocks.MAGGOTS_BLOCK.get())) {
+            if (level.getBlockState(loaderPos.offset(offset)).is(PoTags.Blocks.MAGGOTS_CHUNK_LOADER_BASE_BLOCKS)) {
                 count++;
             }
         }

@@ -16,6 +16,7 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.block.state.properties.SlabType;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
@@ -34,6 +35,8 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
     @Override
     protected void registerStatesAndModels() {
         poopBlock();
+        poopWoodSet();
+        poopDecoSet();
         poopPiece();
         poopFarmland();
         poopCraftingTable();
@@ -78,6 +81,200 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
 
         fluidBlockWithItem(PoBlocks.URINE_LIQUID.get());
         makeCropBlock(PoBlocks.MAGGOTS.get(), "maggots_stage", "maggots_stage");
+        roundwormVines();
+    }
+
+    private void poopWoodSet() {
+        ResourceLocation log = blockTexture(PoBlocks.POOP_LOG.get());
+
+        logBlock(PoBlocks.POOP_LOG.get());
+        axisBlock(PoBlocks.POOP_WOOD.get(), log, log);
+        itemModels().withExistingParent(getItemPath(PoBlocks.POOP_LOG.get()), modLoc("block/poop_log_horizontal"));
+        itemModels().withExistingParent(getItemPath(PoBlocks.POOP_WOOD.get()), modLoc("block/poop_wood_horizontal"));
+
+        weightedLogBlock(
+                PoBlocks.STRIPPED_POOP_LOG.get(),
+                modLoc("block/stripped_poop_log"),
+                modLoc("block/stripped_poop_log2"),
+                modLoc("block/stripped_poop_log_top")
+        );
+        weightedAxisBlock(
+                PoBlocks.STRIPPED_POOP_WOOD.get(),
+                modLoc("block/stripped_poop_log"),
+                modLoc("block/stripped_poop_log2")
+        );
+        itemModels().withExistingParent(getItemPath(PoBlocks.STRIPPED_POOP_LOG.get()), modLoc("block/stripped_poop_log_horizontal"));
+        itemModels().withExistingParent(getItemPath(PoBlocks.STRIPPED_POOP_WOOD.get()), modLoc("block/stripped_poop_wood_horizontal"));
+    }
+
+    private void weightedLogBlock(Block block, ResourceLocation side, ResourceLocation side2, ResourceLocation end) {
+        String path = getBlockPath(block);
+        ModelFile vertical = models().withExistingParent(path, mcLoc("block/cube_column"))
+                .texture("side", side)
+                .texture("end", end);
+        ModelFile vertical2 = models().withExistingParent(path + "2", mcLoc("block/cube_column"))
+                .texture("side", side2)
+                .texture("end", end);
+        ModelFile horizontal = models().withExistingParent(path + "_horizontal", mcLoc("block/cube_column_horizontal"))
+                .texture("side", side)
+                .texture("end", end);
+        ModelFile horizontal2 = models().withExistingParent(path + "_horizontal2", mcLoc("block/cube_column_horizontal"))
+                .texture("side", side2)
+                .texture("end", end);
+
+        getVariantBuilder(block)
+                .partialState().with(RotatedPillarBlock.AXIS, Direction.Axis.Y)
+                .addModels(
+                        new ConfiguredModel(vertical, 0, 0, false, 4),
+                        new ConfiguredModel(vertical2, 0, 0, false, 1)
+                )
+                .partialState().with(RotatedPillarBlock.AXIS, Direction.Axis.Z)
+                .addModels(
+                        new ConfiguredModel(horizontal, 90, 0, false, 4),
+                        new ConfiguredModel(horizontal2, 90, 0, false, 1)
+                )
+                .partialState().with(RotatedPillarBlock.AXIS, Direction.Axis.X)
+                .addModels(
+                        new ConfiguredModel(horizontal, 90, 90, false, 4),
+                        new ConfiguredModel(horizontal2, 90, 90, false, 1)
+                );
+    }
+
+    private void weightedAxisBlock(Block block, ResourceLocation side, ResourceLocation side2) {
+        String path = getBlockPath(block);
+        ModelFile vertical = models().withExistingParent(path, mcLoc("block/cube_column"))
+                .texture("side", side)
+                .texture("end", side);
+        ModelFile vertical2 = models().withExistingParent(path + "2", mcLoc("block/cube_column"))
+                .texture("side", side2)
+                .texture("end", side2);
+        ModelFile horizontal = models().withExistingParent(path + "_horizontal", mcLoc("block/cube_column_horizontal"))
+                .texture("side", side)
+                .texture("end", side);
+        ModelFile horizontal2 = models().withExistingParent(path + "_horizontal2", mcLoc("block/cube_column_horizontal"))
+                .texture("side", side2)
+                .texture("end", side2);
+
+        getVariantBuilder(block)
+                .partialState().with(RotatedPillarBlock.AXIS, Direction.Axis.Y)
+                .addModels(
+                        new ConfiguredModel(vertical, 0, 0, false, 4),
+                        new ConfiguredModel(vertical2, 0, 0, false, 1)
+                )
+                .partialState().with(RotatedPillarBlock.AXIS, Direction.Axis.Z)
+                .addModels(
+                        new ConfiguredModel(horizontal, 90, 0, false, 4),
+                        new ConfiguredModel(horizontal2, 90, 0, false, 1)
+                )
+                .partialState().with(RotatedPillarBlock.AXIS, Direction.Axis.X)
+                .addModels(
+                        new ConfiguredModel(horizontal, 90, 90, false, 4),
+                        new ConfiguredModel(horizontal2, 90, 90, false, 1)
+                );
+    }
+
+    private void poopDecoSet() {
+        ResourceLocation texture = blockTexture(PoBlocks.POOP_BLOCK.get());
+
+        stairsBlock(PoBlocks.POOP_STAIRS.get(), texture);
+        poopSlab(PoBlocks.POOP_SLAB.get(), texture);
+        wallBlock(PoBlocks.POOP_WALL.get(), texture);
+        buttonBlock(PoBlocks.POOP_BUTTON.get(), texture);
+        pressurePlateBlock(PoBlocks.POOP_PRESSURE_PLATE.get(), texture);
+        fenceBlock(PoBlocks.POOP_FENCE.get(), texture);
+        fenceGateBlock(PoBlocks.POOP_FENCE_GATE.get(), texture);
+        doorBlockWithRenderType(
+                PoBlocks.POOP_DOOR.get(),
+                ResourceLocation.parse(blockTexture(PoBlocks.POOP_DOOR.get()) + "_bottom"),
+                ResourceLocation.parse(blockTexture(PoBlocks.POOP_DOOR.get()) + "_top"),
+                "cutout"
+        );
+        trapdoorBlockWithRenderType(PoBlocks.POOP_TRAPDOOR.get(), blockTexture(PoBlocks.POOP_TRAPDOOR.get()), true, "cutout");
+
+        simpleBlockItem(PoBlocks.POOP_STAIRS.get(), blockModel(PoBlocks.POOP_STAIRS.get()));
+        simpleBlockItem(PoBlocks.POOP_SLAB.get(), blockModel(PoBlocks.POOP_SLAB.get()));
+        wallItemModel(PoBlocks.POOP_WALL.get(), PoBlocks.POOP_BLOCK.get());
+        simpleBlockItem(PoBlocks.POOP_PRESSURE_PLATE.get(), blockModel(PoBlocks.POOP_PRESSURE_PLATE.get()));
+        simpleBlockItem(PoBlocks.POOP_FENCE_GATE.get(), blockModel(PoBlocks.POOP_FENCE_GATE.get()));
+        simpleBlockItem(PoBlocks.POOP_BUTTON.get(), models().withExistingParent("poop_button_inventory", mcLoc("block/button_inventory"))
+                .texture("texture", texture));
+        simpleBlockItem(PoBlocks.POOP_FENCE.get(), models().withExistingParent("poop_fence_inventory", mcLoc("block/fence_inventory"))
+                .texture("texture", texture));
+        generatedItem(PoBlocks.POOP_DOOR.get(), "item");
+        simpleBlockItem(PoBlocks.POOP_TRAPDOOR.get(), blockModel(PoBlocks.POOP_TRAPDOOR.get(), "_bottom"));
+    }
+
+    private void poopSlab(Block slabBlock, ResourceLocation base) {
+        ResourceLocation maggots = modLoc("block/poop_block_maggots");
+        ResourceLocation liquids = modLoc("block/poop_block_liquids");
+
+        ModelFile bottom = models().withExistingParent("poop_slab", mcLoc("block/slab"))
+                .texture("bottom", base)
+                .texture("side", base)
+                .texture("top", base);
+        ModelFile top = models().withExistingParent("poop_slab_top", mcLoc("block/slab_top"))
+                .texture("bottom", base)
+                .texture("side", base)
+                .texture("top", base);
+        ModelFile doubleModel = models().withExistingParent("poop_slab_double", mcLoc("block/cube_column"))
+                .texture("end", base)
+                .texture("side", base);
+        ModelFile bottomMaggots = models().withExistingParent("poop_slab_maggots", mcLoc("block/slab"))
+                .texture("bottom", maggots)
+                .texture("side", maggots)
+                .texture("top", maggots);
+        ModelFile topMaggots = models().withExistingParent("poop_slab_top_maggots", mcLoc("block/slab_top"))
+                .texture("bottom", maggots)
+                .texture("side", maggots)
+                .texture("top", maggots);
+        ModelFile doubleMaggots = models().withExistingParent("poop_slab_double_maggots", mcLoc("block/cube_column"))
+                .texture("end", maggots)
+                .texture("side", maggots);
+        ModelFile bottomLiquids = models().withExistingParent("poop_slab_liquids", mcLoc("block/slab"))
+                .texture("bottom", base)
+                .texture("side", base)
+                .texture("top", liquids);
+        ModelFile topLiquids = models().withExistingParent("poop_slab_top_liquids", mcLoc("block/slab_top"))
+                .texture("bottom", base)
+                .texture("side", base)
+                .texture("top", liquids);
+        ModelFile doubleLiquids = models().withExistingParent("poop_slab_double_liquids", modLoc("block/poop_block3"));
+
+        getVariantBuilder(slabBlock)
+                .partialState().with(SlabBlock.TYPE, SlabType.BOTTOM)
+                .addModels(
+                        new ConfiguredModel(bottom, 0, 0, false, 9),
+                        new ConfiguredModel(bottomMaggots, 0, 0, false, 1),
+                        new ConfiguredModel(bottomLiquids, 0, 0, false, 2)
+                )
+                .partialState().with(SlabBlock.TYPE, SlabType.TOP)
+                .addModels(
+                        new ConfiguredModel(top, 0, 0, false, 9),
+                        new ConfiguredModel(topMaggots, 0, 0, false, 1),
+                        new ConfiguredModel(topLiquids, 0, 0, false, 2)
+                )
+                .partialState().with(SlabBlock.TYPE, SlabType.DOUBLE)
+                .addModels(
+                        new ConfiguredModel(doubleModel, 0, 0, false, 9),
+                        new ConfiguredModel(doubleMaggots, 0, 0, false, 1),
+                        new ConfiguredModel(doubleLiquids, 0, 0, false, 2)
+                );
+    }
+
+    private void roundwormVines() {
+        Block head = PoBlocks.ROUNDWORM_VINES.get();
+        ModelFile headModel = models().cross("roundworm_vines", blockTexture(head)).renderType("cutout");
+        ModelFile headModelM = models().cross("roundworm_vines_m", modLoc("block/roundworm_vines_m")).renderType("cutout");
+        simpleBlock(head, new ConfiguredModel(headModel), new ConfiguredModel(headModelM));
+
+        Block plant = PoBlocks.ROUNDWORM_VINES_PLANT.get();
+        ModelFile plantModel = models().cross("roundworm_vines_plant", blockTexture(plant)).renderType("cutout");
+        ModelFile seedsModel = models().cross("roundworm_vines_plant_seeds", modLoc("block/roundworm_vines_plant_seeds")).renderType("cutout");
+        getVariantBuilder(plant)
+                .partialState().with(RoundwormVinesPlantBlock.SEEDS, false)
+                .modelForState().modelFile(plantModel).addModel()
+                .partialState().with(RoundwormVinesPlantBlock.SEEDS, true)
+                .modelForState().modelFile(seedsModel).addModel();
     }
 
     protected void makeCropBlock(CropBlock cropBlock, String model, String texture) {
