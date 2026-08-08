@@ -1,10 +1,12 @@
 package com.altnoir.poopsky.content.item.p;
 
 import com.altnoir.poopsky.content.block.p.PoopFarmlandBlock;
-import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.init.PoBlocks;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.BoneMealItem;
@@ -12,7 +14,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.properties.Property;
 
 import java.util.List;
 
@@ -40,7 +45,43 @@ public class JinKeLaItem extends BoneMealItem {
             return InteractionResult.PASS;
         }
 
-        return super.useOn(context);
+        InteractionResult result = super.useOn(context);
+        if (result.consumesAction()) {
+            return result;
+        }
+
+        BlockState currentState = level.getBlockState(pos);
+        if (currentState.isRandomlyTicking()) {
+            if (level instanceof ServerLevel serverLevel) {
+                triggerRandomTick(serverLevel, pos, currentState);
+                serverLevel.levelEvent(1505, pos, 15);
+                if (!(state.getBlock() instanceof BonemealableBlock)) {
+                    serverLevel.sendParticles(
+                            ParticleTypes.COMPOSTER,
+                            pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+                            45, 0.25, 0.25, 0.25, 0.0
+                    );
+                }
+                context.getItemInHand().consume(1, context.getPlayer());
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+
+        return result;
+    }
+
+    private static void triggerRandomTick(ServerLevel level, BlockPos pos, BlockState state) {
+        Property<?> property = state.getBlock().getStateDefinition().getProperty("age");
+        if (property instanceof IntegerProperty age) {
+            int maxAge = age.getPossibleValues().stream()
+                    .mapToInt(Integer::intValue)
+                    .max()
+                    .orElse(0);
+            level.setBlock(pos, state.setValue(age, maxAge), 4);
+            level.getBlockState(pos).randomTick(level, pos, level.getRandom());
+        } else {
+            state.randomTick(level, pos, level.getRandom());
+        }
     }
 
     @Override

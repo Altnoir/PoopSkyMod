@@ -590,7 +590,6 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .save(recipeOutput);
     }
 
-
     private void buildPopExplosionRecipes(RecipeOutput recipeOutput) {
         record PopExplosionEntry(ItemLike input, ItemLike output, int radius) {
             static PopExplosionEntry of(ItemLike input, ItemLike output) {
@@ -604,6 +603,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         List<PopExplosionEntry> recipes = List.of(
                 PopExplosionEntry.of(Blocks.COBBLESTONE, Blocks.GRAVEL),
                 PopExplosionEntry.of(Blocks.GRAVEL, Blocks.SAND),
+                PopExplosionEntry.of(Blocks.BONE_BLOCK, Blocks.SKELETON_SKULL, 3),
                 PopExplosionEntry.of(Blocks.COAL_BLOCK, Items.DIAMOND, 6)
         );
 

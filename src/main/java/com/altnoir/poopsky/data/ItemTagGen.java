@@ -66,8 +66,6 @@ public final class ItemTagGen {
                 .add(PoItems.POOP.get())
                 .add(PoItems.POOP_BALL.get())
                 .add(PoBlocks.POOP_SAPLING.asItem())
-                .add(PoBlocks.GINKGO_SAPLING.asItem())
-                .add(PoBlocks.GINKGO_LEAVES.asItem())
                 .add(PoBlocks.POOP_LEAVES_IRON.asItem())
                 .add(PoBlocks.POOP_LEAVES_GOLD.asItem())
                 .add(PoBlocks.POOP_PIECE.asItem())

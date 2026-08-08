@@ -73,8 +73,6 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
         add(f03, PoItems.POOP_BALL);
         add(f05, PoBlocks.POOP_SAPLING);
         add(f05, PoBlocks.POOP_LEAVES);
-        add(f03, PoBlocks.GINKGO_SAPLING);
-        add(f03, PoBlocks.GINKGO_LEAVES);
         add(f03, PoBlocks.POOP_PIECE);
         add(f1, PoBlocks.POOP_BLOCK);
         add(f1, PoBlocks.POOLIME_MAGGOTS_BLOCK);
