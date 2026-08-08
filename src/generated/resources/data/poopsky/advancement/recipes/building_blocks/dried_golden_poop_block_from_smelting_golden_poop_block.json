@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "dripstone_block": {
+    "has_golden_poop_block": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:dripstone_block"
+            "items": "poopsky:golden_poop_block"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "poopsky:granite_from_dripstone_block"
+        "recipe": "poopsky:dried_golden_poop_block_from_smelting_golden_poop_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "dripstone_block"
+      "has_golden_poop_block"
     ]
   ],
   "rewards": {
     "recipes": [
-      "poopsky:granite_from_dripstone_block"
+      "poopsky:dried_golden_poop_block_from_smelting_golden_poop_block"
     ]
   }
 }

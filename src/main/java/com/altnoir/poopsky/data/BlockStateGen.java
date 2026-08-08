@@ -45,6 +45,9 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         blockWithTranslucentRenderType(PoBlocks.POOLIME_BLOCK.get());
         PoBlocks.SIMPLE_MODEL_FAMILIES.forEach(this::blockFamily);
         blockWithItem(PoBlocks.CRACKED_POOP_BRICKS.get());
+        blockWithItem(PoBlocks.POOP_SAND.get());
+        blockWithItem(PoBlocks.DRIED_CHILI_POOP_BLOCK.get());
+        blockWithItem(PoBlocks.DRIED_GOLDEN_POOP_BLOCK.get());
 
         randomBlockWithItem(PoBlocks.RAW_POOP_BLOCK.get(), 3, 1);
         blockWithItem(PoBlocks.RAW_SAPLING_POOP_BLOCK.get());

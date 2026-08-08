@@ -11,7 +11,6 @@ import com.altnoir.poopsky.data.*;
 import com.altnoir.poopsky.data.entity.EntityLootTableGen;
 import com.altnoir.poopsky.data.entity.EntityTypeTagsGen;
 import com.altnoir.poopsky.data.lang.LangGen;
-import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.impl.event.PoGameEvents;
 import com.altnoir.poopsky.impl.event.PoModEvents;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
@@ -184,11 +183,33 @@ public class PoopSky {
             FluidInteractionRegistry.addInteraction(PFluidTypes.URINE_FLUID_TYPE.get(), new FluidInteractionRegistry.InteractionInformation(
                     NeoForgeMod.LAVA_TYPE.value(), (fluidState) -> fluidState.isSource() ? Blocks.MAGMA_BLOCK.defaultBlockState() : Blocks.NETHERRACK.defaultBlockState()));
             FluidInteractionRegistry.addInteraction(NeoForgeMod.LAVA_TYPE.value(), new FluidInteractionRegistry.InteractionInformation(
-                    PFluidTypes.URINE_FLUID_TYPE.get(), (fluidState) -> fluidState.isSource() ? Blocks.OBSIDIAN.defaultBlockState() : Blocks.MAGMA_BLOCK.defaultBlockState()));
+                    PFluidTypes.URINE_FLUID_TYPE.get(), (fluidState) -> fluidState.isSource() ? Blocks.OBSIDIAN.defaultBlockState() : Blocks.NETHERRACK.defaultBlockState()));
 
             FluidInteractionRegistry.addInteraction(NeoForgeMod.LAVA_TYPE.value(), new FluidInteractionRegistry.InteractionInformation(
                     (level, currentPos, relativePos, currentState) -> level.getBlockState(currentPos.below()).is(PoBlocks.POOP_BLOCK.get()) && level.getBlockState(relativePos).is(Blocks.BLUE_ICE),
+                    Blocks.DRIPSTONE_BLOCK.defaultBlockState()));
+            FluidInteractionRegistry.addInteraction(NeoForgeMod.LAVA_TYPE.value(), new FluidInteractionRegistry.InteractionInformation(
+                    (level, currentPos, relativePos, currentState) -> level.getBlockState(currentPos.below()).is(PoBlocks.DRIED_POOP_BLOCK.get()) && level.getBlockState(relativePos).is(Blocks.BLUE_ICE),
                     Blocks.DEEPSLATE.defaultBlockState()));
+            FluidInteractionRegistry.addInteraction(NeoForgeMod.LAVA_TYPE.value(), new FluidInteractionRegistry.InteractionInformation(
+                    (level, currentPos, relativePos, currentState) -> level.getBlockState(currentPos.below()).is(PoBlocks.DRIED_CHILI_POOP_BLOCK.get()) && level.getBlockState(relativePos).is(Blocks.BLUE_ICE),
+                    Blocks.NETHERRACK.defaultBlockState()));
+            FluidInteractionRegistry.addInteraction(NeoForgeMod.LAVA_TYPE.value(), new FluidInteractionRegistry.InteractionInformation(
+                    (level, currentPos, relativePos, currentState) -> level.getBlockState(currentPos.below()).is(PoBlocks.DRIED_GOLDEN_POOP_BLOCK.get()) && level.getBlockState(relativePos).is(Blocks.BLUE_ICE),
+                    Blocks.END_STONE.defaultBlockState()));
+
+            FluidInteractionRegistry.addInteraction(NeoForgeMod.LAVA_TYPE.value(), new FluidInteractionRegistry.InteractionInformation(
+                    (level, currentPos, relativePos, currentState) -> level.getBlockState(currentPos.below()).is(PoBlocks.RAW_POOP_BLOCK.get()) && level.getBlockState(relativePos).is(Blocks.BLUE_ICE),
+                    Blocks.ANDESITE.defaultBlockState()));
+            FluidInteractionRegistry.addInteraction(NeoForgeMod.LAVA_TYPE.value(), new FluidInteractionRegistry.InteractionInformation(
+                    (level, currentPos, relativePos, currentState) -> level.getBlockState(currentPos.below()).is(PoBlocks.RAW_SAPLING_POOP_BLOCK.get()) && level.getBlockState(relativePos).is(Blocks.BLUE_ICE),
+                    Blocks.GRANITE.defaultBlockState()));
+            FluidInteractionRegistry.addInteraction(NeoForgeMod.LAVA_TYPE.value(), new FluidInteractionRegistry.InteractionInformation(
+                    (level, currentPos, relativePos, currentState) -> level.getBlockState(currentPos.below()).is(PoBlocks.RAW_SEA_POOP_BLOCK.get()) && level.getBlockState(relativePos).is(Blocks.BLUE_ICE),
+                    Blocks.PRISMARINE.defaultBlockState()));
+            FluidInteractionRegistry.addInteraction(NeoForgeMod.LAVA_TYPE.value(), new FluidInteractionRegistry.InteractionInformation(
+                    (level, currentPos, relativePos, currentState) -> level.getBlockState(currentPos.below()).is(PoBlocks.RAW_WITHER_POOP_BLOCK.get()) && level.getBlockState(relativePos).is(Blocks.BLUE_ICE),
+                    Blocks.BLACKSTONE.defaultBlockState()));
         });
         PoStats.init();
     }

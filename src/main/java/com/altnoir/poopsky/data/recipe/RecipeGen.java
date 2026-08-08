@@ -86,8 +86,17 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         blasting(recipeOutput, PoBlocks.POOP_BRICKS, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CRACKED_POOP_BRICKS, 0.1F, 100, "cracked_poop_bricks");
         smelting(recipeOutput, PoBlocks.DRIED_POOP_BLOCK, RecipeCategory.BUILDING_BLOCKS, PoBlocks.SMOOTH_POOP_BLOCK, 0.1F, 200, "smooth_poop_block");
         blasting(recipeOutput, PoBlocks.DRIED_POOP_BLOCK, RecipeCategory.BUILDING_BLOCKS, PoBlocks.SMOOTH_POOP_BLOCK, 0.1F, 100, "smooth_poop_block");
+        smelting(recipeOutput, PoBlocks.CHILI_POOP_BLOCK, RecipeCategory.BUILDING_BLOCKS, PoBlocks.DRIED_CHILI_POOP_BLOCK, 0.1F, 200, "dried_chili_poop_block");
+        blasting(recipeOutput, PoBlocks.CHILI_POOP_BLOCK, RecipeCategory.BUILDING_BLOCKS, PoBlocks.DRIED_CHILI_POOP_BLOCK, 0.1F, 100, "dried_chili_poop_block");
+        smelting(recipeOutput, PoBlocks.DRIED_CHILI_POOP_BLOCK, RecipeCategory.BUILDING_BLOCKS, Blocks.NETHERRACK, 0.1F, 200, "netherrack");
+        blasting(recipeOutput, PoBlocks.DRIED_CHILI_POOP_BLOCK, RecipeCategory.BUILDING_BLOCKS, Blocks.NETHERRACK, 0.1F, 100, "netherrack");
+        smelting(recipeOutput, PoBlocks.GOLDEN_POOP_BLOCK, RecipeCategory.BUILDING_BLOCKS, PoBlocks.DRIED_GOLDEN_POOP_BLOCK, 0.1F, 200, "dried_golden_poop_block");
+        blasting(recipeOutput, PoBlocks.GOLDEN_POOP_BLOCK, RecipeCategory.BUILDING_BLOCKS, PoBlocks.DRIED_GOLDEN_POOP_BLOCK, 0.1F, 100, "dried_golden_poop_block");
+        smelting(recipeOutput, PoBlocks.DRIED_GOLDEN_POOP_BLOCK, RecipeCategory.BUILDING_BLOCKS, Blocks.END_STONE, 0.1F, 200, "end_stone");
+        blasting(recipeOutput, PoBlocks.DRIED_GOLDEN_POOP_BLOCK, RecipeCategory.BUILDING_BLOCKS, Blocks.END_STONE, 0.1F, 100, "end_stone");
         smelting(recipeOutput, PoBlocks.POOLIME_BLOCK, RecipeCategory.BUILDING_BLOCKS, PoBlocks.BROWN_TILE_BLOCK, 0.1F, 200, "tile_block");
         blasting(recipeOutput, PoBlocks.POOLIME_BLOCK, RecipeCategory.BUILDING_BLOCKS, PoBlocks.BROWN_TILE_BLOCK, 0.1F, 100, "tile_block");
+
         campfireCooking(recipeOutput, PoItems.POOP, RecipeCategory.MISC, Items.COCOA_BEANS, 0.35F, 600, "cocoa_beans");
         smelting(recipeOutput, PoItems.ROUNDWORM, RecipeCategory.MISC, Items.STRING, 0.35F, 200, "roundworm");
         campfireCooking(recipeOutput, PoItems.ROUNDWORM, RecipeCategory.MISC, Items.STRING, 0.35F, 200, "roundworm");
@@ -491,7 +500,6 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         create1x2ShapelessFrom(recipeOutput, Blocks.GRASS_BLOCK, Blocks.DIRT, Blocks.MOSS_BLOCK);
 
         create1x2ShapelessFrom(recipeOutput, Blocks.DIORITE, Blocks.COBBLESTONE, Blocks.CLAY, 2);
-        create1x2ShapelessFrom(recipeOutput, Blocks.GRANITE, Blocks.COBBLESTONE, Blocks.DRIPSTONE_BLOCK, 2);
         create1x2ShapelessFrom(recipeOutput, Blocks.DIRT, Blocks.MUD, PoItems.POOP.get());
         //create1x2ShapelessFrom(recipeOutput, Blocks.TUFF, Blocks.ANDESITE, PSItems.SPALL);
         //create1x2ShapelessFrom(recipeOutput, Blocks.CALCITE, Blocks.DIORITE, PSItems.SPALL);
@@ -603,6 +611,10 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         List<PopExplosionEntry> recipes = List.of(
                 PopExplosionEntry.of(Blocks.COBBLESTONE, Blocks.GRAVEL),
                 PopExplosionEntry.of(Blocks.GRAVEL, Blocks.SAND),
+                PopExplosionEntry.of(PoBlocks.DRIED_POOP_BLOCK.get(), PoBlocks.POOP_SAND.get()),
+                PopExplosionEntry.of(Blocks.GRANITE, Blocks.DRIPSTONE_BLOCK),
+                PopExplosionEntry.of(Blocks.DIORITE, Blocks.CALCITE),
+                PopExplosionEntry.of(Blocks.ANDESITE, Blocks.TUFF),
                 PopExplosionEntry.of(Blocks.BONE_BLOCK, Blocks.SKELETON_SKULL, 3),
                 PopExplosionEntry.of(Blocks.COAL_BLOCK, Items.DIAMOND, 6)
         );

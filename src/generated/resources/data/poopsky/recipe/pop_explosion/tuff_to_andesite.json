@@ -1,0 +1,9 @@
+{
+  "type": "poopsky:pop_explosion",
+  "input": {
+    "item": "minecraft:andesite"
+  },
+  "output": {
+    "block": "minecraft:tuff"
+  }
+}

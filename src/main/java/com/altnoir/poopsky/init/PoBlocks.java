@@ -20,6 +20,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.ColorRGBA;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
@@ -168,8 +169,10 @@ public class PoBlocks {
     public static final BlockEntry<DriedPoopBlock> DRIED_POOP_BLOCK = registerPoopBlock("dried_poop_block",
             props -> new DriedPoopBlock(hardenedProperties(MapColor.COLOR_ORANGE, SoundType.TUFF)
                     .instrument(NoteBlockInstrument.COW_BELL)));
+    public static final BlockEntry<ColoredFallingBlock> POOP_SAND = registerBlock("poop_sand", 88,
+            props -> new ColoredFallingBlock(new ColorRGBA(9131563),
+                    BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).instrument(NoteBlockInstrument.SNARE).strength(0.5F).sound(SoundType.SAND)));
     public static final BlockFamily DRIED_POOP_BLOCK_FAMILY = registerBlockFamily("dried_poop_block", DRIED_POOP_BLOCK, false);
-
     public static final BlockEntry<Block> SMOOTH_POOP_BLOCK = registerDecoMaterialBlock("smooth_poop_block", 88,
             props -> new Block(hardenedProperties(MapColor.COLOR_ORANGE, SoundType.CALCITE)));
     public static final BlockFamily SMOOTH_POOP_BLOCK_FAMILY = registerBlockFamily("smooth_poop_block", SMOOTH_POOP_BLOCK, false);
@@ -190,6 +193,9 @@ public class PoBlocks {
                     .isRedstoneConductor(PoBlocks::always)
                     .isSuffocating(PoBlocks::always)
                     .instrument(NoteBlockInstrument.COW_BELL)));
+    public static final BlockEntry<Block> DRIED_CHILI_POOP_BLOCK = registerBlock("dried_chili_poop_block",
+            props -> new Block(hardenedProperties(MapColor.COLOR_RED, SoundType.TUFF)
+                    .instrument(NoteBlockInstrument.COW_BELL)));
     public static final BlockFamily CHILI_POOP_FAMILY = registerBlockFamily("chili_poop", CHILI_POOP_BLOCK, false);
 
     public static final BlockEntry<GoldenPoopBlock> GOLDEN_POOP_BLOCK = registerPoopBlock("golden_poop_block",
@@ -200,6 +206,9 @@ public class PoBlocks {
                     .isRedstoneConductor(PoBlocks::always)
                     .isSuffocating(PoBlocks::always)
                     .instrument(NoteBlockInstrument.BELL)));
+    public static final BlockEntry<Block> DRIED_GOLDEN_POOP_BLOCK = registerBlock("dried_golden_poop_block",
+            props -> new Block(hardenedProperties(MapColor.GOLD, SoundType.TUFF)
+                    .instrument(NoteBlockInstrument.COW_BELL)));
     public static final BlockFamily GOLDEN_POOP_FAMILY = registerBlockFamily("golden_poop", GOLDEN_POOP_BLOCK, false);
 
     private static final Map<DyeColor, ColoredTile> COLORED_TILES = registerColoredTiles();

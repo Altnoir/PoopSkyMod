@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "diorite": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:diorite"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:pop_explosion/calcite_to_diorite"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "diorite"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "poopsky:pop_explosion/calcite_to_diorite"
+    ]
+  }
+}
