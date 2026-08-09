@@ -88,12 +88,8 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         blasting(recipeOutput, PoBlocks.DRIED_POOP_BLOCK, RecipeCategory.BUILDING_BLOCKS, PoBlocks.SMOOTH_POOP_BLOCK, 0.1F, 100, "smooth_poop_block");
         smelting(recipeOutput, PoBlocks.CHILI_POOP_BLOCK, RecipeCategory.BUILDING_BLOCKS, PoBlocks.DRIED_CHILI_POOP_BLOCK, 0.1F, 200, "dried_chili_poop_block");
         blasting(recipeOutput, PoBlocks.CHILI_POOP_BLOCK, RecipeCategory.BUILDING_BLOCKS, PoBlocks.DRIED_CHILI_POOP_BLOCK, 0.1F, 100, "dried_chili_poop_block");
-        smelting(recipeOutput, PoBlocks.DRIED_CHILI_POOP_BLOCK, RecipeCategory.BUILDING_BLOCKS, Blocks.NETHERRACK, 0.1F, 200, "netherrack");
-        blasting(recipeOutput, PoBlocks.DRIED_CHILI_POOP_BLOCK, RecipeCategory.BUILDING_BLOCKS, Blocks.NETHERRACK, 0.1F, 100, "netherrack");
         smelting(recipeOutput, PoBlocks.GOLDEN_POOP_BLOCK, RecipeCategory.BUILDING_BLOCKS, PoBlocks.DRIED_GOLDEN_POOP_BLOCK, 0.1F, 200, "dried_golden_poop_block");
         blasting(recipeOutput, PoBlocks.GOLDEN_POOP_BLOCK, RecipeCategory.BUILDING_BLOCKS, PoBlocks.DRIED_GOLDEN_POOP_BLOCK, 0.1F, 100, "dried_golden_poop_block");
-        smelting(recipeOutput, PoBlocks.DRIED_GOLDEN_POOP_BLOCK, RecipeCategory.BUILDING_BLOCKS, Blocks.END_STONE, 0.1F, 200, "end_stone");
-        blasting(recipeOutput, PoBlocks.DRIED_GOLDEN_POOP_BLOCK, RecipeCategory.BUILDING_BLOCKS, Blocks.END_STONE, 0.1F, 100, "end_stone");
         smelting(recipeOutput, PoBlocks.POOLIME_BLOCK, RecipeCategory.BUILDING_BLOCKS, PoBlocks.BROWN_TILE_BLOCK, 0.1F, 200, "tile_block");
         blasting(recipeOutput, PoBlocks.POOLIME_BLOCK, RecipeCategory.BUILDING_BLOCKS, PoBlocks.BROWN_TILE_BLOCK, 0.1F, 100, "tile_block");
 

@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.data.entity;
+package com.altnoir.poopsky.data;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;

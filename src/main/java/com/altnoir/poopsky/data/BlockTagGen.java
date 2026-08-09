@@ -168,6 +168,12 @@ public final class BlockTagGen {
                 .add(PoBlocks.STRIPPED_POOP_WOOD.get())
                 .add(PoBlocks.STRIPPED_POOP_EMPTY_LOG.get());
 
+        tag(BlockTags.WALL_POST_OVERRIDE)
+                .add(
+                        PoBlocks.POOP_PRESSURE_PLATE.get(),
+                        PoBlocks.GINKGO_PRESSURE_PLATE.get()
+                );
+
         PoBlocks.WALL_TAG_FAMILIES.forEach(family -> tag(BlockTags.WALLS).add(family.wall().get()));
 
         tag(BlockTags.LOGS)

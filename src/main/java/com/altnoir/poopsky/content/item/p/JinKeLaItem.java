@@ -36,27 +36,15 @@ public class JinKeLaItem extends Item {
 
         if (state.is(PoBlocks.POOP_FARMLAND.get())) {
             PoopFarmlandBlock.FarmMode mode = state.getValue(PoopFarmlandBlock.MODE);
-            if (!mode.isEnriched()) {
-                if (!level.isClientSide) {
-                    level.setBlockAndUpdate(pos, state.setValue(PoopFarmlandBlock.MODE, mode.withEnriched(true)));
-                    level.playSound(null, pos, PoSoundEvents.ITEM_JINKELA_USE.get(), SoundSource.BLOCKS);
-                    context.getItemInHand().consume(1, context.getPlayer());
-                }
-                return InteractionResult.sidedSuccess(level.isClientSide);
+            if (mode.isEnriched()) {
+                return InteractionResult.PASS;
             }
-            return InteractionResult.PASS;
+            if (level instanceof ServerLevel serverLevel && tryApplyToBlock(serverLevel, pos, state)) {
+                context.getItemInHand().consume(1, context.getPlayer());
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
         } else if (state.isRandomlyTicking()) {
-            if (level instanceof ServerLevel serverLevel) {
-                triggerRandomTick(serverLevel, pos, state);
-
-                serverLevel.levelEvent(1505, pos, 15);
-                if (!(state.getBlock() instanceof BonemealableBlock)) {
-                    serverLevel.sendParticles(
-                            ParticleTypes.COMPOSTER,
-                            pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
-                            45, 0.25, 0.25, 0.25, 0.0
-                    );
-                }
+            if (level instanceof ServerLevel serverLevel && tryApplyToBlock(serverLevel, pos, state)) {
                 context.getItemInHand().consume(1, context.getPlayer());
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
@@ -65,12 +53,39 @@ public class JinKeLaItem extends Item {
         return super.useOn(context);
     }
 
+    public static boolean tryApplyToBlock(ServerLevel level, BlockPos pos, BlockState state) {
+        if (state.is(PoBlocks.POOP_FARMLAND.get())) {
+            PoopFarmlandBlock.FarmMode mode = state.getValue(PoopFarmlandBlock.MODE);
+            if (mode.isEnriched()) {
+                return false;
+            }
+            level.setBlockAndUpdate(pos, state.setValue(PoopFarmlandBlock.MODE, mode.withEnriched(true)));
+            level.playSound(null, pos, PoSoundEvents.ITEM_JINKELA_USE.get(), SoundSource.BLOCKS);
+            return true;
+        }
+
+        if (!state.isRandomlyTicking()) {
+            return false;
+        }
+
+        triggerRandomTick(level, pos, state);
+        level.levelEvent(1505, pos, 15);
+        if (!(state.getBlock() instanceof BonemealableBlock)) {
+            level.sendParticles(
+                    ParticleTypes.COMPOSTER,
+                    pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+                    45, 0.25, 0.25, 0.25, 0.0
+            );
+        }
+        return true;
+    }
+
     public static void triggerRandomTick(ServerLevel level, BlockPos pos, BlockState state) {
         Property<?> property = state.getBlock().getStateDefinition().getProperty("age");
         if (property instanceof IntegerProperty age) {
             int maxAge = getMaxAge(age);
             int targetAge = isTerminalAge(maxAge) ? Math.min(state.getValue(age) + 1, maxAge - 1) : maxAge;
-            level.setBlock(pos, state.setValue(age, targetAge), 4);
+            level.setBlockAndUpdate(pos, state.setValue(age, targetAge));
             level.getBlockState(pos).randomTick(level, pos, level.getRandom());
         } else {
             state.randomTick(level, pos, level.getRandom());

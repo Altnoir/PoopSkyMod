@@ -6,10 +6,11 @@ import com.altnoir.poopsky.compat.maid.MaidPlugin;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.p.CompooperBlock;
 import com.altnoir.poopsky.content.entity.p.PoopTntEntity;
+import com.altnoir.poopsky.content.item.p.JinKeLaItem;
 import com.altnoir.poopsky.content.villager.PoVillagers;
 import com.altnoir.poopsky.data.*;
-import com.altnoir.poopsky.data.entity.EntityLootTableGen;
-import com.altnoir.poopsky.data.entity.EntityTypeTagsGen;
+import com.altnoir.poopsky.data.EntityLootTableGen;
+import com.altnoir.poopsky.data.EntityTypeTagsGen;
 import com.altnoir.poopsky.data.lang.LangGen;
 import com.altnoir.poopsky.impl.event.PoGameEvents;
 import com.altnoir.poopsky.impl.event.PoModEvents;
@@ -28,6 +29,7 @@ import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.*;
@@ -130,6 +132,21 @@ public class PoopSky {
                         this.setSuccess(false);
                     } else if (!level.isClientSide) {
                         level.levelEvent(1505, blockpos, 15);
+                    }
+                    return item;
+                }
+            });
+            DispenserBlock.registerBehavior(PoItems.JINKELA.get(), new OptionalDispenseItemBehavior() {
+                @Override
+                protected ItemStack execute(BlockSource blockSource, ItemStack item) {
+                    boolean success = false;
+                    if (blockSource.level() instanceof ServerLevel serverLevel) {
+                        BlockPos blockpos = blockSource.pos().relative(blockSource.state().getValue(DispenserBlock.FACING));
+                        success = JinKeLaItem.tryApplyToBlock(serverLevel, blockpos, serverLevel.getBlockState(blockpos));
+                    }
+                    this.setSuccess(success);
+                    if (success) {
+                        item.shrink(1);
                     }
                     return item;
                 }

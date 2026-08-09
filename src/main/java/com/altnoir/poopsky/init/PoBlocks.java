@@ -148,9 +148,9 @@ public class PoBlocks {
                     .noOcclusion()
                     .isValidSpawn(Blocks::never)));
     public static final BlockEntry<PressurePlateBlock> POOP_PRESSURE_PLATE = registerDecoMaterialBlock("poop_pressure_plate", 88,
-            props -> new PressurePlateBlock(PoBlockSetType.POOP, poopProperties().noCollission()));
+            props -> new PressurePlateBlock(PoBlockSetType.POOP, poopProperties().forceSolidOn().noCollission().pushReaction(PushReaction.DESTROY)));
     public static final BlockEntry<ButtonBlock> POOP_BUTTON = registerDecoMaterialBlock("poop_button", 88,
-            props -> new ButtonBlock(PoBlockSetType.POOP, 200, poopProperties().noCollission()));
+            props -> new ButtonBlock(PoBlockSetType.POOP, 200, poopProperties().noCollission().pushReaction(PushReaction.DESTROY)));
 
     public static final BlockEntry<Block> POOP_BRICKS = registerDecoMaterialBlock("poop_bricks", 88,
             props -> new Block(hardenedProperties(MapColor.COLOR_BROWN, SoundType.FROGLIGHT)));
