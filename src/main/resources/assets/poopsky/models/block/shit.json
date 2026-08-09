@@ -3,7 +3,7 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"particle": "poopsky:block/shit",
+		"particle": "poopsky:block/poop_block",
 		"shit": "poopsky:block/shit"
 	},
 	"elements": [

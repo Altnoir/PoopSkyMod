@@ -1,7 +1,7 @@
 {
   "parent": "poopsky:block/shit",
   "textures": {
-    "particle": "poopsky:block/chili_shit",
+    "particle": "poopsky:block/chili_poop_block",
     "shit": "poopsky:block/chili_shit"
   }
 }

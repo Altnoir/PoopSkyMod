@@ -150,6 +150,13 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .requires(PoItems.SEEDBED_CURSE)
                 .unlockedBy(getItemName(PoItems.SEEDBED_CURSE), has(PoItems.SEEDBED_CURSE))
                 .save(recipeOutput);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PoItems.POOPSICLE.get(), 2)
+                .requires(Items.STICK)
+                .requires(PoItems.SEEDBED_CURSE)
+                .requires(Items.SNOWBALL)
+                .requires(PoItems.MAGGOTS_SEEDS)
+                .unlockedBy(getItemName(PoItems.SEEDBED_CURSE), has(PoItems.SEEDBED_CURSE))
+                .save(recipeOutput);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PoItems.POODDING.get(), 2)
                 .requires(PoItems.POOP_BALL)
                 .requires(Items.EGG).requires(Items.SUGAR)
@@ -180,6 +187,15 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .requires(PoItems.POOP.get())
                 .requires(Items.ENDER_EYE)
                 .unlockedBy(getItemName(Items.ENDER_EYE), has(Items.ENDER_EYE))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, PoItems.RETURN_TOTEM.get())
+                .pattern(" S ")
+                .pattern("GEG")
+                .pattern(" G ")
+                .define('G', Items.GOLD_INGOT)
+                .define('S', PoBlocks.SHIT)
+                .define('E', Items.ECHO_SHARD)
+                .unlockedBy(getItemName(Items.ECHO_SHARD), has(Items.ECHO_SHARD))
                 .save(recipeOutput);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PoItems.TIME_BELL)
                 .requires(Items.BELL)

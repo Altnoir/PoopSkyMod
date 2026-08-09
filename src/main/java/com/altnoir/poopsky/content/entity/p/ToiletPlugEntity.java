@@ -32,7 +32,6 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.PacketDistributor;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
@@ -72,6 +71,13 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
     @OnlyIn(Dist.CLIENT)
     public void ToiletPlugEntityClient() {
         TPFlySound = new TPFlySoundWrapper(this);
+    }
+
+    @Override
+    public void animateHurt(float yaw) {
+        this.setHurtDir(-this.getHurtDir());
+        this.setHurtTime(10);
+        this.setDamage(this.getDamage() * 11.0F);
     }
 
     @Override
@@ -151,6 +157,13 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
 
     @Override
     public void tick() {
+        if (this.getHurtTime() > 0) {
+            this.setHurtTime(this.getHurtTime() - 1);
+        }
+        if (this.getDamage() > 0.0F) {
+            this.setDamage(this.getDamage() - 1.0F);
+        }
+
         super.tick();
         this.tickLerp();
 
@@ -494,7 +507,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
     }
 
     @Override
-    public void onPassengerTurned(@NotNull Entity entityToUpdate) {
+    public void onPassengerTurned(Entity entityToUpdate) {
         entityToUpdate.setYBodyRot(this.getYRot());
     }
 
@@ -519,7 +532,6 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
         this.leashData = leashData;
     }
 
-    @NotNull
     @Override
     public Vec3 getLeashOffset() {
         return new Vec3(0.0, 0.88F * this.getEyeHeight(), this.getBbWidth() * 0.64F);

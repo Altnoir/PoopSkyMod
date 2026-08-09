@@ -200,6 +200,8 @@ public final class LangGen {
         provider.add("message.poopsky.toilet_linker.2", "Link Toilet ②");
         provider.add("message.poopsky.toilet_linker.3", "Linked");
         provider.add("message.poopsky.toilet_linker.4", "Cleared");
+        provider.add("message.poopsky.return_totem.not_bound", "Not bound to a Portable Toilet");
+        provider.add("message.poopsky.return_totem.obstructed", "The Portable Toilet is obstructed");
         provider.add("message.poopsky.toilet_plug.dismount", "Press %s to dismount Toilet Plug");
     }
 

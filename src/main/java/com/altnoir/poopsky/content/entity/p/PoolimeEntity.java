@@ -26,7 +26,6 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.levelgen.structure.Structure;
-import org.jetbrains.annotations.NotNull;
 
 public class PoolimeEntity extends Slime {
     public PoolimeEntity(EntityType<PoolimeEntity> entityType, Level level) {
@@ -38,7 +37,7 @@ public class PoolimeEntity extends Slime {
     }
 
     @Override
-    protected @NotNull ParticleOptions getParticleType() {
+    protected ParticleOptions getParticleType() {
         return PoParticles.POOP_PARTICLE.get();
     }
 

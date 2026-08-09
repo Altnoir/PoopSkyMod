@@ -16,7 +16,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import org.jetbrains.annotations.NotNull;
 
 public class WitherPoopBall extends ThrowableItemProjectile {
     public WitherPoopBall(Level level, LivingEntity shooter) {
@@ -28,7 +27,7 @@ public class WitherPoopBall extends ThrowableItemProjectile {
     }
 
     @Override
-    protected @NotNull Item getDefaultItem() {
+    protected Item getDefaultItem() {
         return PoItems.WITHER_POOP_BALL.get();
     }
 

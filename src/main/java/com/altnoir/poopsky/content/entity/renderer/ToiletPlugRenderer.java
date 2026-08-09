@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 
 public class ToiletPlugRenderer extends EntityRenderer<ToiletPlugEntity> {
     private final EntityModel<ToiletPlugEntity> plugModel;
@@ -34,14 +35,22 @@ public class ToiletPlugRenderer extends EntityRenderer<ToiletPlugEntity> {
         var x = entity.getViewXRot(partialTick);
         var z = entity.getFloatingValue(partialTick);
 
-        poseStack.translate(0.0D, z-1.0D, 0.0D);
+        poseStack.translate(0.0D, z - 1.0D, 0.0D);
         poseStack.mulPose(Axis.YP.rotationDegrees(y));
         poseStack.mulPose(Axis.XP.rotationDegrees(x));
+        float hurtTicks = (float) entity.getHurtTime() - partialTick;
+        float hurtDamage = entity.getDamage() - partialTick;
+        if (hurtDamage < 0.0F) {
+            hurtDamage = 0.0F;
+        }
+        if (hurtTicks > 0.0F) {
+            poseStack.mulPose(Axis.ZP.rotationDegrees(Mth.sin(hurtTicks) * hurtTicks * hurtDamage / 10.0F * (float) entity.getHurtDir()));
+        }
 
         VertexConsumer vertexConsumer = bufferSource.getBuffer(plugModel.renderType(this.getTextureLocation(entity)));
-        
+
         plugModel.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY);
-        
+
         poseStack.popPose();
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }

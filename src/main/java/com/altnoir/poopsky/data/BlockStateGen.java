@@ -78,9 +78,9 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         flushToilet(PoBlocks.GOLDEN_FLUSH_TOILET.get());
         portableToilet(PoBlocks.GINKGO_TOILET.get());
         portableToilet(PoBlocks.PORTABLE_TOILET.get());
-        shitBlock(PoBlocks.SHIT.get());
-        shitBlock(PoBlocks.CHILI_SHIT.get());
-        shitBlock(PoBlocks.GOLDEN_SHIT.get());
+        shitBlock(PoBlocks.SHIT.get(), PoBlocks.POOP_BLOCK.get());
+        shitBlock(PoBlocks.CHILI_SHIT.get(), PoBlocks.CHILI_POOP_BLOCK.get());
+        shitBlock(PoBlocks.GOLDEN_SHIT.get(), PoBlocks.GOLDEN_POOP_BLOCK.get());
 
         fluidBlockWithItem(PoBlocks.URINE_LIQUID.get());
         makeCropBlock(PoBlocks.MAGGOTS.get(), "maggots_stage", "maggots_stage");
@@ -765,8 +765,12 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
             closeModel = models().getExistingFile(modLoc("block/" + path + "_close"));
         } else {
             var texture = modLoc("block/" + path);
-            openModel = models().withExistingParent(path, modLoc("block/flush_toilet")).texture("toilet", texture);
-            closeModel = models().withExistingParent(path + "_close", modLoc("block/flush_toilet_close")).texture("toilet", texture);
+            openModel = models().withExistingParent(path, modLoc("block/flush_toilet"))
+                    .texture("toilet", texture + "_cart")
+                    .texture("particle", texture + "_particle");
+            closeModel = models().withExistingParent(path + "_close", modLoc("block/flush_toilet_close"))
+                    .texture("toilet", texture + "_cart")
+                    .texture("particle", texture + "_particle");
         }
 
         getVariantBuilder(block).forAllStates(state -> {
@@ -782,7 +786,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         generatedItem(block, "item");
     }
 
-    private void shitBlock(Block block) {
+    private void shitBlock(Block block, Block particleBlock) {
         String path = getBlockPath(block);
         ModelFile model;
 
@@ -790,8 +794,9 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
             model = models().getExistingFile(modLoc("block/" + path));
         } else {
             var texture = modLoc("block/" + path);
+            var particleTexture = modLoc("block/" + getBlockPath(particleBlock));
             model = models().withExistingParent(path, modLoc("block/shit"))
-                    .texture(PARTICLE, texture)
+                    .texture(PARTICLE, particleTexture)
                     .texture("shit", texture);
         }
 

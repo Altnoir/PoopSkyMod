@@ -8,6 +8,7 @@ import com.altnoir.poopsky.content.ToiletTypeManager;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
+import com.altnoir.poopsky.content.block.p.PortableToiletBlock;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.content.item.p.TimeBellItem;
 import com.altnoir.poopsky.content.villager.PVillagerBehaviors;
@@ -22,6 +23,7 @@ import com.altnoir.poopsky.worldgen.structure.PoopIslandStructure;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.TickTask;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -34,6 +36,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
@@ -78,6 +81,7 @@ public class PoGameEvents {
         gameEventBus.addListener(PoGameEvents::onCreateSpawnToilet);
         gameEventBus.addListener(PoGameEvents::onPlayerLoggedIn);
         gameEventBus.addListener(PoGameEvents::onPlayerLoggedOut);
+        gameEventBus.addListener(PoGameEvents::onPlayerRespawn);
         gameEventBus.addListener(PoGameEvents::onServerTick);
         gameEventBus.addListener(PoCommands::register);
     }
@@ -264,6 +268,22 @@ public class PoGameEvents {
         if (event.getEntity() instanceof ServerPlayer player) {
             ToiletUtil.clearPendingEndToiletTeleport(player);
         }
+    }
+
+    public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer player)) return;
+
+        BlockPos respawn = player.getRespawnPosition();
+        if (respawn == null) return;
+
+        ServerLevel respawnLevel = player.server.getLevel(player.getRespawnDimension());
+        if (respawnLevel == null || !(respawnLevel.getBlockState(respawn).getBlock() instanceof PortableToiletBlock)) {
+            return;
+        }
+
+        player.setForcedPose(Pose.SWIMMING);
+        player.setPose(Pose.SWIMMING);
+        player.server.tell(new TickTask(player.server.getTickCount() + 1, () -> player.setForcedPose(null)));
     }
 
     public static void onServerTick(ServerTickEvent.Post event) {

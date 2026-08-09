@@ -3,10 +3,11 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"render_type": "minecraft:cutout",
+	"texture_size": [32, 32],
 	"textures": {
-		"toilet": "poopsky:block/flush_toilet",
+		"toilet": "poopsky:block/flush_toilet_cart",
 		"liquid": "poopsky:block/urine_liquid",
-		"particle": "#toilet"
+		"particle": "poopsky:block/flush_toilet_particle"
 	},
 	"elements": [
 		{

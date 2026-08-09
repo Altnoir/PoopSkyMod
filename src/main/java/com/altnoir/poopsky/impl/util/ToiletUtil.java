@@ -6,6 +6,7 @@ import com.altnoir.poopsky.content.block.entity.FlushToiletBlockEntity;
 import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.block.p.FlushToiletBlock;
+import com.altnoir.poopsky.content.block.p.PortableToiletBlock;
 import com.altnoir.poopsky.impl.PoAnimationSavedData;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.impl.network.PlayAnimationAndWaitPayload;
@@ -31,6 +32,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.levelgen.feature.EndPlatformFeature;
 import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.AABB;
@@ -62,6 +64,51 @@ public class ToiletUtil {
 
     public static boolean isEntityCentered(BlockPos blockPos, Entity entity) {
         return new AABB(blockPos).inflate(0.2).contains(entity.position());
+    }
+
+    public static void portableToiletInside(Level level, BlockPos pos, BlockState state, Entity entity) {
+        if (level.isClientSide
+                || state.getValue(PortableToiletBlock.HALF) != DoubleBlockHalf.LOWER
+                || !(entity instanceof Player player)
+                || !player.isShiftKeyDown()
+                || !isEntityInsidePortableToiletRange(state, pos, entity)) {
+            return;
+        }
+
+        var playerData = player.getPersistentData();
+        long lastPoopTime = playerData.getLong("poopTime");
+        canPoop(level, player, player.hasEffect(PoEffects.INTESTINAL_SPASM), false, 0.1F, 0.5F, lastPoopTime,
+                time -> playerData.putLong("poopTime", time));
+    }
+
+    private static boolean isEntityInsidePortableToiletRange(BlockState state, BlockPos blockPos, Entity entity) {
+        if (!new AABB(blockPos).contains(entity.position())) {
+            return false;
+        }
+        double localX = (entity.getX() - blockPos.getX()) * 16.0;
+        double localZ = (entity.getZ() - blockPos.getZ()) * 16.0;
+        double modelX;
+        double modelZ;
+        switch (state.getValue(PortableToiletBlock.FACING)) {
+            case SOUTH -> {
+                modelX = 16.0 - localX;
+                modelZ = 16.0 - localZ;
+            }
+            case EAST -> {
+                modelX = localZ;
+                modelZ = 16.0 - localX;
+            }
+            case WEST -> {
+                modelX = 16.0 - localZ;
+                modelZ = localX;
+            }
+            default -> {
+                modelX = localX;
+                modelZ = localZ;
+            }
+        }
+        return modelX >= 1.0 && modelX <= 15.0
+                && modelZ >= 6.0 && modelZ <= 15.0;
     }
 
     public static void lavaToiletStepOn(Level level, BlockPos pos, BlockState state, Entity entity, boolean isGolden) {

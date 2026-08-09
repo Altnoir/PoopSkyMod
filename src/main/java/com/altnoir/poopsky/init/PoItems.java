@@ -56,6 +56,7 @@ public class PoItems {
     public static final ItemEntry<SimpleFeedableItem> POOP_VEGETABLE_STICKS = registerFood("poop_vegetable_sticks", PFoods.POOP_VEGETABLE_STICKS);
     public static final ItemEntry<SimpleFeedableItem> POOBURGER_MEAT = registerFood("pooburger_meat", PFoods.POOBURGER_MEAT);
     public static final ItemEntry<SimpleFeedableItem> POOBURGER = registerFood("pooburger", PFoods.POOBURGER);
+    public static final ItemEntry<SimpleFeedableItem> POOPSICLE = registerFood("poopsicle", PFoods.POOPSICLE);
     public static final ItemEntry<SimpleFeedableItem> POOP_PASTA = registerFood("poop_pasta", PFoods.POOP_PASTA);
     public static final ItemEntry<SimpleFeedableItem> POODDING = registerFood("poodding", PFoods.POODDING);
 
@@ -96,9 +97,10 @@ public class PoItems {
 
     public static final ItemEntry<FlyCatcherItem> FLY_CATCHER = registerItemNoModel("fly_catcher",
             props -> new FlyCatcherItem(props.stacksTo(1).durability(88)));
+    public static final ItemEntry<JinKeLaItem> JINKELA = registerItem("jinkela", JinKeLaItem::new);
+    public static final ItemEntry<ReturnTotemItem> RETURN_TOTEM = registerItem("return_totem", ReturnTotemItem::new);
     public static final ItemEntry<TimeBellItem> TIME_BELL = registerItem("time_bell",
             props -> new TimeBellItem(props.stacksTo(1)));
-    public static final ItemEntry<JinKeLaItem> JINKELA = registerItem("jinkela", JinKeLaItem::new);
     public static final ItemEntry<Item> SPALL = registerItem("spall", Item::new);
     public static final ItemEntry<SwordItem> SPALL_SWORD = registerHandheldItem("spall_sword",
             prop -> new SwordItem(Tiers.STONE,
@@ -138,6 +140,11 @@ public class PoItems {
             .item("ginkgo_chest_boat", props -> new GinkgoBoatItem(true, PoEntityType.GINKGO_CHEST_BOAT, props.stacksTo(1)))
             .lang("Ginkgo Boat with Chest")
             .register();
+
+    public static final ItemEntry<FlushToiletCartItem> FLUSH_TOILET_CART = registerItem("flush_toilet_cart",
+            props -> new FlushToiletCartItem(PoEntityType.FLUSH_TOILET_CART, props.stacksTo(1)));
+    public static final ItemEntry<FlushToiletCartItem> GOLDEN_FLUSH_TOILET_CART = registerItem("golden_flush_toilet_cart",
+            props -> new FlushToiletCartItem(PoEntityType.GOLDEN_FLUSH_TOILET_CART, props.stacksTo(1)));
     public static final ItemEntry<DeferredSpawnEggItem> POOLIME_SPAWN_EGG = registerItemNoModel("poolime_spawn_egg",
             prop -> new DeferredSpawnEggItem(PoEntityType.POOLIME, 0x7D5F36, 0x5E4228, prop));
     public static final ItemEntry<DeferredSpawnEggItem> FLY_SPAWN_EGG = registerItemNoModel("fly_spawn_egg",

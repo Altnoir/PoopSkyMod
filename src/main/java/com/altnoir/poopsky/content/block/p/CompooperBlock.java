@@ -99,6 +99,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
         add(f08, PoItems.POOP_VEGETABLE_STICKS);
         add(f08, PoItems.POOBURGER_MEAT);
         add(f1, PoItems.POOBURGER);
+        add(f05, PoItems.POOPSICLE);
         add(f08, PoItems.POOP_PASTA);
         add(f08, PoItems.POODDING);
         add(f1, PoBlocks.POOP_CAKE);

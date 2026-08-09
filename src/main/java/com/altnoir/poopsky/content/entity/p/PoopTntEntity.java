@@ -17,7 +17,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class PoopTntEntity extends Entity implements TraceableEntity {
@@ -138,7 +137,7 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
         this.setDeltaMovement(motion);
     }
 
-    private @NotNull Vec3 getMotion(Direction axis) {
+    private Vec3 getMotion(Direction axis) {
         Vec3 motion = this.getDeltaMovement();
         switch (axis) {
             case NORTH -> motion = motion.add(0.0, 0.0, -MOMENTUM_PER_TICK);

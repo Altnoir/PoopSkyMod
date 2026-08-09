@@ -2,6 +2,7 @@ package com.altnoir.poopsky;
 
 import com.altnoir.poopsky.client.IntroController;
 import com.altnoir.poopsky.client.PoAnimationController;
+import com.altnoir.poopsky.client.PoBedrockModelResources;
 import com.altnoir.poopsky.client.ToiletClientBlockExtensions;
 import com.altnoir.poopsky.client.creative.PoSectionedCreativeTabRenderer;
 import com.altnoir.poopsky.client.model.BakedModelEventHandler;
@@ -16,10 +17,12 @@ import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.content.block.renderer.MaggotsChunkLoaderBlockEntityRenderer;
 import com.altnoir.poopsky.content.entity.model.FlyModel;
 import com.altnoir.poopsky.content.entity.model.ToiletPlugModel;
+import com.altnoir.poopsky.content.entity.p.FlushToiletCartEntity;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.content.entity.renderer.GinkgoBoatRenderer;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.impl.event.PSKeyBoardInput;
+import com.altnoir.poopsky.impl.network.FlushToiletCartInputPayload;
 import com.altnoir.poopsky.impl.network.PlugActionPayload;
 import com.altnoir.poopsky.impl.network.PlugDismountPayload;
 import com.altnoir.poopsky.init.*;
@@ -72,6 +75,7 @@ public class PoopSkyClient {
     public static void registerMod(IEventBus modEventBus) {
         BakedModelEventHandler.register(modEventBus);
         modEventBus.addListener(PSKeyBoardInput::registerKeyMappings);
+        modEventBus.addListener(PoBedrockModelResources::onRegisterBedrockModels);
         modEventBus.addListener(ClientModEvents::modLoad);
         modEventBus.addListener(ClientModEvents::registerLayers);
         modEventBus.addListener(ClientModEvents::registerFluidRenderTypes);
@@ -246,12 +250,22 @@ public class PoopSkyClient {
             if (mc.player == null || mc.level == null) return;
 
             boolean isRidingPlug = mc.player.getVehicle() instanceof ToiletPlugEntity;
+            boolean isRidingCart = mc.player.getVehicle() instanceof FlushToiletCartEntity;
 
             while (PSKeyBoardInput.USE_PLUG_KEY.consumeClick()) {
                 PacketDistributor.sendToServer(new PlugActionPayload());
             }
             if (isRidingPlug && PSKeyBoardInput.DISMOUNT_PLUG_KEY.consumeClick()) {
                 PacketDistributor.sendToServer(new PlugDismountPayload());
+            }
+            if (isRidingCart && mc.player.getVehicle() instanceof FlushToiletCartEntity cart) {
+                boolean forward = mc.options.keyUp.isDown();
+                boolean backward = mc.options.keyDown.isDown();
+                boolean left = mc.options.keyLeft.isDown();
+                boolean right = mc.options.keyRight.isDown();
+                boolean fast = mc.options.keySprint.isDown();
+                cart.setInput(forward, backward, left, right, fast);
+                PacketDistributor.sendToServer(new FlushToiletCartInputPayload(forward, backward, left, right, fast));
             }
         }
     }

@@ -24,10 +24,20 @@ public class PoNetworking {
                 PlugInputPayload.CODEC,
                 PlugInputPayload::handle
         );
+        registrar.playToServer(
+                FlushToiletCartInputPayload.TYPE,
+                FlushToiletCartInputPayload.CODEC,
+                FlushToiletCartInputPayload::handle
+        );
         registrar.playToClient(
                 TimeBellFreezePayload.TYPE,
                 TimeBellFreezePayload.CODEC,
                 TimeBellFreezePayload::handle
+        );
+        registrar.playToClient(
+                ReturnTotemActivationPayload.TYPE,
+                ReturnTotemActivationPayload.CODEC,
+                ReturnTotemActivationPayload::handle
         );
         registrar.playToClient(
                 PlayAnimationPayload.TYPE,
