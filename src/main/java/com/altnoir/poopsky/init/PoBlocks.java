@@ -407,6 +407,9 @@ public class PoBlocks {
                     .sound(SoundType.GRASS)
                     .offsetType(BlockBehaviour.OffsetType.XZ)
                     .pushReaction(PushReaction.DESTROY)));
+    public static final BlockEntry<FlowerPotBlock> POTTED_GINKGO_SAPLING = registerBlockNoItem("potted_ginkgo_sapling",
+            props -> new FlowerPotBlock(GINKGO_SAPLING.get(), BlockBehaviour.Properties.ofFullCopy(Blocks.POTTED_OAK_SAPLING)),
+            RegistrateBlockLootTables::dropPottedContents);
 
     public static final BlockEntry<SaltpeterBlock> SALTPETER_BLOCK = registerBlock("saltpeter_block",
             props -> new SaltpeterBlock(BlockBehaviour.Properties.of()

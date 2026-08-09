@@ -26,6 +26,10 @@ public class PoSoundEvents {
     public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_POOP_BLOCK_SLIDE = registerSoundEvent("block.poop_block.slide");
     public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_SALTPETER_CHIME = registerSoundEvent("block.saltpeter.chime");
     public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_COMPOOPER_MAGGOTS = registerSoundEvent("block.compooper.maggots");
+    public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_COMPOOPER_EMPTY = registerSoundEvent("block.compooper.empty");
+    public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_COMPOOPER_FILL = registerSoundEvent("block.compooper.fill");
+    public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_COMPOOPER_FILL_SUCCESS = registerSoundEvent("block.compooper.fill_success");
+    public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_COMPOOPER_READY = registerSoundEvent("block.compooper.ready");
     public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_COMPOOPER_BUCKET_FILL = registerSoundEvent("block.compooper.bucket_fill");
     public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_COMPOOPER_BUCKET_FILL_LAVA = registerSoundEvent("block.compooper.bucket_fill_lava");
     public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_FLY_BARREL_OPEN = registerSoundEvent("block.fly_barrel.open");
@@ -35,6 +39,9 @@ public class PoSoundEvents {
     public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_FLUSH_TOILET_CLOSE = registerSoundEvent("block.flush_toilet.close");
     public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_BREEDING_CHEST_WORK = registerSoundEvent("block.breeding_chest.work");
     public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_TOILET_LAVA_EMPTY = registerSoundEvent("block.toilet.lava_empty");
+    public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_MAGGOTS_CHUNK_LOADER_ACTIVATE = registerSoundEvent("block.maggots_chunk_loader.activate");
+    public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_MAGGOTS_CHUNK_LOADER_AMBIENT = registerSoundEvent("block.maggots_chunk_loader.ambient");
+    public static final RegistryEntry<SoundEvent, SoundEvent> BLOCK_MAGGOTS_CHUNK_LOADER_DEACTIVATE = registerSoundEvent("block.maggots_chunk_loader.deactivate");
     public static final RegistryEntry<SoundEvent, SoundEvent> ENTITY_VILLAGER_WORK_COMPOOPER = registerSoundEvent("entity.villager.work_compooper");
     public static final RegistryEntry<SoundEvent, SoundEvent> ENTITY_VILLAGER_WORK_TOILET = registerSoundEvent("entity.villager.work_toilet");
     public static final RegistryEntry<SoundEvent, SoundEvent> ENTITY_POOLIME_ATTACK = registerSoundEvent("entity.poolime.attack");

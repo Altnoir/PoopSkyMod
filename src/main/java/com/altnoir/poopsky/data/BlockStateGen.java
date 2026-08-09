@@ -505,6 +505,10 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         trapdoorBlockWithRenderType(PoBlocks.GINKGO_TRAPDOOR.get(), blockTexture(PoBlocks.GINKGO_TRAPDOOR.get()), true, "cutout");
         blockWithItem(PoBlocks.GINKGO_LEAVES.get());
         saplingBlock(PoBlocks.GINKGO_SAPLING.get());
+        simpleBlock(PoBlocks.POTTED_GINKGO_SAPLING.get(), models()
+                .withExistingParent(getBlockPath(PoBlocks.POTTED_GINKGO_SAPLING.get()), mcLoc("block/flower_pot_cross"))
+                .texture("plant", blockTexture(PoBlocks.GINKGO_SAPLING.get()))
+                .renderType("cutout"));
 
         simpleBlockItems(
                 PoBlocks.GINKGO_STAIRS.get(),

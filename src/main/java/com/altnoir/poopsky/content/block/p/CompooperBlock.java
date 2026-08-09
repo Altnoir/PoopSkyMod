@@ -3,6 +3,7 @@ package com.altnoir.poopsky.content.block.p;
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import com.mojang.serialization.MapCodec;
 import it.unimi.dsi.fastutil.objects.Object2FloatMap;
 import it.unimi.dsi.fastutil.objects.Object2FloatOpenHashMap;
@@ -10,6 +11,7 @@ import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -157,7 +159,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
         if (i < READY && getValue(stack) > 0) {
             BlockState newState = addItem(player, state, level, pos, stack);
 
-            level.levelEvent(1500, pos, !state.equals(newState) ? 1 : 0);
+            playCompostEffect(level, pos, !state.equals(newState));
             player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
             stack.consume(1, player);
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
@@ -218,7 +220,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
         }
 
         empty(entity, state, level, pos);
-        level.playSound(null, pos, SoundEvents.COMPOSTER_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
+        level.playSound(null, pos, PoSoundEvents.BLOCK_COMPOOPER_EMPTY.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
     }
 
     protected static void empty(@Nullable Entity entity, BlockState state, LevelAccessor level, BlockPos pos) {
@@ -245,11 +247,22 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
         }
     }
 
+    private static void playCompostEffect(LevelAccessor level, BlockPos pos, boolean success) {
+        if (level instanceof ServerLevel serverLevel) {
+            serverLevel.playSound(null, pos, success
+                    ? PoSoundEvents.BLOCK_COMPOOPER_FILL_SUCCESS.get()
+                    : PoSoundEvents.BLOCK_COMPOOPER_FILL.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
+            serverLevel.sendParticles(ParticleTypes.COMPOSTER,
+                    pos.getX() + 0.5, pos.getY() + 0.75, pos.getZ() + 0.5,
+                    10, 0.25, 0.1, 0.25, 0.0);
+        }
+    }
+
     @Override
     protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (state.getValue(POOP_LEVEL) == READY - 1) {
             level.setBlock(pos, state.cycle(POOP_LEVEL), 3);
-            level.playSound(null, pos, SoundEvents.COMPOSTER_READY, SoundSource.BLOCKS, 1.0F, 1.0F);
+            level.playSound(null, pos, PoSoundEvents.BLOCK_COMPOOPER_READY.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
         }
     }
 
@@ -361,7 +374,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
             if (!itemstack.isEmpty()) {
                 this.changed = true;
                 BlockState blockstate = CompooperBlock.addItem(null, this.state, this.level, this.pos, itemstack);
-                this.level.levelEvent(1500, this.pos, blockstate != this.state ? 1 : 0);
+                playCompostEffect(this.level, this.pos, blockstate != this.state);
                 this.removeItemNoUpdate(0);
             }
         }

@@ -26,6 +26,33 @@
     ],
     "subtitle": "subtitle.poopsky.block.compooper.bucket_fill"
   },
+  "block.compooper.empty": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.composter.empty"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.block.compooper.empty"
+  },
+  "block.compooper.fill": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.composter.fill"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.block.compooper.fill"
+  },
+  "block.compooper.fill_success": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.composter.fill_success"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.block.compooper.fill"
+  },
   "block.compooper.maggots": {
     "sounds": [
       {
@@ -34,6 +61,15 @@
       }
     ],
     "subtitle": "subtitle.poopsky.compooper.maggots"
+  },
+  "block.compooper.ready": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.composter.ready"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.block.compooper.ready"
   },
   "block.flush_toilet.close": {
     "sounds": [
@@ -79,6 +115,33 @@
       }
     ],
     "subtitle": "subtitle.poopsky.fly_barrel.work"
+  },
+  "block.maggots_chunk_loader.activate": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.beacon.activate"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.block.maggots_chunk_loader.activate"
+  },
+  "block.maggots_chunk_loader.ambient": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.beacon.ambient"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.block.maggots_chunk_loader.ambient"
+  },
+  "block.maggots_chunk_loader.deactivate": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.beacon.deactivate"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.block.maggots_chunk_loader.deactivate"
   },
   "block.poop_block.slide": {
     "sounds": [

@@ -6,8 +6,10 @@ import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateDataMapProvider;
+import net.neoforged.neoforge.registries.datamaps.builtin.Compostable;
 import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel;
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps;
+import net.neoforged.neoforge.registries.datamaps.builtin.Strippable;
 
 public final class DataMapGen {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
@@ -20,6 +22,17 @@ public final class DataMapGen {
     }
 
     private static void generate(RegistrateDataMapProvider provider) {
+        provider.builder(NeoForgeDataMaps.COMPOSTABLES)
+                .add(PoBlocks.GINKGO_SAPLING.getId(), new Compostable(0.3F), false)
+                .add(PoBlocks.GINKGO_LEAVES.getId(), new Compostable(0.3F), false);
+
+        provider.builder(NeoForgeDataMaps.STRIPPABLES)
+                .add(PoBlocks.GINKGO_LOG.getId(), new Strippable(PoBlocks.STRIPPED_GINKGO_LOG.get()), false)
+                .add(PoBlocks.GINKGO_WOOD.getId(), new Strippable(PoBlocks.STRIPPED_GINKGO_WOOD.get()), false)
+                .add(PoBlocks.POOP_LOG.getId(), new Strippable(PoBlocks.STRIPPED_POOP_LOG.get()), false)
+                .add(PoBlocks.POOP_WOOD.getId(), new Strippable(PoBlocks.STRIPPED_POOP_WOOD.get()), false)
+                .add(PoBlocks.POOP_EMPTY_LOG.getId(), new Strippable(PoBlocks.STRIPPED_POOP_EMPTY_LOG.get()), false);
+
         provider.builder(NeoForgeDataMaps.FURNACE_FUELS)
                 .add(PoItems.POOP.getId(), new FurnaceFuel(200), false)
                 .add(PoBlocks.SHIT.getId(), new FurnaceFuel(600), false)

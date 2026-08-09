@@ -5,13 +5,13 @@ import com.altnoir.poopsky.content.block.p.MaggotsChunkLoaderBlock;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.init.PoBlockEntityType;
 import com.altnoir.poopsky.init.PoBlocks;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
@@ -83,7 +83,7 @@ public class MaggotsChunkLoaderBlockEntity extends BlockEntity {
 
         if (serverLevel.getGameTime() % STRUCTURE_SCAN_INTERVAL == 0L && blockEntity.loadedRadius >= 0) {
             float pitch = 0.6F + blockEntity.loadedRadius * 0.3F;
-            serverLevel.playSound(null, blockEntity.worldPosition, SoundEvents.BEACON_AMBIENT, SoundSource.BLOCKS, 1.0F, pitch);
+            serverLevel.playSound(null, blockEntity.worldPosition, PoSoundEvents.BLOCK_MAGGOTS_CHUNK_LOADER_AMBIENT.get(), SoundSource.BLOCKS, 1.0F, pitch);
         }
 
         if (blockEntity.scanStage >= 0) {
@@ -144,9 +144,9 @@ public class MaggotsChunkLoaderBlockEntity extends BlockEntity {
 
         boolean isActive = desiredRadius >= 0;
         if (!wasActive && isActive) {
-            level.playSound(null, worldPosition, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 1.0F, 1.0F);
+            level.playSound(null, worldPosition, PoSoundEvents.BLOCK_MAGGOTS_CHUNK_LOADER_ACTIVATE.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
         } else if (wasActive && !isActive) {
-            level.playSound(null, worldPosition, SoundEvents.BEACON_DEACTIVATE, SoundSource.BLOCKS, 1.0F, 1.0F);
+            level.playSound(null, worldPosition, PoSoundEvents.BLOCK_MAGGOTS_CHUNK_LOADER_DEACTIVATE.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
         }
     }
 
@@ -187,7 +187,7 @@ public class MaggotsChunkLoaderBlockEntity extends BlockEntity {
     public void releaseAllChunks(ServerLevel level) {
         ChunkPos center = new ChunkPos(worldPosition);
         if (loadedRadius >= 0) {
-            level.playSound(null, worldPosition, SoundEvents.BEACON_DEACTIVATE, SoundSource.BLOCKS, 1.0F, 1.0F);
+            level.playSound(null, worldPosition, PoSoundEvents.BLOCK_MAGGOTS_CHUNK_LOADER_DEACTIVATE.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
         }
         int cleanupRadius = Math.max(loadedRadius, MAX_LOADED_RADIUS);
         for (int offsetX = -cleanupRadius; offsetX <= cleanupRadius; offsetX++) {
