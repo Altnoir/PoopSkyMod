@@ -1,8 +1,10 @@
 package com.altnoir.poopsky.content.entity.p;
 
+import com.altnoir.poopsky.impl.network.FlushToiletCartInputPayload;
 import com.altnoir.poopsky.init.PoEffects;
 import com.altnoir.poopsky.init.PoEntityType;
 import com.altnoir.poopsky.init.PoItems;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -20,6 +22,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
 public class FlushToiletCartEntity extends VehicleEntity {
@@ -216,6 +221,9 @@ public class FlushToiletCartEntity extends VehicleEntity {
         boolean shouldProcessInput = this.isControlledByLocalInstance()
                 || (!this.level().isClientSide && this.getControllingPassenger() != null);
         if (shouldProcessInput) {
+            if (this.level().isClientSide) {
+                this.updateKeyStates();
+            }
             this.moveByInput();
             Vec3 deltaMovement = this.getDeltaMovement();
             if (!this.onGround()) {
@@ -260,6 +268,19 @@ public class FlushToiletCartEntity extends VehicleEntity {
         this.inputLeft = left;
         this.inputRight = right;
         this.inputFast = fast;
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    private void updateKeyStates() {
+        var mc = Minecraft.getInstance();
+        boolean forward = mc.options.keyUp.isDown();
+        boolean backward = mc.options.keyDown.isDown();
+        boolean left = mc.options.keyLeft.isDown();
+        boolean right = mc.options.keyRight.isDown();
+        boolean fast = mc.options.keySprint.isDown();
+
+        this.setInput(forward, backward, left, right, fast);
+        PacketDistributor.sendToServer(new FlushToiletCartInputPayload(forward, backward, left, right, fast));
     }
 
     private void tickLerp() {
