@@ -78,16 +78,16 @@ public class FlyModel<T extends FlyEntity> extends AgeableListModel<T> {
         PartDefinition maggot = partdefinition.addOrReplaceChild("maggot", CubeListBuilder.create(),
                 PartPose.offset(0.5F, 22.0F, 0.0F));
         maggot.addOrReplaceChild("head", CubeListBuilder.create()
-                        .texOffs(0, 32).addBox(-1.8F, -1.2F, -4.5F, 3.6F, 2.4F, 2.8F),
+                        .texOffs(0, 0).addBox(-1.8F, -1.2F, -4.5F, 3.6F, 2.4F, 2.8F),
                 PartPose.ZERO);
         maggot.addOrReplaceChild("front", CubeListBuilder.create()
-                        .texOffs(0, 37).addBox(-2.0F, -1.4F, -1.8F, 4.0F, 2.8F, 2.3F),
+                        .texOffs(16, 0).addBox(-2.0F, -1.4F, -1.8F, 4.0F, 2.8F, 2.3F),
                 PartPose.ZERO);
         maggot.addOrReplaceChild("middle", CubeListBuilder.create()
-                        .texOffs(0, 42).addBox(-1.8F, -1.3F, 0.2F, 3.6F, 2.6F, 2.2F),
+                        .texOffs(32, 0).addBox(-1.8F, -1.3F, 0.2F, 3.6F, 2.6F, 2.2F),
                 PartPose.ZERO);
         maggot.addOrReplaceChild("tail", CubeListBuilder.create()
-                        .texOffs(0, 47).addBox(-1.4F, -1.1F, 2.2F, 2.8F, 2.2F, 2.0F),
+                        .texOffs(48, 0).addBox(-1.4F, -1.1F, 2.2F, 2.8F, 2.2F, 2.0F),
                 PartPose.ZERO);
 
         return LayerDefinition.create(meshdefinition, 64, 64);
