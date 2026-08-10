@@ -29,6 +29,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -163,6 +164,10 @@ public class PoGameEvents {
         builder.addMix(Potions.AWKWARD, PoItems.KING_OF_DRAGON_FRUIT.get(), PoPotions.ON_THE_VGE_POTION);
         builder.addMix(PoPotions.ON_THE_VGE_POTION, Items.REDSTONE, PoPotions.LONG_ON_THE_VGE_POTION);
         builder.addMix(PoPotions.ON_THE_VGE_POTION, Items.GLOWSTONE_DUST, PoPotions.STRONG_ON_THE_VGE_POTION);
+
+        builder.addMix(Potions.AWKWARD, PoItems.MAGGOTS_SEEDS.get(), PoPotions.INFESTATION_POTION);
+        builder.addMix(PoPotions.INFESTATION_POTION, Items.REDSTONE, PoPotions.LONG_INFESTATION_POTION);
+        builder.addMix(PoPotions.INFESTATION_POTION, Items.GLOWSTONE_DUST, PoPotions.STRONG_INFESTATION_POTION);
     }
 
     public static void onVillagerTrades(VillagerTradesEvent event) {
@@ -179,6 +184,12 @@ public class PoGameEvents {
     public static void onMobEffectApplicable(MobEffectEvent.Applicable event) {
         LivingEntity entity = event.getEntity();
         MobEffectInstance effectInstance = event.getEffectInstance();
+
+        if (effectInstance.is(PoEffects.INFESTATION)
+                && entity.getType().is(EntityTypeTags.IMMUNE_TO_INFESTED)) {
+            event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
+            return;
+        }
 
         if (OMEN_EFFECTS.contains(effectInstance.getEffect()) && entity.hasEffect(PoEffects.OMENER)) {
             if (!effectInstance.is(MobEffects.CONFUSION) && !entity.hasEffect(MobEffects.REGENERATION)) {

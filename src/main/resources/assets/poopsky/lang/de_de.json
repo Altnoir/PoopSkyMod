@@ -687,5 +687,18 @@
   "poopsky.configuration.endAnimation": "Toiletten-Endgedicht",
   "poopsky.configuration.endAnimation.tooltip": "Spielt das Toiletten-Endgedicht vor der ersten Reise durch eine Endtoilette ab",
   "poopsky.configuration.introText": "Introtext",
-  "poopsky.configuration.introYear": "Introjahr"
+  "poopsky.configuration.introYear": "Introjahr",
+  "effect.poopsky.infestation": "Befall",
+  "item.minecraft.potion.effect.infestation_potion": "Trank des Befalls",
+  "item.minecraft.splash_potion.effect.infestation_potion": "Wurftrank des Befalls",
+  "item.minecraft.lingering_potion.effect.infestation_potion": "Verweiltrank des Befalls",
+  "item.minecraft.potion.effect.long_infestation_potion": "Trank des Befalls",
+  "item.minecraft.splash_potion.effect.long_infestation_potion": "Wurftrank des Befalls",
+  "item.minecraft.lingering_potion.effect.long_infestation_potion": "Verweiltrank des Befalls",
+  "item.minecraft.potion.effect.strong_infestation_potion": "Trank des Befalls",
+  "item.minecraft.splash_potion.effect.strong_infestation_potion": "Wurftrank des Befalls",
+  "item.minecraft.lingering_potion.effect.strong_infestation_potion": "Verweiltrank des Befalls",
+  "item.minecraft.tipped_arrow.effect.infestation_potion": "Pfeil des Befalls",
+  "item.minecraft.tipped_arrow.effect.long_infestation_potion": "Pfeil des Befalls",
+  "item.minecraft.tipped_arrow.effect.strong_infestation_potion": "Pfeil des Befalls"
 }

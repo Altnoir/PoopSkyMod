@@ -687,5 +687,18 @@
   "poopsky.configuration.endAnimation": "Poème de fin des toilettes",
   "poopsky.configuration.endAnimation.tooltip": "Lit le poème de fin des toilettes avant le premier passage par des toilettes de l’End",
   "poopsky.configuration.introText": "Texte d’introduction",
-  "poopsky.configuration.introYear": "Année d’introduction"
+  "poopsky.configuration.introYear": "Année d’introduction",
+  "effect.poopsky.infestation": "Infestation",
+  "item.minecraft.potion.effect.infestation_potion": "Potion d’infestation",
+  "item.minecraft.splash_potion.effect.infestation_potion": "Potion jetable d’infestation",
+  "item.minecraft.lingering_potion.effect.infestation_potion": "Potion persistante d’infestation",
+  "item.minecraft.potion.effect.long_infestation_potion": "Potion d’infestation",
+  "item.minecraft.splash_potion.effect.long_infestation_potion": "Potion jetable d’infestation",
+  "item.minecraft.lingering_potion.effect.long_infestation_potion": "Potion persistante d’infestation",
+  "item.minecraft.potion.effect.strong_infestation_potion": "Potion d’infestation",
+  "item.minecraft.splash_potion.effect.strong_infestation_potion": "Potion jetable d’infestation",
+  "item.minecraft.lingering_potion.effect.strong_infestation_potion": "Potion persistante d’infestation",
+  "item.minecraft.tipped_arrow.effect.infestation_potion": "Flèche d’infestation",
+  "item.minecraft.tipped_arrow.effect.long_infestation_potion": "Flèche d’infestation",
+  "item.minecraft.tipped_arrow.effect.strong_infestation_potion": "Flèche d’infestation"
 }

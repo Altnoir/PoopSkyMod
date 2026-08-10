@@ -687,5 +687,18 @@
   "poopsky.configuration.endAnimation": "トイレのエンドポエム",
   "poopsky.configuration.endAnimation.tooltip": "初めてエンドトイレを通る前にトイレのエンドポエムを再生します",
   "poopsky.configuration.introText": "イントロテキスト",
-  "poopsky.configuration.introYear": "イントロの年"
+  "poopsky.configuration.introYear": "イントロの年",
+  "effect.poopsky.infestation": "感染",
+  "item.minecraft.potion.effect.infestation_potion": "感染のポーション",
+  "item.minecraft.splash_potion.effect.infestation_potion": "感染のスプラッシュポーション",
+  "item.minecraft.lingering_potion.effect.infestation_potion": "感染の残留ポーション",
+  "item.minecraft.potion.effect.long_infestation_potion": "感染のポーション",
+  "item.minecraft.splash_potion.effect.long_infestation_potion": "感染のスプラッシュポーション",
+  "item.minecraft.lingering_potion.effect.long_infestation_potion": "感染の残留ポーション",
+  "item.minecraft.potion.effect.strong_infestation_potion": "感染のポーション",
+  "item.minecraft.splash_potion.effect.strong_infestation_potion": "感染のスプラッシュポーション",
+  "item.minecraft.lingering_potion.effect.strong_infestation_potion": "感染の残留ポーション",
+  "item.minecraft.tipped_arrow.effect.infestation_potion": "感染の矢",
+  "item.minecraft.tipped_arrow.effect.long_infestation_potion": "感染の矢",
+  "item.minecraft.tipped_arrow.effect.strong_infestation_potion": "感染の矢"
 }
