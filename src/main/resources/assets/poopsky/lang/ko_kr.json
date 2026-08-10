@@ -48,6 +48,7 @@
   "message.poopsky.return_totem.obstructed": "이동식 변기가 막혀 있습니다",
   "message.poopsky.gacha_machine.requires_ingot": "불길한 오염 주괴가 필요합니다",
   "message.poopsky.gacha_machine.busy": "뽑기 기계가 작동 중입니다",
+  "message.poopsky.gacha_machine.invalid_loot": "뽑기 기계 전리품 표에 유효한 캡슐이 없습니다",
   "tooltip.poopsky.item.info_0": "§7§6[Shift]§7를 눌러 상세 정보 표시",
   "tooltip.poopsky.item.info_1": "§8서로 다른 변기 블록 두 개를 각각 우클릭하여 연결하세요",
   "tooltip.poopsky.toilet_linker.info_1": "변기①-차원 ID: %1$s, 좌표: %2$s, %3$s, %4$s",

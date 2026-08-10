@@ -1,6 +1,5 @@
 package com.altnoir.poopsky.content.entity.p;
 
-import com.altnoir.poopsky.content.GachaPool;
 import com.altnoir.poopsky.init.PoComponents;
 import com.altnoir.poopsky.init.PoEntityType;
 import com.altnoir.poopsky.init.PoItems;
@@ -83,22 +82,19 @@ public class GachaBallEntity extends ThrowableItemProjectile {
         if (resourceLocation == null) {
             return;
         }
-        if (!GachaPool.contains(resourceLocation)) {
-            return;
-        }
         EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.getOptional(resourceLocation).orElse(null);
-        if (entityType == null) {
+        if (entityType == null || !entityType.canSummon()) {
             return;
         }
         Entity entity = entityType.create(level);
-        if (entity == null) {
+        if (!(entity instanceof LivingEntity livingEntity)) {
             return;
         }
-        entity.moveTo(location.x(), location.y(), location.z(), level.random.nextFloat() * 360.0F, 0.0F);
-        if (entity instanceof Mob mob) {
+        livingEntity.moveTo(location.x(), location.y(), location.z(), level.random.nextFloat() * 360.0F, 0.0F);
+        if (livingEntity instanceof Mob mob) {
             mob.finalizeSpawn(level, level.getCurrentDifficultyAt(BlockPos.containing(location)),
                     MobSpawnType.TRIGGERED, null);
         }
-        level.addFreshEntity(entity);
+        level.addFreshEntity(livingEntity);
     }
 }

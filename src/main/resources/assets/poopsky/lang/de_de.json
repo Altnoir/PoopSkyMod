@@ -48,6 +48,7 @@
   "message.poopsky.return_totem.obstructed": "Mobile Toilette ist blockiert",
   "message.poopsky.gacha_machine.requires_ingot": "Ein ominöser Schmutzbarren wird benötigt",
   "message.poopsky.gacha_machine.busy": "Der Kapselautomat läuft bereits",
+  "message.poopsky.gacha_machine.invalid_loot": "Die Beutetabelle des Kapselautomaten enthält keine gültige Kapsel",
   "tooltip.poopsky.item.info_0": "§7Halte §6[Umschalt] §7für Details",
   "tooltip.poopsky.item.info_1": "§8Rechtsklicke auf zwei verschiedene Toiletten, um sie zu verbinden",
   "tooltip.poopsky.toilet_linker.info_1": "Toilette① - Dimensions-ID: %1$s, Koordinaten: %2$s, %3$s, %4$s",

@@ -48,6 +48,7 @@
   "message.poopsky.return_totem.obstructed": "Передвижной туалет заблокирован",
   "message.poopsky.gacha_machine.requires_ingot": "Требуется зловещий грязный слиток",
   "message.poopsky.gacha_machine.busy": "Автомат гача уже работает",
+  "message.poopsky.gacha_machine.invalid_loot": "В таблице добычи автомата нет подходящей капсулы",
   "tooltip.poopsky.item.info_0": "§7Удерживайте §6[Shift] §7для деталей",
   "tooltip.poopsky.item.info_1": "§8Щёлкните ПКМ по двум разным унитазам, чтобы соединить их",
   "tooltip.poopsky.toilet_linker.info_1": "Унитаз① - ID измерения: %1$s, Координаты: %2$s, %3$s, %4$s",

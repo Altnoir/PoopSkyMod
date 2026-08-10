@@ -48,6 +48,7 @@
   "message.poopsky.return_totem.obstructed": "移動式トイレが塞がれています",
   "message.poopsky.gacha_machine.requires_ingot": "不吉な汚穢のインゴットが必要です",
   "message.poopsky.gacha_machine.busy": "ガチャマシンは作動中です",
+  "message.poopsky.gacha_machine.invalid_loot": "ガチャマシンのルートテーブルに有効なカプセルがありません",
   "tooltip.poopsky.item.info_0": "§7§6[Shift]§7を押しながら詳細を表示",
   "tooltip.poopsky.item.info_1": "§8異なる2つのトイレブロックを右クリックして接続",
   "tooltip.poopsky.toilet_linker.info_1": "トイレ①-ディメンションID：%1$s、座標：%2$s, %3$s, %4$s",

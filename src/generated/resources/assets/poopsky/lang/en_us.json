@@ -561,6 +561,7 @@
   "key.poopsky.up": "Up",
   "key.poopsky.use_plug": "Summon Toilet Plug",
   "message.poopsky.gacha_machine.busy": "The gacha machine is already running",
+  "message.poopsky.gacha_machine.invalid_loot": "The gacha machine loot table has no valid capsule",
   "message.poopsky.gacha_machine.requires_ingot": "An Ominous Filthy Ingot is required",
   "message.poopsky.return_totem.not_bound": "Not bound to a Portable Toilet",
   "message.poopsky.return_totem.obstructed": "The Portable Toilet is obstructed",

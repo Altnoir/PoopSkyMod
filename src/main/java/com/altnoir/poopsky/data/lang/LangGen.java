@@ -206,6 +206,7 @@ public final class LangGen {
         provider.add("message.poopsky.toilet_plug.dismount", "Press %s to dismount Toilet Plug");
         provider.add("message.poopsky.gacha_machine.requires_ingot", "An Ominous Filthy Ingot is required");
         provider.add("message.poopsky.gacha_machine.busy", "The gacha machine is already running");
+        provider.add("message.poopsky.gacha_machine.invalid_loot", "The gacha machine loot table has no valid capsule");
     }
 
     private static void addFlyTypes() {

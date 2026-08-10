@@ -48,6 +48,7 @@
   "message.poopsky.return_totem.obstructed": "Les toilettes mobiles sont obstruées",
   "message.poopsky.gacha_machine.requires_ingot": "Un lingot souillé de mauvais augure est requis",
   "message.poopsky.gacha_machine.busy": "La machine à capsules fonctionne déjà",
+  "message.poopsky.gacha_machine.invalid_loot": "La table de butin ne contient aucune capsule valide",
   "tooltip.poopsky.item.info_0": "§7Maintenez §6[Maj] §7pour afficher les détails",
   "tooltip.poopsky.item.info_1": "§8Faites un clic droit sur deux blocs de toilettes différents pour lier les canaux",
   "tooltip.poopsky.toilet_linker.info_1": "Toilettes① - DimID : %1$s, Coordonnées : %2$s, %3$s, %4$s",

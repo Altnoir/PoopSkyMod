@@ -48,6 +48,7 @@
   "message.poopsky.return_totem.obstructed": "移動式廁所被阻擋",
   "message.poopsky.gacha_machine.requires_ingot": "需要惡兆污穢錠",
   "message.poopsky.gacha_machine.busy": "扭蛋機正在運作",
+  "message.poopsky.gacha_machine.invalid_loot": "扭蛋機戰利品表中沒有有效的扭蛋球",
   "tooltip.poopsky.item.info_0": "§7按住 §6[Shift] §7顯示詳細資訊",
   "tooltip.poopsky.item.info_1": "§8分別對兩個不同的廁所方塊按右鍵以連接通道",
   "tooltip.poopsky.toilet_linker.info_1": "廁所① - 維度 ID：%1$s，座標：%2$s, %3$s, %4$s",

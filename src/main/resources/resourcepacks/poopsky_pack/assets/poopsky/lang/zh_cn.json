@@ -48,6 +48,7 @@
   "message.poopsky.return_totem.obstructed": "移动巧克力礼盒被遮挡",
   "message.poopsky.gacha_machine.requires_ingot": "需要悦动甜蜜锭",
   "message.poopsky.gacha_machine.busy": "扭蛋机正在运行",
+  "message.poopsky.gacha_machine.invalid_loot": "扭蛋机战利品表中没有有效的扭蛋球",
   "tooltip.poopsky.item.info_0": "§7按住 §6[Shift] §7显示详细",
   "tooltip.poopsky.item.info_1": "§8分别右击两个不同的巧克力礼盒方块以连接通道",
   "tooltip.poopsky.toilet_linker.info_1": "巧克力礼盒①-维度ID：%1$s，坐标：%2$s, %3$s, %4$s",

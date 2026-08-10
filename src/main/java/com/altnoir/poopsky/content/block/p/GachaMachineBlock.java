@@ -134,15 +134,21 @@ public class GachaMachineBlock extends BaseEntityBlock {
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
         if (!level.isClientSide) {
-            if (level.getBlockEntity(lowerPos) instanceof GachaMachineBlockEntity blockEntity
-                    && blockEntity.start()) {
-                if (!player.getAbilities().instabuild) {
-                    stack.shrink(1);
+            if (level.getBlockEntity(lowerPos) instanceof GachaMachineBlockEntity blockEntity) {
+                GachaMachineBlockEntity.StartResult result = blockEntity.start(player);
+                if (result == GachaMachineBlockEntity.StartResult.STARTED) {
+                    if (!player.getAbilities().instabuild) {
+                        stack.shrink(1);
+                    }
+                    level.playSound(null, lowerPos, SoundEvents.NOTE_BLOCK_CHIME.value(),
+                            SoundSource.BLOCKS, 1.0F, 1.0F);
+                } else {
+                    player.displayClientMessage(Component.translatable(result == GachaMachineBlockEntity.StartResult.BUSY
+                            ? "message.poopsky.gacha_machine.busy"
+                            : "message.poopsky.gacha_machine.invalid_loot"), true);
                 }
-                level.playSound(null, lowerPos, SoundEvents.NOTE_BLOCK_CHIME.value(),
-                        SoundSource.BLOCKS, 1.0F, 1.0F);
             } else {
-                player.displayClientMessage(Component.translatable("message.poopsky.gacha_machine.busy"), true);
+                player.displayClientMessage(Component.translatable("message.poopsky.gacha_machine.invalid_loot"), true);
             }
         }
         return ItemInteractionResult.sidedSuccess(level.isClientSide);

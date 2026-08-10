@@ -1,0 +1,64 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "poopsky:gacha_ball",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "poopsky:gacha_entity": "minecraft:cow"
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "poopsky:gacha_ball",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "poopsky:gacha_entity": "minecraft:chicken"
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "poopsky:gacha_ball",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "poopsky:gacha_entity": "minecraft:pig"
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "poopsky:gacha_ball",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "poopsky:gacha_entity": "poopsky:fly"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "random_sequence": "poopsky:gameplay/gacha_machine"
+}
