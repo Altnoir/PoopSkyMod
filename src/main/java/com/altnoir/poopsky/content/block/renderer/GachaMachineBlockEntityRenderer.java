@@ -22,7 +22,7 @@ import java.util.WeakHashMap;
 
 public class GachaMachineBlockEntityRenderer implements BlockEntityRenderer<GachaMachineBlockEntity> {
     private static final int CAPSULE_COLUMNS = 4;
-    private static final float INTERIOR_BALL_SCALE = 0.45F;
+    private static final float INTERIOR_BALL_SCALE = 0.34F;
     private static final float EJECTED_BALL_SCALE = 0.34F;
     private static final ItemStack DISPLAY_BALL = new ItemStack(PoItems.GACHA_BALL.get());
     private static final Map<GachaMachineBlockEntity, CapsulePosition[]> INTERIOR_POSITION_CACHE = new WeakHashMap<>();
