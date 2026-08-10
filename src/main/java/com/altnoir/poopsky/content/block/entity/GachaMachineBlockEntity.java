@@ -32,6 +32,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 
 public class GachaMachineBlockEntity extends BlockEntity {
     public static final int ANIMATION_LENGTH = 50;
+    public static final int CAPSULE_COUNT = 18;
     private static final ResourceKey<LootTable> REWARD_TABLE = ResourceKey.create(
             Registries.LOOT_TABLE, PoopSky.loc("gameplay/gacha_machine"));
 
@@ -43,6 +44,7 @@ public class GachaMachineBlockEntity extends BlockEntity {
 
     private boolean active;
     private int animationTick;
+    private int selectedBallIndex = -1;
     private ItemStack rewardStack = ItemStack.EMPTY;
 
     public GachaMachineBlockEntity(BlockPos pos, BlockState state) {
@@ -61,6 +63,7 @@ public class GachaMachineBlockEntity extends BlockEntity {
             return StartResult.INVALID_REWARD;
         }
         this.rewardStack = reward;
+        this.selectedBallIndex = level.random.nextInt(CAPSULE_COUNT);
         this.animationTick = 0;
         this.active = true;
         setChanged();
@@ -113,6 +116,7 @@ public class GachaMachineBlockEntity extends BlockEntity {
         if (!isValidReward(this.rewardStack)) {
             this.active = false;
             this.animationTick = 0;
+            this.selectedBallIndex = -1;
             this.rewardStack = ItemStack.EMPTY;
             setChanged();
             syncToClient();
@@ -129,6 +133,7 @@ public class GachaMachineBlockEntity extends BlockEntity {
         level.addFreshEntity(itemEntity);
         this.active = false;
         this.animationTick = 0;
+        this.selectedBallIndex = -1;
         this.rewardStack = ItemStack.EMPTY;
         setChanged();
         syncToClient();
@@ -149,11 +154,16 @@ public class GachaMachineBlockEntity extends BlockEntity {
         return this.rewardStack.copy();
     }
 
+    public int selectedBallIndex() {
+        return this.selectedBallIndex;
+    }
+
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         tag.putBoolean("active", this.active);
         tag.putInt("animation_tick", this.animationTick);
+        tag.putInt("selected_ball", this.selectedBallIndex);
         CompoundTag rewardTag = new CompoundTag();
         NonNullList<ItemStack> rewards = NonNullList.withSize(1, this.rewardStack);
         ContainerHelper.saveAllItems(rewardTag, rewards, registries);
@@ -165,6 +175,7 @@ public class GachaMachineBlockEntity extends BlockEntity {
         super.loadAdditional(tag, registries);
         this.active = tag.getBoolean("active");
         this.animationTick = tag.getInt("animation_tick");
+        this.selectedBallIndex = tag.contains("selected_ball") ? tag.getInt("selected_ball") : -1;
         NonNullList<ItemStack> rewards = NonNullList.withSize(1, ItemStack.EMPTY);
         if (tag.contains("reward")) {
             ContainerHelper.loadAllItems(tag.getCompound("reward"), rewards, registries);
@@ -176,6 +187,9 @@ public class GachaMachineBlockEntity extends BlockEntity {
                 this.rewardStack = new ItemStack(PoItems.GACHA_BALL.get());
                 this.rewardStack.set(PoComponents.GACHA_ENTITY.get(), legacyEntityId);
             }
+        }
+        if (this.active && (this.selectedBallIndex < 0 || this.selectedBallIndex >= CAPSULE_COUNT)) {
+            this.selectedBallIndex = 0;
         }
     }
 

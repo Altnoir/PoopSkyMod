@@ -1,5 +1,6 @@
 {
   "credit": "PoopSky",
+  "render_type": "minecraft:translucent",
   "textures": {
     "body": "minecraft:block/red_concrete",
     "frame": "minecraft:block/iron_block",
@@ -31,6 +32,9 @@
     }},
     {"from": [3, 4, 14], "to": [13, 12, 15], "faces": {
       "north": {"texture": "#dark"}
+    }},
+    {"from": [3, 4, 0], "to": [13, 12, 1], "faces": {
+      "north": {"texture": "#glass"}, "south": {"texture": "#glass"}
     }},
     {"from": [1, 14, 0], "to": [15, 16, 15], "faces": {
       "up": {"texture": "#frame"}, "north": {"texture": "#frame"},
