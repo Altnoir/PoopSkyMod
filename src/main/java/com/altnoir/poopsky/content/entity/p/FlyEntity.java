@@ -25,8 +25,10 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
+import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
+import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
@@ -58,6 +60,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
     public int eggTime = this.random.nextInt(6000) + 6000;
 
     private FlyBuzzSoundWrapper buzzSound;
+    private boolean wasBaby;
 
     public FlyEntity(EntityType<FlyEntity> entityType, Level level) {
         super(entityType, level);
@@ -110,6 +113,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
 
     @Override
     public void aiStep() {
+        updateMovementForAge();
         super.aiStep();
         if (this.level().isClientSide && buzzSound != null) {
             buzzSound.tick();
@@ -130,6 +134,10 @@ public class FlyEntity extends Animal implements FlyingAnimal {
 
         // 减缓下落速度
         Vec3 vec3 = this.getDeltaMovement();
+        if (this.isBaby()) {
+            this.setDeltaMovement(vec3.x * 0.85, Math.min(vec3.y, 0.08), vec3.z * 0.85);
+            vec3 = this.getDeltaMovement();
+        }
         if (!this.onGround() && vec3.y < 0.0) {
             this.setDeltaMovement(vec3.x, vec3.y * 0.6, vec3.z);
         }
@@ -144,6 +152,19 @@ public class FlyEntity extends Animal implements FlyingAnimal {
         }
     }
 
+    private void updateMovementForAge() {
+        boolean baby = this.isBaby();
+        if (baby == this.wasBaby) return;
+        this.wasBaby = baby;
+        if (baby) {
+            this.moveControl = new MoveControl(this);
+            this.navigation = new GroundPathNavigation(this, this.level());
+        } else {
+            this.moveControl = new FlyingMoveControl(this, 10, false);
+            this.navigation = this.createNavigation(this.level());
+        }
+    }
+
     @Override
     public boolean isFlapping() {
         return this.isFlying() && this.tickCount % TICKS_PER_FLAP == 0;
@@ -151,7 +172,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
 
     @Override
     public boolean isFlying() {
-        return !this.onGround();
+        return !this.isBaby() && !this.onGround();
     }
 
     @Override

@@ -74,6 +74,21 @@ public class FlyModel<T extends FlyEntity> extends AgeableListModel<T> {
 
     public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.bone.xRot = 0.0F;
+        this.rightWing.visible = !entity.isBaby();
+        this.leftWing.visible = !entity.isBaby();
+        this.frontLeg.visible = !entity.isBaby();
+        this.midLeg.visible = !entity.isBaby();
+        this.backLeg.visible = !entity.isBaby();
+        this.body.xScale = 1.0F;
+        this.body.yScale = 1.0F;
+        this.body.zScale = 1.0F;
+        if (entity.isBaby()) {
+            this.body.xScale = 0.45F;
+            this.body.yScale = 0.45F;
+            this.body.zScale = 0.8F;
+            this.bone.xRot = Mth.sin(ageInTicks * 0.35F) * 0.08F;
+            return;
+        }
         boolean flag = entity.onGround() && entity.getDeltaMovement().lengthSqr() < 1.0E-7;
         if (flag) {
             this.rightWing.yRot = -0.2618F;
