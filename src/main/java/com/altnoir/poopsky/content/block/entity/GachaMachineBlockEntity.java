@@ -60,7 +60,7 @@ public class GachaMachineBlockEntity extends BlockEntity {
             return StartResult.INVALID_REWARD;
         }
         ItemStack reward = drawReward(level, player);
-        if (!isValidReward(reward)) {
+        if (!isValidReward(level, reward)) {
             return StartResult.INVALID_REWARD;
         }
         this.rewardStack = reward;
@@ -79,7 +79,7 @@ public class GachaMachineBlockEntity extends BlockEntity {
                 .withParameter(LootContextParams.THIS_ENTITY, player)
                 .create(LootContextParamSets.CHEST);
         for (ItemStack reward : table.getRandomItems(params)) {
-            if (reward.is(PoItems.GACHA_BALL.get()) && isValidEntityId(reward.get(PoComponents.GACHA_ENTITY.get()))) {
+            if (isValidReward(level, reward)) {
                 return reward.copyWithCount(1);
             }
         }
@@ -95,14 +95,21 @@ public class GachaMachineBlockEntity extends BlockEntity {
             return false;
         }
         EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.getOptional(location).orElse(null);
-        return entityType != null
-                && entityType.canSummon()
-                && LivingEntity.class.isAssignableFrom(entityType.getBaseClass());
+        return entityType != null && entityType.canSummon();
     }
 
-    private static boolean isValidReward(ItemStack reward) {
+    private static boolean isValidEntityId(ServerLevel level, String id) {
+        if (!isValidEntityId(id)) {
+            return false;
+        }
+        ResourceLocation location = ResourceLocation.parse(id);
+        EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.get(location);
+        return entityType.create(level) instanceof LivingEntity;
+    }
+
+    private static boolean isValidReward(ServerLevel level, ItemStack reward) {
         return reward.is(PoItems.GACHA_BALL.get())
-                && isValidEntityId(reward.get(PoComponents.GACHA_ENTITY.get()));
+                && isValidEntityId(level, reward.get(PoComponents.GACHA_ENTITY.get()));
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, GachaMachineBlockEntity blockEntity) {
@@ -110,13 +117,13 @@ public class GachaMachineBlockEntity extends BlockEntity {
             return;
         }
         blockEntity.animationTick++;
-        if (!level.isClientSide && blockEntity.animationTick >= ANIMATION_LENGTH) {
-            blockEntity.finish(level, state);
+        if (level instanceof ServerLevel serverLevel && blockEntity.animationTick >= ANIMATION_LENGTH) {
+            blockEntity.finish(serverLevel, state);
         }
     }
 
-    private void finish(Level level, BlockState state) {
-        if (!isValidReward(this.rewardStack)) {
+    private void finish(ServerLevel level, BlockState state) {
+        if (!isValidReward(level, this.rewardStack)) {
             this.active = false;
             this.animationTick = 0;
             this.selectedBallIndex = -1;
