@@ -203,6 +203,19 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .requires(Items.DRAGON_EGG)
                 .unlockedBy(getItemName(Items.DRAGON_EGG), has(Items.DRAGON_EGG))
                 .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, PoItems.FLUSH_TOILET_CART.get())
+                .pattern("ITI")
+                .define('I', Items.IRON_INGOT)
+                .define('T', PoBlocks.FLUSH_TOILET)
+                .unlockedBy(getItemName(PoBlocks.FLUSH_TOILET), has(PoBlocks.FLUSH_TOILET))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, PoItems.GOLDEN_FLUSH_TOILET_CART.get())
+                .pattern("ITI")
+                .define('I', Items.IRON_INGOT)
+                .define('T', PoBlocks.GOLDEN_FLUSH_TOILET)
+                .unlockedBy(getItemName(PoBlocks.GOLDEN_FLUSH_TOILET), has(PoBlocks.GOLDEN_FLUSH_TOILET))
+                .save(recipeOutput);
+
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, Items.COBWEB)
                 .pattern("S S")
                 .pattern(" P ")
