@@ -16,6 +16,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.joml.Vector3f;
 
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -24,6 +25,7 @@ public class GachaMachineBlockEntityRenderer implements BlockEntityRenderer<Gach
     private static final int CAPSULE_COLUMNS = 4;
     private static final float INTERIOR_BALL_SCALE = 0.26F;
     private static final float EJECTED_BALL_SCALE = 0.34F;
+    private static final float ROLL_RADIUS = 0.085F;
     private static final ItemStack DISPLAY_BALL = new ItemStack(PoItems.GACHA_BALL.get());
     private static final Map<GachaMachineBlockEntity, CapsulePosition[]> INTERIOR_POSITION_CACHE = new WeakHashMap<>();
 
@@ -52,24 +54,24 @@ public class GachaMachineBlockEntityRenderer implements BlockEntityRenderer<Gach
             return;
         }
 
-        float fallProgress = Mth.clamp(progress / 0.72F, 0.0F, 1.0F);
-        float eject = Mth.clamp((progress - 0.72F) / 0.28F, 0.0F, 1.0F);
-        float wobble = Mth.sin(progress * Mth.PI * 8.0F) * 0.12F * (1.0F - eject);
         CapsulePosition selectedPosition = capsules[selectedBall];
-        float horizontal = Mth.lerp(fallProgress, selectedPosition.right(), 0.0F);
-        float dropY = Mth.lerp(fallProgress, selectedPosition.y(), 0.64F);
-        float depth = Mth.lerp(eject, selectedPosition.depth(), 0.70F);
-        float ballScale = Mth.lerp(fallProgress, INTERIOR_BALL_SCALE, EJECTED_BALL_SCALE);
+        float horizontal = Mth.lerp(progress, selectedPosition.right(), 0.0F);
+        float dropY = Mth.lerp(progress, selectedPosition.y(), 0.64F);
+        float depth = Mth.lerp(progress, selectedPosition.depth(), 0.70F);
+        float ballScale = Mth.lerp(progress, INTERIOR_BALL_SCALE, EJECTED_BALL_SCALE);
         float rightX = -facing.getStepZ();
         float rightZ = facing.getStepX();
+        float pathLength = Math.abs(selectedPosition.right())
+                + Math.abs(0.70F - selectedPosition.depth());
+        float rollDegrees = -progress * pathLength / ROLL_RADIUS * 57.29578F;
 
         poseStack.pushPose();
         poseStack.translate(
                 0.5D + rightX * horizontal + facing.getStepX() * depth,
-                dropY + wobble - eject * 0.10D,
+                dropY,
                 0.5D + rightZ * horizontal + facing.getStepZ() * depth);
-        poseStack.mulPose(Axis.YP.rotationDegrees(selectedPosition.rotation() + progress * 1080.0F));
-        poseStack.mulPose(Axis.XP.rotationDegrees(progress * 360.0F));
+        poseStack.mulPose(Axis.of(new Vector3f(rightX, 0.0F, rightZ)).rotationDegrees(rollDegrees));
+        poseStack.mulPose(Axis.YP.rotationDegrees(selectedPosition.rotation()));
         poseStack.scale(ballScale, ballScale, ballScale);
         Minecraft.getInstance().getItemRenderer().renderStatic(
                 stack,
