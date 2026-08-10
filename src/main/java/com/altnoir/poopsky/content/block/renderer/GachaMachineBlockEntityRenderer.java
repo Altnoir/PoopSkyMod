@@ -12,24 +12,22 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
+import java.util.Map;
+import java.util.WeakHashMap;
+
 public class GachaMachineBlockEntityRenderer implements BlockEntityRenderer<GachaMachineBlockEntity> {
-    private static final float INTERIOR_BALL_SCALE = 0.13F;
+    private static final float INTERIOR_BALL_SCALE = 0.10F;
     private static final float EJECTED_BALL_SCALE = 0.30F;
     private static final ItemStack DISPLAY_BALL = new ItemStack(PoItems.GACHA_BALL.get());
-    private static final float[][] INTERIOR_BALLS = {
-            {-0.22F, 1.31F, 0.00F}, {-0.11F, 1.31F, 0.04F}, {0.00F, 1.31F, 0.00F},
-            {0.11F, 1.31F, 0.04F}, {0.22F, 1.31F, 0.00F},
-            {-0.17F, 1.42F, 0.04F}, {-0.06F, 1.42F, 0.00F}, {0.06F, 1.42F, 0.04F},
-            {0.17F, 1.42F, 0.00F},
-            {-0.22F, 1.53F, 0.00F}, {-0.11F, 1.53F, 0.04F}, {0.00F, 1.53F, 0.00F},
-            {0.11F, 1.53F, 0.04F}, {0.22F, 1.53F, 0.00F},
-            {-0.17F, 1.64F, 0.04F}, {-0.06F, 1.64F, 0.00F}, {0.06F, 1.64F, 0.04F},
-            {0.17F, 1.64F, 0.00F}
-    };
+    private static final Map<GachaMachineBlockEntity, CapsulePosition[]> INTERIOR_POSITION_CACHE = new WeakHashMap<>();
+
+    private record CapsulePosition(float right, float y, float depth, float rotation) {
+    }
     public GachaMachineBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
     }
 
@@ -42,11 +40,12 @@ public class GachaMachineBlockEntityRenderer implements BlockEntityRenderer<Gach
         }
         float progress = blockEntity.animationProgress(partialTick);
         Direction facing = blockEntity.getBlockState().getValue(GachaMachineBlock.FACING);
+        CapsulePosition[] capsules = interiorPositions(blockEntity);
 
         int selectedBall = blockEntity.isActive()
-                ? Mth.clamp(blockEntity.selectedBallIndex(), 0, INTERIOR_BALLS.length - 1)
+                ? Mth.clamp(blockEntity.selectedBallIndex(), 0, GachaMachineBlockEntity.CAPSULE_COUNT - 1)
                 : -1;
-        renderInteriorBalls(facing, poseStack, bufferSource, packedLight, blockEntity.getLevel(), selectedBall);
+        renderInteriorBalls(facing, poseStack, bufferSource, packedLight, blockEntity.getLevel(), capsules, selectedBall);
         if (!blockEntity.isActive()) {
             return;
         }
@@ -54,10 +53,10 @@ public class GachaMachineBlockEntityRenderer implements BlockEntityRenderer<Gach
         float fallProgress = Mth.clamp(progress / 0.72F, 0.0F, 1.0F);
         float eject = Mth.clamp((progress - 0.72F) / 0.28F, 0.0F, 1.0F);
         float wobble = Mth.sin(progress * Mth.PI * 8.0F) * 0.12F * (1.0F - eject);
-        float[] selectedPosition = INTERIOR_BALLS[selectedBall];
-        float horizontal = Mth.lerp(fallProgress, selectedPosition[0], 0.0F);
-        float dropY = Mth.lerp(fallProgress, selectedPosition[1], 0.52F);
-        float depth = Mth.lerp(eject, 0.24F + selectedPosition[2], 0.70F);
+        CapsulePosition selectedPosition = capsules[selectedBall];
+        float horizontal = Mth.lerp(fallProgress, selectedPosition.right(), 0.0F);
+        float dropY = Mth.lerp(fallProgress, selectedPosition.y(), 0.52F);
+        float depth = Mth.lerp(eject, selectedPosition.depth(), 0.70F);
         float ballScale = Mth.lerp(fallProgress, INTERIOR_BALL_SCALE, EJECTED_BALL_SCALE);
         float rightX = -facing.getStepZ();
         float rightZ = facing.getStepX();
@@ -67,7 +66,7 @@ public class GachaMachineBlockEntityRenderer implements BlockEntityRenderer<Gach
                 0.5D + rightX * horizontal + facing.getStepX() * depth,
                 dropY + wobble - eject * 0.10D,
                 0.5D + rightZ * horizontal + facing.getStepZ() * depth);
-        poseStack.mulPose(Axis.YP.rotationDegrees(selectedBall * 37.0F + progress * 1080.0F));
+        poseStack.mulPose(Axis.YP.rotationDegrees(selectedPosition.rotation() + progress * 1080.0F));
         poseStack.mulPose(Axis.XP.rotationDegrees(progress * 360.0F));
         poseStack.scale(ballScale, ballScale, ballScale);
         Minecraft.getInstance().getItemRenderer().renderStatic(
@@ -83,20 +82,20 @@ public class GachaMachineBlockEntityRenderer implements BlockEntityRenderer<Gach
     }
 
     private static void renderInteriorBalls(Direction facing, PoseStack poseStack, MultiBufferSource bufferSource,
-                                            int packedLight, Level level, int selectedBall) {
+                                            int packedLight, Level level, CapsulePosition[] capsules, int selectedBall) {
         float rightX = -facing.getStepZ();
         float rightZ = facing.getStepX();
-        for (int index = 0; index < INTERIOR_BALLS.length; index++) {
+        for (int index = 0; index < capsules.length; index++) {
             if (index == selectedBall) {
                 continue;
             }
-            float[] ball = INTERIOR_BALLS[index];
+            CapsulePosition ball = capsules[index];
             poseStack.pushPose();
             poseStack.translate(
-                    0.5D + rightX * ball[0] + facing.getStepX() * (0.24D + ball[2]),
-                    ball[1],
-                    0.5D + rightZ * ball[0] + facing.getStepZ() * (0.24D + ball[2]));
-            poseStack.mulPose(Axis.YP.rotationDegrees(index * 37.0F));
+                    0.5D + rightX * ball.right() + facing.getStepX() * ball.depth(),
+                    ball.y(),
+                    0.5D + rightZ * ball.right() + facing.getStepZ() * ball.depth());
+            poseStack.mulPose(Axis.YP.rotationDegrees(ball.rotation()));
             poseStack.scale(INTERIOR_BALL_SCALE, INTERIOR_BALL_SCALE, INTERIOR_BALL_SCALE);
             Minecraft.getInstance().getItemRenderer().renderStatic(
                     DISPLAY_BALL,
@@ -109,6 +108,21 @@ public class GachaMachineBlockEntityRenderer implements BlockEntityRenderer<Gach
                     index);
             poseStack.popPose();
         }
+    }
+
+    private static CapsulePosition[] interiorPositions(GachaMachineBlockEntity blockEntity) {
+        return INTERIOR_POSITION_CACHE.computeIfAbsent(blockEntity, ignored -> {
+            RandomSource random = RandomSource.create(blockEntity.getBlockPos().asLong() ^ 0x5DEECE66DL);
+            CapsulePosition[] capsules = new CapsulePosition[GachaMachineBlockEntity.CAPSULE_COUNT];
+            for (int index = 0; index < capsules.length; index++) {
+                capsules[index] = new CapsulePosition(
+                        Mth.lerp(random.nextFloat(), -0.34F, 0.34F),
+                        Mth.lerp(random.nextFloat(), 0.10F, 1.90F),
+                        Mth.lerp(random.nextFloat(), -0.36F, 0.36F),
+                        random.nextFloat() * 360.0F);
+            }
+            return capsules;
+        });
     }
 
     @Override

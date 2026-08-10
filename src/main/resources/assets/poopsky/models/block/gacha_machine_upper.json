@@ -1,6 +1,6 @@
 {
   "credit": "PoopSky",
-  "render_type": "minecraft:translucent",
+  "render_type": "minecraft:cutout",
   "textures": {
     "body": "minecraft:block/red_concrete",
     "frame": "minecraft:block/iron_block",
@@ -30,8 +30,25 @@
       "north": {"texture": "#frame"}, "down": {"texture": "#frame"},
       "west": {"texture": "#frame"}, "east": {"texture": "#frame"}
     }},
-    {"from": [3, 4, 14], "to": [13, 12, 15], "faces": {
+    {"from": [1, 0, 0], "to": [15, 2, 1], "faces": {
+      "north": {"texture": "#body"}, "south": {"texture": "#dark"},
+      "west": {"texture": "#body"}, "east": {"texture": "#body"},
+      "up": {"texture": "#body"}, "down": {"texture": "#body"}
+    }},
+    {"from": [1, 0, 14], "to": [15, 16, 15], "faces": {
       "north": {"texture": "#dark"}
+    }},
+    {"from": [1, 0, 1], "to": [2, 16, 15], "faces": {
+      "east": {"texture": "#dark"}
+    }},
+    {"from": [14, 0, 1], "to": [15, 16, 15], "faces": {
+      "west": {"texture": "#dark"}
+    }},
+    {"from": [1, 0, 1], "to": [15, 1, 15], "faces": {
+      "up": {"texture": "#dark"}
+    }},
+    {"from": [1, 15, 1], "to": [15, 16, 15], "faces": {
+      "down": {"texture": "#dark"}
     }},
     {"from": [3, 4, 0], "to": [13, 12, 1], "faces": {
       "north": {"texture": "#glass"}, "south": {"texture": "#glass"}
