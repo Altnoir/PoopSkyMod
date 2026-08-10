@@ -78,6 +78,10 @@ public class RecipeGen extends FabricRecipeProvider {
         blasting(recipeOutput, PoBlocks.POOP_BRICKS, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CRACKED_POOP_BRICKS, 0.1F, 100, "cracked_poop_bricks");
         smelting(recipeOutput, PoBlocks.DRIED_POOP_BLOCK, RecipeCategory.BUILDING_BLOCKS, PoBlocks.SMOOTH_POOP_BLOCK, 0.1F, 200, "smooth_poop_block");
         blasting(recipeOutput, PoBlocks.DRIED_POOP_BLOCK, RecipeCategory.BUILDING_BLOCKS, PoBlocks.SMOOTH_POOP_BLOCK, 0.1F, 100, "smooth_poop_block");
+        smelting(recipeOutput, PoBlocks.CHILI_POOP_BLOCK, RecipeCategory.BUILDING_BLOCKS, PoBlocks.DRIED_CHILI_POOP_BLOCK, 0.1F, 200, "dried_chili_poop_block");
+        blasting(recipeOutput, PoBlocks.CHILI_POOP_BLOCK, RecipeCategory.BUILDING_BLOCKS, PoBlocks.DRIED_CHILI_POOP_BLOCK, 0.1F, 100, "dried_chili_poop_block");
+        smelting(recipeOutput, PoBlocks.GOLDEN_POOP_BLOCK, RecipeCategory.BUILDING_BLOCKS, PoBlocks.DRIED_GOLDEN_POOP_BLOCK, 0.1F, 200, "dried_golden_poop_block");
+        blasting(recipeOutput, PoBlocks.GOLDEN_POOP_BLOCK, RecipeCategory.BUILDING_BLOCKS, PoBlocks.DRIED_GOLDEN_POOP_BLOCK, 0.1F, 100, "dried_golden_poop_block");
         smelting(recipeOutput, PoBlocks.POOLIME_BLOCK, RecipeCategory.BUILDING_BLOCKS, PoBlocks.BROWN_TILE_BLOCK, 0.1F, 200, "tile_block");
         blasting(recipeOutput, PoBlocks.POOLIME_BLOCK, RecipeCategory.BUILDING_BLOCKS, PoBlocks.BROWN_TILE_BLOCK, 0.1F, 100, "tile_block");
         campfireCooking(recipeOutput, PoItems.POOP, RecipeCategory.MISC, Items.COCOA_BEANS, 0.35F, 600, "cocoa_beans");
@@ -137,6 +141,13 @@ public class RecipeGen extends FabricRecipeProvider {
                 .requires(PoItems.SEEDBED_CURSE)
                 .unlockedBy(getItemName(PoItems.SEEDBED_CURSE), has(PoItems.SEEDBED_CURSE))
                 .save(recipeOutput);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PoItems.POOPSICLE.get(), 2)
+                .requires(Items.STICK)
+                .requires(PoItems.SEEDBED_CURSE)
+                .requires(Items.SNOWBALL)
+                .requires(PoItems.MAGGOTS_SEEDS)
+                .unlockedBy(getItemName(PoItems.SEEDBED_CURSE), has(PoItems.SEEDBED_CURSE))
+                .save(recipeOutput);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PoItems.POODDING.get(), 2)
                 .requires(PoItems.POOP_BALL)
                 .requires(Items.EGG).requires(Items.SUGAR)
@@ -167,6 +178,15 @@ public class RecipeGen extends FabricRecipeProvider {
                 .requires(PoItems.POOP.get())
                 .requires(Items.ENDER_EYE)
                 .unlockedBy(getItemName(Items.ENDER_EYE), has(Items.ENDER_EYE))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, PoItems.RETURN_TOTEM.get())
+                .pattern(" S ")
+                .pattern("GEG")
+                .pattern(" G ")
+                .define('G', Items.GOLD_INGOT)
+                .define('S', PoBlocks.SHIT)
+                .define('E', Items.ECHO_SHARD)
+                .unlockedBy(getItemName(Items.ECHO_SHARD), has(Items.ECHO_SHARD))
                 .save(recipeOutput);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PoItems.TIME_BELL)
                 .requires(Items.BELL)
@@ -374,13 +394,12 @@ public class RecipeGen extends FabricRecipeProvider {
                 .unlockedBy(getItemName(PoItems.TOILET_PLUG), has(PoItems.TOILET_PLUG))
                 .save(recipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.MAGGOTS_CHUNK_LOADER)
-                .pattern("GGG")
-                .pattern("GMG")
-                .pattern("ORO")
-                .define('G', Blocks.GLASS)
+                .pattern(" R ")
+                .pattern("RMR")
+                .pattern("CCC")
                 .define('M', PoBlocks.MAGGOTS_BLOCK)
-                .define('O', Blocks.OBSIDIAN)
                 .define('R', Items.REDSTONE)
+                .define('C', PoBlocks.CUT_POOP_BLOCK)
                 .unlockedBy(getItemName(PoBlocks.MAGGOTS_BLOCK), has(PoBlocks.MAGGOTS_BLOCK))
                 .save(recipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.SIEVE)
@@ -431,6 +450,18 @@ public class RecipeGen extends FabricRecipeProvider {
                 .define('M', PoBlocks.MAGGOTS_BLOCK)
                 .unlockedBy(getItemName(PoBlocks.MAGGOTS_BLOCK), has(PoBlocks.MAGGOTS_BLOCK))
                 .save(recipeOutput);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PoItems.FASTING_PILL.get())
+                .requires(PoTags.Items.POOPS)
+                .requires(PoTags.Items.POOP_MOONCAKES)
+                .requires(PoTags.Items.SHITS)
+                .requires(PoItems.POOP_BALL)
+                .requires(PoBlocks.ROUNDWORM_BLOCK)
+                .requires(PoItems.POOP_DUMPLINGS)
+                .requires(PoItems.KING_OF_DRAGON_FRUIT)
+                .requires(PoBlocks.POOP_CAKE)
+                .requires(PoItems.POOBURGER_MEAT)
+                .unlockedBy(getItemName(PoItems.POOBURGER_MEAT), has(PoBlocks.ROUNDWORM_BLOCK))
+                .save(recipeOutput);
     }
 
     private void buildVanillaRecipes(RecipeOutput recipeOutput) {
@@ -477,7 +508,6 @@ public class RecipeGen extends FabricRecipeProvider {
         create1x2ShapelessFrom(recipeOutput, Blocks.GRASS_BLOCK, Blocks.DIRT, Blocks.MOSS_BLOCK);
 
         create1x2ShapelessFrom(recipeOutput, Blocks.DIORITE, Blocks.COBBLESTONE, Blocks.CLAY, 2);
-        create1x2ShapelessFrom(recipeOutput, Blocks.GRANITE, Blocks.COBBLESTONE, Blocks.DRIPSTONE_BLOCK, 2);
         create1x2ShapelessFrom(recipeOutput, Blocks.DIRT, Blocks.MUD, PoItems.POOP.get());
         //create1x2ShapelessFrom(recipeOutput, Blocks.TUFF, Blocks.ANDESITE, PSItems.SPALL);
         //create1x2ShapelessFrom(recipeOutput, Blocks.CALCITE, Blocks.DIORITE, PSItems.SPALL);
@@ -543,16 +573,32 @@ public class RecipeGen extends FabricRecipeProvider {
                 .define('B', Blocks.BLUE_CONCRETE)
                 .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP))
                 .save(recipeOutput, PoopSky.loc("hard_toilet_from_rainbow"));
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.GINKGO_TOILET)
+                .pattern("B")
+                .pattern("B")
+                .pattern("P")
+                .define('P', PoItems.POOP)
+                .define('B', PoBlocks.GINKGO_PLANKS)
+                .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.PORTABLE_TOILET)
+                .pattern("B")
+                .pattern("B")
+                .pattern("P")
+                .define('P', PoItems.POOP)
+                .define('B', Items.IRON_INGOT)
+                .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP))
+                .save(recipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.FLUSH_TOILET)
-                .pattern("BP")
-                .pattern("BB")
+                .pattern("PB")
+                .pattern("B ")
                 .define('P', PoItems.POOP)
                 .define('B', Blocks.QUARTZ_BLOCK)
                 .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP))
                 .save(recipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.GOLDEN_FLUSH_TOILET)
-                .pattern("BP")
-                .pattern("BB")
+                .pattern("PB")
+                .pattern("B ")
                 .define('P', PoItems.POOP)
                 .define('B', Blocks.GOLD_BLOCK)
                 .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP))
@@ -584,6 +630,11 @@ public class RecipeGen extends FabricRecipeProvider {
         List<PopExplosionEntry> recipes = List.of(
                 PopExplosionEntry.of(Blocks.COBBLESTONE, Blocks.GRAVEL),
                 PopExplosionEntry.of(Blocks.GRAVEL, Blocks.SAND),
+                PopExplosionEntry.of(PoBlocks.DRIED_POOP_BLOCK.get(), PoBlocks.POOP_SAND.get()),
+                PopExplosionEntry.of(Blocks.GRANITE, Blocks.DRIPSTONE_BLOCK),
+                PopExplosionEntry.of(Blocks.DIORITE, Blocks.CALCITE),
+                PopExplosionEntry.of(Blocks.ANDESITE, Blocks.TUFF),
+                PopExplosionEntry.of(Blocks.BONE_BLOCK, Blocks.SKELETON_SKULL, 3),
                 PopExplosionEntry.of(Blocks.COAL_BLOCK, Items.DIAMOND, 6)
         );
 

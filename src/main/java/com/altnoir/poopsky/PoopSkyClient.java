@@ -15,8 +15,9 @@ import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
-import com.altnoir.poopsky.content.block.renderer.SieveBlockEntityRenderer;
 import com.altnoir.poopsky.content.block.renderer.MaggotsChunkLoaderBlockEntityRenderer;
+import com.altnoir.poopsky.content.block.renderer.SieveBlockEntityRenderer;
+import com.altnoir.poopsky.content.entity.model.FlushToiletCartModel;
 import com.altnoir.poopsky.content.entity.model.FlyModel;
 import com.altnoir.poopsky.content.entity.model.ToiletPlugModel;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
@@ -96,6 +97,7 @@ public class PoopSkyClient implements ClientModInitializer {
     private static void registerLayers() {
         EntityModelLayerRegistry.registerModelLayer(ToiletPlugModel.LAYER_LOCATION, ToiletPlugModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(FlyModel.LAYER_LOCATION, FlyModel::createBodyLayer);
+        EntityModelLayerRegistry.registerModelLayer(FlushToiletCartModel.LAYER_LOCATION, FlushToiletCartModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(GinkgoBoatRenderer.BOAT_LAYER, BoatModel::createBodyModel);
         EntityModelLayerRegistry.registerModelLayer(GinkgoBoatRenderer.CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel);
     }

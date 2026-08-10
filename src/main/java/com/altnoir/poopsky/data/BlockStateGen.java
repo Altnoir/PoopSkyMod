@@ -1,21 +1,15 @@
 package com.altnoir.poopsky.data;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.content.block.p.MaggotsChunkLoaderBlock;
 import com.altnoir.poopsky.init.PoBlocks;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.models.BlockModelGenerators;
 import net.minecraft.data.models.ItemModelGenerators;
-import net.minecraft.data.models.blockstates.MultiVariantGenerator;
-import net.minecraft.data.models.blockstates.PropertyDispatch;
-import net.minecraft.data.models.blockstates.Variant;
-import net.minecraft.data.models.blockstates.VariantProperties;
 import net.minecraft.data.models.model.ModelTemplates;
 import net.minecraft.data.models.model.TextureMapping;
 import net.minecraft.data.models.model.TextureSlot;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 
 import java.util.List;
 
@@ -36,6 +30,9 @@ public class BlockStateGen extends FabricModelProvider {
         List<Block> cubes = List.of(
                 PoBlocks.POOLIME_BLOCK.get(),
                 PoBlocks.CRACKED_POOP_BRICKS.get(),
+                PoBlocks.POOP_SAND.get(),
+                PoBlocks.DRIED_CHILI_POOP_BLOCK.get(),
+                PoBlocks.DRIED_GOLDEN_POOP_BLOCK.get(),
                 PoBlocks.RAW_SAPLING_POOP_BLOCK.get(),
                 PoBlocks.RAW_SEA_POOP_BLOCK.get(),
                 PoBlocks.RAW_WITHER_POOP_BLOCK.get(),
@@ -49,6 +46,10 @@ public class BlockStateGen extends FabricModelProvider {
 
         generators.createCrossBlockWithDefaultItem(
                 PoBlocks.POOP_SAPLING.get(), BlockModelGenerators.TintState.NOT_TINTED);
+        generators.createPlant(
+                PoBlocks.GINKGO_SAPLING.get(),
+                PoBlocks.POTTED_GINKGO_SAPLING.get(),
+                BlockModelGenerators.TintState.NOT_TINTED);
         generators.createAmethystCluster(PoBlocks.SALTPETER_CLUSTER.get());
         generators.createAmethystCluster(PoBlocks.LARGE_SALTPETER_BUD.get());
         generators.createAmethystCluster(PoBlocks.MEDIUM_SALTPETER_BUD.get());
@@ -62,23 +63,6 @@ public class BlockStateGen extends FabricModelProvider {
         generators.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(craftingTable, craftingTableModel));
         generators.delegateItemModel(craftingTable, craftingTableModel);
 
-        Block chunkLoader = PoBlocks.MAGGOTS_CHUNK_LOADER.get();
-        var inactiveModel = ModelTemplates.CUBE_ALL.create(
-                chunkLoader,
-                TextureMapping.cube(Blocks.BEACON),
-                generators.modelOutput
-        );
-        var activeModel = ModelTemplates.CUBE_ALL.createWithSuffix(
-                chunkLoader,
-                "_powered",
-                TextureMapping.cube(Blocks.REDSTONE_BLOCK),
-                generators.modelOutput
-        );
-        generators.blockStateOutput.accept(MultiVariantGenerator.multiVariant(chunkLoader)
-                .with(PropertyDispatch.property(MaggotsChunkLoaderBlock.POWERED)
-                        .select(false, Variant.variant().with(VariantProperties.MODEL, inactiveModel))
-                        .select(true, Variant.variant().with(VariantProperties.MODEL, activeModel))));
-        generators.delegateItemModel(chunkLoader, inactiveModel);
     }
 
     @Override

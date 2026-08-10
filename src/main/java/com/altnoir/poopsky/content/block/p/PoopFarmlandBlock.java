@@ -1,10 +1,11 @@
 package com.altnoir.poopsky.content.block.p;
 
-import com.altnoir.poopsky.init.PoSoundEvents;
+import com.altnoir.poopsky.content.item.p.JinKeLaItem;
 import com.altnoir.poopsky.fabric.port.util.ItemAbilities;
 import com.altnoir.poopsky.fabric.port.util.ItemAbility;
+import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.init.PoBlocks;
-import com.altnoir.poopsky.init.PoItems;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -13,10 +14,10 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.item.BoneMealItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
@@ -24,12 +25,17 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 
 public class PoopFarmlandBlock extends FarmBlock {
+    protected static final VoxelShape COLLISION_SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 12.0, 16.0);
+
     public enum FarmMode implements StringRepresentable {
         DEFAULT("default"),
         ENRICHED("enriched"),
@@ -100,6 +106,21 @@ public class PoopFarmlandBlock extends FarmBlock {
     }
 
     @Override
+    protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return COLLISION_SHAPE;
+    }
+
+    @Override
+    protected VoxelShape getBlockSupportShape(BlockState state, BlockGetter level, BlockPos pos) {
+        return SHAPE;
+    }
+
+    @Override
+    protected VoxelShape getVisualShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return SHAPE;
+    }
+
+    @Override
     protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (!state.canSurvive(level, pos)) {
             level.setBlockAndUpdate(pos, PoBlocks.POOP_BLOCK.get().defaultBlockState());
@@ -147,10 +168,12 @@ public class PoopFarmlandBlock extends FarmBlock {
     private static void tryEnrichedGrow(ServerLevel level, BlockPos farmlandPos) {
         BlockPos cropPos = farmlandPos.above();
         BlockState cropState = level.getBlockState(cropPos);
-        if (cropState.getBlock() instanceof CropBlock cropBlock && !cropBlock.isMaxAge(cropState)) {
-            boolean applied = BoneMealItem.growCrop(new ItemStack(PoItems.JINKELA.get()), level, cropPos);
-            if (applied) {
-                BoneMealItem.addGrowthParticles(level, cropPos, 15);
+        Property<?> property = cropState.getBlock().getStateDefinition().getProperty("age");
+        if (property instanceof IntegerProperty age) {
+            int maxAge = JinKeLaItem.getMaxAge(age);
+            if (cropState.getValue(age) < maxAge) {
+                JinKeLaItem.triggerRandomTick(level, cropPos, cropState);
+                level.levelEvent(1505, cropPos, 15);
                 level.playSound(null, cropPos, PoSoundEvents.ITEM_JINKELA_USE.get(), SoundSource.BLOCKS);
             }
         }
@@ -172,6 +195,12 @@ public class PoopFarmlandBlock extends FarmBlock {
         int maxAge = minAge == 0 ? possibleValues.size() - 1 : possibleValues.size();
 
         if (!notFarmland(aboveState) && !belowState.isCollisionShapeFullBlock(level, belowPos) && age == maxAge) {
+            BlockState topState = level.getBlockState(abovePos.above());
+            IntegerProperty topAgeProp = (IntegerProperty) topState.getBlock().getStateDefinition().getProperty("age");
+            if (topAgeProp != null && !topState.is(PoTags.Blocks.POOP_FARMLAND_AUTO)) {
+                return;
+            }
+
             BlockState newState;
             if (aboveState.getBlock() instanceof SweetBerryBushBlock) {
                 newState = aboveState.setValue(ageProp, minAge + 1);

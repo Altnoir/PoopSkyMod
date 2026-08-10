@@ -2,9 +2,9 @@ package com.altnoir.poopsky.content.entity.p;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.p.ShitBlock;
-import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoParticles;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.registries.Registries;
@@ -26,7 +26,6 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.levelgen.structure.Structure;
-import org.jetbrains.annotations.NotNull;
 
 public class PoolimeEntity extends Slime {
     public PoolimeEntity(EntityType<PoolimeEntity> entityType, Level level) {
@@ -38,7 +37,7 @@ public class PoolimeEntity extends Slime {
     }
 
     @Override
-    protected @NotNull ParticleOptions getParticleType() {
+    protected ParticleOptions getParticleType() {
         return PoParticles.POOP_PARTICLE.get();
     }
 

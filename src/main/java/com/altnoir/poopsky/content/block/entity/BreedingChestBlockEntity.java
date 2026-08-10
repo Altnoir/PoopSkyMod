@@ -4,12 +4,12 @@ import com.altnoir.poopsky.client.inventory.BreedingChestMenu;
 import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.content.recipe.PFlyRecipes;
-import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.fabric.port.itemhandler.IItemHandler;
 import com.altnoir.poopsky.fabric.port.itemhandler.ItemStackHandler;
 import com.altnoir.poopsky.fabric.port.itemhandler.RangedWrapper;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.init.PoBlockEntityType;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -205,10 +205,10 @@ public class BreedingChestBlockEntity extends BlockEntity implements MenuProvide
             BlockPos checkPos = pos.offset(dx, dy, dz);
             if (!checkPos.equals(pos)) {
                 BlockState state = level.getBlockState(checkPos);
-                if (state.is(PoTags.Blocks.POOP_BLOCKS)) {
+                if (state.is(PoTags.Blocks.BREEDING_CHEST_ACCELERATOR)) {
                     scanPoop++;
                 }
-                if (state.is(PoTags.Blocks.MAGGOTS_BLOCKS)) {
+                if (state.is(PoTags.Blocks.BREEDING_CHEST_PARALLELISM)) {
                     scanMaggots++;
                 }
             }

@@ -1,10 +1,10 @@
 package com.altnoir.poopsky.content.block.p;
 
-import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.fabric.port.util.ItemAbilities;
 import com.altnoir.poopsky.fabric.port.util.ItemAbility;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoParticles;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.worldgen.PoConfigureFeatures;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -63,17 +63,17 @@ public class PoopBlock extends Block implements BonemealableBlock {
     }
 
     @Override
-    protected @NotNull VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 
     @Override
-    protected @NotNull VoxelShape getBlockSupportShape(BlockState state, BlockGetter reader, BlockPos pos) {
+    protected VoxelShape getBlockSupportShape(BlockState state, BlockGetter reader, BlockPos pos) {
         return Shapes.block();
     }
 
     @Override
-    protected @NotNull VoxelShape getVisualShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext context) {
+    protected VoxelShape getVisualShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext context) {
         return Shapes.block();
     }
 

@@ -57,6 +57,26 @@ public class PoEntityType {
             .setData(ProviderType.LANG, NonNullBiConsumer.noop())
             .register();
 
+    public static final EntityEntry<FlushToiletCartEntity> FLUSH_TOILET_CART = REGISTRATE
+            .entity("flush_toilet_cart", FlushToiletCartEntity::new, MobCategory.MISC)
+            .properties(properties -> properties
+                    .sized(0.75F, 0.5F)
+                    .eyeHeight(0.375F)
+                    .clientTrackingRange(10))
+            .renderer(() -> FlushToiletCartRenderer::new)
+            .lang("Flush Toilet Cart")
+            .register();
+    public static final EntityEntry<FlushToiletCartEntity> GOLDEN_FLUSH_TOILET_CART = REGISTRATE
+            .entity("golden_flush_toilet_cart", FlushToiletCartEntity::new, MobCategory.MISC)
+            .properties(properties -> properties
+                    .sized(0.75F, 0.5F)
+                    .eyeHeight(0.375F)
+                    .clientTrackingRange(10))
+            .renderer(() -> FlushToiletCartRenderer::new)
+            .lang("Golden Flush Toilet Cart")
+            .register();
+
+
     public static final EntityEntry<PoopTntEntity> POOP_TNT = REGISTRATE.<PoopTntEntity>entity("poop_tnt", PoopTntEntity::new, MobCategory.MISC)
             .properties(properties -> properties
                     .sized(0.75F, 0.75F)

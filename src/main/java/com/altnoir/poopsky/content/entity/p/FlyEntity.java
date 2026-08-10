@@ -3,12 +3,12 @@ package com.altnoir.poopsky.content.entity.p;
 import com.altnoir.poopsky.client.sound.FlyBuzzSoundWrapper;
 import com.altnoir.poopsky.content.block.p.ShitBlock;
 import com.altnoir.poopsky.content.item.p.FlyItem;
-import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.impl.type.damageType.PoDamageTypes;
 import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoEntityType;
 import com.altnoir.poopsky.init.PoItems;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.core.BlockPos;
@@ -84,7 +84,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.4)); // 受到伤害时逃跑
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0)); // 繁殖行为
         this.goalSelector.addGoal(3, new AttractedByShitGoal(this, 1.25));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, itemStack -> itemStack.is(PoTags.Items.POOPS), false));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, itemStack -> itemStack.is(PoTags.Items.FLY_LIKE), false));
         this.goalSelector.addGoal(4, new FlyToToiletGoal(this, 1.1)); // 主动寻找厕所
         this.goalSelector.addGoal(5, new FollowParentGoal(this, 1.25)); // 跟随父母
         this.goalSelector.addGoal(6, new WaterAvoidingRandomFlyingGoal(this, 1.0)); // 随机飞行，避开水面
@@ -156,7 +156,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
 
     @Override
     public boolean isFood(ItemStack stack) {
-        return stack.is(PoTags.Items.POOPS);
+        return stack.is(PoTags.Items.FLY_LIKE);
     }
 
     @Override

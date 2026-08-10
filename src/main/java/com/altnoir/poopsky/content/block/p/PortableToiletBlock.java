@@ -2,6 +2,7 @@ package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.client.inventory.PortableToiletMenu;
 import com.altnoir.poopsky.fabric.port.extension.IBlockExtension;
+import com.altnoir.poopsky.impl.util.ToiletUtil;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -12,6 +13,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
@@ -248,17 +250,29 @@ public class PortableToiletBlock extends Block implements IBlockExtension {
     }
 
     @Override
+    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        super.entityInside(state, level, pos, entity);
+        if (state.getValue(HALF) == DoubleBlockHalf.LOWER) {
+            ToiletUtil.portableToiletInside(level, pos, state, entity);
+        }
+    }
+
+    @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        BlockPos respawnPos = getRespawnAnchorPos(state, pos);
+        BlockState respawnState = level.getBlockState(respawnPos);
+        if (player instanceof ServerPlayer serverPlayer && respawnState.is(this)
+                && respawnState.getValue(HALF) == DoubleBlockHalf.UPPER && (serverPlayer.getRespawnDimension() != level.dimension()
+                || !respawnPos.equals(serverPlayer.getRespawnPosition()))) {
+            serverPlayer.setRespawnPosition(level.dimension(), respawnPos, player.getYRot(), false, true);
+        }
+
         if (state.getValue(HALF) == DoubleBlockHalf.LOWER) {
             if (isInSeatArea(state, pos, hitResult)) {
                 if (!level.isClientSide) {
                     player.openMenu(state.getMenuProvider(level, pos));
                 }
                 return InteractionResult.sidedSuccess(level.isClientSide);
-            }
-        } else if (player instanceof ServerPlayer serverPlayer) {
-            if (serverPlayer.getRespawnDimension() != level.dimension() || !pos.equals(serverPlayer.getRespawnPosition())) {
-                serverPlayer.setRespawnPosition(level.dimension(), pos, player.getYRot(), false, true);
             }
         }
         setOpen(level, pos, state, !state.getValue(OPEN));
@@ -297,6 +311,10 @@ public class PortableToiletBlock extends Block implements IBlockExtension {
         return getPortableToiletShape(state);
     }
 
+    private static BlockPos getRespawnAnchorPos(BlockState state, BlockPos pos) {
+        return state.getValue(HALF) == DoubleBlockHalf.UPPER ? pos : pos.above();
+    }
+
     @Override
     public boolean isStickyBlock(BlockState state) {
         return true;
@@ -321,7 +339,7 @@ public class PortableToiletBlock extends Block implements IBlockExtension {
 
     @Override
     protected BlockState mirror(BlockState state, Mirror mirror) {
-        return mirror == Mirror.NONE ? state : state.rotate(mirror.getRotation(state.getValue(FACING)));
+        return mirror == Mirror.NONE ? state : rotate(state, mirror.getRotation(state.getValue(FACING)));
     }
 
     @Override

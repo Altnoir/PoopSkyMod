@@ -12,6 +12,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import vectorwing.farmersdelight.common.registry.ModBlocks;
 
 public final class BlockTagGen {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
@@ -26,6 +27,7 @@ public final class BlockTagGen {
 
     private static void generate(RegistrateTagsProvider.IntrinsicImpl<Block> provider) {
         BlockTagGen.provider = provider;
+
         tag(PoTags.Blocks.POOP_BLOCK).add(PoBlocks.POOP_BLOCK.get());
         tag(PoTags.Blocks.CHILI_POOP_BLOCK).add(PoBlocks.CHILI_POOP_BLOCK.get());
         tag(PoTags.Blocks.GINKGO_LOGS)
@@ -53,7 +55,9 @@ public final class BlockTagGen {
                 .add(PoBlocks.POOP_BLOCK.get())
                 .add(PoBlocks.CHILI_POOP_BLOCK.get())
                 .add(PoBlocks.GOLDEN_POOP_BLOCK.get());
-        tag(PoTags.Blocks.MAGGOTS_BLOCKS)
+        tag(PoTags.Blocks.BREEDING_CHEST_ACCELERATOR)
+                .addTag(PoTags.Blocks.POOP_BLOCKS);
+        tag(PoTags.Blocks.BREEDING_CHEST_PARALLELISM)
                 .add(PoBlocks.MAGGOTS_BLOCK.get());
         var poopBuildingBlocks = tag(PoTags.Blocks.POOP_BUILDING_BLOCKS)
                 .add(
@@ -109,6 +113,12 @@ public final class BlockTagGen {
                 )
                 .addTag(PoTags.Blocks.TOILET_BLOCKS);
 
+        tag(PoTags.Blocks.POOP_FARMLAND_AUTO)
+                .add(ModBlocks.TOMATO_CROP_ON_ROPE.get());
+
+        tag(PoTags.Blocks.MAGGOTS_CHUNK_LOADER_BASE_BLOCKS)
+                .add(PoBlocks.MAGGOTS_BLOCK.get());
+
         //基础标签
         tag(BlockTags.MOSS_REPLACEABLE)
                 .add(PoBlocks.POOP_BLOCK.get())
@@ -157,6 +167,12 @@ public final class BlockTagGen {
                 .add(PoBlocks.STRIPPED_POOP_LOG.get())
                 .add(PoBlocks.STRIPPED_POOP_WOOD.get())
                 .add(PoBlocks.STRIPPED_POOP_EMPTY_LOG.get());
+
+        tag(BlockTags.WALL_POST_OVERRIDE)
+                .add(
+                        PoBlocks.POOP_PRESSURE_PLATE.get(),
+                        PoBlocks.GINKGO_PRESSURE_PLATE.get()
+                );
 
         PoBlocks.WALL_TAG_FAMILIES.forEach(family -> tag(BlockTags.WALLS).add(family.wall().get()));
 
@@ -268,6 +284,8 @@ public final class BlockTagGen {
         tag(BlockTags.MINEABLE_WITH_HOE)
                 .add(
                         PoBlocks.STOOL.get(),
+                        PoBlocks.POOP_PIECE.get(),
+                        PoBlocks.POOP_FARMLAND.get(),
                         PoBlocks.POOP_CRAFTING_TABLE.get(),
                         PoBlocks.MAGGOTS_BLOCK.get(),
                         PoBlocks.ROUNDWORM_BLOCK.get(),

@@ -23,7 +23,6 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import org.jetbrains.annotations.NotNull;
 
 public class PoopBall extends ThrowableItemProjectile {
 
@@ -36,7 +35,7 @@ public class PoopBall extends ThrowableItemProjectile {
     }
 
     @Override
-    protected @NotNull Item getDefaultItem() {
+    protected Item getDefaultItem() {
         return PoItems.POOP_BALL.get();
     }
 
@@ -79,7 +78,7 @@ public class PoopBall extends ThrowableItemProjectile {
      * Called when this EntityFireball hits a block or entity.
      */
     @Override
-    protected void onHit(@NotNull HitResult result) {
+    protected void onHit(HitResult result) {
         super.onHit(result);
         if (!this.level().isClientSide) {
             if (result.getType() == HitResult.Type.BLOCK) {

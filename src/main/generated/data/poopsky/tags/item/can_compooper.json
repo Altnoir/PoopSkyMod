@@ -3,8 +3,6 @@
     "poopsky:poop",
     "poopsky:poop_ball",
     "poopsky:poop_sapling",
-    "poopsky:ginkgo_sapling",
-    "poopsky:ginkgo_leaves",
     "poopsky:poop_leaves_iron",
     "poopsky:poop_leaves_gold",
     "poopsky:poop_piece",
@@ -31,6 +29,7 @@
     "poopsky:poop_vegetable_sticks",
     "poopsky:pooburger_meat",
     "poopsky:pooburger",
+    "poopsky:poopsicle",
     "poopsky:poop_pasta",
     "poopsky:poodding",
     "poopsky:poop_cake"

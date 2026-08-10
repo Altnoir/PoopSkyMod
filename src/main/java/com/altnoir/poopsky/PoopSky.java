@@ -5,12 +5,10 @@ import com.altnoir.poopsky.compat.maid.MaidPlugin;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.p.CompooperBlock;
 import com.altnoir.poopsky.content.entity.p.PoopTntEntity;
+import com.altnoir.poopsky.content.item.p.JinKeLaItem;
 import com.altnoir.poopsky.content.villager.PoVillagers;
 import com.altnoir.poopsky.data.*;
-import com.altnoir.poopsky.data.entity.EntityLootTableGen;
-import com.altnoir.poopsky.data.entity.EntityTypeTagsGen;
 import com.altnoir.poopsky.data.lang.LangGen;
-import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.fabric.PoFabricated;
 import com.altnoir.poopsky.fabric.port.fluidhandler.FluidInteractionRegistry;
 import com.altnoir.poopsky.impl.command.PoCommands;
@@ -36,6 +34,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.*;
@@ -138,6 +137,21 @@ public class PoopSky implements ModInitializer {
                 return item;
             }
         });
+        DispenserBlock.registerBehavior(PoItems.JINKELA.get(), new OptionalDispenseItemBehavior() {
+            @Override
+            protected ItemStack execute(BlockSource blockSource, ItemStack item) {
+                boolean success = false;
+                if (blockSource.level() instanceof ServerLevel serverLevel) {
+                    BlockPos pos = blockSource.pos().relative(blockSource.state().getValue(DispenserBlock.FACING));
+                    success = JinKeLaItem.tryApplyToBlock(serverLevel, pos, serverLevel.getBlockState(pos));
+                }
+                this.setSuccess(success);
+                if (success) {
+                    item.shrink(1);
+                }
+                return item;
+            }
+        });
         DispenserBlock.registerBehavior(PoBlocks.POOP_TNT.asItem(), new DefaultDispenseItemBehavior() {
             @Override
             protected ItemStack execute(BlockSource blockSource, ItemStack item) {
@@ -196,14 +210,29 @@ public class PoopSky implements ModInitializer {
                 PoFluids.URINE.get(),
                 fluidState -> fluidState.isSource()
                         ? Blocks.OBSIDIAN.defaultBlockState()
-                        : Blocks.MAGMA_BLOCK.defaultBlockState()));
+                        : Blocks.NETHERRACK.defaultBlockState()));
         FluidInteractionRegistry.addInteraction(Fluids.LAVA, new FluidInteractionRegistry.InteractionInformation(
                 (level, currentPos, relativePos, currentState) ->
                         level.getBlockState(currentPos.below()).is(PoBlocks.POOP_BLOCK.get())
                                 && level.getBlockState(relativePos).is(Blocks.BLUE_ICE),
-                Blocks.DEEPSLATE.defaultBlockState()));
+                Blocks.DRIPSTONE_BLOCK.defaultBlockState()));
+        registerLavaIceInteraction(PoBlocks.DRIED_POOP_BLOCK.get(), Blocks.DEEPSLATE);
+        registerLavaIceInteraction(PoBlocks.DRIED_CHILI_POOP_BLOCK.get(), Blocks.NETHERRACK);
+        registerLavaIceInteraction(PoBlocks.DRIED_GOLDEN_POOP_BLOCK.get(), Blocks.END_STONE);
+        registerLavaIceInteraction(PoBlocks.RAW_POOP_BLOCK.get(), Blocks.ANDESITE);
+        registerLavaIceInteraction(PoBlocks.RAW_SAPLING_POOP_BLOCK.get(), Blocks.GRANITE);
+        registerLavaIceInteraction(PoBlocks.RAW_SEA_POOP_BLOCK.get(), Blocks.PRISMARINE);
+        registerLavaIceInteraction(PoBlocks.RAW_WITHER_POOP_BLOCK.get(), Blocks.BLACKSTONE);
 
         PoStats.init();
+    }
+
+    private static void registerLavaIceInteraction(Block base, Block result) {
+        FluidInteractionRegistry.addInteraction(Fluids.LAVA, new FluidInteractionRegistry.InteractionInformation(
+                (level, currentPos, relativePos, currentState) ->
+                        level.getBlockState(currentPos.below()).is(base)
+                                && level.getBlockState(relativePos).is(Blocks.BLUE_ICE),
+                result.defaultBlockState()));
     }
 
     public static ResourceLocation loc(String path) {

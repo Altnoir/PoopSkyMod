@@ -22,9 +22,18 @@ public class PoNetworking {
                 PlugInputPayload.CODEC,
                 PlugInputPayload::handle
         );
+        FabricatedNetworking.registerC2SPacket(
+                FlushToiletCartInputPayload.TYPE,
+                FlushToiletCartInputPayload.CODEC,
+                FlushToiletCartInputPayload::handle
+        );
         FabricatedNetworking.registerS2CPacket(
                 TimeBellFreezePayload.TYPE,
                 TimeBellFreezePayload.CODEC
+        );
+        FabricatedNetworking.registerS2CPacket(
+                ReturnTotemActivationPayload.TYPE,
+                ReturnTotemActivationPayload.CODEC
         );
         FabricatedNetworking.registerS2CPacket(
                 PlayAnimationPayload.TYPE,
@@ -44,6 +53,7 @@ public class PoNetworking {
 
     public static void registerClientReceivers() {
         ClientPlayNetworking.registerGlobalReceiver(TimeBellFreezePayload.TYPE, TimeBellFreezePayload::handle);
+        ClientPlayNetworking.registerGlobalReceiver(ReturnTotemActivationPayload.TYPE, ReturnTotemActivationPayload::handle);
         ClientPlayNetworking.registerGlobalReceiver(PlayAnimationPayload.TYPE, PlayAnimationPayload::handle);
         ClientPlayNetworking.registerGlobalReceiver(PlayAnimationAndWaitPayload.TYPE, PlayAnimationAndWaitPayload::handle);
         IntroHandshake.registerClient();

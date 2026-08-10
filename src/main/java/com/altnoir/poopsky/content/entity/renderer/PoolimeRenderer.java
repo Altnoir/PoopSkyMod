@@ -11,7 +11,6 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.SlimeOuterLayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import org.jetbrains.annotations.NotNull;
 
 public class PoolimeRenderer extends MobRenderer<PoolimeEntity, SlimeModel<PoolimeEntity>> {
     public PoolimeRenderer(EntityRendererProvider.Context context) {
@@ -20,7 +19,7 @@ public class PoolimeRenderer extends MobRenderer<PoolimeEntity, SlimeModel<Pooli
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(@NotNull PoolimeEntity entity) {
+    public ResourceLocation getTextureLocation(PoolimeEntity entity) {
         return PoopSky.loc("textures/entity/poolime.png");
     }
 

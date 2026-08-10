@@ -1,9 +1,9 @@
 package com.altnoir.poopsky.data.sound;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.fabric.port.data.SoundDefinition;
 import com.altnoir.poopsky.fabric.port.data.SoundDefinitionsProvider;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 
@@ -59,6 +59,22 @@ public class SoundGen extends SoundDefinitionsProvider {
                         sound(PoopSky.mcloc("block.pointed_dripstone.drip_water_into_cauldron"), SoundDefinition.SoundType.EVENT)
                 ));
 
+        add(PoSoundEvents.BLOCK_COMPOOPER_EMPTY, definition()
+                .subtitle("subtitle.poopsky.block.compooper.empty")
+                .with(sound(PoopSky.mcloc("block.composter.empty"), SoundDefinition.SoundType.EVENT)));
+
+        add(PoSoundEvents.BLOCK_COMPOOPER_FILL, definition()
+                .subtitle("subtitle.poopsky.block.compooper.fill")
+                .with(sound(PoopSky.mcloc("block.composter.fill"), SoundDefinition.SoundType.EVENT)));
+
+        add(PoSoundEvents.BLOCK_COMPOOPER_FILL_SUCCESS, definition()
+                .subtitle("subtitle.poopsky.block.compooper.fill")
+                .with(sound(PoopSky.mcloc("block.composter.fill_success"), SoundDefinition.SoundType.EVENT)));
+
+        add(PoSoundEvents.BLOCK_COMPOOPER_READY, definition()
+                .subtitle("subtitle.poopsky.block.compooper.ready")
+                .with(sound(PoopSky.mcloc("block.composter.ready"), SoundDefinition.SoundType.EVENT)));
+
         add(PoSoundEvents.BLOCK_COMPOOPER_BUCKET_FILL, definition()
                 .subtitle("subtitle.poopsky.block.compooper.bucket_fill")
                 .with(
@@ -112,6 +128,18 @@ public class SoundGen extends SoundDefinitionsProvider {
                 .with(
                         sound(PoopSky.mcloc("item.bucket.empty_lava"), SoundDefinition.SoundType.EVENT)
                 ));
+
+        add(PoSoundEvents.BLOCK_MAGGOTS_CHUNK_LOADER_ACTIVATE, definition()
+                .subtitle("subtitle.poopsky.block.maggots_chunk_loader.activate")
+                .with(sound(PoopSky.mcloc("block.beacon.activate"), SoundDefinition.SoundType.EVENT)));
+
+        add(PoSoundEvents.BLOCK_MAGGOTS_CHUNK_LOADER_AMBIENT, definition()
+                .subtitle("subtitle.poopsky.block.maggots_chunk_loader.ambient")
+                .with(sound(PoopSky.mcloc("block.beacon.ambient"), SoundDefinition.SoundType.EVENT)));
+
+        add(PoSoundEvents.BLOCK_MAGGOTS_CHUNK_LOADER_DEACTIVATE, definition()
+                .subtitle("subtitle.poopsky.block.maggots_chunk_loader.deactivate")
+                .with(sound(PoopSky.mcloc("block.beacon.deactivate"), SoundDefinition.SoundType.EVENT)));
 
         add(PoSoundEvents.ENTITY_VILLAGER_WORK_COMPOOPER, definition()
                 .subtitle("subtitle.poopsky.villager.work_compooper")

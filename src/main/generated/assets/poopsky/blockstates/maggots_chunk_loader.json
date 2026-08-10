@@ -4,7 +4,7 @@
       "model": "poopsky:block/maggots_chunk_loader"
     },
     "powered=true": {
-      "model": "poopsky:block/maggots_chunk_loader_powered"
+      "model": "poopsky:block/maggots_chunk_loader"
     }
   }
 }

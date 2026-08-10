@@ -1,8 +1,0 @@
-{
-  "parent": "block/outer_stairs",
-  "textures": {
-    "bottom": "poopsky:block/poop_block",
-    "side": "poopsky:block/poop_block",
-    "top": "poopsky:block/poop_block"
-  }
-}

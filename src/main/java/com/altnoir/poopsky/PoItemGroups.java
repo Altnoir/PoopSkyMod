@@ -78,8 +78,6 @@ public class PoItemGroups {
             }
             if (item instanceof BlockItem && PoBlocks.isBasicBlockItem(item)) {
                 TS_BLOCKS.add(item);
-            } else if (PoBlocks.isDecoMaterialItem(item) || PoBlocks.isDecoTileItem(item)) {
-                continue;
             } else {
                 TS_ITEMS.add(item);
             }

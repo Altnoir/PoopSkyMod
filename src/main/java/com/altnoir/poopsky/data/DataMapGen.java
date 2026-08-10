@@ -2,6 +2,7 @@ package com.altnoir.poopsky.data;
 
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
+import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 
 public final class DataMapGen {
@@ -9,6 +10,9 @@ public final class DataMapGen {
     }
 
     public static void register() {
+        CompostingChanceRegistry.INSTANCE.add(PoBlocks.GINKGO_SAPLING.asItem(), 0.3F);
+        CompostingChanceRegistry.INSTANCE.add(PoBlocks.GINKGO_LEAVES.asItem(), 0.3F);
+
         FuelRegistry fuels = FuelRegistry.INSTANCE;
         fuels.add(PoItems.POOP.get(), 200);
         fuels.add(PoItems.POOP_BALL.get(), 400);

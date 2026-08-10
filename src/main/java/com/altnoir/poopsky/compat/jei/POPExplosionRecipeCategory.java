@@ -35,13 +35,15 @@ public class POPExplosionRecipeCategory implements IRecipeCategory<RecipeHolder<
     private final IDrawable icon;
     private final Component title;
     private final IDrawable arrow;
+    private final IDrawable arrow2;
     private final IDrawable slot;
 
-    public POPExplosionRecipeCategory(IJeiHelpers helpers, IDrawable arrow) {
+    public POPExplosionRecipeCategory(IJeiHelpers helpers, IDrawable arrow, IDrawable arrow2) {
         var guiHelper = helpers.getGuiHelper();
         this.icon = guiHelper.createDrawableItemStack(new ItemStack(PoBlocks.POOP_TNT.get()));
         this.title = Component.translatable("jei.category." + PoopSky.MOD_ID + ".pop_explosion");
         this.arrow = arrow;
+        this.arrow2 = arrow2;
         this.slot = guiHelper.getSlotDrawable();
     }
 
@@ -82,7 +84,8 @@ public class POPExplosionRecipeCategory implements IRecipeCategory<RecipeHolder<
     @Override
     public void draw(RecipeHolder<POPExplosionRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         this.slot.draw(guiGraphics, INPUT_X - 1, INPUT_Y - 1);
-        this.arrow.draw(guiGraphics, ARROW_X, ARROW_Y);
+        IDrawable arrow = recipeHolder.value().radius() > 0 ? this.arrow2 : this.arrow;
+        arrow.draw(guiGraphics, ARROW_X, ARROW_Y);
         this.slot.draw(guiGraphics, OUTPUT_X - 1, OUTPUT_Y - 1);
     }
 

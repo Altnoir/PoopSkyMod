@@ -20,6 +20,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.ColorRGBA;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
@@ -147,9 +148,9 @@ public class PoBlocks {
                     .noOcclusion()
                     .isValidSpawn(Blocks::never)));
     public static final BlockEntry<PressurePlateBlock> POOP_PRESSURE_PLATE = registerDecoMaterialBlock("poop_pressure_plate", 88,
-            props -> new PressurePlateBlock(PoBlockSetType.POOP, poopProperties().noCollission()));
+            props -> new PressurePlateBlock(PoBlockSetType.POOP, poopProperties().forceSolidOn().noCollission().pushReaction(PushReaction.DESTROY)));
     public static final BlockEntry<ButtonBlock> POOP_BUTTON = registerDecoMaterialBlock("poop_button", 88,
-            props -> new ButtonBlock(PoBlockSetType.POOP, 200, poopProperties().noCollission()));
+            props -> new ButtonBlock(PoBlockSetType.POOP, 200, poopProperties().noCollission().pushReaction(PushReaction.DESTROY)));
 
     public static final BlockEntry<Block> POOP_BRICKS = registerDecoMaterialBlock("poop_bricks", 88,
             props -> new Block(hardenedProperties(MapColor.COLOR_BROWN, SoundType.FROGLIGHT)));
@@ -168,8 +169,10 @@ public class PoBlocks {
     public static final BlockEntry<DriedPoopBlock> DRIED_POOP_BLOCK = registerPoopBlock("dried_poop_block",
             props -> new DriedPoopBlock(hardenedProperties(MapColor.COLOR_ORANGE, SoundType.TUFF)
                     .instrument(NoteBlockInstrument.COW_BELL)));
+    public static final BlockEntry<ColoredFallingBlock> POOP_SAND = registerBlock("poop_sand", 88,
+            props -> new ColoredFallingBlock(new ColorRGBA(9131563),
+                    BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).instrument(NoteBlockInstrument.SNARE).strength(0.5F).sound(SoundType.SAND)));
     public static final BlockFamily DRIED_POOP_BLOCK_FAMILY = registerBlockFamily("dried_poop_block", DRIED_POOP_BLOCK, false);
-
     public static final BlockEntry<Block> SMOOTH_POOP_BLOCK = registerDecoMaterialBlock("smooth_poop_block", 88,
             props -> new Block(hardenedProperties(MapColor.COLOR_ORANGE, SoundType.CALCITE)));
     public static final BlockFamily SMOOTH_POOP_BLOCK_FAMILY = registerBlockFamily("smooth_poop_block", SMOOTH_POOP_BLOCK, false);
@@ -190,6 +193,9 @@ public class PoBlocks {
                     .isRedstoneConductor(PoBlocks::always)
                     .isSuffocating(PoBlocks::always)
                     .instrument(NoteBlockInstrument.COW_BELL)));
+    public static final BlockEntry<Block> DRIED_CHILI_POOP_BLOCK = registerBlock("dried_chili_poop_block",
+            props -> new Block(hardenedProperties(MapColor.COLOR_RED, SoundType.TUFF)
+                    .instrument(NoteBlockInstrument.COW_BELL)));
     public static final BlockFamily CHILI_POOP_FAMILY = registerBlockFamily("chili_poop", CHILI_POOP_BLOCK, false);
 
     public static final BlockEntry<GoldenPoopBlock> GOLDEN_POOP_BLOCK = registerPoopBlock("golden_poop_block",
@@ -200,6 +206,9 @@ public class PoBlocks {
                     .isRedstoneConductor(PoBlocks::always)
                     .isSuffocating(PoBlocks::always)
                     .instrument(NoteBlockInstrument.BELL)));
+    public static final BlockEntry<Block> DRIED_GOLDEN_POOP_BLOCK = registerBlock("dried_golden_poop_block",
+            props -> new Block(hardenedProperties(MapColor.GOLD, SoundType.TUFF)
+                    .instrument(NoteBlockInstrument.COW_BELL)));
     public static final BlockFamily GOLDEN_POOP_FAMILY = registerBlockFamily("golden_poop", GOLDEN_POOP_BLOCK, false);
 
     private static final Map<DyeColor, ColoredTile> COLORED_TILES = registerColoredTiles();
@@ -235,6 +244,18 @@ public class PoBlocks {
     public static final BlockFamily PURPLE_TILE_BLOCK_FAMILY = coloredTile(DyeColor.PURPLE).family();
     public static final BlockFamily MAGENTA_TILE_BLOCK_FAMILY = coloredTile(DyeColor.MAGENTA).family();
     public static final BlockFamily PINK_TILE_BLOCK_FAMILY = coloredTile(DyeColor.PINK).family();
+
+    public static final BlockEntry<Block> RAW_POOP_BLOCK = registerBlock("raw_poop_block", 88,
+            props -> new Block(simpleProperties(MapColor.COLOR_BROWN, 0.65F, SoundType.MUD)
+                    .randomTicks()
+                    .isValidSpawn(Blocks::always)
+                    .instrument(NoteBlockInstrument.COW_BELL)));
+    public static final BlockEntry<RawSaplingBlock> RAW_SAPLING_POOP_BLOCK = registerBlock("raw_sapling_poop_block", 88,
+            props -> new RawSaplingBlock(BlockBehaviour.Properties.ofFullCopy(RAW_POOP_BLOCK.get()).sound(SoundType.ROOTED_DIRT)));
+    public static final BlockEntry<RawSeaBlock> RAW_SEA_POOP_BLOCK = registerBlock("raw_sea_poop_block", 88,
+            props -> new RawSeaBlock(BlockBehaviour.Properties.ofFullCopy(RAW_POOP_BLOCK.get()).sound(SoundType.ROOTED_DIRT)));
+    public static final BlockEntry<RawWitherBlock> RAW_WITHER_POOP_BLOCK = registerBlock("raw_wither_poop_block", 88,
+            props -> new RawWitherBlock(BlockBehaviour.Properties.ofFullCopy(RAW_POOP_BLOCK.get()).sound(SoundType.ROOTED_DIRT)));
 
     public static final BlockEntry<ChairBlock> STOOL = registerBlock("stool", 88,
             props -> new ChairBlock(poopProperties().pushReaction(PushReaction.DESTROY).noOcclusion()));
@@ -276,13 +297,6 @@ public class PoBlocks {
             props -> new PlacerBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
                     .instrument(NoteBlockInstrument.BASEDRUM)
                     .requiresCorrectToolForDrops().strength(3.5F)));
-    public static final BlockEntry<MaggotsChunkLoaderBlock> MAGGOTS_CHUNK_LOADER = registerBlock("maggots_chunk_loader",
-            props -> new MaggotsChunkLoaderBlock(BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.TERRACOTTA_WHITE)
-                    .strength(5.0F, 1200.0F)
-                    .sound(SoundType.GLASS)
-                    .requiresCorrectToolForDrops()
-                    .lightLevel(state -> state.getValue(MaggotsChunkLoaderBlock.POWERED) ? 7 : 0)));
     public static final BlockEntry<SieveBlock> SIEVE = registerBlock("sieve_stable",
             props -> new SieveBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.STONE)
@@ -290,7 +304,6 @@ public class PoBlocks {
                     .requiresCorrectToolForDrops()
                     .isValidSpawn(Blocks::never)
                     .noOcclusion()));
-
     public static final BlockEntry<PoopTntBlock> POOP_TNT = registerBlock("poop_tnt", 88,
             props -> new PoopTntBlock(simpleProperties(MapColor.FIRE, 0.0F, SoundType.GRASS)
                     .ignitedByLava()
@@ -302,18 +315,13 @@ public class PoBlocks {
             props -> new BreedingChestBlock(simpleProperties(MapColor.COLOR_BROWN, 1.0F, SoundType.POLISHED_TUFF)
                     .requiresCorrectToolForDrops()
                     .noOcclusion()));
-
-    public static final BlockEntry<Block> RAW_POOP_BLOCK = registerBlock("raw_poop_block", 88,
-            props -> new Block(simpleProperties(MapColor.COLOR_BROWN, 0.65F, SoundType.MUD)
-                    .randomTicks()
-                    .isValidSpawn(Blocks::always)
-                    .instrument(NoteBlockInstrument.COW_BELL)));
-    public static final BlockEntry<RawSaplingBlock> RAW_SAPLING_POOP_BLOCK = registerBlock("raw_sapling_poop_block", 88,
-            props -> new RawSaplingBlock(BlockBehaviour.Properties.ofFullCopy(RAW_POOP_BLOCK.get()).sound(SoundType.ROOTED_DIRT)));
-    public static final BlockEntry<RawSeaBlock> RAW_SEA_POOP_BLOCK = registerBlock("raw_sea_poop_block", 88,
-            props -> new RawSeaBlock(BlockBehaviour.Properties.ofFullCopy(RAW_POOP_BLOCK.get()).sound(SoundType.ROOTED_DIRT)));
-    public static final BlockEntry<RawWitherBlock> RAW_WITHER_POOP_BLOCK = registerBlock("raw_wither_poop_block", 88,
-            props -> new RawWitherBlock(BlockBehaviour.Properties.ofFullCopy(RAW_POOP_BLOCK.get()).sound(SoundType.ROOTED_DIRT)));
+    public static final BlockEntry<MaggotsChunkLoaderBlock> MAGGOTS_CHUNK_LOADER = registerBlock("maggots_chunk_loader",
+            props -> new MaggotsChunkLoaderBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_WHITE)
+                    .strength(3.0F)
+                    .sound(SoundType.BASALT)
+                    .requiresCorrectToolForDrops()
+                    .lightLevel(state -> state.getValue(MaggotsChunkLoaderBlock.POWERED) ? 7 : 0)));
 
     public static final BlockEntry<PoopLogBlock> POOP_LOG = registerPoopBlock("poop_log",
             props -> new PoopLogBlock(logProperties(MapColor.COLOR_BROWN, SoundType.STEM).randomTicks()),
@@ -399,6 +407,10 @@ public class PoBlocks {
                     .sound(SoundType.GRASS)
                     .offsetType(BlockBehaviour.OffsetType.XZ)
                     .pushReaction(PushReaction.DESTROY)));
+    public static final BlockEntry<FlowerPotBlock> POTTED_GINKGO_SAPLING = registerBlockNoItem("potted_ginkgo_sapling",
+            props -> new FlowerPotBlock(GINKGO_SAPLING.get(),
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.POTTED_OAK_SAPLING)),
+            RegistrateBlockLootTables::dropPottedContents);
 
     public static final BlockEntry<SaltpeterBlock> SALTPETER_BLOCK = registerBlock("saltpeter_block",
             props -> new SaltpeterBlock(BlockBehaviour.Properties.of()
@@ -414,6 +426,7 @@ public class PoBlocks {
                     .sound(SoundType.AMETHYST_CLUSTER)
                     .strength(1.5F)
                     .lightLevel(p_152632_ -> 5)
+                    .randomTicks()
                     .pushReaction(PushReaction.DESTROY)),
             (loot, block) -> loot.add(block, createSaltpeterClusterDrop(loot, block)));
     public static final BlockEntry<SaltpeterClusterBlock> LARGE_SALTPETER_BUD = registerBlock("large_saltpeter_bud",
@@ -1059,4 +1072,3 @@ public class PoBlocks {
         return TAB_ITEMS.getOrDefault(tab, Set.of()).stream().anyMatch(entry -> entry.asItem() == item);
     }
 }
-

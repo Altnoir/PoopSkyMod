@@ -23,6 +23,8 @@ public class PHauntingRecipeGen extends HauntingRecipeGen implements IConditionB
         RecipeOutput conditionalOutput = p_recipeOutput.withConditions(modLoaded(PoMods.CREATE.id()));
 
         convert(PoBlocks.POOLIME_BLOCK.get(), Blocks.ICE).register(conditionalOutput);
+        convert(PoBlocks.DRIED_CHILI_POOP_BLOCK.get(), Blocks.NETHERRACK).register(conditionalOutput);
+        convert(PoBlocks.DRIED_GOLDEN_POOP_BLOCK.get(), Blocks.END_STONE).register(conditionalOutput);
     }
 }
  */

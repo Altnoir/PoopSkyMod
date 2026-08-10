@@ -1,6 +1,7 @@
 {
   "parent": "poopsky:block/flush_toilet",
   "textures": {
-    "toilet": "poopsky:block/golden_flush_toilet"
+    "particle": "poopsky:block/golden_flush_toilet_particle",
+    "toilet": "poopsky:block/golden_flush_toilet_cart"
   }
 }

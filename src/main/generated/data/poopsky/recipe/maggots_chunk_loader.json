@@ -2,23 +2,20 @@
   "type": "minecraft:crafting_shaped",
   "category": "redstone",
   "key": {
-    "G": {
-      "item": "minecraft:glass"
+    "C": {
+      "item": "poopsky:cut_poop_block"
     },
     "M": {
       "item": "poopsky:maggots_block"
-    },
-    "O": {
-      "item": "minecraft:obsidian"
     },
     "R": {
       "item": "minecraft:redstone"
     }
   },
   "pattern": [
-    "GGG",
-    "GMG",
-    "ORO"
+    " R ",
+    "RMR",
+    "CCC"
   ],
   "result": {
     "count": 1,

@@ -45,7 +45,9 @@ public final class LangGen {
 
     private static void addAdvancements() {
         addAdvancement("root", "POOPSKY", "It all began with a pile of poop");
+        addAdvancement("poop_block", "Want to Get Rich? Poop First!", "Craft a Poop Block with four pieces of Poop");
         addAdvancement("poop_block_slide", "Master of Poop Sliding", "Slide on a poop block");
+        addAdvancement("poop_crafting_table", "Breaks in One Use", "Craft a disposable Poop Crafting Table with two pieces of Poop");
         addAdvancement("saltpeter_cluster", "Potassium Nitrate", "Place a Poop Block below a Toilet, and Saltpeter Clusters will randomly grow around it\nSaltpeter Clusters can be matured with Poop");
         addAdvancement("powder_snow", "Chemical Ice Making", "When Saltpeter Clusters are waterlogged, they freeze. When attached to ice and waterlogged, they turn into Powder Snow");
         addAdvancement("poop_sapling", "Fecalith", "Grow a Poop Block to obtain a Poop Sapling");
@@ -56,7 +58,10 @@ public final class LangGen {
         addAdvancement("placer", "Midas Touch", "Craft a Placer using a Toilet Plug");
         addAdvancement("omen_armor", "Avatar of Omen", "Upgrade Golden Equipment into Omen Armor");
         addAdvancement("chili", "Gunpowder Fruit", "Sieve a Cactus on a Sieve to obtain a King of Dragon Fruit");
+        addAdvancement("dried_poop_block", "Hard Lump", "Smelt a Poop Block in a furnace\nUsing bone meal on a Dried Poop Block near water may grow Sugar Cane");
         addAdvancement("chili_poop", "Chili Poop", "While affected by Intestinal Spasm, you can poop out Chili Poop\nThe crafted Chili Poop Block can be grown with bone meal");
+        addAdvancement("chili_poop_block", "My Poop Is Even Hotter!", "Craft a Chili Poop Block\nIt can be grown with bone meal");
+        addAdvancement("flush_toilet", "Got It Covered", "Craft a Flush Toilet with Quartz Blocks");
         addAdvancement("rainbow_toilet", "Rainbow Toilet", "Buy a Rainbow Toilet from a Poopmaker");
         addAdvancement("fly_catcher", "Fly-Catching Expert", "Capture a fly with a Fly Catcher");
         addAdvancement("fly_barrel", "Billions in a Second", "Craft a Fly Barrel");
@@ -195,6 +200,8 @@ public final class LangGen {
         provider.add("message.poopsky.toilet_linker.2", "Link Toilet ②");
         provider.add("message.poopsky.toilet_linker.3", "Linked");
         provider.add("message.poopsky.toilet_linker.4", "Cleared");
+        provider.add("message.poopsky.return_totem.not_bound", "Not bound to a Portable Toilet");
+        provider.add("message.poopsky.return_totem.obstructed", "The Portable Toilet is obstructed");
         provider.add("message.poopsky.toilet_plug.dismount", "Press %s to dismount Toilet Plug");
     }
 
@@ -248,7 +255,13 @@ public final class LangGen {
         addSubtitle("block.flush_toilet.open", "Toilet lid opens");
         addSubtitle("block.flush_toilet.close", "Toilet lid closes");
         addSubtitle("block.compooper.bucket_fill", "Compooper fills");
-        addSubtitle("item.jinkela.use", "Jinkela rustles");
+        addSubtitle("block.compooper.empty", "Compooper emptied");
+        addSubtitle("block.compooper.fill", "Compooper filled");
+        addSubtitle("block.compooper.ready", "Compooper composts");
+        addSubtitle("block.maggots_chunk_loader.activate", "Maggots Chunk Loader activates");
+        addSubtitle("block.maggots_chunk_loader.ambient", "Maggots Chunk Loader hums");
+        addSubtitle("block.maggots_chunk_loader.deactivate", "Maggots Chunk Loader deactivates");
+        addSubtitle("item.jinkela.use", "Jinkela crinkles");
         addSubtitle("item.time_bell.open", "Time Bell activates");
         addSubtitle("item.time_bell.close", "Time Bell deactivates");
     }
@@ -369,6 +382,7 @@ public final class LangGen {
         provider.add("jei.poopsky.sea_poop_ball", "Obtained by fishing in Poop Liquid with a chance");
         provider.add("jei.poopsky.sapling_poop_ball", "Sapling Poop Balls are obtained from the Compooper. Eating one grants a sapling.");
         provider.add("jei.poopsky.maggots_seeds", "A Compooper filled with poop can produce Maggots");
+        provider.add("jei.poopsky.poop_farmland", "Right-click a Poop Block with a hoe to create it; it does not require water.\nRight-click it with a shovel to automatically harvest the crop above.\nRight-click it with Jinkela to accelerate the growth of the crop above.");
         provider.add("jei.poopsky.cactus", "Cactus");
         provider.add("jei.poopsky.sugar_cane", "Sugar Cane");
         provider.add("jei.poopsky.fly_desc.white", "Obtained by killing with Ascarid");
