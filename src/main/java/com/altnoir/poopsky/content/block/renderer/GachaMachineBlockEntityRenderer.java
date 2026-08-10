@@ -26,7 +26,10 @@ public class GachaMachineBlockEntityRenderer implements BlockEntityRenderer<Gach
     private static final float INTERIOR_BALL_SCALE = 0.26F;
     private static final float EJECTED_BALL_SCALE = 0.34F;
     private static final float ROLL_RADIUS = 0.085F;
-    private static final float DROP_END = 0.55F;
+    private static final float FALL_END = 0.30F;
+    private static final float CHUTE_END = 0.70F;
+    private static final float CHUTE_ENTRY_Y = 0.40F;
+    private static final float CHUTE_DEPTH = 0.44F;
     private static final float OUTLET_Y = 0.28F;
     private static final float OUTLET_DEPTH = 0.60F;
     private static final ItemStack DISPLAY_BALL = new ItemStack(PoItems.GACHA_BALL.get());
@@ -58,23 +61,37 @@ public class GachaMachineBlockEntityRenderer implements BlockEntityRenderer<Gach
         }
 
         CapsulePosition selectedPosition = capsules[selectedBall];
-        float dropProgress = Mth.clamp(progress / DROP_END, 0.0F, 1.0F);
-        float rollProgress = Mth.clamp((progress - DROP_END) / (1.0F - DROP_END), 0.0F, 1.0F);
-        float horizontal = Mth.lerp(dropProgress, selectedPosition.right(), 0.0F);
-        float dropY = Mth.lerp(dropProgress, selectedPosition.y(), OUTLET_Y);
-        float depth = Mth.lerp(rollProgress, selectedPosition.depth(), OUTLET_DEPTH);
+        float fallProgress = Mth.clamp(progress / FALL_END, 0.0F, 1.0F);
+        float chuteProgress = Mth.clamp((progress - FALL_END) / (CHUTE_END - FALL_END), 0.0F, 1.0F);
+        float outletProgress = Mth.clamp((progress - CHUTE_END) / (1.0F - CHUTE_END), 0.0F, 1.0F);
+        float fallDistance = fallProgress * fallProgress;
+        float chuteDistance = chuteProgress * chuteProgress;
+        float horizontal = Mth.lerp(chuteDistance, selectedPosition.right(), 0.0F);
+        float dropY = Mth.lerp(fallDistance, selectedPosition.y(), CHUTE_ENTRY_Y);
+        dropY = Mth.lerp(chuteDistance, dropY, OUTLET_Y);
+        float depth = Mth.lerp(chuteDistance, selectedPosition.depth(), CHUTE_DEPTH);
+        depth = Mth.lerp(outletProgress, depth, OUTLET_DEPTH);
         float ballScale = Mth.lerp(progress, INTERIOR_BALL_SCALE, EJECTED_BALL_SCALE);
         float rightX = -facing.getStepZ();
         float rightZ = facing.getStepX();
-        float pathLength = Math.abs(OUTLET_DEPTH - selectedPosition.depth());
-        float rollDegrees = -rollProgress * pathLength / ROLL_RADIUS * 57.29578F;
+        float chuteRight = -selectedPosition.right();
+        float chuteForward = CHUTE_DEPTH - selectedPosition.depth();
+        float chuteHorizontalDistance = Mth.sqrt(chuteRight * chuteRight + chuteForward * chuteForward);
+        float chutePathLength = Mth.sqrt(chuteHorizontalDistance * chuteHorizontalDistance
+                + (CHUTE_ENTRY_Y - OUTLET_Y) * (CHUTE_ENTRY_Y - OUTLET_Y));
+        float chuteMoveX = rightX * chuteRight + facing.getStepX() * chuteForward;
+        float chuteMoveZ = rightZ * chuteRight + facing.getStepZ() * chuteForward;
+        Vector3f chuteRollAxis = new Vector3f(-chuteMoveZ, 0.0F, chuteMoveX).normalize();
+        float chuteRollDegrees = -chuteDistance * chutePathLength / ROLL_RADIUS * 57.29578F;
+        float outletRollDegrees = -outletProgress * (OUTLET_DEPTH - CHUTE_DEPTH) / ROLL_RADIUS * 57.29578F;
 
         poseStack.pushPose();
         poseStack.translate(
                 0.5D + rightX * horizontal + facing.getStepX() * depth,
                 dropY,
                 0.5D + rightZ * horizontal + facing.getStepZ() * depth);
-        poseStack.mulPose(Axis.of(new Vector3f(rightX, 0.0F, rightZ)).rotationDegrees(rollDegrees));
+        poseStack.mulPose(Axis.of(chuteRollAxis).rotationDegrees(chuteRollDegrees));
+        poseStack.mulPose(Axis.of(new Vector3f(rightX, 0.0F, rightZ)).rotationDegrees(outletRollDegrees));
         poseStack.mulPose(Axis.YP.rotationDegrees(selectedPosition.rotation()));
         poseStack.scale(ballScale, ballScale, ballScale);
         Minecraft.getInstance().getItemRenderer().renderStatic(

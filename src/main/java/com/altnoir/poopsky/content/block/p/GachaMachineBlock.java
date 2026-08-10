@@ -36,7 +36,7 @@ import org.jetbrains.annotations.Nullable;
 public class GachaMachineBlock extends BaseEntityBlock {
     public static final MapCodec<GachaMachineBlock> CODEC = simpleCodec(GachaMachineBlock::new);
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-    private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
+    private static final VoxelShape SHAPE = Block.box(1, 0, 1, 15, 16, 15);
 
     public GachaMachineBlock(Properties properties) {
         super(properties);
