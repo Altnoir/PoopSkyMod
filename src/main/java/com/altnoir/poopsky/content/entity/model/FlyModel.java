@@ -24,6 +24,11 @@ public class FlyModel<T extends FlyEntity> extends AgeableListModel<T> {
     private final ModelPart frontLeg;
     private final ModelPart midLeg;
     private final ModelPart backLeg;
+    private final ModelPart maggot;
+    private final ModelPart maggotHead;
+    private final ModelPart maggotFront;
+    private final ModelPart maggotMiddle;
+    private final ModelPart maggotTail;
     private float rollAmount;
 
     public FlyModel(ModelPart root) {
@@ -35,6 +40,11 @@ public class FlyModel<T extends FlyEntity> extends AgeableListModel<T> {
         this.frontLeg = this.body.getChild("leg_front");
         this.midLeg = this.body.getChild("leg_mid");
         this.backLeg = this.body.getChild("leg_back");
+        this.maggot = root.getChild("maggot");
+        this.maggotHead = this.maggot.getChild("head");
+        this.maggotFront = this.maggot.getChild("front");
+        this.maggotMiddle = this.maggot.getChild("middle");
+        this.maggotTail = this.maggot.getChild("tail");
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -65,6 +75,21 @@ public class FlyModel<T extends FlyEntity> extends AgeableListModel<T> {
                         .addBox("leg_back", -5.0F, -1.5F, 0.0F, 7, 3, 0, 22, 4),
                 PartPose.offset(1.5F, 3.0F, 2.0F));
 
+        PartDefinition maggot = partdefinition.addOrReplaceChild("maggot", CubeListBuilder.create(),
+                PartPose.offset(0.5F, 22.0F, 0.0F));
+        maggot.addOrReplaceChild("head", CubeListBuilder.create()
+                        .texOffs(0, 32).addBox(-1.8F, -1.2F, -4.5F, 3.6F, 2.4F, 2.8F),
+                PartPose.ZERO);
+        maggot.addOrReplaceChild("front", CubeListBuilder.create()
+                        .texOffs(0, 37).addBox(-2.0F, -1.4F, -1.8F, 4.0F, 2.8F, 2.3F),
+                PartPose.ZERO);
+        maggot.addOrReplaceChild("middle", CubeListBuilder.create()
+                        .texOffs(0, 42).addBox(-1.8F, -1.3F, 0.2F, 3.6F, 2.6F, 2.2F),
+                PartPose.ZERO);
+        maggot.addOrReplaceChild("tail", CubeListBuilder.create()
+                        .texOffs(0, 47).addBox(-1.4F, -1.1F, 2.2F, 2.8F, 2.2F, 2.0F),
+                PartPose.ZERO);
+
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
 
@@ -74,19 +99,23 @@ public class FlyModel<T extends FlyEntity> extends AgeableListModel<T> {
 
     public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.bone.xRot = 0.0F;
-        this.rightWing.visible = !entity.isBaby();
-        this.leftWing.visible = !entity.isBaby();
-        this.frontLeg.visible = !entity.isBaby();
-        this.midLeg.visible = !entity.isBaby();
-        this.backLeg.visible = !entity.isBaby();
-        this.body.xScale = 1.0F;
-        this.body.yScale = 1.0F;
-        this.body.zScale = 1.0F;
-        if (entity.isBaby()) {
-            this.body.xScale = 0.45F;
-            this.body.yScale = 0.45F;
-            this.body.zScale = 0.8F;
-            this.bone.xRot = Mth.sin(ageInTicks * 0.35F) * 0.08F;
+        boolean baby = entity.isBaby();
+        this.bone.visible = !baby;
+        this.maggot.visible = baby;
+        this.rightWing.visible = !baby;
+        this.leftWing.visible = !baby;
+        this.frontLeg.visible = !baby;
+        this.midLeg.visible = !baby;
+        this.backLeg.visible = !baby;
+        if (baby) {
+            float crawl = Mth.sin(ageInTicks * 0.45F);
+            this.maggotHead.yRot = crawl * 0.12F;
+            this.maggotFront.yRot = -crawl * 0.18F;
+            this.maggotMiddle.yRot = crawl * 0.16F;
+            this.maggotTail.yRot = -crawl * 0.1F;
+            this.maggotHead.xRot = crawl * 0.04F;
+            this.maggotTail.xRot = -crawl * 0.06F;
+            this.maggot.y = 22.0F + Mth.sin(ageInTicks * 0.45F) * 0.12F;
             return;
         }
         boolean flag = entity.onGround() && entity.getDeltaMovement().lengthSqr() < 1.0E-7;
@@ -126,6 +155,6 @@ public class FlyModel<T extends FlyEntity> extends AgeableListModel<T> {
 
     @Override
     protected Iterable<ModelPart> bodyParts() {
-        return ImmutableList.of(this.bone);
+        return ImmutableList.of(this.bone, this.maggot);
     }
 }
