@@ -2,10 +2,10 @@ package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.content.block.entity.FlushToiletBlockEntity;
 import com.altnoir.poopsky.content.entity.p.FlushToiletEntity;
-import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.impl.util.ToiletUtil;
 import com.altnoir.poopsky.init.PoEntityType;
 import com.altnoir.poopsky.init.PoItems;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -48,6 +48,11 @@ public class FlushToiletBlock extends BaseEntityBlock {
             Block.box(4, 5, 2, 12, 8, 13),
             Block.box(3.9, 5.9, 11.9, 12.1, 16.1, 16.1)
     );
+    private static final VoxelShape NORTH_COLLISION_SHAPE = Shapes.or(
+            Block.box(4, 0, 3, 12, 5, 13),
+            Block.box(4, 5, 2, 12, 8, 13),
+            Block.box(4, 6, 12, 12, 16, 16)
+    );
     private static final VoxelShape NORTH_OPEN_SHAPE = Shapes.or(
             NORTH_BASE_SHAPE,
             Block.box(4, 8, 11, 12, 18, 12)
@@ -59,7 +64,7 @@ public class FlushToiletBlock extends BaseEntityBlock {
 
     private static final Map<Direction, VoxelShape> OPEN_SHAPES = computeShapes(NORTH_OPEN_SHAPE);
     private static final Map<Direction, VoxelShape> CLOSED_SHAPES = computeShapes(NORTH_CLOSED_SHAPE);
-    private static final Map<Direction, VoxelShape> COLLISION_SHAPES = computeShapes(NORTH_BASE_SHAPE);
+    private static final Map<Direction, VoxelShape> COLLISION_SHAPES = computeShapes(NORTH_COLLISION_SHAPE);
 
     public FlushToiletBlock(Properties properties) {
         super(properties);
