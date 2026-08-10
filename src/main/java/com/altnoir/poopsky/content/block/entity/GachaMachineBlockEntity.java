@@ -32,8 +32,9 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 
 public class GachaMachineBlockEntity extends BlockEntity {
-    public static final int ANIMATION_LENGTH = 50;
+    public static final int ANIMATION_LENGTH = 20;
     public static final int CAPSULE_COUNT = 20;
+    private static final double OUTPUT_DISTANCE = 0.6D;
     private static final ResourceKey<LootTable> REWARD_TABLE = ResourceKey.create(
             Registries.LOOT_TABLE, PoopSky.loc("gameplay/gacha_machine"));
 
@@ -134,9 +135,9 @@ public class GachaMachineBlockEntity extends BlockEntity {
         }
         Direction facing = state.getValue(GachaMachineBlock.FACING);
         ItemEntity itemEntity = new ItemEntity(level,
-                this.worldPosition.getX() + 0.5D + facing.getStepX() * 0.7D,
+                this.worldPosition.getX() + 0.5D + facing.getStepX() * OUTPUT_DISTANCE,
                 this.worldPosition.getY() + 0.58D,
-                this.worldPosition.getZ() + 0.5D + facing.getStepZ() * 0.7D,
+                this.worldPosition.getZ() + 0.5D + facing.getStepZ() * OUTPUT_DISTANCE,
                 this.rewardStack.copyWithCount(1));
         itemEntity.setDeltaMovement(facing.getStepX() * 0.14D, 0.12D, facing.getStepZ() * 0.14D);
         itemEntity.setDefaultPickUpDelay();
