@@ -520,8 +520,7 @@ public class PoBlocks {
                     .mapColor(MapColor.COLOR_RED)
                     .strength(HARDEN, HARD_STRENGTH)
                     .sound(SoundType.METAL)
-                    .noOcclusion()),
-            (loot, block) -> loot.add(block, loot.createDoorTable(block)));
+                    .noOcclusion()));
 
     public record BlockFamily(
             BlockEntry<? extends Block> block,

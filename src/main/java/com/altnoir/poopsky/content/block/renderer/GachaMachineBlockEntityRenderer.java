@@ -22,13 +22,14 @@ import java.util.WeakHashMap;
 
 public class GachaMachineBlockEntityRenderer implements BlockEntityRenderer<GachaMachineBlockEntity> {
     private static final int CAPSULE_COLUMNS = 4;
-    private static final float INTERIOR_BALL_SCALE = 0.34F;
+    private static final float INTERIOR_BALL_SCALE = 0.26F;
     private static final float EJECTED_BALL_SCALE = 0.34F;
     private static final ItemStack DISPLAY_BALL = new ItemStack(PoItems.GACHA_BALL.get());
     private static final Map<GachaMachineBlockEntity, CapsulePosition[]> INTERIOR_POSITION_CACHE = new WeakHashMap<>();
 
     private record CapsulePosition(float right, float y, float depth, float rotation) {
     }
+
     public GachaMachineBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
     }
 
@@ -56,7 +57,7 @@ public class GachaMachineBlockEntityRenderer implements BlockEntityRenderer<Gach
         float wobble = Mth.sin(progress * Mth.PI * 8.0F) * 0.12F * (1.0F - eject);
         CapsulePosition selectedPosition = capsules[selectedBall];
         float horizontal = Mth.lerp(fallProgress, selectedPosition.right(), 0.0F);
-        float dropY = Mth.lerp(fallProgress, selectedPosition.y(), 0.52F);
+        float dropY = Mth.lerp(fallProgress, selectedPosition.y(), 0.64F);
         float depth = Mth.lerp(eject, selectedPosition.depth(), 0.70F);
         float ballScale = Mth.lerp(fallProgress, INTERIOR_BALL_SCALE, EJECTED_BALL_SCALE);
         float rightX = -facing.getStepZ();
@@ -124,9 +125,9 @@ public class GachaMachineBlockEntityRenderer implements BlockEntityRenderer<Gach
                 capsules[index] = new CapsulePosition(
                         Mth.lerp(horizontalProgress, -0.18F, 0.18F)
                                 + Mth.lerp(random.nextFloat(), -0.006F, 0.006F),
-                        Mth.lerp(verticalProgress, 1.14F, 1.80F)
+                        Mth.lerp(verticalProgress, 0.26F, 0.50F)
                                 + Mth.lerp(random.nextFloat(), -0.006F, 0.006F),
-                        0.24F + Mth.lerp(random.nextFloat(), -0.04F, 0.04F),
+                        0.28F + Mth.lerp(random.nextFloat(), -0.02F, 0.02F),
                         random.nextFloat() * 360.0F);
             }
             return capsules;

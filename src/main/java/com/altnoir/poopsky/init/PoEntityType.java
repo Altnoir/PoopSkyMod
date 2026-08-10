@@ -7,8 +7,8 @@ import com.altnoir.poopsky.content.entity.renderer.*;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.EntityEntry;
-import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.world.entity.MobCategory;
 
 public class PoEntityType {

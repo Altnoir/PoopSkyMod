@@ -83,7 +83,9 @@ public class GachaBallEntity extends ThrowableItemProjectile {
             return;
         }
         EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.getOptional(resourceLocation).orElse(null);
-        if (entityType == null || !entityType.canSummon()) {
+        if (entityType == null
+                || !entityType.canSummon()
+                || !LivingEntity.class.isAssignableFrom(entityType.getBaseClass())) {
             return;
         }
         Entity entity = entityType.create(level);

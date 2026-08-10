@@ -12,17 +12,13 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -30,10 +26,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -43,14 +36,12 @@ import org.jetbrains.annotations.Nullable;
 public class GachaMachineBlock extends BaseEntityBlock {
     public static final MapCodec<GachaMachineBlock> CODEC = simpleCodec(GachaMachineBlock::new);
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-    public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
 
     public GachaMachineBlock(Properties properties) {
         super(properties);
         registerDefaultState(stateDefinition.any()
-                .setValue(FACING, Direction.NORTH)
-                .setValue(HALF, DoubleBlockHalf.LOWER));
+                .setValue(FACING, Direction.NORTH));
     }
 
     @Override
@@ -60,67 +51,20 @@ public class GachaMachineBlock extends BaseEntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, HALF);
+        builder.add(FACING);
     }
 
     @Override
     @Nullable
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        BlockPos pos = context.getClickedPos();
-        Level level = context.getLevel();
-        if (pos.getY() >= level.getMaxBuildHeight() - 1 || !level.getBlockState(pos.above()).canBeReplaced(context)) {
-            return null;
-        }
         return defaultBlockState()
-                .setValue(FACING, context.getHorizontalDirection().getOpposite())
-                .setValue(HALF, DoubleBlockHalf.LOWER);
-    }
-
-    @Override
-    public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-        level.setBlock(pos.above(), state.setValue(HALF, DoubleBlockHalf.UPPER), 3);
-    }
-
-    @Override
-    protected BlockState updateShape(BlockState state, Direction direction, BlockState directionState,
-                                     LevelAccessor level, BlockPos pos, BlockPos directionPos) {
-        DoubleBlockHalf half = state.getValue(HALF);
-        if (direction.getAxis() == Direction.Axis.Y
-                && half == DoubleBlockHalf.LOWER == (direction == Direction.UP)) {
-            return directionState.is(this) && directionState.getValue(HALF) != half
-                    ? state
-                    : Blocks.AIR.defaultBlockState();
-        }
-        return half == DoubleBlockHalf.LOWER && direction == Direction.DOWN && !state.canSurvive(level, pos)
-                ? Blocks.AIR.defaultBlockState()
-                : super.updateShape(state, direction, directionState, level, pos, directionPos);
-    }
-
-    @Override
-    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-        if (!level.isClientSide && (player.isCreative() || !player.hasCorrectToolForDrops(state, level, pos))) {
-            if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
-                BlockPos lowerPos = pos.below();
-                BlockState lowerState = level.getBlockState(lowerPos);
-                if (lowerState.is(this) && lowerState.getValue(HALF) == DoubleBlockHalf.LOWER) {
-                    level.setBlock(lowerPos, Blocks.AIR.defaultBlockState(), 35);
-                    level.levelEvent(player, 2001, lowerPos, Block.getId(lowerState));
-                }
-            }
-        }
-        return super.playerWillDestroy(level, pos, state, player);
-    }
-
-    @Override
-    protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
-        return state.getValue(HALF) == DoubleBlockHalf.LOWER
-                || level.getBlockState(pos.below()).is(this);
+                .setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
                                                BlockHitResult hitResult) {
-        explain(level, lowerPos(state, pos), player);
+        explain(level, pos, player);
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
@@ -128,19 +72,18 @@ public class GachaMachineBlock extends BaseEntityBlock {
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
                                               Player player, InteractionHand hand,
                                               BlockHitResult hitResult) {
-        BlockPos lowerPos = lowerPos(state, pos);
         if (!stack.is(PoItems.OMINOUS_FILTHY_INGOT.get())) {
-            explain(level, lowerPos, player);
+            explain(level, pos, player);
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
         if (!level.isClientSide) {
-            if (level.getBlockEntity(lowerPos) instanceof GachaMachineBlockEntity blockEntity) {
+            if (level.getBlockEntity(pos) instanceof GachaMachineBlockEntity blockEntity) {
                 GachaMachineBlockEntity.StartResult result = blockEntity.start(player);
                 if (result == GachaMachineBlockEntity.StartResult.STARTED) {
                     if (!player.getAbilities().instabuild) {
                         stack.shrink(1);
                     }
-                    level.playSound(null, lowerPos, SoundEvents.NOTE_BLOCK_CHIME.value(),
+                    level.playSound(null, pos, SoundEvents.NOTE_BLOCK_CHIME.value(),
                             SoundSource.BLOCKS, 1.0F, 1.0F);
                 } else {
                     player.displayClientMessage(Component.translatable(result == GachaMachineBlockEntity.StartResult.BUSY
@@ -164,15 +107,9 @@ public class GachaMachineBlock extends BaseEntityBlock {
         }
     }
 
-    private static BlockPos lowerPos(BlockState state, BlockPos pos) {
-        return state.getValue(HALF) == DoubleBlockHalf.UPPER ? pos.below() : pos;
-    }
-
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return state.getValue(HALF) == DoubleBlockHalf.LOWER
-                ? new GachaMachineBlockEntity(pos, state)
-                : null;
+        return new GachaMachineBlockEntity(pos, state);
     }
 
     @Override

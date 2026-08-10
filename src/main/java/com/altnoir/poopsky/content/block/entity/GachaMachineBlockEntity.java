@@ -18,6 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
@@ -94,7 +95,9 @@ public class GachaMachineBlockEntity extends BlockEntity {
             return false;
         }
         EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.getOptional(location).orElse(null);
-        return entityType != null && entityType.canSummon();
+        return entityType != null
+                && entityType.canSummon()
+                && LivingEntity.class.isAssignableFrom(entityType.getBaseClass());
     }
 
     private static boolean isValidReward(ItemStack reward) {
@@ -125,7 +128,7 @@ public class GachaMachineBlockEntity extends BlockEntity {
         Direction facing = state.getValue(GachaMachineBlock.FACING);
         ItemEntity itemEntity = new ItemEntity(level,
                 this.worldPosition.getX() + 0.5D + facing.getStepX() * 0.7D,
-                this.worldPosition.getY() + 0.45D,
+                this.worldPosition.getY() + 0.58D,
                 this.worldPosition.getZ() + 0.5D + facing.getStepZ() * 0.7D,
                 this.rewardStack.copyWithCount(1));
         itemEntity.setDeltaMovement(facing.getStepX() * 0.14D, 0.12D, facing.getStepZ() * 0.14D);
