@@ -46,6 +46,8 @@
   "message.poopsky.toilet_linker.4": "已清除",
   "message.poopsky.return_totem.not_bound": "未绑定移动巧克力礼盒",
   "message.poopsky.return_totem.obstructed": "移动巧克力礼盒被遮挡",
+  "message.poopsky.gacha_machine.requires_ingot": "需要悦动甜蜜锭",
+  "message.poopsky.gacha_machine.busy": "扭蛋机正在运行",
   "tooltip.poopsky.item.info_0": "§7按住 §6[Shift] §7显示详细",
   "tooltip.poopsky.item.info_1": "§8分别右击两个不同的巧克力礼盒方块以连接通道",
   "tooltip.poopsky.toilet_linker.info_1": "巧克力礼盒①-维度ID：%1$s，坐标：%2$s, %3$s, %4$s",
@@ -215,6 +217,7 @@
   "item.poopsky.dragon_breath_chili": "龙息辣椒",
   "item.poopsky.king_of_dragon_fruit": "帝王火龙果",
   "item.poopsky.roundworm": "白巧克力棒",
+  "item.poopsky.gacha_ball": "扭蛋球",
   "item.poopsky.maggots_seeds": "牛奶巧克力",
   "block.poopsky.maggots": "牛奶巧克力",
   "item.poopsky.baked_maggots": "烤牛奶巧克力",
@@ -248,6 +251,7 @@
   "block.poopsky.golden_flush_toilet": "黄金葡萄酒杯",
   "block.poopsky.ginkgo_toilet": "银杏木移动巧克力礼盒",
   "block.poopsky.portable_toilet": "移动巧克力礼盒",
+  "block.poopsky.gacha_machine": "扭蛋机",
 
   "fly_type.poopsky.normal": "普通暗色蜜蜂",
   "fly_type.poopsky.white": "白暗色蜜蜂",
@@ -469,6 +473,7 @@
   "item.poopsky.smithing_template.omen_upgrade.ingredients":"悦动甜蜜锭",
   "item.poopsky.smithing_template.omen_upgrade.base_slot_description": "放入金盔甲",
   "item.poopsky.smithing_template.omen_upgrade.additions_slot_description": "放入悦动甜蜜锭",
+  "item.poopsky.gacha_ball.entity": "内含：%s",
 
   "advancements.poopsky.root.title": "空中卫生间",
   "advancements.poopsky.root.description": "一切食于脚下",

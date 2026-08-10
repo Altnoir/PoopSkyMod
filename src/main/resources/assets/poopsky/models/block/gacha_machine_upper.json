@@ -1,0 +1,26 @@
+{
+  "credit": "PoopSky",
+  "textures": {
+    "body": "minecraft:block/red_concrete",
+    "frame": "minecraft:block/iron_block",
+    "dark": "minecraft:block/black_concrete",
+    "glass": "minecraft:block/glass",
+    "particle": "minecraft:block/red_concrete"
+  },
+  "elements": [
+    {"from": [1, 0, 1], "to": [15, 16, 15], "faces": {
+      "down": {"texture": "#body"}, "up": {"texture": "#frame"},
+      "north": {"texture": "#body"}, "south": {"texture": "#body"},
+      "west": {"texture": "#body"}, "east": {"texture": "#body"}
+    }},
+    {"from": [2, 2, 0], "to": [14, 14, 2], "faces": {
+      "north": {"texture": "#glass"}, "south": {"texture": "#dark"},
+      "west": {"texture": "#frame"}, "east": {"texture": "#frame"},
+      "up": {"texture": "#frame"}, "down": {"texture": "#frame"}
+    }},
+    {"from": [1, 14, 0], "to": [15, 16, 15], "faces": {
+      "up": {"texture": "#frame"}, "north": {"texture": "#frame"},
+      "south": {"texture": "#body"}, "west": {"texture": "#body"}, "east": {"texture": "#body"}
+    }}
+  ]
+}

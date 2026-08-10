@@ -2,6 +2,7 @@ package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.entity.*;
+import com.altnoir.poopsky.content.block.renderer.GachaMachineBlockEntityRenderer;
 import com.altnoir.poopsky.content.block.renderer.MaggotsChunkLoaderBlockEntityRenderer;
 import com.altnoir.poopsky.content.block.renderer.SieveBlockEntityRenderer;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
@@ -45,6 +46,12 @@ public class PoBlockEntityType {
     public static final BlockEntityEntry<FlushToiletBlockEntity> FLUSH_TOILET = REGISTRATE
             .<FlushToiletBlockEntity>blockEntity("flush_toilet", (type, pos, state) -> new FlushToiletBlockEntity(pos, state))
             .validBlocks(PoBlocks.FLUSH_TOILET, PoBlocks.GOLDEN_FLUSH_TOILET)
+            .register();
+
+    public static final BlockEntityEntry<GachaMachineBlockEntity> GACHA_MACHINE = REGISTRATE
+            .<GachaMachineBlockEntity>blockEntity("gacha_machine", (type, pos, state) -> new GachaMachineBlockEntity(pos, state))
+            .validBlock(PoBlocks.GACHA_MACHINE)
+            .renderer(() -> GachaMachineBlockEntityRenderer::new)
             .register();
 
     public static void register() {

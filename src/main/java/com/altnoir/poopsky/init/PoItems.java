@@ -155,6 +155,9 @@ public class PoItems {
     public static final ItemEntry<FeedableBlockItem> ROUNDWORM = registerItem("roundworm",
             props -> new FeedableBlockItem(PoBlocks.ROUNDWORM_VINES.get(), new Item.Properties().food(PFoods.ROUNDWORM).stacksTo(88)));
 
+    public static final ItemEntry<GachaBallItem> GACHA_BALL = registerItemNoModel("gacha_ball",
+            props -> new GachaBallItem(props.stacksTo(16)));
+
     public static final ItemEntry<SimpleFeedableItem> FASTING_PILL = registerFood("fasting_pill", PFoods.FASTING_PILL);
 
     public static final ItemEntry<FlyItem> FLY = registerItemNoModel("fly",

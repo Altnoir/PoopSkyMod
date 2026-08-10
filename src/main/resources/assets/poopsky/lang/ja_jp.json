@@ -46,6 +46,8 @@
   "message.poopsky.toilet_linker.4": "解除済み",
   "message.poopsky.return_totem.not_bound": "移動式トイレに紐付けられていません",
   "message.poopsky.return_totem.obstructed": "移動式トイレが塞がれています",
+  "message.poopsky.gacha_machine.requires_ingot": "不吉な汚穢のインゴットが必要です",
+  "message.poopsky.gacha_machine.busy": "ガチャマシンは作動中です",
   "tooltip.poopsky.item.info_0": "§7§6[Shift]§7を押しながら詳細を表示",
   "tooltip.poopsky.item.info_1": "§8異なる2つのトイレブロックを右クリックして接続",
   "tooltip.poopsky.toilet_linker.info_1": "トイレ①-ディメンションID：%1$s、座標：%2$s, %3$s, %4$s",
@@ -215,6 +217,7 @@
   "item.poopsky.dragon_breath_chili": "ドラゴンブレスチリ",
   "item.poopsky.king_of_dragon_fruit": "帝王ドラゴンフルーツ",
   "item.poopsky.roundworm": "回虫",
+  "item.poopsky.gacha_ball": "ガチャカプセル",
   "item.poopsky.maggots_seeds": "ウジ虫",
   "block.poopsky.maggots": "ウジ虫",
   "item.poopsky.baked_maggots": "焼きウジ虫",
@@ -248,6 +251,7 @@
   "block.poopsky.golden_flush_toilet": "黄金のトイレ",
   "block.poopsky.ginkgo_toilet": "イチョウのトイレ",
   "block.poopsky.portable_toilet": "携帯トイレ",
+  "block.poopsky.gacha_machine": "ガチャマシン",
 
   "fly_type.poopsky.normal": "ノーマルハエ",
   "fly_type.poopsky.white": "白ハエ",
@@ -469,6 +473,7 @@
   "item.poopsky.smithing_template.omen_upgrade.ingredients": "不吉な汚穢のインゴット",
   "item.poopsky.smithing_template.omen_upgrade.base_slot_description": "金装備を入れる",
   "item.poopsky.smithing_template.omen_upgrade.additions_slot_description": "不吉な汚穢のインゴットを入れる",
+  "item.poopsky.gacha_ball.entity": "中身：%s",
 
   "advancements.poopsky.root.title": "プープスカイ",
   "advancements.poopsky.root.description": "すべては一山の糞から始まった",

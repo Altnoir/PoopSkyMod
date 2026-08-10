@@ -46,6 +46,8 @@
   "message.poopsky.toilet_linker.4": "Соединение снято",
   "message.poopsky.return_totem.not_bound": "Не привязан к передвижному туалету",
   "message.poopsky.return_totem.obstructed": "Передвижной туалет заблокирован",
+  "message.poopsky.gacha_machine.requires_ingot": "Требуется зловещий грязный слиток",
+  "message.poopsky.gacha_machine.busy": "Автомат гача уже работает",
   "tooltip.poopsky.item.info_0": "§7Удерживайте §6[Shift] §7для деталей",
   "tooltip.poopsky.item.info_1": "§8Щёлкните ПКМ по двум разным унитазам, чтобы соединить их",
   "tooltip.poopsky.toilet_linker.info_1": "Унитаз① - ID измерения: %1$s, Координаты: %2$s, %3$s, %4$s",
@@ -215,6 +217,7 @@
   "item.poopsky.dragon_breath_chili": "Чили дыхания дракона",
   "item.poopsky.king_of_dragon_fruit": "Королевский драконий фрукт",
   "item.poopsky.roundworm": "Круглый червь",
+  "item.poopsky.gacha_ball": "Капсула гача",
   "item.poopsky.maggots_seeds": "Опарыши",
   "block.poopsky.maggots": "Опарыши",
   "item.poopsky.baked_maggots": "Запечённые опарыши",
@@ -248,6 +251,7 @@
   "block.poopsky.golden_flush_toilet": "Золотой унитаз",
   "block.poopsky.ginkgo_toilet": "Унитаз из гинкго",
   "block.poopsky.portable_toilet": "Переносной унитаз",
+  "block.poopsky.gacha_machine": "Автомат гача",
 
   "fly_type.poopsky.normal": "Обычная муха",
   "fly_type.poopsky.white": "Белая муха",
@@ -469,6 +473,7 @@
   "item.poopsky.smithing_template.omen_upgrade.ingredients": "Зловещий грязный слиток",
   "item.poopsky.smithing_template.omen_upgrade.base_slot_description": "Поместите золотое снаряжение",
   "item.poopsky.smithing_template.omen_upgrade.additions_slot_description": "Поместите зловещий грязный слиток",
+  "item.poopsky.gacha_ball.entity": "Внутри: %s",
 
   "advancements.poopsky.root.title": "POOPSKY",
   "advancements.poopsky.root.description": "Всё началось с кучи какашек",

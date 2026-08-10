@@ -1,0 +1,29 @@
+{
+  "credit": "PoopSky",
+  "textures": {
+    "body": "minecraft:block/red_concrete",
+    "frame": "minecraft:block/iron_block",
+    "dark": "minecraft:block/black_concrete",
+    "glass": "minecraft:block/glass",
+    "particle": "minecraft:block/red_concrete"
+  },
+  "elements": [
+    {"from": [1, 0, 1], "to": [15, 16, 15], "faces": {
+      "down": {"texture": "#frame"}, "up": {"texture": "#body"},
+      "north": {"texture": "#body"}, "south": {"texture": "#body"},
+      "west": {"texture": "#body"}, "east": {"texture": "#body"}
+    }},
+    {"from": [4, 3, 0], "to": [12, 9, 2], "faces": {
+      "north": {"texture": "#dark"}, "south": {"texture": "#body"},
+      "west": {"texture": "#frame"}, "east": {"texture": "#frame"}, "up": {"texture": "#frame"}
+    }},
+    {"from": [6, 9, 0], "to": [10, 12, 2], "faces": {
+      "north": {"texture": "#frame"}, "south": {"texture": "#body"},
+      "west": {"texture": "#frame"}, "east": {"texture": "#frame"}, "up": {"texture": "#frame"}
+    }}
+  ],
+  "display": {
+    "thirdperson_righthand": {"rotation": [75, 45, 0], "translation": [0, 2.5, 0], "scale": [0.5, 0.5, 0.5]},
+    "firstperson_righthand": {"rotation": [0, 45, 0], "translation": [0, 3, 0], "scale": [0.4, 0.4, 0.4]}
+  }
+}

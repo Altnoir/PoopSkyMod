@@ -92,6 +92,7 @@
     "poopsky:sieve_stable",
     "poopsky:placer",
     "poopsky:maggots_chunk_loader",
+    "poopsky:gacha_machine",
     "poopsky:saltpeter_block",
     "poopsky:saltpeter_cluster",
     "poopsky:large_saltpeter_bud",

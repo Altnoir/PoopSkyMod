@@ -46,6 +46,8 @@
   "message.poopsky.toilet_linker.4": "Verbindung getrennt",
   "message.poopsky.return_totem.not_bound": "Keine mobile Toilette verbunden",
   "message.poopsky.return_totem.obstructed": "Mobile Toilette ist blockiert",
+  "message.poopsky.gacha_machine.requires_ingot": "Ein ominöser Schmutzbarren wird benötigt",
+  "message.poopsky.gacha_machine.busy": "Der Kapselautomat läuft bereits",
   "tooltip.poopsky.item.info_0": "§7Halte §6[Umschalt] §7für Details",
   "tooltip.poopsky.item.info_1": "§8Rechtsklicke auf zwei verschiedene Toiletten, um sie zu verbinden",
   "tooltip.poopsky.toilet_linker.info_1": "Toilette① - Dimensions-ID: %1$s, Koordinaten: %2$s, %3$s, %4$s",
@@ -215,6 +217,7 @@
   "item.poopsky.dragon_breath_chili": "Drachenatem-Chili",
   "item.poopsky.king_of_dragon_fruit": "Königliche Drachenfrucht",
   "item.poopsky.roundworm": "Spulwurm",
+  "item.poopsky.gacha_ball": "Kapsel",
   "item.poopsky.maggots_seeds": "Maden",
   "block.poopsky.maggots": "Maden",
   "item.poopsky.baked_maggots": "Gebackene Maden",
@@ -248,6 +251,7 @@
   "block.poopsky.golden_flush_toilet": "Goldene Toilette",
   "block.poopsky.ginkgo_toilet": "Ginkgoholztoilette",
   "block.poopsky.portable_toilet": "Tragbare Toilette",
+  "block.poopsky.gacha_machine": "Kapselautomat",
 
   "fly_type.poopsky.normal": "Normale Fliege",
   "fly_type.poopsky.white": "Weiße Fliege",
@@ -469,6 +473,7 @@
   "item.poopsky.smithing_template.omen_upgrade.ingredients": "Ominöser Schmutzbarren",
   "item.poopsky.smithing_template.omen_upgrade.base_slot_description": "Lege Goldausrüstung hinein",
   "item.poopsky.smithing_template.omen_upgrade.additions_slot_description": "Lege einen ominösen Schmutzbarren hinein",
+  "item.poopsky.gacha_ball.entity": "Enthält: %s",
 
   "advancements.poopsky.root.title": "POOPSKY",
   "advancements.poopsky.root.description": "Alles begann mit einem Haufen Kacke",

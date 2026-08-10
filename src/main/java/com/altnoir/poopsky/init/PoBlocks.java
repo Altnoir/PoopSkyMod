@@ -515,6 +515,13 @@ public class PoBlocks {
                     .sound(SoundType.NETHERITE_BLOCK)
                     .noOcclusion()),
             (loot, block) -> loot.add(block, loot.createDoorTable(block)));
+    public static final BlockEntry<GachaMachineBlock> GACHA_MACHINE = registerBlock("gacha_machine", 1,
+            props -> new GachaMachineBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_RED)
+                    .strength(HARDEN, HARD_STRENGTH)
+                    .sound(SoundType.METAL)
+                    .noOcclusion()),
+            (loot, block) -> loot.add(block, loot.createDoorTable(block)));
 
     public record BlockFamily(
             BlockEntry<? extends Block> block,

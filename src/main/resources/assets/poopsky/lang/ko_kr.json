@@ -46,6 +46,8 @@
   "message.poopsky.toilet_linker.4": "연결 해제",
   "message.poopsky.return_totem.not_bound": "이동식 변기에 연결되지 않았습니다",
   "message.poopsky.return_totem.obstructed": "이동식 변기가 막혀 있습니다",
+  "message.poopsky.gacha_machine.requires_ingot": "불길한 오염 주괴가 필요합니다",
+  "message.poopsky.gacha_machine.busy": "뽑기 기계가 작동 중입니다",
   "tooltip.poopsky.item.info_0": "§7§6[Shift]§7를 눌러 상세 정보 표시",
   "tooltip.poopsky.item.info_1": "§8서로 다른 변기 블록 두 개를 각각 우클릭하여 연결하세요",
   "tooltip.poopsky.toilet_linker.info_1": "변기①-차원 ID: %1$s, 좌표: %2$s, %3$s, %4$s",
@@ -215,6 +217,7 @@
   "item.poopsky.dragon_breath_chili": "드래곤 브레스 고추",
   "item.poopsky.king_of_dragon_fruit": "제왕 드래곤 프루트",
   "item.poopsky.roundworm": "회충",
+  "item.poopsky.gacha_ball": "뽑기 캡슐",
   "item.poopsky.maggots_seeds": "구더기",
   "block.poopsky.maggots": "구더기",
   "item.poopsky.baked_maggots": "구운 구더기",
@@ -248,6 +251,7 @@
   "block.poopsky.golden_flush_toilet": "황금 변기",
   "block.poopsky.ginkgo_toilet": "은행나무 변기",
   "block.poopsky.portable_toilet": "이동식 변기",
+  "block.poopsky.gacha_machine": "뽑기 기계",
 
   "fly_type.poopsky.normal": "일반 파리",
   "fly_type.poopsky.white": "흰색 파리",
@@ -469,6 +473,7 @@
   "item.poopsky.smithing_template.omen_upgrade.ingredients": "불길한 오염 주괴",
   "item.poopsky.smithing_template.omen_upgrade.base_slot_description": "금 장비를 넣으세요",
   "item.poopsky.smithing_template.omen_upgrade.additions_slot_description": "불길한 오염 주괴를 넣으세요",
+  "item.poopsky.gacha_ball.entity": "내용물: %s",
 
   "advancements.poopsky.root.title": "POOPSKY",
   "advancements.poopsky.root.description": "모든 것은 한 무더기의 똥에서 시작되었다",

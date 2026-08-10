@@ -26,6 +26,12 @@ public final class PoComponents {
                     .networkSynchronized(ByteBufCodecs.STRING_UTF8)
             );
 
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> GACHA_ENTITY =
+            COMPONENTS.registerComponentType("gacha_entity", builder -> builder
+                    .persistent(ExtraCodecs.NON_EMPTY_STRING)
+                    .networkSynchronized(ByteBufCodecs.STRING_UTF8)
+            );
+
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<ToiletType>> TOILET_TYPE =
             COMPONENTS.registerComponentType("toilet_type", builder -> builder
                     .persistent(ToiletType.CODEC)

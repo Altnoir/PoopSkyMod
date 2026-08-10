@@ -1,0 +1,46 @@
+{
+  "textures": {
+    "upper": "minecraft:block/red_concrete",
+    "lower": "minecraft:block/white_concrete",
+    "seam": "minecraft:block/iron_block",
+    "particle": "minecraft:block/red_concrete"
+  },
+  "elements": [
+    {
+      "from": [4, 4, 4],
+      "to": [12, 8, 12],
+      "faces": {
+        "down": {"texture": "#lower"}, "up": {"texture": "#lower"},
+        "north": {"texture": "#lower"}, "south": {"texture": "#lower"},
+        "west": {"texture": "#lower"}, "east": {"texture": "#lower"}
+      }
+    },
+    {
+      "from": [4, 8, 4],
+      "to": [12, 12, 12],
+      "faces": {
+        "down": {"texture": "#upper"}, "up": {"texture": "#upper"},
+        "north": {"texture": "#upper"}, "south": {"texture": "#upper"},
+        "west": {"texture": "#upper"}, "east": {"texture": "#upper"}
+      }
+    },
+    {
+      "from": [3.75, 7.5, 3.75],
+      "to": [12.25, 8.5, 12.25],
+      "faces": {
+        "down": {"texture": "#seam"}, "up": {"texture": "#seam"},
+        "north": {"texture": "#seam"}, "south": {"texture": "#seam"},
+        "west": {"texture": "#seam"}, "east": {"texture": "#seam"}
+      }
+    }
+  ],
+  "display": {
+    "thirdperson_righthand": {"rotation": [75, 45, 0], "translation": [0, 2.5, 0], "scale": [0.75, 0.75, 0.75]},
+    "thirdperson_lefthand": {"rotation": [75, 225, 0], "translation": [0, 2.5, 0], "scale": [0.75, 0.75, 0.75]},
+    "firstperson_righthand": {"rotation": [0, 45, 0], "translation": [0, 2, 0], "scale": [0.8, 0.8, 0.8]},
+    "firstperson_lefthand": {"rotation": [0, 225, 0], "translation": [0, 2, 0], "scale": [0.8, 0.8, 0.8]},
+    "gui": {"rotation": [30, 225, 0], "translation": [0, 0, 0], "scale": [1.1, 1.1, 1.1]},
+    "ground": {"translation": [0, 3, 0], "scale": [0.5, 0.5, 0.5]},
+    "fixed": {"rotation": [0, 180, 0], "scale": [1.0, 1.0, 1.0]}
+  }
+}

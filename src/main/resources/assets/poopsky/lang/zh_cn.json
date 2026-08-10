@@ -46,6 +46,8 @@
   "message.poopsky.toilet_linker.4": "已清除",
   "message.poopsky.return_totem.not_bound": "未绑定移动厕所",
   "message.poopsky.return_totem.obstructed": "移动厕所被遮挡",
+  "message.poopsky.gacha_machine.requires_ingot": "需要恶兆污秽锭",
+  "message.poopsky.gacha_machine.busy": "扭蛋机正在运行",
   "tooltip.poopsky.item.info_0": "§7按住 §6[Shift] §7显示详细",
   "tooltip.poopsky.item.info_1": "§8分别右击两个不同的厕所方块以连接通道",
   "tooltip.poopsky.toilet_linker.info_1": "厕所①-维度ID：%1$s，坐标：%2$s, %3$s, %4$s",
@@ -215,6 +217,7 @@
   "item.poopsky.dragon_breath_chili": "龙息辣椒",
   "item.poopsky.king_of_dragon_fruit": "帝王火龙果",
   "item.poopsky.roundworm": "蛔虫",
+  "item.poopsky.gacha_ball": "扭蛋球",
   "item.poopsky.maggots_seeds": "蛆",
   "block.poopsky.maggots": "蛆",
   "item.poopsky.baked_maggots": "烤蛆",
@@ -248,6 +251,7 @@
   "block.poopsky.golden_flush_toilet": "黄金马桶",
   "block.poopsky.ginkgo_toilet": "银杏木移动厕所",
   "block.poopsky.portable_toilet": "移动厕所",
+  "block.poopsky.gacha_machine": "扭蛋机",
 
   "fly_type.poopsky.normal": "普通苍蝇",
   "fly_type.poopsky.white": "白苍蝇",
@@ -469,6 +473,7 @@
   "item.poopsky.smithing_template.omen_upgrade.ingredients":"恶兆污秽锭",
   "item.poopsky.smithing_template.omen_upgrade.base_slot_description": "放入金盔甲",
   "item.poopsky.smithing_template.omen_upgrade.additions_slot_description": "放入恶兆污秽锭",
+  "item.poopsky.gacha_ball.entity": "内含：%s",
 
   "advancements.poopsky.root.title": "空中厕所",
   "advancements.poopsky.root.description": "一切屎于脚下",

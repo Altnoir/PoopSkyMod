@@ -7,6 +7,7 @@ import com.altnoir.poopsky.content.entity.renderer.*;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.EntityEntry;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import net.minecraft.world.entity.MobCategory;
 
@@ -83,6 +84,16 @@ public class PoEntityType {
                     .updateInterval(10)
                     .fireImmune())
             .renderer(() -> PoopTntRenderer::new)
+            .setData(ProviderType.LANG, NonNullBiConsumer.noop())
+            .register();
+
+    public static final EntityEntry<GachaBallEntity> GACHA_BALL = REGISTRATE
+            .<GachaBallEntity>entity("gacha_ball", GachaBallEntity::new, MobCategory.MISC)
+            .properties(properties -> properties
+                    .sized(0.25F, 0.25F)
+                    .clientTrackingRange(4)
+                    .updateInterval(10))
+            .renderer(() -> ThrownItemRenderer::new)
             .setData(ProviderType.LANG, NonNullBiConsumer.noop())
             .register();
 

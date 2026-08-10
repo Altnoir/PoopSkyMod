@@ -180,6 +180,7 @@ public final class LangGen {
         provider.add("item.poopsky.smithing_template.omen_upgrade.ingredients", "Ominous Filthy Ingot");
         provider.add("item.poopsky.smithing_template.omen_upgrade.base_slot_description", "Upgrade golden equipment here.");
         provider.add("item.poopsky.smithing_template.omen_upgrade.additions_slot_description", "Add Ominous Filthy Ingot here.");
+        provider.add("item.poopsky.gacha_ball.entity", "Contains: %s");
         provider.add("item.poopsky.music_disc_lawrence.desc", "Ryuichi Sakamoto - Merry Christmas Mr. Lawrence");
         provider.add("item.poopsky.music_disc_light_dance.desc", "Sakanaction - Light Dance");
         provider.add("item.poopsky.music_disc_moon_bowl.desc", "Sakanaction - Moon Bowl");
@@ -203,6 +204,8 @@ public final class LangGen {
         provider.add("message.poopsky.return_totem.not_bound", "Not bound to a Portable Toilet");
         provider.add("message.poopsky.return_totem.obstructed", "The Portable Toilet is obstructed");
         provider.add("message.poopsky.toilet_plug.dismount", "Press %s to dismount Toilet Plug");
+        provider.add("message.poopsky.gacha_machine.requires_ingot", "An Ominous Filthy Ingot is required");
+        provider.add("message.poopsky.gacha_machine.busy", "The gacha machine is already running");
     }
 
     private static void addFlyTypes() {

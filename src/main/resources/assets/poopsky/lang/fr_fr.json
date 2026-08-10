@@ -46,6 +46,8 @@
   "message.poopsky.toilet_linker.4": "Effacé",
   "message.poopsky.return_totem.not_bound": "Aucune toilette mobile liée",
   "message.poopsky.return_totem.obstructed": "Les toilettes mobiles sont obstruées",
+  "message.poopsky.gacha_machine.requires_ingot": "Un lingot souillé de mauvais augure est requis",
+  "message.poopsky.gacha_machine.busy": "La machine à capsules fonctionne déjà",
   "tooltip.poopsky.item.info_0": "§7Maintenez §6[Maj] §7pour afficher les détails",
   "tooltip.poopsky.item.info_1": "§8Faites un clic droit sur deux blocs de toilettes différents pour lier les canaux",
   "tooltip.poopsky.toilet_linker.info_1": "Toilettes① - DimID : %1$s, Coordonnées : %2$s, %3$s, %4$s",
@@ -215,6 +217,7 @@
   "item.poopsky.dragon_breath_chili": "Piment au souffle de dragon",
   "item.poopsky.king_of_dragon_fruit": "Roi des fruits du dragon",
   "item.poopsky.roundworm": "Ascaris",
+  "item.poopsky.gacha_ball": "Capsule",
   "item.poopsky.maggots_seeds": "Asticots",
   "block.poopsky.maggots": "Asticots",
   "item.poopsky.baked_maggots": "Asticots cuits",
@@ -248,6 +251,7 @@
   "block.poopsky.golden_flush_toilet": "Toilettes dorées",
   "block.poopsky.ginkgo_toilet": "Toilettes en ginkgo",
   "block.poopsky.portable_toilet": "Toilettes portables",
+  "block.poopsky.gacha_machine": "Machine à capsules",
 
   "fly_type.poopsky.normal": "Mouche normale",
   "fly_type.poopsky.white": "Mouche blanche",
@@ -469,6 +473,7 @@
   "item.poopsky.smithing_template.omen_upgrade.ingredients": "Lingot souillé de mauvais augure",
   "item.poopsky.smithing_template.omen_upgrade.base_slot_description": "Placez un équipement en or",
   "item.poopsky.smithing_template.omen_upgrade.additions_slot_description": "Placez un lingot souillé de mauvais augure",
+  "item.poopsky.gacha_ball.entity": "Contient : %s",
 
   "advancements.poopsky.root.title": "POOPSKY",
   "advancements.poopsky.root.description": "Tout a commencé avec un tas de crotte",
