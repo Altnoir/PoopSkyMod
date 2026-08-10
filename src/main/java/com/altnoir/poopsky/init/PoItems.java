@@ -184,9 +184,7 @@ public class PoItems {
     }
 
     private static <T extends Item> ItemEntry<T> registerHandheldItem(String name, NonNullFunction<Item.Properties, T> factory) {
-        return REGISTRATE.item(name, factory).model((ctx, prov) -> {
-            prov.handheld(ctx);
-        }).register();
+        return REGISTRATE.item(name, factory).model((ctx, prov) -> prov.handheld(ctx)).register();
     }
 
     private static <T extends Item> ItemEntry<T> registerItemNoModel(String name, NonNullFunction<Item.Properties, T> factory) {

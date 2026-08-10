@@ -26,7 +26,6 @@ import net.minecraft.world.level.block.CandleBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
-import org.jetbrains.annotations.NotNull;
 
 public class PoopCakeBlock extends CakeBlock {
     public PoopCakeBlock(Properties properties) {
@@ -37,6 +36,7 @@ public class PoopCakeBlock extends CakeBlock {
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         Item item = stack.getItem();
         BlockState candleCake = getCandleCakeState(stack, state);
+        //noinspection ConstantConditions
         if (candleCake == null) {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
@@ -73,7 +73,7 @@ public class PoopCakeBlock extends CakeBlock {
         return eat(level, pos, state, player);
     }
 
-    protected static @NotNull InteractionResult eat(LevelAccessor level, BlockPos pos, BlockState state, Player player) {
+    protected static InteractionResult eat(LevelAccessor level, BlockPos pos, BlockState state, Player player) {
         if (!player.canEat(false)) {
             return InteractionResult.PASS;
         } else {

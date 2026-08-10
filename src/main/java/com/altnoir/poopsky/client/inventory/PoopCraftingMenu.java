@@ -1,13 +1,10 @@
 package com.altnoir.poopsky.client.inventory;
 
 import com.altnoir.poopsky.init.PoBlocks;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.CraftingMenu;
-import net.minecraft.world.level.block.Blocks;
 
 public class PoopCraftingMenu extends CraftingMenu {
     private final ContainerLevelAccess access;
