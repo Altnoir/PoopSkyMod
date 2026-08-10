@@ -9,8 +9,6 @@ import com.altnoir.poopsky.content.entity.p.PoopTntEntity;
 import com.altnoir.poopsky.content.item.p.JinKeLaItem;
 import com.altnoir.poopsky.content.villager.PoVillagers;
 import com.altnoir.poopsky.data.*;
-import com.altnoir.poopsky.data.EntityLootTableGen;
-import com.altnoir.poopsky.data.EntityTypeTagsGen;
 import com.altnoir.poopsky.data.lang.LangGen;
 import com.altnoir.poopsky.impl.event.PoGameEvents;
 import com.altnoir.poopsky.impl.event.PoModEvents;

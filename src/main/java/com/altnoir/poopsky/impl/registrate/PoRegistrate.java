@@ -3,8 +3,6 @@ package com.altnoir.poopsky.impl.registrate;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.impl.creative.PoCreativeTabSection;
 import com.tterrag.registrate.AbstractRegistrate;
-import com.tterrag.registrate.builders.BlockBuilder;
-import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -90,7 +88,7 @@ public class PoRegistrate extends AbstractRegistrate<PoRegistrate> {
             NonNullFunction<Item.Properties, T> factory
     ) {
         return (PoItemBuilder<T, P>) this
-                .<Item, T, P, ItemBuilder<T, P>>entry(name, callback -> {
+                .entry(name, callback -> {
                     PoItemBuilder<T, P> builder = PoItemBuilder.create(this, parent, name, callback, factory);
                     if (defaultCreativeSection != null && !ignoredCreativeTabEntries.contains(name)) {
                         builder.defaultCreativeSection(defaultCreativeSection);
