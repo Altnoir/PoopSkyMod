@@ -21,8 +21,8 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 public class GachaMachineBlockEntityRenderer implements BlockEntityRenderer<GachaMachineBlockEntity> {
-    private static final float INTERIOR_BALL_SCALE = 0.10F;
-    private static final float EJECTED_BALL_SCALE = 0.30F;
+    private static final float INTERIOR_BALL_SCALE = 0.14F;
+    private static final float EJECTED_BALL_SCALE = 0.34F;
     private static final ItemStack DISPLAY_BALL = new ItemStack(PoItems.GACHA_BALL.get());
     private static final Map<GachaMachineBlockEntity, CapsulePosition[]> INTERIOR_POSITION_CACHE = new WeakHashMap<>();
 
@@ -117,7 +117,7 @@ public class GachaMachineBlockEntityRenderer implements BlockEntityRenderer<Gach
             for (int index = 0; index < capsules.length; index++) {
                 capsules[index] = new CapsulePosition(
                         Mth.lerp(random.nextFloat(), -0.34F, 0.34F),
-                        Mth.lerp(random.nextFloat(), 0.10F, 1.90F),
+                        Mth.lerp(random.nextFloat(), 1.08F, 1.88F),
                         Mth.lerp(random.nextFloat(), -0.36F, 0.36F),
                         random.nextFloat() * 360.0F);
             }

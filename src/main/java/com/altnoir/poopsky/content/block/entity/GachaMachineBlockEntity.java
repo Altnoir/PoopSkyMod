@@ -32,7 +32,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 
 public class GachaMachineBlockEntity extends BlockEntity {
     public static final int ANIMATION_LENGTH = 50;
-    public static final int CAPSULE_COUNT = 200;
+    public static final int CAPSULE_COUNT = 100;
     private static final ResourceKey<LootTable> REWARD_TABLE = ResourceKey.create(
             Registries.LOOT_TABLE, PoopSky.loc("gameplay/gacha_machine"));
 
