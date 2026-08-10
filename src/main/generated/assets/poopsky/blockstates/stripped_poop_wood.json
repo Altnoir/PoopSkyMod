@@ -1,0 +1,37 @@
+{
+  "variants": {
+    "axis=x": [
+      {
+        "model": "poopsky:block/stripped_poop_wood_horizontal",
+        "weight": 4,
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "poopsky:block/stripped_poop_wood_horizontal2",
+        "x": 90,
+        "y": 90
+      }
+    ],
+    "axis=y": [
+      {
+        "model": "poopsky:block/stripped_poop_wood",
+        "weight": 4
+      },
+      {
+        "model": "poopsky:block/stripped_poop_wood2"
+      }
+    ],
+    "axis=z": [
+      {
+        "model": "poopsky:block/stripped_poop_wood_horizontal",
+        "weight": 4,
+        "x": 90
+      },
+      {
+        "model": "poopsky:block/stripped_poop_wood_horizontal2",
+        "x": 90
+      }
+    ]
+  }
+}

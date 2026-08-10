@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": {
+      "item": "poopsky:ginkgo_planks"
+    },
+    "P": {
+      "item": "poopsky:poop"
+    }
+  },
+  "pattern": [
+    "B",
+    "B",
+    "P"
+  ],
+  "result": {
+    "count": 1,
+    "id": "poopsky:ginkgo_toilet"
+  }
+}

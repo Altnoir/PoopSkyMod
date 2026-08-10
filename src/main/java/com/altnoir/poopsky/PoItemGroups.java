@@ -23,6 +23,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.level.block.Block;
 
 import java.util.List;
 
@@ -70,17 +71,7 @@ public class PoItemGroups {
 
     private static void populateBasicSections(CreativeModeTab.ItemDisplayParameters parameters) {
         for (Item item : PoItems.getAllItems()) {
-            if (item == Items.AIR || item instanceof FlyItem) {
-                continue;
-            }
-            if (PoBlocks.isNoTabItem(item)) {
-                continue;
-            }
-            if (item instanceof BlockItem && PoBlocks.isBasicBlockItem(item)) {
-                TS_BLOCKS.add(item);
-            } else {
-                TS_ITEMS.add(item);
-            }
+            addBasicItem(item);
         }
 
         for (String id : FlyTypeManager.INSTANCE.getFlyTypes()) {
@@ -95,23 +86,43 @@ public class PoItemGroups {
                         .forEach(item -> addPotions(potions, item, parameters.enabledFeatures())));
     }
 
+    private static void addBasicItem(Item item) {
+        if (item == Items.AIR || item instanceof FlyItem || PoBlocks.isNoTabItem(item)) {
+            return;
+        }
+
+        if (item instanceof BlockItem && PoBlocks.isBasicBlockItem(item)) {
+            TS_BLOCKS.add(item);
+            return;
+        }
+
+        if (!PoBlocks.isDecoMaterialItem(item) && !PoBlocks.isDecoTileItem(item)) {
+            TS_ITEMS.add(item);
+        }
+    }
+
     private static void populateDecorativeSections() {
         for (Item item : PoItems.getAllItems()) {
-            if (item instanceof BlockItem && PoBlocks.isDecoMaterialItem(item)) {
+            if (!(item instanceof BlockItem)) {
+                continue;
+            }
+
+            if (PoBlocks.isDecoMaterialItem(item)) {
                 TS_DECO_MATERIALS.add(item);
             }
-        }
-        for (Item item : PoItems.getAllItems()) {
-            if (item instanceof BlockItem && PoBlocks.isDecoTileItem(item)) {
+
+            if (PoBlocks.isDecoTileItem(item)) {
                 TS_DECO_TILES.add(item);
             }
         }
 
-        for (var type : ToiletType.getByCategory(ToiletType.Category.WOOD).values()) {
-            TS_DECO_TOILETS.add(() -> ToiletBlockItem.withType(PoBlocks.WOODEN_TOILET.get(), type));
-        }
-        for (var type : ToiletType.getByCategory(ToiletType.Category.HARD).values()) {
-            TS_DECO_TOILETS.add(() -> ToiletBlockItem.withType(PoBlocks.HARD_TOILET.get(), type));
+        addToiletTypes(ToiletType.Category.WOOD, PoBlocks.WOODEN_TOILET.asItem());
+        addToiletTypes(ToiletType.Category.HARD, PoBlocks.HARD_TOILET.asItem());
+    }
+
+    private static void addToiletTypes(ToiletType.Category category, Item toiletItem) {
+        for (var type : ToiletType.getByCategory(category).values()) {
+            TS_DECO_TOILETS.add(() -> ToiletBlockItem.withType(Block.byItem(toiletItem), type));
         }
     }
 

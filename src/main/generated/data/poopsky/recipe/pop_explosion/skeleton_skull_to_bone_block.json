@@ -1,0 +1,10 @@
+{
+  "type": "poopsky:pop_explosion",
+  "input": {
+    "item": "minecraft:bone_block"
+  },
+  "output": {
+    "block": "minecraft:skeleton_skull"
+  },
+  "radius": 3
+}

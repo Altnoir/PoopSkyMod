@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "seeds=false": {
+      "model": "poopsky:block/roundworm_vines_plant"
+    },
+    "seeds=true": {
+      "model": "poopsky:block/roundworm_vines_plant_seeds"
+    }
+  }
+}

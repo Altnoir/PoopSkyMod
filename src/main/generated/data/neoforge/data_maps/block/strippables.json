@@ -1,0 +1,19 @@
+{
+  "values": {
+    "poopsky:ginkgo_log": {
+      "stripped_block": "poopsky:stripped_ginkgo_log"
+    },
+    "poopsky:ginkgo_wood": {
+      "stripped_block": "poopsky:stripped_ginkgo_wood"
+    },
+    "poopsky:poop_empty_log": {
+      "stripped_block": "poopsky:stripped_poop_empty_log"
+    },
+    "poopsky:poop_log": {
+      "stripped_block": "poopsky:stripped_poop_log"
+    },
+    "poopsky:poop_wood": {
+      "stripped_block": "poopsky:stripped_poop_wood"
+    }
+  }
+}

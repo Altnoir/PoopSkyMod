@@ -1,0 +1,57 @@
+package com.altnoir.poopsky.content.entity.renderer;
+
+import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.content.entity.model.FlushToiletCartModel;
+import com.altnoir.poopsky.content.entity.p.FlushToiletCartEntity;
+import com.altnoir.poopsky.init.PoEntityType;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Axis;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import org.jetbrains.annotations.NotNull;
+
+public class FlushToiletCartRenderer extends EntityRenderer<FlushToiletCartEntity> {
+    private static final ResourceLocation TEXTURE = PoopSky.loc("textures/block/flush_toilet_cart.png");
+    private static final ResourceLocation GOLDEN_TEXTURE = PoopSky.loc("textures/block/golden_flush_toilet_cart.png");
+
+    private final FlushToiletCartModel model;
+
+    public FlushToiletCartRenderer(EntityRendererProvider.Context context) {
+        super(context);
+        this.model = new FlushToiletCartModel();
+        this.shadowRadius = 0.5F;
+    }
+
+    @Override
+    public ResourceLocation getTextureLocation(FlushToiletCartEntity entity) {
+        return entity.getType().equals(PoEntityType.GOLDEN_FLUSH_TOILET_CART.get()) ? GOLDEN_TEXTURE : TEXTURE;
+    }
+
+    @Override
+    public void render(FlushToiletCartEntity entity, float entityYaw, float partialTick,
+                       @NotNull PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+        poseStack.pushPose();
+        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - Mth.rotLerp(partialTick, entity.yRotO, entity.getYRot())));
+
+        float hurtTicks = (float) entity.getHurtTime() - partialTick;
+        float hurtDamage = Math.max(entity.getDamage() - partialTick, 0.0F);
+        if (hurtTicks > 0.0F) {
+            poseStack.mulPose(Axis.XP.rotationDegrees(
+                    Mth.sin(hurtTicks) * hurtTicks * hurtDamage / 10.0F * (float) entity.getHurtDir()
+            ));
+        }
+
+        this.model.setupWheelRotations(entity, partialTick);
+        VertexConsumer consumer = bufferSource.getBuffer(RenderType.entityCutout(this.getTextureLocation(entity)));
+        this.model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY);
+        poseStack.popPose();
+
+        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
+    }
+}

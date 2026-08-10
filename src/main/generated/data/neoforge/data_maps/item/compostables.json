@@ -1,0 +1,10 @@
+{
+  "values": {
+    "poopsky:ginkgo_leaves": {
+      "chance": 0.3
+    },
+    "poopsky:ginkgo_sapling": {
+      "chance": 0.3
+    }
+  }
+}

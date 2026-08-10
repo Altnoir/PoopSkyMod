@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "poopsky:poops"
+    },
+    {
+      "tag": "poopsky:poop_mooncakes"
+    },
+    {
+      "tag": "poopsky:shits"
+    },
+    {
+      "item": "poopsky:poop_ball"
+    },
+    {
+      "item": "poopsky:roundworm_block"
+    },
+    {
+      "item": "poopsky:poop_dumplings"
+    },
+    {
+      "item": "poopsky:king_of_dragon_fruit"
+    },
+    {
+      "item": "poopsky:poop_cake"
+    },
+    {
+      "item": "poopsky:pooburger_meat"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "poopsky:fasting_pill"
+  }
+}

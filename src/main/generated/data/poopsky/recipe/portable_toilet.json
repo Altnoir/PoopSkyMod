@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": {
+      "item": "minecraft:iron_ingot"
+    },
+    "P": {
+      "item": "poopsky:poop"
+    }
+  },
+  "pattern": [
+    "B",
+    "B",
+    "P"
+  ],
+  "result": {
+    "count": 1,
+    "id": "poopsky:portable_toilet"
+  }
+}
