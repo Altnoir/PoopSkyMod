@@ -21,7 +21,8 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 public class GachaMachineBlockEntityRenderer implements BlockEntityRenderer<GachaMachineBlockEntity> {
-    private static final float INTERIOR_BALL_SCALE = 0.14F;
+    private static final int CAPSULE_COLUMNS = 4;
+    private static final float INTERIOR_BALL_SCALE = 0.45F;
     private static final float EJECTED_BALL_SCALE = 0.34F;
     private static final ItemStack DISPLAY_BALL = new ItemStack(PoItems.GACHA_BALL.get());
     private static final Map<GachaMachineBlockEntity, CapsulePosition[]> INTERIOR_POSITION_CACHE = new WeakHashMap<>();
@@ -114,11 +115,18 @@ public class GachaMachineBlockEntityRenderer implements BlockEntityRenderer<Gach
         return INTERIOR_POSITION_CACHE.computeIfAbsent(blockEntity, ignored -> {
             RandomSource random = RandomSource.create(blockEntity.getBlockPos().asLong() ^ 0x5DEECE66DL);
             CapsulePosition[] capsules = new CapsulePosition[GachaMachineBlockEntity.CAPSULE_COUNT];
+            int rows = (capsules.length + CAPSULE_COLUMNS - 1) / CAPSULE_COLUMNS;
             for (int index = 0; index < capsules.length; index++) {
+                int row = index / CAPSULE_COLUMNS;
+                int column = index % CAPSULE_COLUMNS;
+                float horizontalProgress = column / (float) (CAPSULE_COLUMNS - 1);
+                float verticalProgress = row / (float) (rows - 1);
                 capsules[index] = new CapsulePosition(
-                        Mth.lerp(random.nextFloat(), -0.34F, 0.34F),
-                        Mth.lerp(random.nextFloat(), 1.08F, 1.88F),
-                        Mth.lerp(random.nextFloat(), -0.36F, 0.36F),
+                        Mth.lerp(horizontalProgress, -0.18F, 0.18F)
+                                + Mth.lerp(random.nextFloat(), -0.006F, 0.006F),
+                        Mth.lerp(verticalProgress, 1.14F, 1.80F)
+                                + Mth.lerp(random.nextFloat(), -0.006F, 0.006F),
+                        0.24F + Mth.lerp(random.nextFloat(), -0.04F, 0.04F),
                         random.nextFloat() * 360.0F);
             }
             return capsules;
