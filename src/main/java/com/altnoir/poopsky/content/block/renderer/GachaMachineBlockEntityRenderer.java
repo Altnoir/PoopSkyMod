@@ -26,6 +26,8 @@ public class GachaMachineBlockEntityRenderer implements BlockEntityRenderer<Gach
     private static final float INTERIOR_BALL_SCALE = 0.26F;
     private static final float EJECTED_BALL_SCALE = 0.34F;
     private static final float ROLL_RADIUS = 0.085F;
+    private static final float DROP_END = 0.55F;
+    private static final float OUTLET_Y = 0.28F;
     private static final float OUTLET_DEPTH = 0.60F;
     private static final ItemStack DISPLAY_BALL = new ItemStack(PoItems.GACHA_BALL.get());
     private static final Map<GachaMachineBlockEntity, CapsulePosition[]> INTERIOR_POSITION_CACHE = new WeakHashMap<>();
@@ -56,15 +58,16 @@ public class GachaMachineBlockEntityRenderer implements BlockEntityRenderer<Gach
         }
 
         CapsulePosition selectedPosition = capsules[selectedBall];
-        float horizontal = Mth.lerp(progress, selectedPosition.right(), 0.0F);
-        float dropY = Mth.lerp(progress, selectedPosition.y(), 0.64F);
-        float depth = Mth.lerp(progress, selectedPosition.depth(), OUTLET_DEPTH);
+        float dropProgress = Mth.clamp(progress / DROP_END, 0.0F, 1.0F);
+        float rollProgress = Mth.clamp((progress - DROP_END) / (1.0F - DROP_END), 0.0F, 1.0F);
+        float horizontal = Mth.lerp(dropProgress, selectedPosition.right(), 0.0F);
+        float dropY = Mth.lerp(dropProgress, selectedPosition.y(), OUTLET_Y);
+        float depth = Mth.lerp(rollProgress, selectedPosition.depth(), OUTLET_DEPTH);
         float ballScale = Mth.lerp(progress, INTERIOR_BALL_SCALE, EJECTED_BALL_SCALE);
         float rightX = -facing.getStepZ();
         float rightZ = facing.getStepX();
-        float pathLength = Math.abs(selectedPosition.right())
-                + Math.abs(OUTLET_DEPTH - selectedPosition.depth());
-        float rollDegrees = -progress * pathLength / ROLL_RADIUS * 57.29578F;
+        float pathLength = Math.abs(OUTLET_DEPTH - selectedPosition.depth());
+        float rollDegrees = -rollProgress * pathLength / ROLL_RADIUS * 57.29578F;
 
         poseStack.pushPose();
         poseStack.translate(
@@ -128,7 +131,7 @@ public class GachaMachineBlockEntityRenderer implements BlockEntityRenderer<Gach
                 capsules[index] = new CapsulePosition(
                         Mth.lerp(horizontalProgress, -0.18F, 0.18F)
                                 + Mth.lerp(random.nextFloat(), -0.006F, 0.006F),
-                        Mth.lerp(verticalProgress, 0.26F, 0.50F)
+                        Mth.lerp(verticalProgress, 0.55F, 0.80F)
                                 + Mth.lerp(random.nextFloat(), -0.006F, 0.006F),
                         0.32F + Mth.lerp(random.nextFloat(), -0.015F, 0.015F),
                         random.nextFloat() * 360.0F);
