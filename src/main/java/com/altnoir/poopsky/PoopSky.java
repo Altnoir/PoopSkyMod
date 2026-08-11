@@ -2,7 +2,6 @@ package com.altnoir.poopsky;
 
 import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.compat.create.CreatePlugin;
-import com.altnoir.poopsky.compat.maid.MaidPlugin;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.p.CompooperBlock;
 import com.altnoir.poopsky.content.entity.p.PoopTntEntity;
@@ -25,8 +24,8 @@ import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -102,9 +101,6 @@ public class PoopSky {
         PoGameEvents.registerGame(gameEventBus);
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
 
-        if (ModList.get().isLoaded(PoMods.TOUHOU_LITTLE_MAID.id())) {
-            MaidPlugin.registry(modEventBus);
-        }
         if (ModList.get().isLoaded(PoMods.CREATE.id())) {
             CreatePlugin.register(modEventBus);
         }
@@ -128,7 +124,7 @@ public class PoopSky {
 
                     if (!BoneMealItem.applyBonemeal(item, level, blockpos, null) && !BoneMealItem.growWaterPlant(item, level, blockpos, null)) {
                         this.setSuccess(false);
-                    } else if (!level.isClientSide) {
+                    } else if (!level.isClientSide()) {
                         level.levelEvent(1505, blockpos, 15);
                     }
                     return item;
@@ -233,16 +229,16 @@ public class PoopSky {
         // 用于/Reload命令, 比如fly
     }
 
-    public static ResourceLocation loc(String path) {
+    public static Identifier loc(String path) {
         return modloc(PoopSky.MOD_ID, path);
     }
 
-    public static ResourceLocation modloc(String namespace, String path) {
-        return ResourceLocation.fromNamespaceAndPath(namespace, path);
+    public static Identifier modloc(String namespace, String path) {
+        return Identifier.fromNamespaceAndPath(namespace, path);
     }
 
-    public static ResourceLocation mcloc(String path) {
-        return ResourceLocation.withDefaultNamespace(path);
+    public static Identifier mcloc(String path) {
+        return Identifier.withDefaultNamespace(path);
     }
 
     public static String getItemPath(Item item) {
@@ -253,7 +249,7 @@ public class PoopSky {
         return getItemKey(item).getNamespace();
     }
 
-    public static ResourceLocation getItemKey(Item item) {
+    public static Identifier getItemKey(Item item) {
         return BuiltInRegistries.ITEM.getKey(item);
     }
 
@@ -265,7 +261,7 @@ public class PoopSky {
         return getBlockKey(block).getNamespace();
     }
 
-    public static ResourceLocation getBlockKey(Block block) {
+    public static Identifier getBlockKey(Block block) {
         return BuiltInRegistries.BLOCK.getKey(block);
     }
 

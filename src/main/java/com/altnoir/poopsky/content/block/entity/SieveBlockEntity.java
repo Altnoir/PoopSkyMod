@@ -92,7 +92,7 @@ public class SieveBlockEntity extends BlockEntity {
         super(PoBlockEntityType.SIEVE_BLOCK_ENTITY.get(), pos, blockState);
     }
     public boolean tryInsertInput(ItemStack stack) {
-        if (level == null || level.isClientSide) return false;
+        if (level == null || level.isClientSide()) return false;
         if (!itemHandler.getStackInSlot(INPUT_SLOT).isEmpty()) return false;
         if (!itemHandler.isItemValid(INPUT_SLOT, stack)) return false;
 
@@ -107,14 +107,14 @@ public class SieveBlockEntity extends BlockEntity {
     }
 
     public void progressManually(Player player) {
-        if (level == null || level.isClientSide) return;
+        if (level == null || level.isClientSide()) return;
 
         playManualProgressSound();
         advanceProgress(MANUAL_PROGRESS_PER_CLICK, false);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, SieveBlockEntity be) {
-        if (level.isClientSide) return;
+        if (level.isClientSide()) return;
 
         boolean powered = state.getValue(SieveBlock.POWERED);
         be.autoMode = powered;
@@ -124,7 +124,7 @@ public class SieveBlockEntity extends BlockEntity {
     }
 
     private void completeRecipe() {
-        if (level == null || level.isClientSide) return;
+        if (level == null || level.isClientSide()) return;
 
         ItemStack input = itemHandler.getStackInSlot(INPUT_SLOT);
         if (input.isEmpty()) return;
@@ -329,7 +329,7 @@ public class SieveBlockEntity extends BlockEntity {
     }
 
     private void syncToClient() {
-        if (level == null || level.isClientSide) {
+        if (level == null || level.isClientSide()) {
             return;
         }
 

@@ -31,7 +31,7 @@ public class DragonFruitRItem extends Item implements IFeedable {
         InteractionResult feedResult = tryFeedToPlayer(stack, player, target);
         if (feedResult.consumesAction()) return feedResult;
         if (target instanceof FlyEntity fly && fly.isAlive()) {
-            if (!player.level().isClientSide) {
+            if (!player.level().isClientSide()) {
                 ItemStack dragonFlyItem = FlyItem.withType(FlyTypes.DRAGON_FRUIT.get());
                 fly.spawnAtLocation(dragonFlyItem);
                 fly.kill();
@@ -51,7 +51,7 @@ public class DragonFruitRItem extends Item implements IFeedable {
             player.awardStat(Stats.ITEM_USED.get(this));
         }
 
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             if (!livingEntity.hasEffect(PoEffects.ON_THE_VERGE)) {
                 livingEntity.addEffect(new MobEffectInstance(PoEffects.ON_THE_VERGE, 200));
             } else {

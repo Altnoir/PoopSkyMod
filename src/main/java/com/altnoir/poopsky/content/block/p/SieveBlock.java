@@ -73,7 +73,7 @@ public class SieveBlock extends BaseEntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return InteractionResult.SUCCESS;
         }
         if (level.getBlockEntity(pos) instanceof SieveBlockEntity be) {
@@ -84,7 +84,7 @@ public class SieveBlock extends BaseEntityBlock {
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return ItemInteractionResult.SUCCESS;
         }
         if (level.getBlockEntity(pos) instanceof SieveBlockEntity be && !stack.isEmpty() && be.tryInsertInput(stack)) {

@@ -42,12 +42,12 @@ public class JinKeLaItem extends Item {
             if (level instanceof ServerLevel serverLevel && tryApplyToBlock(serverLevel, pos, state)) {
                 context.getItemInHand().consume(1, context.getPlayer());
             }
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return InteractionResult.sidedSuccess(level.isClientSide());
         } else if (state.isRandomlyTicking()) {
             if (level instanceof ServerLevel serverLevel && tryApplyToBlock(serverLevel, pos, state)) {
                 context.getItemInHand().consume(1, context.getPlayer());
             }
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return InteractionResult.sidedSuccess(level.isClientSide());
         }
 
         return super.useOn(context);

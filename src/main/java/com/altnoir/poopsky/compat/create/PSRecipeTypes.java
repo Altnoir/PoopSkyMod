@@ -5,7 +5,7 @@ import com.altnoir.poopsky.compat.create.content.kinetics.fan.processing.Digesti
 import com.simibubi.create.content.processing.recipe.StandardProcessingRecipe;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -18,7 +18,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public enum PSRecipeTypes implements IRecipeTypeInfo {
     DIGESTING(DigestingRecipe::new);
 
-    public final ResourceLocation id;
+    public final Identifier id;
     public final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<?>> serializerObject;
     public final DeferredHolder<RecipeType<?>, RecipeType<?>> typeObject;
 
@@ -35,7 +35,7 @@ public enum PSRecipeTypes implements IRecipeTypeInfo {
     }
 
     @Override
-    public ResourceLocation getId() {
+    public Identifier getId() {
         return id;
     }
 

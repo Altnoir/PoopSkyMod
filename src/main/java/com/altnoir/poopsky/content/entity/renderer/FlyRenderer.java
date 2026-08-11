@@ -5,7 +5,7 @@ import com.altnoir.poopsky.content.entity.model.FlyModel;
 import com.altnoir.poopsky.content.entity.p.FlyEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class FlyRenderer extends MobRenderer<FlyEntity, FlyModel<FlyEntity>> {
 
@@ -15,7 +15,7 @@ public class FlyRenderer extends MobRenderer<FlyEntity, FlyModel<FlyEntity>> {
     }
 
     @Override
-    public ResourceLocation getTextureLocation(FlyEntity entity) {
+    public Identifier getTextureLocation(FlyEntity entity) {
         return PoopSky.loc("textures/entity/fly.png");
     }
 }

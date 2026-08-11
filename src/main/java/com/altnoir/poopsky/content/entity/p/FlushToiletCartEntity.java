@@ -1,8 +1,5 @@
 package com.altnoir.poopsky.content.entity.p;
 
-import java.util.List;
-import java.util.Map;
-
 import com.altnoir.poopsky.impl.network.FlushToiletCartInputPayload;
 import com.altnoir.poopsky.init.PoEffects;
 import com.altnoir.poopsky.init.PoEntityType;
@@ -17,12 +14,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityDimensions;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MoverType;
-import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.DismountHelper;
 import net.minecraft.world.entity.vehicle.VehicleEntity;
@@ -35,6 +27,9 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
+import java.util.Map;
 
 public class FlushToiletCartEntity extends VehicleEntity {
     private static final Map<Pose, List<Integer>> POSE_DISMOUNT_HEIGHTS = Map.of(
@@ -138,7 +133,7 @@ public class FlushToiletCartEntity extends VehicleEntity {
 
     @Override
     public InteractionResult interact(Player player, InteractionHand hand) {
-        if (this.level().isClientSide) {
+        if (this.level().isClientSide()) {
             return InteractionResult.SUCCESS;
         }
         return player.startRiding(this) ? InteractionResult.CONSUME : InteractionResult.PASS;
@@ -289,9 +284,9 @@ public class FlushToiletCartEntity extends VehicleEntity {
         this.tickWheelRotationSync();
 
         boolean shouldProcessInput = this.isControlledByLocalInstance()
-                || (!this.level().isClientSide && this.getControllingPassenger() != null);
+                || (!this.level().isClientSide() && this.getControllingPassenger() != null);
         if (shouldProcessInput) {
-            if (this.level().isClientSide) {
+            if (this.level().isClientSide()) {
                 this.updateKeyStates();
             }
             this.moveByInput();
@@ -305,7 +300,7 @@ public class FlushToiletCartEntity extends VehicleEntity {
                 this.currentSpeed *= 0.6F;
             }
             this.updateWheelRotations();
-        } else if (!this.level().isClientSide) {
+        } else if (!this.level().isClientSide()) {
             Vec3 deltaMovement = this.getDeltaMovement().multiply(0.9, 1, 0.9).add(0, -0.08, 0);
             if (this.onGround()) {
                 deltaMovement = deltaMovement.multiply(0.9, 0, 0.9);

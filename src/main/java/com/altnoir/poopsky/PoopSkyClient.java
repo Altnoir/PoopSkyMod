@@ -37,7 +37,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.levelgen.presets.WorldPreset;
@@ -199,17 +199,17 @@ public class PoopSkyClient {
 
             event.registerFluidType(new IClientFluidTypeExtensions() {
                 @Override
-                public @NotNull ResourceLocation getStillTexture() {
+                public @NotNull Identifier getStillTexture() {
                     return PFluidTypes.URINE_STILL_TEXTURE;
                 }
 
                 @Override
-                public @NotNull ResourceLocation getFlowingTexture() {
+                public @NotNull Identifier getFlowingTexture() {
                     return PFluidTypes.URINE_FLOWING_TEXTURE;
                 }
 
                 @Override
-                public ResourceLocation getOverlayTexture() {
+                public Identifier getOverlayTexture() {
                     return null;
                 }
             }, PFluidTypes.URINE_FLUID_TYPE.get());

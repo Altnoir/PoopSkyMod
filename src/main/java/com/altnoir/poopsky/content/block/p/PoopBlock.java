@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.content.block.p;
 
-import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoParticles;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.worldgen.PoConfigureFeatures;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -82,7 +82,7 @@ public class PoopBlock extends Block implements BonemealableBlock {
         PotionContents potioncontents = stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
 
         if (potioncontents.is(Potions.WATER)) {
-            if (!level.isClientSide) {
+            if (!level.isClientSide()) {
                 ServerLevel serverlevel = (ServerLevel) level;
 
                 for (int i = 0; i < 5; i++) {
@@ -107,7 +107,7 @@ public class PoopBlock extends Block implements BonemealableBlock {
             ItemStack itemStack = ItemUtils.createFilledResult(stack, player, Items.GLASS_BOTTLE.getDefaultInstance());
             player.setItemInHand(hand, itemStack);
 
-            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+            return ItemInteractionResult.sidedSuccess(level.isClientSide());
         }
         return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
     }
@@ -175,7 +175,7 @@ public class PoopBlock extends Block implements BonemealableBlock {
                 entity.playSound(PoSoundEvents.BLOCK_POOP_BLOCK_SLIDE.get(), 1.0F, 1.0F);
             }
 
-            if (!level.isClientSide && level.random.nextInt(5) == 0) {
+            if (!level.isClientSide() && level.random.nextInt(5) == 0) {
                 ((ServerLevel) level).sendParticles(
                         PoParticles.POOP_PARTICLE.get(),
                         entity.getX(), entity.getY() + 0.1, entity.getZ(),

@@ -6,11 +6,11 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -30,7 +30,7 @@ public final class FlyBarrelRecipeBuilder implements RecipeBuilder {
         this.result = result;
     }
 
-    public static FlyBarrelRecipeBuilder flyBarrel(String flyTypeId, ResourceLocation result) {
+    public static FlyBarrelRecipeBuilder flyBarrel(String flyTypeId, Identifier result) {
         return new FlyBarrelRecipeBuilder(flyTypeId, new FlyBarrelRecipe.Output(result, 1));
     }
 
@@ -51,12 +51,12 @@ public final class FlyBarrelRecipeBuilder implements RecipeBuilder {
     }
 
     public void save(@NotNull RecipeOutput recipeOutput, @NotNull String id) {
-        ResourceLocation recipeId = PoopSky.loc(RECIPE_TYPE + "/" + id);
+        Identifier recipeId = PoopSky.loc(RECIPE_TYPE + "/" + id);
         save(recipeOutput, recipeId);
     }
 
     @Override
-    public void save(@NotNull RecipeOutput recipeOutput, @NotNull ResourceLocation id) {
+    public void save(@NotNull RecipeOutput recipeOutput, @NotNull Identifier id) {
         ensureValid(id);
         Advancement.Builder advancementBuilder = recipeOutput.advancement()
                 .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
@@ -68,7 +68,7 @@ public final class FlyBarrelRecipeBuilder implements RecipeBuilder {
         recipeOutput.accept(id, recipe, advancementBuilder.build(id.withPrefix("recipes/")));
     }
 
-    private void ensureValid(ResourceLocation id) {
+    private void ensureValid(Identifier id) {
         if (criteria.isEmpty()) {
             throw new IllegalStateException("No way of obtaining recipe " + id);
         }

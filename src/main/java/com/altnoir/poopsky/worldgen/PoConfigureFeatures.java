@@ -14,7 +14,7 @@ import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
-import net.minecraft.util.random.SimpleWeightedRandomList;
+import net.minecraft.util.random.WeightedList;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.BaseCoralPlantTypeBlock;
@@ -82,7 +82,7 @@ public class PoConfigureFeatures {
                         BlockStateProvider.simple(PoBlocks.POOP_LOG.get()),
                         new GiantTrunkPlacer(12, 2, 14),
 
-                        new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
+                        new WeightedStateProvider(WeightedList.<BlockState>builder()
                                 .add(PoBlocks.POOP_LEAVES.get().defaultBlockState(), 11)
                                 .add(PoBlocks.POOP_LEAVES_IRON.get().defaultBlockState(), 1)
                                 .add(PoBlocks.POOP_LEAVES_GOLD.get().defaultBlockState(), 1)
@@ -122,7 +122,7 @@ public class PoConfigureFeatures {
         register(context, POOP_VEGETATION, Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(
                         new WeightedStateProvider(
-                                SimpleWeightedRandomList.<BlockState>builder()
+                                WeightedList.<BlockState>builder()
                                         .add(PoBlocks.POOP_SAPLING.get().defaultBlockState(), 5)
                                         .add(PoBlocks.POOP_PIECE.get().defaultBlockState(), 1)
                                         .add(Blocks.BROWN_MUSHROOM.defaultBlockState(), 2)
@@ -137,7 +137,7 @@ public class PoConfigureFeatures {
         register(context, CHILI_POOP_VEGETATION, Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(
                         new WeightedStateProvider(
-                                SimpleWeightedRandomList.<BlockState>builder()
+                                WeightedList.<BlockState>builder()
                                         .add(Blocks.WARPED_FUNGUS.defaultBlockState(), 3)
                                         .add(Blocks.CRIMSON_FUNGUS.defaultBlockState(), 3)
                                         .add(Blocks.SWEET_BERRY_BUSH.defaultBlockState(), 2)
@@ -159,7 +159,7 @@ public class PoConfigureFeatures {
                 FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK,
                         new SimpleBlockConfiguration(
                                 new WeightedStateProvider(
-                                        SimpleWeightedRandomList.<BlockState>builder()
+                                        WeightedList.<BlockState>builder()
                                                 .add(Blocks.SUGAR_CANE.defaultBlockState(), 50)
                                                 .add(Blocks.CACTUS.defaultBlockState(), 20)
                                                 .add(Blocks.DEAD_BUSH.defaultBlockState(), 30)
@@ -169,7 +169,7 @@ public class PoConfigureFeatures {
                 PoFeatureUtil.simplePatchConfiguration(Feature.SIMPLE_BLOCK,
                         new SimpleBlockConfiguration(
                                 new WeightedStateProvider(
-                                        SimpleWeightedRandomList.<BlockState>builder()
+                                        WeightedList.<BlockState>builder()
                                                 .add(PoBlocks.SALTPETER_CLUSTER.get().defaultBlockState(), 1)
                                                 .add(PoBlocks.LARGE_SALTPETER_BUD.get().defaultBlockState(), 9)
                                                 .add(PoBlocks.MEDIUM_SALTPETER_BUD.get().defaultBlockState(), 40)
@@ -181,7 +181,7 @@ public class PoConfigureFeatures {
         register(context, RAW_SAPLING_POOP_VEGETATION, Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(
                         new WeightedStateProvider(
-                                SimpleWeightedRandomList.<BlockState>builder()
+                                WeightedList.<BlockState>builder()
                                         .add(Blocks.DANDELION.defaultBlockState())
                                         .add(Blocks.POPPY.defaultBlockState())
                                         .add(Blocks.BLUE_ORCHID.defaultBlockState())
@@ -204,7 +204,7 @@ public class PoConfigureFeatures {
         register(context, RAW_SEA_POOP_VEGETATION, Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(
                         new WeightedStateProvider(
-                                SimpleWeightedRandomList.<BlockState>builder()
+                                WeightedList.<BlockState>builder()
                                         .add(Blocks.TUBE_CORAL.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false))
                                         .add(Blocks.TUBE_CORAL_FAN.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false))
                                         .add(Blocks.BRAIN_CORAL.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false))

@@ -9,14 +9,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public class ToiletPlugItemRenderer extends BlockEntityWithoutLevelRenderer {
     private ToiletPlugModel<?> plugModel;
-    private static final ResourceLocation TEXTURE = PoopSky.loc("textures/entity/toilet_plug.png");
+    private static final Identifier TEXTURE = PoopSky.loc("textures/entity/toilet_plug.png");
     private static final float HAND_Y = 4.0F / 16.0F + 0.5F;
     private static final float HAND_Z = 8.0F / 16.0F - 1.0F;
     private static final float PIVOT_Y = -3.0F / 16.0F;

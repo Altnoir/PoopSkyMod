@@ -1,9 +1,9 @@
 package com.altnoir.poopsky.content.item.p;
 
 import com.altnoir.poopsky.Config;
-import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.impl.network.TimeBellFreezePayload;
 import com.altnoir.poopsky.init.PoEffects;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
@@ -65,7 +65,7 @@ public class TimeBellItem extends Item {
     @Override
     public void onUseTick(Level level, LivingEntity livingEntity, ItemStack stack, int remainingUseDuration) {
         if (!(livingEntity instanceof Player player)) return;
-        if (level.isClientSide) return;
+        if (level.isClientSide()) return;
 
         int usedTicks = this.getUseDuration(stack, livingEntity) - remainingUseDuration;
         if (usedTicks != DELAY_TICKS) return;

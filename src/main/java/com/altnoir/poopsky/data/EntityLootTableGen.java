@@ -7,7 +7,7 @@ import com.altnoir.poopsky.init.PoItems;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.loot.RegistrateEntityLootTables;
 import com.tterrag.registrate.providers.loot.RegistrateLootTableProvider.LootType;
-import net.minecraft.advancements.critereon.*;
+import net.minecraft.advancements.criterion.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.EnchantmentTags;

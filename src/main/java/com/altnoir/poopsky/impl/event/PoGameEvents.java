@@ -106,7 +106,7 @@ public class PoGameEvents {
         if (abstractToiletBlock instanceof BaseToiletLavaBlock && level.getBlockState(pos).getValue(BaseToiletLavaBlock.LAVA))
             return;
 
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             SoundEvent sound;
             Item item;
             if (heldItem.is(Tags.Items.BUCKETS_EMPTY)) {
@@ -138,7 +138,7 @@ public class PoGameEvents {
             BlockPos blockpos = blockhitresult.getBlockPos();
 
             if (blockhitresult.getType() == HitResult.Type.BLOCK && level.mayInteract(player, blockpos) && level.getFluidState(blockpos).is(PoFluids.URINE.get())) {
-                if (!level.isClientSide) {
+                if (!level.isClientSide()) {
                     level.playSound(null, blockpos, SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 0.6F);
                     level.gameEvent(player, GameEvent.FLUID_PICKUP, blockpos);
 
@@ -181,7 +181,7 @@ public class PoGameEvents {
         MobEffectInstance effectInstance = event.getEffectInstance();
 
         if (OMEN_EFFECTS.contains(effectInstance.getEffect()) && entity.hasEffect(PoEffects.OMENER)) {
-            if (!effectInstance.is(MobEffects.CONFUSION) && !entity.hasEffect(MobEffects.REGENERATION)) {
+            if (!effectInstance.is(MobEffects.NAUSEA) && !entity.hasEffect(MobEffects.REGENERATION)) {
                 int amplifier = entity.getEffect(PoEffects.OMENER).getAmplifier();
                 entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 40, amplifier + 1));
             }
@@ -192,7 +192,7 @@ public class PoGameEvents {
     private static final Set<Holder<MobEffect>> OMEN_EFFECTS = Set.of(
             MobEffects.POISON,
             MobEffects.WITHER,
-            MobEffects.CONFUSION
+            MobEffects.NAUSEA
     );
 
     public static void onAddReloadListener(AddReloadListenerEvent event) {
@@ -202,7 +202,7 @@ public class PoGameEvents {
 
     public static void onEntityTick(EntityTickEvent.Pre event) {
         Entity entity = event.getEntity();
-        if (!(entity instanceof Villager villager) || entity.level().isClientSide || entity.tickCount % 10 != 0) return;
+        if (!(entity instanceof Villager villager) || entity.level().isClientSide() || entity.tickCount % 10 != 0) return;
 
         PVillagerBehaviors.tickPoopTemptation(villager);
     }

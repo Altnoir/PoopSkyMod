@@ -14,8 +14,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
@@ -94,7 +94,7 @@ public class ToiletBlockEntity extends BlockEntity {
         if (level == null || level.isClientSide()) return;
         if (linkedPos == null || linkedDim == null || linkedDim.isBlank()) return;
 
-        var targetDimension = ResourceLocation.tryParse(linkedDim);
+        var targetDimension = Identifier.tryParse(linkedDim);
         if (targetDimension == null) return;
 
         var server = ((ServerLevel) level).getServer();
@@ -137,7 +137,7 @@ public class ToiletBlockEntity extends BlockEntity {
                 this.toiletType = type;
             }
         }
-        if (level != null && level.isClientSide) {
+        if (level != null && level.isClientSide()) {
             requestModelDataUpdate();
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
         }
@@ -170,7 +170,7 @@ public class ToiletBlockEntity extends BlockEntity {
                 this.toiletType = type;
             }
         }
-        if (level != null && level.isClientSide) {
+        if (level != null && level.isClientSide()) {
             requestModelDataUpdate();
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
         }

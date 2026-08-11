@@ -3,12 +3,12 @@ package com.altnoir.poopsky.impl;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.compat.PoMods;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.decoration.PaintingVariant;
+import net.minecraft.world.entity.decoration.painting.PaintingVariant;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
@@ -77,11 +77,11 @@ public class PoTags {
         }
 
         private static TagKey<Item> tag(String name) {
-            return ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", name));
+            return ItemTags.create(Identifier.fromNamespaceAndPath("c", name));
         }
 
         private static TagKey<Item> createCreate(String name) {
-            return ItemTags.create(ResourceLocation.fromNamespaceAndPath("create", name));
+            return ItemTags.create(Identifier.fromNamespaceAndPath("create", name));
         }
 
     }

@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.BlockAndTintGetter;
@@ -34,13 +34,13 @@ public class ToiletBakedModel extends BakedModelWrapper<BakedModel> {
     private final BakedModel[] templateModels;
     private final boolean hasLava;
     private final Map<ToiletType, BakedModel[]> variantModels;
-    private final Map<ToiletType, ResourceLocation> variantTextures;
+    private final Map<ToiletType, Identifier> variantTextures;
 
     public ToiletBakedModel(
             BakedModel defaultModel,
             BakedModel[] templateModels,
             Map<ToiletType, BakedModel[]> variantModels,
-            Map<ToiletType, ResourceLocation> variantTextures,
+            Map<ToiletType, Identifier> variantTextures,
             boolean hasLava
     ) {
         super(defaultModel);
@@ -80,7 +80,7 @@ public class ToiletBakedModel extends BakedModelWrapper<BakedModel> {
     }
 
     private TextureAtlasSprite getVariantSprite(ToiletType type) {
-        ResourceLocation texture = variantTextures.get(type);
+        Identifier texture = variantTextures.get(type);
         if (texture == null) return null;
         return Minecraft.getInstance()
                 .getTextureAtlas(InventoryMenu.BLOCK_ATLAS)

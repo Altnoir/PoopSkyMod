@@ -4,14 +4,14 @@ import com.altnoir.poopsky.content.block.ToiletComponent;
 import com.altnoir.poopsky.content.block.entity.FlushToiletBlockEntity;
 import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.content.item.PoBaseItem;
-import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.init.PoComponents;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.TicketType;
@@ -47,7 +47,7 @@ public class ToiletLinkerItem extends PoBaseItem {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
         ItemStack stack = player.getItemInHand(usedHand);
         if (player.isShiftKeyDown()) {
-            return InteractionResultHolder.sidedSuccess(resetComponent(stack, player), level.isClientSide);
+            return InteractionResultHolder.sidedSuccess(resetComponent(stack, player), level.isClientSide());
         }
         return InteractionResultHolder.pass(stack);
     }
@@ -60,14 +60,14 @@ public class ToiletLinkerItem extends PoBaseItem {
         ItemStack stack = context.getItemInHand();
         if (player.isShiftKeyDown()) {
             resetComponent(stack, player);
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return InteractionResult.sidedSuccess(level.isClientSide());
         }
         BlockPos pos = context.getClickedPos();
         var be = level.getBlockEntity(pos);
         if (!(be instanceof ToiletBlockEntity || be instanceof FlushToiletBlockEntity)) {
             return InteractionResult.PASS;
         }
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return InteractionResult.SUCCESS;
         }
         executeBindingLogic((ServerLevel) level, pos, player, stack);
@@ -141,7 +141,7 @@ public class ToiletLinkerItem extends PoBaseItem {
 
     private Optional<ServerLevel> getLevelFromKey(MinecraftServer server, String dimStr) {
         if (dimStr.isEmpty()) return Optional.empty();
-        ResourceLocation loc = ResourceLocation.tryParse(dimStr);
+        Identifier loc = Identifier.tryParse(dimStr);
         if (loc == null) return Optional.empty();
         ResourceKey<Level> registryKey = ResourceKey.create(Registries.DIMENSION, loc);
         return Optional.ofNullable(server.getLevel(registryKey));

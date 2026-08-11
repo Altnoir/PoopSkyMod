@@ -2,8 +2,8 @@ package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.content.block.CompooperType;
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
-import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.init.PoBlocks;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
@@ -63,7 +63,7 @@ public class WaterCompooperBlock extends AbstractCompooperBlock {
 
     @Override
     protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        if (level.isClientSide || !isEntityInsideContent(pos, state, entity)) {
+        if (level.isClientSide() || !isEntityInsideContent(pos, state, entity)) {
             return;
         }
 

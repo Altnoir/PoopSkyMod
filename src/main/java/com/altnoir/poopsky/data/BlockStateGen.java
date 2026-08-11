@@ -11,7 +11,7 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.client.renderer.block.model.BlockModel.GuiLight;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -88,7 +88,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
     }
 
     private void poopWoodSet() {
-        ResourceLocation log = blockTexture(PoBlocks.POOP_LOG.get());
+        Identifier log = blockTexture(PoBlocks.POOP_LOG.get());
 
         logBlock(PoBlocks.POOP_LOG.get());
         axisBlock(PoBlocks.POOP_WOOD.get(), log, log);
@@ -110,7 +110,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         itemModels().withExistingParent(getItemPath(PoBlocks.STRIPPED_POOP_WOOD.get()), modLoc("block/stripped_poop_wood_horizontal"));
     }
 
-    private void weightedLogBlock(Block block, ResourceLocation side, ResourceLocation side2, ResourceLocation end) {
+    private void weightedLogBlock(Block block, Identifier side, Identifier side2, Identifier end) {
         String path = getBlockPath(block);
         ModelFile vertical = models().withExistingParent(path, mcLoc("block/cube_column"))
                 .texture("side", side)
@@ -143,7 +143,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
                 );
     }
 
-    private void weightedAxisBlock(Block block, ResourceLocation side, ResourceLocation side2) {
+    private void weightedAxisBlock(Block block, Identifier side, Identifier side2) {
         String path = getBlockPath(block);
         ModelFile vertical = models().withExistingParent(path, mcLoc("block/cube_column"))
                 .texture("side", side)
@@ -177,7 +177,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
     }
 
     private void poopDecoSet() {
-        ResourceLocation texture = blockTexture(PoBlocks.POOP_BLOCK.get());
+        Identifier texture = blockTexture(PoBlocks.POOP_BLOCK.get());
 
         stairsBlock(PoBlocks.POOP_STAIRS.get(), texture);
         poopSlab(PoBlocks.POOP_SLAB.get(), texture);
@@ -188,8 +188,8 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         fenceGateBlock(PoBlocks.POOP_FENCE_GATE.get(), texture);
         doorBlockWithRenderType(
                 PoBlocks.POOP_DOOR.get(),
-                ResourceLocation.parse(blockTexture(PoBlocks.POOP_DOOR.get()) + "_bottom"),
-                ResourceLocation.parse(blockTexture(PoBlocks.POOP_DOOR.get()) + "_top"),
+                Identifier.parse(blockTexture(PoBlocks.POOP_DOOR.get()) + "_bottom"),
+                Identifier.parse(blockTexture(PoBlocks.POOP_DOOR.get()) + "_top"),
                 "cutout"
         );
         trapdoorBlockWithRenderType(PoBlocks.POOP_TRAPDOOR.get(), blockTexture(PoBlocks.POOP_TRAPDOOR.get()), true, "cutout");
@@ -207,9 +207,9 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         simpleBlockItem(PoBlocks.POOP_TRAPDOOR.get(), blockModel(PoBlocks.POOP_TRAPDOOR.get(), "_bottom"));
     }
 
-    private void poopSlab(Block slabBlock, ResourceLocation base) {
-        ResourceLocation maggots = modLoc("block/poop_block_maggots");
-        ResourceLocation liquids = modLoc("block/poop_block_liquids");
+    private void poopSlab(Block slabBlock, Identifier base) {
+        Identifier maggots = modLoc("block/poop_block_maggots");
+        Identifier liquids = modLoc("block/poop_block_liquids");
 
         ModelFile bottom = models().withExistingParent("poop_slab", mcLoc("block/slab"))
                 .texture("bottom", base)
@@ -393,10 +393,10 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
     }
 
     private void registerPoopCake() {
-        ResourceLocation bottom = modLoc("block/poop_cake_bottom");
-        ResourceLocation top = modLoc("block/poop_cake_top");
-        ResourceLocation side = modLoc("block/poop_cake_side");
-        ResourceLocation inside = modLoc("block/poop_cake_inner");
+        Identifier bottom = modLoc("block/poop_cake_bottom");
+        Identifier top = modLoc("block/poop_cake_top");
+        Identifier side = modLoc("block/poop_cake_side");
+        Identifier inside = modLoc("block/poop_cake_inner");
 
         ModelFile[] cakeModels = new ModelFile[7];
         cakeModels[0] = cakeModel("poop_cake", "cake", bottom, top, side, null);
@@ -420,7 +420,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         });
     }
 
-    private ModelFile cakeModel(String name, String parent, ResourceLocation bottom, ResourceLocation top, ResourceLocation side, ResourceLocation inside) {
+    private ModelFile cakeModel(String name, String parent, Identifier bottom, Identifier top, Identifier side, Identifier inside) {
         var model = models().withExistingParent(name, mcLoc("block/" + parent))
                 .texture(PARTICLE, side)
                 .texture("bottom", bottom)
@@ -432,7 +432,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         return model;
     }
 
-    private ModelFile candleCakeModel(String name, String candleTexture, ResourceLocation bottom, ResourceLocation top, ResourceLocation side) {
+    private ModelFile candleCakeModel(String name, String candleTexture, Identifier bottom, Identifier top, Identifier side) {
         return models().withExistingParent(name, mcLoc("block/template_cake_with_candle"))
                 .texture(PARTICLE, side)
                 .texture("bottom", bottom)
@@ -492,7 +492,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
                 PoBlocks.STRIPPED_GINKGO_WOOD.get()
         );
 
-        ResourceLocation planks = blockTexture(PoBlocks.GINKGO_PLANKS.get());
+        Identifier planks = blockTexture(PoBlocks.GINKGO_PLANKS.get());
         blockWithItem(PoBlocks.GINKGO_PLANKS.get());
         stairsBlock(PoBlocks.GINKGO_STAIRS.get(), planks);
         slabBlock(PoBlocks.GINKGO_SLAB.get(), planks, planks);
@@ -501,7 +501,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         pressurePlateBlock(PoBlocks.GINKGO_PRESSURE_PLATE.get(), planks);
         fenceBlock(PoBlocks.GINKGO_FENCE.get(), planks);
         fenceGateBlock(PoBlocks.GINKGO_FENCE_GATE.get(), planks);
-        doorBlockWithRenderType(PoBlocks.GINKGO_DOOR.get(), ResourceLocation.parse(blockTexture(PoBlocks.GINKGO_DOOR.get()) + "_bottom"), ResourceLocation.parse(blockTexture(PoBlocks.GINKGO_DOOR.get()) + "_top"), "cutout");
+        doorBlockWithRenderType(PoBlocks.GINKGO_DOOR.get(), Identifier.parse(blockTexture(PoBlocks.GINKGO_DOOR.get()) + "_bottom"), Identifier.parse(blockTexture(PoBlocks.GINKGO_DOOR.get()) + "_top"), "cutout");
         trapdoorBlockWithRenderType(PoBlocks.GINKGO_TRAPDOOR.get(), blockTexture(PoBlocks.GINKGO_TRAPDOOR.get()), true, "cutout");
         blockWithItem(PoBlocks.GINKGO_LEAVES.get());
         saplingBlock(PoBlocks.GINKGO_SAPLING.get());
@@ -525,7 +525,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         simpleBlockItem(PoBlocks.GINKGO_TRAPDOOR.get(), blockModel(PoBlocks.GINKGO_TRAPDOOR.get(), "_bottom"));
     }
 
-    private void verticalSlabBlock(VerticalSlabBlock block, ResourceLocation texture) {
+    private void verticalSlabBlock(VerticalSlabBlock block, Identifier texture) {
         String path = getBlockPath(block);
         ModelFile model = models().withExistingParent(path, mcLoc("block/block"))
                 .texture("particle", texture)
@@ -659,16 +659,16 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
     }
 
     private void registerToilet(BlockEntry<? extends Block> block, ToiletType.Category category, boolean hasLava) {
-        Map<ToiletType, ResourceLocation> textures = new LinkedHashMap<>();
+        Map<ToiletType, Identifier> textures = new LinkedHashMap<>();
         for (ToiletType type : ToiletType.getByCategory(category).values()) {
             textures.put(type, toiletTexture(type));
         }
         registerVariantToilet(block.get(), textures, hasLava);
     }
 
-    private void registerVariantToilet(Block toilet, Map<ToiletType, ResourceLocation> textures, boolean hasLava) {
+    private void registerVariantToilet(Block toilet, Map<ToiletType, Identifier> textures, boolean hasLava) {
         ToiletType firstType = textures.keySet().iterator().next();
-        ResourceLocation firstTex = textures.get(firstType);
+        Identifier firstTex = textures.get(firstType);
         String blockPath = getBlockPath(toilet);
 
         List<ModelFile> templateModelList = new ArrayList<>();
@@ -685,7 +685,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         Map<ToiletType, ModelFile> itemModels = new LinkedHashMap<>();
         for (var entry : textures.entrySet()) {
             ToiletType type = entry.getKey();
-            ResourceLocation tex = entry.getValue();
+            Identifier tex = entry.getValue();
             String suffix = "_" + type.id();
             itemModels.put(type, models().withExistingParent(blockPath + suffix, modLoc("block/toilet")).texture("toilet", tex));
             // 生成 _n (FRONT/BACK) 和 _ns (BOTH) 变体模型，供 ToiletBakedModel 直接加载
@@ -891,7 +891,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         return PoopSky.getBlockKey(block).getNamespace();
     }
 
-    private ResourceLocation toiletTexture(ToiletType toiletType) {
+    private Identifier toiletTexture(ToiletType toiletType) {
         String tex = toiletType.texture();
         if (tex != null) {
             String namespace = toiletType.sourceBlock() != null

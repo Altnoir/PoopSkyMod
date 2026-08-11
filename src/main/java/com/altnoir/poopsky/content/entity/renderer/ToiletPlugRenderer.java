@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
 public class ToiletPlugRenderer extends EntityRenderer<ToiletPlugEntity> {
@@ -23,7 +23,7 @@ public class ToiletPlugRenderer extends EntityRenderer<ToiletPlugEntity> {
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ToiletPlugEntity entity) {
+    public Identifier getTextureLocation(ToiletPlugEntity entity) {
         return PoopSky.loc("textures/entity/toilet_plug.png");
     }
 

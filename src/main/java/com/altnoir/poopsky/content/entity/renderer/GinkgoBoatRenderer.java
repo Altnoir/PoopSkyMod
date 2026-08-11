@@ -10,16 +10,16 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.BoatRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.vehicle.Boat;
 
 public class GinkgoBoatRenderer extends BoatRenderer {
     public static final ModelLayerLocation BOAT_LAYER = new ModelLayerLocation(PoopSky.loc("boat/ginkgo"), "main");
     public static final ModelLayerLocation CHEST_BOAT_LAYER = new ModelLayerLocation(PoopSky.loc("chest_boat/ginkgo"), "main");
-    private static final ResourceLocation BOAT_TEXTURE = PoopSky.loc("textures/entity/boat/ginkgo.png");
-    private static final ResourceLocation CHEST_BOAT_TEXTURE = PoopSky.loc("textures/entity/chest_boat/ginkgo.png");
+    private static final Identifier BOAT_TEXTURE = PoopSky.loc("textures/entity/boat/ginkgo.png");
+    private static final Identifier CHEST_BOAT_TEXTURE = PoopSky.loc("textures/entity/chest_boat/ginkgo.png");
 
-    private final Pair<ResourceLocation, ListModel<Boat>> resource;
+    private final Pair<Identifier, ListModel<Boat>> resource;
 
     private GinkgoBoatRenderer(EntityRendererProvider.Context context, boolean chestBoat) {
         super(context, chestBoat);
@@ -32,7 +32,7 @@ public class GinkgoBoatRenderer extends BoatRenderer {
     }
 
     @Override
-    public Pair<ResourceLocation, ListModel<Boat>> getModelWithLocation(Boat boat) {
+    public Pair<Identifier, ListModel<Boat>> getModelWithLocation(Boat boat) {
         return resource;
     }
 

@@ -33,7 +33,7 @@ public class SeaPoopBallItem extends Item implements ProjectileItem {
                 0.5F,
                 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F)
         );
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             SeaPoopBall poopBall = new SeaPoopBall(level, player);
             poopBall.setItem(itemstack);
             poopBall.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 1.5F, 1.0F);

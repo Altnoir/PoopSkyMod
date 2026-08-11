@@ -52,7 +52,7 @@ public class PowderSnowCompooperBlock extends AbstractCompooperBlock {
 
     @Override
     protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        if (level.isClientSide || !isEntityInsideContent(pos, state, entity)) {
+        if (level.isClientSide() || !isEntityInsideContent(pos, state, entity)) {
             return;
         }
         if (entity.isOnFire()) {

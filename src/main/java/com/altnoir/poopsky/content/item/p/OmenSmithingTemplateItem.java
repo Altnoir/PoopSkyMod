@@ -5,7 +5,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.flag.FeatureFlag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SmithingTemplateItem;
@@ -23,21 +23,21 @@ public class OmenSmithingTemplateItem extends SmithingTemplateItem {
     private static final Component OMEN_UPGRADE_INGREDIENTS;
     private static final Component OMEN_UPGRADE_BASE_SLOT_DESCRIPTION;
     private static final Component OMEN_UPGRADE_ADDITIONS_SLOT_DESCRIPTION;
-    private static final ResourceLocation EMPTY_SLOT_HELMET;
-    private static final ResourceLocation EMPTY_SLOT_CHESTPLATE;
-    private static final ResourceLocation EMPTY_SLOT_LEGGINGS;
-    private static final ResourceLocation EMPTY_SLOT_BOOTS;
-    private static final ResourceLocation EMPTY_SLOT_HOE;
-    private static final ResourceLocation EMPTY_SLOT_AXE;
-    private static final ResourceLocation EMPTY_SLOT_SWORD;
-    private static final ResourceLocation EMPTY_SLOT_SHOVEL;
-    private static final ResourceLocation EMPTY_SLOT_PICKAXE;
-    private static final ResourceLocation EMPTY_SLOT_INGOT;
+    private static final Identifier EMPTY_SLOT_HELMET;
+    private static final Identifier EMPTY_SLOT_CHESTPLATE;
+    private static final Identifier EMPTY_SLOT_LEGGINGS;
+    private static final Identifier EMPTY_SLOT_BOOTS;
+    private static final Identifier EMPTY_SLOT_HOE;
+    private static final Identifier EMPTY_SLOT_AXE;
+    private static final Identifier EMPTY_SLOT_SWORD;
+    private static final Identifier EMPTY_SLOT_SHOVEL;
+    private static final Identifier EMPTY_SLOT_PICKAXE;
+    private static final Identifier EMPTY_SLOT_INGOT;
     private final Component appliesTo;
     private final Component ingredients;
     private final Component upgradeDescription;
 
-    public OmenSmithingTemplateItem(Component appliesTo, Component ingredients, Component upgradeDescription, Component baseSlotDescription, Component additionsSlotDescription, List<ResourceLocation> baseSlotEmptyIcons, List<ResourceLocation> additionalSlotEmptyIcons, FeatureFlag... requiredFeatures) {
+    public OmenSmithingTemplateItem(Component appliesTo, Component ingredients, Component upgradeDescription, Component baseSlotDescription, Component additionsSlotDescription, List<Identifier> baseSlotEmptyIcons, List<Identifier> additionalSlotEmptyIcons, FeatureFlag... requiredFeatures) {
         super(appliesTo, ingredients, upgradeDescription, baseSlotDescription, additionsSlotDescription, baseSlotEmptyIcons, additionalSlotEmptyIcons, requiredFeatures);
         this.appliesTo = appliesTo;
         this.ingredients = ingredients;
@@ -48,11 +48,11 @@ public class OmenSmithingTemplateItem extends SmithingTemplateItem {
         return new SmithingTemplateItem(OMEN_UPGRADE_APPLIES_TO, OMEN_UPGRADE_INGREDIENTS, OMEN_UPGRADE, OMEN_UPGRADE_BASE_SLOT_DESCRIPTION, OMEN_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, createNetheriteUpgradeIconList(), createNetheriteUpgradeMaterialList());
     }
 
-    private static List<ResourceLocation> createNetheriteUpgradeIconList() {
+    private static List<Identifier> createNetheriteUpgradeIconList() {
         return List.of(EMPTY_SLOT_HELMET, EMPTY_SLOT_CHESTPLATE, EMPTY_SLOT_LEGGINGS, EMPTY_SLOT_BOOTS);
     }
 
-    private static List<ResourceLocation> createNetheriteUpgradeMaterialList() {
+    private static List<Identifier> createNetheriteUpgradeMaterialList() {
         return List.of(EMPTY_SLOT_INGOT);
     }
 

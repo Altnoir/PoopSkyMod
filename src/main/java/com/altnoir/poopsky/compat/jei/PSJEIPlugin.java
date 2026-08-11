@@ -17,7 +17,7 @@ import mezz.jei.api.ingredients.subtypes.UidContext;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.registration.*;
 import net.minecraft.client.Minecraft;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
@@ -28,11 +28,11 @@ import java.util.List;
 
 @JeiPlugin
 public class PSJEIPlugin implements IModPlugin {
-    private static final ResourceLocation PS_JEI_TEXTURE = PoopSky.loc("textures/gui/jei/enr_jei.png");
+    private static final Identifier PS_JEI_TEXTURE = PoopSky.loc("textures/gui/jei/enr_jei.png");
     private final List<CreateRecipeCategory<?>> createCategories = new ArrayList<>();
 
     @Override
-    public @NotNull ResourceLocation getPluginUid() {
+    public @NotNull Identifier getPluginUid() {
         return PoopSky.loc("jei_plugin");
     }
 

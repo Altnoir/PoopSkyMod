@@ -3,7 +3,7 @@ package com.altnoir.poopsky.compat.create.content.kinetics.fan.processing;
 import com.altnoir.poopsky.compat.create.PSRecipeTypes;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeParams;
 import com.simibubi.create.content.processing.recipe.StandardProcessingRecipe;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 
@@ -31,7 +31,7 @@ public class DigestingRecipe extends StandardProcessingRecipe<SingleRecipeInput>
         return 12;
     }
 
-    public static Builder<DigestingRecipe> builder(ResourceLocation id) {
+    public static Builder<DigestingRecipe> builder(Identifier id) {
         return new Builder<>(DigestingRecipe::new, id);
     }
 }

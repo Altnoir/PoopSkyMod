@@ -4,8 +4,8 @@ import com.altnoir.poopsky.client.inventory.FlyBarrelMenu;
 import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.content.recipe.PFlyRecipes;
-import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.init.PoBlockEntityType;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -119,7 +119,7 @@ public class FlyBarrelBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, FlyBarrelBlockEntity be) {
-        if (level.isClientSide) return;
+        if (level.isClientSide()) return;
 
         ItemStack inputStack = be.itemHandler.getStackInSlot(SLOT_INPUT);
         if (inputStack.isEmpty() || !FlyItem.isFlyItem(inputStack)) {
@@ -239,7 +239,7 @@ public class FlyBarrelBlockEntity extends BlockEntity implements MenuProvider {
             @Override
             public void stopOpen(Player player) {
                 super.stopOpen(player);
-                if (level != null && !level.isClientSide) {
+                if (level != null && !level.isClientSide()) {
                     level.playSound(null, worldPosition, PoSoundEvents.BLOCK_FLY_BARREL_CLOSE.get(), SoundSource.BLOCKS, 0.5F, 0.7F);
                 }
             }
@@ -298,7 +298,7 @@ public class FlyBarrelBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     private void syncToClient() {
-        if (level != null && !level.isClientSide) {
+        if (level != null && !level.isClientSide()) {
             BlockState state = getBlockState();
             level.sendBlockUpdated(worldPosition, state, state, Block.UPDATE_ALL);
         }

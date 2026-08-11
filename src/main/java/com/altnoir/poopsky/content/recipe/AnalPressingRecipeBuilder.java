@@ -6,10 +6,10 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
@@ -72,14 +72,14 @@ public final class AnalPressingRecipeBuilder implements RecipeBuilder {
     }
 
     public void save(@NotNull RecipeOutput recipeOutput, @NotNull String id) {
-        ResourceLocation recipeId = PoopSky.loc(RECIPE_TYPE + "/" + id);
+        Identifier recipeId = PoopSky.loc(RECIPE_TYPE + "/" + id);
         save(recipeOutput, recipeId);
     }
 
     @Override
-    public void save(@NotNull RecipeOutput recipeOutput, @NotNull ResourceLocation id) {
+    public void save(@NotNull RecipeOutput recipeOutput, @NotNull Identifier id) {
         ensureValid(id);
-        ResourceLocation advancementId = PoopSky.loc(id.getPath());
+        Identifier advancementId = PoopSky.loc(id.getPath());
 
         Advancement.Builder advancementBuilder = recipeOutput.advancement()
                 .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
@@ -92,7 +92,7 @@ public final class AnalPressingRecipeBuilder implements RecipeBuilder {
         recipeOutput.accept(id, recipe, advancementBuilder.build(advancementId.withPrefix("recipes/")));
     }
 
-    private void ensureValid(ResourceLocation id) {
+    private void ensureValid(Identifier id) {
         if (criteria.isEmpty()) {
             throw new IllegalStateException("No way of obtaining recipe " + id);
         }

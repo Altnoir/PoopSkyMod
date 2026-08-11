@@ -11,14 +11,14 @@ import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import it.unimi.dsi.fastutil.ints.IntSet;
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.font.FontSet;
 import net.minecraft.client.gui.font.glyphs.BakedGlyph;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.Music;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
@@ -30,9 +30,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PoemScreen extends Screen {
-    private static final ResourceLocation TEXT_LOCATION = PoopSky.loc("texts/poopsky.txt");
-    private static final ResourceLocation TITLE_LOCATION = PoopSky.loc("textures/gui/poopsky.png");
-    private static final ResourceLocation VIGNETTE_LOCATION = PoopSky.mcloc("textures/misc/credits_vignette.png");
+    private static final Identifier TEXT_LOCATION = PoopSky.loc("texts/poopsky.txt");
+    private static final Identifier TITLE_LOCATION = PoopSky.loc("textures/gui/poopsky.png");
+    private static final Identifier VIGNETTE_LOCATION = PoopSky.mcloc("textures/misc/credits_vignette.png");
 
     private static final int CONTENT_WIDTH = 256;
     private static final int TITLE_TEXTURE_WIDTH = 710;
@@ -97,7 +97,7 @@ public class PoemScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+    public void render(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
         super.render(guiGraphics, mouseX, mouseY, partialTick);
         this.renderVignette(guiGraphics);
 
@@ -194,7 +194,7 @@ public class PoemScreen extends Screen {
     }
 
     @Override
-    public void renderBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+    public void renderBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
         guiGraphics.fillRenderType(RenderType.endPortal(), 0, 0, this.width, this.height, 0);
     }
 
@@ -220,7 +220,7 @@ public class PoemScreen extends Screen {
         return lastLineY + 20.0F;
     }
 
-    private void renderVignette(GuiGraphics guiGraphics) {
+    private void renderVignette(GuiGraphicsExtractor guiGraphics) {
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.ZERO, GlStateManager.DestFactor.ONE_MINUS_SRC_COLOR);
         guiGraphics.blit(VIGNETTE_LOCATION, 0, 0, 0, 0.0F, 0.0F, this.width, this.height, this.width, this.height);
@@ -228,7 +228,7 @@ public class PoemScreen extends Screen {
         RenderSystem.defaultBlendFunc();
     }
 
-    private void drawVanillaLine(GuiGraphics guiGraphics, FormattedCharSequence line,
+    private void drawVanillaLine(GuiGraphicsExtractor guiGraphics, FormattedCharSequence line,
                                  float startX, float y, int color) {
         Matrix4f matrix = guiGraphics.pose().last().pose();
         float alpha = (color >>> 24) / 255.0F;

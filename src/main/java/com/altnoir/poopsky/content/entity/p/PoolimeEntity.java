@@ -2,9 +2,9 @@ package com.altnoir.poopsky.content.entity.p;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.p.ShitBlock;
-import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoParticles;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.registries.Registries;

@@ -20,7 +20,7 @@ repositories {
     mavenLocal()
     maven { url = "https://maven.ryanhcode.dev/releases" } // Sable
     maven { url = "https://maven.createmod.net" } // Create, Ponder, Flywheel
-    maven { url = "https://mvn.devos.one/snapshots" } // Registrate
+    maven { url = "https://maven.gegy.dev/releases" } // Registrate
     maven { url = "https://maven.blamejared.com" } // JEI
     maven { url = "https://cursemaven.com" }
     maven { url = "https://api.modrinth.com/maven" } // Simple Bedrock Model
@@ -156,16 +156,26 @@ configurations {
     runtimeClasspath.extendsFrom localRuntime
 }
 
+// 机械动力的还在移植，用不了，先排除编译！
+sourceSets {
+    main {
+        java {
+            exclude 'com/altnoir/poopsky/compat/create'
+            exclude 'com/altnoir/poopsky/compat/jei/create'
+        }
+    }
+}
+
 dependencies {
     // JEI
     compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
     compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
     localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
-    // Create
-    implementation("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
+    // Create 机械动力的还在移植，用不了，先注释了
+/*    implementation("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
     implementation("net.createmod.ponder:Ponder-NeoForge-${minecraft_version}:${ponder_version}")
     compileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-${minecraft_version}:${flywheel_version}")
-    runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-${minecraft_version}:${flywheel_version}")
+    runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-${minecraft_version}:${flywheel_version}")*/
     implementation jarJar("com.tterrag.registrate:Registrate:${registrate_version}")
     implementation(files("libs/simplebedrockmodel-2.5.0-neoforge-mc26.1.jar"))
 }

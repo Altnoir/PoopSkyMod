@@ -23,7 +23,7 @@ public class FlushToiletCartItem extends Item {
     @Override
     public InteractionResult useOn(UseOnContext context) {
         Level level = context.getLevel();
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return InteractionResult.sidedSuccess(true);
         }
         if (!(level instanceof ServerLevel serverLevel)) {

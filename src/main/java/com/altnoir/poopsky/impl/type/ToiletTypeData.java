@@ -9,7 +9,7 @@ import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.ComponentSerialization;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 
 import java.nio.file.Path;
@@ -76,7 +76,7 @@ public class ToiletTypeData implements DataProvider {
         // name_key (始终写出，用于自定义名称或默认指向源方块翻译键)
         json.addProperty("name_key", type.nameKey());
 
-        Path outputPath = this.pathProvider.json(ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, type.id()));
+        Path outputPath = this.pathProvider.json(Identifier.fromNamespaceAndPath(PoopSky.MOD_ID, type.id()));
         return DataProvider.saveStable(cachedOutput, json, outputPath);
     }
 

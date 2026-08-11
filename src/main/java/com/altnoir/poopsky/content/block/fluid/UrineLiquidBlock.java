@@ -45,10 +45,10 @@ public class UrineLiquidBlock extends LiquidBlock {
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.POISON, 60));
             }
             if (livingEntity instanceof ServerPlayer) {
-                MobEffectInstance confusionEffect = livingEntity.getEffect(MobEffects.CONFUSION);
+                MobEffectInstance confusionEffect = livingEntity.getEffect(MobEffects.NAUSEA);
 
-                if (!livingEntity.hasEffect(MobEffects.CONFUSION) | (confusionEffect != null && confusionEffect.getDuration() <= 100)) {
-                    livingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200));
+                if (!livingEntity.hasEffect(MobEffects.NAUSEA) | (confusionEffect != null && confusionEffect.getDuration() <= 100)) {
+                    livingEntity.addEffect(new MobEffectInstance(MobEffects.NAUSEA, 200));
                 }
             }
         }

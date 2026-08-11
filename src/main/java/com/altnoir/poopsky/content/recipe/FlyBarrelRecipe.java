@@ -9,7 +9,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
@@ -61,15 +61,15 @@ public record FlyBarrelRecipe(String flyTypeId, Output result) implements Recipe
         return PoRecipes.FLY_BARREL.type().get();
     }
 
-    public record Output(ResourceLocation id, int count) {
+    public record Output(Identifier id, int count) {
         public static final Codec<Output> CODEC = RecordCodecBuilder.create(inst -> inst.group(
-                ResourceLocation.CODEC.fieldOf("id").forGetter(Output::id),
+                Identifier.CODEC.fieldOf("id").forGetter(Output::id),
                 ExtraCodecs.intRange(1, 99).fieldOf("count").forGetter(Output::count)
         ).apply(inst, Output::new));
 
         public static final StreamCodec<RegistryFriendlyByteBuf, Output> STREAM_CODEC =
                 StreamCodec.composite(
-                        ResourceLocation.STREAM_CODEC, Output::id,
+                        Identifier.STREAM_CODEC, Output::id,
                         ByteBufCodecs.VAR_INT, Output::count,
                         Output::new);
 

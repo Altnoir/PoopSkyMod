@@ -82,7 +82,7 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
         this.move(MoverType.SELF, movement);
         int radius = calculateExplosionRadius(impactSpeed);
 
-        if (!this.level().isClientSide) {
+        if (!this.level().isClientSide()) {
             var state = this.level().getBlockState(this.getOnPos());
 
             if (impactSpeed > INSTANT_EXPLOSION_THRESHOLD && !state.is(PoTags.Blocks.EMPTY_LOGS) && (this.horizontalCollision || this.verticalCollision)) {
@@ -102,12 +102,12 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
         this.setFuse(fuse);
         if (fuse <= 0) {
             this.discard();
-            if (!this.level().isClientSide) {
+            if (!this.level().isClientSide()) {
                 PoopTntUtil.triggerExplosion(this, radius + 1);
             }
         } else {
             this.updateInWaterStateAndDoFluidPushing();
-            if (this.level().isClientSide) {
+            if (this.level().isClientSide()) {
                 this.level().addParticle(ParticleTypes.SMOKE,
                         this.getX(), this.getY() + 0.5, this.getZ(),
                         0.0, 0.0, 0.0);
@@ -117,7 +117,7 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
 
     @Nullable
     private Direction getLogFacing() {
-        if (this.level().isClientSide) return null;
+        if (this.level().isClientSide()) return null;
 
         double midY = this.getY() + this.getBbHeight() / 2.0;
         Vec3 midPos = new Vec3(this.getX(), midY, this.getZ());

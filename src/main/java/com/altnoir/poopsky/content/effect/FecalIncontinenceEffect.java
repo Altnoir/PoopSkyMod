@@ -2,11 +2,11 @@ package com.altnoir.poopsky.content.effect;
 
 import com.altnoir.poopsky.content.block.p.CompooperBlock;
 import com.altnoir.poopsky.content.entity.p.FlushToiletEntity;
-import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.impl.util.ToiletUtil;
 import com.altnoir.poopsky.init.PoEffects;
 import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.init.PoParticles;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
@@ -47,7 +47,7 @@ public class FecalIncontinenceEffect extends MobEffect {
     private void fecalIncontinence(LivingEntity entity, int amplifier) {
         float pitch = entity.getRandom().nextFloat() + 0.5F;
 
-        if (!entity.level().isClientSide) {
+        if (!entity.level().isClientSide()) {
             var vehicle = entity.getVehicle();
             if (vehicle instanceof FlushToiletEntity) {
                 return;

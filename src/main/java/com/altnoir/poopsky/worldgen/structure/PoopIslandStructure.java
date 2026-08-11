@@ -5,7 +5,7 @@ import com.altnoir.poopsky.worldgen.PoStructures;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
@@ -30,7 +30,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class PoopIslandStructure extends Structure {
     public static final MapCodec<PoopIslandStructure> CODEC = simpleCodec(PoopIslandStructure::new);
-    public static final List<ResourceLocation> DIRT_ISLAND_TEMPLATES = List.of(
+    public static final List<Identifier> DIRT_ISLAND_TEMPLATES = List.of(
             PoopSky.loc("islands/dirt/0x1x0"),
             PoopSky.loc("islands/dirt/11x1x11"),
             PoopSky.loc("islands/dirt/2x2x4"),
@@ -50,7 +50,7 @@ public class PoopIslandStructure extends Structure {
 
     @Override
     protected Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
-        ResourceLocation templateId = randomTemplate(context.random());
+        Identifier templateId = randomTemplate(context.random());
         Optional<StructureTemplate> template = context.structureTemplateManager().get(templateId);
         if (template.isEmpty()) {
             PoopSky.LOGGER.warn("Missing poop island template {}", templateId);
@@ -104,7 +104,7 @@ public class PoopIslandStructure extends Structure {
 
         int islandY = clampIslandY(chunk.getHeightAccessorForGeneration(), VOID_ISLAND_Y);
         RandomSource random = RandomSource.create(seed ^ BlockPos.asLong(center.getX(), center.getY(), center.getZ()));
-        ResourceLocation templateId = randomTemplate(random);
+        Identifier templateId = randomTemplate(random);
         StructureTemplate template = templateManager.get(templateId).orElse(null);
         if (template == null) {
             PoopSky.LOGGER.warn("Missing poop island template {}", templateId);
@@ -149,7 +149,7 @@ public class PoopIslandStructure extends Structure {
         return getGuaranteedSpawnIslandCenter(level.getSeed(), Objects.requireNonNullElseGet(registeredSpawn, level::getSharedSpawnPos));
     }
 
-    private static ResourceLocation randomTemplate(RandomSource random) {
+    private static Identifier randomTemplate(RandomSource random) {
         return DIRT_ISLAND_TEMPLATES.get(random.nextInt(DIRT_ISLAND_TEMPLATES.size()));
     }
 

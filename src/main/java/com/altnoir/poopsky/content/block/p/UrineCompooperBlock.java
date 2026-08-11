@@ -2,10 +2,10 @@ package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.content.block.CompooperType;
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
-import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.init.PoParticles;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -84,14 +84,14 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (state.getValue(MAGGOTS)) {
             extractProduce(player, state, level, pos);
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return InteractionResult.sidedSuccess(level.isClientSide());
         } else {
             return InteractionResult.PASS;
         }
     }
 
     public static void extractProduce(Entity entity, BlockState state, Level level, BlockPos pos) {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             var vec3 = Vec3.atLowerCornerWithOffset(pos, 0.5, 1.01, 0.5).offsetRandom(level.random, 0.7F);
             var itementity = new ItemEntity(level, vec3.x(), vec3.y(), vec3.z(), new ItemStack(PoItems.MAGGOTS_SEEDS.get()));
             itementity.setDefaultPickUpDelay();
@@ -117,12 +117,12 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
 
     @Override
     protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        if (level.isClientSide || !isEntityInsideContent(pos, state, entity)) {
+        if (level.isClientSide() || !isEntityInsideContent(pos, state, entity)) {
             return;
         }
 
         if (entity instanceof LivingEntity livingEntity) {
-            livingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200));
+            livingEntity.addEffect(new MobEffectInstance(MobEffects.NAUSEA, 200));
             livingEntity.addEffect(new MobEffectInstance(MobEffects.POISON, 200));
         }
 
@@ -134,7 +134,7 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
 
     @Override
     protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
-        if (!level.isClientSide && state.getValue(LEVEL) == MAX_LEVEL && isHot((ServerLevel) level, pos)) {
+        if (!level.isClientSide() && state.getValue(LEVEL) == MAX_LEVEL && isHot((ServerLevel) level, pos)) {
             level.scheduleTick(pos, this, 80);
         }
         super.onPlace(state, level, pos, oldState, movedByPiston);
@@ -142,7 +142,7 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
 
     @Override
     protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
-        if (!level.isClientSide && neighborPos.equals(pos.below()) && state.getValue(LEVEL) == MAX_LEVEL && isHot((ServerLevel) level, pos)) {
+        if (!level.isClientSide() && neighborPos.equals(pos.below()) && state.getValue(LEVEL) == MAX_LEVEL && isHot((ServerLevel) level, pos)) {
             level.scheduleTick(pos, this, 80);
         }
         super.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston);

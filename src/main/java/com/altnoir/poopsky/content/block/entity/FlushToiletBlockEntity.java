@@ -8,8 +8,8 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
@@ -149,7 +149,7 @@ public class FlushToiletBlockEntity extends BlockEntity implements MenuProvider 
         if (level == null || level.isClientSide()) return;
         if (linkedPos == null || linkedDim == null || linkedDim.isBlank()) return;
 
-        var targetDimension = ResourceLocation.tryParse(linkedDim);
+        var targetDimension = Identifier.tryParse(linkedDim);
         if (targetDimension == null) return;
 
         var server = ((ServerLevel) level).getServer();
@@ -219,7 +219,7 @@ public class FlushToiletBlockEntity extends BlockEntity implements MenuProvider 
     }
 
     private void syncToClient() {
-        if (level != null && !level.isClientSide) {
+        if (level != null && !level.isClientSide()) {
             BlockState state = getBlockState();
             level.sendBlockUpdated(worldPosition, state, state, Block.UPDATE_ALL);
         }

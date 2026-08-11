@@ -12,23 +12,23 @@ public class PFoods {
             .saturationModifier(0.2F)
             .effect(() -> new MobEffectInstance(MobEffects.POISON, 100), 0.1F)
             .effect(() -> new MobEffectInstance(MobEffects.HUNGER, 600), 0.5F)
-            .effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 300), 0.5F)
+            .effect(() -> new MobEffectInstance(MobEffects.NAUSEA, 300), 0.5F)
             .effect(() -> new MobEffectInstance(MobEffects.BLINDNESS, 20), 1.0F)
             .build();
     public static final FoodProperties GOLDEN_POOP = new FoodProperties.Builder()
             .nutrition(4)
             .saturationModifier(1.2F)
-            .effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 300), 0.5F)
+            .effect(() -> new MobEffectInstance(MobEffects.NAUSEA, 300), 0.5F)
             .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 200), 1.0F)
             .build();
 
     public static final FoodProperties MAGGOTS_SEEDS = new FoodProperties.Builder()
             .nutrition(1).saturationModifier(0.4F).fast()
-            .effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 200), 0.5F)
+            .effect(() -> new MobEffectInstance(MobEffects.NAUSEA, 200), 0.5F)
             .build();
     public static final FoodProperties ROUNDWORM = new FoodProperties.Builder()
             .nutrition(1).saturationModifier(0.8F).fast()
-            .effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 200), 0.5F)
+            .effect(() -> new MobEffectInstance(MobEffects.NAUSEA, 200), 0.5F)
             .build();
     public static final FoodProperties BAKED_MAGGOTS = new FoodProperties.Builder()
             .nutrition(1).saturationModifier(0.8F).fast().build();
@@ -36,7 +36,7 @@ public class PFoods {
             .nutrition(2)
             .saturationModifier(0.2F)
             .alwaysEdible()
-            .effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 300), 0.5F)
+            .effect(() -> new MobEffectInstance(MobEffects.NAUSEA, 300), 0.5F)
             .effect(() -> new MobEffectInstance(MobEffects.BLINDNESS, 20), 1.0F)
             .build();
 
@@ -45,7 +45,7 @@ public class PFoods {
             .effect(() -> new MobEffectInstance(MobEffects.DIG_SPEED, 1800, 1), 1.0F)
             .effect(() -> new MobEffectInstance(MobEffects.POISON, 100), 0.5F)
             .effect(() -> new MobEffectInstance(MobEffects.HUNGER, 600), 0.5F)
-            .effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 200), 0.5F)
+            .effect(() -> new MobEffectInstance(MobEffects.NAUSEA, 200), 0.5F)
             .effect(() -> new MobEffectInstance(MobEffects.BLINDNESS, 20), 1.0F)
             .effect(() -> new MobEffectInstance(MobEffects.DARKNESS, 60), 1.0F)
             .build();
@@ -55,27 +55,27 @@ public class PFoods {
             .effect(() -> new MobEffectInstance(MobEffects.WATER_BREATHING, 1800), 1.0F)
             .effect(() -> new MobEffectInstance(MobEffects.POISON, 100), 0.5F)
             .effect(() -> new MobEffectInstance(MobEffects.HUNGER, 600), 0.5F)
-            .effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 200), 0.5F)
+            .effect(() -> new MobEffectInstance(MobEffects.NAUSEA, 200), 0.5F)
             .effect(() -> new MobEffectInstance(MobEffects.BLINDNESS, 20), 1.0F)
             .effect(() -> new MobEffectInstance(MobEffects.DARKNESS, 60), 1.0F)
             .build();
     public static final FoodProperties POOP_MOONCAKE = new FoodProperties.Builder()
             .nutrition(4).saturationModifier(0.5F)
-            .effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 200), 0.5F)
+            .effect(() -> new MobEffectInstance(MobEffects.NAUSEA, 200), 0.5F)
             .effect(() -> new MobEffectInstance(MobEffects.BLINDNESS, 20), 1.0F)
             .effect(() -> new MobEffectInstance(MobEffects.DARKNESS, 60), 1.0F)
             .build();
     public static final FoodProperties CHILI_POOP_MOONCAKE = new FoodProperties.Builder()
             .nutrition(4).saturationModifier(0.5F)
             .effect(() -> new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 2400), 1.0F)
-            .effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 200), 0.5F)
+            .effect(() -> new MobEffectInstance(MobEffects.NAUSEA, 200), 0.5F)
             .effect(() -> new MobEffectInstance(MobEffects.BLINDNESS, 20), 1.0F)
             .effect(() -> new MobEffectInstance(MobEffects.DARKNESS, 60), 1.0F)
             .build();
     public static final FoodProperties GOLDEN_POOP_MOONCAKE = new FoodProperties.Builder()
             .nutrition(4).saturationModifier(0.5F)
             .effect(() -> new MobEffectInstance(MobEffects.ABSORPTION, 2400, 1), 1.0F)
-            .effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 200), 0.5F)
+            .effect(() -> new MobEffectInstance(MobEffects.NAUSEA, 200), 0.5F)
             .effect(() -> new MobEffectInstance(MobEffects.BLINDNESS, 20), 1.0F)
             .effect(() -> new MobEffectInstance(MobEffects.DARKNESS, 60), 1.0F)
             .build();
@@ -86,7 +86,7 @@ public class PFoods {
             .effect(() -> new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 3600), 1.0F)
             .effect(() -> new MobEffectInstance(MobEffects.HUNGER, 600), 0.5F)
             .effect(() -> new MobEffectInstance(MobEffects.GLOWING, 2400), 1.0F)
-            .effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 200), 0.5F)
+            .effect(() -> new MobEffectInstance(MobEffects.NAUSEA, 200), 0.5F)
             .effect(() -> new MobEffectInstance(MobEffects.BLINDNESS, 20), 1.0F)
             .effect(() -> new MobEffectInstance(MobEffects.DARKNESS, 60), 1.0F)
             .build();
@@ -94,7 +94,7 @@ public class PFoods {
     public static final FoodProperties POOP_VEGETABLE_STICKS = new FoodProperties.Builder()
             .nutrition(5).saturationModifier(0.2F)
             .effect(() -> new MobEffectInstance(MobEffects.HUNGER, 600), 0.5F)
-            .effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 200), 0.5F)
+            .effect(() -> new MobEffectInstance(MobEffects.NAUSEA, 200), 0.5F)
             .effect(() -> new MobEffectInstance(MobEffects.BLINDNESS, 20), 1.0F)
             .effect(() -> new MobEffectInstance(MobEffects.DARKNESS, 60), 1.0F)
             .build();
@@ -103,14 +103,14 @@ public class PFoods {
             .nutrition(3).saturationModifier(0.4F)
             .effect(() -> new MobEffectInstance(MobEffects.POISON, 200), 0.1F)
             .effect(() -> new MobEffectInstance(MobEffects.HUNGER, 600), 0.5F)
-            .effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 1200), 0.75F)
+            .effect(() -> new MobEffectInstance(MobEffects.NAUSEA, 1200), 0.75F)
             .effect(() -> new MobEffectInstance(MobEffects.BLINDNESS, 40), 1.0F)
             .effect(() -> new MobEffectInstance(MobEffects.DARKNESS, 120), 1.0F)
             .build();
 
     public static final FoodProperties POOBURGER = new FoodProperties.Builder()
             .nutrition(8).saturationModifier(0.8F)
-            .effect(() -> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 2400), 1.0F)
+            .effect(() -> new MobEffectInstance(MobEffects.RESISTANCE, 2400), 1.0F)
             .effect(() -> new MobEffectInstance(MobEffects.HUNGER, 1200, 1), 0.5F)
             .effect(() -> new MobEffectInstance(MobEffects.BLINDNESS, 40), 1.0F)
             .effect(() -> new MobEffectInstance(MobEffects.DARKNESS, 120), 1.0F)
@@ -128,7 +128,7 @@ public class PFoods {
             .nutrition(2).saturationModifier(0.4F)
             .effect(() -> new MobEffectInstance(MobEffects.WATER_BREATHING, 200), 1.0F)
             .effect(() -> new MobEffectInstance(MobEffects.HUNGER, 600), 0.5F)
-            .effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 200), 0.5F)
+            .effect(() -> new MobEffectInstance(MobEffects.NAUSEA, 200), 0.5F)
             .effect(() -> new MobEffectInstance(MobEffects.BLINDNESS, 20), 1.0F)
             .effect(() -> new MobEffectInstance(MobEffects.DARKNESS, 60), 1.0F)
             .build();

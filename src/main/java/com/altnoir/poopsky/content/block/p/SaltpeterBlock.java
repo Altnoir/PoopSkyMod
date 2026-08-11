@@ -17,7 +17,7 @@ public class SaltpeterBlock extends AmethystBlock {
     @Override
     protected void onProjectileHit(Level level, BlockState state, BlockHitResult hit, Projectile projectile) {
         BlockPos pos = hit.getBlockPos();
-        if (!level.isClientSide && projectile.mayInteract(level, pos)) {
+        if (!level.isClientSide() && projectile.mayInteract(level, pos)) {
             level.playSound(null, pos, PoSoundEvents.BLOCK_SALTPETER_CHIME.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
         }
     }

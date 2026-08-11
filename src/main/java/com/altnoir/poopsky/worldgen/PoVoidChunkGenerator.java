@@ -13,8 +13,8 @@ import net.minecraft.ReportedException;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.tags.TagKey;
@@ -45,11 +45,11 @@ import java.util.stream.Collectors;
 public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
     private static final int VIRTUAL_SURFACE_Y = 64;
     private static final int SPAWN_STRUCTURE_PROTECTION_RADIUS = 50;
-    private static final ResourceLocation STRONGHOLDS_STRUCTURE_SET = PoopSky.mcloc("strongholds");
-    private static final ResourceLocation STRONGHOLD_STRUCTURE = PoopSky.mcloc("stronghold");
+    private static final Identifier STRONGHOLDS_STRUCTURE_SET = PoopSky.mcloc("strongholds");
+    private static final Identifier STRONGHOLD_STRUCTURE = PoopSky.mcloc("stronghold");
 
     private static final Codec<List<ResourceKey<StructureSet>>> STRUCTURE_SET_KEYS_CODEC =
-            Codec.either(ResourceLocation.CODEC.listOf(), ResourceLocation.CODEC).xmap(
+            Codec.either(Identifier.CODEC.listOf(), Identifier.CODEC).xmap(
                     either -> either.map(
                             locations -> locations.stream()
                                     .map(location -> ResourceKey.create(Registries.STRUCTURE_SET, location))
@@ -95,7 +95,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
         super(biomeSource, settings);
         this.settings = settings;
         this.allowedStructureSets = allowedStructureSets;
-        this.generateNormal = settings.is(ResourceLocation.parse("minecraft:nether")) && !Config.voidNetherGeneration;
+        this.generateNormal = settings.is(Identifier.parse("minecraft:nether")) && !Config.voidNetherGeneration;
     }
 
     @Override
@@ -117,7 +117,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
                 return holder.is(tag);
             }
 
-            Set<ResourceLocation> allowedLocations = keys.stream()
+            Set<Identifier> allowedLocations = keys.stream()
                     .map(ResourceKey::location)
                     .collect(Collectors.toUnmodifiableSet());
 
@@ -198,7 +198,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
             filterStructureStarts(registries, structureState.getLevelSeed(), chunk);
         }
 
-        if (!generateNormal && settings.is(ResourceLocation.parse("minecraft:overworld")) && isStructureAllowed(registries, PoopSky.loc("poop_island"))) {
+        if (!generateNormal && settings.is(Identifier.parse("minecraft:overworld")) && isStructureAllowed(registries, PoopSky.loc("poop_island"))) {
             PoopIslandStructure.addGuaranteedSpawnStart(registries, chunk, structureManager, templateManager, structureState.getLevelSeed());
         }
     }
@@ -262,7 +262,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
                 .collect(Collectors.toUnmodifiableSet());
     }
 
-    private boolean isStructureAllowed(RegistryAccess registries, ResourceLocation structureId) {
+    private boolean isStructureAllowed(RegistryAccess registries, Identifier structureId) {
         if (allowedStructureSets == null) {
             return true;
         }
@@ -293,7 +293,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
 
     @Nullable
     private Pair<BlockPos, Holder<Structure>> findGuaranteedSpawnIsland(ServerLevel level, HolderSet<Structure> structures, BlockPos pos, int searchRadius, boolean skipKnownStructures) {
-        if (skipKnownStructures || generateNormal || !settings.is(ResourceLocation.parse("minecraft:overworld")) || !isStructureAllowed(level.registryAccess(), PoopSky.loc("poop_island"))) {
+        if (skipKnownStructures || generateNormal || !settings.is(Identifier.parse("minecraft:overworld")) || !isStructureAllowed(level.registryAccess(), PoopSky.loc("poop_island"))) {
             return null;
         }
 
@@ -329,7 +329,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
 
     private void filterStructureStarts(RegistryAccess registries, long seed, ChunkAccess chunk) {
         Set<Structure> allowedStructures = resolveAllowedStructures(registries);
-        boolean protectSpawn = settings.is(ResourceLocation.parse("minecraft:overworld"));
+        boolean protectSpawn = settings.is(Identifier.parse("minecraft:overworld"));
         BlockPos spawn = protectSpawn ? defaultSpawnPosition(seed) : BlockPos.ZERO;
 
         for (Map.Entry<Structure, StructureStart> entry : List.copyOf(chunk.getAllStarts().entrySet())) {

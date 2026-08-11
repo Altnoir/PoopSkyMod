@@ -3,7 +3,7 @@ package com.altnoir.poopsky.content.item.p;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.init.PoEntityType;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
@@ -23,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 public class ToiletPlugItem extends Item {
     private static final float ATTACK_DAMAGE_MODIFIER = 1.0F;
     private static final float ATTACK_KNOCKBACK_MODIFIER = 1.0F;
-    private static final ResourceLocation BASE_ATTACK_KNOCKBACK_ID = PoopSky.loc("base_attack_knockback");
+    private static final Identifier BASE_ATTACK_KNOCKBACK_ID = PoopSky.loc("base_attack_knockback");
     private static final int POISON_DURATION = 60;
 
     public ToiletPlugItem(Properties properties) {

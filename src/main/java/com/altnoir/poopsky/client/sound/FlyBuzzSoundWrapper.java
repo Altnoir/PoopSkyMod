@@ -15,7 +15,7 @@ public class FlyBuzzSoundWrapper {
     }
 
     public void tick() {
-        if (!fly.level().isClientSide) {
+        if (!fly.level().isClientSide()) {
             return;
         }
 
@@ -28,7 +28,7 @@ public class FlyBuzzSoundWrapper {
     }
 
     public void stop() {
-        if (fly.level().isClientSide && sound != null) {
+        if (fly.level().isClientSide() && sound != null) {
             Minecraft.getInstance().getSoundManager().stop(sound);
             sound = null;
         }

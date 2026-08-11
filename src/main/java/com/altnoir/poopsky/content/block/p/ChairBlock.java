@@ -41,7 +41,7 @@ public class ChairBlock extends Block {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             Entity entity;
             List<ChairEntity> entities = level.getEntities(PoEntityType.STOOL.get(), new AABB(pos), chairEntity -> true);
             if (entities.isEmpty()) {

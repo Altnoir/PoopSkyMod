@@ -89,7 +89,7 @@ public abstract class AbstractCompooperBlock extends Block {
         ItemStack itemStack = ItemUtils.createFilledResult(stack, player, item);
         player.setItemInHand(hand, itemStack);
 
-        return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        return ItemInteractionResult.sidedSuccess(level.isClientSide());
     }
 
     protected ItemInteractionResult liquidBottleUse(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound) {
@@ -110,7 +110,7 @@ public abstract class AbstractCompooperBlock extends Block {
             level.scheduleTick(pos, this, 20);
         }
 
-        return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        return ItemInteractionResult.sidedSuccess(level.isClientSide());
     }
 
     protected ItemInteractionResult glassBottleUse(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, ItemStack item) {
@@ -127,7 +127,7 @@ public abstract class AbstractCompooperBlock extends Block {
         ItemStack itemStack = ItemUtils.createFilledResult(stack, player, item);
         player.setItemInHand(hand, itemStack);
 
-        return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        return ItemInteractionResult.sidedSuccess(level.isClientSide());
     }
 
     protected void setBlock(BlockState state, Level level, BlockPos pos, Player player, SoundEvent sound, float pitch) {

@@ -48,7 +48,7 @@ public class MaggotsChunkLoaderBlock extends BaseEntityBlock {
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide
+        return level.isClientSide()
                 ? null
                 : createTickerHelper(type, PoBlockEntityType.MAGGOTS_CHUNK_LOADER.get(), (level1, pos, state1, blockEntity) -> MaggotsChunkLoaderBlockEntity.tick(level1, state1, blockEntity));
     }

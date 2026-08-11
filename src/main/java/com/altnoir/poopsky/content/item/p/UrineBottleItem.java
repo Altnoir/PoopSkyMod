@@ -12,9 +12,12 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.animal.Chicken;
+import net.minecraft.world.entity.animal.chicken.Chicken;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
@@ -32,7 +35,7 @@ public class UrineBottleItem extends Item implements IFeedable {
             player.awardStat(Stats.ITEM_USED.get(this));
         }
 
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             entity.addEffect(new MobEffectInstance(MobEffects.POISON, 600, 0));
         }
 
@@ -56,7 +59,7 @@ public class UrineBottleItem extends Item implements IFeedable {
         InteractionResult feedResult = tryFeedToPlayer(stack, player, entity);
         if (feedResult.consumesAction()) return feedResult;
         if (entity.isAlive() && entity instanceof Chicken chicken) {
-            if (!player.level().isClientSide) {
+            if (!player.level().isClientSide()) {
                 var waterPotion = PotionContents.createItemStack(Items.POTION, Potions.WATER);
 
                 chicken.playSound(SoundEvents.CHICKEN_EGG);
@@ -67,7 +70,7 @@ public class UrineBottleItem extends Item implements IFeedable {
                 }
                 entity.spawnAtLocation(waterPotion);
             }
-            return InteractionResult.sidedSuccess(player.level().isClientSide);
+            return InteractionResult.sidedSuccess(player.level().isClientSide());
         }
         return super.interactLivingEntity(stack, player, entity, hand);
     }

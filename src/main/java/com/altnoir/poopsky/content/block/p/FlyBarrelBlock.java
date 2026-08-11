@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.content.block.entity.FlyBarrelBlockEntity;
-import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.init.PoBlockEntityType;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -76,7 +76,7 @@ public class FlyBarrelBlock extends BaseEntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             if (level.getBlockEntity(pos) instanceof FlyBarrelBlockEntity be) {
                 level.playSound(null, pos, PoSoundEvents.BLOCK_FLY_BARREL_OPEN.get(), SoundSource.BLOCKS, 0.5F, 0.7F);
                 player.openMenu(be);

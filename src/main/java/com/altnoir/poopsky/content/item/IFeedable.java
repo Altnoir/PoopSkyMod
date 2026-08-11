@@ -37,7 +37,7 @@ public interface IFeedable {
         if (!(target instanceof Player targetPlayer)) return InteractionResult.PASS;
         if (!targetPlayer.canEat(false)) return InteractionResult.PASS;
 
-        if (!feeder.level().isClientSide) {
+        if (!feeder.level().isClientSide()) {
             ItemStack feedStack = stack.copy();
             feedStack.setCount(1);
             targetPlayer.eat(feeder.level(), feedStack);

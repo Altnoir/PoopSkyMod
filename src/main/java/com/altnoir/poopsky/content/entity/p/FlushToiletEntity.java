@@ -37,7 +37,7 @@ public class FlushToiletEntity extends Entity {
     @Override
     public void tick() {
         super.tick();
-        if (this.level().isClientSide) return;
+        if (this.level().isClientSide()) return;
         var state = this.level().getBlockState(this.blockPosition());
         if (!(state.getBlock() instanceof FlushToiletBlock)) {
             this.kill();

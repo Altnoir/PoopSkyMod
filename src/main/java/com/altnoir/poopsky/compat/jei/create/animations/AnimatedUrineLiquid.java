@@ -4,7 +4,7 @@ import com.altnoir.poopsky.init.PoBlocks;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.compat.jei.category.animations.AnimatedKinetics;
 import net.createmod.catnip.animation.AnimationTickHolder;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.util.Mth;
 
 public class AnimatedUrineLiquid extends AnimatedKinetics {
@@ -14,7 +14,7 @@ public class AnimatedUrineLiquid extends AnimatedKinetics {
     }
 
     @Override
-    public void draw(GuiGraphics graphics, int xOffset, int yOffset) {
+    public void draw(GuiGraphicsExtractor graphics, int xOffset, int yOffset) {
         PoseStack matrixStack = graphics.pose();
         matrixStack.pushPose();
         matrixStack.translate(0, 0, 0);

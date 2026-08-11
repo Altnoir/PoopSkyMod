@@ -12,7 +12,7 @@ import com.simibubi.create.compat.jei.EmptyBackground;
 import com.simibubi.create.compat.jei.category.ProcessingViaFanCategory;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -46,7 +46,7 @@ public class FanDigestingCategory extends ProcessingViaFanCategory.MultiOutput<D
     }
 
     @Override
-    protected void renderAttachedBlock(GuiGraphics graphics) {
+    protected void renderAttachedBlock(GuiGraphicsExtractor graphics) {
         urineLiquid.draw(graphics, 0, 0);
     }
 

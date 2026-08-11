@@ -163,7 +163,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
             playCompostEffect(level, pos, !state.equals(newState));
             player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
             stack.consume(1, player);
-            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+            return ItemInteractionResult.sidedSuccess(level.isClientSide());
         }
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
@@ -182,7 +182,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
         ItemStack itemStack = ItemUtils.createFilledResult(stack, player, bucket ? Items.BUCKET.getDefaultInstance() : Items.GLASS_BOTTLE.getDefaultInstance());
         player.setItemInHand(hand, itemStack);
 
-        return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        return ItemInteractionResult.sidedSuccess(level.isClientSide());
     }
 
 
@@ -206,14 +206,14 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
         int i = state.getValue(POOP_LEVEL);
         if (i == READY) {
             extractProduce(player, state, level, pos);
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return InteractionResult.sidedSuccess(level.isClientSide());
         } else {
             return InteractionResult.PASS;
         }
     }
 
     public static void extractProduce(Entity entity, BlockState state, Level level, BlockPos pos) {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             var vec3 = Vec3.atLowerCornerWithOffset(pos, 0.5, 1.01, 0.5).offsetRandom(level.random, 0.7F);
             var itementity = new ItemEntity(level, vec3.x(), vec3.y(), vec3.z(), new ItemStack(PoItems.SAPLING_POOP_BALL.get()));
             itementity.setDefaultPickUpDelay();

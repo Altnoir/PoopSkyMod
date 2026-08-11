@@ -9,7 +9,7 @@ import com.altnoir.poopsky.init.PoItems;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.ModelEvent;
@@ -61,14 +61,14 @@ public class BakedModelEventHandler {
         }
     }
 
-    private static void wrapToiletModels(Map<ModelResourceLocation, BakedModel> models, ResourceLocation blockId, String blockPath, ToiletType.Category category, boolean hasLava) {
+    private static void wrapToiletModels(Map<ModelResourceLocation, BakedModel> models, Identifier blockId, String blockPath, ToiletType.Category category, boolean hasLava) {
         String[] stateSuffixes = hasLava ? LAVA_SUFFIXES : WOOD_SUFFIXES;
 
         Map<ToiletType, BakedModel[]> variantModels = new HashMap<>();
-        Map<ToiletType, ResourceLocation> variantTextures = new HashMap<>();
+        Map<ToiletType, Identifier> variantTextures = new HashMap<>();
         BakedModel[] templateModels = new BakedModel[stateSuffixes.length];
         for (int i = 0; i < stateSuffixes.length; i++) {
-            ResourceLocation modelLoc = PoopSky.loc("block/" + blockPath + stateSuffixes[i]);
+            Identifier modelLoc = PoopSky.loc("block/" + blockPath + stateSuffixes[i]);
             ModelResourceLocation mrl = new ModelResourceLocation(modelLoc, ModelResourceLocation.STANDALONE_VARIANT);
             templateModels[i] = models.get(mrl);
         }
@@ -77,7 +77,7 @@ public class BakedModelEventHandler {
             String typeSuffix = "_" + type.id();
             BakedModel[] typeModels = new BakedModel[stateSuffixes.length];
             for (int i = 0; i < stateSuffixes.length; i++) {
-                ResourceLocation modelLoc = PoopSky.loc("block/" + blockPath + typeSuffix + stateSuffixes[i]);
+                Identifier modelLoc = PoopSky.loc("block/" + blockPath + typeSuffix + stateSuffixes[i]);
                 ModelResourceLocation mrl = new ModelResourceLocation(modelLoc, ModelResourceLocation.STANDALONE_VARIANT);
                 typeModels[i] = models.get(mrl);
             }
@@ -99,18 +99,18 @@ public class BakedModelEventHandler {
         }
     }
 
-    private static ResourceLocation toiletTexture(ToiletType toiletType) {
+    private static Identifier toiletTexture(ToiletType toiletType) {
         String tex = toiletType.texture();
         if (tex != null) {
             String namespace = toiletType.sourceBlock() != null
                     ? blockKey(toiletType.sourceBlock()).getNamespace()
                     : PoopSky.MOD_ID;
-            return ResourceLocation.fromNamespaceAndPath(namespace, "block/" + tex);
+            return Identifier.fromNamespaceAndPath(namespace, "block/" + tex);
         }
 
         Block sourceBlock = toiletType.sourceBlock();
-        ResourceLocation key = blockKey(sourceBlock);
-        return ResourceLocation.fromNamespaceAndPath(key.getNamespace(), "block/" + key.getPath());
+        Identifier key = blockKey(sourceBlock);
+        return Identifier.fromNamespaceAndPath(key.getNamespace(), "block/" + key.getPath());
     }
 
     private static void wrapFlyItemModel(Map<ModelResourceLocation, BakedModel> models) {
@@ -118,7 +118,7 @@ public class BakedModelEventHandler {
 
         if (flyModels.isEmpty()) return;
 
-        ResourceLocation flyModelLoc = PoopSky.loc("item/fly");
+        Identifier flyModelLoc = PoopSky.loc("item/fly");
         BakedModel defaultFlyModel = models.get(new ModelResourceLocation(flyModelLoc, ModelResourceLocation.STANDALONE_VARIANT));
         if (defaultFlyModel == null) return;
 
@@ -173,7 +173,7 @@ public class BakedModelEventHandler {
         }
     }
 
-    private static ResourceLocation blockKey(Block block) {
+    private static Identifier blockKey(Block block) {
         return BuiltInRegistries.BLOCK.getKey(block);
     }
 

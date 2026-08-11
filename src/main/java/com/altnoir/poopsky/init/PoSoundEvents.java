@@ -4,8 +4,8 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.JukeboxSong;
 
@@ -67,12 +67,12 @@ public class PoSoundEvents {
     public static final RegistryEntry<SoundEvent, SoundEvent> ITEM_TIME_BELL_CLOSE = registerSoundEvent("item.time_bell.close");
 
     private static RegistryEntry<SoundEvent, SoundEvent> registerSoundEvent(String name) {
-        ResourceLocation id = PoopSky.loc(name);
+        Identifier id = PoopSky.loc(name);
         return REGISTRATE.simple(name, Registries.SOUND_EVENT, () -> SoundEvent.createVariableRangeEvent(id));
     }
 
     public static ResourceKey<JukeboxSong> registerJukeboxSong(String name) {
-        ResourceLocation id = PoopSky.loc(name);
+        Identifier id = PoopSky.loc(name);
         return ResourceKey.create(Registries.JUKEBOX_SONG, id);
     }
 

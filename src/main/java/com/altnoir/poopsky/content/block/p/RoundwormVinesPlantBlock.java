@@ -75,7 +75,7 @@ public class RoundwormVinesPlantBlock extends GrowingPlantBodyBlock implements B
             BlockState blockstate = state.setValue(SEEDS, Boolean.FALSE);
             level.setBlock(pos, blockstate, 2);
             level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, blockstate));
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return InteractionResult.sidedSuccess(level.isClientSide());
         } else {
             return InteractionResult.PASS;
         }

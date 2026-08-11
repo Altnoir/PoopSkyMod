@@ -453,8 +453,8 @@ if (ModList.get().isLoaded(PoMods.CREATE.id())) {
 
 ### 7. 资源路径
 
-- 使用 `PoopSky.loc("path")` 或 `ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, "path")`。
-- 不要使用旧式 `new ResourceLocation("poopsky:xxx")`。
+- 使用 `PoopSky.loc("path")` 或 `Identifier.fromNamespaceAndPath(PoopSky.MOD_ID, "path")`。
+- 不要使用旧式 `new Identifier("poopsky:xxx")`。
 - 数据包路径以 1.21.1 生成结果为准：原版配方输出目录是 `data/<namespace>/recipe/`，不是旧版 `recipes/`。
 
 ### 8. 配置

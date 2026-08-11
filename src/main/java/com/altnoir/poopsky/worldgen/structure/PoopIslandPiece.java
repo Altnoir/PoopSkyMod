@@ -6,7 +6,7 @@ import com.altnoir.poopsky.init.PoEntityType;
 import com.altnoir.poopsky.worldgen.PoStructures;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -39,7 +39,7 @@ public class PoopIslandPiece extends TemplateStructurePiece {
     private static final long POOLIME_SPAWN_SALT = 0x37A11D5EED12345L;
     private static final double POOLIME_DUPLICATE_RADIUS = 2.0D;
 
-    public PoopIslandPiece(StructureTemplateManager manager, ResourceLocation templateId, BlockPos pos, Rotation rotation) {
+    public PoopIslandPiece(StructureTemplateManager manager, Identifier templateId, BlockPos pos, Rotation rotation) {
         super(PoStructures.POOP_ISLAND_PIECE.get(), 0, manager, templateId, templateId.toString(), placeSettings(rotation), pos);
     }
 

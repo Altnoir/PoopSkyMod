@@ -18,7 +18,7 @@ public class ChiliPoopItem extends Item implements IFeedable {
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity livingEntity) {
         super.finishUsingItem(stack, level, livingEntity);
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             livingEntity.hurt(livingEntity.damageSources().inFire(), 1.0F);
         }
         return stack;

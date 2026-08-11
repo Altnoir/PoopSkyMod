@@ -10,7 +10,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -57,7 +57,7 @@ public class ToiletType implements Comparable<ToiletType> {
      */
     public static ToiletType register(Block sourceBlock, Category category) {
         float h = getBlockDestroyTime(sourceBlock);
-        ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(sourceBlock);
+        Identifier blockId = BuiltInRegistries.BLOCK.getKey(sourceBlock);
         String nameKey = "block." + blockId.getNamespace() + "." + blockId.getPath();
         var type = new ToiletType(() -> sourceBlock, category,
                 blockId.getPath(),
@@ -72,7 +72,7 @@ public class ToiletType implements Comparable<ToiletType> {
     public static ToiletType register(Supplier<Block> sourceBlockSupplier, Category category) {
         Block block = sourceBlockSupplier.get();
         float h = getBlockDestroyTime(block);
-        ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(block);
+        Identifier blockId = BuiltInRegistries.BLOCK.getKey(block);
         String nameKey = "block." + blockId.getNamespace() + "." + blockId.getPath();
         var type = new ToiletType(sourceBlockSupplier, category,
                 blockId.getPath(),
@@ -188,7 +188,7 @@ public class ToiletType implements Comparable<ToiletType> {
         Block sourceBlock = null;
         if (obj.has("source_block") && !obj.get("source_block").isJsonNull()) {
             String blockId = obj.get("source_block").getAsString();
-            sourceBlock = BuiltInRegistries.BLOCK.get(ResourceLocation.parse(blockId));
+            sourceBlock = BuiltInRegistries.BLOCK.get(Identifier.parse(blockId));
         }
 
         // category (可选，默认 "wood")
@@ -234,7 +234,7 @@ public class ToiletType implements Comparable<ToiletType> {
         if (obj.has("name_key") && !obj.get("name_key").isJsonNull()) {
             nameKey = obj.get("name_key").getAsString();
         } else if (sourceBlock != null) {
-            ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(sourceBlock);
+            Identifier blockId = BuiltInRegistries.BLOCK.getKey(sourceBlock);
             nameKey = "block." + blockId.getNamespace() + "." + blockId.getPath();
         } else {
             nameKey = null;

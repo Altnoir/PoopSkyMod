@@ -21,7 +21,7 @@ public class ChiliItem extends ItemNameBlockItem implements IFeedable {
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity livingEntity) {
         super.finishUsingItem(stack, level, livingEntity);
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             livingEntity.hurt(livingEntity.damageSources().inFire(), 1.0F);
             livingEntity.igniteForSeconds(3);
         }
@@ -33,7 +33,7 @@ public class ChiliItem extends ItemNameBlockItem implements IFeedable {
         InteractionResult feedResult = tryFeedToPlayer(stack, player, target);
         if (feedResult.consumesAction()) return feedResult;
         if (target instanceof FlyEntity fly && fly.isAlive()) {
-            if (!player.level().isClientSide) {
+            if (!player.level().isClientSide()) {
                 ItemStack redFlyItem = FlyItem.withType(FlyTypes.RED.get());
                 fly.spawnAtLocation(redFlyItem);
                 fly.kill();

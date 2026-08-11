@@ -59,7 +59,7 @@ public class BaseToiletLavaBlock extends AbstractToiletBlock {
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (state.getValue(LAVA)) {
             if (stack.is(Items.BUCKET)) {
-                if (level.isClientSide) {
+                if (level.isClientSide()) {
                     return ItemInteractionResult.SUCCESS;
                 }
                 level.playSound(null, pos, SoundEvents.BUCKET_FILL_LAVA, SoundSource.BLOCKS, 1.0F, 1.0F);

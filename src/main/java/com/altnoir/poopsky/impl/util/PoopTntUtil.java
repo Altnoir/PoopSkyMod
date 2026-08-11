@@ -112,7 +112,7 @@ public class PoopTntUtil {
     }
 
     private static POPExplosionRecipe.@Nullable Output findExplosionTransformOutput(Level level, Block block, int explosionRadius) {
-        if (level.isClientSide) return null;
+        if (level.isClientSide()) return null;
         ItemStack itemStack = new ItemStack(block.asItem());
         SingleRecipeInput input = new SingleRecipeInput(itemStack);
 

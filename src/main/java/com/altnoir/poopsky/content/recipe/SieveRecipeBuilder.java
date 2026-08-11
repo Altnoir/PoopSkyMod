@@ -6,11 +6,11 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -89,7 +89,7 @@ public final class SieveRecipeBuilder implements RecipeBuilder {
     public void save(@NotNull RecipeOutput recipeOutput) {
         ItemStack[] items = input.getItems();
         if (items.length > 0) {
-            ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(items[0].getItem());
+            Identifier itemId = BuiltInRegistries.ITEM.getKey(items[0].getItem());
             save(recipeOutput, itemId.getPath());
         } else {
             RecipeBuilder.super.save(recipeOutput);
@@ -97,14 +97,14 @@ public final class SieveRecipeBuilder implements RecipeBuilder {
     }
 
     public void save(@NotNull RecipeOutput recipeOutput, @NotNull String id) {
-        ResourceLocation recipeId = PoopSky.loc(RECIPE_TYPE + "/" + id);
+        Identifier recipeId = PoopSky.loc(RECIPE_TYPE + "/" + id);
         save(recipeOutput, recipeId);
     }
 
     @Override
-    public void save(@NotNull RecipeOutput recipeOutput, @NotNull ResourceLocation id) {
+    public void save(@NotNull RecipeOutput recipeOutput, @NotNull Identifier id) {
         ensureValid(id);
-        ResourceLocation advancementId = PoopSky.loc(id.getPath());
+        Identifier advancementId = PoopSky.loc(id.getPath());
 
         Advancement.Builder advancementBuilder = recipeOutput.advancement()
                 .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
@@ -117,12 +117,12 @@ public final class SieveRecipeBuilder implements RecipeBuilder {
         recipeOutput.accept(id, recipe, advancementBuilder.build(advancementId.withPrefix("recipes/")));
     }
 
-    public static ResourceLocation getDefaultRecipeId(ItemLike input) {
-        ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(input.asItem());
+    public static Identifier getDefaultRecipeId(ItemLike input) {
+        Identifier itemId = BuiltInRegistries.ITEM.getKey(input.asItem());
         return PoopSky.loc(RECIPE_TYPE + "/" + itemId.getPath());
     }
 
-    private void ensureValid(ResourceLocation id) {
+    private void ensureValid(Identifier id) {
         if (criteria.isEmpty()) {
             throw new IllegalStateException("No way of obtaining recipe " + id);
         }

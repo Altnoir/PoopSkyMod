@@ -60,7 +60,7 @@ public class PoopCakeBlock extends CakeBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             if (eat(level, pos, state, player).consumesAction()) {
                 return InteractionResult.SUCCESS;
             }
@@ -80,7 +80,7 @@ public class PoopCakeBlock extends CakeBlock {
             player.awardStat(Stats.EAT_CAKE_SLICE);
             player.getFoodData().eat(2, 0.1F);
             level.playSound(null, pos, SoundEvents.GENERIC_EAT, SoundSource.PLAYERS, 0.5F, 0.6F);
-            if (!level.isClientSide() && level instanceof ServerLevel serverLevel) {
+            if (level.isClientSide() && level instanceof ServerLevel serverLevel) {
                 serverLevel.sendParticles(PoParticles.POOP_PARTICLE.get(),
                         pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
                         8,
@@ -88,7 +88,7 @@ public class PoopCakeBlock extends CakeBlock {
                         3.0
                 );
                 addOrExtendEffect(player, MobEffects.LUCK, 1800, 1);
-                addOrExtendEffect(player, MobEffects.CONFUSION, 100, 0);
+                addOrExtendEffect(player, MobEffects.NAUSEA, 100, 0);
                 addOrExtendEffect(player, MobEffects.BLINDNESS, 20, 0);
                 player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 60, 0));
             }

@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.compat;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.fml.loading.LoadingModList;
 
 import java.util.Locale;
@@ -28,8 +28,8 @@ public enum PoMods {
         return id;
     }
 
-    public ResourceLocation rl(String path) {
-        return ResourceLocation.fromNamespaceAndPath(id, path);
+    public Identifier rl(String path) {
+        return Identifier.fromNamespaceAndPath(id, path);
     }
 
     public boolean isLoaded() {

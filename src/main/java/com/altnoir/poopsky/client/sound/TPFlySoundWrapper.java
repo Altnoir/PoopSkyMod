@@ -16,21 +16,21 @@ public class TPFlySoundWrapper {
     }
 
     public void stop() {
-        if (attachedInstance.level().isClientSide && sound != null) {
+        if (attachedInstance.level().isClientSide() && sound != null) {
             Minecraft.getInstance().getSoundManager().stop(sound);
             sound = null;
         }
     }
 
     public void play() {
-        if (attachedInstance.level().isClientSide && sound == null) {
+        if (attachedInstance.level().isClientSide() && sound == null) {
             sound = new TPFlySoundInstance(attachedInstance);
             Minecraft.getInstance().getSoundManager().play(sound);
         }
     }
 
     public void tick() {
-        if (attachedInstance.level().isClientSide && sound != null) {
+        if (attachedInstance.level().isClientSide() && sound != null) {
             sound.tick();
         }
     }

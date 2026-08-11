@@ -12,7 +12,7 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -81,7 +81,7 @@ public class SieveRecipeCategory implements IRecipeCategory<RecipeHolder<SieveRe
     }
 
     @Override
-    public void draw(RecipeHolder<SieveRecipe> recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+    public void draw(RecipeHolder<SieveRecipe> recipe, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
         this.slot.draw(guiGraphics, INPUT_X - 1, INPUT_Y - 1);
         this.arrow.draw(guiGraphics, ARROW_X, ARROW_Y);
 

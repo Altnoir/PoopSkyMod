@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class FlushToiletRenderer extends EntityRenderer<FlushToiletEntity> {
     public FlushToiletRenderer(EntityRendererProvider.Context context) {
@@ -13,7 +13,7 @@ public class FlushToiletRenderer extends EntityRenderer<FlushToiletEntity> {
     }
 
     @Override
-    public ResourceLocation getTextureLocation(FlushToiletEntity entity) {
+    public Identifier getTextureLocation(FlushToiletEntity entity) {
         return MissingTextureAtlasSprite.getLocation();
     }
 

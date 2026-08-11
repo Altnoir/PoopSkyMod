@@ -13,7 +13,7 @@ public class MomentOfPtymeEffect extends MobEffect {
 
     @Override
     public boolean applyEffectTick(LivingEntity livingEntity, int amplifier) {
-        if (!livingEntity.level().isClientSide && livingEntity instanceof Player player) {
+        if (!livingEntity.level().isClientSide() && livingEntity instanceof Player player) {
             var server = livingEntity.level().getServer();
             if (server != null && server.tickRateManager().isFrozen()) {
                 TimeBellItem.unfreeze(server, player);

@@ -8,8 +8,8 @@ import com.tterrag.registrate.providers.RegistrateItemModelProvider;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.client.renderer.block.model.BlockModel.GuiLight;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemDisplayContext;
@@ -114,8 +114,8 @@ public class ItemModelGen extends RegistrateItemModelProvider {
             String armorItemPath = name(itemDeferredItem);
             String trimPath = "trims/items/" + armorType + "_trim_" + trimMaterial.location().getPath();
             String currentTrimName = armorItemPath + "_" + trimMaterial.location().getPath() + "_trim";
-            ResourceLocation trimResLoc = ResourceLocation.parse(trimPath); // minecraft namespace
-            ResourceLocation trimNameResLoc = modLoc(currentTrimName);
+            Identifier trimResLoc = Identifier.parse(trimPath); // minecraft namespace
+            Identifier trimNameResLoc = modLoc(currentTrimName);
 
             existingFileHelper.trackGenerated(trimResLoc, PackType.CLIENT_RESOURCES, ".png", "textures");
 

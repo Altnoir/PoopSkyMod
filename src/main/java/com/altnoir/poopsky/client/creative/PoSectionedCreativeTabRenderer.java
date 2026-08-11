@@ -3,7 +3,7 @@ package com.altnoir.poopsky.client.creative;
 import com.altnoir.poopsky.impl.creative.PoSectionedCreativeModeTab;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.neoforged.neoforge.client.event.ContainerScreenEvent;
 
@@ -26,7 +26,7 @@ public final class PoSectionedCreativeTabRenderer {
         }
     }
 
-    private static void render(GuiGraphics graphics, PoSectionedCreativeModeTab tab, float scrollOffset) {
+    private static void render(GuiGraphicsExtractor graphics, PoSectionedCreativeModeTab tab, float scrollOffset) {
         int firstVisibleRow = tab.visibleStartRow(scrollOffset);
         Font font = Minecraft.getInstance().font;
 
@@ -37,11 +37,11 @@ public final class PoSectionedCreativeTabRenderer {
             }
             int y = GRID_TOP + visibleRow * ROW_HEIGHT;
             renderBanner(graphics, y);
-            graphics.drawString(font, section.title(), GRID_LEFT + 7, y + 5, TEXT_HIGHLIGHT, false);
+            graphics.text(font, section.title(), GRID_LEFT + 7, y + 5, TEXT_HIGHLIGHT, false);
         }
     }
 
-    private static void renderBanner(GuiGraphics graphics, int top) {
+    private static void renderBanner(GuiGraphicsExtractor graphics, int top) {
         graphics.fill(GRID_LEFT, top, GRID_LEFT + GRID_WIDTH, top + ROW_HEIGHT, BACKGROUND);
         graphics.fill(GRID_LEFT, top, GRID_LEFT + 1, top + ROW_HEIGHT, BORDER_MUTED);
         graphics.fill(GRID_LEFT + GRID_WIDTH - 1, top, GRID_LEFT + GRID_WIDTH, top + ROW_HEIGHT, BORDER_MUTED);

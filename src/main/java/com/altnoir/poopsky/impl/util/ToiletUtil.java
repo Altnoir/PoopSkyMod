@@ -15,8 +15,8 @@ import com.altnoir.poopsky.init.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.TickTask;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -67,7 +67,7 @@ public class ToiletUtil {
     }
 
     public static void portableToiletInside(Level level, BlockPos pos, BlockState state, Entity entity) {
-        if (level.isClientSide
+        if (level.isClientSide()
                 || state.getValue(PortableToiletBlock.HALF) != DoubleBlockHalf.LOWER
                 || !(entity instanceof Player player)
                 || !player.isShiftKeyDown()
@@ -112,7 +112,7 @@ public class ToiletUtil {
     }
 
     public static void lavaToiletStepOn(Level level, BlockPos pos, BlockState state, Entity entity, boolean isGolden) {
-        if (!level.isClientSide && entity instanceof Player player && player.isShiftKeyDown() && isEntityCentered(pos, player) && !state.getValue(BaseToiletLavaBlock.LAVA)) {
+        if (!level.isClientSide() && entity instanceof Player player && player.isShiftKeyDown() && isEntityCentered(pos, player) && !state.getValue(BaseToiletLavaBlock.LAVA)) {
             if (player.hasEffect(PoEffects.INTESTINAL_SPASM)) {
                 level.setBlock(pos, state.setValue(BaseToiletLavaBlock.LAVA, true), 3);
                 level.playSound(null, pos, PoSoundEvents.BLOCK_TOILET_LAVA_EMPTY.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
@@ -425,7 +425,7 @@ public class ToiletUtil {
         var server = level.getServer();
         if (server == null) return false;
 
-        var targetDimension = ResourceLocation.tryParse(linkedDim);
+        var targetDimension = Identifier.tryParse(linkedDim);
         if (targetDimension == null) return false;
 
         var targetWorld = server.getLevel(ResourceKey.create(Registries.DIMENSION, targetDimension));

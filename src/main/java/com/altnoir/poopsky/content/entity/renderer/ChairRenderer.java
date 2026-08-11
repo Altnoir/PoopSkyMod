@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class ChairRenderer extends EntityRenderer<ChairEntity> {
     public ChairRenderer(EntityRendererProvider.Context context) {
@@ -13,7 +13,7 @@ public class ChairRenderer extends EntityRenderer<ChairEntity> {
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ChairEntity entity) {
+    public Identifier getTextureLocation(ChairEntity entity) {
         return MissingTextureAtlasSprite.getLocation();
     }
 

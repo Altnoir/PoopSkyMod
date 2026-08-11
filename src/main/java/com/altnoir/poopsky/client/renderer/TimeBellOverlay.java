@@ -2,7 +2,7 @@ package com.altnoir.poopsky.client.renderer;
 
 import com.altnoir.poopsky.Config;
 import net.minecraft.client.DeltaTracker;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.util.Mth;
 
 public final class TimeBellOverlay {
@@ -31,7 +31,7 @@ public final class TimeBellOverlay {
         frozen = value;
     }
 
-    public static void render(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
+    public static void render(GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker) {
         float deltaTicks = Math.min(deltaTracker.getRealtimeDeltaTicks(), 2.0F);
         fovKickTimer = Math.max(0.0F, fovKickTimer - deltaTicks);
 
@@ -59,7 +59,7 @@ public final class TimeBellOverlay {
         }
     }
 
-    private static void drawVignette(GuiGraphics guiGraphics, int width, int height, float alpha) {
+    private static void drawVignette(GuiGraphicsExtractor guiGraphics, int width, int height, float alpha) {
         int maxInsetX = Math.max(VIGNETTE_STEPS, Mth.floor(width * 0.20F));
         int maxInsetY = Math.max(VIGNETTE_STEPS, Mth.floor(height * 0.20F));
 

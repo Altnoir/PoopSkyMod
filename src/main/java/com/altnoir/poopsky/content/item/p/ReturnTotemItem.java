@@ -30,7 +30,7 @@ public class ReturnTotemItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
         ItemStack stack = player.getItemInHand(usedHand);
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return InteractionResultHolder.sidedSuccess(stack, true);
         }
 

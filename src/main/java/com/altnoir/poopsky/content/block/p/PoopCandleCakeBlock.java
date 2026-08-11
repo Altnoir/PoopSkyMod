@@ -72,11 +72,11 @@ public class PoopCandleCakeBlock extends CandleCakeBlock {
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (state.getValue(LIT) && isHittingCandle(hitResult, pos)) {
             extinguish(state, level, pos, player);
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return InteractionResult.sidedSuccess(level.isClientSide());
         }
 
         InteractionResult result = PoopCakeBlock.eat(level, pos, PoBlocks.POOP_CAKE.get().defaultBlockState(), player);
-        if (result.consumesAction() && !level.isClientSide) {
+        if (result.consumesAction() && !level.isClientSide()) {
             popResource(level, pos, new ItemStack(candle));
         }
         return result;
@@ -87,7 +87,7 @@ public class PoopCandleCakeBlock extends CandleCakeBlock {
     }
 
     private static void extinguish(BlockState state, Level level, BlockPos pos, Player player) {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             level.playSound(null, pos, SoundEvents.CANDLE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, 1.0F);
             level.setBlock(pos, state.setValue(LIT, false), 11);
             level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);

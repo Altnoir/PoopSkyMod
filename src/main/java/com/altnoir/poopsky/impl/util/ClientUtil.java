@@ -2,10 +2,13 @@ package com.altnoir.poopsky.impl.util;
 
 import com.altnoir.poopsky.init.PoWorldPreset;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.*;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.MeshData;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -39,7 +42,7 @@ public class ClientUtil {
     private static final Vector3f L1 = new Vector3f(0.4F, 0.0F, 1.0F).normalize();
     private static final Vector3f L2 = new Vector3f(-0.4F, 1.0F, -0.2F).normalize();
 
-    public static void renderBlock(GuiGraphics guiGraphics, BlockState state, float x, float y, float z, float scale) {
+    public static void renderBlock(GuiGraphicsExtractor guiGraphics, BlockState state, float x, float y, float z, float scale) {
         PoseStack poseStack = guiGraphics.pose();
 
         poseStack.pushPose();

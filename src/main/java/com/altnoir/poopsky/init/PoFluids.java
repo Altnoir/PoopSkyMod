@@ -12,7 +12,7 @@ import com.tterrag.registrate.util.entry.RegistryEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -29,8 +29,8 @@ import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 public final class PoFluids {
-    public static final ResourceLocation URINE_STILL_TEXTURE = PoopSky.loc("block/urine_liquid");
-    public static final ResourceLocation URINE_FLOWING_TEXTURE = PoopSky.loc("block/urine_liquid_flowing");
+    public static final Identifier URINE_STILL_TEXTURE = PoopSky.loc("block/urine_liquid");
+    public static final Identifier URINE_FLOWING_TEXTURE = PoopSky.loc("block/urine_liquid_flowing");
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
     public static final RegistryEntry<FluidType, FluidType> URINE_FLUID_TYPE = REGISTRATE.simple(

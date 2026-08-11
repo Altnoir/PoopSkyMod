@@ -2,7 +2,7 @@ package com.altnoir.poopsky.mixin;
 
 import com.altnoir.poopsky.init.PoItems;
 import net.minecraft.world.entity.ai.behavior.TradeWithVillager;
-import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.item.Item;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

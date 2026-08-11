@@ -9,7 +9,7 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementType;
-import net.minecraft.advancements.critereon.*;
+import net.minecraft.advancements.criterion.*;
 import net.minecraft.core.component.DataComponentPredicate;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;

@@ -69,7 +69,7 @@ public class PoopTntBlock extends Block {
 
     @Override
     public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-        if (!level.isClientSide && !player.isCreative() && state.getValue(UNSTABLE)) {
+        if (!level.isClientSide() && !player.isCreative() && state.getValue(UNSTABLE)) {
             onCaughtFire(state, level, pos, null, null);
         }
         return super.playerWillDestroy(level, pos, state, player);
@@ -77,7 +77,7 @@ public class PoopTntBlock extends Block {
 
     @Override
     public void wasExploded(Level level, BlockPos pos, Explosion explosion) {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             PoopTntEntity tnt = new PoopTntEntity(level,
                     pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5,
                     explosion.getIndirectSourceEntity() instanceof LivingEntity living ? living : null);
@@ -107,13 +107,13 @@ public class PoopTntBlock extends Block {
                 stack.consume(1, player);
             }
             player.awardStat(Stats.ITEM_USED.get(item));
-            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+            return ItemInteractionResult.sidedSuccess(level.isClientSide());
         }
     }
 
     @Override
     protected void onProjectileHit(Level level, BlockState state, BlockHitResult hit, Projectile projectile) {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             BlockPos pos = hit.getBlockPos();
             Entity entity = projectile.getOwner();
             if (projectile.isOnFire() && projectile.mayInteract(level, pos)) {
@@ -134,7 +134,7 @@ public class PoopTntBlock extends Block {
     }
 
     public static void ignite(Level level, BlockPos pos, @Nullable LivingEntity igniter) {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             PoopTntEntity tnt = new PoopTntEntity(level,
                     pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, igniter);
             level.addFreshEntity(tnt);

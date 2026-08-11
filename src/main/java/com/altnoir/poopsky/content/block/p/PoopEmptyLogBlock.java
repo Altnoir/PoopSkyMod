@@ -36,7 +36,7 @@ public class PoopEmptyLogBlock extends EmptyRotatedPillarBlock {
             level.setBlockAndUpdate(pos, state.setValue(ARROW, true));
             level.playSound(null, pos, SoundEvents.SHEEP_SHEAR, SoundSource.BLOCKS, 1.0F, 1.0F);
             stack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
-            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+            return ItemInteractionResult.sidedSuccess(level.isClientSide());
         }
         return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
     }

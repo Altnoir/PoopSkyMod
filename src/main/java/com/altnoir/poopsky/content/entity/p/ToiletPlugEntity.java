@@ -19,11 +19,11 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.animal.WaterAnimal;
+import net.minecraft.world.entity.animal.fish.WaterAnimal;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.entity.vehicle.DismountHelper;
 import net.minecraft.world.entity.vehicle.VehicleEntity;
+import net.minecraft.world.entity.vehicle.boat.Boat;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Explosion;
@@ -93,7 +93,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
 
     @Override
     public InteractionResult interact(Player player, InteractionHand hand) {
-        if (!this.level().isClientSide) {
+        if (!this.level().isClientSide()) {
             return player.startRiding(this) ? InteractionResult.CONSUME : InteractionResult.PASS;
         } else {
             return InteractionResult.SUCCESS;
@@ -169,9 +169,9 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
         this.tickLerp();
 
         boolean shouldProcessInput = this.isControlledByLocalInstance()
-                || (!this.level().isClientSide && this.getControllingPassenger() != null);
+                || (!this.level().isClientSide() && this.getControllingPassenger() != null);
         if (shouldProcessInput) {
-            if (this.level().isClientSide) {
+            if (this.level().isClientSide()) {
                 this.updateKeyStates();
                 if (this.getControllingPassenger() != null) {
                     TPFlySound.play();
@@ -190,7 +190,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
         this.checkInsideBlocks();
         var list = this.level().getEntities(this, this.getBoundingBox().inflate(0.2F, -0.01F, 0.2F), EntitySelector.pushableBy(this));
         if (!list.isEmpty()) {
-            boolean flag = !this.level().isClientSide && !(this.getControllingPassenger() instanceof Player);
+            boolean flag = !this.level().isClientSide() && !(this.getControllingPassenger() instanceof Player);
 
             for (Entity entity : list) {
                 if (!entity.hasPassenger(this)) {
@@ -334,7 +334,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
 
     @Override
     public void remove(Entity.RemovalReason reason) {
-        if (!this.level().isClientSide && reason.shouldDestroy() && this.isLeashed()) {
+        if (!this.level().isClientSide() && reason.shouldDestroy() && this.isLeashed()) {
             this.dropLeash(true, true);
         }
 

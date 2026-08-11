@@ -27,7 +27,10 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.piston.PistonMovingBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.*;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -220,7 +223,7 @@ public class PortableToiletBlock extends Block {
 
     @Override
     public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-        if (!level.isClientSide && (player.isCreative() || !player.hasCorrectToolForDrops(state, level, pos))) {
+        if (!level.isClientSide() && (player.isCreative() || !player.hasCorrectToolForDrops(state, level, pos))) {
             if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
                 BlockPos lowerPos = pos.below();
                 BlockState lowerState = level.getBlockState(lowerPos);
@@ -271,15 +274,15 @@ public class PortableToiletBlock extends Block {
 
         if (state.getValue(HALF) == DoubleBlockHalf.LOWER) {
             if (isInSeatArea(state, pos, hitResult)) {
-                if (!level.isClientSide) {
+                if (!level.isClientSide()) {
                     player.openMenu(state.getMenuProvider(level, pos));
                 }
-                return InteractionResult.sidedSuccess(level.isClientSide);
+                return InteractionResult.sidedSuccess(level.isClientSide());
             }
         }
         setOpen(level, pos, state, !state.getValue(OPEN));
 
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.sidedSuccess(level.isClientSide());
     }
 
     @Override

@@ -5,8 +5,8 @@ import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.init.PoParticles;
 import com.tterrag.registrate.providers.ProviderType;
 import net.minecraft.data.PackOutput;
+import net.neoforged.neoforge.client.data.ParticleDescriptionProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.neoforged.neoforge.common.data.ParticleDescriptionProvider;
 
 public final class ParticleGen extends ParticleDescriptionProvider {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();

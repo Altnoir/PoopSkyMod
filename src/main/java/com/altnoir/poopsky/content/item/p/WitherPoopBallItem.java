@@ -33,7 +33,7 @@ public class WitherPoopBallItem extends Item implements ProjectileItem {
                 0.5F,
                 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F)
         );
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             WitherPoopBall poopBall = new WitherPoopBall(level, player);
             poopBall.setItem(itemstack);
             poopBall.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 1.5F, 1.0F);
@@ -47,7 +47,7 @@ public class WitherPoopBallItem extends Item implements ProjectileItem {
 
     @Override
     public Projectile asProjectile(Level level, Position position, ItemStack itemStack, Direction direction) {
-        WitherPoopBall poopBall = new WitherPoopBall(level, position.x(), position.y(), position.z());
+        WitherPoopBall poopBall = new WitherPoopBall(level);
         poopBall.setItem(itemStack);
         return poopBall;
     }

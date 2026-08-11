@@ -3,12 +3,12 @@ package com.altnoir.poopsky.content.entity.p;
 import com.altnoir.poopsky.client.sound.FlyBuzzSoundWrapper;
 import com.altnoir.poopsky.content.block.p.ShitBlock;
 import com.altnoir.poopsky.content.item.p.FlyItem;
-import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.impl.type.damageType.PoDamageTypes;
 import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoEntityType;
 import com.altnoir.poopsky.init.PoItems;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -111,7 +111,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
     @Override
     public void aiStep() {
         super.aiStep();
-        if (this.level().isClientSide && buzzSound != null) {
+        if (this.level().isClientSide() && buzzSound != null) {
             buzzSound.tick();
         }
         this.oFlap = this.flap;
@@ -136,7 +136,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
         this.flap = this.flap + this.flapping * 2.0F;
 
         // 产卵逻辑
-        if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.eggTime <= 0) {
+        if (!this.level().isClientSide() && this.isAlive() && !this.isBaby() && --this.eggTime <= 0) {
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
             this.spawnAtLocation(PoItems.MAGGOTS_SEEDS.get());
             this.gameEvent(GameEvent.ENTITY_PLACE);
@@ -179,7 +179,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
 
     @Override
     public void remove(Entity.RemovalReason reason) {
-        if (this.level().isClientSide && buzzSound != null) {
+        if (this.level().isClientSide() && buzzSound != null) {
             buzzSound.stop();
         }
         super.remove(reason);
@@ -207,7 +207,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
 
     @Override
     public void die(DamageSource source) {
-        if (!this.level().isClientSide && !this.isBaby()) {
+        if (!this.level().isClientSide() && !this.isBaby()) {
             if (source.is(DamageTypes.DROWN)) {
                 var blueFlyItem = FlyItem.withType(FlyTypes.BLUE.get());
                 this.spawnAtLocation(blueFlyItem);
@@ -233,7 +233,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
 
     @Override
     public void thunderHit(ServerLevel level, LightningBolt lightning) {
-        if (!this.level().isClientSide && !this.isBaby()) {
+        if (!this.level().isClientSide() && !this.isBaby()) {
             var blackFlyItem = FlyItem.withType(FlyTypes.BLACK.get());
             var itemEntity = this.spawnAtLocation(blackFlyItem);
             if (itemEntity != null) {

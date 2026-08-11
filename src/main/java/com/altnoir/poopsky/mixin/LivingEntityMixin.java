@@ -46,7 +46,7 @@ public class LivingEntityMixin {
     private void poopsky$removeInvulnerabilityDuringTimeFreeze(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         if (cir.getReturnValueZ()) {
             Entity self = (Entity) (Object) this;
-            if (!self.level().isClientSide && TimeBellItem.isTimeBellFreeze()) {
+            if (!self.level().isClientSide() && TimeBellItem.isTimeBellFreeze()) {
                 self.invulnerableTime = 0;
             }
         }

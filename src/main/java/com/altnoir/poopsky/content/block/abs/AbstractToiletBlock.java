@@ -169,13 +169,13 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
         }
 
         Item item = stack.getItem();
-        if (!level.isClientSide && level instanceof ServerLevel serverLevel) {
+        if (!level.isClientSide() && level instanceof ServerLevel serverLevel) {
             explodeToilet(serverLevel, pos);
         }
 
         consumeFireStarter(stack, player, hand);
         player.awardStat(Stats.ITEM_USED.get(item));
-        return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        return ItemInteractionResult.sidedSuccess(level.isClientSide());
     }
 
     private void consumeFireStarter(ItemStack stack, Player player, InteractionHand hand) {
@@ -197,7 +197,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
             return null;
         }
 
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return ItemInteractionResult.SUCCESS;
         }
 
@@ -243,7 +243,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     @Override
     public void onRemove(BlockState oldState, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!oldState.is(newState.getBlock())) {
-            if (!level.isClientSide) {
+            if (!level.isClientSide()) {
                 updateAdjacentConnections(level, pos, oldState);
             }
         }
@@ -252,7 +252,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
 
     @Override
     public void fallOn(Level level, BlockState blockState, BlockPos pos, Entity entity, float fallDistance) {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             if (entity instanceof FallingBlockEntity falling && isAnvil(falling.getBlockState())) {
                 poopAnvil(level, pos, entity);
             }
@@ -277,7 +277,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
 
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
-        if (!level.isClientSide && entity instanceof Player player) {
+        if (!level.isClientSide() && entity instanceof Player player) {
             if (player.isShiftKeyDown() && ToiletUtil.isEntityCentered(pos, player)) {
                 var playerData = player.getPersistentData();
                 long lastPoopTime = playerData.getLong("poopTime");

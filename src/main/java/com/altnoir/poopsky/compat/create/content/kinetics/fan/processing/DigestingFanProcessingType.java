@@ -93,12 +93,12 @@ public class DigestingFanProcessingType implements FanProcessingType {
 
     @Override
     public void affectEntity(Entity entity, Level level) {
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return;
         }
         if (entity instanceof LivingEntity livingEntity) {
             livingEntity.addEffect(new MobEffectInstance(MobEffects.POISON, 200, 0, true, true));
-            livingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0, true, true));
+            livingEntity.addEffect(new MobEffectInstance(MobEffects.NAUSEA, 200, 0, true, true));
         }
     }
 }

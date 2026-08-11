@@ -26,7 +26,7 @@ public class OnTheVergeEffect extends MobEffect {
         boolean result = false;
         boolean result2 = false;
 
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             int duration = Objects.requireNonNull(livingEntity.getEffect(PoEffects.ON_THE_VERGE)).getDuration();
             Vec3 vec3 = livingEntity.getDeltaMovement().add(new Vec3(0, 0.125, 0));
             boolean openTheDoor = false;

@@ -23,7 +23,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -855,7 +855,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         RecipeOutput ae2 = recipeOutput.withConditions(modLoaded(PoMods.AE2.id()));
         RecipeOutput mekanism = recipeOutput.withConditions(modLoaded(PoMods.MEKANISM.id()));
 
-        record FlyBarrelEntry(FlyType.Type type, ResourceLocation result, RecipeOutput output) {
+        record FlyBarrelEntry(FlyType.Type type, Identifier result, RecipeOutput output) {
             static FlyBarrelEntry of(FlyType.Type type, ItemLike result) {
                 return of(type, result, null);
             }
@@ -864,7 +864,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 return new FlyBarrelEntry(type, BuiltInRegistries.ITEM.getKey(result.asItem()), output);
             }
 
-            static FlyBarrelEntry of(FlyType.Type type, ResourceLocation result, RecipeOutput output) {
+            static FlyBarrelEntry of(FlyType.Type type, Identifier result, RecipeOutput output) {
                 return new FlyBarrelEntry(type, result, output);
             }
         }

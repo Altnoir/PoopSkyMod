@@ -4,9 +4,9 @@ import com.altnoir.poopsky.client.inventory.BreedingChestMenu;
 import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.content.recipe.PFlyRecipes;
-import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.init.PoBlockEntityType;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -133,7 +133,7 @@ public class BreedingChestBlockEntity extends BlockEntity implements MenuProvide
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, BreedingChestBlockEntity be) {
-        if (level.isClientSide) return;
+        if (level.isClientSide()) return;
 
         ItemStack fly1 = be.itemHandler.getStackInSlot(SLOT_FLY_1);
         ItemStack fly2 = be.itemHandler.getStackInSlot(SLOT_FLY_2);
@@ -389,7 +389,7 @@ public class BreedingChestBlockEntity extends BlockEntity implements MenuProvide
     }
 
     private void syncToClient() {
-        if (level != null && !level.isClientSide) {
+        if (level != null && !level.isClientSide()) {
             BlockState state = getBlockState();
             level.sendBlockUpdated(worldPosition, state, state, Block.UPDATE_ALL);
         }

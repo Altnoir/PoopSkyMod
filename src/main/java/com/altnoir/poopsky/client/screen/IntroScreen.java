@@ -10,7 +10,7 @@ import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.font.FontSet;
 import net.minecraft.client.gui.font.glyphs.BakedGlyph;
 import net.minecraft.client.gui.screens.Screen;
@@ -19,7 +19,7 @@ import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -27,9 +27,9 @@ import org.joml.Matrix4f;
 import org.lwjgl.glfw.GLFW;
 
 public class IntroScreen extends Screen {
-    private static final ResourceLocation FONT = PoopSky.loc("poopsky_intro");
-    private static final ResourceLocation POOP_TEXTURE = PoopSky.loc("textures/item/shit.png");
-    private static final ResourceLocation SKY_TEXTURE = PoopSky.loc("textures/gui/poopsky_intro/depth_blue.png");
+    private static final Identifier FONT = PoopSky.loc("poopsky_intro");
+    private static final Identifier POOP_TEXTURE = PoopSky.loc("textures/item/shit.png");
+    private static final Identifier SKY_TEXTURE = PoopSky.loc("textures/gui/poopsky_intro/depth_blue.png");
 
     private static final float VIRTUAL_WIDTH = 1920.0F;
     private static final float VIRTUAL_HEIGHT = 1080.0F;
@@ -173,7 +173,7 @@ public class IntroScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+    public void render(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
         float elapsed = this.elapsedSeconds(partialTick);
         float completion = this.completionSeconds(partialTick);
         if (completion >= WORLD_REVEAL_START) {
@@ -267,11 +267,11 @@ public class IntroScreen extends Screen {
         IntroController.onScreenClosed(this);
     }
 
-    private void drawTitleGlyphs(GuiGraphics guiGraphics, int color) {
+    private void drawTitleGlyphs(GuiGraphicsExtractor guiGraphics, int color) {
         this.drawScaledText(guiGraphics, this.title, TITLE_LEFT, TITLE_TEXT_Y, this.titleLayout.scale(), color);
     }
 
-    private void drawPoopIcon(GuiGraphics guiGraphics, float alpha) {
+    private void drawPoopIcon(GuiGraphicsExtractor guiGraphics, float alpha) {
         guiGraphics.flush();
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
@@ -293,18 +293,18 @@ public class IntroScreen extends Screen {
         BufferUploader.drawWithShader(builder.buildOrThrow());
     }
 
-    private void drawYear(GuiGraphics guiGraphics, float alpha) {
+    private void drawYear(GuiGraphicsExtractor guiGraphics, float alpha) {
         this.drawScaledText(guiGraphics, this.year, YEAR_X, YEAR_TEXT_Y,
                 this.titleLayout.yearScale(), alphaColor(alpha));
     }
 
-    private void drawMaskedTitle(GuiGraphics guiGraphics, float textureTime, float titleAlpha, float textureAlpha) {
+    private void drawMaskedTitle(GuiGraphicsExtractor guiGraphics, float textureTime, float titleAlpha, float textureAlpha) {
         this.drawMaskedTexture(guiGraphics,
                 () -> this.drawTitleGlyphs(guiGraphics, alphaColor(titleAlpha)),
                 textureTime, 1.0F, 1.0F, 1.0F, textureAlpha);
     }
 
-    private void drawMaskedTexture(GuiGraphics guiGraphics, Runnable drawMask, float textureTime,
+    private void drawMaskedTexture(GuiGraphicsExtractor guiGraphics, Runnable drawMask, float textureTime,
                                    float red, float green, float blue, float alpha) {
         this.beginDepthMask(guiGraphics);
         try {
@@ -319,7 +319,7 @@ public class IntroScreen extends Screen {
         }
     }
 
-    private void beginDepthMask(GuiGraphics guiGraphics) {
+    private void beginDepthMask(GuiGraphicsExtractor guiGraphics) {
         guiGraphics.flush();
         guiGraphics.enableScissor(this.maskLeft, this.maskTop, this.maskRight, this.maskBottom);
         RenderSystem.depthMask(true);
@@ -333,14 +333,14 @@ public class IntroScreen extends Screen {
         RenderSystem.depthFunc(DEPTH_EQUAL);
     }
 
-    private void endDepthMask(GuiGraphics guiGraphics) {
+    private void endDepthMask(GuiGraphicsExtractor guiGraphics) {
         RenderSystem.depthMask(true);
         RenderSystem.depthFunc(DEPTH_LEQUAL);
         RenderSystem.defaultBlendFunc();
         guiGraphics.disableScissor();
     }
 
-    private void drawTitleReflections(GuiGraphics guiGraphics, float elapsed, float textureTime, float textureAlpha) {
+    private void drawTitleReflections(GuiGraphicsExtractor guiGraphics, float elapsed, float textureTime, float textureAlpha) {
         if (elapsed <= REFLECTION_START) return;
 
         float reflectionTime = elapsed - REFLECTION_START;
@@ -349,7 +349,7 @@ public class IntroScreen extends Screen {
                 reflectionTime - REFLECTION_SECOND_DELAY);
     }
 
-    private void drawReflectionPair(GuiGraphics guiGraphics, float textureTime, float textureAlpha,
+    private void drawReflectionPair(GuiGraphicsExtractor guiGraphics, float textureTime, float textureAlpha,
                                     float direction, float reflectionTime) {
         if (reflectionTime <= 0.0F || reflectionTime >= REFLECTION_DURATION) return;
 
@@ -364,7 +364,7 @@ public class IntroScreen extends Screen {
                 textureAlpha * REFLECTION_ALPHA * Mth.sin(linearProgress * Mth.PI));
     }
 
-    private void drawPoopScatter(GuiGraphics guiGraphics, float shatterTime, float alpha) {
+    private void drawPoopScatter(GuiGraphicsExtractor guiGraphics, float shatterTime, float alpha) {
         guiGraphics.flush();
         Matrix4f matrix = guiGraphics.pose().last().pose();
 
@@ -410,14 +410,14 @@ public class IntroScreen extends Screen {
                 .setUv(1.0F, 0.0F).setColor(color);
     }
 
-    private void drawReflectionGlyphs(GuiGraphics guiGraphics, float offsetX, float offsetY, int color) {
+    private void drawReflectionGlyphs(GuiGraphicsExtractor guiGraphics, float offsetX, float offsetY, int color) {
         guiGraphics.pose().pushPose();
         guiGraphics.pose().translate(offsetX, offsetY, 0.0F);
         this.drawTitleGlyphs(guiGraphics, color);
         guiGraphics.pose().popPose();
     }
 
-    private void drawTextureTiles(GuiGraphics guiGraphics, float elapsed,
+    private void drawTextureTiles(GuiGraphicsExtractor guiGraphics, float elapsed,
                                   float red, float green, float blue, float alpha) {
         float scrollTime = elapsed - 7.0F;
         int startX = Mth.floor(Mth.positiveModulo(TILE_START_X + TILE_SPEED_X * scrollTime, TILE_SIZE));
@@ -448,7 +448,7 @@ public class IntroScreen extends Screen {
         BufferUploader.drawWithShader(builder.buildOrThrow());
     }
 
-    private void drawScaledText(GuiGraphics guiGraphics, Component text, float x, float y, float scale, int color) {
+    private void drawScaledText(GuiGraphicsExtractor guiGraphics, Component text, float x, float y, float scale, int color) {
         guiGraphics.pose().pushPose();
         guiGraphics.pose().translate(x, y, 0.0F);
         guiGraphics.pose().scale(scale, scale, 1.0F);
@@ -456,7 +456,7 @@ public class IntroScreen extends Screen {
         guiGraphics.pose().popPose();
     }
 
-    private void drawVanillaText(GuiGraphics guiGraphics, String text, int color) {
+    private void drawVanillaText(GuiGraphicsExtractor guiGraphics, String text, int color) {
         FontSet fontSet = this.font.getFontSet(FONT);
         Matrix4f matrix = guiGraphics.pose().last().pose();
         float red = (color >> 16 & 255) / 255.0F;

@@ -13,7 +13,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Slime;
-import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrowableItemProjectile;
 import net.minecraft.world.item.BoneMealItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -26,11 +26,11 @@ import net.minecraft.world.phys.HitResult;
 public class PoopBall extends ThrowableItemProjectile {
 
     public PoopBall(Level level, LivingEntity shooter) {
-        super(EntityType.SNOWBALL, shooter, level);
+        super(EntityType.SNOWBALL, level);
     }
 
-    public PoopBall(Level level, double x, double y, double z) {
-        super(EntityType.SNOWBALL, x, y, z, level);
+    public PoopBall(Level level) {
+        super(EntityType.SNOWBALL, level);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class PoopBall extends ThrowableItemProjectile {
         entity.hurt(this.damageSources().source(PoDamageTypes.POOP_BALL, this, this.getOwner()), (float) i);
 
         if (entity instanceof LivingEntity livingEntity) {
-            livingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 100, 0), this.getOwner());
+            livingEntity.addEffect(new MobEffectInstance(MobEffects.NAUSEA, 100, 0), this.getOwner());
             livingEntity.addEffect(new MobEffectInstance(MobEffects.POISON, 200, 0), this.getOwner());
         }
     }
@@ -79,7 +79,7 @@ public class PoopBall extends ThrowableItemProjectile {
     @Override
     protected void onHit(HitResult result) {
         super.onHit(result);
-        if (!this.level().isClientSide) {
+        if (!this.level().isClientSide()) {
             if (result.getType() == HitResult.Type.BLOCK) {
                 BlockHitResult blockHitResult = (BlockHitResult) result;
                 BlockPos originPos = blockHitResult.getBlockPos();

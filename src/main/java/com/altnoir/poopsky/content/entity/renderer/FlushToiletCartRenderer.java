@@ -15,13 +15,13 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
 public class FlushToiletCartRenderer extends EntityRenderer<FlushToiletCartEntity> {
-    private static final ResourceLocation TEXTURE = PoopSky.loc("textures/block/flush_toilet_cart.png");
-    private static final ResourceLocation GOLDEN_TEXTURE = PoopSky.loc("textures/block/golden_flush_toilet_cart.png");
+    private static final Identifier TEXTURE = PoopSky.loc("textures/block/flush_toilet_cart.png");
+    private static final Identifier GOLDEN_TEXTURE = PoopSky.loc("textures/block/golden_flush_toilet_cart.png");
 
     public FlushToiletCartRenderer(EntityRendererProvider.Context context) {
         super(context);
@@ -29,7 +29,7 @@ public class FlushToiletCartRenderer extends EntityRenderer<FlushToiletCartEntit
     }
 
     @Override
-    public ResourceLocation getTextureLocation(FlushToiletCartEntity entity) {
+    public Identifier getTextureLocation(FlushToiletCartEntity entity) {
         return entity.getType().equals(PoEntityType.GOLDEN_FLUSH_TOILET_CART.get()) ? GOLDEN_TEXTURE : TEXTURE;
     }
 

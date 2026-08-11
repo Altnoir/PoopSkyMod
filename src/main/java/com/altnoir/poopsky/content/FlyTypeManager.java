@@ -3,7 +3,7 @@ package com.altnoir.poopsky.content;
 import com.altnoir.poopsky.PoopSky;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.*;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -26,15 +26,15 @@ public class FlyTypeManager extends SimpleJsonResourceReloadListener {
     }
 
     @Override
-    protected Map<ResourceLocation, JsonElement> prepare(ResourceManager resourceManager, ProfilerFiller profiler) {
-        Map<ResourceLocation, JsonElement> resultMap = new HashMap<>();
+    protected Map<Identifier, JsonElement> prepare(ResourceManager resourceManager, ProfilerFiller profiler) {
+        Map<Identifier, JsonElement> resultMap = new HashMap<>();
 
         // 查找所有数据包中 poopsky_data/ 目录下的 fly_types.json
-        Map<ResourceLocation, Resource> allResources = resourceManager.listResources("poopsky_data",
+        Map<Identifier, Resource> allResources = resourceManager.listResources("poopsky_data",
                 location -> location.getPath().endsWith("fly_types.json"));
 
-        for (Map.Entry<ResourceLocation, Resource> entry : allResources.entrySet()) {
-            ResourceLocation location = entry.getKey();
+        for (Map.Entry<Identifier, Resource> entry : allResources.entrySet()) {
+            Identifier location = entry.getKey();
 
             // 获取同一路径下所有数据包版本的列表（从低优先级到高优先级）
             List<Resource> resourceStack = resourceManager.getResourceStack(location);
@@ -82,14 +82,14 @@ public class FlyTypeManager extends SimpleJsonResourceReloadListener {
             // 构造结果 key：去掉目录前缀和 .json 后缀
             String path = location.getPath();
             String key = path.substring("poopsky_data/".length(), path.length() - ".json".length());
-            resultMap.put(ResourceLocation.fromNamespaceAndPath(location.getNamespace(), key), mergedArray);
+            resultMap.put(Identifier.fromNamespaceAndPath(location.getNamespace(), key), mergedArray);
         }
 
         return resultMap;
     }
 
     @Override
-    protected void apply(Map<ResourceLocation, JsonElement> resources, ResourceManager resourceManager, ProfilerFiller profiler) {
+    protected void apply(Map<Identifier, JsonElement> resources, ResourceManager resourceManager, ProfilerFiller profiler) {
         ImmutableList.Builder<String> builder = ImmutableList.builder();
         for (var entry : resources.entrySet()) {
             if ("fly_types".equals(entry.getKey().getPath())) {

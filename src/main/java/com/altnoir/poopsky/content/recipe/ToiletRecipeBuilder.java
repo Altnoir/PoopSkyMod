@@ -8,7 +8,7 @@ import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.ShapedRecipe;
@@ -58,10 +58,10 @@ public class ToiletRecipeBuilder implements RecipeBuilder {
         return delegate.getResult();
     }
 
-    public void save(RecipeOutput recipeOutput, ResourceLocation id) {
+    public void save(RecipeOutput recipeOutput, Identifier id) {
         delegate.save(new RecipeOutput() {
             @Override
-            public void accept(ResourceLocation recipeId, Recipe<?> recipe, @Nullable AdvancementHolder advancement) {
+            public void accept(Identifier recipeId, Recipe<?> recipe, @Nullable AdvancementHolder advancement) {
                 if (recipe instanceof ShapedRecipe shaped) {
                     recipeOutput.accept(recipeId, new ToiletShapedRecipe(shaped, toiletType), advancement);
                 } else {
@@ -70,7 +70,7 @@ public class ToiletRecipeBuilder implements RecipeBuilder {
             }
 
             @Override
-            public void accept(ResourceLocation recipeId, Recipe<?> recipe, @Nullable AdvancementHolder advancement, ICondition... conditions) {
+            public void accept(Identifier recipeId, Recipe<?> recipe, @Nullable AdvancementHolder advancement, ICondition... conditions) {
                 if (recipe instanceof ShapedRecipe shaped) {
                     recipeOutput.accept(recipeId, new ToiletShapedRecipe(shaped, toiletType), advancement, conditions);
                 } else {
