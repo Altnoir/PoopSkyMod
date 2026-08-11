@@ -24,23 +24,6 @@ repositories {
     maven { url = "https://maven.blamejared.com" } // JEI
     maven { url = "https://cursemaven.com" }
     maven { url = "https://api.modrinth.com/maven" } // Simple Bedrock Model
-    // KubeJS, Rhino
-    maven {
-        url = "https://maven.latvian.dev/releases"
-        content {
-            includeGroup "dev.latvian.mods"
-            includeGroup "dev.latvian.apps"
-        }
-    }
-
-    // KubeJS depends on a project in here
-    maven {
-        url = "https://jitpack.io"
-        content {
-            includeGroup "com.github.mcmodderanchor"
-            includeGroup "com.github.rtyley"
-        }
-    }
 }
 
 base {
@@ -203,10 +186,6 @@ dependencies {
     // Farmers Delight
     compileOnly("curse.maven:farmers-delight-398521:${farmersdelight_version}")
     localRuntime("curse.maven:farmers-delight-398521:${farmersdelight_version}")
-    // KubeJS (compileOnly - compat removed, keep for future use)
-    compileOnly("dev.latvian.mods:kubejs-neoforge:$kubejs_version")
-    // Sable Companion
-    api("dev.ryanhcode.sable-companion:sable-companion-common-${minecraft_version}:${sable_companion_version}")
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
