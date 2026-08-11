@@ -1,10 +1,15 @@
 package com.altnoir.poopsky.content.entity.p;
 
+import java.util.List;
+import java.util.Map;
+
 import com.altnoir.poopsky.impl.network.FlushToiletCartInputPayload;
 import com.altnoir.poopsky.init.PoEffects;
 import com.altnoir.poopsky.init.PoEntityType;
 import com.altnoir.poopsky.init.PoItems;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -13,14 +18,18 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.vehicle.DismountHelper;
 import net.minecraft.world.entity.vehicle.VehicleEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -28,6 +37,12 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
 public class FlushToiletCartEntity extends VehicleEntity {
+    private static final Map<Pose, List<Integer>> POSE_DISMOUNT_HEIGHTS = Map.of(
+            Pose.STANDING, List.of(0, 1, -1),
+            Pose.CROUCHING, List.of(0, 1, -1),
+            Pose.SWIMMING, List.of(0, 1)
+    );
+
     private static final EntityDataAccessor<Float> WHEEL_LEFT_ROTATION =
             SynchedEntityData.defineId(FlushToiletCartEntity.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Float> WHEEL_RIGHT_ROTATION =
@@ -55,6 +70,7 @@ public class FlushToiletCartEntity extends VehicleEntity {
 
     public FlushToiletCartEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
+        this.blocksBuilding = true;
     }
 
     @Override
@@ -152,8 +168,62 @@ public class FlushToiletCartEntity extends VehicleEntity {
 
     @Override
     public Vec3 getDismountLocationForPassenger(LivingEntity passenger) {
-        Vec3 escape = getCollisionHorizontalEscapeVector(this.getBbWidth(), passenger.getBbWidth(), passenger.getYRot());
-        return this.position().add(escape.x, 0.75, escape.z);
+        Direction direction = this.getMotionDirection();
+        if (direction.getAxis() == Direction.Axis.Y) {
+            return super.getDismountLocationForPassenger(passenger);
+        }
+
+        int[][] offsets = DismountHelper.offsetsForDirection(direction);
+        BlockPos blockPos = this.blockPosition();
+        BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
+        List<Pose> poses = passenger.getDismountPoses();
+
+        for (Pose pose : poses) {
+            EntityDimensions dimensions = passenger.getDimensions(pose);
+            float halfWidth = Math.min(dimensions.width(), 1.0F) / 2.0F;
+            for (int heightOffset : POSE_DISMOUNT_HEIGHTS.get(pose)) {
+                for (int[] offset : offsets) {
+                    mutableBlockPos.set(blockPos.getX() + offset[0], blockPos.getY() + heightOffset, blockPos.getZ() + offset[1]);
+                    double floorHeight = this.level().getBlockFloorHeight(
+                            DismountHelper.nonClimbableShape(this.level(), mutableBlockPos),
+                            () -> DismountHelper.nonClimbableShape(this.level(), mutableBlockPos.below())
+                    );
+                    if (DismountHelper.isBlockFloorValid(floorHeight)) {
+                        AABB aabb = new AABB(
+                                -halfWidth,
+                                0.0,
+                                -halfWidth,
+                                halfWidth,
+                                dimensions.height(),
+                                halfWidth
+                        );
+                        Vec3 position = Vec3.upFromBottomCenterOf(mutableBlockPos, floorHeight);
+                        if (DismountHelper.canDismountTo(this.level(), passenger, aabb.move(position))) {
+                            passenger.setPose(pose);
+                            return position;
+                        }
+                    }
+                }
+            }
+        }
+
+        double topY = this.getBoundingBox().maxY;
+        mutableBlockPos.set((double) blockPos.getX(), topY, (double) blockPos.getZ());
+        for (Pose pose : poses) {
+            double passengerHeight = passenger.getDimensions(pose).height();
+            int ceilingSearch = Mth.ceil(topY - mutableBlockPos.getY() + passengerHeight);
+            double ceiling = DismountHelper.findCeilingFrom(
+                    mutableBlockPos,
+                    ceilingSearch,
+                    pos -> this.level().getBlockState(pos).getCollisionShape(this.level(), pos)
+            );
+            if (topY + passengerHeight <= ceiling) {
+                passenger.setPose(pose);
+                break;
+            }
+        }
+
+        return super.getDismountLocationForPassenger(passenger);
     }
 
     @Override

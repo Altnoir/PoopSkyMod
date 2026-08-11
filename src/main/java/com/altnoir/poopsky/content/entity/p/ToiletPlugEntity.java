@@ -63,6 +63,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
 
     public ToiletPlugEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
+        this.blocksBuilding = true;
         if (level.isClientSide()) {
             ToiletPlugEntityClient();
         }
