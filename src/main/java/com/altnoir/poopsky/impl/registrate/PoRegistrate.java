@@ -33,9 +33,8 @@ public class PoRegistrate extends AbstractRegistrate<PoRegistrate> {
         return registrate;
     }
 
-    public PoRegistrate defaultCreativeSection(PoCreativeTabSection section) {
+    public void defaultCreativeSection(PoCreativeTabSection section) {
         this.defaultCreativeSection = section;
-        return this;
     }
 
     void ignoreCreativeTab(String name) {
@@ -43,11 +42,7 @@ public class PoRegistrate extends AbstractRegistrate<PoRegistrate> {
     }
 
     @Override
-    public <T extends Block, P> PoBlockBuilder<T, P> block(
-            P parent,
-            String name,
-            NonNullFunction<BlockBehaviour.Properties, T> factory
-    ) {
+    public <T extends Block, P> PoBlockBuilder<T, P> block(P parent, String name, NonNullFunction<BlockBehaviour.Properties, T> factory) {
         return (PoBlockBuilder<T, P>) this
                 .entry(name, callback -> {
                     PoBlockBuilder<T, P> builder = PoBlockBuilder.create(this, parent, name, callback, factory);
@@ -59,34 +54,22 @@ public class PoRegistrate extends AbstractRegistrate<PoRegistrate> {
     }
 
     @Override
-    public <T extends Block> PoBlockBuilder<T, PoRegistrate> block(
-            NonNullFunction<BlockBehaviour.Properties, T> factory
-    ) {
+    public <T extends Block> PoBlockBuilder<T, PoRegistrate> block(NonNullFunction<BlockBehaviour.Properties, T> factory) {
         return block(self(), currentName(), factory);
     }
 
     @Override
-    public <T extends Block> PoBlockBuilder<T, PoRegistrate> block(
-            String name,
-            NonNullFunction<BlockBehaviour.Properties, T> factory
-    ) {
+    public <T extends Block> PoBlockBuilder<T, PoRegistrate> block(String name, NonNullFunction<BlockBehaviour.Properties, T> factory) {
         return block(self(), name, factory);
     }
 
     @Override
-    public <T extends Block, P> PoBlockBuilder<T, P> block(
-            P parent,
-            NonNullFunction<BlockBehaviour.Properties, T> factory
-    ) {
+    public <T extends Block, P> PoBlockBuilder<T, P> block(P parent, NonNullFunction<BlockBehaviour.Properties, T> factory) {
         return block(parent, currentName(), factory);
     }
 
     @Override
-    public <T extends Item, P> PoItemBuilder<T, P> item(
-            P parent,
-            String name,
-            NonNullFunction<Item.Properties, T> factory
-    ) {
+    public <T extends Item, P> PoItemBuilder<T, P> item(P parent, String name, NonNullFunction<Item.Properties, T> factory) {
         return (PoItemBuilder<T, P>) this
                 .entry(name, callback -> {
                     PoItemBuilder<T, P> builder = PoItemBuilder.create(this, parent, name, callback, factory);
@@ -98,25 +81,17 @@ public class PoRegistrate extends AbstractRegistrate<PoRegistrate> {
     }
 
     @Override
-    public <T extends Item> PoItemBuilder<T, PoRegistrate> item(
-            NonNullFunction<Item.Properties, T> factory
-    ) {
+    public <T extends Item> PoItemBuilder<T, PoRegistrate> item(NonNullFunction<Item.Properties, T> factory) {
         return item(self(), currentName(), factory);
     }
 
     @Override
-    public <T extends Item> PoItemBuilder<T, PoRegistrate> item(
-            String name,
-            NonNullFunction<Item.Properties, T> factory
-    ) {
+    public <T extends Item> PoItemBuilder<T, PoRegistrate> item(String name, NonNullFunction<Item.Properties, T> factory) {
         return item(self(), name, factory);
     }
 
     @Override
-    public <T extends Item, P> PoItemBuilder<T, P> item(
-            P parent,
-            NonNullFunction<Item.Properties, T> factory
-    ) {
+    public <T extends Item, P> PoItemBuilder<T, P> item(P parent, NonNullFunction<Item.Properties, T> factory) {
         return item(parent, currentName(), factory);
     }
 }

@@ -16,10 +16,10 @@ public class PoRecipes {
     public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(BuiltInRegistries.RECIPE_SERIALIZER, PoopSky.MOD_ID);
     public static final DeferredRegister<RecipeType<?>> TYPES = DeferredRegister.create(BuiltInRegistries.RECIPE_TYPE, PoopSky.MOD_ID);
 
-    public static final RecipeEntry<SieveRecipe.Serializer, SieveRecipe> SIEVE = register("sieve", SieveRecipe.Serializer::new);
+    public static final RecipeEntry<RecipeSerializer<SieveRecipe>, SieveRecipe> SIEVE = register("sieve", () -> SieveRecipe.SERIALIZER);
     public static final RecipeEntry<FlyBarrelRecipe.Serializer, FlyBarrelRecipe> FLY_BARREL = register("fly_barrel", FlyBarrelRecipe.Serializer::new);
     public static final RecipeEntry<BreedingChestRecipe.Serializer, BreedingChestRecipe> BREEDING_CHEST = register("breeding_chest", BreedingChestRecipe.Serializer::new);
-    public static final RecipeEntry<POPExplosionRecipe.Serializer, POPExplosionRecipe> POP_EXPLOSION = register("pop_explosion", POPExplosionRecipe.Serializer::new);
+    public static final RecipeEntry<RecipeSerializer<POPExplosionRecipe>, POPExplosionRecipe> POP_EXPLOSION = register("pop_explosion", () -> POPExplosionRecipe.SERIALIZER);
     public static final RecipeEntry<AnalPressingRecipe.Serializer, AnalPressingRecipe> ANAL_PRESSING = register("anal_pressing", AnalPressingRecipe.Serializer::new);
     public static final RecipeEntry<CompooperRecipe.Serializer, CompooperRecipe> COMPOOPER = register("compooper", CompooperRecipe.Serializer::new);
 

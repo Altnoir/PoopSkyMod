@@ -4,8 +4,6 @@ import com.altnoir.poopsky.init.PoRecipes;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -18,6 +16,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record SieveRecipe(Ingredient input, List<ChanceItemStack> outputs, int processingTime) implements Recipe<SingleRecipeInput> {
+    public static final MapCodec<SieveRecipe> MAP_CODEC = RecordCodecBuilder.mapCodec(instance ->
+            instance.group(
+                    Ingredient.CODEC.fieldOf("input").forGetter(SieveRecipe::input),
+                    ChanceItemStack.CODEC.listOf().fieldOf("outputs").forGetter(SieveRecipe::outputs),
+                    Codec.INT.optionalFieldOf("processingTime", 200).forGetter(SieveRecipe::processingTime)
+            ).apply(instance, SieveRecipe::new));
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, SieveRecipe> STREAM_CODEC =
+            StreamCodec.composite(
+                    Ingredient.CONTENTS_STREAM_CODEC, SieveRecipe::input,
+                    ChanceItemStack.STREAM_CODEC.apply(ByteBufCodecs.list()), SieveRecipe::outputs,
+                    ByteBufCodecs.VAR_INT, SieveRecipe::processingTime,
+                    SieveRecipe::new);
+
+    public static final RecipeSerializer<SieveRecipe> SERIALIZER =
+            new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
 
     @Override
     public boolean matches(SingleRecipeInput recipeInput, Level level) {
@@ -25,34 +39,37 @@ public record SieveRecipe(Ingredient input, List<ChanceItemStack> outputs, int p
     }
 
     @Override
-    public ItemStack assemble(SingleRecipeInput recipeInput, HolderLookup.Provider registries) {
+    public ItemStack assemble(SingleRecipeInput recipeInput) {
         return ItemStack.EMPTY;
     }
 
     @Override
-    public ItemStack getResultItem(HolderLookup.Provider registries) {
-        return outputs.isEmpty() ? ItemStack.EMPTY : outputs.getFirst().stack().copy();
+    public boolean showNotification() {
+        return false;
     }
 
     @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return true;
+    public String group() {
+        return "";
     }
 
     @Override
-    public NonNullList<Ingredient> getIngredients() {
-        NonNullList<Ingredient> list = NonNullList.create();
-        list.add(input);
-        return list;
+    public PlacementInfo placementInfo() {
+        return PlacementInfo.NOT_PLACEABLE;
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public RecipeBookCategory recipeBookCategory() {
+        return RecipeBookCategories.CRAFTING_MISC;
+    }
+
+    @Override
+    public RecipeType<SieveRecipe> getType() {
         return PoRecipes.SIEVE.type().get();
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<SieveRecipe> getSerializer() {
         return PoRecipes.SIEVE.serializer().get();
     }
 
@@ -69,7 +86,7 @@ public record SieveRecipe(Ingredient input, List<ChanceItemStack> outputs, int p
     public record ChanceItemStack(ItemStack stack, float chance) {
         public static final Codec<ChanceItemStack> CODEC = RecordCodecBuilder.create(instance ->
                 instance.group(
-                        ItemStack.STRICT_CODEC.fieldOf("item").forGetter(ChanceItemStack::stack),
+                        ItemStack.CODEC.fieldOf("item").forGetter(ChanceItemStack::stack),
                         Codec.floatRange(0.0F, 1.0F).fieldOf("chance").forGetter(ChanceItemStack::chance)
                 ).apply(instance, ChanceItemStack::new));
 
@@ -81,33 +98,6 @@ public record SieveRecipe(Ingredient input, List<ChanceItemStack> outputs, int p
 
         public boolean roll(RandomSource random) {
             return chance > 0.0F && random.nextFloat() < chance;
-        }
-    }
-
-    public static class Serializer implements RecipeSerializer<SieveRecipe> {
-
-        public static final MapCodec<SieveRecipe> CODEC = RecordCodecBuilder.mapCodec(instance ->
-                instance.group(
-                        Ingredient.CODEC_NONEMPTY.fieldOf("input").forGetter(SieveRecipe::input),
-                        ChanceItemStack.CODEC.listOf().fieldOf("outputs").forGetter(SieveRecipe::outputs),
-                        Codec.INT.optionalFieldOf("processingTime", 200).forGetter(SieveRecipe::processingTime)
-                ).apply(instance, SieveRecipe::new));
-
-        public static final StreamCodec<RegistryFriendlyByteBuf, SieveRecipe> STREAM_CODEC =
-                StreamCodec.composite(
-                        Ingredient.CONTENTS_STREAM_CODEC, SieveRecipe::input,
-                        ChanceItemStack.STREAM_CODEC.apply(ByteBufCodecs.list()), SieveRecipe::outputs,
-                        ByteBufCodecs.VAR_INT, SieveRecipe::processingTime,
-                        SieveRecipe::new);
-
-        @Override
-        public MapCodec<SieveRecipe> codec() {
-            return CODEC;
-        }
-
-        @Override
-        public StreamCodec<RegistryFriendlyByteBuf, SieveRecipe> streamCodec() {
-            return STREAM_CODEC;
         }
     }
 }

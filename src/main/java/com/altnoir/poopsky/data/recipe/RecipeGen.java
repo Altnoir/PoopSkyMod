@@ -795,14 +795,14 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .addOutput(Items.SNIFFER_EGG, 0.01F)
                 .unlockedBy(getItemName(PoBlocks.SIEVE.get()), has(PoBlocks.SIEVE.get()))
                 .save(recipeOutput);
-        SieveRecipeBuilder.sieve(ItemTags.SAND, 200)
+        SieveRecipeBuilder.sieve(registries.lookupOrThrow(Registries.ITEM), ItemTags.SAND, 200)
                 .addOutput(Items.CLAY)
                 .addOutput(Items.IRON_NUGGET, 4, 0.5F)
                 .addOutput(Items.GOLD_NUGGET, 4, 0.25F)
                 .addOutput(Items.TURTLE_EGG, 4, 0.01F)
                 .unlockedBy(getItemName(PoBlocks.SIEVE.get()), has(PoBlocks.SIEVE.get()))
                 .save(recipeOutput, "sand");
-        SieveRecipeBuilder.sieve(ItemTags.SOUL_FIRE_BASE_BLOCKS, 200)
+        SieveRecipeBuilder.sieve(registries.lookupOrThrow(Registries.ITEM), ItemTags.SOUL_FIRE_BASE_BLOCKS, 200)
                 .addOutput(Items.BONE, 4, 0.5F)
                 .addOutput(Items.NETHER_WART, 0.5F)
                 .addOutput(Items.GLOWSTONE_DUST, 0.5F)

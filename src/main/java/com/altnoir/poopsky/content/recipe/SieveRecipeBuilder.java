@@ -7,14 +7,18 @@ import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -45,8 +49,8 @@ public final class SieveRecipeBuilder implements RecipeBuilder {
         return new SieveRecipeBuilder(input, processingTime);
     }
 
-    public static SieveRecipeBuilder sieve(TagKey<Item> tag, int processingTime) {
-        return new SieveRecipeBuilder(Ingredient.of(tag), processingTime);
+    public static SieveRecipeBuilder sieve(HolderGetter<Item> items, TagKey<Item> tag, int processingTime) {
+        return new SieveRecipeBuilder(Ingredient.of(items.getOrThrow(tag)), processingTime);
     }
 
     public SieveRecipeBuilder addOutput(ItemLike item) {
@@ -78,33 +82,24 @@ public final class SieveRecipeBuilder implements RecipeBuilder {
     }
 
     @Override
-    public @NotNull Item getResult() {
-        if (outputs.isEmpty()) {
-            throw new IllegalStateException("Sieve recipe has no outputs");
-        }
-        return outputs.getFirst().stack().getItem();
+    public ResourceKey<Recipe<?>> defaultId() {
+        Item item = input.getValues()
+                .stream()
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Sieve recipe has no input items"))
+                .value();
+        return ResourceKey.create(Registries.RECIPE, getDefaultRecipeId(item));
     }
 
     @Override
-    public void save(@NotNull RecipeOutput recipeOutput) {
-        ItemStack[] items = input.getItems();
-        if (items.length > 0) {
-            Identifier itemId = BuiltInRegistries.ITEM.getKey(items[0].getItem());
-            save(recipeOutput, itemId.getPath());
-        } else {
-            RecipeBuilder.super.save(recipeOutput);
-        }
-    }
-
     public void save(@NotNull RecipeOutput recipeOutput, @NotNull String id) {
         Identifier recipeId = PoopSky.loc(RECIPE_TYPE + "/" + id);
-        save(recipeOutput, recipeId);
+        save(recipeOutput, ResourceKey.create(Registries.RECIPE, recipeId));
     }
 
     @Override
-    public void save(@NotNull RecipeOutput recipeOutput, @NotNull Identifier id) {
-        ensureValid(id);
-        Identifier advancementId = PoopSky.loc(id.getPath());
+    public void save(@NotNull RecipeOutput recipeOutput, @NotNull ResourceKey<Recipe<?>> id) {
+        ensureValid(id.identifier());
 
         Advancement.Builder advancementBuilder = recipeOutput.advancement()
                 .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
@@ -114,7 +109,7 @@ public final class SieveRecipeBuilder implements RecipeBuilder {
         criteria.forEach(advancementBuilder::addCriterion);
 
         SieveRecipe recipe = new SieveRecipe(input, List.copyOf(outputs), processingTime);
-        recipeOutput.accept(id, recipe, advancementBuilder.build(advancementId.withPrefix("recipes/")));
+        recipeOutput.accept(id, recipe, advancementBuilder.build(id.identifier().withPrefix("recipes/")));
     }
 
     public static Identifier getDefaultRecipeId(ItemLike input) {

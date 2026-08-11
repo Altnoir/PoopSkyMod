@@ -7,12 +7,14 @@ import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
@@ -68,20 +70,19 @@ public final class POPExplosionRecipeBuilder implements RecipeBuilder {
         return this;
     }
 
-    @Override
-    public @NotNull Item getResult() {
-        return output.toItemStack().getItem();
+    public ResourceKey<Recipe<?>> defaultId() {
+        return RecipeBuilder.getDefaultRecipeId(output.toItemStack());
     }
 
+    @Override
     public void save(@NotNull RecipeOutput recipeOutput, @NotNull String id) {
         Identifier recipeId = PoopSky.loc(RECIPE_TYPE + "/" + id);
-        save(recipeOutput, recipeId);
+        save(recipeOutput, ResourceKey.create(Registries.RECIPE, recipeId));
     }
 
     @Override
-    public void save(@NotNull RecipeOutput recipeOutput, @NotNull Identifier id) {
-        ensureValid(id);
-        Identifier advancementId = PoopSky.loc(id.getPath());
+    public void save(RecipeOutput recipeOutput, ResourceKey<Recipe<?>> id) {
+        ensureValid(id.identifier());
 
         Advancement.Builder advancementBuilder = recipeOutput.advancement()
                 .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
@@ -91,12 +92,7 @@ public final class POPExplosionRecipeBuilder implements RecipeBuilder {
         criteria.forEach(advancementBuilder::addCriterion);
 
         POPExplosionRecipe recipe = new POPExplosionRecipe(input, radius, output);
-        recipeOutput.accept(id, recipe, advancementBuilder.build(advancementId.withPrefix("recipes/")));
-    }
-
-    public static Identifier getDefaultRecipeId(ItemLike input) {
-        Identifier itemId = BuiltInRegistries.ITEM.getKey(input.asItem());
-        return PoopSky.loc(RECIPE_TYPE + "/" + itemId.getPath());
+        recipeOutput.accept(id, recipe, advancementBuilder.build(id.identifier().withPrefix("recipes/")));
     }
 
     private void ensureValid(Identifier id) {

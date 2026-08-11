@@ -68,7 +68,7 @@ public record PlugActionPayload() implements CustomPacketPayload {
     private static ItemStack findToiletPlug(ServerPlayer player) {
         Inventory inv = player.getInventory();
 
-        for (ItemStack stack : inv.items) {
+        for (ItemStack stack : inv.getNonEquipmentItems()) {
             if (stack.is(PoItems.TOILET_PLUG.get())) {
                 return stack;
             }

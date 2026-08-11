@@ -5,8 +5,6 @@ import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -20,6 +18,22 @@ import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.Nullable;
 
 public record POPExplosionRecipe(Ingredient input, int radius, Output output) implements Recipe<SingleRecipeInput> {
+    public static final MapCodec<POPExplosionRecipe> MAP_CODEC = RecordCodecBuilder.mapCodec(instance ->
+            instance.group(
+                    Ingredient.CODEC.fieldOf("input").forGetter(POPExplosionRecipe::input),
+                    Codec.INT.optionalFieldOf("radius", 0).forGetter(POPExplosionRecipe::radius),
+                    Output.CODEC.fieldOf("output").forGetter(POPExplosionRecipe::output)
+            ).apply(instance, POPExplosionRecipe::new));
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, POPExplosionRecipe> STREAM_CODEC =
+            StreamCodec.composite(
+                    Ingredient.CONTENTS_STREAM_CODEC, POPExplosionRecipe::input,
+                    ByteBufCodecs.VAR_INT, POPExplosionRecipe::radius,
+                    Output.STREAM_CODEC, POPExplosionRecipe::output,
+                    POPExplosionRecipe::new);
+
+    public static final RecipeSerializer<POPExplosionRecipe> SERIALIZER =
+            new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
 
     public record Output(@Nullable Block block, @Nullable Item item) {
         public Output {
@@ -76,61 +90,37 @@ public record POPExplosionRecipe(Ingredient input, int radius, Output output) im
     }
 
     @Override
-    public ItemStack assemble(SingleRecipeInput recipeInput, HolderLookup.Provider registries) {
+    public ItemStack assemble(SingleRecipeInput recipeInput) {
         return output.toItemStack();
     }
 
     @Override
-    public ItemStack getResultItem(HolderLookup.Provider registries) {
-        return output.toItemStack();
+    public boolean showNotification() {
+        return false;
     }
 
     @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return true;
+    public String group() {
+        return "";
     }
 
     @Override
-    public NonNullList<Ingredient> getIngredients() {
-        NonNullList<Ingredient> list = NonNullList.create();
-        list.add(input);
-        return list;
+    public PlacementInfo placementInfo() {
+        return PlacementInfo.NOT_PLACEABLE;
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public RecipeBookCategory recipeBookCategory() {
+        return RecipeBookCategories.CRAFTING_MISC;
+    }
+
+    @Override
+    public RecipeType<POPExplosionRecipe> getType() {
         return PoRecipes.POP_EXPLOSION.type().get();
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<POPExplosionRecipe> getSerializer() {
         return PoRecipes.POP_EXPLOSION.serializer().get();
-    }
-
-    public static class Serializer implements RecipeSerializer<POPExplosionRecipe> {
-
-        public static final MapCodec<POPExplosionRecipe> CODEC = RecordCodecBuilder.mapCodec(instance ->
-                instance.group(
-                        Ingredient.CODEC_NONEMPTY.fieldOf("input").forGetter(POPExplosionRecipe::input),
-                        Codec.INT.optionalFieldOf("radius", 0).forGetter(POPExplosionRecipe::radius),
-                        Output.CODEC.fieldOf("output").forGetter(POPExplosionRecipe::output)
-                ).apply(instance, POPExplosionRecipe::new));
-
-        public static final StreamCodec<RegistryFriendlyByteBuf, POPExplosionRecipe> STREAM_CODEC =
-                StreamCodec.composite(
-                        Ingredient.CONTENTS_STREAM_CODEC, POPExplosionRecipe::input,
-                        ByteBufCodecs.VAR_INT, POPExplosionRecipe::radius,
-                        Output.STREAM_CODEC, POPExplosionRecipe::output,
-                        POPExplosionRecipe::new);
-
-        @Override
-        public MapCodec<POPExplosionRecipe> codec() {
-            return CODEC;
-        }
-
-        @Override
-        public StreamCodec<RegistryFriendlyByteBuf, POPExplosionRecipe> streamCodec() {
-            return STREAM_CODEC;
-        }
     }
 }
