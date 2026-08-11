@@ -4,12 +4,12 @@ import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.content.block.CompooperType;
 import com.altnoir.poopsky.content.recipe.PCompooperRecipes;
 import com.altnoir.poopsky.init.PoBlocks;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Util;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -165,7 +165,7 @@ public abstract class AbstractCompooperBlock extends Block {
         } else {
             double height = getLiquidHeight(state);
 
-            var vec3 = Vec3.atLowerCornerWithOffset(pos, 0.5, 0.0725 + height, 0.5).offsetRandom(level.random, 0.7F);
+            var vec3 = Vec3.atLowerCornerWithOffset(pos, 0.5, 0.0725 + height, 0.5).offsetRandom(level.getRandom(), 0.7F);
             int newLevel = state.getValue(LEVEL) - 1;
             int newCount = count - 1;
 
@@ -189,7 +189,7 @@ public abstract class AbstractCompooperBlock extends Block {
         }
         for (int i = 0; i < 8; i++) {
             level.addParticle(ParticleTypes.FIREWORK, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(),
-                    level.random.nextDouble() * 0.2 - 0.1, level.random.nextDouble() * 0.2, level.random.nextDouble() * 0.2 - 0.1);
+                    level.getRandom().nextDouble() * 0.2 - 0.1, level.getRandom().nextDouble() * 0.2, level.getRandom().nextDouble() * 0.2 - 0.1);
         }
     }
 

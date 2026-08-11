@@ -3,15 +3,14 @@ package com.altnoir.poopsky.content.entity.renderer;
 import com.altnoir.poopsky.PoopSky;
 import com.mojang.datafixers.util.Pair;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
-import net.minecraft.client.model.BoatModel;
-import net.minecraft.client.model.ChestBoatModel;
 import net.minecraft.client.model.ListModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.object.boat.BoatModel;
 import net.minecraft.client.renderer.entity.BoatRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.world.entity.vehicle.boat.Boat;
 
 public class GinkgoBoatRenderer extends BoatRenderer {
     public static final ModelLayerLocation BOAT_LAYER = new ModelLayerLocation(PoopSky.loc("boat/ginkgo"), "main");

@@ -3,13 +3,12 @@ package com.altnoir.poopsky.data.sound;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.data.PackOutput;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.common.data.SoundDefinition;
 import net.neoforged.neoforge.common.data.SoundDefinitionsProvider;
 
 public class SoundGen extends SoundDefinitionsProvider {
-    public SoundGen(PackOutput output, ExistingFileHelper helper) {
-        super(output, PoopSky.MOD_ID, helper);
+    public SoundGen(PackOutput output) {
+        super(output, PoopSky.MOD_ID);
     }
 
     @Override

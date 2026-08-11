@@ -90,7 +90,7 @@ public class ToiletLinkerItem extends PoBaseItem {
                     pos.getX(), pos.getY(), pos.getZ(),
                     comp.x2(), comp.y2(), comp.z2()
             ));
-            var pitch = level.random.nextFloat() + 0.1F;
+            var pitch = level.getRandom().nextFloat() + 0.1F;
             player.displayClientMessage(Component.translatable("message.poopsky.toilet_linker.1"), true);
             level.playSound(null, pos, PoSoundEvents.ITEM_TOILET_LINKER_BOOP.get(), SoundSource.PLAYERS, 1.0F, pitch);
         } else if (comp.level2().isEmpty()) {

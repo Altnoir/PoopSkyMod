@@ -2,7 +2,6 @@ package com.altnoir.poopsky.data.recipe;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.compat.PoMods;
-import com.altnoir.poopsky.compat.farmersdelight.FarmersDelightRecipeGen;
 import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.CompooperType;
@@ -13,7 +12,7 @@ import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.init.ToiletTypes;
-import com.simibubi.create.AllItems;
+//import com.simibubi.create.AllItems;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.core.Holder;
@@ -39,7 +38,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 import org.jetbrains.annotations.NotNull;
-import vectorwing.farmersdelight.common.registry.ModItems;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -70,9 +68,6 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         buildAnalPressingRecipes(recipeOutput);
         buildBreedingChestRecipes(recipeOutput);
         buildFlyBarrelRecipes(recipeOutput);
-
-        RecipeOutput fd = recipeOutput.withConditions(modLoaded(PoMods.FARMERSDELIGHT.id()));
-        FarmersDelightRecipeGen.buildRecipes(fd);
     }
 
     private void buildCookingRecipes(RecipeOutput recipeOutput) {
@@ -816,7 +811,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .save(recipeOutput, "soul_blocks");
 
         // Create
-        SieveRecipeBuilder.sieve(PoBlocks.POOP_BLOCK, 200)
+/*        SieveRecipeBuilder.sieve(PoBlocks.POOP_BLOCK, 200)
                 .addOutput(Items.IRON_NUGGET, 8)
                 .addOutput(AllItems.ZINC_NUGGET, 8)
                 .addOutput(Items.IRON_NUGGET, 8, 0.5F)
@@ -833,21 +828,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .addOutput(Items.REDSTONE, 0.5F)
                 .addOutput(Items.AMETHYST_SHARD, 0.25F)
                 .unlockedBy(getItemName(PoBlocks.SIEVE.get()), has(PoBlocks.SIEVE.get()))
-                .save(createLoaded, "raw_poop_block_has_create");
-        // FarmersDelight
-        SieveRecipeBuilder.sieve(ModItems.ORGANIC_COMPOST.get(), 200)
-                .addOutput(Items.DIRT)
-                .addOutput(ModItems.TREE_BARK.get(), 2, 0.5F)
-                .addOutput(ModItems.STRAW.get(), 2, 0.5F)
-                .unlockedBy(getItemName(PoBlocks.SIEVE.get()), has(PoBlocks.SIEVE.get()))
-                .save(fdLoaded, "orgenic_compost_has_farmersdelight");
-        SieveRecipeBuilder.sieve(ModItems.RICH_SOIL.get(), 200)
-                .addOutput(ModItems.ONION.get(), 0.5F)
-                .addOutput(ModItems.TOMATO_SEEDS.get(), 0.5F)
-                .addOutput(ModItems.CABBAGE_SEEDS.get(), 0.5F)
-                .addOutput(ModItems.RICE.get(), 0.5F)
-                .unlockedBy(getItemName(PoBlocks.SIEVE.get()), has(PoBlocks.SIEVE.get()))
-                .save(fdLoaded, "rich_soil_has_farmersdelight");
+                .save(createLoaded, "raw_poop_block_has_create");*/
     }
 
     private void buildFlyBarrelRecipes(RecipeOutput recipeOutput) {

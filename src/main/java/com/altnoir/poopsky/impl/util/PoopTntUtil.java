@@ -127,7 +127,7 @@ public class PoopTntUtil {
     private static void spawnPoopParticle(ServerLevel level, double x, double y, double z, int radius) {
         int particleCount = radius * 30;
         double offset = radius * 0.5;
-        double speed = 0.4 + level.random.nextDouble() * 0.4;
+        double speed = 0.4 + level.getRandom().nextDouble() * 0.4;
         level.sendParticles(PoParticles.POOP_PARTICLE.get(), x, y, z, particleCount, offset, offset, offset, speed);
         if (radius <= 2) {
             level.sendParticles(ParticleTypes.EXPLOSION, x, y, z, radius, offset, offset, offset, speed);

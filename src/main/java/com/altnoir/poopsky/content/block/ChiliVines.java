@@ -25,7 +25,7 @@ public interface ChiliVines {
     static InteractionResult use(@Nullable Entity entity, BlockState state, Level level, BlockPos pos) {
         if (state.getValue(CHILI)) {
             Block.popResource(level, pos, new ItemStack(PoItems.DRAGON_BREATH_CHILI.get(), 1));
-            float f = Mth.randomBetween(level.random, 0.8F, 1.2F);
+            float f = Mth.randomBetween(level.getRandom(), 0.8F, 1.2F);
             level.playSound(null, pos, SoundEvents.CAVE_VINES_PICK_BERRIES, SoundSource.BLOCKS, 1.0F, f);
             BlockState blockstate = state.setValue(CHILI, false);
             level.setBlock(pos, blockstate, 2);

@@ -6,11 +6,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ClickType;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 
 public class PortableToiletMenu extends AbstractContainerMenu {
@@ -59,9 +55,9 @@ public class PortableToiletMenu extends AbstractContainerMenu {
     }
 
     @Override
-    public void clicked(int slotId, int button, ClickType clickType, Player player) {
+    public void clicked(int slotId, int button, ContainerInput input, Player player) {
         if (slotId == 0) {
-            if (clickType == ClickType.PICKUP && (button == 0 || button == 1)) {
+            if (input == ContainerInput.PICKUP && (button == 0 || button == 1)) {
                 ItemStack carried = this.getCarried();
                 if (!carried.isEmpty()) {
                     int count = button == 1 ? 1 : carried.getCount();
@@ -70,7 +66,7 @@ public class PortableToiletMenu extends AbstractContainerMenu {
                     remainder.shrink(count);
                     this.setCarried(remainder);
                 }
-            } else if (clickType == ClickType.SWAP && button >= 0 && button < player.getInventory().getContainerSize()) {
+            } else if (input == ContainerInput.SWAP && button >= 0 && button < player.getInventory().getContainerSize()) {
                 ItemStack hotbar = player.getInventory().getItem(button);
                 if (!hotbar.isEmpty()) {
                     this.trashSlot.setByPlayer(hotbar.copy());
@@ -79,7 +75,7 @@ public class PortableToiletMenu extends AbstractContainerMenu {
             }
             return;
         }
-        super.clicked(slotId, button, clickType, player);
+        super.clicked(slotId, button, input, player);
     }
 
     @Override

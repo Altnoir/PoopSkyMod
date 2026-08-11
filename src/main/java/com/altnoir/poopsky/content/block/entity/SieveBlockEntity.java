@@ -136,7 +136,7 @@ public class SieveBlockEntity extends BlockEntity {
         playCompletionEffects(input);
         consumeInputForRecipe();
 
-        for (ItemStack output : recipe.rollOutputs(level.random)) {
+        for (ItemStack output : recipe.rollOutputs(level.getRandom())) {
             ItemEntity itemEntity = new ItemEntity(
                     level,
                     worldPosition.getX() + 0.5D,

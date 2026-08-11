@@ -12,7 +12,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.neoforged.neoforge.common.NeoForgeMod;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -36,8 +35,8 @@ public class DamageTypeTagsGen extends TagsProvider<DamageType> {
             DamageTypes.DRAGON_BREATH
     );
 
-    public DamageTypeTagsGen(PackOutput output, CompletableFuture<Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
-        super(output, Registries.DAMAGE_TYPE, lookupProvider, PoopSky.MOD_ID, existingFileHelper);
+    public DamageTypeTagsGen(PackOutput output, CompletableFuture<Provider> lookupProvider) {
+        super(output, Registries.DAMAGE_TYPE, lookupProvider, PoopSky.MOD_ID);
     }
 
     @Override

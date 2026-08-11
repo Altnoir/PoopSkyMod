@@ -294,7 +294,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
             double x = pos.getX() + 0.5;
             double y = pos.getY() + 1.0;
             double z = pos.getZ() + 0.5;
-            var pitch = level.random.nextFloat() - 0.4F;
+            var pitch = level.getRandom().nextFloat() - 0.4F;
             level.sendParticles(PoParticles.TOILET_PARTICLE.get(), x, y - 0.5, z, 100, 0.05, 0.05, 0.05, 0.5);
             level.playSound(null, x, y, z, PoSoundEvents.FART, SoundSource.BLOCKS, 1.0F, pitch);
 

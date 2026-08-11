@@ -21,15 +21,14 @@ import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.client.model.generators.loaders.SeparateTransformsModelBuilder;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.*;
 
 public class BlockStateGen extends RegistrateBlockstateProvider {
     public static final String PARTICLE = "particle";
 
-    public BlockStateGen(PackOutput packOutput, ExistingFileHelper exFileHelper) {
-        super(PoopSky.registrate(), packOutput, exFileHelper);
+    public BlockStateGen(PackOutput packOutput) {
+        super(PoopSky.registrate(), packOutput);
     }
 
     @Override

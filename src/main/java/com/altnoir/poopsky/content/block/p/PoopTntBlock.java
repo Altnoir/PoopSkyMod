@@ -82,7 +82,7 @@ public class PoopTntBlock extends Block {
                     pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5,
                     explosion.getIndirectSourceEntity() instanceof LivingEntity living ? living : null);
             int i = tnt.getFuse();
-            tnt.setFuse(level.random.nextInt(i / 4) + i / 8);
+            tnt.setFuse(level.getRandom().nextInt(i / 4) + i / 8);
             level.addFreshEntity(tnt);
         }
     }

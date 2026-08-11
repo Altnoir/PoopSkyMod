@@ -7,7 +7,6 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.MapCodec;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.dispenser.BlockSource;
@@ -16,6 +15,7 @@ import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.Util;
 import net.minecraft.world.Container;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -90,7 +90,7 @@ public class PlacerBlock extends BaseEntityBlock {
         }
 
         BlockSource blocksource = new BlockSource(level, pos, state, blockEntity);
-        int i = blockEntity.getRandomSlot(level.random);
+        int i = blockEntity.getRandomSlot(level.getRandom());
         if (i < 0) {
             level.levelEvent(1001, pos, 0);
         } else {

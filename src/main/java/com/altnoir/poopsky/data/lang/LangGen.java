@@ -13,7 +13,7 @@ import java.util.Map;
 
 public final class LangGen {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
-    private static RegistrateLangProvider provider; // 静态字段
+    private static RegistrateLangProvider provider;
 
     private LangGen() {
     }

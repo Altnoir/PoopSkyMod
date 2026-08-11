@@ -37,22 +37,21 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ClipContext;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
@@ -62,7 +61,6 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
-import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 
 import java.util.Set;
 
@@ -88,7 +86,7 @@ public class PoGameEvents {
 
     public static void onItemCrafted(PlayerEvent.ItemCraftedEvent event) {
         if (event.getEntity() instanceof Player player
-                && !player.level().isClientSide
+                && !player.level().isClientSide()
                 && player.containerMenu instanceof PoopCraftingMenu menu) {
             menu.consumeCraftingTable();
         }
@@ -241,7 +239,7 @@ public class PoGameEvents {
                 ToiletType[] pool = ToiletType.getByCategory(ToiletType.Category.HARD)
                         .values()
                         .toArray(ToiletType[]::new);
-                ToiletType type = pool[level.random.nextInt(pool.length)];
+                ToiletType type = pool[level.getRandom().nextInt(pool.length)];
                 level.setBlock(pos, PoBlocks.HARD_TOILET.get().defaultBlockState(), 2);
                 if (level.getBlockEntity(pos) instanceof ToiletBlockEntity blockEntity) {
                     blockEntity.setToiletType(type);

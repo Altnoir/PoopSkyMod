@@ -6,15 +6,13 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.PaintingVariantTagsProvider;
 import net.minecraft.tags.PaintingVariantTags;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
 public class PaintingVariantTagsGen extends PaintingVariantTagsProvider {
 
-    public PaintingVariantTagsGen(PackOutput output, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
-        super(output, provider, PoopSky.MOD_ID, existingFileHelper);
+    public PaintingVariantTagsGen(PackOutput output, CompletableFuture<HolderLookup.Provider> provider) {
+        super(output, provider, PoopSky.MOD_ID);
     }
 
     @Override

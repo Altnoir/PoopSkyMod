@@ -1,7 +1,10 @@
 package com.altnoir.poopsky.client.particle;
 
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.*;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.ParticleRenderType;
+import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.core.particles.SimpleParticleType;
 
 public class ToiletParticle extends TextureSheetParticle {
@@ -10,14 +13,14 @@ public class ToiletParticle extends TextureSheetParticle {
         this.setSpriteFromAge(sprites);
         this.gravity = 0.8F;
         this.friction = 0.99F;
-        this.lifetime = 40 + level.random.nextInt(20);
-        this.quadSize *= 0.8F + level.random.nextFloat() * 0.4F;
+        this.lifetime = 40 + level.getRandom().nextInt(20);
+        this.quadSize *= 0.8F + level.getRandom().nextFloat() * 0.4F;
         this.rCol = 1.0F;
         this.gCol = 1.0F;
         this.bCol = 1.0F;
-        this.xd = (level.random.nextFloat() - 0.5F) * 0.05F;
-        this.yd = 0.25F + level.random.nextFloat() * 0.3F;
-        this.zd = (level.random.nextFloat() - 0.5F) * 0.05F;
+        this.xd = (level.getRandom().nextFloat() - 0.5F) * 0.05F;
+        this.yd = 0.25F + level.getRandom().nextFloat() * 0.3F;
+        this.zd = (level.getRandom().nextFloat() - 0.5F) * 0.05F;
     }
 
     @Override

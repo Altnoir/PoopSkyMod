@@ -175,7 +175,7 @@ public class ToiletUtil {
             level.addFreshEntity(poop);
         }
 
-        playPoopEffects(level, livingEntity.getX(), livingEntity.getY() + yOffset, livingEntity.getZ(), level.random.nextFloat() + pitchOffset);
+        playPoopEffects(level, livingEntity.getX(), livingEntity.getY() + yOffset, livingEntity.getZ(), level.getRandom().nextFloat() + pitchOffset);
     }
 
     public static void containerPoop(Level level, BlockPos pos, LivingEntity entity, boolean hasSpasm, boolean isGolden, long lastPoopTime, LongConsumer poopTimeSetter) {
@@ -217,7 +217,7 @@ public class ToiletUtil {
         poopTimeSetter.accept(gameTime);
 
         float yOffset = entity instanceof Player ? 0.55F : 0.05F;
-        playPoopEffects(level, entity.getX(), entity.getY() + yOffset, entity.getZ(), level.random.nextFloat() + 0.5F);
+        playPoopEffects(level, entity.getX(), entity.getY() + yOffset, entity.getZ(), level.getRandom().nextFloat() + 0.5F);
     }
 
     public static boolean insertOrReplaceContainer(Level level, BlockPos pos, ItemStack stack) {

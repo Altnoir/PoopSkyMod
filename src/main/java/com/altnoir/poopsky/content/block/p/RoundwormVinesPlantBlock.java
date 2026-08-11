@@ -70,7 +70,7 @@ public class RoundwormVinesPlantBlock extends GrowingPlantBodyBlock implements B
                 default -> new ItemStack(Items.FROGSPAWN, 1);
             };
             Block.popResource(level, pos, dropItem);
-            float f = Mth.randomBetween(level.random, 0.8F, 1.2F);
+            float f = Mth.randomBetween(level.getRandom(), 0.8F, 1.2F);
             level.playSound(null, pos, SoundEvents.CAVE_VINES_PICK_BERRIES, SoundSource.BLOCKS, 1.0F, f);
             BlockState blockstate = state.setValue(SEEDS, Boolean.FALSE);
             level.setBlock(pos, blockstate, 2);

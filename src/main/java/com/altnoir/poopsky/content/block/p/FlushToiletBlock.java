@@ -137,7 +137,7 @@ public class FlushToiletBlock extends BaseEntityBlock {
         boolean closed = !state.getValue(CLOSED);
         level.playSound(null, pos,
                 closed ? PoSoundEvents.BLOCK_FLUSH_TOILET_CLOSE.get() : PoSoundEvents.BLOCK_FLUSH_TOILET_OPEN.get(),
-                SoundSource.BLOCKS, 0.5F, level.random.nextFloat() * 0.1F + 0.9F);
+                SoundSource.BLOCKS, 0.5F, level.getRandom().nextFloat() * 0.1F + 0.9F);
         level.setBlock(pos, state.setValue(CLOSED, closed), Block.UPDATE_CLIENTS);
     }
 
@@ -211,7 +211,7 @@ public class FlushToiletBlock extends BaseEntityBlock {
                 }
                 level.playSound(null, pos, SoundEvents.PISTON_EXTEND, SoundSource.BLOCKS, 0.25F, 1.0F);
             }
-            level.playSound(null, pos, powered ? PoSoundEvents.BLOCK_FLUSH_TOILET_CLOSE.get() : PoSoundEvents.BLOCK_FLUSH_TOILET_OPEN.get(), SoundSource.BLOCKS, 0.5F, level.random.nextFloat() * 0.1F + 0.9F);
+            level.playSound(null, pos, powered ? PoSoundEvents.BLOCK_FLUSH_TOILET_CLOSE.get() : PoSoundEvents.BLOCK_FLUSH_TOILET_OPEN.get(), SoundSource.BLOCKS, 0.5F, level.getRandom().nextFloat() * 0.1F + 0.9F);
             level.setBlock(pos, state.setValue(CLOSED, powered), Block.UPDATE_CLIENTS);
         }
     }

@@ -20,7 +20,7 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.minecraft.util.FastColor;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import org.joml.Matrix4f;
@@ -282,7 +282,7 @@ public class IntroScreen extends Screen {
         float top = this.titleLayout.iconY();
         float right = left + ICON_SIZE;
         float bottom = top + ICON_SIZE;
-        int color = FastColor.ARGB32.colorFromFloat(alpha, 1.0F, 1.0F, 1.0F);
+        int color = ARGB.colorFromFloat(alpha, 1.0F, 1.0F, 1.0F);
         Matrix4f matrix = guiGraphics.pose().last().pose();
         BufferBuilder builder = RenderSystem.renderThreadTesselator()
                 .begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
@@ -375,7 +375,7 @@ public class IntroScreen extends Screen {
 
         BufferBuilder builder = RenderSystem.renderThreadTesselator()
                 .begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-        int color = FastColor.ARGB32.colorFromFloat(alpha, 1.0F, 1.0F, 1.0F);
+        int color = ARGB.colorFromFloat(alpha, 1.0F, 1.0F, 1.0F);
         float gravity = 190.0F * shatterTime * shatterTime;
         for (PoopScatter poop : this.poopScatter) {
             float centerX = poop.x() + poop.velocityX() * shatterTime;
@@ -431,7 +431,7 @@ public class IntroScreen extends Screen {
         while (startY > minY) startY -= TILE_SIZE;
 
         Matrix4f matrix = guiGraphics.pose().last().pose();
-        int color = FastColor.ARGB32.colorFromFloat(alpha, red, green, blue);
+        int color = ARGB.colorFromFloat(alpha, red, green, blue);
         RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
         RenderSystem.setShaderTexture(0, SKY_TEXTURE);
         BufferBuilder builder = RenderSystem.renderThreadTesselator()

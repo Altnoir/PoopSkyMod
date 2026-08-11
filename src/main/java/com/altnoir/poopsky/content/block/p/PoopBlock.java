@@ -88,9 +88,9 @@ public class PoopBlock extends Block implements BonemealableBlock {
                 for (int i = 0; i < 5; i++) {
                     serverlevel.sendParticles(
                             ParticleTypes.SPLASH,
-                            (double) pos.getX() + level.random.nextDouble(),
+                            (double) pos.getX() + level.getRandom().nextDouble(),
                             pos.getY() + 1,
-                            (double) pos.getZ() + level.random.nextDouble(),
+                            (double) pos.getZ() + level.getRandom().nextDouble(),
                             1,
                             0.0,
                             0.0,
@@ -171,11 +171,11 @@ public class PoopBlock extends Block implements BonemealableBlock {
 
     private void maybeDoSlideEffects(Level level, Entity entity) {
         if (doesEntityDoPoopBlockSlideEffects(entity)) {
-            if (level.random.nextInt(5) == 0) {
+            if (level.getRandom().nextInt(5) == 0) {
                 entity.playSound(PoSoundEvents.BLOCK_POOP_BLOCK_SLIDE.get(), 1.0F, 1.0F);
             }
 
-            if (!level.isClientSide() && level.random.nextInt(5) == 0) {
+            if (!level.isClientSide() && level.getRandom().nextInt(5) == 0) {
                 ((ServerLevel) level).sendParticles(
                         PoParticles.POOP_PARTICLE.get(),
                         entity.getX(), entity.getY() + 0.1, entity.getZ(),

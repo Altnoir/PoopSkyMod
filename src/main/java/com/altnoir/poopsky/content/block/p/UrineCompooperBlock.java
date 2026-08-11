@@ -92,7 +92,7 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
 
     public static void extractProduce(Entity entity, BlockState state, Level level, BlockPos pos) {
         if (!level.isClientSide()) {
-            var vec3 = Vec3.atLowerCornerWithOffset(pos, 0.5, 1.01, 0.5).offsetRandom(level.random, 0.7F);
+            var vec3 = Vec3.atLowerCornerWithOffset(pos, 0.5, 1.01, 0.5).offsetRandom(level.getRandom(), 0.7F);
             var itementity = new ItemEntity(level, vec3.x(), vec3.y(), vec3.z(), new ItemStack(PoItems.MAGGOTS_SEEDS.get()));
             itementity.setDefaultPickUpDelay();
             level.addFreshEntity(itementity);
@@ -174,7 +174,7 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
         );
         level.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1.0F, 1.0F);
 
-        var vec3 = Vec3.atLowerCornerWithOffset(pos, 0.5, 0.5, 0.5).offsetRandom(level.random, 0.3F);
+        var vec3 = Vec3.atLowerCornerWithOffset(pos, 0.5, 0.5, 0.5).offsetRandom(level.getRandom(), 0.3F);
         var itemEntity = new ItemEntity(level, vec3.x(), vec3.y(), vec3.z(), new ItemStack(PoItems.UREA.get(), 8));
         itemEntity.setDefaultPickUpDelay();
         level.addFreshEntity(itemEntity);

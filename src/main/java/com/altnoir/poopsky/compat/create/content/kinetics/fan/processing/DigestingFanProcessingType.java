@@ -62,21 +62,21 @@ public class DigestingFanProcessingType implements FanProcessingType {
 
     @Override
     public void spawnProcessingParticles(Level level, Vec3 pos) {
-        if (level.random.nextInt(8) != 0)
+        if (level.getRandom().nextInt(8) != 0)
             return;
         Vector3f color = new Color(0x8B6914).asVectorF();
 
         level.addParticle(new DustParticleOptions(color, 1),
-                pos.x + (level.random.nextFloat() - .5f) * .5f,
+                pos.x + (level.getRandom().nextFloat() - .5f) * .5f,
                 pos.y + .5f,
-                pos.z + (level.random.nextFloat() - .5f) * .5f,
+                pos.z + (level.getRandom().nextFloat() - .5f) * .5f,
                 0, 1 / 8f, 0);
 
-        if (level.random.nextInt(4) == 0) {
+        if (level.getRandom().nextInt(4) == 0) {
             level.addParticle(PoParticles.POOP_PARTICLE.get(),
-                    pos.x + (level.random.nextFloat() - .5f) * .5f,
+                    pos.x + (level.getRandom().nextFloat() - .5f) * .5f,
                     pos.y + .5f,
-                    pos.z + (level.random.nextFloat() - .5f) * .5f,
+                    pos.z + (level.getRandom().nextFloat() - .5f) * .5f,
                     0, -0.05, 0);
         }
     }
