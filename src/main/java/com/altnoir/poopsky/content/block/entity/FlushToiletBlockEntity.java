@@ -172,7 +172,7 @@ public class FlushToiletBlockEntity extends BlockEntity implements MenuProvider 
 
     public void setLinkedPos(BlockPos pos, ServerLevel serverLevel) {
         this.linkedPos = pos;
-        this.linkedDim = serverLevel.dimension().location().toString();
+        this.linkedDim = serverLevel.dimension().identifier().toString();
         this.setChanged();
     }
 

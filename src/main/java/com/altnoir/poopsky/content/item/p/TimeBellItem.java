@@ -122,7 +122,7 @@ public class TimeBellItem extends Item {
         if (!Config.unlimitedFreeze) {
             player.addEffect(new MobEffectInstance(PoEffects.MOMENT_OF_PTYME, FREEZE_TICKS, 0, false, false));
         }
-        player.displayClientMessage(Component.translatable("message.poopsky.time_bell.frozen"), true);
+        player.sendOverlayMessage(Component.translatable("message.poopsky.time_bell.frozen"));
     }
 
     static void executeUnfreeze(MinecraftServer server, Player player) {
@@ -143,7 +143,7 @@ public class TimeBellItem extends Item {
 
         broadcastFreezeState(server, false);
         player.level().playSound(null, player, PoSoundEvents.ITEM_TIME_BELL_CLOSE.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
-        player.displayClientMessage(Component.translatable("message.poopsky.time_bell.unfrozen"), true);
+        player.sendOverlayMessage(Component.translatable("message.poopsky.time_bell.unfrozen"));
     }
 
     public static void unfreeze(MinecraftServer server, Player player) {

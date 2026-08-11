@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.client;
 
 import com.altnoir.poopsky.PoopSky;
-import com.github.mcmodderanchor.simplebedrockmodel.v1.event.RegisterBedrockModelEvent;
-import com.github.mcmodderanchor.simplebedrockmodel.v1.resource.RawResourceLoaders;
+import com.github.mcmodderanchor.simplebedrockmodel.v2.event.RegisterBedrockModelEvent;
+import com.github.mcmodderanchor.simplebedrockmodel.v2.resource.RawResourceLoaders;
 import net.minecraft.resources.Identifier;
 
 public final class PoBedrockModelResources {

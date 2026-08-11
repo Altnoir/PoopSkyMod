@@ -76,13 +76,13 @@ public class ToiletLinkerItem extends PoBaseItem {
 
     private ItemStack resetComponent(ItemStack stack, Player player) {
         stack.set(PoComponents.TOILET_COMPONENT.get(), ToiletComponent.EMPTY);
-        player.displayClientMessage(Component.translatable("message.poopsky.toilet_linker.4").withStyle(ChatFormatting.RED), true);
+        player.sendOverlayMessage(Component.translatable("message.poopsky.toilet_linker.4").withStyle(ChatFormatting.RED));
         return stack;
     }
 
     private void executeBindingLogic(ServerLevel level, BlockPos pos, Player player, ItemStack stack) {
         ToiletComponent comp = stack.getOrDefault(PoComponents.TOILET_COMPONENT.get(), ToiletComponent.EMPTY);
-        String dimKey = level.dimension().location().toString();
+        String dimKey = level.dimension().identifier().toString();
         if (comp.level1().isEmpty()) {
             // Bind first endpoint
             stack.set(PoComponents.TOILET_COMPONENT.get(), new ToiletComponent(
@@ -91,7 +91,7 @@ public class ToiletLinkerItem extends PoBaseItem {
                     comp.x2(), comp.y2(), comp.z2()
             ));
             var pitch = level.getRandom().nextFloat() + 0.1F;
-            player.displayClientMessage(Component.translatable("message.poopsky.toilet_linker.1"), true);
+            player.sendOverlayMessage(Component.translatable("message.poopsky.toilet_linker.1"));
             level.playSound(null, pos, PoSoundEvents.ITEM_TOILET_LINKER_BOOP.get(), SoundSource.PLAYERS, 1.0F, pitch);
         } else if (comp.level2().isEmpty()) {
             // Temporarily store second endpoint data
@@ -120,9 +120,9 @@ public class ToiletLinkerItem extends PoBaseItem {
             level2.getChunkSource().addRegionTicket(TicketType.PORTAL, new ChunkPos(pos2), 1, pos2);
             notifyBlockUpdate(level1, pos1);
             notifyBlockUpdate(level2, pos2);
-            player.displayClientMessage(Component.translatable("message.poopsky.toilet_linker.3").withStyle(ChatFormatting.GREEN), true);
+            player.sendOverlayMessage(Component.translatable("message.poopsky.toilet_linker.3").withStyle(ChatFormatting.GREEN));
             stack.set(PoComponents.TOILET_COMPONENT.get(), ToiletComponent.EMPTY);
-            var pitch = level2.random.nextFloat() + 0.3F;
+            var pitch = level2.getRandom().nextFloat() + 0.3F;
             level2.playSound(null, pos2, PoSoundEvents.ITEM_TOILET_LINKER_SUCCESS.get(), SoundSource.BLOCKS, 1.0F, pitch);
         }
     }

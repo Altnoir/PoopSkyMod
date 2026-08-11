@@ -3,7 +3,8 @@ package com.altnoir.poopsky.client.screen;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.client.PoAnimationController;
 import com.altnoir.poopsky.init.PoSoundEvents;
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.platform.DestFactor;
+import com.mojang.blaze3d.platform.SourceFactor;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
@@ -16,7 +17,6 @@ import net.minecraft.client.gui.font.FontSet;
 import net.minecraft.client.gui.font.glyphs.BakedGlyph;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.Music;
@@ -222,7 +222,7 @@ public class PoemScreen extends Screen {
 
     private void renderVignette(GuiGraphicsExtractor guiGraphics) {
         RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.ZERO, GlStateManager.DestFactor.ONE_MINUS_SRC_COLOR);
+        RenderSystem.blendFunc(SourceFactor.ZERO, DestFactor.ONE_MINUS_SRC_COLOR);
         guiGraphics.blit(VIGNETTE_LOCATION, 0, 0, 0, 0.0F, 0.0F, this.width, this.height, this.width, this.height);
         RenderSystem.disableBlend();
         RenderSystem.defaultBlendFunc();

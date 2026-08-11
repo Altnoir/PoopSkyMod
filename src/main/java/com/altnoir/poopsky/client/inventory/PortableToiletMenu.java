@@ -95,7 +95,7 @@ public class PortableToiletMenu extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player player) {
         return this.access.evaluate(
-                (level, pos) -> level.getBlockState(pos).getBlock() instanceof PortableToiletBlock && player.canInteractWithBlock(pos, 4.0),
+                (level, pos) -> level.getBlockState(pos).getBlock() instanceof PortableToiletBlock && player.isWithinBlockInteractionRange(pos, 4.0),
                 true
         );
     }

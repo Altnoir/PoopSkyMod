@@ -46,7 +46,7 @@ public class ToiletHighlightRenderer {
             return;
         }
 
-        String currentDim = player.level().dimension().location().toString();
+        String currentDim = player.level().dimension().identifier().toString();
         if (!currentDim.equals(comp.level1())) {
             return;
         }

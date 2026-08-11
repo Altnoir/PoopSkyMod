@@ -160,7 +160,7 @@ public class PoItemGroups {
     private static void addPotions(HolderLookup<Potion> potions, Item item, FeatureFlagSet requiredFeatures) {
         potions.listElements()
                 .filter(reference -> reference.value().isEnabled(requiredFeatures))
-                .filter(reference -> reference.key().location().getNamespace().equals(PoopSky.MOD_ID))
+                .filter(reference -> reference.key().identifier().getNamespace().equals(PoopSky.MOD_ID))
                 .map(reference -> PotionContents.createItemStack(item, reference))
                 .forEach(TS_POTIONS::add);
     }

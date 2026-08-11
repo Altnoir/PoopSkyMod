@@ -57,7 +57,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
                             location -> List.of(ResourceKey.create(Registries.STRUCTURE_SET, location))
                     ),
                     keys -> keys.size() == 1
-                            ? Either.right(keys.getFirst().location())
+                            ? Either.right(keys.getFirst().identifier())
                             : Either.left(keys.stream().map(ResourceKey::location).toList())
             );
 
@@ -122,7 +122,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
                     .collect(Collectors.toUnmodifiableSet());
 
             return holder.unwrapKey()
-                    .map(key -> allowedLocations.contains(key.location()))
+                    .map(key -> allowedLocations.contains(key.identifier()))
                     .orElse(false)
                     || holder.value().structures().stream()
                     .map(StructureSelectionEntry::structure)
@@ -299,7 +299,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
 
         Holder<Structure> poopIsland = structures.stream()
                 .filter(structure -> structure.unwrapKey()
-                        .map(key -> key.location().equals(PoopSky.loc("poop_island")))
+                        .map(key -> key.identifier().equals(PoopSky.loc("poop_island")))
                         .orElse(false))
                 .findFirst()
                 .orElse(null);

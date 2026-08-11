@@ -111,8 +111,8 @@ public class ItemModelGen extends RegistrateItemModelProvider {
             };
 
             String armorItemPath = name(itemDeferredItem);
-            String trimPath = "trims/items/" + armorType + "_trim_" + trimMaterial.location().getPath();
-            String currentTrimName = armorItemPath + "_" + trimMaterial.location().getPath() + "_trim";
+            String trimPath = "trims/items/" + armorType + "_trim_" + trimMaterial.identifier().getPath();
+            String currentTrimName = armorItemPath + "_" + trimMaterial.identifier().getPath() + "_trim";
             Identifier trimResLoc = Identifier.parse(trimPath); // minecraft namespace
             Identifier trimNameResLoc = modLoc(currentTrimName);
 

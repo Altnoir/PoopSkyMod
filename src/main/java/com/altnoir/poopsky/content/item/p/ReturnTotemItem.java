@@ -42,13 +42,13 @@ public class ReturnTotemItem extends Item {
 
         BlockPos respawn = serverPlayer.getRespawnPosition();
         if (respawn == null || !(targetLevel.getBlockState(respawn).getBlock() instanceof PortableToiletBlock)) {
-            player.displayClientMessage(Component.translatable("message.poopsky.return_totem.not_bound"), true);
+            player.sendOverlayMessage(Component.translatable("message.poopsky.return_totem.not_bound"));
             return InteractionResultHolder.pass(stack);
         }
 
         Optional<ServerPlayer.RespawnPosAngle> respawnInfo = targetLevel.getBlockState(respawn).getRespawnPosition(EntityType.PLAYER, targetLevel, respawn, serverPlayer.getRespawnAngle());
         if (respawnInfo.isEmpty()) {
-            player.displayClientMessage(Component.translatable("message.poopsky.return_totem.obstructed"), true);
+            player.sendOverlayMessage(Component.translatable("message.poopsky.return_totem.obstructed"));
             return InteractionResultHolder.pass(stack);
         }
 
@@ -64,14 +64,7 @@ public class ReturnTotemItem extends Item {
 
         serverPlayer.setForcedPose(Pose.SWIMMING);
         serverPlayer.setPose(Pose.SWIMMING);
-        serverPlayer.teleportTo(
-                targetLevel,
-                destination.x,
-                destination.y - 0.6,
-                destination.z,
-                yaw,
-                0.0F
-        );
+        serverPlayer.teleportTo(destination.x, destination.y - 0.6, destination.z);
         serverPlayer.setForcedPose(null);
         serverPlayer.resetFallDistance();
         targetLevel.playSound(

@@ -26,7 +26,7 @@ public class PoPainting {
 
     private static void register(BootstrapContext<PaintingVariant> context, ResourceKey<PaintingVariant> key, int width, int height) {
         PAINTING_VARIANTS.add(key);
-        context.register(key, new PaintingVariant(width, height, key.location()));
+        context.register(key, new PaintingVariant(width, height, key.identifier()));
     }
 
     private static ResourceKey<PaintingVariant> create(String name) {

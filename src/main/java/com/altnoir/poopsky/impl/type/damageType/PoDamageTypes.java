@@ -23,7 +23,7 @@ public class PoDamageTypes {
 
     public static void bootstrap(BootstrapContext<DamageType> context) {
         for (var key : KEYS) {
-            context.register(key, new DamageType(key.location().getPath(), 0.1F));
+            context.register(key, new DamageType(key.identifier().getPath(), 0.1F));
         }
     }
 }
