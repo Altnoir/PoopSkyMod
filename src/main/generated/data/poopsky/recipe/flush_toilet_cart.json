@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "T": {
+      "item": "poopsky:flush_toilet"
+    }
+  },
+  "pattern": [
+    "ITI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "poopsky:flush_toilet_cart"
+  }
+}

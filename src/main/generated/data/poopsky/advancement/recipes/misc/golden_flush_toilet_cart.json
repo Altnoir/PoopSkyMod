@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "golden_flush_toilet": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:golden_flush_toilet"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:golden_flush_toilet_cart"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "golden_flush_toilet"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "poopsky:golden_flush_toilet_cart"
+    ]
+  }
+}

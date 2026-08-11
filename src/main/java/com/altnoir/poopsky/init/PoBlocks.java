@@ -16,11 +16,13 @@ import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ColorRGBA;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
@@ -76,6 +78,8 @@ public class PoBlocks {
 
     private static final EnumMap<BlockTab, Set<BlockEntry<? extends Block>>> TAB_ITEMS = new EnumMap<>(BlockTab.class);
 
+    private static final BlockBehaviour.StateArgumentPredicate<EntityType<?>> ALWAYS_SPAWNABLE = Blocks::always;
+
     public static final BlockEntry<ShitBlock> SHIT = registerShitBlock("shit");
     public static final BlockEntry<ShitBlock> CHILI_SHIT = registerShitBlock("chili_shit");
     public static final BlockEntry<ShitBlock> GOLDEN_SHIT = registerShitBlock("golden_shit");
@@ -90,7 +94,7 @@ public class PoBlocks {
             props -> new PoopBlock(poopProperties()
                     .randomTicks()
                     .speedFactor(0.4F)
-                    .isValidSpawn(Blocks::always)
+                    .isValidSpawn(ALWAYS_SPAWNABLE)
                     .isRedstoneConductor(PoBlocks::always)
                     .isSuffocating(PoBlocks::always)
                     .instrument(NoteBlockInstrument.COW_BELL)));
@@ -106,7 +110,7 @@ public class PoBlocks {
             props -> new PoolimeMaggotsBlock(poopProperties(1.0F)
                     .randomTicks()
                     .speedFactor(0.4F)
-                    .isValidSpawn(Blocks::always)
+                    .isValidSpawn(ALWAYS_SPAWNABLE)
                     .instrument(NoteBlockInstrument.COW_BELL)));
     public static final BlockEntry<PoolimeBlock> POOLIME_BLOCK = registerBlock("poolime_block", 88,
             props -> new PoolimeBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN)
@@ -189,7 +193,7 @@ public class PoBlocks {
             props -> new ChiliPoopBlock(poopProperties()
                     .requiresCorrectToolForDrops()
                     .speedFactor(0.4F)
-                    .isValidSpawn(Blocks::always)
+                    .isValidSpawn(ALWAYS_SPAWNABLE)
                     .isRedstoneConductor(PoBlocks::always)
                     .isSuffocating(PoBlocks::always)
                     .instrument(NoteBlockInstrument.COW_BELL)));
@@ -202,7 +206,7 @@ public class PoBlocks {
             props -> new GoldenPoopBlock(simpleProperties(MapColor.GOLD, 0.65F, SoundType.MUD)
                     .requiresCorrectToolForDrops()
                     .speedFactor(0.4F)
-                    .isValidSpawn(Blocks::always)
+                    .isValidSpawn(ALWAYS_SPAWNABLE)
                     .isRedstoneConductor(PoBlocks::always)
                     .isSuffocating(PoBlocks::always)
                     .instrument(NoteBlockInstrument.BELL)));
@@ -248,7 +252,7 @@ public class PoBlocks {
     public static final BlockEntry<Block> RAW_POOP_BLOCK = registerBlock("raw_poop_block", 88,
             props -> new Block(simpleProperties(MapColor.COLOR_BROWN, 0.65F, SoundType.MUD)
                     .randomTicks()
-                    .isValidSpawn(Blocks::always)
+                    .isValidSpawn(ALWAYS_SPAWNABLE)
                     .instrument(NoteBlockInstrument.COW_BELL)));
     public static final BlockEntry<RawSaplingBlock> RAW_SAPLING_POOP_BLOCK = registerBlock("raw_sapling_poop_block", 88,
             props -> new RawSaplingBlock(BlockBehaviour.Properties.ofFullCopy(RAW_POOP_BLOCK.get()).sound(SoundType.ROOTED_DIRT)));
@@ -777,19 +781,29 @@ public class PoBlocks {
         return registerBlockWithItem(name, 88, factory, loot, ToiletBlockItem::new, BlockTab.BASIC_BLOCKS);
     }
 
+    private static BlockBehaviour.Properties familyProperties(Block base) {
+        return BlockBehaviour.Properties.ofFullCopy(base)
+                .isValidSpawn(PoBlocks::defaultSpawnable);
+    }
+
+    private static boolean defaultSpawnable(BlockState state, BlockGetter level, BlockPos pos, EntityType<?> entityType) {
+        return state.isFaceSturdy(level, pos, Direction.UP)
+                && state.getLightEmission() < 14;
+    }
+
     private static BlockFamily registerBlockFamily(String name, BlockEntry<? extends Block> base, boolean defaultBlockItem) {
         int stackSize = defaultBlockItem ? 64 : 88;
         return new BlockFamily(
                 base,
                 registerDecoMaterialBlock(name + "_stairs", stackSize,
-                        props -> new StairBlock(base.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(base.get()))),
+                        props -> new StairBlock(base.get().defaultBlockState(), familyProperties(base.get()))),
                 registerDecoMaterialBlock(name + "_slab", stackSize,
-                        props -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(base.get())),
+                        props -> new SlabBlock(familyProperties(base.get())),
                         (loot, block) -> loot.add(block, loot.createSlabItemTable(block))),
                 registerDecoMaterialBlock(name + "_vertical_slab", stackSize,
-                        props -> new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(base.get())), PoBlocks::createVerticalSlabDrops),
+                        props -> new VerticalSlabBlock(familyProperties(base.get())), PoBlocks::createVerticalSlabDrops),
                 registerDecoMaterialBlock(name + "_wall", stackSize,
-                        props -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(base.get())))
+                        props -> new WallBlock(familyProperties(base.get())))
         );
     }
 
@@ -798,14 +812,14 @@ public class PoBlocks {
         return new BlockFamily(
                 base,
                 registerTileBlock(name + "_stairs", stackSize,
-                        props -> new StairBlock(base.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(base.get()))),
+                        props -> new StairBlock(base.get().defaultBlockState(), familyProperties(base.get()))),
                 registerTileBlock(name + "_slab", stackSize,
-                        props -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(base.get())),
+                        props -> new SlabBlock(familyProperties(base.get())),
                         (loot, block) -> loot.add(block, loot.createSlabItemTable(block))),
                 registerTileBlock(name + "_vertical_slab", stackSize,
-                        props -> new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(base.get())), PoBlocks::createVerticalSlabDrops),
+                        props -> new VerticalSlabBlock(familyProperties(base.get())), PoBlocks::createVerticalSlabDrops),
                 registerTileBlock(name + "_wall", stackSize,
-                        props -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(base.get())))
+                        props -> new WallBlock(familyProperties(base.get())))
         );
     }
 

@@ -202,8 +202,6 @@ public class ToiletUtil {
                 poopTimeSetter.accept(gameTime);
                 return;
             }
-            player.awardStat(PoStats.POOP_STATS.get(), 3);
-            player.causeFoodExhaustion(hasIncontinence ? 0.2F : 4.0F);
         }
 
         Item poopItem;
@@ -214,8 +212,17 @@ public class ToiletUtil {
         } else {
             poopItem = PoBlocks.SHIT.get().asItem();
         }
-        if (!insertOrReplaceContainer(level, pos, new ItemStack(poopItem))) return;
+        if (!insertOrReplaceContainer(level, pos, new ItemStack(poopItem))) {
+            if (!hasIncontinence) {
+                poopTimeSetter.accept(gameTime);
+            }
+            return;
+        }
 
+        if (entity instanceof Player player) {
+            player.awardStat(PoStats.POOP_STATS.get(), 3);
+            player.causeFoodExhaustion(hasIncontinence ? 0.2F : 4.0F);
+        }
         poopTimeSetter.accept(gameTime);
 
         float yOffset = entity instanceof Player ? 0.55F : 0.05F;

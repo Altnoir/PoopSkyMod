@@ -13,7 +13,8 @@ import net.minecraft.world.entity.MobCategory;
 public class PoEntityType {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
-    public static final EntityEntry<ToiletPlugEntity> TOILET_PLUG = REGISTRATE.entity("toilet_plug", ToiletPlugEntity::new, MobCategory.MISC)
+    public static final EntityEntry<ToiletPlugEntity> TOILET_PLUG = REGISTRATE
+            .entity("toilet_plug", ToiletPlugEntity::new, MobCategory.MISC)
             .properties(properties -> properties
                     .fireImmune()
                     .clientTrackingRange(10)
@@ -22,7 +23,8 @@ public class PoEntityType {
             .setData(ProviderType.LANG, NonNullBiConsumer.noop())
             .register();
 
-    public static final EntityEntry<PoolimeEntity> POOLIME = REGISTRATE.entity("poolime", PoolimeEntity::new, MobCategory.MONSTER)
+    public static final EntityEntry<PoolimeEntity> POOLIME = REGISTRATE
+            .entity("poolime", PoolimeEntity::new, MobCategory.MONSTER)
             .properties(properties -> properties
                     .sized(0.52F, 0.52F)
                     .eyeHeight(0.325F)
@@ -33,7 +35,8 @@ public class PoEntityType {
             .attributes(PoolimeEntity::createAttributes)
             .register();
 
-    public static final EntityEntry<FlyEntity> FLY = REGISTRATE.entity("fly", FlyEntity::new, MobCategory.CREATURE)
+    public static final EntityEntry<FlyEntity> FLY = REGISTRATE
+            .entity("fly", FlyEntity::new, MobCategory.CREATURE)
             .properties(properties -> properties
                     .sized(0.5F, 0.6F)
                     .eyeHeight(0.3F)
@@ -43,14 +46,16 @@ public class PoEntityType {
             .attributes(FlyEntity::createAttributes)
             .register();
 
-    public static final EntityEntry<ChairEntity> STOOL = REGISTRATE.entity("stool_entity", ChairEntity::new, MobCategory.MISC)
+    public static final EntityEntry<ChairEntity> STOOL = REGISTRATE
+            .entity("stool_entity", ChairEntity::new, MobCategory.MISC)
             .properties(properties -> properties
                     .sized(0.5F, 0.5F))
             .renderer(() -> ChairRenderer::new)
             .setData(ProviderType.LANG, NonNullBiConsumer.noop())
             .register();
 
-    public static final EntityEntry<FlushToiletEntity> FLUSH_TOILET = REGISTRATE.entity("flush_toilet_entity", FlushToiletEntity::new, MobCategory.MISC)
+    public static final EntityEntry<FlushToiletEntity> FLUSH_TOILET = REGISTRATE
+            .entity("flush_toilet_entity", FlushToiletEntity::new, MobCategory.MISC)
             .properties(properties -> properties
                     .sized(0.5F, 0.5F))
             .renderer(() -> FlushToiletRenderer::new)
@@ -77,7 +82,8 @@ public class PoEntityType {
             .register();
 
 
-    public static final EntityEntry<PoopTntEntity> POOP_TNT = REGISTRATE.<PoopTntEntity>entity("poop_tnt", PoopTntEntity::new, MobCategory.MISC)
+    public static final EntityEntry<PoopTntEntity> POOP_TNT = REGISTRATE
+            .<PoopTntEntity>entity("poop_tnt", PoopTntEntity::new, MobCategory.MISC)
             .properties(properties -> properties
                     .sized(0.75F, 0.75F)
                     .eyeHeight(0.15F)
