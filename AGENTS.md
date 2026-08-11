@@ -5,11 +5,10 @@
 - **模组名称**: PoopSky
 - **Mod ID**: `poopsky`
 - **包名**: `com.altnoir.poopsky`
-- **Minecraft 版本**: 1.21.1
-- **模组加载器**: NeoForge `21.1.235`
-- **Java 版本**: 21
-- **映射**: Parchment `2024.11.17` (Mojang 映射 + 社区参数名)
-- **构建工具**: Gradle + NeoGradle (moddev `2.0.141`)
+- **Minecraft 版本**: 26.1.2
+- **模组加载器**: NeoForge `26.1.2.94`
+- **Java 版本**: 25
+- **构建工具**: Gradle + NeoGradle
 - **许可证**: MIT
 - **作者**: Altnoir, lonelyicer, Wulian233
 
@@ -38,7 +37,7 @@ PoopSkyMod/
     │   ├── init/                        # PoBlocks、PoItems、PoEntityType 等注册类
     │   ├── content/                     # 方块、物品、实体、配方、村民等玩法
     │   ├── client/                      # 菜单屏幕、模型、粒子、渲染、循环音效
-    │   ├── compat/                      # Create、JEI、车万女仆兼容
+    │   ├── compat/                      # Create、JEI兼容
     │   ├── impl/                        # 事件、网络、datagen、标签、工具与 Registrate 扩展
     │   │   ├── network/                 # CustomPacketPayload 与 PoNetworking
     │   │   ├── registrate/              # PoRegistrate 及各类 Datagen provider
@@ -67,13 +66,10 @@ PoopSkyMod/
 
 ## 依赖模组
 
-| 模组                | 版本                 | 用途                         |
-|---------------------|----------------------|------------------------------|
-| **Create**          | `6.0.8-168`          | 机械动力联动（风扇消解配方） |
-| **JEI**             | `19.27.0.340`        | 配方查看                     |
-| **Sable Companion** | `1.6.0`              | 辅助库                       |
-| **KubeJS**          | `2101.7.2-build.295` | 脚本扩展                     |
-| **车万女仆**        | -                    | 女仆AI联动                   |
+| 模组                | 版本            | 用途                         |
+|---------------------|-----------------|------------------------------|
+| **Create**          | `15.0.0-beta.2` | 机械动力联动（风扇消解配方） |
+| **JEI**             | `29.12.0.40`    | 配方查看                     |
 
 ## 注册模式 (PoRegistrate + DeferredRegister)
 
@@ -498,7 +494,7 @@ if (ModList.get().isLoaded(PoMods.CREATE.id())) {
 
 ### 13. BlockBehaviour.Properties 中的方块行为（非 Block 重写）
 
-1.21.1 中许多方块行为**不是** `Block` 类的可重写方法，而是在 `BlockBehaviour.Properties` 中设置的。不要尝试在 `Block` 子类中 `@Override` 这些方法，它们不存在：
+26.1.2 中许多方块行为**不是** `Block` 类的可重写方法，而是在 `BlockBehaviour.Properties` 中设置的。不要尝试在 `Block` 子类中 `@Override` 这些方法，它们不存在：
 
 | 属性     | Properties 方法                        | 说明                                              |
 |----------|----------------------------------------|---------------------------------------------------|

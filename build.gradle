@@ -6,7 +6,7 @@ plugins {
     id 'idea'
     id 'java-library'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.141'
+    id 'net.neoforged.moddev' version '2.0.143'
 }
 
 tasks.named('wrapper', Wrapper).configure {
@@ -30,18 +30,10 @@ base {
     archivesName = mod_id
 }
 
-// Mojang ships Java 21 to end users starting in 1.20.5, so mods should target Java 21.
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+java.toolchain.languageVersion = JavaLanguageVersion.of(25)
 
 neoForge {
-    // Specify the version of NeoForge to use.
     version = project.neo_version
-
-    parchment {
-        mappingsVersion = project.parchment_mappings_version
-        minecraftVersion = project.parchment_minecraft_version
-    }
-
 
     runs {
         client {
@@ -62,12 +54,16 @@ neoForge {
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 
-        data {
-            data()
+        clientData {
+            type = "clientData"
             programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
         }
 
-        // applies to all the run configs above
+        serverData {
+            type = "serverData"
+            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+        }
+
         configureEach {
             systemProperty 'forge.logging.markers', 'REGISTRIES'
             logLevel = org.slf4j.event.Level.DEBUG
@@ -144,7 +140,11 @@ def generateLang = tasks.register('generateLang') {
     }
 }
 
-tasks.named('runData').configure {
+tasks.named('runClientData').configure {
+    dependsOn generateLang
+}
+
+tasks.named('runServerData').configure {
     dependsOn generateLang
 }
 
@@ -161,35 +161,15 @@ dependencies {
     compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
     compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
     localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
-    // Touhou Little Maid
-    implementation "curse.maven:touhou-little-maid-355044:7307724"
-    compileOnly files("libs/touhou_little_mad-0.1.2-alpha.jar")
     // Create
     implementation("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
     implementation("net.createmod.ponder:Ponder-NeoForge-${minecraft_version}:${ponder_version}")
     compileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-${minecraft_version}:${flywheel_version}")
     runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-${minecraft_version}:${flywheel_version}")
     implementation jarJar("com.tterrag.registrate:Registrate:${registrate_version}")
-    // Simple Bedrock Model
-    implementation jarJar("com.github.mcmodderanchor:simplebedrockmodel:$sbm_version-neoforge-mc1.21.1") {
-        version {
-            prefer "$sbm_version"
-        }
-    }
-    compileOnly("com.maydaymemory:mae:$mae_version") {
-        exclude group: 'com.google.code.gson', module: 'gson'
-        exclude group: 'com.google.code.findbugs', module: 'jsr305'
-        exclude group: 'it.unimi.dsi', module: 'fastutil'
-        exclude group: 'org.joml', module: 'joml'
-    }
-
-    // Farmers Delight
-    compileOnly("curse.maven:farmers-delight-398521:${farmersdelight_version}")
-    localRuntime("curse.maven:farmers-delight-398521:${farmersdelight_version}")
+    implementation(files("libs/simplebedrockmodel-2.5.0-neoforge-mc26.1.jar"))
 }
 
-// This block of code expands all declared replace properties in the specified resource targets.
-// A missing property will result in an error. Properties are expanded using ${} Groovy notation.
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
     var replaceProperties = [
             minecraft_version      : minecraft_version,

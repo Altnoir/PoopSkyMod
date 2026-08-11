@@ -22,7 +22,7 @@ A Minecraft mod that introduces many new Poop and items.
 
 ## Build
 
-1. Use [IntelliJ IDEA](https://www.jetbrains.com/idea/) & [JDK 21](https://adoptium.net/temurin/releases/?os=any&version=21)
+1. Use [IntelliJ IDEA](https://www.jetbrains.com/idea/) & [JDK 25](https://adoptium.net/temurin/releases/?os=any&version=25)
 2. Run `gradlew runData`
 3. Run `gradlew runClient`
 
