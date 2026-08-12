@@ -9,11 +9,15 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.entity.npc.villager.VillagerProfession;
+import net.minecraft.world.item.trading.TradeSet;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Set;
@@ -64,12 +68,21 @@ public class PoVillagers {
             String name, ResourceKey<PoiType> poiKey,
             RegistryEntry<SoundEvent, SoundEvent> workSound) {
         return REGISTRATE.simple(name, Registries.VILLAGER_PROFESSION,
-                () -> new VillagerProfession(name,
+                () -> new VillagerProfession(Component.translatable("entity." + PoopSky.MOD_ID + ".villager." + name),
                         holder -> holder.is(poiKey),
                         poiTypeHolder -> poiTypeHolder.is(poiKey),
                         ImmutableSet.of(),
                         ImmutableSet.of(),
-                        workSound.get()));
+                        workSound.get(),
+                        tradeSets(name)));
+    }
+
+    private static Int2ObjectMap<ResourceKey<TradeSet>> tradeSets(String profession) {
+        Int2ObjectMap<ResourceKey<TradeSet>> result = new Int2ObjectOpenHashMap<>();
+        for (int level = 1; level <= 5; level++) {
+            result.put(level, ResourceKey.create(Registries.TRADE_SET, PoopSky.loc(profession + "/level_" + level)));
+        }
+        return result;
     }
 
     private static ResourceKey<PoiType> registryPoiKey(String name) {

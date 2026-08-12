@@ -8,6 +8,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
+import net.neoforged.neoforge.resource.ListenerKey;
 
 import java.util.Map;
 
@@ -15,6 +16,7 @@ public class ToiletTypeManager extends SimpleJsonResourceReloadListener {
     private static final Gson GSON = new GsonBuilder().create();
 
     public static final ToiletTypeManager INSTANCE = new ToiletTypeManager();
+    public static final ListenerKey<ToiletTypeManager> LISTENER_KEY = ListenerKey.create(PoopSky.loc("toilet_types"));
 
     public ToiletTypeManager() {
         super(GSON, "poopsky_data/toilet_type");
@@ -24,7 +26,7 @@ public class ToiletTypeManager extends SimpleJsonResourceReloadListener {
     protected void apply(Map<Identifier, JsonElement> resources, ResourceManager resourceManager, ProfilerFiller profiler) {
         int count = 0;
         for (var entry : resources.entrySet()) {
-            String id = entry.getKey().getPath(); // e.g. "stone"
+            String id = entry.getKey().getPath();
             JsonElement json = entry.getValue();
             try {
                 ToiletType.parseAndRegister(id, json);

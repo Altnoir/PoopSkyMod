@@ -3,55 +3,47 @@ package com.altnoir.poopsky.client.renderer;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.entity.model.ToiletPlugModel;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.texture.OverlayTexture;
+import com.mojang.serialization.MapCodec;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.special.NoDataSpecialModelRenderer;
+import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.ItemDisplayContext;
-import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3fc;
 
-public class ToiletPlugItemRenderer extends BlockEntityWithoutLevelRenderer {
-    private ToiletPlugModel<?> plugModel;
+import java.util.function.Consumer;
+
+public class ToiletPlugItemRenderer implements NoDataSpecialModelRenderer {
     private static final Identifier TEXTURE = PoopSky.loc("textures/entity/toilet_plug.png");
-    private static final float HAND_Y = 4.0F / 16.0F + 0.5F;
-    private static final float HAND_Z = 8.0F / 16.0F - 1.0F;
-    private static final float PIVOT_Y = -3.0F / 16.0F;
+    private final ModelPart plug;
 
-    public ToiletPlugItemRenderer() {
-        super(null, null);
+    public ToiletPlugItemRenderer(ModelPart root) {
+        this.plug = root.getChild("toilet_plug");
     }
 
     @Override
-    public void renderByItem(@NotNull ItemStack stack, @NotNull ItemDisplayContext displayContext,
-                             @NotNull PoseStack poseStack, @NotNull MultiBufferSource bufferSource,
-                             int packedLight, int packedOverlay) {
-        if (plugModel == null) {
-            var entityModels = Minecraft.getInstance().getEntityModels();
-            plugModel = new ToiletPlugModel<>(entityModels.bakeLayer(ToiletPlugModel.LAYER_LOCATION));
-        }
-
-        poseStack.pushPose();
-        applyDisplayTransform(displayContext, poseStack);
-
-        VertexConsumer vertexConsumer = bufferSource.getBuffer(plugModel.renderType(TEXTURE));
-        plugModel.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY);
-
-        poseStack.popPose();
+    public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int lightCoords,
+                       int overlayCoords, boolean hasFoil, int outlineColor) {
+        submitNodeCollector.submitModelPart(plug, poseStack, RenderTypes.entityCutout(TEXTURE), lightCoords, overlayCoords, null, false, hasFoil, -1, null, outlineColor);
     }
 
-    private void applyDisplayTransform(ItemDisplayContext ctx, PoseStack poseStack) {
-        switch (ctx) {
-            case THIRD_PERSON_RIGHT_HAND, THIRD_PERSON_LEFT_HAND, HEAD,
-                 FIRST_PERSON_RIGHT_HAND, FIRST_PERSON_LEFT_HAND -> {
-                poseStack.translate(0.5F, HAND_Y, HAND_Z);
-                poseStack.mulPose(Axis.XP.rotationDegrees(90));
-                poseStack.translate(0.0F, PIVOT_Y, 0.0F);
-            }
-            default -> poseStack.translate(0.5F, 0.5F, 0.5F);
+    @Override
+    public void getExtents(Consumer<Vector3fc> output) {
+        plug.getExtentsForGui(new PoseStack(), output);
+    }
+
+    public record Unbaked() implements NoDataSpecialModelRenderer.Unbaked {
+        public static final MapCodec<Unbaked> MAP_CODEC = MapCodec.unit(new Unbaked());
+
+        @Override
+        public ToiletPlugItemRenderer bake(SpecialModelRenderer.BakingContext context) {
+            return new ToiletPlugItemRenderer(context.entityModelSet().bakeLayer(ToiletPlugModel.LAYER_LOCATION));
+        }
+
+        @Override
+        public MapCodec<Unbaked> type() {
+            return MAP_CODEC;
         }
     }
 }

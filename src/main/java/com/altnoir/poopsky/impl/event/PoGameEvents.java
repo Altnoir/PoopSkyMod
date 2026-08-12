@@ -12,7 +12,6 @@ import com.altnoir.poopsky.content.block.p.PortableToiletBlock;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.content.item.p.TimeBellItem;
 import com.altnoir.poopsky.content.villager.PVillagerBehaviors;
-import com.altnoir.poopsky.content.villager.PVillagerTrades;
 import com.altnoir.poopsky.impl.PoAnimationSavedData;
 import com.altnoir.poopsky.impl.command.PoCommands;
 import com.altnoir.poopsky.impl.network.PoAnimation;
@@ -52,6 +51,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
+import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
@@ -70,7 +71,6 @@ public class PoGameEvents {
         gameEventBus.addListener(PoGameEvents::onRightClickBlock);
         gameEventBus.addListener(PoGameEvents::onRightClickItem);
         gameEventBus.addListener(PoGameEvents::onBrewingRecipeRegistry);
-        gameEventBus.addListener(PoGameEvents::onVillagerTrades);
         gameEventBus.addListener(PoGameEvents::onEntityDismount);
         gameEventBus.addListener(PoGameEvents::onMobEffectApplicable);
         gameEventBus.addListener(PoGameEvents::onAddReloadListener);
@@ -81,6 +81,7 @@ public class PoGameEvents {
         gameEventBus.addListener(PoGameEvents::onPlayerLoggedOut);
         gameEventBus.addListener(PoGameEvents::onPlayerRespawn);
         gameEventBus.addListener(PoGameEvents::onServerTick);
+        gameEventBus.addListener(PoGameEvents::onDatapackSync);
         gameEventBus.addListener(PoCommands::register);
     }
 
@@ -163,10 +164,6 @@ public class PoGameEvents {
         builder.addMix(PoPotions.ON_THE_VGE_POTION, Items.GLOWSTONE_DUST, PoPotions.STRONG_ON_THE_VGE_POTION);
     }
 
-    public static void onVillagerTrades(VillagerTradesEvent event) {
-        PVillagerTrades.registerTrades(event.getType(), event.getTrades());
-    }
-
     public static void onEntityDismount(EntityMountEvent event) {
         if (event.isDismounting() && event.getEntityBeingMounted() instanceof ToiletPlugEntity &&
                 event.getEntity() instanceof Player player && player.isShiftKeyDown()) {
@@ -193,9 +190,9 @@ public class PoGameEvents {
             MobEffects.NAUSEA
     );
 
-    public static void onAddReloadListener(AddReloadListenerEvent event) {
-        event.addListener(FlyTypeManager.INSTANCE);
-        event.addListener(ToiletTypeManager.INSTANCE);
+    public static void onAddReloadListener(AddServerReloadListenersEvent event) {
+        event.addRetainedListener(FlyTypeManager.LISTENER_KEY, FlyTypeManager.INSTANCE);
+        event.addRetainedListener(ToiletTypeManager.LISTENER_KEY, ToiletTypeManager.INSTANCE);
     }
 
     public static void onEntityTick(EntityTickEvent.Pre event) {
@@ -287,5 +284,16 @@ public class PoGameEvents {
     public static void onServerTick(ServerTickEvent.Post event) {
         TimeBellItem.tickPending(event.getServer());
         TimeBellItem.freezeTick(event.getServer());
+    }
+
+    public static void onDatapackSync(OnDatapackSyncEvent event) {
+        event.sendRecipes(
+                PoRecipes.COMPOOPER.type().get(),
+                PoRecipes.SIEVE.type().get(),
+                PoRecipes.POP_EXPLOSION.type().get(),
+                PoRecipes.ANAL_PRESSING.type().get(),
+                PoRecipes.FLY_BARREL.type().get(),
+                PoRecipes.BREEDING_CHEST.type().get()
+        );
     }
 }

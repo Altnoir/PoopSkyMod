@@ -2,27 +2,30 @@ package com.altnoir.poopsky.content;
 
 import com.altnoir.poopsky.PoopSky;
 import com.google.common.collect.ImmutableList;
-import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
+import net.neoforged.neoforge.resource.ListenerKey;
 
 import java.io.Reader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FlyTypeManager extends SimpleJsonResourceReloadListener {
-    private static final Gson GSON = new GsonBuilder().create();
+public class FlyTypeManager extends SimplePreparableReloadListener<Map<Identifier, JsonElement>> {
 
     public static final FlyTypeManager INSTANCE = new FlyTypeManager();
+    public static final ListenerKey<FlyTypeManager> LISTENER_KEY = ListenerKey.create(PoopSky.loc("fly_types"));
 
     private volatile List<String> flyTypes = FlyType.FLY_TYPES;
 
     public FlyTypeManager() {
-        super(GSON, "poopsky_data");
     }
 
     @Override

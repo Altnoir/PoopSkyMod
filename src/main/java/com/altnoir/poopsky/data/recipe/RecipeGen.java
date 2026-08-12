@@ -719,7 +719,6 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
     private void buildSieveRecipes(RecipeOutput recipeOutput) {
         RecipeOutput createLoaded = recipeOutput.withConditions(modLoaded(PoMods.CREATE.id()));
         RecipeOutput createNotLoaded = recipeOutput.withConditions(not(modLoaded(PoMods.CREATE.id())));
-        RecipeOutput fdLoaded = recipeOutput.withConditions(modLoaded(PoMods.FARMERSDELIGHT.id()));
 
         SieveRecipeBuilder.sieve(PoBlocks.POOP_BLOCK, 200)
                 .addOutput(Items.IRON_NUGGET, 8)

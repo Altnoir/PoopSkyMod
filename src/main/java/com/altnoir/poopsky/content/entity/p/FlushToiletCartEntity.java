@@ -25,7 +25,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -345,7 +345,7 @@ public class FlushToiletCartEntity extends VehicleEntity {
         boolean fast = mc.options.keySprint.isDown();
 
         this.setInput(forward, backward, left, right, fast);
-        PacketDistributor.sendToServer(new FlushToiletCartInputPayload(forward, backward, left, right, fast));
+        ClientPacketDistributor.sendToServer(new FlushToiletCartInputPayload(forward, backward, left, right, fast));
     }
 
     private void tickLerp() {

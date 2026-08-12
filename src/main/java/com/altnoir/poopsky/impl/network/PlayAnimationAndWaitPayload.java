@@ -5,7 +5,7 @@ import com.altnoir.poopsky.client.PoAnimationController;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record PlayAnimationAndWaitPayload(PoAnimation animation) implements CustomPacketPayload {
@@ -19,7 +19,7 @@ public record PlayAnimationAndWaitPayload(PoAnimation animation) implements Cust
     public static void handle(PlayAnimationAndWaitPayload payload, IPayloadContext context) {
         context.enqueueWork(() -> PoAnimationController.play(
                 payload.animation(),
-                () -> PacketDistributor.sendToServer(new AnimationFinishedPayload(payload.animation()))
+                () -> ClientPacketDistributor.sendToServer(new AnimationFinishedPayload(payload.animation()))
         ));
     }
 

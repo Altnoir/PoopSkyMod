@@ -10,8 +10,8 @@ import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IJeiHelpers;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
-import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import mezz.jei.api.recipe.types.IRecipeHolderType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
@@ -19,7 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
 public class POPExplosionRecipeCategory implements IRecipeCategory<RecipeHolder<POPExplosionRecipe>> {
-    public static final RecipeType<RecipeHolder<POPExplosionRecipe>> TYPE = RecipeType.createRecipeHolderType(PoopSky.loc("pop_explosion"));
+    public static final IRecipeHolderType<POPExplosionRecipe> TYPE = IRecipeHolderType.create(PoopSky.loc("pop_explosion"));
 
     private static final int WIDTH = 73;
     private static final int HEIGHT = 18;
@@ -48,7 +48,7 @@ public class POPExplosionRecipeCategory implements IRecipeCategory<RecipeHolder<
     }
 
     @Override
-    public RecipeType<RecipeHolder<POPExplosionRecipe>> getRecipeType() {
+    public IRecipeHolderType<POPExplosionRecipe> getRecipeType() {
         return TYPE;
     }
 
@@ -76,9 +76,9 @@ public class POPExplosionRecipeCategory implements IRecipeCategory<RecipeHolder<
     public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<POPExplosionRecipe> recipeHolder, IFocusGroup focuses) {
         var recipe = recipeHolder.value();
         builder.addSlot(RecipeIngredientRole.INPUT, INPUT_X, INPUT_Y)
-                .addIngredients(recipe.input());
+                .add(recipe.input());
         builder.addSlot(RecipeIngredientRole.OUTPUT, OUTPUT_X, OUTPUT_Y)
-                .addItemStack(recipe.output().toItemStack());
+                .add(recipe.output().toItemStack());
     }
 
     @Override

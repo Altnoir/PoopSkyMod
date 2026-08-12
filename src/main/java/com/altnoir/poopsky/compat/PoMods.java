@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.compat;
 
 import net.minecraft.resources.Identifier;
-import net.neoforged.fml.loading.LoadingModList;
+import net.neoforged.fml.loading.FMLLoader;
 
 import java.util.Locale;
 
@@ -9,10 +9,8 @@ public enum PoMods {
     SABLE,
     JEI,
     CREATE,
-    FARMERSDELIGHT,
     SKYBLOCKBUILDER,
     MODERNUI,
-    TOUHOU_LITTLE_MAID,
     AE2,
     MEKANISM;
 
@@ -21,7 +19,7 @@ public enum PoMods {
 
     PoMods() {
         id = name().toLowerCase(Locale.ROOT);
-        isLoaded = LoadingModList.get().getModFileById(id) != null;
+        isLoaded = FMLLoader.getCurrent().getLoadingModList().getModFileById(id) != null;
     }
 
     public String id() {

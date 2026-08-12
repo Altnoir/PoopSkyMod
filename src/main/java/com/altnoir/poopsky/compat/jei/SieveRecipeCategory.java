@@ -9,8 +9,8 @@ import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IJeiHelpers;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
-import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import mezz.jei.api.recipe.types.IRecipeHolderType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
@@ -18,7 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
 public class SieveRecipeCategory implements IRecipeCategory<RecipeHolder<SieveRecipe>> {
-    public static final RecipeType<RecipeHolder<SieveRecipe>> TYPE = RecipeType.createRecipeHolderType(PoopSky.loc("sieve"));
+    public static final IRecipeHolderType<SieveRecipe> TYPE = IRecipeHolderType.create(PoopSky.loc("sieve"));
 
     private static final int WIDTH = 145;
     private static final int HEIGHT = 36;
@@ -46,7 +46,7 @@ public class SieveRecipeCategory implements IRecipeCategory<RecipeHolder<SieveRe
     }
 
     @Override
-    public RecipeType<RecipeHolder<SieveRecipe>> getRecipeType() {
+    public IRecipeHolderType<SieveRecipe> getRecipeType() {
         return TYPE;
     }
 
@@ -64,7 +64,7 @@ public class SieveRecipeCategory implements IRecipeCategory<RecipeHolder<SieveRe
     public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<SieveRecipe> recipeHolder, IFocusGroup focuses) {
         var recipe = recipeHolder.value();
         builder.addSlot(RecipeIngredientRole.INPUT, INPUT_X, INPUT_Y)
-                .addIngredients(recipe.input());
+                .add(recipe.input());
 
         for (int index = 0; index < OUTPUT_COLUMNS * OUTPUT_ROWS; index++) {
             int x = OUTPUT_START_X + (index % OUTPUT_COLUMNS) * SLOT_SPACING;
@@ -74,7 +74,7 @@ public class SieveRecipeCategory implements IRecipeCategory<RecipeHolder<SieveRe
             if (index < recipe.outputs().size()) {
                 var chanceItem = recipe.outputs().get(index);
                 var chance = chanceItem.chance() * 100.0F < 1.0F ? "<1" : String.format("%.2f", chanceItem.chance() * 100.0F).replaceAll("\\.?0+$", "");
-                slotBuilder.addItemStack(chanceItem.stack().copy()).addRichTooltipCallback(
+                slotBuilder.add(chanceItem.stack().copy()).addRichTooltipCallback(
                         (slotView, tooltip) -> tooltip.add(Component.translatable("jei.poopsky.sieve_chance", chance).withStyle(ChatFormatting.GOLD)));
             }
         }

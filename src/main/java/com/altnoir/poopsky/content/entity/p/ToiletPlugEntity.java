@@ -31,7 +31,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
@@ -385,7 +385,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
         if (isSprintingNow) inputFast = true;
         if (!isMoving()) inputFast = false;
 
-        PacketDistributor.sendToServer(new PlugInputPayload(
+        ClientPacketDistributor.sendToServer(new PlugInputPayload(
                 inputForward,
                 inputBackward,
                 inputLeft,

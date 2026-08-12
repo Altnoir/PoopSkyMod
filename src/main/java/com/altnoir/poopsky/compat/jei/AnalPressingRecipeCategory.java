@@ -10,8 +10,8 @@ import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IJeiHelpers;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
-import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import mezz.jei.api.recipe.types.IRecipeHolderType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
@@ -19,7 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
 public class AnalPressingRecipeCategory implements IRecipeCategory<RecipeHolder<AnalPressingRecipe>> {
-    public static final RecipeType<RecipeHolder<AnalPressingRecipe>> TYPE = RecipeType.createRecipeHolderType(PoopSky.loc("anal_pressing"));
+    public static final IRecipeHolderType<AnalPressingRecipe> TYPE = IRecipeHolderType.create(PoopSky.loc("anal_pressing"));
 
     private static final int HEIGHT = 18;
     private static final int INPUT1_X = 1;
@@ -50,7 +50,7 @@ public class AnalPressingRecipeCategory implements IRecipeCategory<RecipeHolder<
     }
 
     @Override
-    public RecipeType<RecipeHolder<AnalPressingRecipe>> getRecipeType() {
+    public IRecipeHolderType<AnalPressingRecipe> getRecipeType() {
         return TYPE;
     }
 
@@ -78,9 +78,9 @@ public class AnalPressingRecipeCategory implements IRecipeCategory<RecipeHolder<
     public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<AnalPressingRecipe> recipeHolder, IFocusGroup focuses) {
         var recipe = recipeHolder.value();
         int count = (2 * recipe.radius() + 1) * (2 * recipe.radius() + 1);
-        builder.addSlot(RecipeIngredientRole.INPUT, INPUT1_X, INPUT1_Y).addIngredients(recipe.input());
-        builder.addSlot(RecipeIngredientRole.INPUT, INPUT2_X, INPUT2_Y).addItemStack(new ItemStack(recipe.replaceTarget(), count));
-        builder.addSlot(RecipeIngredientRole.OUTPUT, OUTPUT_X, OUTPUT_Y).addItemStack(new ItemStack(recipe.output()));
+        builder.addSlot(RecipeIngredientRole.INPUT, INPUT1_X, INPUT1_Y).add(recipe.input());
+        builder.addSlot(RecipeIngredientRole.INPUT, INPUT2_X, INPUT2_Y).add(new ItemStack(recipe.replaceTarget(), count));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, OUTPUT_X, OUTPUT_Y).add(new ItemStack(recipe.output()));
     }
 
     @Override
@@ -96,8 +96,7 @@ public class AnalPressingRecipeCategory implements IRecipeCategory<RecipeHolder<
     public void getTooltip(ITooltipBuilder tooltip, RecipeHolder<AnalPressingRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
         var recipe = recipeHolder.value();
         int count = (2 * recipe.radius() + 1) * (2 * recipe.radius() + 1);
-        if (mouseX >= ARROW_X && mouseX < ARROW_X + 22
-                && mouseY >= ARROW_Y && mouseY < ARROW_Y + 15) {
+        if (mouseX >= ARROW_X && mouseX < ARROW_X + 22 && mouseY >= ARROW_Y && mouseY < ARROW_Y + 15) {
             tooltip.add(Component.translatable("jei.poopsky.anal_pressing_replace", count).withStyle(ChatFormatting.GRAY));
         }
     }

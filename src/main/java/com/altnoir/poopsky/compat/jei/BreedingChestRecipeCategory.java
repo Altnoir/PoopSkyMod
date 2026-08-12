@@ -11,8 +11,8 @@ import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IJeiHelpers;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
-import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import mezz.jei.api.recipe.types.IRecipeHolderType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
@@ -20,7 +20,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
 public class BreedingChestRecipeCategory implements IRecipeCategory<RecipeHolder<BreedingChestRecipe>> {
-    public static final RecipeType<RecipeHolder<BreedingChestRecipe>> TYPE = RecipeType.createRecipeHolderType(PoopSky.loc("breeding_chest"));
+    public static final IRecipeHolderType<BreedingChestRecipe> TYPE = IRecipeHolderType.create(PoopSky.loc("breeding_chest"));
 
     private static final int HEIGHT = 36;
     private static final int INPUT_X = 1;
@@ -46,7 +46,7 @@ public class BreedingChestRecipeCategory implements IRecipeCategory<RecipeHolder
     }
 
     @Override
-    public RecipeType<RecipeHolder<BreedingChestRecipe>> getRecipeType() {
+    public IRecipeHolderType<BreedingChestRecipe> getRecipeType() {
         return TYPE;
     }
 
@@ -72,14 +72,14 @@ public class BreedingChestRecipeCategory implements IRecipeCategory<RecipeHolder
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<BreedingChestRecipe> recipeHolder, IFocusGroup focuses) {
-        var recipe = recipeHolder.value();
-        builder.addSlot(RecipeIngredientRole.INPUT, INPUT_X, INPUT_Y).addItemStack(FlyItem.withType(FlyType.byId(recipe.parent1())));
-        builder.addSlot(RecipeIngredientRole.INPUT, INPUT_X, INPUT2_Y).addItemStack(FlyItem.withType(FlyType.byId(recipe.parent2())));
+        BreedingChestRecipe recipe = recipeHolder.value();
+        builder.addSlot(RecipeIngredientRole.INPUT, INPUT_X, INPUT_Y).add(FlyItem.withType(FlyType.byId(recipe.parent1())));
+        builder.addSlot(RecipeIngredientRole.INPUT, INPUT_X, INPUT2_Y).add(FlyItem.withType(FlyType.byId(recipe.parent2())));
 
         builder.addSlot(RecipeIngredientRole.OUTPUT, OUTPUT_X, OUTPUT_Y)
-                .addItemStack(FlyItem.withType(FlyType.byId(recipe.result())))
+                .add(FlyItem.withType(FlyType.byId(recipe.result())))
                 .addRichTooltipCallback((view, tooltip) -> {
-                    var chance = recipe.chance() * 100.0F < 1.0F ? "<1" : String.format("%.2f", recipe.chance() * 100.0F).replaceAll("\\.?0+$", "");
+                    String chance = recipe.chance() * 100.0F < 1.0F ? "<1" : String.format("%.2f", recipe.chance() * 100.0F).replaceAll("\\.?0+$", "");
                     tooltip.add(Component.translatable("jei.poopsky.breeding_chest_chance", chance).withStyle(ChatFormatting.GOLD));
                 });
     }

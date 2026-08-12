@@ -1,9 +1,13 @@
 package com.altnoir.poopsky.client.particle;
 
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.*;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.SingleQuadParticle;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.util.RandomSource;
 
-public class LeavesParticle extends TextureSheetParticle {
+public class LeavesParticle extends SingleQuadParticle {
     private static final float ACCELERATION_SCALE = 0.0025F;
     private static final int INITIAL_LIFETIME = 300;
     private static final int CURVE_ENDPOINT_TIME = 300;
@@ -14,7 +18,7 @@ public class LeavesParticle extends TextureSheetParticle {
     private final float spinAcceleration;
 
     protected LeavesParticle(ClientLevel level, double x, double y, double z, SpriteSet spriteSet, int color) {
-        super(level, x, y, z);
+        super(level, x, y, z, spriteSet.first());
         this.setSprite(spriteSet.get(this.random.nextInt(12), 12));
         this.rotSpeed = (float) Math.toRadians(this.random.nextBoolean() ? -30.0 : 30.0);
         this.particleRandom = this.random.nextFloat();
@@ -35,8 +39,8 @@ public class LeavesParticle extends TextureSheetParticle {
     }
 
     @Override
-    public ParticleRenderType getRenderType() {
-        return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
+    public Layer getLayer() {
+        return Layer.OPAQUE;
     }
 
     @Override
@@ -72,10 +76,6 @@ public class LeavesParticle extends TextureSheetParticle {
         }
     }
 
-    public static ParticleEngine.SpriteParticleRegistration<LeavesParticleOptions> provider() {
-        return Provider::new;
-    }
-
     public static class Provider implements ParticleProvider<LeavesParticleOptions> {
         private final SpriteSet sprites;
 
@@ -84,7 +84,8 @@ public class LeavesParticle extends TextureSheetParticle {
         }
 
         @Override
-        public Particle createParticle(LeavesParticleOptions options, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(LeavesParticleOptions options, ClientLevel level, double x, double y, double z,
+                                       double xSpeed, double ySpeed, double zSpeed, RandomSource random) {
             return new LeavesParticle(level, x, y, z, this.sprites, options.color());
         }
     }

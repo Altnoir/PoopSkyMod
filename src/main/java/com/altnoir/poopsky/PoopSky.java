@@ -76,7 +76,8 @@ public class PoopSky {
         EntityLootTableGen.register();
         FishingLootGen.register();
         GlobalLootModifierGen.register();
-        PoLootFunctions.register();
+        PoLootFunctions.register(modEventBus);
+        PoLootConditions.register(modEventBus);
         PoVillagers.register();
 
         PoParticles.register();

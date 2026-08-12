@@ -2,7 +2,6 @@ package com.altnoir.poopsky.content;
 
 import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.init.PoComponents;
-import com.altnoir.poopsky.init.PoLootFunctions;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.world.item.ItemStack;
@@ -10,7 +9,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
-import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 
@@ -18,7 +16,7 @@ import java.util.List;
 
 public class SetToiletTypeFunction extends LootItemConditionalFunction {
 
-    public static final MapCodec<SetToiletTypeFunction> CODEC = RecordCodecBuilder.mapCodec(
+    public static final MapCodec<SetToiletTypeFunction> MAP_CODEC = RecordCodecBuilder.mapCodec(
             instance -> commonFields(instance).apply(instance, SetToiletTypeFunction::new)
     );
 
@@ -28,12 +26,12 @@ public class SetToiletTypeFunction extends LootItemConditionalFunction {
 
     @Override
     protected ItemStack run(ItemStack stack, LootContext context) {
-        BlockState state = context.getParamOrNull(LootContextParams.BLOCK_STATE);
+        BlockState state = context.getOptionalParameter(LootContextParams.BLOCK_STATE);
         if (state == null) return stack;
 
         ToiletType type = null;
 
-        BlockEntity be = context.getParamOrNull(LootContextParams.BLOCK_ENTITY);
+        BlockEntity be = context.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
         if (be instanceof ToiletBlockEntity toiletBE) {
             type = toiletBE.getToiletType();
         }
@@ -46,8 +44,8 @@ public class SetToiletTypeFunction extends LootItemConditionalFunction {
     }
 
     @Override
-    public LootItemFunctionType<SetToiletTypeFunction> getType() {
-        return PoLootFunctions.SET_TOILET_TYPE.get();
+    public MapCodec<SetToiletTypeFunction> codec() {
+        return MAP_CODEC;
     }
 
     public static Builder setType() {

@@ -1,0 +1,6 @@
+{
+  "gui_light": "front",
+  "textures": {
+    "particle": "poopsky:item/toilet_plug"
+  }
+}

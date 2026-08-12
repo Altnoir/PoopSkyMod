@@ -12,6 +12,7 @@ import com.altnoir.poopsky.client.particle.ToiletParticle;
 import com.altnoir.poopsky.client.renderer.TimeBellOverlay;
 import com.altnoir.poopsky.client.renderer.ToiletHighlightRenderer;
 import com.altnoir.poopsky.client.renderer.ToiletPlugItemRenderer;
+import com.altnoir.poopsky.compat.jei.PSJeiRecipeCache;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.content.block.renderer.MaggotsChunkLoaderBlockEntityRenderer;
@@ -19,24 +20,30 @@ import com.altnoir.poopsky.content.entity.model.FlyModel;
 import com.altnoir.poopsky.content.entity.model.ToiletPlugModel;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.content.entity.renderer.GinkgoBoatRenderer;
-import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.impl.event.PSKeyBoardInput;
 import com.altnoir.poopsky.impl.network.PlugActionPayload;
 import com.altnoir.poopsky.impl.network.PlugDismountPayload;
 import com.altnoir.poopsky.init.*;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.RecipeBookCategories;
+import net.minecraft.client.color.block.BlockTintSource;
+import net.minecraft.client.color.block.BlockTintSources;
+import net.minecraft.client.color.item.ItemTintSource;
 import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
 import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;
 import net.minecraft.client.model.object.boat.BoatModel;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.BiomeColors;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.client.renderer.block.BlockAndTintGetter;
+import net.minecraft.client.renderer.item.properties.numeric.RangeSelectItemModelProperty;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.entity.ItemOwner;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.levelgen.presets.WorldPreset;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -44,15 +51,16 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.config.ModConfigEvent;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.*;
-import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.network.PacketDistributor;
+
+import java.util.List;
+import java.util.Set;
 
 @Mod(value = PoopSky.MOD_ID, dist = Dist.CLIENT)
 public class PoopSkyClient {
@@ -71,13 +79,14 @@ public class PoopSkyClient {
         modEventBus.addListener(PoBedrockModelResources::onRegisterBedrockModels);
         modEventBus.addListener(ClientModEvents::modLoad);
         modEventBus.addListener(ClientModEvents::registerLayers);
+        modEventBus.addListener(ClientModEvents::registerSpecialModelRenderers);
         modEventBus.addListener(ClientModEvents::registerItemProperties);
         modEventBus.addListener(ClientModEvents::registerRenderTypes);
         modEventBus.addListener(ClientModEvents::registerParticleProviders);
-        modEventBus.addListener(ClientModEvents::registerRecipeBookCategories);
         modEventBus.addListener(ClientModEvents::registerBlockColors);
         modEventBus.addListener(ClientModEvents::registerItemColors);
         modEventBus.addListener(ClientModEvents::registerBlockRenderBuffers);
+        modEventBus.addListener(ClientModEvents::registerRecipeBookCategories);
         modEventBus.addListener(ClientModEvents::registerGuiOverlays);
         modEventBus.addListener(ClientModEvents::registerClientExtensions);
     }
@@ -92,6 +101,7 @@ public class PoopSkyClient {
         modEventBus.addListener(IntroController::onLoggingOut);
         modEventBus.addListener(IntroController::onSelectMusic);
         modEventBus.addListener(PoAnimationController::onLoggingOut);
+        modEventBus.addListener(PSJeiRecipeCache::update);
     }
 
     public static class ClientModEvents {
@@ -106,87 +116,107 @@ public class PoopSkyClient {
             event.registerLayerDefinition(GinkgoBoatRenderer.CHEST_BOAT_LAYER, BoatModel::createChestBoatModel);
         }
 
+        public static void registerSpecialModelRenderers(RegisterSpecialModelRendererEvent event) {
+            event.register(PoopSky.loc("toilet_plug"), ToiletPlugItemRenderer.Unbaked.MAP_CODEC);
+        }
+
         public static void registerGuiOverlays(RegisterGuiLayersEvent event) {
             event.registerBelow(VanillaGuiLayers.CAMERA_OVERLAYS, PoopSky.loc("time_bell_overlay"), TimeBellOverlay::render);
         }
 
-        public static void registerRenderTypes(RegisterNamedRenderTypesEvent event) {
-            event.register(PoopSky.loc("poop_empty_log"), RenderType.cutout(), RenderType.entityCutout(PoBlocks.POOP_EMPTY_LOG.getId()));
+        public static void registerItemProperties(RegisterRangeSelectItemModelPropertyEvent event) {
+            event.register(PoopSky.loc("toilet_type"), ToiletTypeProperty.MAP_CODEC);
         }
 
-        public static void registerRecipeBookCategories(RegisterRecipeBookCategoriesEvent event) {
-            event.registerRecipeCategoryFinder(PoRecipes.SIEVE.type().get(), recipe -> RecipeBookCategories.UNKNOWN);
-            event.registerRecipeCategoryFinder(PoRecipes.FLY_BARREL.type().get(), recipe -> RecipeBookCategories.UNKNOWN);
-            event.registerRecipeCategoryFinder(PoRecipes.BREEDING_CHEST.type().get(), recipe -> RecipeBookCategories.UNKNOWN);
-            event.registerRecipeCategoryFinder(PoRecipes.POP_EXPLOSION.type().get(), recipe -> RecipeBookCategories.UNKNOWN);
-            event.registerRecipeCategoryFinder(PoRecipes.ANAL_PRESSING.type().get(), recipe -> RecipeBookCategories.UNKNOWN);
-        }
-
-        public static void registerItemProperties(FMLClientSetupEvent event) {
-            event.enqueueWork(() -> {
-                for (Item item : PoItems.getAllItems()) {
-                    if (item instanceof ToiletBlockItem && item != Items.AIR) {
-                        ItemProperties.register(item, PoopSky.loc("toilet_type"),
-                                (stack, level, entity, seed) -> {
-                                    ToiletType type = stack.get(PoComponents.TOILET_TYPE.get());
-                                    if (type == null) return 0;
-                                    var categoryTypes = ToiletType.getByCategory(type.category());
-                                    int localIndex = 0;
-                                    for (var entry : categoryTypes.entrySet()) {
-                                        if (entry.getValue().equals(type)) return (float) localIndex;
-                                        localIndex++;
-                                    }
-                                    return 0;
-                                });
-                    }
-                }
-            });
+        public static void registerRenderTypes(RegisterRenderBuffersEvent event) {
         }
 
         public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
             event.registerSpriteSet(PoParticles.POOP_PARTICLE.get(), PoopParticle.Provider::new);
             event.registerSpriteSet(PoParticles.TOILET_PARTICLE.get(), ToiletParticle.Provider::new);
-            event.registerSpriteSet(PoParticles.LEAVES_PARTICLE.get(), LeavesParticle.provider());
+            event.registerSpriteSet(PoParticles.LEAVES_PARTICLE.get(), LeavesParticle.Provider::new);
         }
 
-        public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
-            event.register((state, world, pos, tintIndex) -> {
-                if (tintIndex == 1) {
-                    if (state.getValue(AbstractCompooperBlock.LEVEL) != AbstractCompooperBlock.MIN_LEVEL) {
-                        return world != null && pos != null
-                                ? BiomeColors.getAverageWaterColor(world, pos)
-                                : 0x3F76E4;
-                    }
-                    return 0x47311A;
+        public static void registerBlockColors(RegisterColorHandlersEvent.BlockTintSources event) {
+            event.register(List.of(BlockTintSources.constant(-1), new BlockTintSource() {
+                @Override
+                public int color(BlockState state) {
+                    return state.getValue(AbstractCompooperBlock.LEVEL) == AbstractCompooperBlock.MIN_LEVEL
+                            ? 0x47311A
+                            : 0x3F76E4;
                 }
-                return -1;
-            }, PoBlocks.WATER_COMPOOPER.get());
+
+                @Override
+                public int colorInWorld(BlockState state, BlockAndTintGetter level, BlockPos pos) {
+                    return state.getValue(AbstractCompooperBlock.LEVEL) == AbstractCompooperBlock.MIN_LEVEL
+                            ? 0x47311A
+                            : BiomeColors.getAverageWaterColor(level, pos);
+                }
+
+                @Override
+                public Set<Property<?>> relevantProperties() {
+                    return Set.of(AbstractCompooperBlock.LEVEL);
+                }
+            }), PoBlocks.WATER_COMPOOPER.get());
         }
 
-        public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
-            event.register((stack, tintIndex) -> tintIndex == 1 ? 0x3F76E4 : -1, PoBlocks.WATER_COMPOOPER.get());
+        public static void registerItemColors(RegisterColorHandlersEvent.ItemTintSources event) {
+            event.register(PoopSky.loc("water_compooper"), WaterCompooperTintSource.MAP_CODEC);
         }
 
         public static void registerBlockRenderBuffers(RegisterRenderBuffersEvent event) {
-            event.registerRenderBuffer(RenderType.translucent());
-            event.registerRenderBuffer(RenderType.lightning());
             event.registerRenderBuffer(PoRenderTypes.chunkLoaderGlow());
+        }
+
+        public static void registerRecipeBookCategories(RegisterRecipeBookSearchCategoriesEvent event) {
         }
 
         public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
             event.registerBlock(ToiletClientBlockExtensions.INSTANCE, PoBlocks.WOODEN_TOILET.get(), PoBlocks.HARD_TOILET.get());
 
-            var toiletPlugRenderer = new ToiletPlugItemRenderer();
-            event.registerItem(new IClientItemExtensions() {
-                @Override
-                public BlockEntityWithoutLevelRenderer getCustomRenderer() {
-                    return toiletPlugRenderer;
-                }
-            }, PoItems.TOILET_PLUG.get());
         }
     }
 
-    public class ClientGameEvents {
+    private static final class ToiletTypeProperty implements RangeSelectItemModelProperty {
+        private static final MapCodec<ToiletTypeProperty> MAP_CODEC = MapCodec.unit(new ToiletTypeProperty());
+
+        @Override
+        public float get(ItemStack stack, ClientLevel level, ItemOwner owner, int seed) {
+            ToiletType type = stack.get(PoComponents.TOILET_TYPE.get());
+            if (type == null) {
+                return 0.0F;
+            }
+            int index = 0;
+            for (ToiletType candidate : ToiletType.getByCategory(type.category()).values()) {
+                if (candidate.equals(type)) {
+                    return index;
+                }
+                index++;
+            }
+            return 0.0F;
+        }
+
+        @Override
+        public MapCodec<ToiletTypeProperty> type() {
+            return MAP_CODEC;
+        }
+    }
+
+    private static final class WaterCompooperTintSource implements ItemTintSource {
+        private static final MapCodec<WaterCompooperTintSource> MAP_CODEC = MapCodec.unit(new WaterCompooperTintSource());
+
+        @Override
+        public int calculate(ItemStack stack, ClientLevel level, LivingEntity entity) {
+            return 0x3F76E4;
+        }
+
+        @Override
+        public MapCodec<WaterCompooperTintSource> type() {
+            return MAP_CODEC;
+        }
+    }
+
+    public static class ClientGameEvents {
         public static Holder<WorldPreset> originalDefaultWorldPreset;
 
         public static void onScreenOpen(ScreenEvent.Opening event) {
@@ -199,8 +229,12 @@ public class PoopSkyClient {
                         originalDefaultWorldPreset = originalPreset;
                     }
                     if (originalDefaultWorldPreset.unwrapKey().equals(originalPreset.unwrapKey())) {
-                        var voidWorldPreset = uiState.getSettings().worldgenLoadContext().registryOrThrow(Registries.WORLD_PRESET).getHolder(PoWorldPreset.overrideDefaultWorldPreset()).orElse(null);
-                        uiState.setWorldType(new WorldCreationUiState.WorldTypeEntry(voidWorldPreset));
+                        uiState.getSettings()
+                                .worldgenLoadContext()
+                                .registryOrThrow(Registries.WORLD_PRESET)
+                                .getHolder(PoWorldPreset.overrideDefaultWorldPreset())
+                                .ifPresent(voidWorldPreset -> uiState.setWorldType(
+                                        new WorldCreationUiState.WorldTypeEntry(voidWorldPreset)));
                     }
                 }
             }
@@ -209,12 +243,12 @@ public class PoopSkyClient {
         public static void onComputeFov(ViewportEvent.ComputeFov event) {
             double multiplier = TimeBellOverlay.getFovMultiplier();
             if (multiplier != 1.0) {
-                event.setFOV(Math.min(event.getFOV() * multiplier, TimeBellOverlay.MAX_FOV));
+                event.setFOV((float) Math.min(event.getFOV() * multiplier, TimeBellOverlay.MAX_FOV));
             }
         }
 
         public static void onClientTick(ClientTickEvent.Pre event) {
-            var mc = Minecraft.getInstance();
+            Minecraft mc = Minecraft.getInstance();
             if (mc.player == null || mc.level == null) return;
 
             boolean isRidingPlug = mc.player.getVehicle() instanceof ToiletPlugEntity;

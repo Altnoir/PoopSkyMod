@@ -1,0 +1,51 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "cases": [
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/toilet_plug_flat"
+        },
+        "when": [
+          "gui",
+          "ground",
+          "fixed",
+          "on_shelf"
+        ]
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:special",
+      "base": "poopsky:item/toilet_plug_hand",
+      "model": {
+        "type": "poopsky:toilet_plug"
+      },
+      "transformation": {
+        "left_rotation": [
+          0.7071068,
+          0.0,
+          0.0,
+          0.7071068
+        ],
+        "right_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "translation": [
+          0.5,
+          0.75,
+          -0.6875
+        ]
+      }
+    },
+    "property": "minecraft:display_context"
+  }
+}

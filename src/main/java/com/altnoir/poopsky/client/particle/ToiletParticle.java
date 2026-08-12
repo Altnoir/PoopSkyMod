@@ -3,13 +3,14 @@ package com.altnoir.poopsky.client.particle;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
-import net.minecraft.client.particle.ParticleRenderType;
+import net.minecraft.client.particle.SingleQuadParticle;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.RandomSource;
 
-public class ToiletParticle extends TextureSheetParticle {
-    protected ToiletParticle(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, SpriteSet sprites) {
-        super(level, x, y, z);
+public class ToiletParticle extends SingleQuadParticle {
+    protected ToiletParticle(ClientLevel level, double x, double y, double z, SpriteSet sprites) {
+        super(level, x, y, z, sprites.first());
         this.setSpriteFromAge(sprites);
         this.gravity = 0.8F;
         this.friction = 0.99F;
@@ -35,8 +36,8 @@ public class ToiletParticle extends TextureSheetParticle {
     }
 
     @Override
-    public ParticleRenderType getRenderType() {
-        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+    public Layer getLayer() {
+        return Layer.TRANSLUCENT;
     }
 
     public static class Provider implements ParticleProvider<SimpleParticleType> {
@@ -47,8 +48,9 @@ public class ToiletParticle extends TextureSheetParticle {
         }
 
         @Override
-        public Particle createParticle(SimpleParticleType type, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            return new ToiletParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, this.sprites);
+        public Particle createParticle(SimpleParticleType type, ClientLevel level, double x, double y, double z,
+                                       double xSpeed, double ySpeed, double zSpeed, RandomSource random) {
+            return new ToiletParticle(level, x, y, z, this.sprites);
         }
     }
 }

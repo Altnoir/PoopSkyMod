@@ -12,8 +12,8 @@ import mezz.jei.api.helpers.IJeiHelpers;
 import mezz.jei.api.helpers.IModIdHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
-import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import mezz.jei.api.recipe.types.IRecipeHolderType;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -24,8 +24,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class CompooperRecipeCategory implements IRecipeCategory<RecipeHolder<CompooperRecipe>> {
-    public static final RecipeType<RecipeHolder<CompooperRecipe>> TYPE =
-            RecipeType.createRecipeHolderType(PoopSky.loc("compooper"));
+    public static final IRecipeHolderType<CompooperRecipe> TYPE =
+            IRecipeHolderType.create(PoopSky.loc("compooper"));
 
     private static final int WIDTH = 140;
     private static final int HEIGHT = 48;
@@ -48,7 +48,7 @@ public class CompooperRecipeCategory implements IRecipeCategory<RecipeHolder<Com
     }
 
     @Override
-    public RecipeType<RecipeHolder<CompooperRecipe>> getRecipeType() {
+    public IRecipeHolderType<CompooperRecipe> getRecipeType() {
         return TYPE;
     }
 
@@ -75,8 +75,8 @@ public class CompooperRecipeCategory implements IRecipeCategory<RecipeHolder<Com
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<CompooperRecipe> recipeHolder, IFocusGroup focuses) {
         CompooperRecipe recipe = recipeHolder.value();
-        builder.addSlot(RecipeIngredientRole.INPUT, 4, 18).addItemStack(recipe.input());
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 120, 18).addItemStack(recipe.output());
+        builder.addSlot(RecipeIngredientRole.INPUT, 4, 18).add(recipe.input());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 120, 18).add(recipe.output());
     }
 
     @Override
