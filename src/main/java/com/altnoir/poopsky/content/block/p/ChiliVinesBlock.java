@@ -20,7 +20,6 @@ import net.minecraft.world.level.block.NetherVines;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 
 public class ChiliVinesBlock extends GrowingPlantHeadBlock implements BonemealableBlock, ChiliVines {
     public static final MapCodec<ChiliVinesBlock> CODEC = simpleCodec(ChiliVinesBlock::new);
@@ -61,7 +60,7 @@ public class ChiliVinesBlock extends GrowingPlantHeadBlock implements Bonemealab
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
+    protected ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData) {
         return new ItemStack(PoItems.DRAGON_BREATH_CHILI.get());
     }
 

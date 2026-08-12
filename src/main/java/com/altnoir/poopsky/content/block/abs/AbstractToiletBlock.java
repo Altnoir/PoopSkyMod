@@ -46,9 +46,9 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -134,7 +134,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData, Player player) {
         return ToiletBlockItem.withType(this, getToiletTypeOrDefault(level, pos));
     }
 
@@ -156,7 +156,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
             return false;
         }
 
-        level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, particleState).setPos(pos),
+        level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, particleState),
                 entity.getX(), entity.getY(), entity.getZ(), numberOfParticles, 0.0, 0.0, 0.0, 0.15F);
         return true;
     }
@@ -182,7 +182,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
             stack.consume(1, player);
             return;
         }
-        stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
+        stack.hurtAndBreak(1, player, hand);
     }
 
     @Nullable
@@ -240,23 +240,13 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void onRemove(BlockState oldState, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (!oldState.is(newState.getBlock())) {
-            if (!level.isClientSide()) {
-                updateAdjacentConnections(level, pos, oldState);
-            }
-        }
-        super.onRemove(oldState, level, pos, newState, isMoving);
-    }
-
-    @Override
-    public void fallOn(Level level, BlockState blockState, BlockPos pos, Entity entity, float fallDistance) {
+    public void fallOn(Level level, BlockState blockState, BlockPos pos, Entity entity, double fallDistance) {
         if (!level.isClientSide()) {
             if (entity instanceof FallingBlockEntity falling && isAnvil(falling.getBlockState())) {
                 poopAnvil(level, pos, entity);
             }
 
-            if (ToiletUtil.tryTeleportFromFall(level, pos, entity, fallDistance)) {
+            if (ToiletUtil.tryTeleportFromFall(level, pos, entity, (float) fallDistance)) {
                 return;
             }
         }
@@ -279,7 +269,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
         if (!level.isClientSide() && entity instanceof Player player) {
             if (player.isShiftKeyDown() && ToiletUtil.isEntityCentered(pos, player)) {
                 var playerData = player.getPersistentData();
-                long lastPoopTime = playerData.getLong("poopTime");
+                long lastPoopTime = playerData.getLongOr("poopTime", 0L);
                 ToiletUtil.canPoop(level, player, player.hasEffect(PoEffects.INTESTINAL_SPASM), false, 0.1F, 0.5F, lastPoopTime,
                         time -> playerData.putLong("poopTime", time));
             }
@@ -301,7 +291,6 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
             for (Entity entity : level.getEntitiesOfClass(Entity.class, area)) {
                 entity.setDeltaMovement(entity.getDeltaMovement().add(0.0, 1.6, 0.0));
                 entity.hurtMarked = true;
-                entity.hasImpulse = true;
             }
         }
 
@@ -310,7 +299,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
         }
 
         if (level.getBlockState(pos.below()).is(PoTags.Blocks.POOP_BLOCKS)) {
-            PoFeatureUtil.placePatch(level, random, PoConfigureFeatures.SALTPETER_PATCH, 3, 3, 3);
+            PoFeatureUtil.placePatch(level, pos.above(), random, PoConfigureFeatures.SALTPETER_PATCH, 3, 3, 3);
         }
     }
 
@@ -425,9 +414,9 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean moved) {
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, Orientation orientation, boolean moved) {
         if (level instanceof ServerLevel serverLevel) {
-            if (neighborPos.equals(pos.above()) && hasHot(serverLevel, pos)) {
+            if (hasHot(serverLevel, pos)) {
                 level.scheduleTick(pos, this, 1);
             }
 

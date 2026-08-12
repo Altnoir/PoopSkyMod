@@ -110,7 +110,7 @@ public class HardToiletBlock extends BaseToiletLavaBlock {
         if (type != null) {
             float hardness = type.hardness();
             int i = EventHooks.doPlayerHarvestCheck(player, state, level, pos) ? 30 : 100;
-            return player.getDigSpeed(state, pos) / hardness / (float) i;
+            return player.getDestroySpeed(state, pos) / hardness / (float) i;
         }
         return super.getDestroyProgress(state, player, level, pos);
     }

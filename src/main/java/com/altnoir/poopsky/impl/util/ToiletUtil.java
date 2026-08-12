@@ -456,7 +456,6 @@ public class ToiletUtil {
         server.tell(new TickTask(server.getTickCount() + 1, () -> {
             entity.setDeltaMovement(entity.getDeltaMovement().x, bounce, entity.getDeltaMovement().z);
             entity.hurtMarked = true;
-            entity.hasImpulse = true;
         }));
         return true;
     }

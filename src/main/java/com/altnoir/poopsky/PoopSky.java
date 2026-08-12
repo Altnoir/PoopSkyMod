@@ -1,7 +1,8 @@
 package com.altnoir.poopsky;
 
-import com.altnoir.poopsky.compat.PoMods;
-import com.altnoir.poopsky.compat.create.CreatePlugin;
+//import com.altnoir.poopsky.compat.PoMods;
+//import com.altnoir.poopsky.compat.create.CreatePlugin;
+
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.p.CompooperBlock;
 import com.altnoir.poopsky.content.entity.p.PoopTntEntity;
@@ -37,7 +38,6 @@ import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -102,9 +102,9 @@ public class PoopSky {
         PoGameEvents.registerGame(gameEventBus);
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
 
-        if (ModList.get().isLoaded(PoMods.CREATE.id())) {
-            CreatePlugin.register(modEventBus);
-        }
+//        if (ModList.get().isLoaded(PoMods.CREATE.id())) {
+//            CreatePlugin.register(modEventBus);
+//        }
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

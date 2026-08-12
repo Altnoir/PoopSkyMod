@@ -6,13 +6,12 @@ import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateTagsProvider;
-import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
+import net.minecraft.data.tags.TagAppender;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
-import vectorwing.farmersdelight.common.registry.ModBlocks;
 
 public final class BlockTagGen {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
@@ -112,9 +111,6 @@ public final class BlockTagGen {
                         PoBlocks.GOLDEN_SHIT.get()
                 )
                 .addTag(PoTags.Blocks.TOILET_BLOCKS);
-
-        tag(PoTags.Blocks.POOP_FARMLAND_AUTO)
-                .add(ModBlocks.TOMATO_CROP_ON_ROPE.get());
 
         tag(PoTags.Blocks.MAGGOTS_CHUNK_LOADER_BASE_BLOCKS)
                 .add(PoBlocks.MAGGOTS_BLOCK.get());
@@ -317,7 +313,7 @@ public final class BlockTagGen {
         tag(PoTags.Blocks.FAN_PROCESSING_CATALYSTS_DIGESTING).add(PoBlocks.URINE_LIQUID.get());
     }
 
-    private static IntrinsicHolderTagsProvider.IntrinsicTagAppender<Block> tag(TagKey<Block> tag) {
-        return provider.addTag(tag);
+    private static TagAppender<Block, Block> tag(TagKey<Block> tag) {
+        return provider.tag(tag);
     }
 }

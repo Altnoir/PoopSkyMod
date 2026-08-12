@@ -6,19 +6,18 @@ import com.altnoir.poopsky.init.PoParticles;
 import com.tterrag.registrate.providers.ProviderType;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.client.data.ParticleDescriptionProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 public final class ParticleGen extends ParticleDescriptionProvider {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
-    private ParticleGen(PackOutput output, ExistingFileHelper fileHelper) {
-        super(output, fileHelper);
+    private ParticleGen(PackOutput output) {
+        super(output);
     }
 
     public static void register() {
         REGISTRATE.addDataGenerator(
                 ProviderType.GENERIC_CLIENT,
-                provider -> provider.add(data -> new ParticleGen(data.output(), data.existingFileHelper())));
+                provider -> provider.add(data -> new ParticleGen(data.output())));
     }
 
     @Override

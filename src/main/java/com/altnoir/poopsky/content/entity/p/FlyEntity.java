@@ -10,7 +10,6 @@ import com.altnoir.poopsky.init.PoEntityType;
 import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -38,12 +37,15 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Comparator;
 import java.util.EnumSet;
 
 public class FlyEntity extends Animal implements FlyingAnimal {
@@ -62,7 +64,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
     public FlyEntity(EntityType<FlyEntity> entityType, Level level) {
         super(entityType, level);
         this.moveControl = new FlyingMoveControl(this, 10, false);
-        this.setPathfindingMalus(PathType.DANGER_FIRE, -1.0F);
+        this.setPathfindingMalus(PathType.FIRE_IN_NEIGHBOR, -1.0F);
         this.setPathfindingMalus(PathType.WATER, -1.0F);
         this.setPathfindingMalus(PathType.WATER_BORDER, 16.0F);
         this.setPathfindingMalus(PathType.COCOA, -1.0F);
@@ -97,7 +99,6 @@ public class FlyEntity extends Animal implements FlyingAnimal {
         FlyingPathNavigation flyingPathNavigation = new FlyingPathNavigation(this, level);
         flyingPathNavigation.setCanOpenDoors(false);
         flyingPathNavigation.setCanFloat(true);
-        flyingPathNavigation.setCanPassDoors(true);
         return flyingPathNavigation;
     }
 
@@ -138,7 +139,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
         // 产卵逻辑
         if (!this.level().isClientSide() && this.isAlive() && !this.isBaby() && --this.eggTime <= 0) {
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-            this.spawnAtLocation(PoItems.MAGGOTS_SEEDS.get());
+            this.spawnAtLocation((ServerLevel) this.level(), PoItems.MAGGOTS_SEEDS.get());
             this.gameEvent(GameEvent.ENTITY_PLACE);
             this.eggTime = this.random.nextInt(6000) + 6000;
         }
@@ -160,17 +161,15 @@ public class FlyEntity extends Animal implements FlyingAnimal {
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compound) {
-        super.readAdditionalSaveData(compound);
-        if (compound.contains("EggLayTime")) {
-            this.eggTime = compound.getInt("EggLayTime");
-        }
+    protected void readAdditionalSaveData(ValueInput data) {
+        super.readAdditionalSaveData(data);
+        this.eggTime = data.getIntOr("EggLayTime", this.eggTime);
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compound) {
-        super.addAdditionalSaveData(compound);
-        compound.putInt("EggLayTime", this.eggTime);
+    protected void addAdditionalSaveData(ValueOutput data) {
+        super.addAdditionalSaveData(data);
+        data.putInt("EggLayTime", this.eggTime);
     }
 
     @Override
@@ -202,30 +201,30 @@ public class FlyEntity extends Animal implements FlyingAnimal {
 
     @Override
     public @Nullable FlyEntity getBreedOffspring(ServerLevel level, AgeableMob otherParent) {
-        return PoEntityType.FLY.get().create(level);
+        return PoEntityType.FLY.get().create(level, EntitySpawnReason.BREEDING);
     }
 
     @Override
     public void die(DamageSource source) {
-        if (!this.level().isClientSide() && !this.isBaby()) {
+        if (this.level() instanceof ServerLevel serverLevel && !this.isBaby()) {
             if (source.is(DamageTypes.DROWN)) {
                 var blueFlyItem = FlyItem.withType(FlyTypes.BLUE.get());
-                this.spawnAtLocation(blueFlyItem);
+                this.spawnAtLocation(serverLevel, blueFlyItem);
             }
             if (source.is(PoDamageTypes.ROUNDWORM)) {
                 var whiteFlyItem = FlyItem.withType(FlyTypes.WHITE.get());
-                this.spawnAtLocation(whiteFlyItem);
+                this.spawnAtLocation(serverLevel, whiteFlyItem);
             }
             if (source.is(DamageTypes.CACTUS)) {
                 var greenFlyItem = FlyItem.withType(FlyTypes.GREEN.get());
-                var itemEntity = this.spawnAtLocation(greenFlyItem);
+                var itemEntity = this.spawnAtLocation(serverLevel, greenFlyItem);
                 if (itemEntity != null) {
                     itemEntity.setInvulnerable(true);
                 }
             }
             if (source.is(PoDamageTypes.POOP_BALL)) {
                 var brownFlyItem = FlyItem.withType(FlyTypes.BROWN.get());
-                this.spawnAtLocation(brownFlyItem);
+                this.spawnAtLocation(serverLevel, brownFlyItem);
             }
         }
         super.die(source);
@@ -233,13 +232,13 @@ public class FlyEntity extends Animal implements FlyingAnimal {
 
     @Override
     public void thunderHit(ServerLevel level, LightningBolt lightning) {
-        if (!this.level().isClientSide() && !this.isBaby()) {
+        if (!this.isBaby()) {
             var blackFlyItem = FlyItem.withType(FlyTypes.BLACK.get());
-            var itemEntity = this.spawnAtLocation(blackFlyItem);
+            var itemEntity = this.spawnAtLocation(level, blackFlyItem);
             if (itemEntity != null) {
                 itemEntity.setInvulnerable(true);
             }
-            this.kill();
+            this.kill(level);
         }
     }
 
@@ -248,7 +247,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
     }
 
     @Override
-    public boolean causeFallDamage(float fallDistance, float multiplier, DamageSource damageSource) {
+    public boolean causeFallDamage(double fallDistance, float multiplier, DamageSource damageSource) {
         return false;
     }
 
@@ -267,7 +266,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
         private static final TargetingConditions TARGETING = TargetingConditions.forNonCombat()
                 .range(12.0)
                 .ignoreLineOfSight()
-                .selector(ShitBlock::isWearing);
+                .selector((entity, level) -> ShitBlock.isWearing(entity));
 
         private final FlyEntity fly;
         private final double speedModifier;
@@ -282,13 +281,21 @@ public class FlyEntity extends Animal implements FlyingAnimal {
 
         @Override
         public boolean canUse() {
-            this.player = this.fly.level().getNearestPlayer(TARGETING, this.fly);
+            if (!(this.fly.level() instanceof ServerLevel level)) {
+                return false;
+            }
+            this.player = level.players().stream()
+                    .filter(player -> TARGETING.test(level, this.fly, player))
+                    .min(Comparator.comparingDouble(this.fly::distanceToSqr))
+                    .orElse(null);
             return this.player != null;
         }
 
         @Override
         public boolean canContinueToUse() {
-            return this.player != null && TARGETING.test(this.fly, this.player);
+            return this.player != null
+                    && this.fly.level() instanceof ServerLevel level
+                    && TARGETING.test(level, this.fly, this.player);
         }
 
         @Override
@@ -302,11 +309,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
             if (this.player == null) {
                 return;
             }
-            this.fly.getLookControl().setLookAt(
-                    this.player,
-                    this.fly.getMaxHeadYRot() + 20,
-                    this.fly.getMaxHeadXRot()
-            );
+            this.fly.getLookControl().setLookAt(this.player, this.fly.getMaxHeadYRot() + 20, this.fly.getMaxHeadXRot());
             if (this.fly.distanceToSqr(this.player) < STOP_DISTANCE_SQR) {
                 this.fly.getNavigation().stop();
             } else {

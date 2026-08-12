@@ -6,6 +6,7 @@ import mezz.jei.api.gui.ingredient.ICraftingGridHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.category.extensions.vanilla.crafting.ICraftingCategoryExtension;
 import net.minecraft.core.HolderSet;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.display.SlotDisplay;
@@ -38,6 +39,11 @@ public class ToiletCraftingExtension implements ICraftingCategoryExtension<Toile
         helper.createAndSetIngredients(builder, recipe.delegate().getIngredients().stream()
                 .map(ingredient -> ingredient.orElseGet(() -> Ingredient.of(HolderSet.empty())))
                 .toList(), getWidth(holder), getHeight(holder));
-        helper.createAndSetOutputs(builder, List.of(recipe.getResultItem(null)));
+        var input = recipe.delegate().getIngredients().stream()
+                .map(ingredient -> ingredient.flatMap(value -> value.items().findFirst())
+                        .map(holder -> new net.minecraft.world.item.ItemStack(holder))
+                        .orElse(net.minecraft.world.item.ItemStack.EMPTY))
+                .toList();
+        helper.createAndSetOutputs(builder, List.of(recipe.assemble(CraftingInput.of(getWidth(holder), getHeight(holder), input))));
     }
 }

@@ -5,10 +5,8 @@ import com.altnoir.poopsky.content.recipe.SieveRecipe;
 import com.altnoir.poopsky.init.PoBlockEntityType;
 import com.altnoir.poopsky.init.PoRecipes;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
@@ -24,6 +22,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.wrapper.RangedWrapper;
 import org.jetbrains.annotations.Nullable;
@@ -237,7 +237,7 @@ public class SieveBlockEntity extends BlockEntity {
 
     private Optional<SieveRecipe> findRecipe(ItemStack stack) {
         if (level == null || stack.isEmpty()) return Optional.empty();
-        return level.getRecipeManager()
+        return level.getServer().getRecipeManager()
                 .getRecipeFor(PoRecipes.SIEVE.type().get(), new SingleRecipeInput(stack), level)
                 .map(RecipeHolder::value);
     }
@@ -299,28 +299,21 @@ public class SieveBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.put("inventory", itemHandler.serializeNBT(registries));
-        tag.putInt("progress", progress);
-        tag.putInt("maxProgress", maxProgress);
-        tag.putBoolean("autoMode", autoMode);
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        itemHandler.serialize(output.child("inventory"));
+        output.putInt("progress", progress);
+        output.putInt("maxProgress", maxProgress);
+        output.putBoolean("autoMode", autoMode);
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        itemHandler.deserializeNBT(registries, tag.getCompound("inventory"));
-        progress = tag.getInt("progress");
-        maxProgress = tag.getInt("maxProgress");
-        autoMode = tag.getBoolean("autoMode");
-    }
-
-    @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
-        CompoundTag tag = new CompoundTag();
-        saveAdditional(tag, registries);
-        return tag;
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        input.child("inventory").ifPresent(itemHandler::deserialize);
+        progress = input.getIntOr("progress", 0);
+        maxProgress = input.getIntOr("maxProgress", MANUAL_PROGRESS_PER_CLICK);
+        autoMode = input.getBooleanOr("autoMode", false);
     }
 
     @Override

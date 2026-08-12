@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.impl;
 
-import com.altnoir.poopsky.compat.create.data.PDigestingRecipeGen;
-import com.altnoir.poopsky.compat.create.data.PHauntingRecipeGen;
-import com.altnoir.poopsky.compat.create.data.PWashingRecipeGen;
+//import com.altnoir.poopsky.compat.create.data.PDigestingRecipeGen;
+//import com.altnoir.poopsky.compat.create.data.PHauntingRecipeGen;
+//import com.altnoir.poopsky.compat.create.data.PWashingRecipeGen;
 import com.altnoir.poopsky.data.BlockStateGen;
 import com.altnoir.poopsky.data.ItemModelGen;
 import com.altnoir.poopsky.data.PaintingVariantTagsGen;
@@ -42,8 +42,8 @@ public class DataGenerators {
         generators.addProvider(event.includeClient(), new SoundGen(packOutput));
 
         // Compat
-        generators.addProvider(event.includeServer(), new PDigestingRecipeGen(packOutput, lookupProvider));
-        generators.addProvider(event.includeServer(), new PWashingRecipeGen(packOutput, lookupProvider));
-        generators.addProvider(event.includeServer(), new PHauntingRecipeGen(packOutput, lookupProvider));
+//        generators.addProvider(event.includeServer(), new PDigestingRecipeGen(packOutput, lookupProvider));
+//        generators.addProvider(event.includeServer(), new PWashingRecipeGen(packOutput, lookupProvider));
+//        generators.addProvider(event.includeServer(), new PHauntingRecipeGen(packOutput, lookupProvider));
     }
 }

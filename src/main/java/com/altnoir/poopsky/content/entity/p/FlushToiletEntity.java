@@ -40,12 +40,12 @@ public class FlushToiletEntity extends Entity {
         if (this.level().isClientSide()) return;
         var state = this.level().getBlockState(this.blockPosition());
         if (!(state.getBlock() instanceof FlushToiletBlock)) {
-            this.kill();
+            this.kill((net.minecraft.server.level.ServerLevel) this.level());
             return;
         }
 
         if (this.getPassengers().isEmpty() || state.getValue(FlushToiletBlock.CLOSED)) {
-            this.kill();
+            this.kill((net.minecraft.server.level.ServerLevel) this.level());
             return;
         }
 
@@ -68,11 +68,10 @@ public class FlushToiletEntity extends Entity {
     protected void removePassenger(Entity passenger) {
         if (passenger instanceof LivingEntity living) {
             living.setDeltaMovement(living.getDeltaMovement().add(0.0, 0.4, 0.0));
-            living.hasImpulse = true;
         }
         super.removePassenger(passenger);
         if (!this.isRemoved()) {
-            this.kill();
+            this.kill((net.minecraft.server.level.ServerLevel) this.level());
         }
     }
 

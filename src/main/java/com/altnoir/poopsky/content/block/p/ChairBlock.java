@@ -56,13 +56,11 @@ public class ChairBlock extends Block {
     }
 
     @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.is(newState.getBlock())) {
-            for (ChairEntity chairEntity : level.getEntities(PoEntityType.STOOL.get(), new AABB(pos), e -> true)) {
-                chairEntity.kill();
-            }
+    protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
+        for (ChairEntity chairEntity : level.getEntities(PoEntityType.STOOL.get(), new AABB(pos), e -> true)) {
+            chairEntity.kill(level);
         }
-        super.onRemove(state, level, pos, newState, movedByPiston);
+        super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
@@ -188,7 +189,9 @@ public class ToiletType implements Comparable<ToiletType> {
         Block sourceBlock = null;
         if (obj.has("source_block") && !obj.get("source_block").isJsonNull()) {
             String blockId = obj.get("source_block").getAsString();
-            sourceBlock = BuiltInRegistries.BLOCK.get(Identifier.parse(blockId));
+            sourceBlock = BuiltInRegistries.BLOCK.get(Identifier.parse(blockId))
+                    .map(Holder.Reference::value)
+                    .orElse(null);
         }
 
         // category (可选，默认 "wood")

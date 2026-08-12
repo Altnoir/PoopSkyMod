@@ -9,9 +9,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.BlockUtil;
 import net.minecraft.util.Mth;
@@ -28,12 +28,13 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Vector3f;
 
 
 public class ToiletPlugEntity extends VehicleEntity implements Leashable {
@@ -92,12 +93,10 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
     }
 
     @Override
-    public InteractionResult interact(Player player, InteractionHand hand) {
-        if (!this.level().isClientSide()) {
-            return player.startRiding(this) ? InteractionResult.CONSUME : InteractionResult.PASS;
-        } else {
-            return InteractionResult.SUCCESS;
-        }
+    public InteractionResult interact(Player player, InteractionHand hand, Vec3 location) {
+        return !this.level().isClientSide() && player.startRiding(this)
+                ? InteractionResult.SUCCESS_SERVER
+                : InteractionResult.PASS;
     }
 
     @Override
@@ -116,7 +115,6 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
         return !this.isRemoved();
     }
 
-    @Override
     public void lerpTo(double x, double y, double z, float yRot, float xRot, int steps) {
         this.lerpX = x;
         this.lerpY = y;
@@ -126,27 +124,22 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
         this.lerpSteps = 10;
     }
 
-    @Override
     public double lerpTargetX() {
         return this.lerpSteps > 0 ? this.lerpX : this.getX();
     }
 
-    @Override
     public double lerpTargetY() {
         return this.lerpSteps > 0 ? this.lerpY : this.getY();
     }
 
-    @Override
     public double lerpTargetZ() {
         return this.lerpSteps > 0 ? this.lerpZ : this.getZ();
     }
 
-    @Override
     public float lerpTargetXRot() {
         return this.lerpSteps > 0 ? (float) this.lerpXRot : this.getXRot();
     }
 
-    @Override
     public float lerpTargetYRot() {
         return this.lerpSteps > 0 ? (float) this.lerpYRot : this.getYRot();
     }
@@ -168,7 +161,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
         super.tick();
         this.tickLerp();
 
-        boolean shouldProcessInput = this.isControlledByLocalInstance()
+        boolean shouldProcessInput = this.isLocalInstanceAuthoritative()
                 || (!this.level().isClientSide() && this.getControllingPassenger() != null);
         if (shouldProcessInput) {
             if (this.level().isClientSide()) {
@@ -187,7 +180,6 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
             this.setDeltaMovement(Vec3.ZERO);
         }
 
-        this.checkInsideBlocks();
         var list = this.level().getEntities(this, this.getBoundingBox().inflate(0.2F, -0.01F, 0.2F), EntitySelector.pushableBy(this));
         if (!list.isEmpty()) {
             boolean flag = !this.level().isClientSide() && !(this.getControllingPassenger() instanceof Player);
@@ -226,7 +218,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
     }
 
     private void tickLerp() {
-        if (this.isControlledByLocalInstance()) {
+        if (this.isLocalInstanceAuthoritative()) {
             this.lerpSteps = 0;
             this.syncPacketPositionCodec(this.getX(), this.getY(), this.getZ());
         }
@@ -314,11 +306,11 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
     }
 
     public static boolean canVehicleCollide(Entity vehicle, Entity entity) {
-        return (entity.canBeCollidedWith() || entity.isPushable()) && !vehicle.isPassengerOfSameVehicle(entity);
+        return (entity.canBeCollidedWith(vehicle) || entity.isPushable()) && !vehicle.isPassengerOfSameVehicle(entity);
     }
 
     @Override
-    public boolean canBeCollidedWith() {
+    public boolean canBeCollidedWith(@Nullable Entity other) {
         return true;
     }
 
@@ -335,7 +327,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
     @Override
     public void remove(Entity.RemovalReason reason) {
         if (!this.level().isClientSide() && reason.shouldDestroy() && this.isLeashed()) {
-            this.dropLeash(true, true);
+            this.dropLeash();
         }
 
         super.remove(reason);
@@ -416,11 +408,6 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
     }
 
     @Override
-    public boolean isInvulnerableTo(DamageSource source) {
-        return super.isInvulnerableTo(source) || source.is(DamageTypeTags.IS_FIRE);
-    }
-
-    @Override
     public boolean ignoreExplosion(Explosion explosion) {
         return true;
     }
@@ -431,15 +418,18 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
     }
 
     @Override
-    public boolean hurt(DamageSource source, float amount) {
+    public boolean hurtServer(ServerLevel level, DamageSource source, float amount) {
+        if (source.is(DamageTypeTags.IS_FIRE)) {
+            return false;
+        }
         if (source.getEntity() instanceof Player player && player.isCrouching()) {
-            this.kill();
+            this.kill(level);
             if (!player.getAbilities().instabuild) {
-                this.spawnAtLocation(PoItems.TOILET_PLUG.get());
+                this.spawnAtLocation(level, PoItems.TOILET_PLUG.get());
             }
             return true;
         }
-        return super.hurt(source, amount);
+        return super.hurtServer(level, source, amount);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -454,7 +444,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
             var adjustedY = this.getY() + 0.3 + floatingValue - this.getDeltaMovement().y;
             var adjustedZ = this.getZ() + offsetZ - this.getDeltaMovement().z;
 
-            this.level().addParticle(new DustParticleOptions(new Vector3f(0.4f, 0.25f, 0f), 2.0f),
+            this.level().addParticle(new DustParticleOptions(0x664000, 2.0f),
                     adjustedX,
                     adjustedY,
                     adjustedZ,
@@ -513,13 +503,13 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundTag compound) {
-        this.writeLeashData(compound, this.leashData);
+    protected void addAdditionalSaveData(ValueOutput output) {
+        this.writeLeashData(output, this.leashData);
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundTag compound) {
-        this.leashData = this.readLeashData(compound);
+    protected void readAdditionalSaveData(ValueInput input) {
+        this.readLeashData(input);
     }
 
     @Nullable
@@ -538,11 +528,4 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
         return new Vec3(0.0, 0.88F * this.getEyeHeight(), this.getBbWidth() * 0.64F);
     }
 
-    @Override
-    public void elasticRangeLeashBehaviour(Entity leashHolder, float distance) {
-        var vec3 = leashHolder.position().subtract(this.position()).normalize().scale((double) distance - 6.0);
-        var vec31 = this.getDeltaMovement();
-        var flag = vec31.dot(vec3) > 0.0;
-        this.setDeltaMovement(vec31.add(vec3.scale(flag ? 0.15F : 0.2F)));
-    }
 }

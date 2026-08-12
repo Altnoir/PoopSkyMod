@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.redstone.Orientation;
 import org.jetbrains.annotations.NotNull;
 
 public class DriedPoopBlock extends Block implements BonemealableBlock {
@@ -33,7 +34,7 @@ public class DriedPoopBlock extends Block implements BonemealableBlock {
 
     @Override
     public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
-        PoFeatureUtil.placePatch(level, random, PoConfigureFeatures.DRIED_POOP_PATCH, 96, 7, 3);
+        PoFeatureUtil.placePatch(level, pos.above(), random, PoConfigureFeatures.DRIED_POOP_PATCH, 96, 7, 3);
     }
 
     @Override
@@ -58,9 +59,9 @@ public class DriedPoopBlock extends Block implements BonemealableBlock {
     }
 
     @Override
-    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
-        super.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston);
-        if (neighborPos.equals(pos.above()) && hasHot(level, pos)) {
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, Orientation orientation, boolean movedByPiston) {
+        super.neighborChanged(state, level, pos, neighborBlock, orientation, movedByPiston);
+        if (hasHot(level, pos)) {
             level.scheduleTick(pos, this, 100);
         }
     }

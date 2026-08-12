@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.impl.util;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
@@ -10,7 +11,7 @@ public final class PoFeatureUtil {
     private PoFeatureUtil() {
     }
 
-    public static void placePatch(ServerLevel level, RandomSource random,
+    public static void placePatch(ServerLevel level, BlockPos origin, RandomSource random,
                                   ResourceKey<ConfiguredFeature<?, ?>> feature, int tries,
                                   int xzSpread, int ySpread) {
         level.registryAccess()
@@ -25,7 +26,7 @@ public final class PoFeatureUtil {
                                 level,
                                 level.getChunkSource().getGenerator(),
                                 random,
-                                level.getSharedSpawnPos().offset(x, y, z)
+                                origin.offset(x, y, z)
                         );
                     }
                 });

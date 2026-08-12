@@ -5,6 +5,7 @@ import com.altnoir.poopsky.content.block.CompooperType;
 import com.altnoir.poopsky.content.recipe.PCompooperRecipes;
 import com.altnoir.poopsky.init.PoBlocks;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -70,7 +71,7 @@ public abstract class AbstractCompooperBlock extends Block {
     }
 
     @Override
-    protected int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
+    protected int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos, Direction direction) {
         return blockState.getValue(LEVEL);
     }
 

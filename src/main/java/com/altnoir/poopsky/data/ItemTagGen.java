@@ -7,7 +7,7 @@ import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateItemTagsProvider;
-import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
+import net.minecraft.data.tags.TagAppender;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -286,8 +286,8 @@ public final class ItemTagGen {
                 .add(PoBlocks.GINKGO_TRAPDOOR.asItem());
     }
 
-    private static IntrinsicHolderTagsProvider.IntrinsicTagAppender<Item> tag(TagKey<Item> tag) {
-        return provider.addTag(tag);
+    private static TagAppender<Item, Item> tag(TagKey<Item> tag) {
+        return provider.tag(tag);
     }
 
     private static void copy(TagKey<Block> blockTag, TagKey<Item> itemTag) {

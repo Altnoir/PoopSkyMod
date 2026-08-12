@@ -45,7 +45,7 @@ public class ChiliVinesPlantBlock extends GrowingPlantBodyBlock implements Bonem
     }
 
     @Override
-    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
+    protected ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData) {
         return new ItemStack(PoItems.DRAGON_BREATH_CHILI.get());
     }
 

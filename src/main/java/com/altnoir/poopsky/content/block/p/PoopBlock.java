@@ -19,6 +19,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.player.Player;
@@ -126,14 +127,14 @@ public class PoopBlock extends Block implements BonemealableBlock {
     }
 
     @Override
-    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
         if (this.isSlidingDown(pos, entity)) {
             this.maybeDoSlideAchievement(entity, pos);
             this.doSlideMovement(entity);
             this.maybeDoSlideEffects(level, entity);
         }
 
-        super.entityInside(state, level, pos, entity);
+        super.entityInside(state, level, pos, entity, effectApplier, isPrecise);
     }
 
     private boolean isSlidingDown(BlockPos pos, Entity entity) {
@@ -210,8 +211,8 @@ public class PoopBlock extends Block implements BonemealableBlock {
     @Override
     public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
         level.registryAccess()
-                .registry(Registries.CONFIGURED_FEATURE)
-                .flatMap(holder -> holder.getHolder(PoConfigureFeatures.POOP_PATCH_BONEMEAL))
+                .lookupOrThrow(Registries.CONFIGURED_FEATURE)
+                .get(PoConfigureFeatures.POOP_PATCH_BONEMEAL)
                 .ifPresent(reference -> reference.value().place(level, level.getChunkSource().getGenerator(), random, pos.above()));
     }
 

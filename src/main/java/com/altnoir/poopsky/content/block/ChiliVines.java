@@ -30,7 +30,7 @@ public interface ChiliVines {
             BlockState blockstate = state.setValue(CHILI, false);
             level.setBlock(pos, blockstate, 2);
             level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(entity, blockstate));
-            return InteractionResult.sidedSuccess(level.isClientSide());
+            return InteractionResult.SUCCESS;
         } else {
             return InteractionResult.PASS;
         }

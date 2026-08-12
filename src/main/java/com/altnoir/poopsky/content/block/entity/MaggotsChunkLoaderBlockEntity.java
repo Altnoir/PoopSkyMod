@@ -8,8 +8,6 @@ import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoSoundEvents;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
@@ -17,6 +15,8 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.common.world.chunk.TicketController;
 import net.neoforged.neoforge.common.world.chunk.TicketHelper;
 import net.neoforged.neoforge.common.world.chunk.TicketSet;
@@ -185,14 +185,14 @@ public class MaggotsChunkLoaderBlockEntity extends BlockEntity {
     }
 
     public void releaseAllChunks(ServerLevel level) {
-        ChunkPos center = new ChunkPos(worldPosition);
+        ChunkPos center = ChunkPos.containing(worldPosition);
         if (loadedRadius >= 0) {
             level.playSound(null, worldPosition, PoSoundEvents.BLOCK_MAGGOTS_CHUNK_LOADER_DEACTIVATE.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
         }
         int cleanupRadius = Math.max(loadedRadius, MAX_LOADED_RADIUS);
         for (int offsetX = -cleanupRadius; offsetX <= cleanupRadius; offsetX++) {
             for (int offsetZ = -cleanupRadius; offsetZ <= cleanupRadius; offsetZ++) {
-                TICKET_CONTROLLER.forceChunk(level, worldPosition, center.x + offsetX, center.z + offsetZ, false, true);
+                TICKET_CONTROLLER.forceChunk(level, worldPosition, center.x() + offsetX, center.z() + offsetZ, false, true);
             }
         }
         loadedRadius = -1;
@@ -201,14 +201,14 @@ public class MaggotsChunkLoaderBlockEntity extends BlockEntity {
     }
 
     private void updateTickets(ServerLevel level, int oldRadius, int newRadius) {
-        ChunkPos center = new ChunkPos(worldPosition);
+        ChunkPos center = ChunkPos.containing(worldPosition);
         int maxRadius = Math.max(oldRadius, newRadius);
         for (int offsetX = -maxRadius; offsetX <= maxRadius; offsetX++) {
             for (int offsetZ = -maxRadius; offsetZ <= maxRadius; offsetZ++) {
                 boolean wasLoaded = inRadius(offsetX, offsetZ, oldRadius);
                 boolean shouldLoad = inRadius(offsetX, offsetZ, newRadius);
                 if (wasLoaded != shouldLoad) {
-                    TICKET_CONTROLLER.forceChunk(level, worldPosition, center.x + offsetX, center.z + offsetZ, shouldLoad, true);
+                    TICKET_CONTROLLER.forceChunk(level, worldPosition, center.x() + offsetX, center.z() + offsetZ, shouldLoad, true);
                 }
             }
         }
@@ -228,13 +228,13 @@ public class MaggotsChunkLoaderBlockEntity extends BlockEntity {
             }
 
             int radius = getStructureLevel(level, owner) - 1;
-            ChunkPos center = new ChunkPos(owner);
-            for (long chunk : new LongOpenHashSet(entry.getValue().nonTicking())) {
+            ChunkPos center = ChunkPos.containing(owner);
+            for (long chunk : new LongOpenHashSet(entry.getValue().normal())) {
                 helper.removeTicket(owner, chunk, false);
             }
-            for (long chunk : new LongOpenHashSet(entry.getValue().ticking())) {
-                ChunkPos chunkPos = new ChunkPos(chunk);
-                if (!inRadius(chunkPos.x - center.x, chunkPos.z - center.z, radius)) {
+            for (long chunk : new LongOpenHashSet(entry.getValue().naturalSpawning())) {
+                ChunkPos chunkPos = ChunkPos.unpack(chunk);
+                if (!inRadius(chunkPos.x() - center.x(), chunkPos.z() - center.z(), radius)) {
                     helper.removeTicket(owner, chunk, true);
                 }
             }
@@ -247,19 +247,14 @@ public class MaggotsChunkLoaderBlockEntity extends BlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
-        return saveCustomOnly(registries);
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt("loaded_radius", loadedRadius);
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.putInt("loaded_radius", loadedRadius);
-    }
-
-    @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        loadedRadius = tag.contains("loaded_radius") ? tag.getInt("loaded_radius") : -1;
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        loadedRadius = input.getIntOr("loaded_radius", -1);
     }
 }

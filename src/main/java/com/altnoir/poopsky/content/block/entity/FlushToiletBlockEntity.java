@@ -3,9 +3,7 @@ package com.altnoir.poopsky.content.block.entity;
 import com.altnoir.poopsky.client.inventory.FlushToiletMenu;
 import com.altnoir.poopsky.init.PoBlockEntityType;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.Identifier;
@@ -23,6 +21,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.status.ChunkStatus;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.wrapper.RangedWrapper;
@@ -156,8 +156,8 @@ public class FlushToiletBlockEntity extends BlockEntity implements MenuProvider 
         var targetWorld = server.getLevel(ResourceKey.create(Registries.DIMENSION, targetDimension));
         if (targetWorld == null) return;
 
-        var chunkPos = new ChunkPos(this.getLinkedPos());
-        targetWorld.getChunkSource().getChunk(chunkPos.x, chunkPos.z, ChunkStatus.FULL, true);
+        var chunkPos = ChunkPos.containing(this.getLinkedPos());
+        targetWorld.getChunkSource().getChunk(chunkPos.x(), chunkPos.z(), ChunkStatus.FULL, true);
 
         if (targetWorld.getBlockEntity(linkedPos) instanceof FlushToiletBlockEntity be) {
             be.setLinkedPos(BlockPos.ZERO, "");
@@ -177,39 +177,21 @@ public class FlushToiletBlockEntity extends BlockEntity implements MenuProvider 
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.put("inventory", itemHandler.serializeNBT(registries));
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        itemHandler.serialize(output.child("inventory"));
         if (linkedPos != null && linkedDim != null) {
-            tag.putLong("LinkedPos", linkedPos.asLong());
-            tag.putString("LinkedDim", linkedDim);
+            output.putLong("LinkedPos", linkedPos.asLong());
+            output.putString("LinkedDim", linkedDim);
         }
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        itemHandler.deserializeNBT(registries, tag.getCompound("inventory"));
-        if (tag.contains("LinkedPos")) {
-            this.linkedPos = BlockPos.of(tag.getLong("LinkedPos"));
-            this.linkedDim = tag.getString("LinkedDim");
-        }
-    }
-
-    @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
-        CompoundTag tag = new CompoundTag();
-        saveAdditional(tag, registries);
-        return tag;
-    }
-
-    @Override
-    public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider registries) {
-        super.handleUpdateTag(tag, registries);
-        if (tag.contains("LinkedPos")) {
-            this.linkedPos = BlockPos.of(tag.getLong("LinkedPos"));
-            this.linkedDim = tag.getString("LinkedDim");
-        }
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        input.child("inventory").ifPresent(itemHandler::deserialize);
+        input.getLong("LinkedPos").ifPresent(value -> this.linkedPos = BlockPos.of(value));
+        input.getString("LinkedDim").ifPresent(value -> this.linkedDim = value);
     }
 
     @Override

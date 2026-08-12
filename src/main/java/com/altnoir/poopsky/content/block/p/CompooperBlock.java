@@ -194,11 +194,9 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
     }
 
     @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        super.onRemove(state, level, pos, newState, movedByPiston);
-        if (!state.is(newState.getBlock())) {
-            level.invalidateCapabilities(pos);
-        }
+    protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
+        level.invalidateCapabilities(pos);
+        super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
     }
 
     @Override
@@ -289,7 +287,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
     }
 
     @Override
-    protected int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
+    protected int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos, Direction direction) {
         return blockState.getValue(POOP_LEVEL);
     }
 
