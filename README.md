@@ -34,7 +34,7 @@ A Minecraft mod that introduces many new Poop and items.
 ## LICENSE
 
 - [CODE - MIT](LICENSE-CODE)
-- [ART - CC BY-NC 4.0](LICENSE-ART)
+- [ASSETS - CC BY-NC 4.0](LICENSE-ART)
 
 ## Credits
 
