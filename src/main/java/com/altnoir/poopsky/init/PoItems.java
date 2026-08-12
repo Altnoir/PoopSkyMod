@@ -5,7 +5,6 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.ToiletComponent;
 import com.altnoir.poopsky.content.item.PArmorMaterials;
 import com.altnoir.poopsky.content.item.PFoods;
-import com.altnoir.poopsky.content.item.PToolTiers;
 import com.altnoir.poopsky.content.item.p.*;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.tterrag.registrate.util.entry.ItemEntry;
@@ -15,7 +14,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.equipment.ArmorType;
-import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.ArrayList;
@@ -76,9 +74,10 @@ public class PoItems {
 
     public static final ItemEntry<Item> OMINOUS_FILTHY_INGOT = registerItem("ominous_filthy_ingot", Item::new);
     public static final ItemEntry<MilosSwordItem> MILOS_SWORD = registerItemNoModel("milos_sword",
-            prop -> new MilosSwordItem(PToolTiers.MILOS,
-                    prop.attributes(MilosSwordItem.createAttributes(PToolTiers.MILOS, 2, 1, -3.2F))
-            ));
+            prop -> new MilosSwordItem(prop
+                    .durability(4088)
+                    .repairable(OMINOUS_FILTHY_INGOT.get())
+                    .attributes(MilosSwordItem.createAttributes(2, 11, -3.2F))));
 
     public static final ItemEntry<OmenArmorItem> OMEN_HELMET = registerItemNoModel("omen_helmet",
             prop -> new OmenArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorType.HELMET,
@@ -100,22 +99,17 @@ public class PoItems {
     public static final ItemEntry<TimeBellItem> TIME_BELL = registerItem("time_bell",
             props -> new TimeBellItem(props.stacksTo(1)));
     public static final ItemEntry<Item> SPALL = registerItem("spall", Item::new);
-    public static final ItemEntry<SwordItem> SPALL_SWORD = registerHandheldItem("spall_sword",
-            prop -> new SwordItem(Tiers.STONE,
-                    prop.attributes(SwordItem.createAttributes(Tiers.STONE, 3, -2.4F))));
+    public static final ItemEntry<Item> SPALL_SWORD = registerHandheldItem("spall_sword",
+            prop -> new Item(prop.sword(ToolMaterial.STONE, 3, -2.4F)));
 
-    public static final ItemEntry<ShovelItem> SPALL_SHOVEL = registerHandheldItem("spall_shovel",
-            prop -> new ShovelItem(Tiers.STONE,
-                    prop.attributes(ShovelItem.createAttributes(Tiers.STONE, 1.5F, -3.0F))));
-    public static final ItemEntry<PickaxeItem> SPALL_PICKAXE = registerHandheldItem("spall_pickaxe",
-            prop -> new PickaxeItem(Tiers.STONE,
-                    prop.attributes(PickaxeItem.createAttributes(Tiers.STONE, 1.0F, -2.8F))));
-    public static final ItemEntry<AxeItem> SPALL_AXE = registerHandheldItem("spall_axe",
-            prop -> new AxeItem(Tiers.STONE,
-                    prop.attributes(AxeItem.createAttributes(Tiers.STONE, 6.0F, -3.2F))));
-    public static final ItemEntry<HoeItem> SPALL_HOE = registerHandheldItem("spall_hoe",
-            prop -> new HoeItem(Tiers.STONE,
-                    prop.attributes(HoeItem.createAttributes(Tiers.STONE, -1.0F, -2.0F))));
+    public static final ItemEntry<Item> SPALL_SHOVEL = registerHandheldItem("spall_shovel",
+            prop -> new Item(prop.shovel(ToolMaterial.STONE, 1.5F, -3.0F)));
+    public static final ItemEntry<Item> SPALL_PICKAXE = registerHandheldItem("spall_pickaxe",
+            prop -> new Item(prop.pickaxe(ToolMaterial.STONE, 1.0F, -2.8F)));
+    public static final ItemEntry<Item> SPALL_AXE = registerHandheldItem("spall_axe",
+            prop -> new Item(prop.axe(ToolMaterial.STONE, 6.0F, -3.2F)));
+    public static final ItemEntry<Item> SPALL_HOE = registerHandheldItem("spall_hoe",
+            prop -> new Item(prop.hoe(ToolMaterial.STONE, -1.0F, -2.0F)));
 
     public static final ItemEntry<Item> SALTPETER_SHARD = REGISTRATE.item("saltpeter_shard", Item::new)
             .lang("Saltpeter")
@@ -133,9 +127,9 @@ public class PoItems {
     public static final ItemEntry<Item> LIGHT_DANCE_MUSIC_DISC = registerMusicDisc("music_disc_light_dance", PoSoundEvents.LIGHT_DANCE_KEY);
     public static final ItemEntry<Item> MOON_BOWL_MUSIC_DISC = registerMusicDisc("music_disc_moon_bowl", PoSoundEvents.MOON_BOWL_KEY);
     public static final ItemEntry<GinkgoBoatItem> GINKGO_BOAT = registerItem("ginkgo_boat",
-            props -> new GinkgoBoatItem(false, PoEntityType.GINKGO_BOAT, props.stacksTo(1)));
+            props -> new GinkgoBoatItem(PoEntityType.GINKGO_BOAT.get(), props.stacksTo(1)));
     public static final ItemEntry<GinkgoBoatItem> GINKGO_CHEST_BOAT = REGISTRATE
-            .item("ginkgo_chest_boat", props -> new GinkgoBoatItem(true, PoEntityType.GINKGO_CHEST_BOAT, props.stacksTo(1)))
+            .item("ginkgo_chest_boat", props -> new GinkgoBoatItem(PoEntityType.GINKGO_CHEST_BOAT.get(), props.stacksTo(1)))
             .lang("Ginkgo Boat with Chest")
             .register();
 
@@ -143,10 +137,10 @@ public class PoItems {
             props -> new FlushToiletCartItem(PoEntityType.FLUSH_TOILET_CART, props.stacksTo(1)));
     public static final ItemEntry<FlushToiletCartItem> GOLDEN_FLUSH_TOILET_CART = registerItem("golden_flush_toilet_cart",
             props -> new FlushToiletCartItem(PoEntityType.GOLDEN_FLUSH_TOILET_CART, props.stacksTo(1)));
-    public static final ItemEntry<DeferredSpawnEggItem> POOLIME_SPAWN_EGG = registerItemNoModel("poolime_spawn_egg",
-            prop -> new DeferredSpawnEggItem(PoEntityType.POOLIME, 0x7D5F36, 0x5E4228, prop));
-    public static final ItemEntry<DeferredSpawnEggItem> FLY_SPAWN_EGG = registerItemNoModel("fly_spawn_egg",
-            prop -> new DeferredSpawnEggItem(PoEntityType.FLY, 0x3B4346, 0x900D2D, prop));
+    public static final ItemEntry<SpawnEggItem> POOLIME_SPAWN_EGG = registerItemNoModel("poolime_spawn_egg",
+            prop -> new SpawnEggItem(prop.spawnEgg(PoEntityType.POOLIME.get())));
+    public static final ItemEntry<SpawnEggItem> FLY_SPAWN_EGG = registerItemNoModel("fly_spawn_egg",
+            prop -> new SpawnEggItem(prop.spawnEgg(PoEntityType.FLY.get())));
 
     public static final ItemEntry<FeedableBlockItem> MAGGOTS_SEEDS = registerItem("maggots_seeds",
             props -> new FeedableBlockItem(PoBlocks.MAGGOTS.get(), new Item.Properties().food(PFoods.MAGGOTS_SEEDS).stacksTo(88)));

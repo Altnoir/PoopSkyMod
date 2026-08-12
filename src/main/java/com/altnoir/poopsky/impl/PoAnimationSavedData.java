@@ -1,40 +1,51 @@
 package com.altnoir.poopsky.impl;
 
+import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.impl.network.PoAnimation;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.StringTag;
-import net.minecraft.nbt.Tag;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.saveddata.SavedData;
+import net.minecraft.world.level.saveddata.SavedDataType;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 public final class PoAnimationSavedData extends SavedData {
-    private static final String DATA_NAME = "poopsky_intro";
     private static final String PLAYED_PLAYERS_TAG = "played_players";
     private static final String PLAYED_PLAYER_NAMES_TAG = "played_player_names";
-    private static final Factory<PoAnimationSavedData> FACTORY = new Factory<>(PoAnimationSavedData::new, PoAnimationSavedData::load);
+    private static final Codec<PoAnimationSavedData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            Codec.STRING.listOf().optionalFieldOf(PLAYED_PLAYERS_TAG, List.of()).forGetter(data -> uuidStrings(data.playedPlayers)),
+            Codec.STRING.listOf().optionalFieldOf(PLAYED_PLAYER_NAMES_TAG, List.of()).forGetter(data -> List.copyOf(data.playedPlayerNames)),
+            Codec.STRING.listOf().optionalFieldOf(tagName(PoAnimation.POEM, PLAYED_PLAYERS_TAG), List.of()).forGetter(data -> uuidStrings(data.poemPlayedPlayers)),
+            Codec.STRING.listOf().optionalFieldOf(tagName(PoAnimation.POEM, PLAYED_PLAYER_NAMES_TAG), List.of()).forGetter(data -> List.copyOf(data.poemPlayedPlayerNames))
+    ).apply(instance, PoAnimationSavedData::new));
+    private static final SavedDataType<PoAnimationSavedData> TYPE = new SavedDataType<>(
+            PoopSky.loc("intro"),
+            PoAnimationSavedData::new,
+            CODEC
+    );
 
     private final Set<UUID> playedPlayers = new HashSet<>();
     private final Set<String> playedPlayerNames = new HashSet<>();
     private final Set<UUID> poemPlayedPlayers = new HashSet<>();
     private final Set<String> poemPlayedPlayerNames = new HashSet<>();
 
-    public static PoAnimationSavedData get(ServerLevel level) {
-        return level.getDataStorage().computeIfAbsent(FACTORY, DATA_NAME);
+    private PoAnimationSavedData() {
     }
 
-    private static PoAnimationSavedData load(CompoundTag tag, HolderLookup.Provider registries) {
-        PoAnimationSavedData data = new PoAnimationSavedData();
-        readUuids(tag, PLAYED_PLAYERS_TAG, data.playedPlayers);
-        readNames(tag, PLAYED_PLAYER_NAMES_TAG, data.playedPlayerNames);
-        readUuids(tag, tagName(PoAnimation.POEM, PLAYED_PLAYERS_TAG), data.poemPlayedPlayers);
-        readNames(tag, tagName(PoAnimation.POEM, PLAYED_PLAYER_NAMES_TAG), data.poemPlayedPlayerNames);
-        return data;
+    private PoAnimationSavedData(List<String> playedPlayers, List<String> playedPlayerNames,
+                                 List<String> poemPlayedPlayers, List<String> poemPlayedPlayerNames) {
+        this.playedPlayers.addAll(parseUuids(playedPlayers));
+        this.playedPlayerNames.addAll(playedPlayerNames);
+        this.poemPlayedPlayers.addAll(parseUuids(poemPlayedPlayers));
+        this.poemPlayedPlayerNames.addAll(poemPlayedPlayerNames);
+    }
+
+    public static PoAnimationSavedData get(ServerLevel level) {
+        return level.getDataStorage().computeIfAbsent(TYPE);
     }
 
     public boolean markPlayed(PoAnimation animation, UUID playerId, String playerName) {
@@ -53,15 +64,6 @@ public final class PoAnimationSavedData extends SavedData {
         return this.players(animation).contains(playerId) || this.playerNames(animation).contains(playerName);
     }
 
-    @Override
-    public CompoundTag save(CompoundTag tag, HolderLookup.Provider registries) {
-        tag.put(PLAYED_PLAYERS_TAG, toList(this.playedPlayers));
-        tag.put(PLAYED_PLAYER_NAMES_TAG, toList(this.playedPlayerNames));
-        tag.put(tagName(PoAnimation.POEM, PLAYED_PLAYERS_TAG), toList(this.poemPlayedPlayers));
-        tag.put(tagName(PoAnimation.POEM, PLAYED_PLAYER_NAMES_TAG), toList(this.poemPlayedPlayerNames));
-        return tag;
-    }
-
     private Set<UUID> players(PoAnimation animation) {
         return animation == PoAnimation.POEM ? this.poemPlayedPlayers : this.playedPlayers;
     }
@@ -74,26 +76,20 @@ public final class PoAnimationSavedData extends SavedData {
         return animation.serializedName() + "_" + suffix;
     }
 
-    private static void readUuids(CompoundTag tag, String tagName, Set<UUID> values) {
-        ListTag entries = tag.getList(tagName, Tag.TAG_STRING);
-        for (int index = 0; index < entries.size(); index++) {
+    private static Set<UUID> parseUuids(Iterable<String> entries) {
+        Set<UUID> values = new HashSet<>();
+        for (String entry : entries) {
             try {
-                values.add(UUID.fromString(entries.getString(index)));
+                values.add(UUID.fromString(entry));
             } catch (IllegalArgumentException ignored) {
             }
         }
+        return values;
     }
 
-    private static void readNames(CompoundTag tag, String tagName, Set<String> values) {
-        ListTag entries = tag.getList(tagName, Tag.TAG_STRING);
-        for (int index = 0; index < entries.size(); index++) {
-            values.add(entries.getString(index));
-        }
-    }
-
-    private static ListTag toList(Iterable<?> values) {
-        ListTag list = new ListTag();
-        values.forEach(value -> list.add(StringTag.valueOf(value.toString())));
-        return list;
+    private static List<String> uuidStrings(Iterable<UUID> values) {
+        List<String> result = new java.util.ArrayList<>();
+        values.forEach(value -> result.add(value.toString()));
+        return result;
     }
 }

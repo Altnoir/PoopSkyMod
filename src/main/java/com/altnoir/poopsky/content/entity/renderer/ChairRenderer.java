@@ -4,21 +4,20 @@ import com.altnoir.poopsky.content.entity.p.ChairEntity;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
-import net.minecraft.resources.Identifier;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
 
-public class ChairRenderer extends EntityRenderer<ChairEntity> {
+public class ChairRenderer extends EntityRenderer<ChairEntity, EntityRenderState> {
     public ChairRenderer(EntityRendererProvider.Context context) {
         super(context);
     }
 
     @Override
-    public Identifier getTextureLocation(ChairEntity entity) {
-        return MissingTextureAtlasSprite.getLocation();
+    public boolean shouldRender(ChairEntity livingEntity, Frustum camera, double camX, double camY, double camZ) {
+        return true;
     }
 
     @Override
-    public boolean shouldRender(ChairEntity livingEntity, Frustum camera, double camX, double camY, double camZ) {
-        return true;
+    public EntityRenderState createRenderState() {
+        return new EntityRenderState();
     }
 }

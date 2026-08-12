@@ -43,7 +43,7 @@ import java.util.Optional;
 
 public class PortableToiletBlock extends Block {
     public static final MapCodec<PortableToiletBlock> CODEC = simpleCodec(PortableToiletBlock::new);
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
     private static final Component CONTAINER_TITLE = Component.translatable("container.poopsky.portable_toilet");

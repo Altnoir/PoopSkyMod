@@ -63,38 +63,27 @@ public class ToiletShapedRecipe extends ShapedRecipe {
         return RecipeType.CRAFTING;
     }
 
-    public static class Serializer implements RecipeSerializer<ToiletShapedRecipe> {
+    public static final MapCodec<ToiletShapedRecipe> MAP_CODEC = RecordCodecBuilder.mapCodec(instance ->
+            instance.group(
+                    RecipeSerializer.SHAPED_RECIPE.codec().fieldOf("delegate").forGetter(ToiletShapedRecipe::delegate),
+                    ToiletType.CODEC.fieldOf("toilet_type").forGetter(ToiletShapedRecipe::toiletType)
+            ).apply(instance, ToiletShapedRecipe::new)
+    );
 
-        public static final MapCodec<ToiletShapedRecipe> CODEC = RecordCodecBuilder.mapCodec(instance ->
-                instance.group(
-                        RecipeSerializer.SHAPED_RECIPE.codec().fieldOf("delegate").forGetter(ToiletShapedRecipe::delegate),
-                        ToiletType.CODEC.fieldOf("toilet_type").forGetter(ToiletShapedRecipe::toiletType)
-                ).apply(instance, ToiletShapedRecipe::new)
-        );
-
-        public static final StreamCodec<RegistryFriendlyByteBuf, ToiletShapedRecipe> STREAM_CODEC = new StreamCodec<>() {
-            @Override
-            public ToiletShapedRecipe decode(RegistryFriendlyByteBuf buf) {
-                ShapedRecipe shaped = RecipeSerializer.SHAPED_RECIPE.streamCodec().decode(buf);
-                ToiletType type = ToiletType.STREAM_CODEC.decode(buf);
-                return new ToiletShapedRecipe(shaped, type);
-            }
-
-            @Override
-            public void encode(RegistryFriendlyByteBuf buf, ToiletShapedRecipe recipe) {
-                RecipeSerializer.SHAPED_RECIPE.streamCodec().encode(buf, recipe.delegate());
-                ToiletType.STREAM_CODEC.encode(buf, recipe.toiletType());
-            }
-        };
-
+    public static final StreamCodec<RegistryFriendlyByteBuf, ToiletShapedRecipe> STREAM_CODEC = new StreamCodec<>() {
         @Override
-        public MapCodec<ToiletShapedRecipe> codec() {
-            return CODEC;
+        public ToiletShapedRecipe decode(RegistryFriendlyByteBuf buf) {
+            ShapedRecipe shaped = RecipeSerializer.SHAPED_RECIPE.streamCodec().decode(buf);
+            ToiletType type = ToiletType.STREAM_CODEC.decode(buf);
+            return new ToiletShapedRecipe(shaped, type);
         }
 
         @Override
-        public StreamCodec<RegistryFriendlyByteBuf, ToiletShapedRecipe> streamCodec() {
-            return STREAM_CODEC;
+        public void encode(RegistryFriendlyByteBuf buf, ToiletShapedRecipe recipe) {
+            RecipeSerializer.SHAPED_RECIPE.streamCodec().encode(buf, recipe.delegate());
+            ToiletType.STREAM_CODEC.encode(buf, recipe.toiletType());
         }
-    }
+    };
+
+    public static final RecipeSerializer<ToiletShapedRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
 }

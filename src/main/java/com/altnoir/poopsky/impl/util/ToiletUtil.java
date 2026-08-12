@@ -34,7 +34,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.levelgen.feature.EndPlatformFeature;
-import net.minecraft.world.level.portal.DimensionTransition;
+import net.minecraft.world.level.portal.TeleportTransition;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.ItemStackHandler;
@@ -327,19 +327,19 @@ public class ToiletUtil {
         } else {
             if (entity instanceof ServerPlayer serverPlayer) {
                 entity.setPortalCooldown();
-                return entity.changeDimension(serverPlayer.findRespawnPositionAndUseSpawnBlock(false, DimensionTransition.DO_NOTHING)) != null;
+                return entity.changeDimension(serverPlayer.findRespawnPositionAndUseSpawnBlock(false, TeleportTransition.DO_NOTHING)) != null;
             }
             destination = entity.adjustSpawnLocation(targetLevel, targetLevel.getSharedSpawnPos()).getBottomCenter();
         }
 
         entity.setPortalCooldown();
-        return entity.changeDimension(new DimensionTransition(
+        return entity.changeDimension(new TeleportTransition(
                 targetLevel,
                 destination,
                 entity.getDeltaMovement(),
                 yRot,
                 entity.getXRot(),
-                DimensionTransition.PLAY_PORTAL_SOUND.then(DimensionTransition.PLACE_PORTAL_TICKET)
+                TeleportTransition.PLAY_PORTAL_SOUND.then(TeleportTransition.PLACE_PORTAL_TICKET)
         )) != null;
     }
 

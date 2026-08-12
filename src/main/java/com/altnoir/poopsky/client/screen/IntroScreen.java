@@ -15,12 +15,12 @@ import net.minecraft.client.gui.font.FontSet;
 import net.minecraft.client.gui.font.glyphs.BakedGlyph;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
+import net.minecraft.util.LightCoordsUtil;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import org.joml.Matrix4f;
@@ -470,7 +470,7 @@ public class IntroScreen extends Screen {
             GlyphInfo glyphInfo = fontSet.getGlyphInfo(codePoint, false);
             BakedGlyph glyph = fontSet.getGlyph(codePoint);
             VertexConsumer consumer = guiGraphics.bufferSource().getBuffer(glyph.renderType(Font.DisplayMode.NORMAL));
-            glyph.render(false, x, 0.0F, matrix, consumer, red, green, blue, alpha, LightTexture.FULL_BRIGHT);
+            glyph.render(false, x, 0.0F, matrix, consumer, red, green, blue, alpha, LightCoordsUtil.FULL_BRIGHT);
             x += glyphInfo.getAdvance(false);
             offset += Character.charCount(codePoint);
         }

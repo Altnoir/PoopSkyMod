@@ -10,7 +10,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -56,11 +56,11 @@ public class BaseToiletLavaBlock extends AbstractToiletBlock {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (state.getValue(LAVA)) {
             if (stack.is(Items.BUCKET)) {
                 if (level.isClientSide()) {
-                    return ItemInteractionResult.SUCCESS;
+                    return InteractionResult.SUCCESS;
                 }
                 level.playSound(null, pos, SoundEvents.BUCKET_FILL_LAVA, SoundSource.BLOCKS, 1.0F, 1.0F);
                 level.setBlock(pos, state.setValue(LAVA, false), 3);
@@ -68,7 +68,7 @@ public class BaseToiletLavaBlock extends AbstractToiletBlock {
                 ItemStack itemStack = ItemUtils.createFilledResult(stack, player, new ItemStack(Items.LAVA_BUCKET));
                 player.setItemInHand(hand, itemStack);
 
-                return ItemInteractionResult.sidedSuccess(false);
+                return InteractionResult.SUCCESS_SERVER;
             }
         }
         return super.useItemOn(stack, state, level, pos, player, hand, hitResult);

@@ -5,6 +5,7 @@ import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.impl.PoTags;
+import com.altnoir.poopsky.impl.util.PoFeatureUtil;
 import com.altnoir.poopsky.impl.util.ToiletUtil;
 import com.altnoir.poopsky.init.*;
 import com.altnoir.poopsky.worldgen.PoConfigureFeatures;
@@ -15,14 +16,13 @@ import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
@@ -44,7 +44,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.AABB;
@@ -58,7 +57,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class AbstractToiletBlock extends BaseEntityBlock {
-    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final EnumProperty<ToiletState> CONNECTION = EnumProperty.create("connection", ToiletState.class);
 
     private static final float EXPLOSION_POWER = 4.0F;
@@ -163,7 +162,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (!stack.canPerformAction(ItemAbilities.FIRESTARTER_LIGHT)) {
             return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
         }
@@ -175,7 +174,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
 
         consumeFireStarter(stack, player, hand);
         player.awardStat(Stats.ITEM_USED.get(item));
-        return ItemInteractionResult.sidedSuccess(level.isClientSide());
+        return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
     }
 
     private void consumeFireStarter(ItemStack stack, Player player, InteractionHand hand) {
@@ -187,7 +186,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     }
 
     @Nullable
-    protected ItemInteractionResult handleVariantReplacement(ItemStack stack, Level level, BlockPos pos, Player player, ToiletType.Category acceptedCategory) {
+    protected InteractionResult handleVariantReplacement(ItemStack stack, Level level, BlockPos pos, Player player, ToiletType.Category acceptedCategory) {
         if (!(stack.getItem() instanceof BlockItem blockItem)) {
             return null;
         }
@@ -198,7 +197,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
         }
 
         if (level.isClientSide()) {
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
 
         if (!(level.getBlockEntity(pos) instanceof ToiletBlockEntity blockEntity)) {
@@ -206,7 +205,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
         }
 
         replaceVariant(blockItem, stack, level, pos, player, blockEntity, newType);
-        return ItemInteractionResult.sidedSuccess(false);
+        return InteractionResult.SUCCESS_SERVER;
     }
 
     private void replaceVariant(BlockItem blockItem, ItemStack stack, Level level, BlockPos pos, Player player, ToiletBlockEntity blockEntity, ToiletType newType) {
@@ -311,10 +310,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
         }
 
         if (level.getBlockState(pos.below()).is(PoTags.Blocks.POOP_BLOCKS)) {
-            level.registryAccess()
-                    .registry(Registries.CONFIGURED_FEATURE)
-                    .flatMap(holder -> holder.getHolder(PoConfigureFeatures.SALTPETER_PATCH))
-                    .ifPresent(reference -> reference.value().place(level, level.getChunkSource().getGenerator(), random, pos.above()));
+            PoFeatureUtil.placePatch(level, random, PoConfigureFeatures.SALTPETER_PATCH, 3, 3, 3);
         }
     }
 

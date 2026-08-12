@@ -118,7 +118,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
             }
 
             Set<Identifier> allowedLocations = keys.stream()
-                    .map(ResourceKey::location)
+                    .map(ResourceKey::identifier)
                     .collect(Collectors.toUnmodifiableSet());
 
             return holder.unwrapKey()
@@ -127,22 +127,14 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
                     || holder.value().structures().stream()
                     .map(StructureSelectionEntry::structure)
                     .map(Holder::unwrapKey)
-                    .anyMatch(key -> key.map(ResourceKey::location).filter(allowedLocations::contains).isPresent());
+                    .anyMatch(key -> key.map(ResourceKey::identifier).filter(allowedLocations::contains).isPresent());
         }
     }
 
     @Override
-    public void applyCarvers(
-            WorldGenRegion level,
-            long seed,
-            RandomState randomState,
-            BiomeManager biomeManager,
-            StructureManager structureManager,
-            ChunkAccess chunk,
-            GenerationStep.Carving step
-    ) {
+    public void applyCarvers(WorldGenRegion level, long seed, RandomState randomState, BiomeManager biomeManager, StructureManager structureManager, ChunkAccess chunk) {
         if (generateNormal) {
-            super.applyCarvers(level, seed, randomState, biomeManager, structureManager, chunk, step);
+            super.applyCarvers(level, seed, randomState, biomeManager, structureManager, chunk);
         }
     }
 
@@ -280,14 +272,14 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
 
     private static boolean isStrongholdStructureSet(Holder<StructureSet> holder) {
         return holder.unwrapKey()
-                .map(ResourceKey::location)
+                .map(ResourceKey::identifier)
                 .filter(STRONGHOLDS_STRUCTURE_SET::equals)
                 .isPresent()
                 || holder.value().structures().stream()
                 .map(StructureSelectionEntry::structure)
                 .map(Holder::unwrapKey)
                 .flatMap(Optional::stream)
-                .map(ResourceKey::location)
+                .map(ResourceKey::identifier)
                 .anyMatch(STRONGHOLD_STRUCTURE::equals);
     }
 

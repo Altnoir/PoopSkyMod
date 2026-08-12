@@ -2,7 +2,6 @@ package com.altnoir.poopsky.worldgen;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.impl.PoTags;
-import com.altnoir.poopsky.impl.util.PoFeatureUtil;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.worldgen.foliage.RhombusFoliagePlacer;
 import com.google.common.collect.ImmutableList;
@@ -10,7 +9,6 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
-import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
@@ -20,7 +18,7 @@ import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.BaseCoralPlantTypeBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.PinkPetalsBlock;
+import net.minecraft.world.level.block.FlowerBedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -155,27 +153,24 @@ public class PoConfigureFeatures {
                 vegetationPatch(PoTags.Blocks.GOLDEN_POOP_BLOCK, PoBlocks.GOLDEN_POOP_BLOCK.get(), holdergetter.getOrThrow(GOLDEN_POOP_VEGETATION))
         );
 
-        register(context, DRIED_POOP_PATCH, Feature.RANDOM_PATCH,
-                FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK,
-                        new SimpleBlockConfiguration(
-                                new WeightedStateProvider(
-                                        WeightedList.<BlockState>builder()
-                                                .add(Blocks.SUGAR_CANE.defaultBlockState(), 50)
-                                                .add(Blocks.CACTUS.defaultBlockState(), 20)
-                                                .add(Blocks.DEAD_BUSH.defaultBlockState(), 30)
-                                )))
+        register(context, DRIED_POOP_PATCH, Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(
+                        new WeightedStateProvider(
+                                WeightedList.<BlockState>builder()
+                                        .add(Blocks.SUGAR_CANE.defaultBlockState(), 50)
+                                        .add(Blocks.CACTUS.defaultBlockState(), 20)
+                                        .add(Blocks.DEAD_BUSH.defaultBlockState(), 30)
+                        ))
         );
-        register(context, SALTPETER_PATCH, Feature.RANDOM_PATCH,
-                PoFeatureUtil.simplePatchConfiguration(Feature.SIMPLE_BLOCK,
-                        new SimpleBlockConfiguration(
-                                new WeightedStateProvider(
-                                        WeightedList.<BlockState>builder()
-                                                .add(PoBlocks.SALTPETER_CLUSTER.get().defaultBlockState(), 1)
-                                                .add(PoBlocks.LARGE_SALTPETER_BUD.get().defaultBlockState(), 9)
-                                                .add(PoBlocks.MEDIUM_SALTPETER_BUD.get().defaultBlockState(), 40)
-                                                .add(PoBlocks.SMALL_SALTPETER_BUD.get().defaultBlockState(), 100)
-
-                                )))
+        register(context, SALTPETER_PATCH, Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(
+                        new WeightedStateProvider(
+                                WeightedList.<BlockState>builder()
+                                        .add(PoBlocks.SALTPETER_CLUSTER.get().defaultBlockState(), 1)
+                                        .add(PoBlocks.LARGE_SALTPETER_BUD.get().defaultBlockState(), 9)
+                                        .add(PoBlocks.MEDIUM_SALTPETER_BUD.get().defaultBlockState(), 40)
+                                        .add(PoBlocks.SMALL_SALTPETER_BUD.get().defaultBlockState(), 100)
+                        ))
         );
 
         register(context, RAW_SAPLING_POOP_VEGETATION, Feature.SIMPLE_BLOCK,
@@ -194,7 +189,7 @@ public class PoConfigureFeatures {
                                         .add(Blocks.OXEYE_DAISY.defaultBlockState())
                                         .add(Blocks.CORNFLOWER.defaultBlockState())
                                         .add(Blocks.LILY_OF_THE_VALLEY.defaultBlockState())
-                                        .add(Blocks.PINK_PETALS.defaultBlockState().setValue(PinkPetalsBlock.AMOUNT, PinkPetalsBlock.MAX_FLOWERS))
+                                        .add(Blocks.PINK_PETALS.defaultBlockState().setValue(FlowerBedBlock.AMOUNT, 4))
                         ))
         );
         register(context, RAW_SAPLING_POOP_PATCH_BONEMEAL, Feature.VEGETATION_PATCH,

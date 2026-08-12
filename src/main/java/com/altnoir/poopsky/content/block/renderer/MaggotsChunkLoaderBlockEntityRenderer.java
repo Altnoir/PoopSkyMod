@@ -6,19 +6,23 @@ import com.altnoir.poopsky.init.PoRenderTypes;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.level.LevelEvent;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class MaggotsChunkLoaderBlockEntityRenderer implements BlockEntityRenderer<MaggotsChunkLoaderBlockEntity> {
+public class MaggotsChunkLoaderBlockEntityRenderer implements BlockEntityRenderer<MaggotsChunkLoaderBlockEntity, MaggotsChunkLoaderBlockEntityRenderer.RenderState> {
     private static final float GLOW_SMOOTHING = 0.25F;
     private static final float MODEL_MIN_X = 3.0F / 16.0F;
     private static final float MODEL_MIN_Y = 3.0F / 16.0F;
@@ -34,49 +38,62 @@ public class MaggotsChunkLoaderBlockEntityRenderer implements BlockEntityRendere
     }
 
     @Override
-    public void render(MaggotsChunkLoaderBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
+    public RenderState createRenderState() {
+        return new RenderState();
+    }
+
+    @Override
+    public void extractRenderState(MaggotsChunkLoaderBlockEntity blockEntity, RenderState state, float partialTick,
+                                   Vec3 cameraPosition, ModelFeatureRenderer.CrumblingOverlay breakProgress) {
+        BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTick, cameraPosition, breakProgress);
         Level level = blockEntity.getLevel();
         if (level == null) {
+            state.visible = false;
             return;
         }
 
         boolean powered = blockEntity.getBlockState().getValue(MaggotsChunkLoaderBlock.POWERED);
         int radius = powered ? blockEntity.getLoadedRadius() : -1;
         float time = level.getGameTime() + partialTick;
-        BlockPos pos = blockEntity.getBlockPos();
-        GlowKey key = new GlowKey(level.dimension(), pos);
-        GlowState state = GLOW_STATES.computeIfAbsent(key, p -> new GlowState());
-        state.update(time, radius < 0 ? 0.0F : MIN_GLOW_SCALE + radius * 0.2F, radius < 0 ? 0.0F : 1.0F);
+        GlowKey key = new GlowKey(level.dimension(), blockEntity.getBlockPos());
+        GlowState glowState = GLOW_STATES.computeIfAbsent(key, ignored -> new GlowState());
+        glowState.update(time, radius < 0 ? 0.0F : MIN_GLOW_SCALE + radius * 0.2F, radius < 0 ? 0.0F : 1.0F);
 
-        float glow = state.scale;
-        float alphaFactor = state.alpha;
-        if (glow <= 0.001F || alphaFactor <= 0.001F) {
-            if (radius < 0) {
-                GLOW_STATES.remove(key);
-            }
+        state.glow = glowState.scale;
+        state.alphaFactor = glowState.alpha;
+        state.progress = Mth.clamp((state.glow - MIN_GLOW_SCALE) / (MAX_GLOW_SCALE - MIN_GLOW_SCALE), 0.0F, 1.0F);
+        state.pulse = (Mth.sin(time * 0.22F) + 1.0F) * 0.5F;
+        state.visible = state.glow > 0.001F && state.alphaFactor > 0.001F;
+        if (!state.visible && radius < 0) {
+            GLOW_STATES.remove(key);
+        }
+    }
+
+    @Override
+    public void submit(RenderState state, PoseStack poseStack, SubmitNodeCollector collector, CameraRenderState camera) {
+        if (!state.visible) {
             return;
         }
 
-        float pulse = (Mth.sin((level.getGameTime() + partialTick) * 0.22F) + 1.0F) * 0.5F;
-        float alpha = alphaFactor * (0.25F + 0.15F * pulse);
-        VertexConsumer consumer = bufferSource.getBuffer(PoRenderTypes.chunkLoaderGlow());
-        float progress = Mth.clamp((glow - MIN_GLOW_SCALE) / (MAX_GLOW_SCALE - MIN_GLOW_SCALE), 0.0F, 1.0F);
-        for (int layer = 0; layer < 4; layer++) {
-            float layerScale = 1.0F - layer * 0.25F;
-            float layerAlpha = alpha * (0.25F + layer * 0.25F);
-            float saturation = 0.25F + layer * 0.25F;
-            float pinkRed = Mth.lerp(saturation, 1.0F, 1.0F);
-            float pinkGreen = Mth.lerp(saturation, 0.98F, 0.55F);
-            float pinkBlue = Mth.lerp(saturation, 0.92F, 0.80F);
-            float red = Mth.lerp(progress, pinkRed, 1.0F);
-            float green = Mth.lerp(progress, pinkGreen, 0.98F);
-            float blue = Mth.lerp(progress, pinkBlue, 0.92F);
-            renderGlowBox(poseStack, consumer,
-                    MODEL_MIN_X - glow * layerScale, MODEL_MAX_X + glow * layerScale,
-                    MODEL_MIN_Y - glow * layerScale, MODEL_MAX_Y + glow * layerScale,
-                    MODEL_MIN_Z - glow * layerScale, MODEL_MAX_Z + glow * layerScale,
-                    layerAlpha, red, green, blue);
-        }
+        float alpha = state.alphaFactor * (0.25F + 0.15F * state.pulse);
+        collector.submitCustomGeometry(poseStack, PoRenderTypes.chunkLoaderGlow(), (pose, consumer) -> {
+            for (int layer = 0; layer < 4; layer++) {
+                float layerScale = 1.0F - layer * 0.25F;
+                float layerAlpha = alpha * (0.25F + layer * 0.25F);
+                float saturation = 0.25F + layer * 0.25F;
+                float pinkRed = Mth.lerp(saturation, 1.0F, 1.0F);
+                float pinkGreen = Mth.lerp(saturation, 0.98F, 0.55F);
+                float pinkBlue = Mth.lerp(saturation, 0.92F, 0.80F);
+                float red = Mth.lerp(state.progress, pinkRed, 1.0F);
+                float green = Mth.lerp(state.progress, pinkGreen, 0.98F);
+                float blue = Mth.lerp(state.progress, pinkBlue, 0.92F);
+                renderGlowBox(pose, consumer,
+                        MODEL_MIN_X - state.glow * layerScale, MODEL_MAX_X + state.glow * layerScale,
+                        MODEL_MIN_Y - state.glow * layerScale, MODEL_MAX_Y + state.glow * layerScale,
+                        MODEL_MIN_Z - state.glow * layerScale, MODEL_MAX_Z + state.glow * layerScale,
+                        layerAlpha, red, green, blue);
+            }
+        });
     }
 
     public static void onLevelUnload(LevelEvent.Unload event) {
@@ -86,6 +103,14 @@ public class MaggotsChunkLoaderBlockEntityRenderer implements BlockEntityRendere
     }
 
     private record GlowKey(ResourceKey<Level> dimension, BlockPos pos) {
+    }
+
+    public static class RenderState extends BlockEntityRenderState {
+        private boolean visible;
+        private float glow;
+        private float alphaFactor;
+        private float progress;
+        private float pulse;
     }
 
     private static final class GlowState {
@@ -111,13 +136,11 @@ public class MaggotsChunkLoaderBlockEntityRenderer implements BlockEntityRendere
         }
     }
 
-    private static void renderGlowBox(PoseStack poseStack, VertexConsumer consumer,
+    private static void renderGlowBox(PoseStack.Pose pose, VertexConsumer consumer,
                                       float minX, float maxX,
                                       float minY, float maxY,
                                       float minZ, float maxZ,
                                       float alpha, float red, float green, float blue) {
-        PoseStack.Pose pose = poseStack.last();
-
         renderQuad(pose, consumer,
                 minX, minY, minZ, maxX, minY, minZ, maxX, minY, maxZ, minX, minY, maxZ,
                 alpha, red, green, blue);

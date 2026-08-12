@@ -33,7 +33,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 
-public class PoopFarmlandBlock extends FarmBlock {
+public class PoopFarmlandBlock extends FarmlandBlock {
     protected static final VoxelShape COLLISION_SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 12.0, 16.0);
 
     public enum FarmMode implements StringRepresentable {

@@ -11,7 +11,6 @@ import net.minecraft.stats.Stats;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -33,12 +32,12 @@ public class PoopCakeBlock extends CakeBlock {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         Item item = stack.getItem();
         BlockState candleCake = getCandleCakeState(stack, state);
         //noinspection ConstantConditions
         if (candleCake == null) {
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            return InteractionResult.TRY_WITH_EMPTY_HAND;
         }
 
         stack.consume(1, player);
@@ -46,7 +45,7 @@ public class PoopCakeBlock extends CakeBlock {
         level.setBlockAndUpdate(pos, candleCake);
         level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
         player.awardStat(Stats.ITEM_USED.get(item));
-        return ItemInteractionResult.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
     private static BlockState getCandleCakeState(ItemStack stack, BlockState cakeState) {

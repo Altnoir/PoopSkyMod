@@ -1,9 +1,9 @@
 package com.altnoir.poopsky.content.block.p;
 
+import com.altnoir.poopsky.impl.util.PoFeatureUtil;
 import com.altnoir.poopsky.worldgen.PoConfigureFeatures;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -33,10 +33,7 @@ public class DriedPoopBlock extends Block implements BonemealableBlock {
 
     @Override
     public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
-        level.registryAccess()
-                .registry(Registries.CONFIGURED_FEATURE)
-                .flatMap(holder -> holder.getHolder(PoConfigureFeatures.DRIED_POOP_PATCH))
-                .ifPresent(reference -> reference.value().place(level, level.getChunkSource().getGenerator(), random, pos.above()));
+        PoFeatureUtil.placePatch(level, random, PoConfigureFeatures.DRIED_POOP_PATCH, 96, 7, 3);
     }
 
     @Override

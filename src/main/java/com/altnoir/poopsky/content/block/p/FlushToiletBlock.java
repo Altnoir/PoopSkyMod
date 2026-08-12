@@ -15,7 +15,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -26,7 +26,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
@@ -39,7 +39,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public class FlushToiletBlock extends BaseEntityBlock {
-    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty CLOSED = BooleanProperty.create("closed");
     public static final MapCodec<FlushToiletBlock> CODEC = simpleCodec(FlushToiletBlock::new);
 
@@ -188,7 +188,7 @@ public class FlushToiletBlock extends BaseEntityBlock {
                 .stream()
                 .findFirst()
                 .orElseGet(() -> {
-                    FlushToiletEntity entity = PoEntityType.FLUSH_TOILET.get().spawn(level, pos, MobSpawnType.TRIGGERED);
+                    FlushToiletEntity entity = PoEntityType.FLUSH_TOILET.get().spawn(level, pos, EntitySpawnReason.TRIGGERED);
                     if (entity != null) {
                         Direction facing = state.getValue(FACING);
                         float v = (float) 1 / 16;

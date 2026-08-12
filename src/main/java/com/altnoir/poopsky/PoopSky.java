@@ -43,7 +43,7 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.NeoForgeMod;
-import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
 import net.neoforged.neoforge.fluids.FluidInteractionRegistry;
 import org.slf4j.Logger;
 
@@ -226,7 +226,7 @@ public class PoopSky {
         PoStats.init();
     }
 
-    private void reload(final AddReloadListenerEvent event) {
+    private void reload(final AddServerReloadListenersEvent event) {
         // 用于/Reload命令, 比如fly
     }
 
@@ -246,20 +246,8 @@ public class PoopSky {
         return getItemKey(item).getPath();
     }
 
-    public static String getItemNameSpace(Item item) {
-        return getItemKey(item).getNamespace();
-    }
-
     public static Identifier getItemKey(Item item) {
         return BuiltInRegistries.ITEM.getKey(item);
-    }
-
-    public static String getBlockPath(Block block) {
-        return getBlockKey(block).getPath();
-    }
-
-    public static String getBlockNameSpace(Block block) {
-        return getBlockKey(block).getNamespace();
     }
 
     public static Identifier getBlockKey(Block block) {

@@ -252,8 +252,8 @@ public class FlyEntity extends Animal implements FlyingAnimal {
         return false;
     }
 
-    public static boolean checkFlySpawnRules(EntityType<FlyEntity> fly, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
-        return MobSpawnType.isSpawner(spawnType);
+    public static boolean checkFlySpawnRules(EntityType<FlyEntity> fly, LevelAccessor level, EntitySpawnReason spawnType, BlockPos pos, RandomSource random) {
+        return EntitySpawnReason.isSpawner(spawnType);
     }
 
     @Override

@@ -4,54 +4,64 @@ import com.altnoir.poopsky.content.entity.p.PoopTntEntity;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.BlockRenderDispatcher;
-import net.minecraft.client.renderer.culling.Frustum;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.block.BlockModelResolver;
+import net.minecraft.client.renderer.block.model.BlockDisplayContext;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.TntMinecartRenderer;
-import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
-import net.minecraft.resources.Identifier;
+import net.minecraft.client.renderer.entity.state.TntRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.util.Mth;
 
-public class PoopTntRenderer extends EntityRenderer<PoopTntEntity> {
-    private final BlockRenderDispatcher blockRenderer;
+public class PoopTntRenderer extends EntityRenderer<PoopTntEntity, TntRenderState> {
+    private static final BlockDisplayContext BLOCK_DISPLAY_CONTEXT = BlockDisplayContext.create();
+    private final BlockModelResolver blockModelResolver;
 
     public PoopTntRenderer(EntityRendererProvider.Context context) {
         super(context);
         this.shadowRadius = 0.5F;
-        this.blockRenderer = context.getBlockRenderDispatcher();
+        this.blockModelResolver = context.getBlockModelResolver();
     }
 
     @Override
-    public void render(PoopTntEntity p_entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+    public TntRenderState createRenderState() {
+        return new TntRenderState();
+    }
+
+    @Override
+    public void extractRenderState(PoopTntEntity entity, TntRenderState state, float partialTick) {
+        super.extractRenderState(entity, state, partialTick);
+        state.fuseRemainingInTicks = entity.getFuse() - partialTick + 1.0F;
+        this.blockModelResolver.update(state.blockState, PoBlocks.POOP_TNT.get().defaultBlockState(), BLOCK_DISPLAY_CONTEXT);
+    }
+
+    @Override
+    public void submit(TntRenderState state, PoseStack poseStack, SubmitNodeCollector collector, CameraRenderState camera) {
         poseStack.pushPose();
         poseStack.translate(0.0F, 0.5F, 0.0F);
-        int fuse = p_entity.getFuse();
-        if ((float) fuse - partialTick + 1.0F < 10.0F) {
-            float f = 1.0F - ((float) fuse - partialTick + 1.0F) / 10.0F;
-            f = Mth.clamp(f, 0.0F, 1.0F);
-            f *= f;
-            f *= f;
-            float f1 = 1.0F + f * 0.3F;
-            poseStack.scale(f1, f1, f1);
+        float fuse = state.fuseRemainingInTicks;
+        if (fuse < 10.0F) {
+            float scale = 1.0F - fuse / 10.0F;
+            scale = Mth.clamp(scale, 0.0F, 1.0F);
+            scale *= scale;
+            scale *= scale;
+            scale = 1.0F + scale * 0.3F;
+            poseStack.scale(scale, scale, scale);
         }
+
         poseStack.mulPose(Axis.YP.rotationDegrees(-90.0F));
         poseStack.translate(-0.5F, -0.5F, 0.5F);
         poseStack.mulPose(Axis.YP.rotationDegrees(90.0F));
-        TntMinecartRenderer.renderWhiteSolidBlock(this.blockRenderer,
-                PoBlocks.POOP_TNT.get().defaultBlockState(), poseStack, bufferSource, packedLight, fuse / 5 % 2 == 0);
+        TntMinecartRenderer.submitWhiteSolidBlock(
+                state.blockState,
+                poseStack,
+                collector,
+                state.lightCoords,
+                (int) fuse / 5 % 2 == 0,
+                state.outlineColor
+        );
         poseStack.popPose();
-        super.render(p_entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
-    }
-
-    @Override
-    public Identifier getTextureLocation(PoopTntEntity poopTntEntity) {
-        return MissingTextureAtlasSprite.getLocation();
-    }
-
-    @Override
-    public boolean shouldRender(PoopTntEntity livingEntity, Frustum camera, double camX, double camY, double camZ) {
-        return true;
+        super.submit(state, poseStack, collector, camera);
     }
 }

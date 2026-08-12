@@ -1,21 +1,19 @@
 package com.altnoir.poopsky.content.entity.model;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.altnoir.poopsky.client.render.ToiletPlugRenderState;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import org.jetbrains.annotations.NotNull;
 
-public class ToiletPlugModel<T extends ToiletPlugEntity> extends EntityModel<T> {
+public class ToiletPlugModel extends EntityModel<ToiletPlugRenderState> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(PoopSky.loc("toilet_plug"), "main");
     private final ModelPart plug;
 
     public ToiletPlugModel(ModelPart root) {
+        super(root);
         this.plug = root.getChild("toilet_plug");
     }
 
@@ -40,15 +38,6 @@ public class ToiletPlugModel<T extends ToiletPlugEntity> extends EntityModel<T> 
                 .texOffs(1, 0).addBox(-1.0F, -4.0F, -10.0F, 2.0F, 2.0F, 15.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 3.1416F, 0.0F));
 
         return LayerDefinition.create(meshdefinition, 64, 64);
-    }
-    @Override
-    public void setupAnim(@NotNull ToiletPlugEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
-    }
-
-    @Override
-    public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
-        plug.render(poseStack, buffer, packedLight, packedOverlay, color);
     }
 
     public ModelPart getPlug() {return plug;}

@@ -6,7 +6,7 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -61,7 +61,7 @@ public class PoolimeMaggotsBlock extends Block {
 
                     poolime.moveTo(spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5, 0, 0);
 
-                    if (poolime.checkSpawnRules(level, MobSpawnType.NATURAL) && level.noCollision(poolime, poolime.getBoundingBox())) {
+                    if (poolime.checkSpawnRules(level, EntitySpawnReason.NATURAL) && level.noCollision(poolime, poolime.getBoundingBox())) {
                         level.addFreshEntity(poolime);
                     }
 

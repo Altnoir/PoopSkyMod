@@ -4,22 +4,22 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.client.PoBedrockModelResources;
 import com.altnoir.poopsky.content.entity.p.FlushToiletCartEntity;
 import com.altnoir.poopsky.init.PoEntityType;
-import com.github.mcmodderanchor.simplebedrockmodel.v1.common.model.BedrockBone;
-import com.github.mcmodderanchor.simplebedrockmodel.v1.common.model.BedrockModel;
-import com.github.mcmodderanchor.simplebedrockmodel.v1.resource.BedrockModelResourceSet;
+import com.github.mcmodderanchor.simplebedrockmodel.v2.common.model.BedrockBone;
+import com.github.mcmodderanchor.simplebedrockmodel.v2.common.model.BedrockModel;
+import com.github.mcmodderanchor.simplebedrockmodel.v2.resource.BedrockModelResourceSet;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
-import org.jetbrains.annotations.NotNull;
 
-public class FlushToiletCartRenderer extends EntityRenderer<FlushToiletCartEntity> {
+public class FlushToiletCartRenderer extends EntityRenderer<FlushToiletCartEntity, FlushToiletCartRenderer.RenderState> {
     private static final Identifier TEXTURE = PoopSky.loc("textures/block/flush_toilet_cart.png");
     private static final Identifier GOLDEN_TEXTURE = PoopSky.loc("textures/block/golden_flush_toilet_cart.png");
 
@@ -29,48 +29,69 @@ public class FlushToiletCartRenderer extends EntityRenderer<FlushToiletCartEntit
     }
 
     @Override
-    public Identifier getTextureLocation(FlushToiletCartEntity entity) {
-        return entity.getType().equals(PoEntityType.GOLDEN_FLUSH_TOILET_CART.get()) ? GOLDEN_TEXTURE : TEXTURE;
+    public RenderState createRenderState() {
+        return new RenderState();
     }
 
     @Override
-    public void render(FlushToiletCartEntity entity, float entityYaw, float partialTick, @NotNull PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+    public void extractRenderState(FlushToiletCartEntity entity, RenderState state, float partialTick) {
+        super.extractRenderState(entity, state, partialTick);
+        state.golden = entity.getType().equals(PoEntityType.GOLDEN_FLUSH_TOILET_CART.get());
+        state.yRot = Mth.rotLerp(partialTick, entity.yRotO, entity.getYRot());
+        state.wheelLeftRotation = entity.getWheelLeftRotation(partialTick);
+        state.wheelRightRotation = entity.getWheelRightRotation(partialTick);
+        state.hurtTicks = entity.getHurtTime() - partialTick;
+        state.hurtDamage = Math.max(0.0F, entity.getDamage() - partialTick);
+        state.hurtDirection = entity.getHurtDir();
+    }
+
+    @Override
+    public void submit(RenderState state, PoseStack poseStack, SubmitNodeCollector collector, CameraRenderState camera) {
         BedrockModelResourceSet resourceSet = BedrockModelResourceSet.getInstance();
         if (resourceSet != null) {
             BedrockModel model = resourceSet.getModel(PoBedrockModelResources.FLUSH_TOILET_CART);
             if (model != null) {
-                BedrockBone wheelLeft = model.getBone("wheel_l");
-                BedrockBone wheelRight = model.getBone("wheel_r");
-                if (wheelLeft != null) {
-                    wheelLeft.rotation.rotationX((float) -Math.toRadians(entity.getWheelLeftRotation(partialTick)));
-                }
-                if (wheelRight != null) {
-                    wheelRight.rotation.rotationX((float) -Math.toRadians(entity.getWheelRightRotation(partialTick)));
-                }
-
+                Identifier texture = state.golden ? GOLDEN_TEXTURE : TEXTURE;
                 poseStack.pushPose();
-                poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - Mth.rotLerp(partialTick, entity.yRotO, entity.getYRot())));
-                float hurtTicks = (float) entity.getHurtTime() - partialTick;
-                float hurtDamage = entity.getDamage() - partialTick;
-                if (hurtDamage < 0.0F) {
-                    hurtDamage = 0.0F;
+                poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - state.yRot));
+                if (state.hurtTicks > 0.0F) {
+                    poseStack.mulPose(Axis.XP.rotationDegrees(
+                            Mth.sin(state.hurtTicks) * state.hurtTicks * state.hurtDamage / 10.0F * state.hurtDirection
+                    ));
                 }
-                if (hurtTicks > 0.0F) {
-                    poseStack.mulPose(Axis.XP.rotationDegrees(Mth.sin(hurtTicks) * hurtTicks * hurtDamage / 10.0F * (float) entity.getHurtDir()));
-                }
+                collector.submitCustomGeometry(poseStack, RenderTypes.entityCutout(texture), (pose, consumer) -> {
+                    BedrockBone wheelLeft = model.getBone("wheel_l");
+                    BedrockBone wheelRight = model.getBone("wheel_r");
+                    if (wheelLeft != null) {
+                        wheelLeft.rotation.rotationX((float) -Math.toRadians(state.wheelLeftRotation));
+                    }
+                    if (wheelRight != null) {
+                        wheelRight.rotation.rotationX((float) -Math.toRadians(state.wheelRightRotation));
+                    }
 
-                VertexConsumer consumer = bufferSource.getBuffer(RenderType.entityCutout(this.getTextureLocation(entity)));
-                model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY);
+                    PoseStack modelPose = new PoseStack();
+                    modelPose.last().set(pose);
+                    model.renderToBuffer(modelPose, consumer, state.lightCoords, OverlayTexture.NO_OVERLAY);
+                    if (wheelLeft != null) {
+                        wheelLeft.rotation.identity();
+                    }
+                    if (wheelRight != null) {
+                        wheelRight.rotation.identity();
+                    }
+                });
                 poseStack.popPose();
-
-                if (wheelLeft != null) {
-                    wheelLeft.rotation.rotationX(0.0F);
-                }
-                if (wheelRight != null) {
-                    wheelRight.rotation.rotationX(0.0F);
-                }
             }
         }
-        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
+        super.submit(state, poseStack, collector, camera);
+    }
+
+    public static class RenderState extends EntityRenderState {
+        private boolean golden;
+        private float yRot;
+        private float wheelLeftRotation;
+        private float wheelRightRotation;
+        private float hurtTicks;
+        private float hurtDamage;
+        private int hurtDirection;
     }
 }

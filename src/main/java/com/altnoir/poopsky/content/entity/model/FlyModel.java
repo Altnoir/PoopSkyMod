@@ -1,10 +1,8 @@
 package com.altnoir.poopsky.content.entity.model;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.content.entity.p.FlyEntity;
-import com.google.common.collect.ImmutableList;
-import net.minecraft.client.model.AgeableListModel;
-import net.minecraft.client.model.ModelUtils;
+import com.altnoir.poopsky.client.render.FlyRenderState;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -14,7 +12,7 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 
-public class FlyModel<T extends FlyEntity> extends AgeableListModel<T> {
+public class FlyModel extends EntityModel<FlyRenderState> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(PoopSky.loc("fly"), "main");
 
     private final ModelPart bone;
@@ -24,10 +22,8 @@ public class FlyModel<T extends FlyEntity> extends AgeableListModel<T> {
     private final ModelPart frontLeg;
     private final ModelPart midLeg;
     private final ModelPart backLeg;
-    private float rollAmount;
-
     public FlyModel(ModelPart root) {
-        super(false, 24.0F, 0.0F);
+        super(root);
         this.bone = root.getChild("bone");
         this.body = this.bone.getChild("body");
         this.rightWing = this.body.getChild("rightwing_bone");
@@ -68,14 +64,9 @@ public class FlyModel<T extends FlyEntity> extends AgeableListModel<T> {
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
 
-    public void prepareMobModel(T entity, float limbSwing, float limbSwingAmount, float partialTick) {
-        super.prepareMobModel(entity, limbSwing, limbSwingAmount, partialTick);
-    }
-
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.bone.xRot = 0.0F;
-        boolean flag = entity.onGround() && entity.getDeltaMovement().lengthSqr() < 1.0E-7;
-        if (flag) {
+    public void setupAnim(FlyRenderState state) {
+        this.resetPose();
+        if (state.isStationaryOnGround) {
             this.rightWing.yRot = -0.2618F;
             this.rightWing.zRot = 0.0F;
             this.leftWing.xRot = 0.0F;
@@ -85,7 +76,7 @@ public class FlyModel<T extends FlyEntity> extends AgeableListModel<T> {
             this.midLeg.xRot = 0.0F;
             this.backLeg.xRot = 0.0F;
         } else {
-            float f = ageInTicks * 120.32113F * (float) (Math.PI / 180.0);
+            float f = state.ageInTicks * 120.32113F * (float) (Math.PI / 180.0);
             this.rightWing.yRot = 0.0F;
             this.rightWing.zRot = Mth.cos(f) * (float) Math.PI * 0.15F;
             this.leftWing.xRot = this.rightWing.xRot;
@@ -98,19 +89,5 @@ public class FlyModel<T extends FlyEntity> extends AgeableListModel<T> {
             this.bone.yRot = 0.0F;
             this.bone.zRot = 0.0F;
         }
-
-        if (this.rollAmount > 0.0F) {
-            this.bone.xRot = ModelUtils.rotlerpRad(this.bone.xRot, 3.0915928F, this.rollAmount);
-        }
-    }
-
-    @Override
-    protected Iterable<ModelPart> headParts() {
-        return ImmutableList.of();
-    }
-
-    @Override
-    protected Iterable<ModelPart> bodyParts() {
-        return ImmutableList.of(this.bone);
     }
 }

@@ -26,6 +26,7 @@ import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ColorRGBA;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
@@ -555,9 +556,12 @@ public class PoBlocks {
     }
 
     private static BlockEntry<ShitBlock> registerShitBlock(String name) {
-        return registerBlock(name, 88,
+        return registerBlockWithItem(name, 88,
                 props -> new ShitBlock(poopProperties(0.1F)
-                        .pushReaction(PushReaction.DESTROY)));
+                        .pushReaction(PushReaction.DESTROY)),
+                RegistrateBlockLootTables::dropSelf,
+                (block, properties) -> new BlockItem(block, properties.equippable(EquipmentSlot.HEAD)),
+                BlockTab.BASIC_BLOCKS);
     }
 
     private static BlockEntry<FlushToiletBlock> registerFlushToilet(String name, DyeColor color) {

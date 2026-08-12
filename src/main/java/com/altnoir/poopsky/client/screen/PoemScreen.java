@@ -16,11 +16,11 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.font.FontSet;
 import net.minecraft.client.gui.font.glyphs.BakedGlyph;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.Music;
 import net.minecraft.util.FormattedCharSequence;
+import net.minecraft.util.LightCoordsUtil;
 import net.minecraft.util.Mth;
 import org.joml.Matrix4f;
 
@@ -253,7 +253,7 @@ public class PoemScreen extends Screen {
                 blue = (textColor & 255) / 255.0F;
             }
             glyph.render(style.isItalic(), x[0], y, matrix, consumer,
-                    red, green, blue, alpha, LightTexture.FULL_BRIGHT);
+                    red, green, blue, alpha, LightCoordsUtil.FULL_BRIGHT);
             x[0] += fontSet.getGlyphInfo(codePoint, false).getAdvance(bold);
             return true;
         });

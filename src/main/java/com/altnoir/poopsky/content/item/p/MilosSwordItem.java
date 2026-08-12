@@ -10,16 +10,15 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 
-public class MilosSwordItem extends SwordItem {
+public class MilosSwordItem extends Item {
     public static final Identifier BASE_INTERACTION_RANGE_ID = PoopSky.mcloc("base_interaction_range");
 
-    public MilosSwordItem(Tier tier, Properties properties) {
-        super(tier, properties);
+    public MilosSwordItem(Properties properties) {
+        super(properties);
     }
 
     @Override
@@ -44,7 +43,7 @@ public class MilosSwordItem extends SwordItem {
         return super.hurtEnemy(stack, target, attacker);
     }
 
-    public static ItemAttributeModifiers createAttributes(Tier tier, float attackRange, float attackDamage, float attackSpeed) {
+    public static ItemAttributeModifiers createAttributes(float attackRange, float attackDamage, float attackSpeed) {
         return ItemAttributeModifiers.builder()
                 .add(
                         Attributes.ENTITY_INTERACTION_RANGE,
@@ -53,7 +52,7 @@ public class MilosSwordItem extends SwordItem {
                 ).add(
                         Attributes.ATTACK_DAMAGE,
                         new AttributeModifier(
-                                BASE_ATTACK_DAMAGE_ID, attackDamage + tier.getAttackDamageBonus(), AttributeModifier.Operation.ADD_VALUE
+                                BASE_ATTACK_DAMAGE_ID, attackDamage, AttributeModifier.Operation.ADD_VALUE
                         ),
                         EquipmentSlotGroup.MAINHAND
                 )

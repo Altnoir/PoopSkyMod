@@ -1,57 +1,58 @@
 package com.altnoir.poopsky.content.entity.renderer;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.client.render.ToiletPlugRenderState;
 import com.altnoir.poopsky.content.entity.model.ToiletPlugModel;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
-public class ToiletPlugRenderer extends EntityRenderer<ToiletPlugEntity> {
-    private final EntityModel<ToiletPlugEntity> plugModel;
+public class ToiletPlugRenderer extends EntityRenderer<ToiletPlugEntity, ToiletPlugRenderState> {
+    private static final Identifier TEXTURE = PoopSky.loc("textures/entity/toilet_plug.png");
+    private final ToiletPlugModel plugModel;
 
     public ToiletPlugRenderer(EntityRendererProvider.Context context) {
         super(context);
-        this.plugModel = new ToiletPlugModel<>(context.bakeLayer(ToiletPlugModel.LAYER_LOCATION));
+        this.plugModel = new ToiletPlugModel(context.bakeLayer(ToiletPlugModel.LAYER_LOCATION));
     }
 
     @Override
-    public Identifier getTextureLocation(ToiletPlugEntity entity) {
-        return PoopSky.loc("textures/entity/toilet_plug.png");
+    public ToiletPlugRenderState createRenderState() {
+        return new ToiletPlugRenderState();
     }
 
     @Override
-    public void render(ToiletPlugEntity entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+    public void extractRenderState(ToiletPlugEntity entity, ToiletPlugRenderState state, float partialTick) {
+        super.extractRenderState(entity, state, partialTick);
+        state.viewYRot = entity.getViewYRot(partialTick);
+        state.viewXRot = entity.getViewXRot(partialTick);
+        state.floatingValue = entity.getFloatingValue(partialTick);
+        state.hurtTicks = entity.getHurtTime() - partialTick;
+        state.hurtDamage = Math.max(0.0F, entity.getDamage() - partialTick);
+        state.hurtDirection = entity.getHurtDir();
+    }
+
+    @Override
+    public void submit(ToiletPlugRenderState state, PoseStack poseStack, SubmitNodeCollector collector, CameraRenderState camera) {
         poseStack.pushPose();
-
-        var y = -entity.getViewYRot(partialTick);
-        var x = entity.getViewXRot(partialTick);
-        var z = entity.getFloatingValue(partialTick);
-
-        poseStack.translate(0.0D, z - 1.0D, 0.0D);
-        poseStack.mulPose(Axis.YP.rotationDegrees(y));
-        poseStack.mulPose(Axis.XP.rotationDegrees(x));
-        float hurtTicks = (float) entity.getHurtTime() - partialTick;
-        float hurtDamage = entity.getDamage() - partialTick;
-        if (hurtDamage < 0.0F) {
-            hurtDamage = 0.0F;
-        }
-        if (hurtTicks > 0.0F) {
-            poseStack.mulPose(Axis.ZP.rotationDegrees(Mth.sin(hurtTicks) * hurtTicks * hurtDamage / 10.0F * (float) entity.getHurtDir()));
+        poseStack.translate(0.0D, state.floatingValue - 1.0D, 0.0D);
+        poseStack.mulPose(Axis.YP.rotationDegrees(-state.viewYRot));
+        poseStack.mulPose(Axis.XP.rotationDegrees(state.viewXRot));
+        if (state.hurtTicks > 0.0F) {
+            poseStack.mulPose(Axis.ZP.rotationDegrees(
+                    Mth.sin(state.hurtTicks) * state.hurtTicks * state.hurtDamage / 10.0F * state.hurtDirection
+            ));
         }
 
-        VertexConsumer vertexConsumer = bufferSource.getBuffer(plugModel.renderType(this.getTextureLocation(entity)));
-
-        plugModel.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY);
-
+        collector.submitModel(this.plugModel, state, poseStack, TEXTURE, state.lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor, null);
         poseStack.popPose();
-        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
+        super.submit(state, poseStack, collector, camera);
     }
 }

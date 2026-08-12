@@ -10,7 +10,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
@@ -28,10 +28,10 @@ public class ReturnTotemItem extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
+    public InteractionResult use(Level level, Player player, InteractionHand usedHand) {
         ItemStack stack = player.getItemInHand(usedHand);
         if (level.isClientSide()) {
-            return InteractionResultHolder.sidedSuccess(stack, true);
+            return InteractionResult.SUCCESS.heldItemTransformedTo(stack);
         }
 
         ServerPlayer serverPlayer = (ServerPlayer) player;
@@ -43,13 +43,13 @@ public class ReturnTotemItem extends Item {
         BlockPos respawn = serverPlayer.getRespawnPosition();
         if (respawn == null || !(targetLevel.getBlockState(respawn).getBlock() instanceof PortableToiletBlock)) {
             player.sendOverlayMessage(Component.translatable("message.poopsky.return_totem.not_bound"));
-            return InteractionResultHolder.pass(stack);
+            return InteractionResult.PASS;
         }
 
         Optional<ServerPlayer.RespawnPosAngle> respawnInfo = targetLevel.getBlockState(respawn).getRespawnPosition(EntityType.PLAYER, targetLevel, respawn, serverPlayer.getRespawnAngle());
         if (respawnInfo.isEmpty()) {
             player.sendOverlayMessage(Component.translatable("message.poopsky.return_totem.obstructed"));
-            return InteractionResultHolder.pass(stack);
+            return InteractionResult.PASS;
         }
 
         ItemStack activationStack = stack.copy();
@@ -78,7 +78,7 @@ public class ReturnTotemItem extends Item {
                 1.0F
         );
         spawnReturnTotemParticles(targetLevel, serverPlayer.position());
-        return InteractionResultHolder.sidedSuccess(stack, false);
+        return InteractionResult.SUCCESS_SERVER.heldItemTransformedTo(stack);
     }
 
     private static void spawnReturnTotemParticles(ServerLevel level, Vec3 pos) {
