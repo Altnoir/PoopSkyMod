@@ -11,8 +11,9 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.packs.PackType;
-import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.item.equipment.trim.TrimMaterial;
 import net.minecraft.world.item.equipment.trim.TrimMaterials;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
@@ -46,10 +47,10 @@ public class ItemModelGen extends RegistrateItemModelProvider {
         toiletPlugItem();
         bigSowordItem();
         flyCatcherItem();
-        trimmedArmorItem(PoItems.OMEN_HELMET);
-        trimmedArmorItem(PoItems.OMEN_CHESTPLATE);
-        trimmedArmorItem(PoItems.OMEN_LEGGINGS);
-        trimmedArmorItem(PoItems.OMEN_BOOTS);
+        trimmedArmorItem(PoItems.OMEN_HELMET, ArmorType.HELMET);
+        trimmedArmorItem(PoItems.OMEN_CHESTPLATE, ArmorType.CHESTPLATE);
+        trimmedArmorItem(PoItems.OMEN_LEGGINGS, ArmorType.LEGGINGS);
+        trimmedArmorItem(PoItems.OMEN_BOOTS, ArmorType.BOOTS);
         withExistingParent(name(PoItems.POOLIME_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
         withExistingParent(name(PoItems.FLY_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
         generated(PoItems.URINE_BUCKET);
@@ -97,17 +98,16 @@ public class ItemModelGen extends RegistrateItemModelProvider {
         }
     }
 
-    private void trimmedArmorItem(ItemEntry<? extends ArmorItem> itemDeferredItem) {
-        ArmorItem armorItem = itemDeferredItem.get();
+    private void trimmedArmorItem(ItemEntry<? extends Item> itemDeferredItem, ArmorType type) {
         trimMaterials.forEach((trimMaterial, value) -> {
             float trimValue = value;
 
-            String armorType = switch (armorItem.getEquipmentSlot()) {
-                case HEAD -> "helmet";
-                case CHEST -> "chestplate";
-                case LEGS -> "leggings";
-                case FEET -> "boots";
-                default -> "";
+            String armorType = switch (type) {
+                case HELMET -> "helmet";
+                case CHESTPLATE -> "chestplate";
+                case LEGGINGS -> "leggings";
+                case BOOTS -> "boots";
+                default -> throw new IllegalArgumentException("Unsupported humanoid armor type: " + type);
             };
 
             String armorItemPath = name(itemDeferredItem);

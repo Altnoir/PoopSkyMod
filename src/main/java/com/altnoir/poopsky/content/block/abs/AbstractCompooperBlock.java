@@ -11,7 +11,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Util;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -79,24 +79,24 @@ public abstract class AbstractCompooperBlock extends Block {
         builder.add(LEVEL);
     }
 
-    protected ItemInteractionResult BucketUse(ItemStack stack, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, ItemStack item) {
+    protected InteractionResult BucketUse(ItemStack stack, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, ItemStack item) {
         return BucketUse(stack, level, pos, player, hand, sound, 1.0F, item);
     }
 
-    protected ItemInteractionResult BucketUse(ItemStack stack, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, float pitch, ItemStack item) {
+    protected InteractionResult BucketUse(ItemStack stack, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, float pitch, ItemStack item) {
         var newState = defaultBlockState().setValue(LEVEL, MIN_LEVEL);
         setBlock(newState, level, pos, player, sound, pitch);
         ItemStack itemStack = ItemUtils.createFilledResult(stack, player, item);
         player.setItemInHand(hand, itemStack);
 
-        return ItemInteractionResult.sidedSuccess(level.isClientSide());
+        return sidedSuccess(level);
     }
 
-    protected ItemInteractionResult liquidBottleUse(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound) {
+    protected InteractionResult liquidBottleUse(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound) {
         return liquidBottleUse(stack, state, level, pos, player, hand, sound, 1.0F);
     }
 
-    protected ItemInteractionResult liquidBottleUse(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, float pitch) {
+    protected InteractionResult liquidBottleUse(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, float pitch) {
         int currentLevel = state.getValue(LEVEL);
         int newLevel = currentLevel + 1;
 
@@ -110,14 +110,14 @@ public abstract class AbstractCompooperBlock extends Block {
             level.scheduleTick(pos, this, 20);
         }
 
-        return ItemInteractionResult.sidedSuccess(level.isClientSide());
+        return sidedSuccess(level);
     }
 
-    protected ItemInteractionResult glassBottleUse(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, ItemStack item) {
+    protected InteractionResult glassBottleUse(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, ItemStack item) {
         return glassBottleUse(stack, state, level, pos, player, hand, sound, 1.0F, item);
     }
 
-    protected ItemInteractionResult glassBottleUse(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, float pitch, ItemStack item) {
+    protected InteractionResult glassBottleUse(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, float pitch, ItemStack item) {
         int currentLevel = state.getValue(LEVEL);
         int newLevel = currentLevel - 1;
 
@@ -127,7 +127,11 @@ public abstract class AbstractCompooperBlock extends Block {
         ItemStack itemStack = ItemUtils.createFilledResult(stack, player, item);
         player.setItemInHand(hand, itemStack);
 
-        return ItemInteractionResult.sidedSuccess(level.isClientSide());
+        return sidedSuccess(level);
+    }
+
+    protected static InteractionResult sidedSuccess(Level level) {
+        return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
     }
 
     protected void setBlock(BlockState state, Level level, BlockPos pos, Player player, SoundEvent sound, float pitch) {
@@ -193,17 +197,6 @@ public abstract class AbstractCompooperBlock extends Block {
         }
     }
 
-    /**
-     * Process recipe-based item transformation for compooper blocks.
-     *
-     * @param fluidType  The fluid type identifier string
-     * @param itemEntity The item entity in the compooper
-     * @param state      Current block state
-     * @param level      The level
-     * @param pos        Block position
-     * @param sound      Sound to play on successful conversion
-     * @return true if a recipe was found and applied
-     */
     protected boolean processRecipe(CompooperType fluidType, ItemEntity itemEntity, BlockState state, Level level, BlockPos pos, SoundEvent sound) {
         ItemStack stack = itemEntity.getItem();
         ItemStack result = PCompooperRecipes.getResult(level, fluidType.id(), stack);

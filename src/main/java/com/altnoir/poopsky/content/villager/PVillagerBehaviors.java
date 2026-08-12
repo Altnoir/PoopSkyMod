@@ -7,8 +7,8 @@ import net.minecraft.world.entity.ai.behavior.EntityTracker;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.WalkTarget;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.npc.Villager;
-import net.minecraft.world.entity.npc.VillagerProfession;
+import net.minecraft.world.entity.npc.villager.Villager;
+import net.minecraft.world.entity.npc.villager.VillagerProfession;
 import net.minecraft.world.entity.player.Player;
 
 public class PVillagerBehaviors {
@@ -38,7 +38,7 @@ public class PVillagerBehaviors {
             return false;
         }
 
-        VillagerProfession profession = villager.getVillagerData().getProfession();
+        VillagerProfession profession = villager.getVillagerData().profession().value();
         return profession == PoVillagers.POOP_MAKER.value() || profession == PoVillagers.GASTRONOME.value();
     }
 

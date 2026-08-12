@@ -64,6 +64,7 @@ public final class ItemTagGen {
         copy(PoTags.Blocks.BREEDING_CHEST_PARALLELISM, PoTags.Items.BREEDING_CHEST_PARALLELISM);
         tag(PoTags.Items.FLY_LIKE).addTag(PoTags.Items.FLUSH_TOILET_SAVE);
         tag(PoTags.Items.VILLAGER_LIKE).addTag(PoTags.Items.FLUSH_TOILET_SAVE);
+        tag(PoTags.Items.REPAIRS_OMEN_ARMOR).add(PoItems.OMINOUS_FILTHY_INGOT.get());
 
         tag(PoTags.Items.CAN_COMPOSTABLE)
                 .add(

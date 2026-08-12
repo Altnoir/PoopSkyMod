@@ -2,6 +2,7 @@ package com.altnoir.poopsky.client;
 
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.ParticleEngine;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -40,7 +41,9 @@ public class ToiletClientBlockExtensions implements IClientBlockExtensions {
         if (particleState == state) {
             return false;
         }
-        manager.destroy(pos, particleState);
+        if (level instanceof ClientLevel clientLevel) {
+            clientLevel.addDestroyBlockEffect(pos, particleState);
+        }
         return true;
     }
 

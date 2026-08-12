@@ -240,7 +240,6 @@ Mixin 配置文件位于 `src/main/resources/poopsky.mixins.json`，包路径为
 - 配方类型：`poopsky:anal_pressing`
 - 配方文件夹：`recipe/anal_pressing/`
 - 字段：`input`、`output`、`replace_target`、`radius`。
-- 运行时通过 `applyConversion(Level, BlockPos)` 在指定半径内替换目标方块。
 - Builder：`AnalPressingRecipeBuilder`。
 
 ### 苍蝇桶产出配方 (FlyBarrelRecipe)

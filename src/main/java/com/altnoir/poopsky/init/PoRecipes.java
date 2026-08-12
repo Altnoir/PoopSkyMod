@@ -17,22 +17,21 @@ public class PoRecipes {
     public static final DeferredRegister<RecipeType<?>> TYPES = DeferredRegister.create(BuiltInRegistries.RECIPE_TYPE, PoopSky.MOD_ID);
 
     public static final RecipeEntry<RecipeSerializer<SieveRecipe>, SieveRecipe> SIEVE = register("sieve", () -> SieveRecipe.SERIALIZER);
-    public static final RecipeEntry<FlyBarrelRecipe.Serializer, FlyBarrelRecipe> FLY_BARREL = register("fly_barrel", FlyBarrelRecipe.Serializer::new);
-    public static final RecipeEntry<BreedingChestRecipe.Serializer, BreedingChestRecipe> BREEDING_CHEST = register("breeding_chest", BreedingChestRecipe.Serializer::new);
+    public static final RecipeEntry<RecipeSerializer<FlyBarrelRecipe>, FlyBarrelRecipe> FLY_BARREL = register("fly_barrel", () -> FlyBarrelRecipe.SERIALIZER);
+    public static final RecipeEntry<RecipeSerializer<BreedingChestRecipe>, BreedingChestRecipe> BREEDING_CHEST = register("breeding_chest", () -> BreedingChestRecipe.SERIALIZER);
     public static final RecipeEntry<RecipeSerializer<POPExplosionRecipe>, POPExplosionRecipe> POP_EXPLOSION = register("pop_explosion", () -> POPExplosionRecipe.SERIALIZER);
-    public static final RecipeEntry<AnalPressingRecipe.Serializer, AnalPressingRecipe> ANAL_PRESSING = register("anal_pressing", AnalPressingRecipe.Serializer::new);
-    public static final RecipeEntry<CompooperRecipe.Serializer, CompooperRecipe> COMPOOPER = register("compooper", CompooperRecipe.Serializer::new);
+    public static final RecipeEntry<RecipeSerializer<AnalPressingRecipe>, AnalPressingRecipe> ANAL_PRESSING = register("anal_pressing", () -> AnalPressingRecipe.SERIALIZER);
+    public static final RecipeEntry<RecipeSerializer<CompooperRecipe>, CompooperRecipe> COMPOOPER = register("compooper", () -> CompooperRecipe.SERIALIZER);
 
     public static final DeferredHolder<RecipeSerializer<?>, ToiletShapedRecipe.Serializer> TOILET_SHAPED_SERIALIZER = registerSerializer("toilet_shaped", ToiletShapedRecipe.Serializer::new);
 
-    @SuppressWarnings("unchecked")
-    private static <S extends RecipeSerializer<?>, R extends Recipe<?>> RecipeEntry<S, R> register(String name, Supplier<? extends S> serializerSupplier) {
-        var serializer = (DeferredHolder<RecipeSerializer<?>, S>) registerSerializer(name, serializerSupplier);
-        var type = (DeferredHolder<RecipeType<?>, RecipeType<R>>) (DeferredHolder<?, ?>) TYPES.register(name, () -> RecipeType.simple(PoopSky.loc(name)));
+    private static <S extends RecipeSerializer<?>, R extends Recipe<?>> RecipeEntry<S, R> register(String name, Supplier<S> serializerSupplier) {
+        DeferredHolder<RecipeSerializer<?>, S> serializer = registerSerializer(name, serializerSupplier);
+        DeferredHolder<RecipeType<?>, RecipeType<R>> type = TYPES.register(name, () -> RecipeType.simple(PoopSky.loc(name)));
         return new RecipeEntry<>(serializer, type, name);
     }
 
-    private static <S extends RecipeSerializer<?>> DeferredHolder<RecipeSerializer<?>, S> registerSerializer(String name, Supplier<? extends S> serializerSupplier) {
+    private static <S extends RecipeSerializer<?>> DeferredHolder<RecipeSerializer<?>, S> registerSerializer(String name, Supplier<S> serializerSupplier) {
         return SERIALIZERS.register(name, serializerSupplier);
     }
 

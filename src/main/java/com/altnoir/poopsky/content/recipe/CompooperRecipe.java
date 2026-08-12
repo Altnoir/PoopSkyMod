@@ -4,8 +4,6 @@ import com.altnoir.poopsky.init.PoRecipes;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -14,6 +12,22 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
 public record CompooperRecipe(String fluidType, ItemStack input, ItemStack output) implements Recipe<SingleRecipeInput> {
+    public static final MapCodec<CompooperRecipe> MAP_CODEC = RecordCodecBuilder.mapCodec(instance ->
+            instance.group(
+                    Codec.STRING.fieldOf("fluid_type").forGetter(CompooperRecipe::fluidType),
+                    ItemStack.CODEC.fieldOf("input").forGetter(CompooperRecipe::input),
+                    ItemStack.CODEC.fieldOf("output").forGetter(CompooperRecipe::output)
+            ).apply(instance, CompooperRecipe::new));
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, CompooperRecipe> STREAM_CODEC =
+            StreamCodec.composite(
+                    ByteBufCodecs.STRING_UTF8, CompooperRecipe::fluidType,
+                    ItemStack.STREAM_CODEC, CompooperRecipe::input,
+                    ItemStack.STREAM_CODEC, CompooperRecipe::output,
+                    CompooperRecipe::new);
+
+    public static final RecipeSerializer<CompooperRecipe> SERIALIZER =
+            new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
 
     @Override
     public boolean matches(SingleRecipeInput recipeInput, Level level) {
@@ -21,34 +35,37 @@ public record CompooperRecipe(String fluidType, ItemStack input, ItemStack outpu
     }
 
     @Override
-    public ItemStack assemble(SingleRecipeInput recipeInput, HolderLookup.Provider registries) {
+    public ItemStack assemble(SingleRecipeInput recipeInput) {
         return output.copy();
     }
 
     @Override
-    public ItemStack getResultItem(HolderLookup.Provider registries) {
-        return output.copy();
+    public boolean showNotification() {
+        return false;
     }
 
     @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return true;
+    public String group() {
+        return "";
     }
 
     @Override
-    public NonNullList<Ingredient> getIngredients() {
-        NonNullList<Ingredient> list = NonNullList.create();
-        list.add(Ingredient.of(input.getItem()));
-        return list;
+    public PlacementInfo placementInfo() {
+        return PlacementInfo.NOT_PLACEABLE;
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public RecipeBookCategory recipeBookCategory() {
+        return RecipeBookCategories.CRAFTING_MISC;
+    }
+
+    @Override
+    public RecipeType<CompooperRecipe> getType() {
         return PoRecipes.COMPOOPER.type().get();
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<CompooperRecipe> getSerializer() {
         return PoRecipes.COMPOOPER.serializer().get();
     }
 
@@ -66,30 +83,4 @@ public record CompooperRecipe(String fluidType, ItemStack input, ItemStack outpu
         return stack.getCount() >= input.getCount();
     }
 
-    public static class Serializer implements RecipeSerializer<CompooperRecipe> {
-
-        public static final MapCodec<CompooperRecipe> CODEC = RecordCodecBuilder.mapCodec(instance ->
-                instance.group(
-                        Codec.STRING.fieldOf("fluid_type").forGetter(CompooperRecipe::fluidType),
-                        ItemStack.STRICT_CODEC.fieldOf("input").forGetter(CompooperRecipe::input),
-                        ItemStack.STRICT_CODEC.fieldOf("output").forGetter(CompooperRecipe::output)
-                ).apply(instance, CompooperRecipe::new));
-
-        public static final StreamCodec<RegistryFriendlyByteBuf, CompooperRecipe> STREAM_CODEC =
-                StreamCodec.composite(
-                        ByteBufCodecs.STRING_UTF8, CompooperRecipe::fluidType,
-                        ItemStack.STREAM_CODEC, CompooperRecipe::input,
-                        ItemStack.STREAM_CODEC, CompooperRecipe::output,
-                        CompooperRecipe::new);
-
-        @Override
-        public MapCodec<CompooperRecipe> codec() {
-            return CODEC;
-        }
-
-        @Override
-        public StreamCodec<RegistryFriendlyByteBuf, CompooperRecipe> streamCodec() {
-            return STREAM_CODEC;
-        }
-    }
 }

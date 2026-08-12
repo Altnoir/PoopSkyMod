@@ -8,11 +8,13 @@ import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.Item;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -62,25 +64,19 @@ public final class CompooperRecipeBuilder implements RecipeBuilder {
     }
 
     @Override
-    public @NotNull Item getResult() {
-        return output.getItem();
+    public ResourceKey<Recipe<?>> defaultId() {
+        return ResourceKey.create(Registries.RECIPE, getDefaultRecipeId(fluidType, output.getItem()));
     }
 
     @Override
-    public void save(@NotNull RecipeOutput recipeOutput) {
-        String itemId = PoopSky.getItemPath(output.getItem());
-        save(recipeOutput, itemId);
-    }
-
     public void save(@NotNull RecipeOutput recipeOutput, @NotNull String id) {
         Identifier recipeId = PoopSky.loc(RECIPE_TYPE + "/" + fluidType + "/" + id);
-        save(recipeOutput, recipeId);
+        save(recipeOutput, ResourceKey.create(Registries.RECIPE, recipeId));
     }
 
     @Override
-    public void save(@NotNull RecipeOutput recipeOutput, @NotNull Identifier id) {
-        ensureValid(id);
-        Identifier advancementId = PoopSky.loc(id.getPath());
+    public void save(@NotNull RecipeOutput recipeOutput, @NotNull ResourceKey<Recipe<?>> id) {
+        ensureValid(id.identifier());
 
         Advancement.Builder advancementBuilder = recipeOutput.advancement()
                 .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
@@ -90,7 +86,7 @@ public final class CompooperRecipeBuilder implements RecipeBuilder {
         criteria.forEach(advancementBuilder::addCriterion);
 
         CompooperRecipe recipe = new CompooperRecipe(fluidType, input, output);
-        recipeOutput.accept(id, recipe, advancementBuilder.build(advancementId.withPrefix("recipes/")));
+        recipeOutput.accept(id, recipe, advancementBuilder.build(id.identifier().withPrefix("recipes/")));
     }
 
     public static Identifier getDefaultRecipeId(String fluidType, ItemLike input) {

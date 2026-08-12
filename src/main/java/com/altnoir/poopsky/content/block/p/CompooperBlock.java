@@ -136,7 +136,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
 
 
     @Override
-    protected ItemInteractionResult useItemOn(
+    protected InteractionResult useItemOn(
             ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult
     ) {
         int i = state.getValue(POOP_LEVEL);
@@ -163,16 +163,16 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
             playCompostEffect(level, pos, !state.equals(newState));
             player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
             stack.consume(1, player);
-            return ItemInteractionResult.sidedSuccess(level.isClientSide());
+            return sidedSuccess(level);
         }
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return InteractionResult.TRY_WITH_EMPTY_HAND;
     }
 
-    private ItemInteractionResult liquidUse(ItemStack stack, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, Block newBlock, boolean bucket) {
+    private InteractionResult liquidUse(ItemStack stack, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, Block newBlock, boolean bucket) {
         return liquidUse(stack, level, pos, player, hand, sound, 1.0F, newBlock, bucket);
     }
 
-    private ItemInteractionResult liquidUse(ItemStack stack, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, float pitch, Block newBlock, boolean bucket) {
+    private InteractionResult liquidUse(ItemStack stack, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, float pitch, Block newBlock, boolean bucket) {
         var newState = newBlock.defaultBlockState().setValue(AbstractCompooperBlock.LEVEL, bucket ? MAX_LEVEL : MIN_LEVEL + 1);
 
         level.playSound(null, pos, sound, SoundSource.BLOCKS, 1.0F, pitch);
@@ -182,7 +182,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
         ItemStack itemStack = ItemUtils.createFilledResult(stack, player, bucket ? Items.BUCKET.getDefaultInstance() : Items.GLASS_BOTTLE.getDefaultInstance());
         player.setItemInHand(hand, itemStack);
 
-        return ItemInteractionResult.sidedSuccess(level.isClientSide());
+        return sidedSuccess(level);
     }
 
 
@@ -206,7 +206,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
         int i = state.getValue(POOP_LEVEL);
         if (i == READY) {
             extractProduce(player, state, level, pos);
-            return InteractionResult.sidedSuccess(level.isClientSide());
+            return sidedSuccess(level);
         } else {
             return InteractionResult.PASS;
         }

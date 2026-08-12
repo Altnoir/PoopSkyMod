@@ -7,11 +7,12 @@ import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.Item;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.crafting.Recipe;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -46,18 +47,19 @@ public final class FlyBarrelRecipeBuilder implements RecipeBuilder {
     }
 
     @Override
-    public @NotNull Item getResult() {
-        return BuiltInRegistries.ITEM.get(result.id());
-    }
-
-    public void save(@NotNull RecipeOutput recipeOutput, @NotNull String id) {
-        Identifier recipeId = PoopSky.loc(RECIPE_TYPE + "/" + id);
-        save(recipeOutput, recipeId);
+    public ResourceKey<Recipe<?>> defaultId() {
+        return ResourceKey.create(Registries.RECIPE, PoopSky.loc(RECIPE_TYPE + "/" + flyTypeId));
     }
 
     @Override
-    public void save(@NotNull RecipeOutput recipeOutput, @NotNull Identifier id) {
-        ensureValid(id);
+    public void save(@NotNull RecipeOutput recipeOutput, @NotNull String id) {
+        Identifier recipeId = PoopSky.loc(RECIPE_TYPE + "/" + id);
+        save(recipeOutput, ResourceKey.create(Registries.RECIPE, recipeId));
+    }
+
+    @Override
+    public void save(@NotNull RecipeOutput recipeOutput, @NotNull ResourceKey<Recipe<?>> id) {
+        ensureValid(id.identifier());
         Advancement.Builder advancementBuilder = recipeOutput.advancement()
                 .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
                 .rewards(AdvancementRewards.Builder.recipe(id))
@@ -65,7 +67,7 @@ public final class FlyBarrelRecipeBuilder implements RecipeBuilder {
         criteria.forEach(advancementBuilder::addCriterion);
 
         FlyBarrelRecipe recipe = new FlyBarrelRecipe(flyTypeId, result);
-        recipeOutput.accept(id, recipe, advancementBuilder.build(id.withPrefix("recipes/")));
+        recipeOutput.accept(id, recipe, advancementBuilder.build(id.identifier().withPrefix("recipes/")));
     }
 
     private void ensureValid(Identifier id) {

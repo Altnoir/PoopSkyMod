@@ -28,16 +28,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.RecipeBookCategories;
 import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
 import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;
-import net.minecraft.client.model.BoatModel;
-import net.minecraft.client.model.ChestBoatModel;
+import net.minecraft.client.model.object.boat.BoatModel;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.levelgen.presets.WorldPreset;
@@ -49,7 +46,6 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.*;
-import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
@@ -57,7 +53,6 @@ import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.network.PacketDistributor;
-import org.jetbrains.annotations.NotNull;
 
 @Mod(value = PoopSky.MOD_ID, dist = Dist.CLIENT)
 public class PoopSkyClient {
@@ -76,7 +71,6 @@ public class PoopSkyClient {
         modEventBus.addListener(PoBedrockModelResources::onRegisterBedrockModels);
         modEventBus.addListener(ClientModEvents::modLoad);
         modEventBus.addListener(ClientModEvents::registerLayers);
-        modEventBus.addListener(ClientModEvents::registerFluidRenderTypes);
         modEventBus.addListener(ClientModEvents::registerItemProperties);
         modEventBus.addListener(ClientModEvents::registerRenderTypes);
         modEventBus.addListener(ClientModEvents::registerParticleProviders);
@@ -108,15 +102,8 @@ public class PoopSkyClient {
         public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
             event.registerLayerDefinition(ToiletPlugModel.LAYER_LOCATION, ToiletPlugModel::createBodyLayer);
             event.registerLayerDefinition(FlyModel.LAYER_LOCATION, FlyModel::createBodyLayer);
-            event.registerLayerDefinition(GinkgoBoatRenderer.BOAT_LAYER, BoatModel::createBodyModel);
-            event.registerLayerDefinition(GinkgoBoatRenderer.CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel);
-        }
-
-        public static void registerFluidRenderTypes(FMLClientSetupEvent event) {
-            event.enqueueWork(() -> {
-                ItemBlockRenderTypes.setRenderLayer(PoFluids.URINE.get(), RenderType.translucent());
-                ItemBlockRenderTypes.setRenderLayer(PoFluids.FLOWING_URINE.get(), RenderType.translucent());
-            });
+            event.registerLayerDefinition(GinkgoBoatRenderer.BOAT_LAYER, BoatModel::createBoatModel);
+            event.registerLayerDefinition(GinkgoBoatRenderer.CHEST_BOAT_LAYER, BoatModel::createChestBoatModel);
         }
 
         public static void registerGuiOverlays(RegisterGuiLayersEvent event) {
@@ -196,23 +183,6 @@ public class PoopSkyClient {
                     return toiletPlugRenderer;
                 }
             }, PoItems.TOILET_PLUG.get());
-
-            event.registerFluidType(new IClientFluidTypeExtensions() {
-                @Override
-                public @NotNull Identifier getStillTexture() {
-                    return PFluidTypes.URINE_STILL_TEXTURE;
-                }
-
-                @Override
-                public @NotNull Identifier getFlowingTexture() {
-                    return PFluidTypes.URINE_FLOWING_TEXTURE;
-                }
-
-                @Override
-                public Identifier getOverlayTexture() {
-                    return null;
-                }
-            }, PFluidTypes.URINE_FLUID_TYPE.get());
         }
     }
 

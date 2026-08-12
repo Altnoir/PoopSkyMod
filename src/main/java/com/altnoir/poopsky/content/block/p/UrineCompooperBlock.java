@@ -61,7 +61,7 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         int i = state.getValue(LEVEL);
 
         Item bottle = PoItems.URINE_BOTTLE.get();
@@ -77,14 +77,14 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
         if (i > MIN_LEVEL && stack.getItem() == Items.GLASS_BOTTLE) {
             return glassBottleUse(stack, state, level, pos, player, hand, SoundEvents.BOTTLE_FILL, 0.6F, bottle.getDefaultInstance());
         }
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return InteractionResult.TRY_WITH_EMPTY_HAND;
     }
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (state.getValue(MAGGOTS)) {
             extractProduce(player, state, level, pos);
-            return InteractionResult.sidedSuccess(level.isClientSide());
+            return sidedSuccess(level);
         } else {
             return InteractionResult.PASS;
         }

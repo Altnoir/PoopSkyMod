@@ -155,9 +155,9 @@ public class PoBlocks {
                     .noOcclusion()
                     .isValidSpawn(Blocks::never)));
     public static final BlockEntry<PressurePlateBlock> POOP_PRESSURE_PLATE = registerDecoMaterialBlock("poop_pressure_plate", 88,
-            props -> new PressurePlateBlock(PoBlockSetType.POOP, poopProperties().forceSolidOn().noCollission().pushReaction(PushReaction.DESTROY)));
+            props -> new PressurePlateBlock(PoBlockSetType.POOP, poopProperties().forceSolidOn().noCollision().pushReaction(PushReaction.DESTROY)));
     public static final BlockEntry<ButtonBlock> POOP_BUTTON = registerDecoMaterialBlock("poop_button", 88,
-            props -> new ButtonBlock(PoBlockSetType.POOP, 200, poopProperties().noCollission().pushReaction(PushReaction.DESTROY)));
+            props -> new ButtonBlock(PoBlockSetType.POOP, 200, poopProperties().noCollision().pushReaction(PushReaction.DESTROY)));
 
     public static final BlockEntry<Block> POOP_BRICKS = registerDecoMaterialBlock("poop_bricks", 88,
             props -> new Block(hardenedProperties(MapColor.COLOR_BROWN, SoundType.FROGLIGHT)));
@@ -398,7 +398,7 @@ public class PoBlocks {
             (loot, block) -> loot.add(block, createGinkgoLeavesDrops(loot, block)));
     public static final BlockEntry<PoopTreeBlock> POOP_SAPLING = registerBlock("poop_sapling", 88,
             props -> new PoopTreeBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN)
-                    .noCollission()
+                    .noCollision()
                     .noOcclusion()
                     .instabreak()
                     .randomTicks()
@@ -408,7 +408,7 @@ public class PoBlocks {
     public static final BlockEntry<SaplingBlock> GINKGO_SAPLING = registerBlock("ginkgo_sapling", 64,
             props -> new SaplingBlock(PoTreeGrower.GINKGO, BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_YELLOW)
-                    .noCollission()
+                    .noCollision()
                     .instabreak()
                     .randomTicks()
                     .sound(SoundType.GRASS)
@@ -461,33 +461,33 @@ public class PoBlocks {
 
     public static final BlockEntry<MaggotsBlock> MAGGOTS = registerBlockNoItem("maggots",
             props -> new MaggotsBlock(plantProperties(MapColor.COLOR_YELLOW, SoundType.CROP)
-                    .noCollission()
+                    .noCollision()
                     .randomTicks()),
             PoBlocks::createMaggotsLoot);
     public static final BlockEntry<RoundwormVinesBlock> ROUNDWORM_VINES = registerBlockNoItem("roundworm_vines",
             props -> new RoundwormVinesBlock(
                     plantProperties(MapColor.TERRACOTTA_WHITE, SoundType.TWISTING_VINES)
                             .randomTicks()
-                            .noCollission()),
+                            .noCollision()),
             (loot, block) -> loot.dropOther(block, PoItems.ROUNDWORM.get()));
     public static final BlockEntry<RoundwormVinesPlantBlock> ROUNDWORM_VINES_PLANT = registerBlockNoItem("roundworm_vines_plant",
             props -> new RoundwormVinesPlantBlock(
                     plantProperties(MapColor.TERRACOTTA_WHITE, SoundType.TWISTING_VINES)
-                            .noCollission()),
+                            .noCollision()),
             PoBlocks::createRoundwormVinesPlantLoot);
 
     public static final BlockEntry<ChiliVinesBlock> CHILI_VINES = registerBlockNoItem("chili_vines",
             props -> new ChiliVinesBlock(
                     plantProperties(MapColor.PLANT, SoundType.CAVE_VINES)
                             .lightLevel(ChiliVines.emission(1))
-                            .noCollission()),
+                            .noCollision()),
             (loot, block) -> loot.add(block, createChiliVinesDrop(block)));
 
     public static final BlockEntry<ChiliVinesPlantBlock> CHILI_VINES_PLANT = registerBlockNoItem("chili_vines_plant",
             props -> new ChiliVinesPlantBlock(
                     plantProperties(MapColor.PLANT, SoundType.CAVE_VINES)
                             .lightLevel(ChiliVines.emission(1))
-                            .noCollission()),
+                            .noCollision()),
             (loot, block) -> loot.add(block, createChiliVinesDrop(block)));
 
     // Toilet

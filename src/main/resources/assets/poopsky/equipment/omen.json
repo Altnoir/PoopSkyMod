@@ -1,0 +1,19 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "poopsky:omen_layer_1"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "poopsky:omen_layer_2"
+      }
+    ],
+    "humanoid_baby": [
+      {
+        "texture": "poopsky:omen_layer_1"
+      }
+    ]
+  }
+}

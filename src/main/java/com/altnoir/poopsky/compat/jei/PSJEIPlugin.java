@@ -1,20 +1,20 @@
 package com.altnoir.poopsky.compat.jei;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.compat.PoMods;
-import com.altnoir.poopsky.compat.jei.create.FanDigestingCategory;
+//import com.altnoir.poopsky.compat.PoMods;
+//import com.altnoir.poopsky.compat.jei.create.FanDigestingCategory;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.recipe.ToiletShapedRecipe;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoComponents;
 import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.init.PoRecipes;
-import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
+//import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.ingredients.subtypes.ISubtypeInterpreter;
 import mezz.jei.api.ingredients.subtypes.UidContext;
-import mezz.jei.api.recipe.category.IRecipeCategory;
+//import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.registration.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.Identifier;
@@ -23,13 +23,13 @@ import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
+//import java.util.ArrayList;
+//import java.util.List;
 
 @JeiPlugin
 public class PSJEIPlugin implements IModPlugin {
     private static final Identifier PS_JEI_TEXTURE = PoopSky.loc("textures/gui/jei/enr_jei.png");
-    private final List<CreateRecipeCategory<?>> createCategories = new ArrayList<>();
+//    private final List<CreateRecipeCategory<?>> createCategories = new ArrayList<>();
 
     @Override
     public @NotNull Identifier getPluginUid() {
@@ -51,11 +51,11 @@ public class PSJEIPlugin implements IModPlugin {
                 new POPExplosionRecipeCategory(registration.getJeiHelpers(), arrow,arrow2),
                 new AnalPressingRecipeCategory(registration.getJeiHelpers(), arrow, plus));
 
-        if (PoMods.CREATE.isLoaded()) {
+/*        if (PoMods.CREATE.isLoaded()) {
             createCategories.clear();
             createCategories.add(FanDigestingCategory.create());
             registration.addRecipeCategories(createCategories.toArray(IRecipeCategory[]::new));
-        }
+        }*/
     }
 
     @Override
@@ -110,9 +110,9 @@ public class PSJEIPlugin implements IModPlugin {
 
         PSJEIInfo.register(registration);
 
-        if (PoMods.CREATE.isLoaded()) {
-            createCategories.forEach(category -> category.registerRecipes(registration));
-        }
+//        if (PoMods.CREATE.isLoaded()) {
+//            createCategories.forEach(category -> category.registerRecipes(registration));
+//        }
     }
 
     @Override
@@ -130,8 +130,8 @@ public class PSJEIPlugin implements IModPlugin {
         registration.addRecipeCatalyst(new ItemStack(PoItems.KING_OF_DRAGON_FRUIT.get()), AnalPressingRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(PoItems.DRAGON_BREATH_CHILI.get()), AnalPressingRecipeCategory.TYPE);
 
-        if (PoMods.CREATE.isLoaded()) {
-            createCategories.forEach(category -> category.registerCatalysts(registration));
-        }
+//        if (PoMods.CREATE.isLoaded()) {
+//            createCategories.forEach(category -> category.registerCatalysts(registration));
+//        }
     }
 }

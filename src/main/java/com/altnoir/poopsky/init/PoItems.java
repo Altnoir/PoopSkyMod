@@ -82,16 +82,13 @@ public class PoItems {
 
     public static final ItemEntry<OmenArmorItem> OMEN_HELMET = registerItemNoModel("omen_helmet",
             prop -> new OmenArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorType.HELMET,
-                    prop.durability(ArmorType.HELMET.getDurability(24))));
-    public static final ItemEntry<ArmorItem> OMEN_CHESTPLATE = registerItemNoModel("omen_chestplate",
-            prop -> new ArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorType.CHESTPLATE,
-                    new Item.Properties().durability(ArmorType.HELMET.getDurability(24))));
-    public static final ItemEntry<ArmorItem> OMEN_LEGGINGS = registerItemNoModel("omen_leggings",
-            prop -> new ArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorType.LEGGINGS,
-                    new Item.Properties().durability(ArmorType.HELMET.getDurability(24))));
-    public static final ItemEntry<ArmorItem> OMEN_BOOTS = registerItemNoModel("omen_boots",
-            prop -> new ArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorType.BOOTS,
-                    new Item.Properties().durability(ArmorType.HELMET.getDurability(24))));
+                    prop));
+    public static final ItemEntry<Item> OMEN_CHESTPLATE = registerItemNoModel("omen_chestplate",
+            prop -> new Item(prop.humanoidArmor(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorType.CHESTPLATE)));
+    public static final ItemEntry<Item> OMEN_LEGGINGS = registerItemNoModel("omen_leggings",
+            prop -> new Item(prop.humanoidArmor(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorType.LEGGINGS)));
+    public static final ItemEntry<Item> OMEN_BOOTS = registerItemNoModel("omen_boots",
+            prop -> new Item(prop.humanoidArmor(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorType.BOOTS)));
 
     public static final ItemEntry<SmithingTemplateItem> OMEN_UPGRADE_SMITHING_TEMPLATE = registerItem("omen_upgrade_smithing_template",
             props -> OmenSmithingTemplateItem.createOmenUpgradeTemplate());

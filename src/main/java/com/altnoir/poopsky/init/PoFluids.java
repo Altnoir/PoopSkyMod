@@ -13,15 +13,15 @@ import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.BucketItem;
-import net.minecraft.world.level.GameRules;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.material.*;
 import net.neoforged.neoforge.common.SoundActions;
 import net.neoforged.neoforge.fluids.BaseFlowingFluid;
@@ -48,7 +48,7 @@ public final class PoFluids {
                     .block(PoFluids.URINE_LIQUID))
             .setData(ProviderType.LANG, NonNullBiConsumer.noop())
             .bucket()
-            .model((ctx, prov) -> {
+            .model(() -> (ctx, prov) -> {
             })
             .build()
             .register();
@@ -57,7 +57,7 @@ public final class PoFluids {
     public static final ItemEntry<BucketItem> URINE_BUCKET = ItemEntry.cast(REGISTRATE.get("urine_bucket", Registries.ITEM));
     public static final BlockEntry<UrineLiquidBlock> URINE_LIQUID = REGISTRATE
             .block("urine_liquid", properties -> new UrineLiquidBlock(URINE.get(), urineLiquidProperties()))
-            .blockstate((ctx, prov) -> {
+            .blockstate(() -> (ctx, prov) -> {
             })
             .loot(RegistrateBlockLootTables::dropSelf)
             .register();
@@ -85,8 +85,8 @@ public final class PoFluids {
         ) {
             @Override
             public boolean canConvertToSource(FluidState state, LevelReader reader, BlockPos pos) {
-                if (reader instanceof Level level) {
-                    return level.getGameRules().getBoolean(GameRules.RULE_WATER_SOURCE_CONVERSION);
+                if (reader instanceof ServerLevel level) {
+                    return level.getGameRules().get(GameRules.WATER_SOURCE_CONVERSION);
                 }
                 return true;
             }
@@ -105,7 +105,7 @@ public final class PoFluids {
         return BlockBehaviour.Properties.of()
                 .mapColor(MapColor.COLOR_BROWN)
                 .replaceable()
-                .noCollission()
+                .noCollision()
                 .randomTicks()
                 .strength(100.0F)
                 .lightLevel(state -> 7)
