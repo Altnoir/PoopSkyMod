@@ -46,7 +46,7 @@ public class PoItemGroups {
                     PoSectionedCreativeModeTab.configure(
                             CreativeModeTab.builder()
                                     .title(Component.translatable(POOPSKY_TAB_KEY))
-                                    .icon(PoBlocks.WOODEN_TOILET::asStack),
+                                    .icon(PoBlocks.FLUSH_TOILET::asStack),
                             PoItemGroups::populateBasicSections,
                             TS_ITEMS,
                             TS_BLOCKS,

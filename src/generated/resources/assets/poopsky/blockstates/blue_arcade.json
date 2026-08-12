@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=east,half=lower": {
+      "model": "poopsky:block/blue_arcade_bottom",
+      "y": 90
+    },
+    "facing=east,half=upper": {
+      "model": "poopsky:block/blue_arcade_top",
+      "y": 90
+    },
+    "facing=north,half=lower": {
+      "model": "poopsky:block/blue_arcade_bottom"
+    },
+    "facing=north,half=upper": {
+      "model": "poopsky:block/blue_arcade_top"
+    },
+    "facing=south,half=lower": {
+      "model": "poopsky:block/blue_arcade_bottom",
+      "y": 180
+    },
+    "facing=south,half=upper": {
+      "model": "poopsky:block/blue_arcade_top",
+      "y": 180
+    },
+    "facing=west,half=lower": {
+      "model": "poopsky:block/blue_arcade_bottom",
+      "y": 270
+    },
+    "facing=west,half=upper": {
+      "model": "poopsky:block/blue_arcade_top",
+      "y": 270
+    }
+  }
+}
