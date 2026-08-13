@@ -54,6 +54,16 @@ public class PoNetworking {
                 AnimationFinishedPayload.CODEC,
                 AnimationFinishedPayload::handle
         );
+        registrar.playToClient(
+                LightArcadeSyncPacket.TYPE,
+                LightArcadeSyncPacket.STREAM_CODEC,
+                LightArcadeSyncPacket::handle
+        );
+        registrar.playToServer(
+                LightArcadeBlockUpdatePacket.TYPE,
+                LightArcadeBlockUpdatePacket.STREAM_CODEC,
+                LightArcadeBlockUpdatePacket::handle
+        );
         IntroHandshake.registerPayloads(registrar);
     }
 

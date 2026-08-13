@@ -1,12 +1,18 @@
 package com.altnoir.poopsky.content.block.p;
 
-import com.altnoir.poopsky.data.ArcadeLootGen;
+import com.altnoir.poopsky.client.ClientUtils;
+import com.altnoir.poopsky.content.block.entity.ArcadeBlockEntity;
+import com.altnoir.poopsky.content.item.p.GameDiscItem;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -15,10 +21,8 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.Mirror;
-import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.piston.PistonMovingBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -27,21 +31,20 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
-import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.loading.FMLEnvironment;
 
 import javax.annotation.Nullable;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class ArcadeBlock extends Block {
+public class ArcadeBlock extends Block implements EntityBlock {
     public static final MapCodec<ArcadeBlock> CODEC = simpleCodec(ArcadeBlock::new);
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
@@ -72,6 +75,12 @@ public class ArcadeBlock extends Block {
     @Override
     protected MapCodec<? extends Block> codec() {
         return CODEC;
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return state.getValue(HALF) == DoubleBlockHalf.LOWER ? new ArcadeBlockEntity(pos, state) : null;
     }
 
     @Override
@@ -128,6 +137,20 @@ public class ArcadeBlock extends Block {
     }
 
     @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        if (!level.isClientSide && !state.is(newState.getBlock())
+                && state.getValue(HALF) == DoubleBlockHalf.LOWER
+                && level.getBlockEntity(pos) instanceof ArcadeBlockEntity arcade
+                && arcade.hasCartridge()) {
+            ItemStack cartridge = arcade.takeCartridge();
+            if (!cartridge.isEmpty()) {
+                Block.popResource(level, pos, cartridge);
+            }
+        }
+        super.onRemove(state, level, pos, newState, movedByPiston);
+    }
+
+    @Override
     protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
         if (state.getValue(HALF) == DoubleBlockHalf.LOWER) {
             return true;
@@ -162,37 +185,113 @@ public class ArcadeBlock extends Block {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (level.isClientSide) {
-            return InteractionResult.sidedSuccess(true);
-        }
-
-        BlockPos ejectPos = state.getValue(HALF) == DoubleBlockHalf.UPPER ? pos.below() : pos;
-        BlockState ejectState = level.getBlockState(ejectPos);
-        if (!ejectState.is(this) || ejectState.getValue(HALF) != DoubleBlockHalf.LOWER) {
+        ArcadeBlockEntity arcade = getArcadeEntity(level, pos, state);
+        if (arcade == null) {
             return InteractionResult.PASS;
         }
 
-        if (level instanceof ServerLevel serverLevel) {
-            Direction facing = ejectState.getValue(FACING);
-            var lootTable = serverLevel.getServer()
-                    .reloadableRegistries()
-                    .getLootTable(ArcadeLootGen.lootTableKey(ejectState.getBlock()));
-            lootTable.getRandomItems(new LootParams.Builder(serverLevel).create(LootContextParamSets.EMPTY))
-                    .forEach(stack -> spawnArcadeItem(serverLevel, ejectPos, facing, stack));
-            serverLevel.levelEvent(1000, ejectPos, 0);
-            serverLevel.levelEvent(2000, ejectPos, facing.get3DDataValue());
+        if (handleRewardOrEject(level, player, arcade)) {
+            return InteractionResult.sidedSuccess(level.isClientSide);
         }
 
-        return InteractionResult.sidedSuccess(false);
+        if (!arcade.hasCartridge()) {
+            showNoCartridge(level, player);
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+
+        if (level.isClientSide && FMLEnvironment.dist == Dist.CLIENT
+                && arcade.getCartridge().getItem() instanceof GameDiscItem disc) {
+            ClientUtils.openArcadeScreen(arcade.getBlockPos(), disc);
+        }
+
+        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
-    private static void spawnArcadeItem(ServerLevel level, BlockPos pos, Direction facing, ItemStack stack) {
-        Vec3 position = Vec3.atCenterOf(pos).add(
-                facing.getStepX() * 0.7,
-                0.0,
-                facing.getStepZ() * 0.7
-        );
-        DefaultDispenseItemBehavior.spawnItem(level, stack, 6, facing, position);
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        ArcadeBlockEntity arcade = getArcadeEntity(level, pos, state);
+        if (arcade == null) {
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        }
+
+        if (handleRewardOrEject(level, player, arcade)) {
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        }
+
+        if (arcade.hasCartridge()) {
+            if (level.isClientSide && FMLEnvironment.dist == Dist.CLIENT
+                    && arcade.getCartridge().getItem() instanceof GameDiscItem disc) {
+                ClientUtils.openArcadeScreen(arcade.getBlockPos(), disc);
+            }
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        }
+
+        if (stack.getItem() instanceof GameDiscItem) {
+            if (!level.isClientSide && arcade.insertCartridge(stack)) {
+                stack.shrink(1);
+                level.playSound(null, arcade.getBlockPos(), PoSoundEvents.CONFIRM.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
+            }
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        }
+
+        showNoCartridge(level, player);
+        return ItemInteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    private static boolean handleRewardOrEject(Level level, Player player, ArcadeBlockEntity arcade) {
+        if (arcade.getRewardCount() > 0) {
+            if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
+                arcade.claimReward(serverPlayer);
+            }
+            return true;
+        }
+
+        if (player.isShiftKeyDown()) {
+            if (arcade.hasCartridge()) {
+                ejectCartridge(level, player, arcade);
+            } else {
+                showNoCartridge(level, player);
+            }
+            return true;
+        }
+
+        return false;
+    }
+
+    @Nullable
+    private static ArcadeBlockEntity getArcadeEntity(Level level, BlockPos pos, BlockState state) {
+        if (!(state.getBlock() instanceof ArcadeBlock)) {
+            return null;
+        }
+
+        BlockPos lowerPos = state.getValue(HALF) == DoubleBlockHalf.UPPER ? pos.below() : pos;
+        if (level.getBlockEntity(lowerPos) instanceof ArcadeBlockEntity arcade) {
+            return arcade;
+        }
+
+        return null;
+    }
+
+    private static void ejectCartridge(Level level, Player player, ArcadeBlockEntity arcade) {
+        if (level.isClientSide) {
+            return;
+        }
+
+        ItemStack cartridge = arcade.ejectCartridge();
+        if (cartridge.isEmpty()) {
+            return;
+        }
+
+        if (!player.getInventory().add(cartridge) && !cartridge.isEmpty()) {
+            Block.popResource(level, arcade.getBlockPos(), cartridge);
+        }
+        level.playSound(null, arcade.getBlockPos(), PoSoundEvents.SWITCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
+    }
+
+    private static void showNoCartridge(Level level, Player player) {
+        if (!level.isClientSide) {
+            player.displayClientMessage(Component.translatable("message.gamediscs.light_arcade.no_cartridge"), true);
+        }
     }
 
     @Override

@@ -47,6 +47,11 @@ public class PoBlockEntityType {
             .validBlocks(PoBlocks.FLUSH_TOILET, PoBlocks.GOLDEN_FLUSH_TOILET)
             .register();
 
+    public static final BlockEntityEntry<ArcadeBlockEntity> ARCADE_BLOCK_ENTITY = REGISTRATE
+            .<ArcadeBlockEntity>blockEntity("arcade_block_entity", (type, pos, state) -> new ArcadeBlockEntity(pos, state))
+            .validBlocks(PoBlocks.BLUE_ARCADE)
+            .register();
+
     public static void register() {
     }
 }
