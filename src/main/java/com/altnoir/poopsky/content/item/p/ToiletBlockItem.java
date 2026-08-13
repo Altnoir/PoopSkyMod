@@ -1,23 +1,17 @@
 package com.altnoir.poopsky.content.item.p;
 
 import com.altnoir.poopsky.content.ToiletType;
+import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
-import com.altnoir.poopsky.content.block.p.HardToiletBlock;
-import com.altnoir.poopsky.content.block.p.WoodToiletBlock;
 import com.altnoir.poopsky.init.PoComponents;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-
-import java.util.function.Consumer;
 
 public class ToiletBlockItem extends BlockItem {
     public ToiletBlockItem(Block block, Properties properties) {
@@ -49,14 +43,7 @@ public class ToiletBlockItem extends BlockItem {
         ToiletType type = context.getItemInHand().get(PoComponents.TOILET_TYPE.get());
         if (type == null) return state;
 
-        Block block = getBlock();
-        if (block instanceof HardToiletBlock lava) {
-            return lava.applyVariant(state, type);
-        } else if (block instanceof WoodToiletBlock) {
-            return state;
-        }
-
-        return state;
+        return getBlock() instanceof AbstractToiletBlock toilet ? toilet.applyToiletType(state, type) : state;
     }
 
     @Override
@@ -75,15 +62,4 @@ public class ToiletBlockItem extends BlockItem {
         return result;
     }
 
-    @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> consumer, TooltipFlag tooltipFlag) {
-        super.appendHoverText(stack, context, tooltipDisplay, consumer, tooltipFlag);
-        ToiletType type = stack.get(PoComponents.TOILET_TYPE.get());
-        if (type == null) return;
-
-        consumer.accept(Component.translatable("tooltip.poopsky.toilet_type")
-                .append(": ")
-                .append(type.displayName())
-                .withStyle(ChatFormatting.GRAY));
-    }
 }

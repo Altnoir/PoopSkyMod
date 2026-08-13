@@ -45,7 +45,7 @@ public class BreedingChestBlockEntity extends BlockEntity implements MenuProvide
     private static final int SCAN_INTERVAL = 80;         // 环境扫描间隔（tick）
     private static final int SCAN_RANGE = 2;             // 扫描范围（5x5x5）
 
-    private static final int SCAN_EDGE = SCAN_RANGE * 2 + 1;
+    private static final int SCAN_EDGE = (SCAN_RANGE << 1) + 1;
     private static final int SCAN_BLOCKS_PER_TICK = 10;
     private static final int TOTAL_SCAN_BLOCKS = SCAN_EDGE * SCAN_EDGE * SCAN_EDGE;
     private int progress = 0;

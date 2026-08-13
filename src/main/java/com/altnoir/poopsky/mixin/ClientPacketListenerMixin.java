@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value = ClientPacketListener.class)
 public class ClientPacketListenerMixin {
     @Inject(method = "handleSetEntityPassengersPacket", at = @At("TAIL"))
-    private void replaceToiletPlugDismountMessage(ClientboundSetPassengersPacket packet, CallbackInfo ci) {
+    private static void replaceToiletPlugDismountMessage(ClientboundSetPassengersPacket packet, CallbackInfo ci) {
         var minecraft = Minecraft.getInstance();
         if (minecraft.player != null && minecraft.player.getVehicle() instanceof ToiletPlugEntity) {
             minecraft.gui.setOverlayMessage(Component.translatable(

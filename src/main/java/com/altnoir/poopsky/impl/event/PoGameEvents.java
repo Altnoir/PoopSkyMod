@@ -7,10 +7,10 @@ import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.ToiletTypeManager;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
-import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.block.p.PortableToiletBlock;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.content.item.p.TimeBellItem;
+import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.content.villager.PVillagerBehaviors;
 import com.altnoir.poopsky.impl.PoAnimationSavedData;
 import com.altnoir.poopsky.impl.command.PoCommands;
@@ -19,6 +19,7 @@ import com.altnoir.poopsky.impl.util.ToiletUtil;
 import com.altnoir.poopsky.init.*;
 import com.altnoir.poopsky.worldgen.PoVoidChunkGenerator;
 import com.altnoir.poopsky.worldgen.structure.PoopIslandStructure;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
@@ -47,6 +48,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.storage.LevelData;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.bus.api.IEventBus;
@@ -57,6 +59,7 @@ import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
+import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
@@ -68,6 +71,7 @@ import java.util.Set;
 public class PoGameEvents {
     public static void registerGame(IEventBus gameEventBus) {
         gameEventBus.addListener(PoGameEvents::onItemCrafted);
+        gameEventBus.addListener(PoGameEvents::onItemTooltip);
         gameEventBus.addListener(PoGameEvents::onRightClickBlock);
         gameEventBus.addListener(PoGameEvents::onRightClickItem);
         gameEventBus.addListener(PoGameEvents::onBrewingRecipeRegistry);
@@ -93,6 +97,21 @@ public class PoGameEvents {
         }
     }
 
+    public static void onItemTooltip(ItemTooltipEvent event) {
+        ItemStack stack = event.getItemStack();
+        if (!(stack.getItem() instanceof ToiletBlockItem)) {
+            return;
+        }
+
+        ToiletType type = stack.get(PoComponents.TOILET_TYPE.get());
+        if (type != null) {
+            event.getToolTip().add(Component.translatable("tooltip.poopsky.toilet_type")
+                    .append(": ")
+                    .append(type.displayName())
+                    .withStyle(ChatFormatting.GRAY));
+        }
+    }
+
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         var level = event.getLevel();
         var player = event.getEntity();
@@ -102,7 +121,7 @@ public class PoGameEvents {
 
         if (!(heldItem.getItem() instanceof BottleItem) && !heldItem.is(Tags.Items.BUCKETS_EMPTY)) return;
         if (!(level.getBlockState(pos).getBlock() instanceof AbstractToiletBlock abstractToiletBlock)) return;
-        if (abstractToiletBlock instanceof BaseToiletLavaBlock && level.getBlockState(pos).getValue(BaseToiletLavaBlock.LAVA))
+        if (abstractToiletBlock.isLavaFilled(level.getBlockState(pos)))
             return;
 
         if (!level.isClientSide()) {
@@ -218,13 +237,13 @@ public class PoGameEvents {
 
             event.setCanceled(true);
             BlockPos spawn = level.getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, pos);
-            event.getSettings().setSpawn(spawn, 90.0F);
-            level.getGameRules().getRule(GameRules.RULE_SPAWN_RADIUS).set(0, level.getServer());
+            event.getSettings().setSpawn(LevelData.RespawnData.of(level.dimension(), spawn, 90.0F, 0.0F));
+            level.getGameRules().set(GameRules.RESPAWN_RADIUS, 0, level.getServer());
 
             PoopIslandStructure.registerGuaranteedSpawn(level.getSeed(), spawn);
             BlockPos islandCenter = PoopIslandStructure.getGuaranteedSpawnIslandCenter(level.getSeed(), spawn);
-            ChunkPos islandChunk = new ChunkPos(islandCenter);
-            level.getChunk(islandChunk.x, islandChunk.z);
+            ChunkPos islandChunk = ChunkPos.containing(islandCenter);
+            level.getChunk(islandChunk.x(), islandChunk.z());
         }
     }
 
@@ -248,10 +267,10 @@ public class PoGameEvents {
     public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
 
-        ServerLevel overworld = player.getServer().overworld();
+        ServerLevel overworld = player.level().getServer().overworld();
         if (!(overworld.getChunkSource().getGenerator() instanceof PoVoidChunkGenerator)) return;
 
-        boolean firstJoin = PoAnimationSavedData.get(overworld).markPlayed(PoAnimation.INTRO, player.getUUID(), player.getGameProfile().getName());
+        boolean firstJoin = PoAnimationSavedData.get(overworld).markPlayed(PoAnimation.INTRO, player.getUUID(), player.getGameProfile().name());
         if (firstJoin && "zh_cn".equalsIgnoreCase(player.getLanguage())) {
             player.sendSystemMessage(Component.literal(
                     "温馨提示：如果您正在直播或录制，可在资源包中启用空中厕所的“认知滤网”资源包"
@@ -268,17 +287,20 @@ public class PoGameEvents {
     public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
 
-        BlockPos respawn = player.getRespawnPosition();
-        if (respawn == null) return;
+        ServerPlayer.RespawnConfig respawnConfig = player.getRespawnConfig();
+        if (respawnConfig == null) return;
 
-        ServerLevel respawnLevel = player.server.getLevel(player.getRespawnDimension());
+        LevelData.RespawnData respawnData = respawnConfig.respawnData();
+        BlockPos respawn = respawnData.pos();
+        var server = player.level().getServer();
+        ServerLevel respawnLevel = server.getLevel(respawnData.dimension());
         if (respawnLevel == null || !(respawnLevel.getBlockState(respawn).getBlock() instanceof PortableToiletBlock)) {
             return;
         }
 
         player.setForcedPose(Pose.SWIMMING);
         player.setPose(Pose.SWIMMING);
-        player.server.tell(new TickTask(player.server.getTickCount() + 1, () -> player.setForcedPose(null)));
+        server.schedule(new TickTask(server.getTickCount() + 1, () -> player.setForcedPose(null)));
     }
 
     public static void onServerTick(ServerTickEvent.Post event) {

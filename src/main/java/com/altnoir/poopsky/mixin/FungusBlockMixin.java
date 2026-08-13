@@ -30,7 +30,7 @@ public class FungusBlockMixin {
     private static BlockPos poopsky$groundPos;
 
     @Inject(method = "isValidBonemealTarget", at = @At("HEAD"), cancellable = true)
-    private void poopsky$isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, CallbackInfoReturnable<Boolean> cir) {
+    private static void poopsky$isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, CallbackInfoReturnable<Boolean> cir) {
         BlockState blockstate = level.getBlockState(pos.below());
         if (blockstate.is(PoBlocks.CHILI_POOP_BLOCK.get())) {
             cir.setReturnValue(true);
@@ -50,7 +50,7 @@ public class FungusBlockMixin {
     }
 
     @Inject(method = "performBonemeal", at = @At("RETURN"))
-    private void poopsky$performBonemealReturn(ServerLevel level, RandomSource random, BlockPos pos, BlockState state, CallbackInfo ci) {
+    private static void poopsky$performBonemealReturn(ServerLevel level, RandomSource random, BlockPos pos, BlockState state, CallbackInfo ci) {
         if (poopsky$shouldRestoreGround && poopsky$groundPos != null) {
             level.setBlock(poopsky$groundPos, PoBlocks.CHILI_POOP_BLOCK.get().defaultBlockState(), 3);
             poopsky$shouldRestoreGround = false;

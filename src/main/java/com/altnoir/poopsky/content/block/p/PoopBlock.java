@@ -128,16 +128,16 @@ public class PoopBlock extends Block implements BonemealableBlock {
 
     @Override
     protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
-        if (this.isSlidingDown(pos, entity)) {
-            this.maybeDoSlideAchievement(entity, pos);
-            this.doSlideMovement(entity);
-            this.maybeDoSlideEffects(level, entity);
+        if (PoopBlock.isSlidingDown(pos, entity)) {
+            PoopBlock.maybeDoSlideAchievement(entity, pos);
+            PoopBlock.doSlideMovement(entity);
+            PoopBlock.maybeDoSlideEffects(level, entity);
         }
 
         super.entityInside(state, level, pos, entity, effectApplier, isPrecise);
     }
 
-    private boolean isSlidingDown(BlockPos pos, Entity entity) {
+    private static boolean isSlidingDown(BlockPos pos, Entity entity) {
         if (entity.onGround()) {
             return false;
         } else if (entity.getY() > (double) pos.getY() + 0.9375 - 1.0E-7) {
@@ -152,13 +152,13 @@ public class PoopBlock extends Block implements BonemealableBlock {
         }
     }
 
-    private void maybeDoSlideAchievement(Entity entity, BlockPos pos) {
+    private static void maybeDoSlideAchievement(Entity entity, BlockPos pos) {
         if (entity instanceof ServerPlayer && entity.level().getGameTime() % 20L == 0L) {
             CriteriaTriggers.HONEY_BLOCK_SLIDE.trigger((ServerPlayer) entity, entity.level().getBlockState(pos));
         }
     }
 
-    private void doSlideMovement(Entity entity) {
+    private static void doSlideMovement(Entity entity) {
         Vec3 vec3 = entity.getDeltaMovement();
         if (vec3.y < -0.13) {
             double d0 = -0.05 / vec3.y;
@@ -170,7 +170,7 @@ public class PoopBlock extends Block implements BonemealableBlock {
         entity.resetFallDistance();
     }
 
-    private void maybeDoSlideEffects(Level level, Entity entity) {
+    private static void maybeDoSlideEffects(Level level, Entity entity) {
         if (doesEntityDoPoopBlockSlideEffects(entity)) {
             if (level.getRandom().nextInt(5) == 0) {
                 entity.playSound(PoSoundEvents.BLOCK_POOP_BLOCK_SLIDE.get(), 1.0F, 1.0F);

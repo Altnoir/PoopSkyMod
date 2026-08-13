@@ -1,7 +1,6 @@
 package com.altnoir.poopsky.content.item.p;
 
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
-import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.core.BlockPos;
@@ -32,9 +31,9 @@ public class CompooperBlockItem extends BlockItem {
         ItemStack stack = context.getItemInHand();
         Player player = context.getPlayer();
 
-        if (block instanceof AbstractToiletBlock && player != null && !player.isShiftKeyDown()) {
+        if (block instanceof AbstractToiletBlock toilet && player != null && !player.isShiftKeyDown()) {
             if (!level.isClientSide() && !stack.isEmpty()) {
-                boolean isLava = block instanceof BaseToiletLavaBlock && state.getValue(BaseToiletLavaBlock.LAVA);
+                boolean isLava = toilet.isLavaFilled(state);
 
                 SoundEvent soundEvent = isLava ? PoSoundEvents.BLOCK_COMPOOPER_BUCKET_FILL_LAVA.get() : PoSoundEvents.BLOCK_COMPOOPER_BUCKET_FILL.get();
                 level.playSound(null, pos, soundEvent, SoundSource.PLAYERS, 1.0F, 0.6F);

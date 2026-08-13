@@ -75,7 +75,7 @@ public class ToiletLinkerItem extends PoBaseItem {
         return InteractionResult.SUCCESS;
     }
 
-    private ItemStack resetComponent(ItemStack stack, Player player) {
+    private static ItemStack resetComponent(ItemStack stack, Player player) {
         stack.set(PoComponents.TOILET_COMPONENT.get(), ToiletComponent.EMPTY);
         player.sendOverlayMessage(Component.translatable("message.poopsky.toilet_linker.4").withStyle(ChatFormatting.RED));
         return stack;
@@ -148,7 +148,7 @@ public class ToiletLinkerItem extends PoBaseItem {
         return Optional.ofNullable(server.getLevel(registryKey));
     }
 
-    private void notifyBlockUpdate(ServerLevel level, BlockPos pos) {
+    private static void notifyBlockUpdate(ServerLevel level, BlockPos pos) {
         BlockState state = level.getBlockState(pos);
         level.sendBlockUpdated(pos, state, state, Block.UPDATE_ALL);
     }

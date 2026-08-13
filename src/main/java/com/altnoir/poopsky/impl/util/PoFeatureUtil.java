@@ -19,9 +19,9 @@ public final class PoFeatureUtil {
                 .flatMap(registry -> registry.getHolder(feature))
                 .ifPresent(reference -> {
                     for (int attempt = 0; attempt < tries; attempt++) {
-                        int x = random.nextInt(xzSpread * 2 + 1) - xzSpread;
-                        int y = random.nextInt(ySpread * 2 + 1) - ySpread;
-                        int z = random.nextInt(xzSpread * 2 + 1) - xzSpread;
+                        int x = random.nextInt((xzSpread << 1) + 1) - xzSpread;
+                        int y = random.nextInt((ySpread << 1) + 1) - ySpread;
+                        int z = random.nextInt((xzSpread << 1) + 1) - xzSpread;
                         reference.value().place(
                                 level,
                                 level.getChunkSource().getGenerator(),

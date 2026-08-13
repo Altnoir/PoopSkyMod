@@ -1,18 +1,14 @@
 package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.content.ToiletType;
-import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.impl.util.ToiletUtil;
 import com.altnoir.poopsky.init.ToiletTypes;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.StringRepresentable;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -21,7 +17,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.event.EventHooks;
 import org.jetbrains.annotations.NotNull;
 
@@ -48,11 +43,7 @@ public class HardToiletBlock extends BaseToiletLavaBlock {
 
     public HardToiletBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any()
-                .setValue(FACING, Direction.NORTH)
-                .setValue(CONNECTION, AbstractToiletBlock.ToiletState.DEFAULT)
-                .setValue(LAVA, false)
-                .setValue(TOILET_MODE, ToiletMode.DEFAULT));
+        this.registerDefaultState(this.defaultBlockState().setValue(TOILET_MODE, ToiletMode.DEFAULT));
     }
 
     @Override
@@ -78,15 +69,12 @@ public class HardToiletBlock extends BaseToiletLavaBlock {
     }
 
     @Override
-    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (!state.getValue(LAVA)) {
-            InteractionResult result = handleVariantReplacement(stack, level, pos, player, ToiletType.Category.HARD);
-            if (result != null) return result;
-        }
-        return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
+    protected boolean canReplaceVariant(BlockState state, ToiletType type) {
+        return !isLavaFilled(state) && type.category() == ToiletType.Category.HARD;
     }
 
-    public BlockState applyVariant(BlockState state, ToiletType toiletType) {
+    @Override
+    public BlockState applyToiletType(BlockState state, ToiletType toiletType) {
         if (toiletType.category() == ToiletType.Category.HARD) {
             ToiletMode mode = toiletType.isRedstone() ? ToiletMode.REDSTONE : ToiletMode.DEFAULT;
             return state.setValue(TOILET_MODE, mode);

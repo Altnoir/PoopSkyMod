@@ -101,7 +101,7 @@ public class IntroScreen extends Screen {
             guiGraphics.centeredText(this.font, this.title, centerX, titleY, alphaColor(titleAlpha));
         }
         if (iconAlpha > 0.0F) {
-            this.blitPoop(guiGraphics, centerX - ICON_SIZE / 2, titleY + 26, ICON_SIZE);
+            IntroScreen.blitPoop(guiGraphics, centerX - ICON_SIZE / 2, titleY + 26, ICON_SIZE);
         }
         if (yearAlpha > 0.0F) {
             guiGraphics.centeredText(this.font, this.year, centerX, titleY + 94, alphaColor(yearAlpha));
@@ -127,11 +127,11 @@ public class IntroScreen extends Screen {
             float distance = 18.0F + progress * progress * (70.0F + i % 5 * 24.0F);
             int x = Mth.floor(centerX + Mth.cos(angle) * distance);
             int y = Mth.floor(centerY + Mth.sin(angle) * distance + progress * progress * 80.0F);
-            this.blitPoop(guiGraphics, x, y, 10 + i % 8);
+            IntroScreen.blitPoop(guiGraphics, x, y, 10 + i % 8);
         }
     }
 
-    private void blitPoop(GuiGraphicsExtractor guiGraphics, int x, int y, int size) {
+    private static void blitPoop(GuiGraphicsExtractor guiGraphics, int x, int y, int size) {
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, POOP_TEXTURE, x, y, 0.0F, 0.0F, size, size, 16, 16);
     }
 

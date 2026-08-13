@@ -19,7 +19,7 @@ public class PVillagerBehaviors {
     private static final TargetingConditions POOP_TEMPT_TARGETING = TargetingConditions.forNonCombat()
             .range(POOP_TEMPT_RANGE)
             .ignoreLineOfSight()
-            .selector(entity -> entity instanceof Player player && isHoldingPoop(player));
+            .selector((entity, level) -> entity instanceof Player player && isHoldingPoop(player));
 
     public static void tickPoopTemptation(Villager villager) {
         if (!(villager.level() instanceof ServerLevel level) || !canBeTempted(villager)) return;

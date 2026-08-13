@@ -44,7 +44,7 @@ public class FecalIncontinenceEffect extends MobEffect {
         return true;
     }
 
-    private void fecalIncontinence(LivingEntity entity, int amplifier) {
+    private static void fecalIncontinence(LivingEntity entity, int amplifier) {
         float pitch = entity.getRandom().nextFloat() + 0.5F;
 
         if (!entity.level().isClientSide()) {

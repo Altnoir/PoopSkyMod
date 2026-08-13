@@ -28,7 +28,7 @@ public class CarvedPumpkinBlockMixin {
     private static final Predicate<BlockState> PUMPKINS_PREDICATE = state -> state != null && (state.is(Blocks.CARVED_PUMPKIN) || state.is(Blocks.JACK_O_LANTERN));
 
     @Inject(method = "trySpawnGolem", at = @At("TAIL"))
-    private void poopsky$trySpawn(Level level, BlockPos topPos, CallbackInfo ci) {
+    private static void poopsky$trySpawn(Level level, BlockPos topPos, CallbackInfo ci) {
         PumkinBlockEvents.SpawnResult result = PumkinBlockEvents.trySpawn(level, topPos, PUMPKINS_PREDICATE);
         if (result == null || result.entity() == null) return;
         switch (result.type()) {
@@ -37,7 +37,7 @@ public class CarvedPumpkinBlockMixin {
     }
 
     @Inject(method = "canSpawnGolem", at = @At("RETURN"), cancellable = true)
-    private void poopsky$canSpawn(LevelReader level, BlockPos topPos, CallbackInfoReturnable<Boolean> cir) {
+    private static void poopsky$canSpawn(LevelReader level, BlockPos topPos, CallbackInfoReturnable<Boolean> cir) {
         if (PumkinBlockEvents.canSpawnCustomGolem(level, topPos)) {
             cir.setReturnValue(true);
         }

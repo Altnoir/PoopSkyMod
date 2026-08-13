@@ -2,8 +2,6 @@ package com.altnoir.poopsky.content.block.entity;
 
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
-import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
-import com.altnoir.poopsky.content.block.p.HardToiletBlock;
 import com.altnoir.poopsky.init.PoBlockEntityType;
 import com.altnoir.poopsky.init.PoFluids;
 import com.altnoir.poopsky.init.ToiletTypes;
@@ -64,21 +62,19 @@ public class ToiletBlockEntity extends BlockEntity {
         this.toiletType = toiletType;
         this.setChanged();
         if (level instanceof ServerLevel serverLevel) {
-            syncToiletModeToBlockState();
+            syncToiletTypeToBlockState();
             requestModelDataUpdate();
             serverLevel.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
         }
     }
 
-    private void syncToiletModeToBlockState() {
+    private void syncToiletTypeToBlockState() {
         if (level == null) return;
         BlockState state = getBlockState();
-        boolean shouldBeRedstone = toiletType != null && toiletType.isRedstone();
-        if (state.getBlock() instanceof HardToiletBlock) {
-            HardToiletBlock.ToiletMode currentMode = state.getValue(HardToiletBlock.TOILET_MODE);
-            HardToiletBlock.ToiletMode targetMode = shouldBeRedstone ? HardToiletBlock.ToiletMode.REDSTONE : HardToiletBlock.ToiletMode.DEFAULT;
-            if (currentMode != targetMode) {
-                level.setBlock(getBlockPos(), state.setValue(HardToiletBlock.TOILET_MODE, targetMode), 3);
+        if (state.getBlock() instanceof AbstractToiletBlock toiletBlock) {
+            BlockState updatedState = toiletBlock.applyToiletType(state, toiletType);
+            if (updatedState != state) {
+                level.setBlock(getBlockPos(), updatedState, 3);
             }
         }
     }
@@ -102,7 +98,7 @@ public class ToiletBlockEntity extends BlockEntity {
         var targetWorld = server.getLevel(ResourceKey.create(Registries.DIMENSION, targetDimension));
         if (targetWorld == null) return;
 
-        var chunkPos = ChunkPos.containing(this.getLinkedPos());
+        var chunkPos = ChunkPos.containing(this.linkedPos);
 
         targetWorld.getChunkSource().getChunk(chunkPos.x(), chunkPos.z(), ChunkStatus.FULL, true);
 
@@ -193,10 +189,9 @@ public class ToiletBlockEntity extends BlockEntity {
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, ToiletBlockEntity blockEntity) {
-        var fluid = PoFluids.URINE.get();
-        if (state.hasProperty(BaseToiletLavaBlock.LAVA) && state.getValue(BaseToiletLavaBlock.LAVA)) {
-            fluid = Fluids.LAVA;
-        }
+        var fluid = state.getBlock() instanceof AbstractToiletBlock toilet && toilet.isLavaFilled(state)
+                ? Fluids.LAVA
+                : PoFluids.URINE.get();
         if (blockEntity.getFluid().getFluid() != fluid) {
             blockEntity.drain(blockEntity.getFluidAmount(), false);
         }

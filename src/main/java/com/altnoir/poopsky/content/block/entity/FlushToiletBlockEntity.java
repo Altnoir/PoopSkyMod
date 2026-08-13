@@ -186,7 +186,7 @@ public class FlushToiletBlockEntity extends BlockEntity implements MenuProvider 
         var targetWorld = server.getLevel(ResourceKey.create(Registries.DIMENSION, targetDimension));
         if (targetWorld == null) return;
 
-        var chunkPos = ChunkPos.containing(this.getLinkedPos());
+        var chunkPos = ChunkPos.containing(this.linkedPos);
         targetWorld.getChunkSource().getChunk(chunkPos.x(), chunkPos.z(), ChunkStatus.FULL, true);
 
         if (targetWorld.getBlockEntity(linkedPos) instanceof FlushToiletBlockEntity be) {

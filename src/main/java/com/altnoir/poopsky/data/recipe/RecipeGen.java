@@ -57,21 +57,20 @@ public final class RecipeGen {
     private static void generate(RegistrateRecipeProvider recipeProvider) {
         provider = recipeProvider;
         registries = recipeProvider.registries();
-        RecipeOutput recipeOutput = recipeProvider;
-        buildCookingRecipes(recipeOutput);
-        buildFoodRecipes(recipeOutput);
-        buildItemRecipes(recipeOutput);
-        buildBuildingRecipes(recipeOutput);
-        buildVanillaRecipes(recipeOutput);
-        buildStonecuttingRecipes(recipeOutput);
-        buildToiletRecipes(recipeOutput);
+        buildCookingRecipes(recipeProvider);
+        buildFoodRecipes(recipeProvider);
+        buildItemRecipes(recipeProvider);
+        buildBuildingRecipes(recipeProvider);
+        buildVanillaRecipes(recipeProvider);
+        buildStonecuttingRecipes(recipeProvider);
+        buildToiletRecipes(recipeProvider);
 
-        buildSieveRecipes(recipeOutput);
-        buildCompooperRecipes(recipeOutput);
-        buildPopExplosionRecipes(recipeOutput);
-        buildAnalPressingRecipes(recipeOutput);
-        buildBreedingChestRecipes(recipeOutput);
-        buildFlyBarrelRecipes(recipeOutput);
+        buildSieveRecipes(recipeProvider);
+        buildCompooperRecipes(recipeProvider);
+        buildPopExplosionRecipes(recipeProvider);
+        buildAnalPressingRecipes(recipeProvider);
+        buildBreedingChestRecipes(recipeProvider);
+        buildFlyBarrelRecipes(recipeProvider);
         provider = null;
         registries = null;
     }

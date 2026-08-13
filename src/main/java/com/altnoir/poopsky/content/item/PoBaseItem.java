@@ -34,7 +34,7 @@ public class PoBaseItem extends Item {
         }
     }
 
-    private boolean isShiftDown() {
+    private static boolean isShiftDown() {
         return InputConstants.isKeyDown(Minecraft.getInstance().getWindow(), InputConstants.KEY_LSHIFT)
                 || InputConstants.isKeyDown(Minecraft.getInstance().getWindow(), InputConstants.KEY_RSHIFT);
     }

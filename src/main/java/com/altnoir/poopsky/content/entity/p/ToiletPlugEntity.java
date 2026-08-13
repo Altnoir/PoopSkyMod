@@ -187,7 +187,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
             for (Entity entity : list) {
                 if (!entity.hasPassenger(this)) {
                     if (flag
-                            && this.getPassengers().size() < this.getMaxPassengers()
+                            && this.getPassengers().size() < ToiletPlugEntity.getMaxPassengers()
                             && !entity.isPassenger()
                             && this.hasEnoughSpaceFor(entity)
                             && entity instanceof LivingEntity
@@ -335,10 +335,10 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
 
     @Override
     protected boolean canAddPassenger(Entity passenger) {
-        return this.getPassengers().size() < this.getMaxPassengers();
+        return this.getPassengers().size() < ToiletPlugEntity.getMaxPassengers();
     }
 
-    protected int getMaxPassengers() {
+    protected static int getMaxPassengers() {
         return 2;
     }
 

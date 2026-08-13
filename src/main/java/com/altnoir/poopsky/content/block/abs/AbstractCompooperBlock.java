@@ -142,7 +142,7 @@ public abstract class AbstractCompooperBlock extends Block {
         level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, newState));
     }
 
-    protected boolean isHot(ServerLevel level, BlockPos pos) {
+    protected static boolean isHot(ServerLevel level, BlockPos pos) {
         BlockState state = level.getBlockState(pos.below());
         return state.is(Blocks.FIRE)
                 || state.is(Blocks.MAGMA_BLOCK)

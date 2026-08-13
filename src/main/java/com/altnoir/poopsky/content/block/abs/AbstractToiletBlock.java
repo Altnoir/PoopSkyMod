@@ -2,7 +2,6 @@ package com.altnoir.poopsky.content.block.abs;
 
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
-import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.impl.util.PoFeatureUtil;
@@ -56,6 +55,9 @@ import net.neoforged.neoforge.common.ItemAbilities;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.EnumMap;
+import java.util.Map;
+
 public abstract class AbstractToiletBlock extends BaseEntityBlock {
     public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final EnumProperty<ToiletState> CONNECTION = EnumProperty.create("connection", ToiletState.class);
@@ -80,6 +82,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     );
     private static final VoxelShape WEST_CAP_SHAPE = Block.box(0.0, 12.0, 5.0, 1.0, 16.0, 11.0);
     private static final VoxelShape EAST_CAP_SHAPE = Block.box(15.0, 12.0, 5.0, 16.0, 16.0, 11.0);
+    private static final Map<Direction, Map<ToiletState, VoxelShape>> SHAPES = createShapes();
 
     public enum ToiletState implements StringRepresentable {
         DEFAULT("default"),
@@ -102,7 +105,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
         }
     }
 
-    public AbstractToiletBlock(Properties properties) {
+    protected AbstractToiletBlock(Properties properties) {
         super(properties);
         ToiletTypes.init();
         this.registerDefaultState(
@@ -113,6 +116,18 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     }
 
     public abstract ToiletType getDefaultToiletType();
+
+    protected boolean canReplaceVariant(BlockState state, ToiletType type) {
+        return false;
+    }
+
+    public BlockState applyToiletType(BlockState state, ToiletType type) {
+        return state;
+    }
+
+    public boolean isLavaFilled(BlockState state) {
+        return false;
+    }
 
     @Nullable
     protected ToiletType getToiletType(BlockGetter level, BlockPos pos) {
@@ -163,6 +178,16 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
 
     @Override
     protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        InteractionResult replacementResult = tryReplaceVariant(stack, state, level, pos, player);
+        if (replacementResult != InteractionResult.PASS) {
+            return replacementResult;
+        }
+
+        InteractionResult blockResult = useToiletItem(stack, state, level, pos, player, hand, hitResult);
+        if (blockResult != InteractionResult.PASS) {
+            return blockResult;
+        }
+
         if (!stack.canPerformAction(ItemAbilities.FIRESTARTER_LIGHT)) {
             return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
         }
@@ -177,7 +202,12 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
         return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
     }
 
-    private void consumeFireStarter(ItemStack stack, Player player, InteractionHand hand) {
+    protected InteractionResult useToiletItem(ItemStack stack, BlockState state, Level level, BlockPos pos,
+                                              Player player, InteractionHand hand, BlockHitResult hitResult) {
+        return InteractionResult.PASS;
+    }
+
+    private static void consumeFireStarter(ItemStack stack, Player player, InteractionHand hand) {
         if (stack.is(Items.FIRE_CHARGE)) {
             stack.consume(1, player);
             return;
@@ -185,15 +215,14 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
         stack.hurtAndBreak(1, player, hand);
     }
 
-    @Nullable
-    protected InteractionResult handleVariantReplacement(ItemStack stack, Level level, BlockPos pos, Player player, ToiletType.Category acceptedCategory) {
+    private InteractionResult tryReplaceVariant(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player) {
         if (!(stack.getItem() instanceof BlockItem blockItem)) {
-            return null;
+            return InteractionResult.PASS;
         }
 
         ToiletType newType = ToiletType.bySourceBlock(blockItem.getBlock());
-        if (newType == null || newType == getToiletTypeOrDefault(level, pos) || newType.category() != acceptedCategory) {
-            return null;
+        if (newType == null || newType == getToiletTypeOrDefault(level, pos) || !canReplaceVariant(state, newType)) {
+            return InteractionResult.PASS;
         }
 
         if (level.isClientSide()) {
@@ -201,7 +230,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
         }
 
         if (!(level.getBlockEntity(pos) instanceof ToiletBlockEntity blockEntity)) {
-            return null;
+            return InteractionResult.PASS;
         }
 
         replaceVariant(blockItem, stack, level, pos, player, blockEntity, newType);
@@ -218,7 +247,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
         playVariantReplaceSound(blockItem, level, pos, player);
 
         stack.consume(1, player);
-        if (!player.getAbilities().instabuild && currentType != null) {
+        if (!player.getAbilities().instabuild) {
             dropVariantSource(level, pos, currentType);
         }
     }
@@ -228,7 +257,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
         level.playSound(null, pos, sound.getPlaceSound(), SoundSource.BLOCKS, (sound.getVolume() + 1.0F) / 2.0F, sound.getPitch() * 0.8F);
     }
 
-    private void dropVariantSource(Level level, BlockPos pos, ToiletType type) {
+    private static void dropVariantSource(Level level, BlockPos pos, ToiletType type) {
         Block oldBlock = type.sourceBlock();
         if (oldBlock == null) {
             return;
@@ -253,11 +282,11 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
         super.fallOn(level, blockState, pos, entity, fallDistance);
     }
 
-    protected boolean isAnvil(BlockState state) {
+    protected static boolean isAnvil(BlockState state) {
         return state.is(Blocks.ANVIL) || state.is(Blocks.CHIPPED_ANVIL) || state.is(Blocks.DAMAGED_ANVIL);
     }
 
-    private void poopAnvil(Level level, BlockPos pos, Entity entity) {
+    private static void poopAnvil(Level level, BlockPos pos, Entity entity) {
         Item poopItem = ToiletUtil.isGoldenToilet(level, pos) ? PoItems.GOLDEN_POOP.get() : PoItems.POOP.get();
         var poop = new ItemEntity(level, entity.getX(), entity.getY() + 0.1, entity.getZ(), new ItemStack(poopItem, ANVIL_POOP_COUNT));
         poop.setDefaultPickUpDelay();
@@ -294,7 +323,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
             }
         }
 
-        if (state.getBlock() instanceof BaseToiletLavaBlock && state.getValue(BaseToiletLavaBlock.LAVA)) {
+        if (isLavaFilled(state)) {
             return;
         }
 
@@ -335,27 +364,32 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
         return getToiletShape(state);
     }
 
-    private VoxelShape getToiletShape(BlockState state) {
-        Direction facing = state.getValue(FACING);
-        ToiletState connection = state.getValue(CONNECTION);
-
-        return switch (facing) {
-            case EAST -> Shapes.or(EAST_WEST_BASE_SHAPE,
-                    capUnlessConnected(connection, ToiletState.BACK, WEST_CAP_SHAPE),
-                    capUnlessConnected(connection, ToiletState.FRONT, EAST_CAP_SHAPE));
-            case WEST -> Shapes.or(EAST_WEST_BASE_SHAPE,
-                    capUnlessConnected(connection, ToiletState.FRONT, WEST_CAP_SHAPE),
-                    capUnlessConnected(connection, ToiletState.BACK, EAST_CAP_SHAPE));
-            case SOUTH -> Shapes.or(NORTH_SOUTH_BASE_SHAPE,
-                    capUnlessConnected(connection, ToiletState.BACK, NORTH_CAP_SHAPE),
-                    capUnlessConnected(connection, ToiletState.FRONT, SOUTH_CAP_SHAPE));
-            default -> Shapes.or(NORTH_SOUTH_BASE_SHAPE,
-                    capUnlessConnected(connection, ToiletState.FRONT, NORTH_CAP_SHAPE),
-                    capUnlessConnected(connection, ToiletState.BACK, SOUTH_CAP_SHAPE));
-        };
+    private static VoxelShape getToiletShape(BlockState state) {
+        return SHAPES.get(state.getValue(FACING)).get(state.getValue(CONNECTION));
     }
 
-    private VoxelShape capUnlessConnected(ToiletState connection, ToiletState side, VoxelShape cap) {
+    private static Map<Direction, Map<ToiletState, VoxelShape>> createShapes() {
+        EnumMap<Direction, Map<ToiletState, VoxelShape>> shapes = new EnumMap<>(Direction.class);
+        shapes.put(Direction.NORTH, createShapes(NORTH_SOUTH_BASE_SHAPE, NORTH_CAP_SHAPE, SOUTH_CAP_SHAPE));
+        shapes.put(Direction.SOUTH, createShapes(NORTH_SOUTH_BASE_SHAPE, SOUTH_CAP_SHAPE, NORTH_CAP_SHAPE));
+        shapes.put(Direction.EAST, createShapes(EAST_WEST_BASE_SHAPE, EAST_CAP_SHAPE, WEST_CAP_SHAPE));
+        shapes.put(Direction.WEST, createShapes(EAST_WEST_BASE_SHAPE, WEST_CAP_SHAPE, EAST_CAP_SHAPE));
+        return Map.copyOf(shapes);
+    }
+
+    private static Map<ToiletState, VoxelShape> createShapes(VoxelShape base, VoxelShape frontCap, VoxelShape backCap) {
+        EnumMap<ToiletState, VoxelShape> shapes = new EnumMap<>(ToiletState.class);
+        for (ToiletState connection : ToiletState.values()) {
+            shapes.put(connection, Shapes.or(
+                    base,
+                    capUnlessConnected(connection, ToiletState.FRONT, frontCap),
+                    capUnlessConnected(connection, ToiletState.BACK, backCap)
+            ));
+        }
+        return Map.copyOf(shapes);
+    }
+
+    private static VoxelShape capUnlessConnected(ToiletState connection, ToiletState side, VoxelShape cap) {
         return connection == side || connection == ToiletState.BOTH ? Shapes.empty() : cap;
     }
 
@@ -387,7 +421,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
         }
     }
 
-    private void explodeToilet(ServerLevel level, BlockPos pos) {
+    private static void explodeToilet(ServerLevel level, BlockPos pos) {
         BlockPos above = pos.above();
         Item poopItem = ToiletUtil.isGoldenToilet(level, pos) ? PoItems.GOLDEN_POOP.get() : PoItems.POOP.get();
         level.explode(null, pos.getX() + 0.5, pos.getY() + TOILET_USE_Y, pos.getZ() + 0.5, EXPLOSION_POWER, Level.ExplosionInteraction.BLOCK);
@@ -407,9 +441,6 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
             if (hasHot(serverLevel, pos)) {
                 level.scheduleTick(pos, this, 1);
             }
-        }
-        if (level.getBlockEntity(pos) instanceof ToiletBlockEntity be && be.getToiletType() == null) {
-            be.setToiletType(getDefaultToiletType());
         }
     }
 
@@ -455,7 +486,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
         return ToiletState.DEFAULT;
     }
 
-    protected boolean hasHot(ServerLevel level, BlockPos pos) {
+    protected static boolean hasHot(ServerLevel level, BlockPos pos) {
         var above = pos.above();
         return level.isInWorldBounds(above) && level.getBlockState(above).is(Blocks.FIRE);
     }
@@ -463,13 +494,11 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     protected boolean isValidNeighbor(LevelReader level, BlockPos neighborPos, BlockState state, Direction facing) {
         BlockState neighbor = level.getBlockState(neighborPos);
 
-        if (!(neighbor.getBlock() instanceof AbstractToiletBlock) || !isFaceConnected(neighbor, facing)) {
+        if (!(neighbor.getBlock() instanceof AbstractToiletBlock neighborToilet) || !isFaceConnected(neighbor, facing)) {
             return false;
         }
 
-        boolean selfHasLava = state.hasProperty(BaseToiletLavaBlock.LAVA) && state.getValue(BaseToiletLavaBlock.LAVA);
-        boolean neighborHasLava = neighbor.hasProperty(BaseToiletLavaBlock.LAVA) && neighbor.getValue(BaseToiletLavaBlock.LAVA);
-        return selfHasLava == neighborHasLava;
+        return isLavaFilled(state) == neighborToilet.isLavaFilled(neighbor);
     }
 
     private boolean isFaceConnected(BlockState state, Direction facing) {
@@ -492,7 +521,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
 
                 if (level.getBlockState(pos).getBlock() instanceof AbstractToiletBlock toilet) {
                     this.setSuccess(true);
-                    toilet.explodeToilet(level, pos);
+                    AbstractToiletBlock.explodeToilet(level, pos);
                     onToilet.accept(toilet, level, pos, stack);
                     return stack;
                 }

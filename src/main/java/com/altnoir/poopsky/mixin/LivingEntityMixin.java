@@ -54,12 +54,12 @@ public class LivingEntityMixin {
     }
 
     @Unique
-    private boolean poopSky$hasCurse(LivingEntity self) {
+    private static boolean poopSky$hasCurse(LivingEntity self) {
         return self.hasEffect(PoEffects.SEEDBED_CURSE);
     }
 
     @Unique
-    private boolean poopSky$hasBleeding(LivingEntity self) {
+    private static boolean poopSky$hasBleeding(LivingEntity self) {
         return self.hasEffect(PoEffects.BLEEDING);
     }
 }

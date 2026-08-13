@@ -21,7 +21,7 @@ public class VillagerMixin {
             method = "eatUntilFull",
             at = @At(value = "INVOKE", target = "Ljava/util/Map;get(Ljava/lang/Object;)Ljava/lang/Object;", remap = false, ordinal = 0)
     )
-    public Object redirectFoodPointsGet(Map<Item, Integer> map, Object item) {
+    private static Object redirectFoodPointsGet(Map<Item, Integer> map, Object item) {
         if (map == Villager.FOOD_POINTS && item == PoItems.POOP.get()) return 1;
         return item instanceof Item key ? map.get(key) : null;
     }
@@ -30,7 +30,7 @@ public class VillagerMixin {
             method = "countFoodPointsInInventory",
             at = @At(value = "INVOKE", target = "Ljava/util/Map;entrySet()Ljava/util/Set;", remap = false, ordinal = 0)
     )
-    public Set<Map.Entry<Item, Integer>> redirectEntrySet(Map<Item, Integer> item) {
+    private static Set<Map.Entry<Item, Integer>> redirectEntrySet(Map<Item, Integer> item) {
         if (item == Villager.FOOD_POINTS) {
             Map<Item, Integer> FoodPoints = new HashMap<>(item);
             FoodPoints.put(PoItems.POOP.get(), 1);

@@ -94,7 +94,7 @@ public class VerticalSlabBlock extends HorizontalDirectionalBlock implements Sim
                 .setValue(WATERLOGGED, waterlogged);
     }
 
-    private Direction getFacingForPlacement(BlockPlaceContext context, BlockPos pos) {
+    private static Direction getFacingForPlacement(BlockPlaceContext context, BlockPos pos) {
         Direction clickedFace = context.getClickedFace();
         if (clickedFace.getAxis().isHorizontal()) {
             return clickedFace.getOpposite();

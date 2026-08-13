@@ -53,7 +53,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
     private static final VoxelShape OUTER_SHAPE = Shapes.block();
     private static final VoxelShape[] SHAPES = Util.make(new VoxelShape[9], shapes -> {
         for (int i = 0; i < READY; i++) {
-            shapes[i] = Shapes.join(OUTER_SHAPE, Block.box(2.0, Math.max(2, 1 + i * 2), 2.0, 14.0, 16.0, 14.0), BooleanOp.ONLY_FIRST);
+            shapes[i] = Shapes.join(OUTER_SHAPE, Block.box(2.0, Math.max(2, 1 + (i << 1)), 2.0, 14.0, 16.0, 14.0), BooleanOp.ONLY_FIRST);
         }
 
         shapes[READY] = shapes[READY - 1];

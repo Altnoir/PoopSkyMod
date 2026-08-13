@@ -18,7 +18,7 @@ public class TradeWithVillagerMixin {
             method = "tick*",
             at = @At(value = "INVOKE", target = "Ljava/util/Map;keySet()Ljava/util/Set;", remap = false, ordinal = 0)
     )
-    private Set<Item> redirectFoodPointsKeySet(Map<Item, Integer> item) {
+    private static Set<Item> redirectFoodPointsKeySet(Map<Item, Integer> item) {
         if (item == Villager.FOOD_POINTS) {
             Set<Item> originalKeys = new HashSet<>(item.keySet());
             originalKeys.add(PoItems.POOP.get());

@@ -134,7 +134,7 @@ public class FlushToiletBlock extends BaseEntityBlock {
         return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
     }
 
-    private void toggleClosed(Level level, BlockPos pos, BlockState state) {
+    private static void toggleClosed(Level level, BlockPos pos, BlockState state) {
         boolean closed = !state.getValue(CLOSED);
         level.playSound(null, pos,
                 closed ? PoSoundEvents.BLOCK_FLUSH_TOILET_CLOSE.get() : PoSoundEvents.BLOCK_FLUSH_TOILET_OPEN.get(),
@@ -142,7 +142,7 @@ public class FlushToiletBlock extends BaseEntityBlock {
         level.setBlock(pos, state.setValue(CLOSED, closed), Block.UPDATE_CLIENTS);
     }
 
-    private void openMenu(Level level, BlockPos pos, Player player) {
+    private static void openMenu(Level level, BlockPos pos, Player player) {
         if (level.getBlockEntity(pos) instanceof FlushToiletBlockEntity be) {
             player.openMenu(be);
         }

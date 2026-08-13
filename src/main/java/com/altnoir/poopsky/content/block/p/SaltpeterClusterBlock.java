@@ -87,7 +87,7 @@ public class SaltpeterClusterBlock extends AmethystClusterBlock implements Bonem
         serverLevel.setBlockAndUpdate(blockPos, nextState);
     }
 
-    private BlockState getGrowthState(BlockState state) {
+    private static BlockState getGrowthState(BlockState state) {
         Direction facing = state.getValue(BlockStateProperties.FACING);
         boolean waterlogged = state.getValue(BlockStateProperties.WATERLOGGED);
         if (state.is(PoBlocks.SMALL_SALTPETER_BUD.get())) {

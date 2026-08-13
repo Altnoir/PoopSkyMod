@@ -317,7 +317,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
 
     private void poopPiece() {
         for (int layers = 1; layers < 8; layers++) {
-            int height = layers * 2;
+            int height = layers << 1;
             String modelName = "poop_height" + height;
 
             models().withExistingParent(modelName, mcLoc("block/thin_block"))
@@ -337,7 +337,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
                                 .modelFile(models().getExistingFile(modLoc("block/poop_block1")))
                                 .build();
                     }
-                    String modelName = "poop_height" + (layers * 2);
+                    String modelName = "poop_height" + (layers << 1);
                     return ConfiguredModel.builder()
                             .modelFile(models().getExistingFile(modLoc("block/" + modelName)))
                             .build();
@@ -831,7 +831,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         Arrays.stream(blocks).forEach(block -> simpleBlockItem(block, blockModel(block)));
     }
 
-    private int horizontalRotation(Direction direction) {
+    private static int horizontalRotation(Direction direction) {
         return switch (direction) {
             case EAST -> 90;
             case SOUTH -> 180;
@@ -878,7 +878,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         return new ModelFile.UncheckedModelFile(modLoc("block/" + getBlockPath(block) + suffix));
     }
 
-    private String getItemPath(Block block) {
+    private static String getItemPath(Block block) {
         return PoopSky.getItemPath(block.asItem());
     }
 
@@ -886,7 +886,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         return PoopSky.getBlockKey(block).getPath();
     }
 
-    private String getBlockNameSpace(Block block) {
+    private static String getBlockNameSpace(Block block) {
         return PoopSky.getBlockKey(block).getNamespace();
     }
 

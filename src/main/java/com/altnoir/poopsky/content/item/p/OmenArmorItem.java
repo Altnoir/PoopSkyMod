@@ -49,14 +49,14 @@ public class OmenArmorItem extends Item {
         }
     }
 
-    private boolean hasPlayerCorrectArmorOn(Player player) {
+    private static boolean hasPlayerCorrectArmorOn(Player player) {
         return player.getItemBySlot(EquipmentSlot.FEET).is(PoItems.OMEN_BOOTS.get())
                 && player.getItemBySlot(EquipmentSlot.LEGS).is(PoItems.OMEN_LEGGINGS.get())
                 && player.getItemBySlot(EquipmentSlot.CHEST).is(PoItems.OMEN_CHESTPLATE.get())
                 && player.getItemBySlot(EquipmentSlot.HEAD).is(PoItems.OMEN_HELMET.get());
     }
 
-    private boolean hasFullSuitOfArmorOn(Player player) {
+    private static boolean hasFullSuitOfArmorOn(Player player) {
         ItemStack boots = player.getItemBySlot(EquipmentSlot.FEET);
         ItemStack leggings = player.getItemBySlot(EquipmentSlot.LEGS);
         ItemStack chestplate = player.getItemBySlot(EquipmentSlot.CHEST);

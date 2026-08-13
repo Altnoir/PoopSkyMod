@@ -29,11 +29,11 @@ public class PoolimeBlock extends HalfTransparentBlock implements IBlockExtensio
         if (entity.isSuppressingBounce()) {
             super.updateEntityMovementAfterFallOn(level, entity);
         } else {
-            this.bounceUp(entity);
+            PoolimeBlock.bounceUp(entity);
         }
     }
 
-    private void bounceUp(Entity entity) {
+    private static void bounceUp(Entity entity) {
         Vec3 vec3 = entity.getDeltaMovement();
         if (vec3.y < 0.0) {
             double v = entity instanceof LivingEntity ? 0.5 : 0.4;

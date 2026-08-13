@@ -100,13 +100,13 @@ public class FlushToiletMenu extends AbstractContainerMenu {
         return result;
     }
 
-    private boolean canReplaceSlot(ItemStack slotItem, ItemStack newItem) {
+    private static boolean canReplaceSlot(ItemStack slotItem, ItemStack newItem) {
         if (slotItem.isEmpty()) return true;
         if (!slotItem.is(PoTags.Items.FLUSH_TOILET_SAVE)) return true;
         return !ItemStack.isSameItemSameComponents(slotItem, newItem);
     }
 
-    private void replaceSlotItem(Slot flushSlot, Slot sourceSlot, ItemStack newItem) {
+    private static void replaceSlotItem(Slot flushSlot, Slot sourceSlot, ItemStack newItem) {
         ItemStack oldItem = flushSlot.getItem();
 
         if (!oldItem.isEmpty() && oldItem.is(PoTags.Items.FLUSH_TOILET_SAVE)) {

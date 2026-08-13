@@ -251,7 +251,7 @@ public class SieveBlockEntity extends BlockEntity {
     }
 
     @Nullable
-    private BlockState getInputBlockState(ItemStack stack) {
+    private static BlockState getInputBlockState(ItemStack stack) {
         if (!(stack.getItem() instanceof BlockItem blockItem)) {
             return null;
         }

@@ -139,7 +139,7 @@ public class PlacerBlock extends BaseEntityBlock {
         }
     }
 
-    private void playPlacedBlockSound(Level level, BlockPos pos) {
+    private static void playPlacedBlockSound(Level level, BlockPos pos) {
         BlockState placedState = level.getBlockState(pos);
         SoundType soundType = placedState.getSoundType(level, pos, null);
 
