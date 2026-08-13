@@ -16,6 +16,6 @@ public record VisualButton(
         int shift
 ) {
     public void render(GuiGraphics graphics, int x, int y, boolean pressed) {
-        graphics.blit(image, x + this.x, y + this.y, 0, sourceX, pressed ? this.shift + sourceY : sourceY, width, height, imageWidth, imageHeight);
+        graphics.blit(image, x + this.x, y + this.y, sourceX, pressed ? this.shift + sourceY : sourceY, width, height, imageWidth, imageHeight);
     }
 }

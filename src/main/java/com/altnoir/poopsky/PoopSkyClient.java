@@ -4,6 +4,7 @@ import com.altnoir.poopsky.client.IntroController;
 import com.altnoir.poopsky.client.PoAnimationController;
 import com.altnoir.poopsky.client.PoBedrockModelResources;
 import com.altnoir.poopsky.client.ToiletClientBlockExtensions;
+import com.altnoir.poopsky.client.arcade.ArcadeWorldScreenRenderer;
 import com.altnoir.poopsky.client.creative.PoSectionedCreativeTabRenderer;
 import com.altnoir.poopsky.client.model.BakedModelEventHandler;
 import com.altnoir.poopsky.client.particle.LeavesParticle;
@@ -92,6 +93,8 @@ public class PoopSkyClient {
         modEventBus.addListener(ClientGameEvents::onScreenOpen);
         modEventBus.addListener(ClientGameEvents::onClientTick);
         modEventBus.addListener(ClientGameEvents::onComputeFov);
+        modEventBus.addListener(ArcadeWorldScreenRenderer::onRenderFrame);
+        modEventBus.addListener(ArcadeWorldScreenRenderer::onLoggingOut);
         modEventBus.addListener(PoSectionedCreativeTabRenderer::onRenderForeground);
         modEventBus.addListener(ToiletHighlightRenderer::onRenderLevel);
         modEventBus.addListener(MaggotsChunkLoaderBlockEntityRenderer::onLevelUnload);

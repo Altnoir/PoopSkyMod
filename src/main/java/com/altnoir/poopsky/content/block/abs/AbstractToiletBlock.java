@@ -279,14 +279,11 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
         if (!level.isClientSide && entity instanceof Player player) {
             if (player.isShiftKeyDown() && ToiletUtil.isEntityCentered(pos, player)) {
-                var playerData = player.getPersistentData();
-                long lastPoopTime = playerData.getLong("poopTime");
-                ToiletUtil.canPoop(level, player, player.hasEffect(PoEffects.INTESTINAL_SPASM), false, 0.1F, 0.5F, lastPoopTime,
-                        time -> playerData.putLong("poopTime", time));
+                ToiletUtil.playerToiletPoop(level, player, player.hasEffect(PoEffects.INTESTINAL_SPASM),
+                        false, 0.1F, 0.5F);
             }
         }
     }
-
 
     @Override
     protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {

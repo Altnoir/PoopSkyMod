@@ -75,10 +75,7 @@ public class ToiletUtil {
             return;
         }
 
-        var playerData = player.getPersistentData();
-        long lastPoopTime = playerData.getLong("poopTime");
-        canPoop(level, player, player.hasEffect(PoEffects.INTESTINAL_SPASM), false, 0.1F, 0.5F, lastPoopTime,
-                time -> playerData.putLong("poopTime", time));
+        playerToiletPoop(level, player, player.hasEffect(PoEffects.INTESTINAL_SPASM), false, 0.1F, 0.5F);
     }
 
     private static boolean isEntityInsidePortableToiletRange(BlockState state, BlockPos blockPos, Entity entity) {
@@ -122,12 +119,16 @@ public class ToiletUtil {
                 boolean hasIncontinence = player.hasEffect(PoEffects.FECAL_INCONTINENCE);
                 boolean isFire = hasIncontinence && !isGolden;
                 float pitchOffset = isGolden ? -0.5F : 0.5F;
-                var playerData = player.getPersistentData();
-                long lastPoopTime = playerData.getLong("poopTime");
-                canPoop(level, player, isFire, isGolden, 0.1F, pitchOffset, lastPoopTime,
-                        time -> playerData.putLong("poopTime", time));
+                playerToiletPoop(level, player, isFire, isGolden, 0.1F, pitchOffset);
             }
         }
+    }
+
+    public static void playerToiletPoop(Level level, Player player, boolean isFire, boolean isGolden,
+                                        float yOffset, float pitchOffset) {
+        long lastPoopTime = player.getData(PoAttachments.POOP_TIME.get());
+        canPoop(level, player, isFire, isGolden, yOffset, pitchOffset, lastPoopTime,
+                time -> player.setData(PoAttachments.POOP_TIME.get(), time));
     }
 
     public static void canPoop(Level level, LivingEntity entity, boolean isFire, boolean isGolden, float yOffset, float pitchOffset, long lastPoopTime, LongConsumer poopTimeSetter) {

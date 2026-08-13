@@ -23,6 +23,6 @@ public class BreakParticleRenderer extends Renderer {
 
     @Override
     public void render(GuiGraphics graphics, int posX, int posY) {
-        graphics.blit(file, posX - SIZE / 2, posY - SIZE / 2, 0, x, y, SIZE, SIZE, fileWidth, fileHeight);
+        graphics.blit(file, posX - SIZE / 2, posY - SIZE / 2, x, y, SIZE, SIZE, fileWidth, fileHeight);
     }
 }

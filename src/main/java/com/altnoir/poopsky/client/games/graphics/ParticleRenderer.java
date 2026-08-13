@@ -25,6 +25,6 @@ public class ParticleRenderer extends Renderer {
 
     @Override
     public void render(GuiGraphics graphics, int posX, int posY) {
-        graphics.blit(file, posX - (int)(0.5 * width), posY - (int)(0.5 * height), 0, x, y, width, height, fileWidth, fileHeight);
+        graphics.blit(file, posX - (int)(0.5 * width), posY - (int)(0.5 * height), x, y, width, height, fileWidth, fileHeight);
     }
 }

@@ -31,7 +31,7 @@ public class SlimeGame extends Game {
     private static final int TILE_SIZE = 8;
 
     // Dimensions of the game field (in tiles)
-    private static final int GAME_WIDTH = 35;
+    private static final int GAME_WIDTH = 28;
     private static final int GAME_HEIGHT = 20;
 
     // List of blocked positions (in tiles)

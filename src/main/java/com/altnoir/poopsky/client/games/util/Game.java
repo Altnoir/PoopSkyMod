@@ -27,8 +27,9 @@ import java.util.Random;
 import java.util.function.Supplier;
 
 public class Game {
-    public static final int WIDTH = 280;
+    public static final int WIDTH = 224;
     public static final int HEIGHT = 160;
+    private static final int RESULT_TEXT_OFFSET = 30;
 
     public GameStage stage = GameStage.START;
     public Controls controls = new Controls(this);
@@ -163,7 +164,7 @@ public class Game {
 
     public void render(GuiGraphics graphics, int posX, int posY) {
         if (getBackground() != null) {
-            graphics.blit(getBackground(), posX, posY, 0, 0, 0, WIDTH, HEIGHT, WIDTH, HEIGHT);
+            graphics.blit(getBackground(), posX, posY, 0, 0, WIDTH, HEIGHT, WIDTH, HEIGHT);
         }
         renderOverlay(graphics, posX, posY);
     }
@@ -192,36 +193,36 @@ public class Game {
             }
 
             if (stage == GameStage.DIED || stage == GameStage.WON) {
-                graphics.blit(PoopSky.loc("textures/gui/score_board.png"), posX, posY, 0, 0, 0, WIDTH, HEIGHT, WIDTH, HEIGHT);
+                graphics.blit(PoopSky.loc("textures/gui/score_board.png"), posX, posY, 0, 0, WIDTH, HEIGHT, WIDTH, HEIGHT);
 
                 Component component = stage == GameStage.DIED
                         ? Component.translatable("gui.gamingconsole.died").withStyle(ChatFormatting.BOLD, ChatFormatting.DARK_RED)
                         : Component.translatable("gui.gamingconsole.won").withStyle(ChatFormatting.BOLD, ChatFormatting.DARK_GREEN);
 
-                graphics.drawString(font, component, posX + (WIDTH - font.width(component.getVisualOrderText())) / 2, posY + 29,
+                graphics.drawString(font, component, posX + (WIDTH - font.width(component.getVisualOrderText())) / 2, posY + RESULT_TEXT_OFFSET + 29,
                         Objects.requireNonNull(component.getStyle().getColor()).getValue(), false);
-                graphics.drawString(font, component, posX + (WIDTH - font.width(component.getVisualOrderText())) / 2, posY + 31,
+                graphics.drawString(font, component, posX + (WIDTH - font.width(component.getVisualOrderText())) / 2, posY + RESULT_TEXT_OFFSET + 31,
                         component.getStyle().getColor().getValue(), false);
-                graphics.drawString(font, component, posX + (WIDTH - font.width(component.getVisualOrderText())) / 2 + 1, posY + 30,
+                graphics.drawString(font, component, posX + (WIDTH - font.width(component.getVisualOrderText())) / 2 + 1, posY + RESULT_TEXT_OFFSET + 30,
                         component.getStyle().getColor().getValue(), false);
-                graphics.drawString(font, component, posX + (WIDTH - font.width(component.getVisualOrderText())) / 2 - 1, posY + 30,
+                graphics.drawString(font, component, posX + (WIDTH - font.width(component.getVisualOrderText())) / 2 - 1, posY + RESULT_TEXT_OFFSET + 30,
                         component.getStyle().getColor().getValue(), false);
 
                 component = stage == GameStage.DIED
                         ? Component.translatable("gui.gamingconsole.died").withStyle(ChatFormatting.BOLD, ChatFormatting.RED)
                         : Component.translatable("gui.gamingconsole.won").withStyle(ChatFormatting.BOLD, ChatFormatting.GREEN);
-                graphics.drawString(font, component, posX + (WIDTH - font.width(component.getVisualOrderText())) / 2, posY + 30,
+                graphics.drawString(font, component, posX + (WIDTH - font.width(component.getVisualOrderText())) / 2, posY + RESULT_TEXT_OFFSET + 30,
                         Objects.requireNonNull(component.getStyle().getColor()).getValue(), false);
 
                 component = Component.translatable("gui.gamingconsole.score").append(": ").append(String.valueOf(settledScore)).withStyle(ChatFormatting.YELLOW);
-                graphics.drawString(font, component, posX + (WIDTH - font.width(component.getVisualOrderText())) / 2, posY + 35 + font.lineHeight,
+                graphics.drawString(font, component, posX + (WIDTH - font.width(component.getVisualOrderText())) / 2, posY + RESULT_TEXT_OFFSET + 35 + font.lineHeight,
                         Objects.requireNonNull(component.getStyle().getColor()).getValue(), false);
 
                 int bestScore = isArcadeGame() ? ClientUtils.getArcadeBestScore(arcadeMachinePos, getGameName()) : 0;
                 component = Component.translatable(settledScore >= bestScore ? "gui.gamingconsole.new_best_score" : "gui.gamingconsole.best_score")
                         .append(": ").append(String.valueOf(bestScore))
                         .withStyle(settledScore >= bestScore ? ChatFormatting.GREEN : ChatFormatting.YELLOW);
-                graphics.drawString(font, component, posX + (WIDTH - font.width(component.getVisualOrderText())) / 2, posY + 50 + font.lineHeight,
+                graphics.drawString(font, component, posX + (WIDTH - font.width(component.getVisualOrderText())) / 2, posY + RESULT_TEXT_OFFSET + 50 + font.lineHeight,
                         Objects.requireNonNull(component.getStyle().getColor()).getValue(), false);
             }
         } else {

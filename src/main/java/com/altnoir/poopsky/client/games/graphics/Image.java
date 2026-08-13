@@ -22,6 +22,6 @@ public class Image extends Renderer {
 
     @Override
     public void render(GuiGraphics graphics, int posX, int posY) {
-        graphics.blit(file, posX, posY, 0, x, y, width, height, fileWidth, fileHeight);
+        graphics.blit(file, posX, posY, x, y, width, height, fileWidth, fileHeight);
     }
 }

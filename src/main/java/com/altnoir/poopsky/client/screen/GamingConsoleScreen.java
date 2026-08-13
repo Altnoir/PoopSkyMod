@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.client.screen;
 
-import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.client.ClientUtils;
+import com.altnoir.poopsky.client.arcade.ArcadeWorldScreenRenderer;
 import com.altnoir.poopsky.client.games.controls.Button;
 import com.altnoir.poopsky.client.games.util.Game;
 import com.altnoir.poopsky.content.item.p.GameDiscItem;
@@ -9,19 +9,12 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
 @OnlyIn(Dist.CLIENT)
 public class GamingConsoleScreen extends Screen {
-    private static final ResourceLocation BACKGROUND = PoopSky.loc("textures/gui/gaming_console.png");
-    private static final int CONSOLE_WIDTH = 300;
-    private static final int CONSOLE_HEIGHT = 250;
-    private static final int SCREEN_X = 10;
-    private static final int SCREEN_Y = 10;
-
     private static final int W = 87;
     private static final int S = 83;
     private static final int A = 65;
@@ -29,13 +22,6 @@ public class GamingConsoleScreen extends Screen {
     private static final int E = 69;
     private static final int SPACE = 32;
     private static final int ENTER = 257;
-
-    private static final VisualButton W_BUTTON = new VisualButton(BACKGROUND, 512, 512, 41, 169, 14, 24, 23, 256, 24);
-    private static final VisualButton A_BUTTON = new VisualButton(BACKGROUND, 512, 512, 25, 185, 23, 15, 0, 256, 24);
-    private static final VisualButton D_BUTTON = new VisualButton(BACKGROUND, 512, 512, 48, 185, 23, 15, 38, 256, 24);
-    private static final VisualButton S_BUTTON = new VisualButton(BACKGROUND, 512, 512, 41, 193, 14, 23, 60, 256, 24);
-    private static final VisualButton B1_BUTTON = new VisualButton(BACKGROUND, 512, 512, 104, 184, 16, 16, 234, 0, 24);
-    private static final VisualButton B2_BUTTON = new VisualButton(BACKGROUND, 512, 512, 156, 176, 16, 16, 234, 0, 24);
 
     private final BlockPos arcadeMachinePos;
     private Game game;
@@ -49,14 +35,7 @@ public class GamingConsoleScreen extends Screen {
         arcadeGame.setArcadeMachine(arcadeMachinePos);
         arcadeGame.prepare();
         this.game = arcadeGame;
-    }
-
-    private int getConsoleX() {
-        return (this.width - CONSOLE_WIDTH) / 2;
-    }
-
-    private int getConsoleY() {
-        return (this.height - CONSOLE_HEIGHT) / 2;
+        ArcadeWorldScreenRenderer.setGame(arcadeMachinePos, cartridge, arcadeGame);
     }
 
     @Override
@@ -79,33 +58,6 @@ public class GamingConsoleScreen extends Screen {
 
     @Override
     public void render(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        renderBackground(graphics, mouseX, mouseY, partialTick);
-        super.render(graphics, mouseX, mouseY, partialTick);
-        renderGameScreen(graphics, getConsoleX() + SCREEN_X, getConsoleY() + SCREEN_Y);
-        renderButtons(graphics);
-    }
-
-    @Override
-    public void renderBackground(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        super.renderBackground(graphics, mouseX, mouseY, partialTick);
-        graphics.blit(BACKGROUND, getConsoleX(), getConsoleY(), 0, 64, 0, CONSOLE_WIDTH, CONSOLE_HEIGHT, 512, 512);
-    }
-
-    private void renderGameScreen(GuiGraphics graphics, int x, int y) {
-        graphics.enableScissor(x, y, x + Game.WIDTH, y + Game.HEIGHT);
-        if (!game.isEmpty()) {
-            game.render(graphics, x, y);
-        }
-        graphics.disableScissor();
-    }
-
-    private void renderButtons(GuiGraphics graphics) {
-        W_BUTTON.render(graphics, getConsoleX(), getConsoleY(), game.controls.isButtonDown(Button.UP));
-        A_BUTTON.render(graphics, getConsoleX(), getConsoleY(), game.controls.isButtonDown(Button.LEFT));
-        D_BUTTON.render(graphics, getConsoleX(), getConsoleY(), game.controls.isButtonDown(Button.RIGHT));
-        S_BUTTON.render(graphics, getConsoleX(), getConsoleY(), game.controls.isButtonDown(Button.DOWN));
-        B1_BUTTON.render(graphics, getConsoleX(), getConsoleY(), game.controls.isButtonDown(Button.BUTTON1));
-        B2_BUTTON.render(graphics, getConsoleX(), getConsoleY(), game.controls.isButtonDown(Button.BUTTON2));
     }
 
     @Override
@@ -195,6 +147,7 @@ public class GamingConsoleScreen extends Screen {
     public void onClose() {
         if (game != null) {
             game.closeArcadeGame();
+            ArcadeWorldScreenRenderer.clearGame(arcadeMachinePos, game);
         }
         super.onClose();
         game = null;
