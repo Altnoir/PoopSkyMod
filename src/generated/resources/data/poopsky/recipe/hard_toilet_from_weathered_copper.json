@@ -3,19 +3,14 @@
   "delegate": {
     "category": "building",
     "key": {
-      "#": {
-        "item": "minecraft:weathered_copper"
-      },
-      "P": {
-        "item": "poopsky:poop"
-      }
+      "#": "minecraft:weathered_copper",
+      "P": "poopsky:poop"
     },
     "pattern": [
       "P",
       "#"
     ],
     "result": {
-      "count": 1,
       "id": "poopsky:hard_toilet"
     }
   },

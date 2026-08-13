@@ -3,19 +3,14 @@
   "delegate": {
     "category": "building",
     "key": {
-      "#": {
-        "item": "poopsky:pink_tile_block"
-      },
-      "P": {
-        "item": "poopsky:poop"
-      }
+      "#": "poopsky:pink_tile_block",
+      "P": "poopsky:poop"
     },
     "pattern": [
       "P",
       "#"
     ],
     "result": {
-      "count": 1,
       "id": "poopsky:hard_toilet"
     }
   },

@@ -2,15 +2,10 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "minecraft:netherrack"
-    },
-    {
-      "item": "minecraft:crimson_fungus"
-    }
+    "minecraft:netherrack",
+    "minecraft:crimson_fungus"
   ],
   "result": {
-    "count": 1,
     "id": "minecraft:crimson_nylium"
   }
 }

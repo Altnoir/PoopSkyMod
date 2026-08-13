@@ -75,7 +75,7 @@ public class ToiletUtil {
         }
 
         var playerData = player.getPersistentData();
-        long lastPoopTime = playerData.getLong("poopTime");
+        long lastPoopTime = playerData.getLong("poopTime").orElse(0L);
         canPoop(level, player, player.hasEffect(PoEffects.INTESTINAL_SPASM), false, 0.1F, 0.5F, lastPoopTime,
                 time -> playerData.putLong("poopTime", time));
     }
@@ -122,7 +122,7 @@ public class ToiletUtil {
                 boolean isFire = hasIncontinence && !isGolden;
                 float pitchOffset = isGolden ? -0.5F : 0.5F;
                 var playerData = player.getPersistentData();
-                long lastPoopTime = playerData.getLong("poopTime");
+                long lastPoopTime = playerData.getLong("poopTime").orElse(0L);
                 canPoop(level, player, isFire, isGolden, 0.1F, pitchOffset, lastPoopTime,
                         time -> playerData.putLong("poopTime", time));
             }
@@ -268,7 +268,7 @@ public class ToiletUtil {
     }
 
     public static boolean tryTeleportFromFall(Level level, BlockPos pos, Entity entity, float fallDistance) {
-        if (fallDistance < 0.875F || !isEntityInToiletPit(level, pos, entity)) {
+        if (fallDistance < 0.875F || isEntityInToiletPit(level, pos, entity)) {
             return false;
         }
         BlockEntity blockEntity = level.getBlockEntity(pos);
@@ -325,31 +325,33 @@ public class ToiletUtil {
         } else {
             if (entity instanceof ServerPlayer serverPlayer) {
                 entity.setPortalCooldown();
-                return entity.changeDimension(serverPlayer.findRespawnPositionAndUseSpawnBlock(false, TeleportTransition.DO_NOTHING)) != null;
+                TeleportTransition transition = serverPlayer.findRespawnPositionAndUseSpawnBlock(false, TeleportTransition.DO_NOTHING);
+                return serverPlayer.teleport(transition) != null;
             }
-            destination = entity.adjustSpawnLocation(targetLevel, targetLevel.getSharedSpawnPos()).getBottomCenter();
+            destination = entity.adjustSpawnLocation(targetLevel, targetLevel.getRespawnData().pos()).getBottomCenter();
         }
 
         entity.setPortalCooldown();
-        return entity.changeDimension(new TeleportTransition(
+        TeleportTransition transition = new TeleportTransition(
                 targetLevel,
                 destination,
                 entity.getDeltaMovement(),
                 yRot,
                 entity.getXRot(),
                 TeleportTransition.PLAY_PORTAL_SOUND.then(TeleportTransition.PLACE_PORTAL_TICKET)
-        )) != null;
+        );
+        if (entity instanceof ServerPlayer serverPlayer) {
+            return serverPlayer.teleport(transition) != null;
+        }
+        return entity.teleportTo(targetLevel, destination.x, destination.y, destination.z, Set.of(), yRot, entity.getXRot(), false);
     }
 
     private static boolean beginEndToiletPoem(ServerPlayer player, BlockPos toiletPos) {
-        PoAnimationSavedData data = PoAnimationSavedData.get(player.getServer().overworld());
-        if (data.hasPlayed(PoAnimation.POEM, player.getUUID(), player.getGameProfile().getName())) {
+        PoAnimationSavedData data = PoAnimationSavedData.get(player.level().getServer().overworld());
+        if (data.hasPlayed(PoAnimation.POEM, player.getUUID(), player.getGameProfile().name())) {
             return false;
         }
-        PendingEndToiletTeleport pending = new PendingEndToiletTeleport(
-                player.level().dimension(),
-                toiletPos.immutable()
-        );
+        PendingEndToiletTeleport pending = new PendingEndToiletTeleport(player.level().dimension(), toiletPos.immutable());
         if (PENDING_END_TOILET_TELEPORTS.putIfAbsent(player.getUUID(), pending) == null) {
             PacketDistributor.sendToPlayer(player, new PlayAnimationAndWaitPayload(PoAnimation.POEM));
         }
@@ -362,14 +364,14 @@ public class ToiletUtil {
                 || !pending.sourceDimension().equals(player.level().dimension())
                 || !player.isAlive()
                 || !isEndToilet(player.level(), pending.toiletPos())
-                || !isEntityInToiletPit(player.level(), pending.toiletPos(), player)) {
+                || isEntityInToiletPit(player.level(), pending.toiletPos(), player)) {
             return;
         }
 
-        PoAnimationSavedData.get(player.getServer().overworld()).markPlayed(
+        PoAnimationSavedData.get(player.level().getServer().overworld()).markPlayed(
                 PoAnimation.POEM,
                 player.getUUID(),
-                player.getGameProfile().getName()
+                player.getGameProfile().name()
         );
         teleportThroughEndPortal(player.level(), pending.toiletPos(), player);
     }
@@ -388,23 +390,23 @@ public class ToiletUtil {
 
         if (state.getBlock() instanceof FlushToiletBlock) {
             if (state.getValue(FlushToiletBlock.CLOSED)) {
-                return false;
+                return true;
             }
 
             Direction facing = state.getValue(FlushToiletBlock.FACING);
             double forward = offsetX * facing.getStepX() + offsetZ * facing.getStepZ();
             double sideways = Math.abs(offsetX * facing.getStepZ() - offsetZ * facing.getStepX());
-            return sideways <= 2.0 / 16.0 && forward >= -1.0 / 16.0 && forward <= 4.0 / 16.0;
+            return !(sideways <= 2.0 / 16.0) || !(forward >= -1.0 / 16.0) || !(forward <= 4.0 / 16.0);
         }
 
         if (state.getBlock() instanceof AbstractToiletBlock) {
             Direction facing = state.getValue(AbstractToiletBlock.FACING);
             double forward = offsetX * facing.getStepX() + offsetZ * facing.getStepZ();
             double sideways = Math.abs(offsetX * facing.getStepZ() - offsetZ * facing.getStepX());
-            return sideways <= 3.0 / 16.0 && Math.abs(forward) <= 8.0 / 16.0;
+            return !(sideways <= 3.0 / 16.0) || !(Math.abs(forward) <= 8.0 / 16.0);
         }
 
-        return false;
+        return true;
     }
 
     public static boolean teleportEntity(Level level, Entity entity, BlockEntity blockEntity, float fallDistance) {
@@ -440,18 +442,18 @@ public class ToiletUtil {
 
         boolean teleported = true;
         if (passenger != null) {
-            teleported &= passenger.teleportTo(targetWorld, destination.x, destination.y, destination.z, Set.of(), entity.getYRot(), entity.getXRot());
+            teleported &= passenger.teleportTo(targetWorld, destination.x, destination.y, destination.z, Set.of(), entity.getYRot(), entity.getXRot(), false);
         }
-        teleported &= entity.teleportTo(targetWorld, destination.x, destination.y, destination.z, Set.of(), entity.getYRot(), entity.getXRot());
+        teleported &= entity.teleportTo(targetWorld, destination.x, destination.y, destination.z, Set.of(), entity.getYRot(), entity.getXRot(), false);
         if (!teleported) {
             return false;
         }
 
-        var pitch = targetWorld.random.nextFloat() + 0.1F;
+        float pitch = targetWorld.getRandom().nextFloat() + 0.1F;
         targetWorld.playSound(null, destination.x, destination.y, destination.z, SoundEvents.MUD_BREAK, SoundSource.PLAYERS, 1.0F, pitch);
 
-        var bounce = Math.sqrt(2 * 0.08 * fallDistance) * 0.85;
-        server.tell(new TickTask(server.getTickCount() + 1, () -> {
+        double bounce = Math.sqrt(2 * 0.08 * fallDistance) * 0.85;
+        server.schedule(new TickTask(server.getTickCount() + 1, () -> {
             entity.setDeltaMovement(entity.getDeltaMovement().x, bounce, entity.getDeltaMovement().z);
             entity.hurtMarked = true;
         }));
@@ -462,11 +464,7 @@ public class ToiletUtil {
         BlockState state = level.getBlockState(pos);
         if (state.getBlock() instanceof FlushToiletBlock) {
             Direction facing = state.getValue(FlushToiletBlock.FACING);
-            return Vec3.atBottomCenterOf(pos).add(
-                    facing.getStepX() * 3.0 / 32.0,
-                    0.5,
-                    facing.getStepZ() * 3.0 / 32.0
-            );
+            return Vec3.atBottomCenterOf(pos).add(facing.getStepX() * 3.0 / 32.0, 0.5, facing.getStepZ() * 3.0 / 32.0);
         }
         state.getBlock();
         return Vec3.atBottomCenterOf(pos).add(0.0, 1.0, 0.0);

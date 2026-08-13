@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "poopsky:poolime_block"
-    }
+    "poopsky:poolime_block"
   ],
   "result": {
     "count": 4,

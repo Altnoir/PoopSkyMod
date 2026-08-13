@@ -1,8 +1,6 @@
 {
   "type": "poopsky:pop_explosion",
-  "input": {
-    "item": "minecraft:coal_block"
-  },
+  "input": "minecraft:coal_block",
   "output": {
     "item": "minecraft:diamond"
   },

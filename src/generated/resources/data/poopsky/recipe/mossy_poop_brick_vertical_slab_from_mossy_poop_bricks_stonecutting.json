@@ -1,8 +1,6 @@
 {
   "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "poopsky:mossy_poop_bricks"
-  },
+  "ingredient": "poopsky:mossy_poop_bricks",
   "result": {
     "count": 2,
     "id": "poopsky:mossy_poop_brick_vertical_slab"

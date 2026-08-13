@@ -1,7 +1,5 @@
 {
   "type": "poopsky:anal_pressing",
-  "input": {
-    "item": "minecraft:emerald_block"
-  },
+  "input": "minecraft:emerald_block",
   "output": "minecraft:emerald_ore"
 }

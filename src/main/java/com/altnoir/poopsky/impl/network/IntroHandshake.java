@@ -37,7 +37,7 @@ public final class IntroHandshake {
         if (!(event.getListener() instanceof ServerConfigurationPacketListenerImpl listener)) return;
 
         GameProfile profile = listener.getOwner();
-        if (profile.getId() == null || PoAnimationSavedData.get(server.overworld()).hasPlayed(PoAnimation.INTRO, profile.getId(), profile.getName())) {
+        if (profile.id() == null || PoAnimationSavedData.get(server.overworld()).hasPlayed(PoAnimation.INTRO, profile.id(), profile.name())) {
             return;
         }
 

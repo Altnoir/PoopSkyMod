@@ -1,7 +1,5 @@
 {
   "type": "poopsky:anal_pressing",
-  "input": {
-    "item": "minecraft:iron_block"
-  },
+  "input": "minecraft:iron_block",
   "output": "minecraft:iron_ore"
 }

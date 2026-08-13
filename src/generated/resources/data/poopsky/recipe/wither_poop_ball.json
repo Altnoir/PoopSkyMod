@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "P": {
-      "item": "poopsky:poop_ball"
-    },
-    "S": {
-      "item": "minecraft:wither_rose"
-    }
+    "P": "poopsky:poop_ball",
+    "S": "minecraft:wither_rose"
   },
   "pattern": [
     "PPP",

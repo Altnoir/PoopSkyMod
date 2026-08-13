@@ -1,8 +1,6 @@
 {
   "type": "poopsky:sieve",
-  "input": {
-    "tag": "minecraft:soul_fire_base_blocks"
-  },
+  "input": "#minecraft:soul_fire_base_blocks",
   "outputs": [
     {
       "chance": 0.5,
@@ -14,21 +12,18 @@
     {
       "chance": 0.5,
       "item": {
-        "count": 1,
         "id": "minecraft:nether_wart"
       }
     },
     {
       "chance": 0.5,
       "item": {
-        "count": 1,
         "id": "minecraft:glowstone_dust"
       }
     },
     {
       "chance": 0.25,
       "item": {
-        "count": 1,
         "id": "minecraft:ghast_tear"
       }
     }

@@ -1,0 +1,42 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "poopsky:block/compooper"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/urine_compooper1"
+      },
+      "when": {
+        "level": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/urine_compooper2"
+      },
+      "when": {
+        "level": "2"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/urine_compooper3"
+      },
+      "when": {
+        "level": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/urine_compooper_maggots"
+      },
+      "when": {
+        "level": "3",
+        "maggots": "true"
+      }
+    }
+  ]
+}

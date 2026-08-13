@@ -3,19 +3,14 @@
   "delegate": {
     "category": "building",
     "key": {
-      "#": {
-        "item": "minecraft:polished_granite"
-      },
-      "P": {
-        "item": "poopsky:poop"
-      }
+      "#": "minecraft:polished_granite",
+      "P": "poopsky:poop"
     },
     "pattern": [
       "P",
       "#"
     ],
     "result": {
-      "count": 1,
       "id": "poopsky:hard_toilet"
     }
   },

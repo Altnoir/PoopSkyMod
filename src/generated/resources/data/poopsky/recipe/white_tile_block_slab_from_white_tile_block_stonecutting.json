@@ -1,8 +1,6 @@
 {
   "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "poopsky:white_tile_block"
-  },
+  "ingredient": "poopsky:white_tile_block",
   "result": {
     "count": 2,
     "id": "poopsky:white_tile_block_slab"

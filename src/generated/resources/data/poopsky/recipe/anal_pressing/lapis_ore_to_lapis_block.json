@@ -1,7 +1,5 @@
 {
   "type": "poopsky:anal_pressing",
-  "input": {
-    "item": "minecraft:lapis_block"
-  },
+  "input": "minecraft:lapis_block",
   "output": "minecraft:lapis_ore"
 }

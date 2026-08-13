@@ -2,16 +2,13 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "S": {
-      "item": "poopsky:spall"
-    }
+    "S": "poopsky:spall"
   },
   "pattern": [
     "S",
     "S"
   ],
   "result": {
-    "count": 1,
     "id": "minecraft:flint"
   }
 }

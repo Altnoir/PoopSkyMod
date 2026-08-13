@@ -126,7 +126,7 @@ public final class BlockTagGen {
                 .add(PoBlocks.RAW_WITHER_POOP_BLOCK.get());
         tag(BlockTags.BEACON_BASE_BLOCKS).addTag(PoTags.Blocks.POOP_BLOCKS);
 
-        tag(BlockTags.SNOW_LAYER_CAN_SURVIVE_ON).addTag(PoTags.Blocks.POOP_BLOCKS);
+        tag(BlockTags.SUPPORT_OVERRIDE_SNOW_LAYER).addTag(PoTags.Blocks.POOP_BLOCKS);
         PoBlocks.getPoopCandleCakes().values().forEach(candleCake ->
                 tag(BlockTags.CANDLE_CAKES).add(candleCake.get()));
         tag(BlockTags.CLIMBABLE)

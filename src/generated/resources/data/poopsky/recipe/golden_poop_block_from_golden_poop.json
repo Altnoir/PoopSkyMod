@@ -2,16 +2,13 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "poopsky:golden_poop"
-    }
+    "#": "poopsky:golden_poop"
   },
   "pattern": [
     "##",
     "##"
   ],
   "result": {
-    "count": 1,
     "id": "poopsky:golden_poop_block"
   }
 }

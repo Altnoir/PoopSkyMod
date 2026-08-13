@@ -2,18 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "minecraft:bell"
-    },
-    {
-      "item": "poopsky:poop"
-    },
-    {
-      "item": "minecraft:dragon_egg"
-    }
+    "minecraft:bell",
+    "poopsky:poop",
+    "minecraft:dragon_egg"
   ],
   "result": {
-    "count": 1,
     "id": "poopsky:time_bell"
   }
 }

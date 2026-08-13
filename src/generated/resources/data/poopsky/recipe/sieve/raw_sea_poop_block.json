@@ -1,8 +1,6 @@
 {
   "type": "poopsky:sieve",
-  "input": {
-    "item": "poopsky:raw_sea_poop_block"
-  },
+  "input": "poopsky:raw_sea_poop_block",
   "outputs": [
     {
       "chance": 1.0,
@@ -14,35 +12,30 @@
     {
       "chance": 0.75,
       "item": {
-        "count": 1,
         "id": "minecraft:seagrass"
       }
     },
     {
       "chance": 1.0,
       "item": {
-        "count": 1,
         "id": "minecraft:lily_pad"
       }
     },
     {
       "chance": 0.5,
       "item": {
-        "count": 1,
         "id": "minecraft:kelp"
       }
     },
     {
       "chance": 0.09,
       "item": {
-        "count": 1,
         "id": "minecraft:nautilus_shell"
       }
     },
     {
       "chance": 0.01,
       "item": {
-        "count": 1,
         "id": "minecraft:heart_of_the_sea"
       }
     }

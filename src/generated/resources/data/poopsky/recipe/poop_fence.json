@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "B": {
-      "item": "poopsky:poop_block"
-    },
-    "P": {
-      "item": "poopsky:poop"
-    }
+    "B": "poopsky:poop_block",
+    "P": "poopsky:poop"
   },
   "pattern": [
     "BPB",

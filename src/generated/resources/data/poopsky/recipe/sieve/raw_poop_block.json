@@ -9,14 +9,11 @@
     }
   ],
   "type": "poopsky:sieve",
-  "input": {
-    "item": "poopsky:raw_poop_block"
-  },
+  "input": "poopsky:raw_poop_block",
   "outputs": [
     {
       "chance": 1.0,
       "item": {
-        "count": 1,
         "id": "minecraft:raw_copper"
       }
     },
@@ -30,14 +27,12 @@
     {
       "chance": 0.5,
       "item": {
-        "count": 1,
         "id": "minecraft:redstone"
       }
     },
     {
       "chance": 0.25,
       "item": {
-        "count": 1,
         "id": "minecraft:amethyst_shard"
       }
     }

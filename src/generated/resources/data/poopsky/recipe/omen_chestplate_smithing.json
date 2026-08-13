@@ -1,16 +1,9 @@
 {
   "type": "minecraft:smithing_transform",
-  "addition": {
-    "item": "poopsky:ominous_filthy_ingot"
-  },
-  "base": {
-    "item": "minecraft:golden_chestplate"
-  },
+  "addition": "poopsky:ominous_filthy_ingot",
+  "base": "minecraft:golden_chestplate",
   "result": {
-    "count": 1,
     "id": "poopsky:omen_chestplate"
   },
-  "template": {
-    "item": "poopsky:omen_upgrade_smithing_template"
-  }
+  "template": "poopsky:omen_upgrade_smithing_template"
 }

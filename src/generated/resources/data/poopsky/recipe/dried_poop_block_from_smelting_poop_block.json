@@ -4,11 +4,8 @@
   "cookingtime": 200,
   "experience": 0.1,
   "group": "dried_poop_block",
-  "ingredient": {
-    "item": "poopsky:poop_block"
-  },
+  "ingredient": "poopsky:poop_block",
   "result": {
-    "count": 1,
     "id": "poopsky:dried_poop_block"
   }
 }

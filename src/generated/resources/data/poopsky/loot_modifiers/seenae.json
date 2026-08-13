@@ -20,5 +20,6 @@
       "condition": "minecraft:random_chance"
     }
   ],
+  "priority": 0,
   "table": "poopsky:gameplay/fishing/seenae"
 }

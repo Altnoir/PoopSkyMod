@@ -1,0 +1,56 @@
+{
+  "variants": {
+    "facing=down,arrow=false": {
+      "model": "poopsky:block/poop_empty_log",
+      "x": 180
+    },
+    "facing=down,arrow=true": {
+      "model": "poopsky:block/poop_empty_log_arrow",
+      "x": 180
+    },
+    "facing=east,arrow=false": {
+      "model": "poopsky:block/poop_empty_log",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,arrow=true": {
+      "model": "poopsky:block/poop_empty_log_arrow",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north,arrow=false": {
+      "model": "poopsky:block/poop_empty_log",
+      "x": 90
+    },
+    "facing=north,arrow=true": {
+      "model": "poopsky:block/poop_empty_log_arrow",
+      "x": 90
+    },
+    "facing=south,arrow=false": {
+      "model": "poopsky:block/poop_empty_log",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,arrow=true": {
+      "model": "poopsky:block/poop_empty_log_arrow",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up,arrow=false": {
+      "model": "poopsky:block/poop_empty_log"
+    },
+    "facing=up,arrow=true": {
+      "model": "poopsky:block/poop_empty_log_arrow"
+    },
+    "facing=west,arrow=false": {
+      "model": "poopsky:block/poop_empty_log",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,arrow=true": {
+      "model": "poopsky:block/poop_empty_log_arrow",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

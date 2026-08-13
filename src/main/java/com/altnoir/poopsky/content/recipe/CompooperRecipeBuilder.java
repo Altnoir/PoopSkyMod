@@ -13,7 +13,7 @@ import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.NotNull;
@@ -26,30 +26,30 @@ public final class CompooperRecipeBuilder implements RecipeBuilder {
     private static final String RECIPE_TYPE = PoRecipes.COMPOOPER.folder();
 
     private final String fluidType;
-    private final ItemStack input;
-    private final ItemStack output;
+    private final ItemStackTemplate input;
+    private final ItemStackTemplate output;
     private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
 
-    public CompooperRecipeBuilder(String fluidType, ItemStack input, ItemStack output) {
+    public CompooperRecipeBuilder(String fluidType, ItemStackTemplate input, ItemStackTemplate output) {
         this.fluidType = fluidType;
         this.input = input;
         this.output = output;
     }
 
     public static CompooperRecipeBuilder compooper(String fluidType, ItemLike input, ItemLike output) {
-        return new CompooperRecipeBuilder(fluidType, new ItemStack(input), new ItemStack(output));
+        return new CompooperRecipeBuilder(fluidType, new ItemStackTemplate(input.asItem()), new ItemStackTemplate(output.asItem()));
     }
 
     public static CompooperRecipeBuilder compooper(String fluidType, ItemLike input, ItemLike output, int count) {
-        return new CompooperRecipeBuilder(fluidType, new ItemStack(input), new ItemStack(output, count));
+        return new CompooperRecipeBuilder(fluidType, new ItemStackTemplate(input.asItem()), new ItemStackTemplate(output.asItem(), count));
     }
 
-    public static CompooperRecipeBuilder compooper(String fluidType, ItemStack input, ItemStack output) {
+    public static CompooperRecipeBuilder compooper(String fluidType, ItemStackTemplate input, ItemStackTemplate output) {
         return new CompooperRecipeBuilder(fluidType, input, output);
     }
 
-    public static CompooperRecipeBuilder compooper(String fluidType, ItemLike input, ItemStack output) {
-        return new CompooperRecipeBuilder(fluidType, new ItemStack(input), output);
+    public static CompooperRecipeBuilder compooper(String fluidType, ItemLike input, ItemStackTemplate output) {
+        return new CompooperRecipeBuilder(fluidType, new ItemStackTemplate(input.asItem()), output);
     }
 
     @Override
@@ -65,7 +65,7 @@ public final class CompooperRecipeBuilder implements RecipeBuilder {
 
     @Override
     public ResourceKey<Recipe<?>> defaultId() {
-        return ResourceKey.create(Registries.RECIPE, getDefaultRecipeId(fluidType, output.getItem()));
+        return ResourceKey.create(Registries.RECIPE, getDefaultRecipeId(fluidType, output.item().value()));
     }
 
     @Override

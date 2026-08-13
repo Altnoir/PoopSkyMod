@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "poopsky:chili_shit"
-    }
+    "poopsky:chili_shit"
   ],
   "result": {
     "count": 3,

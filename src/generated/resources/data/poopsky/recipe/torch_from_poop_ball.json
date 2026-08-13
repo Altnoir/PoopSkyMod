@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "P": {
-      "item": "poopsky:poop_ball"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    }
+    "P": "poopsky:poop_ball",
+    "S": "minecraft:stick"
   },
   "pattern": [
     "P",

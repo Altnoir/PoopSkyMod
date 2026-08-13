@@ -1,13 +1,10 @@
 {
   "type": "poopsky:sieve",
-  "input": {
-    "tag": "minecraft:sand"
-  },
+  "input": "#minecraft:sand",
   "outputs": [
     {
       "chance": 1.0,
       "item": {
-        "count": 1,
         "id": "minecraft:clay"
       }
     },

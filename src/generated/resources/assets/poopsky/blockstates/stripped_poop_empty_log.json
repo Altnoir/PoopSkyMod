@@ -1,0 +1,100 @@
+{
+  "variants": {
+    "facing=down,arrow=false": [
+      {
+        "model": "poopsky:block/stripped_poop_empty_log",
+        "weight": 4,
+        "x": 180
+      },
+      {
+        "model": "poopsky:block/stripped_poop_empty_log2",
+        "x": 180
+      }
+    ],
+    "facing=down,arrow=true": {
+      "model": "poopsky:block/stripped_poop_empty_log_arrow",
+      "x": 180
+    },
+    "facing=east,arrow=false": [
+      {
+        "model": "poopsky:block/stripped_poop_empty_log",
+        "weight": 4,
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "poopsky:block/stripped_poop_empty_log2",
+        "x": 90,
+        "y": 90
+      }
+    ],
+    "facing=east,arrow=true": {
+      "model": "poopsky:block/stripped_poop_empty_log_arrow",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north,arrow=false": [
+      {
+        "model": "poopsky:block/stripped_poop_empty_log",
+        "weight": 4,
+        "x": 90
+      },
+      {
+        "model": "poopsky:block/stripped_poop_empty_log2",
+        "x": 90
+      }
+    ],
+    "facing=north,arrow=true": {
+      "model": "poopsky:block/stripped_poop_empty_log_arrow",
+      "x": 90
+    },
+    "facing=south,arrow=false": [
+      {
+        "model": "poopsky:block/stripped_poop_empty_log",
+        "weight": 4,
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "poopsky:block/stripped_poop_empty_log2",
+        "x": 90,
+        "y": 180
+      }
+    ],
+    "facing=south,arrow=true": {
+      "model": "poopsky:block/stripped_poop_empty_log_arrow",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up,arrow=false": [
+      {
+        "model": "poopsky:block/stripped_poop_empty_log",
+        "weight": 4
+      },
+      {
+        "model": "poopsky:block/stripped_poop_empty_log2"
+      }
+    ],
+    "facing=up,arrow=true": {
+      "model": "poopsky:block/stripped_poop_empty_log_arrow"
+    },
+    "facing=west,arrow=false": [
+      {
+        "model": "poopsky:block/stripped_poop_empty_log",
+        "weight": 4,
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "poopsky:block/stripped_poop_empty_log2",
+        "x": 90,
+        "y": 270
+      }
+    ],
+    "facing=west,arrow=true": {
+      "model": "poopsky:block/stripped_poop_empty_log_arrow",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

@@ -2,18 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "minecraft:bread"
-    },
-    {
-      "item": "poopsky:pooburger_meat"
-    },
-    {
-      "item": "poopsky:seedbed_curse"
-    }
+    "minecraft:bread",
+    "poopsky:pooburger_meat",
+    "poopsky:seedbed_curse"
   ],
   "result": {
-    "count": 1,
     "id": "poopsky:pooburger"
   }
 }

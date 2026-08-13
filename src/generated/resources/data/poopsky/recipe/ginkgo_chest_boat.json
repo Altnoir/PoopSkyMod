@@ -2,15 +2,10 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "minecraft:chest"
-    },
-    {
-      "item": "poopsky:ginkgo_boat"
-    }
+    "minecraft:chest",
+    "poopsky:ginkgo_boat"
   ],
   "result": {
-    "count": 1,
     "id": "poopsky:ginkgo_chest_boat"
   }
 }

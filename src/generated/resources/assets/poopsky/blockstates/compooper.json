@@ -1,0 +1,73 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "poopsky:block/compooper"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/compooper_contents1"
+      },
+      "when": {
+        "level": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/compooper_contents2"
+      },
+      "when": {
+        "level": "2"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/compooper_contents3"
+      },
+      "when": {
+        "level": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/compooper_contents4"
+      },
+      "when": {
+        "level": "4"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/compooper_contents5"
+      },
+      "when": {
+        "level": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/compooper_contents6"
+      },
+      "when": {
+        "level": "6"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/compooper_contents7"
+      },
+      "when": {
+        "level": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/compooper_contents_ready"
+      },
+      "when": {
+        "level": "8"
+      }
+    }
+  ]
+}

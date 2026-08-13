@@ -5,8 +5,8 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
-import net.minecraft.util.valueproviders.UniformInt;
-import net.minecraft.world.level.LevelSimulatedReader;
+import net.minecraft.util.valueproviders.IntProviders;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
@@ -14,7 +14,7 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerTy
 public class RhombusFoliagePlacer extends FoliagePlacer {
     public static final MapCodec<RhombusFoliagePlacer> CODEC = RecordCodecBuilder.mapCodec(
             instance -> foliagePlacerParts(instance)
-                    .and(UniformInt.codec(0, 24).fieldOf("crown_height").forGetter(p -> p.crownHeight))
+                    .and(IntProviders.codec(0, 24).fieldOf("crown_height").forGetter(p -> p.crownHeight))
                     .apply(instance, RhombusFoliagePlacer::new)
     );
 
@@ -31,18 +31,18 @@ public class RhombusFoliagePlacer extends FoliagePlacer {
     }
 
     @Override
-    protected void createFoliage(LevelSimulatedReader reader, FoliageSetter placer, RandomSource random,
+    protected void createFoliage(WorldGenLevel reader, FoliageSetter placer, RandomSource random,
                                  TreeConfiguration config, int trunkHeight, FoliageAttachment attachment,
                                  int foliageHeight, int radius, int offset) {
-        var center = attachment.pos();
-        var startY = center.getY() - foliageHeight + offset;
-        var endY = center.getY() + offset;
-        var halfHeight = (endY - startY + 1) / 2.0F;
+        BlockPos center = attachment.pos();
+        int startY = center.getY() - foliageHeight + offset;
+        int endY = center.getY() + offset;
+        float halfHeight = (endY - startY + 1) / 2.0F;
 
-        for (var y = startY; y <= endY; ++y) {
-            var distFromEdge = Math.min(y - startY, endY - y);
-            var extraRadius = (int) Math.ceil(distFromEdge * radius / halfHeight);
-            var currRadius = attachment.radiusOffset() + extraRadius;
+        for (int y = startY; y <= endY; ++y) {
+            int distFromEdge = Math.min(y - startY, endY - y);
+            int extraRadius = (int) Math.ceil(distFromEdge * radius / halfHeight);
+            int currRadius = attachment.radiusOffset() + extraRadius;
 
             placeLeavesRow(reader, placer, random, config, new BlockPos(center.getX(), y, center.getZ()),
                     currRadius, 0, attachment.doubleTrunk());

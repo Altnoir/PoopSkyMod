@@ -1,8 +1,6 @@
 {
   "type": "poopsky:sieve",
-  "input": {
-    "item": "poopsky:chili_poop_block"
-  },
+  "input": "poopsky:chili_poop_block",
   "outputs": [
     {
       "chance": 1.0,
@@ -28,14 +26,12 @@
     {
       "chance": 0.5,
       "item": {
-        "count": 1,
         "id": "minecraft:magma_cream"
       }
     },
     {
       "chance": 0.1,
       "item": {
-        "count": 1,
         "id": "minecraft:ghast_tear"
       }
     }

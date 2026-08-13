@@ -1,8 +1,6 @@
 {
   "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "poopsky:cut_poop_block"
-  },
+  "ingredient": "poopsky:cut_poop_block",
   "result": {
     "count": 2,
     "id": "poopsky:cut_poop_block_vertical_slab"

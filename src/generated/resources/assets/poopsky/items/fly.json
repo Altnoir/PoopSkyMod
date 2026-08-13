@@ -1,0 +1,243 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "cases": [
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_white"
+        },
+        "when": "white"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_black"
+        },
+        "when": "black"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_green"
+        },
+        "when": "green"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_blue"
+        },
+        "when": "blue"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_red"
+        },
+        "when": "red"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_gray"
+        },
+        "when": "gray"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_light_gray"
+        },
+        "when": "light_gray"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_brown"
+        },
+        "when": "brown"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_orange"
+        },
+        "when": "orange"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_yellow"
+        },
+        "when": "yellow"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_lime"
+        },
+        "when": "lime"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_cyan"
+        },
+        "when": "cyan"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_light_blue"
+        },
+        "when": "light_blue"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_purple"
+        },
+        "when": "purple"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_magenta"
+        },
+        "when": "magenta"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_pink"
+        },
+        "when": "pink"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_iron"
+        },
+        "when": "iron"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_copper"
+        },
+        "when": "copper"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_gold"
+        },
+        "when": "gold"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_emerald"
+        },
+        "when": "emerald"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_diamond"
+        },
+        "when": "diamond"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_netherite"
+        },
+        "when": "netherite"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_dragon_fruit"
+        },
+        "when": "dragon_fruit"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_glowstone"
+        },
+        "when": "glowstone"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_ender"
+        },
+        "when": "ender"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_zinc"
+        },
+        "when": "zinc"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_certus"
+        },
+        "when": "certus"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_sky_dust"
+        },
+        "when": "sky_dust"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_osmium"
+        },
+        "when": "osmium"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_tin"
+        },
+        "when": "tin"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_lead"
+        },
+        "when": "lead"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_uranium"
+        },
+        "when": "uranium"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/fly_fluorite"
+        },
+        "when": "fluorite"
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "poopsky:item/fly"
+    },
+    "property": "poopsky:fly_type"
+  }
+}

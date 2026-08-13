@@ -19,7 +19,7 @@ public final class PCompooperRecipes {
                 .map(RecipeHolder::value)
                 .filter(recipe -> recipe.matchesFluid(fluidType) && recipe.matchesInput(input))
                 .findFirst()
-                .map(recipe -> recipe.output().copy())
+                .map(recipe -> recipe.output().create())
                 .orElse(ItemStack.EMPTY);
     }
 }

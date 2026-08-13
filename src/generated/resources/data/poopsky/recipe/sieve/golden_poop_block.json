@@ -1,8 +1,6 @@
 {
   "type": "poopsky:sieve",
-  "input": {
-    "item": "poopsky:golden_poop_block"
-  },
+  "input": "poopsky:golden_poop_block",
   "outputs": [
     {
       "chance": 1.0,
@@ -21,7 +19,6 @@
     {
       "chance": 0.5,
       "item": {
-        "count": 1,
         "id": "minecraft:raw_gold"
       }
     }

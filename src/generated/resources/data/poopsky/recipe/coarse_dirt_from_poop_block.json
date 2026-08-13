@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "G": {
-      "item": "minecraft:gravel"
-    },
-    "P": {
-      "item": "poopsky:poop_block"
-    }
+    "G": "minecraft:gravel",
+    "P": "poopsky:poop_block"
   },
   "pattern": [
     "PG",

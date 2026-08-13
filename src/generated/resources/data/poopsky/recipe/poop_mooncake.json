@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "P": {
-      "item": "poopsky:poop"
-    },
-    "W": {
-      "item": "minecraft:wheat"
-    }
+    "P": "poopsky:poop",
+    "W": "minecraft:wheat"
   },
   "pattern": [
     "WPW"

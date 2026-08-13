@@ -1,8 +1,6 @@
 {
   "type": "poopsky:pop_explosion",
-  "input": {
-    "item": "minecraft:diorite"
-  },
+  "input": "minecraft:diorite",
   "output": {
     "block": "minecraft:calcite"
   }

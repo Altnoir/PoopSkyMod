@@ -2,18 +2,13 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "M": {
-      "item": "poopsky:maggots_seeds"
-    },
-    "P": {
-      "item": "poopsky:poop"
-    }
+    "M": "poopsky:maggots_seeds",
+    "P": "poopsky:poop"
   },
   "pattern": [
     "PMP"
   ],
   "result": {
-    "count": 1,
     "id": "poopsky:poop_bread"
   }
 }

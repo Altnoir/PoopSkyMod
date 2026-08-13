@@ -10,6 +10,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -39,7 +40,7 @@ public record PlugActionPayload() implements CustomPacketPayload {
 
     private static void spawnAndRidePlug(ServerPlayer player) {
         var level = player.level();
-        var entity = PoEntityType.TOILET_PLUG.get().create(level);
+        var entity = PoEntityType.TOILET_PLUG.get().create(level, EntitySpawnReason.TRIGGERED);
         if (entity == null) return;
 
         entity.setPos(player.position());
@@ -51,7 +52,7 @@ public record PlugActionPayload() implements CustomPacketPayload {
     }
 
     private static void removePlug(ServerPlayer player, ToiletPlugEntity plug) {
-        plug.kill();
+        plug.discard();
         Level level = player.level();
         level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.5F, 1.0F);
         if (!player.isCreative()) {
@@ -74,10 +75,9 @@ public record PlugActionPayload() implements CustomPacketPayload {
             }
         }
 
-        for (ItemStack stack : inv.offhand) {
-            if (stack.is(PoItems.TOILET_PLUG.get())) {
-                return stack;
-            }
+        ItemStack offhand = inv.getItem(Inventory.SLOT_OFFHAND);
+        if (offhand.is(PoItems.TOILET_PLUG.get())) {
+            return offhand;
         }
 
         return ItemStack.EMPTY;
@@ -88,4 +88,3 @@ public record PlugActionPayload() implements CustomPacketPayload {
         return TYPE;
     }
 }
-

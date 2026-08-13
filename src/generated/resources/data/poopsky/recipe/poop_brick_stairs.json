@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "P": {
-      "item": "poopsky:poop_bricks"
-    }
+    "P": "poopsky:poop_bricks"
   },
   "pattern": [
     "P  ",

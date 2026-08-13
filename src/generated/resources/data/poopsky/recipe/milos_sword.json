@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "item": "minecraft:bone"
-    },
-    "O": {
-      "item": "poopsky:ominous_filthy_ingot"
-    },
-    "P": {
-      "item": "poopsky:toilet_plug"
-    }
+    "B": "minecraft:bone",
+    "O": "poopsky:ominous_filthy_ingot",
+    "P": "poopsky:toilet_plug"
   },
   "pattern": [
     "BOB",
@@ -18,7 +12,6 @@
     " P "
   ],
   "result": {
-    "count": 1,
     "id": "poopsky:milos_sword"
   }
 }

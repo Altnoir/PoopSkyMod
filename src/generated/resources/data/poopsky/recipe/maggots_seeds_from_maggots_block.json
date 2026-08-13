@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "poopsky:maggots_block"
-    }
+    "poopsky:maggots_block"
   ],
   "result": {
     "count": 9,

@@ -2,18 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "poopsky:golden_poop"
-    },
-    {
-      "item": "poopsky:golden_poop"
-    },
-    {
-      "item": "poopsky:golden_poop"
-    }
+    "poopsky:golden_poop",
+    "poopsky:golden_poop",
+    "poopsky:golden_poop"
   ],
   "result": {
-    "count": 1,
     "id": "poopsky:golden_shit"
   }
 }

@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "D": {
-      "item": "minecraft:orange_dye"
-    },
-    "T": {
-      "tag": "poopsky:tile_slabs"
-    }
+    "D": "minecraft:orange_dye",
+    "T": "#poopsky:tile_slabs"
   },
   "pattern": [
     "TTT",

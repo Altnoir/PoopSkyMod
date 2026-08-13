@@ -1,10 +1,7 @@
 {
   "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "poopsky:smooth_poop_block"
-  },
+  "ingredient": "poopsky:smooth_poop_block",
   "result": {
-    "count": 1,
     "id": "poopsky:smooth_poop_block_wall"
   }
 }

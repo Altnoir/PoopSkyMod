@@ -9,6 +9,7 @@ import com.altnoir.poopsky.content.item.p.*;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
+import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.food.FoodProperties;
@@ -142,9 +143,9 @@ public class PoItems {
             prop -> new SpawnEggItem(prop.spawnEgg(PoEntityType.FLY.get())));
 
     public static final ItemEntry<FeedableBlockItem> MAGGOTS_SEEDS = registerItem("maggots_seeds",
-            props -> new FeedableBlockItem(PoBlocks.MAGGOTS.get(), PFoods.apply(new Item.Properties(), PFoods.MAGGOTS_SEEDS).stacksTo(88)));
+            props -> new FeedableBlockItem(PoBlocks.MAGGOTS.get(), PFoods.apply(props, PFoods.MAGGOTS_SEEDS).stacksTo(88)));
     public static final ItemEntry<FeedableBlockItem> ROUNDWORM = registerItem("roundworm",
-            props -> new FeedableBlockItem(PoBlocks.ROUNDWORM_VINES.get(), PFoods.apply(new Item.Properties(), PFoods.ROUNDWORM).stacksTo(88)));
+            props -> new FeedableBlockItem(PoBlocks.ROUNDWORM_VINES.get(), PFoods.apply(props, PFoods.ROUNDWORM).stacksTo(88)));
 
     public static final ItemEntry<SimpleFeedableItem> FASTING_PILL = registerFood("fasting_pill", PFoods.FASTING_PILL);
 
@@ -175,11 +176,13 @@ public class PoItems {
     }
 
     private static <T extends Item> ItemEntry<T> registerHandheldItem(String name, NonNullFunction<Item.Properties, T> factory) {
-        return REGISTRATE.item(name, factory).model((ctx, prov) -> prov.handheld(ctx)).register();
+        return REGISTRATE.item(name, factory)
+                .model(() -> (ctx, prov) -> prov.generateFlatItem(ctx.get(), ModelTemplates.FLAT_HANDHELD_ITEM, prov.modItemTexture(ctx.getName())))
+                .register();
     }
 
     private static <T extends Item> ItemEntry<T> registerItemNoModel(String name, NonNullFunction<Item.Properties, T> factory) {
-        return REGISTRATE.item(name, factory).model((ctx, prov) -> {
+        return REGISTRATE.item(name, factory).model(() -> (ctx, prov) -> {
         }).register();
     }
 

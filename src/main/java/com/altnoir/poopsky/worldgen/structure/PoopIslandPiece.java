@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.StructureManager;
@@ -115,14 +116,14 @@ public class PoopIslandPiece extends TemplateStructurePiece {
                 continue;
             }
 
-            PoolimeEntity poolime = PoEntityType.POOLIME.get().create(level.getLevel());
+            PoolimeEntity poolime = PoEntityType.POOLIME.get().create(level.getLevel(), EntitySpawnReason.STRUCTURE);
             if (poolime == null) {
                 continue;
             }
 
             RandomSource spawnRandom = RandomSource.create(featureSeed(level.getSeed(), origin, pos, POOLIME_SPAWN_SALT));
             poolime.setSize(spawnRandom.nextInt(3) + 1, true);
-            poolime.moveTo(pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D, spawnRandom.nextFloat() * 360.0F, 0.0F);
+            poolime.snapTo(pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D, spawnRandom.nextFloat() * 360.0F, 0.0F);
             if (level.noCollision(poolime, poolime.getBoundingBox()) && !hasNearbyPoolime(level, poolime)) {
                 level.addFreshEntity(poolime);
             }
@@ -174,7 +175,10 @@ public class PoopIslandPiece extends TemplateStructurePiece {
 
     private static boolean isTreeMarker(StructureTemplate.StructureBlockInfo blockInfo) {
         CompoundTag tag = blockInfo.nbt();
-        return tag != null && PoopIslandStructure.POOP_TREE_MARKER.equals(tag.getString("metadata"));
+        if (tag != null) {
+            tag.getString("metadata");
+        }
+        return false;
     }
 
     private static Rotation readRotation(CompoundTag tag) {
@@ -183,7 +187,7 @@ public class PoopIslandPiece extends TemplateStructurePiece {
         }
 
         try {
-            return Rotation.valueOf(tag.getString(ROTATION_KEY));
+            return Rotation.valueOf(tag.getString(ROTATION_KEY).orElse(Rotation.NONE.name()));
         } catch (IllegalArgumentException exception) {
             return Rotation.NONE;
         }

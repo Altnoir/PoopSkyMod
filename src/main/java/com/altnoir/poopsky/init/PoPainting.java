@@ -8,6 +8,7 @@ import net.minecraft.world.entity.decoration.painting.PaintingVariant;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class PoPainting {
     public static final List<ResourceKey<PaintingVariant>> PAINTING_VARIANTS = new ArrayList<>();
@@ -26,7 +27,7 @@ public class PoPainting {
 
     private static void register(BootstrapContext<PaintingVariant> context, ResourceKey<PaintingVariant> key, int width, int height) {
         PAINTING_VARIANTS.add(key);
-        context.register(key, new PaintingVariant(width, height, key.identifier()));
+        context.register(key, new PaintingVariant(width, height, key.identifier(), Optional.empty(), Optional.empty()));
     }
 
     private static ResourceKey<PaintingVariant> create(String name) {

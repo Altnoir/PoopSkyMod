@@ -2,15 +2,10 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "poopsky:poolime_block"
-    },
-    {
-      "item": "minecraft:lime_dye"
-    }
+    "poopsky:poolime_block",
+    "minecraft:lime_dye"
   ],
   "result": {
-    "count": 1,
     "id": "minecraft:slime_block"
   }
 }

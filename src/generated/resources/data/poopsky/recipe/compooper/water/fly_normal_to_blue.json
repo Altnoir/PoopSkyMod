@@ -5,14 +5,12 @@
     "components": {
       "poopsky:fly_type": "normal"
     },
-    "count": 1,
     "id": "poopsky:fly"
   },
   "output": {
     "components": {
       "poopsky:fly_type": "blue"
     },
-    "count": 1,
     "id": "poopsky:fly"
   }
 }

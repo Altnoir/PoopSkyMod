@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "poopsky:golden_shit"
-    }
+    "poopsky:golden_shit"
   ],
   "result": {
     "count": 3,

@@ -1,16 +1,9 @@
 {
   "type": "minecraft:smithing_transform",
-  "addition": {
-    "item": "poopsky:ominous_filthy_ingot"
-  },
-  "base": {
-    "item": "minecraft:golden_leggings"
-  },
+  "addition": "poopsky:ominous_filthy_ingot",
+  "base": "minecraft:golden_leggings",
   "result": {
-    "count": 1,
     "id": "poopsky:omen_leggings"
   },
-  "template": {
-    "item": "poopsky:omen_upgrade_smithing_template"
-  }
+  "template": "poopsky:omen_upgrade_smithing_template"
 }

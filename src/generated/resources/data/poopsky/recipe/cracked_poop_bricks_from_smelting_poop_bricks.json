@@ -4,11 +4,8 @@
   "cookingtime": 200,
   "experience": 0.1,
   "group": "cracked_poop_bricks",
-  "ingredient": {
-    "item": "poopsky:poop_bricks"
-  },
+  "ingredient": "poopsky:poop_bricks",
   "result": {
-    "count": 1,
     "id": "poopsky:cracked_poop_bricks"
   }
 }

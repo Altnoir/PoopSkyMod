@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "D": {
-      "item": "minecraft:brown_dye"
-    },
-    "T": {
-      "tag": "poopsky:tile_vertical_slabs"
-    }
+    "D": "minecraft:brown_dye",
+    "T": "#poopsky:tile_vertical_slabs"
   },
   "pattern": [
     "TTT",

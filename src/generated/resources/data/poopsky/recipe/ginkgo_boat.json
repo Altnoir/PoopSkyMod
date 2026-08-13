@@ -2,16 +2,13 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "P": {
-      "item": "poopsky:ginkgo_planks"
-    }
+    "P": "poopsky:ginkgo_planks"
   },
   "pattern": [
     "P P",
     "PPP"
   ],
   "result": {
-    "count": 1,
     "id": "poopsky:ginkgo_boat"
   }
 }

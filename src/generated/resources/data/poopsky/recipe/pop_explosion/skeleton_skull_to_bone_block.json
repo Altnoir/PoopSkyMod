@@ -1,8 +1,6 @@
 {
   "type": "poopsky:pop_explosion",
-  "input": {
-    "item": "minecraft:bone_block"
-  },
+  "input": "minecraft:bone_block",
   "output": {
     "block": "minecraft:skeleton_skull"
   },

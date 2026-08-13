@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "redstone",
   "key": {
-    "C": {
-      "item": "poopsky:cut_poop_block"
-    },
-    "M": {
-      "item": "poopsky:maggots_block"
-    },
-    "R": {
-      "item": "minecraft:redstone"
-    }
+    "C": "poopsky:cut_poop_block",
+    "M": "poopsky:maggots_block",
+    "R": "minecraft:redstone"
   },
   "pattern": [
     " R ",
@@ -18,7 +12,6 @@
     "CCC"
   ],
   "result": {
-    "count": 1,
     "id": "poopsky:maggots_chunk_loader"
   }
 }

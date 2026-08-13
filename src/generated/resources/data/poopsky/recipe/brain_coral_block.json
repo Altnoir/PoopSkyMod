@@ -2,18 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "poopsky:poop_block"
-    },
-    {
-      "item": "minecraft:brain_coral"
-    },
-    {
-      "item": "minecraft:brain_coral_fan"
-    }
+    "poopsky:poop_block",
+    "minecraft:brain_coral",
+    "minecraft:brain_coral_fan"
   ],
   "result": {
-    "count": 1,
     "id": "minecraft:brain_coral_block"
   }
 }

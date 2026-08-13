@@ -2,18 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "poopsky:poop_block"
-    },
-    {
-      "item": "minecraft:horn_coral"
-    },
-    {
-      "item": "minecraft:horn_coral_fan"
-    }
+    "poopsky:poop_block",
+    "minecraft:horn_coral",
+    "minecraft:horn_coral_fan"
   ],
   "result": {
-    "count": 1,
     "id": "minecraft:horn_coral_block"
   }
 }

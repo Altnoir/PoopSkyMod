@@ -56,7 +56,7 @@ public final class PoFluids {
     public static final RegistryEntry<Fluid, FlowingFluid> URINE = REGISTRATE.get("urine", Registries.FLUID);
     public static final ItemEntry<BucketItem> URINE_BUCKET = ItemEntry.cast(REGISTRATE.get("urine_bucket", Registries.ITEM));
     public static final BlockEntry<UrineLiquidBlock> URINE_LIQUID = REGISTRATE
-            .block("urine_liquid", properties -> new UrineLiquidBlock(URINE.get(), urineLiquidProperties()))
+            .block("urine_liquid", properties -> new UrineLiquidBlock(URINE.get(), urineLiquidProperties(properties)))
             .blockstate(() -> (ctx, prov) -> {
             })
             .loot(RegistrateBlockLootTables::dropSelf)
@@ -101,8 +101,8 @@ public final class PoFluids {
         };
     }
 
-    private static BlockBehaviour.Properties urineLiquidProperties() {
-        return BlockBehaviour.Properties.of()
+    private static BlockBehaviour.Properties urineLiquidProperties(BlockBehaviour.Properties properties) {
+        return properties
                 .mapColor(MapColor.COLOR_BROWN)
                 .replaceable()
                 .noCollision()

@@ -1,9 +1,0 @@
-{
-  "category": "hard",
-  "hardness": 10.0,
-  "is_end": false,
-  "is_golden": false,
-  "is_redstone": false,
-  "name_key": "block.minecraft.orange_concrete",
-  "source_block": "minecraft:orange_concrete"
-}

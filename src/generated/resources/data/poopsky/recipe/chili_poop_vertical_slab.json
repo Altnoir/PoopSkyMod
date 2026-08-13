@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "P": {
-      "item": "poopsky:chili_poop_block"
-    }
+    "P": "poopsky:chili_poop_block"
   },
   "pattern": [
     "P",

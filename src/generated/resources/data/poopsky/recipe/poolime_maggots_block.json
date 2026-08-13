@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "M": {
-      "item": "poopsky:maggots_block"
-    },
-    "P": {
-      "item": "poopsky:poop_block"
-    }
+    "M": "poopsky:maggots_block",
+    "P": "poopsky:poop_block"
   },
   "pattern": [
     "PPP",
@@ -15,7 +11,6 @@
     "PPP"
   ],
   "result": {
-    "count": 1,
     "id": "poopsky:poolime_maggots_block"
   }
 }

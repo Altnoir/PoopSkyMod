@@ -2,18 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "poopsky:chili_poop"
-    },
-    {
-      "item": "poopsky:chili_poop"
-    },
-    {
-      "item": "poopsky:chili_poop"
-    }
+    "poopsky:chili_poop",
+    "poopsky:chili_poop",
+    "poopsky:chili_poop"
   ],
   "result": {
-    "count": 1,
     "id": "poopsky:chili_shit"
   }
 }

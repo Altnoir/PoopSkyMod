@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "R": {
-      "item": "poopsky:roundworm"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    }
+    "R": "poopsky:roundworm",
+    "S": "minecraft:stick"
   },
   "pattern": [
     "RR",
@@ -15,7 +11,6 @@
     " S"
   ],
   "result": {
-    "count": 1,
     "id": "poopsky:fly_catcher"
   }
 }

@@ -2,18 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "poopsky:poop_block"
-    },
-    {
-      "item": "minecraft:fire_coral"
-    },
-    {
-      "item": "minecraft:fire_coral_fan"
-    }
+    "poopsky:poop_block",
+    "minecraft:fire_coral",
+    "minecraft:fire_coral_fan"
   ],
   "result": {
-    "count": 1,
     "id": "minecraft:fire_coral_block"
   }
 }

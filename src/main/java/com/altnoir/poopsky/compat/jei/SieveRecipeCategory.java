@@ -74,7 +74,7 @@ public class SieveRecipeCategory implements IRecipeCategory<RecipeHolder<SieveRe
             if (index < recipe.outputs().size()) {
                 var chanceItem = recipe.outputs().get(index);
                 var chance = chanceItem.chance() * 100.0F < 1.0F ? "<1" : String.format("%.2f", chanceItem.chance() * 100.0F).replaceAll("\\.?0+$", "");
-                slotBuilder.add(chanceItem.stack().copy()).addRichTooltipCallback(
+                slotBuilder.add(chanceItem.stack().create()).addRichTooltipCallback(
                         (slotView, tooltip) -> tooltip.add(Component.translatable("jei.poopsky.sieve_chance", chance).withStyle(ChatFormatting.GOLD)));
             }
         }

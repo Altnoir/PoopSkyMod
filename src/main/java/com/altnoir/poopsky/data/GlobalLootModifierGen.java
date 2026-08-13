@@ -44,7 +44,7 @@ public final class GlobalLootModifierGen extends GlobalLootModifierProvider {
                                                 .subPredicate(FishingHookPredicate.inOpenWater(false))
                                 ).build(),
                                 LootItemRandomChanceCondition.randomChance(0.5f).build()
-                        },
+                        }, 0,
                         FishingLootGen.FISHING_SENNAE
                 ));
     }

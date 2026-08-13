@@ -3,19 +3,14 @@
   "delegate": {
     "category": "building",
     "key": {
-      "#": {
-        "item": "minecraft:deepslate"
-      },
-      "P": {
-        "item": "poopsky:poop"
-      }
+      "#": "minecraft:deepslate",
+      "P": "poopsky:poop"
     },
     "pattern": [
       "P",
       "#"
     ],
     "result": {
-      "count": 1,
       "id": "poopsky:hard_toilet"
     }
   },

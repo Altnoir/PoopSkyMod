@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "redstone",
   "key": {
-    "A": {
-      "item": "poopsky:poop_block"
-    },
-    "S": {
-      "tag": "c:gunpowders"
-    }
+    "A": "poopsky:poop_block",
+    "S": "#c:gunpowders"
   },
   "pattern": [
     "SAS",
@@ -15,7 +11,6 @@
     "SAS"
   ],
   "result": {
-    "count": 1,
     "id": "poopsky:poop_tnt"
   }
 }

@@ -16,7 +16,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
@@ -66,7 +66,7 @@ public final class SieveRecipeBuilder implements RecipeBuilder {
     }
 
     public SieveRecipeBuilder addOutput(ItemLike item, int count, float chance) {
-        this.outputs.add(new SieveRecipe.ChanceItemStack(new ItemStack(item, count), chance));
+        this.outputs.add(new SieveRecipe.ChanceItemStack(new ItemStackTemplate(item.asItem(), count), chance));
         return this;
     }
 

@@ -1,8 +1,6 @@
 {
   "type": "poopsky:anal_pressing",
-  "input": {
-    "item": "minecraft:raw_gold_block"
-  },
+  "input": "minecraft:raw_gold_block",
   "output": "minecraft:nether_gold_ore",
   "replace_target": "minecraft:netherrack"
 }

@@ -1,10 +1,7 @@
 {
   "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "poopsky:stripped_poop_log"
-  },
+  "ingredient": "poopsky:stripped_poop_log",
   "result": {
-    "count": 1,
     "id": "poopsky:stripped_poop_empty_log"
   }
 }

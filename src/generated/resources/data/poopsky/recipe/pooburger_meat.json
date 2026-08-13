@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "poopsky:poop"
-    },
-    {
-      "item": "poopsky:poop"
-    },
-    {
-      "item": "poopsky:poop"
-    },
-    {
-      "item": "minecraft:egg"
-    }
+    "poopsky:poop",
+    "poopsky:poop",
+    "poopsky:poop",
+    "minecraft:egg"
   ],
   "result": {
     "count": 3,

@@ -1,8 +1,0 @@
-{
-  "category": "wood",
-  "is_end": false,
-  "is_golden": false,
-  "is_redstone": false,
-  "name_key": "block.poopsky.toilet.oak",
-  "source_block": "minecraft:oak_planks"
-}

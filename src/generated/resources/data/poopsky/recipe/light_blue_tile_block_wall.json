@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "P": {
-      "item": "poopsky:light_blue_tile_block"
-    }
+    "P": "poopsky:light_blue_tile_block"
   },
   "pattern": [
     "PPP",

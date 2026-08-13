@@ -2,15 +2,12 @@
   "type": "minecraft:crafting_shaped",
   "category": "redstone",
   "key": {
-    "P": {
-      "item": "poopsky:ginkgo_planks"
-    }
+    "P": "poopsky:ginkgo_planks"
   },
   "pattern": [
     "PP"
   ],
   "result": {
-    "count": 1,
     "id": "poopsky:ginkgo_pressure_plate"
   }
 }

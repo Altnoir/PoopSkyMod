@@ -6,33 +6,34 @@ import com.altnoir.poopsky.content.block.ChiliVines;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.p.*;
 import com.altnoir.poopsky.init.PoBlocks;
-import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
+import com.tterrag.registrate.providers.ProviderType;
+import com.tterrag.registrate.providers.generators.RegistrateBlockModelGenerator;
 import com.tterrag.registrate.util.entry.BlockEntry;
-import net.minecraft.client.renderer.block.model.BlockModel.GuiLight;
 import net.minecraft.core.Direction;
-import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.SlabType;
-import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
-import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
-import net.neoforged.neoforge.client.model.generators.ModelFile;
-import net.neoforged.neoforge.client.model.generators.loaders.SeparateTransformsModelBuilder;
 
 import java.util.*;
 
-public class BlockStateGen extends RegistrateBlockstateProvider {
+public class BlockStateGen extends LegacyBlockStateGenerator {
     public static final String PARTICLE = "particle";
 
-    public BlockStateGen(PackOutput packOutput) {
-        super(PoopSky.registrate(), packOutput);
+    private BlockStateGen(RegistrateBlockModelGenerator prov) {
+        super(prov);
     }
 
-    @Override
-    protected void registerStatesAndModels() {
+    public static void register() {
+        PoopSky.registrate().addDataGenerator(ProviderType.BLOCKSTATE, prov -> {
+            BlockStateGen gen = new BlockStateGen(prov);
+            gen.registerStatesAndModels();
+            gen.flushVariantBuilders();
+        });
+    }
+
+    private void registerStatesAndModels() {
         poopBlock();
         poopWoodSet();
         poopDecoSet();
@@ -67,6 +68,16 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         orientable(PoBlocks.PLACER.get());
         maggotsChunkLoader();
         cubeBottomTop(PoBlocks.MAGGOTS_BLOCK.get());
+        existingBlockstate(PoBlocks.STOOL.get());
+        existingBlockstate(PoBlocks.COMPOOPER.get());
+        existingBlockstate(PoBlocks.WATER_COMPOOPER.get());
+        existingBlockstate(PoBlocks.LAVA_COMPOOPER.get());
+        existingBlockstate(PoBlocks.POWDER_SNOW_COMPOOPER.get());
+        existingBlockstate(PoBlocks.URINE_COMPOOPER.get());
+        existingBlockstate(PoBlocks.SIEVE.get());
+        existingBlockstate(PoBlocks.POOP_EMPTY_LOG.get());
+        existingBlockstate(PoBlocks.STRIPPED_POOP_EMPTY_LOG.get());
+        existingBlockstate(PoBlocks.POOP_SAPLING.get());
         blockWithItem(PoBlocks.ROUNDWORM_BLOCK.get());
         chiliVines(PoBlocks.CHILI_VINES.get());
         chiliVines(PoBlocks.CHILI_VINES_PLANT.get());
@@ -301,7 +312,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
                 .texture("up", modLoc("block/poop_block_liquids"))
                 .texture(PARTICLE, modLoc("block/poop_block"))
                 .element().from(0, 0, 0).to(16, 16, 16)
-                .allFaces((face, faceBuilder) -> faceBuilder.texture("#side").uvs(0, 0, 16, 16))
+                .allFaces((face, faceBuilder) -> faceBuilder.texture("#side"))
                 .face(Direction.UP).texture("#up").end();
 
         getVariantBuilder(PoBlocks.POOP_BLOCK.get())
@@ -807,20 +818,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
                     .build();
         });
 
-        String itemPath = getItemPath(block);
-        var baseModel = itemModels().nested()
-                .parent(new ModelFile.UncheckedModelFile("item/generated"))
-                .texture("layer0", modLoc("item/" + itemPath));
-        var blockModel = itemModels().nested()
-                .parent(new ModelFile.UncheckedModelFile(modLoc("block/" + path)));
-
-        itemModels().getBuilder(itemPath)
-                .customLoader(SeparateTransformsModelBuilder::begin)
-                .base(baseModel)
-                .perspective(ItemDisplayContext.HEAD, blockModel)
-                .perspective(ItemDisplayContext.GROUND, blockModel)
-                .end()
-                .guiLight(GuiLight.FRONT);
+        separateTransformsItem(block, modLoc("item/" + getItemPath(block)), modLoc("block/" + path));
     }
 
     private void blockWithItem(Block block) {

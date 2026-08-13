@@ -75,8 +75,8 @@ public class CompooperRecipeCategory implements IRecipeCategory<RecipeHolder<Com
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<CompooperRecipe> recipeHolder, IFocusGroup focuses) {
         CompooperRecipe recipe = recipeHolder.value();
-        builder.addSlot(RecipeIngredientRole.INPUT, 4, 18).add(recipe.input());
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 120, 18).add(recipe.output());
+        builder.addSlot(RecipeIngredientRole.INPUT, 4, 18).add(recipe.input().create());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 120, 18).add(recipe.output().create());
     }
 
     @Override

@@ -3,19 +3,14 @@
   "delegate": {
     "category": "building",
     "key": {
-      "#": {
-        "item": "minecraft:cherry_planks"
-      },
-      "P": {
-        "item": "poopsky:poop"
-      }
+      "#": "minecraft:cherry_planks",
+      "P": "poopsky:poop"
     },
     "pattern": [
       "P",
       "#"
     ],
     "result": {
-      "count": 1,
       "id": "poopsky:wooden_toilet"
     }
   },

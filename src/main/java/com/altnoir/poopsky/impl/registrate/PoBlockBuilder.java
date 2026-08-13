@@ -29,7 +29,7 @@ public class PoBlockBuilder<T extends Block, P> extends BlockBuilder<T, P> {
             NonNullFunction<BlockBehaviour.Properties, T> factory
     ) {
         PoBlockBuilder<T, P> builder = new PoBlockBuilder<>(owner, parent, name, callback, factory);
-        builder.defaultBlockstate().defaultLoot().defaultLang();
+        builder.defaultLoot().defaultLang();
         return builder;
     }
 

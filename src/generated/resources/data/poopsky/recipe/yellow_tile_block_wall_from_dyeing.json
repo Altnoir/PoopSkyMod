@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "D": {
-      "item": "minecraft:yellow_dye"
-    },
-    "T": {
-      "tag": "poopsky:tile_walls"
-    }
+    "D": "minecraft:yellow_dye",
+    "T": "#poopsky:tile_walls"
   },
   "pattern": [
     "TTT",

@@ -1,0 +1,14 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "poopsky:block/stool_block"
+      }
+    },
+    {
+      "apply": {
+        "model": "poopsky:block/stool_block1"
+      }
+    }
+  ]
+}

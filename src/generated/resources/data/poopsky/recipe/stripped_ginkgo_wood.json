@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "L": {
-      "item": "poopsky:stripped_ginkgo_log"
-    }
+    "L": "poopsky:stripped_ginkgo_log"
   },
   "pattern": [
     "LL",

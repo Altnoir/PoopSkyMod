@@ -13,7 +13,6 @@ import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.init.ToiletTypes;
-//import com.simibubi.create.AllItems;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.generators.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -21,6 +20,7 @@ import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -29,7 +29,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -39,8 +39,13 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.conditions.ICondition;
+import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
+import net.neoforged.neoforge.common.conditions.NotCondition;
 
 import java.util.List;
+
+//import com.simibubi.create.AllItems;
 
 public final class RecipeGen {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
@@ -48,6 +53,14 @@ public final class RecipeGen {
     private static HolderLookup.Provider registries;
 
     private RecipeGen() {
+    }
+
+    private static ModLoadedCondition modLoaded(String modId) {
+        return new ModLoadedCondition(modId);
+    }
+
+    private static NotCondition not(ICondition condition) {
+        return new NotCondition(condition);
     }
 
     public static void register() {
@@ -113,7 +126,7 @@ public final class RecipeGen {
         smelting(recipeOutput, PoItems.ROUNDWORM, RecipeCategory.MISC, Items.STRING, 0.35F, 200, "roundworm");
         campfireCooking(recipeOutput, PoItems.ROUNDWORM, RecipeCategory.MISC, Items.STRING, 0.35F, 200, "roundworm");
         smelting(recipeOutput, PoItems.MAGGOTS_SEEDS, RecipeCategory.BUILDING_BLOCKS, PoItems.BAKED_MAGGOTS, 0.35F, 200, "maggots_seeds");
-        cooking(recipeOutput, RecipeSerializer.SMOKING_RECIPE, SmokingRecipe::new, PoItems.MAGGOTS_SEEDS,
+        cooking(recipeOutput, SmokingRecipe::new, PoItems.MAGGOTS_SEEDS,
                 RecipeCategory.BUILDING_BLOCKS, PoItems.BAKED_MAGGOTS, 0.35F, 100, "maggots_seeds", "_from_smoking");
     }
 
@@ -977,7 +990,7 @@ public final class RecipeGen {
 
 
     private static void buildCompooperRecipes(RecipeOutput recipeOutput) {
-        CompooperRecipeBuilder.compooper(CompooperType.WATER.id(), FlyItem.withType(FlyTypes.NORMAL.get()), FlyItem.withType(FlyTypes.BLUE.get()))
+        CompooperRecipeBuilder.compooper(CompooperType.WATER.id(), FlyItem.templateWithType(FlyTypes.NORMAL.get()), FlyItem.templateWithType(FlyTypes.BLUE.get()))
                 .unlockedBy(getItemName(PoBlocks.COMPOOPER.get()), has(PoBlocks.COMPOOPER.get()))
                 .save(recipeOutput, "fly_normal_to_blue");
         CompooperRecipeBuilder.compooper(CompooperType.WATER.id(), PoItems.SALTPETER_SHARD.get(), Items.SNOWBALL)
@@ -1018,9 +1031,10 @@ public final class RecipeGen {
     private static void spallEnchantedRecipe(RecipeOutput recipeOutput, Holder<Enchantment> enchantment, ItemLike item, RecipeCategory category, String... patterns) {
         ItemEnchantments.Mutable enchants = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
         enchants.set(enchantment, 1);
-        ItemStack stack = new ItemStack(item);
-        stack.set(DataComponents.ENCHANTMENTS, enchants.toImmutable());
-        ShapedRecipeBuilder builder = provider.shaped(category, stack);
+        DataComponentPatch components = DataComponentPatch.builder()
+                .set(DataComponents.ENCHANTMENTS, enchants.toImmutable())
+                .build();
+        ShapedRecipeBuilder builder = provider.shaped(category, new ItemStackTemplate(item.asItem(), components));
         for (String pattern : patterns) {
             builder.pattern(pattern);
         }
@@ -1267,24 +1281,24 @@ public final class RecipeGen {
 
     private static void smelting(RecipeOutput recipeOutput, ItemLike ingredient, RecipeCategory category,
                                  ItemLike result, float experience, int cookingTime, String group) {
-        cooking(recipeOutput, RecipeSerializer.SMELTING_RECIPE, SmeltingRecipe::new, ingredient,
+        cooking(recipeOutput, SmeltingRecipe::new, ingredient,
                 category, result, experience, cookingTime, group, "_from_smelting");
     }
 
     private static void blasting(RecipeOutput recipeOutput, ItemLike ingredient, RecipeCategory category,
                                  ItemLike result, float experience, int cookingTime, String group) {
-        cooking(recipeOutput, RecipeSerializer.BLASTING_RECIPE, BlastingRecipe::new, ingredient,
+        cooking(recipeOutput, BlastingRecipe::new, ingredient,
                 category, result, experience, cookingTime, group, "_from_blasting");
     }
 
     private static void campfireCooking(RecipeOutput recipeOutput, ItemLike ingredient, RecipeCategory category,
                                         ItemLike result, float experience, int cookingTime, String group) {
-        cooking(recipeOutput, RecipeSerializer.CAMPFIRE_COOKING_RECIPE, CampfireCookingRecipe::new, ingredient,
+        cooking(recipeOutput, CampfireCookingRecipe::new, ingredient,
                 category, result, experience, cookingTime, group, "_from_campfire_cooking");
     }
 
     private static <T extends AbstractCookingRecipe> void cooking(
-            RecipeOutput recipeOutput, RecipeSerializer<T> serializer, AbstractCookingRecipe.Factory<T> recipeFactory,
+            RecipeOutput recipeOutput, AbstractCookingRecipe.Factory<T> recipeFactory,
             ItemLike ingredient, RecipeCategory category, ItemLike result, float experience, int cookingTime,
             String group, String suffix) {
         SimpleCookingRecipeBuilder.generic(

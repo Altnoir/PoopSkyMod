@@ -2,36 +2,17 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "minecraft:rotten_flesh"
-    },
-    {
-      "item": "minecraft:rotten_flesh"
-    },
-    {
-      "item": "minecraft:rotten_flesh"
-    },
-    {
-      "item": "minecraft:rotten_flesh"
-    },
-    {
-      "item": "poopsky:poop_ball"
-    },
-    {
-      "item": "poopsky:poop"
-    },
-    {
-      "item": "poopsky:poop"
-    },
-    {
-      "item": "poopsky:poop"
-    },
-    {
-      "item": "poopsky:poop"
-    }
+    "minecraft:rotten_flesh",
+    "minecraft:rotten_flesh",
+    "minecraft:rotten_flesh",
+    "minecraft:rotten_flesh",
+    "poopsky:poop_ball",
+    "poopsky:poop",
+    "poopsky:poop",
+    "poopsky:poop",
+    "poopsky:poop"
   ],
   "result": {
-    "count": 1,
     "id": "poopsky:seedbed_curse"
   }
 }

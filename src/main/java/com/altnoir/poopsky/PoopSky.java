@@ -83,6 +83,7 @@ public class PoopSky {
 
         PoParticles.register();
         ParticleGen.register();
+        BlockStateGen.register();
         ItemModelGen.register();
         AdvancementGen.register();
         RecipeGen.register();

@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "P": {
-      "item": "poopsky:dried_poop_block"
-    }
+    "P": "poopsky:dried_poop_block"
   },
   "pattern": [
     "P  ",

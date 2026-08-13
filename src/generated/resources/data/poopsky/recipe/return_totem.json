@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "E": {
-      "item": "minecraft:echo_shard"
-    },
-    "G": {
-      "item": "minecraft:gold_ingot"
-    },
-    "S": {
-      "item": "poopsky:shit"
-    }
+    "E": "minecraft:echo_shard",
+    "G": "minecraft:gold_ingot",
+    "S": "poopsky:shit"
   },
   "pattern": [
     " S ",
@@ -18,7 +12,6 @@
     " G "
   ],
   "result": {
-    "count": 1,
     "id": "poopsky:return_totem"
   }
 }

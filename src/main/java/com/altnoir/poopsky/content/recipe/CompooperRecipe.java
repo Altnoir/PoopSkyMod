@@ -8,22 +8,23 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
-public record CompooperRecipe(String fluidType, ItemStack input, ItemStack output) implements Recipe<SingleRecipeInput> {
+public record CompooperRecipe(String fluidType, ItemStackTemplate input, ItemStackTemplate output) implements Recipe<SingleRecipeInput> {
     public static final MapCodec<CompooperRecipe> MAP_CODEC = RecordCodecBuilder.mapCodec(instance ->
             instance.group(
                     Codec.STRING.fieldOf("fluid_type").forGetter(CompooperRecipe::fluidType),
-                    ItemStack.CODEC.fieldOf("input").forGetter(CompooperRecipe::input),
-                    ItemStack.CODEC.fieldOf("output").forGetter(CompooperRecipe::output)
+                    ItemStackTemplate.CODEC.fieldOf("input").forGetter(CompooperRecipe::input),
+                    ItemStackTemplate.CODEC.fieldOf("output").forGetter(CompooperRecipe::output)
             ).apply(instance, CompooperRecipe::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, CompooperRecipe> STREAM_CODEC =
             StreamCodec.composite(
                     ByteBufCodecs.STRING_UTF8, CompooperRecipe::fluidType,
-                    ItemStack.STREAM_CODEC, CompooperRecipe::input,
-                    ItemStack.STREAM_CODEC, CompooperRecipe::output,
+                    ItemStackTemplate.STREAM_CODEC, CompooperRecipe::input,
+                    ItemStackTemplate.STREAM_CODEC, CompooperRecipe::output,
                     CompooperRecipe::new);
 
     public static final RecipeSerializer<CompooperRecipe> SERIALIZER =
@@ -36,7 +37,7 @@ public record CompooperRecipe(String fluidType, ItemStack input, ItemStack outpu
 
     @Override
     public ItemStack assemble(SingleRecipeInput recipeInput) {
-        return output.copy();
+        return output.create();
     }
 
     @Override
@@ -77,10 +78,11 @@ public record CompooperRecipe(String fluidType, ItemStack input, ItemStack outpu
      * 检查输入物品是否匹配，支持组件匹配
      */
     public boolean matchesInput(ItemStack stack) {
-        if (!ItemStack.isSameItemSameComponents(input, stack)) {
+        ItemStack expected = input.create();
+        if (!ItemStack.isSameItemSameComponents(expected, stack)) {
             return false;
         }
-        return stack.getCount() >= input.getCount();
+        return stack.getCount() >= input.count();
     }
 
 }

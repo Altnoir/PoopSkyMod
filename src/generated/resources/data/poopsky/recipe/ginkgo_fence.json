@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "P": {
-      "item": "poopsky:ginkgo_planks"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    }
+    "P": "poopsky:ginkgo_planks",
+    "S": "minecraft:stick"
   },
   "pattern": [
     "PSP",

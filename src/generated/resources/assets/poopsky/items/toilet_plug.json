@@ -1,0 +1,26 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "cases": [
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:item/toilet_plug_gui"
+        },
+        "when": [
+          "gui",
+          "ground",
+          "fixed"
+        ]
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:special",
+      "base": "poopsky:item/toilet_plug_special",
+      "model": {
+        "type": "poopsky:toilet_plug"
+      }
+    },
+    "property": "minecraft:display_context"
+  }
+}

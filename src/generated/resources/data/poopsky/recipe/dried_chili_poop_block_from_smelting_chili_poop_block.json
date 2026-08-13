@@ -4,11 +4,8 @@
   "cookingtime": 200,
   "experience": 0.1,
   "group": "dried_chili_poop_block",
-  "ingredient": {
-    "item": "poopsky:chili_poop_block"
-  },
+  "ingredient": "poopsky:chili_poop_block",
   "result": {
-    "count": 1,
     "id": "poopsky:dried_chili_poop_block"
   }
 }

@@ -1,10 +1,7 @@
 {
   "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "poopsky:golden_poop_block"
-  },
+  "ingredient": "poopsky:golden_poop_block",
   "result": {
-    "count": 1,
     "id": "poopsky:golden_poop_wall"
   }
 }

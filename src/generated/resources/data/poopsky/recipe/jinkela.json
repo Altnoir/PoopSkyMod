@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "poopsky:poop"
-    },
-    {
-      "item": "poopsky:urea"
-    },
-    {
-      "item": "poopsky:saltpeter_shard"
-    }
+    "poopsky:poop",
+    "poopsky:urea",
+    "poopsky:saltpeter_shard"
   ],
   "result": {
     "count": 4,

@@ -9,6 +9,7 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
@@ -77,22 +78,22 @@ public record SieveRecipe(Ingredient input, List<ChanceItemStack> outputs, int p
         List<ItemStack> rolledOutputs = new ArrayList<>();
         for (ChanceItemStack entry : outputs) {
             if (entry.roll(random)) {
-                rolledOutputs.add(entry.stack().copy());
+                rolledOutputs.add(entry.stack().create());
             }
         }
         return rolledOutputs;
     }
 
-    public record ChanceItemStack(ItemStack stack, float chance) {
+    public record ChanceItemStack(ItemStackTemplate stack, float chance) {
         public static final Codec<ChanceItemStack> CODEC = RecordCodecBuilder.create(instance ->
                 instance.group(
-                        ItemStack.CODEC.fieldOf("item").forGetter(ChanceItemStack::stack),
+                        ItemStackTemplate.CODEC.fieldOf("item").forGetter(ChanceItemStack::stack),
                         Codec.floatRange(0.0F, 1.0F).fieldOf("chance").forGetter(ChanceItemStack::chance)
                 ).apply(instance, ChanceItemStack::new));
 
         public static final StreamCodec<RegistryFriendlyByteBuf, ChanceItemStack> STREAM_CODEC =
                 StreamCodec.composite(
-                        ItemStack.STREAM_CODEC, ChanceItemStack::stack,
+                        ItemStackTemplate.STREAM_CODEC, ChanceItemStack::stack,
                         ByteBufCodecs.FLOAT, ChanceItemStack::chance,
                         ChanceItemStack::new);
 

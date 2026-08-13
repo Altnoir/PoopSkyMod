@@ -1,8 +1,6 @@
 {
   "type": "poopsky:anal_pressing",
-  "input": {
-    "item": "minecraft:coal_block"
-  },
+  "input": "minecraft:coal_block",
   "output": "minecraft:deepslate_coal_ore",
   "replace_target": "minecraft:deepslate"
 }

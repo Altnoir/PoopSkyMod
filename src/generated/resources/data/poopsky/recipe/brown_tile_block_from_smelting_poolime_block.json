@@ -4,11 +4,8 @@
   "cookingtime": 200,
   "experience": 0.1,
   "group": "tile_block",
-  "ingredient": {
-    "item": "poopsky:poolime_block"
-  },
+  "ingredient": "poopsky:poolime_block",
   "result": {
-    "count": 1,
     "id": "poopsky:brown_tile_block"
   }
 }

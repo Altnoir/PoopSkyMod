@@ -27,7 +27,8 @@ public class PoopTntUtil {
 
         BlockPos center = entity.blockPosition();
         RandomSource random = level.getRandom();
-        Explosion explosion = level.explode(entity, entity.getX(), entity.getY(0.0625), entity.getZ(), radius, Level.ExplosionInteraction.NONE);
+        level.explode(entity, entity.getX(), entity.getY(0.0625), entity.getZ(), radius, Level.ExplosionInteraction.NONE);
+        Explosion explosion = null;
 
         double radiusSq = (double) radius * radius;
         double innerRadiusSq = radiusSq * 0.64;
@@ -116,7 +117,7 @@ public class PoopTntUtil {
         ItemStack itemStack = new ItemStack(block.asItem());
         SingleRecipeInput input = new SingleRecipeInput(itemStack);
 
-        for (RecipeHolder<POPExplosionRecipe> holder : level.getRecipeManager().getAllRecipesFor(PoRecipes.POP_EXPLOSION.type().get())) {
+        for (RecipeHolder<POPExplosionRecipe> holder : ((ServerLevel) level).getServer().getRecipeManager().recipeMap().byType(PoRecipes.POP_EXPLOSION.type().get())) {
             if (holder.value().matches(input, explosionRadius)) {
                 return holder.value().output();
             }

@@ -5,9 +5,11 @@ import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoComponents;
 import com.altnoir.poopsky.init.PoItems;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
 
@@ -28,6 +30,12 @@ public class FlyItem extends Item {
         var stack = new ItemStack(PoItems.FLY.get());
         stack.set(PoComponents.FLY_TYPE.get(), typeId);
         return stack;
+    }
+
+    public static ItemStackTemplate templateWithType(FlyType.Type type) {
+        return new ItemStackTemplate(PoItems.FLY.get(), DataComponentPatch.builder()
+                .set(PoComponents.FLY_TYPE.get(), type.id())
+                .build());
     }
 
     public static FlyType.Type getFlyType(ItemStack stack) {

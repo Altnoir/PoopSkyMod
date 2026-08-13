@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "poopsky:sapling_poop_ball"
-    }
+    "#": "poopsky:sapling_poop_ball"
   },
   "pattern": [
     "###",
@@ -12,7 +10,6 @@
     "###"
   ],
   "result": {
-    "count": 1,
     "id": "poopsky:raw_sapling_poop_block"
   }
 }

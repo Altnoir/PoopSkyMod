@@ -17,7 +17,6 @@
       "translate": "advancements.poopsky.flush_toilet.description"
     },
     "icon": {
-      "count": 1,
       "id": "poopsky:flush_toilet"
     },
     "title": {

@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "poopsky:poop_ball"
-    },
-    {
-      "item": "minecraft:egg"
-    },
-    {
-      "item": "minecraft:sugar"
-    }
+    "poopsky:poop_ball",
+    "minecraft:egg",
+    "minecraft:sugar"
   ],
   "result": {
     "count": 2,

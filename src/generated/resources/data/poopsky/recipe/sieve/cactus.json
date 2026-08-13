@@ -1,20 +1,16 @@
 {
   "type": "poopsky:sieve",
-  "input": {
-    "item": "minecraft:cactus"
-  },
+  "input": "minecraft:cactus",
   "outputs": [
     {
       "chance": 1.0,
       "item": {
-        "count": 1,
         "id": "poopsky:king_of_dragon_fruit"
       }
     },
     {
       "chance": 0.5,
       "item": {
-        "count": 1,
         "id": "poopsky:king_of_dragon_fruit"
       }
     }

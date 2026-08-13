@@ -70,10 +70,7 @@ public class PoConfigureFeatures {
                         BlockStateProvider.simple(PoBlocks.POOP_LEAVES.get()),
                         new RandomSpreadFoliagePlacer(ConstantInt.of(3), ConstantInt.of(0), ConstantInt.of(2), 114),
                         new TwoLayersFeatureSize(2, 0, 2)
-                )
-                        .dirt(BlockStateProvider.simple(Blocks.MUD))
-                        .forceDirt()
-                        .build()
+                ).build()
         );
 
         register(context, MEGA_POOP_TREE, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(

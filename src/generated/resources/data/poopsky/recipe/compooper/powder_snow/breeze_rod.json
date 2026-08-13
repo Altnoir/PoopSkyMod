@@ -2,11 +2,9 @@
   "type": "poopsky:compooper",
   "fluid_type": "powder_snow",
   "input": {
-    "count": 1,
     "id": "minecraft:stick"
   },
   "output": {
-    "count": 1,
     "id": "minecraft:breeze_rod"
   }
 }

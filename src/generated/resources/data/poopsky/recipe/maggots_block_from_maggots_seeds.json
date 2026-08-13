@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "poopsky:maggots_seeds"
-    }
+    "#": "poopsky:maggots_seeds"
   },
   "pattern": [
     "###",
@@ -12,7 +10,6 @@
     "###"
   ],
   "result": {
-    "count": 1,
     "id": "poopsky:maggots_block"
   }
 }

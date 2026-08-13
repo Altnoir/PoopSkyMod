@@ -9,6 +9,8 @@ import com.tterrag.registrate.providers.loot.RegistrateEntityLootTables;
 import com.tterrag.registrate.providers.loot.RegistrateLootTableProvider.LootType;
 import net.minecraft.advancements.criterion.*;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.predicates.DataComponentPredicates;
+import net.minecraft.core.component.predicates.EnchantmentsPredicate;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.world.entity.EntityType;
@@ -54,12 +56,12 @@ public final class EntityLootTableGen {
                                                 LootItem.lootTableItem(PoItems.POOP_BALL.get())
                                                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))
                                                         .apply(EnchantedCountIncreaseFunction.lootingMultiplier(registries, UniformGenerator.between(0.0F, 1.0F)))
-                                                        .when(killedByFrog().invert())
+                                                        .when(killedByFrog(registries).invert())
                                         )
                                         .add(
                                                 LootItem.lootTableItem(PoItems.POOP_BALL.get())
                                                         .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))
-                                                        .when(killedByFrog())
+                                                        .when(killedByFrog(registries))
                                         )
                                         .when(
                                                 LootItemEntityPropertyCondition.hasProperties(
@@ -82,6 +84,14 @@ public final class EntityLootTableGen {
                                         )
                         )
         );
+        loot.add(PoEntityType.TOILET_PLUG.get(), LootTable.lootTable());
+        loot.add(PoEntityType.STOOL.get(), LootTable.lootTable());
+        loot.add(PoEntityType.FLUSH_TOILET.get(), LootTable.lootTable());
+        loot.add(PoEntityType.FLUSH_TOILET_CART.get(), LootTable.lootTable());
+        loot.add(PoEntityType.GOLDEN_FLUSH_TOILET_CART.get(), LootTable.lootTable());
+        loot.add(PoEntityType.POOP_TNT.get(), LootTable.lootTable());
+        loot.add(PoEntityType.GINKGO_BOAT.get(), LootTable.lootTable());
+        loot.add(PoEntityType.GINKGO_CHEST_BOAT.get(), LootTable.lootTable());
     }
 
     private static AnyOfCondition.Builder shouldSmeltLoot(HolderLookup.Provider registries) {
@@ -98,22 +108,23 @@ public final class EntityLootTableGen {
                                         EntityEquipmentPredicate.Builder.equipment()
                                                 .mainhand(
                                                         ItemPredicate.Builder.item()
-                                                                .withSubPredicate(
-                                                                        ItemSubPredicates.ENCHANTMENTS,
-                                                                        ItemEnchantmentsPredicate.enchantments(
+                                                                .withComponents(DataComponentMatchers.Builder.components().partial(
+                                                                        DataComponentPredicates.ENCHANTMENTS,
+                                                                        EnchantmentsPredicate.enchantments(
                                                                                 List.of(new EnchantmentPredicate(
                                                                                         enchantments.getOrThrow(EnchantmentTags.SMELTS_LOOT),
                                                                                         MinMaxBounds.Ints.ANY))
                                                                         )
-                                                                )
+                                                                ).build())
                                                 )
                                 )
                 )
         );
     }
 
-    private static LootItemCondition.Builder killedByFrog() {
+    private static LootItemCondition.Builder killedByFrog(HolderLookup.Provider registries) {
         return DamageSourceCondition.hasDamageSource(
-                DamageSourcePredicate.Builder.damageType().source(EntityPredicate.Builder.entity().of(EntityType.FROG)));
+                DamageSourcePredicate.Builder.damageType().source(EntityPredicate.Builder.entity()
+                        .of(registries.lookupOrThrow(Registries.ENTITY_TYPE), EntityType.FROG)));
     }
 }

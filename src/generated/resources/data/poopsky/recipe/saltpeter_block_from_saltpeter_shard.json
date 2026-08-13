@@ -2,16 +2,13 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "poopsky:saltpeter_shard"
-    }
+    "#": "poopsky:saltpeter_shard"
   },
   "pattern": [
     "##",
     "##"
   ],
   "result": {
-    "count": 1,
     "id": "poopsky:saltpeter_block"
   }
 }

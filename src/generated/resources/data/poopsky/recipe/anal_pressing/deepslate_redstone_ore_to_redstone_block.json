@@ -1,8 +1,6 @@
 {
   "type": "poopsky:anal_pressing",
-  "input": {
-    "item": "minecraft:redstone_block"
-  },
+  "input": "minecraft:redstone_block",
   "output": "minecraft:deepslate_redstone_ore",
   "replace_target": "minecraft:deepslate"
 }

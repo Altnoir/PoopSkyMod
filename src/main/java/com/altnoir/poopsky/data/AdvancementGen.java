@@ -12,11 +12,11 @@ import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.criterion.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentExactPredicate;
+import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
@@ -284,13 +284,14 @@ public final class AdvancementGen {
                 )
                 .addCriterion("flush_toilet", InventoryChangeTrigger.TriggerInstance.hasItems(PoBlocks.FLUSH_TOILET.get()))
                 .save(provider, modId("flush_toilet"));
-        var rainbowStack = new ItemStack(PoBlocks.HARD_TOILET.get());
-        rainbowStack.set(PoComponents.TOILET_TYPE.get(), ToiletTypes.RAINBOW);
+        var rainbowStack = new ItemStackTemplate(PoBlocks.HARD_TOILET.get().asItem(), DataComponentPatch.builder()
+                .set(PoComponents.TOILET_TYPE.get(), ToiletTypes.RAINBOW)
+                .build());
 
         Advancement.Builder.advancement()
                 .parent(compooper)
                 .display(
-                        ItemStackTemplate.fromNonEmptyStack(rainbowStack),
+                        rainbowStack,
                         Component.translatable("advancements.poopsky.rainbow_toilet.title"),
                         Component.translatable("advancements.poopsky.rainbow_toilet.description"),
                         null,

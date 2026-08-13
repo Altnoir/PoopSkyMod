@@ -4,7 +4,9 @@ import com.altnoir.poopsky.content.entity.p.FlyEntity;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoEntityType;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -51,7 +53,7 @@ public class PumkinBlockEvents {
     }
 
     private static SpawnResult createVillager(Level level, BlockPattern.BlockPatternMatch match) {
-        Villager villager = EntityType.VILLAGER.create(level);
+        Villager villager = level instanceof ServerLevel serverLevel ? EntityType.VILLAGER.create(serverLevel, EntitySpawnReason.TRIGGERED) : null;
         if (villager != null) {
             villager.setBaby(true);
         }
@@ -59,18 +61,18 @@ public class PumkinBlockEvents {
     }
 
     private static SpawnResult createBlaze(Level level, BlockPattern.BlockPatternMatch match) {
-        Blaze blaze = EntityType.BLAZE.create(level);
+        Blaze blaze = level instanceof ServerLevel serverLevel ? EntityType.BLAZE.create(serverLevel, EntitySpawnReason.TRIGGERED) : null;
         if (blaze != null) {
             blaze.getAttribute(Attributes.SCALE).setBaseValue(0.5);
             blaze.targetSelector.getAvailableGoals().removeIf(goal -> goal.getGoal() instanceof NearestAttackableTargetGoal);
             blaze.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(blaze, Mob.class, 10, true, false,
-                    livingEntity -> livingEntity instanceof Enemy && !(livingEntity instanceof Blaze)));
+                    (livingEntity, serverLevel) -> livingEntity instanceof Enemy && !(livingEntity instanceof Blaze)));
         }
         return new SpawnResult(GolemType.BLAZE, blaze, match, match.getBlock(0, 1, 0).getPos());
     }
 
     private static SpawnResult createFly(Level level, BlockPattern.BlockPatternMatch match) {
-        FlyEntity fly = PoEntityType.FLY.get().create(level);
+        FlyEntity fly = level instanceof ServerLevel serverLevel ? PoEntityType.FLY.get().create(serverLevel, EntitySpawnReason.TRIGGERED) : null;
         return new SpawnResult(GolemType.FLY, fly, match, match.getBlock(0, 1, 0).getPos());
     }
 

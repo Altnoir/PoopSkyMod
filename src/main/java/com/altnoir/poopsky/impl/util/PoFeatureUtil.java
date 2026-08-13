@@ -14,9 +14,8 @@ public final class PoFeatureUtil {
     public static void placePatch(ServerLevel level, BlockPos origin, RandomSource random,
                                   ResourceKey<ConfiguredFeature<?, ?>> feature, int tries,
                                   int xzSpread, int ySpread) {
-        level.registryAccess()
-                .registry(Registries.CONFIGURED_FEATURE)
-                .flatMap(registry -> registry.getHolder(feature))
+        level.registryAccess().lookupOrThrow(Registries.CONFIGURED_FEATURE)
+                .get(feature)
                 .ifPresent(reference -> {
                     for (int attempt = 0; attempt < tries; attempt++) {
                         int x = random.nextInt((xzSpread << 1) + 1) - xzSpread;
