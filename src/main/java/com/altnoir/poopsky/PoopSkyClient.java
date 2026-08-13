@@ -4,7 +4,7 @@ import com.altnoir.poopsky.client.IntroController;
 import com.altnoir.poopsky.client.PoAnimationController;
 import com.altnoir.poopsky.client.PoBedrockModelResources;
 import com.altnoir.poopsky.client.ToiletClientBlockExtensions;
-import com.altnoir.poopsky.client.arcade.ArcadeWorldScreenRenderer;
+import com.altnoir.poopsky.game.client.arcade.ArcadeWorldScreenRenderer;
 import com.altnoir.poopsky.client.creative.PoSectionedCreativeTabRenderer;
 import com.altnoir.poopsky.client.model.BakedModelEventHandler;
 import com.altnoir.poopsky.client.particle.LeavesParticle;

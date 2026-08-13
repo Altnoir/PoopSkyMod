@@ -1,11 +1,11 @@
 package com.altnoir.poopsky.content.block.entity;
 
-import com.altnoir.poopsky.client.games.controls.Button;
-import com.altnoir.poopsky.client.games.util.GameStage;
 import com.altnoir.poopsky.content.block.p.ArcadeBlock;
 import com.altnoir.poopsky.content.item.p.GameDiscItem;
 import com.altnoir.poopsky.data.ArcadeLootGen;
 import com.altnoir.poopsky.game.ServerGame;
+import com.altnoir.poopsky.game.client.controls.Button;
+import com.altnoir.poopsky.game.client.util.GameStage;
 import com.altnoir.poopsky.impl.network.ArcadeSnapshotPacket;
 import com.altnoir.poopsky.init.PoBlockEntityType;
 import net.minecraft.core.BlockPos;
@@ -36,16 +36,14 @@ import java.util.Map;
 import java.util.UUID;
 
 public class ArcadeBlockEntity extends BlockEntity {
-    private boolean suppressSync;
     private final ItemStackHandler inventory = new ItemStackHandler(1) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
-            if (!suppressSync) {
-                syncToClients();
-                if (level != null && !level.isClientSide) {
-                    refreshSession();
-                }
+            if (level != null && !level.isClientSide) {
+                refreshSession();
+                updateGameState();
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
             }
         }
     };
@@ -87,14 +85,24 @@ public class ArcadeBlockEntity extends BlockEntity {
 
     public ItemStack takeCartridge() {
         ItemStack cartridge = getCartridge();
-        suppressSync = true;
-        try {
-            inventory.setStackInSlot(0, ItemStack.EMPTY);
-        } finally {
-            suppressSync = false;
-            refreshSession();
-        }
+        inventory.setStackInSlot(0, ItemStack.EMPTY);
         return cartridge;
+    }
+
+    public void updateGameState() {
+        if (level == null || level.isClientSide) {
+            return;
+        }
+        boolean game = hasCartridge();
+        updateGameStateAt(getBlockPos(), game);
+        updateGameStateAt(getBlockPos().above(), game);
+    }
+
+    private void updateGameStateAt(BlockPos pos, boolean game) {
+        BlockState state = level.getBlockState(pos);
+        if (state.getBlock() instanceof ArcadeBlock && state.getValue(ArcadeBlock.GAME) != game) {
+            level.setBlock(pos, state.setValue(ArcadeBlock.GAME, game), 3);
+        }
     }
 
     public void handleInput(ServerPlayer player, Button button, boolean pressed) {
@@ -149,7 +157,7 @@ public class ArcadeBlockEntity extends BlockEntity {
             snapshotCooldown = 0;
             return;
         }
-        game = ServerGame.create(disc, getBlockPos());
+        game = ServerGame.create(disc);
         scoreSettled = false;
         game.setSoundEmitter((event, pitch, volume) -> {
             if (level != null) {
@@ -190,7 +198,9 @@ public class ArcadeBlockEntity extends BlockEntity {
 
         rewardCount += currentScore / 5;
         setChanged();
-        syncToClients();
+        if (level != null) {
+            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+        }
     }
 
     public boolean claimReward(ServerPlayer player) {
@@ -201,7 +211,9 @@ public class ArcadeBlockEntity extends BlockEntity {
         rewardCount--;
         spawnReward(player);
         setChanged();
-        syncToClients();
+        if (level != null) {
+            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+        }
         return true;
     }
 
@@ -228,10 +240,6 @@ public class ArcadeBlockEntity extends BlockEntity {
         level.playSound(null, getBlockPos(), SoundEvents.DISPENSER_DISPENSE, SoundSource.BLOCKS, 1.0F, 1.0F);
     }
 
-    public void syncToClients() {
-        sendStatePacket();
-    }
-
     private void sendStatePacket() {
         if (!(level instanceof ServerLevel serverLevel)) {
             return;
@@ -240,12 +248,26 @@ public class ArcadeBlockEntity extends BlockEntity {
         PacketDistributor.sendToPlayersTrackingChunk(
                 serverLevel,
                 new ChunkPos(getBlockPos()),
-                new ArcadeSnapshotPacket(getBlockPos(), saveWithoutMetadata(serverLevel.registryAccess()), gameSnapshot)
+                new ArcadeSnapshotPacket(
+                        getBlockPos(),
+                        saveWithoutMetadata(serverLevel.registryAccess()),
+                        gameSnapshot
+                )
         );
     }
 
     public void applyClientData(CompoundTag tag, HolderLookup.Provider registries) {
         loadAdditional(tag, registries);
+    }
+
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        if (level != null && !level.isClientSide) {
+            refreshSession();
+            updateGameState();
+            broadcastSnapshot();
+        }
     }
 
     @Override
@@ -294,6 +316,8 @@ public class ArcadeBlockEntity extends BlockEntity {
         }
         if (level != null && !level.isClientSide) {
             refreshSession();
+            updateGameState();
+            broadcastSnapshot();
         }
     }
 }

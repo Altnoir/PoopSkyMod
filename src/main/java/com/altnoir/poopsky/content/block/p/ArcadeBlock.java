@@ -29,10 +29,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.piston.PistonMovingBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
@@ -51,6 +48,7 @@ public class ArcadeBlock extends Block implements EntityBlock {
     public static final MapCodec<ArcadeBlock> CODEC = simpleCodec(ArcadeBlock::new);
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
+    public static final BooleanProperty GAME = BooleanProperty.create("game");
 
     private static final VoxelShape TOP_SCREEN_CUTOUT = Block.box(1.0, 0.0, 7.0, 15.0, 10.0, 9.0);
     private static final VoxelShape BOTTOM_NORTH_SHAPE = Shapes.or(
@@ -72,7 +70,8 @@ public class ArcadeBlock extends Block implements EntityBlock {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(FACING, Direction.NORTH)
-                .setValue(HALF, DoubleBlockHalf.LOWER));
+                .setValue(HALF, DoubleBlockHalf.LOWER)
+                .setValue(GAME, false));
     }
 
     @Override
@@ -98,7 +97,7 @@ public class ArcadeBlock extends Block implements EntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, HALF);
+        builder.add(FACING, HALF, GAME);
     }
 
     @Nullable
@@ -109,7 +108,8 @@ public class ArcadeBlock extends Block implements EntityBlock {
         if (pos.getY() < level.getMaxBuildHeight() - 1 && level.getBlockState(pos.above()).canBeReplaced(context)) {
             return this.defaultBlockState()
                     .setValue(FACING, context.getHorizontalDirection().getOpposite())
-                    .setValue(HALF, DoubleBlockHalf.LOWER);
+                    .setValue(HALF, DoubleBlockHalf.LOWER)
+                    .setValue(GAME, false);
         }
         return null;
     }
@@ -184,6 +184,11 @@ public class ArcadeBlock extends Block implements EntityBlock {
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return getArcadeShape(state);
+    }
+
+    @Override
+    public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
+        return state.getValue(GAME) ? 7 : 0;
     }
 
     @Override

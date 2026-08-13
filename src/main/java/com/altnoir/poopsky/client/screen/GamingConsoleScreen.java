@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.client.screen;
 
-import com.altnoir.poopsky.client.games.controls.Button;
+import com.altnoir.poopsky.game.client.controls.Button;
 import com.altnoir.poopsky.content.item.p.GameDiscItem;
 import com.altnoir.poopsky.impl.network.ArcadeInputPacket;
 import com.altnoir.poopsky.impl.network.ArcadeResetPacket;

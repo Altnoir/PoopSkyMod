@@ -1,10 +1,10 @@
 package com.altnoir.poopsky.client;
 
-import com.altnoir.poopsky.client.games.gamediscs.BlocktrisGame;
-import com.altnoir.poopsky.client.games.gamediscs.FlappyBirdGame;
-import com.altnoir.poopsky.client.games.gamediscs.PongGame;
-import com.altnoir.poopsky.client.games.gamediscs.SlimeGame;
-import com.altnoir.poopsky.client.games.util.Game;
+import com.altnoir.poopsky.game.client.gamediscs.BlocktrisGame;
+import com.altnoir.poopsky.game.client.gamediscs.FlappyBirdGame;
+import com.altnoir.poopsky.game.client.gamediscs.PongGame;
+import com.altnoir.poopsky.game.client.gamediscs.RoundwormGame;
+import com.altnoir.poopsky.game.client.util.Game;
 import com.altnoir.poopsky.client.screen.GamingConsoleScreen;
 import com.altnoir.poopsky.content.block.entity.ArcadeBlockEntity;
 import com.altnoir.poopsky.content.item.p.GameDiscItem;
@@ -48,7 +48,7 @@ public final class ClientUtils {
 
     private static void registerGames() {
         GAMES.put(PoItems.GAME_DISC_FLAPPY_BIRD.get(), FlappyBirdGame::new);
-        GAMES.put(PoItems.GAME_DISC_SLIME.get(), SlimeGame::new);
+        GAMES.put(PoItems.GAME_DISC_SLIME.get(), RoundwormGame::new);
         GAMES.put(PoItems.GAME_DISC_BLOCKTRIS.get(), BlocktrisGame::new);
         GAMES.put(PoItems.GAME_DISC_PONG.get(), PongGame::new);
     }
