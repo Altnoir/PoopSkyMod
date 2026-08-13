@@ -1,0 +1,9 @@
+{
+  "amount": 2.0,
+  "random_sequence": "poopsky:trade_set/gastronome/level_5",
+  "trades": [
+    "poopsky:gastronome/5/emerald_lawrence_music_disc",
+    "poopsky:gastronome/5/emerald_light_dance_music_disc",
+    "poopsky:gastronome/5/emerald_moon_bowl_music_disc"
+  ]
+}

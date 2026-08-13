@@ -12,7 +12,7 @@
     }
   },
   "display": {
-    "background": "poopsky:textures/block/poop_block.png",
+    "background": "poopsky:block/poop_block",
     "description": {
       "translate": "advancements.poopsky.root.description"
     },

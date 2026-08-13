@@ -1,6 +1,15 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "poopsky:block/water_compooper"
+    "model": "poopsky:block/water_compooper_item",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -1
+      },
+      {
+        "type": "poopsky:water_compooper"
+      }
+    ]
   }
 }

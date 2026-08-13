@@ -32,17 +32,14 @@ public class DataGenerators {
         PackOutput packOutput = generators.getPackOutput();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
-        if (event instanceof GatherDataEvent.Server) {
-            event.addProvider(new FlyTypeData(packOutput));
-            event.addProvider(new ToiletTypeData(packOutput));
+        event.addProvider(new FlyTypeData(packOutput));
+        event.addProvider(new ToiletTypeData(packOutput));
 
-            DatapackGen datapackProvider = new DatapackGen(packOutput, lookupProvider);
-            event.addProvider(new PaintingVariantTagsGen(packOutput, datapackProvider.getRegistryProvider()));
-            event.addProvider(datapackProvider);
-            event.addProvider(new DamageTypeTagsGen(packOutput, datapackProvider.getRegistryProvider()));
-        } else if (event instanceof GatherDataEvent.Client) {
-            event.addProvider(new SoundGen(packOutput));
-        }
+        DatapackGen datapackProvider = new DatapackGen(packOutput, lookupProvider);
+        event.addProvider(new PaintingVariantTagsGen(packOutput, datapackProvider.getRegistryProvider()));
+        event.addProvider(datapackProvider);
+        event.addProvider(new DamageTypeTagsGen(packOutput, datapackProvider.getRegistryProvider()));
+        event.addProvider(new SoundGen(packOutput));
 
         // Compat
 //        generators.addProvider(event.includeServer(), new PDigestingRecipeGen(packOutput, lookupProvider));

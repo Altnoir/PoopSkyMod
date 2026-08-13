@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "poopsky:block/ginkgo_door"
+    "model": "poopsky:item/ginkgo_door"
   }
 }

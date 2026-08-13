@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "poopsky:block/stool"
+    "model": "poopsky:item/stool"
   }
 }

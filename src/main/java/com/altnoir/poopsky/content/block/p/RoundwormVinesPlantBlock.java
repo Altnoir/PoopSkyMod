@@ -84,10 +84,12 @@ public class RoundwormVinesPlantBlock extends GrowingPlantBodyBlock implements B
 
     @Override
     protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
-        if (entity instanceof FlyEntity fly && fly.isAlive()) {
-            fly.hurt(level.damageSources().source(PoDamageTypes.ROUNDWORM), 2.0F);
-        } else if (entity instanceof LivingEntity livingEntity) {
-            livingEntity.hurt(level.damageSources().source(PoDamageTypes.ROUNDWORM), 0.5F);
+        if (level instanceof ServerLevel serverLevel) {
+            if (entity instanceof FlyEntity fly && fly.isAlive()) {
+                fly.hurtServer(serverLevel, level.damageSources().source(PoDamageTypes.ROUNDWORM), 2.0F);
+            } else if (entity instanceof LivingEntity livingEntity) {
+                livingEntity.hurtServer(serverLevel, level.damageSources().source(PoDamageTypes.ROUNDWORM), 0.5F);
+            }
         }
         super.entityInside(state, level, pos, entity, effectApplier, isPrecise);
     }

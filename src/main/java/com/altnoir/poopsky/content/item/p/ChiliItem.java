@@ -22,8 +22,8 @@ public class ChiliItem extends BlockItem implements IFeedable {
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity livingEntity) {
         super.finishUsingItem(stack, level, livingEntity);
-        if (!level.isClientSide()) {
-            livingEntity.hurt(livingEntity.damageSources().inFire(), 1.0F);
+        if (level instanceof ServerLevel serverLevel) {
+            livingEntity.hurtServer(serverLevel, livingEntity.damageSources().inFire(), 1.0F);
             livingEntity.igniteForSeconds(3);
         }
         return stack;

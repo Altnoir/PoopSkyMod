@@ -55,11 +55,6 @@ neoForge {
             programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
         }
 
-        serverData {
-            type = "serverData"
-            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
-        }
-
         configureEach {
             systemProperty 'forge.logging.markers', 'REGISTRIES'
             logLevel = org.slf4j.event.Level.DEBUG
@@ -140,8 +135,9 @@ tasks.named('runClientData').configure {
     dependsOn generateLang
 }
 
-tasks.named('runServerData').configure {
-    dependsOn generateLang
+tasks.register('runData') {
+    group = 'data generation'
+    dependsOn tasks.named('runClientData')
 }
 
 tasks.named('processResources').configure {

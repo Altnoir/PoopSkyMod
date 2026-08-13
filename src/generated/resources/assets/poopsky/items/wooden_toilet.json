@@ -1,6 +1,96 @@
 {
   "model": {
-    "type": "minecraft:model",
-    "model": "poopsky:block/wooden_toilet"
+    "type": "minecraft:select",
+    "cases": [
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/wooden_toilet_oak_planks"
+        },
+        "when": "oak_planks"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/wooden_toilet_spruce_planks"
+        },
+        "when": "spruce_planks"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/wooden_toilet_birch_planks"
+        },
+        "when": "birch_planks"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/wooden_toilet_jungle_planks"
+        },
+        "when": "jungle_planks"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/wooden_toilet_acacia_planks"
+        },
+        "when": "acacia_planks"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/wooden_toilet_cherry_planks"
+        },
+        "when": "cherry_planks"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/wooden_toilet_dark_oak_planks"
+        },
+        "when": "dark_oak_planks"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/wooden_toilet_mangrove_planks"
+        },
+        "when": "mangrove_planks"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/wooden_toilet_bamboo_planks"
+        },
+        "when": "bamboo_planks"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/wooden_toilet_crimson_planks"
+        },
+        "when": "crimson_planks"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/wooden_toilet_warped_planks"
+        },
+        "when": "warped_planks"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/wooden_toilet_ginkgo_planks"
+        },
+        "when": "ginkgo_planks"
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "poopsky:block/wooden_toilet"
+    },
+    "property": "poopsky:toilet_type"
   }
 }

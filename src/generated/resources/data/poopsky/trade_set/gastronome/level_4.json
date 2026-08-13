@@ -1,0 +1,8 @@
+{
+  "amount": 2.0,
+  "random_sequence": "poopsky:trade_set/gastronome/level_4",
+  "trades": [
+    "poopsky:gastronome/4/pooburger_meat_emerald",
+    "poopsky:gastronome/4/pooburger_emerald"
+  ]
+}

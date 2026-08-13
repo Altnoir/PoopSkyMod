@@ -1,0 +1,17 @@
+{
+  "gives": {
+    "id": "poopsky:omen_upgrade_smithing_template"
+  },
+  "max_uses": 1.0,
+  "merchant_predicate": {
+    "condition": "poopsky:config_value",
+    "key": "upgrade_template",
+    "value": false
+  },
+  "reputation_discount": 0.3,
+  "wants": {
+    "count": 24.0,
+    "id": "minecraft:emerald"
+  },
+  "xp": 40.0
+}

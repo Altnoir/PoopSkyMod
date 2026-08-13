@@ -2,10 +2,7 @@ package com.altnoir.poopsky.client.sound;
 
 import com.altnoir.poopsky.content.entity.p.FlyEntity;
 import net.minecraft.client.Minecraft;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class FlyBuzzSoundWrapper {
     private final FlyEntity fly;
     private FlyBuzzSoundInstance sound;

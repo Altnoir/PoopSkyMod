@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.content.item.p;
 
 import com.altnoir.poopsky.content.item.IFeedable;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -18,8 +19,8 @@ public class ChiliPoopItem extends Item implements IFeedable {
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity livingEntity) {
         super.finishUsingItem(stack, level, livingEntity);
-        if (!level.isClientSide()) {
-            livingEntity.hurt(livingEntity.damageSources().inFire(), 1.0F);
+        if (level instanceof ServerLevel serverLevel) {
+            livingEntity.hurtServer(serverLevel, livingEntity.damageSources().inFire(), 1.0F);
         }
         return stack;
     }

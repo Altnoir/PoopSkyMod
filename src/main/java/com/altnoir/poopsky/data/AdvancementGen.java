@@ -41,7 +41,7 @@ public final class AdvancementGen {
                         PoBlocks.WOODEN_TOILET.get(),
                         Component.translatable("advancements.poopsky.root.title"),
                         Component.translatable("advancements.poopsky.root.description"),
-                        PoopSky.loc("textures/block/poop_block.png"),
+                        PoopSky.loc("block/poop_block"),
                         AdvancementType.TASK,
                         true,
                         true,

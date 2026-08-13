@@ -1,0 +1,9 @@
+{
+  "category": "hard",
+  "hardness": 10.0,
+  "is_end": false,
+  "is_golden": false,
+  "is_redstone": false,
+  "name_key": "block.minecraft.magenta_terracotta",
+  "source_block": "minecraft:magenta_terracotta"
+}

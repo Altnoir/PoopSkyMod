@@ -1,0 +1,8 @@
+{
+  "amount": 2.0,
+  "random_sequence": "poopsky:trade_set/poopmaker/level_2",
+  "trades": [
+    "poopsky:poopmaker/2/poolime_block_emerald",
+    "poopsky:poopmaker/2/emerald_omen_upgrade_smithing_template"
+  ]
+}

@@ -31,8 +31,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
@@ -70,7 +68,6 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
     public void ToiletPlugEntityClient() {
         TPFlySound = new TPFlySoundWrapper(this);
     }
@@ -362,7 +359,6 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
         this.inputFast = inputFast;
     }
 
-    @OnlyIn(Dist.CLIENT)
     private void updateKeyStates() {
         var mc = Minecraft.getInstance();
 
@@ -432,7 +428,6 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
         return super.hurtServer(level, source, amount);
     }
 
-    @OnlyIn(Dist.CLIENT)
     private void spawnParticles() {
         var speed = this.getDeltaMovement().length();
         if (speed > 0.1) {

@@ -6,6 +6,7 @@
   "mixins": [
     "BaseCoralPlantTypeBlockMixin",
     "CarvedPumpkinBlockMixin",
+    "EntityMixin",
     "FishingHookMixin",
     "FungusBlockMixin",
     "LivingEntityMixin",

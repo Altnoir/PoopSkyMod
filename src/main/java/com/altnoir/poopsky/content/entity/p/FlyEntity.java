@@ -40,8 +40,6 @@ import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -74,7 +72,6 @@ public class FlyEntity extends Animal implements FlyingAnimal {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
     private void initClient() {
         buzzSound = new FlyBuzzSoundWrapper(this);
     }

@@ -1,0 +1,10 @@
+{
+  "amount": 2.0,
+  "random_sequence": "poopsky:trade_set/gastronome/level_1",
+  "trades": [
+    "poopsky:gastronome/1/poop_emerald",
+    "poopsky:gastronome/1/poop_block_emerald",
+    "poopsky:gastronome/1/maggots_block_emerald",
+    "poopsky:gastronome/1/urine_bottle_emerald"
+  ]
+}

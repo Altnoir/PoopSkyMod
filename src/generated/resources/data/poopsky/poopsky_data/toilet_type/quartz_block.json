@@ -1,0 +1,10 @@
+{
+  "category": "hard",
+  "hardness": 10.0,
+  "is_end": false,
+  "is_golden": false,
+  "is_redstone": false,
+  "name_key": "block.minecraft.quartz_block",
+  "source_block": "minecraft:quartz_block",
+  "texture": "quartz_block_side"
+}

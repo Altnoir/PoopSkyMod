@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "poopsky:block/powder_snow_compooper"
+    "model": "poopsky:block/powder_snow_compooper_item"
   }
 }

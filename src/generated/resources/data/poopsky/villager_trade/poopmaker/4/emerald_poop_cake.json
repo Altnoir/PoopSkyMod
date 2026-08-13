@@ -1,0 +1,11 @@
+{
+  "gives": {
+    "id": "poopsky:poop_cake"
+  },
+  "reputation_discount": 0.25,
+  "wants": {
+    "count": 18.0,
+    "id": "minecraft:emerald"
+  },
+  "xp": 25.0
+}

@@ -55,16 +55,16 @@ public class UrineBottleItem extends Item implements IFeedable {
         InteractionResult feedResult = tryFeedToPlayer(stack, player, entity);
         if (feedResult.consumesAction()) return feedResult;
         if (entity.isAlive() && entity instanceof Chicken chicken) {
-            if (!player.level().isClientSide()) {
+            if (player.level() instanceof ServerLevel serverLevel) {
                 var waterPotion = PotionContents.createItemStack(Items.POTION, Potions.WATER);
 
                 chicken.playSound(SoundEvents.CHICKEN_EGG);
                 chicken.addEffect(new MobEffectInstance(MobEffects.SPEED, 1200, 1));
-                chicken.hurt(player.damageSources().playerAttack(player), 1.0F);
+                chicken.hurtServer(serverLevel, player.damageSources().playerAttack(player), 1.0F);
                 if (!player.getAbilities().instabuild) {
                     stack.shrink(1);
                 }
-                entity.spawnAtLocation((ServerLevel) entity.level(), waterPotion);
+                entity.spawnAtLocation(serverLevel, waterPotion);
             }
             return player.level().isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
         }

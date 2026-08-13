@@ -1,0 +1,12 @@
+{
+  "gives": {
+    "id": "poopsky:music_disc_light_dance"
+  },
+  "max_uses": 2.0,
+  "reputation_discount": 1.0,
+  "wants": {
+    "count": 8.0,
+    "id": "minecraft:emerald"
+  },
+  "xp": 30.0
+}

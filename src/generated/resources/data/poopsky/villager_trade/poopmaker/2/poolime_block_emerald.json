@@ -1,0 +1,12 @@
+{
+  "gives": {
+    "count": 5,
+    "id": "minecraft:emerald"
+  },
+  "max_uses": 44.0,
+  "reputation_discount": 0.1,
+  "wants": {
+    "id": "poopsky:poolime_block"
+  },
+  "xp": 10.0
+}

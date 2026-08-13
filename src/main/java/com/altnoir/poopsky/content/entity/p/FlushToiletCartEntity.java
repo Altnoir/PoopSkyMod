@@ -24,8 +24,6 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
@@ -301,7 +299,6 @@ public class FlushToiletCartEntity extends VehicleEntity {
         this.inputFast = fast;
     }
 
-    @OnlyIn(Dist.CLIENT)
     private void updateKeyStates() {
         var mc = Minecraft.getInstance();
         boolean forward = mc.options.keyUp.isDown();

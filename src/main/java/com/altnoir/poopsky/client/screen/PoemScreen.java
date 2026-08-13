@@ -90,25 +90,28 @@ public class PoemScreen extends Screen {
     @Override
     public void extractRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
         guiGraphics.fill(0, 0, this.width, this.height, 0xFF000000);
+        float renderedScroll = Mth.lerp(partialTick, this.previousScroll, this.scroll);
+        float offset = -renderedScroll;
+        int contentLeft = this.width / 2 - CONTENT_WIDTH / 2;
         int titleLeft = this.width / 2 - TITLE_WIDTH / 2;
         int titleTop = (this.height - TITLE_HEIGHT) / 2;
+        int lineY = this.height + 24;
+        boolean scrolling = this.playbackTicks >= SCROLL_START_TICK;
+        guiGraphics.pose().pushMatrix();
+        guiGraphics.pose().translate(this.width / 2.0F, this.height / 2.0F);
+        guiGraphics.pose().rotate(scrolling ? Mth.PI : this.titleRotation(partialTick));
+        guiGraphics.pose().translate(-this.width / 2.0F, -this.height / 2.0F + offset);
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TITLE_LOCATION, titleLeft, titleTop,
                 0.0F, 0.0F, TITLE_WIDTH, TITLE_HEIGHT, TITLE_TEXTURE_WIDTH, TITLE_TEXTURE_HEIGHT);
-
-        if (this.playbackTicks < SCROLL_START_TICK) {
-            return;
-        }
-
-        float renderedScroll = Mth.lerp(partialTick, this.previousScroll, this.scroll);
-        int contentLeft = this.width / 2 - CONTENT_WIDTH / 2;
-        int lineY = this.height + 24;
-        for (FormattedCharSequence line : this.lines) {
-            int y = Mth.floor(lineY - renderedScroll);
-            if (y + this.font.lineHeight > 0 && y < this.height) {
-                guiGraphics.text(this.font, line, contentLeft, y, 0xFFFFFFFF);
+        if (scrolling) {
+            for (FormattedCharSequence line : this.lines) {
+                if (lineY + offset + 20.0F > 0.0F && lineY + offset < this.height) {
+                    guiGraphics.text(this.font, line, contentLeft, lineY, 0xFFFFFFFF);
+                }
+                lineY += 12;
             }
-            lineY += 12;
         }
+        guiGraphics.pose().popMatrix();
     }
 
     @Override
@@ -174,6 +177,11 @@ public class PoemScreen extends Screen {
         }
         int lastLineY = this.height + 24 + (this.lines.size() - 1) * 12;
         return lastLineY + 20.0F;
+    }
+
+    private float titleRotation(float partialTick) {
+        float progress = Mth.clamp((this.playbackTicks + partialTick - TITLE_HOLD_TICKS) / TITLE_ROTATION_TICKS, 0.0F, 1.0F);
+        return (float) (Mth.DEG_TO_RAD * Mth.smoothstep(progress) * 180.0F);
     }
 
     private void finish() {

@@ -4,6 +4,7 @@ import com.altnoir.poopsky.init.PoItems;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -39,9 +40,6 @@ public class SeaPoopBall extends ThrowableItemProjectile {
                 : ParticleTypes.ITEM_SNOWBALL;
     }
 
-    /**
-     * Handles an entity event received from a {@link net.minecraft.network.protocol.game.ClientboundEntityEventPacket}.
-     */
     @Override
     public void handleEntityEvent(byte id) {
         if (id == 3) {
@@ -58,7 +56,9 @@ public class SeaPoopBall extends ThrowableItemProjectile {
         super.onHitEntity(result);
         Entity entity = result.getEntity();
         int i = entity instanceof Slime ? 3 : 0;
-        entity.hurt(this.damageSources().thrown(this, this.getOwner()), (float) i);
+        if (level() instanceof ServerLevel serverLevel) {
+            entity.hurtServer(serverLevel, this.damageSources().thrown(this, this.getOwner()), (float) i);
+        }
 
         if (entity instanceof LivingEntity livingEntity) {
             livingEntity.addEffect(new MobEffectInstance(MobEffects.NAUSEA, 200, 0), this.getOwner());

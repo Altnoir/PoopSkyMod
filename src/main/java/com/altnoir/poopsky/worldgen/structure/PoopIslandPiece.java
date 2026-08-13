@@ -175,10 +175,9 @@ public class PoopIslandPiece extends TemplateStructurePiece {
 
     private static boolean isTreeMarker(StructureTemplate.StructureBlockInfo blockInfo) {
         CompoundTag tag = blockInfo.nbt();
-        if (tag != null) {
-            tag.getString("metadata");
-        }
-        return false;
+        return tag != null && tag.getString("metadata")
+                .filter(PoopIslandStructure.POOP_TREE_MARKER::equals)
+                .isPresent();
     }
 
     private static Rotation readRotation(CompoundTag tag) {

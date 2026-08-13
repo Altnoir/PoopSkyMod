@@ -1,0 +1,15 @@
+{
+  "gives": {
+    "components": {
+      "poopsky:toilet_type": "rainbow"
+    },
+    "id": "poopsky:hard_toilet"
+  },
+  "max_uses": 8.0,
+  "reputation_discount": 0.5,
+  "wants": {
+    "count": 12.0,
+    "id": "minecraft:emerald"
+  },
+  "xp": 25.0
+}

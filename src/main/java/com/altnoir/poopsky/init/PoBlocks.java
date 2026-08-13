@@ -2,11 +2,13 @@ package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.SetToiletTypeFunction;
+import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.ChiliVines;
 import com.altnoir.poopsky.content.block.PoTreeGrower;
 import com.altnoir.poopsky.content.block.p.*;
 import com.altnoir.poopsky.content.item.p.CompooperBlockItem;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
+import com.altnoir.poopsky.data.ItemModelGen;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.impl.type.PoBlockSetType;
 import com.altnoir.poopsky.impl.type.PoWoodType;
@@ -404,7 +406,7 @@ public class PoBlocks {
             props -> new ParticleLeavesBlock(0xF0DB3E, registeredProperties(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
                     .mapColor(MapColor.COLOR_YELLOW))),
             (loot, block) -> loot.add(block, createGinkgoLeavesDrops(loot, block)));
-    public static final BlockEntry<PoopTreeBlock> POOP_SAPLING = registerBlock("poop_sapling", 88,
+    public static final BlockEntry<PoopTreeBlock> POOP_SAPLING = registerFlatBlockItem("poop_sapling", 88,
             props -> new PoopTreeBlock(props.mapColor(MapColor.COLOR_BROWN)
                     .noCollision()
                     .noOcclusion()
@@ -413,7 +415,7 @@ public class PoBlocks {
                     .sound(SoundType.MUD)
                     .offsetType(BlockBehaviour.OffsetType.XZ)
                     .pushReaction(PushReaction.DESTROY)));
-    public static final BlockEntry<SaplingBlock> GINKGO_SAPLING = registerBlock("ginkgo_sapling", 64,
+    public static final BlockEntry<SaplingBlock> GINKGO_SAPLING = registerFlatBlockItem("ginkgo_sapling", 64,
             props -> new SaplingBlock(PoTreeGrower.GINKGO, props
                     .mapColor(MapColor.COLOR_YELLOW)
                     .noCollision()
@@ -433,7 +435,7 @@ public class PoBlocks {
                     .strength(1.5F)
                     .sound(SoundType.AMETHYST)
                     .requiresCorrectToolForDrops()));
-    public static final BlockEntry<SaltpeterClusterBlock> SALTPETER_CLUSTER = registerBlock("saltpeter_cluster",
+    public static final BlockEntry<SaltpeterClusterBlock> SALTPETER_CLUSTER = registerFlatBlockItem("saltpeter_cluster", 64,
             props -> new SaltpeterClusterBlock(7.0F, 3.0F, props
                     .mapColor(MapColor.COLOR_LIGHT_GRAY)
                     .forceSolidOn()
@@ -444,17 +446,17 @@ public class PoBlocks {
                     .randomTicks()
                     .pushReaction(PushReaction.DESTROY)),
             (loot, block) -> loot.add(block, createSaltpeterClusterDrop(loot, block)));
-    public static final BlockEntry<SaltpeterClusterBlock> LARGE_SALTPETER_BUD = registerBlock("large_saltpeter_bud",
+    public static final BlockEntry<SaltpeterClusterBlock> LARGE_SALTPETER_BUD = registerFlatBlockItem("large_saltpeter_bud", 64,
             props -> new SaltpeterClusterBlock(5.0F, 3.0F, registeredProperties(BlockBehaviour.Properties.ofFullCopy(SALTPETER_CLUSTER.get())
                     .sound(SoundType.MEDIUM_AMETHYST_BUD)
                     .lightLevel(p_152629_ -> 4))),
             RegistrateBlockLootTables::dropWhenSilkTouch);
-    public static final BlockEntry<SaltpeterClusterBlock> MEDIUM_SALTPETER_BUD = registerBlock("medium_saltpeter_bud",
+    public static final BlockEntry<SaltpeterClusterBlock> MEDIUM_SALTPETER_BUD = registerFlatBlockItem("medium_saltpeter_bud", 64,
             props -> new SaltpeterClusterBlock(4.0F, 3.0F, registeredProperties(BlockBehaviour.Properties.ofFullCopy(SALTPETER_CLUSTER.get())
                     .sound(SoundType.LARGE_AMETHYST_BUD)
                     .lightLevel(p_152617_ -> 2))),
             RegistrateBlockLootTables::dropWhenSilkTouch);
-    public static final BlockEntry<SaltpeterClusterBlock> SMALL_SALTPETER_BUD = registerBlock("small_saltpeter_bud",
+    public static final BlockEntry<SaltpeterClusterBlock> SMALL_SALTPETER_BUD = registerFlatBlockItem("small_saltpeter_bud", 64,
             props -> new SaltpeterClusterBlock(3.0F, 4.0F, registeredProperties(BlockBehaviour.Properties.ofFullCopy(SALTPETER_CLUSTER.get())
                     .sound(SoundType.SMALL_AMETHYST_BUD)
                     .lightLevel(p_187409_ -> 1))),
@@ -499,13 +501,13 @@ public class PoBlocks {
             (loot, block) -> loot.add(block, createChiliVinesDrop(block)));
 
     // Toilet
-    public static final BlockEntry<WoodToiletBlock> WOODEN_TOILET = registerToiletBlock("wooden_toilet",
+    public static final BlockEntry<WoodToiletBlock> WOODEN_TOILET = registerToiletBlock("wooden_toilet", ToiletType.Category.WOOD,
             props -> new WoodToiletBlock(toiletProperties(MapColor.WOOD, WOODEN_STRENGTH, SoundType.WOOD, NoteBlockInstrument.BASS)
                     .randomTicks()
                     .ignitedByLava()),
             (loot, block) -> loot.add(block, createToiletDrop(block)));
 
-    public static final BlockEntry<HardToiletBlock> HARD_TOILET = registerToiletBlock("hard_toilet",
+    public static final BlockEntry<HardToiletBlock> HARD_TOILET = registerToiletBlock("hard_toilet", ToiletType.Category.HARD,
             props -> new HardToiletBlock(toiletProperties(MapColor.STONE, HARD_STRENGTH, SoundType.STONE, NoteBlockInstrument.BASEDRUM)
                     .lightLevel(lavaLightLevel())
                     .requiresCorrectToolForDrops()
@@ -782,6 +784,32 @@ public class PoBlocks {
         return entry;
     }
 
+    private static <T extends Block> BlockEntry<T> registerFlatBlockItem(
+            String name,
+            int stackSize,
+            NonNullFunction<BlockBehaviour.Properties, T> factory
+    ) {
+        return registerFlatBlockItem(name, stackSize, factory, RegistrateBlockLootTables::dropSelf);
+    }
+
+    private static <T extends Block> BlockEntry<T> registerFlatBlockItem(
+            String name,
+            int stackSize,
+            NonNullFunction<BlockBehaviour.Properties, T> factory,
+            NonNullBiConsumer<RegistrateBlockLootTables, T> loot
+    ) {
+        BlockEntry<T> entry = REGISTRATE.block(name, properties -> createBlock(name, factory, properties))
+                .loot(loot)
+                .item((block, properties) -> new BlockItem(block, properties.stacksTo(stackSize)))
+                .model(() -> (context, provider) -> provider.createWithExistingModel(
+                        context.get(),
+                        provider.modLoc("item/" + name)))
+                .build()
+                .register();
+        TAB_ITEMS.computeIfAbsent(BlockTab.BASIC_BLOCKS, ignored -> new HashSet<>()).add(entry);
+        return entry;
+    }
+
     private static BlockBehaviour.Properties registrationProperties() {
         BlockBehaviour.Properties properties = REGISTRATION_PROPERTIES.get();
         return properties != null ? properties : BlockBehaviour.Properties.of();
@@ -811,8 +839,20 @@ public class PoBlocks {
         return registerBlockWithItem(name, 64, factory, loot, CompooperBlockItem::new, BlockTab.BASIC_BLOCKS);
     }
 
-    public static <T extends Block> BlockEntry<T> registerToiletBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
-        return registerBlockWithItem(name, 88, factory, loot, ToiletBlockItem::new, BlockTab.BASIC_BLOCKS);
+    public static <T extends Block> BlockEntry<T> registerToiletBlock(
+            String name,
+            ToiletType.Category category,
+            NonNullFunction<BlockBehaviour.Properties, T> factory,
+            NonNullBiConsumer<RegistrateBlockLootTables, T> loot
+    ) {
+        BlockEntry<T> entry = REGISTRATE.block(name, properties -> createBlock(name, factory, properties))
+                .loot(loot)
+                .item((block, properties) -> new ToiletBlockItem(block, properties.stacksTo(88)))
+                .model(() -> (context, provider) -> ItemModelGen.toiletItem(provider, context.get(), name, category))
+                .build()
+                .register();
+        TAB_ITEMS.computeIfAbsent(BlockTab.BASIC_BLOCKS, ignored -> new HashSet<>()).add(entry);
+        return entry;
     }
 
     private static BlockBehaviour.Properties familyProperties(Block base) {

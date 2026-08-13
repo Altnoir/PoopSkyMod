@@ -1,10 +1,14 @@
 package com.altnoir.poopsky.data;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.PoopSkyClient;
 import com.altnoir.poopsky.client.model.FlyTypeItemModelProperty;
+import com.altnoir.poopsky.client.model.ToiletTypeItemModelProperty;
 import com.altnoir.poopsky.client.renderer.ToiletPlugItemRenderer;
 import com.altnoir.poopsky.content.FlyType;
+import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.init.FlyTypes;
+import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -61,9 +65,53 @@ public final class ItemModelGen {
         trimmedArmorItem(prov, PoItems.OMEN_CHESTPLATE.get(), ArmorType.CHESTPLATE);
         trimmedArmorItem(prov, PoItems.OMEN_LEGGINGS.get(), ArmorType.LEGGINGS);
         trimmedArmorItem(prov, PoItems.OMEN_BOOTS.get(), ArmorType.BOOTS);
-        spawnEgg(prov, PoItems.POOLIME_SPAWN_EGG.get());
-        spawnEgg(prov, PoItems.FLY_SPAWN_EGG.get());
+        spawnEgg(prov, PoItems.POOLIME_SPAWN_EGG.get(), prov.mcLoc("item/slime_spawn_egg"));
+        spawnEgg(prov, PoItems.FLY_SPAWN_EGG.get(), prov.mcLoc("item/bee_spawn_egg"));
+        migratedBlockItems(prov);
         prov.generateFlatItem(PoItems.URINE_BUCKET.get(), prov.modItemTexture("urine_bucket"));
+    }
+
+    private static void migratedBlockItems(RegistrateItemModelGenerator prov) {
+        existingItemModel(prov, PoBlocks.COMPOOPER.get().asItem());
+        compooperItem(prov, PoBlocks.WATER_COMPOOPER.get().asItem(), true);
+        compooperItem(prov, PoBlocks.LAVA_COMPOOPER.get().asItem(), false);
+        compooperItem(prov, PoBlocks.POWDER_SNOW_COMPOOPER.get().asItem(), false);
+        compooperItem(prov, PoBlocks.URINE_COMPOOPER.get().asItem(), false);
+        existingItemModel(prov, PoBlocks.POOP_DOOR.get().asItem());
+        existingItemModel(prov, PoBlocks.GINKGO_DOOR.get().asItem());
+        existingItemModel(prov, PoBlocks.POOP_TRAPDOOR.get().asItem());
+        existingItemModel(prov, PoBlocks.GINKGO_TRAPDOOR.get().asItem());
+        existingItemModel(prov, PoBlocks.POOP_BUTTON.get().asItem());
+        existingItemModel(prov, PoBlocks.GINKGO_BUTTON.get().asItem());
+        existingItemModel(prov, PoBlocks.POOP_FENCE.get().asItem());
+        existingItemModel(prov, PoBlocks.GINKGO_FENCE.get().asItem());
+        existingItemModel(prov, PoBlocks.POOP_FENCE_GATE.get().asItem());
+        existingItemModel(prov, PoBlocks.GINKGO_FENCE_GATE.get().asItem());
+        existingItemModel(prov, PoBlocks.GINKGO_TOILET.get().asItem());
+        existingItemModel(prov, PoBlocks.PORTABLE_TOILET.get().asItem());
+        existingItemModel(prov, PoBlocks.POOP_BLOCK.get().asItem());
+        existingItemModel(prov, PoBlocks.RAW_POOP_BLOCK.get().asItem());
+        existingItemModel(prov, PoBlocks.POOP_PIECE.get().asItem());
+        existingItemModel(prov, PoBlocks.STOOL.get().asItem());
+        Identifier cakeModel = prov.modLoc("item/poop_cake");
+        emit(prov, cakeModel, () -> parentModel(prov.modLoc("block/poop_cake")));
+        prov.createWithExistingModel(PoBlocks.POOP_CAKE.get().asItem(), cakeModel);
+    }
+
+    private static void existingItemModel(RegistrateItemModelGenerator prov, Item item) {
+        prov.createWithExistingModel(item, prov.modLoc("item/" + prov.name(() -> item)));
+    }
+
+    private static void compooperItem(RegistrateItemModelGenerator prov, Item item, boolean waterTint) {
+        Identifier model = prov.modLoc("block/" + prov.name(() -> item) + "_item");
+        if (waterTint) {
+            prov.itemModelOutput.accept(item, ItemModelUtils.tintedModel(
+                    model,
+                    ItemModelUtils.constantTint(-1),
+                    PoopSkyClient.WaterCompooperTintSource.INSTANCE));
+        } else {
+            prov.createWithExistingModel(item, model);
+        }
     }
 
     private static void flyItem(RegistrateItemModelGenerator prov) {
@@ -79,6 +127,21 @@ public final class ItemModelGen {
         prov.itemModelOutput.accept(PoItems.FLY.get(), ItemModelUtils.select(
                 FlyTypeItemModelProperty.INSTANCE,
                 ItemModelUtils.plainModel(normalModel),
+                cases));
+    }
+
+    public static void toiletItem(RegistrateItemModelGenerator prov, Item item, String blockPath, ToiletType.Category category) {
+        Identifier fallbackModel = prov.modLoc("block/" + blockPath);
+        List<net.minecraft.client.renderer.item.SelectItemModel.SwitchCase<String>> cases = ToiletType.getByCategory(category)
+                .values()
+                .stream()
+                .map(type -> ItemModelUtils.when(
+                        type.id(),
+                        ItemModelUtils.plainModel(prov.modLoc("block/" + blockPath + "_" + type.id()))))
+                .toList();
+        prov.itemModelOutput.accept(item, ItemModelUtils.select(
+                ToiletTypeItemModelProperty.INSTANCE,
+                ItemModelUtils.plainModel(fallbackModel),
                 cases));
     }
 
@@ -105,10 +168,8 @@ public final class ItemModelGen {
         prov.createWithExistingModel(item, model);
     }
 
-    private static void spawnEgg(RegistrateItemModelGenerator prov, Item item) {
-        Identifier model = prov.modLoc("item/" + prov.name(() -> item));
-        emit(prov, model, () -> parentModel(prov.mcLoc("item/template_spawn_egg")));
-        prov.createWithExistingModel(item, model);
+    private static void spawnEgg(RegistrateItemModelGenerator prov, Item item, Identifier vanillaModel) {
+        prov.createWithExistingModel(item, vanillaModel);
     }
 
     private static void trimmedArmorItem(RegistrateItemModelGenerator prov, Item item, ArmorType type) {

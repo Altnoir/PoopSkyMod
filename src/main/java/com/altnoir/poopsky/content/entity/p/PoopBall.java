@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -68,7 +69,9 @@ public class PoopBall extends ThrowableItemProjectile {
         super.onHitEntity(result);
         Entity entity = result.getEntity();
         int i = entity instanceof Slime ? 3 : 1;
-        entity.hurt(this.damageSources().source(PoDamageTypes.POOP_BALL, this, this.getOwner()), (float) i);
+        if (level() instanceof ServerLevel serverLevel) {
+            entity.hurtServer(serverLevel, this.damageSources().source(PoDamageTypes.POOP_BALL, this, this.getOwner()), (float) i);
+        }
 
         if (entity instanceof LivingEntity livingEntity) {
             livingEntity.addEffect(new MobEffectInstance(MobEffects.NAUSEA, 100, 0), this.getOwner());

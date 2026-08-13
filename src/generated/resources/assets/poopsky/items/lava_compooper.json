@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "poopsky:block/lava_compooper"
+    "model": "poopsky:block/lava_compooper_item"
   }
 }

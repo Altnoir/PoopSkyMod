@@ -1,0 +1,12 @@
+{
+  "gives": {
+    "id": "poopsky:dragon_breath_chili"
+  },
+  "max_uses": 10.0,
+  "reputation_discount": 0.15,
+  "wants": {
+    "count": 8.0,
+    "id": "minecraft:emerald"
+  },
+  "xp": 5.0
+}

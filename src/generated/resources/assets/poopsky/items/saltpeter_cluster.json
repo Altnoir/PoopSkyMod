@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "poopsky:block/saltpeter_cluster"
+    "model": "poopsky:item/saltpeter_cluster"
   }
 }

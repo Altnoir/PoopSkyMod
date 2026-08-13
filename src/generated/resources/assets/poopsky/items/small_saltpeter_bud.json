@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "poopsky:block/small_saltpeter_bud"
+    "model": "poopsky:item/small_saltpeter_bud"
   }
 }

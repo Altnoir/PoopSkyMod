@@ -155,7 +155,9 @@ public class ToiletUtil {
         if (livingEntity instanceof Player player) {
             if (player.getFoodData().getFoodLevel() <= 0) {
                 shouldPoop = false;
-                player.hurt(level.damageSources().wither(), 1.0F);
+                if (level instanceof ServerLevel serverLevel) {
+                    player.hurtServer(serverLevel, level.damageSources().wither(), 1.0F);
+                }
                 var redStone = new ItemEntity(level, player.getX(), player.getY() + 0.1, player.getZ(), new ItemStack(Items.REDSTONE));
                 redStone.setDefaultPickUpDelay();
                 level.addFreshEntity(redStone);
@@ -187,7 +189,9 @@ public class ToiletUtil {
 
         if (entity instanceof Player player) {
             if (player.getFoodData().getFoodLevel() <= 0) {
-                player.hurt(level.damageSources().wither(), 1.0F);
+                if (level instanceof ServerLevel serverLevel) {
+                    player.hurtServer(serverLevel, level.damageSources().wither(), 1.0F);
+                }
                 insertOrReplaceContainer(level, pos, Items.REDSTONE.getDefaultInstance());
                 poopTimeSetter.accept(gameTime);
                 return;

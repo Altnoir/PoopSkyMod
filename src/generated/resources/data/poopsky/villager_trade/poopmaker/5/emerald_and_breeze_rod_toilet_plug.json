@@ -1,0 +1,21 @@
+{
+  "additional_wants": {
+    "count": 6.0,
+    "id": "minecraft:breeze_rod"
+  },
+  "gives": {
+    "id": "poopsky:toilet_plug"
+  },
+  "max_uses": 2.0,
+  "merchant_predicate": {
+    "condition": "poopsky:config_value",
+    "key": "plug_trades",
+    "value": false
+  },
+  "reputation_discount": 1.0,
+  "wants": {
+    "count": 42.0,
+    "id": "minecraft:emerald"
+  },
+  "xp": 100.0
+}

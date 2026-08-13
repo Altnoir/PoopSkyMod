@@ -1,0 +1,13 @@
+{
+  "gives": {
+    "count": 2,
+    "id": "poopsky:poop_vegetable_sticks"
+  },
+  "max_uses": 32.0,
+  "reputation_discount": 0.1,
+  "wants": {
+    "count": 8.0,
+    "id": "minecraft:emerald"
+  },
+  "xp": 15.0
+}

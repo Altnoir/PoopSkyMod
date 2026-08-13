@@ -2,6 +2,7 @@ package com.altnoir.poopsky.content.item.p;
 
 import com.altnoir.poopsky.content.block.p.PoopFarmlandBlock;
 import com.altnoir.poopsky.init.PoBlocks;
+import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -9,7 +10,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.BoneMealItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
@@ -24,7 +25,7 @@ import net.minecraft.world.level.block.state.properties.Property;
 
 import java.util.function.Consumer;
 
-public class JinKeLaItem extends Item {
+public class JinKeLaItem extends BoneMealItem {
     public JinKeLaItem(Properties properties) {
         super(properties);
     }
@@ -44,14 +45,23 @@ public class JinKeLaItem extends Item {
                 context.getItemInHand().consume(1, context.getPlayer());
             }
             return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
-        } else if (state.isRandomlyTicking()) {
-            if (level instanceof ServerLevel serverLevel && tryApplyToBlock(serverLevel, pos, state)) {
+        }
+
+        InteractionResult result = super.useOn(context);
+        if (result.consumesAction()) {
+            return result;
+        }
+
+        BlockState currentState = level.getBlockState(pos);
+        if (currentState.isRandomlyTicking()) {
+            if (level instanceof ServerLevel serverLevel) {
+                applyRandomTick(serverLevel, pos, currentState);
                 context.getItemInHand().consume(1, context.getPlayer());
             }
             return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
         }
 
-        return super.useOn(context);
+        return result;
     }
 
     public static boolean tryApplyToBlock(ServerLevel level, BlockPos pos, BlockState state) {
@@ -65,10 +75,22 @@ public class JinKeLaItem extends Item {
             return true;
         }
 
+        ItemStack fertilizer = new ItemStack(PoItems.JINKELA.get());
+        if (BoneMealItem.applyBonemeal(fertilizer, level, pos, null)
+                || BoneMealItem.growWaterPlant(fertilizer, level, pos, null)) {
+            level.levelEvent(1505, pos, 15);
+            return true;
+        }
+
         if (!state.isRandomlyTicking()) {
             return false;
         }
 
+        applyRandomTick(level, pos, state);
+        return true;
+    }
+
+    private static void applyRandomTick(ServerLevel level, BlockPos pos, BlockState state) {
         triggerRandomTick(level, pos, state);
         level.levelEvent(1505, pos, 15);
         if (!(state.getBlock() instanceof BonemealableBlock)) {
@@ -78,7 +100,6 @@ public class JinKeLaItem extends Item {
                     45, 0.25, 0.25, 0.25, 0.0
             );
         }
-        return true;
     }
 
     public static void triggerRandomTick(ServerLevel level, BlockPos pos, BlockState state) {

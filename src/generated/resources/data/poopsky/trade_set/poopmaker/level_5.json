@@ -1,0 +1,9 @@
+{
+  "amount": 2.0,
+  "random_sequence": "poopsky:trade_set/poopmaker/level_5",
+  "trades": [
+    "poopsky:poopmaker/5/emerald_brown_tile_block",
+    "poopsky:poopmaker/5/emerald_rainbow_toilet",
+    "poopsky:poopmaker/5/emerald_and_breeze_rod_toilet_plug"
+  ]
+}

@@ -125,17 +125,17 @@ public final class LangGen {
     }
 
     private static void addPotions() {
-        for (var entry : PoPotions.all()) {
-            String path = entry.getId().getPath();
-            String baseName = path.replace("_potion", "");
-            String potionName = potionDisplayName(baseName);
-            String arrowName = arrowDisplayName(baseName);
-
-            provider.add("item.minecraft.potion.effect." + path, potionName);
-            provider.add("item.minecraft.splash_potion.effect." + path, potionName);
-            provider.add("item.minecraft.lingering_potion.effect." + path, potionName);
-            provider.add("item.minecraft.tipped_arrow.effect." + path, arrowName);
-        }
+        PoPotions.all().stream()
+                .map(entry -> entry.get().name())
+                .distinct()
+                .forEach(name -> {
+                    String potionName = potionDisplayName(name);
+                    String arrowName = arrowDisplayName(name);
+                    provider.add("item.minecraft.potion.effect." + name, potionName);
+                    provider.add("item.minecraft.splash_potion.effect." + name, potionName);
+                    provider.add("item.minecraft.lingering_potion.effect." + name, potionName);
+                    provider.add("item.minecraft.tipped_arrow.effect." + name, arrowName);
+                });
     }
 
     private static String potionDisplayName(String baseName) {

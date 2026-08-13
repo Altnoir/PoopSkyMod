@@ -7,7 +7,6 @@ import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.monster.slime.SlimeModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.layers.SlimeOuterLayer;
 import net.minecraft.client.renderer.entity.state.SlimeRenderState;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
@@ -15,7 +14,7 @@ import net.minecraft.util.Mth;
 public class PoolimeRenderer extends MobRenderer<PoolimeEntity, SlimeRenderState, SlimeModel> {
     public PoolimeRenderer(EntityRendererProvider.Context context) {
         super(context, new SlimeModel(context.bakeLayer(ModelLayers.SLIME)), 0.25F);
-        this.addLayer(new SlimeOuterLayer(this, context.getModelSet()));
+        this.addLayer(new PoolimeOuterLayer(this, context.getModelSet()));
     }
 
     @Override

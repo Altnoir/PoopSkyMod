@@ -856,7 +856,9 @@ public class BlockStateGen extends LegacyBlockStateGenerator {
     }
 
     private ItemModelBuilder wallItemModel(Block wall, Block baseBlock) {
-        return itemModels().withExistingParent(getItemPath(wall), mcLoc("block/wall_inventory")).texture("wall", modLoc("block/" + getBlockPath(baseBlock)));
+        Identifier texture = modLoc("block/" + getBlockPath(baseBlock));
+        models().withExistingParent(getBlockPath(wall), mcLoc("block/wall_inventory")).texture("wall", texture);
+        return itemModels().withExistingParent(getItemPath(wall), mcLoc("block/wall_inventory")).texture("wall", texture);
     }
 
     protected ItemModelBuilder generatedItem(Block block) {

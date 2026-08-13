@@ -1,0 +1,16 @@
+{
+  "gives": {
+    "components": {
+      "minecraft:potion_contents": {
+        "potion": "minecraft:water"
+      }
+    },
+    "id": "minecraft:potion"
+  },
+  "max_uses": 3.0,
+  "reputation_discount": 0.1,
+  "wants": {
+    "id": "poopsky:urine_bottle"
+  },
+  "xp": 15.0
+}

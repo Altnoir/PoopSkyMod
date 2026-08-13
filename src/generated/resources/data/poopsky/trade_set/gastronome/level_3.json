@@ -1,0 +1,9 @@
+{
+  "amount": 2.0,
+  "random_sequence": "poopsky:trade_set/gastronome/level_3",
+  "trades": [
+    "poopsky:gastronome/3/poop_vegetable_sticks_emerald",
+    "poopsky:gastronome/3/poop_pasta_emerald",
+    "poopsky:gastronome/3/poodding_emerald"
+  ]
+}

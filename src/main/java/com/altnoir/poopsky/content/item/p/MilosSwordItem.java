@@ -4,6 +4,7 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.init.PoEffects;
 import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
@@ -34,7 +35,9 @@ public class MilosSwordItem extends Item {
                     if (amplifier % 5 == 0) {
                         float baseDamage = (0.1F + 0.1F * (amplifier / 5.0F)) / (1.0F + 0.1F * amplifier);
                         float damage = target.getMaxHealth() * baseDamage;
-                        target.hurt(target.damageSources().mobAttack(attacker), damage);
+                        if (target.level() instanceof ServerLevel serverLevel) {
+                            target.hurtServer(serverLevel, target.damageSources().mobAttack(attacker), damage);
+                        }
                     }
                     target.addEffect(new MobEffectInstance(PoEffects.BLEEDING, duration, amplifier));
                 }

@@ -1,0 +1,9 @@
+{
+  "category": "hard",
+  "hardness": 10.0,
+  "is_end": false,
+  "is_golden": false,
+  "is_redstone": false,
+  "name_key": "block.poopsky.toilet.orange_tile",
+  "source_block": "poopsky:orange_tile_block"
+}

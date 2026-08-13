@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:simple_block",
+  "config": {
+    "to_place": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "minecraft:warped_fungus"
+          },
+          "weight": 3
+        },
+        {
+          "data": {
+            "Name": "minecraft:crimson_fungus"
+          },
+          "weight": 3
+        },
+        {
+          "data": {
+            "Name": "minecraft:sweet_berry_bush",
+            "Properties": {
+              "age": "0"
+            }
+          },
+          "weight": 2
+        },
+        {
+          "data": {
+            "Name": "minecraft:crimson_roots"
+          },
+          "weight": 2
+        }
+      ]
+    }
+  }
+}

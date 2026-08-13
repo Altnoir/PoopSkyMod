@@ -202,8 +202,12 @@ public class PoopSkyClient {
         }
     }
 
-    private static final class WaterCompooperTintSource implements ItemTintSource {
-        private static final MapCodec<WaterCompooperTintSource> MAP_CODEC = MapCodec.unit(new WaterCompooperTintSource());
+    public static final class WaterCompooperTintSource implements ItemTintSource {
+        public static final WaterCompooperTintSource INSTANCE = new WaterCompooperTintSource();
+        public static final MapCodec<WaterCompooperTintSource> MAP_CODEC = MapCodec.unit(INSTANCE);
+
+        private WaterCompooperTintSource() {
+        }
 
         @Override
         public int calculate(ItemStack stack, ClientLevel level, LivingEntity entity) {

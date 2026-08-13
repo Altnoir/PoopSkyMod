@@ -1,6 +1,838 @@
 {
   "model": {
-    "type": "minecraft:model",
-    "model": "poopsky:block/hard_toilet"
+    "type": "minecraft:select",
+    "cases": [
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_white_tile_block"
+        },
+        "when": "white_tile_block"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_light_gray_tile_block"
+        },
+        "when": "light_gray_tile_block"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_gray_tile_block"
+        },
+        "when": "gray_tile_block"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_black_tile_block"
+        },
+        "when": "black_tile_block"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_brown_tile_block"
+        },
+        "when": "brown_tile_block"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_red_tile_block"
+        },
+        "when": "red_tile_block"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_orange_tile_block"
+        },
+        "when": "orange_tile_block"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_yellow_tile_block"
+        },
+        "when": "yellow_tile_block"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_lime_tile_block"
+        },
+        "when": "lime_tile_block"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_green_tile_block"
+        },
+        "when": "green_tile_block"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_cyan_tile_block"
+        },
+        "when": "cyan_tile_block"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_light_blue_tile_block"
+        },
+        "when": "light_blue_tile_block"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_blue_tile_block"
+        },
+        "when": "blue_tile_block"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_purple_tile_block"
+        },
+        "when": "purple_tile_block"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_magenta_tile_block"
+        },
+        "when": "magenta_tile_block"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_pink_tile_block"
+        },
+        "when": "pink_tile_block"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_stone"
+        },
+        "when": "stone"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_cobblestone"
+        },
+        "when": "cobblestone"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_mossy_cobblestone"
+        },
+        "when": "mossy_cobblestone"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_smooth_stone"
+        },
+        "when": "smooth_stone"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_stone_bricks"
+        },
+        "when": "stone_bricks"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_chiseled_stone_bricks"
+        },
+        "when": "chiseled_stone_bricks"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_mossy_stone_bricks"
+        },
+        "when": "mossy_stone_bricks"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_granite"
+        },
+        "when": "granite"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_polished_granite"
+        },
+        "when": "polished_granite"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_diorite"
+        },
+        "when": "diorite"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_polished_diorite"
+        },
+        "when": "polished_diorite"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_andesite"
+        },
+        "when": "andesite"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_polished_andesite"
+        },
+        "when": "polished_andesite"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_calcite"
+        },
+        "when": "calcite"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_dripstone_block"
+        },
+        "when": "dripstone_block"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_deepslate"
+        },
+        "when": "deepslate"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_cobbled_deepslate"
+        },
+        "when": "cobbled_deepslate"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_polished_deepslate"
+        },
+        "when": "polished_deepslate"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_deepslate_bricks"
+        },
+        "when": "deepslate_bricks"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_deepslate_tiles"
+        },
+        "when": "deepslate_tiles"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_tuff"
+        },
+        "when": "tuff"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_polished_tuff"
+        },
+        "when": "polished_tuff"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_tuff_bricks"
+        },
+        "when": "tuff_bricks"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_bricks"
+        },
+        "when": "bricks"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_mud_bricks"
+        },
+        "when": "mud_bricks"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_sandstone"
+        },
+        "when": "sandstone"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_smooth_sandstone"
+        },
+        "when": "smooth_sandstone"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_red_sandstone"
+        },
+        "when": "red_sandstone"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_smooth_red_sandstone"
+        },
+        "when": "smooth_red_sandstone"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_prismarine"
+        },
+        "when": "prismarine"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_prismarine_bricks"
+        },
+        "when": "prismarine_bricks"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_dark_prismarine"
+        },
+        "when": "dark_prismarine"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_netherrack"
+        },
+        "when": "netherrack"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_nether_bricks"
+        },
+        "when": "nether_bricks"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_red_nether_bricks"
+        },
+        "when": "red_nether_bricks"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_smooth_basalt"
+        },
+        "when": "smooth_basalt"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_blackstone"
+        },
+        "when": "blackstone"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_polished_blackstone"
+        },
+        "when": "polished_blackstone"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_polished_blackstone_bricks"
+        },
+        "when": "polished_blackstone_bricks"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_quartz_block"
+        },
+        "when": "quartz_block"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_smooth_quartz"
+        },
+        "when": "smooth_quartz"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_chiseled_quartz_block"
+        },
+        "when": "chiseled_quartz_block"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_quartz_bricks"
+        },
+        "when": "quartz_bricks"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_end_stone"
+        },
+        "when": "end_stone"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_end_stone_bricks"
+        },
+        "when": "end_stone_bricks"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_purpur_block"
+        },
+        "when": "purpur_block"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_terracotta"
+        },
+        "when": "terracotta"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_white_terracotta"
+        },
+        "when": "white_terracotta"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_orange_terracotta"
+        },
+        "when": "orange_terracotta"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_magenta_terracotta"
+        },
+        "when": "magenta_terracotta"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_light_blue_terracotta"
+        },
+        "when": "light_blue_terracotta"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_yellow_terracotta"
+        },
+        "when": "yellow_terracotta"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_lime_terracotta"
+        },
+        "when": "lime_terracotta"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_pink_terracotta"
+        },
+        "when": "pink_terracotta"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_gray_terracotta"
+        },
+        "when": "gray_terracotta"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_light_gray_terracotta"
+        },
+        "when": "light_gray_terracotta"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_cyan_terracotta"
+        },
+        "when": "cyan_terracotta"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_purple_terracotta"
+        },
+        "when": "purple_terracotta"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_blue_terracotta"
+        },
+        "when": "blue_terracotta"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_brown_terracotta"
+        },
+        "when": "brown_terracotta"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_green_terracotta"
+        },
+        "when": "green_terracotta"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_red_terracotta"
+        },
+        "when": "red_terracotta"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_black_terracotta"
+        },
+        "when": "black_terracotta"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_white_concrete"
+        },
+        "when": "white_concrete"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_orange_concrete"
+        },
+        "when": "orange_concrete"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_magenta_concrete"
+        },
+        "when": "magenta_concrete"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_light_blue_concrete"
+        },
+        "when": "light_blue_concrete"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_yellow_concrete"
+        },
+        "when": "yellow_concrete"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_lime_concrete"
+        },
+        "when": "lime_concrete"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_pink_concrete"
+        },
+        "when": "pink_concrete"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_gray_concrete"
+        },
+        "when": "gray_concrete"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_light_gray_concrete"
+        },
+        "when": "light_gray_concrete"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_cyan_concrete"
+        },
+        "when": "cyan_concrete"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_purple_concrete"
+        },
+        "when": "purple_concrete"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_blue_concrete"
+        },
+        "when": "blue_concrete"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_brown_concrete"
+        },
+        "when": "brown_concrete"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_green_concrete"
+        },
+        "when": "green_concrete"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_red_concrete"
+        },
+        "when": "red_concrete"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_black_concrete"
+        },
+        "when": "black_concrete"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_rainbow"
+        },
+        "when": "rainbow"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_iron_block"
+        },
+        "when": "iron_block"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_gold_block"
+        },
+        "when": "gold_block"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_copper_block"
+        },
+        "when": "copper_block"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_exposed_copper"
+        },
+        "when": "exposed_copper"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_weathered_copper"
+        },
+        "when": "weathered_copper"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_oxidized_copper"
+        },
+        "when": "oxidized_copper"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_chiseled_copper"
+        },
+        "when": "chiseled_copper"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_exposed_chiseled_copper"
+        },
+        "when": "exposed_chiseled_copper"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_weathered_chiseled_copper"
+        },
+        "when": "weathered_chiseled_copper"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_oxidized_chiseled_copper"
+        },
+        "when": "oxidized_chiseled_copper"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_cut_copper"
+        },
+        "when": "cut_copper"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_exposed_cut_copper"
+        },
+        "when": "exposed_cut_copper"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_weathered_cut_copper"
+        },
+        "when": "weathered_cut_copper"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_oxidized_cut_copper"
+        },
+        "when": "oxidized_cut_copper"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_amethyst_block"
+        },
+        "when": "amethyst_block"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_lapis_block"
+        },
+        "when": "lapis_block"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_redstone_block"
+        },
+        "when": "redstone_block"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_diamond_block"
+        },
+        "when": "diamond_block"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_emerald_block"
+        },
+        "when": "emerald_block"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_netherite_block"
+        },
+        "when": "netherite_block"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_obsidian"
+        },
+        "when": "obsidian"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "poopsky:block/hard_toilet_crying_obsidian"
+        },
+        "when": "crying_obsidian"
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "poopsky:block/hard_toilet"
+    },
+    "property": "poopsky:toilet_type"
   }
 }
