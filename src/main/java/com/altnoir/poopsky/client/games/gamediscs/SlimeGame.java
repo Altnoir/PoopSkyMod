@@ -6,6 +6,7 @@ import com.altnoir.poopsky.client.games.graphics.BreakParticleRenderer;
 import com.altnoir.poopsky.client.games.graphics.DirectionalImage;
 import com.altnoir.poopsky.client.games.util.*;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
@@ -60,6 +61,20 @@ public class SlimeGame extends Game {
 
     public SlimeGame() {
         super();
+    }
+
+    @Override
+    public void applySnapshot(CompoundTag tag) {
+        super.applySnapshot(tag);
+        int[] xs = tag.getIntArray("slimeX");
+        int[] ys = tag.getIntArray("slimeY");
+        slime.clear();
+        for (int i = 0; i < xs.length; i++) {
+            slime.add(new Vec2(xs[i], ys[i]));
+        }
+        apple.setPos(calcPos(new Vec2(tag.getInt("appleX"), tag.getInt("appleY"))));
+        direction = new Vec2(tag.getInt("dirX"), tag.getInt("dirY"));
+        nextDirection = null;
     }
 
     @Override

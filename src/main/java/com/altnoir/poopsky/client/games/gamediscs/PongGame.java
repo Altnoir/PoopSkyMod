@@ -2,6 +2,7 @@ package com.altnoir.poopsky.client.games.gamediscs;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec2;
 import com.altnoir.poopsky.PoopSky;
@@ -45,6 +46,16 @@ public class PongGame extends Game {
 
     public PongGame() {
         super();
+    }
+
+    @Override
+    public void applySnapshot(CompoundTag tag) {
+        super.applySnapshot(tag);
+        player.setY((float) tag.getDouble("playerY"));
+        oponent.setY((float) tag.getDouble("opponentY"));
+        ball.setPos(new Vec2((float) tag.getDouble("ballX"), (float) tag.getDouble("ballY")));
+        oponentScore = tag.getInt("opponentScore");
+        ballTimer = tag.getInt("ballTimer");
     }
 
     @Override

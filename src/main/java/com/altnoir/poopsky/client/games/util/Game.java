@@ -6,10 +6,10 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.phys.Vec2;
-import net.neoforged.neoforge.network.PacketDistributor;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.client.ClientUtils;
 import com.altnoir.poopsky.client.games.audio.SoundPlayer;
@@ -17,7 +17,6 @@ import com.altnoir.poopsky.client.games.controls.Button;
 import com.altnoir.poopsky.client.games.controls.Controls;
 import com.altnoir.poopsky.client.games.graphics.ParticleColor;
 import com.altnoir.poopsky.client.games.graphics.Renderer;
-import com.altnoir.poopsky.impl.network.LightArcadeBlockUpdatePacket;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -45,6 +44,16 @@ public class Game {
     private int settledScore;
     private final List<Particle> particles = new ArrayList<>();
 
+    public void applySnapshot(CompoundTag tag) {
+        if (tag == null) {
+            return;
+        }
+        stage = GameStage.valueOf(tag.getString("stage"));
+        score = tag.getInt("score");
+        ticks = tag.getInt("ticks");
+        settledScore = tag.getInt("settled_score");
+    }
+
     public int maxLives() {
         return 1;
     }
@@ -59,6 +68,7 @@ public class Game {
 
     public void setArcadeMachine(BlockPos pos) {
         this.arcadeMachinePos = pos;
+        this.soundPlayer.setPosition(pos.above());
     }
 
     public boolean isArcadeGame() {
@@ -128,7 +138,6 @@ public class Game {
     private void finishArcadeGame() {
         if (isArcadeGame() && !arcadeSettled) {
             settledScore = score;
-            sendArcadeScoreUpdate();
             arcadeSettled = true;
             score = 0;
         }
@@ -149,14 +158,6 @@ public class Game {
             i++;
         }
         ticks++;
-    }
-
-    private void sendArcadeScoreUpdate() {
-        if (!isArcadeGame()) {
-            return;
-        }
-
-        PacketDistributor.sendToServer(new LightArcadeBlockUpdatePacket(arcadeMachinePos, getGameName(), score));
     }
 
     public void gameTick() {

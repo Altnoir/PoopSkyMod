@@ -1,16 +1,16 @@
 package com.altnoir.poopsky.client.screen;
 
-import com.altnoir.poopsky.client.ClientUtils;
-import com.altnoir.poopsky.client.arcade.ArcadeWorldScreenRenderer;
 import com.altnoir.poopsky.client.games.controls.Button;
-import com.altnoir.poopsky.client.games.util.Game;
 import com.altnoir.poopsky.content.item.p.GameDiscItem;
+import com.altnoir.poopsky.impl.network.ArcadeInputPacket;
+import com.altnoir.poopsky.impl.network.ArcadeResetPacket;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 
 @OnlyIn(Dist.CLIENT)
@@ -24,31 +24,10 @@ public class GamingConsoleScreen extends Screen {
     private static final int ENTER = 257;
 
     private final BlockPos arcadeMachinePos;
-    private Game game;
-    private int closeTimer;
 
     public GamingConsoleScreen(Component title, BlockPos arcadeMachinePos, GameDiscItem cartridge) {
         super(title);
         this.arcadeMachinePos = arcadeMachinePos;
-
-        Game arcadeGame = ClientUtils.newGameFor(cartridge);
-        arcadeGame.setArcadeMachine(arcadeMachinePos);
-        arcadeGame.prepare();
-        this.game = arcadeGame;
-        ArcadeWorldScreenRenderer.setGame(arcadeMachinePos, cartridge, arcadeGame);
-    }
-
-    @Override
-    public void tick() {
-        if (game != null) {
-            game.tick();
-        }
-        if (closeTimer > 0) {
-            closeTimer--;
-            if (closeTimer == 0) {
-                this.minecraft.setScreen(null);
-            }
-        }
     }
 
     @Override
@@ -63,47 +42,38 @@ public class GamingConsoleScreen extends Screen {
     @Override
     public boolean keyPressed(int key, int scanCode, int modifiers) {
         boolean flag = false;
-
         if (key == E) {
-            game.closeArcadeGame();
-            closeTimer = 2;
-            return true;
-        }
-        if (key == 256) {
-            game.closeArcadeGame();
-            closeTimer = 2;
+            this.minecraft.setScreen(null);
             return true;
         }
         if (key == 82) {
-            game.closeArcadeGame();
-            game.prepare();
+            PacketDistributor.sendToServer(new ArcadeResetPacket(arcadeMachinePos));
             flag = true;
-            game.soundPlayer.playConfirm();
         }
 
         switch (key) {
             case W -> {
-                game.controls.setButton(Button.UP, true);
+                PacketDistributor.sendToServer(new ArcadeInputPacket(arcadeMachinePos, Button.UP, true));
                 flag = true;
             }
             case S -> {
-                game.controls.setButton(Button.DOWN, true);
+                PacketDistributor.sendToServer(new ArcadeInputPacket(arcadeMachinePos, Button.DOWN, true));
                 flag = true;
             }
             case A -> {
-                game.controls.setButton(Button.LEFT, true);
+                PacketDistributor.sendToServer(new ArcadeInputPacket(arcadeMachinePos, Button.LEFT, true));
                 flag = true;
             }
             case D -> {
-                game.controls.setButton(Button.RIGHT, true);
+                PacketDistributor.sendToServer(new ArcadeInputPacket(arcadeMachinePos, Button.RIGHT, true));
                 flag = true;
             }
             case SPACE -> {
-                game.controls.setButton(Button.BUTTON1, true);
+                PacketDistributor.sendToServer(new ArcadeInputPacket(arcadeMachinePos, Button.BUTTON1, true));
                 flag = true;
             }
             case ENTER -> {
-                game.controls.setButton(Button.BUTTON2, true);
+                PacketDistributor.sendToServer(new ArcadeInputPacket(arcadeMachinePos, Button.BUTTON2, true));
                 flag = true;
             }
         }
@@ -116,27 +86,27 @@ public class GamingConsoleScreen extends Screen {
         boolean flag = false;
         switch (keyCode) {
             case W -> {
-                game.controls.setButton(Button.UP, false);
+                PacketDistributor.sendToServer(new ArcadeInputPacket(arcadeMachinePos, Button.UP, false));
                 flag = true;
             }
             case S -> {
-                game.controls.setButton(Button.DOWN, false);
+                PacketDistributor.sendToServer(new ArcadeInputPacket(arcadeMachinePos, Button.DOWN, false));
                 flag = true;
             }
             case A -> {
-                game.controls.setButton(Button.LEFT, false);
+                PacketDistributor.sendToServer(new ArcadeInputPacket(arcadeMachinePos, Button.LEFT, false));
                 flag = true;
             }
             case D -> {
-                game.controls.setButton(Button.RIGHT, false);
+                PacketDistributor.sendToServer(new ArcadeInputPacket(arcadeMachinePos, Button.RIGHT, false));
                 flag = true;
             }
             case SPACE -> {
-                game.controls.setButton(Button.BUTTON1, false);
+                PacketDistributor.sendToServer(new ArcadeInputPacket(arcadeMachinePos, Button.BUTTON1, false));
                 flag = true;
             }
             case ENTER -> {
-                game.controls.setButton(Button.BUTTON2, false);
+                PacketDistributor.sendToServer(new ArcadeInputPacket(arcadeMachinePos, Button.BUTTON2, false));
                 flag = true;
             }
         }
@@ -145,11 +115,6 @@ public class GamingConsoleScreen extends Screen {
 
     @Override
     public void onClose() {
-        if (game != null) {
-            game.closeArcadeGame();
-            ArcadeWorldScreenRenderer.clearGame(arcadeMachinePos, game);
-        }
         super.onClose();
-        game = null;
     }
 }

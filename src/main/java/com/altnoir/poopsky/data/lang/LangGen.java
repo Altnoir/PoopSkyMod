@@ -331,7 +331,6 @@ public final class LangGen {
         provider.add("gui.gamingconsole.new_best_score", "New Best");
         provider.add("gui.gamingconsole.won", "You won!");
         provider.add("gui.gamingconsole.died", "You lost!");
-        provider.add("gui.gamingconsole.hold", "Hold");
         provider.add("gui.gamingconsole.next", "Next");
 
         // Containers

@@ -3,6 +3,8 @@ package com.altnoir.poopsky.client.games.gamediscs;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec2;
 import com.altnoir.poopsky.PoopSky;
@@ -32,6 +34,28 @@ public class FlappyBirdGame extends Game {
 
     public FlappyBirdGame() {
         super();
+    }
+
+    @Override
+    public void applySnapshot(CompoundTag tag) {
+        super.applySnapshot(tag);
+        bird.setPos(new Vec2((float) tag.getDouble("birdX"), (float) tag.getDouble("birdY")));
+        bird.setVelocity(new Vec2(0, (float) tag.getDouble("birdVY")));
+        ground.setX((float) tag.getDouble("groundX"));
+        pipeSpawnTimer = tag.getInt("pipeSpawnTimer");
+
+        pipes.clear();
+        ListTag pipeTags = tag.getList("pipes", 10);
+        for (int i = 0; i < pipeTags.size(); i++) {
+            CompoundTag pipeTag = pipeTags.getCompound(i);
+            float x = (float) pipeTag.getDouble("x");
+            float hole = (float) pipeTag.getDouble("hole");
+            float holeSize = (float) pipeTag.getDouble("holeSize");
+            pipes.add(new Sprite(new Vec2(x, hole - 64), new Vec2(16, 64), PoopSky.loc("textures/games/sprite/pipe_top.png")));
+            pipes.add(new Sprite(new Vec2(x, hole + holeSize), new Vec2(16, 64), PoopSky.loc("textures/games/sprite/pipe_bottom.png")));
+            pipes.getLast().setVelocity(new Vec2(-2.5F, 0));
+            pipes.get(pipes.size() - 2).setVelocity(new Vec2(-2.5F, 0));
+        }
     }
 
     @Override

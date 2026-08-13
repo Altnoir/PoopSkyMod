@@ -14,6 +14,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
@@ -73,6 +74,20 @@ public final class ArcadeWorldScreenRenderer {
         }
     }
 
+    public static void applyRemoteSnapshot(BlockPos pos, ItemStack cartridge, CompoundTag snapshot) {
+        if (cartridge.isEmpty() || !(cartridge.getItem() instanceof GameDiscItem disc)) {
+            ScreenState state = SCREENS.remove(pos);
+            if (state != null) {
+                state.close();
+            }
+            return;
+        }
+
+        ScreenState state = getOrCreate(pos, disc);
+        state.snapshot = snapshot;
+        state.ensureResources();
+    }
+
     public static void onClientStop() {
         SCREENS.values().forEach(ScreenState::close);
         SCREENS.clear();
@@ -107,10 +122,10 @@ public final class ArcadeWorldScreenRenderer {
     }
 
     private static void renderState(ScreenState state) {
-        Game game = state.activeGame != null ? state.activeGame : state.cartridgeGame;
-        if (game == null) {
+        if (state.cartridgeGame == null) {
             return;
         }
+        ClientGameRenderer.apply(state.cartridgeGame, state.snapshot);
 
         RenderSystem.backupProjectionMatrix();
         Matrix4fStack modelViewStack = RenderSystem.getModelViewStack();
@@ -129,7 +144,7 @@ public final class ArcadeWorldScreenRenderer {
         );
 
         GuiGraphics graphics = new GuiGraphics(Minecraft.getInstance(), state.bufferSource);
-        game.render(graphics, 0, 0);
+        state.cartridgeGame.render(graphics, 0, 0);
         graphics.flush();
 
         NativeImage pixels = state.texture.getPixels();
@@ -152,6 +167,7 @@ public final class ArcadeWorldScreenRenderer {
         private GameDiscItem cartridge;
         private Game cartridgeGame;
         private Game activeGame;
+        private CompoundTag snapshot;
         private RenderTarget target;
         private DynamicTexture texture;
         private ByteBufferBuilder bufferBuilder;
@@ -164,7 +180,6 @@ public final class ArcadeWorldScreenRenderer {
             this.cartridgeGame = ClientUtils.newGameFor(cartridge);
             this.cartridgeGame.setArcadeMachine(pos);
             this.cartridgeGame.prepare();
-            this.cartridgeGame.start();
         }
 
         private void ensureResources() {

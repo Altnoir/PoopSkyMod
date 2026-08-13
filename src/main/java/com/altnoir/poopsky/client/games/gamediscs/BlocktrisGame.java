@@ -1,11 +1,5 @@
 package com.altnoir.poopsky.client.games.gamediscs;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.phys.Vec2;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.client.games.controls.Button;
 import com.altnoir.poopsky.client.games.graphics.BasicParticleRenderer;
@@ -13,27 +7,40 @@ import com.altnoir.poopsky.client.games.graphics.MultiImage;
 import com.altnoir.poopsky.client.games.graphics.ParticleColor;
 import com.altnoir.poopsky.client.games.util.*;
 import com.altnoir.poopsky.init.PoSoundEvents;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.chat.Component;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.Vec2;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BlocktrisGame extends Game {
+    private static final int TILE_SIZE = 8;
+    private static final int GRID_WIDTH = 10;
+    private static final int GRID_HEIGHT = 20;
+    private static final int BOARD_X = 72;
+    private static final int NEXT_CELL_X = 23;
+    private static final int NEXT_LABEL_X = 188;
+
     public Grid grid;
     private BlocktrisPiece piece;
-    private BlocktrisPiece hold = null;
-    private List<BlocktrisPiece> nexts = new ArrayList<>();
+    private final List<BlocktrisPiece> nexts = new ArrayList<>();
     private int placementCooldown = 0;
-    private boolean switched = false;
 
     public BlocktrisGame() {
         super();
         grid = new Grid(
-                10,
-                23,
-                5,
+                GRID_WIDTH,
+                GRID_HEIGHT,
+                TILE_SIZE,
                 new MultiImage(
                         PoopSky.loc("textures/games/sprite/cubes.png"),
-                        5, 40, 8));
+                        8, 64, 8));
 
         int type = random.nextInt(7);
         piece = new BlocktrisPiece(
@@ -45,16 +52,42 @@ public class BlocktrisGame extends Game {
     }
 
     @Override
+    public void applySnapshot(CompoundTag tag) {
+        super.applySnapshot(tag);
+
+        ListTag rows = tag.getList("grid", 11);
+        for (int y = 0; y < rows.size(); y++) {
+            int[] row = rows.getIntArray(y);
+            for (int x = 0; x < row.length; x++) {
+                grid.set(x, y, row[x]);
+            }
+        }
+
+        int type = tag.getInt("pieceType");
+        piece = new BlocktrisPiece(BlocktrisPiece.PIECES.get(type).get(), tag.getInt("pieceX"), tag.getInt("pieceY"), type, this);
+        piece.setRotation(tag.getInt("pieceRot"));
+
+        nexts.clear();
+        int[] nextTypes = tag.getIntArray("nextTypes");
+        for (int i = 0; i < nextTypes.length; i++) {
+            BlocktrisPiece next = new BlocktrisPiece(BlocktrisPiece.PIECES.get(nextTypes[i]).get(), NEXT_CELL_X, 4 + i * 3, nextTypes[i], this);
+            next.setRotation(1);
+            nexts.add(next);
+        }
+        placementCooldown = tag.getInt("placementCooldown");
+    }
+
+    @Override
     public void prepare() {
         super.prepare();
 
         grid = new Grid(
-                10,
-                23,
-                5,
+                GRID_WIDTH,
+                GRID_HEIGHT,
+                TILE_SIZE,
                 new MultiImage(
                         PoopSky.loc("textures/games/sprite/cubes.png"),
-                        5, 40, 8));
+                        8, 64, 8));
 
         int type = random.nextInt(0, 7);
         piece = new BlocktrisPiece(
@@ -64,7 +97,6 @@ public class BlocktrisGame extends Game {
                 this
         );
         nexts.clear();
-        hold = null;
     }
 
     @Override
@@ -82,7 +114,6 @@ public class BlocktrisGame extends Game {
             );
         }
         placementCooldown = 0;
-        switched = false;
     }
 
     @Override
@@ -94,34 +125,26 @@ public class BlocktrisGame extends Game {
 
     @Override
     public int gameTickDuration() {
-        return (int)(10f / ((float)score / 50f + 1f));
+        return (int) (10f / ((float) score / 50f + 1f));
     }
 
     @Override
     public void render(GuiGraphics graphics, int posX, int posY) {
         super.render(graphics, posX, posY);
 
-        grid.render(graphics, posX + 45, posY - 15);
-        piece.render(graphics, posX + 45, posY - 15);
+        grid.render(graphics, posX + BOARD_X, posY);
+        piece.render(graphics, posX + BOARD_X, posY);
 
         for (int i = 0; i < nexts.size(); i++) {
             BlocktrisPiece next = nexts.get(i);
             next.setRotation(1);
-            next.setPos(23, 4 + i * 3);
+            next.setPos(NEXT_CELL_X, 4 + i * 3);
             next.renderCentered(graphics, posX, posY);
         }
 
-        if (hold != null) {
-            hold.setRotation(1);
-            hold.setPos(4, 6);
-            hold.renderCentered(graphics, posX, posY);
-        }
-
         Font font = Minecraft.getInstance().font;
-        Component text = Component.translatable("gui.gamingconsole.hold");
-        graphics.drawString(font, text, 22 + posX - font.width(text.getVisualOrderText()) / 2, 16 + posY, 0x555555, false);
-        text = Component.translatable("gui.gamingconsole.next");
-        graphics.drawString(font, text, 118 + posX - font.width(text.getVisualOrderText()) / 2, 6 + posY, 0x555555, false);
+        Component text = Component.translatable("gui.gamingconsole.next");
+        graphics.drawString(font, text, NEXT_LABEL_X + posX - font.width(text.getVisualOrderText()) / 2, 12 + posY, 0x555555, false);
 
         renderParticles(graphics, posX, posY);
 
@@ -151,29 +174,16 @@ public class BlocktrisGame extends Game {
                 soundPlayer.play(PoSoundEvents.SHOOT.get(), 2.5f, 0.1f);
                 if (piece.move(0, 1)) {
                     placePiece();
-                }
-                else {
+                } else {
                     placementCooldown = 10;
                 }
             }
             if (button == Button.BUTTON1) {
                 soundPlayer.play(PoSoundEvents.EXPLOSION.get(), 0.7f, 0.5f);
                 piece.hardDrop();
+                placementCooldown = 0;
                 placePiece();
-            }
-            if (button == Button.BUTTON2) {
-                if (!switched) {
-                    soundPlayer.play(PoSoundEvents.SWITCH.get(), 0.6f, 0.5f);
-                    BlocktrisPiece oldHold = hold;
-                    hold = piece;
-                    if (oldHold != null) {
-                        piece = oldHold;
-                    } else {
-                        piece = getNext();
-                    }
-                    piece.setPos(4, 1);
-                    switched = true;
-                }
+                placementCooldown = 10;
             }
         }
     }
@@ -182,18 +192,20 @@ public class BlocktrisGame extends Game {
     public void tick() {
         super.tick();
         if (stage == GameStage.PLAYING && ticks % 2 == 0) {
-            if (controls.isButtonDown(Button.LEFT) && controls.wasButtonDown(Button.LEFT)) {
-                piece.move(-1, 0);
-                soundPlayer.play(PoSoundEvents.SHOOT.get(), 2.5f, 0.1f);
-            }
-            if (controls.isButtonDown(Button.RIGHT) && controls.wasButtonDown(Button.RIGHT)) {
-                piece.move(1, 0);
-                soundPlayer.play(PoSoundEvents.SHOOT.get(), 2.5f, 0.1f);
-            }
-            if (controls.isButtonDown(Button.DOWN) && controls.wasButtonDown(Button.DOWN)) {
-                soundPlayer.play(PoSoundEvents.SHOOT.get(), 2.5f, 0.1f);
-                if (piece.move(0, 1)) {
-                    placePiece();
+            if (placementCooldown <= 0) {
+                if (controls.isButtonDown(Button.LEFT) && controls.wasButtonDown(Button.LEFT)) {
+                    piece.move(-1, 0);
+                    soundPlayer.play(PoSoundEvents.SHOOT.get(), 2.5f, 0.1f);
+                }
+                if (controls.isButtonDown(Button.RIGHT) && controls.wasButtonDown(Button.RIGHT)) {
+                    piece.move(1, 0);
+                    soundPlayer.play(PoSoundEvents.SHOOT.get(), 2.5f, 0.1f);
+                }
+                if (controls.isButtonDown(Button.DOWN) && controls.wasButtonDown(Button.DOWN)) {
+                    soundPlayer.play(PoSoundEvents.SHOOT.get(), 2.5f, 0.1f);
+                    if (piece.move(0, 1)) {
+                        placePiece();
+                    }
                 }
             }
         }
@@ -204,7 +216,6 @@ public class BlocktrisGame extends Game {
     }
 
     private void placePiece() {
-        switched = false;
         if (placementCooldown <= 0) {
             piece.place();
 
@@ -226,7 +237,7 @@ public class BlocktrisGame extends Game {
                                 spawnParticleExplosion(
                                         () ->
                                                 new BasicParticleRenderer(ParticleColor.random(random)),
-                                        new Vec2(45 + x * 5, y * 5 - 15),
+                                        new Vec2(BOARD_X + x * TILE_SIZE, y * TILE_SIZE),
                                         4,
                                         3,
                                         5,

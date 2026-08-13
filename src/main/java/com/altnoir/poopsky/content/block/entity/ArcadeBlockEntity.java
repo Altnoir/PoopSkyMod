@@ -1,9 +1,12 @@
 package com.altnoir.poopsky.content.block.entity;
 
+import com.altnoir.poopsky.client.games.controls.Button;
+import com.altnoir.poopsky.client.games.util.GameStage;
 import com.altnoir.poopsky.content.block.p.ArcadeBlock;
 import com.altnoir.poopsky.content.item.p.GameDiscItem;
 import com.altnoir.poopsky.data.ArcadeLootGen;
-import com.altnoir.poopsky.impl.network.LightArcadeSyncPacket;
+import com.altnoir.poopsky.game.ServerGame;
+import com.altnoir.poopsky.impl.network.ArcadeSnapshotPacket;
 import com.altnoir.poopsky.init.PoBlockEntityType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -17,6 +20,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
@@ -39,11 +43,18 @@ public class ArcadeBlockEntity extends BlockEntity {
             setChanged();
             if (!suppressSync) {
                 syncToClients();
+                if (level != null && !level.isClientSide) {
+                    refreshSession();
+                }
             }
         }
     };
     private final Map<UUID, Map<String, Integer>> bestScores = new HashMap<>();
     private int rewardCount;
+    private ServerGame game;
+    private int snapshotCooldown;
+    private UUID activePlayer;
+    private boolean scoreSettled;
 
     public ArcadeBlockEntity(BlockPos pos, BlockState state) {
         super(PoBlockEntityType.ARCADE_BLOCK_ENTITY.get(), pos, state);
@@ -81,8 +92,86 @@ public class ArcadeBlockEntity extends BlockEntity {
             inventory.setStackInSlot(0, ItemStack.EMPTY);
         } finally {
             suppressSync = false;
+            refreshSession();
         }
         return cartridge;
+    }
+
+    public void handleInput(ServerPlayer player, Button button, boolean pressed) {
+        if (game == null) {
+            refreshSession();
+        }
+        if (game != null && (activePlayer == null || game.stage == GameStage.START)) {
+            activePlayer = player.getUUID();
+            scoreSettled = false;
+        }
+        if (game != null) {
+            game.setButton(button, pressed);
+        }
+    }
+
+    public void resetGame() {
+        if (game != null) {
+            game.prepare();
+            game.settledScore = 0;
+            scoreSettled = false;
+            snapshotCooldown = 0;
+            broadcastSnapshot();
+        }
+    }
+
+    public static void serverTick(Level level, BlockPos pos, BlockState state, ArcadeBlockEntity arcade) {
+        arcade.serverTickInternal();
+    }
+
+    private void serverTickInternal() {
+        if (game == null) {
+            return;
+        }
+
+        game.tick();
+        if (!scoreSettled && (game.stage == GameStage.DIED || game.stage == GameStage.WON)) {
+            game.settledScore = game.score;
+            settleActiveGame();
+        }
+        snapshotCooldown--;
+        if (snapshotCooldown <= 0) {
+            snapshotCooldown = 2;
+            broadcastSnapshot();
+        }
+    }
+
+    private void refreshSession() {
+        if (!(getCartridge().getItem() instanceof GameDiscItem disc)) {
+            game = null;
+            activePlayer = null;
+            scoreSettled = false;
+            snapshotCooldown = 0;
+            return;
+        }
+        game = ServerGame.create(disc, getBlockPos());
+        scoreSettled = false;
+        game.setSoundEmitter((event, pitch, volume) -> {
+            if (level != null) {
+                level.playSound(null, getBlockPos().above(), event, SoundSource.BLOCKS, volume, pitch);
+            }
+        });
+        snapshotCooldown = 0;
+    }
+
+    private void settleActiveGame() {
+        scoreSettled = true;
+        if (!(level instanceof ServerLevel serverLevel) || activePlayer == null) {
+            return;
+        }
+        ServerPlayer player = serverLevel.getServer().getPlayerList().getPlayer(activePlayer);
+        if (player != null) {
+            settleGame(player, game.getGameName(), game.score);
+        }
+    }
+
+    private void broadcastSnapshot() {
+        sendStatePacket();
     }
 
     public int getBestScore(UUID player, String game) {
@@ -140,13 +229,19 @@ public class ArcadeBlockEntity extends BlockEntity {
     }
 
     public void syncToClients() {
-        if (level instanceof ServerLevel serverLevel) {
-            PacketDistributor.sendToPlayersTrackingChunk(
-                    serverLevel,
-                    new ChunkPos(getBlockPos()),
-                    new LightArcadeSyncPacket(getBlockPos(), saveWithoutMetadata(serverLevel.registryAccess()))
-            );
+        sendStatePacket();
+    }
+
+    private void sendStatePacket() {
+        if (!(level instanceof ServerLevel serverLevel)) {
+            return;
         }
+        CompoundTag gameSnapshot = game != null ? game.writeSnapshot() : new CompoundTag();
+        PacketDistributor.sendToPlayersTrackingChunk(
+                serverLevel,
+                new ChunkPos(getBlockPos()),
+                new ArcadeSnapshotPacket(getBlockPos(), saveWithoutMetadata(serverLevel.registryAccess()), gameSnapshot)
+        );
     }
 
     public void applyClientData(CompoundTag tag, HolderLookup.Provider registries) {
@@ -196,6 +291,9 @@ public class ArcadeBlockEntity extends BlockEntity {
                 scoresByGame.put(game, playerScores.getInt(game));
             }
             bestScores.put(UUID.fromString(playerId), scoresByGame);
+        }
+        if (level != null && !level.isClientSide) {
+            refreshSession();
         }
     }
 }

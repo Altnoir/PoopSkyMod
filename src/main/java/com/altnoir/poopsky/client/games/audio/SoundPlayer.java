@@ -3,7 +3,10 @@ package com.altnoir.poopsky.client.games.audio;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.client.resources.sounds.SoundInstance;
 import com.altnoir.poopsky.init.PoSoundEvents;
 
 import java.util.Random;
@@ -12,6 +15,7 @@ import java.util.Random;
 public class SoundPlayer {
     private final SoundManager manager;
     private final Random random;
+    private BlockPos position;
 
     public SoundPlayer() {
         manager = Minecraft.getInstance().getSoundManager();
@@ -25,7 +29,26 @@ public class SoundPlayer {
         play(event, pitch, 1f);
     }
     public void play(SoundEvent event, float pitch, float volume) {
-        manager.play(SimpleSoundInstance.forUI(event, pitch, volume));
+        if (position != null) {
+            manager.play(new SimpleSoundInstance(
+                    event,
+                    SoundSource.BLOCKS,
+                    volume,
+                    pitch,
+                    SoundInstance.createUnseededRandom(),
+                    position
+            ));
+        } else {
+            manager.play(SimpleSoundInstance.forUI(event, pitch, volume));
+        }
+    }
+
+    public void setPosition(BlockPos position) {
+        this.position = position;
+    }
+
+    public void clearPosition() {
+        this.position = null;
     }
     public void playRandom(SoundEvent event, float minPitch, float maxPitch, float volume) {
         play(event, random.nextFloat(minPitch, maxPitch), volume);
