@@ -3,6 +3,7 @@ package com.altnoir.poopsky.mixin;
 import com.altnoir.poopsky.content.item.p.TimeBellItem;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.init.PoEffects;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -16,8 +17,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin {
-    @Inject(method = "hurt", at = @At("HEAD"), cancellable = true)
-    private void poopsky$ignoreProjectiles(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+    @Inject(method = "hurtServer", at = @At("HEAD"), cancellable = true)
+    private void poopsky$ignoreProjectiles(ServerLevel level, DamageSource source, float damage, CallbackInfoReturnable<Boolean> cir) {
         LivingEntity self = (LivingEntity) (Object) this;
         if (poopSky$hasCurse(self) && source.is(DamageTypeTags.IS_PROJECTILE)) {
             cir.setReturnValue(false);
@@ -42,8 +43,8 @@ public class LivingEntityMixin {
         return finalAmount;
     }
 
-    @Inject(method = "hurt", at = @At("TAIL"))
-    private void poopsky$removeInvulnerabilityDuringTimeFreeze(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+    @Inject(method = "hurtServer", at = @At("TAIL"))
+    private void poopsky$removeInvulnerabilityDuringTimeFreeze(ServerLevel level, DamageSource source, float damage, CallbackInfoReturnable<Boolean> cir) {
         if (cir.getReturnValueZ()) {
             Entity self = (Entity) (Object) this;
             if (!self.level().isClientSide() && TimeBellItem.isTimeBellFreeze()) {

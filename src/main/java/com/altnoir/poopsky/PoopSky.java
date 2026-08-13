@@ -83,6 +83,7 @@ public class PoopSky {
 
         PoParticles.register();
         ParticleGen.register();
+        ItemModelGen.register();
         AdvancementGen.register();
         RecipeGen.register();
         PoSoundEvents.register();
@@ -115,9 +116,6 @@ public class PoopSky {
             DispenserBlock.registerProjectileBehavior(PoItems.POOP_BALL);
             DispenserBlock.registerProjectileBehavior(PoItems.SEA_POOP_BALL);
             DispenserBlock.registerProjectileBehavior(PoItems.WITHER_POOP_BALL);
-            DispenserBlock.registerBehavior(PoBlocks.SHIT.asItem(), ArmorItem.DISPENSE_ITEM_BEHAVIOR);
-            DispenserBlock.registerBehavior(PoBlocks.CHILI_SHIT.asItem(), ArmorItem.DISPENSE_ITEM_BEHAVIOR);
-            DispenserBlock.registerBehavior(PoBlocks.GOLDEN_SHIT.asItem(), ArmorItem.DISPENSE_ITEM_BEHAVIOR);
             DispenserBlock.registerBehavior(PoItems.POOP.get(), new OptionalDispenseItemBehavior() {
                 @Override
                 protected ItemStack execute(BlockSource blockSource, ItemStack item) {
@@ -167,15 +165,15 @@ public class PoopSky {
                 private final DefaultDispenseItemBehavior defaultDispenseItemBehavior = new DefaultDispenseItemBehavior();
 
                 @Override
-                public ItemStack execute(BlockSource p_338850_, ItemStack p_338251_) {
-                    DispensibleContainerItem dispensiblecontaineritem = (DispensibleContainerItem) p_338251_.getItem();
-                    BlockPos blockpos = p_338850_.pos().relative(p_338850_.state().getValue(DispenserBlock.FACING));
-                    Level level = p_338850_.level();
-                    if (dispensiblecontaineritem.emptyContents(null, level, blockpos, null, p_338251_)) {
-                        dispensiblecontaineritem.checkExtraContent(null, level, p_338251_, blockpos);
-                        return this.consumeWithRemainder(p_338850_, p_338251_, new ItemStack(Items.BUCKET));
+                public ItemStack execute(BlockSource blockSource, ItemStack item) {
+                    DispensibleContainerItem dispensiblecontaineritem = (DispensibleContainerItem) item.getItem();
+                    BlockPos blockpos = blockSource.pos().relative(blockSource.state().getValue(DispenserBlock.FACING));
+                    Level level = blockSource.level();
+                    if (dispensiblecontaineritem.emptyContents(null, level, blockpos, null, item)) {
+                        dispensiblecontaineritem.checkExtraContent(null, level, item, blockpos);
+                        return this.consumeWithRemainder(blockSource, item, new ItemStack(Items.BUCKET));
                     } else {
-                        return this.defaultDispenseItemBehavior.dispense(p_338850_, p_338251_);
+                        return this.defaultDispenseItemBehavior.dispense(blockSource, item);
                     }
                 }
             };

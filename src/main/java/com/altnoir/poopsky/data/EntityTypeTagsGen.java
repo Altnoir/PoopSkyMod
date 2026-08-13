@@ -20,18 +20,18 @@ public final class EntityTypeTagsGen {
     }
 
     private static void generate(RegistrateTagsProvider.IntrinsicImpl<EntityType<?>> provider) {
-        provider.addTag(PoTags.EntityTypes.IGNORES_BLEEDING)
+        provider.tag(PoTags.EntityTypes.IGNORES_BLEEDING)
                 .add(EntityType.IRON_GOLEM, EntityType.SNOW_GOLEM);
 
-        provider.addTag(PoTags.EntityTypes.RETAIN_IN_SUB_LEVEL)
+        provider.tag(PoTags.EntityTypes.RETAIN_IN_SUB_LEVEL)
                 .add(PoEntityType.STOOL.get(), PoEntityType.FLUSH_TOILET.get());
-        provider.addTag(PoTags.EntityTypes.DESTROY_WITH_SUB_LEVEL)
+        provider.tag(PoTags.EntityTypes.DESTROY_WITH_SUB_LEVEL)
                 .add(PoEntityType.STOOL.get(), PoEntityType.FLUSH_TOILET.get());
 
-        provider.addTag(EntityTypeTags.IGNORES_POISON_AND_REGEN)
+        provider.tag(EntityTypeTags.IGNORES_POISON_AND_REGEN)
                 .add(PoEntityType.POOLIME.get(), PoEntityType.FLY.get());
 
-        provider.addTag(EntityTypeTags.ARTHROPOD)
+        provider.tag(EntityTypeTags.ARTHROPOD)
                 .add(PoEntityType.FLY.get());
     }
 }

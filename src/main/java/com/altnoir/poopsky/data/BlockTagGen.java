@@ -151,7 +151,7 @@ public final class BlockTagGen {
         tag(BlockTags.SAND)
                 .add(PoBlocks.DRIED_POOP_BLOCK.get());
 
-        tag(BlockTags.MUSHROOM_GROW_BLOCK)
+        tag(BlockTags.OVERRIDES_MUSHROOM_LIGHT_REQUIREMENT)
                 .addTag(PoTags.Blocks.POOP_BLOCKS)
                 .add(PoBlocks.RAW_POOP_BLOCK.get())
                 .add(PoBlocks.RAW_SAPLING_POOP_BLOCK.get())

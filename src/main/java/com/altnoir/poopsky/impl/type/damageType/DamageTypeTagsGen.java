@@ -5,7 +5,7 @@ import com.altnoir.poopsky.impl.PoTags;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.data.tags.KeyTagProvider;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.TagKey;
@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class DamageTypeTagsGen extends TagsProvider<DamageType> {
+public class DamageTypeTagsGen extends KeyTagProvider<DamageType> {
     private static final List<TagKey<DamageType>> BLEEDING_BYPASS_TAGS = List.of(
             DamageTypeTags.IS_FIRE,
             DamageTypeTags.IS_FREEZING,

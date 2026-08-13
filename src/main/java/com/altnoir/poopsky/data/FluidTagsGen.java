@@ -20,11 +20,11 @@ public final class FluidTagsGen {
     }
 
     private static void generate(RegistrateTagsProvider.IntrinsicImpl<Fluid> provider) {
-        provider.addTag(FluidTags.WATER)
+        provider.tag(FluidTags.WATER)
                 .add(PoFluids.URINE.get())
                 .add(PoFluids.FLOWING_URINE.get());
 
-        provider.addTag(PoTags.Fluids.FAN_PROCESSING_CATALYSTS_DIGESTING)
+        provider.tag(PoTags.Fluids.FAN_PROCESSING_CATALYSTS_DIGESTING)
                 .add(PoFluids.URINE.get())
                 .add(PoFluids.FLOWING_URINE.get());
     }

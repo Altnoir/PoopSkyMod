@@ -1,24 +1,24 @@
 package com.altnoir.poopsky.compat.jei;
 
 import com.altnoir.poopsky.PoopSky;
-//import com.altnoir.poopsky.compat.PoMods;
-//import com.altnoir.poopsky.compat.jei.create.FanDigestingCategory;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.recipe.ToiletShapedRecipe;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoComponents;
 import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.init.PoRecipes;
-//import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.ingredients.subtypes.ISubtypeInterpreter;
-//import mezz.jei.api.recipe.category.IRecipeCategory;
-import mezz.jei.api.ingredients.subtypes.UidContext;
 import mezz.jei.api.registration.*;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
+
+//import com.altnoir.poopsky.compat.PoMods;
+//import com.altnoir.poopsky.compat.jei.create.FanDigestingCategory;
+//import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
+//import mezz.jei.api.recipe.category.IRecipeCategory;
 
 //import java.util.ArrayList;
 //import java.util.List;
@@ -57,19 +57,11 @@ public class PSJEIPlugin implements IModPlugin {
 
     @Override
     public void registerItemSubtypes(ISubtypeRegistration registration) {
-        registration.registerSubtypeInterpreter(PoItems.FLY.get(), new ISubtypeInterpreter<>() {
-            @Override
-            public Object getSubtypeData(ItemStack itemStack, UidContext context) {
-                return itemStack.get(PoComponents.FLY_TYPE.get());
-            }
-        });
+        registration.registerSubtypeInterpreter(PoItems.FLY.get(), (itemStack, context) -> itemStack.get(PoComponents.FLY_TYPE.get()));
 
-        ISubtypeInterpreter<ItemStack> toiletSubtypeInterpreter = new ISubtypeInterpreter<>() {
-            @Override
-            public Object getSubtypeData(ItemStack itemStack, UidContext context) {
-                ToiletType toiletType = itemStack.get(PoComponents.TOILET_TYPE.get());
-                return toiletType != null ? toiletType.id() : null;
-            }
+        ISubtypeInterpreter<ItemStack> toiletSubtypeInterpreter = (itemStack, context) -> {
+            ToiletType toiletType = itemStack.get(PoComponents.TOILET_TYPE.get());
+            return toiletType != null ? toiletType.id() : null;
         };
         registration.registerSubtypeInterpreter(PoBlocks.WOODEN_TOILET.asItem(), toiletSubtypeInterpreter);
         registration.registerSubtypeInterpreter(PoBlocks.HARD_TOILET.asItem(), toiletSubtypeInterpreter);

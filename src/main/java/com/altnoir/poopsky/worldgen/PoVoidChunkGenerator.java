@@ -58,7 +58,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
                     ),
                     keys -> keys.size() == 1
                             ? Either.right(keys.getFirst().identifier())
-                            : Either.left(keys.stream().map(ResourceKey::location).toList())
+                            : Either.left(keys.stream().map(ResourceKey::identifier).toList())
             );
 
     private static final Codec<AllowedStructureSets> ALLOWED_STRUCTURE_SETS_CODEC =
@@ -163,7 +163,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
             return super.getBaseColumn(x, z, level, randomState);
         }
 
-        int minY = level.getMinBuildHeight();
+        int minY = level.getMinY();
         int surfaceY = virtualSurfaceY(level);
         BlockState[] states = new BlockState[Math.max(0, surfaceY - minY)];
 
@@ -182,9 +182,10 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
             ChunkGeneratorStructureState structureState,
             StructureManager structureManager,
             ChunkAccess chunk,
-            StructureTemplateManager templateManager
+            StructureTemplateManager templateManager,
+            ResourceKey<Level> levelKey
     ) {
-        super.createStructures(registries, structureState, structureManager, chunk, templateManager);
+        super.createStructures(registries, structureState, structureManager, chunk, templateManager, levelKey);
 
         if (!generateNormal) {
             filterStructureStarts(registries, structureState.getLevelSeed(), chunk);
@@ -244,9 +245,9 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
             return Set.of();
         }
 
-        Registry<StructureSet> registry = registries.registryOrThrow(Registries.STRUCTURE_SET);
+        Registry<StructureSet> registry = registries.lookupOrThrow(Registries.STRUCTURE_SET);
 
-        return registry.holders()
+        return registry.listElements()
                 .filter(this::isStructureSetAllowed)
                 .flatMap(holder -> holder.value().structures().stream())
                 .map(StructureSelectionEntry::structure)
@@ -259,8 +260,8 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
             return true;
         }
 
-        Registry<Structure> structureRegistry = registries.registryOrThrow(Registries.STRUCTURE);
-        Structure structure = structureRegistry.get(structureId);
+        Registry<Structure> structureRegistry = registries.lookupOrThrow(Registries.STRUCTURE);
+        Structure structure = structureRegistry.getValue(structureId);
         return structure != null && resolveAllowedStructures(registries).contains(structure);
     }
 
@@ -364,7 +365,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
         SectionPos sectionPos = SectionPos.bottomOf(chunk);
         BlockPos origin = sectionPos.origin();
         RegistryAccess registries = level.registryAccess();
-        Registry<Structure> structureRegistry = registries.registryOrThrow(Registries.STRUCTURE);
+        Registry<Structure> structureRegistry = registries.lookupOrThrow(Registries.STRUCTURE);
         Set<Structure> allowedStructures = resolveAllowedStructures(registries);
 
         Map<Integer, List<Structure>> structuresByStep =
@@ -419,8 +420,8 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
             CrashReport report = CrashReport.forThrowable(exception, "Void biome decoration");
 
             report.addCategory("Generation")
-                    .setDetail("CenterX", chunkPos.x)
-                    .setDetail("CenterZ", chunkPos.z)
+                    .setDetail("CenterX", chunkPos.x())
+                    .setDetail("CenterZ", chunkPos.z())
                     .setDetail("Decoration Seed", decorationSeed);
 
             throw new ReportedException(report);
@@ -435,15 +436,15 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
 
         return new BoundingBox(
                 pos.getMinBlockX(),
-                height.getMinBuildHeight() + 1,
+                height.getMinY() + 1,
                 pos.getMinBlockZ(),
                 pos.getMaxBlockX(),
-                height.getMaxBuildHeight() - 1,
+                height.getMaxY(),
                 pos.getMaxBlockZ()
         );
     }
 
     private static int virtualSurfaceY(LevelHeightAccessor level) {
-        return Math.clamp(VIRTUAL_SURFACE_Y, level.getMinBuildHeight() + 1, level.getMaxBuildHeight());
+        return Math.clamp(VIRTUAL_SURFACE_Y, level.getMinY() + 1, level.getMaxY() + 1);
     }
 }

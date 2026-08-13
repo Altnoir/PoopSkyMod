@@ -56,8 +56,8 @@ import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsE
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.List;
 import java.util.Set;
@@ -231,8 +231,8 @@ public class PoopSkyClient {
                     if (originalDefaultWorldPreset.unwrapKey().equals(originalPreset.unwrapKey())) {
                         uiState.getSettings()
                                 .worldgenLoadContext()
-                                .registryOrThrow(Registries.WORLD_PRESET)
-                                .getHolder(PoWorldPreset.overrideDefaultWorldPreset())
+                                .lookupOrThrow(Registries.WORLD_PRESET)
+                                .get(PoWorldPreset.overrideDefaultWorldPreset())
                                 .ifPresent(voidWorldPreset -> uiState.setWorldType(
                                         new WorldCreationUiState.WorldTypeEntry(voidWorldPreset)));
                     }
@@ -254,10 +254,10 @@ public class PoopSkyClient {
             boolean isRidingPlug = mc.player.getVehicle() instanceof ToiletPlugEntity;
 
             while (PSKeyBoardInput.USE_PLUG_KEY.consumeClick()) {
-                PacketDistributor.sendToServer(new PlugActionPayload());
+                ClientPacketDistributor.sendToServer(new PlugActionPayload());
             }
             if (isRidingPlug && PSKeyBoardInput.DISMOUNT_PLUG_KEY.consumeClick()) {
-                PacketDistributor.sendToServer(new PlugDismountPayload());
+                ClientPacketDistributor.sendToServer(new PlugDismountPayload());
             }
         }
     }

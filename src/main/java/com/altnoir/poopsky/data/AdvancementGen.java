@@ -10,10 +10,14 @@ import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.criterion.*;
-import net.minecraft.core.component.predicates.DataComponentPredicate;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentExactPredicate;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 
@@ -28,6 +32,10 @@ public final class AdvancementGen {
     }
 
     private static void generate(RegistrateAdvancementProvider provider) {
+        HolderLookup.Provider registries = provider.getProvider();
+        HolderLookup<Item> items = registries.lookupOrThrow(Registries.ITEM);
+        HolderLookup<EntityType<?>> entityTypes = registries.lookupOrThrow(Registries.ENTITY_TYPE);
+
         AdvancementHolder root = Advancement.Builder.advancement()
                 .display(
                         PoBlocks.WOODEN_TOILET.get(),
@@ -282,7 +290,7 @@ public final class AdvancementGen {
         Advancement.Builder.advancement()
                 .parent(compooper)
                 .display(
-                        rainbowStack,
+                        ItemStackTemplate.fromNonEmptyStack(rainbowStack),
                         Component.translatable("advancements.poopsky.rainbow_toilet.title"),
                         Component.translatable("advancements.poopsky.rainbow_toilet.description"),
                         null,
@@ -292,9 +300,9 @@ public final class AdvancementGen {
                         false
                 )
                 .addCriterion("rainbow_toilet", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
-                        .of(PoBlocks.HARD_TOILET.get())
-                        .hasComponents(DataComponentPredicate.builder()
-                                .expect(PoComponents.TOILET_TYPE.get(), ToiletTypes.RAINBOW)
+                        .of(items, PoBlocks.HARD_TOILET.get())
+                        .withComponents(DataComponentMatchers.Builder.components()
+                                .exact(DataComponentExactPredicate.expect(PoComponents.TOILET_TYPE.get(), ToiletTypes.RAINBOW))
                                 .build())))
                 .save(provider, modId("rainbow_toilet"));
 
@@ -408,7 +416,7 @@ public final class AdvancementGen {
                         true,
                         false
                 )
-                .addCriterion("fly", SummonedEntityTrigger.TriggerInstance.summonedEntity(EntityPredicate.Builder.entity().of(PoEntityType.FLY.get())))
+                .addCriterion("fly", SummonedEntityTrigger.TriggerInstance.summonedEntity(EntityPredicate.Builder.entity().of(entityTypes, PoEntityType.FLY.get())))
                 .save(provider, modId("fly"));
         AdvancementHolder fly_catcher = Advancement.Builder.advancement()
                 .parent(fly)
@@ -609,7 +617,7 @@ public final class AdvancementGen {
                         true,
                         false
                 )
-                .addCriterion("summon_villager", SummonedEntityTrigger.TriggerInstance.summonedEntity(EntityPredicate.Builder.entity().of(EntityType.VILLAGER)))
+                .addCriterion("summon_villager", SummonedEntityTrigger.TriggerInstance.summonedEntity(EntityPredicate.Builder.entity().of(entityTypes, EntityType.VILLAGER)))
                 .save(provider, modId("summon_villager"));
     }
 

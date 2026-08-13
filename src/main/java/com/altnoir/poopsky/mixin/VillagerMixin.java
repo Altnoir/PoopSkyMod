@@ -1,11 +1,15 @@
 package com.altnoir.poopsky.mixin;
 
 import com.altnoir.poopsky.init.PoItems;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +23,7 @@ public class VillagerMixin {
     )
     public Object redirectFoodPointsGet(Map<Item, Integer> map, Object item) {
         if (map == Villager.FOOD_POINTS && item == PoItems.POOP.get()) return 1;
-        return map.get(item);
+        return item instanceof Item key ? map.get(key) : null;
     }
 
     @Redirect(
@@ -35,11 +39,11 @@ public class VillagerMixin {
         return item.entrySet();
     }
 
-    @Redirect(
-            method = "wantsToPickUp",
-            at = @At(value = "INVOKE", target = "Ljava/util/Set;contains(Ljava/lang/Object;)Z", remap = false, ordinal = 0)
-    )
-    public boolean wantsToPickUp(Set<Item> set, Object item) {
-        return set.contains(item) || item == PoItems.POOP.get() || item == PoItems.MAGGOTS_SEEDS.get();
+    @Inject(method = "wantsToPickUp", at = @At("HEAD"), cancellable = true)
+    private void poopsky$acceptPoopAndMaggots(ServerLevel level, ItemStack itemStack, CallbackInfoReturnable<Boolean> cir) {
+        if ((itemStack.is(PoItems.POOP) || itemStack.is(PoItems.MAGGOTS_SEEDS))
+                && ((Villager) (Object) this).getInventory().canAddItem(itemStack)) {
+            cir.setReturnValue(true);
+        }
     }
 }

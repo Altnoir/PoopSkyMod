@@ -5,21 +5,21 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 
-import java.util.List;
+public final class PCompooperRecipes {
+    private PCompooperRecipes() {
+    }
 
-public class PCompooperRecipes {
     public static ItemStack getResult(Level level, String fluidType, ItemStack input) {
-        if (level == null) return ItemStack.EMPTY;
-
-        List<RecipeHolder<CompooperRecipe>> recipes = level.recipeAccess().getAllRecipesFor(PoRecipes.COMPOOPER.type().get());
-
-        for (var holder : recipes) {
-            CompooperRecipe recipe = holder.value();
-            if (recipe.matchesFluid(fluidType) && recipe.matchesInput(input)) {
-                return recipe.output().copy();
-            }
+        if (level == null || input.isEmpty()) {
+            return ItemStack.EMPTY;
         }
 
-        return ItemStack.EMPTY;
+        return PoRecipeLookup.all(level, PoRecipes.COMPOOPER.type().get())
+                .stream()
+                .map(RecipeHolder::value)
+                .filter(recipe -> recipe.matchesFluid(fluidType) && recipe.matchesInput(input))
+                .findFirst()
+                .map(recipe -> recipe.output().copy())
+                .orElse(ItemStack.EMPTY);
     }
 }

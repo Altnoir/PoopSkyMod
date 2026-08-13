@@ -85,12 +85,14 @@ public class PoopIslandStructure extends Structure {
     ) {
         BlockPos registeredSpawn = GUARANTEED_SPAWNS.get(seed);
         BlockPos center = registeredSpawn != null ? getGuaranteedSpawnIslandCenter(seed, registeredSpawn) : getGuaranteedSpawnIslandCenter(seed);
-        if (!chunk.getPos().equals(new ChunkPos(center))) {
+        if (!chunk.getPos().equals(new ChunkPos(
+                SectionPos.blockToSectionCoord(center.getX()),
+                SectionPos.blockToSectionCoord(center.getZ())))) {
             return;
         }
 
-        Registry<Structure> structureRegistry = registries.registryOrThrow(Registries.STRUCTURE);
-        Structure structure = structureRegistry.get(PoopSky.loc("poop_island"));
+        Registry<Structure> structureRegistry = registries.lookupOrThrow(Registries.STRUCTURE);
+        Structure structure = structureRegistry.getValue(PoopSky.loc("poop_island"));
         if (!(structure instanceof PoopIslandStructure)) {
             PoopSky.LOGGER.warn("Missing poop island structure");
             return;
@@ -106,10 +108,6 @@ public class PoopIslandStructure extends Structure {
         RandomSource random = RandomSource.create(seed ^ BlockPos.asLong(center.getX(), center.getY(), center.getZ()));
         Identifier templateId = randomTemplate(random);
         StructureTemplate template = templateManager.get(templateId).orElse(null);
-        if (template == null) {
-            PoopSky.LOGGER.warn("Missing poop island template {}", templateId);
-            return;
-        }
 
         Rotation rotation = Rotation.getRandom(random);
         Vec3i size = template.getSize(rotation);
@@ -146,7 +144,7 @@ public class PoopIslandStructure extends Structure {
 
     public static BlockPos getGuaranteedSpawnIslandCenter(ServerLevel level) {
         BlockPos registeredSpawn = GUARANTEED_SPAWNS.get(level.getSeed());
-        return getGuaranteedSpawnIslandCenter(level.getSeed(), Objects.requireNonNullElseGet(registeredSpawn, level::getSharedSpawnPos));
+        return getGuaranteedSpawnIslandCenter(level.getSeed(), Objects.requireNonNullElseGet(registeredSpawn, () -> level.getRespawnData().pos()));
     }
 
     private static Identifier randomTemplate(RandomSource random) {
@@ -154,6 +152,6 @@ public class PoopIslandStructure extends Structure {
     }
 
     private static int clampIslandY(LevelHeightAccessor level, int y) {
-        return Math.clamp(y, level.getMinBuildHeight() + 8, level.getMaxBuildHeight() - 32);
+        return Math.clamp(y, level.getMinY() + 8, level.getMaxY() - 31);
     }
 }

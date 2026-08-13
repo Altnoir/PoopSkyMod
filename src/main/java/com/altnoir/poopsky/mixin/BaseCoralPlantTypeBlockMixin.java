@@ -14,9 +14,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = BaseCoralPlantTypeBlock.class)
 public class BaseCoralPlantTypeBlockMixin {
     @Inject(method = "scanForWater", at = @At("HEAD"), cancellable = true)
-    private static void injectScanForWater(BlockState state, BlockGetter level, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
+    private static void injectScanForWater(BlockState state, BlockGetter level, BlockPos blockPos, CallbackInfoReturnable<Boolean> cir) {
         for (Direction direction : Direction.values()) {
-            if (level.getBlockState(pos.relative(direction)).is(PoTags.Blocks.WATER_BLOCK)) {
+            if (level.getBlockState(blockPos.relative(direction)).is(PoTags.Blocks.WATER_BLOCK)) {
                 cir.setReturnValue(true);
             }
         }
