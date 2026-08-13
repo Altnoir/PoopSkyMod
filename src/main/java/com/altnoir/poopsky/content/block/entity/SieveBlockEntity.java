@@ -24,8 +24,12 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.neoforged.neoforge.items.wrapper.RangedWrapper;
+import net.neoforged.neoforge.transfer.RangedResourceHandler;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
+import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -38,53 +42,73 @@ public class SieveBlockEntity extends BlockEntity {
     private int maxProgress = MANUAL_PROGRESS_PER_CLICK;
     private boolean autoMode = false;
 
-    private final ItemStackHandler itemHandler = new ItemStackHandler(1) {
+    private final ItemStacksResourceHandler itemHandler = new ItemStacksResourceHandler(1) {
         @Override
-        protected void onContentsChanged(int slot) {
+        protected void onContentsChanged(int index, ItemStack previousContents) {
             setChanged();
             syncToClient();
         }
 
         @Override
-        public int getSlotLimit(int slot) {
+        public boolean isValid(int slot, ItemResource resource) {
+            return !resource.isEmpty() && hasRecipe(resource.toStack(1));
+        }
+
+        @Override
+        protected int getCapacity(int slot, ItemResource resource) {
             return 1;
         }
 
         @Override
-        public boolean isItemValid(int slot, ItemStack stack) {
-            return hasRecipe(stack);
+        public int extract(int slot, ItemResource resource, int amount, TransactionContext transaction) {
+            return 0;
         }
 
         @Override
-        public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            return ItemStack.EMPTY;
+        public int extract(ItemResource resource, int amount, TransactionContext transaction) {
+            return 0;
         }
     };
-    private final RangedWrapper topSideHandler = new RangedWrapper(itemHandler, 0, 1) {
+    private final ResourceHandler<ItemResource> topSideHandler = new RangedResourceHandler<>(itemHandler, 0, 1) {
         @Override
-        public boolean isItemValid(int slot, ItemStack stack) {
-            return hasRecipe(stack);
+        public boolean isValid(int slot, ItemResource resource) {
+            return !resource.isEmpty() && hasRecipe(resource.toStack(1));
         }
 
         @Override
-        public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            return ItemStack.EMPTY;
+        public int extract(int slot, ItemResource resource, int amount, TransactionContext transaction) {
+            return 0;
+        }
+
+        @Override
+        public int extract(ItemResource resource, int amount, TransactionContext transaction) {
+            return 0;
         }
     };
-    private final RangedWrapper bottomHandler = new RangedWrapper(itemHandler, 0, 1) {
+    private final ResourceHandler<ItemResource> bottomHandler = new RangedResourceHandler<>(itemHandler, 0, 1) {
         @Override
-        public boolean isItemValid(int slot, ItemStack stack) {
+        public boolean isValid(int slot, ItemResource resource) {
             return false;
         }
 
         @Override
-        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-            return stack;
+        public int insert(int slot, ItemResource resource, int amount, TransactionContext transaction) {
+            return 0;
         }
 
         @Override
-        public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            return ItemStack.EMPTY;
+        public int insert(ItemResource resource, int amount, TransactionContext transaction) {
+            return 0;
+        }
+
+        @Override
+        public int extract(int slot, ItemResource resource, int amount, TransactionContext transaction) {
+            return 0;
+        }
+
+        @Override
+        public int extract(ItemResource resource, int amount, TransactionContext transaction) {
+            return 0;
         }
     };
 
@@ -93,11 +117,11 @@ public class SieveBlockEntity extends BlockEntity {
     }
     public boolean tryInsertInput(ItemStack stack) {
         if (level == null || level.isClientSide()) return false;
-        if (!itemHandler.getStackInSlot(INPUT_SLOT).isEmpty()) return false;
-        if (!itemHandler.isItemValid(INPUT_SLOT, stack)) return false;
+        if (!getStackInSlot(INPUT_SLOT).isEmpty()) return false;
+        if (!isItemValid(INPUT_SLOT, stack)) return false;
 
         ItemStack toInsert = stack.copyWithCount(1);
-        ItemStack remainder = itemHandler.insertItem(INPUT_SLOT, toInsert, false);
+        ItemStack remainder = insertItem(INPUT_SLOT, toInsert, false);
         if (remainder.isEmpty()) {
             playInsertEffects(toInsert);
             resetProgress();
@@ -126,7 +150,7 @@ public class SieveBlockEntity extends BlockEntity {
     private void completeRecipe() {
         if (level == null || level.isClientSide()) return;
 
-        ItemStack input = itemHandler.getStackInSlot(INPUT_SLOT);
+        ItemStack input = getStackInSlot(INPUT_SLOT);
         if (input.isEmpty()) return;
 
         Optional<SieveRecipe> recipeOpt = findRecipe(input);
@@ -152,7 +176,7 @@ public class SieveBlockEntity extends BlockEntity {
     }
 
     private void advanceProgress(int amount, boolean automatic) {
-        ItemStack input = itemHandler.getStackInSlot(INPUT_SLOT);
+        ItemStack input = getStackInSlot(INPUT_SLOT);
         Optional<SieveRecipe> recipe = findRecipe(input);
         if (recipe.isEmpty()) {
             if (progress != 0 || automatic != autoMode) {
@@ -193,7 +217,7 @@ public class SieveBlockEntity extends BlockEntity {
             return;
         }
 
-        BlockState blockState = getInputBlockState(itemHandler.getStackInSlot(INPUT_SLOT));
+        BlockState blockState = getInputBlockState(getStackInSlot(INPUT_SLOT));
         if (blockState == null) {
             return;
         }
@@ -243,14 +267,14 @@ public class SieveBlockEntity extends BlockEntity {
     }
 
     private void consumeInputForRecipe() {
-        ItemStack input = itemHandler.getStackInSlot(INPUT_SLOT);
+        ItemStack input = getStackInSlot(INPUT_SLOT);
         if (input.isEmpty()) {
             return;
         }
 
         ItemStack remaining = input.copy();
         remaining.shrink(1);
-        itemHandler.setStackInSlot(INPUT_SLOT, remaining);
+        setStackInSlot(INPUT_SLOT, remaining);
     }
 
     private void resetProgress() {
@@ -263,14 +287,14 @@ public class SieveBlockEntity extends BlockEntity {
 
     public void dropContents() {
         if (level != null) {
-            for (int i = 0; i < itemHandler.getSlots(); i++) {
-                Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), itemHandler.getStackInSlot(i));
+            for (int i = 0; i < itemHandler.size(); i++) {
+                Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), getStackInSlot(i));
             }
         }
     }
 
     public ItemStack getRenderStack() {
-        return itemHandler.getStackInSlot(INPUT_SLOT);
+        return getStackInSlot(INPUT_SLOT);
     }
 
     public float getRenderProgress(float partialTick) {
@@ -286,16 +310,43 @@ public class SieveBlockEntity extends BlockEntity {
         return Math.clamp(interpolatedProgress / (float) maxProgress, 0.0F, 1.0F);
     }
 
-    public ItemStackHandler getItemHandler() {
-        return itemHandler;
-    }
-
-    public RangedWrapper getTopSideHandler() {
+    public ResourceHandler<ItemResource> getTopSideHandler() {
         return topSideHandler;
     }
 
-    public RangedWrapper getBottomHandler() {
+    public ResourceHandler<ItemResource> getBottomHandler() {
         return bottomHandler;
+    }
+
+    public ItemStack getStackInSlot(int slot) {
+        ItemResource resource = itemHandler.getResource(slot);
+        long amount = itemHandler.getAmountAsLong(slot);
+        return resource.isEmpty() || amount <= 0 ? ItemStack.EMPTY : resource.toStack((int) amount);
+    }
+
+    public void setStackInSlot(int slot, ItemStack stack) {
+        if (stack.isEmpty()) {
+            itemHandler.set(slot, ItemResource.EMPTY, 0);
+        } else {
+            itemHandler.set(slot, ItemResource.of(stack), stack.getCount());
+        }
+    }
+
+    private ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+        if (stack.isEmpty()) return ItemStack.EMPTY;
+        ItemResource resource = ItemResource.of(stack);
+        try (Transaction tx = Transaction.openRoot()) {
+            int inserted = itemHandler.insert(slot, resource, stack.getCount(), tx);
+            if (!simulate) tx.commit();
+            if (inserted <= 0) return stack;
+            ItemStack remainder = stack.copy();
+            remainder.shrink(inserted);
+            return remainder;
+        }
+    }
+
+    private boolean isItemValid(int slot, ItemStack stack) {
+        return itemHandler.isValid(slot, ItemResource.of(stack));
     }
 
     @Override

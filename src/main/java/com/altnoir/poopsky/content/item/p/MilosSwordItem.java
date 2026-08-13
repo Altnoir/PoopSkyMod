@@ -22,8 +22,8 @@ public class MilosSwordItem extends Item {
     }
 
     @Override
-    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (!target.getType().is(PoTags.EntityTypes.IGNORES_BLEEDING)) {
+    public void hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        if (!target.getType().builtInRegistryHolder().is(PoTags.EntityTypes.IGNORES_BLEEDING)) {
             if (attacker instanceof Player player && player.getAttackStrengthScale(0.0F) >= 1.0F) {
                 if (!target.hasEffect(PoEffects.BLEEDING)) {
                     target.addEffect(new MobEffectInstance(PoEffects.BLEEDING, 200));
@@ -40,7 +40,7 @@ public class MilosSwordItem extends Item {
                 }
             }
         }
-        return super.hurtEnemy(stack, target, attacker);
+        super.hurtEnemy(stack, target, attacker);
     }
 
     public static ItemAttributeModifiers createAttributes(float attackRange, float attackDamage, float attackSpeed) {

@@ -2,8 +2,8 @@ package com.altnoir.poopsky.content.item.p;
 
 import com.altnoir.poopsky.content.item.IFeedable;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -59,14 +59,14 @@ public class UrineBottleItem extends Item implements IFeedable {
                 var waterPotion = PotionContents.createItemStack(Items.POTION, Potions.WATER);
 
                 chicken.playSound(SoundEvents.CHICKEN_EGG);
-                chicken.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 1200, 1));
+                chicken.addEffect(new MobEffectInstance(MobEffects.SPEED, 1200, 1));
                 chicken.hurt(player.damageSources().playerAttack(player), 1.0F);
                 if (!player.getAbilities().instabuild) {
                     stack.shrink(1);
                 }
-                entity.spawnAtLocation(waterPotion);
+                entity.spawnAtLocation((ServerLevel) entity.level(), waterPotion);
             }
-            return InteractionResult.sidedSuccess(player.level().isClientSide());
+            return player.level().isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
         }
         return super.interactLivingEntity(stack, player, entity, hand);
     }
@@ -74,16 +74,6 @@ public class UrineBottleItem extends Item implements IFeedable {
     @Override
     public ItemUseAnimation getUseAnimation(ItemStack stack) {
         return ItemUseAnimation.DRINK;
-    }
-
-    @Override
-    public SoundEvent getDrinkingSound() {
-        return SoundEvents.GENERIC_DRINK;
-    }
-
-    @Override
-    public SoundEvent getEatingSound() {
-        return SoundEvents.GENERIC_DRINK;
     }
 
     @Override

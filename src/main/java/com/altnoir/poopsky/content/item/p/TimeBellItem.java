@@ -81,18 +81,19 @@ public class TimeBellItem extends Item {
             executeFreeze(server, player);
         }
 
-        player.getCooldowns().addCooldown(this, FREEZE_TICKS + 1);
+        player.getCooldowns().addCooldown(stack, FREEZE_TICKS + 1);
     }
 
     @Override
-    public void releaseUsing(ItemStack stack, Level level, LivingEntity livingEntity, int timeLeft) {
-        if (!(livingEntity instanceof Player)) return;
+    public boolean releaseUsing(ItemStack stack, Level level, LivingEntity livingEntity, int timeLeft) {
+        if (!(livingEntity instanceof Player)) return false;
 
         int usedTicks = this.getUseDuration(stack, livingEntity) - timeLeft;
 
         if (usedTicks < DELAY_TICKS) {
-            Minecraft.getInstance().getSoundManager().stop(PoSoundEvents.ITEM_TIME_BELL_OPEN.get().getLocation(), SoundSource.PLAYERS);
+            Minecraft.getInstance().getSoundManager().stop(PoSoundEvents.ITEM_TIME_BELL_OPEN.get().location(), SoundSource.PLAYERS);
         }
+        return true;
     }
 
     private static void executeFreeze(MinecraftServer server, Player player) {

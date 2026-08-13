@@ -11,12 +11,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.List;
+import java.util.function.Consumer;
 
 public class ToiletBlockItem extends BlockItem {
     public ToiletBlockItem(Block block, Properties properties) {
@@ -75,12 +76,12 @@ public class ToiletBlockItem extends BlockItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> consumer, TooltipFlag tooltipFlag) {
+        super.appendHoverText(stack, context, tooltipDisplay, consumer, tooltipFlag);
         ToiletType type = stack.get(PoComponents.TOILET_TYPE.get());
         if (type == null) return;
 
-        tooltipComponents.add(Component.translatable("tooltip.poopsky.toilet_type")
+        consumer.accept(Component.translatable("tooltip.poopsky.toilet_type")
                 .append(": ")
                 .append(type.displayName())
                 .withStyle(ChatFormatting.GRAY));

@@ -9,6 +9,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -45,14 +46,13 @@ public class ToiletPlugItem extends Item {
                 .build();
     }
 
-    public static boolean poisonOnHit(LivingEntity target, LivingEntity attacker) {
+    public static void poisonOnHit(LivingEntity target, LivingEntity attacker) {
         target.addEffect(new MobEffectInstance(MobEffects.POISON, POISON_DURATION), attacker);
-        return true;
     }
 
     @Override
-    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        return poisonOnHit(target, attacker);
+    public void hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        poisonOnHit(target, attacker);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class ToiletPlugItem extends Item {
         var face = context.getClickedFace();
         var stack = context.getItemInHand();
 
-        var plug = PoEntityType.TOILET_PLUG.get().create(level);
+        var plug = PoEntityType.TOILET_PLUG.get().create(level, EntitySpawnReason.SPAWN_ITEM_USE);
 
         if (plug == null)
             return InteractionResult.FAIL;

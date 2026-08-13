@@ -5,6 +5,7 @@ import com.altnoir.poopsky.content.item.IFeedable;
 import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoEffects;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -22,7 +23,6 @@ import org.jetbrains.annotations.NotNull;
 public class DragonFruitRItem extends Item implements IFeedable {
     public DragonFruitRItem(Properties properties) {
         super(properties);
-
     }
 
     @Override
@@ -32,8 +32,8 @@ public class DragonFruitRItem extends Item implements IFeedable {
         if (target instanceof FlyEntity fly && fly.isAlive()) {
             if (!player.level().isClientSide()) {
                 ItemStack dragonFlyItem = FlyItem.withType(FlyTypes.DRAGON_FRUIT.get());
-                fly.spawnAtLocation(dragonFlyItem);
-                fly.kill();
+                fly.spawnAtLocation((ServerLevel) fly.level(), dragonFlyItem);
+                fly.kill((ServerLevel) fly.level());
                 stack.consume(1, player);
             }
             return InteractionResult.SUCCESS;

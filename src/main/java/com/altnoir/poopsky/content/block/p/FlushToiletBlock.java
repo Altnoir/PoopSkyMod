@@ -220,7 +220,7 @@ public class FlushToiletBlock extends BaseEntityBlock {
     @Override
     protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
         if (level.getBlockEntity(pos) instanceof FlushToiletBlockEntity be) {
-            Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), be.getItemHandler().getStackInSlot(0));
+            Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), be.getStackInSlot(0));
         }
         super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
     }

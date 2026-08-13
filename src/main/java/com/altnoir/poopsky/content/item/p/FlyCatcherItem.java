@@ -4,6 +4,7 @@ import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.entity.p.FlyEntity;
 import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoSoundEvents;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -27,14 +28,14 @@ public class FlyCatcherItem extends Item {
                 ItemStack flyItem = FlyItem.withType(type);
 
                 if (!player.getInventory().add(flyItem)) {
-                    fly.spawnAtLocation(flyItem);
+                    fly.spawnAtLocation((ServerLevel) fly.level(), flyItem);
                 }
 
                 level.playSound(null, fly.getX(), fly.getY(), fly.getZ(),
                         PoSoundEvents.ENTITY_FLY_CAPTURE.get(), SoundSource.NEUTRAL, 1.0F, 1.0F);
 
                 if (!player.getAbilities().instabuild) {
-                    stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
+                    stack.hurtAndBreak(1, player, hand.asEquipmentSlot());
                 }
 
                 fly.discard();

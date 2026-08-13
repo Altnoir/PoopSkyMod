@@ -13,6 +13,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.ContainerUser;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -24,9 +25,12 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.neoforged.neoforge.items.wrapper.RangedWrapper;
+import net.neoforged.neoforge.transfer.RangedResourceHandler;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
+import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 import org.jetbrains.annotations.Nullable;
 
 public class FlyBarrelBlockEntity extends BlockEntity implements MenuProvider {
@@ -69,48 +73,58 @@ public class FlyBarrelBlockEntity extends BlockEntity implements MenuProvider {
         }
     };
 
-    private final ItemStackHandler itemHandler = new ItemStackHandler(TOTAL_SLOTS) {
+    private final ItemStacksResourceHandler itemHandler = new ItemStacksResourceHandler(TOTAL_SLOTS) {
         @Override
-        protected void onContentsChanged(int slot) {
+        protected void onContentsChanged(int index, ItemStack previousContents) {
             setChanged();
             syncToClient();
         }
 
         @Override
-        public boolean isItemValid(int slot, ItemStack stack) {
-            if (slot == SLOT_INPUT) return FlyItem.isFlyItem(stack);
+        public boolean isValid(int slot, ItemResource resource) {
+            if (slot == SLOT_INPUT) return !resource.isEmpty() && FlyItem.isFlyItem(resource.toStack(1));
             return false;
         }
 
         @Override
-        public int getSlotLimit(int slot) {
-            return slot == SLOT_INPUT ? 88 : 64;
+        protected int getCapacity(int slot, ItemResource resource) {
+            return Math.min(slot == SLOT_INPUT ? 88 : 64, resource.getMaxStackSize());
         }
     };
 
     // 自动化：上面/侧面 = 输入（只接受苍蝇）
-    private final IItemHandler topSideHandler = new RangedWrapper(itemHandler, SLOT_INPUT, SLOT_INPUT + 1) {
+    private final ResourceHandler<ItemResource> topSideHandler = new RangedResourceHandler<>(itemHandler, SLOT_INPUT, SLOT_INPUT + 1) {
         @Override
-        public boolean isItemValid(int slot, ItemStack stack) {
-            return super.isItemValid(slot, stack) && FlyItem.isFlyItem(stack);
+        public boolean isValid(int slot, ItemResource resource) {
+            return super.isValid(slot, resource) && !resource.isEmpty() && FlyItem.isFlyItem(resource.toStack(1));
         }
 
         @Override
-        public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            return ItemStack.EMPTY;
+        public int extract(int slot, ItemResource resource, int amount, TransactionContext transaction) {
+            return 0;
+        }
+
+        @Override
+        public int extract(ItemResource resource, int amount, TransactionContext transaction) {
+            return 0;
         }
     };
 
     // 自动化：下面 = 输出（只允许提取）
-    private final IItemHandler bottomHandler = new RangedWrapper(itemHandler, SLOT_OUTPUT_1, TOTAL_SLOTS) {
+    private final ResourceHandler<ItemResource> bottomHandler = new RangedResourceHandler<>(itemHandler, SLOT_OUTPUT_1, TOTAL_SLOTS) {
         @Override
-        public boolean isItemValid(int slot, ItemStack stack) {
+        public boolean isValid(int slot, ItemResource resource) {
             return false;
         }
 
         @Override
-        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-            return stack;
+        public int insert(int slot, ItemResource resource, int amount, TransactionContext transaction) {
+            return 0;
+        }
+
+        @Override
+        public int insert(ItemResource resource, int amount, TransactionContext transaction) {
+            return 0;
         }
     };
 
@@ -121,7 +135,7 @@ public class FlyBarrelBlockEntity extends BlockEntity implements MenuProvider {
     public static void tick(Level level, BlockPos pos, BlockState state, FlyBarrelBlockEntity be) {
         if (level.isClientSide()) return;
 
-        ItemStack inputStack = be.itemHandler.getStackInSlot(SLOT_INPUT);
+        ItemStack inputStack = be.getStackInSlot(SLOT_INPUT);
         if (inputStack.isEmpty() || !FlyItem.isFlyItem(inputStack)) {
             be.progress = 0;
             be.currentInterval = BASE_TICK_INTERVAL;
@@ -150,14 +164,14 @@ public class FlyBarrelBlockEntity extends BlockEntity implements MenuProvider {
 
     private boolean areOutputsFull() {
         for (int i = SLOT_OUTPUT_1; i <= SLOT_OUTPUT_4; i++) {
-            ItemStack stack = itemHandler.getStackInSlot(i);
+            ItemStack stack = getStackInSlot(i);
             if (stack.getCount() < stack.getMaxStackSize()) return false;
         }
         return true;
     }
 
     private void produce() {
-        ItemStack inputStack = itemHandler.getStackInSlot(SLOT_INPUT);
+        ItemStack inputStack = getStackInSlot(SLOT_INPUT);
         FlyType.Type type = FlyItem.getFlyType(inputStack);
         ItemStack product = PFlyRecipes.getProduct(level, type);
         if (product.isEmpty()) return;
@@ -170,9 +184,9 @@ public class FlyBarrelBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     private ItemStack tryInsert(int slot, ItemStack stack) {
-        ItemStack current = itemHandler.getStackInSlot(slot);
+        ItemStack current = getStackInSlot(slot);
         if (current.isEmpty()) {
-            itemHandler.setStackInSlot(slot, stack.copy());
+            setStackInSlot(slot, stack.copy());
             return ItemStack.EMPTY;
         }
         if (ItemStack.isSameItemSameComponents(current, stack)) {
@@ -180,7 +194,7 @@ public class FlyBarrelBlockEntity extends BlockEntity implements MenuProvider {
             int toAdd = Math.min(space, stack.getCount());
             if (toAdd > 0) {
                 current.grow(toAdd);
-                itemHandler.setStackInSlot(slot, current);
+                setStackInSlot(slot, current);
                 stack.shrink(toAdd);
             }
         }
@@ -201,29 +215,29 @@ public class FlyBarrelBlockEntity extends BlockEntity implements MenuProvider {
         return new SimpleContainer(TOTAL_SLOTS) {
             @Override
             public ItemStack getItem(int slot) {
-                return itemHandler.getStackInSlot(slot);
+                return getStackInSlot(slot);
             }
 
             @Override
             public void setItem(int slot, ItemStack stack) {
-                itemHandler.setStackInSlot(slot, stack);
+                setStackInSlot(slot, stack);
             }
 
             @Override
             public ItemStack removeItem(int slot, int amount) {
-                return itemHandler.extractItem(slot, amount, false);
+                return extractItem(slot, amount, false);
             }
 
             @Override
             public ItemStack removeItemNoUpdate(int slot) {
-                ItemStack stack = itemHandler.getStackInSlot(slot);
-                itemHandler.setStackInSlot(slot, ItemStack.EMPTY);
+                ItemStack stack = getStackInSlot(slot);
+                setStackInSlot(slot, ItemStack.EMPTY);
                 return stack;
             }
 
             @Override
             public boolean canPlaceItem(int slot, ItemStack stack) {
-                return itemHandler.isItemValid(slot, stack);
+                return isItemValid(slot, stack);
             }
 
             @Override
@@ -237,8 +251,8 @@ public class FlyBarrelBlockEntity extends BlockEntity implements MenuProvider {
             }
 
             @Override
-            public void stopOpen(Player player) {
-                super.stopOpen(player);
+            public void stopOpen(ContainerUser containerUser) {
+                super.stopOpen(containerUser);
                 if (level != null && !level.isClientSide()) {
                     level.playSound(null, worldPosition, PoSoundEvents.BLOCK_FLY_BARREL_CLOSE.get(), SoundSource.BLOCKS, 0.5F, 0.7F);
                 }
@@ -252,23 +266,51 @@ public class FlyBarrelBlockEntity extends BlockEntity implements MenuProvider {
             @Override
             public boolean isEmpty() {
                 for (int i = 0; i < TOTAL_SLOTS; i++) {
-                    if (!itemHandler.getStackInSlot(i).isEmpty()) return false;
+                    if (!getStackInSlot(i).isEmpty()) return false;
                 }
                 return true;
             }
         };
     }
 
-    public IItemHandler getItemHandler() {
+    public ItemStacksResourceHandler getItemHandler() {
         return itemHandler;
     }
 
-    public IItemHandler getTopSideHandler() {
+    public ResourceHandler<ItemResource> getTopSideHandler() {
         return topSideHandler;
     }
 
-    public IItemHandler getBottomHandler() {
+    public ResourceHandler<ItemResource> getBottomHandler() {
         return bottomHandler;
+    }
+
+    public ItemStack getStackInSlot(int slot) {
+        ItemResource resource = itemHandler.getResource(slot);
+        long amount = itemHandler.getAmountAsLong(slot);
+        return resource.isEmpty() || amount <= 0 ? ItemStack.EMPTY : resource.toStack((int) amount);
+    }
+
+    public void setStackInSlot(int slot, ItemStack stack) {
+        if (stack.isEmpty()) {
+            itemHandler.set(slot, ItemResource.EMPTY, 0);
+        } else {
+            itemHandler.set(slot, ItemResource.of(stack), stack.getCount());
+        }
+    }
+
+    private ItemStack extractItem(int slot, int amount, boolean simulate) {
+        ItemResource resource = itemHandler.getResource(slot);
+        if (resource.isEmpty() || amount <= 0) return ItemStack.EMPTY;
+        try (Transaction tx = Transaction.openRoot()) {
+            int extracted = itemHandler.extract(slot, resource, amount, tx);
+            if (!simulate) tx.commit();
+            return resource.toStack(extracted);
+        }
+    }
+
+    private boolean isItemValid(int slot, ItemStack stack) {
+        return itemHandler.isValid(slot, ItemResource.of(stack));
     }
 
     @Override

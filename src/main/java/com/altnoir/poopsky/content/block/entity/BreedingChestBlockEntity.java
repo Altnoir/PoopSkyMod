@@ -25,10 +25,12 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.neoforged.neoforge.items.wrapper.RangedWrapper;
-import org.jetbrains.annotations.Nullable;
+import net.neoforged.neoforge.transfer.RangedResourceHandler;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
+import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 
 public class BreedingChestBlockEntity extends BlockEntity implements MenuProvider {
     public static final int SLOT_FECES = 0;
@@ -80,51 +82,57 @@ public class BreedingChestBlockEntity extends BlockEntity implements MenuProvide
         }
     };
 
-    private final ItemStackHandler itemHandler = new ItemStackHandler(TOTAL_SLOTS) {
+    private final ItemStacksResourceHandler itemHandler = new ItemStacksResourceHandler(TOTAL_SLOTS) {
         @Override
-        protected void onContentsChanged(int slot) {
+        protected void onContentsChanged(int index, ItemStack previousContents) {
             setChanged();
             syncToClient();
         }
 
         @Override
-        public boolean isItemValid(int slot, ItemStack stack) {
-            if (slot == SLOT_FECES) return stack.is(PoTags.Items.POOPS);
-            if (slot == SLOT_FLY_1 || slot == SLOT_FLY_2) return FlyItem.isFlyItem(stack);
+        public boolean isValid(int slot, ItemResource resource) {
+            if (resource.isEmpty()) return false;
+            if (slot == SLOT_FECES) return resource.toStack(1).is(PoTags.Items.POOPS);
+            if (slot == SLOT_FLY_1 || slot == SLOT_FLY_2) return FlyItem.isFlyItem(resource.toStack(1));
             return false;
         }
 
         @Override
-        public int getSlotLimit(int slot) {
-            if (slot == SLOT_FECES) return 88;
+        protected int getCapacity(int slot, ItemResource resource) {
+            if (slot == SLOT_FECES) return Math.min(88, resource.getMaxStackSize());
             if (slot == SLOT_FLY_1 || slot == SLOT_FLY_2) return 1;
-            return super.getSlotLimit(slot);
+            return resource.getMaxStackSize();
         }
     };
 
     // 自动化：上面/侧面 = 输入（粪便 + 苍蝇）
-    private final IItemHandler topSideHandler = new RangedWrapper(itemHandler, SLOT_FECES, SLOT_FECES + 1) {
+    private final ResourceHandler<ItemResource> topSideHandler = new RangedResourceHandler<>(itemHandler, SLOT_FECES, SLOT_FECES + 1) {
         @Override
-        public boolean isItemValid(int slot, ItemStack stack) {
-            return super.isItemValid(slot, stack);
+        public int extract(int slot, ItemResource resource, int amount, TransactionContext transaction) {
+            return 0;
         }
 
         @Override
-        public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            return ItemStack.EMPTY;
+        public int extract(ItemResource resource, int amount, TransactionContext transaction) {
+            return 0;
         }
     };
 
     // 自动化：下面 = 输出
-    private final IItemHandler bottomHandler = new RangedWrapper(itemHandler, SLOT_OUTPUT_1, TOTAL_SLOTS) {
+    private final ResourceHandler<ItemResource> bottomHandler = new RangedResourceHandler<>(itemHandler, SLOT_OUTPUT_1, TOTAL_SLOTS) {
         @Override
-        public boolean isItemValid(int slot, ItemStack stack) {
+        public boolean isValid(int slot, ItemResource resource) {
             return false;
         }
 
         @Override
-        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-            return stack;
+        public int insert(int slot, ItemResource resource, int amount, TransactionContext transaction) {
+            return 0;
+        }
+
+        @Override
+        public int insert(ItemResource resource, int amount, TransactionContext transaction) {
+            return 0;
         }
     };
 
@@ -135,9 +143,9 @@ public class BreedingChestBlockEntity extends BlockEntity implements MenuProvide
     public static void tick(Level level, BlockPos pos, BlockState state, BreedingChestBlockEntity be) {
         if (level.isClientSide()) return;
 
-        ItemStack fly1 = be.itemHandler.getStackInSlot(SLOT_FLY_1);
-        ItemStack fly2 = be.itemHandler.getStackInSlot(SLOT_FLY_2);
-        ItemStack feces = be.itemHandler.getStackInSlot(SLOT_FECES);
+        ItemStack fly1 = be.getStackInSlot(SLOT_FLY_1);
+        ItemStack fly2 = be.getStackInSlot(SLOT_FLY_2);
+        ItemStack feces = be.getStackInSlot(SLOT_FECES);
 
         if (fly1.isEmpty() || fly2.isEmpty() || feces.isEmpty()) {
             be.progress = 0;
@@ -224,15 +232,15 @@ public class BreedingChestBlockEntity extends BlockEntity implements MenuProvide
 
     private boolean areOutputsFull() {
         for (int i = SLOT_OUTPUT_1; i <= SLOT_OUTPUT_3; i++) {
-            ItemStack stack = itemHandler.getStackInSlot(i);
+            ItemStack stack = getStackInSlot(i);
             if (stack.getCount() < stack.getMaxStackSize()) return false;
         }
         return true;
     }
 
     private void breed() {
-        ItemStack fly1 = itemHandler.getStackInSlot(SLOT_FLY_1);
-        ItemStack fly2 = itemHandler.getStackInSlot(SLOT_FLY_2);
+        ItemStack fly1 = getStackInSlot(SLOT_FLY_1);
+        ItemStack fly2 = getStackInSlot(SLOT_FLY_2);
 
         FlyType.Type type1 = FlyItem.getFlyType(fly1);
         FlyType.Type type2 = FlyItem.getFlyType(fly2);
@@ -241,10 +249,10 @@ public class BreedingChestBlockEntity extends BlockEntity implements MenuProvide
         int count = 1 + currentMaggotsBonus;
 
         // 消耗对应数量的粪便
-        ItemStack feces = itemHandler.getStackInSlot(SLOT_FECES);
+        ItemStack feces = getStackInSlot(SLOT_FECES);
         feces.shrink(count);
         if (feces.isEmpty()) {
-            itemHandler.setStackInSlot(SLOT_FECES, ItemStack.EMPTY);
+            setStackInSlot(SLOT_FECES, ItemStack.EMPTY);
         }
 
         // 每个产物独立进行变异判定
@@ -265,9 +273,9 @@ public class BreedingChestBlockEntity extends BlockEntity implements MenuProvide
     }
 
     private ItemStack tryInsert(int slot, ItemStack stack) {
-        ItemStack current = itemHandler.getStackInSlot(slot);
+        ItemStack current = getStackInSlot(slot);
         if (current.isEmpty()) {
-            itemHandler.setStackInSlot(slot, stack.copy());
+            setStackInSlot(slot, stack.copy());
             return ItemStack.EMPTY;
         }
         if (ItemStack.isSameItemSameComponents(current, stack)) {
@@ -275,7 +283,7 @@ public class BreedingChestBlockEntity extends BlockEntity implements MenuProvide
             int toAdd = Math.min(space, stack.getCount());
             if (toAdd > 0) {
                 current.grow(toAdd);
-                itemHandler.setStackInSlot(slot, current);
+                setStackInSlot(slot, current);
                 stack.shrink(toAdd);
             }
         }
@@ -288,7 +296,7 @@ public class BreedingChestBlockEntity extends BlockEntity implements MenuProvide
     }
 
     @Override
-    public @Nullable AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player player) {
+    public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player player) {
         return new BreedingChestMenu(id, playerInventory, createContainerProxy(), data);
     }
 
@@ -296,33 +304,33 @@ public class BreedingChestBlockEntity extends BlockEntity implements MenuProvide
         return new SimpleContainer(TOTAL_SLOTS) {
             @Override
             public ItemStack getItem(int slot) {
-                return itemHandler.getStackInSlot(slot);
+                return getStackInSlot(slot);
             }
 
             @Override
             public void setItem(int slot, ItemStack stack) {
-                if (stack.getCount() > itemHandler.getSlotLimit(slot)) {
+                if (!stack.isEmpty() && stack.getCount() > itemHandler.getCapacityAsInt(slot, ItemResource.of(stack))) {
                     stack = stack.copy();
-                    stack.setCount(itemHandler.getSlotLimit(slot));
+                    stack.setCount(itemHandler.getCapacityAsInt(slot, ItemResource.of(stack)));
                 }
-                itemHandler.setStackInSlot(slot, stack);
+                setStackInSlot(slot, stack);
             }
 
             @Override
             public ItemStack removeItem(int slot, int amount) {
-                return itemHandler.extractItem(slot, amount, false);
+                return extractItem(slot, amount, false);
             }
 
             @Override
             public ItemStack removeItemNoUpdate(int slot) {
-                ItemStack stack = itemHandler.getStackInSlot(slot);
-                itemHandler.setStackInSlot(slot, ItemStack.EMPTY);
+                ItemStack stack = getStackInSlot(slot);
+                setStackInSlot(slot, ItemStack.EMPTY);
                 return stack;
             }
 
             @Override
             public boolean canPlaceItem(int slot, ItemStack stack) {
-                return itemHandler.isItemValid(slot, stack);
+                return isItemValid(slot, stack);
             }
 
             @Override
@@ -343,23 +351,51 @@ public class BreedingChestBlockEntity extends BlockEntity implements MenuProvide
             @Override
             public boolean isEmpty() {
                 for (int i = 0; i < TOTAL_SLOTS; i++) {
-                    if (!itemHandler.getStackInSlot(i).isEmpty()) return false;
+                    if (!getStackInSlot(i).isEmpty()) return false;
                 }
                 return true;
             }
         };
     }
 
-    public IItemHandler getItemHandler() {
+    public ItemStacksResourceHandler getItemHandler() {
         return itemHandler;
     }
 
-    public IItemHandler getTopSideHandler() {
+    public ResourceHandler<ItemResource> getTopSideHandler() {
         return topSideHandler;
     }
 
-    public IItemHandler getBottomHandler() {
+    public ResourceHandler<ItemResource> getBottomHandler() {
         return bottomHandler;
+    }
+
+    public ItemStack getStackInSlot(int slot) {
+        ItemResource resource = itemHandler.getResource(slot);
+        long amount = itemHandler.getAmountAsLong(slot);
+        return resource.isEmpty() || amount <= 0 ? ItemStack.EMPTY : resource.toStack((int) amount);
+    }
+
+    public void setStackInSlot(int slot, ItemStack stack) {
+        if (stack.isEmpty()) {
+            itemHandler.set(slot, ItemResource.EMPTY, 0);
+        } else {
+            itemHandler.set(slot, ItemResource.of(stack), stack.getCount());
+        }
+    }
+
+    private ItemStack extractItem(int slot, int amount, boolean simulate) {
+        ItemResource resource = itemHandler.getResource(slot);
+        if (resource.isEmpty() || amount <= 0) return ItemStack.EMPTY;
+        try (Transaction tx = Transaction.openRoot()) {
+            int extracted = itemHandler.extract(slot, resource, amount, tx);
+            if (!simulate) tx.commit();
+            return resource.toStack(extracted);
+        }
+    }
+
+    private boolean isItemValid(int slot, ItemStack stack) {
+        return itemHandler.isValid(slot, ItemResource.of(stack));
     }
 
     @Override
@@ -377,7 +413,7 @@ public class BreedingChestBlockEntity extends BlockEntity implements MenuProvide
     }
 
     @Override
-    public @Nullable ClientboundBlockEntityDataPacket getUpdatePacket() {
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }
 

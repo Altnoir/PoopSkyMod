@@ -5,6 +5,7 @@ import com.altnoir.poopsky.impl.network.ReturnTotemActivationPayload;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -35,18 +36,20 @@ public class ReturnTotemItem extends Item {
         }
 
         ServerPlayer serverPlayer = (ServerPlayer) player;
-        ServerLevel targetLevel = serverPlayer.server.getLevel(serverPlayer.getRespawnDimension());
+        MinecraftServer server = serverPlayer.level().getServer();
+        ServerLevel targetLevel = server.getLevel(serverPlayer.getRespawnConfig().respawnData().dimension());
         if (targetLevel == null) {
-            targetLevel = serverPlayer.server.overworld();
+            targetLevel = server.overworld();
         }
 
-        BlockPos respawn = serverPlayer.getRespawnPosition();
-        if (respawn == null || !(targetLevel.getBlockState(respawn).getBlock() instanceof PortableToiletBlock)) {
+        BlockPos respawn = serverPlayer.getRespawnConfig().respawnData().pos();
+        if (!(targetLevel.getBlockState(respawn).getBlock() instanceof PortableToiletBlock)) {
             player.sendOverlayMessage(Component.translatable("message.poopsky.return_totem.not_bound"));
             return InteractionResult.PASS;
         }
 
-        Optional<ServerPlayer.RespawnPosAngle> respawnInfo = targetLevel.getBlockState(respawn).getRespawnPosition(EntityType.PLAYER, targetLevel, respawn, serverPlayer.getRespawnAngle());
+        float respawnAngle = serverPlayer.getRespawnConfig().respawnData().yaw();
+        Optional<ServerPlayer.RespawnPosAngle> respawnInfo = targetLevel.getBlockState(respawn).getRespawnPosition(EntityType.PLAYER, targetLevel, respawn, respawnAngle);
         if (respawnInfo.isEmpty()) {
             player.sendOverlayMessage(Component.translatable("message.poopsky.return_totem.obstructed"));
             return InteractionResult.PASS;
@@ -60,7 +63,7 @@ public class ReturnTotemItem extends Item {
         Vec3 destination = angle.position();
         float yaw = angle.yaw();
         Vec3 origin = serverPlayer.position();
-        spawnReturnTotemParticles(serverPlayer.serverLevel(), origin);
+        spawnReturnTotemParticles(serverPlayer.level(), origin);
 
         serverPlayer.setForcedPose(Pose.SWIMMING);
         serverPlayer.setPose(Pose.SWIMMING);

@@ -22,6 +22,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
@@ -29,8 +30,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class ToiletLinkerItem extends PoBaseItem {
     public ToiletLinkerItem(Properties properties) {
@@ -38,8 +39,8 @@ public class ToiletLinkerItem extends PoBaseItem {
     }
 
     @Override
-    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        return ToiletPlugItem.poisonOnHit(target, attacker);
+    public void hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        ToiletPlugItem.poisonOnHit(target, attacker);
     }
 
     @Override
@@ -60,7 +61,7 @@ public class ToiletLinkerItem extends PoBaseItem {
         ItemStack stack = context.getItemInHand();
         if (player.isShiftKeyDown()) {
             resetComponent(stack, player);
-            return InteractionResult.sidedSuccess(level.isClientSide());
+            return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
         }
         BlockPos pos = context.getClickedPos();
         var be = level.getBlockEntity(pos);
@@ -116,8 +117,8 @@ public class ToiletLinkerItem extends PoBaseItem {
             // Mark both block entities as changed
             if (level1.getBlockEntity(pos1) instanceof BlockEntity be1) be1.setChanged();
             if (level2.getBlockEntity(pos2) instanceof BlockEntity be2) be2.setChanged();
-            level1.getChunkSource().addRegionTicket(TicketType.PORTAL, new ChunkPos(pos1), 1, pos1);
-            level2.getChunkSource().addRegionTicket(TicketType.PORTAL, new ChunkPos(pos2), 1, pos2);
+            level1.getChunkSource().addTicketWithRadius(TicketType.PORTAL, ChunkPos.containing(pos1), 1);
+            level2.getChunkSource().addTicketWithRadius(TicketType.PORTAL, ChunkPos.containing(pos2), 1);
             notifyBlockUpdate(level1, pos1);
             notifyBlockUpdate(level2, pos2);
             player.sendOverlayMessage(Component.translatable("message.poopsky.toilet_linker.3").withStyle(ChatFormatting.GREEN));
@@ -159,19 +160,19 @@ public class ToiletLinkerItem extends PoBaseItem {
     }
 
     @Override
-    public void appendShiftTooltip(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+    public void appendShiftTooltip(ItemStack stack, TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> consumer, TooltipFlag tooltipFlag) {
         var comp = stack.get(PoComponents.TOILET_COMPONENT.get());
         if (comp == null) return;
         if (!comp.level1().isEmpty()) {
-            tooltipComponents.add(Component.translatable("tooltip.poopsky.toilet_linker.info_1", comp.level1(), comp.x1(), comp.y1(), comp.z1()).withStyle(ChatFormatting.GRAY));
+            consumer.accept(Component.translatable("tooltip.poopsky.toilet_linker.info_1", comp.level1(), comp.x1(), comp.y1(), comp.z1()).withStyle(ChatFormatting.GRAY));
         }
         if (!comp.level2().isEmpty()) {
-            tooltipComponents.add(Component.translatable("tooltip.poopsky.toilet_linker.info_2", comp.level2(), comp.x2(), comp.y2(), comp.z2()).withStyle(ChatFormatting.GRAY));
+            consumer.accept(Component.translatable("tooltip.poopsky.toilet_linker.info_2", comp.level2(), comp.x2(), comp.y2(), comp.z2()).withStyle(ChatFormatting.GRAY));
         }
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("tooltip.poopsky.item.info_1"));
+    public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> consumer, TooltipFlag tooltipFlag) {
+        consumer.accept(Component.translatable("tooltip.poopsky.item.info_1"));
     }
 }

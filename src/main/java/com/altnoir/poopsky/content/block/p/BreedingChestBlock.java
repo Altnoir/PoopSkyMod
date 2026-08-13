@@ -61,7 +61,7 @@ public class BreedingChestBlock extends BaseEntityBlock {
     protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
         if (level.getBlockEntity(pos) instanceof BreedingChestBlockEntity be) {
             for (int i = 0; i < BreedingChestBlockEntity.TOTAL_SLOTS; i++) {
-                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), be.getItemHandler().getStackInSlot(i));
+                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), be.getStackInSlot(i));
             }
         }
         super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);

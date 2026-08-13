@@ -37,7 +37,6 @@ import net.minecraft.world.level.levelgen.feature.EndPlatformFeature;
 import net.minecraft.world.level.portal.TeleportTransition;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.HashMap;
@@ -222,10 +221,9 @@ public class ToiletUtil {
 
     public static boolean insertOrReplaceContainer(Level level, BlockPos pos, ItemStack stack) {
         if (!(level.getBlockEntity(pos) instanceof FlushToiletBlockEntity be)) return false;
-        ItemStackHandler handler = be.getItemHandler();
-        ItemStack current = handler.getStackInSlot(0);
+        ItemStack current = be.getStackInSlot(0);
         if (current.isEmpty()) {
-            handler.setStackInSlot(0, stack.copy());
+            be.setStackInSlot(0, stack.copy());
             return true;
         }
         if (current.is(stack.getItem()) && ItemStack.isSameItemSameComponents(current, stack)) {
@@ -233,12 +231,12 @@ public class ToiletUtil {
             int space = maxStack - current.getCount();
             if (space >= stack.getCount()) {
                 current.grow(stack.getCount());
-                handler.setStackInSlot(0, current);
+                be.setStackInSlot(0, current);
                 return true;
             }
         }
         if (!current.is(PoTags.Items.FLUSH_TOILET_SAVE)) {
-            handler.setStackInSlot(0, stack.copy());
+            be.setStackInSlot(0, stack.copy());
             return true;
         }
         return false;

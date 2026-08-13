@@ -12,6 +12,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BonemealableBlock;
@@ -21,7 +22,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 
-import java.util.List;
+import java.util.function.Consumer;
 
 public class JinKeLaItem extends Item {
     public JinKeLaItem(Properties properties) {
@@ -42,12 +43,12 @@ public class JinKeLaItem extends Item {
             if (level instanceof ServerLevel serverLevel && tryApplyToBlock(serverLevel, pos, state)) {
                 context.getItemInHand().consume(1, context.getPlayer());
             }
-            return InteractionResult.sidedSuccess(level.isClientSide());
+            return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
         } else if (state.isRandomlyTicking()) {
             if (level instanceof ServerLevel serverLevel && tryApplyToBlock(serverLevel, pos, state)) {
                 context.getItemInHand().consume(1, context.getPlayer());
             }
-            return InteractionResult.sidedSuccess(level.isClientSide());
+            return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
         }
 
         return super.useOn(context);
@@ -104,7 +105,7 @@ public class JinKeLaItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("tooltip.poopsky.jinkela.info"));
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> consumer, TooltipFlag tooltipFlag) {
+        consumer.accept(Component.translatable("tooltip.poopsky.jinkela.info"));
     }
 }

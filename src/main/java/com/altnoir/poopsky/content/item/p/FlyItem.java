@@ -9,8 +9,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 
-import java.util.List;
+import java.util.function.Consumer;
 
 public class FlyItem extends Item {
     public FlyItem(Properties properties) {
@@ -39,10 +40,10 @@ public class FlyItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> consumer, TooltipFlag tooltipFlag) {
+        super.appendHoverText(stack, context, tooltipDisplay, consumer, tooltipFlag);
         FlyType.Type type = getFlyType(stack);
-        tooltipComponents.add(Component.translatable("tooltip.poopsky.fly_type")
+        consumer.accept(Component.translatable("tooltip.poopsky.fly_type")
                 .append(": ")
                 .append(type.getDisplayName())
                 .withStyle(ChatFormatting.GRAY));

@@ -23,9 +23,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.neoforged.neoforge.items.wrapper.RangedWrapper;
+import net.neoforged.neoforge.transfer.RangedResourceHandler;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
+import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 import org.jetbrains.annotations.Nullable;
 
 public class FlushToiletBlockEntity extends BlockEntity implements MenuProvider {
@@ -34,23 +37,28 @@ public class FlushToiletBlockEntity extends BlockEntity implements MenuProvider 
     private BlockPos linkedPos;
     private String linkedDim;
 
-    private final ItemStackHandler itemHandler = new ItemStackHandler(SLOT_COUNT) {
+    private final ItemStacksResourceHandler itemHandler = new ItemStacksResourceHandler(SLOT_COUNT) {
         @Override
-        protected void onContentsChanged(int slot) {
+        protected void onContentsChanged(int index, ItemStack previousContents) {
             setChanged();
             syncToClient();
         }
     };
 
-    private final IItemHandler bottomHandler = new RangedWrapper(itemHandler, 0, 1) {
+    private final ResourceHandler<ItemResource> bottomHandler = new RangedResourceHandler<>(itemHandler, 0, 1) {
         @Override
-        public boolean isItemValid(int slot, ItemStack stack) {
+        public boolean isValid(int slot, ItemResource resource) {
             return false;
         }
 
         @Override
-        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-            return stack;
+        public int insert(int slot, ItemResource resource, int amount, TransactionContext transaction) {
+            return 0;
+        }
+
+        @Override
+        public int insert(ItemResource resource, int amount, TransactionContext transaction) {
+            return 0;
         }
     };
 
@@ -73,23 +81,23 @@ public class FlushToiletBlockEntity extends BlockEntity implements MenuProvider 
         return new SimpleContainer(SLOT_COUNT) {
             @Override
             public ItemStack getItem(int slot) {
-                return itemHandler.getStackInSlot(slot);
+                return getStackInSlot(slot);
             }
 
             @Override
             public void setItem(int slot, ItemStack stack) {
-                itemHandler.setStackInSlot(slot, stack);
+                setStackInSlot(slot, stack);
             }
 
             @Override
             public ItemStack removeItem(int slot, int amount) {
-                return itemHandler.extractItem(slot, amount, false);
+                return extractItem(slot, amount, false);
             }
 
             @Override
             public ItemStack removeItemNoUpdate(int slot) {
-                ItemStack stack = itemHandler.getStackInSlot(slot);
-                itemHandler.setStackInSlot(slot, ItemStack.EMPTY);
+                ItemStack stack = getStackInSlot(slot);
+                setStackInSlot(slot, ItemStack.EMPTY);
                 return stack;
             }
 
@@ -116,25 +124,47 @@ public class FlushToiletBlockEntity extends BlockEntity implements MenuProvider 
             @Override
             public boolean isEmpty() {
                 for (int i = 0; i < SLOT_COUNT; i++) {
-                    if (!itemHandler.getStackInSlot(i).isEmpty()) return false;
+                    if (!getStackInSlot(i).isEmpty()) return false;
                 }
                 return true;
             }
         };
     }
 
-    public ItemStackHandler getItemHandler() {
+    public ItemStacksResourceHandler getItemHandler() {
         return itemHandler;
     }
 
-
-    public IItemHandler getBottomHandler() {
+    public ResourceHandler<ItemResource> getBottomHandler() {
         return bottomHandler;
     }
 
+    public ItemStack getStackInSlot(int slot) {
+        ItemResource resource = itemHandler.getResource(slot);
+        long amount = itemHandler.getAmountAsLong(slot);
+        return resource.isEmpty() || amount <= 0 ? ItemStack.EMPTY : resource.toStack((int) amount);
+    }
+
+    public void setStackInSlot(int slot, ItemStack stack) {
+        if (stack.isEmpty()) {
+            itemHandler.set(slot, ItemResource.EMPTY, 0);
+        } else {
+            itemHandler.set(slot, ItemResource.of(stack), stack.getCount());
+        }
+    }
+
+    private ItemStack extractItem(int slot, int amount, boolean simulate) {
+        ItemResource resource = itemHandler.getResource(slot);
+        if (resource.isEmpty() || amount <= 0) return ItemStack.EMPTY;
+        try (Transaction tx = Transaction.openRoot()) {
+            int extracted = itemHandler.extract(slot, resource, amount, tx);
+            if (!simulate) tx.commit();
+            return resource.toStack(extracted);
+        }
+    }
 
     public void clearContents() {
-        itemHandler.setStackInSlot(0, ItemStack.EMPTY);
+        setStackInSlot(0, ItemStack.EMPTY);
     }
 
     public String getLinkedDim() {

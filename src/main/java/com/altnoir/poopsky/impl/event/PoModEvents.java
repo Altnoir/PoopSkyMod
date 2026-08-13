@@ -56,7 +56,7 @@ public class PoModEvents {
 
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
-                Capabilities.ItemHandler.BLOCK,
+                Capabilities.Item.BLOCK,
                 PoBlockEntityType.SIEVE_BLOCK_ENTITY.get(),
                 (blockEntity, direction) -> {
                     if (direction == null || direction == Direction.DOWN) {
@@ -66,12 +66,12 @@ public class PoModEvents {
                 }
         );
         event.registerBlockEntity(
-                Capabilities.FluidHandler.BLOCK,
+                Capabilities.Fluid.BLOCK,
                 PoBlockEntityType.TOILET_BLOCK_ENTITY.get(),
                 (blockEntity, side) -> blockEntity.fluidTank
         );
         event.registerBlockEntity(
-                Capabilities.ItemHandler.BLOCK,
+                Capabilities.Item.BLOCK,
                 PoBlockEntityType.FLY_BARREL.get(),
                 (blockEntity, direction) -> {
                     if (direction == null || direction == Direction.DOWN) {
@@ -81,7 +81,7 @@ public class PoModEvents {
                 }
         );
         event.registerBlockEntity(
-                Capabilities.ItemHandler.BLOCK,
+                Capabilities.Item.BLOCK,
                 PoBlockEntityType.BREEDING_CHEST.get(),
                 (blockEntity, direction) -> {
                     if (direction == null || direction == Direction.DOWN) {
@@ -91,7 +91,7 @@ public class PoModEvents {
                 }
         );
         event.registerBlockEntity(
-                Capabilities.ItemHandler.BLOCK,
+                Capabilities.Item.BLOCK,
                 PoBlockEntityType.FLUSH_TOILET.get(),
                 (blockEntity, direction) -> blockEntity.getBottomHandler()
         );

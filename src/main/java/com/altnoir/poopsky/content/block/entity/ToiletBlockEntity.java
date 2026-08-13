@@ -24,8 +24,9 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+import net.neoforged.neoforge.transfer.fluid.FluidResource;
+import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jetbrains.annotations.Nullable;
 
 public class ToiletBlockEntity extends BlockEntity {
@@ -33,9 +34,9 @@ public class ToiletBlockEntity extends BlockEntity {
     private String linkedDim;
     private ToiletType toiletType;
 
-    public final FluidTank fluidTank = new FluidTank(8888000) {
+    public final FluidStacksResourceHandler fluidTank = new FluidStacksResourceHandler(1, 8888000) {
         @Override
-        protected void onContentsChanged() {
+        protected void onContentsChanged(int index, FluidStack previousContents) {
             setChanged();
             if (level instanceof ServerLevel serverLevel) {
                 serverLevel.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
@@ -162,15 +163,43 @@ public class ToiletBlockEntity extends BlockEntity {
         return ClientboundBlockEntityDataPacket.create(this);
     }
 
+    public FluidStack getFluid() {
+        FluidResource resource = fluidTank.getResource(0);
+        long amount = fluidTank.getAmountAsLong(0);
+        return resource.isEmpty() || amount <= 0 ? FluidStack.EMPTY : resource.toStack((int) amount);
+    }
+
+    public int getFluidAmount() {
+        return (int) fluidTank.getAmountAsLong(0);
+    }
+
+    public int fill(FluidStack stack, boolean simulate) {
+        if (stack.isEmpty()) return 0;
+        try (Transaction tx = Transaction.openRoot()) {
+            int filled = fluidTank.insert(0, FluidResource.of(stack), stack.getAmount(), tx);
+            if (!simulate) tx.commit();
+            return filled;
+        }
+    }
+
+    public int drain(int amount, boolean simulate) {
+        FluidResource resource = fluidTank.getResource(0);
+        if (resource.isEmpty() || amount <= 0) return 0;
+        try (Transaction tx = Transaction.openRoot()) {
+            int drained = fluidTank.extract(0, resource, amount, tx);
+            if (!simulate) tx.commit();
+            return drained;
+        }
+    }
+
     public static void tick(Level level, BlockPos pos, BlockState state, ToiletBlockEntity blockEntity) {
         var fluid = PoFluids.URINE.get();
         if (state.hasProperty(BaseToiletLavaBlock.LAVA) && state.getValue(BaseToiletLavaBlock.LAVA)) {
             fluid = Fluids.LAVA;
         }
-        var fluidTank = blockEntity.fluidTank.getFluid().getFluid();
-        if (fluidTank != fluid) {
-            blockEntity.fluidTank.drain(blockEntity.fluidTank.getFluidAmount(), IFluidHandler.FluidAction.EXECUTE);
+        if (blockEntity.getFluid().getFluid() != fluid) {
+            blockEntity.drain(blockEntity.getFluidAmount(), false);
         }
-        blockEntity.fluidTank.fill(new FluidStack(fluid, Integer.MAX_VALUE), IFluidHandler.FluidAction.EXECUTE);
+        blockEntity.fill(new FluidStack(fluid, Integer.MAX_VALUE), false);
     }
 }
