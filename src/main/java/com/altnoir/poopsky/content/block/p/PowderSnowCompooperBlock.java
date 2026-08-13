@@ -5,11 +5,13 @@ import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -20,7 +22,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 
 public class PowderSnowCompooperBlock extends AbstractCompooperBlock {
     public static final MapCodec<PowderSnowCompooperBlock> CODEC = simpleCodec(PowderSnowCompooperBlock::new);
@@ -36,7 +37,7 @@ public class PowderSnowCompooperBlock extends AbstractCompooperBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData, Player player) {
         return new ItemStack(PoBlocks.COMPOOPER.get());
     }
 
@@ -51,14 +52,14 @@ public class PowderSnowCompooperBlock extends AbstractCompooperBlock {
     }
 
     @Override
-    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
         if (level.isClientSide() || !isEntityInsideContent(pos, state, entity)) {
             return;
         }
         if (entity.isOnFire()) {
             entity.clearFire();
             level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 1.0F);
-            if (entity.mayInteract(level, pos)) {
+            if (level instanceof ServerLevel serverLevel && entity.mayInteract(serverLevel, pos)) {
                 BlockState newState = PoBlocks.WATER_COMPOOPER.get().defaultBlockState().setValue(LEVEL, 2);
                 level.setBlockAndUpdate(pos, newState);
                 level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(newState));

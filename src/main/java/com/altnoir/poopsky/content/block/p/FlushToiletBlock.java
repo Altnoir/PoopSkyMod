@@ -97,9 +97,9 @@ public class FlushToiletBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
+    public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, double fallDistance) {
         if (!level.isClientSide()) {
-            if (ToiletUtil.tryTeleportFromFall(level, pos, entity, fallDistance)) {
+            if (ToiletUtil.tryTeleportFromFall(level, pos, entity, (float) fallDistance)) {
                 return;
             }
         }
@@ -131,7 +131,7 @@ public class FlushToiletBlock extends BaseEntityBlock {
                 }
             }
         }
-        return InteractionResult.sidedSuccess(level.isClientSide());
+        return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
     }
 
     private void toggleClosed(Level level, BlockPos pos, BlockState state) {

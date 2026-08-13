@@ -10,6 +10,7 @@ import com.altnoir.poopsky.content.item.p.JinKeLaItem;
 import com.altnoir.poopsky.content.villager.PoVillagers;
 import com.altnoir.poopsky.data.*;
 import com.altnoir.poopsky.data.lang.LangGen;
+import com.altnoir.poopsky.data.recipe.RecipeGen;
 import com.altnoir.poopsky.impl.event.PoGameEvents;
 import com.altnoir.poopsky.impl.event.PoModEvents;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
@@ -83,6 +84,7 @@ public class PoopSky {
         PoParticles.register();
         ParticleGen.register();
         AdvancementGen.register();
+        RecipeGen.register();
         PoSoundEvents.register();
         PoStats.register();
 

@@ -5,6 +5,7 @@ import com.altnoir.poopsky.init.PoSoundEvents;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -27,6 +28,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
@@ -45,8 +47,9 @@ public class PoopTntBlock extends Block {
     }
 
     @Override
-    public void onCaughtFire(BlockState state, Level level, BlockPos pos, @Nullable Direction face, @Nullable LivingEntity igniter) {
+    public boolean onCaughtFire(BlockState state, Level level, BlockPos pos, @Nullable Direction face, @Nullable LivingEntity igniter) {
         ignite(level, pos, igniter);
+        return true;
     }
 
     @Override
@@ -60,7 +63,7 @@ public class PoopTntBlock extends Block {
     }
 
     @Override
-    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, @Nullable Orientation orientation, boolean isMoving) {
         if (level.hasNeighborSignal(pos)) {
             onCaughtFire(state, level, pos, null, null);
             level.removeBlock(pos, false);
@@ -76,7 +79,7 @@ public class PoopTntBlock extends Block {
     }
 
     @Override
-    public void wasExploded(Level level, BlockPos pos, Explosion explosion) {
+    public void wasExploded(ServerLevel level, BlockPos pos, Explosion explosion) {
         if (!level.isClientSide()) {
             PoopTntEntity tnt = new PoopTntEntity(level,
                     pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5,
@@ -102,7 +105,7 @@ public class PoopTntBlock extends Block {
             level.setBlock(pos, Blocks.AIR.defaultBlockState(), 11);
             Item item = stack.getItem();
             if (stack.is(Items.FLINT_AND_STEEL)) {
-                stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
+                stack.hurtAndBreak(1, player, hand.asEquipmentSlot());
             } else {
                 stack.consume(1, player);
             }
@@ -113,10 +116,10 @@ public class PoopTntBlock extends Block {
 
     @Override
     protected void onProjectileHit(Level level, BlockState state, BlockHitResult hit, Projectile projectile) {
-        if (!level.isClientSide()) {
+        if (level instanceof ServerLevel serverLevel) {
             BlockPos pos = hit.getBlockPos();
             Entity entity = projectile.getOwner();
-            if (projectile.isOnFire() && projectile.mayInteract(level, pos)) {
+            if (projectile.isOnFire() && projectile.mayInteract(serverLevel, pos)) {
                 onCaughtFire(state, level, pos, null, entity instanceof LivingEntity living ? living : null);
                 level.removeBlock(pos, false);
             }

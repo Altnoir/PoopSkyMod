@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.content.effect;
 
 import com.altnoir.poopsky.content.item.p.TimeBellItem;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
@@ -12,7 +13,7 @@ public class MomentOfPtymeEffect extends MobEffect {
     }
 
     @Override
-    public boolean applyEffectTick(LivingEntity livingEntity, int amplifier) {
+    public boolean applyEffectTick(ServerLevel serverLevel, LivingEntity livingEntity, int amplifier) {
         if (!livingEntity.level().isClientSide() && livingEntity instanceof Player player) {
             var server = livingEntity.level().getServer();
             if (server != null && server.tickRateManager().isFrozen()) {

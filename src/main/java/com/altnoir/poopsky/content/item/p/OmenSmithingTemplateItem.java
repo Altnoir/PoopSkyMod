@@ -6,12 +6,14 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Util;
-import net.minecraft.world.flag.FeatureFlag;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SmithingTemplateItem;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class OmenSmithingTemplateItem extends SmithingTemplateItem {
     private static final ChatFormatting TITLE_FORMAT;
@@ -37,15 +39,19 @@ public class OmenSmithingTemplateItem extends SmithingTemplateItem {
     private final Component ingredients;
     private final Component upgradeDescription;
 
-    public OmenSmithingTemplateItem(Component appliesTo, Component ingredients, Component upgradeDescription, Component baseSlotDescription, Component additionsSlotDescription, List<Identifier> baseSlotEmptyIcons, List<Identifier> additionalSlotEmptyIcons, FeatureFlag... requiredFeatures) {
-        super(appliesTo, ingredients, upgradeDescription, baseSlotDescription, additionsSlotDescription, baseSlotEmptyIcons, additionalSlotEmptyIcons, requiredFeatures);
+    public OmenSmithingTemplateItem(Component appliesTo, Component ingredients, Component upgradeDescription, Component baseSlotDescription,
+                                    Component additionsSlotDescription, List<Identifier> baseSlotEmptyIcons,
+                                    List<Identifier> additionalSlotEmptyIcons, Item.Properties properties) {
+        super(appliesTo, ingredients, baseSlotDescription, additionsSlotDescription, baseSlotEmptyIcons, additionalSlotEmptyIcons, properties);
         this.appliesTo = appliesTo;
         this.ingredients = ingredients;
         this.upgradeDescription = upgradeDescription;
     }
 
-    public static SmithingTemplateItem createOmenUpgradeTemplate() {
-        return new SmithingTemplateItem(OMEN_UPGRADE_APPLIES_TO, OMEN_UPGRADE_INGREDIENTS, OMEN_UPGRADE, OMEN_UPGRADE_BASE_SLOT_DESCRIPTION, OMEN_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, createNetheriteUpgradeIconList(), createNetheriteUpgradeMaterialList());
+    public static SmithingTemplateItem createOmenUpgradeTemplate(Item.Properties properties) {
+        return new OmenSmithingTemplateItem(OMEN_UPGRADE_APPLIES_TO, OMEN_UPGRADE_INGREDIENTS, OMEN_UPGRADE,
+                OMEN_UPGRADE_BASE_SLOT_DESCRIPTION, OMEN_UPGRADE_ADDITIONS_SLOT_DESCRIPTION,
+                createNetheriteUpgradeIconList(), createNetheriteUpgradeMaterialList(), properties);
     }
 
     private static List<Identifier> createNetheriteUpgradeIconList() {
@@ -57,14 +63,13 @@ public class OmenSmithingTemplateItem extends SmithingTemplateItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-        tooltipComponents.add(this.upgradeDescription);
-        tooltipComponents.add(CommonComponents.EMPTY);
-        tooltipComponents.add(APPLIES_TO_TITLE);
-        tooltipComponents.add(CommonComponents.space().append(this.appliesTo));
-        tooltipComponents.add(INGREDIENTS_TITLE);
-        tooltipComponents.add(CommonComponents.space().append(this.ingredients));
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag tooltipFlag) {
+        tooltip.accept(this.upgradeDescription);
+        tooltip.accept(CommonComponents.EMPTY);
+        tooltip.accept(APPLIES_TO_TITLE);
+        tooltip.accept(CommonComponents.space().append(this.appliesTo));
+        tooltip.accept(INGREDIENTS_TITLE);
+        tooltip.accept(CommonComponents.space().append(this.ingredients));
     }
 
     static {

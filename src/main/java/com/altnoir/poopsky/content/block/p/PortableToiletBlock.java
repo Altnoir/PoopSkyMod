@@ -9,11 +9,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
@@ -21,8 +23,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.piston.PistonMovingBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -32,6 +34,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.level.storage.LevelData;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -192,7 +195,7 @@ public class PortableToiletBlock extends Block {
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         BlockPos pos = context.getClickedPos();
         Level level = context.getLevel();
-        if (pos.getY() < level.getMaxBuildHeight() - 1 && level.getBlockState(pos.above()).canBeReplaced(context)) {
+        if (pos.getY() < level.getMaxY() && level.getBlockState(pos.above()).canBeReplaced(context)) {
             return this.defaultBlockState()
                     .setValue(FACING, context.getHorizontalDirection().getOpposite())
                     .setValue(OPEN, false)
@@ -207,12 +210,13 @@ public class PortableToiletBlock extends Block {
     }
 
     @Override
-    protected BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
+    protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess ticks, BlockPos currentPos,
+                                     Direction facing, BlockPos facingPos, BlockState facingState, RandomSource random) {
         DoubleBlockHalf half = state.getValue(HALF);
         if (facing.getAxis() != Direction.Axis.Y || half == DoubleBlockHalf.LOWER != (facing == Direction.UP)) {
             return half == DoubleBlockHalf.LOWER && facing == Direction.DOWN && !state.canSurvive(level, currentPos)
                     ? Blocks.AIR.defaultBlockState()
-                    : super.updateShape(state, facing, facingState, level, currentPos, facingPos);
+                    : super.updateShape(state, level, ticks, currentPos, facing, facingPos, facingState, random);
         }
         if (facingState.is(this) && facingState.getValue(HALF) != half) {
             return facingState.setValue(HALF, half);
@@ -255,8 +259,8 @@ public class PortableToiletBlock extends Block {
     }
 
     @Override
-    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        super.entityInside(state, level, pos, entity);
+    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
+        super.entityInside(state, level, pos, entity, effectApplier, isPrecise);
         if (state.getValue(HALF) == DoubleBlockHalf.LOWER) {
             ToiletUtil.portableToiletInside(level, pos, state, entity);
         }
@@ -266,10 +270,12 @@ public class PortableToiletBlock extends Block {
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         BlockPos respawnPos = getRespawnAnchorPos(state, pos);
         BlockState respawnState = level.getBlockState(respawnPos);
+        ServerPlayer.RespawnConfig respawnConfig = new ServerPlayer.RespawnConfig(
+                LevelData.RespawnData.of(level.dimension(), respawnPos, player.getYRot(), player.getXRot()), false);
         if (player instanceof ServerPlayer serverPlayer && respawnState.is(this)
-                && respawnState.getValue(HALF) == DoubleBlockHalf.UPPER && (serverPlayer.getRespawnDimension() != level.dimension()
-                || !respawnPos.equals(serverPlayer.getRespawnPosition()))) {
-            serverPlayer.setRespawnPosition(level.dimension(), respawnPos, player.getYRot(), false, true);
+                && respawnState.getValue(HALF) == DoubleBlockHalf.UPPER
+                && !respawnConfig.isSamePosition(serverPlayer.getRespawnConfig())) {
+            serverPlayer.setRespawnPosition(respawnConfig, true);
         }
 
         if (state.getValue(HALF) == DoubleBlockHalf.LOWER) {
@@ -277,12 +283,12 @@ public class PortableToiletBlock extends Block {
                 if (!level.isClientSide()) {
                     player.openMenu(state.getMenuProvider(level, pos));
                 }
-                return InteractionResult.sidedSuccess(level.isClientSide());
+                return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
             }
         }
         setOpen(level, pos, state, !state.getValue(OPEN));
 
-        return InteractionResult.sidedSuccess(level.isClientSide());
+        return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
     }
 
     @Override
@@ -323,7 +329,7 @@ public class PortableToiletBlock extends Block {
         if (!respawnState.is(this) || respawnState.getValue(HALF) != DoubleBlockHalf.UPPER) {
             return Optional.empty();
         }
-        return Optional.of(ServerPlayer.RespawnPosAngle.of(Vec3.atCenterOf(respawnPos), respawnPos));
+        return Optional.of(ServerPlayer.RespawnPosAngle.of(Vec3.atCenterOf(respawnPos), respawnPos, 0.0F));
     }
 
     private static BlockPos getRespawnAnchorPos(BlockState state, BlockPos pos) {

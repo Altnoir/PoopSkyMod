@@ -1,9 +1,11 @@
 package com.altnoir.poopsky.content.effect;
 
+import com.altnoir.poopsky.content.recipe.PoRecipeLookup;
 import com.altnoir.poopsky.impl.util.PoopTntUtil;
 import com.altnoir.poopsky.init.PoEffects;
 import com.altnoir.poopsky.init.PoRecipes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,8 +23,7 @@ public class OnTheVergeEffect extends MobEffect {
     }
 
     @Override
-    public boolean applyEffectTick(LivingEntity livingEntity, int amplifier) {
-        Level level = livingEntity.level();
+    public boolean applyEffectTick(ServerLevel level, LivingEntity livingEntity, int amplifier) {
         boolean result = false;
         boolean result2 = false;
 
@@ -39,7 +40,7 @@ public class OnTheVergeEffect extends MobEffect {
                         BlockState state = level.getBlockState(pos);
                         BlockState stoneState = level.getBlockState(stonePos);
 
-                        for (var holder : level.getRecipeManager().getAllRecipesFor(PoRecipes.ANAL_PRESSING.type().get())) {
+                        for (var holder : PoRecipeLookup.all(level, PoRecipes.ANAL_PRESSING.type().get())) {
                             var recipe = holder.value();
                             if (recipe.input().test(new ItemStack(state.getBlock().asItem())) && recipe.replaceTarget() == stoneState.getBlock()) {
                                 level.removeBlock(pos, false);

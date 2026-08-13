@@ -4,6 +4,7 @@ import com.altnoir.poopsky.init.PoRecipes;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -73,5 +74,16 @@ public record AnalPressingRecipe(Ingredient input, Block output, Block replaceTa
     @Override
     public RecipeSerializer<AnalPressingRecipe> getSerializer() {
         return PoRecipes.ANAL_PRESSING.serializer().get();
+    }
+
+    public void applyConversion(Level level, BlockPos centerPos) {
+        for (int dx = -radius; dx <= radius; dx++) {
+            for (int dz = -radius; dz <= radius; dz++) {
+                BlockPos targetPos = centerPos.offset(dx, 0, dz);
+                if (level.getBlockState(targetPos).is(replaceTarget)) {
+                    level.setBlockAndUpdate(targetPos, output.defaultBlockState());
+                }
+            }
+        }
     }
 }

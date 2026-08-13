@@ -7,7 +7,6 @@ import com.altnoir.poopsky.init.PoItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -21,6 +20,8 @@ import net.minecraft.world.entity.vehicle.VehicleEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
@@ -51,12 +52,7 @@ public class FlushToiletCartEntity extends VehicleEntity {
 
     private float deltaRotation;
     private float currentSpeed;
-    private int lerpSteps;
-    private double lerpX;
-    private double lerpY;
-    private double lerpZ;
-    private float lerpYRot;
-    private float lerpXRot;
+    private final InterpolationHandler interpolation = new InterpolationHandler(this, 10);
 
     public float wheelLeftRotation;
     public float wheelLeftRotationO;
@@ -104,11 +100,11 @@ public class FlushToiletCartEntity extends VehicleEntity {
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundTag compoundTag) {
+    protected void readAdditionalSaveData(ValueInput input) {
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundTag compoundTag) {
+    protected void addAdditionalSaveData(ValueOutput output) {
     }
 
     @Override
@@ -117,7 +113,7 @@ public class FlushToiletCartEntity extends VehicleEntity {
     }
 
     @Override
-    public boolean canBeCollidedWith() {
+    public boolean canBeCollidedWith(@Nullable Entity other) {
         return true;
     }
 
@@ -132,7 +128,7 @@ public class FlushToiletCartEntity extends VehicleEntity {
     }
 
     @Override
-    public InteractionResult interact(Player player, InteractionHand hand) {
+    public InteractionResult interact(Player player, InteractionHand hand, Vec3 location) {
         if (this.level().isClientSide()) {
             return InteractionResult.SUCCESS;
         }
@@ -236,38 +232,8 @@ public class FlushToiletCartEntity extends VehicleEntity {
     }
 
     @Override
-    public void lerpTo(double x, double y, double z, float yRot, float xRot, int steps) {
-        this.lerpX = x;
-        this.lerpY = y;
-        this.lerpZ = z;
-        this.lerpYRot = yRot;
-        this.lerpXRot = xRot;
-        this.lerpSteps = 10;
-    }
-
-    @Override
-    public double lerpTargetX() {
-        return this.lerpSteps > 0 ? this.lerpX : this.getX();
-    }
-
-    @Override
-    public double lerpTargetY() {
-        return this.lerpSteps > 0 ? this.lerpY : this.getY();
-    }
-
-    @Override
-    public double lerpTargetZ() {
-        return this.lerpSteps > 0 ? this.lerpZ : this.getZ();
-    }
-
-    @Override
-    public float lerpTargetXRot() {
-        return this.lerpSteps > 0 ? this.lerpXRot : this.getXRot();
-    }
-
-    @Override
-    public float lerpTargetYRot() {
-        return this.lerpSteps > 0 ? this.lerpYRot : this.getYRot();
+    public InterpolationHandler getInterpolation() {
+        return this.interpolation;
     }
 
     @Override
@@ -280,10 +246,10 @@ public class FlushToiletCartEntity extends VehicleEntity {
         }
 
         super.tick();
-        this.tickLerp();
+        this.interpolation.interpolate();
         this.tickWheelRotationSync();
 
-        boolean shouldProcessInput = this.isControlledByLocalInstance()
+        boolean shouldProcessInput = this.isLocalInstanceAuthoritative()
                 || (!this.level().isClientSide() && this.getControllingPassenger() != null);
         if (shouldProcessInput) {
             if (this.level().isClientSide()) {
@@ -346,18 +312,6 @@ public class FlushToiletCartEntity extends VehicleEntity {
 
         this.setInput(forward, backward, left, right, fast);
         ClientPacketDistributor.sendToServer(new FlushToiletCartInputPayload(forward, backward, left, right, fast));
-    }
-
-    private void tickLerp() {
-        if (this.isControlledByLocalInstance()) {
-            this.lerpSteps = 0;
-            this.syncPacketPositionCodec(this.getX(), this.getY(), this.getZ());
-        }
-
-        if (this.lerpSteps > 0) {
-            this.lerpPositionAndRotationStep(this.lerpSteps, this.lerpX, this.lerpY, this.lerpZ, this.lerpYRot, this.lerpXRot);
-            this.lerpSteps--;
-        }
     }
 
     private void moveByInput() {

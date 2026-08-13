@@ -14,6 +14,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
@@ -56,7 +57,7 @@ public class RoundwormVinesPlantBlock extends GrowingPlantBodyBlock implements B
     }
 
     @Override
-    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
+    protected ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData) {
         return new ItemStack(PoItems.ROUNDWORM.get());
     }
 
@@ -75,20 +76,20 @@ public class RoundwormVinesPlantBlock extends GrowingPlantBodyBlock implements B
             BlockState blockstate = state.setValue(SEEDS, Boolean.FALSE);
             level.setBlock(pos, blockstate, 2);
             level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, blockstate));
-            return InteractionResult.sidedSuccess(level.isClientSide());
+            return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
         } else {
             return InteractionResult.PASS;
         }
     }
 
     @Override
-    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
         if (entity instanceof FlyEntity fly && fly.isAlive()) {
             fly.hurt(level.damageSources().source(PoDamageTypes.ROUNDWORM), 2.0F);
         } else if (entity instanceof LivingEntity livingEntity) {
             livingEntity.hurt(level.damageSources().source(PoDamageTypes.ROUNDWORM), 0.5F);
         }
-        super.entityInside(state, level, pos, entity);
+        super.entityInside(state, level, pos, entity, effectApplier, isPrecise);
     }
 
     @Override
@@ -113,6 +114,6 @@ public class RoundwormVinesPlantBlock extends GrowingPlantBodyBlock implements B
 
     @Override
     public PathType getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, @Nullable Mob mob) {
-        return PathType.DAMAGE_OTHER;
+        return PathType.DAMAGING;
     }
 }

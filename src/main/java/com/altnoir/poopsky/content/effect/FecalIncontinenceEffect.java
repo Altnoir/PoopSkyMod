@@ -28,7 +28,7 @@ public class FecalIncontinenceEffect extends MobEffect {
     }
 
     @Override
-    public boolean applyEffectTick(LivingEntity entity, int amplifier) {
+    public boolean applyEffectTick(ServerLevel serverLevel, LivingEntity entity, int amplifier) {
         int chance = entity.getRandom().nextInt(Math.max(1, 20 - amplifier * 5));
         if (amplifier >= 1 && entity instanceof Player player && player.isShiftKeyDown()) {
             player.causeFoodExhaustion(0.1F * (amplifier + 2));

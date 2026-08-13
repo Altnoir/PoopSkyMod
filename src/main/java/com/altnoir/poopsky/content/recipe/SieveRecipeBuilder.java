@@ -91,7 +91,6 @@ public final class SieveRecipeBuilder implements RecipeBuilder {
         return ResourceKey.create(Registries.RECIPE, getDefaultRecipeId(item));
     }
 
-    @Override
     public void save(@NotNull RecipeOutput recipeOutput, @NotNull String id) {
         Identifier recipeId = PoopSky.loc(RECIPE_TYPE + "/" + id);
         save(recipeOutput, ResourceKey.create(Registries.RECIPE, recipeId));

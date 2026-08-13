@@ -78,7 +78,7 @@ public class PoopCakeBlock extends CakeBlock {
         } else {
             player.awardStat(Stats.EAT_CAKE_SLICE);
             player.getFoodData().eat(2, 0.1F);
-            level.playSound(null, pos, SoundEvents.GENERIC_EAT, SoundSource.PLAYERS, 0.5F, 0.6F);
+            level.playSound(null, pos, SoundEvents.GENERIC_EAT.value(), SoundSource.PLAYERS, 0.5F, 0.6F);
             if (level.isClientSide() && level instanceof ServerLevel serverLevel) {
                 serverLevel.sendParticles(PoParticles.POOP_PARTICLE.get(),
                         pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,

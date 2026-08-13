@@ -8,19 +8,22 @@ import com.altnoir.poopsky.content.block.CompooperType;
 import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.content.recipe.*;
 import com.altnoir.poopsky.impl.PoTags;
+import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.init.ToiletTypes;
 //import com.simibubi.create.AllItems;
-import com.tterrag.registrate.providers.RegistrateRecipeProvider;
+import com.tterrag.registrate.providers.ProviderType;
+import com.tterrag.registrate.providers.generators.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import net.minecraft.advancements.Criterion;
+import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
@@ -36,24 +39,25 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.conditions.IConditionBuilder;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
-public class RecipeGen extends RegistrateRecipeProvider implements IConditionBuilder {
-    private final CompletableFuture<HolderLookup.Provider> registriesFuture;
-    private HolderLookup.Provider registries;
+public final class RecipeGen {
+    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
+    private static RegistrateRecipeProvider provider;
+    private static HolderLookup.Provider registries;
 
-    public RecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> provider) {
-        super(PoopSky.registrate(), output, provider);
-        this.registriesFuture = provider;
+    private RecipeGen() {
     }
 
-    @Override
-    protected void buildRecipes(@NotNull RecipeOutput recipeOutput) {
-        this.registries = this.registriesFuture.join();
+    public static void register() {
+        REGISTRATE.addDataGenerator(ProviderType.RECIPE, RecipeGen::generate);
+    }
+
+    private static void generate(RegistrateRecipeProvider recipeProvider) {
+        provider = recipeProvider;
+        registries = recipeProvider.registries();
+        RecipeOutput recipeOutput = recipeProvider;
         buildCookingRecipes(recipeOutput);
         buildFoodRecipes(recipeOutput);
         buildItemRecipes(recipeOutput);
@@ -68,9 +72,27 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         buildAnalPressingRecipes(recipeOutput);
         buildBreedingChestRecipes(recipeOutput);
         buildFlyBarrelRecipes(recipeOutput);
+        provider = null;
+        registries = null;
     }
 
-    private void buildCookingRecipes(RecipeOutput recipeOutput) {
+    private static Criterion<InventoryChangeTrigger.TriggerInstance> has(ItemLike item) {
+        return provider.has(item);
+    }
+
+    private static Criterion<InventoryChangeTrigger.TriggerInstance> has(TagKey<Item> tag) {
+        return provider.has(tag);
+    }
+
+    private static String getHasName(ItemLike item) {
+        return RegistrateRecipeProvider.getHasName(item);
+    }
+
+    private static String getItemName(ItemLike item) {
+        return RegistrateRecipeProvider.getItemName(item);
+    }
+
+    private static void buildCookingRecipes(RecipeOutput recipeOutput) {
         shapeless1x1Recipe(recipeOutput, Blocks.CRIMSON_NYLIUM, Blocks.CRIMSON_FUNGUS, Blocks.NETHERRACK);
         shapeless1x1Recipe(recipeOutput, Blocks.WARPED_NYLIUM, Blocks.WARPED_FUNGUS, Blocks.NETHERRACK);
         shapeless1x1Recipe(recipeOutput, Blocks.SLIME_BLOCK, Items.LIME_DYE, PoBlocks.POOLIME_BLOCK);
@@ -96,37 +118,37 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 RecipeCategory.BUILDING_BLOCKS, PoItems.BAKED_MAGGOTS, 0.35F, 100, "maggots_seeds", "_from_smoking");
     }
 
-    private void buildFoodRecipes(RecipeOutput recipeOutput) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PoItems.POOP_BREAD)
+    private static void buildFoodRecipes(RecipeOutput recipeOutput) {
+        provider.shaped(RecipeCategory.FOOD, PoItems.POOP_BREAD)
                 .pattern("PMP")
                 .define('P', PoItems.POOP)
                 .define('M', PoItems.MAGGOTS_SEEDS)
                 .unlockedBy(getItemName(PoItems.MAGGOTS_SEEDS), has(PoItems.MAGGOTS_SEEDS))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PoItems.POOP_MOONCAKE, 2)
+        provider.shaped(RecipeCategory.FOOD, PoItems.POOP_MOONCAKE, 2)
                 .pattern("WPW")
                 .define('W', Items.WHEAT)
                 .define('P', PoItems.POOP)
                 .unlockedBy(getItemName(Items.WHEAT), has(Items.WHEAT))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PoItems.CHILI_POOP_MOONCAKE, 2)
+        provider.shaped(RecipeCategory.FOOD, PoItems.CHILI_POOP_MOONCAKE, 2)
                 .pattern("WPW")
                 .define('W', Items.WHEAT)
                 .define('P', PoItems.CHILI_POOP)
                 .unlockedBy(getItemName(Items.WHEAT), has(Items.WHEAT))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PoItems.GOLDEN_POOP_MOONCAKE, 2)
+        provider.shaped(RecipeCategory.FOOD, PoItems.GOLDEN_POOP_MOONCAKE, 2)
                 .pattern("WPW")
                 .define('W', Items.WHEAT)
                 .define('P', PoItems.GOLDEN_POOP)
                 .unlockedBy(getItemName(Items.WHEAT), has(Items.WHEAT))
                 .save(recipeOutput);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PoItems.POOP_DUMPLINGS)
+        provider.shapeless(RecipeCategory.FOOD, PoItems.POOP_DUMPLINGS)
                 .requires(PoItems.POOP_BALL.get())
                 .requires(ItemTags.LEAVES)
                 .unlockedBy(getItemName(PoItems.POOP_BALL.get()), has(PoItems.POOP_BALL.get()))
                 .save(recipeOutput);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PoItems.POOP_SOUP)
+        provider.shapeless(RecipeCategory.FOOD, PoItems.POOP_SOUP)
                 .requires(Items.BOWL)
                 .requires(PoItems.POOP)
                 .requires(PoItems.MAGGOTS_SEEDS)
@@ -134,31 +156,31 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .unlockedBy(getItemName(PoItems.MAGGOTS_SEEDS), has(PoItems.MAGGOTS_SEEDS))
                 .save(recipeOutput);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PoItems.POOBURGER_MEAT.get(), 3)
+        provider.shapeless(RecipeCategory.FOOD, PoItems.POOBURGER_MEAT.get(), 3)
                 .requires(PoItems.POOP, 3)
                 .requires(Items.EGG)
                 .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP))
                 .save(recipeOutput);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PoItems.POOBURGER.get())
+        provider.shapeless(RecipeCategory.FOOD, PoItems.POOBURGER.get())
                 .requires(Items.BREAD)
                 .requires(PoItems.POOBURGER_MEAT)
                 .requires(PoItems.SEEDBED_CURSE)
                 .unlockedBy(getItemName(PoItems.SEEDBED_CURSE), has(PoItems.SEEDBED_CURSE))
                 .save(recipeOutput);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PoItems.POOPSICLE.get(), 2)
+        provider.shapeless(RecipeCategory.FOOD, PoItems.POOPSICLE.get(), 2)
                 .requires(Items.STICK)
                 .requires(PoItems.SEEDBED_CURSE)
                 .requires(Items.SNOWBALL)
                 .requires(PoItems.MAGGOTS_SEEDS)
                 .unlockedBy(getItemName(PoItems.SEEDBED_CURSE), has(PoItems.SEEDBED_CURSE))
                 .save(recipeOutput);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PoItems.POODDING.get(), 2)
+        provider.shapeless(RecipeCategory.FOOD, PoItems.POODDING.get(), 2)
                 .requires(PoItems.POOP_BALL)
                 .requires(Items.EGG).requires(Items.SUGAR)
                 .unlockedBy(getItemName(PoItems.POOP_BALL), has(PoItems.POOP_BALL))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PoBlocks.POOP_CAKE.get())
+        provider.shaped(RecipeCategory.FOOD, PoBlocks.POOP_CAKE.get())
                 .pattern("MMM")
                 .pattern("SES")
                 .pattern("PPP")
@@ -169,21 +191,21 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .save(recipeOutput);
     }
 
-    private void buildItemRecipes(RecipeOutput recipeOutput) {
+    private static void buildItemRecipes(RecipeOutput recipeOutput) {
         offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.SALTPETER_BLOCK, PoItems.SALTPETER_SHARD);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PoItems.JINKELA, 4)
+        provider.shapeless(RecipeCategory.MISC, PoItems.JINKELA, 4)
                 .requires(PoItems.POOP)
                 .requires(PoItems.UREA)
                 .requires(PoItems.SALTPETER_SHARD)
                 .unlockedBy(getItemName(PoItems.UREA), has(PoItems.UREA))
                 .save(recipeOutput);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PoItems.TOILET_PLUG_WAND)
+        provider.shapeless(RecipeCategory.MISC, PoItems.TOILET_PLUG_WAND)
                 .requires(PoItems.TOILET_PLUG.get())
                 .requires(PoItems.POOP.get())
                 .requires(Items.ENDER_EYE)
                 .unlockedBy(getItemName(Items.ENDER_EYE), has(Items.ENDER_EYE))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, PoItems.RETURN_TOTEM.get())
+        provider.shaped(RecipeCategory.MISC, PoItems.RETURN_TOTEM.get())
                 .pattern(" S ")
                 .pattern("GEG")
                 .pattern(" G ")
@@ -192,26 +214,26 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .define('E', Items.ECHO_SHARD)
                 .unlockedBy(getItemName(Items.ECHO_SHARD), has(Items.ECHO_SHARD))
                 .save(recipeOutput);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PoItems.TIME_BELL)
+        provider.shapeless(RecipeCategory.MISC, PoItems.TIME_BELL)
                 .requires(Items.BELL)
                 .requires(PoItems.POOP.get())
                 .requires(Items.DRAGON_EGG)
                 .unlockedBy(getItemName(Items.DRAGON_EGG), has(Items.DRAGON_EGG))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, PoItems.FLUSH_TOILET_CART.get())
+        provider.shaped(RecipeCategory.MISC, PoItems.FLUSH_TOILET_CART.get())
                 .pattern("ITI")
                 .define('I', Items.IRON_INGOT)
                 .define('T', PoBlocks.FLUSH_TOILET)
                 .unlockedBy(getItemName(PoBlocks.FLUSH_TOILET), has(PoBlocks.FLUSH_TOILET))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, PoItems.GOLDEN_FLUSH_TOILET_CART.get())
+        provider.shaped(RecipeCategory.MISC, PoItems.GOLDEN_FLUSH_TOILET_CART.get())
                 .pattern("ITI")
                 .define('I', Items.IRON_INGOT)
                 .define('T', PoBlocks.GOLDEN_FLUSH_TOILET)
                 .unlockedBy(getItemName(PoBlocks.GOLDEN_FLUSH_TOILET), has(PoBlocks.GOLDEN_FLUSH_TOILET))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, Items.COBWEB)
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, Items.COBWEB)
                 .pattern("S S")
                 .pattern(" P ")
                 .pattern("S S")
@@ -219,7 +241,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .define('S', PoItems.MAGGOTS_SEEDS)
                 .unlockedBy(getItemName(PoItems.MAGGOTS_SEEDS), has(PoItems.MAGGOTS_SEEDS))
                 .save(recipeOutput, getConversionRecipeName(PoItems.MAGGOTS_SEEDS));
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoItems.WITHER_POOP_BALL.get(), 8)
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, PoItems.WITHER_POOP_BALL.get(), 8)
                 .pattern("PPP")
                 .pattern("PSP")
                 .pattern("PPP")
@@ -227,7 +249,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .define('S', Items.WITHER_ROSE)
                 .unlockedBy(getItemName(Items.WITHER_ROSE), has(Items.WITHER_ROSE))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoItems.GOLDEN_POOP.get())
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, PoItems.GOLDEN_POOP.get())
                 .pattern("PPP")
                 .pattern("PSP")
                 .pattern("PPP")
@@ -235,19 +257,19 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .define('S', PoItems.POOP)
                 .unlockedBy(getItemName(Items.GOLD_NUGGET), has(Items.GOLD_NUGGET))
                 .save(recipeOutput);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PoItems.SEEDBED_CURSE.get())
+        provider.shapeless(RecipeCategory.FOOD, PoItems.SEEDBED_CURSE.get())
                 .requires(Items.ROTTEN_FLESH, 4)
                 .requires(PoItems.POOP_BALL)
                 .requires(PoItems.POOP, 4)
                 .unlockedBy(getItemName(Items.ROTTEN_FLESH), has(Items.ROTTEN_FLESH))
                 .save(recipeOutput);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PoItems.OMINOUS_FILTHY_INGOT.get())
+        provider.shapeless(RecipeCategory.FOOD, PoItems.OMINOUS_FILTHY_INGOT.get())
                 .requires(PoItems.SEEDBED_CURSE, 4)
                 .requires(Items.IRON_INGOT, 4)
                 .unlockedBy(getItemName(PoItems.SEEDBED_CURSE), has(PoItems.SEEDBED_CURSE))
                 .save(recipeOutput);
         copySmithingTemplate(recipeOutput, PoItems.OMEN_UPGRADE_SMITHING_TEMPLATE, PoBlocks.POOP_BLOCK, PoItems.SEEDBED_CURSE);
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PoItems.MILOS_SWORD)
+        provider.shaped(RecipeCategory.FOOD, PoItems.MILOS_SWORD)
                 .pattern("BOB")
                 .pattern(" O ")
                 .pattern(" P ")
@@ -264,7 +286,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         omenSmithing(recipeOutput, Items.GOLDEN_BOOTS, RecipeCategory.COMBAT, PoItems.OMEN_BOOTS.get());
     }
 
-    private void buildBuildingRecipes(RecipeOutput recipeOutput) {
+    private static void buildBuildingRecipes(RecipeOutput recipeOutput) {
         offer2x2CompactingRecipe(recipeOutput, PoBlocks.POOP_BLOCK, PoItems.POOP);
         blockFamilyRecipes(recipeOutput, PoBlocks.POOP_FAMILY);
 
@@ -303,37 +325,37 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         threeBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PoItems.CHILI_POOP, RecipeCategory.BUILDING_BLOCKS, PoBlocks.CHILI_SHIT);
         threeBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PoItems.GOLDEN_POOP, RecipeCategory.BUILDING_BLOCKS, PoBlocks.GOLDEN_SHIT);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BLOCK)
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BLOCK)
                 .pattern("P")
                 .pattern("P")
                 .define('P', PoBlocks.POOP_SLAB)
                 .unlockedBy(getItemName(PoBlocks.POOP_BLOCK), has(PoBlocks.POOP_BLOCK))
                 .save(recipeOutput, getConversionRecipeName(PoBlocks.POOP_BLOCK) + "_from_slab");
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BLOCK)
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BLOCK)
                 .pattern("PP")
                 .define('P', PoBlocks.POOP_VERTICAL_SLAB)
                 .unlockedBy(getItemName(PoBlocks.POOP_BLOCK), has(PoBlocks.POOP_BLOCK))
                 .save(recipeOutput, getConversionRecipeName(PoBlocks.POOP_BLOCK) + "_from_vertical_slab");
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BUTTON)
+        provider.shapeless(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BUTTON)
                 .requires(PoItems.POOP.get())
                 .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_PRESSURE_PLATE)
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_PRESSURE_PLATE)
                 .pattern("PP")
                 .define('P', PoItems.POOP)
                 .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_FENCE, 3)
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_FENCE, 3)
                 .pattern("BPB")
                 .pattern("BPB")
                 .define('B', PoBlocks.POOP_BLOCK)
                 .define('P', PoItems.POOP)
                 .unlockedBy(getItemName(PoBlocks.POOP_BLOCK), has(PoBlocks.POOP_BLOCK))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_FENCE_GATE)
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_FENCE_GATE)
                 .pattern("PBP")
                 .pattern("PBP")
                 .define('B', PoBlocks.POOP_BLOCK)
@@ -341,67 +363,67 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .unlockedBy(getItemName(PoBlocks.POOP_BLOCK), has(PoBlocks.POOP_BLOCK))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_DOOR, 3)
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_DOOR, 3)
                 .pattern("PP")
                 .pattern("PP")
                 .pattern("PP")
                 .define('P', PoBlocks.POOP_VERTICAL_SLAB)
                 .unlockedBy(getItemName(PoBlocks.POOP_BLOCK), has(PoBlocks.POOP_BLOCK))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_TRAPDOOR, 2)
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_TRAPDOOR, 2)
                 .pattern("PPP")
                 .pattern("PPP")
                 .define('P', PoBlocks.POOP_SLAB)
                 .unlockedBy(getItemName(PoBlocks.POOP_BLOCK), has(PoBlocks.POOP_BLOCK))
                 .save(recipeOutput);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BLOCK, 4)
+        provider.shapeless(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BLOCK, 4)
                 .requires(PoBlocks.POOP_EMPTY_LOG)
                 .unlockedBy(getItemName(PoBlocks.POOP_LOG), has(PoBlocks.POOP_LOG))
                 .save(recipeOutput, getConversionRecipeName(PoBlocks.POOP_BLOCK, PoBlocks.POOP_EMPTY_LOG));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BLOCK, 4)
+        provider.shapeless(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BLOCK, 4)
                 .requires(PoBlocks.STRIPPED_POOP_EMPTY_LOG)
                 .unlockedBy(getItemName(PoBlocks.POOP_LOG), has(PoBlocks.POOP_LOG))
                 .save(recipeOutput, getConversionRecipeName(PoBlocks.POOP_BLOCK, PoBlocks.STRIPPED_POOP_EMPTY_LOG));
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_WOOD, 3)
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_WOOD, 3)
                 .pattern("LL")
                 .pattern("LL")
                 .define('L', PoBlocks.POOP_LOG)
                 .unlockedBy(getItemName(PoBlocks.POOP_LOG), has(PoBlocks.POOP_LOG))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.STRIPPED_POOP_WOOD, 3)
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.STRIPPED_POOP_WOOD, 3)
                 .pattern("LL")
                 .pattern("LL")
                 .define('L', PoBlocks.STRIPPED_POOP_LOG)
                 .unlockedBy(getItemName(PoBlocks.STRIPPED_POOP_LOG), has(PoBlocks.STRIPPED_POOP_LOG))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_PIECE, 6)
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_PIECE, 6)
                 .pattern("PPP")
                 .define('P', PoBlocks.POOP_SLAB)
                 .unlockedBy(getItemName(PoBlocks.POOP_SLAB), has(PoBlocks.POOP_SLAB))
                 .save(recipeOutput);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, PoItems.LAWRENCE_MUSIC_DISC)
+        provider.shapeless(RecipeCategory.BUILDING_BLOCKS, PoItems.LAWRENCE_MUSIC_DISC)
                 .requires(Tags.Items.MUSIC_DISCS)
                 .requires(PoItems.POOP)
                 .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_CRAFTING_TABLE, 8)
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_CRAFTING_TABLE, 8)
                 .pattern("PP")
                 .define('P', PoBlocks.POOP_BLOCK)
                 .unlockedBy(getItemName(PoBlocks.POOP_BLOCK), has(PoBlocks.POOP_BLOCK))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.COMPOOPER)
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.COMPOOPER)
                 .pattern("S S")
                 .pattern("S S")
                 .pattern("SSS")
                 .define('S', Blocks.MOSSY_COBBLESTONE_SLAB)
                 .unlockedBy(getItemName(Blocks.MOSSY_COBBLESTONE_SLAB), has(Blocks.MOSSY_COBBLESTONE_SLAB))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.PLACER)
+        provider.shaped(RecipeCategory.REDSTONE, PoBlocks.PLACER)
                 .pattern("SSS")
                 .pattern("SPS")
                 .pattern("SAS")
@@ -410,7 +432,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .define('P', PoItems.TOILET_PLUG)
                 .unlockedBy(getItemName(PoItems.TOILET_PLUG), has(PoItems.TOILET_PLUG))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.SIEVE)
+        provider.shaped(RecipeCategory.REDSTONE, PoBlocks.SIEVE)
                 .pattern("SAS")
                 .pattern("S S")
                 .pattern("S S")
@@ -418,7 +440,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .define('A', Items.STRING)
                 .unlockedBy(getItemName(Blocks.MOSSY_COBBLESTONE_WALL), has(Blocks.MOSSY_COBBLESTONE_WALL))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.POOP_TNT)
+        provider.shaped(RecipeCategory.REDSTONE, PoBlocks.POOP_TNT)
                 .pattern("SAS")
                 .pattern("ASA")
                 .pattern("SAS")
@@ -426,7 +448,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .define('A', PoBlocks.POOP_BLOCK)
                 .unlockedBy(getItemName(PoItems.KING_OF_DRAGON_FRUIT), has(PoItems.KING_OF_DRAGON_FRUIT))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, PoItems.FLY_CATCHER)
+        provider.shaped(RecipeCategory.MISC, PoItems.FLY_CATCHER)
                 .pattern("RR")
                 .pattern("RS")
                 .pattern(" S")
@@ -434,12 +456,12 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .define('S', Items.STICK)
                 .unlockedBy(getItemName(PoItems.ROUNDWORM), has(PoItems.ROUNDWORM))
                 .save(recipeOutput);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, PoBlocks.FLY_BARREL)
+        provider.shapeless(RecipeCategory.REDSTONE, PoBlocks.FLY_BARREL)
                 .requires(Items.BARREL)
                 .requires(PoBlocks.MAGGOTS_BLOCK)
                 .unlockedBy(getItemName(PoBlocks.MAGGOTS_BLOCK), has(PoBlocks.MAGGOTS_BLOCK))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.BREEDING_CHEST)
+        provider.shaped(RecipeCategory.REDSTONE, PoBlocks.BREEDING_CHEST)
                 .pattern("CCC")
                 .pattern("CPC")
                 .pattern("CBC")
@@ -448,7 +470,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .define('B', Tags.Items.BARRELS)
                 .unlockedBy(getItemName(PoBlocks.CUT_POOP_BLOCK), has(PoBlocks.CUT_POOP_BLOCK))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.MAGGOTS_CHUNK_LOADER)
+        provider.shaped(RecipeCategory.REDSTONE, PoBlocks.MAGGOTS_CHUNK_LOADER)
                 .pattern(" R ")
                 .pattern("RMR")
                 .pattern("CCC")
@@ -459,7 +481,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .save(recipeOutput);
 
         offer2x2CompactingRecipe(recipeOutput, PoBlocks.POOLIME_BLOCK.get(), PoItems.POOP_BALL.get());
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOLIME_MAGGOTS_BLOCK.get())
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOLIME_MAGGOTS_BLOCK.get())
                 .pattern("PPP")
                 .pattern("PMP")
                 .pattern("PPP")
@@ -468,7 +490,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .unlockedBy(getItemName(PoBlocks.MAGGOTS_BLOCK), has(PoBlocks.MAGGOTS_BLOCK))
                 .save(recipeOutput);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PoItems.FASTING_PILL.get())
+        provider.shapeless(RecipeCategory.FOOD, PoItems.FASTING_PILL.get())
                 .requires(PoTags.Items.POOPS).requires(PoTags.Items.POOP_MOONCAKES).requires(PoTags.Items.SHITS)
                 .requires(PoItems.POOP_BALL).requires(PoBlocks.ROUNDWORM_BLOCK).requires(PoItems.POOP_DUMPLINGS)
                 .requires(PoItems.KING_OF_DRAGON_FRUIT).requires(PoBlocks.POOP_CAKE).requires(PoItems.POOBURGER_MEAT)
@@ -476,12 +498,12 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .save(recipeOutput);
     }
 
-    private void buildVanillaRecipes(RecipeOutput recipeOutput) {
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.GUNPOWDER)
+    private static void buildVanillaRecipes(RecipeOutput recipeOutput) {
+        provider.shapeless(RecipeCategory.MISC, Items.GUNPOWDER)
                 .requires(PoItems.KING_OF_DRAGON_FRUIT)
                 .unlockedBy(getItemName(PoItems.KING_OF_DRAGON_FRUIT), has(PoItems.KING_OF_DRAGON_FRUIT))
                 .save(recipeOutput, getConversionRecipeName(Items.GUNPOWDER) + "_from_" + getItemName(PoItems.KING_OF_DRAGON_FRUIT));
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, Blocks.COARSE_DIRT, 4)
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, Blocks.COARSE_DIRT, 4)
                 .pattern("PG")
                 .pattern("GP")
                 .define('G', Blocks.GRAVEL)
@@ -489,21 +511,21 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .unlockedBy(getItemName(PoBlocks.POOP_BLOCK), has(PoBlocks.POOP_BLOCK))
                 .save(recipeOutput, getConversionRecipeName(Blocks.COARSE_DIRT) + "_from_poop_block");
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Blocks.POINTED_DRIPSTONE)
+        provider.shaped(RecipeCategory.MISC, Blocks.POINTED_DRIPSTONE)
                 .pattern("S")
                 .pattern("S")
                 .pattern("S")
                 .define('S', PoItems.SPALL)
                 .unlockedBy(getItemName(PoItems.SPALL), has(PoItems.SPALL))
                 .save(recipeOutput, getConversionRecipeName(Blocks.POINTED_DRIPSTONE) + "_from_spall");
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.FLINT)
+        provider.shaped(RecipeCategory.MISC, Items.FLINT)
                 .pattern("S")
                 .pattern("S")
                 .define('S', PoItems.SPALL)
                 .unlockedBy(getItemName(PoItems.SPALL), has(PoItems.SPALL))
                 .save(recipeOutput, getConversionRecipeName(Items.FLINT) + "_from_spall");
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.TORCH, 4)
+        provider.shaped(RecipeCategory.MISC, Items.TORCH, 4)
                 .pattern("P")
                 .pattern("S")
                 .define('P', PoItems.POOP_BALL)
@@ -526,7 +548,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
     }
 
     private static void coralBlockRecipe(RecipeOutput recipeOutput, Block result, Block coral, Block coralFan) {
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, result)
+        provider.shapeless(RecipeCategory.BUILDING_BLOCKS, result)
                 .requires(PoBlocks.POOP_BLOCK)
                 .requires(coral)
                 .requires(coralFan)
@@ -534,7 +556,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .save(recipeOutput, getConversionRecipeName(result));
     }
 
-    private void buildStonecuttingRecipes(RecipeOutput recipeOutput) {
+    private static void buildStonecuttingRecipes(RecipeOutput recipeOutput) {
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.STOOL, PoBlocks.DRIED_POOP_BLOCK, 4);
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_CRAFTING_TABLE, PoBlocks.POOP_BLOCK, 4);
 
@@ -567,7 +589,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         stonecutterResult(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_BLOCK, PoBlocks.STRIPPED_POOP_EMPTY_LOG, 4);
     }
 
-    private void buildToiletRecipes(RecipeOutput recipeOutput) {
+    private static void buildToiletRecipes(RecipeOutput recipeOutput) {
         for (var entry : ToiletType.getByCategory(ToiletType.Category.WOOD).entrySet()) {
             toiletRecipes(recipeOutput, PoBlocks.WOODEN_TOILET, entry.getValue().sourceBlock(), entry.getValue());
         }
@@ -576,7 +598,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 toiletRecipes(recipeOutput, PoBlocks.HARD_TOILET, entry.getValue().sourceBlock(), entry.getValue());
             }
         }
-        ToiletRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.HARD_TOILET, ToiletTypes.RAINBOW)
+        ToiletRecipeBuilder.shaped(provider.itemLookup(), RecipeCategory.BUILDING_BLOCKS, PoBlocks.HARD_TOILET, ToiletTypes.RAINBOW)
                 .pattern(" P ")
                 .pattern("RGB")
                 .define('P', PoItems.POOP)
@@ -584,9 +606,9 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .define('G', Blocks.GREEN_CONCRETE)
                 .define('B', Blocks.BLUE_CONCRETE)
                 .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP))
-                .save(recipeOutput, PoopSky.loc("hard_toilet_from_rainbow"));
+                .save(recipeOutput, PoopSky.loc("hard_toilet_from_rainbow").toString());
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.GINKGO_TOILET)
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.GINKGO_TOILET)
                 .pattern("B")
                 .pattern("B")
                 .pattern("P")
@@ -594,7 +616,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .define('B', PoBlocks.GINKGO_PLANKS)
                 .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.PORTABLE_TOILET)
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.PORTABLE_TOILET)
                 .pattern("B")
                 .pattern("B")
                 .pattern("P")
@@ -602,14 +624,14 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .define('B', Items.IRON_INGOT)
                 .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.FLUSH_TOILET)
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.FLUSH_TOILET)
                 .pattern("PB")
                 .pattern("B ")
                 .define('P', PoItems.POOP)
                 .define('B', Blocks.QUARTZ_BLOCK)
                 .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.GOLDEN_FLUSH_TOILET)
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.GOLDEN_FLUSH_TOILET)
                 .pattern("PB")
                 .pattern("B ")
                 .define('P', PoItems.POOP)
@@ -618,7 +640,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .save(recipeOutput);
     }
 
-    private void buildPopExplosionRecipes(RecipeOutput recipeOutput) {
+    private static void buildPopExplosionRecipes(RecipeOutput recipeOutput) {
         record PopExplosionEntry(ItemLike input, ItemLike output, int radius) {
             static PopExplosionEntry of(ItemLike input, ItemLike output) {
                 return new PopExplosionEntry(input, output, 0);
@@ -649,7 +671,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         }
     }
 
-    private void buildAnalPressingRecipes(RecipeOutput recipeOutput) {
+    private static void buildAnalPressingRecipes(RecipeOutput recipeOutput) {
         record AnalPressing(Block input, Block output, Block replaceTarget, int radius) {
             static AnalPressing of(Block input, Block output) {
                 return new AnalPressing(input, output, null, 1);
@@ -716,7 +738,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .save(recipeOutput);
     }
 
-    private void buildSieveRecipes(RecipeOutput recipeOutput) {
+    private static void buildSieveRecipes(RecipeOutput recipeOutput) {
         RecipeOutput createLoaded = recipeOutput.withConditions(modLoaded(PoMods.CREATE.id()));
         RecipeOutput createNotLoaded = recipeOutput.withConditions(not(modLoaded(PoMods.CREATE.id())));
 
@@ -830,7 +852,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .save(createLoaded, "raw_poop_block_has_create");*/
     }
 
-    private void buildFlyBarrelRecipes(RecipeOutput recipeOutput) {
+    private static void buildFlyBarrelRecipes(RecipeOutput recipeOutput) {
         RecipeOutput create = recipeOutput.withConditions(modLoaded(PoMods.CREATE.id()));
         RecipeOutput ae2 = recipeOutput.withConditions(modLoaded(PoMods.AE2.id()));
         RecipeOutput mekanism = recipeOutput.withConditions(modLoaded(PoMods.MEKANISM.id()));
@@ -877,7 +899,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 FlyBarrelEntry.of(FlyTypes.GLOWSTONE.get(), Items.GLOWSTONE_DUST),
                 FlyBarrelEntry.of(FlyTypes.ENDER.get(), Items.ENDER_PEARL),
                 // Create
-                FlyBarrelEntry.of(FlyTypes.ZINC.get(), AllItems.RAW_ZINC, create),
+//                FlyBarrelEntry.of(FlyTypes.ZINC.get(), AllItems.RAW_ZINC, create),
                 // AE2
                 FlyBarrelEntry.of(FlyTypes.CERTUS.get(), PoMods.AE2.rl("certus_quartz_crystal"), ae2),
                 FlyBarrelEntry.of(FlyTypes.SKY_DUST.get(), PoMods.AE2.rl("sky_dust"), ae2),
@@ -896,7 +918,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         }
     }
 
-    private void buildBreedingChestRecipes(RecipeOutput recipeOutput) {
+    private static void buildBreedingChestRecipes(RecipeOutput recipeOutput) {
         RecipeOutput create = recipeOutput.withConditions(modLoaded(PoMods.CREATE.id()));
         RecipeOutput ae2 = recipeOutput.withConditions(modLoaded(PoMods.AE2.id()));
         RecipeOutput mekanism = recipeOutput.withConditions(modLoaded(PoMods.MEKANISM.id()));
@@ -934,7 +956,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 Breeding.of(FlyTypes.EMERALD.get(), FlyTypes.DIAMOND.get(), FlyTypes.NETHERITE.get()),
                 Breeding.of(FlyTypes.NORMAL.get(), FlyTypes.COPPER.get(), FlyTypes.BLACK.get()),
                 // Create
-                Breeding.of(FlyTypes.CYAN.get(), FlyTypes.IRON.get(), FlyTypes.ZINC.get()).loaded(create),
+//                Breeding.of(FlyTypes.CYAN.get(), FlyTypes.IRON.get(), FlyTypes.ZINC.get()).loaded(create),
                 // AE2
                 Breeding.of(FlyTypes.LIGHT_BLUE.get(), FlyTypes.DIAMOND.get(), FlyTypes.CERTUS.get()).loaded(ae2),
                 Breeding.of(FlyTypes.BLACK.get(), FlyTypes.GLOWSTONE.get(), FlyTypes.SKY_DUST.get()).loaded(ae2),
@@ -955,7 +977,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
     }
 
 
-    private void buildCompooperRecipes(RecipeOutput recipeOutput) {
+    private static void buildCompooperRecipes(RecipeOutput recipeOutput) {
         CompooperRecipeBuilder.compooper(CompooperType.WATER.id(), FlyItem.withType(FlyTypes.NORMAL.get()), FlyItem.withType(FlyTypes.BLUE.get()))
                 .unlockedBy(getItemName(PoBlocks.COMPOOPER.get()), has(PoBlocks.COMPOOPER.get()))
                 .save(recipeOutput, "fly_normal_to_blue");
@@ -975,18 +997,18 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .save(recipeOutput);
     }
 
-    private void toiletRecipes(RecipeOutput recipeOutput, ItemLike toilet, ItemLike block, ToiletType toiletType) {
-        ToiletRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, toilet, toiletType)
+    private static void toiletRecipes(RecipeOutput recipeOutput, ItemLike toilet, ItemLike block, ToiletType toiletType) {
+        ToiletRecipeBuilder.shaped(provider.itemLookup(), RecipeCategory.BUILDING_BLOCKS, toilet, toiletType)
                 .pattern("P")
                 .pattern("#")
                 .define('P', PoItems.POOP.get())
                 .define('#', block)
                 .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP.get()))
-                .save(recipeOutput, PoopSky.loc(getItemName(toilet) + "_from_" + toiletType.id()));
+                .save(recipeOutput, PoopSky.loc(getItemName(toilet) + "_from_" + toiletType.id()).toString());
     }
 
-    private void spallToolRecipes(RecipeOutput recipeOutput) {
-        var enchantment = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
+    private static void spallToolRecipes(RecipeOutput recipeOutput) {
+        var enchantment = registries.lookupOrThrow(Registries.ENCHANTMENT);
         spallEnchantedRecipe(recipeOutput, enchantment.getOrThrow(Enchantments.LOOTING), PoItems.SPALL_SWORD.get(), RecipeCategory.COMBAT, "M", "M", "S");
         spallEnchantedRecipe(recipeOutput, enchantment.getOrThrow(Enchantments.EFFICIENCY), PoItems.SPALL_SHOVEL.get(), RecipeCategory.TOOLS, "M", "S", "S");
         spallEnchantedRecipe(recipeOutput, enchantment.getOrThrow(Enchantments.FORTUNE), PoItems.SPALL_PICKAXE.get(), RecipeCategory.TOOLS, "MMM", " S ", " S ");
@@ -994,12 +1016,12 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         spallEnchantedRecipe(recipeOutput, enchantment.getOrThrow(Enchantments.UNBREAKING), PoItems.SPALL_HOE.get(), RecipeCategory.TOOLS, "MM", " S", " S");
     }
 
-    private void spallEnchantedRecipe(RecipeOutput recipeOutput, Holder<Enchantment> enchantment, ItemLike item, RecipeCategory category, String... patterns) {
+    private static void spallEnchantedRecipe(RecipeOutput recipeOutput, Holder<Enchantment> enchantment, ItemLike item, RecipeCategory category, String... patterns) {
         ItemEnchantments.Mutable enchants = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
         enchants.set(enchantment, 1);
         ItemStack stack = new ItemStack(item);
         stack.set(DataComponents.ENCHANTMENTS, enchants.toImmutable());
-        ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(category, stack);
+        ShapedRecipeBuilder builder = provider.shaped(category, stack);
         for (String pattern : patterns) {
             builder.pattern(pattern);
         }
@@ -1009,8 +1031,8 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .save(recipeOutput);
     }
 
-    private void stairsRecipe(RecipeOutput recipeOutput, ItemLike output, ItemLike input) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 8)
+    private static void stairsRecipe(RecipeOutput recipeOutput, ItemLike output, ItemLike input) {
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, output, 8)
                 .pattern("P  ")
                 .pattern("PP ")
                 .pattern("PPP")
@@ -1019,92 +1041,92 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .save(recipeOutput);
     }
 
-    private void ginkgoWoodRecipes(RecipeOutput recipeOutput) {
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, PoBlocks.GINKGO_PLANKS, 4)
+    private static void ginkgoWoodRecipes(RecipeOutput recipeOutput) {
+        provider.shapeless(RecipeCategory.BUILDING_BLOCKS, PoBlocks.GINKGO_PLANKS, 4)
                 .requires(PoTags.Items.GINKGO_LOGS)
                 .unlockedBy("has_ginkgo_logs", has(PoTags.Items.GINKGO_LOGS))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.GINKGO_WOOD, 3)
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.GINKGO_WOOD, 3)
                 .pattern("LL")
                 .pattern("LL")
                 .define('L', PoBlocks.GINKGO_LOG)
                 .unlockedBy(getItemName(PoBlocks.GINKGO_LOG), has(PoBlocks.GINKGO_LOG))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.STRIPPED_GINKGO_WOOD, 3)
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.STRIPPED_GINKGO_WOOD, 3)
                 .pattern("LL")
                 .pattern("LL")
                 .define('L', PoBlocks.STRIPPED_GINKGO_LOG)
                 .unlockedBy(getItemName(PoBlocks.STRIPPED_GINKGO_LOG), has(PoBlocks.STRIPPED_GINKGO_LOG))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.GINKGO_STAIRS, 4)
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.GINKGO_STAIRS, 4)
                 .pattern("P  ")
                 .pattern("PP ")
                 .pattern("PPP")
                 .define('P', PoBlocks.GINKGO_PLANKS)
                 .unlockedBy(getItemName(PoBlocks.GINKGO_PLANKS), has(PoBlocks.GINKGO_PLANKS))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.GINKGO_SLAB, 6)
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.GINKGO_SLAB, 6)
                 .pattern("PPP")
                 .define('P', PoBlocks.GINKGO_PLANKS)
                 .unlockedBy(getItemName(PoBlocks.GINKGO_PLANKS), has(PoBlocks.GINKGO_PLANKS))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.GINKGO_VERTICAL_SLAB, 6)
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.GINKGO_VERTICAL_SLAB, 6)
                 .pattern("P")
                 .pattern("P")
                 .pattern("P")
                 .define('P', PoBlocks.GINKGO_PLANKS)
                 .unlockedBy(getItemName(PoBlocks.GINKGO_PLANKS), has(PoBlocks.GINKGO_PLANKS))
                 .save(recipeOutput);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, PoBlocks.GINKGO_BUTTON)
+        provider.shapeless(RecipeCategory.REDSTONE, PoBlocks.GINKGO_BUTTON)
                 .requires(PoBlocks.GINKGO_PLANKS)
                 .unlockedBy(getItemName(PoBlocks.GINKGO_PLANKS), has(PoBlocks.GINKGO_PLANKS))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.GINKGO_PRESSURE_PLATE)
+        provider.shaped(RecipeCategory.REDSTONE, PoBlocks.GINKGO_PRESSURE_PLATE)
                 .pattern("PP")
                 .define('P', PoBlocks.GINKGO_PLANKS)
                 .unlockedBy(getItemName(PoBlocks.GINKGO_PLANKS), has(PoBlocks.GINKGO_PLANKS))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, PoBlocks.GINKGO_FENCE, 3)
+        provider.shaped(RecipeCategory.DECORATIONS, PoBlocks.GINKGO_FENCE, 3)
                 .pattern("PSP")
                 .pattern("PSP")
                 .define('P', PoBlocks.GINKGO_PLANKS)
                 .define('S', Items.STICK)
                 .unlockedBy(getItemName(PoBlocks.GINKGO_PLANKS), has(PoBlocks.GINKGO_PLANKS))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.GINKGO_FENCE_GATE)
+        provider.shaped(RecipeCategory.REDSTONE, PoBlocks.GINKGO_FENCE_GATE)
                 .pattern("SPS")
                 .pattern("SPS")
                 .define('P', PoBlocks.GINKGO_PLANKS)
                 .define('S', Items.STICK)
                 .unlockedBy(getItemName(PoBlocks.GINKGO_PLANKS), has(PoBlocks.GINKGO_PLANKS))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.GINKGO_DOOR, 3)
+        provider.shaped(RecipeCategory.REDSTONE, PoBlocks.GINKGO_DOOR, 3)
                 .pattern("PP")
                 .pattern("PP")
                 .pattern("PP")
                 .define('P', PoBlocks.GINKGO_PLANKS)
                 .unlockedBy(getItemName(PoBlocks.GINKGO_PLANKS), has(PoBlocks.GINKGO_PLANKS))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.GINKGO_TRAPDOOR, 2)
+        provider.shaped(RecipeCategory.REDSTONE, PoBlocks.GINKGO_TRAPDOOR, 2)
                 .pattern("PPP")
                 .pattern("PPP")
                 .define('P', PoBlocks.GINKGO_PLANKS)
                 .unlockedBy(getItemName(PoBlocks.GINKGO_PLANKS), has(PoBlocks.GINKGO_PLANKS))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, PoItems.GINKGO_BOAT)
+        provider.shaped(RecipeCategory.TRANSPORTATION, PoItems.GINKGO_BOAT)
                 .pattern("P P")
                 .pattern("PPP")
                 .define('P', PoBlocks.GINKGO_PLANKS)
                 .unlockedBy(getItemName(PoBlocks.GINKGO_PLANKS), has(PoBlocks.GINKGO_PLANKS))
                 .save(recipeOutput);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, PoItems.GINKGO_CHEST_BOAT)
+        provider.shapeless(RecipeCategory.TRANSPORTATION, PoItems.GINKGO_CHEST_BOAT)
                 .requires(Items.CHEST)
                 .requires(PoItems.GINKGO_BOAT)
                 .unlockedBy(getItemName(PoItems.GINKGO_BOAT), has(PoItems.GINKGO_BOAT))
                 .save(recipeOutput);
     }
 
-    private void blockFamilyRecipes(RecipeOutput recipeOutput, PoBlocks.BlockFamily family) {
+    private static void blockFamilyRecipes(RecipeOutput recipeOutput, PoBlocks.BlockFamily family) {
         stairsRecipe(recipeOutput, family.stairs(), family.block());
         slabRecipe(recipeOutput, family.slab(), family.block());
         verticalSlabRecipe(recipeOutput, family.verticalSlab(), family.block());
@@ -1129,14 +1151,14 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
     }
 
     private static void tileDyeRecipe(RecipeOutput recipeOutput, Item dye, BlockEntry<?> block, TagKey<Item> inputTag) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, block.get(), 8)
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, block.get(), 8)
                 .pattern("TTT")
                 .pattern("TDT")
                 .pattern("TTT")
                 .define('T', inputTag)
                 .define('D', dye)
                 .unlockedBy(getItemName(dye), has(dye))
-                .save(recipeOutput, PoopSky.loc(getItemName(block.get()) + "_from_dyeing"));
+                .save(recipeOutput, PoopSky.loc(getItemName(block.get()) + "_from_dyeing").toString());
     }
 
     private static final List<Item> DYES = List.of(
@@ -1146,16 +1168,16 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
             Items.BLUE_DYE, Items.PURPLE_DYE, Items.MAGENTA_DYE, Items.PINK_DYE
     );
 
-    private void slabRecipe(RecipeOutput recipeOutput, ItemLike output, ItemLike input) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 6)
+    private static void slabRecipe(RecipeOutput recipeOutput, ItemLike output, ItemLike input) {
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, output, 6)
                 .pattern("PPP")
                 .define('P', input)
                 .unlockedBy(getItemName(input), has(input))
                 .save(recipeOutput);
     }
 
-    private void verticalSlabRecipe(RecipeOutput recipeOutput, ItemLike output, ItemLike input) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 6)
+    private static void verticalSlabRecipe(RecipeOutput recipeOutput, ItemLike output, ItemLike input) {
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, output, 6)
                 .pattern("P")
                 .pattern("P")
                 .pattern("P")
@@ -1164,8 +1186,8 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .save(recipeOutput);
     }
 
-    private void wallRecipe(RecipeOutput recipeOutput, ItemLike output, ItemLike input) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 6)
+    private static void wallRecipe(RecipeOutput recipeOutput, ItemLike output, ItemLike input) {
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, output, 6)
                 .pattern("PPP")
                 .pattern("PPP")
                 .define('P', input)
@@ -1174,7 +1196,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
     }
 
     private static void offerCompactingRecipe(RecipeOutput recipeOutput, RecipeCategory category, ItemLike output, ItemLike input) {
-        ShapedRecipeBuilder.shaped(category, output)
+        provider.shaped(category, output)
                 .define('#', input)
                 .pattern("###")
                 .pattern("###")
@@ -1190,13 +1212,13 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
     private static void offer2x2CompactingRecipe(RecipeOutput recipeOutput, RecipeCategory packedCategory,
                                                  RecipeCategory unpackedCategory, ItemLike packed, ItemLike unpacked,
                                                  int packedCount, int unpackedCount) {
-        ShapedRecipeBuilder.shaped(packedCategory, packed, packedCount)
+        provider.shaped(packedCategory, packed, packedCount)
                 .define('#', unpacked)
                 .pattern("##")
                 .pattern("##")
                 .unlockedBy(getItemName(unpacked), has(unpacked))
                 .save(recipeOutput, getConversionRecipeName(packed, unpacked));
-        ShapelessRecipeBuilder.shapeless(unpackedCategory, unpacked, unpackedCount)
+        provider.shapeless(unpackedCategory, unpacked, unpackedCount)
                 .requires(packed)
                 .unlockedBy(getItemName(packed), has(packed))
                 .save(recipeOutput, getConversionRecipeName(unpacked, packed));
@@ -1207,7 +1229,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
     }
 
     private static void offer2x2CompactingRecipe(RecipeOutput recipeOutput, RecipeCategory category, ItemLike output, ItemLike input, int count) {
-        ShapedRecipeBuilder.shaped(category, output, count)
+        provider.shaped(category, output, count)
                 .define('#', input)
                 .pattern("##")
                 .pattern("##")
@@ -1215,22 +1237,22 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .save(recipeOutput, getConversionRecipeName(output, input));
     }
 
-    private void create1x2ShapelessFrom(RecipeOutput recipeOutput, ItemLike output, ItemLike input1, ItemLike input2) {
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, output)
+    private static void create1x2ShapelessFrom(RecipeOutput recipeOutput, ItemLike output, ItemLike input1, ItemLike input2) {
+        provider.shapeless(RecipeCategory.BUILDING_BLOCKS, output)
                 .requires(input1).requires(input2)
                 .unlockedBy(getItemName(input2), has(input2))
                 .save(recipeOutput, getConversionRecipeName(output, input2));
     }
 
-    private void create1x2ShapelessFrom(RecipeOutput recipeOutput, ItemLike output, ItemLike input1, ItemLike input2, int count) {
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, output, count)
+    private static void create1x2ShapelessFrom(RecipeOutput recipeOutput, ItemLike output, ItemLike input1, ItemLike input2, int count) {
+        provider.shapeless(RecipeCategory.BUILDING_BLOCKS, output, count)
                 .requires(input1).requires(input2)
                 .unlockedBy(getItemName(input2), has(input2))
                 .save(recipeOutput, getConversionRecipeName(output, input2));
     }
 
     private static void shapeless1x1Recipe(RecipeOutput recipeOutput, ItemLike result, ItemLike input, ItemLike input1) {
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, result)
+        provider.shapeless(RecipeCategory.BUILDING_BLOCKS, result)
                 .requires(input1).requires(input)
                 .unlockedBy(getItemName(input), has(input))
                 .save(recipeOutput, getConversionRecipeName(result));
@@ -1267,11 +1289,19 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
             ItemLike ingredient, RecipeCategory category, ItemLike result, float experience, int cookingTime,
             String group, String suffix) {
         SimpleCookingRecipeBuilder.generic(
-                        Ingredient.of(ingredient), category, result, experience, cookingTime, serializer, recipeFactory
+                        Ingredient.of(ingredient), category, cookingCategory(category), result, experience, cookingTime, recipeFactory
                 )
                 .group(group)
                 .unlockedBy(getHasName(ingredient), has(ingredient))
-                .save(recipeOutput, PoopSky.loc(getItemName(result) + suffix + "_" + getItemName(ingredient)));
+                .save(recipeOutput, PoopSky.loc(getItemName(result) + suffix + "_" + getItemName(ingredient)).toString());
+    }
+
+    private static CookingBookCategory cookingCategory(RecipeCategory category) {
+        return switch (category) {
+            case FOOD -> CookingBookCategory.FOOD;
+            case BUILDING_BLOCKS -> CookingBookCategory.BLOCKS;
+            default -> CookingBookCategory.MISC;
+        };
     }
 
     private static void stonecutterResult(RecipeOutput recipeOutput, RecipeCategory category, ItemLike result, ItemLike material) {
@@ -1285,7 +1315,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
     }
 
     private static void copySmithingTemplate(RecipeOutput recipeOutput, ItemLike template, ItemLike baseItem, ItemLike item) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, template, 2).define('#', item).define('C', baseItem).define('S', template).pattern("#S#").pattern("#C#").pattern("###").unlockedBy(getHasName(template), has(template)).save(recipeOutput);
+        provider.shaped(RecipeCategory.MISC, template, 2).define('#', item).define('C', baseItem).define('S', template).pattern("#S#").pattern("#C#").pattern("###").unlockedBy(getHasName(template), has(template)).save(recipeOutput);
     }
 
     protected static void nineBlockStorageRecipes(RecipeOutput recipeOutput, RecipeCategory unpackedCategory, ItemLike unpacked, RecipeCategory packedCategory, ItemLike packed) {
@@ -1293,8 +1323,8 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
     }
 
     private static void nineBlockStorageRecipes(RecipeOutput recipeOutput, RecipeCategory unpackedCategory, ItemLike unpacked, RecipeCategory packedCategory, ItemLike packed, String packedName, String unpackedName) {
-        ShapelessRecipeBuilder.shapeless(unpackedCategory, unpacked, 9).requires(packed).unlockedBy(getHasName(packed), has(packed)).save(recipeOutput, PoopSky.loc(unpackedName));
-        ShapedRecipeBuilder.shaped(packedCategory, packed).define('#', unpacked).pattern("###").pattern("###").pattern("###").unlockedBy(getHasName(unpacked), has(unpacked)).save(recipeOutput, PoopSky.loc(packedName));
+        provider.shapeless(unpackedCategory, unpacked, 9).requires(packed).unlockedBy(getHasName(packed), has(packed)).save(recipeOutput, PoopSky.loc(unpackedName).toString());
+        provider.shaped(packedCategory, packed).define('#', unpacked).pattern("###").pattern("###").pattern("###").unlockedBy(getHasName(unpacked), has(unpacked)).save(recipeOutput, PoopSky.loc(packedName).toString());
     }
 
     private static void threeBlockStorageRecipes(RecipeOutput recipeOutput, RecipeCategory unpackedCategory, ItemLike unpacked, RecipeCategory packedCategory, ItemLike packed) {
@@ -1302,8 +1332,8 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
     }
 
     private static void threeBlockStorageRecipes(RecipeOutput recipeOutput, RecipeCategory unpackedCategory, ItemLike unpacked, RecipeCategory packedCategory, ItemLike packed, String packedName, String unpackedName) {
-        ShapelessRecipeBuilder.shapeless(packedCategory, packed, 1).requires(unpacked, 3).unlockedBy(getHasName(unpacked), has(unpacked)).save(recipeOutput, PoopSky.loc(packedName));
-        ShapelessRecipeBuilder.shapeless(unpackedCategory, unpacked, 3).requires(packed).unlockedBy(getHasName(packed), has(packed)).save(recipeOutput, PoopSky.loc(unpackedName));
+        provider.shapeless(packedCategory, packed, 1).requires(unpacked, 3).unlockedBy(getHasName(unpacked), has(unpacked)).save(recipeOutput, PoopSky.loc(packedName).toString());
+        provider.shapeless(unpackedCategory, unpacked, 3).requires(packed).unlockedBy(getHasName(packed), has(packed)).save(recipeOutput, PoopSky.loc(unpackedName).toString());
     }
 
     private static String getConversionRecipeName(ItemLike result) {

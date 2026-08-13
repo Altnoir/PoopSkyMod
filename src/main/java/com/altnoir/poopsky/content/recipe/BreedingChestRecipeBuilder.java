@@ -59,7 +59,6 @@ public final class BreedingChestRecipeBuilder implements RecipeBuilder {
         return ResourceKey.create(Registries.RECIPE, PoopSky.loc(RECIPE_TYPE + "/" + parent1 + "_plus_" + parent2));
     }
 
-    @Override
     public void save(@NotNull RecipeOutput recipeOutput, @NotNull String id) {
         Identifier recipeId = PoopSky.loc(RECIPE_TYPE + "/" + id);
         save(recipeOutput, ResourceKey.create(Registries.RECIPE, recipeId));

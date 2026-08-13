@@ -42,7 +42,7 @@ public class PoopTreeBlock extends SaplingBlock implements BonemealableBlock {
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        var offset = state.getOffset(level, pos);
+        var offset = state.getOffset(pos);
         return SHAPE.move(offset.x, offset.y, offset.z);
     }
 

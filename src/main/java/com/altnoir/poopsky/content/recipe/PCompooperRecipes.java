@@ -8,20 +8,10 @@ import net.minecraft.world.level.Level;
 import java.util.List;
 
 public class PCompooperRecipes {
-
-    /**
-     * Get compooper recipe result by fluid type and input
-     *
-     * @param level     Level
-     * @param fluidType Fluid type (water, lava, powder_snow, urine)
-     * @param input     Input item
-     * @return Matching output, or ItemStack.EMPTY if no match
-     */
     public static ItemStack getResult(Level level, String fluidType, ItemStack input) {
         if (level == null) return ItemStack.EMPTY;
 
-        List<RecipeHolder<CompooperRecipe>> recipes = level.getRecipeManager()
-                .getAllRecipesFor(PoRecipes.COMPOOPER.type().get());
+        List<RecipeHolder<CompooperRecipe>> recipes = level.recipeAccess().getAllRecipesFor(PoRecipes.COMPOOPER.type().get());
 
         for (var holder : recipes) {
             CompooperRecipe recipe = holder.value();
@@ -31,12 +21,5 @@ public class PCompooperRecipes {
         }
 
         return ItemStack.EMPTY;
-    }
-
-    /**
-     * Check if a matching recipe exists
-     */
-    public static boolean hasRecipe(Level level, String fluidType, ItemStack input) {
-        return !getResult(level, fluidType, input).isEmpty();
     }
 }

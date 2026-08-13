@@ -25,7 +25,7 @@ public class PoopLogBlock extends RotatedPillarBlock {
             BlockPos neighborPos = pos.relative(direction);
             BlockState neighborState = level.getBlockState(neighborPos);
 
-            if (!neighborState.isSolidRender(level, neighborPos) || neighborState.is(BlockTags.LEAVES)) {
+            if (!neighborState.isSolidRender() || neighborState.is(BlockTags.LEAVES)) {
                 allSolid = false;
                 break;
             }

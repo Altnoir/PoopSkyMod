@@ -6,16 +6,18 @@ import com.altnoir.poopsky.init.PoEntityType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
@@ -106,7 +108,7 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
                 PoopTntUtil.triggerExplosion(this, radius + 1);
             }
         } else {
-            this.updateInWaterStateAndDoFluidPushing();
+            this.updateFluidInteraction();
             if (this.level().isClientSide()) {
                 this.level().addParticle(ParticleTypes.SMOKE,
                         this.getX(), this.getY() + 0.5, this.getZ(),
@@ -169,13 +171,13 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundTag compound) {
-        compound.putShort("fuse", (short) this.getFuse());
+    protected void addAdditionalSaveData(ValueOutput output) {
+        output.putShort("fuse", (short) this.getFuse());
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundTag compound) {
-        this.setFuse(compound.getShort("fuse"));
+    protected void readAdditionalSaveData(ValueInput input) {
+        this.setFuse(input.getShortOr("fuse", (short) DEFAULT_FUSE_TIME));
     }
 
     @Override
@@ -187,7 +189,7 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
     }
 
     @Override
-    public boolean hurt(DamageSource source, float amount) {
+    public boolean hurtServer(ServerLevel level, DamageSource source, float amount) {
         return false;
     }
 }

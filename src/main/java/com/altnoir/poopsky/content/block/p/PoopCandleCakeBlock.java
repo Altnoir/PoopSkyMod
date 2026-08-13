@@ -72,7 +72,7 @@ public class PoopCandleCakeBlock extends CandleCakeBlock {
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (state.getValue(LIT) && isHittingCandle(hitResult, pos)) {
             extinguish(state, level, pos, player);
-            return InteractionResult.sidedSuccess(level.isClientSide());
+            return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
         }
 
         InteractionResult result = PoopCakeBlock.eat(level, pos, PoBlocks.POOP_CAKE.get().defaultBlockState(), player);
@@ -95,7 +95,7 @@ public class PoopCandleCakeBlock extends CandleCakeBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
+    protected ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData) {
         return PoBlocks.POOP_CAKE.get().asItem().getDefaultInstance();
     }
 }

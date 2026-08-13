@@ -47,7 +47,7 @@ public class PoolimeMaggotsBlock extends Block {
     @Override
     protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         super.randomTick(state, level, pos, random);
-        PoolimeEntity poolime = PoEntityType.POOLIME.get().create(level);
+        PoolimeEntity poolime = PoEntityType.POOLIME.get().create(level, EntitySpawnReason.NATURAL);
 
         if (poolime != null) {
             int count = level.getEntitiesOfClass(PoolimeEntity.class, poolime.getBoundingBox().inflate(64.0D)).size();
@@ -59,7 +59,7 @@ public class PoolimeMaggotsBlock extends Block {
                     int size = random.nextInt(4) + 1;
                     poolime.setSize(size, true);
 
-                    poolime.moveTo(spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5, 0, 0);
+                    poolime.snapTo(spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5, 0, 0);
 
                     if (poolime.checkSpawnRules(level, EntitySpawnReason.NATURAL) && level.noCollision(poolime, poolime.getBoundingBox())) {
                         level.addFreshEntity(poolime);

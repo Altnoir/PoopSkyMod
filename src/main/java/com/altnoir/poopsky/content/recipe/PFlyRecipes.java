@@ -10,13 +10,9 @@ import java.util.List;
 import java.util.Random;
 
 public class PFlyRecipes {
-
-    public record JeiMutationRecipe(FlyType.Type parent1, FlyType.Type parent2, FlyType.Type result, float chance) {}
-
     public static ItemStack getProduct(Level level, FlyType.Type type) {
         if (level == null) return ItemStack.EMPTY;
-        return level.getRecipeManager()
-                .getAllRecipesFor(PoRecipes.FLY_BARREL.type().get())
+        return PoRecipeLookup.all(level, PoRecipes.FLY_BARREL.type().get())
                 .stream()
                 .filter(holder -> holder.value().matches(type.id()))
                 .findFirst()
@@ -27,8 +23,7 @@ public class PFlyRecipes {
     public static MutationResult tryMutate(Level level, FlyType.Type parent1, FlyType.Type parent2) {
         if (level == null) return fallbackResult(parent1, parent2);
 
-        List<RecipeHolder<BreedingChestRecipe>> recipes = level.getRecipeManager()
-                .getAllRecipesFor(PoRecipes.BREEDING_CHEST.type().get());
+        List<RecipeHolder<BreedingChestRecipe>> recipes = PoRecipeLookup.all(level, PoRecipes.BREEDING_CHEST.type().get());
 
         Random random = new Random();
         for (var holder : recipes) {

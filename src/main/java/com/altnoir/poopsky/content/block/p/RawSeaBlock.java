@@ -16,8 +16,8 @@ public class RawSeaBlock extends AbstractRawBlock {
     @Override
     public void performBonemeal(ServerLevel serverLevel, RandomSource randomSource, BlockPos blockPos, BlockState blockState) {
         serverLevel.registryAccess()
-                .registry(Registries.CONFIGURED_FEATURE)
-                .flatMap(holder -> holder.getHolder(PoConfigureFeatures.RAW_SEA_POOP_PATCH_BONEMEAL))
+                .lookupOrThrow(Registries.CONFIGURED_FEATURE)
+                .get(PoConfigureFeatures.RAW_SEA_POOP_PATCH_BONEMEAL)
                 .ifPresent(reference -> reference.value().place(serverLevel, serverLevel.getChunkSource().getGenerator(), randomSource, blockPos.above()));
     }
 }

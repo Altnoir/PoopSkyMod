@@ -6,6 +6,7 @@ import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoParticles;
 import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
@@ -73,12 +74,11 @@ public class PoolimeEntity extends Slime {
                 && this.isWithinMeleeAttackRange(livingEntity)
                 && this.hasLineOfSight(livingEntity)) {
             DamageSource damageSource = this.damageSources().mobAttack(this);
-            if (livingEntity.hurt(damageSource, this.getAttackDamage())) {
+            if (this.level() instanceof ServerLevel serverLevel
+                    && livingEntity.hurtServer(serverLevel, damageSource, this.getAttackDamage())) {
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.POISON, 120, 0));
                 this.playSound(PoSoundEvents.ENTITY_POOLIME_ATTACK.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-                if (this.level() instanceof ServerLevel serverLevel) {
-                    EnchantmentHelper.doPostAttackEffects(serverLevel, livingEntity, damageSource);
-                }
+                EnchantmentHelper.doPostAttackEffects(serverLevel, livingEntity, damageSource);
             }
         }
     }
@@ -101,8 +101,10 @@ public class PoolimeEntity extends Slime {
         }
 
         Structure structure = serverLevel.registryAccess()
-                .registryOrThrow(Registries.STRUCTURE)
-                .get(PoopSky.loc("poop_island"));
+                .lookupOrThrow(Registries.STRUCTURE)
+                .get(PoopSky.loc("poop_island"))
+                .map(Holder.Reference::value)
+                .orElse(null);
         return structure != null && serverLevel.structureManager().getStructureAt(pos, structure).isValid();
     }
 }

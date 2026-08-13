@@ -18,6 +18,7 @@ import net.minecraft.world.*;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -34,10 +35,8 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Vector3f;
 
 public class UrineCompooperBlock extends AbstractCompooperBlock implements WorldlyContainerHolder {
     public static final MapCodec<UrineCompooperBlock> CODEC = simpleCodec(UrineCompooperBlock::new);
@@ -57,7 +56,7 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData, Player player) {
         return new ItemStack(PoBlocks.COMPOOPER.get());
     }
 
@@ -117,7 +116,7 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
     }
 
     @Override
-    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
         if (level.isClientSide() || !isEntityInsideContent(pos, state, entity)) {
             return;
         }
@@ -160,14 +159,8 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
 
     private static void purification(ServerLevel level, BlockPos pos) {
         int waterColor = level.getBiome(pos).value().getWaterColor();
-        var red = (waterColor >> 16 & 0xFF) / 255.0F;
-        var green = (waterColor >> 8 & 0xFF) / 255.0F;
-        var blue = (waterColor & 0xFF) / 255.0F;
-
-        var color = new Vector3f(red, green, blue);
-
         level.sendParticles(
-                new DustColorTransitionOptions(color, color, 1.0F),
+                new DustColorTransitionOptions(waterColor, waterColor, 1.0F),
                 pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5,
                 15,
                 0.3, 0.1, 0.3,

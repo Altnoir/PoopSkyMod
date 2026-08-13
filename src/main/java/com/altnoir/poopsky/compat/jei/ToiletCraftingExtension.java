@@ -42,7 +42,7 @@ public class ToiletCraftingExtension implements ICraftingCategoryExtension<Toile
                 .toList(), getWidth(holder), getHeight(holder));
         var input = recipe.delegate().getIngredients().stream()
                 .map(ingredient -> ingredient.flatMap(value -> value.items().findFirst())
-                        .map(holder -> new ItemStack(holder))
+                        .map(ItemStack::new)
                         .orElse(ItemStack.EMPTY))
                 .toList();
         helper.createAndSetOutputs(builder, List.of(recipe.assemble(CraftingInput.of(getWidth(holder), getHeight(holder), input))));

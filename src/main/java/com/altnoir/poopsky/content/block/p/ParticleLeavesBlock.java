@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.client.particle.LeavesParticleOptions;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.ParticleUtils;
@@ -11,11 +12,22 @@ import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class ParticleLeavesBlock extends LeavesBlock {
+    public static final MapCodec<ParticleLeavesBlock> CODEC = simpleCodec(properties -> new ParticleLeavesBlock(0x5E4228, properties));
     private final LeavesParticleOptions particleOption;
 
     public ParticleLeavesBlock(int particleColor, Properties properties) {
-        super(properties);
+        super(0.01F, properties);
         this.particleOption = new LeavesParticleOptions(particleColor);
+    }
+
+    @Override
+    public MapCodec<? extends ParticleLeavesBlock> codec() {
+        return CODEC;
+    }
+
+    @Override
+    protected void spawnFallingLeavesParticle(Level level, BlockPos pos, RandomSource random) {
+        ParticleUtils.spawnParticleBelow(level, pos, random, this.particleOption);
     }
 
     @Override

@@ -4,13 +4,16 @@ import com.altnoir.poopsky.content.block.p.FlushToiletBlock;
 import com.altnoir.poopsky.impl.util.ToiletUtil;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoEffects;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 public class FlushToiletEntity extends Entity {
     private long poopTime;
@@ -25,13 +28,13 @@ public class FlushToiletEntity extends Entity {
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundTag compoundTag) {
-        this.poopTime = compoundTag.getLong("poopTime");
+    protected void readAdditionalSaveData(ValueInput input) {
+        this.poopTime = input.getLongOr("poopTime", 0L);
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundTag compoundTag) {
-        compoundTag.putLong("poopTime", this.poopTime);
+    protected void addAdditionalSaveData(ValueOutput output) {
+        output.putLong("poopTime", this.poopTime);
     }
 
     @Override
@@ -83,5 +86,10 @@ public class FlushToiletEntity extends Entity {
         } else {
             callback.accept(passenger, this.getX(), this.getY() + 0.4, this.getZ());
         }
+    }
+
+    @Override
+    public boolean hurtServer(ServerLevel level, DamageSource source, float damage) {
+        return false;
     }
 }

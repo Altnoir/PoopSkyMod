@@ -51,7 +51,6 @@ public final class FlyBarrelRecipeBuilder implements RecipeBuilder {
         return ResourceKey.create(Registries.RECIPE, PoopSky.loc(RECIPE_TYPE + "/" + flyTypeId));
     }
 
-    @Override
     public void save(@NotNull RecipeOutput recipeOutput, @NotNull String id) {
         Identifier recipeId = PoopSky.loc(RECIPE_TYPE + "/" + id);
         save(recipeOutput, ResourceKey.create(Registries.RECIPE, recipeId));

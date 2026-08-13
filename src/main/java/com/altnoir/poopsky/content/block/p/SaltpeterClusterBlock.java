@@ -10,8 +10,8 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.AmethystClusterBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BonemealableBlock;
@@ -43,9 +43,12 @@ public class SaltpeterClusterBlock extends AmethystClusterBlock implements Bonem
     }
 
     @Override
-    protected BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
-        isDone((Level) level, pos, state);
-        return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
+    protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess ticks, BlockPos pos,
+                                     Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
+        if (level instanceof Level concreteLevel) {
+            isDone(concreteLevel, pos, state);
+        }
+        return super.updateShape(state, level, ticks, pos, direction, neighborPos, neighborState, random);
     }
 
     @Override
@@ -63,7 +66,7 @@ public class SaltpeterClusterBlock extends AmethystClusterBlock implements Bonem
     @Override
     protected void onProjectileHit(Level level, BlockState state, BlockHitResult hit, Projectile projectile) {
         BlockPos pos = hit.getBlockPos();
-        if (!level.isClientSide() && projectile.mayInteract(level, pos)) {
+        if (level instanceof ServerLevel serverLevel && projectile.mayInteract(serverLevel, pos)) {
             level.playSound(null, pos, PoSoundEvents.BLOCK_SALTPETER_CHIME.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
         }
     }

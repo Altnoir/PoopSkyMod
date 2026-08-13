@@ -27,11 +27,11 @@ public class PoItems {
     }
 
     public static final ItemEntry<PoopItem> POOP = registerItem("poop",
-            props -> new PoopItem(props.food(PFoods.POOP).stacksTo(88)));
+            props -> new PoopItem(PFoods.apply(props, PFoods.POOP).stacksTo(88)));
     public static final ItemEntry<ChiliPoopItem> CHILI_POOP = registerItem("chili_poop",
-            props -> new ChiliPoopItem(props.food(PFoods.POOP).stacksTo(88)));
+            props -> new ChiliPoopItem(PFoods.apply(props, PFoods.POOP).stacksTo(88)));
     public static final ItemEntry<PoopItem> GOLDEN_POOP = registerItem("golden_poop",
-            props -> new PoopItem(props.food(PFoods.GOLDEN_POOP).stacksTo(88)));
+            props -> new PoopItem(PFoods.apply(props, PFoods.GOLDEN_POOP).stacksTo(88)));
     public static final ItemEntry<Item> SEEDBED_CURSE = registerItem("seedbed_curse",
             props -> new Item(props.stacksTo(88)));
     public static final ItemEntry<Item> FOLIUM_SENNAE = registerItem("folium_sennae", Item::new);
@@ -39,7 +39,7 @@ public class PoItems {
     public static final ItemEntry<PoopBallItem> POOP_BALL = registerItem("poop_ball",
             props -> new PoopBallItem(props.stacksTo(88)));
     public static final ItemEntry<SaplingBallItem> SAPLING_POOP_BALL = registerItem("sapling_poop_ball",
-            props -> new SaplingBallItem(props.food(PFoods.SAPLING_BALL).stacksTo(88)));
+            props -> new SaplingBallItem(PFoods.apply(props, PFoods.SAPLING_BALL).stacksTo(88)));
     public static final ItemEntry<SeaPoopBallItem> SEA_POOP_BALL = registerItem("sea_poop_ball",
             props -> new SeaPoopBallItem(props.stacksTo(88)));
     public static final ItemEntry<WitherPoopBallItem> WITHER_POOP_BALL = registerItem("wither_poop_ball",
@@ -60,9 +60,9 @@ public class PoItems {
     public static final ItemEntry<SimpleFeedableItem> POODDING = registerFood("poodding", PFoods.POODDING);
 
     public static final ItemEntry<ChiliItem> DRAGON_BREATH_CHILI = registerItem("dragon_breath_chili",
-            props -> new ChiliItem(PoBlocks.CHILI_VINES.get(), props.food(PFoods.DRAGON_BREATH_CHILI)));
+            props -> new ChiliItem(PoBlocks.CHILI_VINES.get(), PFoods.apply(props, PFoods.DRAGON_BREATH_CHILI)));
     public static final ItemEntry<DragonFruitRItem> KING_OF_DRAGON_FRUIT = registerItem("king_of_dragon_fruit",
-            props -> new DragonFruitRItem(props.food(PFoods.KING_OF_DRAGON_FRUIT)));
+            props -> new DragonFruitRItem(PFoods.apply(props, PFoods.KING_OF_DRAGON_FRUIT)));
 
     public static final ItemEntry<ToiletPlugItem> TOILET_PLUG = registerItemNoModel("toilet_plug",
             props -> new ToiletPlugItem(props.attributes(ToiletPlugItem.createWeaponAttributes())
@@ -90,7 +90,7 @@ public class PoItems {
             prop -> new Item(prop.humanoidArmor(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorType.BOOTS)));
 
     public static final ItemEntry<SmithingTemplateItem> OMEN_UPGRADE_SMITHING_TEMPLATE = registerItem("omen_upgrade_smithing_template",
-            props -> OmenSmithingTemplateItem.createOmenUpgradeTemplate());
+            OmenSmithingTemplateItem::createOmenUpgradeTemplate);
 
     public static final ItemEntry<FlyCatcherItem> FLY_CATCHER = registerItemNoModel("fly_catcher",
             props -> new FlyCatcherItem(props.stacksTo(1).durability(88)));
@@ -117,9 +117,8 @@ public class PoItems {
     public static final ItemEntry<Item> UREA = registerItem("urea", Item::new);
 
     public static final ItemEntry<UrineBottleItem> URINE_BOTTLE = registerItem("urine_bottle",
-            prop -> new UrineBottleItem(prop
-                    .craftRemainder(Items.GLASS_BOTTLE)
-                    .food(PFoods.URINE_BOTTLE)
+            prop -> new UrineBottleItem(PFoods.apply(prop
+                    .craftRemainder(Items.GLASS_BOTTLE), PFoods.URINE_BOTTLE)
                     .stacksTo(18)
             ));
     public static final ItemEntry<BucketItem> URINE_BUCKET = PoFluids.URINE_BUCKET;
@@ -143,9 +142,9 @@ public class PoItems {
             prop -> new SpawnEggItem(prop.spawnEgg(PoEntityType.FLY.get())));
 
     public static final ItemEntry<FeedableBlockItem> MAGGOTS_SEEDS = registerItem("maggots_seeds",
-            props -> new FeedableBlockItem(PoBlocks.MAGGOTS.get(), new Item.Properties().food(PFoods.MAGGOTS_SEEDS).stacksTo(88)));
+            props -> new FeedableBlockItem(PoBlocks.MAGGOTS.get(), PFoods.apply(new Item.Properties(), PFoods.MAGGOTS_SEEDS).stacksTo(88)));
     public static final ItemEntry<FeedableBlockItem> ROUNDWORM = registerItem("roundworm",
-            props -> new FeedableBlockItem(PoBlocks.ROUNDWORM_VINES.get(), new Item.Properties().food(PFoods.ROUNDWORM).stacksTo(88)));
+            props -> new FeedableBlockItem(PoBlocks.ROUNDWORM_VINES.get(), PFoods.apply(new Item.Properties(), PFoods.ROUNDWORM).stacksTo(88)));
 
     public static final ItemEntry<SimpleFeedableItem> FASTING_PILL = registerFood("fasting_pill", PFoods.FASTING_PILL);
 
@@ -165,7 +164,7 @@ public class PoItems {
     }
 
     private static ItemEntry<SimpleFeedableItem> registerFood(String name, FoodProperties food) {
-        return registerItem(name, props -> new SimpleFeedableItem(props.food(food).stacksTo(88)));
+        return registerItem(name, props -> new SimpleFeedableItem(PFoods.apply(props, food).stacksTo(88)));
     }
 
     private static ItemEntry<Item> registerMusicDisc(String name, ResourceKey<JukeboxSong> song) {

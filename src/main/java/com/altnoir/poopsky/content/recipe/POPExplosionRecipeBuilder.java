@@ -74,7 +74,6 @@ public final class POPExplosionRecipeBuilder implements RecipeBuilder {
         return RecipeBuilder.getDefaultRecipeId(output.toItemStack());
     }
 
-    @Override
     public void save(@NotNull RecipeOutput recipeOutput, @NotNull String id) {
         Identifier recipeId = PoopSky.loc(RECIPE_TYPE + "/" + id);
         save(recipeOutput, ResourceKey.create(Registries.RECIPE, recipeId));

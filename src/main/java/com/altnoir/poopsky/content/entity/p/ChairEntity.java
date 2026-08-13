@@ -1,10 +1,13 @@
 package com.altnoir.poopsky.content.entity.p;
 
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 public class ChairEntity extends Entity {
     public ChairEntity(EntityType<?> entityType, Level level) {
@@ -13,16 +16,14 @@ public class ChairEntity extends Entity {
 
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
-
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundTag compound) {
-
+    protected void readAdditionalSaveData(ValueInput input) {
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundTag compound) {
+    protected void addAdditionalSaveData(ValueOutput output) {
 
     }
 
@@ -31,7 +32,12 @@ public class ChairEntity extends Entity {
         passenger.setPos(this.getX(), this.getY() + 1.0, this.getZ());
         super.removePassenger(passenger);
         if (!this.isRemoved()) {
-            this.kill();
+            this.kill((ServerLevel) this.level());
         }
+    }
+
+    @Override
+    public boolean hurtServer(ServerLevel level, DamageSource source, float damage) {
+        return false;
     }
 }
