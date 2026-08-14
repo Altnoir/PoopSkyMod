@@ -59,6 +59,7 @@ public class OnTheVergeEffect extends MobEffect {
             }
             if (amplifier >= 1 && duration > 200) {
                 openTheDoor = true;
+                result = true;
             }
 
             if (openTheDoor) {
