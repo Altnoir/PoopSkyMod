@@ -97,6 +97,8 @@
     "poopsky:large_saltpeter_bud",
     "poopsky:medium_saltpeter_bud",
     "poopsky:small_saltpeter_bud",
+    "poopsky:dried_chili_poop_block",
+    "poopsky:dried_golden_poop_block",
     "poopsky:compooper",
     "poopsky:water_compooper",
     "poopsky:lava_compooper",
@@ -127,6 +129,7 @@
     "poopsky:cut_poop_block_stairs",
     "poopsky:cut_poop_block_slab",
     "poopsky:cut_poop_block_vertical_slab",
-    "poopsky:cut_poop_block_wall"
+    "poopsky:cut_poop_block_wall",
+    "poopsky:poop_sand"
   ]
 }

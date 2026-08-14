@@ -10,7 +10,9 @@ import com.altnoir.poopsky.content.item.p.*;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
@@ -159,6 +161,16 @@ public class PoItems {
 
     public static final ItemEntry<FlyItem> FLY = registerItemNoModel("fly",
             props -> new FlyItem(props.stacksTo(88)));
+
+    public static final ItemEntry<GameDiscItem> GAME_DISC_SLIME = registerItem("game_disc_slime",
+            props -> new GameDiscItem(props.rarity(Rarity.RARE),
+                    Component.translatable("gamediscs.slime").withStyle(ChatFormatting.DARK_GREEN)));
+    public static final ItemEntry<GameDiscItem> GAME_DISC_BLOCKTRIS = registerItem("game_disc_blocktris",
+            props -> new GameDiscItem(props.rarity(Rarity.RARE),
+                    Component.translatable("gamediscs.blocktris").withStyle(ChatFormatting.BLUE)));
+    public static final ItemEntry<GameDiscItem> GAME_DISC_PONG = registerItem("game_disc_pong",
+            props -> new GameDiscItem(props.rarity(Rarity.RARE),
+                    Component.translatable("gamediscs.pong").withStyle(ChatFormatting.WHITE)));
 
     public static List<Item> getAllItems() {
         var registrateItems = REGISTRATE.getAll(Registries.ITEM).stream()

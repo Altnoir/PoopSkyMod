@@ -78,6 +78,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         flushToilet(PoBlocks.GOLDEN_FLUSH_TOILET.get());
         portableToilet(PoBlocks.GINKGO_TOILET.get());
         portableToilet(PoBlocks.PORTABLE_TOILET.get());
+        PoBlocks.getArcadeBlocks().forEach(entry -> arcade(entry.get()));
         shitBlock(PoBlocks.SHIT.get(), PoBlocks.POOP_BLOCK.get());
         shitBlock(PoBlocks.CHILI_SHIT.get(), PoBlocks.CHILI_POOP_BLOCK.get());
         shitBlock(PoBlocks.GOLDEN_SHIT.get(), PoBlocks.GOLDEN_POOP_BLOCK.get());
@@ -753,6 +754,35 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         });
 
         generatedItem(block, "item");
+    }
+
+    private ModelFile arcadeModel(Block block, boolean upper) {
+        String path = getBlockPath(block);
+        String suffix = upper ? "_top" : "_bottom";
+        var model = models().withExistingParent(path + suffix, modLoc("block/arcade" + suffix))
+                .texture("arcade", modLoc("block/" + path + suffix))
+                .texture(PARTICLE, modLoc("block/" + path + "_particle"));
+        if (upper) {
+            model.texture("screen", modLoc("block/screen"));
+        }
+        return model;
+    }
+
+    private void arcade(Block block) {
+        String path = getBlockPath(block);
+        ModelFile bottom = arcadeModel(block, false);
+        ModelFile top = arcadeModel(block, true);
+
+        getVariantBuilder(block).forAllStates(state -> {
+            boolean upper = state.getValue(ArcadeBlock.HALF) == DoubleBlockHalf.UPPER;
+            return ConfiguredModel.builder()
+                    .modelFile(upper ? top : bottom)
+                    .rotationY(horizontalRotation(state.getValue(ArcadeBlock.FACING)))
+                    .build();
+        });
+
+        itemModels().withExistingParent(getItemPath(block), mcLoc("item/generated"))
+                .texture("layer0", modLoc("item/" + path));
     }
 
     private void flushToilet(Block block) {

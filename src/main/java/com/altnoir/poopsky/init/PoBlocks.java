@@ -69,6 +69,8 @@ public class PoBlocks {
 
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
+    private static final List<BlockEntry<ArcadeBlock>> ARCADE_BLOCKS = new ArrayList<>();
+
     private enum BlockTab {
         BASIC_BLOCKS,
         DECO_MATERIALS,
@@ -520,6 +522,8 @@ public class PoBlocks {
                     .noOcclusion()),
             (loot, block) -> loot.add(block, loot.createDoorTable(block)));
 
+    public static final BlockEntry<ArcadeBlock> BLUE_ARCADE = registerArcadeBlock("blue_arcade", DyeColor.BLUE);
+
     public record BlockFamily(
             BlockEntry<? extends Block> block,
             BlockEntry<StairBlock> stairs,
@@ -779,6 +783,22 @@ public class PoBlocks {
 
     public static <T extends Block> BlockEntry<T> registerToiletBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
         return registerBlockWithItem(name, 88, factory, loot, ToiletBlockItem::new, BlockTab.BASIC_BLOCKS);
+    }
+
+    public static BlockEntry<ArcadeBlock> registerArcadeBlock(String name, DyeColor color) {
+        BlockEntry<ArcadeBlock> entry = registerBlock(name, 8,
+                props -> new ArcadeBlock(BlockBehaviour.Properties.of()
+                        .mapColor(color)
+                        .strength(HARDEN, HARD_STRENGTH)
+                        .sound(SoundType.METAL)
+                        .noOcclusion()),
+                (loot, block) -> loot.add(block, loot.createDoorTable(block)));
+        ARCADE_BLOCKS.add(entry);
+        return entry;
+    }
+
+    public static List<BlockEntry<ArcadeBlock>> getArcadeBlocks() {
+        return List.copyOf(ARCADE_BLOCKS);
     }
 
     private static BlockBehaviour.Properties familyProperties(Block base) {

@@ -268,5 +268,29 @@ public class SoundGen extends SoundDefinitionsProvider {
 
         add(PoSoundEvents.MOON_BOWL, definition()
                 .with(sound(PoopSky.loc("moon_bowl")).stream()));
+
+
+        add(PoSoundEvents.JUMP, definition()
+                .with(sound(PoopSky.loc("jump"))));
+        add(PoSoundEvents.CLICK, definition()
+                .with(sound(PoopSky.loc("click"))));
+        add(PoSoundEvents.POINT, definition()
+                .with(sound(PoopSky.loc("point"))));
+        add(PoSoundEvents.NEW_BEST, definition()
+                .with(sound(PoopSky.loc("new_best"))));
+        add(PoSoundEvents.GAME_OVER, definition()
+                .with(sound(PoopSky.loc("game_over"))));
+        add(PoSoundEvents.SELECT, definition()
+                .with(sound(PoopSky.loc("select"))));
+        add(PoSoundEvents.CONFIRM, definition()
+                .with(sound(PoopSky.loc("confirm"))));
+        add(PoSoundEvents.EXPLOSION, definition()
+                .with(sound(PoopSky.loc("explosion"))));
+        add(PoSoundEvents.SHOOT, definition()
+                .with(sound(PoopSky.loc("shoot"))));
+        add(PoSoundEvents.SWING, definition()
+                .with(sound(PoopSky.loc("swing"))));
+        add(PoSoundEvents.SWITCH, definition()
+                .with(sound(PoopSky.loc("switch"))));
     }
 }

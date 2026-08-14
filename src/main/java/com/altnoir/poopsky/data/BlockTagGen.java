@@ -271,6 +271,8 @@ public final class BlockTagGen {
                 PoBlocks.LARGE_SALTPETER_BUD.get(),
                 PoBlocks.MEDIUM_SALTPETER_BUD.get(),
                 PoBlocks.SMALL_SALTPETER_BUD.get(),
+                PoBlocks.DRIED_CHILI_POOP_BLOCK.get(),
+                PoBlocks.DRIED_GOLDEN_POOP_BLOCK.get(),
                 PoBlocks.COMPOOPER.get(),
                 PoBlocks.WATER_COMPOOPER.get(),
                 PoBlocks.LAVA_COMPOOPER.get(),
@@ -302,6 +304,8 @@ public final class BlockTagGen {
                         PoBlocks.POOP_LEAVES_IRON.get()
                 )
                 .addTag(PoTags.Blocks.POOP_BUILDING_BLOCKS);
+
+        tag(BlockTags.MINEABLE_WITH_PICKAXE).add(PoBlocks.POOP_SAND.get());
 
         tag(Tags.Blocks.VILLAGER_JOB_SITES)
                 .add(

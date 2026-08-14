@@ -319,6 +319,20 @@ public final class LangGen {
         provider.add("block.poopsky.toilet_format", "%s Toilet");
         provider.add("block.poopsky.rainbow_toilet", "Rainbow Toilet");
 
+        provider.add("gamediscs.slime", "Slime");
+        provider.add("gamediscs.blocktris", "Blocktris");
+        provider.add("gamediscs.pong", "Pong");
+        provider.add("message.gamediscs.light_arcade.no_cartridge", "No cartridge");
+
+        provider.add("gui.gamingconsole.title", "Arcade Machine");
+        provider.add("gui.gamingconsole.press_any_key", "Press any key");
+        provider.add("gui.gamingconsole.score", "Score");
+        provider.add("gui.gamingconsole.best_score", "Best");
+        provider.add("gui.gamingconsole.new_best_score", "New Best");
+        provider.add("gui.gamingconsole.won", "You won!");
+        provider.add("gui.gamingconsole.died", "You lost!");
+        provider.add("gui.gamingconsole.next", "Next");
+
         // Containers
         provider.add("container.poopsky.fly_barrel", "Fly Barrel");
         provider.add("container.poopsky.breeding_chest", "Breeding Box");
@@ -356,8 +370,6 @@ public final class LangGen {
         provider.add("tooltip.poopsky.fly_type", "Type");
         provider.add("tooltip.poopsky.item.info_0", "§7Hold §6[Shift] §7to show details");
         provider.add("tooltip.poopsky.item.info_1", "§8Right-click two different toilet blocks to link channels");
-        provider.add("tooltip.poopsky.poop_ball.info_1", "Villager Support");
-        provider.add("tooltip.poopsky.poop_ball.info_2", "500KG Poop");
         provider.add("tooltip.poopsky.toilet_linker.info_1", "Toilet① - DimID: %1$s, Coordinates: %2$s, %3$s, %4$s");
         provider.add("tooltip.poopsky.toilet_linker.info_2", "Toilet② - DimID: %1$s, Coordinates: %2$s, %3$s, %4$s");
         provider.add("tooltip.poopsky.jinkela.info", "§8Fertilizer mixed with Jinkela: one bag spreads like two");

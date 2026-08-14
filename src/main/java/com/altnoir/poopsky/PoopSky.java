@@ -71,11 +71,13 @@ public class PoopSky {
         PoPotions.register();
         PoRecipes.register(modEventBus);
         PoComponents.register(modEventBus);
+        PoAttachments.register(modEventBus);
 
         PoEntityType.register();
         PoBlockEntityType.register();
         EntityLootTableGen.register();
         FishingLootGen.register();
+        ArcadeLootGen.register();
         GlobalLootModifierGen.register();
         PoLootFunctions.register();
         PoVillagers.register();
