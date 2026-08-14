@@ -271,6 +271,8 @@ public final class BlockTagGen {
                 PoBlocks.LARGE_SALTPETER_BUD.get(),
                 PoBlocks.MEDIUM_SALTPETER_BUD.get(),
                 PoBlocks.SMALL_SALTPETER_BUD.get(),
+                PoBlocks.DRIED_CHILI_POOP_BLOCK.get(),
+                PoBlocks.DRIED_GOLDEN_POOP_BLOCK.get(),
                 PoBlocks.COMPOOPER.get(),
                 PoBlocks.WATER_COMPOOPER.get(),
                 PoBlocks.LAVA_COMPOOPER.get(),
