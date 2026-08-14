@@ -305,6 +305,8 @@ public final class BlockTagGen {
                 )
                 .addTag(PoTags.Blocks.POOP_BUILDING_BLOCKS);
 
+        tag(BlockTags.MINEABLE_WITH_PICKAXE).add(PoBlocks.POOP_SAND.get());
+
         tag(Tags.Blocks.VILLAGER_JOB_SITES)
                 .add(
                         PoBlocks.COMPOOPER.get(),

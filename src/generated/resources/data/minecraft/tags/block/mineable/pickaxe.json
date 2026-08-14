@@ -129,6 +129,7 @@
     "poopsky:cut_poop_block_stairs",
     "poopsky:cut_poop_block_slab",
     "poopsky:cut_poop_block_vertical_slab",
-    "poopsky:cut_poop_block_wall"
+    "poopsky:cut_poop_block_wall",
+    "poopsky:poop_sand"
   ]
 }
