@@ -90,7 +90,7 @@ public class TimeBellItem extends Item {
 
         int usedTicks = this.getUseDuration(stack, livingEntity) - timeLeft;
 
-        if (usedTicks < DELAY_TICKS) {
+        if (level.isClientSide && usedTicks < DELAY_TICKS) {
             Minecraft.getInstance().getSoundManager().stop(PoSoundEvents.ITEM_TIME_BELL_OPEN.get().getLocation(), SoundSource.PLAYERS);
         }
     }
