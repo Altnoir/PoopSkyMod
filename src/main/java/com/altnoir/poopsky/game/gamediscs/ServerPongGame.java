@@ -1,6 +1,7 @@
-package com.altnoir.poopsky.game;
+package com.altnoir.poopsky.game.gamediscs;
 
-import com.altnoir.poopsky.game.client.util.GameStage;
+import com.altnoir.poopsky.game.ServerGame;
+import com.altnoir.poopsky.game.util.GameStage;
 import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.nbt.CompoundTag;
 
@@ -17,6 +18,7 @@ public class ServerPongGame extends ServerGame {
 
     @Override
     public void prepare() {
+        super.prepare();
         playerY = 70;
         opponentY = 70;
         ballX = 110;
@@ -25,9 +27,6 @@ public class ServerPongGame extends ServerGame {
         ballTimer = 60;
         ballSpeed = 4.0F;
         resetBall();
-        score = 0;
-        stage = GameStage.START;
-        ticks = 1;
     }
 
     private void resetBall() {
@@ -50,7 +49,7 @@ public class ServerPongGame extends ServerGame {
         if (downDown) {
             playerY += 3;
         }
-        playerY = Math.min(Math.max(playerY, 0), GAME_HEIGHT - 20);
+        playerY = Math.min(Math.max(playerY, 0), HEIGHT - 20);
 
         if (ballY < opponentY + 10) {
             opponentY -= 3;
@@ -58,7 +57,7 @@ public class ServerPongGame extends ServerGame {
         if (ballY > opponentY + 10) {
             opponentY += 3;
         }
-        opponentY = Math.min(Math.max(opponentY, 0), GAME_HEIGHT - 20);
+        opponentY = Math.min(Math.max(opponentY, 0), HEIGHT - 20);
 
         if (ballTimer > 0) {
             ballTimer--;
@@ -67,7 +66,7 @@ public class ServerPongGame extends ServerGame {
 
         ballX += ballVX;
         ballY += ballVY;
-        if (ballY <= 0 || ballY >= GAME_HEIGHT - 4) {
+        if (ballY <= 0 || ballY >= HEIGHT - 4) {
             ballVY = -ballVY;
             playSound(PoSoundEvents.JUMP.get(), 0.8F, 0.8F);
         }
@@ -75,7 +74,7 @@ public class ServerPongGame extends ServerGame {
             ballVX = Math.abs(ballVX);
             playSound(PoSoundEvents.JUMP.get(), 1.0F, 1.0F);
         }
-        if (ballX + 4 >= GAME_WIDTH - 15 && ballY + 4 >= opponentY && ballY <= opponentY + 20) {
+        if (ballX + 4 >= WIDTH - 15 && ballY + 4 >= opponentY && ballY <= opponentY + 20) {
             ballVX = -Math.abs(ballVX);
             playSound(PoSoundEvents.JUMP.get(), 1.0F, 1.0F);
         }
@@ -83,7 +82,7 @@ public class ServerPongGame extends ServerGame {
             opponentScore++;
             resetBall();
         }
-        if (ballX + 4 > GAME_WIDTH) {
+        if (ballX + 4 > WIDTH) {
             score++;
             playSound(PoSoundEvents.POINT.get(), 1.0F, 0.7F);
             resetBall();

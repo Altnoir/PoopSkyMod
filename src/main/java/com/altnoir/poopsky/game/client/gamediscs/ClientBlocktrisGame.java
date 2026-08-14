@@ -2,9 +2,9 @@ package com.altnoir.poopsky.game.client.gamediscs;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.game.client.graphics.MultiImage;
-import com.altnoir.poopsky.game.client.util.BlocktrisPiece;
-import com.altnoir.poopsky.game.client.util.Game;
-import com.altnoir.poopsky.game.client.util.Grid;
+import com.altnoir.poopsky.game.util.BlocktrisPiece;
+import com.altnoir.poopsky.game.client.ClientGame;
+import com.altnoir.poopsky.game.util.Grid;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -16,19 +16,19 @@ import net.minecraft.resources.ResourceLocation;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlocktrisGame extends Game {
+public class ClientBlocktrisGame extends ClientGame {
     private static final int TILE_SIZE = 8;
     private static final int GRID_WIDTH = 10;
     private static final int GRID_HEIGHT = 20;
     private static final int BOARD_X = 72;
-    private static final int NEXT_CELL_X = 22;
-    private static final int NEXT_LABEL_X = 176;
+    private static final int NEXT_CELL_X = 23;
+    private static final int NEXT_LABEL_X = 188;
 
     public Grid grid = createGrid();
     private BlocktrisPiece piece = new BlocktrisPiece(BlocktrisPiece.PIECES.get(0).get(), 4, 1, 0, this);
     private final List<BlocktrisPiece> nexts = new ArrayList<>();
 
-    public BlocktrisGame() {
+    public ClientBlocktrisGame() {
         super();
     }
 
@@ -83,7 +83,7 @@ public class BlocktrisGame extends Game {
 
         Font font = Minecraft.getInstance().font;
         Component text = Component.translatable("gui.gamingconsole.next");
-        graphics.drawString(font, text, NEXT_LABEL_X + posX - font.width(text.getVisualOrderText()) / 2, 6 + posY, 0x555555, false);
+        graphics.drawString(font, text, NEXT_LABEL_X + posX - font.width(text.getVisualOrderText()) / 2, 10 + posY, 0x555555, false);
 
         renderOverlay(graphics, posX, posY);
     }

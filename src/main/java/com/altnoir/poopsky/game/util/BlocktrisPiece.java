@@ -1,8 +1,8 @@
-package com.altnoir.poopsky.game.client.util;
+package com.altnoir.poopsky.game.util;
 
+import com.altnoir.poopsky.game.client.gamediscs.ClientBlocktrisGame;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.phys.Vec2;
-import com.altnoir.poopsky.game.client.gamediscs.BlocktrisGame;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -135,7 +135,7 @@ public class BlocktrisPiece {
                     new Vec2(0, -1),
                     new Vec2(0, 0),
                     new Vec2(1, 0),
-                    new Vec2( 1, 1)
+                    new Vec2(1, 1)
             ),
             List.of(
                     new Vec2(0, -1),
@@ -155,7 +155,7 @@ public class BlocktrisPiece {
             S
     );
 
-    public BlocktrisPiece(List<List<Vec2>> variants, int x, int y, int color, BlocktrisGame game) {
+    public BlocktrisPiece(List<List<Vec2>> variants, int x, int y, int color, ClientBlocktrisGame game) {
         this.variants = variants;
         this.x = x;
         this.y = y;
@@ -175,7 +175,7 @@ public class BlocktrisPiece {
     public void render(GuiGraphics graphics, int posX, int posY) {
         grid.getImages().setImage(color + 1);
         for (Vec2 part : current()) {
-            grid.getImages().render(graphics, posX + (x + (int)part.x) * grid.tileSize(), posY + (y + (int)part.y) * grid.tileSize());
+            grid.getImages().render(graphics, posX + (x + (int) part.x) * grid.tileSize(), posY + (y + (int) part.y) * grid.tileSize());
         }
     }
 
@@ -196,7 +196,7 @@ public class BlocktrisPiece {
         }
         Vec2 addition = smallest.add(biggest.negated()).scale(0.5f).add(biggest).negated();
         for (Vec2 part : current()) {
-            grid.getImages().render(graphics, posX + (int)((x + part.x + addition.x) * grid.tileSize()), posY + (int)((y + (int)part.y + addition.y) * grid.tileSize()));
+            grid.getImages().render(graphics, posX + (int) ((x + part.x + addition.x) * grid.tileSize()), posY + (int) ((y + (int) part.y + addition.y) * grid.tileSize()));
         }
     }
 

@@ -1,7 +1,8 @@
-package com.altnoir.poopsky.game;
+package com.altnoir.poopsky.game.gamediscs;
 
-import com.altnoir.poopsky.game.client.controls.Button;
-import com.altnoir.poopsky.game.client.util.GameStage;
+import com.altnoir.poopsky.game.ServerGame;
+import com.altnoir.poopsky.game.controls.Button;
+import com.altnoir.poopsky.game.util.GameStage;
 import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
@@ -23,6 +24,7 @@ public class ServerRoundwormGame extends ServerGame {
 
     @Override
     public void prepare() {
+        super.prepare();
         body.clear();
         body.add(new Vec2(5, 5));
         body.add(new Vec2(6, 5));
@@ -30,9 +32,6 @@ public class ServerRoundwormGame extends ServerGame {
         respawnApple();
         direction = new Vec2(1, 0);
         nextDirection = null;
-        score = 0;
-        stage = GameStage.START;
-        ticks = 1;
     }
 
     private void respawnApple() {

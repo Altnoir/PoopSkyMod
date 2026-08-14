@@ -3,7 +3,7 @@ package com.altnoir.poopsky.game.client.arcade;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.client.ClientUtils;
 import com.altnoir.poopsky.content.item.p.GameDiscItem;
-import com.altnoir.poopsky.game.client.util.Game;
+import com.altnoir.poopsky.game.client.ClientGame;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -31,8 +31,6 @@ import java.util.Map;
 public final class ArcadeWorldScreenRenderer {
     private static final int TEXTURE_WIDTH = 448;
     private static final int TEXTURE_HEIGHT = 320;
-    private static final int GAME_WIDTH = 224;
-    private static final int GAME_HEIGHT = 160;
 
     private static final Map<BlockPos, ScreenState> SCREENS = new HashMap<>();
 
@@ -85,7 +83,7 @@ public final class ArcadeWorldScreenRenderer {
         }
 
         for (ScreenState state : SCREENS.values()) {
-            if (state.cartridgeGame == null || state.snapshot == null || state.snapshot.isEmpty()) {
+            if (state.cartridgeClientGame == null || state.snapshot == null || state.snapshot.isEmpty()) {
                 continue;
             }
             state.ensureResources();
@@ -108,10 +106,10 @@ public final class ArcadeWorldScreenRenderer {
     }
 
     private static void renderState(ScreenState state) {
-        if (state.cartridgeGame == null) {
+        if (state.cartridgeClientGame == null) {
             return;
         }
-        ClientGameRenderer.apply(state.cartridgeGame, state.snapshot);
+        ClientGameRenderer.apply(state.cartridgeClientGame, state.snapshot);
 
         RenderSystem.backupProjectionMatrix();
         Matrix4fStack modelViewStack = RenderSystem.getModelViewStack();
@@ -125,12 +123,12 @@ public final class ArcadeWorldScreenRenderer {
         state.target.bindWrite(true);
         RenderSystem.disableDepthTest();
         RenderSystem.setProjectionMatrix(
-                new Matrix4f().setOrtho(0.0F, GAME_WIDTH, GAME_HEIGHT, 0.0F, 1000.0F, 3000.0F),
+                new Matrix4f().setOrtho(0.0F, ClientGame.WIDTH, ClientGame.HEIGHT, 0.0F, 1000.0F, 3000.0F),
                 VertexSorting.ORTHOGRAPHIC_Z
         );
 
         GuiGraphics graphics = new GuiGraphics(Minecraft.getInstance(), state.bufferSource);
-        state.cartridgeGame.render(graphics, 0, 0);
+        state.cartridgeClientGame.render(graphics, 0, 0);
         graphics.flush();
 
         NativeImage pixels = state.texture.getPixels();
@@ -151,7 +149,7 @@ public final class ArcadeWorldScreenRenderer {
         private final BlockPos pos;
         private final ResourceLocation textureLocation;
         private GameDiscItem cartridge;
-        private Game cartridgeGame;
+        private ClientGame cartridgeClientGame;
         private CompoundTag snapshot;
         private RenderTarget target;
         private DynamicTexture texture;
@@ -162,9 +160,9 @@ public final class ArcadeWorldScreenRenderer {
             this.pos = pos;
             this.cartridge = cartridge;
             this.textureLocation = PoopSky.loc(texturePath(pos));
-            this.cartridgeGame = ClientUtils.newGameFor(cartridge);
-            this.cartridgeGame.setArcadeMachine(pos);
-            this.cartridgeGame.prepare();
+            this.cartridgeClientGame = ClientUtils.newGameFor(cartridge);
+            this.cartridgeClientGame.setArcadeMachine(pos);
+            this.cartridgeClientGame.prepare();
         }
 
         private void ensureResources() {

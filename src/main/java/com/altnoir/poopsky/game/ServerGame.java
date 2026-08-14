@@ -1,22 +1,19 @@
 package com.altnoir.poopsky.game;
 
 import com.altnoir.poopsky.content.item.p.GameDiscItem;
-import com.altnoir.poopsky.game.client.controls.Button;
-import com.altnoir.poopsky.game.client.util.GameStage;
+import com.altnoir.poopsky.game.controls.Button;
+import com.altnoir.poopsky.game.gamediscs.ServerBlocktrisGame;
+import com.altnoir.poopsky.game.gamediscs.ServerFlappyBirdGame;
+import com.altnoir.poopsky.game.gamediscs.ServerPongGame;
+import com.altnoir.poopsky.game.gamediscs.ServerRoundwormGame;
+import com.altnoir.poopsky.game.util.Game;
+import com.altnoir.poopsky.game.util.GameStage;
 import com.altnoir.poopsky.init.PoItems;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
 
 import java.util.Random;
 
-public abstract class ServerGame {
-    protected static final int GAME_WIDTH = 224;
-    protected static final int GAME_HEIGHT = 160;
-
-    public GameStage stage = GameStage.START;
-    public int score;
-    public int settledScore;
-    public int ticks = 1;
+public abstract class ServerGame extends Game {
     protected final Random random;
     protected boolean upDown;
     protected boolean downDown;
@@ -37,13 +34,6 @@ public abstract class ServerGame {
 
     protected void playSound(SoundEvent event, float pitch, float volume) {
         soundEmitter.play(event, pitch, volume);
-    }
-
-    public abstract void prepare();
-
-    public void start() {
-        stage = GameStage.PLAYING;
-        ticks = 1;
     }
 
     public final void setButton(Button button, boolean pressed) {
@@ -91,29 +81,14 @@ public abstract class ServerGame {
     protected void extraTick() {
     }
 
-    public CompoundTag writeSnapshot() {
-        CompoundTag tag = new CompoundTag();
-        tag.putString("stage", stage.name());
-        tag.putInt("score", score);
-        tag.putInt("settled_score", settledScore);
-        tag.putInt("ticks", ticks);
-        return tag;
-    }
-
     public String getGameName() {
-        if (this instanceof ServerPongGame) {
-            return "PongGame";
-        }
-        if (this instanceof ServerRoundwormGame) {
-            return "SlimeGame";
-        }
-        if (this instanceof ServerFlappyBirdGame) {
-            return "FlappyBirdGame";
-        }
-        if (this instanceof ServerBlocktrisGame) {
-            return "BlocktrisGame";
-        }
-        return getClass().getSimpleName();
+        return switch (this) {
+            case ServerPongGame ignored -> "PongGame";
+            case ServerRoundwormGame ignored -> "SlimeGame";
+            case ServerFlappyBirdGame ignored -> "FlappyBirdGame";
+            case ServerBlocktrisGame ignored -> "BlocktrisGame";
+            default -> getClass().getSimpleName();
+        };
     }
 
     public static ServerGame create(GameDiscItem disc) {

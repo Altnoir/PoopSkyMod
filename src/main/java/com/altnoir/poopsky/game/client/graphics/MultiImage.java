@@ -11,7 +11,7 @@ public class MultiImage extends Renderer {
     private List<Image> images = new ArrayList<>();
     private int current = 0;
 
-    public MultiImage(List<Image>images) {
+    public MultiImage(List<Image> images) {
         this.images = images;
     }
 
@@ -20,6 +20,7 @@ public class MultiImage extends Renderer {
             images.add(new Image(file, fileWidth, fileHeight, rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight()));
         }
     }
+
     public MultiImage(ResourceLocation file, int fileWidth, int fileHeight, int count) {
         this(file, fileWidth, fileHeight, fromFile(fileWidth, fileHeight, count));
     }
@@ -33,11 +34,8 @@ public class MultiImage extends Renderer {
     }
 
     public MultiImage setImage(int index) {
-        current = Math.min(Math.max(index, 0), count() - 1);
+        current = Math.clamp(index, 0, count() - 1);
         return this;
-    }
-    public int current() {
-        return current;
     }
 
     public int count() {

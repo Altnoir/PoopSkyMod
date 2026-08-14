@@ -1,52 +1,25 @@
-package com.altnoir.poopsky.game.client.util;
+package com.altnoir.poopsky.game.client;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.client.ClientUtils;
+import com.altnoir.poopsky.game.util.Game;
+import com.altnoir.poopsky.game.util.GameStage;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public class Game {
-    public static final int WIDTH = 224;
-    public static final int HEIGHT = 160;
+public class ClientGame extends Game {
     private static final int RESULT_TEXT_OFFSET = 30;
-
-    public GameStage stage = GameStage.START;
-    public int ticks = 1;
-    public int score;
-    private int settledScore;
 
     @Nullable
     private BlockPos arcadeMachinePos;
-
-    public void applySnapshot(CompoundTag tag) {
-        if (tag == null) {
-            return;
-        }
-        String stageName = tag.getString("stage");
-        if (stageName.isEmpty()) {
-            return;
-        }
-        stage = GameStage.valueOf(stageName);
-        score = tag.getInt("score");
-        ticks = tag.getInt("ticks");
-        settledScore = tag.getInt("settled_score");
-    }
-
-    public void prepare() {
-        score = 0;
-        settledScore = 0;
-        stage = GameStage.START;
-        ticks = 1;
-    }
 
     public void setArcadeMachine(BlockPos pos) {
         this.arcadeMachinePos = pos;
@@ -54,11 +27,6 @@ public class Game {
 
     public boolean isArcadeGame() {
         return arcadeMachinePos != null;
-    }
-
-    @Nullable
-    public BlockPos getArcadeMachinePos() {
-        return arcadeMachinePos;
     }
 
     private String getGameName() {
@@ -96,7 +64,8 @@ public class Game {
             }
 
             if (stage == GameStage.DIED || stage == GameStage.WON) {
-                graphics.blit(PoopSky.loc("textures/gui/score_board.png"), posX, posY, 0, 0, WIDTH, HEIGHT, WIDTH, HEIGHT);
+                graphics.blit(PoopSky.loc("textures/gui/score_board.png"), posX + (WIDTH - 140) / 2, posY + (HEIGHT - 100) / 2,
+                        0, 0, 140, 100, 140, 100);
 
                 Component component = stage == GameStage.DIED
                         ? Component.translatable("gui.gamingconsole.died").withStyle(ChatFormatting.BOLD, ChatFormatting.DARK_RED)

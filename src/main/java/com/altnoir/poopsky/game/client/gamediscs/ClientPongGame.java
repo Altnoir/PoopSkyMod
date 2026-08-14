@@ -2,14 +2,14 @@ package com.altnoir.poopsky.game.client.gamediscs;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.game.client.graphics.MultiImage;
-import com.altnoir.poopsky.game.client.util.Game;
-import com.altnoir.poopsky.game.client.util.Sprite;
+import com.altnoir.poopsky.game.client.ClientGame;
+import com.altnoir.poopsky.game.util.Sprite;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec2;
 
-public class PongGame extends Game {
+public class ClientPongGame extends ClientGame {
     private final Sprite player = new Sprite(
             new Vec2(10, (float) HEIGHT / 2 - 10),
             new Vec2(5, 20),
@@ -33,7 +33,7 @@ public class PongGame extends Game {
 
     private int oponentScore;
 
-    public PongGame() {
+    public ClientPongGame() {
         super();
     }
 

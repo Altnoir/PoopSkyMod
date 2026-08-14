@@ -1,7 +1,8 @@
-package com.altnoir.poopsky.game;
+package com.altnoir.poopsky.game.gamediscs;
 
-import com.altnoir.poopsky.game.client.controls.Button;
-import com.altnoir.poopsky.game.client.util.GameStage;
+import com.altnoir.poopsky.game.ServerGame;
+import com.altnoir.poopsky.game.controls.Button;
+import com.altnoir.poopsky.game.util.GameStage;
 import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntArrayTag;
@@ -19,37 +20,52 @@ public class ServerBlocktrisGame extends ServerGame {
                     List.of(new Vec2(0, 0), new Vec2(0, -1), new Vec2(-1, 0), new Vec2(0, 1)),
                     List.of(new Vec2(0, 0), new Vec2(0, -1), new Vec2(1, 0), new Vec2(-1, 0))
             ),
-            List.of(List.of(new Vec2(0, -1), new Vec2(0, 0), new Vec2(0, 1), new Vec2(-1, 1)),
+            List.of(
+                    List.of(new Vec2(0, -1), new Vec2(0, 0), new Vec2(0, 1), new Vec2(-1, 1)),
                     List.of(new Vec2(-1, -1), new Vec2(-1, 0), new Vec2(0, 0), new Vec2(1, 0)),
                     List.of(new Vec2(0, -1), new Vec2(0, 0), new Vec2(0, 1), new Vec2(1, -1)),
-                    List.of(new Vec2(-1, 0), new Vec2(0, 0), new Vec2(1, 0), new Vec2(1, 1))),
-            List.of(List.of(new Vec2(0, -1), new Vec2(0, 0), new Vec2(0, 1), new Vec2(0, 2)),
-                    List.of(new Vec2(-1, 0), new Vec2(0, 0), new Vec2(1, 0), new Vec2(2, 0))),
-            List.of(List.of(new Vec2(-1, 0), new Vec2(0, 0), new Vec2(-1, 1), new Vec2(0, -1)),
-                    List.of(new Vec2(-1, 0), new Vec2(0, 0), new Vec2(0, 1), new Vec2(1, 1))),
-            List.of(List.of(new Vec2(0, 0), new Vec2(1, 0), new Vec2(0, 1), new Vec2(1, 1))),
-            List.of(List.of(new Vec2(0, -1), new Vec2(0, 0), new Vec2(0, 1), new Vec2(1, 1)),
+                    List.of(new Vec2(-1, 0), new Vec2(0, 0), new Vec2(1, 0), new Vec2(1, 1))
+            ),
+            List.of(
+                    List.of(new Vec2(0, -1), new Vec2(0, 0), new Vec2(0, 1), new Vec2(0, 2)),
+                    List.of(new Vec2(-1, 0), new Vec2(0, 0), new Vec2(1, 0), new Vec2(2, 0))
+            ),
+            List.of(
+                    List.of(new Vec2(-1, 0), new Vec2(0, 0), new Vec2(-1, 1), new Vec2(0, -1)),
+                    List.of(new Vec2(-1, 0), new Vec2(0, 0), new Vec2(0, 1), new Vec2(1, 1))
+            ),
+            List.of(
+                    List.of(new Vec2(0, 0), new Vec2(1, 0), new Vec2(0, 1), new Vec2(1, 1))
+            ),
+            List.of(
+                    List.of(new Vec2(0, -1), new Vec2(0, 0), new Vec2(0, 1), new Vec2(1, 1)),
                     List.of(new Vec2(-1, 1), new Vec2(-1, 0), new Vec2(0, 0), new Vec2(1, 0)),
                     List.of(new Vec2(0, -1), new Vec2(0, 0), new Vec2(0, 1), new Vec2(-1, -1)),
-                    List.of(new Vec2(-1, 0), new Vec2(0, 0), new Vec2(1, 0), new Vec2(1, -1))),
-            List.of(List.of(new Vec2(0, -1), new Vec2(0, 0), new Vec2(1, 0), new Vec2(1, 1)),
-                    List.of(new Vec2(0, -1), new Vec2(0, 0), new Vec2(1, -1), new Vec2(-1, 0)))
+                    List.of(new Vec2(-1, 0), new Vec2(0, 0), new Vec2(1, 0), new Vec2(1, -1))
+            ),
+            List.of(
+                    List.of(new Vec2(0, -1), new Vec2(0, 0), new Vec2(1, 0), new Vec2(1, 1)),
+                    List.of(new Vec2(0, -1), new Vec2(0, 0), new Vec2(1, -1), new Vec2(-1, 0))
+            )
     );
 
-    private int[][] grid = new int[10][20];
+    private static final int GRID_WIDTH = 10;
+    private static final int VISIBLE_HEIGHT = 20;
+    private static final int HIDDEN_TOP_ROWS = 4;
+    private static final int GRID_HEIGHT = VISIBLE_HEIGHT + HIDDEN_TOP_ROWS;
+
+    private int[][] grid = new int[10][GRID_HEIGHT];
     private Piece piece;
     private final List<Piece> next = new ArrayList<>();
     private int placementCooldown;
 
     @Override
     public void prepare() {
-        grid = new int[10][20];
+        super.prepare();
+        grid = new int[10][GRID_HEIGHT];
         next.clear();
         piece = new Piece(random.nextInt(7));
         placementCooldown = 0;
-        score = 0;
-        stage = GameStage.START;
-        ticks = 1;
     }
 
     @Override
@@ -169,10 +185,10 @@ public class ServerBlocktrisGame extends ServerGame {
     public CompoundTag writeSnapshot() {
         CompoundTag tag = super.writeSnapshot();
         ListTag rows = new ListTag();
-        for (int y = 0; y < grid[0].length; y++) {
-            int[] row = new int[grid.length];
-            for (int x = 0; x < grid.length; x++) {
-                row[x] = grid[x][y];
+        for (int y = 0; y < VISIBLE_HEIGHT; y++) {
+            int[] row = new int[GRID_WIDTH];
+            for (int x = 0; x < GRID_WIDTH; x++) {
+                row[x] = grid[x][y + HIDDEN_TOP_ROWS];
             }
             rows.add(new IntArrayTag(row));
         }
@@ -194,7 +210,7 @@ public class ServerBlocktrisGame extends ServerGame {
         private final int type;
         private final List<List<Vec2>> variants;
         private int x = 4;
-        private int y = 1;
+        private int y = -2;
         private int rotation;
 
         private Piece(int type) {
@@ -210,7 +226,8 @@ public class ServerBlocktrisGame extends ServerGame {
             for (Vec2 cell : cells()) {
                 int cx = x + (int) cell.x;
                 int cy = y + (int) cell.y;
-                if (cx < 0 || cx >= 10 || cy < 0 || cy >= 20 || grid[cx][cy] != 0) {
+                if (cx < 0 || cx >= GRID_WIDTH || cy < -HIDDEN_TOP_ROWS || cy >= VISIBLE_HEIGHT
+                        || grid[cx][cy + HIDDEN_TOP_ROWS] != 0) {
                     return true;
                 }
             }
@@ -245,7 +262,7 @@ public class ServerBlocktrisGame extends ServerGame {
 
         private void place() {
             for (Vec2 cell : cells()) {
-                grid[x + (int) cell.x][y + (int) cell.y] = type + 1;
+                grid[x + (int) cell.x][y + (int) cell.y + HIDDEN_TOP_ROWS] = type + 1;
             }
         }
     }

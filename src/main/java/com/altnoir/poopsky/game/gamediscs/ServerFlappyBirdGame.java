@@ -1,7 +1,8 @@
-package com.altnoir.poopsky.game;
+package com.altnoir.poopsky.game.gamediscs;
 
-import com.altnoir.poopsky.game.client.controls.Button;
-import com.altnoir.poopsky.game.client.util.GameStage;
+import com.altnoir.poopsky.game.ServerGame;
+import com.altnoir.poopsky.game.controls.Button;
+import com.altnoir.poopsky.game.util.GameStage;
 import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -19,15 +20,13 @@ public class ServerFlappyBirdGame extends ServerGame {
 
     @Override
     public void prepare() {
+        super.prepare();
         birdX = 20;
         birdY = 30;
         birdVY = 0;
         pipes.clear();
         groundX = 0;
         pipeSpawnTimer = 0;
-        score = 0;
-        stage = GameStage.START;
-        ticks = 1;
     }
 
     @Override
@@ -44,15 +43,15 @@ public class ServerFlappyBirdGame extends ServerGame {
         birdY += birdVY;
         birdVY += 0.75;
         birdVY *= 0.9;
-        if (birdY < 0 || birdY + 8 >= GAME_HEIGHT - 16) {
+        if (birdY < 0 || birdY + 8 >= HEIGHT - 16) {
             stage = GameStage.DIED;
             playSound(PoSoundEvents.GAME_OVER.get(), 0.9F, 2.0F);
             return;
         }
         if (pipeSpawnTimer <= 0) {
             int holeSize = random.nextInt(24, 28);
-            int hole = random.nextInt(5, GAME_HEIGHT - holeSize - 21);
-            pipes.add(new double[]{GAME_WIDTH, hole, holeSize});
+            int hole = random.nextInt(5, HEIGHT - holeSize - 21);
+            pipes.add(new double[]{WIDTH, hole, holeSize});
             pipeSpawnTimer = 30;
         }
         pipeSpawnTimer--;

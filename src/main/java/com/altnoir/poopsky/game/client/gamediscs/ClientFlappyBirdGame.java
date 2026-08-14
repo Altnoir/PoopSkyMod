@@ -2,8 +2,8 @@ package com.altnoir.poopsky.game.client.gamediscs;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.game.client.graphics.AnimatedImage;
-import com.altnoir.poopsky.game.client.util.Game;
-import com.altnoir.poopsky.game.client.util.Sprite;
+import com.altnoir.poopsky.game.client.ClientGame;
+import com.altnoir.poopsky.game.util.Sprite;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -13,7 +13,7 @@ import net.minecraft.world.phys.Vec2;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FlappyBirdGame extends Game {
+public class ClientFlappyBirdGame extends ClientGame {
     private Sprite bird = new Sprite(new Vec2(20, 30), new Vec2(10, 8),
             new AnimatedImage(PoopSky.loc("textures/games/sprite/bird.png"), 10, 32, 4, 2));
     private final List<Sprite> pipes = new ArrayList<>();
@@ -21,7 +21,7 @@ public class FlappyBirdGame extends Game {
             PoopSky.loc("textures/games/sprite/ground.png"));
     private int pipeSpawnTimer;
 
-    public FlappyBirdGame() {
+    public ClientFlappyBirdGame() {
         super();
     }
 

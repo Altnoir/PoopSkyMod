@@ -2,9 +2,9 @@ package com.altnoir.poopsky.game.client.gamediscs;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.game.client.graphics.DirectionalImage;
-import com.altnoir.poopsky.game.client.util.Game;
-import com.altnoir.poopsky.game.client.util.Sprite;
-import com.altnoir.poopsky.game.client.util.VecUtil;
+import com.altnoir.poopsky.game.client.ClientGame;
+import com.altnoir.poopsky.game.util.Sprite;
+import com.altnoir.poopsky.game.util.VecUtil;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -13,7 +13,7 @@ import net.minecraft.world.phys.Vec2;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoundwormGame extends Game {
+public class ClientRoundwormGame extends ClientGame {
     private final DirectionalImage HEAD = new DirectionalImage(
             PoopSky.loc("textures/games/sprite/roundworm_head.png"), 8, 32);
     private final DirectionalImage TAIL = new DirectionalImage(
@@ -30,7 +30,7 @@ public class RoundwormGame extends Game {
     private final Sprite roundwormRenderer = new Sprite(Vec2.ZERO, new Vec2(TILE_SIZE, TILE_SIZE), BODY);
     private final Sprite shit = new Sprite(Vec2.ZERO, new Vec2(TILE_SIZE, TILE_SIZE), SHIT);
 
-    public RoundwormGame() {
+    public ClientRoundwormGame() {
         super();
     }
 

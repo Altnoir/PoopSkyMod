@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.game.client.util;
+package com.altnoir.poopsky.game.util;
 
 import net.minecraft.world.phys.Vec2;
 

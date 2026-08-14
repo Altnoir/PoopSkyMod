@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.game.client.controls;
+package com.altnoir.poopsky.game.controls;
 public enum Button {
     UP, DOWN, LEFT, RIGHT, BUTTON1, BUTTON2;
     public boolean isActionButton() {
