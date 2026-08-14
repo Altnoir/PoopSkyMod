@@ -45,6 +45,11 @@ public record SieveRecipe(Ingredient input, List<ChanceItemStack> outputs, int p
     }
 
     @Override
+    public boolean isSpecial() {
+        return true;
+    }
+
+    @Override
     public boolean showNotification() {
         return false;
     }

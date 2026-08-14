@@ -136,29 +136,6 @@ abstract class LegacyBlockStateGenerator {
         simpleBlockItem(block, model);
     }
 
-    protected void separateTransformsItem(Block block, Identifier texture, Identifier blockModel) {
-        Identifier itemModel = modLoc("item/" + BuiltInRegistries.ITEM.getKey(block.asItem()).getPath());
-        prov.modelOutput.accept(itemModel, () -> {
-            JsonObject root = new JsonObject();
-            JsonObject base = new JsonObject();
-            base.addProperty("parent", "minecraft:item/generated");
-            JsonObject textures = new JsonObject();
-            textures.addProperty("layer0", texture.toString());
-            base.add("textures", textures);
-            root.add("base", base);
-            root.addProperty("gui_light", "front");
-            root.addProperty("loader", "neoforge:separate_transforms");
-            JsonObject perspectives = new JsonObject();
-            for (String context : List.of("ground", "head")) {
-                JsonObject model = new JsonObject();
-                model.addProperty("parent", blockModel.toString());
-                perspectives.add(context, model);
-            }
-            root.add("perspectives", perspectives);
-            return root;
-        });
-    }
-
     protected ModelFile cubeAll(Block block) {
         return models().cubeAll(path(block), blockTexture(block));
     }

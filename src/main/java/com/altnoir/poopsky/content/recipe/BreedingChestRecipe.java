@@ -44,12 +44,17 @@ public record BreedingChestRecipe(String parent1, String parent2, String result,
 
     @Override
     public boolean matches(RecipeInput input, Level level) {
-        return false; // 不使用标准 RecipeInput 匹配
+        return false;
     }
 
     @Override
     public ItemStack assemble(RecipeInput input) {
         return ItemStack.EMPTY;
+    }
+
+    @Override
+    public boolean isSpecial() {
+        return true;
     }
 
     @Override

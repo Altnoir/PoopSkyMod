@@ -32,12 +32,17 @@ public record CompooperRecipe(String fluidType, ItemStackTemplate input, ItemSta
 
     @Override
     public boolean matches(SingleRecipeInput recipeInput, Level level) {
-        return false; // Not used for custom matching
+        return false;
     }
 
     @Override
     public ItemStack assemble(SingleRecipeInput recipeInput) {
         return output.create();
+    }
+
+    @Override
+    public boolean isSpecial() {
+        return true;
     }
 
     @Override

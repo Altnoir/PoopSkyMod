@@ -2,9 +2,7 @@ package com.altnoir.poopsky.client.screen;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.client.IntroController;
-import com.altnoir.poopsky.client.renderer.GuiQuadRenderState;
-import com.altnoir.poopsky.client.renderer.IntroGlyphMaskRenderState;
-import com.altnoir.poopsky.client.renderer.PoGuiRenderPipelines;
+import com.altnoir.poopsky.client.renderer.IntroGlyphRenderState;
 import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.client.KeyMapping;
@@ -13,11 +11,9 @@ import net.minecraft.client.gui.GlyphSource;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.font.TextRenderable;
 import net.minecraft.client.gui.font.glyphs.BakedGlyph;
-import net.minecraft.client.gui.render.TextureSetup;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.client.renderer.texture.AbstractTexture;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.network.chat.Component;
@@ -56,12 +52,6 @@ public class IntroScreen extends Screen {
     private static final float TEXTURE_FADE_END = 9.4F;
     private static final float ICON_FADE_START = 2.0F;
     private static final float ICON_FADE_END = 4.5F;
-    private static final float REFLECTION_START = 9.5F;
-    private static final float REFLECTION_DURATION = 3.2F;
-    private static final float REFLECTION_SECOND_DELAY = 3.0F;
-    private static final float REFLECTION_OFFSET_X = 26.0F;
-    private static final float REFLECTION_OFFSET_Y = 30.0F;
-    private static final float REFLECTION_ALPHA = 0.55F;
     private static final int POOP_COLUMNS = 36;
     private static final int POOP_ROWS = 10;
     private static final float MIN_FONT_ALPHA = 4.0F / 255.0F;
@@ -164,22 +154,18 @@ public class IntroScreen extends Screen {
             float scatterAlpha = smooth(shatterTime, 0.0F, SHATTER_FADE_DURATION);
             float remainingTitleAlpha = 1.0F - scatterAlpha;
             if (remainingTitleAlpha > MIN_TEXTURE_ALPHA) {
-                this.drawMaskedTitle(guiGraphics, textureTime,
-                        1.0F, 1.0F, 1.0F, remainingTitleAlpha);
+                this.drawTexturedTitle(guiGraphics, textureTime,
+                        remainingTitleAlpha, remainingTitleAlpha);
             }
             if (scatterAlpha > MIN_TEXTURE_ALPHA) {
                 this.drawPoopScatter(guiGraphics, shatterTime, scatterAlpha);
             }
         } else {
             float textureAlpha = smooth(elapsed, TEXTURE_FADE_START, TEXTURE_FADE_END);
-            if (textureAlpha > MIN_TEXTURE_ALPHA) {
-                this.drawTitleReflections(guiGraphics, elapsed, textureTime, textureAlpha);
-            }
             float titleAlpha = smooth(elapsed, TITLE_FADE_START, TITLE_FADE_END);
             if (titleAlpha > MIN_FONT_ALPHA) {
                 if (textureAlpha > MIN_TEXTURE_ALPHA) {
-                    this.drawMaskedTitle(guiGraphics, textureTime,
-                            1.0F, 1.0F, 1.0F, Math.min(titleAlpha, textureAlpha));
+                    this.drawTexturedTitle(guiGraphics, textureTime, titleAlpha, textureAlpha);
                 } else {
                     this.drawTitleGlyphs(guiGraphics, alphaColor(titleAlpha));
                 }
@@ -248,100 +234,55 @@ public class IntroScreen extends Screen {
                 this.titleLayout.yearScale(), alphaColor(alpha));
     }
 
-    private void drawMaskedTitle(GuiGraphicsExtractor guiGraphics, float textureTime,
-                                 float red, float green, float blue, float alpha) {
-        this.drawMaskedText(guiGraphics, this.title, TITLE_LEFT, TITLE_TEXT_Y,
-                this.titleLayout.scale(), textureTime, red, green, blue, alpha);
+    private void drawTexturedTitle(GuiGraphicsExtractor guiGraphics, float textureTime,
+                                   float titleAlpha, float textureAlpha) {
+        this.drawMovingTitleTexture(guiGraphics, textureTime, textureAlpha);
+        guiGraphics.nextStratum();
+        this.drawTitleGlyphs(guiGraphics, alphaColor(titleAlpha));
     }
 
-    private void drawTitleReflections(GuiGraphicsExtractor guiGraphics,
-                                      float elapsed, float textureTime, float textureAlpha) {
-        if (elapsed <= REFLECTION_START) {
-            return;
-        }
-        float reflectionTime = elapsed - REFLECTION_START;
-        this.drawReflectionPair(guiGraphics, textureTime, textureAlpha, -1.0F, reflectionTime);
-        this.drawReflectionPair(guiGraphics, textureTime, textureAlpha, 1.0F,
-                reflectionTime - REFLECTION_SECOND_DELAY);
-    }
-
-    private void drawReflectionPair(GuiGraphicsExtractor guiGraphics, float textureTime, float textureAlpha,
-                                    float direction, float reflectionTime) {
-        if (reflectionTime <= 0.0F || reflectionTime >= REFLECTION_DURATION) {
-            return;
-        }
-        float linearProgress = reflectionTime / REFLECTION_DURATION;
-        float progress = (float) Mth.smoothstep(linearProgress);
-        float horizontalOffset = direction * REFLECTION_OFFSET_X * progress;
-        float verticalOffset = REFLECTION_OFFSET_Y * progress;
-        float alpha = textureAlpha * REFLECTION_ALPHA * Mth.sin(linearProgress * Mth.PI);
-
-        guiGraphics.pose().pushMatrix();
-        guiGraphics.pose().translate(horizontalOffset, -verticalOffset);
-        this.drawMaskedTitle(guiGraphics, textureTime, 0.34F, 0.52F, 0.66F, alpha);
-        guiGraphics.pose().popMatrix();
-
-        guiGraphics.pose().pushMatrix();
-        guiGraphics.pose().translate(-horizontalOffset, verticalOffset);
-        this.drawMaskedTitle(guiGraphics, textureTime, 0.34F, 0.52F, 0.66F, alpha);
-        guiGraphics.pose().popMatrix();
-    }
-
-    private void drawMaskedText(GuiGraphicsExtractor guiGraphics, Component text,
-                                float x, float y, float scale, float textureTime,
-                                float red, float green, float blue, float alpha) {
-        AbstractTexture texture = this.minecraft.getTextureManager().getTexture(SKY_TEXTURE);
-        TextureSetup textureSetup = TextureSetup.singleTexture(texture.getTextureView(), texture.getSampler());
+    private void drawMovingTitleTexture(GuiGraphicsExtractor guiGraphics,
+                                        float textureTime, float alpha) {
         float scrollTime = textureTime - 7.0F;
         float textureOriginX = TILE_START_X + TILE_SPEED_X * scrollTime;
         float textureOriginY = TILE_START_Y + TILE_SPEED_Y * scrollTime;
-        int color = colorFromFloat(alpha, red, green, blue);
-        GlyphSource glyphSource = this.font.getGlyphSource(INTRO_FONT);
-        float cursor = 0.0F;
-        Matrix3x2f tilePose = new Matrix3x2f(guiGraphics.pose());
-
-        guiGraphics.guiRenderState.addGuiElement(new GuiQuadRenderState(
-                PoGuiRenderPipelines.INTRO_DEPTH_CLEAR, textureSetup, tilePose,
-                0.0F, 0.0F, VIRTUAL_WIDTH, VIRTUAL_HEIGHT,
-                0.0F, 0.0F, 1.0F, 1.0F, 1.0F, 0xFFFFFFFF));
-        guiGraphics.nextStratum();
-
-        guiGraphics.pose().pushMatrix();
-        guiGraphics.pose().translate(x, y);
-        guiGraphics.pose().scale(scale, scale);
-        for (int offset = 0; offset < text.getString().length(); ) {
-            int codePoint = text.getString().codePointAt(offset);
-            BakedGlyph glyph = glyphSource.getGlyph(codePoint);
-            TextRenderable renderable = glyph.createGlyph(cursor, 0.0F, color, 0, Style.EMPTY, 0.0F, 0.0F);
-            guiGraphics.guiRenderState.addGuiElement(new IntroGlyphMaskRenderState(
-                    new Matrix3x2f(guiGraphics.pose()), renderable));
-            cursor += glyph.info().getAdvance(false);
-            offset += Character.charCount(codePoint);
-        }
-        guiGraphics.pose().popMatrix();
-        guiGraphics.nextStratum();
 
         int startX = Mth.floor(Mth.positiveModulo(textureOriginX, TILE_SIZE));
         int startY = Mth.floor(Mth.positiveModulo(textureOriginY, TILE_SIZE));
-        float minX = TITLE_LEFT - REFLECTION_OFFSET_X;
-        float minY = TITLE_TEXT_Y - REFLECTION_OFFSET_Y;
-        float maxX = TITLE_RIGHT + REFLECTION_OFFSET_X;
-        float maxY = TITLE_TEXT_Y + this.titleLayout.height() + REFLECTION_OFFSET_Y;
+        float minX = TITLE_LEFT;
+        float minY = TITLE_TEXT_Y;
+        float maxX = TITLE_RIGHT;
+        float maxY = TITLE_TEXT_Y + this.titleLayout.height();
         while (startX > minX) {
             startX -= Mth.floor(TILE_SIZE);
         }
         while (startY > minY) {
             startY -= Mth.floor(TILE_SIZE);
         }
+        guiGraphics.enableScissor(
+                Mth.floor(minX),
+                Mth.floor(minY),
+                Mth.ceil(maxX),
+                Mth.ceil(maxY));
         for (float tileX = startX; tileX < maxX; tileX += TILE_SIZE) {
             for (float tileY = startY; tileY < maxY; tileY += TILE_SIZE) {
-                guiGraphics.guiRenderState.addGuiElement(new GuiQuadRenderState(
-                        PoGuiRenderPipelines.INTRO_DEPTH_TEXTURE, textureSetup, tilePose,
-                        tileX, tileY, tileX + TILE_SIZE, tileY + TILE_SIZE,
-                        0.0F, 0.0F, 1.0F, 1.0F, 0.0F, color));
+                guiGraphics.blit(
+                        RenderPipelines.GUI_TEXTURED,
+                        SKY_TEXTURE,
+                        Mth.floor(tileX),
+                        Mth.floor(tileY),
+                        0.0F,
+                        0.0F,
+                        Mth.ceil(TILE_SIZE),
+                        Mth.ceil(TILE_SIZE),
+                        256,
+                        256,
+                        256,
+                        256,
+                        alphaColor(alpha));
             }
         }
-        guiGraphics.nextStratum();
+        guiGraphics.disableScissor();
     }
 
     private void drawPoopScatter(GuiGraphicsExtractor guiGraphics, float shatterTime, float alpha) {
@@ -370,7 +311,17 @@ public class IntroScreen extends Screen {
         guiGraphics.pose().pushMatrix();
         guiGraphics.pose().translate(x, y);
         guiGraphics.pose().scale(scale, scale);
-        guiGraphics.text(this.font, text, 0, 0, color);
+        GlyphSource glyphSource = this.font.getGlyphSource(INTRO_FONT);
+        float cursor = 0.0F;
+        for (int offset = 0; offset < text.getString().length(); ) {
+            int codePoint = text.getString().codePointAt(offset);
+            BakedGlyph glyph = glyphSource.getGlyph(codePoint);
+            TextRenderable renderable = glyph.createGlyph(cursor, 0.0F, color, 0, Style.EMPTY, 0.0F, 0.0F);
+            guiGraphics.guiRenderState.addGlyphToCurrentLayer(new IntroGlyphRenderState(
+                    new Matrix3x2f(guiGraphics.pose()), renderable));
+            cursor += glyph.info().getAdvance(false);
+            offset += Character.charCount(codePoint);
+        }
         guiGraphics.pose().popMatrix();
     }
 

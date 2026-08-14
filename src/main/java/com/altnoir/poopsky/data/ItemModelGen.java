@@ -145,10 +145,16 @@ public final class ItemModelGen {
                 cases));
     }
 
-    private static void toiletPlugItem(RegistrateItemModelGenerator prov) {
-        Identifier legacyModel = prov.modLoc("item/toilet_plug");
-        emit(prov, legacyModel, ItemModelGen::legacyToiletPlugModel);
+    public static void shitItem(RegistrateItemModelGenerator prov, Item item, String name) {
+        Identifier flatModel = flatModel(prov, name, PoopSky.loc("item/" + name));
+        ItemModel.Unbaked blockModel = ItemModelUtils.plainModel(prov.modLoc("block/" + name));
+        prov.itemModelOutput.accept(item, ItemModelUtils.select(
+                new DisplayContext(),
+                ItemModelUtils.plainModel(flatModel),
+                ItemModelUtils.when(List.of(ItemDisplayContext.GROUND, ItemDisplayContext.HEAD), blockModel)));
+    }
 
+    private static void toiletPlugItem(RegistrateItemModelGenerator prov) {
         Identifier specialBase = prov.modLoc("item/toilet_plug_special");
         emit(prov, specialBase, () -> parentModel(prov.mcLoc("builtin/entity")));
         Identifier guiModel = flatModel(prov, "toilet_plug_gui", PoopSky.loc("item/toilet_plug"));
@@ -214,21 +220,6 @@ public final class ItemModelGen {
         Identifier model = prov.modLoc("item/" + name);
         ModelTemplates.FLAT_ITEM.create(model, TextureMapping.layer0(new net.minecraft.client.resources.model.sprite.Material(texture)), prov.modelOutput);
         return model;
-    }
-
-    private static JsonObject legacyToiletPlugModel() {
-        JsonObject result = new JsonObject();
-        result.addProperty("loader", "neoforge:separate_transforms");
-        result.addProperty("gui_light", "front");
-        result.add("base", parentModel(Identifier.withDefaultNamespace("builtin/entity")));
-        JsonObject perspectives = new JsonObject();
-        for (String context : List.of("fixed", "ground", "gui")) {
-            perspectives.add(context, texturedModel(
-                    Identifier.withDefaultNamespace("item/generated"),
-                    Map.of("layer0", PoopSky.loc("item/toilet_plug"))));
-        }
-        result.add("perspectives", perspectives);
-        return result;
     }
 
     private static JsonObject parentModel(Identifier parent) {

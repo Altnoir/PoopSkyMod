@@ -17,6 +17,7 @@
   "client": [
     "ClientPacketListenerMixin",
     "CreateWorldScreenWorldTabMixin",
+    "CreativeModeInventoryScreenMixin",
     "WorldCreationUiStateMixin"
   ],
   "injectors": {

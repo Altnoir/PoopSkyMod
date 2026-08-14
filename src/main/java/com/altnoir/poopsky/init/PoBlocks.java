@@ -565,15 +565,19 @@ public class PoBlocks {
     }
 
     private static BlockEntry<ShitBlock> registerShitBlock(String name) {
-        return registerBlockWithItem(name, 88,
-                props -> new ShitBlock(props
+        BlockEntry<ShitBlock> entry = REGISTRATE.block(name, properties -> createBlock(name,
+                        props -> new ShitBlock(props
                         .mapColor(MapColor.COLOR_BROWN)
                         .strength(0.1F)
                         .sound(SoundType.MUD)
-                        .pushReaction(PushReaction.DESTROY)),
-                RegistrateBlockLootTables::dropSelf,
-                (block, properties) -> new BlockItem(block, properties.equippable(EquipmentSlot.HEAD)),
-                BlockTab.BASIC_BLOCKS);
+                        .pushReaction(PushReaction.DESTROY)), properties))
+                .loot(RegistrateBlockLootTables::dropSelf)
+                .item((block, properties) -> new BlockItem(block, properties.stacksTo(88).equippable(EquipmentSlot.HEAD)))
+                .model(() -> (context, provider) -> ItemModelGen.shitItem(provider, context.get(), name))
+                .build()
+                .register();
+        TAB_ITEMS.computeIfAbsent(BlockTab.BASIC_BLOCKS, ignored -> new HashSet<>()).add(entry);
+        return entry;
     }
 
     private static BlockEntry<FlushToiletBlock> registerFlushToilet(String name, DyeColor color) {

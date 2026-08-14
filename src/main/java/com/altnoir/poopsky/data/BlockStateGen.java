@@ -824,8 +824,6 @@ public class BlockStateGen extends LegacyBlockStateGenerator {
                     .rotationY(horizontalRotation(facing))
                     .build();
         });
-
-        separateTransformsItem(block, modLoc("item/" + getItemPath(block)), modLoc("block/" + path));
     }
 
     private void blockWithItem(Block block) {

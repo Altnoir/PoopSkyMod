@@ -19,6 +19,7 @@ public final class PoSectionedCreativeModeTab extends CreativeModeTab {
     private final List<PoCreativeTabSection> sections;
     private final Consumer<ItemDisplayParameters> populator;
     private Collection<ItemStack> displayItems = List.of();
+    private List<ItemStack> layoutItems = List.of();
     private Set<ItemStack> searchItems = ItemStackLinkedSet.createTypeAndComponentsSet();
     private List<SectionLayout> sectionLayouts = List.of();
 
@@ -39,6 +40,7 @@ public final class PoSectionedCreativeModeTab extends CreativeModeTab {
         populator.accept(parameters);
 
         List<ItemStack> newDisplayItems = new ArrayList<>();
+        List<ItemStack> newLayoutItems = new ArrayList<>();
         Set<ItemStack> newSearchItems = ItemStackLinkedSet.createTypeAndComponentsSet();
         Set<ItemStack> seenDisplayItems = ItemStackLinkedSet.createTypeAndComponentsSet();
         List<SectionLayout> newLayouts = new ArrayList<>();
@@ -52,15 +54,17 @@ public final class PoSectionedCreativeModeTab extends CreativeModeTab {
                 continue;
             }
 
-            int headingRow = newDisplayItems.size() / COLUMNS;
+            int headingRow = newLayoutItems.size() / COLUMNS;
             newLayouts.add(new SectionLayout(section.title(), headingRow));
-            addEmptyRow(newDisplayItems);
+            addEmptyRow(newLayoutItems);
             newDisplayItems.addAll(enabledItems);
+            newLayoutItems.addAll(enabledItems);
             newSearchItems.addAll(enabledItems);
-            padToCompleteRow(newDisplayItems);
+            padToCompleteRow(newLayoutItems);
         }
 
         displayItems = List.copyOf(newDisplayItems);
+        layoutItems = List.copyOf(newLayoutItems);
         searchItems = newSearchItems;
         sectionLayouts = List.copyOf(newLayouts);
     }
@@ -89,8 +93,12 @@ public final class PoSectionedCreativeModeTab extends CreativeModeTab {
         return sectionLayouts;
     }
 
+    public Collection<ItemStack> layoutItems() {
+        return layoutItems;
+    }
+
     public int visibleStartRow(float scrollOffset) {
-        int hiddenRows = Math.max(Mth.positiveCeilDiv(displayItems.size(), COLUMNS) - VISIBLE_ROWS, 0);
+        int hiddenRows = Math.max(Mth.positiveCeilDiv(layoutItems.size(), COLUMNS) - VISIBLE_ROWS, 0);
         return Math.max((int) (scrollOffset * hiddenRows + 0.5F), 0);
     }
 

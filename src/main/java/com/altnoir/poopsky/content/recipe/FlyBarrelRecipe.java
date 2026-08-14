@@ -42,12 +42,17 @@ public record FlyBarrelRecipe(String flyTypeId, Output result) implements Recipe
 
     @Override
     public boolean matches(RecipeInput input, Level level) {
-        return false; // 不使用标准 RecipeInput 匹配
+        return false;
     }
 
     @Override
     public ItemStack assemble(RecipeInput input) {
         return resultStack();
+    }
+
+    @Override
+    public boolean isSpecial() {
+        return true;
     }
 
     @Override

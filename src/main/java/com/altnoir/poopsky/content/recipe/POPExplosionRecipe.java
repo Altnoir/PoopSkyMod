@@ -95,6 +95,11 @@ public record POPExplosionRecipe(Ingredient input, int radius, Output output) im
     }
 
     @Override
+    public boolean isSpecial() {
+        return true;
+    }
+
+    @Override
     public boolean showNotification() {
         return false;
     }
