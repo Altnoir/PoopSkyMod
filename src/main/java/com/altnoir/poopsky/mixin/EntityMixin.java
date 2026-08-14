@@ -9,6 +9,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
@@ -40,6 +41,7 @@ public abstract class EntityMixin {
         level.addParticle(particle, x, y, z, velocityX, velocityY, velocityZ);
     }
 
+    @Unique
     private boolean poopsky$isInUrine(Level level) {
         BlockPos pos = blockPosition();
         return level.getFluidState(pos).is(PoFluids.URINE.get())

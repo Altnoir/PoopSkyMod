@@ -9,6 +9,7 @@ import com.altnoir.poopsky.client.model.BakedModelEventHandler;
 import com.altnoir.poopsky.client.particle.LeavesParticle;
 import com.altnoir.poopsky.client.particle.PoopParticle;
 import com.altnoir.poopsky.client.particle.ToiletParticle;
+import com.altnoir.poopsky.client.renderer.PoGuiRenderPipelines;
 import com.altnoir.poopsky.client.renderer.TimeBellOverlay;
 import com.altnoir.poopsky.client.renderer.ToiletHighlightRenderer;
 import com.altnoir.poopsky.client.renderer.ToiletPlugItemRenderer;
@@ -39,6 +40,7 @@ import net.minecraft.client.renderer.item.properties.numeric.RangeSelectItemMode
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.ItemOwner;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -82,6 +84,7 @@ public class PoopSkyClient {
         modEventBus.addListener(ClientModEvents::registerSpecialModelRenderers);
         modEventBus.addListener(ClientModEvents::registerItemProperties);
         modEventBus.addListener(ClientModEvents::registerRenderTypes);
+        modEventBus.addListener(PoGuiRenderPipelines::register);
         modEventBus.addListener(ClientModEvents::registerParticleProviders);
         modEventBus.addListener(ClientModEvents::registerBlockColors);
         modEventBus.addListener(ClientModEvents::registerItemColors);
@@ -211,7 +214,7 @@ public class PoopSkyClient {
 
         @Override
         public int calculate(ItemStack stack, ClientLevel level, LivingEntity entity) {
-            return 0x3F76E4;
+            return ARGB.opaque(0x3F76E4);
         }
 
         @Override

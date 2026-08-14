@@ -13,8 +13,14 @@ public final class ClientUtil {
     private ClientUtil() {
     }
 
-    public static void renderBlock(GuiGraphicsExtractor guiGraphics, BlockState state, float x, float y, float z, float scale) {
-        guiGraphics.item(new ItemStack(state.getBlock()), Math.round(x), Math.round(y));
+    public static void renderBlock(GuiGraphicsExtractor guiGraphics, BlockState state, float centerX, float centerY, float size) {
+        float scale = size / 16.0F;
+        var pose = guiGraphics.pose();
+        pose.pushMatrix();
+        pose.translate(centerX - size / 2.0F, centerY - size / 2.0F);
+        pose.scale(scale, scale);
+        guiGraphics.item(new ItemStack(state.getBlock()), 0, 0);
+        pose.popMatrix();
     }
 
     public static boolean isPoopSkyWorldType(WorldCreationUiState uiState) {

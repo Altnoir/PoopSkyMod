@@ -81,6 +81,7 @@ public class LivingEntityMixin {
         return self.hasEffect(PoEffects.BLEEDING);
     }
 
+    @Unique
     private static boolean poopsky$isInUrine(LivingEntity entity) {
         Level level = entity.level();
         BlockPos pos = entity.blockPosition();

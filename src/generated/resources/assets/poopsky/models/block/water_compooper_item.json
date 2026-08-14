@@ -1,0 +1,7 @@
+{
+  "parent": "poopsky:block/compooper_item",
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "inside": "minecraft:block/water_still"
+  }
+}

@@ -86,7 +86,7 @@ public class CompooperRecipeCategory implements IRecipeCategory<RecipeHolder<Com
 
         this.slot.draw(guiGraphics, 3, 17);
         this.arrow.draw(guiGraphics, 28, 18);
-        ClientUtil.renderBlock(guiGraphics, state, 70, 18, 10, 20f);
+        ClientUtil.renderBlock(guiGraphics, state, 70, 26, 32);
         this.arrow.draw(guiGraphics, 90, 18);
         this.slot.draw(guiGraphics, 119, 17);
     }

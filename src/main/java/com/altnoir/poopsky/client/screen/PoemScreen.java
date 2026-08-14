@@ -6,10 +6,15 @@ import com.altnoir.poopsky.init.PoSoundEvents;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import it.unimi.dsi.fastutil.ints.IntSet;
 import net.minecraft.client.GameNarrator;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.render.TextureSetup;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.renderer.blockentity.AbstractEndPortalRenderer;
+import net.minecraft.client.renderer.texture.AbstractTexture;
+import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.Music;
@@ -24,6 +29,7 @@ import java.util.List;
 public class PoemScreen extends Screen {
     private static final Identifier TEXT_LOCATION = PoopSky.loc("texts/poopsky.txt");
     private static final Identifier TITLE_LOCATION = PoopSky.loc("textures/gui/poopsky.png");
+    private static final Identifier VIGNETTE_LOCATION = PoopSky.mcloc("textures/misc/credits_vignette.png");
     private static final int CONTENT_WIDTH = 256;
     private static final int TITLE_TEXTURE_WIDTH = 710;
     private static final int TITLE_TEXTURE_HEIGHT = 154;
@@ -56,6 +62,7 @@ public class PoemScreen extends Screen {
         if (!this.lines.isEmpty()) {
             return;
         }
+
         try (Reader reader = this.minecraft.getResourceManager().openAsReader(TEXT_LOCATION);
              BufferedReader bufferedReader = new BufferedReader(reader)) {
             String line;
@@ -79,6 +86,7 @@ public class PoemScreen extends Screen {
         if (this.playbackTicks <= SCROLL_START_TICK) {
             return;
         }
+
         this.previousScroll = this.scroll;
         this.scrollingTicks++;
         this.scroll = Math.max(0.0F, this.scroll + this.calculateScrollSpeed());
@@ -89,7 +97,9 @@ public class PoemScreen extends Screen {
 
     @Override
     public void extractRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
-        guiGraphics.fill(0, 0, this.width, this.height, 0xFF000000);
+        super.extractRenderState(guiGraphics, mouseX, mouseY, partialTick);
+        this.extractVignette(guiGraphics);
+
         float renderedScroll = Mth.lerp(partialTick, this.previousScroll, this.scroll);
         float offset = -renderedScroll;
         int contentLeft = this.width / 2 - CONTENT_WIDTH / 2;
@@ -97,12 +107,15 @@ public class PoemScreen extends Screen {
         int titleTop = (this.height - TITLE_HEIGHT) / 2;
         int lineY = this.height + 24;
         boolean scrolling = this.playbackTicks >= SCROLL_START_TICK;
+
         guiGraphics.pose().pushMatrix();
         guiGraphics.pose().translate(this.width / 2.0F, this.height / 2.0F);
         guiGraphics.pose().rotate(scrolling ? Mth.PI : this.titleRotation(partialTick));
         guiGraphics.pose().translate(-this.width / 2.0F, -this.height / 2.0F + offset);
-        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TITLE_LOCATION, titleLeft, titleTop,
-                0.0F, 0.0F, TITLE_WIDTH, TITLE_HEIGHT, TITLE_TEXTURE_WIDTH, TITLE_TEXTURE_HEIGHT);
+        guiGraphics.blit(TITLE_LOCATION,
+                titleLeft, titleTop, titleLeft + TITLE_WIDTH, titleTop + TITLE_HEIGHT,
+                0.0F, 1.0F, 0.0F, 1.0F);
+
         if (scrolling) {
             for (FormattedCharSequence line : this.lines) {
                 if (lineY + offset + 20.0F > 0.0F && lineY + offset < this.height) {
@@ -112,6 +125,21 @@ public class PoemScreen extends Screen {
             }
         }
         guiGraphics.pose().popMatrix();
+    }
+
+    @Override
+    public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
+        TextureManager textureManager = Minecraft.getInstance().getTextureManager();
+        AbstractTexture sky = textureManager.getTexture(AbstractEndPortalRenderer.END_SKY_LOCATION);
+        AbstractTexture portal = textureManager.getTexture(AbstractEndPortalRenderer.END_PORTAL_LOCATION);
+        TextureSetup textures = TextureSetup.doubleTexture(
+                sky.getTextureView(), sky.getSampler(), portal.getTextureView(), portal.getSampler());
+        guiGraphics.fill(RenderPipelines.END_PORTAL, textures, 0, 0, this.width, this.height);
+    }
+
+    private void extractVignette(GuiGraphicsExtractor guiGraphics) {
+        guiGraphics.blit(RenderPipelines.VIGNETTE, VIGNETTE_LOCATION, 0, 0,
+                0.0F, 0.0F, this.width, this.height, this.width, this.height);
     }
 
     @Override
@@ -171,6 +199,12 @@ public class PoemScreen extends Screen {
         return baseSpeed * (5.0F + this.speedupModifiers.size() * 15.0F) * this.direction;
     }
 
+    private float titleRotation(float partialTick) {
+        float progress = Mth.clamp(
+                (this.playbackTicks + partialTick - TITLE_HOLD_TICKS) / TITLE_ROTATION_TICKS, 0.0F, 1.0F);
+        return Mth.DEG_TO_RAD * (float) Mth.smoothstep(progress) * 180.0F;
+    }
+
     private float endScrollPosition() {
         if (this.lines.isEmpty()) {
             return this.height + TITLE_HEIGHT;
@@ -179,15 +213,11 @@ public class PoemScreen extends Screen {
         return lastLineY + 20.0F;
     }
 
-    private float titleRotation(float partialTick) {
-        float progress = Mth.clamp((this.playbackTicks + partialTick - TITLE_HOLD_TICKS) / TITLE_ROTATION_TICKS, 0.0F, 1.0F);
-        return (float) (Mth.DEG_TO_RAD * Mth.smoothstep(progress) * 180.0F);
-    }
-
     private void finish() {
-        if (!this.finished) {
-            this.finished = true;
-            PoAnimationController.finish(this);
+        if (this.finished) {
+            return;
         }
+        this.finished = true;
+        PoAnimationController.finish(this);
     }
 }

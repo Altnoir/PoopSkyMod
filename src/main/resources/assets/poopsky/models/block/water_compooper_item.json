@@ -1,6 +1,0 @@
-{
-	"parent": "poopsky:block/compooper_item",
-	"textures": {
-		"inside": "minecraft:block/water_still"
-	}
-}

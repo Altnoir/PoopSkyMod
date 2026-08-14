@@ -74,6 +74,7 @@ public class BlockStateGen extends LegacyBlockStateGenerator {
         existingBlockstate(PoBlocks.LAVA_COMPOOPER.get());
         existingBlockstate(PoBlocks.POWDER_SNOW_COMPOOPER.get());
         existingBlockstate(PoBlocks.URINE_COMPOOPER.get());
+        waterCompooperItemModel();
         existingBlockstate(PoBlocks.SIEVE.get());
         existingBlockstate(PoBlocks.POOP_EMPTY_LOG.get());
         existingBlockstate(PoBlocks.STRIPPED_POOP_EMPTY_LOG.get());
@@ -95,6 +96,12 @@ public class BlockStateGen extends LegacyBlockStateGenerator {
         fluidBlockWithItem(PoBlocks.URINE_LIQUID.get());
         makeCropBlock(PoBlocks.MAGGOTS.get(), "maggots_stage", "maggots_stage");
         roundwormVines();
+    }
+
+    private void waterCompooperItemModel() {
+        models().withExistingParent("water_compooper_item", modLoc("block/compooper_item"))
+                .texture("inside", mcLoc("block/water_still"))
+                .renderType("translucent");
     }
 
     private void poopWoodSet() {
