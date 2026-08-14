@@ -162,9 +162,6 @@ public class PoItems {
     public static final ItemEntry<FlyItem> FLY = registerItemNoModel("fly",
             props -> new FlyItem(props.stacksTo(88)));
 
-    public static final ItemEntry<GameDiscItem> GAME_DISC_FLAPPY_BIRD = registerItem("game_disc_flappy_bird",
-            props -> new GameDiscItem(props.rarity(Rarity.RARE),
-                    Component.translatable("gamediscs.flappy_bird").withStyle(ChatFormatting.YELLOW)));
     public static final ItemEntry<GameDiscItem> GAME_DISC_SLIME = registerItem("game_disc_slime",
             props -> new GameDiscItem(props.rarity(Rarity.RARE),
                     Component.translatable("gamediscs.slime").withStyle(ChatFormatting.DARK_GREEN)));

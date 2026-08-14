@@ -1,62 +1,62 @@
 {
   "variants": {
-    "facing=east,half=lower,game=false": {
+    "facing=east,game=false,half=lower": {
       "model": "poopsky:block/blue_arcade_bottom",
       "y": 90
     },
-    "facing=east,half=lower,game=true": {
+    "facing=east,game=false,half=upper": {
+      "model": "poopsky:block/blue_arcade_top",
+      "y": 90
+    },
+    "facing=east,game=true,half=lower": {
       "model": "poopsky:block/blue_arcade_bottom",
       "y": 90
     },
-    "facing=east,half=upper,game=false": {
+    "facing=east,game=true,half=upper": {
       "model": "poopsky:block/blue_arcade_top",
       "y": 90
     },
-    "facing=east,half=upper,game=true": {
-      "model": "poopsky:block/blue_arcade_top",
-      "y": 90
-    },
-    "facing=north,half=lower,game=false": {
+    "facing=north,game=false,half=lower": {
       "model": "poopsky:block/blue_arcade_bottom"
     },
-    "facing=north,half=lower,game=true": {
+    "facing=north,game=false,half=upper": {
+      "model": "poopsky:block/blue_arcade_top"
+    },
+    "facing=north,game=true,half=lower": {
       "model": "poopsky:block/blue_arcade_bottom"
     },
-    "facing=north,half=upper,game=false": {
+    "facing=north,game=true,half=upper": {
       "model": "poopsky:block/blue_arcade_top"
     },
-    "facing=north,half=upper,game=true": {
-      "model": "poopsky:block/blue_arcade_top"
-    },
-    "facing=south,half=lower,game=false": {
+    "facing=south,game=false,half=lower": {
       "model": "poopsky:block/blue_arcade_bottom",
       "y": 180
     },
-    "facing=south,half=lower,game=true": {
-      "model": "poopsky:block/blue_arcade_bottom",
-      "y": 180
-    },
-    "facing=south,half=upper,game=false": {
+    "facing=south,game=false,half=upper": {
       "model": "poopsky:block/blue_arcade_top",
       "y": 180
     },
-    "facing=south,half=upper,game=true": {
+    "facing=south,game=true,half=lower": {
+      "model": "poopsky:block/blue_arcade_bottom",
+      "y": 180
+    },
+    "facing=south,game=true,half=upper": {
       "model": "poopsky:block/blue_arcade_top",
       "y": 180
     },
-    "facing=west,half=lower,game=false": {
+    "facing=west,game=false,half=lower": {
       "model": "poopsky:block/blue_arcade_bottom",
       "y": 270
     },
-    "facing=west,half=lower,game=true": {
-      "model": "poopsky:block/blue_arcade_bottom",
-      "y": 270
-    },
-    "facing=west,half=upper,game=false": {
+    "facing=west,game=false,half=upper": {
       "model": "poopsky:block/blue_arcade_top",
       "y": 270
     },
-    "facing=west,half=upper,game=true": {
+    "facing=west,game=true,half=lower": {
+      "model": "poopsky:block/blue_arcade_bottom",
+      "y": 270
+    },
+    "facing=west,game=true,half=upper": {
       "model": "poopsky:block/blue_arcade_top",
       "y": 270
     }

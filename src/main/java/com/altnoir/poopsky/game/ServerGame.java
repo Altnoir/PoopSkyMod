@@ -3,7 +3,6 @@ package com.altnoir.poopsky.game;
 import com.altnoir.poopsky.content.item.p.GameDiscItem;
 import com.altnoir.poopsky.game.controls.Button;
 import com.altnoir.poopsky.game.gamediscs.ServerBlocktrisGame;
-import com.altnoir.poopsky.game.gamediscs.ServerFlappyBirdGame;
 import com.altnoir.poopsky.game.gamediscs.ServerPongGame;
 import com.altnoir.poopsky.game.gamediscs.ServerRoundwormGame;
 import com.altnoir.poopsky.game.util.Game;
@@ -85,7 +84,6 @@ public abstract class ServerGame extends Game {
         return switch (this) {
             case ServerPongGame ignored -> "PongGame";
             case ServerRoundwormGame ignored -> "SlimeGame";
-            case ServerFlappyBirdGame ignored -> "FlappyBirdGame";
             case ServerBlocktrisGame ignored -> "BlocktrisGame";
             default -> getClass().getSimpleName();
         };
@@ -93,9 +91,7 @@ public abstract class ServerGame extends Game {
 
     public static ServerGame create(GameDiscItem disc) {
         ServerGame game;
-        if (disc == PoItems.GAME_DISC_FLAPPY_BIRD.get()) {
-            game = new ServerFlappyBirdGame();
-        } else if (disc == PoItems.GAME_DISC_SLIME.get()) {
+        if (disc == PoItems.GAME_DISC_SLIME.get()) {
             game = new ServerRoundwormGame();
         } else if (disc == PoItems.GAME_DISC_BLOCKTRIS.get()) {
             game = new ServerBlocktrisGame();

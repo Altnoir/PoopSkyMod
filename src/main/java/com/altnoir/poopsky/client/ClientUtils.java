@@ -1,10 +1,12 @@
 package com.altnoir.poopsky.client;
 
-import com.altnoir.poopsky.game.client.gamediscs.*;
-import com.altnoir.poopsky.game.client.ClientGame;
 import com.altnoir.poopsky.client.screen.GamingConsoleScreen;
 import com.altnoir.poopsky.content.block.entity.ArcadeBlockEntity;
 import com.altnoir.poopsky.content.item.p.GameDiscItem;
+import com.altnoir.poopsky.game.client.ClientGame;
+import com.altnoir.poopsky.game.client.gamediscs.ClientBlocktrisGame;
+import com.altnoir.poopsky.game.client.gamediscs.ClientPongGame;
+import com.altnoir.poopsky.game.client.gamediscs.ClientRoundwormGame;
 import com.altnoir.poopsky.init.PoItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -44,7 +46,6 @@ public final class ClientUtils {
     }
 
     private static void registerGames() {
-        GAMES.put(PoItems.GAME_DISC_FLAPPY_BIRD.get(), ClientFlappyBirdGame::new);
         GAMES.put(PoItems.GAME_DISC_SLIME.get(), ClientRoundwormGame::new);
         GAMES.put(PoItems.GAME_DISC_BLOCKTRIS.get(), ClientBlocktrisGame::new);
         GAMES.put(PoItems.GAME_DISC_PONG.get(), ClientPongGame::new);

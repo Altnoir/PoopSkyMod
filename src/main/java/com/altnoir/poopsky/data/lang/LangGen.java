@@ -318,7 +318,6 @@ public final class LangGen {
         provider.add("block.poopsky.toilet_format", "%s Toilet");
         provider.add("block.poopsky.rainbow_toilet", "Rainbow Toilet");
 
-        provider.add("gamediscs.flappy_bird", "Flappy Bee");
         provider.add("gamediscs.slime", "Slime");
         provider.add("gamediscs.blocktris", "Blocktris");
         provider.add("gamediscs.pong", "Pong");

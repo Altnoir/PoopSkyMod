@@ -27,9 +27,7 @@ public final class ArcadeLootGen {
     }
 
     public static void register() {
-        REGISTRATE.addDataGenerator(
-                ProviderType.LOOT,
-                provider -> provider.addLootAction(LootContextParamSets.EMPTY, ArcadeLootGen::generate));
+        REGISTRATE.addDataGenerator(ProviderType.LOOT, provider -> provider.addLootAction(LootContextParamSets.EMPTY, ArcadeLootGen::generate));
     }
 
     public static ResourceKey<LootTable> lootTableKey(Block block) {
