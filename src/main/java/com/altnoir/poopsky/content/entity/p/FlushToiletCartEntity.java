@@ -1,8 +1,5 @@
 package com.altnoir.poopsky.content.entity.p;
 
-import java.util.List;
-import java.util.Map;
-
 import com.altnoir.poopsky.impl.network.FlushToiletCartInputPayload;
 import com.altnoir.poopsky.init.PoEffects;
 import com.altnoir.poopsky.init.PoEntityType;
@@ -17,12 +14,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityDimensions;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MoverType;
-import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.DismountHelper;
 import net.minecraft.world.entity.vehicle.VehicleEntity;
@@ -35,6 +27,9 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
+import java.util.Map;
 
 public class FlushToiletCartEntity extends VehicleEntity {
     private static final Map<Pose, List<Integer>> POSE_DISMOUNT_HEIGHTS = Map.of(
@@ -53,6 +48,8 @@ public class FlushToiletCartEntity extends VehicleEntity {
     private boolean inputLeft;
     private boolean inputRight;
     private boolean inputFast;
+    private boolean inputJump;
+    private static final float DIRECT_JUMP_SPEED = 0.42F;
 
     private float deltaRotation;
     private float currentSpeed;
@@ -75,11 +72,7 @@ public class FlushToiletCartEntity extends VehicleEntity {
 
     @Override
     public float maxUpStep() {
-        LivingEntity driver = this.getControllingPassenger();
-        if (driver != null && driver.hasEffect(PoEffects.OMENER)) {
-            return 1.0F;
-        }
-        return 0.5F;
+        return this.hasOmenDriver() ? 1.0F : 0.5F;
     }
 
     @Override
@@ -277,6 +270,9 @@ public class FlushToiletCartEntity extends VehicleEntity {
 
     @Override
     public void tick() {
+        if (this.getControllingPassenger() == null) {
+            this.inputJump = false;
+        }
         if (this.getHurtTime() > 0) {
             this.setHurtTime(this.getHurtTime() - 1);
         }
@@ -288,56 +284,70 @@ public class FlushToiletCartEntity extends VehicleEntity {
         this.tickLerp();
         this.tickWheelRotationSync();
 
-        boolean shouldProcessInput = this.isControlledByLocalInstance()
-                || (!this.level().isClientSide && this.getControllingPassenger() != null);
+        boolean shouldProcessInput = this.isControlledByLocalInstance() || (!this.level().isClientSide && this.getControllingPassenger() != null);
         if (shouldProcessInput) {
             if (this.level().isClientSide) {
                 this.updateKeyStates();
             }
             this.moveByInput();
+            this.tryDirectJump();
             Vec3 deltaMovement = this.getDeltaMovement();
             if (!this.onGround()) {
                 deltaMovement = deltaMovement.add(0, -0.08, 0);
+                deltaMovement = deltaMovement.multiply(1, 0.98, 1);
             }
-            this.setDeltaMovement(deltaMovement);
-            this.move(MoverType.SELF, this.getDeltaMovement());
-            if (this.horizontalCollision) {
-                this.currentSpeed *= 0.6F;
-            }
-            this.updateWheelRotations();
+            this.moveAndTickWheels(deltaMovement);
         } else if (!this.level().isClientSide) {
             Vec3 deltaMovement = this.getDeltaMovement().multiply(0.9, 1, 0.9).add(0, -0.08, 0);
             if (this.onGround()) {
                 deltaMovement = deltaMovement.multiply(0.9, 0, 0.9);
             }
-            this.setDeltaMovement(deltaMovement);
-            this.move(MoverType.SELF, deltaMovement);
-            if (this.horizontalCollision) {
-                this.currentSpeed *= 0.6F;
-            }
-            this.updateWheelRotations();
+            this.moveAndTickWheels(deltaMovement);
         } else {
             this.setDeltaMovement(Vec3.ZERO);
         }
         this.resetPassengerFallDistance();
     }
 
-    private void resetPassengerFallDistance() {
-        if (!this.isVehicle()) {
-            return;
+    private void moveAndTickWheels(Vec3 deltaMovement) {
+        this.setDeltaMovement(deltaMovement);
+        this.move(MoverType.SELF, deltaMovement);
+        if (this.horizontalCollision) {
+            this.currentSpeed *= 0.6F;
         }
-        this.resetFallDistance();
-        for (Entity passenger : this.getPassengers()) {
-            passenger.resetFallDistance();
+        this.updateWheelRotations();
+    }
+
+    private void tryDirectJump() {
+        if (this.inputJump) {
+            if (this.hasOmenDriver()) {
+                Vec3 movement = this.getDeltaMovement();
+                this.setDeltaMovement(movement.x, DIRECT_JUMP_SPEED, movement.z);
+                this.hasImpulse = true;
+            }
+            this.inputJump = false;
         }
     }
 
-    public void setInput(boolean forward, boolean backward, boolean left, boolean right, boolean fast) {
+    private boolean hasOmenDriver() {
+        LivingEntity driver = this.getControllingPassenger();
+        return driver != null && driver.hasEffect(PoEffects.OMENER);
+    }
+
+    private void resetPassengerFallDistance() {
+        if (this.isVehicle()) {
+            this.resetFallDistance();
+            this.getPassengers().forEach(Entity::resetFallDistance);
+        }
+    }
+
+    public void setInput(boolean forward, boolean backward, boolean left, boolean right, boolean fast, boolean jump) {
         this.inputForward = forward;
         this.inputBackward = backward;
         this.inputLeft = left;
         this.inputRight = right;
         this.inputFast = fast;
+        this.inputJump = jump;
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -348,9 +358,10 @@ public class FlushToiletCartEntity extends VehicleEntity {
         boolean left = mc.options.keyLeft.isDown();
         boolean right = mc.options.keyRight.isDown();
         boolean fast = mc.options.keySprint.isDown();
+        boolean jump = mc.options.keyJump.isDown();
 
-        this.setInput(forward, backward, left, right, fast);
-        PacketDistributor.sendToServer(new FlushToiletCartInputPayload(forward, backward, left, right, fast));
+        this.setInput(forward, backward, left, right, fast, jump);
+        PacketDistributor.sendToServer(new FlushToiletCartInputPayload(forward, backward, left, right, fast, jump));
     }
 
     private void tickLerp() {
@@ -366,7 +377,7 @@ public class FlushToiletCartEntity extends VehicleEntity {
     }
 
     private void moveByInput() {
-        if (this.getControllingPassenger() instanceof Player driver) {
+        if (this.getControllingPassenger() instanceof Player) {
             float movementFriction = this.isInWater() ? 0.3F : 0.9F;
             this.deltaRotation *= movementFriction;
 
@@ -377,21 +388,13 @@ public class FlushToiletCartEntity extends VehicleEntity {
                 this.deltaRotation++;
             }
 
-            float targetSpeed = 0.0F;
-            if (this.inputRight != this.inputLeft && !this.inputForward && !this.inputBackward) {
-                targetSpeed = 0.005F / (1.0F - movementFriction);
-            }
-            if (this.inputForward) {
-                targetSpeed = 0.04F / (1.0F - movementFriction);
-            } else if (this.inputBackward) {
-                targetSpeed = -0.04F / (1.0F - movementFriction);
-            }
+            float targetSpeed = this.getTargetSpeed(movementFriction);
 
             this.setYRot(this.getYRot() + this.deltaRotation);
             if (this.inputFast) {
                 targetSpeed *= 2.0F;
             }
-            if (driver.hasEffect(PoEffects.OMENER)) {
+            if (this.hasOmenDriver()) {
                 targetSpeed *= 2.0F;
             }
 
@@ -402,26 +405,40 @@ public class FlushToiletCartEntity extends VehicleEntity {
                 this.currentSpeed += (targetSpeed - this.currentSpeed) * 0.08F;
             }
 
-            float yawRad = (float) Math.toRadians(-this.getYRot());
-            Vec3 forward = new Vec3(Math.sin(yawRad), 0, Math.cos(yawRad));
+            Vec3 forward = this.getForwardVector();
             this.setDeltaMovement(new Vec3(forward.x * this.currentSpeed, this.getDeltaMovement().y, forward.z * this.currentSpeed));
         } else {
             this.setDeltaMovement(this.getDeltaMovement().multiply(0.9, 1, 0.9));
         }
     }
 
-    private void updateWheelRotations() {
+    private float getTargetSpeed(float movementFriction) {
+        if (this.inputForward) {
+            return 0.04F / (1.0F - movementFriction);
+        }
+        if (this.inputBackward) {
+            return -0.04F / (1.0F - movementFriction);
+        }
+        if (this.inputRight != this.inputLeft) {
+            return 0.005F / (1.0F - movementFriction);
+        }
+        return 0.0F;
+    }
+
+    private Vec3 getForwardVector() {
         float yawRad = (float) Math.toRadians(-this.getYRot());
-        Vec3 forward = new Vec3(Math.sin(yawRad), 0, Math.cos(yawRad));
-        float forwardSpeed = (float) this.getDeltaMovement().dot(forward);
+        return new Vec3(Math.sin(yawRad), 0, Math.cos(yawRad));
+    }
+
+    private void updateWheelRotations() {
+        float forwardSpeed = (float) this.getDeltaMovement().dot(this.getForwardVector());
         float turnDelta = this.getYRot() - this.yRotO;
 
         float wheelScale = 180.0F / (float) Math.PI / 0.5F;
         float leftWheelSpeed = forwardSpeed * wheelScale + turnDelta * 2.0F;
         float rightWheelSpeed = forwardSpeed * wheelScale - turnDelta * 2.0F;
 
-        this.wheelLeftRotationO = this.wheelLeftRotation;
-        this.wheelRightRotationO = this.wheelRightRotation;
+        this.storeWheelRotationPrevious();
         this.wheelLeftRotation += leftWheelSpeed;
         this.wheelRightRotation += rightWheelSpeed;
         this.entityData.set(WHEEL_LEFT_ROTATION, this.wheelLeftRotation);
@@ -429,10 +446,14 @@ public class FlushToiletCartEntity extends VehicleEntity {
     }
 
     private void tickWheelRotationSync() {
-        this.wheelLeftRotationO = this.wheelLeftRotation;
-        this.wheelRightRotationO = this.wheelRightRotation;
+        this.storeWheelRotationPrevious();
         this.wheelLeftRotation = this.entityData.get(WHEEL_LEFT_ROTATION);
         this.wheelRightRotation = this.entityData.get(WHEEL_RIGHT_ROTATION);
+    }
+
+    private void storeWheelRotationPrevious() {
+        this.wheelLeftRotationO = this.wheelLeftRotation;
+        this.wheelRightRotationO = this.wheelRightRotation;
     }
 
     public float getWheelLeftRotation(float partialTick) {

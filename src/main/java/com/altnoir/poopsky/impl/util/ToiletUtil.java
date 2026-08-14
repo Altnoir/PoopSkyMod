@@ -179,20 +179,22 @@ public class ToiletUtil {
         playPoopEffects(level, livingEntity.getX(), livingEntity.getY() + yOffset, livingEntity.getZ(), level.random.nextFloat() + pitchOffset);
     }
 
-    public static void containerPoop(Level level, BlockPos pos, LivingEntity entity, boolean hasSpasm, boolean isGolden, long lastPoopTime, LongConsumer poopTimeSetter) {
+    public static boolean containerPoop(Level level, BlockPos pos, LivingEntity entity, boolean hasSpasm, boolean isGolden, long lastPoopTime, LongConsumer poopTimeSetter) {
         boolean hasIncontinence = entity.hasEffect(PoEffects.FECAL_INCONTINENCE);
         long gameTime = level.getGameTime();
 
         if (!hasIncontinence) {
-            if (lastPoopTime != 0 && gameTime - lastPoopTime < 20) return;
+            if (lastPoopTime != 0 && gameTime - lastPoopTime < 20) return true;
         }
 
         if (entity instanceof Player player) {
             if (player.getFoodData().getFoodLevel() <= 0) {
                 player.hurt(level.damageSources().wither(), 1.0F);
-                insertOrReplaceContainer(level, pos, Items.REDSTONE.getDefaultInstance());
+                if (!insertOrReplaceContainer(level, pos, Items.REDSTONE.getDefaultInstance())) {
+                    return false;
+                }
                 poopTimeSetter.accept(gameTime);
-                return;
+                return true;
             }
         }
 
@@ -208,7 +210,7 @@ public class ToiletUtil {
             if (!hasIncontinence) {
                 poopTimeSetter.accept(gameTime);
             }
-            return;
+            return false;
         }
 
         if (entity instanceof Player player) {
@@ -219,6 +221,23 @@ public class ToiletUtil {
 
         float yOffset = entity instanceof Player ? 0.55F : 0.05F;
         playPoopEffects(level, entity.getX(), entity.getY() + yOffset, entity.getZ(), level.random.nextFloat() + 0.5F);
+        return true;
+    }
+
+    public static void triggerFountain(ServerLevel level, BlockPos pos) {
+        double x = pos.getX() + 0.5;
+        double y = pos.getY() + 1.0;
+        double z = pos.getZ() + 0.5;
+        float pitch = level.random.nextFloat() - 0.4F;
+        level.sendParticles(PoParticles.TOILET_PARTICLE.get(), x, y - 0.5, z, 100, 0.05, 0.05, 0.05, 0.5);
+        level.playSound(null, x, y, z, PoSoundEvents.FART, SoundSource.BLOCKS, 1.0F, pitch);
+
+        AABB area = new AABB(pos.getX(), y, pos.getZ(), pos.getX() + 1, y + 2, pos.getZ() + 1);
+        for (Entity entity : level.getEntitiesOfClass(Entity.class, area)) {
+            entity.setDeltaMovement(entity.getDeltaMovement().add(0.0, 1.6, 0.0));
+            entity.hurtMarked = true;
+            entity.hasImpulse = true;
+        }
     }
 
     public static boolean insertOrReplaceContainer(Level level, BlockPos pos, ItemStack stack) {

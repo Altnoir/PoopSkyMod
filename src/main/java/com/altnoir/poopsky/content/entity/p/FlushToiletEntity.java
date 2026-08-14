@@ -6,6 +6,7 @@ import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoEffects;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -44,8 +45,11 @@ public class FlushToiletEntity extends Entity {
             return;
         }
 
-        if (this.getPassengers().isEmpty() || state.getValue(FlushToiletBlock.CLOSED)) {
+        if (this.getPassengers().isEmpty()) {
             this.kill();
+            return;
+        }
+        if (state.getValue(FlushToiletBlock.CLOSED)) {
             return;
         }
 
@@ -55,7 +59,11 @@ public class FlushToiletEntity extends Entity {
 
             boolean hasSpasm = livingEntity.hasEffect(PoEffects.INTESTINAL_SPASM);
             boolean isGolden = state.is(PoBlocks.GOLDEN_FLUSH_TOILET.get());
-            ToiletUtil.containerPoop(level(), blockPosition(), livingEntity, hasSpasm, isGolden, poopTime, time -> this.poopTime = time);
+            boolean inserted = ToiletUtil.containerPoop(level(), blockPosition(), livingEntity, hasSpasm, isGolden, poopTime, time -> this.poopTime = time);
+
+            if (!inserted && livingEntity instanceof Player player && level() instanceof ServerLevel serverLevel) {
+                FlushToiletBlock.ejectFullToiletPlayer(serverLevel, blockPosition(), player);
+            }
         }
     }
 
@@ -80,7 +88,7 @@ public class FlushToiletEntity extends Entity {
     protected void positionRider(Entity passenger, MoveFunction callback) {
         super.positionRider(passenger, callback);
         if (passenger instanceof Player) {
-            callback.accept(passenger, this.getX(), this.getY() - 0.15, this.getZ());
+            callback.accept(passenger, this.getX(), this.getY() - 0.1, this.getZ());
         } else {
             callback.accept(passenger, this.getX(), this.getY() + 0.4, this.getZ());
         }

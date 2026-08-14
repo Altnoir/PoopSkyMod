@@ -7,8 +7,10 @@ import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoParticles;
 import com.altnoir.poopsky.init.PoRecipes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
@@ -23,6 +25,10 @@ import org.jetbrains.annotations.Nullable;
 
 public class PoopTntUtil {
     public static void triggerExplosion(Entity entity, int radius) {
+        triggerExplosion(entity, radius, null);
+    }
+
+    public static void triggerExplosion(Entity entity, int radius, @Nullable ServerPlayer hiddenPlayer) {
         if (!(entity.level() instanceof ServerLevel level)) return;
 
         BlockPos center = entity.blockPosition();
@@ -56,7 +62,7 @@ public class PoopTntUtil {
             }
         }
 
-        spawnPoopParticle(level, entity.getX(), entity.getY(), entity.getZ(), radius);
+        spawnPoopParticle(level, entity.getX(), entity.getY(), entity.getZ(), radius, hiddenPlayer);
     }
 
     private static boolean shouldSkipEdgeBlock(RandomSource random, double distSq, double innerRadiusSq, double radiusSq) {
@@ -124,15 +130,42 @@ public class PoopTntUtil {
         return null;
     }
 
-    private static void spawnPoopParticle(ServerLevel level, double x, double y, double z, int radius) {
+    private static void spawnPoopParticle(
+            ServerLevel level,
+            double x,
+            double y,
+            double z,
+            int radius,
+            @Nullable ServerPlayer hiddenPlayer
+    ) {
         int particleCount = radius * 30;
         double offset = radius * 0.5;
         double speed = 0.4 + level.random.nextDouble() * 0.4;
         level.sendParticles(PoParticles.POOP_PARTICLE.get(), x, y, z, particleCount, offset, offset, offset, speed);
-        if (radius <= 2) {
-            level.sendParticles(ParticleTypes.EXPLOSION, x, y, z, radius, offset, offset, offset, speed);
+
+        ParticleOptions explosionParticle = radius <= 2
+                ? ParticleTypes.EXPLOSION
+                : ParticleTypes.EXPLOSION_EMITTER;
+        if (hiddenPlayer == null) {
+            level.sendParticles(explosionParticle, x, y, z, radius, offset, offset, offset, speed);
         } else {
-            level.sendParticles(ParticleTypes.EXPLOSION_EMITTER, x, y, z, radius, offset, offset, offset, speed);
+            for (ServerPlayer player : level.players()) {
+                if (player != hiddenPlayer) {
+                    level.sendParticles(
+                            player,
+                            explosionParticle,
+                            false,
+                            x,
+                            y,
+                            z,
+                            radius,
+                            offset,
+                            offset,
+                            offset,
+                            speed
+                    );
+                }
+            }
         }
     }
 }

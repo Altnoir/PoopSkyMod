@@ -16,12 +16,12 @@ public final class ClientGameRenderer {
         }
 
         clientGame.applySnapshot(snapshot);
-        if (clientGame instanceof ClientRoundwormGame slime) {
-            slime.applySnapshot(snapshot);
-        } else if (clientGame instanceof ClientPongGame pong) {
-            pong.applySnapshot(snapshot);
-        } else if (clientGame instanceof ClientBlocktrisGame blocktris) {
-            blocktris.applySnapshot(snapshot);
+        switch (clientGame) {
+            case ClientRoundwormGame slime -> slime.applySnapshot(snapshot);
+            case ClientPongGame pong -> pong.applySnapshot(snapshot);
+            case ClientBlocktrisGame blocktris -> blocktris.applySnapshot(snapshot);
+            default -> {
+            }
         }
     }
 }

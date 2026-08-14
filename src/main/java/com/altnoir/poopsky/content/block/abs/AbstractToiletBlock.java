@@ -6,7 +6,10 @@ import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.impl.util.ToiletUtil;
-import com.altnoir.poopsky.init.*;
+import com.altnoir.poopsky.init.PoBlockEntityType;
+import com.altnoir.poopsky.init.PoEffects;
+import com.altnoir.poopsky.init.PoItems;
+import com.altnoir.poopsky.init.ToiletTypes;
 import com.altnoir.poopsky.worldgen.PoConfigureFeatures;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -47,7 +50,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -65,7 +67,6 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     private static final int EXPLOSION_POOP_COUNT = 88;
     private static final int ANVIL_POOP_COUNT = 8;
     private static final double TOILET_USE_Y = 1.5;
-    private static final float MIN_TELEPORT_FALL_DISTANCE = 1.0F;
 
     private static final VoxelShape NORTH_SOUTH_BASE_SHAPE = Shapes.or(
             Block.box(0.0, 0.0, 0.0, 5.0, 16.0, 16.0),
@@ -287,27 +288,13 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
 
     @Override
     protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (level.getBlockState(pos.below()).is(Blocks.MAGMA_BLOCK)) {
-            double x = pos.getX() + 0.5;
-            double y = pos.getY() + 1.0;
-            double z = pos.getZ() + 0.5;
-            var pitch = level.random.nextFloat() - 0.4F;
-            level.sendParticles(PoParticles.TOILET_PARTICLE.get(), x, y - 0.5, z, 100, 0.05, 0.05, 0.05, 0.5);
-            level.playSound(null, x, y, z, PoSoundEvents.FART, SoundSource.BLOCKS, 1.0F, pitch);
-
-            AABB area = new AABB(pos.getX(), y, pos.getZ(), pos.getX() + 1, y + 2, pos.getZ() + 1);
-            for (Entity entity : level.getEntitiesOfClass(Entity.class, area)) {
-                entity.setDeltaMovement(entity.getDeltaMovement().add(0.0, 1.6, 0.0));
-                entity.hurtMarked = true;
-                entity.hasImpulse = true;
-            }
-        }
-
         if (state.getBlock() instanceof BaseToiletLavaBlock && state.getValue(BaseToiletLavaBlock.LAVA)) {
             return;
         }
-
-        if (level.getBlockState(pos.below()).is(PoTags.Blocks.POOP_BLOCKS)) {
+        var below = level.getBlockState(pos.below());
+        if (below.is(Blocks.MAGMA_BLOCK)) {
+            ToiletUtil.triggerFountain(level, pos);
+        } else if (below.is(PoTags.Blocks.POOP_BLOCKS)) {
             level.registryAccess()
                     .registry(Registries.CONFIGURED_FEATURE)
                     .flatMap(holder -> holder.getHolder(PoConfigureFeatures.SALTPETER_PATCH))

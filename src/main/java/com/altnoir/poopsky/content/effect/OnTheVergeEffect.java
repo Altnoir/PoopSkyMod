@@ -4,6 +4,8 @@ import com.altnoir.poopsky.impl.util.PoopTntUtil;
 import com.altnoir.poopsky.init.PoEffects;
 import com.altnoir.poopsky.init.PoRecipes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
@@ -28,7 +30,7 @@ public class OnTheVergeEffect extends MobEffect {
 
         if (!level.isClientSide) {
             int duration = Objects.requireNonNull(livingEntity.getEffect(PoEffects.ON_THE_VERGE)).getDuration();
-            Vec3 vec3 = livingEntity.getDeltaMovement().add(new Vec3(0, 0.125, 0));
+            Vec3 vec3 = livingEntity.getDeltaMovement().add(new Vec3(0, 1.6, 0));
             boolean openTheDoor = false;
 
             if (livingEntity instanceof Player player) {
@@ -57,15 +59,21 @@ public class OnTheVergeEffect extends MobEffect {
                     result = true;
                 }
             }
-            if (amplifier >= 1 && duration > 200) {
+            if (amplifier >= 1 && duration > 200 && livingEntity.tickCount % 20 == 0) {
                 openTheDoor = true;
-                result = true;
             }
 
             if (openTheDoor) {
                 livingEntity.setDeltaMovement(vec3);
+                ServerPlayer hiddenPlayer = null;
+                if (livingEntity instanceof ServerPlayer serverPlayer) {
+                    serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(serverPlayer));
+                    hiddenPlayer = serverPlayer;
+                } else {
+                    livingEntity.hasImpulse = true;
+                }
                 int radius = Math.min(18, amplifier + 2);
-                PoopTntUtil.triggerExplosion(livingEntity, radius);
+                PoopTntUtil.triggerExplosion(livingEntity, radius, hiddenPlayer);
             }
         }
 
@@ -77,7 +85,6 @@ public class OnTheVergeEffect extends MobEffect {
         }
         return true;
     }
-
 
     @Override
     public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {

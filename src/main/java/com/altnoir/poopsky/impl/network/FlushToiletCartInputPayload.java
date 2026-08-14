@@ -13,7 +13,8 @@ public record FlushToiletCartInputPayload(
         boolean backward,
         boolean left,
         boolean right,
-        boolean fast
+        boolean fast,
+        boolean jump
 ) implements CustomPacketPayload {
     public static final CustomPacketPayload.Type<FlushToiletCartInputPayload> TYPE = new CustomPacketPayload.Type<>(
             PoopSky.loc("flush_toilet_cart_input")
@@ -31,7 +32,8 @@ public record FlushToiletCartInputPayload(
                         payload.backward(),
                         payload.left(),
                         payload.right(),
-                        payload.fast()
+                        payload.fast(),
+                        payload.jump()
                 );
             }
         });
@@ -43,10 +45,12 @@ public record FlushToiletCartInputPayload(
         buf.writeBoolean(payload.left());
         buf.writeBoolean(payload.right());
         buf.writeBoolean(payload.fast());
+        buf.writeBoolean(payload.jump());
     }
 
     private static FlushToiletCartInputPayload decode(FriendlyByteBuf buf) {
         return new FlushToiletCartInputPayload(
+                buf.readBoolean(),
                 buf.readBoolean(),
                 buf.readBoolean(),
                 buf.readBoolean(),

@@ -3,12 +3,12 @@ package com.altnoir.poopsky.content.entity.p;
 import com.altnoir.poopsky.client.sound.FlyBuzzSoundWrapper;
 import com.altnoir.poopsky.content.block.p.ShitBlock;
 import com.altnoir.poopsky.content.item.p.FlyItem;
-import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.impl.type.damageType.PoDamageTypes;
 import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoEntityType;
 import com.altnoir.poopsky.init.PoItems;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -25,8 +25,10 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
+import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
+import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
@@ -72,6 +74,11 @@ public class FlyEntity extends Animal implements FlyingAnimal {
         }
     }
 
+    @Override
+    public float maxUpStep() {
+        return this.isBaby() ? 0.5F : super.maxUpStep();
+    }
+
     @OnlyIn(Dist.CLIENT)
     private void initClient() {
         buzzSound = new FlyBuzzSoundWrapper(this);
@@ -86,14 +93,17 @@ public class FlyEntity extends Animal implements FlyingAnimal {
         this.goalSelector.addGoal(3, new AttractedByShitGoal(this, 1.25));
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, itemStack -> itemStack.is(PoTags.Items.FLY_LIKE), false));
         this.goalSelector.addGoal(4, new FlyToToiletGoal(this, 1.1)); // 主动寻找厕所
-        this.goalSelector.addGoal(5, new FollowParentGoal(this, 1.25)); // 跟随父母
-        this.goalSelector.addGoal(6, new WaterAvoidingRandomFlyingGoal(this, 1.0)); // 随机飞行，避开水面
-        this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0F)); // 看向附近的玩家
-        this.goalSelector.addGoal(8, new RandomLookAroundGoal(this)); // 随机环顾四周
+        this.goalSelector.addGoal(5, new WaterAvoidingRandomFlyingGoal(this, 1.0)); // 随机飞行，避开水面
+        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F)); // 看向附近的玩家
+        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this)); // 随机环顾四周
     }
 
     @Override
     protected PathNavigation createNavigation(Level level) {
+        return this.createFlyingNavigation(level);
+    }
+
+    private FlyingPathNavigation createFlyingNavigation(Level level) {
         FlyingPathNavigation flyingPathNavigation = new FlyingPathNavigation(this, level);
         flyingPathNavigation.setCanOpenDoors(false);
         flyingPathNavigation.setCanFloat(true);
@@ -103,16 +113,21 @@ public class FlyEntity extends Animal implements FlyingAnimal {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 10.0)
+                .add(Attributes.MAX_HEALTH, 4.0)
                 .add(Attributes.FLYING_SPEED, 0.6F)
-                .add(Attributes.MOVEMENT_SPEED, 0.3F);
+                .add(Attributes.MOVEMENT_SPEED, 0.1F);
     }
 
     @Override
     public void aiStep() {
+        this.refreshMovementMode();
         super.aiStep();
         if (this.level().isClientSide && buzzSound != null) {
-            buzzSound.tick();
+            if (this.isBaby()) {
+                buzzSound.stop();
+            } else {
+                buzzSound.tick();
+            }
         }
         this.oFlap = this.flap;
         this.oFlapSpeed = this.flapSpeed;
@@ -130,7 +145,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
 
         // 减缓下落速度
         Vec3 vec3 = this.getDeltaMovement();
-        if (!this.onGround() && vec3.y < 0.0) {
+        if (!this.isBaby() && !this.onGround() && vec3.y < 0.0) {
             this.setDeltaMovement(vec3.x, vec3.y * 0.6, vec3.z);
         }
         this.flap = this.flap + this.flapping * 2.0F;
@@ -146,12 +161,45 @@ public class FlyEntity extends Animal implements FlyingAnimal {
 
     @Override
     public boolean isFlapping() {
-        return this.isFlying() && this.tickCount % TICKS_PER_FLAP == 0;
+        return !this.isBaby() && this.isFlying() && this.tickCount % TICKS_PER_FLAP == 0;
     }
 
     @Override
     public boolean isFlying() {
-        return !this.onGround();
+        return !this.isBaby() && !this.onGround();
+    }
+
+    private void refreshMovementMode() {
+        var jumpStrength = this.getAttribute(Attributes.JUMP_STRENGTH);
+        if (jumpStrength != null) {
+            jumpStrength.setBaseValue(this.isBaby() ? 0.0 : 0.42);
+        }
+        if (this.isBaby()) {
+            if (this.moveControl instanceof FlyingMoveControl) {
+                this.moveControl = new BabyGroundMoveControl(this);
+                this.navigation = new GroundPathNavigation(this, this.level());
+                this.setNoGravity(false);
+            }
+        } else if (!(this.moveControl instanceof FlyingMoveControl)) {
+            this.moveControl = new FlyingMoveControl(this, 10, false);
+            this.navigation = this.createFlyingNavigation(this.level());
+        }
+    }
+
+    private static class BabyGroundMoveControl extends MoveControl {
+        private BabyGroundMoveControl(FlyEntity fly) {
+            super(fly);
+        }
+
+        @Override
+        public void tick() {
+            if (this.operation == MoveControl.Operation.MOVE_TO && this.wantedY - this.mob.getY() > 0.5F) {
+                this.mob.getNavigation().stop();
+                this.operation = MoveControl.Operation.WAIT;
+                return;
+            }
+            super.tick();
+        }
     }
 
     @Override

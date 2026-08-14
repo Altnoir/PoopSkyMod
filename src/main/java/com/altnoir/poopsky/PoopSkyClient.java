@@ -4,7 +4,6 @@ import com.altnoir.poopsky.client.IntroController;
 import com.altnoir.poopsky.client.PoAnimationController;
 import com.altnoir.poopsky.client.PoBedrockModelResources;
 import com.altnoir.poopsky.client.ToiletClientBlockExtensions;
-import com.altnoir.poopsky.game.client.arcade.ArcadeWorldScreenRenderer;
 import com.altnoir.poopsky.client.creative.PoSectionedCreativeTabRenderer;
 import com.altnoir.poopsky.client.model.BakedModelEventHandler;
 import com.altnoir.poopsky.client.particle.LeavesParticle;
@@ -21,6 +20,7 @@ import com.altnoir.poopsky.content.entity.model.ToiletPlugModel;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.content.entity.renderer.GinkgoBoatRenderer;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
+import com.altnoir.poopsky.game.client.arcade.ArcadeWorldScreenRenderer;
 import com.altnoir.poopsky.impl.event.PSKeyBoardInput;
 import com.altnoir.poopsky.impl.network.PlugActionPayload;
 import com.altnoir.poopsky.impl.network.PlugDismountPayload;
@@ -110,7 +110,8 @@ public class PoopSkyClient {
 
         public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
             event.registerLayerDefinition(ToiletPlugModel.LAYER_LOCATION, ToiletPlugModel::createBodyLayer);
-            event.registerLayerDefinition(FlyModel.LAYER_LOCATION, FlyModel::createBodyLayer);
+            event.registerLayerDefinition(FlyModel.LAYER_LOCATION, FlyModel::createFlyBodyLayer);
+            event.registerLayerDefinition(FlyModel.MAGGOT_LAYER_LOCATION, FlyModel::createMaggotBodyLayer);
             event.registerLayerDefinition(GinkgoBoatRenderer.BOAT_LAYER, BoatModel::createBodyModel);
             event.registerLayerDefinition(GinkgoBoatRenderer.CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel);
         }
@@ -219,7 +220,7 @@ public class PoopSkyClient {
         }
     }
 
-    public class ClientGameEvents {
+    public static class ClientGameEvents {
         public static Holder<WorldPreset> originalDefaultWorldPreset;
 
         public static void onScreenOpen(ScreenEvent.Opening event) {

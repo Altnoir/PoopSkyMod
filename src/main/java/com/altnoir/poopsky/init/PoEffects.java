@@ -1,11 +1,7 @@
 package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.content.effect.FecalIncontinenceEffect;
-import com.altnoir.poopsky.content.effect.InfestationEffect;
-import com.altnoir.poopsky.content.effect.MomentOfPtymeEffect;
-import com.altnoir.poopsky.content.effect.OnTheVergeEffect;
-import com.altnoir.poopsky.content.effect.PMobEffect;
+import com.altnoir.poopsky.content.effect.*;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
@@ -61,7 +57,7 @@ public class PoEffects {
     );
     public static final RegistryEntry<MobEffect, MobEffect> INFESTATION = registerMobEffect(
             "infestation",
-            () -> new InfestationEffect(MobEffectCategory.HARMFUL, 0x6B4F2A)
+            () -> new InfestationEffect(MobEffectCategory.HARMFUL, 0xF7DFBA)
     );
 
     private static RegistryEntry<MobEffect, MobEffect> registerMobEffect(String name, NonNullSupplier<MobEffect> effect) {

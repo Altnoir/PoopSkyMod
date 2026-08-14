@@ -110,13 +110,14 @@ public class FlushToiletBlock extends BaseEntityBlock {
         if (player.getMainHandItem().is(PoItems.TOILET_PLUG_WAND.get())) {
             return InteractionResult.PASS;
         }
-        if (state.getValue(CLOSED) && !isInLidArea(state, pos, hitResult)) {
-            return InteractionResult.PASS;
-        }
 
         if (!level.isClientSide) {
             if (state.getValue(CLOSED)) {
-                toggleClosed(level, pos, state);
+                if (isInLidArea(state, pos, hitResult)) {
+                    toggleClosed(level, pos, state);
+                } else {
+                    sitOnToilet((ServerLevel) level, pos, state, player);
+                }
             } else if (isInLidArea(state, pos, hitResult)) {
                 toggleClosed(level, pos, state);
             } else if (player.isShiftKeyDown()) {
@@ -124,13 +125,17 @@ public class FlushToiletBlock extends BaseEntityBlock {
             } else if (!level.getEntities(PoEntityType.FLUSH_TOILET.get(), new AABB(pos), e -> !e.getPassengers().isEmpty()).isEmpty()) {
                 openMenu(level, pos, player);
             } else {
-                FlushToiletEntity entity = getOrCreateFlushToiletEntity((ServerLevel) level, pos, state);
-                if (entity != null) {
-                    player.startRiding(entity);
-                }
+                sitOnToilet((ServerLevel) level, pos, state, player);
             }
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    private static void sitOnToilet(ServerLevel level, BlockPos pos, BlockState state, Player player) {
+        FlushToiletEntity entity = getOrCreateFlushToiletEntity(level, pos, state);
+        if (entity != null) {
+            player.startRiding(entity);
+        }
     }
 
     private void toggleClosed(Level level, BlockPos pos, BlockState state) {
@@ -145,6 +150,11 @@ public class FlushToiletBlock extends BaseEntityBlock {
         if (level.getBlockEntity(pos) instanceof FlushToiletBlockEntity be) {
             player.openMenu(be);
         }
+    }
+
+    public static void ejectFullToiletPlayer(ServerLevel level, BlockPos pos, Player player) {
+        player.stopRiding();
+        ToiletUtil.triggerFountain(level, pos);
     }
 
     private static boolean isInLidArea(BlockState state, BlockPos pos, BlockHitResult hitResult) {
@@ -220,6 +230,7 @@ public class FlushToiletBlock extends BaseEntityBlock {
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         if (!state.is(newState.getBlock())) {
             if (level.getBlockEntity(pos) instanceof FlushToiletBlockEntity be) {
+                be.clearLinkedBlock();
                 Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), be.getItemHandler().getStackInSlot(0));
             }
         }
