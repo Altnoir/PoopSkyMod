@@ -311,6 +311,7 @@ public final class LangGen {
         provider.add("effect.poopsky.seedbed_curse", "Seedbed Curse");
         provider.add("effect.poopsky.bleeding", "Bleeding");
         provider.add("effect.poopsky.moment_of_ptyme", "Moment of Ptyme");
+        provider.add("effect.poopsky.infestation", "Infestation");
 
         // Blocks
         provider.add("block.poopsky.urine", "Urine");

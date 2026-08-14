@@ -688,5 +688,18 @@
   "poopsky.configuration.endAnimation": "화장실 엔드 포엠",
   "poopsky.configuration.endAnimation.tooltip": "처음으로 엔드 화장실을 통과하기 전에 화장실 엔드 포엠을 재생합니다",
   "poopsky.configuration.introText": "인트로 텍스트",
-  "poopsky.configuration.introYear": "인트로 연도"
+  "poopsky.configuration.introYear": "인트로 연도",
+  "effect.poopsky.infestation": "감염",
+  "item.minecraft.potion.effect.infestation_potion": "감염의 물약",
+  "item.minecraft.splash_potion.effect.infestation_potion": "투척용 감염의 물약",
+  "item.minecraft.lingering_potion.effect.infestation_potion": "잔류형 감염의 물약",
+  "item.minecraft.potion.effect.long_infestation_potion": "감염의 물약",
+  "item.minecraft.splash_potion.effect.long_infestation_potion": "투척용 감염의 물약",
+  "item.minecraft.lingering_potion.effect.long_infestation_potion": "잔류형 감염의 물약",
+  "item.minecraft.potion.effect.strong_infestation_potion": "감염의 물약",
+  "item.minecraft.splash_potion.effect.strong_infestation_potion": "투척용 감염의 물약",
+  "item.minecraft.lingering_potion.effect.strong_infestation_potion": "잔류형 감염의 물약",
+  "item.minecraft.tipped_arrow.effect.infestation_potion": "감염의 화살",
+  "item.minecraft.tipped_arrow.effect.long_infestation_potion": "감염의 화살",
+  "item.minecraft.tipped_arrow.effect.strong_infestation_potion": "감염의 화살"
 }

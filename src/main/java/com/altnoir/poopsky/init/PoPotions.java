@@ -49,6 +49,19 @@ public class PoPotions {
             () -> new Potion(new MobEffectInstance(PoEffects.ON_THE_VERGE, 1800, 1))
     );
 
+    public static final RegistryEntry<Potion, Potion> INFESTATION_POTION = registerPotion(
+            "infestation_potion",
+            () -> new Potion(new MobEffectInstance(PoEffects.INFESTATION, 3600, 0))
+    );
+    public static final RegistryEntry<Potion, Potion> LONG_INFESTATION_POTION = registerPotion(
+            "long_infestation_potion",
+            () -> new Potion(new MobEffectInstance(PoEffects.INFESTATION, 9600, 0))
+    );
+    public static final RegistryEntry<Potion, Potion> STRONG_INFESTATION_POTION = registerPotion(
+            "strong_infestation_potion",
+            () -> new Potion(new MobEffectInstance(PoEffects.INFESTATION, 1800, 1))
+    );
+
     private static RegistryEntry<Potion, Potion> registerPotion(String name, NonNullSupplier<Potion> potion) {
         RegistryEntry<Potion, Potion> entry = REGISTRATE.simple(name, Registries.POTION, potion);
         ALL.add(entry);

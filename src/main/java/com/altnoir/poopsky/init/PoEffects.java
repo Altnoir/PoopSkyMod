@@ -2,6 +2,7 @@ package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.effect.FecalIncontinenceEffect;
+import com.altnoir.poopsky.content.effect.InfestationEffect;
 import com.altnoir.poopsky.content.effect.MomentOfPtymeEffect;
 import com.altnoir.poopsky.content.effect.OnTheVergeEffect;
 import com.altnoir.poopsky.content.effect.PMobEffect;
@@ -57,6 +58,10 @@ public class PoEffects {
     public static final RegistryEntry<MobEffect, MobEffect> MOMENT_OF_PTYME = registerMobEffect(
             "moment_of_ptyme",
             () -> new MomentOfPtymeEffect(MobEffectCategory.NEUTRAL, 0xFFD700)
+    );
+    public static final RegistryEntry<MobEffect, MobEffect> INFESTATION = registerMobEffect(
+            "infestation",
+            () -> new InfestationEffect(MobEffectCategory.HARMFUL, 0x6B4F2A)
     );
 
     private static RegistryEntry<MobEffect, MobEffect> registerMobEffect(String name, NonNullSupplier<MobEffect> effect) {

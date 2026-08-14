@@ -703,5 +703,18 @@
   "poopsky.configuration.endAnimation": "止厕之殇",
   "poopsky.configuration.endAnimation.tooltip": "首次通过末地厕所时是否播放止厕之殇",
   "poopsky.configuration.introText": "开场动画文字",
-  "poopsky.configuration.introYear": "开场动画数字"
+  "poopsky.configuration.introYear": "开场动画数字",
+  "effect.poopsky.infestation": "感染",
+  "item.minecraft.potion.effect.infestation_potion": "感染药水",
+  "item.minecraft.splash_potion.effect.infestation_potion": "喷溅型感染药水",
+  "item.minecraft.lingering_potion.effect.infestation_potion": "滞留型感染药水",
+  "item.minecraft.potion.effect.long_infestation_potion": "感染药水",
+  "item.minecraft.splash_potion.effect.long_infestation_potion": "喷溅型感染药水",
+  "item.minecraft.lingering_potion.effect.long_infestation_potion": "滞留型感染药水",
+  "item.minecraft.potion.effect.strong_infestation_potion": "感染药水",
+  "item.minecraft.splash_potion.effect.strong_infestation_potion": "喷溅型感染药水",
+  "item.minecraft.lingering_potion.effect.strong_infestation_potion": "滞留型感染药水",
+  "item.minecraft.tipped_arrow.effect.infestation_potion": "感染之箭",
+  "item.minecraft.tipped_arrow.effect.long_infestation_potion": "感染之箭",
+  "item.minecraft.tipped_arrow.effect.strong_infestation_potion": "感染之箭"
 }

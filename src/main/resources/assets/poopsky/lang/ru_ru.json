@@ -688,5 +688,18 @@
   "poopsky.configuration.endAnimation": "Туалетная поэма Края",
   "poopsky.configuration.endAnimation.tooltip": "Воспроизводит туалетную поэму Края перед первым проходом через туалет Края",
   "poopsky.configuration.introText": "Текст вступления",
-  "poopsky.configuration.introYear": "Год во вступлении"
+  "poopsky.configuration.introYear": "Год во вступлении",
+  "effect.poopsky.infestation": "Заражение",
+  "item.minecraft.potion.effect.infestation_potion": "Зелье заражения",
+  "item.minecraft.splash_potion.effect.infestation_potion": "Взрывное зелье заражения",
+  "item.minecraft.lingering_potion.effect.infestation_potion": "Туманное зелье заражения",
+  "item.minecraft.potion.effect.long_infestation_potion": "Зелье заражения",
+  "item.minecraft.splash_potion.effect.long_infestation_potion": "Взрывное зелье заражения",
+  "item.minecraft.lingering_potion.effect.long_infestation_potion": "Туманное зелье заражения",
+  "item.minecraft.potion.effect.strong_infestation_potion": "Зелье заражения",
+  "item.minecraft.splash_potion.effect.strong_infestation_potion": "Взрывное зелье заражения",
+  "item.minecraft.lingering_potion.effect.strong_infestation_potion": "Туманное зелье заражения",
+  "item.minecraft.tipped_arrow.effect.infestation_potion": "Стрела заражения",
+  "item.minecraft.tipped_arrow.effect.long_infestation_potion": "Стрела заражения",
+  "item.minecraft.tipped_arrow.effect.strong_infestation_potion": "Стрела заражения"
 }
