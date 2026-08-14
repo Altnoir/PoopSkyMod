@@ -261,6 +261,8 @@ public final class BlockTagGen {
         mineableWithPickaxe.add(
                 PoBlocks.SIEVE.get(),
                 PoBlocks.PLACER.get(),
+                PoBlocks.DRIED_CHILI_POOP_BLOCK.get(),
+                PoBlocks.DRIED_GOLDEN_POOP_BLOCK.get(),
                 PoBlocks.MAGGOTS_CHUNK_LOADER.get(),
                 PoBlocks.SALTPETER_BLOCK.get(),
                 PoBlocks.SALTPETER_CLUSTER.get(),
@@ -298,6 +300,8 @@ public final class BlockTagGen {
                         PoBlocks.POOP_LEAVES_IRON.get()
                 )
                 .addTag(PoTags.Blocks.POOP_BUILDING_BLOCKS);
+
+        tag(BlockTags.MINEABLE_WITH_SHOVEL).add(PoBlocks.POOP_SAND.get());
 
         tag(Tags.Blocks.VILLAGER_JOB_SITES)
                 .add(
