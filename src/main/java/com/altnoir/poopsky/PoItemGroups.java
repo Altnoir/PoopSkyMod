@@ -4,7 +4,9 @@ import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.content.FlyTypeManager;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.item.p.FlyItem;
+import com.altnoir.poopsky.content.item.p.GashaponItem;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
+import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.impl.creative.PoCreativeTabSection;
 import com.altnoir.poopsky.impl.creative.PoSectionedCreativeModeTab;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
@@ -23,8 +25,10 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.block.Block;
+import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 
 import java.util.List;
+import java.util.Objects;
 
 public class PoItemGroups {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
@@ -34,7 +38,7 @@ public class PoItemGroups {
 
     public static final PoCreativeTabSection TS_ITEMS = section("itemGroup.poopsky.section.items");
     public static final PoCreativeTabSection TS_BLOCKS = section("itemGroup.poopsky.section.blocks");
-    public static final PoCreativeTabSection TS_FLIES = section("itemGroup.poopsky.section.flies");
+    public static final PoCreativeTabSection TS_MOBS = section("itemGroup.poopsky.section.mobs");
     public static final PoCreativeTabSection TS_POTIONS = section("itemGroup.poopsky.section.potions");
 
     public static final PoCreativeTabSection TS_DECO_MATERIALS = section("itemGroup.poopsky_deco.section.materials");
@@ -50,7 +54,7 @@ public class PoItemGroups {
                             PoItemGroups::populateBasicSections,
                             TS_ITEMS,
                             TS_BLOCKS,
-                            TS_FLIES,
+                            TS_MOBS,
                             TS_POTIONS
                     ).build()
             ).register();
@@ -73,9 +77,15 @@ public class PoItemGroups {
             addBasicItem(item);
         }
 
+        parameters.holders()
+                .lookup(Registries.ENTITY_TYPE)
+                .flatMap(registry -> registry.get(PoTags.EntityTypes.GASHAPON_MOB))
+                .ifPresent(holders -> holders.forEach(holder -> TS_MOBS.add(() ->
+                        GashaponItem.withColorAndMob(GashaponItem.YELLOW, Objects.requireNonNull(holder.getKey()).location().toString())
+                )));
         for (String id : FlyTypeManager.INSTANCE.getFlyTypes()) {
             if (isFlyVisible(id)) {
-                TS_FLIES.add(() -> FlyItem.withType(id));
+                TS_MOBS.add(() -> FlyItem.withType(id));
             }
         }
 
@@ -90,9 +100,21 @@ public class PoItemGroups {
             return;
         }
 
-        if (item instanceof BlockItem && PoBlocks.isBasicBlockItem(item)) {
-            TS_BLOCKS.add(item);
-            return;
+        switch (item) {
+            case DeferredSpawnEggItem ignored -> {
+                TS_MOBS.add(item);
+                return;
+            }
+            case GashaponItem ignored -> {
+                TS_ITEMS.add(item);
+                return;
+            }
+            case BlockItem ignored when PoBlocks.isBasicBlockItem(item) -> {
+                TS_BLOCKS.add(item);
+                return;
+            }
+            default -> {
+            }
         }
 
         if (!PoBlocks.isDecoMaterialItem(item) && !PoBlocks.isDecoTileItem(item)) {
@@ -135,7 +157,7 @@ public class PoItemGroups {
                 POOPSKY_DECO_TAB_KEY,
                 TS_ITEMS.translationKey(),
                 TS_BLOCKS.translationKey(),
-                TS_FLIES.translationKey(),
+                TS_MOBS.translationKey(),
                 TS_POTIONS.translationKey(),
                 TS_DECO_MATERIALS.translationKey(),
                 TS_DECO_TILES.translationKey(),

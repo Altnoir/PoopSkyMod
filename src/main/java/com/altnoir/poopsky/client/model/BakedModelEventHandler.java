@@ -24,6 +24,7 @@ public class BakedModelEventHandler {
         registerAllToiletModels(event, "wooden_toilet", ToiletType.Category.WOOD, false);
         registerAllToiletModels(event, "hard_toilet", ToiletType.Category.HARD, true);
         registerFlyItemModels(event);
+        registerGashaponItemModels(event);
     }
 
     private static void registerAllToiletModels(ModelEvent.RegisterAdditional event, String blockPath, ToiletType.Category category, boolean hasLava) {
@@ -52,12 +53,26 @@ public class BakedModelEventHandler {
         wrapToiletItemModel(models, PoBlocks.WOODEN_TOILET.get(), "wooden_toilet", ToiletType.Category.WOOD);
         wrapToiletItemModel(models, PoBlocks.HARD_TOILET.get(), "hard_toilet", ToiletType.Category.HARD);
         wrapFlyItemModel(models);
+        wrapGashaponItemModel(models);
     }
 
     private static void registerFlyItemModels(ModelEvent.RegisterAdditional event) {
         for (String id : FlyType.FLY_TYPES) {
             String flyId = id.equals(FlyTypes.NORMAL.id()) ? "fly" : "fly_" + id;
             event.register(new ModelResourceLocation(PoopSky.loc("item/" + flyId), ModelResourceLocation.STANDALONE_VARIANT));
+        }
+    }
+
+    private static void registerGashaponItemModels(ModelEvent.RegisterAdditional event) {
+        event.register(new ModelResourceLocation(
+                PoopSky.loc("item/gashapon"),
+                ModelResourceLocation.STANDALONE_VARIANT
+        ));
+        for (String color : new String[]{"yellow", "red", "green", "blue"}) {
+            event.register(new ModelResourceLocation(
+                    PoopSky.loc("item/gashapon_" + color),
+                    ModelResourceLocation.STANDALONE_VARIANT
+            ));
         }
     }
 
@@ -135,6 +150,31 @@ public class BakedModelEventHandler {
 
         for (ModelResourceLocation key : toWrap) {
             models.put(key, wrapper);
+        }
+    }
+
+    private static void wrapGashaponItemModel(Map<ModelResourceLocation, BakedModel> models) {
+        Map<String, BakedModel> colorModels = GashaponItemBakedModel.collectGashaponModels(models);
+        if (colorModels.isEmpty()) {
+            return;
+        }
+
+        ModelResourceLocation defaultKey = new ModelResourceLocation(
+                PoopSky.loc("item/gashapon"),
+                ModelResourceLocation.STANDALONE_VARIANT
+        );
+        BakedModel defaultModel = models.get(defaultKey);
+        if (defaultModel == null) {
+            return;
+        }
+
+        GashaponItemBakedModel wrapper = new GashaponItemBakedModel(defaultModel, colorModels);
+        String gashaponId = BuiltInRegistries.ITEM.getKey(PoItems.GASHAPON.get()).toString();
+        for (var entry : models.keySet()) {
+            String entryStr = entry.toString();
+            if (entryStr.startsWith(gashaponId + "#") || entryStr.equals(gashaponId)) {
+                models.put(entry, wrapper);
+            }
         }
     }
 

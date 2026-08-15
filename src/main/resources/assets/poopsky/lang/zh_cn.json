@@ -621,11 +621,12 @@
   "death.attack.roundworm.player": "%1$s 被 %2$s 用蛔虫杀死了",
   "death.attack.poop_ball": "%1$s 被粪便球砸死了",
   "death.attack.poop_ball.player": "%1$s 被 %2$s 用粪便球砸死了",
+
   "itemgroup.poopsky": "空中厕所",
   "itemgroup.poopsky_deco": "空中厕所丨建筑方块",
   "itemGroup.poopsky.section.items": "基础物品",
   "itemGroup.poopsky.section.blocks": "功能方块",
-  "itemGroup.poopsky.section.flies": "苍蝇",
+  "itemGroup.poopsky.section.mobs": "生物",
   "itemGroup.poopsky.section.potions": "药水",
   "itemGroup.poopsky_deco.section.materials": "建材",
   "itemGroup.poopsky_deco.section.tiles": "瓷砖",

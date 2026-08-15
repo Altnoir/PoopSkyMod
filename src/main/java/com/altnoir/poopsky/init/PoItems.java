@@ -136,32 +136,6 @@ public class PoItems {
     public static final ItemEntry<Item> LAWRENCE_MUSIC_DISC = registerMusicDisc("music_disc_lawrence", PoSoundEvents.LAWRENCE_KEY);
     public static final ItemEntry<Item> LIGHT_DANCE_MUSIC_DISC = registerMusicDisc("music_disc_light_dance", PoSoundEvents.LIGHT_DANCE_KEY);
     public static final ItemEntry<Item> MOON_BOWL_MUSIC_DISC = registerMusicDisc("music_disc_moon_bowl", PoSoundEvents.MOON_BOWL_KEY);
-    public static final ItemEntry<GinkgoBoatItem> GINKGO_BOAT = registerItem("ginkgo_boat",
-            props -> new GinkgoBoatItem(false, PoEntityType.GINKGO_BOAT, props.stacksTo(1)));
-    public static final ItemEntry<GinkgoBoatItem> GINKGO_CHEST_BOAT = REGISTRATE
-            .item("ginkgo_chest_boat", props -> new GinkgoBoatItem(true, PoEntityType.GINKGO_CHEST_BOAT, props.stacksTo(1)))
-            .lang("Ginkgo Boat with Chest")
-            .register();
-
-    public static final ItemEntry<FlushToiletCartItem> FLUSH_TOILET_CART = registerItem("flush_toilet_cart",
-            props -> new FlushToiletCartItem(PoEntityType.FLUSH_TOILET_CART, props.stacksTo(1)));
-    public static final ItemEntry<FlushToiletCartItem> GOLDEN_FLUSH_TOILET_CART = registerItem("golden_flush_toilet_cart",
-            props -> new FlushToiletCartItem(PoEntityType.GOLDEN_FLUSH_TOILET_CART, props.stacksTo(1)));
-    public static final ItemEntry<DeferredSpawnEggItem> POOLIME_SPAWN_EGG = registerItemNoModel("poolime_spawn_egg",
-            prop -> new DeferredSpawnEggItem(PoEntityType.POOLIME, 0x7D5F36, 0x5E4228, prop));
-    public static final ItemEntry<DeferredSpawnEggItem> FLY_SPAWN_EGG = registerItemNoModel("fly_spawn_egg",
-            prop -> new DeferredSpawnEggItem(PoEntityType.FLY, 0x3B4346, 0x900D2D, prop));
-
-    public static final ItemEntry<FeedableBlockItem> MAGGOTS_SEEDS = registerItem("maggots_seeds",
-            props -> new FeedableBlockItem(PoBlocks.MAGGOTS.get(), new Item.Properties().food(PFoods.MAGGOTS_SEEDS).stacksTo(88)));
-    public static final ItemEntry<FeedableBlockItem> ROUNDWORM = registerItem("roundworm",
-            props -> new FeedableBlockItem(PoBlocks.ROUNDWORM_VINES.get(), new Item.Properties().food(PFoods.ROUNDWORM).stacksTo(88)));
-
-    public static final ItemEntry<SimpleFeedableItem> FASTING_PILL = registerFood("fasting_pill", PFoods.FASTING_PILL);
-
-    public static final ItemEntry<FlyItem> FLY = registerItemNoModel("fly",
-            props -> new FlyItem(props.stacksTo(88)));
-
     public static final ItemEntry<GameDiscItem> GAME_DISC_SLIME = registerItem("game_disc_slime",
             props -> new GameDiscItem(props.rarity(Rarity.RARE),
                     Component.translatable("gamediscs.slime").withStyle(ChatFormatting.DARK_GREEN)));
@@ -171,6 +145,34 @@ public class PoItems {
     public static final ItemEntry<GameDiscItem> GAME_DISC_PONG = registerItem("game_disc_pong",
             props -> new GameDiscItem(props.rarity(Rarity.RARE),
                     Component.translatable("gamediscs.pong").withStyle(ChatFormatting.WHITE)));
+
+    public static final ItemEntry<GinkgoBoatItem> GINKGO_BOAT = registerItem("ginkgo_boat",
+            props -> new GinkgoBoatItem(false, PoEntityType.GINKGO_BOAT, props.stacksTo(1)));
+    public static final ItemEntry<GinkgoBoatItem> GINKGO_CHEST_BOAT = REGISTRATE.item("ginkgo_chest_boat",
+                    props -> new GinkgoBoatItem(true, PoEntityType.GINKGO_CHEST_BOAT, props.stacksTo(1)))
+            .lang("Ginkgo Boat with Chest")
+            .register();
+    public static final ItemEntry<FlushToiletCartItem> FLUSH_TOILET_CART = registerItem("flush_toilet_cart",
+            props -> new FlushToiletCartItem(PoEntityType.FLUSH_TOILET_CART, props.stacksTo(1)));
+    public static final ItemEntry<FlushToiletCartItem> GOLDEN_FLUSH_TOILET_CART = registerItem("golden_flush_toilet_cart",
+            props -> new FlushToiletCartItem(PoEntityType.GOLDEN_FLUSH_TOILET_CART, props.stacksTo(1)));
+
+    public static final ItemEntry<FeedableBlockItem> MAGGOTS_SEEDS = registerItem("maggots_seeds",
+            props -> new FeedableBlockItem(PoBlocks.MAGGOTS.get(), new Item.Properties().food(PFoods.MAGGOTS_SEEDS).stacksTo(88)));
+    public static final ItemEntry<FeedableBlockItem> ROUNDWORM = registerItem("roundworm",
+            props -> new FeedableBlockItem(PoBlocks.ROUNDWORM_VINES.get(), new Item.Properties().food(PFoods.ROUNDWORM).stacksTo(88)));
+
+    public static final ItemEntry<SimpleFeedableItem> FASTING_PILL = registerFood("fasting_pill", PFoods.FASTING_PILL);
+    public static final ItemEntry<GashaponItem> GASHAPON = registerItem("gashapon",
+            props -> new GashaponItem(props.component(PoComponents.GASHAPON_COLOR.get(), GashaponItem.YELLOW).stacksTo(16)));
+
+    public static final ItemEntry<DeferredSpawnEggItem> POOLIME_SPAWN_EGG = registerItemNoModel("poolime_spawn_egg",
+            prop -> new DeferredSpawnEggItem(PoEntityType.POOLIME, 0x7D5F36, 0x5E4228, prop));
+    public static final ItemEntry<DeferredSpawnEggItem> FLY_SPAWN_EGG = registerItemNoModel("fly_spawn_egg",
+            prop -> new DeferredSpawnEggItem(PoEntityType.FLY, 0x3B4346, 0x900D2D, prop));
+
+    public static final ItemEntry<FlyItem> FLY = registerItemNoModel("fly",
+            props -> new FlyItem(props.stacksTo(88)));
 
     public static List<Item> getAllItems() {
         var registrateItems = REGISTRATE.getAll(Registries.ITEM).stream()

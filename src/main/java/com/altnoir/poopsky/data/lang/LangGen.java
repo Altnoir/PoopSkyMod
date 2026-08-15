@@ -283,7 +283,7 @@ public final class LangGen {
                 PoItemGroups.POOPSKY_DECO_TAB_KEY, "PoopSky Builder Block",
                 PoItemGroups.TS_ITEMS.translationKey(), "Basic Items",
                 PoItemGroups.TS_BLOCKS.translationKey(), "Functional Blocks",
-                PoItemGroups.TS_FLIES.translationKey(), "Flies",
+                PoItemGroups.TS_MOBS.translationKey(), "Flies",
                 PoItemGroups.TS_POTIONS.translationKey(), "Potions",
                 PoItemGroups.TS_DECO_MATERIALS.translationKey(), "Building Blocks",
                 PoItemGroups.TS_DECO_TILES.translationKey(), "Tiles",

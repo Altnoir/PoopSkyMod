@@ -328,6 +328,14 @@ public class PoBlocks {
                     .sound(SoundType.BASALT)
                     .requiresCorrectToolForDrops()
                     .lightLevel(state -> state.getValue(MaggotsChunkLoaderBlock.POWERED) ? 7 : 0)));
+    public static final BlockEntry<GachaBlock> GACHA_MACHINE = registerBlock("gacha_machine", 64,
+            props -> new GachaBlock(BlockBehaviour.Properties.of()
+                    .mapColor(DyeColor.WHITE)
+                    .strength(HARDEN, HARD_STRENGTH)
+                    .sound(SoundType.NETHERITE_BLOCK)
+                    .noOcclusion()));
+
+    public static final BlockEntry<ArcadeBlock> BLUE_ARCADE = registerArcadeBlock("blue_arcade", DyeColor.BLUE);
 
     public static final BlockEntry<PoopLogBlock> POOP_LOG = registerPoopBlock("poop_log",
             props -> new PoopLogBlock(logProperties(MapColor.COLOR_BROWN, SoundType.STEM).randomTicks()),
@@ -521,8 +529,6 @@ public class PoBlocks {
                     .sound(SoundType.NETHERITE_BLOCK)
                     .noOcclusion()),
             (loot, block) -> loot.add(block, loot.createDoorTable(block)));
-
-    public static final BlockEntry<ArcadeBlock> BLUE_ARCADE = registerArcadeBlock("blue_arcade", DyeColor.BLUE);
 
     public record BlockFamily(
             BlockEntry<? extends Block> block,
@@ -786,7 +792,7 @@ public class PoBlocks {
     }
 
     public static BlockEntry<ArcadeBlock> registerArcadeBlock(String name, DyeColor color) {
-        BlockEntry<ArcadeBlock> entry = registerBlock(name, 8,
+        BlockEntry<ArcadeBlock> entry = registerBlock(name, 64,
                 props -> new ArcadeBlock(BlockBehaviour.Properties.of()
                         .mapColor(color)
                         .strength(HARDEN, HARD_STRENGTH)

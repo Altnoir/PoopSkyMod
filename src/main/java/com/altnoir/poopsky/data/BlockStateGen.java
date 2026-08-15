@@ -78,6 +78,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         flushToilet(PoBlocks.GOLDEN_FLUSH_TOILET.get());
         portableToilet(PoBlocks.GINKGO_TOILET.get());
         portableToilet(PoBlocks.PORTABLE_TOILET.get());
+        gachaMachine(PoBlocks.GACHA_MACHINE.get());
         PoBlocks.getArcadeBlocks().forEach(entry -> arcade(entry.get()));
         shitBlock(PoBlocks.SHIT.get(), PoBlocks.POOP_BLOCK.get());
         shitBlock(PoBlocks.CHILI_SHIT.get(), PoBlocks.CHILI_POOP_BLOCK.get());
@@ -644,6 +645,18 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         });
 
         simpleBlockItem(block, horizontal);
+    }
+
+    private void gachaMachine(Block block) {
+        String path = getBlockPath(block);
+        ModelFile model = models().getExistingFile(modLoc("block/" + path));
+
+        getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder()
+                .modelFile(model)
+                .rotationY(horizontalRotation(state.getValue(BlockStateProperties.HORIZONTAL_FACING)))
+                .build());
+
+        simpleBlockItem(block, model);
     }
 
     private void chiliVines(Block block) {

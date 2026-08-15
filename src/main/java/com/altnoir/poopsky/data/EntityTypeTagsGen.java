@@ -23,6 +23,17 @@ public final class EntityTypeTagsGen {
         provider.addTag(PoTags.EntityTypes.IGNORES_BLEEDING)
                 .add(EntityType.IRON_GOLEM, EntityType.SNOW_GOLEM);
 
+        provider.addTag(PoTags.EntityTypes.GASHAPON_MOB)
+                .add(
+                        EntityType.COW,
+                        EntityType.SHEEP,
+                        EntityType.PIG,
+                        EntityType.CHICKEN,
+                        EntityType.RABBIT,
+                        EntityType.CAT,
+                        EntityType.WOLF
+                );
+
         provider.addTag(PoTags.EntityTypes.RETAIN_IN_SUB_LEVEL)
                 .add(PoEntityType.STOOL.get(), PoEntityType.FLUSH_TOILET.get());
         provider.addTag(PoTags.EntityTypes.DESTROY_WITH_SUB_LEVEL)

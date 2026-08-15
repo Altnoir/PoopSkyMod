@@ -1,0 +1,14 @@
+{
+  "base": {
+    "parent": "minecraft:item/generated",
+    "textures": {
+      "layer0": "poopsky:item/gashapon_red"
+    }
+  },
+  "loader": "neoforge:separate_transforms",
+  "perspectives": {
+    "ground": {
+      "parent": "minecraft:builtin/entity"
+    }
+  }
+}

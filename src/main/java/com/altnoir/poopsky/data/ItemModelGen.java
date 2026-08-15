@@ -44,6 +44,7 @@ public class ItemModelGen extends RegistrateItemModelProvider {
     @Override
     protected void registerModels() {
         flyItem();
+        gashaponItem();
         toiletPlugItem();
         bigSowordItem();
         flyCatcherItem();
@@ -96,6 +97,27 @@ public class ItemModelGen extends RegistrateItemModelProvider {
                     .parent(new ModelFile.UncheckedModelFile("item/generated"))
                     .texture("layer0", PoopSky.loc("item/" + flyId));
         }
+    }
+
+    private void gashaponItem() {
+        gashaponItemModel("gashapon");
+        for (String color : new String[]{"yellow", "red", "green", "blue"}) {
+            gashaponItemModel("gashapon_" + color);
+        }
+    }
+
+    private void gashaponItemModel(String modelName) {
+        var base = nested()
+                .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                .texture("layer0", PoopSky.loc("item/" + modelName));
+        var entityModel = nested()
+                .parent(new ModelFile.UncheckedModelFile("builtin/entity"));
+
+        getBuilder(modelName)
+                .customLoader(SeparateTransformsModelBuilder::begin)
+                .base(base)
+                .perspective(ItemDisplayContext.GROUND, entityModel)
+                .end();
     }
 
     private void trimmedArmorItem(ItemEntry<? extends ArmorItem> itemDeferredItem) {

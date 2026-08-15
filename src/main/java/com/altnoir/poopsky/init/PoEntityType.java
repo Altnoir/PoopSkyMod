@@ -79,7 +79,6 @@ public class PoEntityType {
             .lang("Golden Flush Toilet Cart")
             .register();
 
-
     public static final EntityEntry<PoopTntEntity> POOP_TNT = REGISTRATE
             .<PoopTntEntity>entity("poop_tnt", PoopTntEntity::new, MobCategory.MISC)
             .properties(properties -> properties
@@ -110,6 +109,16 @@ public class PoEntityType {
                     .clientTrackingRange(10))
             .renderer(() -> GinkgoBoatRenderer.provider(true))
             .lang("Ginkgo Boat with Chest")
+            .register();
+
+    public static final EntityEntry<GashaponEntity> GASHAPON = REGISTRATE
+            .entity("gashapon", GashaponEntity::create, MobCategory.MISC)
+            .properties(properties -> properties
+                    .sized(0.5F, 0.75F)
+                    .eyeHeight(0.375F)
+                    .clientTrackingRange(10))
+            .renderer(() -> GashaponRenderer::new)
+            .lang("Gashapon")
             .register();
 
     public static void register() {

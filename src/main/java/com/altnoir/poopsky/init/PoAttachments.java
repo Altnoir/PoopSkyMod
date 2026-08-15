@@ -9,11 +9,10 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 public final class PoAttachments {
-    public static final DeferredRegister<AttachmentType<?>> ATTACHMENTS =
-            DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, PoopSky.MOD_ID);
+    public static final DeferredRegister<AttachmentType<?>> ATTACHMENTS = DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, PoopSky.MOD_ID);
 
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Long>> POOP_TIME =
-            ATTACHMENTS.register("poop_time", () -> AttachmentType.builder(() -> 0L)
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Long>> POOP_TIME = ATTACHMENTS
+            .register("poop_time", () -> AttachmentType.builder(() -> 0L)
                     .serialize(Codec.LONG)
                     .build());
 
