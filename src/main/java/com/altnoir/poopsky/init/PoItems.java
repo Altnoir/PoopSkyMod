@@ -133,6 +133,7 @@ public class PoItems {
                     .stacksTo(18)
             ));
     public static final ItemEntry<BucketItem> URINE_BUCKET = PoFluids.URINE_BUCKET;
+    public static final ItemEntry<TokenItem> TOKEN = registerItem("token", TokenItem::new);
     public static final ItemEntry<Item> LAWRENCE_MUSIC_DISC = registerMusicDisc("music_disc_lawrence", PoSoundEvents.LAWRENCE_KEY);
     public static final ItemEntry<Item> LIGHT_DANCE_MUSIC_DISC = registerMusicDisc("music_disc_light_dance", PoSoundEvents.LIGHT_DANCE_KEY);
     public static final ItemEntry<Item> MOON_BOWL_MUSIC_DISC = registerMusicDisc("music_disc_moon_bowl", PoSoundEvents.MOON_BOWL_KEY);

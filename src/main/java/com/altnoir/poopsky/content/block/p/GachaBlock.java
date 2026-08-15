@@ -11,12 +11,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -27,7 +23,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 public class GachaBlock extends Block {
@@ -47,36 +42,37 @@ public class GachaBlock extends Block {
         return CODEC;
     }
 
-    @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (!stack.is(Items.EMERALD)) {
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    public boolean advanceTokenSpin(ServerLevel level, BlockPos pos) {
+        BlockState state = level.getBlockState(pos);
+        if (!state.is(this)) {
+            return false;
         }
-        if (!level.isClientSide) {
-            if (state.getValue(STEP) != 0) {
-                if (!level.getBlockTicks().hasScheduledTick(pos, this)) {
-                    level.scheduleTick(pos, this, 2);
-                }
-                return ItemInteractionResult.sidedSuccess(false);
-            }
-            stack.consume(1, player);
-            level.playSound(null, pos, SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 0.5F, 0.8F);
-            level.scheduleTick(pos, this, 2);
-        }
-        return ItemInteractionResult.sidedSuccess(level.isClientSide);
-    }
 
-    @Override
-    protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         int step = state.getValue(STEP);
         if (step == 7) {
-            level.setBlock(pos, state.setValue(STEP, 0), 3);
-            dispense(level, state, pos, random);
-            return;
+            return true;
         }
 
         level.setBlock(pos, state.setValue(STEP, step + 1), 3);
-        level.scheduleTick(pos, this, 2);
+        level.playSound(null, pos, SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 0.5F, 0.8F);
+        return step + 1 == 7;
+    }
+
+    public void completeTokenSpin(ServerLevel level, BlockPos pos) {
+        BlockState state = level.getBlockState(pos);
+        if (!state.is(this)) {
+            return;
+        }
+
+        level.setBlock(pos, state.setValue(STEP, 0), 3);
+        dispense(level, state, pos, level.random);
+    }
+
+    public void resetTokenSpin(Level level, BlockPos pos) {
+        BlockState state = level.getBlockState(pos);
+        if (state.is(this) && state.getValue(STEP) != 0) {
+            level.setBlock(pos, state.setValue(STEP, 0), 3);
+        }
     }
 
     private void dispense(ServerLevel level, BlockState state, BlockPos pos, RandomSource random) {

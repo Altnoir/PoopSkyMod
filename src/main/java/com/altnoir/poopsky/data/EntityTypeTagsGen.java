@@ -26,12 +26,35 @@ public final class EntityTypeTagsGen {
         provider.addTag(PoTags.EntityTypes.GASHAPON_MOB)
                 .add(
                         EntityType.COW,
+                        EntityType.MOOSHROOM,
                         EntityType.SHEEP,
                         EntityType.PIG,
                         EntityType.CHICKEN,
+                        EntityType.PANDA,
+                        EntityType.POLAR_BEAR,
+                        EntityType.CAMEL,
+                        EntityType.LLAMA,
+                        EntityType.DONKEY,
+                        EntityType.MULE,
+                        EntityType.GOAT,
+                        EntityType.HORSE,
                         EntityType.RABBIT,
+                        EntityType.COD,
+                        EntityType.SALMON,
+                        EntityType.TROPICAL_FISH,
+                        EntityType.PUFFERFISH,
+                        EntityType.TURTLE,
+                        EntityType.DOLPHIN,
+                        EntityType.BEE,
+                        EntityType.OCELOT,
                         EntityType.CAT,
-                        EntityType.WOLF
+                        EntityType.WOLF,
+                        EntityType.FOX,
+                        EntityType.FROG,
+                        EntityType.ALLAY,
+                        EntityType.PARROT,
+                        EntityType.ARMADILLO,
+                        EntityType.AXOLOTL
                 );
 
         provider.addTag(PoTags.EntityTypes.RETAIN_IN_SUB_LEVEL)
