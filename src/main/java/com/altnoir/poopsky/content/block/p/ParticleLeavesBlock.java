@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.client.particle.LeavesParticleOptions;
+import com.altnoir.poopsky.impl.util.FireSafetyUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.ParticleUtils;
@@ -32,16 +33,16 @@ public class ParticleLeavesBlock extends LeavesBlock {
 
     @Override
     public boolean isFlammable(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
-        return true;
+        return FireSafetyUtil.isFlammable(state);
     }
 
     @Override
     public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
-        return 60;
+        return FireSafetyUtil.getFlammability(state, 60);
     }
 
     @Override
     public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
-        return 30;
+        return FireSafetyUtil.getFireSpreadSpeed(state, 30);
     }
 }

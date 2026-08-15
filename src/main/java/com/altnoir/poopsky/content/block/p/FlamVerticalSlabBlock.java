@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.content.block.p;
 
+import com.altnoir.poopsky.impl.util.FireSafetyUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
@@ -12,16 +13,16 @@ public class FlamVerticalSlabBlock extends VerticalSlabBlock {
 
     @Override
     public boolean isFlammable(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
-        return true;
+        return FireSafetyUtil.isFlammable(state);
     }
 
     @Override
     public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
-        return 20;
+        return FireSafetyUtil.getFlammability(state, 20);
     }
 
     @Override
     public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
-        return 5;
+        return FireSafetyUtil.getFireSpreadSpeed(state, 5);
     }
 }
