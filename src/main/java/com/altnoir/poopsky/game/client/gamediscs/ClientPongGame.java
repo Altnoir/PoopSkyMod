@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.game.client.gamediscs;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.game.client.graphics.MultiImage;
 import com.altnoir.poopsky.game.client.ClientGame;
+import com.altnoir.poopsky.game.client.graphics.MultiImage;
 import com.altnoir.poopsky.game.util.Sprite;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.nbt.CompoundTag;
@@ -53,9 +53,9 @@ public class ClientPongGame extends ClientGame {
         oponent.render(graphics, posX, posY);
         ball.render(graphics, posX, posY);
 
-        if (score < 10) {
+        if (getScore() < 10) {
             if (numberRenderer.getImage() instanceof MultiImage image) {
-                image.setImage(score);
+                image.setImage(getScore());
             }
             numberRenderer.setPos(new Vec2((float) WIDTH / 2 - numberRenderer.getWidth() - 4, 4));
             numberRenderer.render(graphics, posX, posY);
@@ -104,4 +104,8 @@ public class ClientPongGame extends ClientGame {
         return false;
     }
 
+    @Override
+    public String getGameName() {
+        return "PongGame";
+    }
 }

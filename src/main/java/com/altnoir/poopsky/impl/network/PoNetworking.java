@@ -65,9 +65,9 @@ public class PoNetworking {
                 ArcadeResetPacket::handle
         );
         registrar.playToClient(
-                ArcadeSnapshotPacket.TYPE,
-                ArcadeSnapshotPacket.STREAM_CODEC,
-                ArcadeSnapshotPacket::handle
+                ArcadeGameSnapshotPacket.TYPE,
+                ArcadeGameSnapshotPacket.STREAM_CODEC,
+                ArcadeGameSnapshotPacket::handle
         );
         IntroHandshake.registerPayloads(registrar);
     }

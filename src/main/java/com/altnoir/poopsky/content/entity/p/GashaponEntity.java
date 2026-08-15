@@ -16,10 +16,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 
 public class GashaponEntity extends ThrowableProjectile {
-    private static final EntityDataAccessor<Byte> DATA_VARIANT =
-            SynchedEntityData.defineId(GashaponEntity.class, EntityDataSerializers.BYTE);
-    private static final EntityDataAccessor<String> DATA_MOB_ID =
-            SynchedEntityData.defineId(GashaponEntity.class, EntityDataSerializers.STRING);
+    private static final EntityDataAccessor<Byte> DATA_VARIANT = SynchedEntityData.defineId(GashaponEntity.class, EntityDataSerializers.BYTE);
+    private static final EntityDataAccessor<String> DATA_MOB_ID = SynchedEntityData.defineId(GashaponEntity.class, EntityDataSerializers.STRING);
 
     public GashaponEntity(EntityType<? extends GashaponEntity> entityType, Level level) {
         super(entityType, level);
@@ -65,7 +63,7 @@ public class GashaponEntity extends ThrowableProjectile {
     public static byte variantFromColor(String color) {
         return switch (color) {
             case GashaponItem.RED -> 1;
-            case GashaponItem.GREEN -> 2;
+            case GashaponItem.YELLOW -> 2;
             case GashaponItem.BLUE -> 3;
             default -> 0;
         };

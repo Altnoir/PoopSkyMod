@@ -5,7 +5,28 @@
       "layer0": "poopsky:item/gashapon"
     }
   },
+  "gui_light": "front",
   "loader": "neoforge:separate_transforms",
+  "overrides": [
+    {
+      "model": "poopsky:item/gashapon_yellow",
+      "predicate": {
+        "minecraft:custom_model_data": 1.0
+      }
+    },
+    {
+      "model": "poopsky:item/gashapon_red",
+      "predicate": {
+        "minecraft:custom_model_data": 2.0
+      }
+    },
+    {
+      "model": "poopsky:item/gashapon_blue",
+      "predicate": {
+        "minecraft:custom_model_data": 4.0
+      }
+    }
+  ],
   "perspectives": {
     "ground": {
       "parent": "minecraft:builtin/entity"

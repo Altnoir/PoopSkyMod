@@ -1,9 +1,9 @@
 package com.altnoir.poopsky.game.client.gamediscs;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.game.client.ClientGame;
 import com.altnoir.poopsky.game.client.graphics.MultiImage;
 import com.altnoir.poopsky.game.util.BlocktrisPiece;
-import com.altnoir.poopsky.game.client.ClientGame;
 import com.altnoir.poopsky.game.util.Grid;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -98,4 +98,8 @@ public class ClientBlocktrisGame extends ClientGame {
         return false;
     }
 
+    @Override
+    public String getGameName() {
+        return "BlocktrisGame";
+    }
 }

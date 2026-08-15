@@ -7,6 +7,7 @@ import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -20,16 +21,18 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileItem;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.CustomModelData;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public class GashaponItem extends Item implements ProjectileItem {
-    public static final String YELLOW = "yellow";
+    public static final String PINK = "pink";
     public static final String RED = "red";
-    public static final String GREEN = "green";
+    public static final String YELLOW = "yellow";
     public static final String BLUE = "blue";
-    public static final String[] COLORS = {YELLOW, RED, GREEN, BLUE};
+    public static final String[] COLORS = {PINK, RED, YELLOW, BLUE};
 
     public GashaponItem(Properties properties) {
         super(properties);
@@ -38,6 +41,7 @@ public class GashaponItem extends Item implements ProjectileItem {
     public static ItemStack withColor(String color) {
         ItemStack stack = new ItemStack(PoItems.GASHAPON.get());
         stack.set(PoComponents.GASHAPON_COLOR.get(), color);
+        stack.set(DataComponents.CUSTOM_MODEL_DATA, new CustomModelData(getColorModelData(color)));
         return stack;
     }
 
@@ -49,11 +53,21 @@ public class GashaponItem extends Item implements ProjectileItem {
 
     public static String getColor(ItemStack stack) {
         String color = stack.get(PoComponents.GASHAPON_COLOR.get());
-        return color != null ? color : YELLOW;
+        return color != null ? color : PINK;
     }
 
-    public static String getMobId(ItemStack stack) {
+    public static @Nullable String getMobId(ItemStack stack) {
         return stack.get(PoComponents.GASHAPON_MOB.get());
+    }
+
+    public static int getColorModelData(String color) {
+        return switch (color) {
+            case PINK -> 0;
+            case YELLOW -> 1;
+            case RED -> 2;
+            case BLUE -> 4;
+            default -> 0;
+        };
     }
 
     @Override

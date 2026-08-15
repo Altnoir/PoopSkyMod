@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.game.client.arcade;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.client.ClientUtils;
+import com.altnoir.poopsky.game.util.GameUtils;
 import com.altnoir.poopsky.content.item.p.GameDiscItem;
 import com.altnoir.poopsky.game.client.ClientGame;
 import com.mojang.blaze3d.pipeline.RenderTarget;
@@ -109,7 +109,7 @@ public final class ArcadeWorldScreenRenderer {
         if (state.cartridgeClientGame == null) {
             return;
         }
-        ClientGameRenderer.apply(state.cartridgeClientGame, state.snapshot);
+        state.cartridgeClientGame.applySnapshot(state.snapshot);
 
         RenderSystem.backupProjectionMatrix();
         Matrix4fStack modelViewStack = RenderSystem.getModelViewStack();
@@ -160,9 +160,8 @@ public final class ArcadeWorldScreenRenderer {
             this.pos = pos;
             this.cartridge = cartridge;
             this.textureLocation = PoopSky.loc(texturePath(pos));
-            this.cartridgeClientGame = ClientUtils.newGameFor(cartridge);
+            this.cartridgeClientGame = GameUtils.newGameFor(cartridge);
             this.cartridgeClientGame.setArcadeMachine(pos);
-            this.cartridgeClientGame.prepare();
         }
 
         private void ensureResources() {

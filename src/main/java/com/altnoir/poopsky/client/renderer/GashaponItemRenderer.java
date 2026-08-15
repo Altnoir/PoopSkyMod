@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.client.renderer;
 
-import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.client.PoBedrockModelResources;
 import com.altnoir.poopsky.content.entity.renderer.GashaponRenderer;
+import com.altnoir.poopsky.content.item.p.GashaponItem;
 import com.altnoir.poopsky.init.PoComponents;
 import com.github.mcmodderanchor.simplebedrockmodel.v1.common.model.BedrockModel;
 import com.github.mcmodderanchor.simplebedrockmodel.v1.resource.BedrockModelResourceSet;
@@ -23,14 +23,7 @@ public class GashaponItemRenderer extends BlockEntityWithoutLevelRenderer {
     }
 
     @Override
-    public void renderByItem(
-            @NotNull ItemStack stack,
-            @NotNull ItemDisplayContext displayContext,
-            @NotNull PoseStack poseStack,
-            @NotNull MultiBufferSource bufferSource,
-            int packedLight,
-            int packedOverlay
-    ) {
+    public void renderByItem(@NotNull ItemStack stack, @NotNull ItemDisplayContext displayContext, @NotNull PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         if (displayContext != ItemDisplayContext.GROUND) {
             return;
         }
@@ -47,15 +40,13 @@ public class GashaponItemRenderer extends BlockEntityWithoutLevelRenderer {
 
         poseStack.pushPose();
         poseStack.translate(0.5F, 0.5F, 0.5F);
-        VertexConsumer consumer = bufferSource.getBuffer(RenderType.entityCutout(this.getTexture(stack)));
+        VertexConsumer consumer = bufferSource.getBuffer(RenderType.entityCutout(getTexture(stack)));
         model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY);
         poseStack.popPose();
     }
 
     private static ResourceLocation getTexture(ItemStack stack) {
         String color = stack.get(PoComponents.GASHAPON_COLOR.get());
-        return color != null
-                ? GashaponRenderer.getTexture(color)
-                : PoopSky.loc("textures/item/gashapon.png");
+        return color != null ? GashaponRenderer.getTexture(color) : GashaponRenderer.getTexture(GashaponItem.PINK);
     }
 }

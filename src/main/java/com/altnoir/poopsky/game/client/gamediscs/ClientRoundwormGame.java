@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.game.client.gamediscs;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.game.client.graphics.DirectionalImage;
 import com.altnoir.poopsky.game.client.ClientGame;
+import com.altnoir.poopsky.game.client.graphics.DirectionalImage;
 import com.altnoir.poopsky.game.util.Sprite;
 import com.altnoir.poopsky.game.util.VecUtil;
 import net.minecraft.client.gui.GuiGraphics;
@@ -84,4 +84,8 @@ public class ClientRoundwormGame extends ClientGame {
         return PoopSky.loc("textures/games/background/roundworm_background.png");
     }
 
+    @Override
+    public String getGameName() {
+        return "SlimeGame";
+    }
 }

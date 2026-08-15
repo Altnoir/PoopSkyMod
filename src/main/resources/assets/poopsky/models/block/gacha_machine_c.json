@@ -59,7 +59,7 @@
 		{
 			"from": [6.5, 1, -1.1],
 			"to": [9.5, 4, -0.1],
-			"rotation": {"angle": 0, "axis": "z", "origin": [8, 2.5, 0]},
+			"rotation": {"angle": 45, "axis": "z", "origin": [8, 2.5, 0]},
 			"faces": {
 				"north": {"uv": [4, 5.5, 4.75, 6.25], "texture": "#machine"},
 				"east": {"uv": [4, 5.5, 4.25, 6.25], "texture": "#machine"},

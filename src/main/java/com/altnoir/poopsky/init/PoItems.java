@@ -164,7 +164,7 @@ public class PoItems {
 
     public static final ItemEntry<SimpleFeedableItem> FASTING_PILL = registerFood("fasting_pill", PFoods.FASTING_PILL);
     public static final ItemEntry<GashaponItem> GASHAPON = registerItem("gashapon",
-            props -> new GashaponItem(props.component(PoComponents.GASHAPON_COLOR.get(), GashaponItem.YELLOW).stacksTo(16)));
+            props -> new GashaponItem(props.stacksTo(16)));
 
     public static final ItemEntry<DeferredSpawnEggItem> POOLIME_SPAWN_EGG = registerItemNoModel("poolime_spawn_egg",
             prop -> new DeferredSpawnEggItem(PoEntityType.POOLIME, 0x7D5F36, 0x5E4228, prop));

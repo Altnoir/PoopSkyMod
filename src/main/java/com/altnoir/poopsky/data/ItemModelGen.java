@@ -100,10 +100,10 @@ public class ItemModelGen extends RegistrateItemModelProvider {
     }
 
     private void gashaponItem() {
-        gashaponItemModel("gashapon");
-        for (String color : new String[]{"yellow", "red", "green", "blue"}) {
+        for (String color : new String[]{"yellow", "red", "blue"}) {
             gashaponItemModel("gashapon_" + color);
         }
+        gashaponMainModel();
     }
 
     private void gashaponItemModel(String modelName) {
@@ -117,7 +117,32 @@ public class ItemModelGen extends RegistrateItemModelProvider {
                 .customLoader(SeparateTransformsModelBuilder::begin)
                 .base(base)
                 .perspective(ItemDisplayContext.GROUND, entityModel)
-                .end();
+                .end()
+                .guiLight(GuiLight.FRONT);
+    }
+
+    private void gashaponMainModel() {
+        var base = nested()
+                .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                .texture("layer0", PoopSky.loc("item/gashapon"));
+        var entityModel = nested()
+                .parent(new ModelFile.UncheckedModelFile("builtin/entity"));
+
+        var builder = getBuilder("gashapon")
+                .customLoader(SeparateTransformsModelBuilder::begin)
+                .base(base)
+                .perspective(ItemDisplayContext.GROUND, entityModel)
+                .end()
+                .guiLight(GuiLight.FRONT);
+
+        int[] modelData = {1, 2, 4};
+        String[] colors = {"yellow", "red", "blue"};
+        for (int i = 0; i < colors.length; i++) {
+            builder.override()
+                    .predicate(ResourceLocation.withDefaultNamespace("custom_model_data"), modelData[i])
+                    .model(new ModelFile.UncheckedModelFile(PoopSky.loc("item/gashapon_" + colors[i])))
+                    .end();
+        }
     }
 
     private void trimmedArmorItem(ItemEntry<? extends ArmorItem> itemDeferredItem) {

@@ -53,7 +53,7 @@ public abstract class ServerGame extends Game {
     }
 
     protected void buttonDown(Button button) {
-        if (stage == GameStage.START || stage == GameStage.RETRY) {
+        if (stage == GameStage.START) {
             start();
         } else if (stage == GameStage.DIED || stage == GameStage.WON) {
             prepare();

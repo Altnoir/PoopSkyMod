@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.client.screen;
 
-import com.altnoir.poopsky.game.controls.Button;
 import com.altnoir.poopsky.content.item.p.GameDiscItem;
+import com.altnoir.poopsky.game.controls.Button;
 import com.altnoir.poopsky.impl.network.ArcadeInputPacket;
 import com.altnoir.poopsky.impl.network.ArcadeResetPacket;
 import net.minecraft.client.gui.GuiGraphics;
@@ -50,67 +50,31 @@ public class GamingConsoleScreen extends Screen {
             PacketDistributor.sendToServer(new ArcadeResetPacket(arcadeMachinePos));
             flag = true;
         }
-
-        switch (key) {
-            case W -> {
-                PacketDistributor.sendToServer(new ArcadeInputPacket(arcadeMachinePos, Button.UP, true));
-                flag = true;
-            }
-            case S -> {
-                PacketDistributor.sendToServer(new ArcadeInputPacket(arcadeMachinePos, Button.DOWN, true));
-                flag = true;
-            }
-            case A -> {
-                PacketDistributor.sendToServer(new ArcadeInputPacket(arcadeMachinePos, Button.LEFT, true));
-                flag = true;
-            }
-            case D -> {
-                PacketDistributor.sendToServer(new ArcadeInputPacket(arcadeMachinePos, Button.RIGHT, true));
-                flag = true;
-            }
-            case SPACE -> {
-                PacketDistributor.sendToServer(new ArcadeInputPacket(arcadeMachinePos, Button.BUTTON1, true));
-                flag = true;
-            }
-            case ENTER -> {
-                PacketDistributor.sendToServer(new ArcadeInputPacket(arcadeMachinePos, Button.BUTTON2, true));
-                flag = true;
-            }
-        }
+        flag |= sendInputIfGameKey(key, true);
 
         return super.keyPressed(key, scanCode, modifiers) || flag;
     }
 
     @Override
     public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
-        boolean flag = false;
-        switch (keyCode) {
-            case W -> {
-                PacketDistributor.sendToServer(new ArcadeInputPacket(arcadeMachinePos, Button.UP, false));
-                flag = true;
-            }
-            case S -> {
-                PacketDistributor.sendToServer(new ArcadeInputPacket(arcadeMachinePos, Button.DOWN, false));
-                flag = true;
-            }
-            case A -> {
-                PacketDistributor.sendToServer(new ArcadeInputPacket(arcadeMachinePos, Button.LEFT, false));
-                flag = true;
-            }
-            case D -> {
-                PacketDistributor.sendToServer(new ArcadeInputPacket(arcadeMachinePos, Button.RIGHT, false));
-                flag = true;
-            }
-            case SPACE -> {
-                PacketDistributor.sendToServer(new ArcadeInputPacket(arcadeMachinePos, Button.BUTTON1, false));
-                flag = true;
-            }
-            case ENTER -> {
-                PacketDistributor.sendToServer(new ArcadeInputPacket(arcadeMachinePos, Button.BUTTON2, false));
-                flag = true;
-            }
+        return sendInputIfGameKey(keyCode, false) || super.keyReleased(keyCode, scanCode, modifiers);
+    }
+
+    private boolean sendInputIfGameKey(int key, boolean pressed) {
+        Button button = switch (key) {
+            case W -> Button.UP;
+            case S -> Button.DOWN;
+            case A -> Button.LEFT;
+            case D -> Button.RIGHT;
+            case SPACE -> Button.BUTTON1;
+            case ENTER -> Button.BUTTON2;
+            default -> null;
+        };
+        if (button == null) {
+            return false;
         }
-        return super.keyReleased(keyCode, scanCode, modifiers) || flag;
+        PacketDistributor.sendToServer(new ArcadeInputPacket(arcadeMachinePos, button, pressed));
+        return true;
     }
 
     @Override

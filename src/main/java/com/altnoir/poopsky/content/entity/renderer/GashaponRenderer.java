@@ -3,6 +3,7 @@ package com.altnoir.poopsky.content.entity.renderer;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.client.PoBedrockModelResources;
 import com.altnoir.poopsky.content.entity.p.GashaponEntity;
+import com.altnoir.poopsky.content.item.p.GashaponItem;
 import com.github.mcmodderanchor.simplebedrockmodel.v1.common.model.BedrockModel;
 import com.github.mcmodderanchor.simplebedrockmodel.v1.resource.BedrockModelResourceSet;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -17,7 +18,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class GashaponRenderer extends EntityRenderer<GashaponEntity> {
-    private static final String[] COLORS = {"yellow", "red", "green", "blue"};
+    private static final String[] COLORS = {
+            GashaponItem.PINK,
+            GashaponItem.RED,
+            GashaponItem.YELLOW,
+            GashaponItem.BLUE
+    };
 
     public GashaponRenderer(EntityRendererProvider.Context context) {
         super(context);
@@ -31,10 +37,10 @@ public class GashaponRenderer extends EntityRenderer<GashaponEntity> {
 
     public static ResourceLocation getTexture(String color) {
         return switch (color) {
-            case "red" -> PoopSky.loc("textures/entity/gashapon/gashapon_red.png");
-            case "green" -> PoopSky.loc("textures/entity/gashapon/gashapon_green.png");
-            case "blue" -> PoopSky.loc("textures/entity/gashapon/gashapon_blue.png");
-            default -> PoopSky.loc("textures/entity/gashapon/gashapon_yellow.png");
+            case GashaponItem.BLUE -> PoopSky.loc("textures/entity/gashapon/gashapon_blue.png");
+            case GashaponItem.YELLOW -> PoopSky.loc("textures/entity/gashapon/gashapon_yellow.png");
+            case GashaponItem.RED -> PoopSky.loc("textures/entity/gashapon/gashapon_red.png");
+            default -> PoopSky.loc("textures/entity/gashapon/gashapon_pink.png");
         };
     }
 

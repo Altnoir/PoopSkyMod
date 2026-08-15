@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.content.block.p;
 
-import com.altnoir.poopsky.client.ClientUtils;
 import com.altnoir.poopsky.content.block.entity.ArcadeBlockEntity;
 import com.altnoir.poopsky.content.item.p.GameDiscItem;
+import com.altnoir.poopsky.game.util.GameUtils;
 import com.altnoir.poopsky.init.PoBlockEntityType;
 import com.altnoir.poopsky.init.PoSoundEvents;
 import com.mojang.serialization.MapCodec;
@@ -26,7 +26,6 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.piston.PistonMovingBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.*;
@@ -128,10 +127,9 @@ public class ArcadeBlock extends Block implements EntityBlock {
                     : super.updateShape(state, facing, facingState, level, currentPos, facingPos);
         }
         if (facingState.is(this) && facingState.getValue(HALF) != half) {
-            return facingState.setValue(HALF, half);
+            return state;
         }
-        return facingState.is(Blocks.MOVING_PISTON) || isMatchingMovingHalf(state, level, facingPos)
-                ? state : Blocks.AIR.defaultBlockState();
+        return Blocks.AIR.defaultBlockState();
     }
 
     @Override
@@ -147,6 +145,71 @@ public class ArcadeBlock extends Block implements EntityBlock {
             }
         }
         return super.playerWillDestroy(level, pos, state, player);
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        ArcadeBlockEntity arcade = getArcadeEntity(level, pos, state);
+        if (arcade == null) {
+            return InteractionResult.PASS;
+        }
+        if (!arcade.isController(player) || handleRewardOrEject(level, player, arcade)) {
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        if (arcade.hasCartridge()) {
+            if (level.isClientSide && FMLEnvironment.dist == Dist.CLIENT
+                    && arcade.getCartridge().getItem() instanceof GameDiscItem disc) {
+                GameUtils.openArcadeScreen(arcade.getBlockPos(), disc);
+            }
+        } else {
+            showNoCartridge(level, player);
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        ArcadeBlockEntity arcade = getArcadeEntity(level, pos, state);
+        if (arcade == null) {
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        }
+        if (!arcade.isController(player) || handleRewardOrEject(level, player, arcade)) {
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        }
+        if (arcade.hasCartridge()) {
+            if (level.isClientSide && FMLEnvironment.dist == Dist.CLIENT
+                    && arcade.getCartridge().getItem() instanceof GameDiscItem disc) {
+                GameUtils.openArcadeScreen(arcade.getBlockPos(), disc);
+            }
+        } else if (stack.getItem() instanceof GameDiscItem) {
+            if (!level.isClientSide && arcade.insertCartridge(stack)) {
+                stack.shrink(1);
+                level.playSound(null, arcade.getBlockPos(), PoSoundEvents.CONFIRM.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
+            }
+        } else {
+            showNoCartridge(level, player);
+        }
+        return ItemInteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    private static boolean handleRewardOrEject(Level level, Player player, ArcadeBlockEntity arcade) {
+        if (arcade.getRewardCount() > 0) {
+            if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
+                return arcade.claimReward(serverPlayer);
+            }
+            return true;
+        }
+
+        if (player.isShiftKeyDown()) {
+            if (arcade.hasCartridge()) {
+                ejectCartridge(level, player, arcade);
+            } else {
+                showNoCartridge(level, player);
+            }
+            return true;
+        }
+
+        return false;
     }
 
     @Override
@@ -170,110 +233,7 @@ public class ArcadeBlock extends Block implements EntityBlock {
         }
         BlockPos below = pos.below();
         BlockState belowState = level.getBlockState(below);
-        return belowState.is(this) || belowState.is(Blocks.MOVING_PISTON) || isMatchingMovingHalf(state, level, below);
-    }
-
-    private static boolean isMatchingMovingHalf(BlockState state, BlockGetter level, BlockPos partnerPos) {
-        if (level.getBlockEntity(partnerPos) instanceof PistonMovingBlockEntity moving) {
-            BlockState moved = moving.getMovedState();
-            return moved.is(state.getBlock()) && moved.getValue(HALF) != state.getValue(HALF);
-        }
-        return false;
-    }
-
-    @Override
-    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return getArcadeShape(state);
-    }
-
-    @Override
-    public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
-        return state.getValue(GAME) ? 7 : 0;
-    }
-
-    @Override
-    protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return getArcadeShape(state);
-    }
-
-    private static VoxelShape getArcadeShape(BlockState state) {
-        Map<Direction, VoxelShape> shapes = state.getValue(HALF) == DoubleBlockHalf.UPPER ? TOP_SHAPES : BOTTOM_SHAPES;
-        return shapes.get(state.getValue(FACING));
-    }
-
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        ArcadeBlockEntity arcade = getArcadeEntity(level, pos, state);
-        if (arcade == null) {
-            return InteractionResult.PASS;
-        }
-
-        if (handleRewardOrEject(level, player, arcade)) {
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-
-        if (!arcade.hasCartridge()) {
-            showNoCartridge(level, player);
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-
-        if (level.isClientSide && FMLEnvironment.dist == Dist.CLIENT
-                && arcade.getCartridge().getItem() instanceof GameDiscItem disc) {
-            ClientUtils.openArcadeScreen(arcade.getBlockPos(), disc);
-        }
-
-        return InteractionResult.sidedSuccess(level.isClientSide);
-    }
-
-    @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        ArcadeBlockEntity arcade = getArcadeEntity(level, pos, state);
-        if (arcade == null) {
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        }
-
-        if (handleRewardOrEject(level, player, arcade)) {
-            return ItemInteractionResult.sidedSuccess(level.isClientSide);
-        }
-
-        if (arcade.hasCartridge()) {
-            if (level.isClientSide && FMLEnvironment.dist == Dist.CLIENT
-                    && arcade.getCartridge().getItem() instanceof GameDiscItem disc) {
-                ClientUtils.openArcadeScreen(arcade.getBlockPos(), disc);
-            }
-            return ItemInteractionResult.sidedSuccess(level.isClientSide);
-        }
-
-        if (stack.getItem() instanceof GameDiscItem) {
-            if (!level.isClientSide && arcade.insertCartridge(stack)) {
-                stack.shrink(1);
-                level.playSound(null, arcade.getBlockPos(), PoSoundEvents.CONFIRM.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-            }
-            return ItemInteractionResult.sidedSuccess(level.isClientSide);
-        }
-
-        showNoCartridge(level, player);
-        return ItemInteractionResult.sidedSuccess(level.isClientSide);
-    }
-
-    private static boolean handleRewardOrEject(Level level, Player player, ArcadeBlockEntity arcade) {
-        if (arcade.getRewardCount() > 0) {
-            if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
-                arcade.claimReward(serverPlayer);
-            }
-            return true;
-        }
-
-        if (player.isShiftKeyDown()) {
-            if (arcade.hasCartridge()) {
-                ejectCartridge(level, player, arcade);
-            } else {
-                showNoCartridge(level, player);
-            }
-            return true;
-        }
-
-        return false;
+        return belowState.is(this);
     }
 
     @Nullable
@@ -313,19 +273,23 @@ public class ArcadeBlock extends Block implements EntityBlock {
     }
 
     @Override
-    public boolean isStickyBlock(BlockState state) {
-        return true;
+    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return getArcadeShape(state);
     }
 
     @Override
-    public boolean canStickTo(BlockState state, BlockState other) {
-        if (state.is(this) && other.is(this) && state.getValue(HALF) != other.getValue(HALF)) {
-            return true;
-        }
-        if (state.is(this) || other.is(this)) {
-            return false;
-        }
-        return super.canStickTo(state, other);
+    public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
+        return state.getValue(GAME) ? 7 : 0;
+    }
+
+    @Override
+    protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return getArcadeShape(state);
+    }
+
+    private static VoxelShape getArcadeShape(BlockState state) {
+        Map<Direction, VoxelShape> shapes = state.getValue(HALF) == DoubleBlockHalf.UPPER ? TOP_SHAPES : BOTTOM_SHAPES;
+        return shapes.get(state.getValue(FACING));
     }
 
     @Override

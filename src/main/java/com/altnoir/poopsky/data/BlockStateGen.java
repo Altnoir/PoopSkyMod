@@ -649,14 +649,25 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
 
     private void gachaMachine(Block block) {
         String path = getBlockPath(block);
-        ModelFile model = models().getExistingFile(modLoc("block/" + path));
+        ModelFile base = models().getExistingFile(modLoc("block/" + path));
+        ModelFile left = models().getExistingFile(modLoc("block/" + path + "_l"));
+        ModelFile center = models().getExistingFile(modLoc("block/" + path + "_c"));
+        ModelFile right = models().getExistingFile(modLoc("block/" + path + "_r"));
 
-        getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder()
-                .modelFile(model)
-                .rotationY(horizontalRotation(state.getValue(BlockStateProperties.HORIZONTAL_FACING)))
-                .build());
+        getVariantBuilder(block).forAllStates(state -> {
+            ModelFile model = switch (state.getValue(GachaBlock.STEP)) {
+                case 1, 5 -> left;
+                case 2, 6 -> center;
+                case 3, 7 -> right;
+                default -> base;
+            };
+            return ConfiguredModel.builder()
+                    .modelFile(model)
+                    .rotationY(horizontalRotation(state.getValue(BlockStateProperties.HORIZONTAL_FACING)))
+                    .build();
+        });
 
-        simpleBlockItem(block, model);
+        simpleBlockItem(block, base);
     }
 
     private void chiliVines(Block block) {

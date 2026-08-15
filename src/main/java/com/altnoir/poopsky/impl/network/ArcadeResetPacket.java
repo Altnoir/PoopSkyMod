@@ -7,8 +7,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import org.jetbrains.annotations.NotNull;
 
@@ -30,15 +28,11 @@ public record ArcadeResetPacket(BlockPos machinePos) implements CustomPacketPayl
     public static void handle(ArcadeResetPacket payload, @NotNull IPayloadContext context) {
         context.enqueueWork(() -> {
             ServerPlayer player = (ServerPlayer) context.player();
-            Level level = player.level();
-            if (!level.isLoaded(payload.machinePos())) {
+            if (!ArcadeAccess.canAccess(player, payload.machinePos())) {
                 return;
             }
-            if (player.position().distanceToSqr(Vec3.atCenterOf(payload.machinePos())) > 8.0D * 8.0D) {
-                return;
-            }
-            if (level.getBlockEntity(payload.machinePos()) instanceof ArcadeBlockEntity arcade) {
-                arcade.resetGame();
+            if (player.level().getBlockEntity(payload.machinePos()) instanceof ArcadeBlockEntity arcade) {
+                arcade.resetGame(player);
             }
         });
     }

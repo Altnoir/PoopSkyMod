@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.client;
+package com.altnoir.poopsky.game.util;
 
 import com.altnoir.poopsky.client.screen.GamingConsoleScreen;
 import com.altnoir.poopsky.content.block.entity.ArcadeBlockEntity;
@@ -17,10 +17,10 @@ import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public final class ClientUtils {
+public final class GameUtils {
     private static final Map<GameDiscItem, Supplier<ClientGame>> GAMES = new IdentityHashMap<>();
 
-    private ClientUtils() {
+    private GameUtils() {
     }
 
     public static void openArcadeScreen(BlockPos machinePos, GameDiscItem cartridge) {
