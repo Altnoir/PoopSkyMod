@@ -20,9 +20,6 @@ public final class EntityTypeTagsGen {
     }
 
     private static void generate(RegistrateTagsProvider.IntrinsicImpl<EntityType<?>> provider) {
-        provider.addTag(PoTags.EntityTypes.IGNORES_BLEEDING)
-                .add(EntityType.IRON_GOLEM, EntityType.SNOW_GOLEM);
-
         provider.addTag(PoTags.EntityTypes.GASHAPON_MOB)
                 .add(
                         EntityType.COW,
@@ -56,6 +53,8 @@ public final class EntityTypeTagsGen {
                         EntityType.ARMADILLO,
                         EntityType.AXOLOTL
                 );
+        provider.addTag(PoTags.EntityTypes.IGNORES_BLEEDING)
+                .add(EntityType.IRON_GOLEM, EntityType.SNOW_GOLEM);
 
         provider.addTag(PoTags.EntityTypes.RETAIN_IN_SUB_LEVEL)
                 .add(PoEntityType.STOOL.get(), PoEntityType.FLUSH_TOILET.get());

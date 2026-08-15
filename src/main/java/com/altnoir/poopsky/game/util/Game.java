@@ -18,10 +18,6 @@ public abstract class Game {
         return score;
     }
 
-    public int getTicks() {
-        return ticks;
-    }
-
     public void prepare() {
         score = 0;
         stage = GameStage.START;

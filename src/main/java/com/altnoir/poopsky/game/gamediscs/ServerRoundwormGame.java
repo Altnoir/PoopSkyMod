@@ -37,10 +37,19 @@ public class ServerRoundwormGame extends ServerGame {
     private void respawnApple() {
         while (true) {
             shit = new Vec2(random.nextInt(28), random.nextInt(20));
-            if (!BLOCKED.contains(shit) && !body.contains(shit)) {
+            if (!containsPoint(BLOCKED, shit) && !containsPoint(body, shit)) {
                 return;
             }
         }
+    }
+
+    private static boolean containsPoint(List<Vec2> points, Vec2 point) {
+        for (Vec2 value : points) {
+            if (value.equals(point)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -76,7 +85,7 @@ public class ServerRoundwormGame extends ServerGame {
         Vec2 head = body.getLast();
         Vec2 newPos = new Vec2(head.x + direction.x, head.y + direction.y);
         if (newPos.x < 0 || newPos.x >= 28 || newPos.y < 0 || newPos.y >= 20
-                || body.contains(newPos) || BLOCKED.contains(newPos)) {
+                || containsPoint(body, newPos) || containsPoint(BLOCKED, newPos)) {
             stage = GameStage.DIED;
             playSound(PoSoundEvents.GAME_OVER.get(), 0.9F, 2.0F);
             return;

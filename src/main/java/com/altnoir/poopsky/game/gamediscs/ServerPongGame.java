@@ -14,7 +14,7 @@ public class ServerPongGame extends ServerGame {
     private double ballVY = 2;
     private int opponentScore;
     private int ballTimer = 60;
-    private float ballSpeed = 4.0F;
+    private float ballSpeed = 2.0F;
 
     @Override
     public void prepare() {
@@ -25,14 +25,14 @@ public class ServerPongGame extends ServerGame {
         ballY = 78;
         opponentScore = 0;
         ballTimer = 60;
-        ballSpeed = 4.0F;
+        ballSpeed = 2.0F;
         resetBall();
     }
 
     private void resetBall() {
         ballX = 110;
         ballY = 78;
-        ballSpeed = 4.0F;
+        ballSpeed = 2.0F;
         ballVX = random.nextBoolean() ? ballSpeed : -ballSpeed;
         ballVY = random.nextBoolean() ? ballSpeed : -ballSpeed;
         ballTimer = 60;
@@ -49,7 +49,7 @@ public class ServerPongGame extends ServerGame {
         if (downDown) {
             playerY += 3;
         }
-        playerY = Math.min(Math.max(playerY, 0), HEIGHT - 20);
+        playerY = Math.clamp(playerY, 0, HEIGHT - 20);
 
         if (ballY < opponentY + 10) {
             opponentY -= 3;
@@ -57,7 +57,7 @@ public class ServerPongGame extends ServerGame {
         if (ballY > opponentY + 10) {
             opponentY += 3;
         }
-        opponentY = Math.min(Math.max(opponentY, 0), HEIGHT - 20);
+        opponentY = Math.clamp(opponentY, 0, HEIGHT - 20);
 
         if (ballTimer > 0) {
             ballTimer--;
