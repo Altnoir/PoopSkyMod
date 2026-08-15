@@ -675,8 +675,6 @@
   "poopsky.configuration.setPoopskyDefault.tooltip": "让服务器默认使用空中厕所世界预设",
   "poopsky.configuration.voidNetherGeneration": "虚空下界生成",
   "poopsky.configuration.voidNetherGeneration.tooltip": "使用空中厕所自定义虚空生成器时，让下界也保持空旷",
-  "poopsky.configuration.strongholdGeneration": "生成末地要塞",
-  "poopsky.configuration.strongholdGeneration.tooltip": "是否在空中厕所世界中生成末地要塞结构",
   "poopsky.configuration.lavaFluid": "禁用地下熔岩湖",
   "poopsky.configuration.lavaFluid.tooltip": "在世界生成中禁用地下熔岩湖",
   "poopsky.configuration.spawnToiletMode": "出生点厕所模式",

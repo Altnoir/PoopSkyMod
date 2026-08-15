@@ -631,8 +631,6 @@
   "poopsky.configuration.spawnToiletMode.sky_flush_toilet": "Sky Flush Toilet",
   "poopsky.configuration.spawnToiletMode.tooltip": "Which toilet to generate at the PoopSky world spawn. RANDOM_TOILET selects a random HARD toilet variant",
   "poopsky.configuration.spawnToiletMode.wooden_toilet": "Wooden Toilet",
-  "poopsky.configuration.strongholdGeneration": "Generate Strongholds",
-  "poopsky.configuration.strongholdGeneration.tooltip": "Whether strongholds generate in PoopSky worlds",
   "poopsky.configuration.timeStop": "Time Stop",
   "poopsky.configuration.title": "%s Options",
   "poopsky.configuration.trades": "Trades",

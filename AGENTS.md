@@ -189,7 +189,6 @@ Mixin 配置文件位于 `src/main/resources/poopsky.mixins.json`，包路径为
 |------------------------|---------|-------:|-------------------------------------------|
 | `setPoopskyDefault`    | boolean |   true | 是否将 poopsky 设为专用服务器默认世界类型 |
 | `voidNetherGeneration` | boolean |   true | 下界是否也使用虚空生成                    |
-| `strongholdGeneration` | boolean |   true | PoopSky 世界是否生成要塞                  |
 | `desperateWorld`       | boolean |  false | 是否启用绝望世界模式                      |
 | `compooperCrafting`    | boolean |  false | 是否禁用棍子合成时的液体消耗              |
 | `lavaFluid`            | boolean |   true | 是否禁用地下熔岩湖                        |

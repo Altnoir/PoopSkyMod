@@ -425,8 +425,6 @@ public final class LangGen {
         addConfig("setPoopskyDefault.tooltip", "Makes dedicated servers use the PoopSky world preset by default");
         addConfig("voidNetherGeneration", "Void Nether Generation");
         addConfig("voidNetherGeneration.tooltip", "Keeps the Nether empty when using the Poopsky custom void generator");
-        addConfig("strongholdGeneration", "Generate Strongholds");
-        addConfig("strongholdGeneration.tooltip", "Whether strongholds generate in PoopSky worlds");
         addConfig("spawnToiletMode", "Spawn Toilet Mode");
         addConfig("spawnToiletMode.tooltip", "Which toilet to generate at the PoopSky world spawn. RANDOM_TOILET selects a random HARD toilet variant");
         addConfig("spawnToiletMode.wooden_toilet", "Wooden Toilet");

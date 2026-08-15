@@ -27,7 +27,6 @@ public class Config {
 
     public static boolean setPoopSkyDefault;
     public static boolean voidNetherGeneration;
-    public static boolean strongholdGeneration;
     public static SpawnToiletMode spawnToiletMode;
     public static boolean desperateWorld;
     public static boolean lavaFluid;
@@ -67,8 +66,6 @@ public class Config {
             "Whether the dedicated server level-type default should be set to poopsky");
     private static final ModConfigSpec.BooleanValue VOID_NETHER_GENERATION = booleanOption("world", "voidNetherGeneration", true,
             "Whether the custom void generator should also keep the nether empty");
-    private static final ModConfigSpec.BooleanValue STRONGHOLD_GENERATION = booleanOption("world", "strongholdGeneration", true,
-            "Whether strongholds should generate in PoopSky worlds");
     private static final ModConfigSpec.EnumValue<SpawnToiletMode> SPAWN_TOILET_MODE = enumOption("world", "spawnToiletMode", SpawnToiletMode.WOODEN_TOILET,
             "Which toilet to generate at the PoopSky spawn point.",
             "Allowed values: WOODEN_TOILET, SKY_FLUSH_TOILET, RANDOM_TOILET");
@@ -102,7 +99,6 @@ public class Config {
         if (config.getSpec() == SPEC) {
             setPoopSkyDefault = SET_POOPSKY_DEFAULT.get();
             voidNetherGeneration = VOID_NETHER_GENERATION.get();
-            strongholdGeneration = STRONGHOLD_GENERATION.get();
             spawnToiletMode = SPAWN_TOILET_MODE.get();
             desperateWorld = DESPERATE_WORLD.get();
             lavaFluid = LAVA_FLUID_BLOCK.get();
