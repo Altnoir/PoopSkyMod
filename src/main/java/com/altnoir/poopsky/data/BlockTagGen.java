@@ -161,6 +161,11 @@ public final class BlockTagGen {
         tag(BlockTags.SAND).add(PoBlocks.DRIED_POOP_BLOCK.get());
 
         tag(BlockTags.REPLACEABLE_BY_TREES).add(PoBlocks.MYCELIUM_BLOCK.get());
+        tag(BlockTags.INSIDE_STEP_SOUND_BLOCKS)
+                .add(
+                        PoBlocks.MYCELIUM_MAT.get(),
+                        PoBlocks.MUSHROOM_BED.get()
+                );
 
         tag(BlockTags.MUSHROOM_GROW_BLOCK)
                 .addTag(PoTags.Blocks.POOP_BLOCKS)
