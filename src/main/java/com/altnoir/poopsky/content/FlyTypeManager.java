@@ -10,6 +10,8 @@ import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -123,6 +125,16 @@ public class FlyTypeManager extends SimpleJsonResourceReloadListener {
     public int getIndex(String id) {
         int index = flyTypes.indexOf(id);
         return Math.max(index, 0);
+    }
+
+    public synchronized void addKubeJsTypes(Collection<String> ids) {
+        List<String> updated = new ArrayList<>(flyTypes);
+        for (String id : ids) {
+            if (!updated.contains(id)) {
+                updated.add(id);
+            }
+        }
+        this.flyTypes = List.copyOf(updated);
     }
 
     public boolean isValid(String id) {

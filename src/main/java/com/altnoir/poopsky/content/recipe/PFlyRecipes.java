@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Random;
 
 public class PFlyRecipes {
-
     public record JeiMutationRecipe(FlyType.Type parent1, FlyType.Type parent2, FlyType.Type result, float chance) {}
 
     public static ItemStack getProduct(Level level, FlyType.Type type) {

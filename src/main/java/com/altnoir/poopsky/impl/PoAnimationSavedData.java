@@ -13,10 +13,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-/**
- * Legacy world-level animation state used only to migrate old saves.
- * New animation flags are stored on ServerPlayer attachments.
- */
 public final class PoAnimationSavedData extends SavedData {
     private static final String DATA_NAME = "poopsky_intro";
     private static final String PLAYED_PLAYERS_TAG = "played_players";

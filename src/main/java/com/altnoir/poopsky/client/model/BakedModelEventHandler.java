@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.client.model;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.content.FlyType;
+import com.altnoir.poopsky.content.FlyTypeManager;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoBlocks;
@@ -55,7 +55,7 @@ public class BakedModelEventHandler {
     }
 
     private static void registerFlyItemModels(ModelEvent.RegisterAdditional event) {
-        for (String id : FlyType.FLY_TYPES) {
+        for (String id : FlyTypeManager.INSTANCE.getFlyTypes()) {
             String flyId = id.equals(FlyTypes.NORMAL.id()) ? "fly" : "fly_" + id;
             event.register(new ModelResourceLocation(PoopSky.loc("item/" + flyId), ModelResourceLocation.STANDALONE_VARIANT));
         }
