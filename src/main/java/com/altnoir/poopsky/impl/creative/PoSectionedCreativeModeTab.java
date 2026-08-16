@@ -5,6 +5,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackLinkedSet;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,6 +22,8 @@ public final class PoSectionedCreativeModeTab extends CreativeModeTab {
     private Collection<ItemStack> displayItems = List.of();
     private Set<ItemStack> searchItems = ItemStackLinkedSet.createTypeAndComponentsSet();
     private List<SectionLayout> sectionLayouts = List.of();
+    @Nullable
+    private ItemDisplayParameters cachedParameters;
 
     private PoSectionedCreativeModeTab(Builder builder, List<PoCreativeTabSection> sections, Consumer<ItemDisplayParameters> populator) {
         super(builder);
@@ -35,6 +38,7 @@ public final class PoSectionedCreativeModeTab extends CreativeModeTab {
 
     @Override
     public void buildContents(ItemDisplayParameters parameters) {
+        this.cachedParameters = parameters;
         sections.forEach(PoCreativeTabSection::clear);
         populator.accept(parameters);
 
@@ -63,6 +67,12 @@ public final class PoSectionedCreativeModeTab extends CreativeModeTab {
         displayItems = List.copyOf(newDisplayItems);
         searchItems = newSearchItems;
         sectionLayouts = List.copyOf(newLayouts);
+    }
+
+    public void rebuild() {
+        if (cachedParameters != null) {
+            buildContents(cachedParameters);
+        }
     }
 
     @Override

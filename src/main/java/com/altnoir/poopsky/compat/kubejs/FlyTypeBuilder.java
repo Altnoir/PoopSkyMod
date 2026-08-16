@@ -25,12 +25,12 @@ public final class FlyTypeBuilder {
         return id;
     }
 
-    public ResourceLocation texture() {
-        return texture;
-    }
-
     public String displayName() {
         return displayName;
+    }
+
+    public ResourceLocation texture() {
+        return texture;
     }
 
     public boolean hasFlyBarrel() {

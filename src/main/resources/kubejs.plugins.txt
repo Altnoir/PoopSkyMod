@@ -1,1 +1,1 @@
-com.altnoir.poopsky.compat.kubejs.PoopSkyKubeJSPlugin
+com.altnoir.poopsky.compat.kubejs.PoKubeJSPlugin

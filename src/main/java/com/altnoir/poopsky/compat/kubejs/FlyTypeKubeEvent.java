@@ -4,6 +4,6 @@ import dev.latvian.mods.kubejs.event.KubeEvent;
 
 public final class FlyTypeKubeEvent implements KubeEvent {
     public FlyTypeBuilder register(String id) {
-        return PoopSkyFlyTypes.INSTANCE.register(id);
+        return PoFlyTypes.INSTANCE.registerStartup(id);
     }
 }

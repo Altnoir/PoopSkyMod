@@ -28,7 +28,7 @@ public final class KubeJSFlyTypeReloadListener implements PreparableReloadListen
             Executor backgroundExecutor,
             Executor gameExecutor) {
         return preparationBarrier.wait(null).thenRunAsync(
-                () -> FlyTypeManager.INSTANCE.replaceKubeJsDefinitions(PoopSkyFlyTypes.INSTANCE.definitions()),
+                () -> FlyTypeManager.INSTANCE.replaceKubeJsDefinitions(PoFlyTypes.INSTANCE.definitions()),
                 gameExecutor
         );
     }
