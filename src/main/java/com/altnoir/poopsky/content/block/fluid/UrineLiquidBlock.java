@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.content.block.fluid;
 
+import com.altnoir.poopsky.init.PoBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -22,7 +23,7 @@ public class UrineLiquidBlock extends LiquidBlock {
     protected void check(Level level, BlockPos pos) {
         //hasBlockNeighbor(level, pos, Blocks.NETHERRACK, Blocks.MAGMA_BLOCK, Blocks.LAVA);
         //hasBlockNeighbor(level, pos, Blocks.CLAY, Blocks.CLAY, Blocks.WATER);
-        hasBlockNeighbor(level, pos, Blocks.SOUL_SAND, Blocks.SAND);
+        hasBlockNeighbor(level, pos, PoBlocks.POOP_SAND.get(), Blocks.SAND);
     }
 
     @Override

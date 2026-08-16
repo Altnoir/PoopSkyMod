@@ -391,6 +391,10 @@ public final class LangGen {
         provider.add("jei.category.poopsky.anal_pressing", "Anal Pressing");
         provider.add("jei.category.poopsky.fly_barrel", "Fly Barrel");
         provider.add("jei.category.poopsky.breeding_chest", "Breeding Box");
+        provider.add("jei.category.poopsky.liquid_interaction", "Liquid Interaction");
+        provider.add("jei.poopsky.liquid_interaction.source_flowing", "Source and flowing fluids produce different results");
+        provider.add("jei.poopsky.liquid_interaction.replace_left", "The result replaces the left fluid");
+        provider.add("jei.poopsky.liquid_interaction.below", "The block below must be: %s");
         provider.add("jei.poopsky.sieve_chance", "Chance: %.2f%%");
         provider.add("jei.poopsky.pop_explosion_radius", "Radius > %s");
         provider.add("jei.poopsky.anal_pressing_replace", "Max Press %s");

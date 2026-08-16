@@ -19,9 +19,10 @@ import mezz.jei.api.registration.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ public class PSJEIPlugin implements IModPlugin {
     private final List<CreateRecipeCategory<?>> createCategories = new ArrayList<>();
 
     @Override
-    public @NotNull ResourceLocation getPluginUid() {
+    public ResourceLocation getPluginUid() {
         return PoopSky.loc("jei_plugin");
     }
 
@@ -48,8 +49,9 @@ public class PSJEIPlugin implements IModPlugin {
                 new SieveRecipeCategory(registration.getJeiHelpers(), arrow),
                 new FlyBarrelRecipeCategory(registration.getJeiHelpers(), arrow),
                 new BreedingChestRecipeCategory(registration.getJeiHelpers(), arrow),
-                new POPExplosionRecipeCategory(registration.getJeiHelpers(), arrow,arrow2),
-                new AnalPressingRecipeCategory(registration.getJeiHelpers(), arrow, plus));
+                new POPExplosionRecipeCategory(registration.getJeiHelpers(), arrow, arrow2),
+                new AnalPressingRecipeCategory(registration.getJeiHelpers(), arrow, plus),
+                new LiquidInteractionRecipeCategory(registration.getJeiHelpers(), arrow, plus));
 
         if (PoMods.CREATE.isLoaded()) {
             createCategories.clear();
@@ -62,12 +64,12 @@ public class PSJEIPlugin implements IModPlugin {
     public void registerItemSubtypes(ISubtypeRegistration registration) {
         registration.registerSubtypeInterpreter(PoItems.FLY.get(), new ISubtypeInterpreter<>() {
             @Override
-            public Object getSubtypeData(ItemStack itemStack, UidContext context) {
+            public @Nullable Object getSubtypeData(ItemStack itemStack, UidContext context) {
                 return itemStack.get(PoComponents.FLY_TYPE.get());
             }
 
             @Override
-            public @NotNull String getLegacyStringSubtypeInfo(ItemStack itemStack, UidContext context) {
+            public String getLegacyStringSubtypeInfo(ItemStack itemStack, UidContext context) {
                 String flyType = itemStack.get(PoComponents.FLY_TYPE.get());
                 return flyType != null ? flyType : "";
             }
@@ -75,13 +77,13 @@ public class PSJEIPlugin implements IModPlugin {
 
         ISubtypeInterpreter<ItemStack> toiletSubtypeInterpreter = new ISubtypeInterpreter<>() {
             @Override
-            public Object getSubtypeData(ItemStack itemStack, UidContext context) {
+            public @Nullable Object getSubtypeData(ItemStack itemStack, UidContext context) {
                 ToiletType toiletType = itemStack.get(PoComponents.TOILET_TYPE.get());
                 return toiletType != null ? toiletType.id() : null;
             }
 
             @Override
-            public @NotNull String getLegacyStringSubtypeInfo(ItemStack itemStack, UidContext context) {
+            public String getLegacyStringSubtypeInfo(ItemStack itemStack, UidContext context) {
                 ToiletType toiletType = itemStack.get(PoComponents.TOILET_TYPE.get());
                 return toiletType != null ? toiletType.id() : "";
             }
@@ -108,6 +110,8 @@ public class PSJEIPlugin implements IModPlugin {
         registration.addRecipes(FlyBarrelRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PoRecipes.FLY_BARREL.type().get()));
         registration.addRecipes(BreedingChestRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PoRecipes.BREEDING_CHEST.type().get()));
 
+        registration.addRecipes(LiquidInteractionRecipeCategory.TYPE, LiquidInteractionRecipes.all());
+
         PSJEIInfo.register(registration);
 
         if (PoMods.CREATE.isLoaded()) {
@@ -129,6 +133,10 @@ public class PSJEIPlugin implements IModPlugin {
         registration.addRecipeCatalyst(new ItemStack(PoBlocks.POOP_TNT.get()), POPExplosionRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(PoItems.KING_OF_DRAGON_FRUIT.get()), AnalPressingRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(PoItems.DRAGON_BREATH_CHILI.get()), AnalPressingRecipeCategory.TYPE);
+
+        registration.addRecipeCatalyst(new ItemStack(PoItems.URINE_BUCKET.get()), LiquidInteractionRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(Items.WATER_BUCKET), LiquidInteractionRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(Items.LAVA_BUCKET), LiquidInteractionRecipeCategory.TYPE);
 
         if (PoMods.CREATE.isLoaded()) {
             createCategories.forEach(category -> category.registerCatalysts(registration));
