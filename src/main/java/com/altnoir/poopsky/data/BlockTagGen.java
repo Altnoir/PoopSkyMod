@@ -51,6 +51,8 @@ public final class BlockTagGen {
         tag(PoTags.Blocks.WATER_BLOCK)
                 .add(PoBlocks.RAW_SEA_POOP_BLOCK.get());
 
+        tag(PoTags.Blocks.MYCELIUM_REPLACEABLE).addTag(BlockTags.DIRT);
+
         tag(PoTags.Blocks.POOP_BLOCKS)
                 .add(PoBlocks.POOP_BLOCK.get())
                 .add(PoBlocks.CHILI_POOP_BLOCK.get())
@@ -119,6 +121,7 @@ public final class BlockTagGen {
         tag(PoTags.Blocks.MAGGOTS_CHUNK_LOADER_BASE_BLOCKS)
                 .add(PoBlocks.MAGGOTS_BLOCK.get());
 
+
         //基础标签
         tag(BlockTags.MOSS_REPLACEABLE)
                 .add(PoBlocks.POOP_BLOCK.get())
@@ -148,12 +151,16 @@ public final class BlockTagGen {
 
         tag(BlockTags.DIRT)
                 .addTag(PoTags.Blocks.POOP_BLOCKS)
-                .add(PoBlocks.RAW_POOP_BLOCK.get())
-                .add(PoBlocks.RAW_SAPLING_POOP_BLOCK.get())
-                .add(PoBlocks.RAW_SEA_POOP_BLOCK.get())
-                .add(PoBlocks.RAW_WITHER_POOP_BLOCK.get());
-        tag(BlockTags.SAND)
-                .add(PoBlocks.DRIED_POOP_BLOCK.get());
+                .add(
+                        PoBlocks.RAW_POOP_BLOCK.get(),
+                        PoBlocks.RAW_SAPLING_POOP_BLOCK.get(),
+                        PoBlocks.RAW_SEA_POOP_BLOCK.get(),
+                        PoBlocks.RAW_WITHER_POOP_BLOCK.get(),
+                        PoBlocks.MYCELIUM_BLOCK.get()
+                );
+        tag(BlockTags.SAND).add(PoBlocks.DRIED_POOP_BLOCK.get());
+
+        tag(BlockTags.REPLACEABLE_BY_TREES).add(PoBlocks.MYCELIUM_BLOCK.get());
 
         tag(BlockTags.MUSHROOM_GROW_BLOCK)
                 .addTag(PoTags.Blocks.POOP_BLOCKS)
@@ -295,6 +302,9 @@ public final class BlockTagGen {
                         PoBlocks.RAW_SAPLING_POOP_BLOCK.get(),
                         PoBlocks.RAW_SEA_POOP_BLOCK.get(),
                         PoBlocks.RAW_WITHER_POOP_BLOCK.get(),
+                        PoBlocks.MYCELIUM_BLOCK.get(),
+                        PoBlocks.MYCELIUM_MAT.get(),
+                        PoBlocks.MUSHROOM_BED.get(),
                         PoBlocks.SHIT.get(),
                         PoBlocks.CHILI_SHIT.get(),
                         PoBlocks.GOLDEN_SHIT.get(),

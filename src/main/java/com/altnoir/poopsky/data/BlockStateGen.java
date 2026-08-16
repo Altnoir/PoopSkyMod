@@ -15,6 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
@@ -53,6 +54,11 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         blockWithItem(PoBlocks.RAW_SAPLING_POOP_BLOCK.get());
         blockWithItem(PoBlocks.RAW_SEA_POOP_BLOCK.get());
         blockWithItem(PoBlocks.RAW_WITHER_POOP_BLOCK.get());
+        rotationYblockWithItem(PoBlocks.MYCELIUM_BLOCK.get());
+        multifaceBlock(PoBlocks.MYCELIUM_MAT.get());
+        flowerbedModels(PoBlocks.MUSHROOM_BED.get());
+
+
         blockWithItem(PoBlocks.POOP_LEAVES.get());
         blockWithItem(PoBlocks.POOP_LEAVES_GOLD.get());
         blockWithItem(PoBlocks.POOP_LEAVES_IRON.get());
@@ -647,6 +653,85 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         simpleBlockItem(block, horizontal);
     }
 
+    private void rotationYblockWithItem(Block block) {
+        var model = createBlockModel(block);
+
+        getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder()
+                .modelFile(model).rotationY(0).nextModel()
+                .modelFile(model).rotationY(90).nextModel()
+                .modelFile(model).rotationY(180).nextModel()
+                .modelFile(model).rotationY(270).build());
+        simpleBlockItem(block, model);
+    }
+
+    private void multifaceBlock(Block block) {
+        String path = getBlockPath(block);
+        ResourceLocation texture = modLoc("block/" + path);
+        ModelFile model = models().getBuilder(path).renderType("cutout")
+                .ao(false)
+                .texture(PARTICLE, texture)
+                .texture("multiface", texture)
+                .element()
+                .from(0, 0, 0.1F).to(16, 16, 0.1F)
+                .face(Direction.NORTH).uvs(16, 0, 0, 16).texture("#multiface").end()
+                .face(Direction.SOUTH).uvs(0, 0, 16, 16).texture("#multiface").end()
+                .end();
+
+        var builder = getMultipartBuilder(block);
+        for (MultifaceFace face : MULTIFACE_FACES) {
+            builder.part()
+                    .modelFile(model)
+                    .rotationX(face.rotationX())
+                    .rotationY(face.rotationY())
+                    .uvLock(face.rotationX() != 0 || face.rotationY() != 0)
+                    .addModel()
+                    .condition(face.property(), true)
+                    .end();
+
+            var noFacePart = builder.part()
+                    .modelFile(model)
+                    .rotationX(face.rotationX())
+                    .rotationY(face.rotationY())
+                    .uvLock(face.rotationX() != 0 || face.rotationY() != 0)
+                    .addModel();
+            MULTIFACE_FACES.forEach(entry -> noFacePart.condition(entry.property(), false));
+            noFacePart.end();
+        }
+
+        generatedItem(block);
+    }
+
+    private void flowerbedModels(Block block) {
+        String blockPath = getBlockPath(block);
+        ModelFile[] flowerbedModels = new ModelFile[4];
+        for (int i = 1; i <= 4; i++) {
+            flowerbedModels[i - 1] = models().withExistingParent(blockPath + "_" + i, mcLoc("block/flowerbed_" + i))
+                    .renderType("cutout")
+                    .texture("flowerbed", modLoc("block/" + blockPath))
+                    .texture("stem", modLoc("block/" + blockPath + "_stem"));
+        }
+
+        var builder = getMultipartBuilder(block);
+        for (int amount = 1; amount <= 4; amount++) {
+            List<Integer> amounts = new ArrayList<>();
+            for (int i = amount; i <= 4; i++) {
+                amounts.add(i);
+            }
+
+            for (Direction facing : Direction.Plane.HORIZONTAL) {
+                builder.part()
+                        .modelFile(flowerbedModels[amount - 1])
+                        .rotationY(horizontalRotation(facing))
+                        .addModel()
+                        .condition(BlockStateProperties.FLOWER_AMOUNT, amounts.toArray(Integer[]::new))
+                        .condition(BlockStateProperties.HORIZONTAL_FACING, facing)
+                        .end();
+            }
+        }
+
+        generatedItem(block);
+    }
+
     private void gachaMachine(Block block) {
         String path = getBlockPath(block);
         ModelFile base = models().getExistingFile(modLoc("block/" + path));
@@ -895,6 +980,18 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         };
     }
 
+    private record MultifaceFace(BooleanProperty property, int rotationX, int rotationY) {
+    }
+
+    private static final List<MultifaceFace> MULTIFACE_FACES = List.of(
+            new MultifaceFace(BlockStateProperties.NORTH, 0, 0),
+            new MultifaceFace(BlockStateProperties.EAST, 0, 90),
+            new MultifaceFace(BlockStateProperties.SOUTH, 0, 180),
+            new MultifaceFace(BlockStateProperties.WEST, 0, 270),
+            new MultifaceFace(BlockStateProperties.UP, 270, 0),
+            new MultifaceFace(BlockStateProperties.DOWN, 90, 0)
+    );
+
     private void blockFamily(PoBlocks.BlockFamily family) {
         blockFamily(family.block().get(), family.stairs().get(), family.slab().get(), family.verticalSlab().get(), family.wall().get());
     }
@@ -923,6 +1020,11 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
     protected ItemModelBuilder generatedItem(Block block, String name) {
         return itemModels().withExistingParent(getItemPath(block), mcLoc("item/generated"))
                 .texture("layer0", modLoc(name + "/" + getBlockPath(block)));
+    }
+
+    private ModelFile createBlockModel(Block block) {
+        return models().withExistingParent(getBlockPath(block), mcLoc("block/cube_all"))
+                .texture("all", modLoc("block/" + getBlockPath(block)));
     }
 
     private ModelFile blockModel(Block block) {

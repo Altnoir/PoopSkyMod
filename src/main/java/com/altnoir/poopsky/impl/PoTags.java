@@ -33,6 +33,8 @@ public class PoTags {
         TagKey<Block> POOP_TNT_DESTROY = create("poop_tnt_destroy");
         TagKey<Block> POOP_TNT_REPLACEABLE = create("poop_tnt_replaceable");
 
+        TagKey<Block> MYCELIUM_REPLACEABLE = create("mycelium_replaceable");
+
         TagKey<Block> BREEDING_CHEST_ACCELERATOR = create("breeding_chest_accelerator");
         TagKey<Block> BREEDING_CHEST_PARALLELISM = create("breeding_chest_parallelism");
         TagKey<Block> FLY_LOVE = create("fly_love");

@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "poopsky:block/mycelium_block"
+      },
+      {
+        "model": "poopsky:block/mycelium_block",
+        "y": 90
+      },
+      {
+        "model": "poopsky:block/mycelium_block",
+        "y": 180
+      },
+      {
+        "model": "poopsky:block/mycelium_block",
+        "y": 270
+      }
+    ]
+  }
+}

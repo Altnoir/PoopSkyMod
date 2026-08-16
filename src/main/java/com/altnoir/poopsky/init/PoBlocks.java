@@ -5,6 +5,7 @@ import com.altnoir.poopsky.content.SetToiletTypeFunction;
 import com.altnoir.poopsky.content.block.ChiliVines;
 import com.altnoir.poopsky.content.block.PoTreeGrower;
 import com.altnoir.poopsky.content.block.p.*;
+import com.altnoir.poopsky.content.block.p.MyceliumBlock;
 import com.altnoir.poopsky.content.item.p.CompooperBlockItem;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
@@ -262,6 +263,31 @@ public class PoBlocks {
             props -> new RawSeaBlock(BlockBehaviour.Properties.ofFullCopy(RAW_POOP_BLOCK.get()).sound(SoundType.ROOTED_DIRT)));
     public static final BlockEntry<RawWitherBlock> RAW_WITHER_POOP_BLOCK = registerBlock("raw_wither_poop_block", 88,
             props -> new RawWitherBlock(BlockBehaviour.Properties.ofFullCopy(RAW_POOP_BLOCK.get()).sound(SoundType.ROOTED_DIRT)));
+
+    public static final BlockEntry<MyceliumBlock> MYCELIUM_BLOCK = registerBlock("mycelium_block",
+            props -> new MyceliumBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_PURPLE)
+                    .strength(0.1F)
+                    .sound(SoundType.MOSS)
+                    .pushReaction(PushReaction.DESTROY))
+    );
+    public static final BlockEntry<MyceliumMatBlock> MYCELIUM_MAT = registerBlock("mycelium_mat",
+            props -> new MyceliumMatBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_PURPLE)
+                    .replaceable()
+                    .noCollission()
+                    .strength(0.2F)
+                    .sound(SoundType.GLOW_LICHEN)
+                    .lightLevel(GlowLichenBlock.emission(3))
+                    .ignitedByLava()
+                    .pushReaction(PushReaction.DESTROY)
+            )
+    );
+    public static final BlockEntry<PinkPetalsBlock> MUSHROOM_BED = registerBlock("mushroom_bed",
+            props -> new PinkPetalsBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_RED).noCollission().sound(SoundType.PINK_PETALS).pushReaction(PushReaction.DESTROY)
+            )
+    );
 
     public static final BlockEntry<ChairBlock> STOOL = registerBlock("stool", 88,
             props -> new ChairBlock(poopProperties().pushReaction(PushReaction.DESTROY).noOcclusion()));
