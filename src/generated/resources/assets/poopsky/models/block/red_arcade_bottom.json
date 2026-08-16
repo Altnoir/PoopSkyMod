@@ -1,0 +1,7 @@
+{
+  "parent": "poopsky:block/arcade_bottom",
+  "textures": {
+    "arcade": "poopsky:block/arcade/red_arcade_bottom",
+    "particle": "poopsky:block/arcade/red_arcade_particle"
+  }
+}

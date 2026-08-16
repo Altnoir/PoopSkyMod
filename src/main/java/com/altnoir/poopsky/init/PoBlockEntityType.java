@@ -50,7 +50,7 @@ public class PoBlockEntityType {
 
     public static final BlockEntityEntry<ArcadeBlockEntity> ARCADE_BLOCK_ENTITY = REGISTRATE
             .<ArcadeBlockEntity>blockEntity("arcade_block_entity", (type, pos, state) -> new ArcadeBlockEntity(pos, state))
-            .validBlocks(PoBlocks.BLUE_ARCADE)
+            .validBlocks(PoBlocks.RED_ARCADE, PoBlocks.BLUE_ARCADE)
             .renderer(() -> ArcadeBlockEntityRenderer::new)
             .register();
 

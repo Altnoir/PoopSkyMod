@@ -260,24 +260,27 @@ public final class BlockTagGen {
                         PoBlocks.GINKGO_TOILET.get()
                 );
 
-        var mineableWithPickaxe = tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(
-                        PoBlocks.HARD_TOILET.get(),
-                        PoBlocks.FLUSH_TOILET.get(),
-                        PoBlocks.PORTABLE_TOILET.get(),
-                        PoBlocks.GOLDEN_FLUSH_TOILET.get(),
-                        PoBlocks.BREEDING_CHEST.get(),
-                        PoBlocks.POOP_LOG.get(),
-                        PoBlocks.POOP_WOOD.get(),
-                        PoBlocks.STRIPPED_POOP_LOG.get(),
-                        PoBlocks.STRIPPED_POOP_WOOD.get()
-                );
-        PoBlocks.COLORED_TILE_BLOCK_FAMILIES.forEach(family ->
-                family.blocks().forEach(block -> mineableWithPickaxe.add(block.get())));
+        var mineableWithPickaxe = tag(BlockTags.MINEABLE_WITH_PICKAXE);
+        PoBlocks.COLORED_TILE_BLOCK_FAMILIES.forEach(family -> family.blocks().forEach(block -> mineableWithPickaxe.add(block.get())));
+        PoBlocks.POOP_BRICK_FAMILY.blocks().stream().skip(1).forEach(block -> mineableWithPickaxe.add(block.get()));
+        PoBlocks.HARDENED_POOP_FAMILIES.stream().skip(1).forEach(family -> family.blocks().forEach(block -> mineableWithPickaxe.add(block.get())));
         mineableWithPickaxe.add(
+                PoBlocks.HARD_TOILET.get(),
+                PoBlocks.FLUSH_TOILET.get(),
+                PoBlocks.PORTABLE_TOILET.get(),
+                PoBlocks.GOLDEN_FLUSH_TOILET.get(),
+                PoBlocks.CRACKED_POOP_BRICKS.get(),
+                PoBlocks.POOP_LOG.get(),
+                PoBlocks.POOP_WOOD.get(),
+                PoBlocks.STRIPPED_POOP_LOG.get(),
+                PoBlocks.STRIPPED_POOP_WOOD.get(),
                 PoBlocks.SIEVE.get(),
                 PoBlocks.PLACER.get(),
+                PoBlocks.BREEDING_CHEST.get(),
                 PoBlocks.MAGGOTS_CHUNK_LOADER.get(),
+                PoBlocks.RED_ARCADE.get(),
+                PoBlocks.BLUE_ARCADE.get(),
+                PoBlocks.GACHA_MACHINE.get(),
                 PoBlocks.SALTPETER_BLOCK.get(),
                 PoBlocks.SALTPETER_CLUSTER.get(),
                 PoBlocks.LARGE_SALTPETER_BUD.get(),
@@ -291,9 +294,6 @@ public final class BlockTagGen {
                 PoBlocks.POWDER_SNOW_COMPOOPER.get(),
                 PoBlocks.URINE_COMPOOPER.get()
         );
-        mineableWithPickaxe.add(PoBlocks.POOP_BRICKS.get(), PoBlocks.CRACKED_POOP_BRICKS.get());
-        PoBlocks.POOP_BRICK_FAMILY.blocks().stream().skip(1).forEach(block -> mineableWithPickaxe.add(block.get()));
-        PoBlocks.HARDENED_POOP_FAMILIES.stream().skip(1).forEach(family -> family.blocks().forEach(block -> mineableWithPickaxe.add(block.get())));
 
         tag(BlockTags.MINEABLE_WITH_HOE)
                 .add(

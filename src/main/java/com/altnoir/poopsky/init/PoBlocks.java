@@ -359,9 +359,11 @@ public class PoBlocks {
                     .mapColor(DyeColor.WHITE)
                     .strength(HARDEN, HARD_STRENGTH)
                     .sound(SoundType.NETHERITE_BLOCK)
+                    .requiresCorrectToolForDrops()
                     .noOcclusion()));
 
     public static final BlockEntry<ArcadeBlock> BLUE_ARCADE = registerArcadeBlock("blue_arcade", DyeColor.BLUE);
+    public static final BlockEntry<ArcadeBlock> RED_ARCADE = registerArcadeBlock("red_arcade", DyeColor.RED);
 
     public static final BlockEntry<PoopLogBlock> POOP_LOG = registerPoopBlock("poop_log",
             props -> new PoopLogBlock(logProperties(MapColor.COLOR_BROWN, SoundType.STEM).randomTicks()),
@@ -823,6 +825,7 @@ public class PoBlocks {
                         .mapColor(color)
                         .strength(HARDEN, HARD_STRENGTH)
                         .sound(SoundType.METAL)
+                        .requiresCorrectToolForDrops()
                         .noOcclusion()),
                 (loot, block) -> loot.add(block, loot.createDoorTable(block)));
         ARCADE_BLOCKS.add(entry);

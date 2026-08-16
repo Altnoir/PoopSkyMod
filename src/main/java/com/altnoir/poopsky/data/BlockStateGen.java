@@ -58,7 +58,6 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         multifaceBlock(PoBlocks.MYCELIUM_MAT.get());
         flowerbedModels(PoBlocks.MUSHROOM_BED.get());
 
-
         blockWithItem(PoBlocks.POOP_LEAVES.get());
         blockWithItem(PoBlocks.POOP_LEAVES_GOLD.get());
         blockWithItem(PoBlocks.POOP_LEAVES_IRON.get());
@@ -84,8 +83,8 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         flushToilet(PoBlocks.GOLDEN_FLUSH_TOILET.get());
         portableToilet(PoBlocks.GINKGO_TOILET.get());
         portableToilet(PoBlocks.PORTABLE_TOILET.get());
-        gachaMachine(PoBlocks.GACHA_MACHINE.get());
         PoBlocks.getArcadeBlocks().forEach(entry -> arcade(entry.get()));
+        gachaMachine(PoBlocks.GACHA_MACHINE.get());
         shitBlock(PoBlocks.SHIT.get(), PoBlocks.POOP_BLOCK.get());
         shitBlock(PoBlocks.CHILI_SHIT.get(), PoBlocks.CHILI_POOP_BLOCK.get());
         shitBlock(PoBlocks.GOLDEN_SHIT.get(), PoBlocks.GOLDEN_POOP_BLOCK.get());
@@ -869,10 +868,10 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         String path = getBlockPath(block);
         String suffix = upper ? "_top" : "_bottom";
         var model = models().withExistingParent(path + suffix, modLoc("block/arcade" + suffix))
-                .texture("arcade", modLoc("block/" + path + suffix))
-                .texture(PARTICLE, modLoc("block/" + path + "_particle"));
+                .texture("arcade", modLoc("block/arcade/" + path + suffix))
+                .texture(PARTICLE, modLoc("block/arcade/" + path + "_particle"));
         if (upper) {
-            model.texture("screen", modLoc("block/screen"));
+            model.texture("screen", modLoc("block/arcade/screen"));
         }
         return model;
     }
