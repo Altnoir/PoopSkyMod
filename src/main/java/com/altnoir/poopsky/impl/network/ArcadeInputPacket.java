@@ -2,7 +2,7 @@ package com.altnoir.poopsky.impl.network;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.entity.ArcadeBlockEntity;
-import com.altnoir.poopsky.game.controls.Button;
+import com.altnoir.poopsky.game.Button;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;

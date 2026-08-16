@@ -463,6 +463,12 @@
   "key.poopsky.dismount_plug": "변기 뚫어뻥에서 내리기",
   "key.poopsky.up": "상승",
   "key.poopsky.down": "하강",
+  "key.poopsky.arcade.up": "아케이드 위",
+  "key.poopsky.arcade.down": "아케이드 아래",
+  "key.poopsky.arcade.left": "아케이드 왼쪽",
+  "key.poopsky.arcade.right": "아케이드 오른쪽",
+  "key.poopsky.arcade.button1": "아케이드 버튼 1",
+  "key.poopsky.arcade.button2": "아케이드 버튼 2",
   "message.poopsky.toilet_plug.dismount": "%s 키를 눌러 변기 뚫어뻥에서 내리기",
 
   "upgrade.poopsky.omen_upgrade": "기피 업그레이드",

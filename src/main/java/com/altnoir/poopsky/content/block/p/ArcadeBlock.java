@@ -36,8 +36,6 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.loading.FMLEnvironment;
 
 import javax.annotation.Nullable;
 import java.util.EnumMap;
@@ -156,11 +154,8 @@ public class ArcadeBlock extends Block implements EntityBlock {
         if (!arcade.isController(player) || handleRewardOrEject(level, player, arcade)) {
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
+        startArcadeControl(level, player, arcade);
         if (arcade.hasCartridge()) {
-            if (level.isClientSide && FMLEnvironment.dist == Dist.CLIENT
-                    && arcade.getCartridge().getItem() instanceof GameDiscItem disc) {
-                GameUtils.openArcadeScreen(arcade.getBlockPos(), disc);
-            }
         } else {
             showNoCartridge(level, player);
         }
@@ -176,11 +171,8 @@ public class ArcadeBlock extends Block implements EntityBlock {
         if (!arcade.isController(player) || handleRewardOrEject(level, player, arcade)) {
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
+        startArcadeControl(level, player, arcade);
         if (arcade.hasCartridge()) {
-            if (level.isClientSide && FMLEnvironment.dist == Dist.CLIENT
-                    && arcade.getCartridge().getItem() instanceof GameDiscItem disc) {
-                GameUtils.openArcadeScreen(arcade.getBlockPos(), disc);
-            }
         } else if (stack.getItem() instanceof GameDiscItem) {
             if (!level.isClientSide && arcade.insertCartridge(stack)) {
                 stack.shrink(1);
@@ -269,6 +261,17 @@ public class ArcadeBlock extends Block implements EntityBlock {
     private static void showNoCartridge(Level level, Player player) {
         if (!level.isClientSide) {
             player.displayClientMessage(Component.translatable("message.gamediscs.light_arcade.no_cartridge"), true);
+        }
+    }
+
+    private static void startArcadeControl(Level level, Player player, ArcadeBlockEntity arcade) {
+        if (!arcade.hasCartridge()) {
+            return;
+        }
+        if (level.isClientSide) {
+            GameUtils.enterArcadeControl(arcade.getBlockPos());
+        } else if (player instanceof ServerPlayer serverPlayer) {
+            arcade.startControl(serverPlayer);
         }
     }
 

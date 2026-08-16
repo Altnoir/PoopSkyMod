@@ -1,21 +1,23 @@
-package com.altnoir.poopsky.game.client.gamediscs;
+package com.altnoir.poopsky.game.gamediscs.render;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.game.client.ClientGame;
 import com.altnoir.poopsky.game.client.graphics.MultiImage;
-import com.altnoir.poopsky.game.util.Sprite;
+import com.altnoir.poopsky.game.client.graphics.Sprite;
+import com.altnoir.poopsky.game.model.PongGameState;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec2;
 
 public class ClientPongGame extends ClientGame {
+    private final PongGameState state = new PongGameState();
     private final Sprite player = new Sprite(
             new Vec2(10, (float) HEIGHT / 2 - 10),
             new Vec2(5, 20),
             ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/white_concrete.png")
     );
-    private final Sprite oponent = new Sprite(
+    private final Sprite opponent = new Sprite(
             new Vec2(WIDTH - 15, (float) HEIGHT / 2 - 10),
             new Vec2(5, 20),
             ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/white_concrete.png")
@@ -31,8 +33,6 @@ public class ClientPongGame extends ClientGame {
             new MultiImage(PoopSky.loc("textures/games/sprite/numbers.png"), 8, 120, 10)
     );
 
-    private int oponentScore;
-
     public ClientPongGame() {
         super();
     }
@@ -40,17 +40,16 @@ public class ClientPongGame extends ClientGame {
     @Override
     public void applySnapshot(CompoundTag tag) {
         super.applySnapshot(tag);
-        player.setY((float) tag.getDouble("playerY"));
-        oponent.setY((float) tag.getDouble("opponentY"));
-        ball.setPos(new Vec2((float) tag.getDouble("ballX"), (float) tag.getDouble("ballY")));
-        oponentScore = tag.getInt("opponentScore");
+        state.applySnapshot(tag);
     }
 
     @Override
-    public void render(GuiGraphics graphics, int posX, int posY) {
-        super.render(graphics, posX, posY);
+    protected void renderGame(GuiGraphics graphics, int posX, int posY) {
+        player.setY((float) state.getPlayerY());
+        opponent.setY((float) state.getOpponentY());
+        ball.setPos(new Vec2((float) state.getBallX(), (float) state.getBallY()));
         player.render(graphics, posX, posY);
-        oponent.render(graphics, posX, posY);
+        opponent.render(graphics, posX, posY);
         ball.render(graphics, posX, posY);
 
         if (getScore() < 10) {
@@ -72,9 +71,9 @@ public class ClientPongGame extends ClientGame {
             numberRenderer.render(graphics, posX, posY);
         }
 
-        if (oponentScore < 10) {
+        if (state.getOpponentScore() < 10) {
             if (numberRenderer.getImage() instanceof MultiImage image) {
-                image.setImage(oponentScore);
+                image.setImage(state.getOpponentScore());
             }
             numberRenderer.setPos(new Vec2((float) WIDTH / 2 + 4, 4));
             numberRenderer.render(graphics, posX, posY);
@@ -90,8 +89,6 @@ public class ClientPongGame extends ClientGame {
             numberRenderer.setPos(new Vec2((float) WIDTH / 2 + numberRenderer.getWidth() + 4 * 2, 4));
             numberRenderer.render(graphics, posX, posY);
         }
-
-        renderOverlay(graphics, posX, posY);
     }
 
     @Override
@@ -104,8 +101,4 @@ public class ClientPongGame extends ClientGame {
         return false;
     }
 
-    @Override
-    public String getGameName() {
-        return "PongGame";
-    }
 }

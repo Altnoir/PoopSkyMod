@@ -463,6 +463,12 @@
   "key.poopsky.dismount_plug": "離開廁所吸盤",
   "key.poopsky.up": "上升",
   "key.poopsky.down": "下降",
+  "key.poopsky.arcade.up": "街機上",
+  "key.poopsky.arcade.down": "街機下",
+  "key.poopsky.arcade.left": "街機左",
+  "key.poopsky.arcade.right": "街機右",
+  "key.poopsky.arcade.button1": "街機按鈕 1",
+  "key.poopsky.arcade.button2": "街機按鈕 2",
   "message.poopsky.toilet_plug.dismount": "按下 %s 來離開廁所吸盤",
 
   "upgrade.poopsky.omen_upgrade": "忌諱升級",

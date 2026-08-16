@@ -11,10 +11,6 @@ public class MultiImage extends Renderer {
     private List<Image> images = new ArrayList<>();
     private int current = 0;
 
-    public MultiImage(List<Image> images) {
-        this.images = images;
-    }
-
     public MultiImage(ResourceLocation file, int fileWidth, int fileHeight, List<Rect2i> rects) {
         for (Rect2i rect : rects) {
             images.add(new Image(file, fileWidth, fileHeight, rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight()));

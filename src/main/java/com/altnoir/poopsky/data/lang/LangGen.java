@@ -187,6 +187,12 @@ public final class LangGen {
 
     private static void addKeybindings() {
         provider.add("key.category.poopsky", "POOPSKY");
+        provider.add("key.poopsky.arcade.up", "Arcade Up");
+        provider.add("key.poopsky.arcade.down", "Arcade Down");
+        provider.add("key.poopsky.arcade.left", "Arcade Left");
+        provider.add("key.poopsky.arcade.right", "Arcade Right");
+        provider.add("key.poopsky.arcade.button1", "Arcade Button 1");
+        provider.add("key.poopsky.arcade.button2", "Arcade Button 2");
         provider.add("key.poopsky.dismount_plug", "Dismount Toilet Plug");
         provider.add("key.poopsky.down", "Descend");
         provider.add("key.poopsky.up", "Up");

@@ -1,16 +1,16 @@
-package com.altnoir.poopsky.game.client.gamediscs;
+package com.altnoir.poopsky.game.gamediscs.render;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.game.client.ClientGame;
 import com.altnoir.poopsky.game.client.graphics.DirectionalImage;
-import com.altnoir.poopsky.game.util.Sprite;
+import com.altnoir.poopsky.game.client.graphics.Sprite;
+import com.altnoir.poopsky.game.model.RoundwormGameState;
 import com.altnoir.poopsky.game.util.VecUtil;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec2;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ClientRoundwormGame extends ClientGame {
@@ -26,7 +26,7 @@ public class ClientRoundwormGame extends ClientGame {
     private static final Vec2 GAME_POS = new Vec2(0, 0);
     private static final int TILE_SIZE = 8;
 
-    private final List<Vec2> roundworm = new ArrayList<>();
+    private final RoundwormGameState state = new RoundwormGameState();
     private final Sprite roundwormRenderer = new Sprite(Vec2.ZERO, new Vec2(TILE_SIZE, TILE_SIZE), BODY);
     private final Sprite shit = new Sprite(Vec2.ZERO, new Vec2(TILE_SIZE, TILE_SIZE), SHIT);
 
@@ -37,19 +37,13 @@ public class ClientRoundwormGame extends ClientGame {
     @Override
     public void applySnapshot(CompoundTag tag) {
         super.applySnapshot(tag);
-        int[] xs = tag.getIntArray("roundwormX");
-        int[] ys = tag.getIntArray("roundwormY");
-        roundworm.clear();
-        for (int i = 0; i < xs.length; i++) {
-            roundworm.add(new Vec2(xs[i], ys[i]));
-        }
-        shit.setPos(calcPos(new Vec2(tag.getInt("shitX"), tag.getInt("shitY"))));
+        state.applySnapshot(tag);
     }
 
     @Override
-    public void render(GuiGraphics graphics, int posX, int posY) {
-        super.render(graphics, posX, posY);
-
+    protected void renderGame(GuiGraphics graphics, int posX, int posY) {
+        List<Vec2> roundworm = state.body();
+        shit.setPos(calcPos(state.shit()));
         shit.render(graphics, posX, posY);
 
         for (int i = roundworm.size() - 1; i >= 0; i--) {
@@ -72,7 +66,6 @@ public class ClientRoundwormGame extends ClientGame {
             }
         }
 
-        renderOverlay(graphics, posX, posY);
     }
 
     private Vec2 calcPos(Vec2 tile) {
@@ -84,8 +77,4 @@ public class ClientRoundwormGame extends ClientGame {
         return PoopSky.loc("textures/games/background/roundworm_background.png");
     }
 
-    @Override
-    public String getGameName() {
-        return "SlimeGame";
-    }
 }

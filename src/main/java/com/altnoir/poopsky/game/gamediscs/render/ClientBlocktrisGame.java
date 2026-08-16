@@ -1,15 +1,15 @@
-package com.altnoir.poopsky.game.client.gamediscs;
+package com.altnoir.poopsky.game.gamediscs.render;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.game.client.ClientGame;
+import com.altnoir.poopsky.game.client.graphics.BlocktrisPiece;
+import com.altnoir.poopsky.game.client.graphics.Grid;
 import com.altnoir.poopsky.game.client.graphics.MultiImage;
-import com.altnoir.poopsky.game.util.BlocktrisPiece;
-import com.altnoir.poopsky.game.util.Grid;
+import com.altnoir.poopsky.game.model.BlocktrisGameState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
@@ -18,14 +18,15 @@ import java.util.List;
 
 public class ClientBlocktrisGame extends ClientGame {
     private static final int TILE_SIZE = 8;
-    private static final int GRID_WIDTH = 10;
-    private static final int GRID_HEIGHT = 20;
+    private static final int GRID_WIDTH = BlocktrisGameState.GRID_WIDTH;
+    private static final int GRID_HEIGHT = BlocktrisGameState.VISIBLE_HEIGHT;
     private static final int BOARD_X = 72;
     private static final int NEXT_CELL_X = 23;
     private static final int NEXT_LABEL_X = 188;
 
     public Grid grid = createGrid();
-    private BlocktrisPiece piece = new BlocktrisPiece(BlocktrisPiece.PIECES.get(0).get(), 4, 1, 0, this);
+    private final BlocktrisGameState state = new BlocktrisGameState();
+    private BlocktrisPiece piece = new BlocktrisPiece(0, 4, 1, 0, grid);
     private final List<BlocktrisPiece> nexts = new ArrayList<>();
 
     public ClientBlocktrisGame() {
@@ -44,33 +45,30 @@ public class ClientBlocktrisGame extends ClientGame {
     @Override
     public void applySnapshot(CompoundTag tag) {
         super.applySnapshot(tag);
+        state.applySnapshot(tag);
 
         grid = createGrid();
-        ListTag rows = tag.getList("grid", 11);
-        for (int y = 0; y < rows.size(); y++) {
-            int[] row = rows.getIntArray(y);
-            for (int x = 0; x < row.length; x++) {
-                grid.set(x, y, row[x]);
+        for (int y = 0; y < GRID_HEIGHT; y++) {
+            for (int x = 0; x < GRID_WIDTH; x++) {
+                grid.set(x, y, state.getVisibleGrid(x, y));
             }
         }
 
-        int type = tag.getInt("pieceType");
-        piece = new BlocktrisPiece(BlocktrisPiece.PIECES.get(type).get(), tag.getInt("pieceX"), tag.getInt("pieceY"), type, this);
-        piece.setRotation(tag.getInt("pieceRot"));
+        int type = state.getCurrentType();
+        piece = new BlocktrisPiece(type, state.getCurrentX(), state.getCurrentY(), type, grid);
+        piece.setRotation(state.getCurrentRotation());
 
         nexts.clear();
-        int[] nextTypes = tag.getIntArray("nextTypes");
+        int[] nextTypes = state.nextTypes();
         for (int i = 0; i < nextTypes.length; i++) {
-            BlocktrisPiece next = new BlocktrisPiece(BlocktrisPiece.PIECES.get(nextTypes[i]).get(), NEXT_CELL_X, 4 + i * 3, nextTypes[i], this);
+            BlocktrisPiece next = new BlocktrisPiece(nextTypes[i], NEXT_CELL_X, 4 + i * 3, nextTypes[i], grid);
             next.setRotation(1);
             nexts.add(next);
         }
     }
 
     @Override
-    public void render(GuiGraphics graphics, int posX, int posY) {
-        super.render(graphics, posX, posY);
-
+    protected void renderGame(GuiGraphics graphics, int posX, int posY) {
         grid.render(graphics, posX + BOARD_X, posY);
         piece.render(graphics, posX + BOARD_X, posY);
 
@@ -84,8 +82,6 @@ public class ClientBlocktrisGame extends ClientGame {
         Font font = Minecraft.getInstance().font;
         Component text = Component.translatable("gui.gamingconsole.next");
         graphics.drawString(font, text, NEXT_LABEL_X + posX - font.width(text.getVisualOrderText()) / 2, 10 + posY, 0x555555, false);
-
-        renderOverlay(graphics, posX, posY);
     }
 
     @Override
@@ -98,8 +94,4 @@ public class ClientBlocktrisGame extends ClientGame {
         return false;
     }
 
-    @Override
-    public String getGameName() {
-        return "BlocktrisGame";
-    }
 }

@@ -1,16 +1,11 @@
-package com.altnoir.poopsky.game.util;
+package com.altnoir.poopsky.game.client.graphics;
 
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.world.phys.Vec2;
-import com.altnoir.poopsky.game.client.graphics.Image;
-import com.altnoir.poopsky.game.client.graphics.MultiImage;
-
-import java.util.List;
 
 public class Grid {
     private final int[][] map;
     private final int size;
-    private MultiImage images;
+    private final MultiImage images;
 
     public Grid(int width, int height, int tileSize, MultiImage images) {
         map = new int[width][height];
@@ -18,33 +13,10 @@ public class Grid {
         this.images = images;
     }
 
-    public Grid(int width, int height, int tileSize, List<Image> images) {
-        map = new int[width][height];
-        size = tileSize;
-        this.images = new MultiImage(images);
-    }
-
     public int tileSize() {
         return size;
     }
 
-    public int width() {
-        return map.length;
-    }
-    public int height() {
-        return map[0].length;
-    }
-
-    public int get(Vec2 pos) {
-        return map[(int)pos.x][(int)pos.y];
-    }
-    public int get(int x, int y) {
-        return map[x][y];
-    }
-
-    public void set(Vec2 pos, int value) {
-        map[(int)pos.x][(int)pos.y] = value;
-    }
     public void set(int x, int y, int value) {
         map[x][y] = value;
     }
@@ -59,10 +31,6 @@ public class Grid {
                 renderTile(graphics, posX, posY, x, y);
             }
         }
-    }
-
-    public boolean isIn(Vec2 pos) {
-        return pos.x >= 0 && pos.y >= 0 && pos.x < width() && pos.y < height();
     }
 
     private void renderTile(GuiGraphics graphics, int posX, int posY, int x, int y) {

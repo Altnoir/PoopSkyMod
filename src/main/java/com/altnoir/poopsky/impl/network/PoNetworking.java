@@ -64,6 +64,11 @@ public class PoNetworking {
                 ArcadeResetPacket.STREAM_CODEC,
                 ArcadeResetPacket::handle
         );
+        registrar.playToServer(
+                ArcadeStopControlPacket.TYPE,
+                ArcadeStopControlPacket.STREAM_CODEC,
+                ArcadeStopControlPacket::handle
+        );
         registrar.playToClient(
                 ArcadeGameSnapshotPacket.TYPE,
                 ArcadeGameSnapshotPacket.STREAM_CODEC,

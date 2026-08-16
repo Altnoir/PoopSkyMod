@@ -463,6 +463,12 @@
   "key.poopsky.dismount_plug": "ラバーカップから降りる",
   "key.poopsky.up": "上昇",
   "key.poopsky.down": "下降",
+  "key.poopsky.arcade.up": "アーケード上",
+  "key.poopsky.arcade.down": "アーケード下",
+  "key.poopsky.arcade.left": "アーケード左",
+  "key.poopsky.arcade.right": "アーケード右",
+  "key.poopsky.arcade.button1": "アーケードボタン 1",
+  "key.poopsky.arcade.button2": "アーケードボタン 2",
   "message.poopsky.toilet_plug.dismount": "%sを押してラバーカップから降りる",
 
   "upgrade.poopsky.omen_upgrade": "忌避アップグレード",

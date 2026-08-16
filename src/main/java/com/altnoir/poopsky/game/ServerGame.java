@@ -1,13 +1,6 @@
 package com.altnoir.poopsky.game;
 
 import com.altnoir.poopsky.content.item.p.GameDiscItem;
-import com.altnoir.poopsky.game.controls.Button;
-import com.altnoir.poopsky.game.gamediscs.ServerBlocktrisGame;
-import com.altnoir.poopsky.game.gamediscs.ServerPongGame;
-import com.altnoir.poopsky.game.gamediscs.ServerRoundwormGame;
-import com.altnoir.poopsky.game.util.Game;
-import com.altnoir.poopsky.game.util.GameStage;
-import com.altnoir.poopsky.init.PoItems;
 import net.minecraft.sounds.SoundEvent;
 
 import java.util.Random;
@@ -22,9 +15,14 @@ public abstract class ServerGame extends Game {
     protected boolean button2Down;
     private SoundEmitter soundEmitter = (event, pitch, volume) -> {
     };
+    private GameDefinition gameDefinition;
 
     protected ServerGame() {
         this.random = new Random();
+    }
+
+    void setGameDefinition(GameDefinition gameDefinition) {
+        this.gameDefinition = gameDefinition;
     }
 
     public void setSoundEmitter(SoundEmitter soundEmitter) {
@@ -81,25 +79,12 @@ public abstract class ServerGame extends Game {
     }
 
     public String getGameName() {
-        return switch (this) {
-            case ServerPongGame ignored -> "PongGame";
-            case ServerRoundwormGame ignored -> "SlimeGame";
-            case ServerBlocktrisGame ignored -> "BlocktrisGame";
-            default -> getClass().getSimpleName();
-        };
+        return gameDefinition != null ? gameDefinition.gameName() : getClass().getSimpleName();
     }
 
     public static ServerGame create(GameDiscItem disc) {
-        ServerGame game;
-        if (disc == PoItems.GAME_DISC_SLIME.get()) {
-            game = new ServerRoundwormGame();
-        } else if (disc == PoItems.GAME_DISC_BLOCKTRIS.get()) {
-            game = new ServerBlocktrisGame();
-        } else if (disc == PoItems.GAME_DISC_PONG.get()) {
-            game = new ServerPongGame();
-        } else {
-            throw new IllegalArgumentException("Unknown arcade game " + disc);
-        }
+        GameDefinition definition = GameDefinitions.byDiscItem(disc);
+        ServerGame game = definition.newServerGame();
         game.prepare();
         return game;
     }

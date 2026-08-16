@@ -463,6 +463,12 @@
   "key.poopsky.dismount_plug": "Слезть с вантуза",
   "key.poopsky.up": "Вверх",
   "key.poopsky.down": "Вниз",
+  "key.poopsky.arcade.up": "Аркада: вверх",
+  "key.poopsky.arcade.down": "Аркада: вниз",
+  "key.poopsky.arcade.left": "Аркада: влево",
+  "key.poopsky.arcade.right": "Аркада: вправо",
+  "key.poopsky.arcade.button1": "Аркада: кнопка 1",
+  "key.poopsky.arcade.button2": "Аркада: кнопка 2",
   "message.poopsky.toilet_plug.dismount": "Нажмите %s, чтобы слезть с вантуза",
 
   "upgrade.poopsky.omen_upgrade": "Зловещее улучшение",

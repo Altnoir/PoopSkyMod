@@ -463,6 +463,12 @@
   "key.poopsky.dismount_plug": "Vom Pümpel absteigen",
   "key.poopsky.up": "Aufwärts",
   "key.poopsky.down": "Abwärts",
+  "key.poopsky.arcade.up": "Arcade: hoch",
+  "key.poopsky.arcade.down": "Arcade: runter",
+  "key.poopsky.arcade.left": "Arcade: links",
+  "key.poopsky.arcade.right": "Arcade: rechts",
+  "key.poopsky.arcade.button1": "Arcade: Taste 1",
+  "key.poopsky.arcade.button2": "Arcade: Taste 2",
   "message.poopsky.toilet_plug.dismount": "Drücke %s, um vom Pümpel abzusteigen",
 
   "upgrade.poopsky.omen_upgrade": "Omen-Aufwertung",

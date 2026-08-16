@@ -478,6 +478,12 @@
   "key.poopsky.dismount_plug": "脱离魔女扫帚",
   "key.poopsky.up": "上升",
   "key.poopsky.down": "下降",
+  "key.poopsky.arcade.up": "街机上",
+  "key.poopsky.arcade.down": "街机下",
+  "key.poopsky.arcade.left": "街机左",
+  "key.poopsky.arcade.right": "街机右",
+  "key.poopsky.arcade.button1": "街机按钮 1",
+  "key.poopsky.arcade.button2": "街机按钮 2",
   "message.poopsky.toilet_plug.dismount": "按下%s来脱离魔女扫帚",
 
   "upgrade.poopsky.omen_upgrade":"甜蜜升级",

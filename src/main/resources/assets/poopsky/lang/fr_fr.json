@@ -463,6 +463,12 @@
   "key.poopsky.dismount_plug": "Descendre de la ventouse",
   "key.poopsky.up": "Monter",
   "key.poopsky.down": "Descendre",
+  "key.poopsky.arcade.up": "Arcade : haut",
+  "key.poopsky.arcade.down": "Arcade : bas",
+  "key.poopsky.arcade.left": "Arcade : gauche",
+  "key.poopsky.arcade.right": "Arcade : droite",
+  "key.poopsky.arcade.button1": "Arcade : bouton 1",
+  "key.poopsky.arcade.button2": "Arcade : bouton 2",
   "message.poopsky.toilet_plug.dismount": "Appuyez sur %s pour descendre de la ventouse",
 
   "upgrade.poopsky.omen_upgrade": "Amélioration de mauvais augure",

@@ -1,8 +1,9 @@
 package com.altnoir.poopsky.game.client.arcade;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.game.util.GameUtils;
 import com.altnoir.poopsky.content.item.p.GameDiscItem;
+import com.altnoir.poopsky.game.client.ArcadeControlSession;
+import com.altnoir.poopsky.game.client.ClientGameTypes;
 import com.altnoir.poopsky.game.client.ClientGame;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.platform.NativeImage;
@@ -42,6 +43,7 @@ public final class ArcadeWorldScreenRenderer {
     }
 
     public static void onLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
+        ArcadeControlSession.clear();
         onClientStop();
     }
 
@@ -160,7 +162,7 @@ public final class ArcadeWorldScreenRenderer {
             this.pos = pos;
             this.cartridge = cartridge;
             this.textureLocation = PoopSky.loc(texturePath(pos));
-            this.cartridgeClientGame = GameUtils.newGameFor(cartridge);
+            this.cartridgeClientGame = ClientGameTypes.newGameFor(cartridge);
             this.cartridgeClientGame.setArcadeMachine(pos);
         }
 

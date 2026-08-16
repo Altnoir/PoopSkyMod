@@ -3,9 +3,9 @@ package com.altnoir.poopsky.content.block.entity;
 import com.altnoir.poopsky.content.block.p.ArcadeBlock;
 import com.altnoir.poopsky.content.item.p.GameDiscItem;
 import com.altnoir.poopsky.data.ArcadeLootGen;
+import com.altnoir.poopsky.game.GameStage;
 import com.altnoir.poopsky.game.ServerGame;
-import com.altnoir.poopsky.game.controls.Button;
-import com.altnoir.poopsky.game.util.GameStage;
+import com.altnoir.poopsky.game.Button;
 import com.altnoir.poopsky.impl.network.ArcadeGameSnapshotPacket;
 import com.altnoir.poopsky.impl.util.DispenseUtil;
 import com.altnoir.poopsky.init.PoBlockEntityType;
@@ -26,6 +26,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
@@ -143,11 +144,37 @@ public class ArcadeBlockEntity extends BlockEntity {
         }
     }
 
+    public boolean startControl(ServerPlayer player) {
+        if (!hasCartridge() || !canControl(player)) {
+            return false;
+        }
+        activePlayer = player.getUUID();
+        scoreSettled = false;
+        snapshotCooldown = 0;
+        markStatusChanged();
+        return true;
+    }
+
+    public void stopControl(ServerPlayer player) {
+        if (activePlayer == null || !activePlayer.equals(player.getUUID())) {
+            return;
+        }
+        activePlayer = null;
+        scoreSettled = false;
+        markStatusChanged();
+    }
+
     public static void serverTick(Level level, BlockPos pos, BlockState state, ArcadeBlockEntity arcade) {
         arcade.serverTickInternal();
     }
 
     private void serverTickInternal() {
+        if (level instanceof ServerLevel serverLevel && activePlayer != null) {
+            ServerPlayer controlling = serverLevel.getServer().getPlayerList().getPlayer(activePlayer);
+            if (controlling != null) {
+                controlling.setDeltaMovement(Vec3.ZERO);
+            }
+        }
         if (game == null) {
             return;
         }

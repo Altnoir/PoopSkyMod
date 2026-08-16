@@ -22,7 +22,8 @@ import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.content.entity.renderer.GinkgoBoatRenderer;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.game.client.arcade.ArcadeWorldScreenRenderer;
-import com.altnoir.poopsky.impl.event.PSKeyBoardInput;
+import com.altnoir.poopsky.game.client.ArcadeControlSession;
+import com.altnoir.poopsky.impl.event.PoKeyBoardInput;
 import com.altnoir.poopsky.impl.network.PlugActionPayload;
 import com.altnoir.poopsky.impl.network.PlugDismountPayload;
 import com.altnoir.poopsky.init.*;
@@ -74,7 +75,7 @@ public class PoopSkyClient {
 
     public static void registerMod(IEventBus modEventBus) {
         BakedModelEventHandler.register(modEventBus);
-        modEventBus.addListener(PSKeyBoardInput::registerKeyMappings);
+        modEventBus.addListener(PoKeyBoardInput::registerKeyMappings);
         modEventBus.addListener(PoBedrockModelResources::onRegisterBedrockModels);
         modEventBus.addListener(ClientModEvents::modLoad);
         modEventBus.addListener(ClientModEvents::registerLayers);
@@ -93,6 +94,7 @@ public class PoopSkyClient {
     public static void registerGame(IEventBus modEventBus) {
         modEventBus.addListener(ClientGameEvents::onScreenOpen);
         modEventBus.addListener(ClientGameEvents::onClientTick);
+        modEventBus.addListener(ArcadeControlSession::onKeyInput);
         modEventBus.addListener(ClientGameEvents::onComputeFov);
         modEventBus.addListener(ArcadeWorldScreenRenderer::onRenderFrame);
         modEventBus.addListener(ArcadeWorldScreenRenderer::onLoggingOut);
@@ -233,6 +235,9 @@ public class PoopSkyClient {
         public static Holder<WorldPreset> originalDefaultWorldPreset;
 
         public static void onScreenOpen(ScreenEvent.Opening event) {
+            if (ArcadeControlSession.isActive()) {
+                ArcadeControlSession.exit();
+            }
             if (event.getNewScreen() instanceof CreateWorldScreen screen) {
                 var uiState = screen.getUiState();
                 var originalPreset = uiState.getWorldType().preset();
@@ -258,14 +263,18 @@ public class PoopSkyClient {
 
         public static void onClientTick(ClientTickEvent.Pre event) {
             var mc = Minecraft.getInstance();
-            if (mc.player == null || mc.level == null) return;
+            if (mc.player == null || mc.level == null) {
+                ArcadeControlSession.clear();
+                return;
+            }
+            ArcadeControlSession.tick(mc);
 
             boolean isRidingPlug = mc.player.getVehicle() instanceof ToiletPlugEntity;
 
-            while (PSKeyBoardInput.USE_PLUG_KEY.consumeClick()) {
+            while (PoKeyBoardInput.USE_PLUG_KEY.consumeClick()) {
                 PacketDistributor.sendToServer(new PlugActionPayload());
             }
-            if (isRidingPlug && PSKeyBoardInput.DISMOUNT_PLUG_KEY.consumeClick()) {
+            if (isRidingPlug && PoKeyBoardInput.DISMOUNT_PLUG_KEY.consumeClick()) {
                 PacketDistributor.sendToServer(new PlugDismountPayload());
             }
         }
