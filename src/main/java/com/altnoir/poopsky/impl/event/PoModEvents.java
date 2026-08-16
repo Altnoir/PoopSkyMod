@@ -29,7 +29,6 @@ public class PoModEvents {
     public static void registerMod(IEventBus modEventBus) {
         modEventBus.addListener(DataGenerators::gatherData);
         modEventBus.addListener(PoNetworking::registerNetworking);
-        modEventBus.addListener(PoNetworking::registerConfigurationTasks);
         modEventBus.addListener(PoModEvents::modLoad);
         modEventBus.addListener(PoModEvents::registerAttributes);
         modEventBus.addListener(PoModEvents::registerSpawnPlacements);

@@ -15,6 +15,7 @@ import com.altnoir.poopsky.content.villager.PVillagerBehaviors;
 import com.altnoir.poopsky.content.villager.PVillagerTrades;
 import com.altnoir.poopsky.impl.PoAnimationSavedData;
 import com.altnoir.poopsky.impl.command.PoCommands;
+import com.altnoir.poopsky.impl.network.PlayAnimationPayload;
 import com.altnoir.poopsky.impl.network.PoAnimation;
 import com.altnoir.poopsky.impl.util.ToiletUtil;
 import com.altnoir.poopsky.init.*;
@@ -64,7 +65,9 @@ import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 
+import java.util.Objects;
 import java.util.Set;
 
 public class PoGameEvents {
@@ -264,14 +267,21 @@ public class PoGameEvents {
     public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
 
-        ServerLevel overworld = player.getServer().overworld();
+        ServerLevel overworld = Objects.requireNonNull(player.getServer()).overworld();
         if (!(overworld.getChunkSource().getGenerator() instanceof PoVoidChunkGenerator)) return;
 
-        boolean firstJoin = PoAnimationSavedData.get(overworld).markPlayed(PoAnimation.INTRO, player.getUUID(), player.getGameProfile().getName());
-        if (firstJoin && "zh_cn".equalsIgnoreCase(player.getLanguage())) {
-            player.sendSystemMessage(Component.literal(
-                    "温馨提示：如果您正在直播或录制，可在资源包中启用空中厕所的“认知滤网”资源包"
-            ));
+        PoAnimationSavedData legacy = PoAnimationSavedData.get(overworld);
+        if (player.getData(PoAttachments.SEEN_INTRO.get())) {
+            return;
+        }
+        player.setData(PoAttachments.SEEN_INTRO.get(), true);
+        if (!legacy.hasPlayed(PoAnimation.INTRO, player.getUUID(), player.getGameProfile().getName())) {
+            PacketDistributor.sendToPlayer(player, new PlayAnimationPayload(PoAnimation.INTRO));
+            if ("zh_cn".equalsIgnoreCase(player.getLanguage())) {
+                player.sendSystemMessage(Component.literal(
+                        "温馨提示：如果您正在直播或录制，可在资源包中启用空中厕所的“认知滤网”资源包"
+                ));
+            }
         }
     }
 

@@ -228,8 +228,7 @@ public class PoemScreen extends Screen {
         RenderSystem.defaultBlendFunc();
     }
 
-    private void drawVanillaLine(GuiGraphics guiGraphics, FormattedCharSequence line,
-                                 float startX, float y, int color) {
+    private void drawVanillaLine(GuiGraphics guiGraphics, FormattedCharSequence line, float startX, float y, int color) {
         Matrix4f matrix = guiGraphics.pose().last().pose();
         float alpha = (color >>> 24) / 255.0F;
         float defaultRed = (color >> 16 & 255) / 255.0F;

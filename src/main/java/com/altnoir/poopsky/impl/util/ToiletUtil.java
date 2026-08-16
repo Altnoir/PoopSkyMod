@@ -330,7 +330,9 @@ public class ToiletUtil {
             return false;
         }
 
-        if (entity instanceof ServerPlayer player && beginEndToiletPoem(player, toiletPos)) {
+        if (targetKey == Level.END
+                && entity instanceof ServerPlayer player
+                && beginEndToiletPoem(player, toiletPos)) {
             return true;
         }
 
@@ -364,10 +366,15 @@ public class ToiletUtil {
     }
 
     private static boolean beginEndToiletPoem(ServerPlayer player, BlockPos toiletPos) {
-        PoAnimationSavedData data = PoAnimationSavedData.get(player.getServer().overworld());
-        if (data.hasPlayed(PoAnimation.POEM, player.getUUID(), player.getGameProfile().getName())) {
+        PoAnimationSavedData legacy = PoAnimationSavedData.get(player.getServer().overworld());
+        if (player.getData(PoAttachments.SEEN_POEM.get())) {
             return false;
         }
+        if (legacy.hasPlayed(PoAnimation.POEM, player.getUUID(), player.getGameProfile().getName())) {
+            player.setData(PoAttachments.SEEN_POEM.get(), true);
+            return false;
+        }
+        player.setData(PoAttachments.SEEN_POEM.get(), true);
         PendingEndToiletTeleport pending = new PendingEndToiletTeleport(
                 player.level().dimension(),
                 toiletPos.immutable()
@@ -388,11 +395,6 @@ public class ToiletUtil {
             return;
         }
 
-        PoAnimationSavedData.get(player.getServer().overworld()).markPlayed(
-                PoAnimation.POEM,
-                player.getUUID(),
-                player.getGameProfile().getName()
-        );
         teleportThroughEndPortal(player.level(), pending.toiletPos(), player);
     }
 

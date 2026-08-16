@@ -13,6 +13,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * Legacy world-level animation state used only to migrate old saves.
+ * New animation flags are stored on ServerPlayer attachments.
+ */
 public final class PoAnimationSavedData extends SavedData {
     private static final String DATA_NAME = "poopsky_intro";
     private static final String PLAYED_PLAYERS_TAG = "played_players";
@@ -35,18 +39,6 @@ public final class PoAnimationSavedData extends SavedData {
         readUuids(tag, tagName(PoAnimation.POEM, PLAYED_PLAYERS_TAG), data.poemPlayedPlayers);
         readNames(tag, tagName(PoAnimation.POEM, PLAYED_PLAYER_NAMES_TAG), data.poemPlayedPlayerNames);
         return data;
-    }
-
-    public boolean markPlayed(PoAnimation animation, UUID playerId, String playerName) {
-        Set<UUID> players = this.players(animation);
-        Set<String> playerNames = this.playerNames(animation);
-        boolean played = players.contains(playerId) || playerNames.contains(playerName);
-        boolean changed = players.add(playerId);
-        changed |= playerNames.add(playerName);
-        if (changed) {
-            this.setDirty();
-        }
-        return !played;
     }
 
     public boolean hasPlayed(PoAnimation animation, UUID playerId, String playerName) {

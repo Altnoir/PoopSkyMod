@@ -16,6 +16,18 @@ public final class PoAttachments {
                     .serialize(Codec.LONG)
                     .build());
 
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> SEEN_INTRO = ATTACHMENTS
+            .register("seen_intro", () -> AttachmentType.builder(() -> false)
+                    .serialize(Codec.BOOL)
+                    .copyOnDeath()
+                    .build());
+
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> SEEN_POEM = ATTACHMENTS
+            .register("seen_poem", () -> AttachmentType.builder(() -> false)
+                    .serialize(Codec.BOOL)
+                    .copyOnDeath()
+                    .build());
+
     private PoAttachments() {
     }
 
