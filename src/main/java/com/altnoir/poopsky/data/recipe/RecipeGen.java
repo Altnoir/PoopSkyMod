@@ -197,6 +197,14 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .define('E', Items.ECHO_SHARD)
                 .unlockedBy(getItemName(Items.ECHO_SHARD), has(Items.ECHO_SHARD))
                 .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, PoItems.TOKEN.get(), 2)
+                .pattern("RRR")
+                .pattern("RER")
+                .pattern("RRR")
+                .define('R', PoItems.ROUNDWORM.get())
+                .define('E', Items.NAUTILUS_SHELL)
+                .unlockedBy(getItemName(PoItems.ROUNDWORM), has(PoItems.ROUNDWORM))
+                .save(recipeOutput);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PoItems.TIME_BELL)
                 .requires(Items.BELL)
                 .requires(PoItems.POOP.get())

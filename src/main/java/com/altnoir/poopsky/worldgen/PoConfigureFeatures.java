@@ -6,6 +6,7 @@ import com.altnoir.poopsky.impl.util.PoFeatureUtil;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.worldgen.foliage.RhombusFoliagePlacer;
 import com.google.common.collect.ImmutableList;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
@@ -22,6 +23,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.PinkPetalsBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
@@ -62,6 +64,9 @@ public class PoConfigureFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> RAW_SEA_POOP_PATCH_BONEMEAL = resourceKey("raw_sea_poop_patch_bonemeal");
     public static final ResourceKey<ConfiguredFeature<?, ?>> RAW_WITHER_POOP_VEGETATION = resourceKey("raw_wither_poop_vegetation");
     public static final ResourceKey<ConfiguredFeature<?, ?>> RAW_WITHER_POOP_PATCH_BONEMEAL = resourceKey("raw_wither_poop_patch_bonemeal");
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> MYCELIUM_VEGETATION = resourceKey("mycelium_vegetation");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> MYCELIUM_PATCH_BONEMEAL = resourceKey("mycelium_patch_bonemeal");
 
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         HolderGetter<ConfiguredFeature<?, ?>> holdergetter = context.lookup(Registries.CONFIGURED_FEATURE);
@@ -229,6 +234,26 @@ public class PoConfigureFeatures {
                 vegetationPatch(PoTags.Blocks.RAW_WITHER_POOP_BLOCK, PoBlocks.RAW_WITHER_POOP_BLOCK.get(),
                         holdergetter.getOrThrow(RAW_WITHER_POOP_VEGETATION), 0.1F, 0.125F)
         );
+
+        SimpleWeightedRandomList.Builder<BlockState> builder = SimpleWeightedRandomList.builder();
+        for (int i = 1; i <= 4; i++) {
+            for (Direction direction : Direction.Plane.HORIZONTAL) {
+                builder.add(PoBlocks.MUSHROOM_BED.get().defaultBlockState()
+                        .setValue(PinkPetalsBlock.AMOUNT, Integer.valueOf(i)).setValue(PinkPetalsBlock.FACING, direction), 2);
+            }
+        }
+        register(context, MYCELIUM_VEGETATION, Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(
+                        new WeightedStateProvider(builder
+                                .add(Blocks.FLOWERING_AZALEA.defaultBlockState(), 4)
+                                .add(Blocks.AZALEA.defaultBlockState(), 7)
+                                .add(PoBlocks.MYCELIUM_MAT.get().defaultBlockState().setValue(BlockStateProperties.DOWN, true), 25)
+                                .add(Blocks.TALL_GRASS.defaultBlockState(), 10)
+                        ))
+        );
+        register(context, MYCELIUM_PATCH_BONEMEAL, Feature.VEGETATION_PATCH,
+                vegetationPatch(PoTags.Blocks.MYCELIUM_REPLACEABLE, PoBlocks.MYCELIUM_BLOCK.get(),
+                        holdergetter.getOrThrow(MYCELIUM_VEGETATION), 0.6F, 0.75F));
     }
 
     private static VegetationPatchConfiguration vegetationPatch(TagKey<Block> replaceable, Block ground, Holder<ConfiguredFeature<?, ?>> feature) {

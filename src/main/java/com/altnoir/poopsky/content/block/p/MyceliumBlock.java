@@ -1,9 +1,9 @@
 package com.altnoir.poopsky.content.block.p;
 
+import com.altnoir.poopsky.worldgen.PoConfigureFeatures;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.features.CaveFeatures;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
@@ -47,7 +47,7 @@ public class MyceliumBlock extends Block implements BonemealableBlock {
     public void performBonemeal(ServerLevel serverLevel, RandomSource randomSource, BlockPos blockPos, BlockState blockState) {
         serverLevel.registryAccess()
                 .registry(Registries.CONFIGURED_FEATURE)
-                .flatMap(holder -> holder.getHolder(CaveFeatures.MOSS_PATCH_BONEMEAL))
+                .flatMap(holder -> holder.getHolder(PoConfigureFeatures.MYCELIUM_PATCH_BONEMEAL))
                 .ifPresent(reference -> reference.value().place(serverLevel, serverLevel.getChunkSource().getGenerator(), randomSource, blockPos.above()));
     }
 
