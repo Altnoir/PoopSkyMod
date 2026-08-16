@@ -2,6 +2,7 @@ package com.altnoir.poopsky.content;
 
 import com.altnoir.poopsky.init.FlyTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.*;
 
@@ -33,7 +34,16 @@ public class FlyType {
 
     public record Type(String id) {
         public Component getDisplayName() {
+            FlyTypeDefinition definition = FlyTypeManager.INSTANCE.getDefinition(id);
+            if (definition != null && definition.displayName() != null) {
+                return Component.literal(definition.displayName());
+            }
             return Component.translatable("fly_type.poopsky." + id);
+        }
+
+        public ResourceLocation texture() {
+            FlyTypeDefinition definition = FlyTypeManager.INSTANCE.getDefinition(id);
+            return definition != null ? definition.texture() : FlyTypeDefinition.defaultOf(id).texture();
         }
 
         @Override

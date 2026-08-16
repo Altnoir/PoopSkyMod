@@ -3,6 +3,8 @@ package com.altnoir.poopsky;
 import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.compat.create.CreatePlugin;
 import com.altnoir.poopsky.compat.maid.MaidPlugin;
+import com.altnoir.poopsky.content.FlyTypeManager;
+import com.altnoir.poopsky.content.ToiletTypeManager;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.p.CompooperBlock;
 import com.altnoir.poopsky.content.entity.p.PoopTntEntity;
@@ -102,6 +104,7 @@ public class PoopSky {
         var gameEventBus = NeoForge.EVENT_BUS;
         PoModEvents.registerMod(modEventBus);
         PoGameEvents.registerGame(gameEventBus);
+        gameEventBus.addListener(this::reload);
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
 
         if (ModList.get().isLoaded(PoMods.TOUHOU_LITTLE_MAID.id())) {
@@ -232,7 +235,8 @@ public class PoopSky {
     }
 
     private void reload(final AddReloadListenerEvent event) {
-        // 用于/Reload命令, 比如fly
+        event.addListener(FlyTypeManager.INSTANCE);
+        event.addListener(ToiletTypeManager.INSTANCE);
     }
 
     public static ResourceLocation loc(String path) {

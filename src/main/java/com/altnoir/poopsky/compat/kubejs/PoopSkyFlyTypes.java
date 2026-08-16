@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.compat.kubejs;
 
 import com.altnoir.poopsky.content.FlyType;
+import com.altnoir.poopsky.content.FlyTypeDefinition;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -29,6 +30,10 @@ public final class PoopSkyFlyTypes {
 
     public Collection<FlyTypeBuilder> builders() {
         return List.copyOf(builders.values());
+    }
+
+    public Collection<FlyTypeDefinition> definitions() {
+        return builders().stream().map(FlyTypeBuilder::toDefinition).toList();
     }
 
     public void clear() {

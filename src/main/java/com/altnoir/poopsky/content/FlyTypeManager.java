@@ -10,7 +10,6 @@ import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 
 import java.io.Reader;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +20,8 @@ public class FlyTypeManager extends SimpleJsonResourceReloadListener {
 
     public static final FlyTypeManager INSTANCE = new FlyTypeManager();
 
-    private volatile List<String> flyTypes = FlyType.FLY_TYPES;
+    private volatile List<FlyTypeDefinition> dataPackFlyTypes = defaultDefinitions(FlyType.FLY_TYPES);
+    private volatile List<FlyTypeDefinition> kubeJsFlyTypes = List.of();
 
     public FlyTypeManager() {
         super(GSON, "poopsky_data");
@@ -110,34 +110,50 @@ public class FlyTypeManager extends SimpleJsonResourceReloadListener {
         if (loaded.isEmpty()) {
             loaded = FlyType.FLY_TYPES;
         }
-        this.flyTypes = loaded;
+        this.dataPackFlyTypes = loaded.stream().map(FlyTypeDefinition::defaultOf).toList();
         PoopSky.LOGGER.info("Loaded {} fly types from data pack", loaded.size());
     }
 
     public List<String> getFlyTypes() {
-        return flyTypes;
+        return getDefinitions().stream().map(FlyTypeDefinition::id).toList();
+    }
+
+    public List<FlyTypeDefinition> getDefinitions() {
+        Map<String, FlyTypeDefinition> combined = new java.util.LinkedHashMap<>();
+        for (FlyTypeDefinition definition : dataPackFlyTypes) {
+            combined.putIfAbsent(definition.id(), definition);
+        }
+        for (FlyTypeDefinition definition : kubeJsFlyTypes) {
+            combined.put(definition.id(), definition);
+        }
+        return List.copyOf(combined.values());
     }
 
     public int size() {
-        return flyTypes.size();
+        return getFlyTypes().size();
     }
 
     public int getIndex(String id) {
-        int index = flyTypes.indexOf(id);
+        int index = getFlyTypes().indexOf(id);
         return Math.max(index, 0);
     }
 
-    public synchronized void addKubeJsTypes(Collection<String> ids) {
-        List<String> updated = new ArrayList<>(flyTypes);
-        for (String id : ids) {
-            if (!updated.contains(id)) {
-                updated.add(id);
-            }
-        }
-        this.flyTypes = List.copyOf(updated);
+    public synchronized void replaceKubeJsDefinitions(Collection<FlyTypeDefinition> definitions) {
+        this.kubeJsFlyTypes = List.copyOf(definitions);
+    }
+
+    public FlyTypeDefinition getDefinition(String id) {
+        return getDefinitions().stream()
+                .filter(definition -> definition.id().equals(id))
+                .findFirst()
+                .orElse(null);
     }
 
     public boolean isValid(String id) {
-        return flyTypes.contains(id);
+        return getDefinitions().stream().anyMatch(definition -> definition.id().equals(id));
+    }
+
+    private static List<FlyTypeDefinition> defaultDefinitions(List<String> ids) {
+        return ids.stream().map(FlyTypeDefinition::defaultOf).toList();
     }
 }

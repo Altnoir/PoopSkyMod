@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.compat.kubejs;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.content.FlyTypeDefinition;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
@@ -48,6 +49,10 @@ public final class FlyTypeBuilder {
         return breedingRecipes;
     }
 
+    public FlyTypeDefinition toDefinition() {
+        return new FlyTypeDefinition(id, texture, displayName != null ? displayName : formatName(id));
+    }
+
     public FlyTypeBuilder texture(String texture) {
         ResourceLocation parsed = ResourceLocation.tryParse(texture);
         if (parsed == null) {
@@ -92,5 +97,20 @@ public final class FlyTypeBuilder {
     }
 
     public record BreedingRecipe(String parent1, String parent2, float chance) {
+    }
+
+    private static String formatName(String id) {
+        StringBuilder name = new StringBuilder();
+        String[] parts = id.split("_");
+        for (int i = 0; i < parts.length; i++) {
+            if (i > 0) {
+                name.append(' ');
+            }
+            String part = parts[i];
+            name.append(Character.toUpperCase(part.charAt(0)));
+            name.append(part.substring(1));
+        }
+        name.append(" Fly");
+        return name.toString();
     }
 }

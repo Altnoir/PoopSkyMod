@@ -2,9 +2,7 @@ package com.altnoir.poopsky.impl.event;
 
 import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.client.inventory.PoopCraftingMenu;
-import com.altnoir.poopsky.content.FlyTypeManager;
 import com.altnoir.poopsky.content.ToiletType;
-import com.altnoir.poopsky.content.ToiletTypeManager;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
@@ -54,7 +52,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
@@ -79,7 +76,6 @@ public class PoGameEvents {
         gameEventBus.addListener(PoGameEvents::onVillagerTrades);
         gameEventBus.addListener(PoGameEvents::onEntityDismount);
         gameEventBus.addListener(PoGameEvents::onMobEffectApplicable);
-        gameEventBus.addListener(PoGameEvents::onAddReloadListener);
         gameEventBus.addListener(PoGameEvents::onEntityTick);
         gameEventBus.addListener(PoGameEvents::onFinalizeSpawn);
         gameEventBus.addListener(PoGameEvents::onCreateSpawnToilet);
@@ -208,11 +204,6 @@ public class PoGameEvents {
             MobEffects.WITHER,
             MobEffects.CONFUSION
     );
-
-    public static void onAddReloadListener(AddReloadListenerEvent event) {
-        event.addListener(FlyTypeManager.INSTANCE);
-        event.addListener(ToiletTypeManager.INSTANCE);
-    }
 
     public static void onEntityTick(EntityTickEvent.Pre event) {
         Entity entity = event.getEntity();

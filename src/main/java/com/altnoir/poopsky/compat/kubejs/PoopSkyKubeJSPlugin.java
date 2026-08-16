@@ -6,31 +6,42 @@ import com.altnoir.poopsky.content.recipe.FlyBarrelRecipe;
 import com.altnoir.poopsky.content.recipe.POPExplosionRecipe;
 import com.altnoir.poopsky.content.recipe.SieveRecipe;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import dev.latvian.mods.kubejs.client.LangKubeEvent;
+import dev.latvian.mods.kubejs.core.RecipeManagerKJS;
+import dev.latvian.mods.kubejs.event.EventGroupRegistry;
 import dev.latvian.mods.kubejs.generator.KubeAssetGenerator;
 import dev.latvian.mods.kubejs.generator.KubeDataGenerator;
 import dev.latvian.mods.kubejs.plugin.KubeJSPlugin;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
+import dev.latvian.mods.kubejs.recipe.RecipesKubeEvent;
 import dev.latvian.mods.kubejs.recipe.component.*;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeMappingRegistry;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchemaRegistry;
-import dev.latvian.mods.kubejs.script.BindingRegistry;
 import dev.latvian.mods.kubejs.script.ScriptManager;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.AddReloadListenerEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public final class PoopSkyKubeJSPlugin implements KubeJSPlugin {
     @Override
-    public void registerBindings(BindingRegistry registry) {
-        registry.add("PoopSkyFlyType", PoopSkyFlyTypes.INSTANCE);
+    public void init() {
+        NeoForge.EVENT_BUS.addListener(KubeJSFlyTypeReloadListener::onAddReloadListener);
+    }
+
+    @Override
+    public void registerEvents(EventGroupRegistry registry) {
+        registry.register(PoopSkyEvents.GROUP);
     }
 
     @Override
@@ -114,11 +125,21 @@ public final class PoopSkyKubeJSPlugin implements KubeJSPlugin {
 
     @Override
     public void afterScriptsLoaded(ScriptManager scriptManager) {
-        List<String> ids = new ArrayList<>();
-        for (FlyTypeBuilder builder : PoopSkyFlyTypes.INSTANCE.builders()) {
-            ids.add(builder.id());
+        if (!scriptManager.scriptType.isServer()) {
+            return;
         }
-        FlyTypeManager.INSTANCE.addKubeJsTypes(ids);
+        PoopSkyFlyTypes.INSTANCE.clear();
+        PoopSkyEvents.FLY_TYPE.post(new FlyTypeKubeEvent());
+        FlyTypeManager.INSTANCE.replaceKubeJsDefinitions(PoopSkyFlyTypes.INSTANCE.definitions());
+    }
+
+    @Override
+    public void beforeRecipeLoading(RecipesKubeEvent event, RecipeManagerKJS manager, Map<ResourceLocation, JsonElement> recipes) {
+        for (FlyTypeBuilder builder : PoopSkyFlyTypes.INSTANCE.builders()) {
+            for (GeneratedRecipe recipe : generatedRecipes(builder)) {
+                recipes.put(recipe.id(), recipe.json());
+            }
+        }
     }
 
     @Override
@@ -126,8 +147,9 @@ public final class PoopSkyKubeJSPlugin implements KubeJSPlugin {
         JsonArray values = new JsonArray();
         for (FlyTypeBuilder builder : PoopSkyFlyTypes.INSTANCE.builders()) {
             values.add(builder.id());
-            generateFlyBarrelRecipe(generator, builder);
-            generateBreedingRecipes(generator, builder);
+            for (GeneratedRecipe recipe : generatedRecipes(builder)) {
+                generator.json(recipe.id(), recipe.json());
+            }
         }
         if (!values.isEmpty()) {
             JsonObject flyTypes = new JsonObject();
@@ -151,8 +173,7 @@ public final class PoopSkyKubeJSPlugin implements KubeJSPlugin {
     @Override
     public void generateLang(LangKubeEvent event) {
         for (FlyTypeBuilder builder : PoopSkyFlyTypes.INSTANCE.builders()) {
-            String name = builder.displayName() != null ? builder.displayName() : formatName(builder.id());
-            event.add("fly_type.poopsky." + builder.id(), name);
+            event.add("fly_type.poopsky." + builder.id(), builder.toDefinition().displayName());
         }
     }
 
@@ -161,21 +182,18 @@ public final class PoopSkyKubeJSPlugin implements KubeJSPlugin {
         PoopSkyFlyTypes.INSTANCE.clear();
     }
 
-    private static void generateFlyBarrelRecipe(KubeDataGenerator generator, FlyTypeBuilder builder) {
-        if (!builder.hasFlyBarrel()) {
-            return;
+    private static List<GeneratedRecipe> generatedRecipes(FlyTypeBuilder builder) {
+        List<GeneratedRecipe> recipes = new ArrayList<>();
+        if (builder.hasFlyBarrel()) {
+            JsonObject recipe = new JsonObject();
+            recipe.addProperty("type", "poopsky:fly_barrel");
+            recipe.addProperty("fly_type", builder.id());
+            JsonObject result = new JsonObject();
+            result.addProperty("id", builder.flyBarrelResult());
+            result.addProperty("count", builder.flyBarrelCount());
+            recipe.add("result", result);
+            recipes.add(new GeneratedRecipe(PoopSky.loc("recipe/fly_barrel/" + builder.id()), recipe));
         }
-        JsonObject recipe = new JsonObject();
-        recipe.addProperty("type", "poopsky:fly_barrel");
-        recipe.addProperty("fly_type", builder.id());
-        JsonObject result = new JsonObject();
-        result.addProperty("id", builder.flyBarrelResult());
-        result.addProperty("count", builder.flyBarrelCount());
-        recipe.add("result", result);
-        generator.json(PoopSky.loc("recipe/fly_barrel/" + builder.id()), recipe);
-    }
-
-    private static void generateBreedingRecipes(KubeDataGenerator generator, FlyTypeBuilder builder) {
         for (FlyTypeBuilder.BreedingRecipe breeding : builder.breedingRecipes()) {
             JsonObject recipe = new JsonObject();
             recipe.addProperty("type", "poopsky:breeding_chest");
@@ -184,22 +202,11 @@ public final class PoopSkyKubeJSPlugin implements KubeJSPlugin {
             recipe.addProperty("result", builder.id());
             recipe.addProperty("chance", breeding.chance());
             String path = "recipe/breeding_chest/" + builder.id() + "_from_" + breeding.parent1() + "_and_" + breeding.parent2();
-            generator.json(PoopSky.loc(path), recipe);
+            recipes.add(new GeneratedRecipe(PoopSky.loc(path), recipe));
         }
+        return recipes;
     }
 
-    private static String formatName(String id) {
-        StringBuilder name = new StringBuilder();
-        String[] parts = id.split("_");
-        for (int i = 0; i < parts.length; i++) {
-            if (i > 0) {
-                name.append(' ');
-            }
-            String part = parts[i];
-            name.append(Character.toUpperCase(part.charAt(0)));
-            name.append(part.substring(1));
-        }
-        name.append(" Fly");
-        return name.toString();
+    private record GeneratedRecipe(ResourceLocation id, JsonObject json) {
     }
 }
