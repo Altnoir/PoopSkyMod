@@ -75,7 +75,6 @@ public class PoopSky implements ModInitializer {
         FishingLootGen.register();
         GlobalLootModifierGen.register();
         PoLootFunctions.register();
-        PoVillagers.register();
 
         PoParticles.register();
         AdvancementGen.register();
@@ -92,6 +91,8 @@ public class PoopSky implements ModInitializer {
         PoStructures.register();
         PoChunkGenerators.register();
 
+        PoVillagers.init();
+
         REGISTRATE.register();
         DataMapGen.register();
 
@@ -102,6 +103,7 @@ public class PoopSky implements ModInitializer {
 
         PoFabricated.init();
         PoGameEvents.registerGame();
+        PoVillagers.register();
 
         if (FabricLoader.getInstance().isModLoaded(PoMods.TOUHOU_LITTLE_MAID.id())) {
             MaidPlugin.registry();

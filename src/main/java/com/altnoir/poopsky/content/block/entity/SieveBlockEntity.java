@@ -31,7 +31,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 
 public class SieveBlockEntity extends BlockEntity {
-    private static final int INPUT_SLOT = 0;
+    public static final int INPUT_SLOT = 0;
     private static final int MANUAL_PROGRESS_PER_CLICK = 20;
 
     private int progress = 0;

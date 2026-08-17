@@ -1,7 +1,6 @@
 package com.altnoir.poopsky.impl.event;
 
 import com.altnoir.poopsky.Config;
-import com.altnoir.poopsky.client.inventory.PoopCraftingMenu;
 import com.altnoir.poopsky.content.FlyTypeManager;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.ToiletTypeManager;
@@ -134,14 +133,14 @@ public class PoGameEvents {
     }
 
     public static void onBrewingRecipeRegistry(PotionBrewing.Builder builder) {
-        builder.addMix(Potions.AWKWARD, PoItems.FOLIUM_SENNAE.get(), PoPotions.FECAL_INCONTINENCE_POTION);
-        builder.addMix(PoPotions.FECAL_INCONTINENCE_POTION, Items.REDSTONE, PoPotions.LONG_FECAL_INCONTINENCE_POTION);
-        builder.addMix(PoPotions.FECAL_INCONTINENCE_POTION, Items.GLOWSTONE_DUST, PoPotions.STRONG_FECAL_INCONTINENCE_POTION);
-        builder.addMix(PoPotions.FECAL_INCONTINENCE_POTION, Items.GLOWSTONE, PoPotions.SUPER_FECAL_INCONTINENCE_POTION);
+        builder.addMix(Potions.AWKWARD, PoItems.FOLIUM_SENNAE.get(), PoPotions.FECAL_INCONTINENCE_POTION.getDelegate());
+        builder.addMix(PoPotions.FECAL_INCONTINENCE_POTION.getDelegate(), Items.REDSTONE, PoPotions.LONG_FECAL_INCONTINENCE_POTION.getDelegate());
+        builder.addMix(PoPotions.FECAL_INCONTINENCE_POTION.getDelegate(), Items.GLOWSTONE_DUST, PoPotions.STRONG_FECAL_INCONTINENCE_POTION.getDelegate());
+        builder.addMix(PoPotions.FECAL_INCONTINENCE_POTION.getDelegate(), Items.GLOWSTONE, PoPotions.SUPER_FECAL_INCONTINENCE_POTION.getDelegate());
 
-        builder.addMix(Potions.AWKWARD, PoItems.KING_OF_DRAGON_FRUIT.get(), PoPotions.ON_THE_VGE_POTION);
-        builder.addMix(PoPotions.ON_THE_VGE_POTION, Items.REDSTONE, PoPotions.LONG_ON_THE_VGE_POTION);
-        builder.addMix(PoPotions.ON_THE_VGE_POTION, Items.GLOWSTONE_DUST, PoPotions.STRONG_ON_THE_VGE_POTION);
+        builder.addMix(Potions.AWKWARD, PoItems.KING_OF_DRAGON_FRUIT.get(), PoPotions.ON_THE_VGE_POTION.getDelegate());
+        builder.addMix(PoPotions.ON_THE_VGE_POTION.getDelegate(), Items.REDSTONE, PoPotions.LONG_ON_THE_VGE_POTION.getDelegate());
+        builder.addMix(PoPotions.ON_THE_VGE_POTION.getDelegate(), Items.GLOWSTONE_DUST, PoPotions.STRONG_ON_THE_VGE_POTION.getDelegate());
     }
 
     public static void onVillagerTrades() {

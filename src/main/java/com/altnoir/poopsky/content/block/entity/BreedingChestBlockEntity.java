@@ -103,7 +103,7 @@ public class BreedingChestBlockEntity extends BlockEntity implements MenuProvide
     };
 
     // 自动化：上面/侧面 = 输入（粪便 + 苍蝇）
-    private final IItemHandler topSideHandler = new RangedWrapper(itemHandler, SLOT_FECES, SLOT_FECES + 1) {
+    private final IItemHandler topSideHandler = new RangedWrapper(itemHandler, SLOT_FECES, SLOT_OUTPUT_1) {
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
             return super.isItemValid(slot, stack);
