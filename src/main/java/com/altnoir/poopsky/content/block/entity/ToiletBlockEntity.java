@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.content.block.entity;
 
+import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
@@ -15,7 +16,6 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
@@ -94,7 +94,7 @@ public class ToiletBlockEntity extends BlockEntity {
         if (level == null || level.isClientSide()) return;
         if (linkedPos == null || linkedDim == null || linkedDim.isBlank()) return;
 
-        var targetDimension = ResourceLocation.tryParse(linkedDim);
+        var targetDimension = PoopSky.tryParse(linkedDim);
         if (targetDimension == null) return;
 
         var server = ((ServerLevel) level).getServer();

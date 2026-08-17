@@ -135,11 +135,11 @@ public class ItemModelGen extends RegistrateItemModelProvider {
                 .end()
                 .guiLight(GuiLight.FRONT);
 
-        int[] modelData = {1, 2, 4};
+        int[] modelData = {1, 2, 3};
         String[] colors = {"yellow", "red", "blue"};
         for (int i = 0; i < colors.length; i++) {
             builder.override()
-                    .predicate(ResourceLocation.withDefaultNamespace("custom_model_data"), modelData[i])
+                    .predicate(PoopSky.mcloc("custom_model_data"), modelData[i])
                     .model(new ModelFile.UncheckedModelFile(PoopSky.loc("item/gashapon_" + colors[i])))
                     .end();
         }
@@ -161,7 +161,7 @@ public class ItemModelGen extends RegistrateItemModelProvider {
             String armorItemPath = name(itemDeferredItem);
             String trimPath = "trims/items/" + armorType + "_trim_" + trimMaterial.location().getPath();
             String currentTrimName = armorItemPath + "_" + trimMaterial.location().getPath() + "_trim";
-            ResourceLocation trimResLoc = ResourceLocation.parse(trimPath); // minecraft namespace
+            ResourceLocation trimResLoc = PoopSky.parse(trimPath); // minecraft namespace
             ResourceLocation trimNameResLoc = modLoc(currentTrimName);
 
             existingFileHelper.trackGenerated(trimResLoc, PackType.CLIENT_RESOURCES, ".png", "textures");

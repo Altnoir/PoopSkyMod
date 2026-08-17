@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.impl.util;
 
+import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.entity.FlushToiletBlockEntity;
@@ -16,7 +17,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.TickTask;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -447,7 +447,7 @@ public class ToiletUtil {
         var server = level.getServer();
         if (server == null) return false;
 
-        var targetDimension = ResourceLocation.tryParse(linkedDim);
+        var targetDimension = PoopSky.tryParse(linkedDim);
         if (targetDimension == null) return false;
 
         var targetWorld = server.getLevel(ResourceKey.create(Registries.DIMENSION, targetDimension));

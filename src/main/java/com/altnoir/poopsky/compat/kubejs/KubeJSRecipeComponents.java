@@ -77,7 +77,7 @@ public final class KubeJSRecipeComponents {
                 return new POPExplosionRecipe.Output(null, stack.getItem());
             }
             if (value instanceof CharSequence text) {
-                ResourceLocation id = ResourceLocation.tryParse(text.toString());
+                ResourceLocation id = PoopSky.tryParse(text.toString());
                 if (id != null) {
                     Block block = BuiltInRegistries.BLOCK.get(id);
                     if (block != Blocks.AIR) {
@@ -110,7 +110,7 @@ public final class KubeJSRecipeComponents {
                 return new FlyBarrelRecipe.Output(BuiltInRegistries.ITEM.getKey(item), 1);
             }
             if (value instanceof CharSequence text) {
-                ResourceLocation id = ResourceLocation.tryParse(text.toString());
+                ResourceLocation id = PoopSky.tryParse(text.toString());
                 if (id != null) {
                     Item item = BuiltInRegistries.ITEM.get(id);
                     if (item != Items.AIR) {
@@ -130,7 +130,7 @@ public final class KubeJSRecipeComponents {
             return new ItemStack(item);
         }
         if (value instanceof CharSequence text) {
-            ResourceLocation id = ResourceLocation.tryParse(text.toString());
+            ResourceLocation id = PoopSky.tryParse(text.toString());
             if (id != null) {
                 Item item = BuiltInRegistries.ITEM.get(id);
                 if (item != Items.AIR) {

@@ -1,11 +1,12 @@
 package com.altnoir.poopsky.content.item.p;
 
+import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.ToiletComponent;
 import com.altnoir.poopsky.content.block.entity.FlushToiletBlockEntity;
 import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.content.item.PoBaseItem;
-import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.init.PoComponents;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
@@ -141,7 +142,7 @@ public class ToiletLinkerItem extends PoBaseItem {
 
     private Optional<ServerLevel> getLevelFromKey(MinecraftServer server, String dimStr) {
         if (dimStr.isEmpty()) return Optional.empty();
-        ResourceLocation loc = ResourceLocation.tryParse(dimStr);
+        ResourceLocation loc = PoopSky.tryParse(dimStr);
         if (loc == null) return Optional.empty();
         ResourceKey<Level> registryKey = ResourceKey.create(Registries.DIMENSION, loc);
         return Optional.ofNullable(server.getLevel(registryKey));

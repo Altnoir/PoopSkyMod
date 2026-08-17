@@ -127,8 +127,7 @@ public class PoItems {
     public static final ItemEntry<Item> UREA = registerItem("urea", Item::new);
 
     public static final ItemEntry<UrineBottleItem> URINE_BOTTLE = registerItem("urine_bottle",
-            prop -> new UrineBottleItem(prop
-                    .craftRemainder(Items.GLASS_BOTTLE)
+            prop -> new UrineBottleItem(prop.craftRemainder(Items.GLASS_BOTTLE)
                     .food(PFoods.URINE_BOTTLE)
                     .stacksTo(18)
             ));
@@ -137,6 +136,7 @@ public class PoItems {
     public static final ItemEntry<Item> LAWRENCE_MUSIC_DISC = registerMusicDisc("music_disc_lawrence", PoSoundEvents.LAWRENCE_KEY);
     public static final ItemEntry<Item> LIGHT_DANCE_MUSIC_DISC = registerMusicDisc("music_disc_light_dance", PoSoundEvents.LIGHT_DANCE_KEY);
     public static final ItemEntry<Item> MOON_BOWL_MUSIC_DISC = registerMusicDisc("music_disc_moon_bowl", PoSoundEvents.MOON_BOWL_KEY);
+    public static final ItemEntry<Item> THEME_MUSIC_DISC = registerMusicDisc("music_disc_theme", PoSoundEvents.THEME_KEY);
     public static final ItemEntry<GameDiscItem> GAME_DISC_SLIME = registerItem("game_disc_slime",
             props -> new GameDiscItem(props.rarity(Rarity.RARE),
                     Component.translatable("gamediscs.slime").withStyle(ChatFormatting.DARK_GREEN)));

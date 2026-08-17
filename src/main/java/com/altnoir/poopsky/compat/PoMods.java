@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.compat;
 
+import com.altnoir.poopsky.PoopSky;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.fml.loading.LoadingModList;
 
@@ -29,7 +30,7 @@ public enum PoMods {
     }
 
     public ResourceLocation rl(String path) {
-        return ResourceLocation.fromNamespaceAndPath(id, path);
+        return PoopSky.modloc(id, path);
     }
 
     public boolean isLoaded() {

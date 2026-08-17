@@ -23,7 +23,7 @@
     {
       "model": "poopsky:item/gashapon_blue",
       "predicate": {
-        "minecraft:custom_model_data": 4.0
+        "minecraft:custom_model_data": 3.0
       }
     }
   ],

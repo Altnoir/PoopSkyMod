@@ -49,7 +49,7 @@ public class PVillagerTrades {
             }
 
             trades.get(3).add((entity, random) -> new MerchantOffer(
-                    new ItemCost(Items.EMERALD, 8),
+                    new ItemCost(Items.EMERALD, 5),
                     new ItemStack(PoBlocks.STOOL, 1), 16, 15, 0.1f)
             );
             trades.get(3).add((entity, random) -> new MerchantOffer(
@@ -155,6 +155,10 @@ public class PVillagerTrades {
             trades.get(5).add((entity, random) -> new MerchantOffer(
                     new ItemCost(Items.EMERALD, 8),
                     new ItemStack(PoItems.MOON_BOWL_MUSIC_DISC.get(), 1), 2, 30, 1.0f)
+            );
+            trades.get(5).add((entity, random) -> new MerchantOffer(
+                    new ItemCost(Items.EMERALD, 8),
+                    new ItemStack(PoItems.THEME_MUSIC_DISC.get(), 1), 2, 30, 1.0f)
             );
         }
     }

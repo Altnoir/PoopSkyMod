@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.content.block.entity;
 
+import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.client.inventory.FlushToiletMenu;
 import com.altnoir.poopsky.init.PoBlockEntityType;
 import net.minecraft.core.BlockPos;
@@ -9,7 +10,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
@@ -149,7 +149,7 @@ public class FlushToiletBlockEntity extends BlockEntity implements MenuProvider 
         if (level == null || level.isClientSide()) return;
         if (linkedPos == null || linkedDim == null || linkedDim.isBlank()) return;
 
-        var targetDimension = ResourceLocation.tryParse(linkedDim);
+        var targetDimension = PoopSky.tryParse(linkedDim);
         if (targetDimension == null) return;
 
         var server = ((ServerLevel) level).getServer();

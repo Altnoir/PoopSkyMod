@@ -190,9 +190,12 @@ public final class ItemTagGen {
         tag(ItemTags.VANISHING_ENCHANTABLE).addTag(PoTags.Items.SHITS);
 
         tag(Tags.Items.MUSIC_DISCS)
-                .add(PoItems.LAWRENCE_MUSIC_DISC.get())
-                .add(PoItems.LIGHT_DANCE_MUSIC_DISC.get())
-                .add(PoItems.MOON_BOWL_MUSIC_DISC.get());
+                .add(
+                        PoItems.LAWRENCE_MUSIC_DISC.get(),
+                        PoItems.LIGHT_DANCE_MUSIC_DISC.get(),
+                        PoItems.MOON_BOWL_MUSIC_DISC.get(),
+                        PoItems.THEME_MUSIC_DISC.get()
+                );
 
         tag(PoTags.Items.POOP_MOONCAKES)
                 .add(

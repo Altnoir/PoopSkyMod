@@ -245,6 +245,9 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     public void onRemove(BlockState oldState, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!oldState.is(newState.getBlock())) {
             if (!level.isClientSide) {
+                if (level.getBlockEntity(pos) instanceof ToiletBlockEntity be) {
+                    be.clearLinkedBlock();
+                }
                 updateAdjacentConnections(level, pos, oldState);
             }
         }

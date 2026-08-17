@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.content.entity.p;
 
+import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.item.p.GashaponItem;
 import com.altnoir.poopsky.init.PoEntityType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -98,7 +99,7 @@ public class GashaponEntity extends ThrowableProjectile {
             return;
         }
 
-        ResourceLocation id = ResourceLocation.tryParse(mobId);
+        ResourceLocation id = PoopSky.tryParse(mobId);
         if (id == null) {
             return;
         }

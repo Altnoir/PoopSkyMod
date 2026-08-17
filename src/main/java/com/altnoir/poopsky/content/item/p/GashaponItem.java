@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.content.item.p;
 
+import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.entity.p.GashaponEntity;
 import com.altnoir.poopsky.init.PoComponents;
 import com.altnoir.poopsky.init.PoItems;
@@ -26,6 +27,7 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Objects;
 
 public class GashaponItem extends Item implements ProjectileItem {
     public static final String PINK = "pink";
@@ -62,10 +64,9 @@ public class GashaponItem extends Item implements ProjectileItem {
 
     public static int getColorModelData(String color) {
         return switch (color) {
-            case PINK -> 0;
             case YELLOW -> 1;
             case RED -> 2;
-            case BLUE -> 4;
+            case BLUE -> 3;
             default -> 0;
         };
     }
@@ -76,12 +77,12 @@ public class GashaponItem extends Item implements ProjectileItem {
         if (!level.isClientSide) {
             GashaponEntity projectile = new GashaponEntity(level, player);
             projectile.setVariant(GashaponEntity.variantFromColor(getColor(itemstack)));
-            projectile.setMobId(getMobId(itemstack));
+            projectile.setMobId(Objects.requireNonNull(getMobId(itemstack)));
             projectile.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 1.5F, 1.0F);
             level.addFreshEntity(projectile);
         }
-        level.playSound(null, player.getX(), player.getY(), player.getZ(), PoSoundEvents.ENTITY_POOP_BALL_THROW.get(),
-                SoundSource.NEUTRAL, 0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
+        level.playSound(player, player.getX(), player.getY(), player.getZ(), PoSoundEvents.ENTITY_POOP_BALL_THROW.get(),
+                SoundSource.NEUTRAL, 1.0F, level.getRandom().nextFloat() * 0.4F + 0.8F);
         player.awardStat(Stats.ITEM_USED.get(this));
         itemstack.shrink(1);
         return InteractionResultHolder.sidedSuccess(itemstack, level.isClientSide());
@@ -91,7 +92,7 @@ public class GashaponItem extends Item implements ProjectileItem {
     public Projectile asProjectile(Level level, Position position, ItemStack itemStack, Direction direction) {
         GashaponEntity projectile = new GashaponEntity(level, position.x(), position.y(), position.z());
         projectile.setVariant(GashaponEntity.variantFromColor(getColor(itemStack)));
-        projectile.setMobId(getMobId(itemStack));
+        projectile.setMobId(Objects.requireNonNull(getMobId(itemStack)));
         return projectile;
     }
 
@@ -100,7 +101,7 @@ public class GashaponItem extends Item implements ProjectileItem {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
         String mobId = getMobId(stack);
         if (mobId != null && !mobId.isBlank()) {
-            ResourceLocation id = ResourceLocation.tryParse(mobId);
+            ResourceLocation id = PoopSky.tryParse(mobId);
             var entityType = id != null ? BuiltInRegistries.ENTITY_TYPE.get(id) : null;
             tooltipComponents.add(entityType != null
                     ? Component.translatable(entityType.getDescriptionId()).withStyle(ChatFormatting.GOLD)

@@ -95,7 +95,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
         super(biomeSource, settings);
         this.settings = settings;
         this.allowedStructureSets = allowedStructureSets;
-        this.generateNormal = settings.is(ResourceLocation.parse("minecraft:nether")) && !Config.voidNetherGeneration;
+        this.generateNormal = settings.is(PoopSky.parse("minecraft:nether")) && !Config.voidNetherGeneration;
     }
 
     @Override
@@ -198,7 +198,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
             filterStructureStarts(registries, structureState.getLevelSeed(), chunk);
         }
 
-        if (!generateNormal && settings.is(ResourceLocation.parse("minecraft:overworld")) && isStructureAllowed(registries, PoopSky.loc("poop_island"))) {
+        if (!generateNormal && settings.is(PoopSky.parse("minecraft:overworld")) && isStructureAllowed(registries, PoopSky.loc("poop_island"))) {
             PoopIslandStructure.addGuaranteedSpawnStart(registries, chunk, structureManager, templateManager, structureState.getLevelSeed());
         }
     }
@@ -291,7 +291,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
 
     @Nullable
     private Pair<BlockPos, Holder<Structure>> findGuaranteedSpawnIsland(ServerLevel level, HolderSet<Structure> structures, BlockPos pos, int searchRadius, boolean skipKnownStructures) {
-        if (skipKnownStructures || generateNormal || !settings.is(ResourceLocation.parse("minecraft:overworld")) || !isStructureAllowed(level.registryAccess(), PoopSky.loc("poop_island"))) {
+        if (skipKnownStructures || generateNormal || !settings.is(PoopSky.parse("minecraft:overworld")) || !isStructureAllowed(level.registryAccess(), PoopSky.loc("poop_island"))) {
             return null;
         }
 
@@ -327,7 +327,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
 
     private void filterStructureStarts(RegistryAccess registries, long seed, ChunkAccess chunk) {
         Set<Structure> allowedStructures = resolveAllowedStructures(registries);
-        boolean protectSpawn = settings.is(ResourceLocation.parse("minecraft:overworld"));
+        boolean protectSpawn = settings.is(PoopSky.parse("minecraft:overworld"));
         BlockPos spawn = protectSpawn ? defaultSpawnPosition(seed) : BlockPos.ZERO;
 
         for (Map.Entry<Structure, StructureStart> entry : List.copyOf(chunk.getAllStarts().entrySet())) {

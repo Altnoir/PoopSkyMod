@@ -251,6 +251,14 @@ public class PoopSky {
         return ResourceLocation.withDefaultNamespace(path);
     }
 
+    public static ResourceLocation parse(String location) {
+        return ResourceLocation.parse(location);
+    }
+
+    public static ResourceLocation tryParse(String location) {
+        return ResourceLocation.tryParse(location);
+    }
+
     public static String getItemPath(Item item) {
         return getItemKey(item).getPath();
     }
