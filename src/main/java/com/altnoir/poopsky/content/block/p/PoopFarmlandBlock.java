@@ -126,7 +126,9 @@ public class PoopFarmlandBlock extends FarmBlock {
             level.setBlockAndUpdate(pos, PoBlocks.POOP_BLOCK.get().defaultBlockState());
             return;
         }
-        cropDrop(level, pos);
+        if (state.getValue(MODE).isLeak()) {
+            cropDrop(level, pos);
+        }
     }
 
     @Override
