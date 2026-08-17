@@ -4,7 +4,6 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.entity.p.GashaponEntity;
 import com.altnoir.poopsky.init.PoComponents;
 import com.altnoir.poopsky.init.PoItems;
-import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
@@ -12,6 +11,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -81,8 +81,8 @@ public class GashaponItem extends Item implements ProjectileItem {
             projectile.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 1.5F, 1.0F);
             level.addFreshEntity(projectile);
         }
-        level.playSound(player, player.getX(), player.getY(), player.getZ(), PoSoundEvents.ENTITY_POOP_BALL_THROW.get(),
-                SoundSource.NEUTRAL, 1.0F, level.getRandom().nextFloat() * 0.4F + 0.8F);
+        level.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.EGG_THROW, SoundSource.PLAYERS,
+                0.5F, level.getRandom().nextFloat() * 0.4F + 0.8F);
         player.awardStat(Stats.ITEM_USED.get(this));
         itemstack.shrink(1);
         return InteractionResultHolder.sidedSuccess(itemstack, level.isClientSide());

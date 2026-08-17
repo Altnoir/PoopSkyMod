@@ -354,16 +354,11 @@ public class PoBlocks {
                     .sound(SoundType.BASALT)
                     .requiresCorrectToolForDrops()
                     .lightLevel(state -> state.getValue(MaggotsChunkLoaderBlock.POWERED) ? 7 : 0)));
-    public static final BlockEntry<GachaBlock> GACHA_MACHINE = registerBlock("gacha_machine", 64,
-            props -> new GachaBlock(BlockBehaviour.Properties.of()
-                    .mapColor(DyeColor.WHITE)
-                    .strength(HARDEN, HARD_STRENGTH)
-                    .sound(SoundType.NETHERITE_BLOCK)
-                    .requiresCorrectToolForDrops()
-                    .noOcclusion()));
 
-    public static final BlockEntry<ArcadeBlock> RED_ARCADE = registerArcadeBlock("red_arcade", DyeColor.RED);
-    public static final BlockEntry<ArcadeBlock> BLUE_ARCADE = registerArcadeBlock("blue_arcade", DyeColor.BLUE);
+    public static final BlockEntry<Block> MAGGOTS_BLOCK = registerBlock("maggots_block", 88,
+            props -> new Block(simpleProperties(MapColor.TERRACOTTA_WHITE, POOP, SoundType.WEEPING_VINES)));
+    public static final BlockEntry<Block> ROUNDWORM_BLOCK = registerBlock("roundworm_block", 88,
+            props -> new Block(simpleProperties(MapColor.TERRACOTTA_WHITE, POOP, SoundType.TWISTING_VINES)));
 
     public static final BlockEntry<PoopLogBlock> POOP_LOG = registerPoopBlock("poop_log",
             props -> new PoopLogBlock(logProperties(MapColor.COLOR_BROWN, SoundType.STEM).randomTicks()),
@@ -487,43 +482,15 @@ public class PoBlocks {
                     .lightLevel(p_187409_ -> 1)),
             RegistrateBlockLootTables::dropWhenSilkTouch);
 
-    public static final BlockEntry<? extends LiquidBlock> URINE_LIQUID = PoFluids.URINE_LIQUID;
-
-    public static final BlockEntry<Block> MAGGOTS_BLOCK = registerBlock("maggots_block", 88,
-            props -> new Block(simpleProperties(MapColor.TERRACOTTA_WHITE, POOP, SoundType.WEEPING_VINES)));
-    public static final BlockEntry<Block> ROUNDWORM_BLOCK = registerBlock("roundworm_block", 88,
-            props -> new Block(simpleProperties(MapColor.TERRACOTTA_WHITE, POOP, SoundType.TWISTING_VINES)));
-
-    public static final BlockEntry<MaggotsBlock> MAGGOTS = registerBlockNoItem("maggots",
-            props -> new MaggotsBlock(plantProperties(MapColor.COLOR_YELLOW, SoundType.CROP)
-                    .noCollission()
-                    .randomTicks()),
-            PoBlocks::createMaggotsLoot);
-    public static final BlockEntry<RoundwormVinesBlock> ROUNDWORM_VINES = registerBlockNoItem("roundworm_vines",
-            props -> new RoundwormVinesBlock(
-                    plantProperties(MapColor.TERRACOTTA_WHITE, SoundType.TWISTING_VINES)
-                            .randomTicks()
-                            .noCollission()),
-            (loot, block) -> loot.dropOther(block, PoItems.ROUNDWORM.get()));
-    public static final BlockEntry<RoundwormVinesPlantBlock> ROUNDWORM_VINES_PLANT = registerBlockNoItem("roundworm_vines_plant",
-            props -> new RoundwormVinesPlantBlock(
-                    plantProperties(MapColor.TERRACOTTA_WHITE, SoundType.TWISTING_VINES)
-                            .noCollission()),
-            PoBlocks::createRoundwormVinesPlantLoot);
-
-    public static final BlockEntry<ChiliVinesBlock> CHILI_VINES = registerBlockNoItem("chili_vines",
-            props -> new ChiliVinesBlock(
-                    plantProperties(MapColor.PLANT, SoundType.CAVE_VINES)
-                            .lightLevel(ChiliVines.emission(1))
-                            .noCollission()),
-            (loot, block) -> loot.add(block, createChiliVinesDrop(block)));
-
-    public static final BlockEntry<ChiliVinesPlantBlock> CHILI_VINES_PLANT = registerBlockNoItem("chili_vines_plant",
-            props -> new ChiliVinesPlantBlock(
-                    plantProperties(MapColor.PLANT, SoundType.CAVE_VINES)
-                            .lightLevel(ChiliVines.emission(1))
-                            .noCollission()),
-            (loot, block) -> loot.add(block, createChiliVinesDrop(block)));
+    public static final BlockEntry<GachaBlock> GACHA_MACHINE = registerBlock("gacha_machine", 64,
+            props -> new GachaBlock(BlockBehaviour.Properties.of()
+                    .mapColor(DyeColor.WHITE)
+                    .strength(HARDEN, HARD_STRENGTH)
+                    .sound(SoundType.NETHERITE_BLOCK)
+                    .requiresCorrectToolForDrops()
+                    .noOcclusion()));
+    public static final BlockEntry<ArcadeBlock> RED_ARCADE = registerArcadeBlock("red_arcade", DyeColor.RED);
+    public static final BlockEntry<ArcadeBlock> BLUE_ARCADE = registerArcadeBlock("blue_arcade", DyeColor.BLUE);
 
     // Toilet
     public static final BlockEntry<WoodToiletBlock> WOODEN_TOILET = registerToiletBlock("wooden_toilet",
@@ -557,6 +524,41 @@ public class PoBlocks {
                     .sound(SoundType.NETHERITE_BLOCK)
                     .noOcclusion()),
             (loot, block) -> loot.add(block, loot.createDoorTable(block)));
+
+
+    public static final BlockEntry<? extends LiquidBlock> URINE_LIQUID = PoFluids.URINE_LIQUID;
+
+    public static final BlockEntry<MaggotsBlock> MAGGOTS = registerBlockNoItem("maggots",
+            props -> new MaggotsBlock(plantProperties(MapColor.COLOR_YELLOW, SoundType.CROP)
+                    .noCollission()
+                    .randomTicks()),
+            PoBlocks::createMaggotsLoot);
+    public static final BlockEntry<RoundwormVinesBlock> ROUNDWORM_VINES = registerBlockNoItem("roundworm_vines",
+            props -> new RoundwormVinesBlock(
+                    plantProperties(MapColor.TERRACOTTA_WHITE, SoundType.TWISTING_VINES)
+                            .randomTicks()
+                            .noCollission()),
+            (loot, block) -> loot.dropOther(block, PoItems.ROUNDWORM.get()));
+    public static final BlockEntry<RoundwormVinesPlantBlock> ROUNDWORM_VINES_PLANT = registerBlockNoItem("roundworm_vines_plant",
+            props -> new RoundwormVinesPlantBlock(
+                    plantProperties(MapColor.TERRACOTTA_WHITE, SoundType.TWISTING_VINES)
+                            .noCollission()),
+            PoBlocks::createRoundwormVinesPlantLoot);
+
+    public static final BlockEntry<ChiliVinesBlock> CHILI_VINES = registerBlockNoItem("chili_vines",
+            props -> new ChiliVinesBlock(
+                    plantProperties(MapColor.PLANT, SoundType.CAVE_VINES)
+                            .lightLevel(ChiliVines.emission(1))
+                            .noCollission()),
+            (loot, block) -> loot.add(block, createChiliVinesDrop(block)));
+
+    public static final BlockEntry<ChiliVinesPlantBlock> CHILI_VINES_PLANT = registerBlockNoItem("chili_vines_plant",
+            props -> new ChiliVinesPlantBlock(
+                    plantProperties(MapColor.PLANT, SoundType.CAVE_VINES)
+                            .lightLevel(ChiliVines.emission(1))
+                            .noCollission()),
+            (loot, block) -> loot.add(block, createChiliVinesDrop(block)));
+
 
     public record BlockFamily(
             BlockEntry<? extends Block> block,

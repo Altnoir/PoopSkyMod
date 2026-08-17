@@ -3,12 +3,15 @@ package com.altnoir.poopsky.content.entity.p;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.item.p.GashaponItem;
 import com.altnoir.poopsky.init.PoEntityType;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -109,6 +112,9 @@ public class GashaponEntity extends ThrowableProjectile {
         if (entity != null) {
             entity.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
             this.level().addFreshEntity(entity);
+
+            var pos = new BlockPos((int) this.getX(), (int) this.getY(), (int) this.getZ());
+            this.level().playSound(entity, pos, SoundEvents.CHICKEN_EGG, SoundSource.PLAYERS, 0.5F, 1.0F);
         }
     }
 }

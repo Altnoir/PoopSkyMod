@@ -20,7 +20,7 @@ repositories {
     mavenLocal()
     maven { url = "https://maven.createmod.net" } // Create, Ponder, Flywheel
     maven { url = "https://mvn.devos.one/snapshots" } // Registrate
-    maven { url = "https://maven.blamejared.com" } // JEI
+    maven { url = "https://maven.blamejared.com" } // JEI, Patchouli
     maven { url = "https://cursemaven.com" }
     maven { url = "https://api.modrinth.com/maven" } // Simple Bedrock Model
     // KubeJS, Rhino
@@ -177,6 +177,9 @@ dependencies {
     compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
     compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
     localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+    // Patchouli
+    compileOnly "vazkii.patchouli:Patchouli:${patchouli_version}:api"
+    runtimeOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
     // Touhou Little Maid
     implementation "curse.maven:touhou-little-maid-355044:7307724"
     compileOnly files("libs/touhou_little_mad-0.1.2-alpha.jar")
