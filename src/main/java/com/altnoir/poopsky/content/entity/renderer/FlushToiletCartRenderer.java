@@ -20,8 +20,8 @@ import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
 public class FlushToiletCartRenderer extends EntityRenderer<FlushToiletCartEntity> {
-    private static final ResourceLocation TEXTURE = PoopSky.loc("textures/block/flush_toilet_cart.png");
-    private static final ResourceLocation GOLDEN_TEXTURE = PoopSky.loc("textures/block/golden_flush_toilet_cart.png");
+    private static final ResourceLocation TEXTURE = PoopSky.loc("textures/block/toilet/flush_toilet_cart.png");
+    private static final ResourceLocation GOLDEN_TEXTURE = PoopSky.loc("textures/block/toilet/golden_flush_toilet_cart.png");
 
     public FlushToiletCartRenderer(EntityRendererProvider.Context context) {
         super(context);

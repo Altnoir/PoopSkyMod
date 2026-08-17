@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "poopsky:block/primo_stem",
+    "side": "poopsky:block/primo_stem"
+  }
+}

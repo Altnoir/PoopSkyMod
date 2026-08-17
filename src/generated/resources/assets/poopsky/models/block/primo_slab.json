@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "poopsky:block/primo_planks",
+    "side": "poopsky:block/primo_planks",
+    "top": "poopsky:block/primo_planks"
+  }
+}

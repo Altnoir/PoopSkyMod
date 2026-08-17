@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "poopsky:block/primo_hyphae_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "poopsky:block/primo_hyphae"
+    },
+    "axis=z": {
+      "model": "poopsky:block/primo_hyphae_horizontal",
+      "x": 90
+    }
+  }
+}

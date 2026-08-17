@@ -4,8 +4,8 @@
 	"render_type": "minecraft:cutout",
 	"texture_size": [64, 64],
 	"textures": {
-		"bottom": "poopsky:block/portable_toilet_particle",
-		"toilet": "poopsky:block/portable_toilet_bottom",
+		"bottom": "poopsky:block/toilet/portable_toilet_particle",
+		"toilet": "poopsky:block/toilet/portable_toilet_bottom",
 		"particle": "#bottom"
 	},
 	"elements": [

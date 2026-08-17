@@ -376,6 +376,7 @@ public class PoBlocks {
             (loot, block) -> loot.add(block, createSpallOreDrops(loot, block)));
     public static final BlockEntry<PoopEmptyLogBlock> STRIPPED_POOP_EMPTY_LOG = registerPoopBlock("stripped_poop_empty_log",
             props -> new PoopEmptyLogBlock(logProperties(MapColor.COLOR_BROWN, SoundType.BAMBOO_WOOD).noOcclusion()));
+
     public static final BlockEntry<LogBlock> GINKGO_LOG = registerDecoMaterialBlock("ginkgo_log", 64,
             props -> new LogBlock(logProperties(MapColor.COLOR_YELLOW, SoundType.WOOD).ignitedByLava()));
     public static final BlockEntry<LogBlock> GINKGO_WOOD = registerDecoMaterialBlock("ginkgo_wood", 64,
@@ -394,6 +395,7 @@ public class PoBlocks {
     public static final BlockEntry<FlamVerticalSlabBlock> GINKGO_VERTICAL_SLAB = registerDecoMaterialBlock("ginkgo_vertical_slab", 64,
             props -> new FlamVerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(GINKGO_PLANKS.get())),
             PoBlocks::createVerticalSlabDrops);
+
     public static final BlockEntry<ButtonBlock> GINKGO_BUTTON = registerDecoMaterialBlock("ginkgo_button", 64,
             props -> new ButtonBlock(BlockSetType.OAK, 30, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_BUTTON)));
     public static final BlockEntry<PressurePlateBlock> GINKGO_PRESSURE_PLATE = registerDecoMaterialBlock("ginkgo_pressure_plate", 64,
@@ -407,6 +409,44 @@ public class PoBlocks {
             (loot, block) -> loot.add(block, loot.createDoorTable(block)));
     public static final BlockEntry<TrapDoorBlock> GINKGO_TRAPDOOR = registerDecoMaterialBlock("ginkgo_trapdoor", 64,
             props -> new TrapDoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_TRAPDOOR).mapColor(MapColor.COLOR_YELLOW)));
+
+    public static final BlockEntry<LogBlock> PRIMO_STEM = registerDecoMaterialBlock("primo_stem", 64,
+            props -> new LogBlock(logProperties(MapColor.COLOR_ORANGE, SoundType.STEM)));
+    public static final BlockEntry<LogBlock> PRIMO_HYPHAE = registerDecoMaterialBlock("primo_hyphae", 64,
+            props -> new LogBlock(logProperties(MapColor.COLOR_ORANGE, SoundType.STEM)));
+    public static final BlockEntry<LogBlock> STRIPPED_PRIMO_STEM = registerDecoMaterialBlock("stripped_primo_stem", 64,
+            props -> new LogBlock(logProperties(MapColor.COLOR_ORANGE, SoundType.STEM)));
+    public static final BlockEntry<LogBlock> STRIPPED_PRIMO_HYPHAE = registerDecoMaterialBlock("stripped_primo_hyphae", 64,
+            props -> new LogBlock(logProperties(MapColor.COLOR_ORANGE, SoundType.STEM)));
+    public static final BlockEntry<Block> PRIMO_PLANKS = registerDecoMaterialBlock("primo_planks", 64,
+            props -> new Block(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_ORANGE)
+                    .instrument(NoteBlockInstrument.BASS)
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.NETHER_WOOD))
+    );
+    public static final BlockEntry<StairBlock> PRIMO_STAIRS = registerDecoMaterialBlock("primo_stairs", 64,
+            props -> new StairBlock(PRIMO_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(PRIMO_PLANKS.get())));
+    public static final BlockEntry<SlabBlock> PRIMO_SLAB = registerDecoMaterialBlock("primo_slab", 64,
+            props -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(PRIMO_PLANKS.get())),
+            (loot, block) -> loot.add(block, loot.createSlabItemTable(block)));
+    public static final BlockEntry<VerticalSlabBlock> PRIMO_VERTICAL_SLAB = registerDecoMaterialBlock("primo_vertical_slab", 64,
+            props -> new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(PRIMO_PLANKS.get())), PoBlocks::createVerticalSlabDrops);
+
+    public static final BlockEntry<ButtonBlock> PRIMO_BUTTON = registerDecoMaterialBlock("primo_button", 64,
+            props -> new ButtonBlock(BlockSetType.CRIMSON, 30, BlockBehaviour.Properties.ofFullCopy(Blocks.CRIMSON_BUTTON)));
+    public static final BlockEntry<PressurePlateBlock> PRIMO_PRESSURE_PLATE = registerDecoMaterialBlock("primo_pressure_plate", 64,
+            props -> new PressurePlateBlock(BlockSetType.CRIMSON, BlockBehaviour.Properties.ofFullCopy(Blocks.CRIMSON_PRESSURE_PLATE)));
+    public static final BlockEntry<FenceBlock> PRIMO_FENCE = registerDecoMaterialBlock("primo_fence", 64,
+            props -> new FenceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CRIMSON_FENCE).mapColor(MapColor.COLOR_ORANGE)));
+    public static final BlockEntry<FenceGateBlock> PRIMO_FENCE_GATE = registerDecoMaterialBlock("primo_fence_gate", 64,
+            props -> new FenceGateBlock(WoodType.CRIMSON, BlockBehaviour.Properties.ofFullCopy(Blocks.CRIMSON_FENCE_GATE).mapColor(MapColor.COLOR_ORANGE)));
+    public static final BlockEntry<DoorBlock> PRIMO_DOOR = registerDecoMaterialBlock("primo_door", 64,
+            props -> new DoorBlock(BlockSetType.CRIMSON, BlockBehaviour.Properties.ofFullCopy(Blocks.CRIMSON_DOOR).mapColor(MapColor.COLOR_YELLOW)),
+            (loot, block) -> loot.add(block, loot.createDoorTable(block)));
+    public static final BlockEntry<TrapDoorBlock> PRIMO_TRAPDOOR = registerDecoMaterialBlock("primo_trapdoor", 64,
+            props -> new TrapDoorBlock(BlockSetType.CRIMSON, BlockBehaviour.Properties.ofFullCopy(Blocks.CRIMSON_TRAPDOOR).mapColor(MapColor.COLOR_YELLOW)));
+
     public static final BlockEntry<ParticleLeavesBlock> POOP_LEAVES = registerBlock("poop_leaves", 88,
             props -> new ParticleLeavesBlock(0x5E4228, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
                     .mapColor(MapColor.COLOR_BROWN)
@@ -426,6 +466,9 @@ public class PoBlocks {
             props -> new ParticleLeavesBlock(0xF0DB3E, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
                     .mapColor(MapColor.COLOR_YELLOW)),
             (loot, block) -> loot.add(block, createGinkgoLeavesDrops(loot, block)));
+    public static final BlockEntry<LeavesBlock> PRIMO_CAP = registerBlock("primo_cap", 64,
+            props -> new LeavesBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_YELLOW).strength(1.0F).sound(SoundType.WART_BLOCK)));
+
     public static final BlockEntry<PoopTreeBlock> POOP_SAPLING = registerBlock("poop_sapling", 88,
             props -> new PoopTreeBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN)
                     .noCollission()
@@ -444,6 +487,15 @@ public class PoBlocks {
                     .sound(SoundType.GRASS)
                     .offsetType(BlockBehaviour.OffsetType.XZ)
                     .pushReaction(PushReaction.DESTROY)));
+    public static final BlockEntry<SaplingBlock> PRIMO_FUNGUS = registerBlock("primo_fungus", 64,
+            props -> new SaplingBlock(PoTreeGrower.PRIMO, BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_ORANGE)
+                    .noCollission()
+                    .instabreak()
+                    .randomTicks()
+                    .sound(SoundType.FUNGUS)
+                    .pushReaction(PushReaction.DESTROY)));
+
     public static final BlockEntry<FlowerPotBlock> POTTED_GINKGO_SAPLING = registerBlockNoItem("potted_ginkgo_sapling",
             props -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, GINKGO_SAPLING,
                     BlockBehaviour.Properties.ofFullCopy(Blocks.POTTED_OAK_SAPLING)),

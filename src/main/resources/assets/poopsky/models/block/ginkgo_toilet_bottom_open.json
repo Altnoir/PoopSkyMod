@@ -2,7 +2,7 @@
 	"parent": "poopsky:block/portable_toilet_bottom_open",
 	"textures": {
 		"bottom": "poopsky:block/ginkgo_planks",
-		"toilet": "poopsky:block/ginkgo_toilet_bottom",
+		"toilet": "poopsky:block/toilet/ginkgo_toilet_bottom",
 		"particle": "#bottom"
 	}
 }

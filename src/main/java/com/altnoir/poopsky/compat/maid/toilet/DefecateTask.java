@@ -36,4 +36,9 @@ public class DefecateTask implements IMaidTask {
     public List<Pair<Integer, BehaviorControl<? super EntityMaid>>> createBrainTasks(EntityMaid entityMaid) {
         return Lists.newArrayList(new Pair<>(0, new DefecateBehavior()));
     }
+
+    @Override
+    public boolean workPointTask(EntityMaid entityMaid) {
+        return true;
+    }
 }

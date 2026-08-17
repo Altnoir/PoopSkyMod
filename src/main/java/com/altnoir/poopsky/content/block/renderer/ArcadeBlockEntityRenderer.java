@@ -27,8 +27,7 @@ public class ArcadeBlockEntityRenderer implements BlockEntityRenderer<ArcadeBloc
     }
 
     @Override
-    public void render(ArcadeBlockEntity blockEntity, float partialTick, PoseStack poseStack,
-                       MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
+    public void render(ArcadeBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         BlockState state = blockEntity.getBlockState();
         if (!(state.getBlock() instanceof ArcadeBlock)) {
             return;

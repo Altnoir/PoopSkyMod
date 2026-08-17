@@ -62,6 +62,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         blockWithItem(PoBlocks.POOP_LEAVES_GOLD.get());
         blockWithItem(PoBlocks.POOP_LEAVES_IRON.get());
         ginkgoWoodSet();
+        primoFunguset();
         blockWithItem(PoBlocks.SALTPETER_BLOCK.get());
         clusterBlock(PoBlocks.SALTPETER_CLUSTER.get());
         clusterBlock(PoBlocks.LARGE_SALTPETER_BUD.get());
@@ -532,6 +533,47 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         simpleBlockItem(PoBlocks.GINKGO_TRAPDOOR.get(), blockModel(PoBlocks.GINKGO_TRAPDOOR.get(), "_bottom"));
     }
 
+    private void primoFunguset() {
+        logBlock(PoBlocks.PRIMO_STEM.get());
+        logBlock(PoBlocks.STRIPPED_PRIMO_STEM.get());
+        axisBlock(PoBlocks.PRIMO_HYPHAE.get(), blockTexture(PoBlocks.PRIMO_STEM.get()), blockTexture(PoBlocks.PRIMO_STEM.get()));
+        axisBlock(PoBlocks.STRIPPED_PRIMO_HYPHAE.get(), blockTexture(PoBlocks.STRIPPED_PRIMO_STEM.get()), blockTexture(PoBlocks.STRIPPED_PRIMO_STEM.get()));
+        simpleBlockItems(
+                PoBlocks.PRIMO_STEM.get(),
+                PoBlocks.STRIPPED_PRIMO_STEM.get(),
+                PoBlocks.PRIMO_HYPHAE.get(),
+                PoBlocks.STRIPPED_PRIMO_HYPHAE.get()
+        );
+
+        ResourceLocation planks = blockTexture(PoBlocks.PRIMO_PLANKS.get());
+        blockWithItem(PoBlocks.PRIMO_PLANKS.get());
+        stairsBlock(PoBlocks.PRIMO_STAIRS.get(), planks);
+        slabBlock(PoBlocks.PRIMO_SLAB.get(), planks, planks);
+        verticalSlabBlock(PoBlocks.PRIMO_VERTICAL_SLAB.get(), planks);
+        buttonBlock(PoBlocks.PRIMO_BUTTON.get(), planks);
+        pressurePlateBlock(PoBlocks.PRIMO_PRESSURE_PLATE.get(), planks);
+        fenceBlock(PoBlocks.PRIMO_FENCE.get(), planks);
+        fenceGateBlock(PoBlocks.PRIMO_FENCE_GATE.get(), planks);
+        doorBlockWithRenderType(PoBlocks.PRIMO_DOOR.get(), ResourceLocation.parse(blockTexture(PoBlocks.PRIMO_DOOR.get()) + "_bottom"), ResourceLocation.parse(blockTexture(PoBlocks.PRIMO_DOOR.get()) + "_top"), "cutout");
+        trapdoorBlockWithRenderType(PoBlocks.PRIMO_TRAPDOOR.get(), blockTexture(PoBlocks.PRIMO_TRAPDOOR.get()), true, "cutout");
+        blockWithItem(PoBlocks.PRIMO_CAP.get());
+        saplingBlock(PoBlocks.PRIMO_FUNGUS.get());
+
+        simpleBlockItems(
+                PoBlocks.PRIMO_STAIRS.get(),
+                PoBlocks.PRIMO_SLAB.get(),
+                PoBlocks.PRIMO_PRESSURE_PLATE.get(),
+                PoBlocks.PRIMO_FENCE_GATE.get()
+        );
+        ModelFile buttonInventory = models().withExistingParent(getBlockPath(PoBlocks.PRIMO_BUTTON.get()) + "_inventory", mcLoc("block/button_inventory"))
+                .texture("texture", planks);
+        simpleBlockItem(PoBlocks.PRIMO_BUTTON.get(), buttonInventory);
+        simpleBlockItem(PoBlocks.PRIMO_FENCE.get(), models().withExistingParent(getBlockPath(PoBlocks.PRIMO_FENCE.get()) + "_inventory", mcLoc("block/fence_inventory"))
+                .texture("texture", planks));
+        generatedItem(PoBlocks.PRIMO_DOOR.get(), "item");
+        simpleBlockItem(PoBlocks.PRIMO_TRAPDOOR.get(), blockModel(PoBlocks.PRIMO_TRAPDOOR.get(), "_bottom"));
+    }
+
     private void verticalSlabBlock(VerticalSlabBlock block, ResourceLocation texture) {
         String path = getBlockPath(block);
         ModelFile model = models().withExistingParent(path, mcLoc("block/block"))
@@ -902,7 +944,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
             openModel = models().getExistingFile(modLoc("block/" + path));
             closeModel = models().getExistingFile(modLoc("block/" + path + "_close"));
         } else {
-            var texture = modLoc("block/" + path);
+            var texture = modLoc("block/toilet/" + path);
             openModel = models().withExistingParent(path, modLoc("block/flush_toilet"))
                     .texture("toilet", texture + "_cart")
                     .texture("particle", texture + "_particle");
@@ -931,7 +973,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         if (path.equals("shit")) {
             model = models().getExistingFile(modLoc("block/" + path));
         } else {
-            var texture = modLoc("block/" + path);
+            var texture = modLoc("block/shit/" + path);
             var particleTexture = modLoc("block/" + getBlockPath(particleBlock));
             model = models().withExistingParent(path, modLoc("block/shit"))
                     .texture(PARTICLE, particleTexture)

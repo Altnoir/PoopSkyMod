@@ -1,16 +1,16 @@
 {
 	"format_version": "1.9.0",
 	"credit": "Made with Blockbench",
-	"texture_size": [64, 64],
 	"render_type": "minecraft:cutout",
+	"texture_size": [64, 64],
 	"textures": {
-		"toilet": "poopsky:block/ginkgo_toilet_top",
+		"toilet": "poopsky:block/toilet/ginkgo_toilet_top",
 		"particle": "poopsky:block/ginkgo_planks"
 	},
 	"elements": [
 		{
-			"from": [-1, 14, 0],
-			"to": [17, 19, 16],
+			"from": [-0.99, 14, 0],
+			"to": [16.99, 19, 16],
 			"faces": {
 				"north": {"uv": [0, 4, 4.5, 5.25], "texture": "#toilet"},
 				"east": {"uv": [8.5, 0, 12.5, 1.25], "texture": "#toilet"},
@@ -80,8 +80,8 @@
 			}
 		},
 		{
-			"from": [16, 5, 0],
-			"to": [17, 14, 16],
+			"from": [15.99, 5, 0],
+			"to": [16.99, 14, 16],
 			"faces": {
 				"north": {"uv": [10.75, 7, 11, 9.25], "texture": "#toilet"},
 				"east": {"uv": [7, 7, 11, 9.25], "texture": "#toilet"},
@@ -101,8 +101,8 @@
 			}
 		},
 		{
-			"from": [-1, 5, 0],
-			"to": [0, 14, 16],
+			"from": [-0.99, 5, 0],
+			"to": [0.01, 14, 16],
 			"faces": {
 				"north": {"uv": [7.25, 7, 7, 9.25], "texture": "#toilet"},
 				"east": {"uv": [11, 7, 7, 9.25], "texture": "#toilet"},

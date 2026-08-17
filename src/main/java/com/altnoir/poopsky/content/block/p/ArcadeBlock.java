@@ -10,6 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -155,8 +156,7 @@ public class ArcadeBlock extends Block implements EntityBlock {
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
         startArcadeControl(level, player, arcade);
-        if (arcade.hasCartridge()) {
-        } else {
+        if (!arcade.hasCartridge()) {
             showNoCartridge(level, player);
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
@@ -172,13 +172,12 @@ public class ArcadeBlock extends Block implements EntityBlock {
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
         startArcadeControl(level, player, arcade);
-        if (arcade.hasCartridge()) {
-        } else if (stack.getItem() instanceof GameDiscItem) {
+        if (stack.getItem() instanceof GameDiscItem) {
             if (!level.isClientSide && arcade.insertCartridge(stack)) {
                 stack.shrink(1);
                 level.playSound(null, arcade.getBlockPos(), PoSoundEvents.CONFIRM.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
             }
-        } else {
+        } else if (!arcade.hasCartridge()) {
             showNoCartridge(level, player);
         }
         return ItemInteractionResult.sidedSuccess(level.isClientSide);

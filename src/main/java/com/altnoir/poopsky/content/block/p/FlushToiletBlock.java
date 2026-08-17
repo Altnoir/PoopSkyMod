@@ -41,6 +41,7 @@ import java.util.Map;
 public class FlushToiletBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty CLOSED = BooleanProperty.create("closed");
+    public static final BooleanProperty POWERED = BooleanProperty.create("powered");
     public static final MapCodec<FlushToiletBlock> CODEC = simpleCodec(FlushToiletBlock::new);
 
     private static final VoxelShape NORTH_BASE_SHAPE = Shapes.or(
@@ -70,7 +71,8 @@ public class FlushToiletBlock extends BaseEntityBlock {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(FACING, Direction.NORTH)
-                .setValue(CLOSED, false));
+                .setValue(CLOSED, false)
+                .setValue(POWERED, false));
     }
 
     @Override
@@ -90,9 +92,11 @@ public class FlushToiletBlock extends BaseEntityBlock {
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
+        boolean powered = context.getLevel().hasNeighborSignal(context.getClickedPos());
         return this.defaultBlockState()
                 .setValue(FACING, context.getHorizontalDirection().getOpposite())
-                .setValue(CLOSED, context.getLevel().hasNeighborSignal(context.getClickedPos()));
+                .setValue(POWERED, powered)
+                .setValue(CLOSED, powered);
     }
 
     @Override
@@ -214,16 +218,20 @@ public class FlushToiletBlock extends BaseEntityBlock {
     protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean moved) {
         super.neighborChanged(state, level, pos, neighborBlock, neighborPos, moved);
         boolean powered = level.hasNeighborSignal(pos);
-        if (powered != state.getValue(CLOSED)) {
-            if (powered) {
-                if (level.getBlockEntity(pos) instanceof FlushToiletBlockEntity be) {
-                    be.clearContents();
-                }
-                level.playSound(null, pos, SoundEvents.PISTON_EXTEND, SoundSource.BLOCKS, 0.25F, 1.0F);
-            }
-            level.playSound(null, pos, powered ? PoSoundEvents.BLOCK_FLUSH_TOILET_CLOSE.get() : PoSoundEvents.BLOCK_FLUSH_TOILET_OPEN.get(), SoundSource.BLOCKS, 0.5F, level.random.nextFloat() * 0.1F + 0.9F);
-            level.setBlock(pos, state.setValue(CLOSED, powered), Block.UPDATE_CLIENTS);
+        if (powered == state.getValue(POWERED)) {
+            return;
         }
+        BlockState newState = state.setValue(POWERED, powered).setValue(CLOSED, powered);
+        if (powered) {
+            if (level.getBlockEntity(pos) instanceof FlushToiletBlockEntity be) {
+                be.clearContents();
+            }
+            level.playSound(null, pos, SoundEvents.PISTON_EXTEND, SoundSource.BLOCKS, 0.25F, 1.0F);
+        }
+        if (newState.getValue(CLOSED) != state.getValue(CLOSED)) {
+            level.playSound(null, pos, powered ? PoSoundEvents.BLOCK_FLUSH_TOILET_CLOSE.get() : PoSoundEvents.BLOCK_FLUSH_TOILET_OPEN.get(), SoundSource.BLOCKS, 0.5F, level.random.nextFloat() * 0.1F + 0.9F);
+        }
+        level.setBlock(pos, newState, Block.UPDATE_CLIENTS);
     }
 
     @Override
@@ -239,7 +247,7 @@ public class FlushToiletBlock extends BaseEntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, CLOSED);
+        builder.add(FACING, CLOSED, POWERED);
     }
 
     @Override

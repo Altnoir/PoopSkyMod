@@ -3,9 +3,9 @@ package com.altnoir.poopsky.content.block.entity;
 import com.altnoir.poopsky.content.block.p.ArcadeBlock;
 import com.altnoir.poopsky.content.item.p.GameDiscItem;
 import com.altnoir.poopsky.data.ArcadeLootGen;
+import com.altnoir.poopsky.game.Button;
 import com.altnoir.poopsky.game.GameStage;
 import com.altnoir.poopsky.game.ServerGame;
-import com.altnoir.poopsky.game.Button;
 import com.altnoir.poopsky.impl.network.ArcadeGameSnapshotPacket;
 import com.altnoir.poopsky.impl.util.DispenseUtil;
 import com.altnoir.poopsky.init.PoBlockEntityType;
@@ -16,6 +16,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -144,15 +145,17 @@ public class ArcadeBlockEntity extends BlockEntity {
         }
     }
 
-    public boolean startControl(ServerPlayer player) {
+    public void startControl(ServerPlayer player) {
         if (!hasCartridge() || !canControl(player)) {
-            return false;
+            return;
         }
         activePlayer = player.getUUID();
         scoreSettled = false;
         snapshotCooldown = 0;
         markStatusChanged();
-        return true;
+        if (level != null) {
+            level.playSound(null, getBlockPos(), SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 1.0F, 0.6F);
+        }
     }
 
     public void stopControl(ServerPlayer player) {
@@ -162,6 +165,9 @@ public class ArcadeBlockEntity extends BlockEntity {
         activePlayer = null;
         scoreSettled = false;
         markStatusChanged();
+        if (level != null) {
+            level.playSound(null, getBlockPos(), SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 1.0F, 0.5F);
+        }
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, ArcadeBlockEntity arcade) {

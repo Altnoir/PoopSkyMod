@@ -11,4 +11,9 @@ public class PoTreeGrower {
             Optional.of(PoConfigureFeatures.MEGA_GINKGO_TREE),
             Optional.of(PoConfigureFeatures.GINKGO_TREE),
             Optional.of(PoConfigureFeatures.GINKGO_BEE_TREE));
+
+    public static final TreeGrower PRIMO = new TreeGrower(PoopSky.MOD_ID + ":primo",
+            Optional.of(PoConfigureFeatures.MEGA_GINKGO_TREE),
+            Optional.of(PoConfigureFeatures.GINKGO_TREE),
+            Optional.of(PoConfigureFeatures.GINKGO_BEE_TREE));
 }

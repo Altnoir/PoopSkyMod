@@ -51,17 +51,22 @@ public class PoItems {
     public static final ItemEntry<SimpleFeedableItem> POOP_MOONCAKE = registerFood("poop_mooncake", PFoods.POOP_MOONCAKE);
     public static final ItemEntry<SimpleFeedableItem> CHILI_POOP_MOONCAKE = registerFood("chili_poop_mooncake", PFoods.CHILI_POOP_MOONCAKE);
     public static final ItemEntry<SimpleFeedableItem> GOLDEN_POOP_MOONCAKE = registerFood("golden_poop_mooncake", PFoods.GOLDEN_POOP_MOONCAKE);
-    public static final ItemEntry<SimpleFeedableItem> BAKED_MAGGOTS = registerFood("baked_maggots", PFoods.BAKED_MAGGOTS);
+    public static final ItemEntry<SimpleFeedableItem> POOPSICLE = registerFood("poopsicle", PFoods.POOPSICLE);
     public static final ItemEntry<SimpleFeedableItem> POOP_BREAD = registerFood("poop_bread", PFoods.POOP_BREAD);
     public static final ItemEntry<SimpleFeedableItem> POOP_DUMPLINGS = registerFood("poop_dumplings", PFoods.POOP_DUMPLINGS);
     public static final ItemEntry<SimpleFeedableItem> POOP_SOUP = registerFood("poop_soup", PFoods.POOP_SOUP);
     public static final ItemEntry<SimpleFeedableItem> POOP_VEGETABLE_STICKS = registerFood("poop_vegetable_sticks", PFoods.POOP_VEGETABLE_STICKS);
     public static final ItemEntry<SimpleFeedableItem> POOBURGER_MEAT = registerFood("pooburger_meat", PFoods.POOBURGER_MEAT);
     public static final ItemEntry<SimpleFeedableItem> POOBURGER = registerFood("pooburger", PFoods.POOBURGER);
-    public static final ItemEntry<SimpleFeedableItem> POOPSICLE = registerFood("poopsicle", PFoods.POOPSICLE);
+    public static final ItemEntry<SimpleFeedableItem> FASTING_PILL = registerFood("fasting_pill", PFoods.FASTING_PILL);
     public static final ItemEntry<SimpleFeedableItem> POOP_PASTA = registerFood("poop_pasta", PFoods.POOP_PASTA);
     public static final ItemEntry<SimpleFeedableItem> POODDING = registerFood("poodding", PFoods.POODDING);
 
+    public static final ItemEntry<SimpleFeedableItem> BAKED_MAGGOTS = registerFood("baked_maggots", PFoods.BAKED_MAGGOTS);
+    public static final ItemEntry<FeedableBlockItem> MAGGOTS_SEEDS = registerItem("maggots_seeds",
+            props -> new FeedableBlockItem(PoBlocks.MAGGOTS.get(), new Item.Properties().food(PFoods.MAGGOTS_SEEDS).stacksTo(88)));
+    public static final ItemEntry<FeedableBlockItem> ROUNDWORM = registerItem("roundworm",
+            props -> new FeedableBlockItem(PoBlocks.ROUNDWORM_VINES.get(), new Item.Properties().food(PFoods.ROUNDWORM).stacksTo(88)));
     public static final ItemEntry<ChiliItem> DRAGON_BREATH_CHILI = registerItem("dragon_breath_chili",
             props -> new ChiliItem(PoBlocks.CHILI_VINES.get(), props.food(PFoods.DRAGON_BREATH_CHILI)));
     public static final ItemEntry<DragonFruitRItem> KING_OF_DRAGON_FRUIT = registerItem("king_of_dragon_fruit",
@@ -101,6 +106,9 @@ public class PoItems {
             props -> new FlyCatcherItem(props.stacksTo(1).durability(88)));
     public static final ItemEntry<JinKeLaItem> JINKELA = registerItem("jinkela", JinKeLaItem::new);
     public static final ItemEntry<ReturnTotemItem> RETURN_TOTEM = registerItem("return_totem", ReturnTotemItem::new);
+    public static final ItemEntry<TokenItem> TOKEN = registerItem("token", TokenItem::new);
+    public static final ItemEntry<GashaponItem> GASHAPON = registerItem("gashapon",
+            props -> new GashaponItem(props.stacksTo(16)));
     public static final ItemEntry<TimeBellItem> TIME_BELL = registerItem("time_bell",
             props -> new TimeBellItem(props.stacksTo(1)));
     public static final ItemEntry<Item> SPALL = registerItem("spall", Item::new);
@@ -131,8 +139,8 @@ public class PoItems {
                     .food(PFoods.URINE_BOTTLE)
                     .stacksTo(18)
             ));
+
     public static final ItemEntry<BucketItem> URINE_BUCKET = PoFluids.URINE_BUCKET;
-    public static final ItemEntry<TokenItem> TOKEN = registerItem("token", TokenItem::new);
     public static final ItemEntry<Item> LAWRENCE_MUSIC_DISC = registerMusicDisc("music_disc_lawrence", PoSoundEvents.LAWRENCE_KEY);
     public static final ItemEntry<Item> LIGHT_DANCE_MUSIC_DISC = registerMusicDisc("music_disc_light_dance", PoSoundEvents.LIGHT_DANCE_KEY);
     public static final ItemEntry<Item> MOON_BOWL_MUSIC_DISC = registerMusicDisc("music_disc_moon_bowl", PoSoundEvents.MOON_BOWL_KEY);
@@ -157,15 +165,6 @@ public class PoItems {
             props -> new FlushToiletCartItem(PoEntityType.FLUSH_TOILET_CART, props.stacksTo(1)));
     public static final ItemEntry<FlushToiletCartItem> GOLDEN_FLUSH_TOILET_CART = registerItem("golden_flush_toilet_cart",
             props -> new FlushToiletCartItem(PoEntityType.GOLDEN_FLUSH_TOILET_CART, props.stacksTo(1)));
-
-    public static final ItemEntry<FeedableBlockItem> MAGGOTS_SEEDS = registerItem("maggots_seeds",
-            props -> new FeedableBlockItem(PoBlocks.MAGGOTS.get(), new Item.Properties().food(PFoods.MAGGOTS_SEEDS).stacksTo(88)));
-    public static final ItemEntry<FeedableBlockItem> ROUNDWORM = registerItem("roundworm",
-            props -> new FeedableBlockItem(PoBlocks.ROUNDWORM_VINES.get(), new Item.Properties().food(PFoods.ROUNDWORM).stacksTo(88)));
-
-    public static final ItemEntry<SimpleFeedableItem> FASTING_PILL = registerFood("fasting_pill", PFoods.FASTING_PILL);
-    public static final ItemEntry<GashaponItem> GASHAPON = registerItem("gashapon",
-            props -> new GashaponItem(props.stacksTo(16)));
 
     public static final ItemEntry<DeferredSpawnEggItem> POOLIME_SPAWN_EGG = registerItemNoModel("poolime_spawn_egg",
             prop -> new DeferredSpawnEggItem(PoEntityType.POOLIME, 0x7D5F36, 0x5E4228, prop));

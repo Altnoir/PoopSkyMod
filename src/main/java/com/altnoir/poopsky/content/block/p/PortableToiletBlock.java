@@ -261,12 +261,8 @@ public class PortableToiletBlock extends Block {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        BlockPos respawnPos = getRespawnAnchorPos(state, pos);
-        BlockState respawnState = level.getBlockState(respawnPos);
-        if (player instanceof ServerPlayer serverPlayer && respawnState.is(this)
-                && respawnState.getValue(HALF) == DoubleBlockHalf.UPPER && (serverPlayer.getRespawnDimension() != level.dimension()
-                || !respawnPos.equals(serverPlayer.getRespawnPosition()))) {
-            serverPlayer.setRespawnPosition(level.dimension(), respawnPos, player.getYRot(), false, true);
+        if (player instanceof ServerPlayer serverPlayer && state.getValue(HALF) == DoubleBlockHalf.UPPER && isRespawnDifferent(serverPlayer, level, pos)) {
+            serverPlayer.setRespawnPosition(level.dimension(), pos, player.getYRot(), false, true);
         }
 
         if (state.getValue(HALF) == DoubleBlockHalf.LOWER) {
@@ -280,6 +276,10 @@ public class PortableToiletBlock extends Block {
         setOpen(level, pos, state, !state.getValue(OPEN));
 
         return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    private static boolean isRespawnDifferent(ServerPlayer player, Level level, BlockPos pos) {
+        return player.getRespawnDimension() != level.dimension() || !pos.equals(player.getRespawnPosition());
     }
 
     @Override
@@ -315,16 +315,10 @@ public class PortableToiletBlock extends Block {
 
     @Override
     public Optional<ServerPlayer.RespawnPosAngle> getRespawnPosition(BlockState state, EntityType<?> type, LevelReader level, BlockPos pos, float orientation) {
-        BlockPos respawnPos = getRespawnAnchorPos(state, pos);
-        BlockState respawnState = level.getBlockState(respawnPos);
-        if (!respawnState.is(this) || respawnState.getValue(HALF) != DoubleBlockHalf.UPPER) {
+        if (!state.is(this) || state.getValue(HALF) != DoubleBlockHalf.UPPER) {
             return Optional.empty();
         }
-        return Optional.of(ServerPlayer.RespawnPosAngle.of(Vec3.atCenterOf(respawnPos), respawnPos));
-    }
-
-    private static BlockPos getRespawnAnchorPos(BlockState state, BlockPos pos) {
-        return state.getValue(HALF) == DoubleBlockHalf.UPPER ? pos : pos.above();
+        return Optional.of(ServerPlayer.RespawnPosAngle.of(Vec3.atCenterOf(pos), pos));
     }
 
     @Override
