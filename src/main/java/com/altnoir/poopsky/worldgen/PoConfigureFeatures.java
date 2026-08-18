@@ -330,10 +330,11 @@ public class PoConfigureFeatures {
         register(context, MYCELIUM_VEGETATION, Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(
                         new WeightedStateProvider(builder
-                                .add(Blocks.FLOWERING_AZALEA.defaultBlockState(), 4)
-                                .add(Blocks.AZALEA.defaultBlockState(), 7)
+                                .add(PoBlocks.GLOW_PRIMO_FUNGUS.get().defaultBlockState(), 8)
+                                .add(PoBlocks.PRIMO_FUNGUS.get().defaultBlockState(), 12)
                                 .add(PoBlocks.MYCELIUM_MAT.get().defaultBlockState().setValue(BlockStateProperties.DOWN, true), 25)
-                                .add(Blocks.TALL_GRASS.defaultBlockState(), 10)
+                                .add(Blocks.BROWN_MUSHROOM.defaultBlockState(), 4)
+                                .add(Blocks.RED_MUSHROOM.defaultBlockState(), 4)
                         ))
         );
         register(context, MYCELIUM_PATCH_BONEMEAL, Feature.VEGETATION_PATCH,

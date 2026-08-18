@@ -29,6 +29,8 @@ public final class DataMapGen {
         provider.builder(NeoForgeDataMaps.STRIPPABLES)
                 .add(PoBlocks.GINKGO_LOG.getId(), new Strippable(PoBlocks.STRIPPED_GINKGO_LOG.get()), false)
                 .add(PoBlocks.GINKGO_WOOD.getId(), new Strippable(PoBlocks.STRIPPED_GINKGO_WOOD.get()), false)
+                .add(PoBlocks.PRIMO_STEM.getId(), new Strippable(PoBlocks.STRIPPED_PRIMO_STEM.get()), false)
+                .add(PoBlocks.PRIMO_HYPHAE.getId(), new Strippable(PoBlocks.STRIPPED_PRIMO_HYPHAE.get()), false)
                 .add(PoBlocks.POOP_LOG.getId(), new Strippable(PoBlocks.STRIPPED_POOP_LOG.get()), false)
                 .add(PoBlocks.POOP_WOOD.getId(), new Strippable(PoBlocks.STRIPPED_POOP_WOOD.get()), false)
                 .add(PoBlocks.POOP_EMPTY_LOG.getId(), new Strippable(PoBlocks.STRIPPED_POOP_EMPTY_LOG.get()), false);

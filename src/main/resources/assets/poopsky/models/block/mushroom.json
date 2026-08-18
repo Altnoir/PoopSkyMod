@@ -31,11 +31,6 @@
 			}
 		}
 	],
-	"display": {
-		"ground": {
-			"rotation": [0, -118, 0]
-		}
-	},
 	"groups": [
 		{
 			"name": "main",

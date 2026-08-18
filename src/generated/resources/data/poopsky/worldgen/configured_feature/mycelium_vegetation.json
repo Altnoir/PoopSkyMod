@@ -166,15 +166,21 @@
         },
         {
           "data": {
-            "Name": "minecraft:flowering_azalea"
+            "Name": "poopsky:glow_primo_fungus",
+            "Properties": {
+              "stage": "0"
+            }
           },
-          "weight": 4
+          "weight": 8
         },
         {
           "data": {
-            "Name": "minecraft:azalea"
+            "Name": "poopsky:primo_fungus",
+            "Properties": {
+              "stage": "0"
+            }
           },
-          "weight": 7
+          "weight": 12
         },
         {
           "data": {
@@ -193,12 +199,15 @@
         },
         {
           "data": {
-            "Name": "minecraft:tall_grass",
-            "Properties": {
-              "half": "lower"
-            }
+            "Name": "minecraft:brown_mushroom"
           },
-          "weight": 10
+          "weight": 4
+        },
+        {
+          "data": {
+            "Name": "minecraft:red_mushroom"
+          },
+          "weight": 4
         }
       ]
     }

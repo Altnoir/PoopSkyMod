@@ -530,8 +530,8 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         coralBlockRecipe(recipeOutput, Blocks.HORN_CORAL_BLOCK, Blocks.HORN_CORAL, Blocks.HORN_CORAL_FAN);
 
         offerCompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, Blocks.MOSSY_COBBLESTONE, PoItems.SPALL);
-        create1x2ShapelessFrom(recipeOutput, Blocks.GRASS_BLOCK, Blocks.DIRT, Blocks.MOSS_BLOCK);
-        create1x2ShapelessFrom(recipeOutput, Blocks.MYCELIUM, Blocks.DIRT, PoBlocks.MYCELIUM_BLOCK.get());
+        create1x2ShapelessFrom(recipeOutput, Blocks.GRASS_BLOCK, Blocks.DIRT, Blocks.MOSS_BLOCK, 2);
+        create1x2ShapelessFrom(recipeOutput, Blocks.MYCELIUM, Blocks.DIRT, PoBlocks.MYCELIUM_BLOCK.get(), 2);
 
         create1x2ShapelessFrom(recipeOutput, Blocks.DIORITE, Blocks.COBBLESTONE, Blocks.CLAY, 2);
         create1x2ShapelessFrom(recipeOutput, Blocks.DIRT, Blocks.MUD, PoItems.POOP.get());

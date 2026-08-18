@@ -587,7 +587,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         ResourceLocation texture = modLoc("block/mushroom/" + path);
         ResourceLocation particle = modLoc("block/" + getBlockPath(block));
 
-        ModelFile base = models().withExistingParent(path + "_base", mcLoc("block/block"))
+        ModelFile bottom = models().withExistingParent(path + "_bottom", mcLoc("block/block"))
                 .texture("all", texture)
                 .texture(PARTICLE, particle)
                 .element()
@@ -596,6 +596,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
                 .face(Direction.EAST).uvs(6, 9, 9, 13).texture("#all").end()
                 .face(Direction.SOUTH).uvs(6, 9, 9, 13).texture("#all").end()
                 .face(Direction.WEST).uvs(6, 9, 9, 13).texture("#all").end()
+                .face(Direction.UP).uvs(6, 6, 9, 9).texture("#all").end()
                 .face(Direction.DOWN).uvs(9, 6, 6, 9).texture("#all").end()
                 .end();
 
@@ -614,7 +615,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
                 .end();
 
         getMultipartBuilder(fungus)
-                .part().modelFile(base).addModel().end()
+                .part().modelFile(bottom).addModel().end()
                 .part().modelFile(top).addModel().end();
         generatedItem(fungus, "item");
     }
@@ -815,7 +816,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
             }
         }
 
-        generatedItem(block);
+        generatedItem(block, "item");
     }
 
     private void gachaMachine(Block block) {

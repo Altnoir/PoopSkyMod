@@ -169,16 +169,18 @@ public final class BlockTagGen {
 
         tag(BlockTags.MUSHROOM_GROW_BLOCK)
                 .addTag(PoTags.Blocks.POOP_BLOCKS)
-                .add(PoBlocks.RAW_POOP_BLOCK.get())
-                .add(PoBlocks.RAW_SAPLING_POOP_BLOCK.get())
-                .add(PoBlocks.RAW_SEA_POOP_BLOCK.get())
-                .add(PoBlocks.RAW_WITHER_POOP_BLOCK.get())
-                .add(PoBlocks.POOP_LOG.get())
-                .add(PoBlocks.POOP_WOOD.get())
-                .add(PoBlocks.POOP_EMPTY_LOG.get())
-                .add(PoBlocks.STRIPPED_POOP_LOG.get())
-                .add(PoBlocks.STRIPPED_POOP_WOOD.get())
-                .add(PoBlocks.STRIPPED_POOP_EMPTY_LOG.get());
+                .add(PoBlocks.RAW_POOP_BLOCK.get(),
+                        PoBlocks.RAW_SAPLING_POOP_BLOCK.get(),
+                        PoBlocks.RAW_SEA_POOP_BLOCK.get(),
+                        PoBlocks.RAW_WITHER_POOP_BLOCK.get(),
+                        PoBlocks.MYCELIUM_BLOCK.get(),
+                        PoBlocks.POOP_LOG.get(),
+                        PoBlocks.POOP_WOOD.get(),
+                        PoBlocks.POOP_EMPTY_LOG.get(),
+                        PoBlocks.STRIPPED_POOP_LOG.get(),
+                        PoBlocks.STRIPPED_POOP_WOOD.get(),
+                        PoBlocks.STRIPPED_POOP_EMPTY_LOG.get()
+                );
 
         tag(BlockTags.WALL_POST_OVERRIDE)
                 .add(

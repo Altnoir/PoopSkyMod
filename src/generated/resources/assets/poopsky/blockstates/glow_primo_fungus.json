@@ -2,7 +2,7 @@
   "multipart": [
     {
       "apply": {
-        "model": "poopsky:block/glow_primo_fungus_base"
+        "model": "poopsky:block/glow_primo_fungus_bottom"
       }
     },
     {
