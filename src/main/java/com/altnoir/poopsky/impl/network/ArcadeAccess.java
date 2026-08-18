@@ -15,11 +15,11 @@ public final class ArcadeAccess {
     public static boolean canAccess(ServerPlayer player, BlockPos machinePos) {
         Level level = player.level();
         if (!level.isLoaded(machinePos)) {
-            return false;
+            return true;
         }
         if (player.position().distanceToSqr(Vec3.atCenterOf(machinePos)) > MAX_CONTROL_DISTANCE_SQ) {
-            return false;
+            return true;
         }
-        return level.getBlockEntity(machinePos) instanceof ArcadeBlockEntity;
+        return !(level.getBlockEntity(machinePos) instanceof ArcadeBlockEntity);
     }
 }

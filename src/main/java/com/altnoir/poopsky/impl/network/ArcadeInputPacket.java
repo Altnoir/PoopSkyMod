@@ -9,7 +9,6 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import org.jetbrains.annotations.NotNull;
 
 public record ArcadeInputPacket(BlockPos machinePos, Button button, boolean pressed) implements CustomPacketPayload {
     public static final Type<ArcadeInputPacket> TYPE = new Type<>(PoopSky.loc("arcade_input"));
@@ -32,10 +31,10 @@ public record ArcadeInputPacket(BlockPos machinePos, Button button, boolean pres
         }
     };
 
-    public static void handle(ArcadeInputPacket payload, @NotNull IPayloadContext context) {
+    public static void handle(ArcadeInputPacket payload, IPayloadContext context) {
         context.enqueueWork(() -> {
             ServerPlayer player = (ServerPlayer) context.player();
-            if (!ArcadeAccess.canAccess(player, payload.machinePos())) {
+            if (ArcadeAccess.canAccess(player, payload.machinePos())) {
                 return;
             }
             if (player.level().getBlockEntity(payload.machinePos()) instanceof ArcadeBlockEntity arcade) {
@@ -45,7 +44,7 @@ public record ArcadeInputPacket(BlockPos machinePos, Button button, boolean pres
     }
 
     @Override
-    public @NotNull Type<ArcadeInputPacket> type() {
+    public Type<ArcadeInputPacket> type() {
         return TYPE;
     }
 }

@@ -8,7 +8,6 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import org.jetbrains.annotations.NotNull;
 
 public record ArcadeResetPacket(BlockPos machinePos) implements CustomPacketPayload {
     public static final Type<ArcadeResetPacket> TYPE = new Type<>(PoopSky.loc("arcade_reset"));
@@ -25,10 +24,10 @@ public record ArcadeResetPacket(BlockPos machinePos) implements CustomPacketPayl
         }
     };
 
-    public static void handle(ArcadeResetPacket payload, @NotNull IPayloadContext context) {
+    public static void handle(ArcadeResetPacket payload, IPayloadContext context) {
         context.enqueueWork(() -> {
             ServerPlayer player = (ServerPlayer) context.player();
-            if (!ArcadeAccess.canAccess(player, payload.machinePos())) {
+            if (ArcadeAccess.canAccess(player, payload.machinePos())) {
                 return;
             }
             if (player.level().getBlockEntity(payload.machinePos()) instanceof ArcadeBlockEntity arcade) {
@@ -38,7 +37,7 @@ public record ArcadeResetPacket(BlockPos machinePos) implements CustomPacketPayl
     }
 
     @Override
-    public @NotNull Type<ArcadeResetPacket> type() {
+    public Type<ArcadeResetPacket> type() {
         return TYPE;
     }
 }

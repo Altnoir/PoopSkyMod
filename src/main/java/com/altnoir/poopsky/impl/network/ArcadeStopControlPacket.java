@@ -8,7 +8,6 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import org.jetbrains.annotations.NotNull;
 
 public record ArcadeStopControlPacket(BlockPos machinePos) implements CustomPacketPayload {
     public static final Type<ArcadeStopControlPacket> TYPE = new Type<>(PoopSky.loc("arcade_stop_control"));
@@ -25,10 +24,10 @@ public record ArcadeStopControlPacket(BlockPos machinePos) implements CustomPack
         }
     };
 
-    public static void handle(ArcadeStopControlPacket payload, @NotNull IPayloadContext context) {
+    public static void handle(ArcadeStopControlPacket payload, IPayloadContext context) {
         context.enqueueWork(() -> {
             ServerPlayer player = (ServerPlayer) context.player();
-            if (!ArcadeAccess.canAccess(player, payload.machinePos())) {
+            if (ArcadeAccess.canAccess(player, payload.machinePos())) {
                 return;
             }
             if (player.level().getBlockEntity(payload.machinePos()) instanceof ArcadeBlockEntity arcade) {
@@ -38,7 +37,7 @@ public record ArcadeStopControlPacket(BlockPos machinePos) implements CustomPack
     }
 
     @Override
-    public @NotNull Type<ArcadeStopControlPacket> type() {
+    public Type<ArcadeStopControlPacket> type() {
         return TYPE;
     }
 }

@@ -12,7 +12,6 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import org.jetbrains.annotations.NotNull;
 
 public record ArcadeGameSnapshotPacket(BlockPos machinePos, CompoundTag gameSnapshot) implements CustomPacketPayload {
     public static final Type<ArcadeGameSnapshotPacket> TYPE = new Type<>(PoopSky.loc("arcade_game_snapshot"));
@@ -32,7 +31,7 @@ public record ArcadeGameSnapshotPacket(BlockPos machinePos, CompoundTag gameSnap
         }
     };
 
-    public static void handle(ArcadeGameSnapshotPacket payload, @NotNull IPayloadContext context) {
+    public static void handle(ArcadeGameSnapshotPacket payload, IPayloadContext context) {
         context.enqueueWork(() -> {
             ClientLevel level = Minecraft.getInstance().level;
             if (level == null || !level.isLoaded(payload.machinePos())) {
@@ -51,7 +50,7 @@ public record ArcadeGameSnapshotPacket(BlockPos machinePos, CompoundTag gameSnap
     }
 
     @Override
-    public @NotNull Type<ArcadeGameSnapshotPacket> type() {
+    public Type<ArcadeGameSnapshotPacket> type() {
         return TYPE;
     }
 }
