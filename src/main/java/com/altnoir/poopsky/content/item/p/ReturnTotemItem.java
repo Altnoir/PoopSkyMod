@@ -2,13 +2,11 @@ package com.altnoir.poopsky.content.item.p;
 
 import com.altnoir.poopsky.content.block.p.PortableToiletBlock;
 import com.altnoir.poopsky.impl.network.ReturnTotemActivationPayload;
+import com.altnoir.poopsky.impl.util.TotemEffectUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EntityType;
@@ -60,7 +58,7 @@ public class ReturnTotemItem extends Item {
         Vec3 destination = angle.position();
         float yaw = angle.yaw();
         Vec3 origin = serverPlayer.position();
-        spawnReturnTotemParticles(serverPlayer.serverLevel(), origin);
+        TotemEffectUtil.spawnActivationParticles(serverPlayer.serverLevel(), origin);
 
         serverPlayer.setForcedPose(Pose.SWIMMING);
         serverPlayer.setPose(Pose.SWIMMING);
@@ -74,27 +72,8 @@ public class ReturnTotemItem extends Item {
         );
         serverPlayer.setForcedPose(null);
         serverPlayer.resetFallDistance();
-        targetLevel.playSound(
-                null,
-                serverPlayer.getX(),
-                serverPlayer.getY(),
-                serverPlayer.getZ(),
-                SoundEvents.TOTEM_USE,
-                SoundSource.PLAYERS,
-                1.0F,
-                1.0F
-        );
-        spawnReturnTotemParticles(targetLevel, serverPlayer.position());
+        TotemEffectUtil.playActivationSound(targetLevel, serverPlayer.position());
+        TotemEffectUtil.spawnActivationParticles(targetLevel, serverPlayer.position());
         return InteractionResultHolder.sidedSuccess(stack, false);
-    }
-
-    private static void spawnReturnTotemParticles(ServerLevel level, Vec3 pos) {
-        level.sendParticles(
-                ParticleTypes.TOTEM_OF_UNDYING,
-                pos.x, pos.y + 1.0, pos.z,
-                30,
-                0.5, 0.5, 0.5,
-                0.0
-        );
     }
 }

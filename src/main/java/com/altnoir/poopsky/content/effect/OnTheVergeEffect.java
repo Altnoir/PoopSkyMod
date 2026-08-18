@@ -30,7 +30,6 @@ public class OnTheVergeEffect extends MobEffect {
 
         if (!level.isClientSide) {
             int duration = Objects.requireNonNull(livingEntity.getEffect(PoEffects.ON_THE_VERGE)).getDuration();
-            Vec3 vec3 = livingEntity.getDeltaMovement().add(new Vec3(0, 1.6, 0));
             boolean openTheDoor = false;
 
             if (livingEntity instanceof Player player) {
@@ -62,7 +61,7 @@ public class OnTheVergeEffect extends MobEffect {
             if (amplifier >= 1 && duration > 200 && livingEntity.tickCount % 20 == 0) {
                 openTheDoor = true;
             }
-
+            Vec3 vec3 = livingEntity.getDeltaMovement().add(new Vec3(0, 1.6, 0));
             if (openTheDoor) {
                 livingEntity.setDeltaMovement(vec3);
                 ServerPlayer hiddenPlayer = null;

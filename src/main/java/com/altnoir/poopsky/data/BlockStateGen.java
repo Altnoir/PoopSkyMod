@@ -59,6 +59,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         multifaceBlock(PoBlocks.MYCELIUM_MAT.get());
         flowerbedModels(PoBlocks.MUSHROOM_BED.get());
 
+        blockWithItem(PoBlocks.POOPSKY_BLOCK.get());
         blockWithItem(PoBlocks.POOP_LEAVES.get());
         blockWithItem(PoBlocks.POOP_LEAVES_GOLD.get());
         blockWithItem(PoBlocks.POOP_LEAVES_IRON.get());

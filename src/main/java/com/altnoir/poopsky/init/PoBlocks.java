@@ -7,6 +7,7 @@ import com.altnoir.poopsky.content.block.PoTreeGrower;
 import com.altnoir.poopsky.content.block.p.*;
 import com.altnoir.poopsky.content.block.p.MyceliumBlock;
 import com.altnoir.poopsky.content.item.p.CompooperBlockItem;
+import com.altnoir.poopsky.content.item.p.PoopSkyBlockItem;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.impl.type.PoBlockSetType;
@@ -289,6 +290,9 @@ public class PoBlocks {
             )
     );
 
+    public static final BlockEntry<PoopSkyBlock> POOPSKY_BLOCK = registerBlockWithItem("poopsky_block", 88,
+            props -> new PoopSkyBlock(hardenedProperties(MapColor.COLOR_ORANGE, SoundType.CALCITE)),
+            RegistrateBlockLootTables::dropSelf, PoopSkyBlockItem::new, BlockTab.BASIC_BLOCKS);
     public static final BlockEntry<ChairBlock> STOOL = registerBlock("stool", 88,
             props -> new ChairBlock(poopProperties().pushReaction(PushReaction.DESTROY).noOcclusion()));
     public static final BlockEntry<PoopCraftingTableBlock> POOP_CRAFTING_TABLE = registerBlock("poop_crafting_table", 88,

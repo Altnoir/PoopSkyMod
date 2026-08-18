@@ -39,6 +39,11 @@ public class PoNetworking {
                 ReturnTotemActivationPayload::handle
         );
         registrar.playToClient(
+                UnpoopingTotemActivationPayload.TYPE,
+                UnpoopingTotemActivationPayload.CODEC,
+                UnpoopingTotemActivationPayload::handle
+        );
+        registrar.playToClient(
                 PlayAnimationPayload.TYPE,
                 PlayAnimationPayload.CODEC,
                 PlayAnimationPayload::handle
