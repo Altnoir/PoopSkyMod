@@ -531,12 +531,11 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
 
         offerCompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, Blocks.MOSSY_COBBLESTONE, PoItems.SPALL);
         create1x2ShapelessFrom(recipeOutput, Blocks.GRASS_BLOCK, Blocks.DIRT, Blocks.MOSS_BLOCK, 2);
-        create1x2ShapelessFrom(recipeOutput, Blocks.MYCELIUM, Blocks.DIRT, PoBlocks.MYCELIUM_BLOCK.get(), 2);
+        create1x2ShapelessFrom(recipeOutput, Blocks.MYCELIUM, Blocks.DIRT, PoBlocks.MYCELIUM_BLOCK, 2);
 
         create1x2ShapelessFrom(recipeOutput, Blocks.DIORITE, Blocks.COBBLESTONE, Blocks.CLAY, 2);
         create1x2ShapelessFrom(recipeOutput, Blocks.DIRT, Blocks.MUD, PoItems.POOP.get());
-        //create1x2ShapelessFrom(recipeOutput, Blocks.TUFF, Blocks.ANDESITE, PSItems.SPALL);
-        //create1x2ShapelessFrom(recipeOutput, Blocks.CALCITE, Blocks.DIORITE, PSItems.SPALL);
+        create1x2ShapelessFrom(recipeOutput, Blocks.WET_SPONGE, PoBlocks.ROUNDWORM_BLOCK, PoBlocks.GOLDEN_POOP_BLOCK, 2);
     }
 
     private static void coralBlockRecipe(RecipeOutput recipeOutput, Block result, Block coral, Block coralFan) {
@@ -901,8 +900,8 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 FlyBarrelEntry.of(FlyTypes.CYAN.get(), Items.PRISMARINE_SHARD),
                 FlyBarrelEntry.of(FlyTypes.LIGHT_BLUE.get(), Items.PRISMARINE_CRYSTALS),
                 FlyBarrelEntry.of(FlyTypes.BLUE.get(), Items.LAPIS_LAZULI),
-                FlyBarrelEntry.of(FlyTypes.PURPLE.get(), Items.SHULKER_SHELL),
-                FlyBarrelEntry.of(FlyTypes.MAGENTA.get(), Items.CHORUS_FRUIT),
+                FlyBarrelEntry.of(FlyTypes.PURPLE.get(), Items.CHORUS_FLOWER),
+                FlyBarrelEntry.of(FlyTypes.MAGENTA.get(), Items.SHULKER_SHELL),
                 FlyBarrelEntry.of(FlyTypes.PINK.get(), Items.PINK_PETALS),
                 FlyBarrelEntry.of(FlyTypes.IRON.get(), Items.RAW_IRON),
                 FlyBarrelEntry.of(FlyTypes.COPPER.get(), Items.RAW_COPPER),

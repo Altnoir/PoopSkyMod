@@ -115,7 +115,6 @@ public class PoItems {
     public static final ItemEntry<SwordItem> SPALL_SWORD = registerHandheldItem("spall_sword",
             prop -> new SwordItem(Tiers.STONE,
                     prop.attributes(SwordItem.createAttributes(Tiers.STONE, 3, -2.4F))));
-
     public static final ItemEntry<ShovelItem> SPALL_SHOVEL = registerHandheldItem("spall_shovel",
             prop -> new ShovelItem(Tiers.STONE,
                     prop.attributes(ShovelItem.createAttributes(Tiers.STONE, 1.5F, -3.0F))));
@@ -145,15 +144,13 @@ public class PoItems {
     public static final ItemEntry<Item> LIGHT_DANCE_MUSIC_DISC = registerMusicDisc("music_disc_light_dance", PoSoundEvents.LIGHT_DANCE_KEY);
     public static final ItemEntry<Item> MOON_BOWL_MUSIC_DISC = registerMusicDisc("music_disc_moon_bowl", PoSoundEvents.MOON_BOWL_KEY);
     public static final ItemEntry<Item> THEME_MUSIC_DISC = registerMusicDisc("music_disc_theme", PoSoundEvents.THEME_KEY);
-    public static final ItemEntry<GameDiscItem> GAME_DISC_SLIME = registerItem("game_disc_slime",
-            props -> new GameDiscItem(props.rarity(Rarity.RARE),
-                    Component.translatable("gamediscs.slime").withStyle(ChatFormatting.DARK_GREEN)));
+
+    public static final ItemEntry<GameDiscItem> GAME_DISC_ROUNDWORM = registerItem("game_disc_roundworm",
+            props -> new GameDiscItem(props.rarity(Rarity.RARE), Component.translatable("gamediscs.roundworm").withStyle(ChatFormatting.YELLOW)));
     public static final ItemEntry<GameDiscItem> GAME_DISC_BLOCKTRIS = registerItem("game_disc_blocktris",
-            props -> new GameDiscItem(props.rarity(Rarity.RARE),
-                    Component.translatable("gamediscs.blocktris").withStyle(ChatFormatting.BLUE)));
+            props -> new GameDiscItem(props.rarity(Rarity.RARE), Component.translatable("gamediscs.blocktris").withStyle(ChatFormatting.YELLOW)));
     public static final ItemEntry<GameDiscItem> GAME_DISC_PONG = registerItem("game_disc_pong",
-            props -> new GameDiscItem(props.rarity(Rarity.RARE),
-                    Component.translatable("gamediscs.pong").withStyle(ChatFormatting.WHITE)));
+            props -> new GameDiscItem(props.rarity(Rarity.RARE), Component.translatable("gamediscs.pong").withStyle(ChatFormatting.GRAY)));
 
     public static final ItemEntry<GinkgoBoatItem> GINKGO_BOAT = registerItem("ginkgo_boat",
             props -> new GinkgoBoatItem(false, PoEntityType.GINKGO_BOAT, props.stacksTo(1)));

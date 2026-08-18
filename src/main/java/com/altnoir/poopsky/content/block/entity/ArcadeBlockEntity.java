@@ -86,12 +86,6 @@ public class ArcadeBlockEntity extends BlockEntity {
         return cartridge;
     }
 
-    public ItemStack takeCartridge() {
-        ItemStack cartridge = getCartridge();
-        inventory.setStackInSlot(0, ItemStack.EMPTY);
-        return cartridge;
-    }
-
     public void updateGameState() {
         if (level == null || level.isClientSide) {
             return;
@@ -115,17 +109,15 @@ public class ArcadeBlockEntity extends BlockEntity {
         if (game == null) {
             return;
         }
-        if (!canControl(player)) {
+        if (canControl(player)) {
             return;
         }
         if (activePlayer == null || game.getStage() == GameStage.START) {
-            activePlayer = player.getUUID();
-            scoreSettled = false;
-            markStatusChanged();
+            beginControl(player.getUUID());
         }
         game.setButton(button, pressed);
         if (game.getStage() == GameStage.START) {
-            scoreSettled = false;
+            resetSessionState();
         }
         if (pressed) {
             snapshotCooldown = 0;
@@ -135,24 +127,20 @@ public class ArcadeBlockEntity extends BlockEntity {
 
     public void resetGame(ServerPlayer player) {
         if (game != null) {
-            if (!canControl(player)) {
+            if (canControl(player)) {
                 return;
             }
             game.prepare();
-            scoreSettled = false;
-            snapshotCooldown = 0;
+            resetSessionState();
             sendGameSnapshot();
         }
     }
 
     public void startControl(ServerPlayer player) {
-        if (!hasCartridge() || !canControl(player)) {
+        if (!hasCartridge() || canControl(player)) {
             return;
         }
-        activePlayer = player.getUUID();
-        scoreSettled = false;
-        snapshotCooldown = 0;
-        markStatusChanged();
+        beginControl(player.getUUID());
         if (level != null) {
             level.playSound(null, getBlockPos(), SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 1.0F, 0.6F);
         }
@@ -162,9 +150,7 @@ public class ArcadeBlockEntity extends BlockEntity {
         if (activePlayer == null || !activePlayer.equals(player.getUUID())) {
             return;
         }
-        activePlayer = null;
-        scoreSettled = false;
-        markStatusChanged();
+        endControl();
         if (level != null) {
             level.playSound(null, getBlockPos(), SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 1.0F, 0.5F);
         }
@@ -198,40 +184,65 @@ public class ArcadeBlockEntity extends BlockEntity {
 
     private void refreshSession() {
         if (!(getCartridge().getItem() instanceof GameDiscItem disc)) {
-            game = null;
-            activePlayer = null;
-            scoreSettled = false;
-            snapshotCooldown = 0;
+            clearSession();
             return;
         }
         game = ServerGame.create(disc);
-        scoreSettled = false;
+        resetSessionState();
         game.setSoundEmitter((event, pitch, volume) -> {
             if (level != null) {
                 level.playSound(null, getBlockPos().above(), event, SoundSource.BLOCKS, volume, pitch);
             }
         });
+    }
+
+    private void beginControl(UUID player) {
+        activePlayer = player;
+        snapshotCooldown = 0;
+        if (game == null || game.getStage() != GameStage.DIED && game.getStage() != GameStage.WON) {
+            scoreSettled = false;
+        }
+        markStatusChanged();
+    }
+
+    private void endControl() {
+        activePlayer = null;
+        markStatusChanged();
+    }
+
+    private void clearSession() {
+        game = null;
+        activePlayer = null;
+        resetSessionState();
+    }
+
+    private void resetSessionState() {
+        scoreSettled = false;
         snapshotCooldown = 0;
     }
 
     private boolean canControl(ServerPlayer player) {
         if (activePlayer == null || activePlayer.equals(player.getUUID())) {
-            return true;
+            return false;
         }
         if (level instanceof ServerLevel serverLevel
                 && serverLevel.getServer().getPlayerList().getPlayer(activePlayer) == null) {
             activePlayer = player.getUUID();
             markStatusChanged();
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     public boolean isController(Player player) {
         if (activePlayer == null || activePlayer.equals(player.getUUID())) {
             return false;
         }
-        return !(player instanceof ServerPlayer serverPlayer) || !canControl(serverPlayer);
+        return !(player instanceof ServerPlayer serverPlayer) || canControl(serverPlayer);
+    }
+
+    public boolean isControlling(Player player) {
+        return activePlayer != null && activePlayer.equals(player.getUUID());
     }
 
     private void initializeServer() {
@@ -247,13 +258,18 @@ public class ArcadeBlockEntity extends BlockEntity {
 
     private void settleActiveGame() {
         scoreSettled = true;
-        if (!(level instanceof ServerLevel serverLevel) || activePlayer == null) {
+        if (!(level instanceof ServerLevel serverLevel) || activePlayer == null || game == null) {
             return;
         }
         ServerPlayer player = serverLevel.getServer().getPlayerList().getPlayer(activePlayer);
-        if (player != null) {
-            settleGame(player, game.getGameName(), game.getScore());
+        if (player == null) {
+            return;
         }
+        int currentScore = Math.max(0, game.getScore());
+        bestScores.computeIfAbsent(player.getUUID(), ignored -> new HashMap<>())
+                .merge(game.getGameName(), currentScore, Math::max);
+        rewardCount += currentScore;
+        markStatusChanged();
     }
 
     public int getBestScore(UUID player, String game) {
@@ -264,17 +280,7 @@ public class ArcadeBlockEntity extends BlockEntity {
         return rewardCount;
     }
 
-    private void settleGame(ServerPlayer player, String game, int score) {
-        int currentScore = Math.max(0, score);
-
-        Map<String, Integer> playerScores = bestScores.computeIfAbsent(player.getUUID(), ignored -> new HashMap<>());
-        playerScores.merge(game, currentScore, Math::max);
-
-        rewardCount += currentScore / 5;
-        markStatusChanged();
-    }
-
-    public boolean claimReward(ServerPlayer player) {
+    public boolean giveReward(ServerPlayer player) {
         if (!(level instanceof ServerLevel) || rewardCount <= 0 || isController(player)) {
             return false;
         }

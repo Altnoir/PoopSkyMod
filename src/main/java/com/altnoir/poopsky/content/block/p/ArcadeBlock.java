@@ -151,6 +151,9 @@ public class ArcadeBlock extends Block implements EntityBlock {
         if (arcade == null) {
             return InteractionResult.PASS;
         }
+        if (handleControlExit(level, player, arcade)) {
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
         if (arcade.isController(player) || handleRewardOrEject(level, player, arcade)) {
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
@@ -167,6 +170,9 @@ public class ArcadeBlock extends Block implements EntityBlock {
         if (arcade == null) {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
+        if (handleControlExit(level, player, arcade)) {
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        }
         if (arcade.isController(player) || handleRewardOrEject(level, player, arcade)) {
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
@@ -182,10 +188,23 @@ public class ArcadeBlock extends Block implements EntityBlock {
         return ItemInteractionResult.sidedSuccess(level.isClientSide);
     }
 
+    private static boolean handleControlExit(Level level, Player player, ArcadeBlockEntity arcade) {
+        if (level.isClientSide) {
+            return GameUtils.exitArcadeControl(arcade.getBlockPos());
+        }
+        if (arcade.isControlling(player)) {
+            if (player instanceof ServerPlayer serverPlayer) {
+                arcade.stopControl(serverPlayer);
+            }
+            return true;
+        }
+        return false;
+    }
+
     private static boolean handleRewardOrEject(Level level, Player player, ArcadeBlockEntity arcade) {
         if (arcade.getRewardCount() > 0) {
             if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
-                return arcade.claimReward(serverPlayer);
+                return arcade.giveReward(serverPlayer);
             }
             return true;
         }
@@ -208,7 +227,7 @@ public class ArcadeBlock extends Block implements EntityBlock {
                 && state.getValue(HALF) == DoubleBlockHalf.LOWER
                 && level.getBlockEntity(pos) instanceof ArcadeBlockEntity arcade
                 && arcade.hasCartridge()) {
-            ItemStack cartridge = arcade.takeCartridge();
+            ItemStack cartridge = arcade.ejectCartridge();
             if (!cartridge.isEmpty()) {
                 Block.popResource(level, pos, cartridge);
             }

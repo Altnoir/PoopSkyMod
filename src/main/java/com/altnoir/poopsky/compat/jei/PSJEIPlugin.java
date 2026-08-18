@@ -51,7 +51,8 @@ public class PSJEIPlugin implements IModPlugin {
                 new BreedingChestRecipeCategory(registration.getJeiHelpers(), arrow),
                 new POPExplosionRecipeCategory(registration.getJeiHelpers(), arrow, arrow2),
                 new AnalPressingRecipeCategory(registration.getJeiHelpers(), arrow, plus),
-                new LiquidInteractionRecipeCategory(registration.getJeiHelpers(), arrow, plus));
+                new LiquidInteractionRecipeCategory(registration.getJeiHelpers(), arrow, plus),
+                new ArcadeLootRecipeCategory(registration.getJeiHelpers()));
 
         if (PoMods.CREATE.isLoaded()) {
             createCategories.clear();
@@ -111,6 +112,7 @@ public class PSJEIPlugin implements IModPlugin {
         registration.addRecipes(BreedingChestRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PoRecipes.BREEDING_CHEST.type().get()));
 
         registration.addRecipes(LiquidInteractionRecipeCategory.TYPE, LiquidInteractionRecipes.all());
+        registration.addRecipes(ArcadeLootRecipeCategory.TYPE, ArcadeLootRecipes.all());
 
         PSJEIInfo.register(registration);
 
@@ -137,6 +139,9 @@ public class PSJEIPlugin implements IModPlugin {
         registration.addRecipeCatalyst(new ItemStack(PoItems.URINE_BUCKET.get()), LiquidInteractionRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(Items.WATER_BUCKET), LiquidInteractionRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(Items.LAVA_BUCKET), LiquidInteractionRecipeCategory.TYPE);
+        for (var arcade : PoBlocks.getArcadeBlocks()) {
+            registration.addRecipeCatalyst(new ItemStack(arcade.get()), ArcadeLootRecipeCategory.TYPE);
+        }
 
         if (PoMods.CREATE.isLoaded()) {
             createCategories.forEach(category -> category.registerCatalysts(registration));

@@ -46,11 +46,6 @@ public final class ArcadeControlSession {
 
         int key = event.getKey();
         if (event.getAction() == InputConstants.PRESS) {
-            if (key == GLFW.GLFW_KEY_Q) {
-                exit();
-                return;
-            }
-
             if (key == GLFW.GLFW_KEY_R) {
                 send(new ArcadeResetPacket(machinePos));
                 return;
@@ -112,6 +107,15 @@ public final class ArcadeControlSession {
         releaseButtons(pos);
         send(new ArcadeStopControlPacket(pos));
         clear();
+    }
+
+    public static boolean exitAt(BlockPos pos) {
+        if (!pos.equals(machinePos)) {
+            return false;
+        }
+        releaseButtons(pos);
+        clear();
+        return true;
     }
 
     public static void clear() {

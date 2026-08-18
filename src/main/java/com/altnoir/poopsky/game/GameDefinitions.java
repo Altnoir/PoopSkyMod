@@ -11,8 +11,8 @@ import java.util.List;
 public final class GameDefinitions {
     public static final GameDefinition ROUNDWORM = new GameDefinition(
             "roundworm",
-            "SlimeGame",
-            PoItems.GAME_DISC_SLIME,
+            "RoundwormGame",
+            PoItems.GAME_DISC_ROUNDWORM,
             ServerRoundwormGame::new
     );
     public static final GameDefinition BLOCKTRIS = new GameDefinition(

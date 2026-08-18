@@ -17,6 +17,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
+import java.util.Locale;
+
 public class SieveRecipeCategory implements IRecipeCategory<RecipeHolder<SieveRecipe>> {
     public static final RecipeType<RecipeHolder<SieveRecipe>> TYPE = RecipeType.createRecipeHolderType(PoopSky.loc("sieve"));
 
@@ -73,7 +75,9 @@ public class SieveRecipeCategory implements IRecipeCategory<RecipeHolder<SieveRe
 
             if (index < recipe.outputs().size()) {
                 var chanceItem = recipe.outputs().get(index);
-                var chance = chanceItem.chance() * 100.0F < 1.0F ? "<1" : String.format("%.2f", chanceItem.chance() * 100.0F).replaceAll("\\.?0+$", "");
+                var chance = chanceItem.chance() * 100.0F < 1.0F
+                        ? "<1%"
+                        : String.format(Locale.ROOT, "%.1f%%", chanceItem.chance() * 100.0F);
                 slotBuilder.addItemStack(chanceItem.stack().copy()).addRichTooltipCallback(
                         (slotView, tooltip) -> tooltip.add(Component.translatable("jei.poopsky.sieve_chance", chance).withStyle(ChatFormatting.GOLD)));
             }
@@ -101,6 +105,4 @@ public class SieveRecipeCategory implements IRecipeCategory<RecipeHolder<SieveRe
     public int getHeight() {
         return HEIGHT;
     }
-
-
 }

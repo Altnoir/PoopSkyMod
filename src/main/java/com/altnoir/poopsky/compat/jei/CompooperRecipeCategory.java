@@ -24,8 +24,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class CompooperRecipeCategory implements IRecipeCategory<RecipeHolder<CompooperRecipe>> {
-    public static final RecipeType<RecipeHolder<CompooperRecipe>> TYPE =
-            RecipeType.createRecipeHolderType(PoopSky.loc("compooper"));
+    public static final RecipeType<RecipeHolder<CompooperRecipe>> TYPE = RecipeType.createRecipeHolderType(PoopSky.loc("compooper"));
 
     private static final int WIDTH = 140;
     private static final int HEIGHT = 48;

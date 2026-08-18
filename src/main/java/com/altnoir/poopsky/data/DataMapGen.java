@@ -28,7 +28,9 @@ public final class DataMapGen {
                 .add(PoBlocks.PRIMO_FUNGUS.getId(), new Compostable(0.3F), false)
                 .add(PoBlocks.GLOW_PRIMO_FUNGUS.getId(), new Compostable(0.3F), false)
                 .add(PoBlocks.PRIMO_CAP.getId(), new Compostable(1.0F), false)
-                .add(PoBlocks.GLOW_PRIMO_CAP.getId(), new Compostable(1.0F), false);
+                .add(PoBlocks.GLOW_PRIMO_CAP.getId(), new Compostable(1.0F), false)
+                .add(PoBlocks.MUSHROOM_BED.getId(), new Compostable(0.3F), false)
+                .add(PoBlocks.MYCELIUM_MAT.getId(), new Compostable(0.3F), false);
 
         provider.builder(NeoForgeDataMaps.STRIPPABLES)
                 .add(PoBlocks.GINKGO_LOG.getId(), new Strippable(PoBlocks.STRIPPED_GINKGO_LOG.get()), false)

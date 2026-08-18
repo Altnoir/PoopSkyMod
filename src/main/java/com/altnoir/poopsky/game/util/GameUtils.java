@@ -14,6 +14,10 @@ public final class GameUtils {
         ArcadeControlSession.enter(machinePos);
     }
 
+    public static boolean exitArcadeControl(BlockPos machinePos) {
+        return ArcadeControlSession.exitAt(machinePos);
+    }
+
     public static int getArcadeBestScore(BlockPos machinePos, String game) {
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;

@@ -325,7 +325,7 @@ public final class LangGen {
         provider.add("block.poopsky.toilet_format", "%s Toilet");
         provider.add("block.poopsky.rainbow_toilet", "Rainbow Toilet");
 
-        provider.add("gamediscs.slime", "Slime");
+        provider.add("gamediscs.roundworm", "Roundworm");
         provider.add("gamediscs.blocktris", "Blocktris");
         provider.add("gamediscs.pong", "Pong");
         provider.add("message.gamediscs.light_arcade.no_cartridge", "No cartridge");
@@ -392,10 +392,12 @@ public final class LangGen {
         provider.add("jei.category.poopsky.fly_barrel", "Fly Barrel");
         provider.add("jei.category.poopsky.breeding_chest", "Breeding Box");
         provider.add("jei.category.poopsky.liquid_interaction", "Liquid Interaction");
+        provider.add("jei.category.poopsky.arcade", "Arcade Rewards");
         provider.add("jei.poopsky.liquid_interaction.source_flowing", "Source and flowing fluids produce different results");
         provider.add("jei.poopsky.liquid_interaction.replace_left", "The result replaces the left fluid");
         provider.add("jei.poopsky.liquid_interaction.below", "The block below must be: %s");
-        provider.add("jei.poopsky.sieve_chance", "Chance: %.2f%%");
+        provider.add("jei.poopsky.sieve_chance", "Chance: %s");
+        provider.add("jei.poopsky.arcade_chance", "Chance: %s");
         provider.add("jei.poopsky.pop_explosion_radius", "Radius > %s");
         provider.add("jei.poopsky.anal_pressing_replace", "Max Press %s");
         provider.add("jei.poopsky.digesting_chance", "Chance: %.2f%%");
