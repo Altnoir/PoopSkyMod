@@ -61,7 +61,7 @@ public class GashaponEntity extends ThrowableProjectile {
     }
 
     public void setMobId(String mobId) {
-        this.entityData.set(DATA_MOB_ID, mobId == null ? "" : mobId);
+        this.entityData.set(DATA_MOB_ID, mobId);
     }
 
     public static byte variantFromColor(String color) {

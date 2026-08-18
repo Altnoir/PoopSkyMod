@@ -20,7 +20,6 @@ public class FlyModel<T extends FlyEntity> extends AgeableListModel<T> {
     private static final int MAGGOT_SEGMENT_COUNT = 7;
 
     private final ModelPart bone;
-    private final ModelPart body;
     private final ModelPart rightWing;
     private final ModelPart leftWing;
     private final ModelPart frontLeg;
@@ -32,12 +31,12 @@ public class FlyModel<T extends FlyEntity> extends AgeableListModel<T> {
     public FlyModel(ModelPart root, ModelPart maggotRoot) {
         super(false, 24.0F, 0.0F, 2.0F, 1.5F, 12.0F);
         this.bone = root.getChild("bone");
-        this.body = this.bone.getChild("body");
-        this.rightWing = this.body.getChild("rightwing_bone");
-        this.leftWing = this.body.getChild("leftwing_bone");
-        this.frontLeg = this.body.getChild("leg_front");
-        this.midLeg = this.body.getChild("leg_mid");
-        this.backLeg = this.body.getChild("leg_back");
+        ModelPart body = this.bone.getChild("body");
+        this.rightWing = body.getChild("rightwing_bone");
+        this.leftWing = body.getChild("leftwing_bone");
+        this.frontLeg = body.getChild("leg_front");
+        this.midLeg = body.getChild("leg_mid");
+        this.backLeg = body.getChild("leg_back");
         this.maggot = maggotRoot;
         for (int i = 0; i < MAGGOT_SEGMENT_COUNT; i++) {
             this.maggotSegments[i] = this.maggot.getChild("segment" + i);

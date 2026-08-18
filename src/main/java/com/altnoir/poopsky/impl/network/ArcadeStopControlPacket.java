@@ -1,7 +1,6 @@
 package com.altnoir.poopsky.impl.network;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.content.block.entity.ArcadeBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -12,28 +11,13 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 public record ArcadeStopControlPacket(BlockPos machinePos) implements CustomPacketPayload {
     public static final Type<ArcadeStopControlPacket> TYPE = new Type<>(PoopSky.loc("arcade_stop_control"));
 
-    public static final StreamCodec<FriendlyByteBuf, ArcadeStopControlPacket> STREAM_CODEC = new StreamCodec<>() {
-        @Override
-        public ArcadeStopControlPacket decode(FriendlyByteBuf buffer) {
-            return new ArcadeStopControlPacket(buffer.readBlockPos());
-        }
+    public static final StreamCodec<FriendlyByteBuf, ArcadeStopControlPacket> STREAM_CODEC =
+            StreamCodec.composite(BlockPos.STREAM_CODEC, ArcadeStopControlPacket::machinePos, ArcadeStopControlPacket::new);
 
-        @Override
-        public void encode(FriendlyByteBuf buffer, ArcadeStopControlPacket payload) {
-            buffer.writeBlockPos(payload.machinePos());
-        }
-    };
 
     public static void handle(ArcadeStopControlPacket payload, IPayloadContext context) {
-        context.enqueueWork(() -> {
-            ServerPlayer player = (ServerPlayer) context.player();
-            if (ArcadeAccess.canAccess(player, payload.machinePos())) {
-                return;
-            }
-            if (player.level().getBlockEntity(payload.machinePos()) instanceof ArcadeBlockEntity arcade) {
-                arcade.stopControl(player);
-            }
-        });
+        ArcadePacketHandler.handle(context, payload.machinePos(),
+                arcade -> arcade.stopControl((ServerPlayer) context.player()));
     }
 
     @Override

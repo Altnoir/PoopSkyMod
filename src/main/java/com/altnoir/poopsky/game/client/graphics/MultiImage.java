@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MultiImage extends Renderer {
-    private List<Image> images = new ArrayList<>();
+    private final List<Image> images = new ArrayList<>();
     private int current = 0;
 
     public MultiImage(ResourceLocation file, int fileWidth, int fileHeight, List<Rect2i> rects) {

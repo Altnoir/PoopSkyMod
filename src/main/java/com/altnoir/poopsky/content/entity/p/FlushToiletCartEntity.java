@@ -201,7 +201,7 @@ public class FlushToiletCartEntity extends VehicleEntity {
         }
 
         double topY = this.getBoundingBox().maxY;
-        mutableBlockPos.set((double) blockPos.getX(), topY, (double) blockPos.getZ());
+        mutableBlockPos.set(blockPos.getX(), topY, blockPos.getZ());
         for (Pose pose : poses) {
             double passengerHeight = passenger.getDimensions(pose).height();
             int ceilingSearch = Mth.ceil(topY - mutableBlockPos.getY() + passengerHeight);

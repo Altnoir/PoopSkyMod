@@ -30,13 +30,15 @@ public class ServerBlocktrisGame extends ServerGame {
         }
         switch (button) {
             case LEFT -> {
-                state.moveCurrent(-1, 0);
-                playSound(PoSoundEvents.SHOOT.get(), 2.5F, 0.1F);
+                if (!state.moveCurrent(-1, 0)) {
+                    playSound(PoSoundEvents.SHOOT.get(), 2.5F, 0.1F);
+                }
                 state.setPlacementCooldown(10);
             }
             case RIGHT -> {
-                state.moveCurrent(1, 0);
-                playSound(PoSoundEvents.SHOOT.get(), 2.5F, 0.1F);
+                if (!state.moveCurrent(1, 0)) {
+                    playSound(PoSoundEvents.SHOOT.get(), 2.5F, 0.1F);
+                }
                 state.setPlacementCooldown(10);
             }
             case DOWN -> {
@@ -54,7 +56,7 @@ public class ServerBlocktrisGame extends ServerGame {
                 place();
                 state.setPlacementCooldown(10);
             }
-            case BUTTON2 -> {
+            case UP, BUTTON2 -> {
                 state.rotateCurrent();
                 playSound(PoSoundEvents.SWING.get(), 1.5F, 0.5F);
             }
@@ -72,7 +74,7 @@ public class ServerBlocktrisGame extends ServerGame {
 
     @Override
     protected int gameTickDuration() {
-        return (int) (10f / ((float) score / 50f + 1f));
+        return Math.max(1, (int) (10f / ((float) score / 50f + 1f)));
     }
 
     @Override
@@ -82,12 +84,14 @@ public class ServerBlocktrisGame extends ServerGame {
             return;
         }
         if (leftDown) {
-            state.moveCurrent(-1, 0);
-            playSound(PoSoundEvents.SHOOT.get(), 2.5F, 0.1F);
+            if (!state.moveCurrent(-1, 0)) {
+                playSound(PoSoundEvents.SHOOT.get(), 2.5F, 0.1F);
+            }
         }
         if (rightDown) {
-            state.moveCurrent(1, 0);
-            playSound(PoSoundEvents.SHOOT.get(), 2.5F, 0.1F);
+            if (!state.moveCurrent(1, 0)) {
+                playSound(PoSoundEvents.SHOOT.get(), 2.5F, 0.1F);
+            }
         }
         if (downDown && state.moveCurrent(0, 1)) {
             playSound(PoSoundEvents.SHOOT.get(), 2.5F, 0.1F);

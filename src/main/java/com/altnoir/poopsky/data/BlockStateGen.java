@@ -1117,12 +1117,12 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         wallItemModel(wall, block);
     }
 
-    private ItemModelBuilder wallItemModel(Block wall, Block baseBlock) {
-        return itemModels().withExistingParent(getItemPath(wall), mcLoc("block/wall_inventory")).texture("wall", modLoc("block/" + getBlockPath(baseBlock)));
+    private void wallItemModel(Block wall, Block baseBlock) {
+        itemModels().withExistingParent(getItemPath(wall), mcLoc("block/wall_inventory")).texture("wall", modLoc("block/" + getBlockPath(baseBlock)));
     }
 
-    protected ItemModelBuilder generatedItem(Block block) {
-        return generatedItem(block, "block");
+    protected void generatedItem(Block block) {
+        generatedItem(block, "block");
     }
 
     protected ItemModelBuilder generatedItem(Block block, String name) {

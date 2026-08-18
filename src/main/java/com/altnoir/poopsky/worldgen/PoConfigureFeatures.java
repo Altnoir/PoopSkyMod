@@ -324,7 +324,7 @@ public class PoConfigureFeatures {
         for (int i = 1; i <= 4; i++) {
             for (Direction direction : Direction.Plane.HORIZONTAL) {
                 builder.add(PoBlocks.MUSHROOM_BED.get().defaultBlockState()
-                        .setValue(PinkPetalsBlock.AMOUNT, Integer.valueOf(i)).setValue(PinkPetalsBlock.FACING, direction), 2);
+                        .setValue(PinkPetalsBlock.AMOUNT, i).setValue(PinkPetalsBlock.FACING, direction), 2);
             }
         }
         register(context, MYCELIUM_VEGETATION, Feature.SIMPLE_BLOCK,

@@ -8,6 +8,7 @@ import com.altnoir.poopsky.game.model.PongGameState;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec2;
 
 public class ClientPongGame extends ClientGame {
@@ -32,6 +33,12 @@ public class ClientPongGame extends ClientGame {
             new Vec2(8, 12),
             new MultiImage(PoopSky.loc("textures/games/sprite/numbers.png"), 8, 120, 10)
     );
+    private CompoundTag lastSnapshot;
+    private double previousPlayerY;
+    private double previousOpponentY;
+    private double previousBallX;
+    private double previousBallY;
+    private boolean hasPrevious;
 
     public ClientPongGame() {
         super();
@@ -39,15 +46,50 @@ public class ClientPongGame extends ClientGame {
 
     @Override
     public void applySnapshot(CompoundTag tag) {
+        if (tag == null) {
+            return;
+        }
+        if (lastSnapshot != null && tag.equals(lastSnapshot)) {
+            return;
+        }
+
+        double newPlayerY = tag.getDouble("playerY");
+        double newOpponentY = tag.getDouble("opponentY");
+        double newBallX = tag.getDouble("ballX");
+        double newBallY = tag.getDouble("ballY");
+        int newBallTimer = tag.getInt("ballTimer");
+
+        boolean continuous = hasPrevious
+                && newBallTimer <= state.getBallTimer()
+                && Math.abs(newBallX - state.getBallX()) <= 12
+                && Math.abs(newBallY - state.getBallY()) <= 12;
+        if (!continuous) {
+            previousPlayerY = newPlayerY;
+            previousOpponentY = newOpponentY;
+            previousBallX = newBallX;
+            previousBallY = newBallY;
+        } else {
+            previousPlayerY = state.getPlayerY();
+            previousOpponentY = state.getOpponentY();
+            previousBallX = state.getBallX();
+            previousBallY = state.getBallY();
+        }
+
         super.applySnapshot(tag);
         state.applySnapshot(tag);
+        lastSnapshot = tag.copy();
+        hasPrevious = true;
     }
 
     @Override
-    protected void renderGame(GuiGraphics graphics, int posX, int posY) {
-        player.setY((float) state.getPlayerY());
-        opponent.setY((float) state.getOpponentY());
-        ball.setPos(new Vec2((float) state.getBallX(), (float) state.getBallY()));
+    protected void renderGame(GuiGraphics graphics, int posX, int posY, float partialTick) {
+        double delta = Mth.clamp(partialTick, 0.0F, 1.0F);
+        player.setY((float) (previousPlayerY + (state.getPlayerY() - previousPlayerY) * delta));
+        opponent.setY((float) (previousOpponentY + (state.getOpponentY() - previousOpponentY) * delta));
+        ball.setPos(new Vec2(
+                (float) (previousBallX + (state.getBallX() - previousBallX) * delta),
+                (float) (previousBallY + (state.getBallY() - previousBallY) * delta)
+        ));
         player.render(graphics, posX, posY);
         opponent.render(graphics, posX, posY);
         ball.render(graphics, posX, posY);
@@ -56,8 +98,6 @@ public class ClientPongGame extends ClientGame {
             if (numberRenderer.getImage() instanceof MultiImage image) {
                 image.setImage(getScore());
             }
-            numberRenderer.setPos(new Vec2((float) WIDTH / 2 - numberRenderer.getWidth() - 4, 4));
-            numberRenderer.render(graphics, posX, posY);
         } else {
             if (numberRenderer.getImage() instanceof MultiImage image) {
                 image.setImage(1);
@@ -67,9 +107,9 @@ public class ClientPongGame extends ClientGame {
             if (numberRenderer.getImage() instanceof MultiImage image) {
                 image.setImage(0);
             }
-            numberRenderer.setPos(new Vec2((float) WIDTH / 2 - numberRenderer.getWidth() - 4, 4));
-            numberRenderer.render(graphics, posX, posY);
         }
+        numberRenderer.setPos(new Vec2((float) WIDTH / 2 - numberRenderer.getWidth() - 4, 4));
+        numberRenderer.render(graphics, posX, posY);
 
         if (state.getOpponentScore() < 10) {
             if (numberRenderer.getImage() instanceof MultiImage image) {
@@ -99,6 +139,11 @@ public class ClientPongGame extends ClientGame {
     @Override
     public boolean showScore() {
         return false;
+    }
+
+    @Override
+    public boolean requiresPerFrameRender() {
+        return true;
     }
 
 }

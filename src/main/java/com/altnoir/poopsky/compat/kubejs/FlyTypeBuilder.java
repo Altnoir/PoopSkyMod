@@ -67,8 +67,8 @@ public final class FlyTypeBuilder {
         return this;
     }
 
-    public FlyTypeBuilder flyBarrel(String result) {
-        return flyBarrel(result, 1);
+    public void flyBarrel(String result) {
+        flyBarrel(result, 1);
     }
 
     public FlyTypeBuilder flyBarrel(String result, int count) {
@@ -84,8 +84,8 @@ public final class FlyTypeBuilder {
         return this;
     }
 
-    public FlyTypeBuilder breeding(String parent1, String parent2) {
-        return breeding(parent1, parent2, 0.2F);
+    public void breeding(String parent1, String parent2) {
+        breeding(parent1, parent2, 0.2F);
     }
 
     public FlyTypeBuilder breeding(String parent1, String parent2, float chance) {

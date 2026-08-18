@@ -11,7 +11,7 @@ public class BlocktrisPiece {
     private int x;
     private int y;
     private int rotation;
-    private int color;
+    private final int color;
     private final Grid grid;
 
     public BlocktrisPiece(int type, int x, int y, int color, Grid grid) {

@@ -31,7 +31,7 @@ public class MyceliumMatBlock extends MultifaceBlock implements BonemealableBloc
 
     public MyceliumMatBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED, Boolean.valueOf(false)));
+        this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED, Boolean.FALSE));
     }
 
     @Override

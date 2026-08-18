@@ -10,84 +10,93 @@ import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
-import java.util.EnumMap;
-import java.util.Map;
+import java.util.EnumSet;
 
 public final class ArcadeControlSession {
-    private static final ArcadeControlSession INSTANCE = new ArcadeControlSession();
-    private static final Map<Button, Boolean> HELD_BUTTONS = new EnumMap<>(Button.class);
+    private static final EnumSet<Button> HELD_BUTTONS = EnumSet.noneOf(Button.class);
 
     @Nullable
-    private BlockPos machinePos;
+    private static BlockPos machinePos;
 
     private ArcadeControlSession() {
     }
 
     public static boolean isActive() {
-        return INSTANCE.machinePos != null;
+        return machinePos != null;
     }
 
     public static void enter(BlockPos pos) {
         clear();
-        INSTANCE.machinePos = pos;
-        HELD_BUTTONS.clear();
+        machinePos = pos;
     }
 
     public static void onKeyInput(InputEvent.Key event) {
-        if (INSTANCE.machinePos == null) {
-            return;
-        }
-        if (event.getAction() == InputConstants.REPEAT) {
+        if (machinePos == null || event.getAction() == InputConstants.REPEAT) {
             return;
         }
 
-        int key = event.getKey();
         Minecraft mc = Minecraft.getInstance();
         suppressVanillaMovement(mc.options);
-        if (key == GLFW.GLFW_KEY_Q && event.getAction() == InputConstants.PRESS) {
-            exit();
-            return;
-        }
-        if (key == GLFW.GLFW_KEY_R && event.getAction() == InputConstants.PRESS) {
-            PacketDistributor.sendToServer(new ArcadeResetPacket(INSTANCE.machinePos));
-            return;
+
+        int key = event.getKey();
+        if (event.getAction() == InputConstants.PRESS) {
+            if (key == GLFW.GLFW_KEY_Q) {
+                exit();
+                return;
+            }
+
+            if (key == GLFW.GLFW_KEY_R) {
+                send(new ArcadeResetPacket(machinePos));
+                return;
+            }
         }
 
-        Button button = buttonFor(key, event.getScanCode());
+        Button button = getButton(key, event.getScanCode());
         if (button == null) {
             return;
         }
 
         boolean pressed = event.getAction() == InputConstants.PRESS;
-        if (pressed == HELD_BUTTONS.getOrDefault(button, false)) {
+        if (pressed == HELD_BUTTONS.contains(button)) {
             return;
         }
-        if (pressed && key == GLFW.GLFW_KEY_ENTER) {
-            mc.options.keyChat.consumeClick();
-            mc.options.keyCommand.consumeClick();
+
+        if (pressed) {
+            HELD_BUTTONS.add(button);
+
+            if (key == GLFW.GLFW_KEY_ENTER) {
+                mc.options.keyChat.consumeClick();
+                mc.options.keyCommand.consumeClick();
+            }
+        } else {
+            HELD_BUTTONS.remove(button);
         }
-        HELD_BUTTONS.put(button, pressed);
-        PacketDistributor.sendToServer(new ArcadeInputPacket(INSTANCE.machinePos, button, pressed));
+
+        send(new ArcadeInputPacket(machinePos, button, pressed));
     }
 
+
     public static void tick(Minecraft mc) {
-        if (INSTANCE.machinePos == null) {
+        if (machinePos == null) {
             return;
         }
+
         if (mc.player == null || mc.level == null) {
             clear();
             return;
         }
 
-        if (!(mc.level.getBlockEntity(INSTANCE.machinePos) instanceof ArcadeBlockEntity arcade)) {
+        if (!(mc.level.getBlockEntity(machinePos) instanceof ArcadeBlockEntity arcade)) {
             clear();
             return;
         }
+
         if (!arcade.hasCartridge()) {
             exit();
             return;
@@ -96,29 +105,28 @@ public final class ArcadeControlSession {
     }
 
     public static void exit() {
-        if (INSTANCE.machinePos == null) {
+        if (machinePos == null) {
             return;
         }
-        BlockPos pos = INSTANCE.machinePos;
-        Minecraft mc = Minecraft.getInstance();
-        if (mc.player != null) {
-            releaseHeldButtons(pos);
-            PacketDistributor.sendToServer(new ArcadeStopControlPacket(pos));
-        }
+        BlockPos pos = machinePos;
+        releaseButtons(pos);
+        send(new ArcadeStopControlPacket(pos));
         clear();
     }
 
     public static void clear() {
-        INSTANCE.machinePos = null;
+        machinePos = null;
         HELD_BUTTONS.clear();
     }
 
-    private static void releaseHeldButtons(BlockPos pos) {
-        for (Map.Entry<Button, Boolean> entry : HELD_BUTTONS.entrySet()) {
-            if (entry.getValue()) {
-                PacketDistributor.sendToServer(new ArcadeInputPacket(pos, entry.getKey(), false));
-            }
+    private static void releaseButtons(BlockPos pos) {
+        for (Button button : HELD_BUTTONS) {
+            send(new ArcadeInputPacket(pos, button, false));
         }
+    }
+
+    private static void send(CustomPacketPayload packet) {
+        PacketDistributor.sendToServer(packet);
     }
 
     private static void suppressVanillaMovement(Options options) {
@@ -127,16 +135,13 @@ public final class ArcadeControlSession {
         options.keyLeft.setDown(false);
         options.keyRight.setDown(false);
         options.keyJump.setDown(false);
-        options.keyJump.consumeClick();
         options.keySprint.setDown(false);
-        options.keySprint.consumeClick();
         options.keyChat.setDown(false);
-        options.keyChat.consumeClick();
         options.keyCommand.setDown(false);
-        options.keyCommand.consumeClick();
     }
 
-    private static Button buttonFor(int key, int scanCode) {
+    @Nullable
+    private static Button getButton(int key, int scanCode) {
         if (PoKeyBoardInput.ARCADE_UP.matches(key, scanCode)) {
             return Button.UP;
         }
@@ -155,6 +160,13 @@ public final class ArcadeControlSession {
         if (PoKeyBoardInput.ARCADE_BUTTON2.matches(key, scanCode)) {
             return Button.BUTTON2;
         }
-        return null;
+
+        return switch (key) {
+            case GLFW.GLFW_KEY_UP -> Button.UP;
+            case GLFW.GLFW_KEY_DOWN -> Button.DOWN;
+            case GLFW.GLFW_KEY_LEFT -> Button.LEFT;
+            case GLFW.GLFW_KEY_RIGHT -> Button.RIGHT;
+            default -> null;
+        };
     }
 }
