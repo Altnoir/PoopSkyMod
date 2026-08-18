@@ -9,7 +9,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.SaplingBlock;
 import net.minecraft.world.level.block.grower.TreeGrower;
 import net.minecraft.world.level.block.state.BlockState;
@@ -20,7 +19,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.Optional;
 
-public class PoopTreeBlock extends SaplingBlock implements BonemealableBlock {
+public class PoopTreeBlock extends SaplingBlock {
     public static final MapCodec<PoopTreeBlock> CODEC = simpleCodec(PoopTreeBlock::new);
     public static final TreeGrower treeGrower = new TreeGrower(PoopSky.MOD_ID + ":poop_tree",
             Optional.of(PoConfigureFeatures.MEGA_POOP_TREE),
@@ -54,9 +53,5 @@ public class PoopTreeBlock extends SaplingBlock implements BonemealableBlock {
     @Override
     public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) {
         return random.nextFloat() < 0.45F;
-    }
-
-    protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
-        return true;
     }
 }

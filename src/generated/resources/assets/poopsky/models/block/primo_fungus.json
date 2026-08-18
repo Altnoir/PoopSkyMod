@@ -1,7 +1,7 @@
 {
-  "parent": "minecraft:block/cross",
-  "render_type": "minecraft:cutout",
+  "parent": "poopsky:block/mushroom",
   "textures": {
-    "cross": "poopsky:block/primo_fungus"
+    "all": "poopsky:block/mushroom/primo_fungus",
+    "particle": "poopsky:block/primo_planks"
   }
 }

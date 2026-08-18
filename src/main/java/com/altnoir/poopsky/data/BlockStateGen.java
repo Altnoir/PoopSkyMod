@@ -25,6 +25,7 @@ import net.neoforged.neoforge.client.model.generators.loaders.SeparateTransforms
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 public class BlockStateGen extends RegistrateBlockstateProvider {
     public static final String PARTICLE = "particle";
@@ -489,89 +490,133 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
     }
 
     private void ginkgoWoodSet() {
-        logBlock(PoBlocks.GINKGO_LOG.get());
-        logBlock(PoBlocks.STRIPPED_GINKGO_LOG.get());
-        axisBlock(PoBlocks.GINKGO_WOOD.get(), blockTexture(PoBlocks.GINKGO_LOG.get()), blockTexture(PoBlocks.GINKGO_LOG.get()));
-        axisBlock(PoBlocks.STRIPPED_GINKGO_WOOD.get(), blockTexture(PoBlocks.STRIPPED_GINKGO_LOG.get()), blockTexture(PoBlocks.STRIPPED_GINKGO_LOG.get()));
-        simpleBlockItems(
+        registerWoodSet(new WoodSetData(
                 PoBlocks.GINKGO_LOG.get(),
                 PoBlocks.STRIPPED_GINKGO_LOG.get(),
                 PoBlocks.GINKGO_WOOD.get(),
-                PoBlocks.STRIPPED_GINKGO_WOOD.get()
-        );
-
-        ResourceLocation planks = blockTexture(PoBlocks.GINKGO_PLANKS.get());
-        blockWithItem(PoBlocks.GINKGO_PLANKS.get());
-        stairsBlock(PoBlocks.GINKGO_STAIRS.get(), planks);
-        slabBlock(PoBlocks.GINKGO_SLAB.get(), planks, planks);
-        verticalSlabBlock(PoBlocks.GINKGO_VERTICAL_SLAB.get(), planks);
-        buttonBlock(PoBlocks.GINKGO_BUTTON.get(), planks);
-        pressurePlateBlock(PoBlocks.GINKGO_PRESSURE_PLATE.get(), planks);
-        fenceBlock(PoBlocks.GINKGO_FENCE.get(), planks);
-        fenceGateBlock(PoBlocks.GINKGO_FENCE_GATE.get(), planks);
-        doorBlockWithRenderType(PoBlocks.GINKGO_DOOR.get(), ResourceLocation.parse(blockTexture(PoBlocks.GINKGO_DOOR.get()) + "_bottom"), ResourceLocation.parse(blockTexture(PoBlocks.GINKGO_DOOR.get()) + "_top"), "cutout");
-        trapdoorBlockWithRenderType(PoBlocks.GINKGO_TRAPDOOR.get(), blockTexture(PoBlocks.GINKGO_TRAPDOOR.get()), true, "cutout");
-        blockWithItem(PoBlocks.GINKGO_LEAVES.get());
-        saplingBlock(PoBlocks.GINKGO_SAPLING.get());
-        simpleBlock(PoBlocks.POTTED_GINKGO_SAPLING.get(), models()
-                .withExistingParent(getBlockPath(PoBlocks.POTTED_GINKGO_SAPLING.get()), mcLoc("block/flower_pot_cross"))
-                .texture("plant", blockTexture(PoBlocks.GINKGO_SAPLING.get()))
-                .renderType("cutout"));
-
-        simpleBlockItems(
+                PoBlocks.STRIPPED_GINKGO_WOOD.get(),
+                PoBlocks.GINKGO_PLANKS.get(),
                 PoBlocks.GINKGO_STAIRS.get(),
                 PoBlocks.GINKGO_SLAB.get(),
+                PoBlocks.GINKGO_VERTICAL_SLAB.get(),
+                PoBlocks.GINKGO_BUTTON.get(),
                 PoBlocks.GINKGO_PRESSURE_PLATE.get(),
-                PoBlocks.GINKGO_FENCE_GATE.get()
-        );
-        ModelFile buttonInventory = models().withExistingParent(getBlockPath(PoBlocks.GINKGO_BUTTON.get()) + "_inventory", mcLoc("block/button_inventory"))
-                .texture("texture", planks);
-        simpleBlockItem(PoBlocks.GINKGO_BUTTON.get(), buttonInventory);
-        simpleBlockItem(PoBlocks.GINKGO_FENCE.get(), models().withExistingParent(getBlockPath(PoBlocks.GINKGO_FENCE.get()) + "_inventory", mcLoc("block/fence_inventory"))
-                .texture("texture", planks));
-        generatedItem(PoBlocks.GINKGO_DOOR.get(), "item");
-        simpleBlockItem(PoBlocks.GINKGO_TRAPDOOR.get(), blockModel(PoBlocks.GINKGO_TRAPDOOR.get(), "_bottom"));
+                PoBlocks.GINKGO_FENCE.get(),
+                PoBlocks.GINKGO_FENCE_GATE.get(),
+                PoBlocks.GINKGO_DOOR.get(),
+                PoBlocks.GINKGO_TRAPDOOR.get(),
+                PoBlocks.GINKGO_LEAVES.get(),
+                PoBlocks.GINKGO_SAPLING.get(),
+                PoBlocks.POTTED_GINKGO_SAPLING.get()
+        ), this::saplingBlock);
     }
 
     private void primoFunguset() {
-        logBlock(PoBlocks.PRIMO_STEM.get());
-        logBlock(PoBlocks.STRIPPED_PRIMO_STEM.get());
-        axisBlock(PoBlocks.PRIMO_HYPHAE.get(), blockTexture(PoBlocks.PRIMO_STEM.get()), blockTexture(PoBlocks.PRIMO_STEM.get()));
-        axisBlock(PoBlocks.STRIPPED_PRIMO_HYPHAE.get(), blockTexture(PoBlocks.STRIPPED_PRIMO_STEM.get()), blockTexture(PoBlocks.STRIPPED_PRIMO_STEM.get()));
-        simpleBlockItems(
+        registerWoodSet(new WoodSetData(
                 PoBlocks.PRIMO_STEM.get(),
                 PoBlocks.STRIPPED_PRIMO_STEM.get(),
                 PoBlocks.PRIMO_HYPHAE.get(),
-                PoBlocks.STRIPPED_PRIMO_HYPHAE.get()
-        );
-
-        ResourceLocation planks = blockTexture(PoBlocks.PRIMO_PLANKS.get());
-        blockWithItem(PoBlocks.PRIMO_PLANKS.get());
-        stairsBlock(PoBlocks.PRIMO_STAIRS.get(), planks);
-        slabBlock(PoBlocks.PRIMO_SLAB.get(), planks, planks);
-        verticalSlabBlock(PoBlocks.PRIMO_VERTICAL_SLAB.get(), planks);
-        buttonBlock(PoBlocks.PRIMO_BUTTON.get(), planks);
-        pressurePlateBlock(PoBlocks.PRIMO_PRESSURE_PLATE.get(), planks);
-        fenceBlock(PoBlocks.PRIMO_FENCE.get(), planks);
-        fenceGateBlock(PoBlocks.PRIMO_FENCE_GATE.get(), planks);
-        doorBlockWithRenderType(PoBlocks.PRIMO_DOOR.get(), ResourceLocation.parse(blockTexture(PoBlocks.PRIMO_DOOR.get()) + "_bottom"), ResourceLocation.parse(blockTexture(PoBlocks.PRIMO_DOOR.get()) + "_top"), "cutout");
-        trapdoorBlockWithRenderType(PoBlocks.PRIMO_TRAPDOOR.get(), blockTexture(PoBlocks.PRIMO_TRAPDOOR.get()), true, "cutout");
-        blockWithItem(PoBlocks.PRIMO_CAP.get());
-        saplingBlock(PoBlocks.PRIMO_FUNGUS.get());
-
-        simpleBlockItems(
+                PoBlocks.STRIPPED_PRIMO_HYPHAE.get(),
+                PoBlocks.PRIMO_PLANKS.get(),
                 PoBlocks.PRIMO_STAIRS.get(),
                 PoBlocks.PRIMO_SLAB.get(),
+                PoBlocks.PRIMO_VERTICAL_SLAB.get(),
+                PoBlocks.PRIMO_BUTTON.get(),
                 PoBlocks.PRIMO_PRESSURE_PLATE.get(),
-                PoBlocks.PRIMO_FENCE_GATE.get()
-        );
-        ModelFile buttonInventory = models().withExistingParent(getBlockPath(PoBlocks.PRIMO_BUTTON.get()) + "_inventory", mcLoc("block/button_inventory"))
+                PoBlocks.PRIMO_FENCE.get(),
+                PoBlocks.PRIMO_FENCE_GATE.get(),
+                PoBlocks.PRIMO_DOOR.get(),
+                PoBlocks.PRIMO_TRAPDOOR.get(),
+                PoBlocks.PRIMO_CAP.get(),
+                PoBlocks.PRIMO_FUNGUS.get(),
+                null
+        ), this::primoFungusModel);
+
+        blockWithTranslucentRenderType(PoBlocks.GLOW_PRIMO_CAP.get());
+        glowPrimoFungusModel(PoBlocks.GLOW_PRIMO_FUNGUS.get(), PoBlocks.GLOW_PRIMO_CAP.get());
+    }
+
+    private void registerWoodSet(WoodSetData set, Consumer<SaplingBlock> plantGenerator) {
+        logBlock(set.log());
+        logBlock(set.strippedLog());
+        axisBlock(set.wood(), blockTexture(set.log()), blockTexture(set.log()));
+        axisBlock(set.strippedWood(), blockTexture(set.strippedLog()), blockTexture(set.strippedLog()));
+        simpleBlockItems(set.log(), set.strippedLog(), set.wood(), set.strippedWood());
+
+        ResourceLocation planks = blockTexture(set.planks());
+        blockWithItem(set.planks());
+        stairsBlock(set.stairs(), planks);
+        slabBlock(set.slab(), planks, planks);
+        verticalSlabBlock(set.verticalSlab(), planks);
+        buttonBlock(set.button(), planks);
+        pressurePlateBlock(set.pressurePlate(), planks);
+        fenceBlock(set.fence(), planks);
+        fenceGateBlock(set.fenceGate(), planks);
+        doorBlockWithRenderType(set.door(), ResourceLocation.parse(blockTexture(set.door()) + "_bottom"), ResourceLocation.parse(blockTexture(set.door()) + "_top"), "cutout");
+        trapdoorBlockWithRenderType(set.trapdoor(), blockTexture(set.trapdoor()), true, "cutout");
+        blockWithItem(set.extraBlock());
+        plantGenerator.accept(set.plant());
+        if (set.pottedPlant() != null) {
+            simpleBlock(set.pottedPlant(), models()
+                    .withExistingParent(getBlockPath(set.pottedPlant()), mcLoc("block/flower_pot_cross"))
+                    .texture("plant", blockTexture(set.plant()))
+                    .renderType("cutout"));
+        }
+
+        simpleBlockItems(set.stairs(), set.slab(), set.pressurePlate(), set.fenceGate());
+        ModelFile buttonInventory = models().withExistingParent(getBlockPath(set.button()) + "_inventory", mcLoc("block/button_inventory"))
                 .texture("texture", planks);
-        simpleBlockItem(PoBlocks.PRIMO_BUTTON.get(), buttonInventory);
-        simpleBlockItem(PoBlocks.PRIMO_FENCE.get(), models().withExistingParent(getBlockPath(PoBlocks.PRIMO_FENCE.get()) + "_inventory", mcLoc("block/fence_inventory"))
+        simpleBlockItem(set.button(), buttonInventory);
+        simpleBlockItem(set.fence(), models().withExistingParent(getBlockPath(set.fence()) + "_inventory", mcLoc("block/fence_inventory"))
                 .texture("texture", planks));
-        generatedItem(PoBlocks.PRIMO_DOOR.get(), "item");
-        simpleBlockItem(PoBlocks.PRIMO_TRAPDOOR.get(), blockModel(PoBlocks.PRIMO_TRAPDOOR.get(), "_bottom"));
+        generatedItem(set.door(), "item");
+        simpleBlockItem(set.trapdoor(), blockModel(set.trapdoor(), "_bottom"));
+    }
+
+    private void primoFungusModel(SaplingBlock fungus) {
+        ModelFile model = models()
+                .withExistingParent(getBlockPath(fungus), modLoc("block/mushroom"))
+                .texture("all", modLoc("block/mushroom/" + getBlockPath(fungus)))
+                .texture(PARTICLE, modLoc("block/" + getBlockPath(PoBlocks.PRIMO_PLANKS.get())));
+        simpleBlock(fungus, model);
+        generatedItem(fungus, "item");
+    }
+
+    private void glowPrimoFungusModel(SaplingBlock fungus, Block block) {
+        String path = getBlockPath(fungus);
+        ResourceLocation texture = modLoc("block/mushroom/" + path);
+        ResourceLocation particle = modLoc("block/" + getBlockPath(block));
+
+        ModelFile base = models().withExistingParent(path + "_base", mcLoc("block/block"))
+                .texture("all", texture)
+                .texture(PARTICLE, particle)
+                .element()
+                .from(5, 0, 5).to(11, 8, 11)
+                .face(Direction.NORTH).uvs(6, 9, 9, 13).texture("#all").end()
+                .face(Direction.EAST).uvs(6, 9, 9, 13).texture("#all").end()
+                .face(Direction.SOUTH).uvs(6, 9, 9, 13).texture("#all").end()
+                .face(Direction.WEST).uvs(6, 9, 9, 13).texture("#all").end()
+                .face(Direction.DOWN).uvs(9, 6, 6, 9).texture("#all").end()
+                .end();
+
+        ModelFile top = models().withExistingParent(path + "_top", mcLoc("block/block"))
+                .texture("all", texture)
+                .texture(PARTICLE, particle)
+                .renderType("translucent")
+                .element()
+                .from(2, 8, 2).to(14, 14, 14)
+                .face(Direction.NORTH).uvs(6, 0, 12, 3).texture("#all").end()
+                .face(Direction.EAST).uvs(6, 3, 12, 6).texture("#all").end()
+                .face(Direction.SOUTH).uvs(6, 0, 12, 3).texture("#all").end()
+                .face(Direction.WEST).uvs(6, 3, 12, 6).texture("#all").end()
+                .face(Direction.UP).uvs(6, 6, 0, 0).texture("#all").end()
+                .face(Direction.DOWN).uvs(6, 6, 0, 12).texture("#all").end()
+                .end();
+
+        getMultipartBuilder(fungus)
+                .part().modelFile(base).addModel().end()
+                .part().modelFile(top).addModel().end();
+        generatedItem(fungus, "item");
     }
 
     private void verticalSlabBlock(VerticalSlabBlock block, ResourceLocation texture) {
@@ -1019,6 +1064,27 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
             case WEST -> 270;
             default -> 0;
         };
+    }
+
+    private record WoodSetData(
+            LogBlock log,
+            LogBlock strippedLog,
+            LogBlock wood,
+            LogBlock strippedWood,
+            Block planks,
+            StairBlock stairs,
+            SlabBlock slab,
+            VerticalSlabBlock verticalSlab,
+            ButtonBlock button,
+            PressurePlateBlock pressurePlate,
+            FenceBlock fence,
+            FenceGateBlock fenceGate,
+            DoorBlock door,
+            TrapDoorBlock trapdoor,
+            Block extraBlock,
+            SaplingBlock plant,
+            FlowerPotBlock pottedPlant
+    ) {
     }
 
     private record MultifaceFace(BooleanProperty property, int rotationX, int rotationY) {

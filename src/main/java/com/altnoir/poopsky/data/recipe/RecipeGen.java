@@ -531,6 +531,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
 
         offerCompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, Blocks.MOSSY_COBBLESTONE, PoItems.SPALL);
         create1x2ShapelessFrom(recipeOutput, Blocks.GRASS_BLOCK, Blocks.DIRT, Blocks.MOSS_BLOCK);
+        create1x2ShapelessFrom(recipeOutput, Blocks.MYCELIUM, Blocks.DIRT, PoBlocks.MYCELIUM_BLOCK.get());
 
         create1x2ShapelessFrom(recipeOutput, Blocks.DIORITE, Blocks.COBBLESTONE, Blocks.CLAY, 2);
         create1x2ShapelessFrom(recipeOutput, Blocks.DIRT, Blocks.MUD, PoItems.POOP.get());
@@ -726,6 +727,14 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         AnalPressingRecipeBuilder.analPressing(Blocks.COAL_BLOCK, Blocks.WITHER_SKELETON_SKULL)
                 .replaceTarget(Blocks.SKELETON_SKULL)
                 .unlockedBy(getItemName(Blocks.COAL_BLOCK), has(Blocks.WITHER_SKELETON_SKULL))
+                .save(recipeOutput);
+        AnalPressingRecipeBuilder.analPressing(Blocks.MOSS_BLOCK, Blocks.GRASS_BLOCK)
+                .replaceTarget(Blocks.DIRT)
+                .unlockedBy(getItemName(Blocks.MOSS_BLOCK), has(Blocks.MOSS_BLOCK))
+                .save(recipeOutput);
+        AnalPressingRecipeBuilder.analPressing(PoBlocks.MYCELIUM_BLOCK, Blocks.MYCELIUM)
+                .replaceTarget(Blocks.DIRT)
+                .unlockedBy(getItemName(Blocks.MOSS_BLOCK), has(Blocks.MOSS_BLOCK))
                 .save(recipeOutput);
     }
 

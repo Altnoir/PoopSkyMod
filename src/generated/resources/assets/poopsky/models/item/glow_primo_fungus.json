@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "poopsky:item/primo_fungus"
+    "layer0": "poopsky:item/glow_primo_fungus"
   }
 }

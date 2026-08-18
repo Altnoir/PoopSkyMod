@@ -466,8 +466,11 @@ public class PoBlocks {
             props -> new ParticleLeavesBlock(0xF0DB3E, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
                     .mapColor(MapColor.COLOR_YELLOW)),
             (loot, block) -> loot.add(block, createGinkgoLeavesDrops(loot, block)));
-    public static final BlockEntry<LeavesBlock> PRIMO_CAP = registerBlock("primo_cap", 64,
-            props -> new LeavesBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_YELLOW).strength(1.0F).sound(SoundType.WART_BLOCK)));
+    public static final BlockEntry<Block> PRIMO_CAP = registerBlock("primo_cap", 64,
+            props -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_YELLOW).strength(1.0F).sound(SoundType.WART_BLOCK)));
+    public static final BlockEntry<HalfTransparentBlock> GLOW_PRIMO_CAP = registerBlock("glow_primo_cap", 64,
+            props -> new HalfTransparentBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLUE).strength(1.0F).sound(SoundType.WART_BLOCK)
+                    .noOcclusion().lightLevel(state -> 12)));
 
     public static final BlockEntry<PoopTreeBlock> POOP_SAPLING = registerBlock("poop_sapling", 88,
             props -> new PoopTreeBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN)
@@ -487,12 +490,17 @@ public class PoBlocks {
                     .sound(SoundType.GRASS)
                     .offsetType(BlockBehaviour.OffsetType.XZ)
                     .pushReaction(PushReaction.DESTROY)));
-    public static final BlockEntry<SaplingBlock> PRIMO_FUNGUS = registerBlock("primo_fungus", 64,
-            props -> new SaplingBlock(PoTreeGrower.PRIMO, BlockBehaviour.Properties.of()
+    public static final BlockEntry<PrimoFungusBlock> PRIMO_FUNGUS = registerBlock("primo_fungus", 64,
+            props -> new PrimoFungusBlock(PoTreeGrower.PRIMO, BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_ORANGE)
-                    .noCollission()
                     .instabreak()
-                    .randomTicks()
+                    .sound(SoundType.FUNGUS)
+                    .pushReaction(PushReaction.DESTROY)));
+    public static final BlockEntry<PrimoFungusBlock> GLOW_PRIMO_FUNGUS = registerBlock("glow_primo_fungus", 64,
+            props -> new PrimoFungusBlock(PoTreeGrower.PRIMO, BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_ORANGE)
+                    .instabreak()
+                    .lightLevel(state -> 7)
                     .sound(SoundType.FUNGUS)
                     .pushReaction(PushReaction.DESTROY)));
 
@@ -514,24 +522,24 @@ public class PoBlocks {
                     .noOcclusion()
                     .sound(SoundType.AMETHYST_CLUSTER)
                     .strength(1.5F)
-                    .lightLevel(p_152632_ -> 5)
+                    .lightLevel(state -> 5)
                     .randomTicks()
                     .pushReaction(PushReaction.DESTROY)),
             (loot, block) -> loot.add(block, createSaltpeterClusterDrop(loot, block)));
     public static final BlockEntry<SaltpeterClusterBlock> LARGE_SALTPETER_BUD = registerBlock("large_saltpeter_bud",
             props -> new SaltpeterClusterBlock(5.0F, 3.0F, BlockBehaviour.Properties.ofFullCopy(SALTPETER_CLUSTER.get())
                     .sound(SoundType.MEDIUM_AMETHYST_BUD)
-                    .lightLevel(p_152629_ -> 4)),
+                    .lightLevel(state -> 4)),
             RegistrateBlockLootTables::dropWhenSilkTouch);
     public static final BlockEntry<SaltpeterClusterBlock> MEDIUM_SALTPETER_BUD = registerBlock("medium_saltpeter_bud",
             props -> new SaltpeterClusterBlock(4.0F, 3.0F, BlockBehaviour.Properties.ofFullCopy(SALTPETER_CLUSTER.get())
                     .sound(SoundType.LARGE_AMETHYST_BUD)
-                    .lightLevel(p_152617_ -> 2)),
+                    .lightLevel(state -> 2)),
             RegistrateBlockLootTables::dropWhenSilkTouch);
     public static final BlockEntry<SaltpeterClusterBlock> SMALL_SALTPETER_BUD = registerBlock("small_saltpeter_bud",
             props -> new SaltpeterClusterBlock(3.0F, 4.0F, BlockBehaviour.Properties.ofFullCopy(SALTPETER_CLUSTER.get())
                     .sound(SoundType.SMALL_AMETHYST_BUD)
-                    .lightLevel(p_187409_ -> 1)),
+                    .lightLevel(state -> 1)),
             RegistrateBlockLootTables::dropWhenSilkTouch);
 
     public static final BlockEntry<GachaBlock> GACHA_MACHINE = registerBlock("gacha_machine", 64,

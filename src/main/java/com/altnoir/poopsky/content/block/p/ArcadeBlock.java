@@ -10,7 +10,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -152,7 +151,7 @@ public class ArcadeBlock extends Block implements EntityBlock {
         if (arcade == null) {
             return InteractionResult.PASS;
         }
-        if (!arcade.isController(player) || handleRewardOrEject(level, player, arcade)) {
+        if (arcade.isController(player) || handleRewardOrEject(level, player, arcade)) {
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
         startArcadeControl(level, player, arcade);
@@ -168,7 +167,7 @@ public class ArcadeBlock extends Block implements EntityBlock {
         if (arcade == null) {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
-        if (!arcade.isController(player) || handleRewardOrEject(level, player, arcade)) {
+        if (arcade.isController(player) || handleRewardOrEject(level, player, arcade)) {
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
         startArcadeControl(level, player, arcade);

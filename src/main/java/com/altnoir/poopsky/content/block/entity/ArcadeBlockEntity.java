@@ -229,9 +229,9 @@ public class ArcadeBlockEntity extends BlockEntity {
 
     public boolean isController(Player player) {
         if (activePlayer == null || activePlayer.equals(player.getUUID())) {
-            return true;
+            return false;
         }
-        return player instanceof ServerPlayer serverPlayer && canControl(serverPlayer);
+        return !(player instanceof ServerPlayer serverPlayer) || !canControl(serverPlayer);
     }
 
     private void initializeServer() {
@@ -275,7 +275,7 @@ public class ArcadeBlockEntity extends BlockEntity {
     }
 
     public boolean claimReward(ServerPlayer player) {
-        if (!(level instanceof ServerLevel) || rewardCount <= 0 || !isController(player)) {
+        if (!(level instanceof ServerLevel) || rewardCount <= 0 || isController(player)) {
             return false;
         }
 
