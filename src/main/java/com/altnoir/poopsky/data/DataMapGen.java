@@ -24,7 +24,11 @@ public final class DataMapGen {
     private static void generate(RegistrateDataMapProvider provider) {
         provider.builder(NeoForgeDataMaps.COMPOSTABLES)
                 .add(PoBlocks.GINKGO_SAPLING.getId(), new Compostable(0.3F), false)
-                .add(PoBlocks.GINKGO_LEAVES.getId(), new Compostable(0.3F), false);
+                .add(PoBlocks.GINKGO_LEAVES.getId(), new Compostable(0.3F), false)
+                .add(PoBlocks.PRIMO_FUNGUS.getId(), new Compostable(0.3F), false)
+                .add(PoBlocks.GLOW_PRIMO_FUNGUS.getId(), new Compostable(0.3F), false)
+                .add(PoBlocks.PRIMO_CAP.getId(), new Compostable(1.0F), false)
+                .add(PoBlocks.GLOW_PRIMO_CAP.getId(), new Compostable(1.0F), false);
 
         provider.builder(NeoForgeDataMaps.STRIPPABLES)
                 .add(PoBlocks.GINKGO_LOG.getId(), new Strippable(PoBlocks.STRIPPED_GINKGO_LOG.get()), false)

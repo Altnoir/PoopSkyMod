@@ -5,6 +5,18 @@
     },
     "poopsky:ginkgo_sapling": {
       "chance": 0.3
+    },
+    "poopsky:glow_primo_cap": {
+      "chance": 1.0
+    },
+    "poopsky:glow_primo_fungus": {
+      "chance": 0.3
+    },
+    "poopsky:primo_cap": {
+      "chance": 1.0
+    },
+    "poopsky:primo_fungus": {
+      "chance": 0.3
     }
   }
 }
