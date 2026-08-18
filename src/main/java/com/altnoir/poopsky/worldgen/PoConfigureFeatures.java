@@ -191,7 +191,6 @@ public class PoConfigureFeatures {
                 Blocks.SMALL_DRIPLEAF,
                 PoBlocks.PRIMO_FUNGUS.get(),
                 PoBlocks.GLOW_PRIMO_FUNGUS.get(),
-                PoBlocks.MYCELIUM_MAT.get(),
                 PoBlocks.MUSHROOM_BED.get()
         );
         register(context, PRIMO_FUNGUS, PoFeatures.HUGE_PRIMO_FUNGUS.get(), new PoHugeFungusConfiguration(

@@ -68,8 +68,8 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         buildCompooperRecipes(recipeOutput);
         buildPopExplosionRecipes(recipeOutput);
         buildAnalPressingRecipes(recipeOutput);
-        buildBreedingChestRecipes(recipeOutput);
         buildFlyBarrelRecipes(recipeOutput);
+        buildBreedingChestRecipes(recipeOutput);
 
         RecipeOutput fd = recipeOutput.withConditions(modLoaded(PoMods.FARMERSDELIGHT.id()));
         FarmersDelightRecipeGen.buildRecipes(fd);
@@ -901,7 +901,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 FlyBarrelEntry.of(FlyTypes.CYAN.get(), Items.PRISMARINE_SHARD),
                 FlyBarrelEntry.of(FlyTypes.LIGHT_BLUE.get(), Items.PRISMARINE_CRYSTALS),
                 FlyBarrelEntry.of(FlyTypes.BLUE.get(), Items.LAPIS_LAZULI),
-                FlyBarrelEntry.of(FlyTypes.PURPLE.get(), Items.AMETHYST_SHARD),
+                FlyBarrelEntry.of(FlyTypes.PURPLE.get(), Items.SHULKER_SHELL),
                 FlyBarrelEntry.of(FlyTypes.MAGENTA.get(), Items.CHORUS_FRUIT),
                 FlyBarrelEntry.of(FlyTypes.PINK.get(), Items.PINK_PETALS),
                 FlyBarrelEntry.of(FlyTypes.IRON.get(), Items.RAW_IRON),
