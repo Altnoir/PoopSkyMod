@@ -160,13 +160,6 @@ public final class ArcadeControlSession {
         if (PoKeyBoardInput.ARCADE_BUTTON2.matches(key, scanCode)) {
             return Button.BUTTON2;
         }
-
-        return switch (key) {
-            case GLFW.GLFW_KEY_UP -> Button.UP;
-            case GLFW.GLFW_KEY_DOWN -> Button.DOWN;
-            case GLFW.GLFW_KEY_LEFT -> Button.LEFT;
-            case GLFW.GLFW_KEY_RIGHT -> Button.RIGHT;
-            default -> null;
-        };
+        return null;
     }
 }
