@@ -12,8 +12,7 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 public class PoFeatures {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
-    public static final RegistryEntry<Feature<?>, Feature<PoHugeFungusConfiguration>> HUGE_PRIMO_FUNGUS =
-            registerFeature("huge_primo_fungus");
+    public static final RegistryEntry<Feature<?>, Feature<PoHugeFungusConfiguration>> HUGE_PRIMO_FUNGUS = registerFeature("huge_primo_fungus");
 
     private static RegistryEntry<Feature<?>, Feature<PoHugeFungusConfiguration>> registerFeature(String name) {
         return REGISTRATE.simple(name, Registries.FEATURE, featureSupplier());

@@ -15,6 +15,7 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.util.valueproviders.ConstantInt;
@@ -130,18 +131,82 @@ public class PoConfigureFeatures {
                 new TwoLayersFeatureSize(2, 0, 2)
         ).decorators(List.of(new BeehiveDecorator(0.05F))).build());
 
-        BlockPredicate replaceable = BlockPredicate.ONLY_IN_AIR_PREDICATE;
+        BlockPredicate blockpredicate = BlockPredicate.matchesBlocks(
+                Blocks.OAK_SAPLING,
+                Blocks.SPRUCE_SAPLING,
+                Blocks.BIRCH_SAPLING,
+                Blocks.JUNGLE_SAPLING,
+                Blocks.ACACIA_SAPLING,
+                Blocks.CHERRY_SAPLING,
+                Blocks.DARK_OAK_SAPLING,
+                Blocks.MANGROVE_PROPAGULE,
+                Blocks.DANDELION,
+                Blocks.TORCHFLOWER,
+                Blocks.POPPY,
+                Blocks.BLUE_ORCHID,
+                Blocks.ALLIUM,
+                Blocks.AZURE_BLUET,
+                Blocks.RED_TULIP,
+                Blocks.ORANGE_TULIP,
+                Blocks.WHITE_TULIP,
+                Blocks.PINK_TULIP,
+                Blocks.OXEYE_DAISY,
+                Blocks.CORNFLOWER,
+                Blocks.WITHER_ROSE,
+                Blocks.LILY_OF_THE_VALLEY,
+                Blocks.BROWN_MUSHROOM,
+                Blocks.RED_MUSHROOM,
+                Blocks.WHEAT,
+                Blocks.SUGAR_CANE,
+                Blocks.ATTACHED_PUMPKIN_STEM,
+                Blocks.ATTACHED_MELON_STEM,
+                Blocks.PUMPKIN_STEM,
+                Blocks.MELON_STEM,
+                Blocks.LILY_PAD,
+                Blocks.NETHER_WART,
+                Blocks.COCOA,
+                Blocks.CARROTS,
+                Blocks.POTATOES,
+                Blocks.CHORUS_PLANT,
+                Blocks.CHORUS_FLOWER,
+                Blocks.TORCHFLOWER_CROP,
+                Blocks.PITCHER_CROP,
+                Blocks.BEETROOTS,
+                Blocks.SWEET_BERRY_BUSH,
+                Blocks.WARPED_FUNGUS,
+                Blocks.CRIMSON_FUNGUS,
+                Blocks.WEEPING_VINES,
+                Blocks.WEEPING_VINES_PLANT,
+                Blocks.TWISTING_VINES,
+                Blocks.TWISTING_VINES_PLANT,
+                Blocks.CAVE_VINES,
+                Blocks.CAVE_VINES_PLANT,
+                Blocks.SPORE_BLOSSOM,
+                Blocks.AZALEA,
+                Blocks.FLOWERING_AZALEA,
+                Blocks.MOSS_CARPET,
+                Blocks.PINK_PETALS,
+                Blocks.BIG_DRIPLEAF,
+                Blocks.BIG_DRIPLEAF_STEM,
+                Blocks.SMALL_DRIPLEAF,
+                PoBlocks.PRIMO_FUNGUS.get(),
+                PoBlocks.GLOW_PRIMO_FUNGUS.get(),
+                PoBlocks.MYCELIUM_MAT.get(),
+                PoBlocks.MUSHROOM_BED.get()
+        );
         register(context, PRIMO_FUNGUS, PoFeatures.HUGE_PRIMO_FUNGUS.get(), new PoHugeFungusConfiguration(
-                PoBlocks.MYCELIUM_BLOCK.get().defaultBlockState(),
+                BlockTags.DIRT,
                 PoBlocks.PRIMO_STEM.get().defaultBlockState(),
                 PoBlocks.PRIMO_CAP.get().defaultBlockState(),
-                Optional.empty(), replaceable
+                Optional.of(Blocks.BUDDING_AMETHYST.defaultBlockState()),
+                blockpredicate
         ));
         register(context, GLOW_PRIMO_FUNGUS, PoFeatures.HUGE_PRIMO_FUNGUS.get(), new PoHugeFungusConfiguration(
-                PoBlocks.MYCELIUM_BLOCK.get().defaultBlockState(),
+                BlockTags.DIRT,
                 PoBlocks.PRIMO_STEM.get().defaultBlockState(),
                 PoBlocks.GLOW_PRIMO_CAP.get().defaultBlockState(),
-                Optional.empty(), replaceable
+                Optional.empty(),
+                blockpredicate
         ));
 
         register(context, POOP_VEGETATION, Feature.SIMPLE_BLOCK,

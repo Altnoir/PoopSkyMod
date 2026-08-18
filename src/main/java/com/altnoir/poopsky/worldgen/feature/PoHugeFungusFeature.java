@@ -2,7 +2,6 @@ package com.altnoir.poopsky.worldgen.feature;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelAccessor;
@@ -13,7 +12,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.WeepingVinesFeature;
 
 public class PoHugeFungusFeature extends Feature<PoHugeFungusConfiguration> {
     public PoHugeFungusFeature(Codec<PoHugeFungusConfiguration> codec) {
@@ -26,9 +24,8 @@ public class PoHugeFungusFeature extends Feature<PoHugeFungusConfiguration> {
         BlockPos origin = context.origin();
         RandomSource random = context.random();
         PoHugeFungusConfiguration config = context.config();
-        Block allowedBaseBlock = config.validBaseState().getBlock();
         BlockPos newOrigin = null;
-        if (level.getBlockState(origin.below()).is(allowedBaseBlock)) {
+        if (level.getBlockState(origin.below()).is(config.validBaseTag())) {
             newOrigin = origin;
         }
 
@@ -41,7 +38,7 @@ public class PoHugeFungusFeature extends Feature<PoHugeFungusConfiguration> {
             totalHeight *= 2;
         }
 
-        level.setBlock(origin, Blocks.AIR.defaultBlockState(), 260);
+        level.setBlock(origin, Blocks.AIR.defaultBlockState(), Block.UPDATE_INVISIBLE);
         this.placeStem(level, config, newOrigin, totalHeight);
         this.placeHat(level, random, config, newOrigin, totalHeight);
         return true;
@@ -87,7 +84,6 @@ public class PoHugeFungusFeature extends Feature<PoHugeFungusConfiguration> {
             int totalHeight
     ) {
         BlockPos.MutableBlockPos blockPos = new BlockPos.MutableBlockPos();
-        boolean placeVines = config.hatState().is(Blocks.NETHER_WART_BLOCK);
         int hatHeight = Math.min(random.nextInt(1 + totalHeight / 3) + 5, totalHeight);
         int hatStartY = totalHeight - hatHeight;
 
@@ -113,7 +109,7 @@ public class PoHugeFungusFeature extends Feature<PoHugeFungusConfiguration> {
 
                         if (isHatBottom) {
                             if (!inside) {
-                                this.placeHatDropBlock(level, random, blockPos, config.hatState(), placeVines);
+                                this.placeHatDropBlock(level, random, blockPos, config.hatState());
                             }
                         } else if (inside) {
                             this.placeHatBlock(
@@ -122,8 +118,7 @@ public class PoHugeFungusFeature extends Feature<PoHugeFungusConfiguration> {
                                     config,
                                     blockPos,
                                     0.1F,
-                                    0.2F,
-                                    placeVines ? 0.1F : 0.0F
+                                    0.2F
                             );
                         } else if (corner) {
                             this.placeHatBlock(
@@ -132,8 +127,7 @@ public class PoHugeFungusFeature extends Feature<PoHugeFungusConfiguration> {
                                     config,
                                     blockPos,
                                     0.01F,
-                                    0.7F,
-                                    placeVines ? 0.083F : 0.0F
+                                    0.7F
                             );
                         } else {
                             this.placeHatBlock(
@@ -142,8 +136,7 @@ public class PoHugeFungusFeature extends Feature<PoHugeFungusConfiguration> {
                                     config,
                                     blockPos,
                                     5.0E-4F,
-                                    0.98F,
-                                    placeVines ? 0.07F : 0.0F
+                                    0.98F
                             );
                         }
                     }
@@ -158,38 +151,20 @@ public class PoHugeFungusFeature extends Feature<PoHugeFungusConfiguration> {
             PoHugeFungusConfiguration config,
             BlockPos.MutableBlockPos blockPos,
             float decorBlockProbability,
-            float hatBlockProbability,
-            float vinesProbability
+            float hatBlockProbability
     ) {
         if (config.decorState().isPresent() && random.nextFloat() < decorBlockProbability) {
             this.setBlock(level, blockPos, config.decorState().get());
         } else if (random.nextFloat() < hatBlockProbability) {
             this.setBlock(level, blockPos, config.hatState());
-            if (random.nextFloat() < vinesProbability) {
-                tryPlaceWeepingVines(blockPos, level, random);
-            }
         }
     }
 
-    private void placeHatDropBlock(LevelAccessor level, RandomSource random, BlockPos blockPos, BlockState hatState, boolean placeVines) {
+    private void placeHatDropBlock(LevelAccessor level, RandomSource random, BlockPos blockPos, BlockState hatState) {
         if (level.getBlockState(blockPos.below()).is(hatState.getBlock())) {
             this.setBlock(level, blockPos, hatState);
         } else if (random.nextFloat() < 0.15) {
             this.setBlock(level, blockPos, hatState);
-            if (placeVines && random.nextInt(11) == 0) {
-                tryPlaceWeepingVines(blockPos, level, random);
-            }
-        }
-    }
-
-    private static void tryPlaceWeepingVines(BlockPos hatBlockPos, LevelAccessor level, RandomSource random) {
-        BlockPos.MutableBlockPos placePos = hatBlockPos.mutable().move(Direction.DOWN);
-        if (level.isEmptyBlock(placePos)) {
-            int goalVineHeight = Mth.nextInt(random, 1, 5);
-            if (random.nextInt(7) == 0) {
-                goalVineHeight *= 2;
-            }
-            WeepingVinesFeature.placeWeepingVinesColumn(level, random, placePos, goalVineHeight, 23, 25);
         }
     }
 }
