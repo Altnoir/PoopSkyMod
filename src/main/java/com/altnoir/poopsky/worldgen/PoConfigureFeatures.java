@@ -4,6 +4,7 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.impl.util.PoFeatureUtil;
 import com.altnoir.poopsky.init.PoBlocks;
+import com.altnoir.poopsky.worldgen.feature.PoHugeFungusConfiguration;
 import com.altnoir.poopsky.worldgen.foliage.RhombusFoliagePlacer;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.Direction;
@@ -24,6 +25,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.PinkPetalsBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
@@ -42,6 +44,7 @@ import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlac
 import net.minecraft.world.level.levelgen.placement.CaveSurface;
 
 import java.util.List;
+import java.util.Optional;
 
 public class PoConfigureFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> POOP_TREE = resourceKey("poop_tree");
@@ -49,6 +52,9 @@ public class PoConfigureFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> GINKGO_TREE = resourceKey("ginkgo_tree");
     public static final ResourceKey<ConfiguredFeature<?, ?>> MEGA_GINKGO_TREE = resourceKey("mega_ginkgo_tree");
     public static final ResourceKey<ConfiguredFeature<?, ?>> GINKGO_BEE_TREE = resourceKey("ginkgo_bee_tree");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> PRIMO_FUNGUS = resourceKey("primo_fungus");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> GLOW_PRIMO_FUNGUS = resourceKey("glow_primo_fungus");
+
     public static final ResourceKey<ConfiguredFeature<?, ?>> POOP_VEGETATION = resourceKey("poop_vegetation");
     public static final ResourceKey<ConfiguredFeature<?, ?>> POOP_PATCH_BONEMEAL = resourceKey("poop_patch_bonemeal");
     public static final ResourceKey<ConfiguredFeature<?, ?>> CHILI_POOP_VEGETATION = resourceKey("chili_poop_vegetation");
@@ -123,6 +129,20 @@ public class PoConfigureFeatures {
                 new RhombusFoliagePlacer(ConstantInt.of(2), ConstantInt.of(1), UniformInt.of(7, 8)),
                 new TwoLayersFeatureSize(2, 0, 2)
         ).decorators(List.of(new BeehiveDecorator(0.05F))).build());
+
+        BlockPredicate replaceable = BlockPredicate.ONLY_IN_AIR_PREDICATE;
+        register(context, PRIMO_FUNGUS, PoFeatures.HUGE_PRIMO_FUNGUS.get(), new PoHugeFungusConfiguration(
+                PoBlocks.MYCELIUM_BLOCK.get().defaultBlockState(),
+                PoBlocks.PRIMO_STEM.get().defaultBlockState(),
+                PoBlocks.PRIMO_CAP.get().defaultBlockState(),
+                Optional.empty(), replaceable
+        ));
+        register(context, GLOW_PRIMO_FUNGUS, PoFeatures.HUGE_PRIMO_FUNGUS.get(), new PoHugeFungusConfiguration(
+                PoBlocks.MYCELIUM_BLOCK.get().defaultBlockState(),
+                PoBlocks.PRIMO_STEM.get().defaultBlockState(),
+                PoBlocks.GLOW_PRIMO_CAP.get().defaultBlockState(),
+                Optional.empty(), replaceable
+        ));
 
         register(context, POOP_VEGETATION, Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(

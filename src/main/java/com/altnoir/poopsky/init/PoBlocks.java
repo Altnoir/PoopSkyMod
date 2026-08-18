@@ -410,14 +410,14 @@ public class PoBlocks {
     public static final BlockEntry<TrapDoorBlock> GINKGO_TRAPDOOR = registerDecoMaterialBlock("ginkgo_trapdoor", 64,
             props -> new TrapDoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_TRAPDOOR).mapColor(MapColor.COLOR_YELLOW)));
 
-    public static final BlockEntry<LogBlock> PRIMO_STEM = registerDecoMaterialBlock("primo_stem", 64,
-            props -> new LogBlock(logProperties(MapColor.COLOR_ORANGE, SoundType.STEM)));
-    public static final BlockEntry<LogBlock> PRIMO_HYPHAE = registerDecoMaterialBlock("primo_hyphae", 64,
-            props -> new LogBlock(logProperties(MapColor.COLOR_ORANGE, SoundType.STEM)));
-    public static final BlockEntry<LogBlock> STRIPPED_PRIMO_STEM = registerDecoMaterialBlock("stripped_primo_stem", 64,
-            props -> new LogBlock(logProperties(MapColor.COLOR_ORANGE, SoundType.STEM)));
-    public static final BlockEntry<LogBlock> STRIPPED_PRIMO_HYPHAE = registerDecoMaterialBlock("stripped_primo_hyphae", 64,
-            props -> new LogBlock(logProperties(MapColor.COLOR_ORANGE, SoundType.STEM)));
+    public static final BlockEntry<RotatedPillarBlock> PRIMO_STEM = registerDecoMaterialBlock("primo_stem", 64,
+            props -> new RotatedPillarBlock(logProperties(MapColor.COLOR_ORANGE, SoundType.STEM)));
+    public static final BlockEntry<RotatedPillarBlock> PRIMO_HYPHAE = registerDecoMaterialBlock("primo_hyphae", 64,
+            props -> new RotatedPillarBlock(logProperties(MapColor.COLOR_ORANGE, SoundType.STEM)));
+    public static final BlockEntry<RotatedPillarBlock> STRIPPED_PRIMO_STEM = registerDecoMaterialBlock("stripped_primo_stem", 64,
+            props -> new RotatedPillarBlock(logProperties(MapColor.COLOR_ORANGE, SoundType.STEM)));
+    public static final BlockEntry<RotatedPillarBlock> STRIPPED_PRIMO_HYPHAE = registerDecoMaterialBlock("stripped_primo_hyphae", 64,
+            props -> new RotatedPillarBlock(logProperties(MapColor.COLOR_ORANGE, SoundType.STEM)));
     public static final BlockEntry<Block> PRIMO_PLANKS = registerDecoMaterialBlock("primo_planks", 64,
             props -> new Block(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_ORANGE)
@@ -466,10 +466,10 @@ public class PoBlocks {
             props -> new ParticleLeavesBlock(0xF0DB3E, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
                     .mapColor(MapColor.COLOR_YELLOW)),
             (loot, block) -> loot.add(block, createGinkgoLeavesDrops(loot, block)));
-    public static final BlockEntry<Block> PRIMO_CAP = registerBlock("primo_cap", 64,
-            props -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_YELLOW).strength(1.0F).sound(SoundType.WART_BLOCK)));
-    public static final BlockEntry<HalfTransparentBlock> GLOW_PRIMO_CAP = registerBlock("glow_primo_cap", 64,
-            props -> new HalfTransparentBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLUE).strength(1.0F).sound(SoundType.WART_BLOCK)
+    public static final BlockEntry<PrimoCapBlock> PRIMO_CAP = registerBlock("primo_cap", 64,
+            props -> new PrimoCapBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_YELLOW).strength(1.0F).sound(SoundType.WART_BLOCK)));
+    public static final BlockEntry<GlowPrimoCapBlock> GLOW_PRIMO_CAP = registerBlock("glow_primo_cap", 64,
+            props -> new GlowPrimoCapBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLUE).strength(1.0F).sound(SoundType.WART_BLOCK)
                     .noOcclusion().lightLevel(state -> 12)));
 
     public static final BlockEntry<PoopTreeBlock> POOP_SAPLING = registerBlock("poop_sapling", 88,
@@ -497,7 +497,7 @@ public class PoBlocks {
                     .sound(SoundType.FUNGUS)
                     .pushReaction(PushReaction.DESTROY)));
     public static final BlockEntry<PrimoFungusBlock> GLOW_PRIMO_FUNGUS = registerBlock("glow_primo_fungus", 64,
-            props -> new PrimoFungusBlock(PoTreeGrower.PRIMO, BlockBehaviour.Properties.of()
+            props -> new PrimoFungusBlock(PoTreeGrower.GLOW_PRIMO, BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_ORANGE)
                     .instabreak()
                     .lightLevel(state -> 7)

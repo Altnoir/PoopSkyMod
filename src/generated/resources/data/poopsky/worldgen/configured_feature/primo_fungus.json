@@ -1,0 +1,21 @@
+{
+  "type": "poopsky:huge_primo_fungus",
+  "config": {
+    "hat_state": {
+      "Name": "poopsky:primo_cap"
+    },
+    "replaceable_blocks": {
+      "type": "minecraft:matching_blocks",
+      "blocks": "minecraft:air"
+    },
+    "stem_state": {
+      "Name": "poopsky:primo_stem",
+      "Properties": {
+        "axis": "y"
+      }
+    },
+    "valid_base_block": {
+      "Name": "poopsky:mycelium_block"
+    }
+  }
+}

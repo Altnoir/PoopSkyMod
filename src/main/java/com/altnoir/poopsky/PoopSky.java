@@ -17,6 +17,7 @@ import com.altnoir.poopsky.impl.event.PoModEvents;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.init.*;
 import com.altnoir.poopsky.worldgen.PoChunkGenerators;
+import com.altnoir.poopsky.worldgen.PoFeatures;
 import com.altnoir.poopsky.worldgen.PoStructures;
 import com.altnoir.poopsky.worldgen.foliage.PoFoliagePlacerTypes;
 import com.mojang.logging.LogUtils;
@@ -98,6 +99,7 @@ public class PoopSky {
         LangGen.register();
 
         PoFoliagePlacerTypes.register();
+        PoFeatures.register();
         PoStructures.register();
         PoChunkGenerators.register();
 

@@ -1067,10 +1067,10 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
     }
 
     private record WoodSetData(
-            LogBlock log,
-            LogBlock strippedLog,
-            LogBlock wood,
-            LogBlock strippedWood,
+            RotatedPillarBlock log,
+            RotatedPillarBlock strippedLog,
+            RotatedPillarBlock wood,
+            RotatedPillarBlock strippedWood,
             Block planks,
             StairBlock stairs,
             SlabBlock slab,

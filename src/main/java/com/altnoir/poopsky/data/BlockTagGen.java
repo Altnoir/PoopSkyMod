@@ -199,7 +199,11 @@ public final class BlockTagGen {
                         PoBlocks.GINKGO_LOG.get(),
                         PoBlocks.GINKGO_WOOD.get(),
                         PoBlocks.STRIPPED_GINKGO_LOG.get(),
-                        PoBlocks.STRIPPED_GINKGO_WOOD.get()
+                        PoBlocks.STRIPPED_GINKGO_WOOD.get(),
+                        PoBlocks.PRIMO_STEM.get(),
+                        PoBlocks.PRIMO_HYPHAE.get(),
+                        PoBlocks.STRIPPED_PRIMO_STEM.get(),
+                        PoBlocks.STRIPPED_PRIMO_HYPHAE.get()
                 );
         tag(Tags.Blocks.STRIPPED_LOGS)
                 .add(PoBlocks.STRIPPED_POOP_LOG.get())
@@ -209,14 +213,14 @@ public final class BlockTagGen {
                 .add(PoBlocks.STRIPPED_GINKGO_WOOD.get());
         tag(BlockTags.LOGS_THAT_BURN).addTag(PoTags.Blocks.GINKGO_LOGS);
         tag(BlockTags.PLANKS).add(PoBlocks.GINKGO_PLANKS.get());
-        tag(BlockTags.WOODEN_STAIRS).add(PoBlocks.GINKGO_STAIRS.get());
-        tag(BlockTags.WOODEN_SLABS).add(PoBlocks.GINKGO_SLAB.get());
-        tag(BlockTags.WOODEN_BUTTONS).add(PoBlocks.GINKGO_BUTTON.get());
-        tag(BlockTags.WOODEN_PRESSURE_PLATES).add(PoBlocks.GINKGO_PRESSURE_PLATE.get());
-        tag(BlockTags.WOODEN_FENCES).add(PoBlocks.GINKGO_FENCE.get());
-        tag(BlockTags.FENCE_GATES).add(PoBlocks.GINKGO_FENCE_GATE.get());
-        tag(BlockTags.WOODEN_DOORS).add(PoBlocks.GINKGO_DOOR.get());
-        tag(BlockTags.WOODEN_TRAPDOORS).add(PoBlocks.GINKGO_TRAPDOOR.get());
+        tag(BlockTags.WOODEN_STAIRS).add(PoBlocks.GINKGO_STAIRS.get(), PoBlocks.PRIMO_STAIRS.get());
+        tag(BlockTags.WOODEN_SLABS).add(PoBlocks.GINKGO_SLAB.get(), PoBlocks.PRIMO_SLAB.get());
+        tag(BlockTags.WOODEN_BUTTONS).add(PoBlocks.GINKGO_BUTTON.get(), PoBlocks.PRIMO_BUTTON.get());
+        tag(BlockTags.WOODEN_PRESSURE_PLATES).add(PoBlocks.GINKGO_PRESSURE_PLATE.get(), PoBlocks.PRIMO_PRESSURE_PLATE.get());
+        tag(BlockTags.WOODEN_FENCES).add(PoBlocks.GINKGO_FENCE.get(), PoBlocks.PRIMO_FENCE.get());
+        tag(BlockTags.FENCE_GATES).add(PoBlocks.GINKGO_FENCE_GATE.get(), PoBlocks.PRIMO_FENCE_GATE.get());
+        tag(BlockTags.WOODEN_DOORS).add(PoBlocks.GINKGO_DOOR.get(), PoBlocks.PRIMO_DOOR.get());
+        tag(BlockTags.WOODEN_TRAPDOORS).add(PoBlocks.GINKGO_TRAPDOOR.get(), PoBlocks.PRIMO_TRAPDOOR.get());
         tag(BlockTags.SAPLINGS).add(PoBlocks.GINKGO_SAPLING.get());
 
         tag(BlockTags.LEAVES)
@@ -257,6 +261,15 @@ public final class BlockTagGen {
                         PoBlocks.GINKGO_FENCE_GATE.get(),
                         PoBlocks.GINKGO_DOOR.get(),
                         PoBlocks.GINKGO_TRAPDOOR.get(),
+                        PoBlocks.PRIMO_PLANKS.get(),
+                        PoBlocks.PRIMO_STAIRS.get(),
+                        PoBlocks.PRIMO_SLAB.get(),
+                        PoBlocks.PRIMO_VERTICAL_SLAB.get(),
+                        PoBlocks.PRIMO_PRESSURE_PLATE.get(),
+                        PoBlocks.PRIMO_FENCE.get(),
+                        PoBlocks.PRIMO_FENCE_GATE.get(),
+                        PoBlocks.PRIMO_DOOR.get(),
+                        PoBlocks.PRIMO_TRAPDOOR.get(),
                         PoBlocks.GINKGO_TOILET.get()
                 );
 
@@ -314,6 +327,8 @@ public final class BlockTagGen {
                         PoBlocks.CHILI_SHIT.get(),
                         PoBlocks.GOLDEN_SHIT.get(),
                         PoBlocks.GINKGO_LEAVES.get(),
+                        PoBlocks.PRIMO_CAP.get(),
+                        PoBlocks.GLOW_PRIMO_CAP.get(),
                         PoBlocks.POOP_LEAVES.get(),
                         PoBlocks.POOP_LEAVES_GOLD.get(),
                         PoBlocks.POOP_LEAVES_IRON.get()

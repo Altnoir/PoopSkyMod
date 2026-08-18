@@ -14,6 +14,15 @@
     "poopsky:ginkgo_fence_gate",
     "poopsky:ginkgo_door",
     "poopsky:ginkgo_trapdoor",
+    "poopsky:primo_planks",
+    "poopsky:primo_stairs",
+    "poopsky:primo_slab",
+    "poopsky:primo_vertical_slab",
+    "poopsky:primo_pressure_plate",
+    "poopsky:primo_fence",
+    "poopsky:primo_fence_gate",
+    "poopsky:primo_door",
+    "poopsky:primo_trapdoor",
     "poopsky:ginkgo_toilet"
   ]
 }
