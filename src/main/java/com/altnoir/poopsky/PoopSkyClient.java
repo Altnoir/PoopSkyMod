@@ -9,10 +9,7 @@ import com.altnoir.poopsky.client.model.BakedModelEventHandler;
 import com.altnoir.poopsky.client.particle.LeavesParticle;
 import com.altnoir.poopsky.client.particle.PoopParticle;
 import com.altnoir.poopsky.client.particle.ToiletParticle;
-import com.altnoir.poopsky.client.renderer.PoGuiRenderPipelines;
-import com.altnoir.poopsky.client.renderer.TimeBellOverlay;
-import com.altnoir.poopsky.client.renderer.ToiletHighlightRenderer;
-import com.altnoir.poopsky.client.renderer.ToiletPlugItemRenderer;
+import com.altnoir.poopsky.client.renderer.*;
 import com.altnoir.poopsky.compat.jei.PSJeiRecipeCache;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
@@ -92,6 +89,8 @@ public class PoopSkyClient {
         modEventBus.addListener(ClientModEvents::registerRecipeBookCategories);
         modEventBus.addListener(ClientModEvents::registerGuiOverlays);
         modEventBus.addListener(ClientModEvents::registerClientExtensions);
+        modEventBus.addListener(ConfigureMainRenderTargetEvent.class, IntroGlyphRenderState::configureMainRenderTarget);
+        modEventBus.addListener(RegisterRenderPipelinesEvent.class, IntroGlyphRenderState::registerPipelines);
     }
 
     public static void registerGame(IEventBus modEventBus) {

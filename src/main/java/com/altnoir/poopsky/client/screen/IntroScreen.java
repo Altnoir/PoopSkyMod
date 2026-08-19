@@ -217,7 +217,11 @@ public class IntroScreen extends Screen {
     }
 
     private void drawTitleGlyphs(GuiGraphicsExtractor guiGraphics, int color) {
-        this.drawScaledText(guiGraphics, this.title, TITLE_LEFT, TITLE_TEXT_Y, this.titleLayout.scale(), color);
+        this.drawTitleGlyphs(guiGraphics, color, false);
+    }
+
+    private void drawTitleGlyphs(GuiGraphicsExtractor guiGraphics, int color, boolean mask) {
+        this.drawScaledText(guiGraphics, this.title, TITLE_LEFT, TITLE_TEXT_Y, this.titleLayout.scale(), color, mask);
     }
 
     private void drawPoopIcon(GuiGraphicsExtractor guiGraphics, float alpha) {
@@ -236,9 +240,10 @@ public class IntroScreen extends Screen {
 
     private void drawTexturedTitle(GuiGraphicsExtractor guiGraphics, float textureTime,
                                    float titleAlpha, float textureAlpha) {
+        this.drawTitleGlyphs(guiGraphics, 0xFF000000, true);
+        guiGraphics.nextStratum();
         this.drawMovingTitleTexture(guiGraphics, textureTime, textureAlpha);
         guiGraphics.nextStratum();
-        this.drawTitleGlyphs(guiGraphics, alphaColor(titleAlpha));
     }
 
     private void drawMovingTitleTexture(GuiGraphicsExtractor guiGraphics,
@@ -266,20 +271,13 @@ public class IntroScreen extends Screen {
                 Mth.ceil(maxY));
         for (float tileX = startX; tileX < maxX; tileX += TILE_SIZE) {
             for (float tileY = startY; tileY < maxY; tileY += TILE_SIZE) {
-                guiGraphics.blit(
-                        RenderPipelines.GUI_TEXTURED,
-                        SKY_TEXTURE,
-                        Mth.floor(tileX),
-                        Mth.floor(tileY),
-                        0.0F,
-                        0.0F,
-                        Mth.ceil(TILE_SIZE),
-                        Mth.ceil(TILE_SIZE),
-                        256,
-                        256,
-                        256,
-                        256,
-                        alphaColor(alpha));
+                int x0 = Mth.floor(tileX);
+                int y0 = Mth.floor(tileY);
+                int x1 = Mth.ceil(tileX + TILE_SIZE);
+                int y1 = Mth.ceil(tileY + TILE_SIZE);
+
+                guiGraphics.blit(IntroGlyphRenderState.TEXTURE_MASK, SKY_TEXTURE, x0, y0, 0.0F, 0.0F,
+                        x1 - x0, y1 - y0, 256, 256, 256, 256, alphaColor(alpha));
             }
         }
         guiGraphics.disableScissor();
@@ -308,6 +306,11 @@ public class IntroScreen extends Screen {
 
     private void drawScaledText(GuiGraphicsExtractor guiGraphics, Component text,
                                 float x, float y, float scale, int color) {
+        this.drawScaledText(guiGraphics, text, x, y, scale, color, false);
+    }
+
+    private void drawScaledText(GuiGraphicsExtractor guiGraphics, Component text,
+                                float x, float y, float scale, int color, boolean mask) {
         guiGraphics.pose().pushMatrix();
         guiGraphics.pose().translate(x, y);
         guiGraphics.pose().scale(scale, scale);
@@ -318,7 +321,7 @@ public class IntroScreen extends Screen {
             BakedGlyph glyph = glyphSource.getGlyph(codePoint);
             TextRenderable renderable = glyph.createGlyph(cursor, 0.0F, color, 0, Style.EMPTY, 0.0F, 0.0F);
             guiGraphics.guiRenderState.addGlyphToCurrentLayer(new IntroGlyphRenderState(
-                    new Matrix3x2f(guiGraphics.pose()), renderable));
+                    new Matrix3x2f(guiGraphics.pose()), renderable, mask));
             cursor += glyph.info().getAdvance(false);
             offset += Character.charCount(codePoint);
         }
