@@ -546,6 +546,8 @@ public class PoBlocks {
                     .lightLevel(state -> 1)),
             RegistrateBlockLootTables::dropWhenSilkTouch);
 
+    public static final BlockEntry<ArcadeBlock> RED_ARCADE = registerArcadeBlock("red_arcade", DyeColor.RED);
+    public static final BlockEntry<ArcadeBlock> BLUE_ARCADE = registerArcadeBlock("blue_arcade", DyeColor.BLUE);
     public static final BlockEntry<GachaBlock> GACHA_MACHINE = registerBlock("gacha_machine", 64,
             props -> new GachaBlock(BlockBehaviour.Properties.of()
                     .mapColor(DyeColor.WHITE)
@@ -553,8 +555,6 @@ public class PoBlocks {
                     .sound(SoundType.NETHERITE_BLOCK)
                     .requiresCorrectToolForDrops()
                     .noOcclusion()));
-    public static final BlockEntry<ArcadeBlock> RED_ARCADE = registerArcadeBlock("red_arcade", DyeColor.RED);
-    public static final BlockEntry<ArcadeBlock> BLUE_ARCADE = registerArcadeBlock("blue_arcade", DyeColor.BLUE);
 
     // Toilet
     public static final BlockEntry<WoodToiletBlock> WOODEN_TOILET = registerToiletBlock("wooden_toilet",
