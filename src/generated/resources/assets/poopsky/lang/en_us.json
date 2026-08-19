@@ -449,6 +449,8 @@
   "gamediscs.roundworm": "Roundworm",
   "generator.poopsky.poopsky": "PoopSky",
   "gui.gamingconsole.best_score": "Best",
+  "gui.gamingconsole.blocktris.botton_1": "Press [%s] to fall",
+  "gui.gamingconsole.blocktris.botton_2": "Press [%s] to rotate",
   "gui.gamingconsole.died": "You lost!",
   "gui.gamingconsole.new_best_score": "New Best",
   "gui.gamingconsole.next": "Next",

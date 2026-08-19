@@ -23,7 +23,7 @@ import com.altnoir.poopsky.content.entity.renderer.GinkgoBoatRenderer;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.game.client.arcade.ArcadeWorldScreenRenderer;
 import com.altnoir.poopsky.game.client.ArcadeControlSession;
-import com.altnoir.poopsky.impl.event.PoKeyBoardInput;
+import com.altnoir.poopsky.init.PoKeyBoardInput;
 import com.altnoir.poopsky.impl.network.PlugActionPayload;
 import com.altnoir.poopsky.impl.network.PlugDismountPayload;
 import com.altnoir.poopsky.init.*;

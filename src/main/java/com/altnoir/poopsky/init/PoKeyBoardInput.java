@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.impl.event;
+package com.altnoir.poopsky.init;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;

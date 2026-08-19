@@ -70,6 +70,8 @@
   "gui.gamingconsole.won": "你赢了！",
   "gui.gamingconsole.died": "你输了！",
   "gui.gamingconsole.next": "下一个",
+  "gui.gamingconsole.blocktris.botton_1": "按[%s]下落",
+  "gui.gamingconsole.blocktris.botton_2": "按[%s]旋转",
 
   "item.poopsky.poolime_spawn_egg": "屎莱姆刷怪蛋",
   "item.poopsky.fly_spawn_egg": "苍蝇刷怪蛋",
@@ -249,6 +251,7 @@
   "block.poopsky.primo_door": "太初木门",
   "block.poopsky.primo_trapdoor": "太初木活板门",
 
+  "block.poopsky.poopsky_block": "天屎方块",
   "block.poopsky.stool": "粪便凳",
   "block.poopsky.poolime_block": "粘屎块",
   "block.poopsky.poolime_maggots_block": "屎莱姆蛆块",

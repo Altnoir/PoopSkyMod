@@ -6,6 +6,7 @@ import com.altnoir.poopsky.game.client.graphics.BlocktrisPiece;
 import com.altnoir.poopsky.game.client.graphics.Grid;
 import com.altnoir.poopsky.game.client.graphics.MultiImage;
 import com.altnoir.poopsky.game.model.BlocktrisGameState;
+import com.altnoir.poopsky.init.PoKeyBoardInput;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -80,8 +81,17 @@ public class ClientBlocktrisGame extends ClientGame {
         }
 
         Font font = Minecraft.getInstance().font;
+        Component keyName1 = PoKeyBoardInput.ARCADE_BUTTON1.getTranslatedKeyMessage();
+        Component keyName2 = PoKeyBoardInput.ARCADE_BUTTON2.getTranslatedKeyMessage();
+
         Component text = Component.translatable("gui.gamingconsole.next");
-        graphics.drawString(font, text, NEXT_LABEL_X + posX - font.width(text.getVisualOrderText()) / 2, 10 + posY, 0x555555, false);
+        Component textBotton1 = Component.translatable("gui.gamingconsole.blocktris.botton_1", keyName1);
+        Component textBotton2 = Component.translatable("gui.gamingconsole.blocktris.botton_2", keyName2);
+
+        int textX = NEXT_LABEL_X + posX - font.width(text.getVisualOrderText()) / 2;
+        graphics.drawString(font, text, textX, 10 + posY, 0x555555, false);
+        graphics.drawString(font, textBotton1, textX - 7, 100 + posY, 0x555555, false);
+        graphics.drawString(font, textBotton2, textX - 7, 110 + posY, 0x555555, false);
     }
 
     @Override

@@ -2,7 +2,7 @@ package com.altnoir.poopsky.game.client;
 
 import com.altnoir.poopsky.content.block.entity.ArcadeBlockEntity;
 import com.altnoir.poopsky.game.Button;
-import com.altnoir.poopsky.impl.event.PoKeyBoardInput;
+import com.altnoir.poopsky.init.PoKeyBoardInput;
 import com.altnoir.poopsky.impl.network.ArcadeInputPacket;
 import com.altnoir.poopsky.impl.network.ArcadeResetPacket;
 import com.altnoir.poopsky.impl.network.ArcadeStopControlPacket;

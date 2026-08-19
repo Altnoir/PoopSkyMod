@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.mixin;
 
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
-import com.altnoir.poopsky.impl.event.PoKeyBoardInput;
+import com.altnoir.poopsky.init.PoKeyBoardInput;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.network.chat.Component;

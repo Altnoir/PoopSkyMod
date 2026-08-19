@@ -325,6 +325,7 @@ public final class LangGen {
         provider.add("block.poopsky.toilet_format", "%s Toilet");
         provider.add("block.poopsky.rainbow_toilet", "Rainbow Toilet");
 
+        // Game
         provider.add("gamediscs.roundworm", "Roundworm");
         provider.add("gamediscs.blocktris", "Blocktris");
         provider.add("gamediscs.pong", "Pong");
@@ -338,6 +339,8 @@ public final class LangGen {
         provider.add("gui.gamingconsole.won", "You won!");
         provider.add("gui.gamingconsole.died", "You lost!");
         provider.add("gui.gamingconsole.next", "Next");
+        provider.add("gui.gamingconsole.blocktris.botton_1", "Press [%s] to fall");
+        provider.add("gui.gamingconsole.blocktris.botton_2", "Press [%s] to rotate");
 
         // Containers
         provider.add("container.poopsky.fly_barrel", "Fly Barrel");
