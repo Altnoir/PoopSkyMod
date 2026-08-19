@@ -1,0 +1,32 @@
+{
+  "name": "POP",
+  "icon": "poopsky:poop_tnt",
+  "category": "poopsky:second_steps",
+  "read_by_default": false,
+  "sortnum": 4,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "Filth Propulsion",
+      "item": "poopsky:poop_tnt",
+      "link_recipe": true,
+      "text": "Craft POP from poop blocks and gunpowder material.$(br2)Both gunpowder and King of Dragon Fruit work as gunpowder material."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "poopsky:poop_tnt"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Acceleration and Explosion",
+      "text": "Send POP through a pipe made of poop empty logs. The empty logs keep pushing it, raising its speed and explosion radius.$(br2)When triggered, POP converts blocks in range according to its recipes."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/poop_tree",
+        "poopsky:second_steps/king_of_dragon_fruit"
+      ]
+    }
+  ]
+}

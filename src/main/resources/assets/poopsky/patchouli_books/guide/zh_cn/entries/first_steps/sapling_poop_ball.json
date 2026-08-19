@@ -1,0 +1,21 @@
+{
+  "name": "树苗粪便球",
+  "icon": "poopsky:sapling_poop_ball",
+  "category": "poopsky:first_steps",
+  "read_by_default": false,
+  "sortnum": 15,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "堆粪桶的礼物",
+      "item": "poopsky:sapling_poop_ball",
+      "link_recipe": true,
+      "text": "堆粪桶满级后取出的特殊产物，能够帮助你获得第一棵普通树。"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "使用",
+      "text": "食用树苗粪便球后，会随机产出一棵原版树苗。$(br2)这是空岛环境中补充树木资源的重要来源。"
+    }
+  ]
+}

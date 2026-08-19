@@ -1,0 +1,27 @@
+{
+  "name": "龙息辣椒",
+  "icon": "poopsky:dragon_breath_chili",
+  "category": "poopsky:second_steps",
+  "read_by_default": false,
+  "sortnum": 10,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "养粪人的商品",
+      "item": "poopsky:dragon_breath_chili",
+      "text": "从养粪人村民处购买龙息辣椒。$(br2)吃下后会获得肠道痉挛，并在短时间内着火。"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "拉出岩浆",
+      "text": "带着肠道痉挛效果，在非木制厕所上按住潜行排便，厕所会变成岩浆厕所。$(br2)随后用桶右键厕所，就能舀出岩浆。"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:second_steps/poopmaker",
+        "poopsky:second_steps/lava"
+      ]
+    }
+  ]
+}

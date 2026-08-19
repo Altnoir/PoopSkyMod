@@ -1,0 +1,31 @@
+{
+  "name": "粪便块",
+  "icon": "poopsky:poop_block",
+  "category": "poopsky:first_steps",
+  "read_by_default": false,
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "第一步合成",
+      "item": "poopsky:poop_block",
+      "link_recipe": true,
+      "text": "四个粪便按 2x2 摆放，就能压成一个粪便块。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "poopsky:poop_block_from_poop"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "催熟",
+      "text": "手持粪便右击粪便块，粪便块会向周围扩散，并概率长出粪便树苗。$(br2)继续催熟周围的新粪便块，可以提高获得树苗的机会。"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/poop_crafting_table"
+      ]
+    }
+  ]
+}

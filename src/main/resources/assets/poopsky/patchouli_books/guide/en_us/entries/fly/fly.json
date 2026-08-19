@@ -1,0 +1,28 @@
+{
+  "name": "Fly",
+  "icon": "poopsky:fly",
+  "category": "poopsky:fly",
+  "read_by_default": false,
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "Black Worker of Filth",
+      "item": "poopsky:fly",
+      "text": "Place a carved pumpkin on a maggot block to summon a fly.$(br2)Flies are the basic resource for breeding chests and fly barrels."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Special Variants",
+      "text": "Drowning a fly drops a blue fly; killing it with a roundworm drops a white fly; cactus drops a green fly; a poop ball drops a brown fly; lightning drops a black fly.$(br2)Feeding a fly chili gives a red fly, while feeding it King of Dragon Fruit gives a dragon fruit fly."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:fly/fly_catcher",
+        "poopsky:fly/breeding_chest",
+        "poopsky:fly/fly_barrel"
+      ]
+    }
+  ]
+}

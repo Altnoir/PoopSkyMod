@@ -1,0 +1,39 @@
+{
+  "name": "Poop Tree",
+  "icon": "poopsky:poop_log",
+  "category": "poopsky:first_steps",
+  "read_by_default": false,
+  "sortnum": 6,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "Poop Tree",
+      "item": "poopsky:poop_log",
+      "link_recipe": true,
+      "text": "The mature form of a poop sapling, made of poop logs, poop wood, and poop leaves."
+    },
+    {
+      "type": "patchouli:stonecutting",
+      "recipe": "poopsky:poop_empty_log_from_poop_log_stonecutting",
+      "text": "Use a stonecutter to turn poop logs into poop empty logs.$(br2)Empty logs accelerate POP later in the second category, Filth Gives Life."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Carbonizing",
+      "text": "When poop wood is enclosed on all six sides by opaque solid blocks, it slowly turns into a coal block.$(br2)Leaves cannot seal it, so keep every side filled while you wait."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Harvest",
+      "text": "Without Silk Touch, breaking poop logs or poop wood drops 4 to 5 spall.$(br2)Leaves drop poop and may also drop roundworms."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/spall",
+        "poopsky:first_steps/coal_block",
+        "poopsky:second_steps/poop_tnt"
+      ]
+    }
+  ]
+}

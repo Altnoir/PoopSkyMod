@@ -1,0 +1,32 @@
+{
+  "name": "篝火",
+  "icon": "minecraft:campfire",
+  "category": "poopsky:first_steps",
+  "read_by_default": false,
+  "sortnum": 10,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "第一簇火",
+      "item": "minecraft:campfire",
+      "text": "用煤炭、原木和木棍合成篝火。$(br2)粪便木属于原木，可以充当篝火的木料。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "minecraft:campfire"
+    },
+    {
+      "type": "patchouli:campfire",
+      "recipe": "poopsky:string_from_campfire_cooking_roundworm",
+      "text": "把蛔虫放在篝火上烤，会得到线。"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/coal_block",
+        "poopsky:first_steps/roundworm",
+        "poopsky:first_steps/string"
+      ]
+    }
+  ]
+}

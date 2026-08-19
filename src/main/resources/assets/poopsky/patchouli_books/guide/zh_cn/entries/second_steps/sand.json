@@ -1,0 +1,26 @@
+{
+  "name": "沙子",
+  "icon": "minecraft:sand",
+  "category": "poopsky:second_steps",
+  "read_by_default": false,
+  "sortnum": 8,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "熔炉烘烤",
+      "item": "minecraft:sand",
+      "text": "把蛔虫块放进熔炉烧制，可以得到普通沙子。$(br2)沙子也是筛架的重要原料，筛沙子可以获得铁粒等资源。"
+    },
+    {
+      "type": "patchouli:smelting",
+      "recipe": "poopsky:sand_from_smelting_roundworm_block"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:second_steps/roundworm_block",
+        "poopsky:second_steps/iron"
+      ]
+    }
+  ]
+}

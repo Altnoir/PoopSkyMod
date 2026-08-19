@@ -312,6 +312,7 @@ public final class BlockTagGen {
 
         tag(BlockTags.MINEABLE_WITH_HOE)
                 .add(
+                        PoBlocks.POOPSKY_BLOCK.get(),
                         PoBlocks.STOOL.get(),
                         PoBlocks.POOP_PIECE.get(),
                         PoBlocks.POOP_FARMLAND.get(),

@@ -1,0 +1,27 @@
+{
+  "name": "帝王火龙果",
+  "icon": "poopsky:king_of_dragon_fruit",
+  "category": "poopsky:second_steps",
+  "read_by_default": false,
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "火药味水果",
+      "item": "poopsky:king_of_dragon_fruit",
+      "text": "把仙人掌放进筛架筛矿，有概率得到帝王火龙果。$(br2)它属于火药类材料，可以直接用于合成 POP。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "poopsky:gunpowder_from_king_of_dragon_fruit",
+      "text": "也可以把一个帝王火龙果拆成一份火药。"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:second_steps/cactus",
+        "poopsky:second_steps/poop_tnt"
+      ]
+    }
+  ]
+}

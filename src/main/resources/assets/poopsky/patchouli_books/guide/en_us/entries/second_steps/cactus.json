@@ -1,0 +1,23 @@
+{
+  "name": "Cactus",
+  "icon": "minecraft:cactus",
+  "category": "poopsky:second_steps",
+  "read_by_default": false,
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "Sieving Material",
+      "item": "minecraft:cactus",
+      "text": "Cactus can grow on dried poop blocks, and poop sand can also grow it when fertilized.$(br2)Sieve cactus on the sieve stable to obtain King of Dragon Fruit."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/sieve_stable",
+        "poopsky:second_steps/king_of_dragon_fruit",
+        "poopsky:second_steps/poop_sand"
+      ]
+    }
+  ]
+}

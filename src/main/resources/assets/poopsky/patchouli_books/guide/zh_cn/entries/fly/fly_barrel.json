@@ -1,0 +1,36 @@
+{
+  "name": "苍蝇桶",
+  "icon": "poopsky:fly_barrel",
+  "category": "poopsky:fly",
+  "read_by_default": false,
+  "sortnum": 4,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "自动生产器",
+      "item": "poopsky:fly_barrel",
+      "text": "把苍蝇放入输入口，苍蝇桶会按苍蝇品种持续生产对应资源。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "poopsky:fly_barrel"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "堆叠加速",
+      "text": "基础生产间隔约 42.5 秒。输入口每额外多一只同品种苍蝇，生产间隔缩短 0.5 秒，最快可到 1 秒。$(br2)上方和侧面可以输入苍蝇，下方可以输出产物。"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "产物示例",
+      "text": "原苍蝇→蛆种子，红苍蝇→红石，铁苍蝇→粗铁，钻石苍蝇→钻石，火龙果苍蝇→火药，末影苍蝇→末影珍珠。$(br2)完整产物表可以查看 JEI。"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:fly/fly",
+        "poopsky:fly/breeding_chest"
+      ]
+    }
+  ]
+}

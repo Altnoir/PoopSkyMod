@@ -45,8 +45,8 @@ public class PoItemGroups {
     public static final PoCreativeTabSection TS_DECO_TILES = section("itemGroup.poopsky_deco.section.tiles");
     public static final PoCreativeTabSection TS_DECO_TOILETS = section("itemGroup.poopsky_deco.section.toilets");
 
-    public static final RegistryEntry<CreativeModeTab, CreativeModeTab> POOPSKY_TAB =
-            REGISTRATE.generic("poopsky", Registries.CREATIVE_MODE_TAB, () ->
+    public static final RegistryEntry<CreativeModeTab, CreativeModeTab> POOPSKY_TAB = REGISTRATE.generic("poopsky",
+            Registries.CREATIVE_MODE_TAB, () ->
                     PoSectionedCreativeModeTab.configure(
                             CreativeModeTab.builder()
                                     .title(Component.translatable(POOPSKY_TAB_KEY))
@@ -57,10 +57,10 @@ public class PoItemGroups {
                             TS_MOBS,
                             TS_POTIONS
                     ).build()
-            ).register();
+    ).register();
 
-    public static final RegistryEntry<CreativeModeTab, CreativeModeTab> POOPSKY_DECORATIVE =
-            REGISTRATE.generic("poopsky_deco", Registries.CREATIVE_MODE_TAB, () ->
+    public static final RegistryEntry<CreativeModeTab, CreativeModeTab> POOPSKY_DECORATIVE = REGISTRATE.generic("poopsky_deco",
+            Registries.CREATIVE_MODE_TAB, () ->
                     PoSectionedCreativeModeTab.configure(
                             CreativeModeTab.builder()
                                     .title(Component.translatable(POOPSKY_DECO_TAB_KEY))
@@ -70,7 +70,7 @@ public class PoItemGroups {
                             TS_DECO_TILES,
                             TS_DECO_TOILETS
                     ).build()
-            ).register();
+    ).register();
 
     private static void populateBasicSections(CreativeModeTab.ItemDisplayParameters parameters) {
         for (Item item : PoItems.getAllItems()) {

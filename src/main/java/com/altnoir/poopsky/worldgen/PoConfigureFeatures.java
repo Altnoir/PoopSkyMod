@@ -62,7 +62,7 @@ public class PoConfigureFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> CHILI_POOP_PATCH_BONEMEAL = resourceKey("chili_poop_patch_bonemeal");
     public static final ResourceKey<ConfiguredFeature<?, ?>> GOLDEN_POOP_VEGETATION = resourceKey("golden_poop_vegetation");
     public static final ResourceKey<ConfiguredFeature<?, ?>> GOLDEN_POOP_PATCH_BONEMEAL = resourceKey("golden_poop_patch_bonemeal");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> DRIED_POOP_PATCH = resourceKey("dried_poop_patch");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> POOP_SAND_PATCH = resourceKey("dried_poop_sand_patch");
     public static final ResourceKey<ConfiguredFeature<?, ?>> SALTPETER_PATCH = resourceKey("saltpeter_patch");
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> RAW_SAPLING_POOP_VEGETATION = resourceKey("raw_sapling_poop_vegetation");
@@ -244,7 +244,7 @@ public class PoConfigureFeatures {
                 vegetationPatch(PoTags.Blocks.GOLDEN_POOP_BLOCK, PoBlocks.GOLDEN_POOP_BLOCK.get(), holdergetter.getOrThrow(GOLDEN_POOP_VEGETATION))
         );
 
-        register(context, DRIED_POOP_PATCH, Feature.RANDOM_PATCH,
+        register(context, POOP_SAND_PATCH, Feature.RANDOM_PATCH,
                 FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK,
                         new SimpleBlockConfiguration(
                                 new WeightedStateProvider(

@@ -1,0 +1,29 @@
+{
+  "name": "Urine Bucket",
+  "icon": "poopsky:urine_bucket",
+  "category": "poopsky:second_steps",
+  "read_by_default": false,
+  "sortnum": 6,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "Collecting from a Toilet",
+      "item": "poopsky:urine_bucket",
+      "text": "Use a bucket on a default toilet to collect urine.$(br2)Pour it out to place urine fluid."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Urine and Sand",
+      "text": "When urine touches normal sand, the sand becomes poop sand.$(br2)You can also pour urine into an empty compooper to make a urine compooper."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/toilet",
+        "poopsky:second_steps/iron",
+        "poopsky:second_steps/poop_sand",
+        "poopsky:second_steps/urine_compooper"
+      ]
+    }
+  ]
+}

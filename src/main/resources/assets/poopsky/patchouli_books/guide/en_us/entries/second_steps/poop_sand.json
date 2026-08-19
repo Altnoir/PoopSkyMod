@@ -1,0 +1,23 @@
+{
+  "name": "Poop Sand",
+  "icon": "poopsky:poop_sand",
+  "category": "poopsky:second_steps",
+  "read_by_default": false,
+  "sortnum": 7,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "Urine-Soaked Sand",
+      "item": "poopsky:poop_sand",
+      "text": "When urine touches normal sand, the sand turns into poop sand.$(br2)Bonemeal poop sand to grow cactus; with water nearby, sugar cane can also appear."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:second_steps/urine_bucket",
+        "poopsky:second_steps/sand",
+        "poopsky:second_steps/cactus"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "name": "Poop Crafting Table",
+  "icon": "poopsky:poop_crafting_table",
+  "category": "poopsky:first_steps",
+  "read_by_default": false,
+  "sortnum": 4,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "3x3 Crafting",
+      "item": "poopsky:poop_crafting_table",
+      "link_recipe": true,
+      "text": "One poop block can be crafted into eight poop crafting tables.$(br2)Later recipes such as the compooper require a 3x3 crafting grid."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "poopsky:poop_crafting_table"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/poop_sapling"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "name": "Urine Compooper",
+  "icon": "poopsky:urine_compooper",
+  "category": "poopsky:second_steps",
+  "read_by_default": false,
+  "sortnum": 13,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "A Compooper Full of Urine",
+      "item": "poopsky:urine_compooper",
+      "text": "Right-click a default toilet while holding an empty compooper to collect urine.$(br2)You can also pour a urine bucket into an empty compooper."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Distillation",
+      "text": "Place a urine compooper above a lit campfire and wait. It distills into a water compooper.$(br2)This also produces urea."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/compooper",
+        "poopsky:second_steps/urine_bucket",
+        "poopsky:second_steps/water_compooper"
+      ]
+    }
+  ]
+}

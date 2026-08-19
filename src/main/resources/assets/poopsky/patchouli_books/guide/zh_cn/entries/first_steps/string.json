@@ -1,0 +1,26 @@
+{
+  "name": "线",
+  "icon": "minecraft:string",
+  "category": "poopsky:first_steps",
+  "read_by_default": false,
+  "sortnum": 12,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "从蛔虫到线",
+      "item": "minecraft:string",
+      "text": "把蛔虫放到篝火上烤，等待烹饪完成即可得到线。"
+    },
+    {
+      "type": "patchouli:campfire",
+      "recipe": "poopsky:string_from_campfire_cooking_roundworm"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/roundworm",
+        "poopsky:first_steps/sieve_stable"
+      ]
+    }
+  ]
+}

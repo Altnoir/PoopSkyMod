@@ -410,48 +410,6 @@ public final class AdvancementGen {
                 )
                 .addCriterion("fly", SummonedEntityTrigger.TriggerInstance.summonedEntity(EntityPredicate.Builder.entity().of(PoEntityType.FLY.get())))
                 .save(provider, modId("fly"));
-        AdvancementHolder fly_catcher = Advancement.Builder.advancement()
-                .parent(fly)
-                .display(
-                        PoItems.FLY_CATCHER.get(),
-                        Component.translatable("advancements.poopsky.fly_catcher.title"),
-                        Component.translatable("advancements.poopsky.fly_catcher.description"),
-                        null,
-                        AdvancementType.TASK,
-                        true,
-                        true,
-                        false
-                )
-                .addCriterion("fly_catcher", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.FLY_CATCHER.get()))
-                .save(provider, modId("fly_catcher"));
-        Advancement.Builder.advancement()
-                .parent(fly_catcher)
-                .display(
-                        PoBlocks.FLY_BARREL.get(),
-                        Component.translatable("advancements.poopsky.fly_barrel.title"),
-                        Component.translatable("advancements.poopsky.fly_barrel.description"),
-                        null,
-                        AdvancementType.GOAL,
-                        true,
-                        true,
-                        false
-                )
-                .addCriterion("fly_barrel", InventoryChangeTrigger.TriggerInstance.hasItems(PoBlocks.FLY_BARREL.get()))
-                .save(provider, modId("fly_barrel"));
-        Advancement.Builder.advancement()
-                .parent(fly_catcher)
-                .display(
-                        PoBlocks.BREEDING_CHEST.get(),
-                        Component.translatable("advancements.poopsky.breeding_chest.title"),
-                        Component.translatable("advancements.poopsky.breeding_chest.description"),
-                        null,
-                        AdvancementType.GOAL,
-                        true,
-                        true,
-                        false
-                )
-                .addCriterion("breeding_chest", InventoryChangeTrigger.TriggerInstance.hasItems(PoBlocks.BREEDING_CHEST.get()))
-                .save(provider, modId("breeding_chest"));
 
         Advancement.Builder.advancement()
                 .parent(compooper)
@@ -567,7 +525,7 @@ public final class AdvancementGen {
                 )
                 .addCriterion("king_of_dragon_fruit", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.KING_OF_DRAGON_FRUIT.get()))
                 .save(provider, modId("king_of_dragon_fruit"));
-        Advancement.Builder.advancement()
+        AdvancementHolder pop = Advancement.Builder.advancement()
                 .parent(king_of_dragon_fruit)
                 .display(
                         PoBlocks.POOP_TNT,
@@ -581,6 +539,48 @@ public final class AdvancementGen {
                 )
                 .addCriterion("pooop_tnt", InventoryChangeTrigger.TriggerInstance.hasItems(PoBlocks.POOP_TNT.get()))
                 .save(provider, modId("pooop_tnt"));
+        AdvancementHolder fly_catcher = Advancement.Builder.advancement()
+                .parent(pop)
+                .display(
+                        PoItems.FLY_CATCHER.get(),
+                        Component.translatable("advancements.poopsky.fly_catcher.title"),
+                        Component.translatable("advancements.poopsky.fly_catcher.description"),
+                        null,
+                        AdvancementType.TASK,
+                        true,
+                        true,
+                        false
+                )
+                .addCriterion("fly_catcher", InventoryChangeTrigger.TriggerInstance.hasItems(PoItems.FLY_CATCHER.get()))
+                .save(provider, modId("fly_catcher"));
+        Advancement.Builder.advancement()
+                .parent(fly_catcher)
+                .display(
+                        PoBlocks.FLY_BARREL.get(),
+                        Component.translatable("advancements.poopsky.fly_barrel.title"),
+                        Component.translatable("advancements.poopsky.fly_barrel.description"),
+                        null,
+                        AdvancementType.GOAL,
+                        true,
+                        true,
+                        false
+                )
+                .addCriterion("fly_barrel", InventoryChangeTrigger.TriggerInstance.hasItems(PoBlocks.FLY_BARREL.get()))
+                .save(provider, modId("fly_barrel"));
+        Advancement.Builder.advancement()
+                .parent(fly_catcher)
+                .display(
+                        PoBlocks.BREEDING_CHEST.get(),
+                        Component.translatable("advancements.poopsky.breeding_chest.title"),
+                        Component.translatable("advancements.poopsky.breeding_chest.description"),
+                        null,
+                        AdvancementType.GOAL,
+                        true,
+                        true,
+                        false
+                )
+                .addCriterion("breeding_chest", InventoryChangeTrigger.TriggerInstance.hasItems(PoBlocks.BREEDING_CHEST.get()))
+                .save(provider, modId("breeding_chest"));
 
         AdvancementHolder roundworm = Advancement.Builder.advancement()
                 .parent(poop_sapling)

@@ -1,0 +1,23 @@
+{
+  "name": "Villager Professions",
+  "icon": "minecraft:villager_spawn_egg",
+  "category": "poopsky:second_steps",
+  "read_by_default": false,
+  "sortnum": 11,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "Two Professions of Filth",
+      "item": "minecraft:villager_spawn_egg",
+      "text": "Two villager professions are connected to filth.$(br2)The Poopmaker works at a compooper, while the Gastronome works at a toilet."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/compooper",
+        "poopsky:first_steps/toilet",
+        "poopsky:second_steps/dragon_breath_chili"
+      ]
+    }
+  ]
+}

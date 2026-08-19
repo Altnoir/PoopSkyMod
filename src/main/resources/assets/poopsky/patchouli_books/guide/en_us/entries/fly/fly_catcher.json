@@ -1,0 +1,27 @@
+{
+  "name": "Fly Catcher",
+  "icon": "poopsky:fly_catcher",
+  "category": "poopsky:fly",
+  "read_by_default": false,
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "Pocketing a Fly",
+      "item": "poopsky:fly_catcher",
+      "text": "Use a fly catcher on an adult fly to turn it into a carryable fly item. Each capture costs 1 durability.$(br2)Capturing a living fly currently gives a normal fly."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "poopsky:fly_catcher"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:fly/fly",
+        "poopsky:fly/breeding_chest",
+        "poopsky:fly/fly_barrel"
+      ]
+    }
+  ]
+}

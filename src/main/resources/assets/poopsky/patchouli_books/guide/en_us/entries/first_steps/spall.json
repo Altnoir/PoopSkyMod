@@ -1,0 +1,27 @@
+{
+  "name": "Spall",
+  "icon": "poopsky:spall",
+  "category": "poopsky:first_steps",
+  "read_by_default": false,
+  "sortnum": 7,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "Trunk Shards",
+      "item": "poopsky:spall",
+      "link_recipe": true,
+      "text": "A material left behind by broken poop tree trunks, and a key early-game resource."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "poopsky:mossy_cobblestone_from_compacting",
+      "text": "Nine spall can be compacted into one mossy cobblestone."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/mossy_cobblestone"
+      ]
+    }
+  ]
+}

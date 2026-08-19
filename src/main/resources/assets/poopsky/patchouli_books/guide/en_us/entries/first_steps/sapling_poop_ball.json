@@ -1,0 +1,21 @@
+{
+  "name": "Sapling Poop Ball",
+  "icon": "poopsky:sapling_poop_ball",
+  "category": "poopsky:first_steps",
+  "read_by_default": false,
+  "sortnum": 15,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "Gift from the Compooper",
+      "item": "poopsky:sapling_poop_ball",
+      "link_recipe": true,
+      "text": "A special product collected from a full compooper. It can give you your first ordinary tree sapling."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Using It",
+      "text": "Eating a sapling poop ball produces one random vanilla sapling.$(br2)This is an important way to restore tree resources in the sky."
+    }
+  ]
+}

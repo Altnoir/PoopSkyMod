@@ -1,0 +1,27 @@
+{
+  "name": "Dragon Breath Chili",
+  "icon": "poopsky:dragon_breath_chili",
+  "category": "poopsky:second_steps",
+  "read_by_default": false,
+  "sortnum": 10,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "Poopmaker's Goods",
+      "item": "poopsky:dragon_breath_chili",
+      "text": "Buy Dragon Breath Chili from a Poopmaker villager.$(br2)Eating it gives Intestinal Spasm and sets you on fire briefly."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Lava from the Toilet",
+      "text": "While affected by Intestinal Spasm, sneak on a non-wood toilet to turn it into a lava toilet.$(br2)Use a bucket on it to collect lava."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:second_steps/poopmaker",
+        "poopsky:second_steps/lava"
+      ]
+    }
+  ]
+}

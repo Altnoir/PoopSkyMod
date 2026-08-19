@@ -1,0 +1,35 @@
+{
+  "name": "杂交配方",
+  "icon": "poopsky:fly",
+  "category": "poopsky:fly",
+  "read_by_default": false,
+  "sortnum": 5,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "父母顺序可以互换。每个匹配配方有 20% 概率变异；失败时产出一只父本苍蝇。$(br2)以下为当前可用的杂交路线。"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "基础路线 1",
+      "text": "$(li)黑苍蝇 + 黄苍蝇 = 棕苍蝇$(li)绿苍蝇 + 蓝苍蝇 = 青苍蝇$(li)紫苍蝇 + 粉苍蝇 = 嫣苍蝇$(li)红苍蝇 + 蓝苍蝇 = 紫苍蝇$(li)红苍蝇 + 绿苍蝇 = 黄苍蝇$(li)红苍蝇 + 黄苍蝇 = 橙苍蝇$(li)白苍蝇 + 黑苍蝇 = 灰苍蝇$(li)白苍蝇 + 蓝苍蝇 = 淡蓝苍蝇$(li)白苍蝇 + 灰苍蝇 = 淡灰苍蝇$(li)白苍蝇 + 绿苍蝇 = 翠苍蝇$(li)白苍蝇 + 红苍蝇 = 粉苍蝇"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "基础路线 2",
+      "text": "$(li)紫苍蝇 + 青苍蝇 = 末影苍蝇$(li)绿苍蝇 + 黄苍蝇 = 火龙果苍蝇$(li)火龙果苍蝇 + 黄苍蝇 = 荧石苍蝇$(li)白苍蝇 + 橙苍蝇 = 铜苍蝇$(li)淡灰苍蝇 + 铜苍蝇 = 铁苍蝇$(li)荧石苍蝇 + 铜苍蝇 = 金苍蝇$(li)翠苍蝇 + 金苍蝇 = 绿宝石苍蝇$(li)金苍蝇 + 绿宝石苍蝇 = 钻石苍蝇$(li)绿宝石苍蝇 + 钻石苍蝇 = 下界合金苍蝇$(li)原苍蝇 + 铜苍蝇 = 黑苍蝇"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "联动配方",
+      "text": "以下配方需要对应模组加载：$(br2)$(li)青苍蝇 + 铁苍蝇 = 锌苍蝇 [Create]$(li)淡蓝苍蝇 + 钻石苍蝇 = 赛特斯石英苍蝇 [AE2]$(li)黑苍蝇 + 荧石苍蝇 = 陨石粉苍蝇 [AE2]$(li)淡灰苍蝇 + 铁苍蝇 = 锡苍蝇 [Mekanism]$(li)铁苍蝇 + 锡苍蝇 = 铅苍蝇 [Mekanism]$(li)钻石苍蝇 + 铅苍蝇 = 锇苍蝇 [Mekanism]$(li)火龙果苍蝇 + 绿宝石苍蝇 = 铀苍蝇 [Mekanism]$(li)紫苍蝇 + 锇苍蝇 = 氟石苍蝇 [Mekanism]"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:fly/breeding_chest",
+        "poopsky:fly/fly_barrel"
+      ]
+    }
+  ]
+}

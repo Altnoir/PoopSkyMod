@@ -1,0 +1,22 @@
+{
+  "name": "铁",
+  "icon": "minecraft:iron_ingot",
+  "category": "poopsky:second_steps",
+  "read_by_default": false,
+  "sortnum": 5,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "筛架的第一批收获",
+      "item": "minecraft:iron_ingot",
+      "text": "在筛架中筛粪便块，可以获得铁粒，也有概率得到粗铁。$(br2)把铁粒合成铁锭后，就能制作桶。"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/sieve_stable",
+        "poopsky:second_steps/urine_bucket"
+      ]
+    }
+  ]
+}

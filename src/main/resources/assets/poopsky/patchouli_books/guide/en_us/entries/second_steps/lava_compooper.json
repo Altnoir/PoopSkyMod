@@ -1,0 +1,27 @@
+{
+  "name": "Lava Compooper",
+  "icon": "poopsky:lava_compooper",
+  "category": "poopsky:second_steps",
+  "read_by_default": false,
+  "sortnum": 15,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "A Compooper Full of Lava",
+      "item": "poopsky:lava_compooper",
+      "text": "Right-click a lava toilet while holding an empty compooper to collect lava.$(br2)Use a bucket on the lava compooper to get a lava bucket."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Using Lava",
+      "text": "A lava compooper stores lava and can process items.$(br2)Pour lava next to water to obtain cobblestone."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:second_steps/lava",
+        "poopsky:second_steps/water_compooper"
+      ]
+    }
+  ]
+}

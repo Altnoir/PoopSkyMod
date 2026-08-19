@@ -1,0 +1,37 @@
+{
+  "name": "繁育箱",
+  "icon": "poopsky:breeding_chest",
+  "category": "poopsky:fly",
+  "read_by_default": false,
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "苍蝇杂交机",
+      "item": "poopsky:breeding_chest",
+      "text": "放入两只苍蝇和粪便。配方存在时每次繁殖有 20% 概率产生新品种，失败时产出一只父本苍蝇。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "poopsky:breeding_chest"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "5x5x5 加速与增产",
+      "text": "以繁育箱为中心检查周围 5x5x5 范围，大约每 4 秒扫描一次。$(br2)范围内每有一个粪便类方块，繁殖间隔缩短 0.5 秒；基础间隔为 60 秒，最快可到 1 秒。$(br2)范围内每有一个蛆块，成功繁殖时额外多产 1 只苍蝇，同时按总产量消耗粪便。"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "自动化",
+      "text": "上方和侧面可以输入粪便和苍蝇，下方可以输出产物。$(br2)输出槽满时会停止工作，适合接入漏斗和管道。"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:fly/fly",
+        "poopsky:fly/breeding_recipes",
+        "poopsky:fly/fly_barrel"
+      ]
+    }
+  ]
+}

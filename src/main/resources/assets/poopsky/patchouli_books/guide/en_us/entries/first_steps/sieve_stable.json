@@ -1,0 +1,28 @@
+{
+  "name": "Sieve Stable",
+  "icon": "poopsky:sieve_stable",
+  "category": "poopsky:first_steps",
+  "read_by_default": false,
+  "sortnum": 13,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "The Start of Sieving",
+      "item": "poopsky:sieve_stable",
+      "text": "Build the sieve stable from mossy cobblestone walls and string. It is the core structure for the later sieving chain: sieve poop blocks for iron, and sieve cactus for King of Dragon Fruit."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "poopsky:sieve_stable"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/mossy_cobblestone",
+        "poopsky:first_steps/string",
+        "poopsky:second_steps/cactus",
+        "poopsky:second_steps/iron"
+      ]
+    }
+  ]
+}

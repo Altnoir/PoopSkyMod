@@ -99,6 +99,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         smelting(recipeOutput, PoItems.MAGGOTS_SEEDS, RecipeCategory.BUILDING_BLOCKS, PoItems.BAKED_MAGGOTS, 0.35F, 200, "maggots_seeds");
         cooking(recipeOutput, RecipeSerializer.SMOKING_RECIPE, SmokingRecipe::new, PoItems.MAGGOTS_SEEDS,
                 RecipeCategory.BUILDING_BLOCKS, PoItems.BAKED_MAGGOTS, 0.35F, 100, "maggots_seeds", "_from_smoking");
+        smelting(recipeOutput, PoBlocks.ROUNDWORM_BLOCK, RecipeCategory.BUILDING_BLOCKS, Items.SAND, 0.1F, 200, "roundworm_block");
     }
 
     private void buildFoodRecipes(RecipeOutput recipeOutput) {
@@ -187,6 +188,15 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .requires(PoItems.POOP.get())
                 .requires(Items.ENDER_EYE)
                 .unlockedBy(getItemName(Items.ENDER_EYE), has(Items.ENDER_EYE))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, PoItems.FLY_CATCHER)
+                .pattern("RRD")
+                .pattern("RS ")
+                .pattern("S  ")
+                .define('R', PoItems.ROUNDWORM)
+                .define('S', Items.STICK)
+                .define('D', Items.DIAMOND)
+                .unlockedBy(getItemName(Items.DIAMOND), has(Items.DIAMOND))
                 .save(recipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, PoItems.RETURN_TOTEM.get())
                 .pattern(" S ")
@@ -438,14 +448,6 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .define('S', Tags.Items.GUNPOWDERS)
                 .define('A', PoBlocks.POOP_BLOCK)
                 .unlockedBy(getItemName(PoItems.KING_OF_DRAGON_FRUIT), has(PoItems.KING_OF_DRAGON_FRUIT))
-                .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, PoItems.FLY_CATCHER)
-                .pattern("RR")
-                .pattern("RS")
-                .pattern(" S")
-                .define('R', PoItems.ROUNDWORM)
-                .define('S', Items.STICK)
-                .unlockedBy(getItemName(PoItems.ROUNDWORM), has(PoItems.ROUNDWORM))
                 .save(recipeOutput);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, PoBlocks.FLY_BARREL)
                 .requires(Items.BARREL)

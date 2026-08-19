@@ -1,0 +1,31 @@
+{
+  "name": "Poop Block",
+  "icon": "poopsky:poop_block",
+  "category": "poopsky:first_steps",
+  "read_by_default": false,
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "First Craft",
+      "item": "poopsky:poop_block",
+      "link_recipe": true,
+      "text": "Four poop arranged in a 2x2 square can be pressed into one poop block."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "poopsky:poop_block_from_poop"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Fertilizing",
+      "text": "Use poop on a poop block to spread the filth outward and sometimes grow a poop sapling.$(br2)Keep fertilizing new poop blocks to improve your chance of finding saplings."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/poop_crafting_table"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "name": "Poop Sapling",
+  "icon": "poopsky:poop_sapling",
+  "category": "poopsky:first_steps",
+  "read_by_default": false,
+  "sortnum": 5,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "First Plant of Filth",
+      "item": "poopsky:poop_sapling",
+      "link_recipe": true,
+      "text": "Fertilizing poop blocks can occasionally produce a poop sapling.$(br2)Plant it on suitable ground and it will slowly grow into a poop tree."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Growing Faster",
+      "text": "Poop saplings can also be fertilized with poop.$(br2)This does not always succeed on the first use, but it greatly reduces the waiting time."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/poop_tree"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "name": "粪便树苗",
+  "icon": "poopsky:poop_sapling",
+  "category": "poopsky:first_steps",
+  "read_by_default": false,
+  "sortnum": 5,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "秽壤的第一株植物",
+      "item": "poopsky:poop_sapling",
+      "link_recipe": true,
+      "text": "催熟粪便块时概率得到粪便树苗。$(br2)把它种在适合树苗生长的地面上，它会慢慢长成粪便树。"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "加速生长",
+      "text": "粪便树苗也可以被粪便催熟。$(br2)使用粪便加速生长并不保证一次成功，但可以明显缩短等待时间。"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/poop_tree"
+      ]
+    }
+  ]
+}

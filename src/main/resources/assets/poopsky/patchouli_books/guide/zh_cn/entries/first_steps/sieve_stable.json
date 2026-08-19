@@ -1,0 +1,28 @@
+{
+  "name": "筛架",
+  "icon": "poopsky:sieve_stable",
+  "category": "poopsky:first_steps",
+  "read_by_default": false,
+  "sortnum": 13,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "筛矿的开始",
+      "item": "poopsky:sieve_stable",
+      "text": "用苔石墙和线搭成筛架。它是后续筛矿流程的核心结构，筛粪便块可以获得铁粒和粗铁，筛仙人掌可以获取帝王火龙果。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "poopsky:sieve_stable"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/mossy_cobblestone",
+        "poopsky:first_steps/string",
+        "poopsky:second_steps/cactus",
+        "poopsky:second_steps/iron"
+      ]
+    }
+  ]
+}

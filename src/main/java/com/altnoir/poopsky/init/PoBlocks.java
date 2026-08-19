@@ -174,12 +174,11 @@ public class PoBlocks {
             props -> new Block(hardenedProperties(MapColor.COLOR_GREEN, SoundType.FROGLIGHT)));
     public static final BlockFamily MOSSY_POOP_BRICK_FAMILY = registerBlockFamily("mossy_poop_brick", MOSSY_POOP_BRICKS, false);
 
-    public static final BlockEntry<DriedPoopBlock> DRIED_POOP_BLOCK = registerPoopBlock("dried_poop_block",
-            props -> new DriedPoopBlock(hardenedProperties(MapColor.COLOR_ORANGE, SoundType.TUFF)
-                    .instrument(NoteBlockInstrument.COW_BELL)));
+    public static final BlockEntry<Block> DRIED_POOP_BLOCK = registerPoopBlock("dried_poop_block",
+            props -> new Block(hardenedProperties(MapColor.COLOR_ORANGE, SoundType.TUFF).instrument(NoteBlockInstrument.COW_BELL)));
     public static final BlockEntry<PoopSandBlock> POOP_SAND = registerBlock("poop_sand", 88,
-            props -> new PoopSandBlock(new ColorRGBA(9131563),
-                    BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).instrument(NoteBlockInstrument.SNARE).strength(0.5F).sound(SoundType.SAND)));
+            props -> new PoopSandBlock(new ColorRGBA(9131563), BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_ORANGE).instrument(NoteBlockInstrument.SNARE).strength(0.5F).sound(SoundType.SAND)));
     public static final BlockFamily DRIED_POOP_BLOCK_FAMILY = registerBlockFamily("dried_poop_block", DRIED_POOP_BLOCK, false);
     public static final BlockEntry<Block> SMOOTH_POOP_BLOCK = registerDecoMaterialBlock("smooth_poop_block", 88,
             props -> new Block(hardenedProperties(MapColor.COLOR_ORANGE, SoundType.CALCITE)));
@@ -291,7 +290,13 @@ public class PoBlocks {
     );
 
     public static final BlockEntry<PoopSkyBlock> POOPSKY_BLOCK = registerBlockWithItem("poopsky_block", 88,
-            props -> new PoopSkyBlock(hardenedProperties(MapColor.COLOR_ORANGE, SoundType.CALCITE)),
+            props -> new PoopSkyBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_WHITE)
+                    .sound(SoundType.CORAL_BLOCK)
+                    .strength(0.5F)
+                    .noOcclusion()
+                    .lightLevel(GlowLichenBlock.emission(2))
+            ),
             RegistrateBlockLootTables::dropSelf, PoopSkyBlockItem::new, BlockTab.BASIC_BLOCKS);
     public static final BlockEntry<ChairBlock> STOOL = registerBlock("stool", 88,
             props -> new ChairBlock(poopProperties().pushReaction(PushReaction.DESTROY).noOcclusion()));

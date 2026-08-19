@@ -1,0 +1,28 @@
+{
+  "name": "Lava",
+  "icon": "minecraft:lava_bucket",
+  "category": "poopsky:second_steps",
+  "read_by_default": false,
+  "sortnum": 12,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "Scooped from a Toilet",
+      "item": "minecraft:lava_bucket",
+      "text": "After eating Dragon Breath Chili, use a non-wood toilet to turn it into a lava toilet.$(br2)Scoop it with a bucket to collect lava and clear the toilet."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Using Lava",
+      "text": "Pour lava into an empty compooper to make a lava compooper, or use it for fluid reactions.$(br2)Water and lava together make cobblestone."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/toilet",
+        "poopsky:second_steps/dragon_breath_chili",
+        "poopsky:second_steps/lava_compooper"
+      ]
+    }
+  ]
+}
