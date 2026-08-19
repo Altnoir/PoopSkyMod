@@ -7,6 +7,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.world.phys.Vec2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -15,6 +16,7 @@ public final class BlocktrisGameState {
     public static final int VISIBLE_HEIGHT = 20;
     public static final int HIDDEN_TOP_ROWS = 4;
     public static final int GRID_HEIGHT = VISIBLE_HEIGHT + HIDDEN_TOP_ROWS;
+    private static final int[] KICK_OFFSETS = {-1, 1, -2, 2};
 
     private final int[][] grid = new int[GRID_WIDTH][GRID_HEIGHT];
     private Piece piece;
@@ -34,8 +36,8 @@ public final class BlocktrisGameState {
         }
     }
 
-    public void rotateCurrent() {
-        piece.rotate();
+    public boolean rotateCurrent() {
+        return piece.rotate();
     }
 
     public boolean moveCurrent(int dx, int dy) {
@@ -87,9 +89,8 @@ public final class BlocktrisGameState {
     }
 
     public void tickPlacementCooldown() {
-        placementCooldown--;
-        if (placementCooldown < 0) {
-            placementCooldown = 0;
+        if (placementCooldown > 0) {
+            placementCooldown--;
         }
     }
 
@@ -120,7 +121,7 @@ public final class BlocktrisGameState {
         ListTag rows = tag.getList("grid", 11);
         for (int y = 0; y < rows.size(); y++) {
             int[] row = rows.getIntArray(y);
-            for (int x = 0; x < row.length; x++) {
+            for (int x = 0; x < Math.min(row.length, GRID_WIDTH); x++) {
                 grid[x][y + HIDDEN_TOP_ROWS] = row[x];
             }
         }
@@ -138,10 +139,8 @@ public final class BlocktrisGameState {
     }
 
     private void clearGrid() {
-        for (int x = 0; x < GRID_WIDTH; x++) {
-            for (int y = 0; y < GRID_HEIGHT; y++) {
-                grid[x][y] = 0;
-            }
+        for (int[] column : grid) {
+            Arrays.fill(column, 0);
         }
     }
 
@@ -155,15 +154,20 @@ public final class BlocktrisGameState {
                     break;
                 }
             }
-            if (full) {
-                clearedLines++;
-                for (int line = y; line > 0; line--) {
-                    for (int x = 0; x < GRID_WIDTH; x++) {
-                        grid[x][line] = grid[x][line - 1];
-                    }
-                }
-                y++;
+            if (!full) {
+                continue;
             }
+
+            clearedLines++;
+            for (int line = y; line > 0; line--) {
+                for (int x = 0; x < GRID_WIDTH; x++) {
+                    grid[x][line] = grid[x][line - 1];
+                }
+            }
+            for (int x = 0; x < GRID_WIDTH; x++) {
+                grid[x][0] = 0;
+            }
+            y++;
         }
         return clearedLines;
     }
@@ -177,7 +181,7 @@ public final class BlocktrisGameState {
 
         private Piece(int type) {
             this.type = type;
-            this.variants = BlocktrisShapes.PIECES.get(type);
+            variants = BlocktrisShapes.PIECES.get(type);
         }
 
         private List<Vec2> cells() {
@@ -198,23 +202,38 @@ public final class BlocktrisGameState {
 
         private boolean move(int dx, int dy) {
             x += dx;
-            boolean blocked = touches();
-            if (blocked) {
-                x -= dx;
-            }
             y += dy;
-            if (touches()) {
-                y -= dy;
-                blocked = true;
+            if (!touches()) {
+                return false;
             }
-            return blocked;
+            x -= dx;
+            y -= dy;
+            return true;
         }
 
-        private void rotate() {
+        private boolean rotate() {
+            int oldRotation = rotation;
             rotation = (rotation + 1) % variants.size();
-            if (touches()) {
-                rotation = (rotation - 1 + variants.size()) % variants.size();
+            if (!touches()) {
+                return true;
             }
+
+            for (int dx : KICK_OFFSETS) {
+                x += dx;
+                if (!touches()) {
+                    return true;
+                }
+                x -= dx;
+            }
+
+            y--;
+            if (!touches()) {
+                return true;
+            }
+            y++;
+
+            rotation = oldRotation;
+            return false;
         }
 
         private void hardDrop() {

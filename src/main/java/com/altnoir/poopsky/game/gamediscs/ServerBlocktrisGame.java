@@ -8,6 +8,9 @@ import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.nbt.CompoundTag;
 
 public class ServerBlocktrisGame extends ServerGame {
+    private static final int MOVE_DELAY = 4;
+    private static final int MOVE_REPEAT = 2;
+
     private final BlocktrisGameState state = new BlocktrisGameState();
 
     @Override
@@ -28,37 +31,31 @@ public class ServerBlocktrisGame extends ServerGame {
         if (stage != GameStage.PLAYING) {
             return;
         }
+
         switch (button) {
             case LEFT -> {
-                if (!state.moveCurrent(-1, 0)) {
-                    playSound(PoSoundEvents.SHOOT.get(), 2.5F, 0.1F);
-                }
-                state.setPlacementCooldown(10);
+                moveHorizontal(-1);
+                state.setPlacementCooldown(MOVE_DELAY);
             }
             case RIGHT -> {
-                if (!state.moveCurrent(1, 0)) {
-                    playSound(PoSoundEvents.SHOOT.get(), 2.5F, 0.1F);
-                }
-                state.setPlacementCooldown(10);
+                moveHorizontal(1);
+                state.setPlacementCooldown(MOVE_DELAY);
             }
             case DOWN -> {
                 if (state.moveCurrent(0, 1)) {
                     place();
-                } else {
-                    playSound(PoSoundEvents.SHOOT.get(), 2.5F, 0.1F);
-                    state.setPlacementCooldown(10);
                 }
             }
             case BUTTON1 -> {
                 state.hardDropCurrent();
                 playSound(PoSoundEvents.EXPLOSION.get(), 0.7F, 0.5F);
-                state.setPlacementCooldown(0);
                 place();
-                state.setPlacementCooldown(10);
+                state.setPlacementCooldown(MOVE_DELAY);
             }
             case UP, BUTTON2 -> {
-                state.rotateCurrent();
-                playSound(PoSoundEvents.SWING.get(), 1.5F, 0.5F);
+                if (state.rotateCurrent()) {
+                    playSound(PoSoundEvents.SWING.get(), 1.5F, 0.5F);
+                }
             }
             default -> {
             }
@@ -74,28 +71,31 @@ public class ServerBlocktrisGame extends ServerGame {
 
     @Override
     protected int gameTickDuration() {
-        return Math.max(1, (int) (10f / ((float) score / 50f + 1f)));
+        return Math.max(2, 10 - score / 10);
     }
 
     @Override
     protected void extraTick() {
-        state.tickPlacementCooldown();
-        if (stage != GameStage.PLAYING || ticks % 2 != 0 || state.getPlacementCooldown() > 0) {
+        if (stage != GameStage.PLAYING) {
             return;
         }
-        if (leftDown) {
-            if (!state.moveCurrent(-1, 0)) {
-                playSound(PoSoundEvents.SHOOT.get(), 2.5F, 0.1F);
-            }
-        }
-        if (rightDown) {
-            if (!state.moveCurrent(1, 0)) {
-                playSound(PoSoundEvents.SHOOT.get(), 2.5F, 0.1F);
-            }
-        }
+
         if (downDown && state.moveCurrent(0, 1)) {
-            playSound(PoSoundEvents.SHOOT.get(), 2.5F, 0.1F);
             place();
+            return;
+        }
+
+        state.tickPlacementCooldown();
+        if (ticks % MOVE_REPEAT != 0 || state.getPlacementCooldown() > 0 || leftDown == rightDown) {
+            return;
+        }
+
+        moveHorizontal(leftDown ? -1 : 1);
+    }
+
+    private void moveHorizontal(int direction) {
+        if (!state.moveCurrent(direction, 0)) {
+            playSound(PoSoundEvents.SHOOT.get(), 2.5F, 0.1F);
         }
     }
 

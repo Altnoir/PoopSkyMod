@@ -10,20 +10,22 @@ public final class PongGameState {
     private static final int BALL_SIZE = 4;
     private static final double PLAYER_X = 10;
     private static final double OPPONENT_X = Game.WIDTH - 15;
+    private static final double PLAYER_SPEED = 4;
+    private static final double OPPONENT_SPEED = 2.7;
+    private static final double OPPONENT_DEAD_ZONE = 2;
     private static final double INITIAL_BALL_X = 110;
     private static final double INITIAL_BALL_Y = 78;
     private static final int INITIAL_BALL_TIMER = 60;
-    private static final float INITIAL_BALL_SPEED = 3.0F;
+    private static final double INITIAL_BALL_SPEED = 3;
 
     private double playerY = 70;
     private double opponentY = 70;
     private double ballX = INITIAL_BALL_X;
     private double ballY = INITIAL_BALL_Y;
-    private double ballVX = 2;
-    private double ballVY = 2;
+    private double ballVX = INITIAL_BALL_SPEED;
+    private double ballVY = INITIAL_BALL_SPEED;
     private int opponentScore;
     private int ballTimer = INITIAL_BALL_TIMER;
-    private float ballSpeed = INITIAL_BALL_SPEED;
 
     public void prepare(Random random) {
         playerY = 70;
@@ -31,30 +33,19 @@ public final class PongGameState {
         ballX = INITIAL_BALL_X;
         ballY = INITIAL_BALL_Y;
         opponentScore = 0;
-        ballTimer = INITIAL_BALL_TIMER;
-        ballSpeed = INITIAL_BALL_SPEED;
         resetBall(random);
     }
 
-    public TickResult tick(int gameTicks, boolean up, boolean down, Random random) {
-        if (gameTicks % 20 == 0) {
-            ballSpeed += 0.1F;
-        }
+    public TickResult tick(boolean up, boolean down, Random random) {
         if (up) {
-            playerY -= 3;
+            playerY -= PLAYER_SPEED;
         }
         if (down) {
-            playerY += 3;
+            playerY += PLAYER_SPEED;
         }
         playerY = Math.clamp(playerY, 0, Game.HEIGHT - PADDLE_HEIGHT);
 
-        if (ballY < opponentY + 10) {
-            opponentY -= 3;
-        }
-        if (ballY > opponentY + 10) {
-            opponentY += 3;
-        }
-        opponentY = Math.clamp(opponentY, 0, Game.HEIGHT - PADDLE_HEIGHT);
+        updateOpponent();
 
         if (ballTimer > 0) {
             ballTimer--;
@@ -67,15 +58,21 @@ public final class PongGameState {
         boolean wallBounce = false;
         boolean playerBounce = false;
         boolean opponentBounce = false;
+
         if (ballY <= 0 || ballY >= Game.HEIGHT - BALL_SIZE) {
+            ballY = Math.clamp(ballY, 0, Game.HEIGHT - BALL_SIZE);
             ballVY = -ballVY;
             wallBounce = true;
         }
-        if (ballX <= PLAYER_X + 5 && ballY + BALL_SIZE >= playerY && ballY <= playerY + PADDLE_HEIGHT) {
+        if (ballVX < 0 && ballX <= PLAYER_X + 5 && ballX + BALL_SIZE >= PLAYER_X
+                && ballY + BALL_SIZE >= playerY && ballY <= playerY + PADDLE_HEIGHT) {
+            ballX = PLAYER_X + 5;
             ballVX = Math.abs(ballVX);
             playerBounce = true;
         }
-        if (ballX + BALL_SIZE >= OPPONENT_X && ballY + BALL_SIZE >= opponentY && ballY <= opponentY + PADDLE_HEIGHT) {
+        if (ballVX > 0 && ballX + BALL_SIZE >= OPPONENT_X && ballX <= OPPONENT_X + 5
+                && ballY + BALL_SIZE >= opponentY && ballY <= opponentY + PADDLE_HEIGHT) {
+            ballX = OPPONENT_X - BALL_SIZE;
             ballVX = -Math.abs(ballVX);
             opponentBounce = true;
         }
@@ -91,6 +88,18 @@ public final class PongGameState {
         }
 
         return new TickResult(wallBounce, playerBounce, opponentBounce, false, false);
+    }
+
+    private void updateOpponent() {
+        double targetY = ballVX > 0 && ballTimer == 0
+                ? ballY + (double) BALL_SIZE / 2 - (double) PADDLE_HEIGHT / 2
+                : (double) (Game.HEIGHT - PADDLE_HEIGHT) / 2;
+        double delta = targetY - opponentY;
+
+        if (Math.abs(delta) > OPPONENT_DEAD_ZONE) {
+            opponentY += Math.copySign(Math.min(Math.abs(delta), OPPONENT_SPEED), delta);
+        }
+        opponentY = Math.clamp(opponentY, 0, Game.HEIGHT - PADDLE_HEIGHT);
     }
 
     public double getPlayerY() {
@@ -133,17 +142,13 @@ public final class PongGameState {
         ballY = tag.getDouble("ballY");
         opponentScore = tag.getInt("opponentScore");
         ballTimer = tag.getInt("ballTimer");
-        ballVX = 2;
-        ballVY = 2;
-        ballSpeed = INITIAL_BALL_SPEED;
     }
 
     private void resetBall(Random random) {
         ballX = INITIAL_BALL_X;
         ballY = INITIAL_BALL_Y;
-        ballSpeed = INITIAL_BALL_SPEED;
-        ballVX = random.nextBoolean() ? ballSpeed : -ballSpeed;
-        ballVY = random.nextBoolean() ? ballSpeed : -ballSpeed;
+        ballVX = random.nextBoolean() ? INITIAL_BALL_SPEED : -INITIAL_BALL_SPEED;
+        ballVY = random.nextBoolean() ? INITIAL_BALL_SPEED : -INITIAL_BALL_SPEED;
         ballTimer = INITIAL_BALL_TIMER;
     }
 

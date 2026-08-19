@@ -17,14 +17,11 @@ public class ServerPongGame extends ServerGame {
 
     @Override
     protected void gameTick() {
-        PongGameState.TickResult result = state.tick(ticks, upDown, downDown, random);
+        PongGameState.TickResult result = state.tick(upDown, downDown, random);
         if (result.wallBounce()) {
             playSound(PoSoundEvents.JUMP.get(), 0.8F, 0.8F);
         }
-        if (result.playerBounce()) {
-            playSound(PoSoundEvents.JUMP.get(), 1.0F, 1.0F);
-        }
-        if (result.opponentBounce()) {
+        if (result.playerBounce() || result.opponentBounce()) {
             playSound(PoSoundEvents.JUMP.get(), 1.0F, 1.0F);
         }
         if (result.playerScored()) {
