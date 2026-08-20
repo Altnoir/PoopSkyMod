@@ -16,9 +16,15 @@
       "recipe": "poopsky:sieve_stable"
     },
     {
+      "type": "patchouli:crafting",
+      "title": "Building Branches",
+      "recipe": "minecraft:mossy_cobblestone_slab",
+      "recipe2": "minecraft:mossy_cobblestone_wall",
+      "text": "Mossy cobblestone slabs build the compooper, while mossy cobblestone walls build the sieve stable."
+    },
+    {
       "type": "patchouli:relations",
       "entries": [
-        "poopsky:first_steps/mossy_cobblestone",
         "poopsky:first_steps/string",
         "poopsky:second_steps/cactus",
         "poopsky:second_steps/iron"

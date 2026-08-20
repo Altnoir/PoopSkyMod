@@ -18,7 +18,6 @@
     {
       "type": "patchouli:relations",
       "entries": [
-        "poopsky:first_steps/mossy_cobblestone",
         "poopsky:first_steps/string",
         "poopsky:second_steps/cactus",
         "poopsky:second_steps/iron"

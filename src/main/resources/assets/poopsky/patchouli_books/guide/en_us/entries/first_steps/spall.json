@@ -20,7 +20,8 @@
     {
       "type": "patchouli:relations",
       "entries": [
-        "poopsky:first_steps/mossy_cobblestone"
+        "poopsky:first_steps/compooper",
+        "poopsky:first_steps/sieve_stable"
       ]
     }
   ]
