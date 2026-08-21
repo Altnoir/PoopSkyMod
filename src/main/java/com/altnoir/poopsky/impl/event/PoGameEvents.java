@@ -15,10 +15,14 @@ import com.altnoir.poopsky.content.villager.PVillagerBehaviors;
 import com.altnoir.poopsky.impl.PoAnimationSavedData;
 import com.altnoir.poopsky.impl.command.PoCommands;
 import com.altnoir.poopsky.impl.network.PoAnimation;
+import com.altnoir.poopsky.impl.network.UnpoopingTotemActivationPayload;
+import com.altnoir.poopsky.impl.util.PoopTntUtil;
 import com.altnoir.poopsky.impl.util.ToiletUtil;
+import com.altnoir.poopsky.impl.util.TotemEffectUtil;
 import com.altnoir.poopsky.init.*;
 import com.altnoir.poopsky.worldgen.PoVoidChunkGenerator;
 import com.altnoir.poopsky.worldgen.structure.PoopIslandStructure;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -29,6 +33,9 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
+import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -51,6 +58,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.storage.LevelData;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
@@ -58,6 +66,7 @@ import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
@@ -65,6 +74,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.Set;
 
@@ -80,6 +90,7 @@ public class PoGameEvents {
         gameEventBus.addListener(PoGameEvents::onAddReloadListener);
         gameEventBus.addListener(PoGameEvents::onEntityTick);
         gameEventBus.addListener(PoGameEvents::onFinalizeSpawn);
+        gameEventBus.addListener(PoGameEvents::onLivingDeath);
         gameEventBus.addListener(PoGameEvents::onCreateSpawnToilet);
         gameEventBus.addListener(PoGameEvents::onPlayerLoggedIn);
         gameEventBus.addListener(PoGameEvents::onPlayerLoggedOut);
@@ -301,6 +312,47 @@ public class PoGameEvents {
         player.setForcedPose(Pose.SWIMMING);
         player.setPose(Pose.SWIMMING);
         server.schedule(new TickTask(server.getTickCount() + 1, () -> player.setForcedPose(null)));
+    }
+
+    public static void onLivingDeath(LivingDeathEvent event) {
+        LivingEntity entity = event.getEntity();
+        if (entity.level().isClientSide() || event.getSource().is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
+            return;
+        }
+
+        InteractionHand hand = null;
+        for (InteractionHand possibleHand : InteractionHand.values()) {
+            if (entity.getItemInHand(possibleHand).is(PoItems.TOTEM_OF_UNPOOPING.get())) {
+                hand = possibleHand;
+                break;
+            }
+        }
+        if (hand == null) {
+            return;
+        }
+
+        ItemStack totem = entity.getItemInHand(hand).copy();
+        entity.getItemInHand(hand).shrink(1);
+        event.setCanceled(true);
+
+        entity.setHealth(1.0F);
+        entity.removeAllEffects();
+        entity.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 1));
+        entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 200, 0));
+        entity.setDeltaMovement(entity.getDeltaMovement().add(new Vec3(0, 1.6, 0)));
+
+        if (entity instanceof ServerPlayer serverPlayer) {
+            serverPlayer.awardStat(Stats.ITEM_USED.get(PoItems.TOTEM_OF_UNPOOPING.get()));
+            CriteriaTriggers.USED_TOTEM.trigger(serverPlayer, totem);
+            entity.gameEvent(GameEvent.ITEM_INTERACT_FINISH);
+            PacketDistributor.sendToPlayer(serverPlayer, new UnpoopingTotemActivationPayload(totem));
+        }
+        if (entity.level() instanceof ServerLevel serverLevel) {
+            TotemEffectUtil.spawnActivationParticles(serverLevel, entity.position());
+            TotemEffectUtil.playActivationSound(serverLevel, entity.position());
+        }
+
+        PoopTntUtil.triggerExplosion(entity, 6);
     }
 
     public static void onServerTick(ServerTickEvent.Post event) {

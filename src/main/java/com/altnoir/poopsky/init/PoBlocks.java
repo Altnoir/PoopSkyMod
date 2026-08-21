@@ -581,7 +581,6 @@ public class PoBlocks {
                     .randomTicks()
                     .ignitedByLava()),
             (loot, block) -> loot.add(block, createToiletDrop(block)));
-
     public static final BlockEntry<HardToiletBlock> HARD_TOILET = registerToiletBlock("hard_toilet", ToiletType.Category.HARD,
             props -> new HardToiletBlock(toiletProperties(MapColor.STONE, HARD_STRENGTH, SoundType.STONE, NoteBlockInstrument.BASEDRUM)
                     .lightLevel(lavaLightLevel())
@@ -929,7 +928,10 @@ public class PoBlocks {
     private static BlockEntry<ArcadeBlock> registerArcadeBlock(String name, DyeColor color) {
         BlockEntry<ArcadeBlock> entry = registerBlock(name, 64,
                 props -> new ArcadeBlock(props.mapColor(color).strength(HARDEN, HARD_STRENGTH)
-                        .sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion()));
+                        .sound(SoundType.NETHERITE_BLOCK)
+                        .requiresCorrectToolForDrops()
+                        .noOcclusion()),
+                (loot, block) -> loot.add(block, loot.createDoorTable(block)));
         ARCADE_BLOCKS.add(entry);
         return entry;
     }

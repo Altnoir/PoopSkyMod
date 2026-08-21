@@ -191,7 +191,6 @@ public final class RecipeGen {
                 .requires(Items.EGG).requires(Items.SUGAR)
                 .unlockedBy(getItemName(PoItems.POOP_BALL), has(PoItems.POOP_BALL))
                 .save(recipeOutput);
-
         provider.shaped(RecipeCategory.FOOD, PoBlocks.POOP_CAKE.get())
                 .pattern("MMM")
                 .pattern("SES")
@@ -200,6 +199,17 @@ public final class RecipeGen {
                 .define('S', Items.SUGAR).define('E', Items.EGG)
                 .define('P', PoItems.POOP)
                 .unlockedBy(getItemName(PoItems.MAGGOTS_SEEDS), has(PoItems.MAGGOTS_SEEDS))
+                .save(recipeOutput);
+
+        provider.shapeless(RecipeCategory.BUILDING_BLOCKS, PoBlocks.MUSHROOM_BED.get())
+                .requires(Items.BROWN_MUSHROOM)
+                .requires(Items.RED_MUSHROOM)
+                .unlockedBy(getItemName(Items.BROWN_MUSHROOM), has(Items.BROWN_MUSHROOM))
+                .save(recipeOutput);
+        provider.shapeless(RecipeCategory.FOOD, Items.MUSHROOM_STEW)
+                .requires(PoBlocks.MUSHROOM_BED.get())
+                .requires(Items.BOWL)
+                .unlockedBy(getItemName(PoBlocks.MUSHROOM_BED.get()), has(PoBlocks.MUSHROOM_BED.get()))
                 .save(recipeOutput);
     }
 
@@ -217,7 +227,7 @@ public final class RecipeGen {
                 .requires(Items.ENDER_EYE)
                 .unlockedBy(getItemName(Items.ENDER_EYE), has(Items.ENDER_EYE))
                 .save(recipeOutput);
-        provider.shaped(RecipeCategory.MISC, PoItems.RETURN_TOTEM.get())
+        provider.shaped(RecipeCategory.MISC, PoItems.RETURN_TOTEM.get(), 8)
                 .pattern(" S ")
                 .pattern("GEG")
                 .pattern(" G ")
@@ -225,6 +235,21 @@ public final class RecipeGen {
                 .define('S', PoBlocks.SHIT)
                 .define('E', Items.ECHO_SHARD)
                 .unlockedBy(getItemName(Items.ECHO_SHARD), has(Items.ECHO_SHARD))
+                .save(recipeOutput);
+        provider.shaped(RecipeCategory.MISC, PoItems.TOTEM_OF_UNPOOPING.get(), 8)
+                .pattern("S")
+                .pattern("E")
+                .define('S', PoBlocks.SHIT)
+                .define('E', Items.ENCHANTED_GOLDEN_APPLE)
+                .unlockedBy(getItemName(Items.ENCHANTED_GOLDEN_APPLE), has(Items.ENCHANTED_GOLDEN_APPLE))
+                .save(recipeOutput);
+        provider.shaped(RecipeCategory.MISC, PoItems.TOKEN.get(), 4)
+                .pattern("RRR")
+                .pattern("RER")
+                .pattern("RRR")
+                .define('R', PoItems.ROUNDWORM.get())
+                .define('E', Items.NAUTILUS_SHELL)
+                .unlockedBy(getItemName(PoItems.ROUNDWORM), has(PoItems.ROUNDWORM))
                 .save(recipeOutput);
         provider.shapeless(RecipeCategory.MISC, PoItems.TIME_BELL)
                 .requires(Items.BELL)
@@ -243,6 +268,11 @@ public final class RecipeGen {
                 .define('I', Items.IRON_INGOT)
                 .define('T', PoBlocks.GOLDEN_FLUSH_TOILET)
                 .unlockedBy(getItemName(PoBlocks.GOLDEN_FLUSH_TOILET), has(PoBlocks.GOLDEN_FLUSH_TOILET))
+                .save(recipeOutput);
+        provider.shapeless(RecipeCategory.MISC, PoItems.LAWRENCE_MUSIC_DISC)
+                .requires(Tags.Items.MUSIC_DISCS)
+                .requires(PoItems.POOP)
+                .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP))
                 .save(recipeOutput);
 
         provider.shaped(RecipeCategory.BUILDING_BLOCKS, Items.COBWEB)
@@ -416,12 +446,14 @@ public final class RecipeGen {
                 .unlockedBy(getItemName(PoBlocks.POOP_SLAB), has(PoBlocks.POOP_SLAB))
                 .save(recipeOutput);
 
-        provider.shapeless(RecipeCategory.BUILDING_BLOCKS, PoItems.LAWRENCE_MUSIC_DISC)
-                .requires(Tags.Items.MUSIC_DISCS)
-                .requires(PoItems.POOP)
-                .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP))
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOPSKY_BLOCK)
+                .pattern("RRR")
+                .pattern("RSR")
+                .pattern("RRR")
+                .define('R', PoItems.ROUNDWORM.get())
+                .define('S', PoTags.Items.SHITS)
+                .unlockedBy(getItemName(PoItems.ROUNDWORM), has(PoItems.ROUNDWORM))
                 .save(recipeOutput);
-
         provider.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_CRAFTING_TABLE, 8)
                 .pattern("PP")
                 .define('P', PoBlocks.POOP_BLOCK)
@@ -461,12 +493,13 @@ public final class RecipeGen {
                 .unlockedBy(getItemName(PoItems.KING_OF_DRAGON_FRUIT), has(PoItems.KING_OF_DRAGON_FRUIT))
                 .save(recipeOutput);
         provider.shaped(RecipeCategory.MISC, PoItems.FLY_CATCHER)
-                .pattern("RR")
-                .pattern("RS")
-                .pattern(" S")
+                .pattern("RRD")
+                .pattern("RS ")
+                .pattern("S  ")
                 .define('R', PoItems.ROUNDWORM)
                 .define('S', Items.STICK)
-                .unlockedBy(getItemName(PoItems.ROUNDWORM), has(PoItems.ROUNDWORM))
+                .define('D', Items.DIAMOND)
+                .unlockedBy(getItemName(Items.DIAMOND), has(Items.DIAMOND))
                 .save(recipeOutput);
         provider.shapeless(RecipeCategory.REDSTONE, PoBlocks.FLY_BARREL)
                 .requires(Items.BARREL)
@@ -490,6 +523,15 @@ public final class RecipeGen {
                 .define('M', PoBlocks.MAGGOTS_BLOCK)
                 .define('C', PoBlocks.CUT_POOP_BLOCK)
                 .unlockedBy(getItemName(PoBlocks.MAGGOTS_BLOCK), has(PoBlocks.MAGGOTS_BLOCK))
+                .save(recipeOutput);
+
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.GACHA_MACHINE)
+                .pattern("III")
+                .pattern("IEI")
+                .pattern("III")
+                .define('I', Items.IRON_INGOT)
+                .define('E', PoTags.Items.EGG)
+                .unlockedBy(getItemName(Items.IRON_INGOT), has(Items.IRON_INGOT))
                 .save(recipeOutput);
 
         offer2x2CompactingRecipe(recipeOutput, PoBlocks.POOLIME_BLOCK.get(), PoItems.POOP_BALL.get());
