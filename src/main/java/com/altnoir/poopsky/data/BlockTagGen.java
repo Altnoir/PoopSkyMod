@@ -293,6 +293,7 @@ public final class BlockTagGen {
                 PoBlocks.PLACER.get(),
                 PoBlocks.BREEDING_CHEST.get(),
                 PoBlocks.MAGGOTS_CHUNK_LOADER.get(),
+                PoBlocks.BROWN_ARCADE.get(),
                 PoBlocks.RED_ARCADE.get(),
                 PoBlocks.BLUE_ARCADE.get(),
                 PoBlocks.GACHA_MACHINE.get(),

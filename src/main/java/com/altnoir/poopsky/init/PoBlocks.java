@@ -551,6 +551,7 @@ public class PoBlocks {
                     .lightLevel(state -> 1)),
             RegistrateBlockLootTables::dropWhenSilkTouch);
 
+    public static final BlockEntry<ArcadeBlock> BROWN_ARCADE = registerArcadeBlock("brown_arcade", DyeColor.BROWN);
     public static final BlockEntry<ArcadeBlock> RED_ARCADE = registerArcadeBlock("red_arcade", DyeColor.RED);
     public static final BlockEntry<ArcadeBlock> BLUE_ARCADE = registerArcadeBlock("blue_arcade", DyeColor.BLUE);
     public static final BlockEntry<GachaBlock> GACHA_MACHINE = registerBlock("gacha_machine", 64,

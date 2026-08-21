@@ -123,6 +123,7 @@ public class PoopSky {
             DispenserBlock.registerProjectileBehavior(PoItems.POOP_BALL);
             DispenserBlock.registerProjectileBehavior(PoItems.SEA_POOP_BALL);
             DispenserBlock.registerProjectileBehavior(PoItems.WITHER_POOP_BALL);
+            DispenserBlock.registerProjectileBehavior(PoItems.GASHAPON);
             DispenserBlock.registerBehavior(PoBlocks.SHIT.asItem(), ArmorItem.DISPENSE_ITEM_BEHAVIOR);
             DispenserBlock.registerBehavior(PoBlocks.CHILI_SHIT.asItem(), ArmorItem.DISPENSE_ITEM_BEHAVIOR);
             DispenserBlock.registerBehavior(PoBlocks.GOLDEN_SHIT.asItem(), ArmorItem.DISPENSE_ITEM_BEHAVIOR);

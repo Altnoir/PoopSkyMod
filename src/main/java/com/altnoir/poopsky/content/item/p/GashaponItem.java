@@ -27,7 +27,6 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Objects;
 
 public class GashaponItem extends Item implements ProjectileItem {
     public static final String PINK = "pink";
@@ -62,6 +61,11 @@ public class GashaponItem extends Item implements ProjectileItem {
         return stack.get(PoComponents.GASHAPON_MOB.get());
     }
 
+    private static String getMobIdOrDefault(ItemStack stack) {
+        String mobId = getMobId(stack);
+        return mobId != null ? mobId : "";
+    }
+
     public static int getColorModelData(String color) {
         return switch (color) {
             case YELLOW -> 1;
@@ -77,7 +81,7 @@ public class GashaponItem extends Item implements ProjectileItem {
         if (!level.isClientSide) {
             GashaponEntity projectile = new GashaponEntity(level, player);
             projectile.setVariant(GashaponEntity.variantFromColor(getColor(itemstack)));
-            projectile.setMobId(Objects.requireNonNull(getMobId(itemstack)));
+            projectile.setMobId(getMobIdOrDefault(itemstack));
             projectile.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 1.5F, 1.0F);
             level.addFreshEntity(projectile);
         }
@@ -92,7 +96,7 @@ public class GashaponItem extends Item implements ProjectileItem {
     public Projectile asProjectile(Level level, Position position, ItemStack itemStack, Direction direction) {
         GashaponEntity projectile = new GashaponEntity(level, position.x(), position.y(), position.z());
         projectile.setVariant(GashaponEntity.variantFromColor(getColor(itemStack)));
-        projectile.setMobId(Objects.requireNonNull(getMobId(itemStack)));
+        projectile.setMobId(getMobIdOrDefault(itemStack));
         return projectile;
     }
 

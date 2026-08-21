@@ -4,6 +4,8 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.item.p.GashaponItem;
 import com.altnoir.poopsky.init.PoEntityType;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -64,6 +66,22 @@ public class GashaponEntity extends ThrowableProjectile {
         this.entityData.set(DATA_MOB_ID, mobId);
     }
 
+    private ParticleOptions getHitParticle() {
+        return ParticleTypes.ITEM_SNOWBALL;
+    }
+
+    @Override
+    public void handleEntityEvent(byte id) {
+        if (id == 3) {
+            ParticleOptions particle = this.getHitParticle();
+            for (int i = 0; i < 8; i++) {
+                this.level().addParticle(particle, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
+            }
+        } else {
+            super.handleEntityEvent(id);
+        }
+    }
+
     public static byte variantFromColor(String color) {
         return switch (color) {
             case GashaponItem.RED -> 1;
@@ -91,7 +109,11 @@ public class GashaponEntity extends ThrowableProjectile {
     protected void onHit(HitResult result) {
         super.onHit(result);
         if (!this.level().isClientSide) {
-            this.spawnMob();
+            if (this.getMobId().isBlank()) {
+                this.level().broadcastEntityEvent(this, (byte) 3);
+            } else {
+                this.spawnMob();
+            }
             this.discard();
         }
     }
