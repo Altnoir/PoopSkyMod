@@ -136,8 +136,8 @@ public final class PongGameState {
     }
 
     public void applySnapshot(CompoundTag tag) {
-        playerY = tag.getDoubleOr("playerY", INITIAL_PLAYER_Y);
-        opponentY = tag.getDoubleOr("opponentY", INITIAL_PLAYER_Y);
+        playerY = tag.getDoubleOr("playerY", 70.0);
+        opponentY = tag.getDoubleOr("opponentY", 70.0);
         ballX = tag.getDoubleOr("ballX", INITIAL_BALL_X);
         ballY = tag.getDoubleOr("ballY", INITIAL_BALL_Y);
         opponentScore = tag.getIntOr("opponentScore", 0);

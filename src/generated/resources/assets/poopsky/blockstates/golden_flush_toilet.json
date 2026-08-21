@@ -1,62 +1,32 @@
 {
   "variants": {
-    "closed=false,facing=east,powered=false": {
+    "closed=false,facing=east": {
       "model": "poopsky:block/golden_flush_toilet",
       "y": 90
     },
-    "closed=false,facing=east,powered=true": {
-      "model": "poopsky:block/golden_flush_toilet",
-      "y": 90
-    },
-    "closed=false,facing=north,powered=false": {
+    "closed=false,facing=north": {
       "model": "poopsky:block/golden_flush_toilet"
     },
-    "closed=false,facing=north,powered=true": {
-      "model": "poopsky:block/golden_flush_toilet"
-    },
-    "closed=false,facing=south,powered=false": {
+    "closed=false,facing=south": {
       "model": "poopsky:block/golden_flush_toilet",
       "y": 180
     },
-    "closed=false,facing=south,powered=true": {
-      "model": "poopsky:block/golden_flush_toilet",
-      "y": 180
-    },
-    "closed=false,facing=west,powered=false": {
+    "closed=false,facing=west": {
       "model": "poopsky:block/golden_flush_toilet",
       "y": 270
     },
-    "closed=false,facing=west,powered=true": {
-      "model": "poopsky:block/golden_flush_toilet",
-      "y": 270
-    },
-    "closed=true,facing=east,powered=false": {
+    "closed=true,facing=east": {
       "model": "poopsky:block/golden_flush_toilet_close",
       "y": 90
     },
-    "closed=true,facing=east,powered=true": {
-      "model": "poopsky:block/golden_flush_toilet_close",
-      "y": 90
-    },
-    "closed=true,facing=north,powered=false": {
+    "closed=true,facing=north": {
       "model": "poopsky:block/golden_flush_toilet_close"
     },
-    "closed=true,facing=north,powered=true": {
-      "model": "poopsky:block/golden_flush_toilet_close"
-    },
-    "closed=true,facing=south,powered=false": {
+    "closed=true,facing=south": {
       "model": "poopsky:block/golden_flush_toilet_close",
       "y": 180
     },
-    "closed=true,facing=south,powered=true": {
-      "model": "poopsky:block/golden_flush_toilet_close",
-      "y": 180
-    },
-    "closed=true,facing=west,powered=false": {
-      "model": "poopsky:block/golden_flush_toilet_close",
-      "y": 270
-    },
-    "closed=true,facing=west,powered=true": {
+    "closed=true,facing=west": {
       "model": "poopsky:block/golden_flush_toilet_close",
       "y": 270
     }

@@ -50,7 +50,7 @@ public class ServerRoundwormGame extends ServerGame {
             }
             case ATE -> {
                 score++;
-                playSound(SoundEvents.GENERIC_EAT, 0.8F, 0.8F);
+                playSound(SoundEvents.GENERIC_EAT.value(), 0.8F, 0.8F);
             }
             case MOVED -> {
             }

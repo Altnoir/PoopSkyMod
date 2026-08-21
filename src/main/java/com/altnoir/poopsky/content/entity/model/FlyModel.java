@@ -14,6 +14,7 @@ import net.minecraft.util.Mth;
 
 public class FlyModel extends EntityModel<FlyRenderState> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(PoopSky.loc("fly"), "main");
+    public static final ModelLayerLocation MAGGOT_LAYER_LOCATION = new ModelLayerLocation(PoopSky.loc("maggot"), "main");
 
     private final ModelPart bone;
     private final ModelPart body;
@@ -22,6 +23,7 @@ public class FlyModel extends EntityModel<FlyRenderState> {
     private final ModelPart frontLeg;
     private final ModelPart midLeg;
     private final ModelPart backLeg;
+    private ModelPart maggot;
     public FlyModel(ModelPart root) {
         super(root);
         this.bone = root.getChild("bone");
@@ -31,6 +33,20 @@ public class FlyModel extends EntityModel<FlyRenderState> {
         this.frontLeg = this.body.getChild("leg_front");
         this.midLeg = this.body.getChild("leg_mid");
         this.backLeg = this.body.getChild("leg_back");
+        this.maggot = null;
+    }
+
+    public FlyModel(ModelPart root, ModelPart maggot) {
+        this(root);
+        this.maggot = maggot;
+    }
+
+    public static LayerDefinition createMaggotBodyLayer() {
+        MeshDefinition mesh = new MeshDefinition();
+        PartDefinition root = mesh.getRoot().addOrReplaceChild("maggot", CubeListBuilder.create(), PartPose.offset(0, 20, 0));
+        float[][] boxes = {{-1.5F,0,-3.5F,3,2,2},{-2,0,-1.5F,4,3,2},{-3,0,1,6,4,3},{-1.5F,0,4,3,3,3},{-1,0,7,2,2,3},{-1,0,9.5F,2,1,2},{-.5F,0,11.5F,1,1,2}};
+        for (int i=0;i<boxes.length;i++) { float[] b=boxes[i]; root.addOrReplaceChild("segment"+i, CubeListBuilder.create().texOffs(0, i*4).addBox(b[0],b[1],b[2],b[3],b[4],b[5]), PartPose.ZERO); }
+        return LayerDefinition.create(mesh, 32, 32);
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -66,6 +82,10 @@ public class FlyModel extends EntityModel<FlyRenderState> {
 
     public void setupAnim(FlyRenderState state) {
         this.resetPose();
+        if (state.isBaby && this.maggot != null) {
+            this.maggot.xRot = Mth.sin(state.ageInTicks * 0.3F) * 0.08F;
+            return;
+        }
         if (state.isStationaryOnGround) {
             this.rightWing.yRot = -0.2618F;
             this.rightWing.zRot = 0.0F;

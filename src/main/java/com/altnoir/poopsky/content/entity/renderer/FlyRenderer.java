@@ -12,12 +12,13 @@ public class FlyRenderer extends MobRenderer<FlyEntity, FlyRenderState, FlyModel
 
 
     public FlyRenderer(EntityRendererProvider.Context context) {
-        super(context, new FlyModel(context.bakeLayer(FlyModel.LAYER_LOCATION)), 0.4F);
+        super(context, new FlyModel(context.bakeLayer(FlyModel.LAYER_LOCATION),
+                context.bakeLayer(FlyModel.MAGGOT_LAYER_LOCATION).getChild("maggot")), 0.4F);
     }
 
     @Override
     public Identifier getTextureLocation(FlyRenderState state) {
-        return PoopSky.loc("textures/entity/fly.png");
+        return PoopSky.loc(state.isBaby ? "textures/entity/maggot.png" : "textures/entity/fly.png");
     }
 
     @Override

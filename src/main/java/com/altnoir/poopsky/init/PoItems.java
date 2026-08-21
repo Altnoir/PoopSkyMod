@@ -11,6 +11,7 @@ import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -21,6 +22,8 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.IntStream;
 
 public class PoItems {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
@@ -104,7 +107,7 @@ public class PoItems {
             props -> new Item(props.stacksTo(8)));
     public static final ItemEntry<TokenItem> TOKEN = registerItem("token",
             props -> new TokenItem(props.stacksTo(88)));
-    public static final ItemEntry<GashaponItem> GASHAPON = registerItem("gashapon",
+    public static final ItemEntry<GashaponItem> GASHAPON = registerItemNoModel("gashapon",
             props -> new GashaponItem(props.stacksTo(16)));
     public static final ItemEntry<TimeBellItem> TIME_BELL = registerItem("time_bell",
             props -> new TimeBellItem(props.stacksTo(1)));
@@ -172,8 +175,36 @@ public class PoItems {
         var registrateItems = REGISTRATE.getAll(Registries.ITEM).stream()
                 .map(DeferredHolder::get)
                 .toList();
-
-        return new ArrayList<>(registrateItems);
+        ArrayList<Item> ordered = new ArrayList<>(registrateItems);
+        List<String> migratedOrder = List.of(
+                "maggots_block", "roundworm_block", "poop_log", "poop_wood", "poop_empty_log",
+                "stripped_poop_log", "stripped_poop_wood", "stripped_poop_empty_log", "ginkgo_log",
+                "ginkgo_wood", "stripped_ginkgo_log", "stripped_ginkgo_wood", "ginkgo_planks",
+                "ginkgo_stairs", "ginkgo_slab", "ginkgo_vertical_slab", "ginkgo_button",
+                "ginkgo_pressure_plate", "ginkgo_fence", "ginkgo_fence_gate", "ginkgo_door",
+                "ginkgo_trapdoor", "primo_stem", "primo_hyphae", "stripped_primo_stem",
+                "stripped_primo_hyphae", "primo_planks", "primo_stairs", "primo_slab",
+                "primo_vertical_slab", "primo_button", "primo_pressure_plate", "primo_fence",
+                "primo_fence_gate", "primo_door", "primo_trapdoor", "poop_leaves", "poop_leaves_iron",
+                "poop_leaves_gold", "ginkgo_leaves", "primo_cap", "glow_primo_cap", "poop_sapling",
+                "ginkgo_sapling", "primo_fungus", "glow_primo_fungus", "saltpeter_block",
+                "saltpeter_cluster", "large_saltpeter_bud", "medium_saltpeter_bud", "small_saltpeter_bud",
+                "red_arcade", "blue_arcade", "gacha_machine", "wooden_toilet", "hard_toilet",
+                "flush_toilet", "golden_flush_toilet", "ginkgo_toilet", "portable_toilet", "urine_liquid"
+        );
+        Map<String, Integer> ranks = IntStream.range(0, migratedOrder.size()).boxed()
+                .collect(java.util.stream.Collectors.toMap(migratedOrder::get, index -> index));
+        List<Item> migrated = ordered.stream()
+                .filter(item -> ranks.containsKey(BuiltInRegistries.ITEM.getKey(item).getPath()))
+                .sorted(java.util.Comparator.comparingInt(item -> ranks.get(BuiltInRegistries.ITEM.getKey(item).getPath())))
+                .toList();
+        int migratedIndex = 0;
+        for (int index = 0; index < ordered.size(); index++) {
+            if (ranks.containsKey(BuiltInRegistries.ITEM.getKey(ordered.get(index)).getPath())) {
+                ordered.set(index, migrated.get(migratedIndex++));
+            }
+        }
+        return ordered;
     }
 
     private static <T extends Item> ItemEntry<T> registerItem(String name, NonNullFunction<Item.Properties, T> factory) {

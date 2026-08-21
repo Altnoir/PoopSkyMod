@@ -77,7 +77,7 @@ public class PoItemGroups {
                 .lookup(Registries.ENTITY_TYPE)
                 .flatMap(registry -> registry.get(PoTags.EntityTypes.GASHAPON_MOB))
                 .ifPresent(holders -> holders.forEach(holder -> TS_MOBS.add(() ->
-                        GashaponItem.withColorAndMob(GashaponItem.PINK, Objects.requireNonNull(holder.getKey()).location().toString())
+                        GashaponItem.withColorAndMob(GashaponItem.PINK, Objects.requireNonNull(holder.getKey()).identifier().toString())
                 )));
         for (String id : FlyTypeManager.INSTANCE.getFlyTypes()) {
             if (isFlyVisible(id)) {

@@ -78,7 +78,7 @@ public class GachaBlock extends Block {
     private void dispense(ServerLevel level, BlockState state, BlockPos pos, RandomSource random) {
         Direction facing = state.getValue(FACING);
         var registry = level.registryAccess().lookupOrThrow(Registries.ENTITY_TYPE);
-        var mobs = registry.getTag(PoTags.EntityTypes.GASHAPON_MOB).orElse(null);
+        var mobs = registry.get(PoTags.EntityTypes.GASHAPON_MOB).orElse(null);
         if (mobs == null) {
             return;
         }

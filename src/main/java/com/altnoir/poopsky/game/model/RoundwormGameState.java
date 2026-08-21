@@ -89,14 +89,14 @@ public final class RoundwormGameState {
     }
 
     public void applySnapshot(CompoundTag tag) {
-        int[] xs = tag.getIntArray("roundwormX");
-        int[] ys = tag.getIntArray("roundwormY");
+        int[] xs = tag.getIntArray("roundwormX").orElseGet(() -> new int[0]);
+        int[] ys = tag.getIntArray("roundwormY").orElseGet(() -> new int[0]);
         body.clear();
         for (int i = 0; i < xs.length; i++) {
             body.add(new Vec2(xs[i], ys[i]));
         }
-        shit = new Vec2(tag.getInt("shitX"), tag.getInt("shitY"));
-        direction = new Vec2(tag.getInt("dirX"), tag.getInt("dirY"));
+        shit = new Vec2(tag.getIntOr("shitX", 0), tag.getIntOr("shitY", 0));
+        direction = new Vec2(tag.getIntOr("dirX", 1), tag.getIntOr("dirY", 0));
         nextDirection = null;
     }
 

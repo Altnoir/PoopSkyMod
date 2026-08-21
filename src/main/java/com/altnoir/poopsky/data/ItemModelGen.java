@@ -3,10 +3,12 @@ package com.altnoir.poopsky.data;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.PoopSkyClient;
 import com.altnoir.poopsky.client.model.FlyTypeItemModelProperty;
+import com.altnoir.poopsky.client.model.GashaponColorItemModelProperty;
 import com.altnoir.poopsky.client.model.ToiletTypeItemModelProperty;
 import com.altnoir.poopsky.client.renderer.ToiletPlugItemRenderer;
 import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.ToiletType;
+import com.altnoir.poopsky.content.item.p.GashaponItem;
 import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
@@ -58,6 +60,7 @@ public final class ItemModelGen {
 
     private static void generate(RegistrateItemModelGenerator prov) {
         flyItem(prov);
+        gashaponItem(prov);
         toiletPlugItem(prov);
         parentedItem(prov, PoItems.MILOS_SWORD.get(), PoopSky.loc("item/big_sword"));
         parentedItem(prov, PoItems.FLY_CATCHER.get(), prov.mcLoc("item/handheld_rod"));
@@ -89,6 +92,12 @@ public final class ItemModelGen {
         existingItemModel(prov, PoBlocks.GINKGO_FENCE_GATE.get().asItem());
         existingItemModel(prov, PoBlocks.GINKGO_TOILET.get().asItem());
         existingItemModel(prov, PoBlocks.PORTABLE_TOILET.get().asItem());
+        existingItemModel(prov, PoBlocks.PRIMO_DOOR.get().asItem());
+        existingItemModel(prov, PoBlocks.PRIMO_TRAPDOOR.get().asItem());
+        existingItemModel(prov, PoBlocks.PRIMO_FENCE.get().asItem());
+        existingItemModel(prov, PoBlocks.MUSHROOM_BED.get().asItem());
+        existingItemModel(prov, PoBlocks.RED_ARCADE.get().asItem());
+        existingItemModel(prov, PoBlocks.BLUE_ARCADE.get().asItem());
         existingItemModel(prov, PoBlocks.POOP_BLOCK.get().asItem());
         existingItemModel(prov, PoBlocks.RAW_POOP_BLOCK.get().asItem());
         existingItemModel(prov, PoBlocks.POOP_PIECE.get().asItem());
@@ -127,6 +136,22 @@ public final class ItemModelGen {
         prov.itemModelOutput.accept(PoItems.FLY.get(), ItemModelUtils.select(
                 FlyTypeItemModelProperty.INSTANCE,
                 ItemModelUtils.plainModel(normalModel),
+                cases));
+    }
+
+    private static void gashaponItem(RegistrateItemModelGenerator prov) {
+        Identifier pinkModel = flatModel(prov, "gashapon", PoopSky.loc("item/gashapon"));
+        List<net.minecraft.client.renderer.item.SelectItemModel.SwitchCase<String>> cases = List.of(
+                ItemModelUtils.when(GashaponItem.YELLOW,
+                        ItemModelUtils.plainModel(flatModel(prov, "gashapon_yellow", PoopSky.loc("item/gashapon_yellow")))),
+                ItemModelUtils.when(GashaponItem.RED,
+                        ItemModelUtils.plainModel(flatModel(prov, "gashapon_red", PoopSky.loc("item/gashapon_red")))),
+                ItemModelUtils.when(GashaponItem.BLUE,
+                        ItemModelUtils.plainModel(flatModel(prov, "gashapon_blue", PoopSky.loc("item/gashapon_blue"))))
+        );
+        prov.itemModelOutput.accept(PoItems.GASHAPON.get(), ItemModelUtils.select(
+                GashaponColorItemModelProperty.INSTANCE,
+                ItemModelUtils.plainModel(pinkModel),
                 cases));
     }
 

@@ -13,10 +13,12 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.SlabType;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 public class BlockStateGen extends LegacyBlockStateGenerator {
     public static final String PARTICLE = "particle";
@@ -53,10 +55,15 @@ public class BlockStateGen extends LegacyBlockStateGenerator {
         blockWithItem(PoBlocks.RAW_SAPLING_POOP_BLOCK.get());
         blockWithItem(PoBlocks.RAW_SEA_POOP_BLOCK.get());
         blockWithItem(PoBlocks.RAW_WITHER_POOP_BLOCK.get());
+        rotationYblockWithItem(PoBlocks.MYCELIUM_BLOCK.get());
+        multifaceBlock(PoBlocks.MYCELIUM_MAT.get());
+        flowerbedModels(PoBlocks.MUSHROOM_BED.get());
+        blockWithTranslucentRenderType(PoBlocks.POOPSKY_BLOCK.get());
         blockWithItem(PoBlocks.POOP_LEAVES.get());
         blockWithItem(PoBlocks.POOP_LEAVES_GOLD.get());
         blockWithItem(PoBlocks.POOP_LEAVES_IRON.get());
         ginkgoWoodSet();
+        primoFungusSet();
         blockWithItem(PoBlocks.SALTPETER_BLOCK.get());
         clusterBlock(PoBlocks.SALTPETER_CLUSTER.get());
         clusterBlock(PoBlocks.LARGE_SALTPETER_BUD.get());
@@ -89,6 +96,9 @@ public class BlockStateGen extends LegacyBlockStateGenerator {
         flushToilet(PoBlocks.GOLDEN_FLUSH_TOILET.get());
         portableToilet(PoBlocks.GINKGO_TOILET.get());
         portableToilet(PoBlocks.PORTABLE_TOILET.get());
+        arcade(PoBlocks.RED_ARCADE.get());
+        arcade(PoBlocks.BLUE_ARCADE.get());
+        gachaMachine(PoBlocks.GACHA_MACHINE.get());
         shitBlock(PoBlocks.SHIT.get(), PoBlocks.POOP_BLOCK.get());
         shitBlock(PoBlocks.CHILI_SHIT.get(), PoBlocks.CHILI_POOP_BLOCK.get());
         shitBlock(PoBlocks.GOLDEN_SHIT.get(), PoBlocks.GOLDEN_POOP_BLOCK.get());
@@ -102,6 +112,40 @@ public class BlockStateGen extends LegacyBlockStateGenerator {
         models().withExistingParent("water_compooper_item", modLoc("block/compooper_item"))
                 .texture("inside", mcLoc("block/water_still"))
                 .renderType("translucent");
+    }
+
+    private void rotationYblockWithItem(Block block) {
+        ModelFile model = models().cubeAll(getBlockPath(block), blockTexture(block));
+        getVariantBuilder(block).forAllStates(state -> new ConfiguredModel[]{
+                new ConfiguredModel(model, 0, 0, false, 1),
+                new ConfiguredModel(model, 0, 90, false, 1),
+                new ConfiguredModel(model, 0, 180, false, 1),
+                new ConfiguredModel(model, 0, 270, false, 1)
+        });
+        simpleBlockItem(block, model);
+    }
+
+    private void multifaceBlock(Block block) {
+        String path = getBlockPath(block);
+        Identifier texture = modLoc("block/" + path);
+        models().withExistingParent(path, mcLoc("block/block")).renderType("cutout")
+                .texture(PARTICLE, texture).texture("multiface", texture)
+                .element().from(0, 0, 0.1F).to(16, 16, 0.1F)
+                .allFaces((face, builder) -> builder.texture("#multiface")).end();
+        existingBlockstate(block);
+        generatedItem(block);
+    }
+
+    private void flowerbedModels(Block block) {
+        String path = getBlockPath(block);
+        for (int amount = 1; amount <= 4; amount++) {
+            models().withExistingParent(path + "_" + amount, mcLoc("block/flowerbed_" + amount))
+                    .renderType("cutout")
+                    .texture("flowerbed", modLoc("block/" + path))
+                    .texture("stem", modLoc("block/" + path + "_stem"));
+        }
+        existingBlockstate(block);
+        generatedItem(block, "item");
     }
 
     private void poopWoodSet() {
@@ -542,6 +586,73 @@ public class BlockStateGen extends LegacyBlockStateGenerator {
         simpleBlockItem(PoBlocks.GINKGO_TRAPDOOR.get(), blockModel(PoBlocks.GINKGO_TRAPDOOR.get(), "_bottom"));
     }
 
+    private void primoFungusSet() {
+        registerWoodSet(new WoodSetData(
+                PoBlocks.PRIMO_STEM.get(), PoBlocks.STRIPPED_PRIMO_STEM.get(),
+                PoBlocks.PRIMO_HYPHAE.get(), PoBlocks.STRIPPED_PRIMO_HYPHAE.get(),
+                PoBlocks.PRIMO_PLANKS.get(), PoBlocks.PRIMO_STAIRS.get(), PoBlocks.PRIMO_SLAB.get(),
+                PoBlocks.PRIMO_VERTICAL_SLAB.get(), PoBlocks.PRIMO_BUTTON.get(),
+                PoBlocks.PRIMO_PRESSURE_PLATE.get(), PoBlocks.PRIMO_FENCE.get(),
+                PoBlocks.PRIMO_FENCE_GATE.get(), PoBlocks.PRIMO_DOOR.get(), PoBlocks.PRIMO_TRAPDOOR.get(),
+                PoBlocks.PRIMO_CAP.get(), PoBlocks.PRIMO_FUNGUS.get()), this::primoFungusModel);
+        blockWithTranslucentRenderType(PoBlocks.GLOW_PRIMO_CAP.get());
+        glowPrimoFungusModel(PoBlocks.GLOW_PRIMO_FUNGUS.get(), PoBlocks.GLOW_PRIMO_CAP.get());
+    }
+
+    private void registerWoodSet(WoodSetData set, Consumer<SaplingBlock> plantGenerator) {
+        logBlock(set.log());
+        logBlock(set.strippedLog());
+        axisBlock(set.wood(), blockTexture(set.log()), blockTexture(set.log()));
+        axisBlock(set.strippedWood(), blockTexture(set.strippedLog()), blockTexture(set.strippedLog()));
+        simpleBlockItems(set.log(), set.strippedLog(), set.wood(), set.strippedWood());
+
+        Identifier planks = blockTexture(set.planks());
+        blockWithItem(set.planks());
+        stairsBlock(set.stairs(), planks);
+        slabBlock(set.slab(), planks, planks);
+        verticalSlabBlock(set.verticalSlab(), planks);
+        buttonBlock(set.button(), planks);
+        pressurePlateBlock(set.pressurePlate(), planks);
+        fenceBlock(set.fence(), planks);
+        fenceGateBlock(set.fenceGate(), planks);
+        doorBlockWithRenderType(set.door(), Identifier.parse(blockTexture(set.door()) + "_bottom"),
+                Identifier.parse(blockTexture(set.door()) + "_top"), "cutout");
+        trapdoorBlockWithRenderType(set.trapdoor(), blockTexture(set.trapdoor()), true, "cutout");
+        blockWithItem(set.extraBlock());
+        plantGenerator.accept(set.plant());
+
+        simpleBlockItems(set.stairs(), set.slab(), set.pressurePlate(), set.fenceGate());
+        ModelFile buttonInventory = models().withExistingParent(getBlockPath(set.button()) + "_inventory", mcLoc("block/button_inventory"))
+                .texture("texture", planks);
+        simpleBlockItem(set.button(), buttonInventory);
+        simpleBlockItem(set.fence(), models().withExistingParent(getBlockPath(set.fence()) + "_inventory", mcLoc("block/fence_inventory"))
+                .texture("texture", planks));
+        generatedItem(set.door(), "item");
+        simpleBlockItem(set.trapdoor(), blockModel(set.trapdoor(), "_bottom"));
+    }
+
+    private void primoFungusModel(SaplingBlock fungus) {
+        ModelFile model = models().withExistingParent(getBlockPath(fungus), modLoc("block/mushroom"))
+                .texture("all", modLoc("block/mushroom/" + getBlockPath(fungus)))
+                .texture(PARTICLE, blockTexture(PoBlocks.PRIMO_PLANKS.get()));
+        simpleBlock(fungus, model);
+        generatedItem(fungus, "item");
+    }
+
+    private void glowPrimoFungusModel(SaplingBlock fungus, Block cap) {
+        String path = getBlockPath(fungus);
+        Identifier texture = modLoc("block/mushroom/" + path);
+        Identifier particle = blockTexture(cap);
+        ModelFile bottom = models().withExistingParent(path + "_bottom", mcLoc("block/block"))
+                .texture("all", texture).texture(PARTICLE, particle)
+                .element().from(5, 0, 5).to(11, 8, 11).allFaces((face, builder) -> builder.texture("#all")).end();
+        ModelFile top = models().withExistingParent(path + "_top", mcLoc("block/block"))
+                .texture("all", texture).texture(PARTICLE, particle).renderType("translucent")
+                .element().from(2, 8, 2).to(14, 14, 14).allFaces((face, builder) -> builder.texture("#all")).end();
+        existingBlockstate(fungus);
+        generatedItem(fungus, "item");
+    }
+
     private void verticalSlabBlock(VerticalSlabBlock block, Identifier texture) {
         String path = getBlockPath(block);
         ModelFile model = models().withExistingParent(path, mcLoc("block/block"))
@@ -781,7 +892,7 @@ public class BlockStateGen extends LegacyBlockStateGenerator {
             openModel = models().getExistingFile(modLoc("block/" + path));
             closeModel = models().getExistingFile(modLoc("block/" + path + "_close"));
         } else {
-            var texture = modLoc("block/" + path);
+            var texture = modLoc("block/toilet/" + path);
             openModel = models().withExistingParent(path, modLoc("block/flush_toilet"))
                     .texture("toilet", texture + "_cart")
                     .texture("particle", texture + "_particle");
@@ -803,6 +914,40 @@ public class BlockStateGen extends LegacyBlockStateGenerator {
         generatedItem(block, "item");
     }
 
+    private void arcade(Block block) {
+        String path = getBlockPath(block);
+        ModelFile bottom = models().withExistingParent(path + "_bottom", modLoc("block/arcade_bottom"))
+                .texture("arcade", modLoc("block/arcade/" + path + "_bottom"))
+                .texture(PARTICLE, modLoc("block/arcade/" + path + "_particle"));
+        ModelFile top = models().withExistingParent(path + "_top", modLoc("block/arcade_top"))
+                .texture("arcade", modLoc("block/arcade/" + path + "_top"))
+                .texture(PARTICLE, modLoc("block/arcade/" + path + "_particle"))
+                .texture("screen", modLoc("block/arcade/screen"));
+        getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder()
+                .modelFile(state.getValue(ArcadeBlock.HALF) == DoubleBlockHalf.UPPER ? top : bottom)
+                .rotationY(horizontalRotation(state.getValue(ArcadeBlock.FACING))).build());
+        generatedItem(block, "item");
+    }
+
+    private void gachaMachine(Block block) {
+        String path = getBlockPath(block);
+        ModelFile base = models().getExistingFile(modLoc("block/" + path));
+        ModelFile left = models().getExistingFile(modLoc("block/" + path + "_l"));
+        ModelFile center = models().getExistingFile(modLoc("block/" + path + "_c"));
+        ModelFile right = models().getExistingFile(modLoc("block/" + path + "_r"));
+        getVariantBuilder(block).forAllStates(state -> {
+            ModelFile model = switch (state.getValue(GachaBlock.STEP)) {
+                case 1, 5 -> left;
+                case 2, 6 -> center;
+                case 3, 7 -> right;
+                default -> base;
+            };
+            return ConfiguredModel.builder().modelFile(model)
+                    .rotationY(horizontalRotation(state.getValue(BlockStateProperties.HORIZONTAL_FACING))).build();
+        });
+        simpleBlockItem(block, base);
+    }
+
     private void shitBlock(Block block, Block particleBlock) {
         String path = getBlockPath(block);
         ModelFile model;
@@ -810,7 +955,7 @@ public class BlockStateGen extends LegacyBlockStateGenerator {
         if (path.equals("shit")) {
             model = models().getExistingFile(modLoc("block/" + path));
         } else {
-            var texture = modLoc("block/" + path);
+            var texture = modLoc("block/shit/" + path);
             var particleTexture = modLoc("block/" + getBlockPath(particleBlock));
             model = models().withExistingParent(path, modLoc("block/shit"))
                     .texture(PARTICLE, particleTexture)
@@ -908,4 +1053,36 @@ public class BlockStateGen extends LegacyBlockStateGenerator {
         String path = getBlockPath(sourceBlock);
         return PoopSky.modloc(key, "block/" + path);
     }
+
+    private record WoodSetData(
+            RotatedPillarBlock log,
+            RotatedPillarBlock strippedLog,
+            RotatedPillarBlock wood,
+            RotatedPillarBlock strippedWood,
+            Block planks,
+            StairBlock stairs,
+            SlabBlock slab,
+            VerticalSlabBlock verticalSlab,
+            ButtonBlock button,
+            PressurePlateBlock pressurePlate,
+            FenceBlock fence,
+            FenceGateBlock fenceGate,
+            DoorBlock door,
+            TrapDoorBlock trapdoor,
+            Block extraBlock,
+            SaplingBlock plant
+    ) {
+    }
+
+    private record MultifaceFace(BooleanProperty property, int rotationX, int rotationY) {
+    }
+
+    private static final List<MultifaceFace> MULTIFACE_FACES = List.of(
+            new MultifaceFace(BlockStateProperties.NORTH, 0, 0),
+            new MultifaceFace(BlockStateProperties.EAST, 0, 90),
+            new MultifaceFace(BlockStateProperties.SOUTH, 0, 180),
+            new MultifaceFace(BlockStateProperties.WEST, 0, 270),
+            new MultifaceFace(BlockStateProperties.UP, 270, 0),
+            new MultifaceFace(BlockStateProperties.DOWN, 90, 0)
+    );
 }

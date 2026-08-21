@@ -12,7 +12,7 @@ import net.minecraft.client.Options;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.neoforged.neoforge.client.event.InputEvent;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
@@ -130,7 +130,7 @@ public final class ArcadeControlSession {
     }
 
     private static void send(CustomPacketPayload packet) {
-        PacketDistributor.sendToServer(packet);
+        ClientPacketDistributor.sendToServer(packet);
     }
 
     private static void suppressVanillaMovement(Options options) {
@@ -146,22 +146,22 @@ public final class ArcadeControlSession {
 
     @Nullable
     private static Button getButton(int key, int scanCode) {
-        if (PoKeyBoardInput.ARCADE_UP.matches(key, scanCode)) {
+        if (PoKeyBoardInput.ARCADE_UP.getKey().getValue() == key) {
             return Button.UP;
         }
-        if (PoKeyBoardInput.ARCADE_DOWN.matches(key, scanCode)) {
+        if (PoKeyBoardInput.ARCADE_DOWN.getKey().getValue() == key) {
             return Button.DOWN;
         }
-        if (PoKeyBoardInput.ARCADE_LEFT.matches(key, scanCode)) {
+        if (PoKeyBoardInput.ARCADE_LEFT.getKey().getValue() == key) {
             return Button.LEFT;
         }
-        if (PoKeyBoardInput.ARCADE_RIGHT.matches(key, scanCode)) {
+        if (PoKeyBoardInput.ARCADE_RIGHT.getKey().getValue() == key) {
             return Button.RIGHT;
         }
-        if (PoKeyBoardInput.ARCADE_BUTTON1.matches(key, scanCode)) {
+        if (PoKeyBoardInput.ARCADE_BUTTON1.getKey().getValue() == key) {
             return Button.BUTTON1;
         }
-        if (PoKeyBoardInput.ARCADE_BUTTON2.matches(key, scanCode)) {
+        if (PoKeyBoardInput.ARCADE_BUTTON2.getKey().getValue() == key) {
             return Button.BUTTON2;
         }
         return null;

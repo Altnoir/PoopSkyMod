@@ -416,25 +416,34 @@ public class PoBlocks {
             props -> new Block(props.mapColor(MapColor.COLOR_ORANGE).instrument(NoteBlockInstrument.BASS)
                     .strength(2.0F, 3.0F).sound(SoundType.NETHER_WOOD)));
     public static final BlockEntry<StairBlock> PRIMO_STAIRS = registerDecoMaterialBlock("primo_stairs", 64,
-            props -> new StairBlock(PRIMO_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(PRIMO_PLANKS.get())));
+            props -> new StairBlock(Blocks.CRIMSON_PLANKS.defaultBlockState(), primoPlankProperties()));
     public static final BlockEntry<SlabBlock> PRIMO_SLAB = registerDecoMaterialBlock("primo_slab", 64,
-            props -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(PRIMO_PLANKS.get())),
+            props -> new SlabBlock(primoPlankProperties()),
             (loot, block) -> loot.add(block, loot.createSlabItemTable(block)));
     public static final BlockEntry<VerticalSlabBlock> PRIMO_VERTICAL_SLAB = registerDecoMaterialBlock("primo_vertical_slab", 64,
-            props -> new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(PRIMO_PLANKS.get())), PoBlocks::createVerticalSlabDrops);
+            props -> new VerticalSlabBlock(primoPlankProperties()), PoBlocks::createVerticalSlabDrops);
     public static final BlockEntry<ButtonBlock> PRIMO_BUTTON = registerDecoMaterialBlock("primo_button", 64,
-            props -> new ButtonBlock(BlockSetType.CRIMSON, 30, BlockBehaviour.Properties.ofFullCopy(Blocks.CRIMSON_BUTTON)));
+            props -> new ButtonBlock(BlockSetType.CRIMSON, 30,
+                    registeredProperties(BlockBehaviour.Properties.ofFullCopy(Blocks.CRIMSON_BUTTON))));
     public static final BlockEntry<PressurePlateBlock> PRIMO_PRESSURE_PLATE = registerDecoMaterialBlock("primo_pressure_plate", 64,
-            props -> new PressurePlateBlock(BlockSetType.CRIMSON, BlockBehaviour.Properties.ofFullCopy(Blocks.CRIMSON_PRESSURE_PLATE)));
+            props -> new PressurePlateBlock(BlockSetType.CRIMSON,
+                    registeredProperties(BlockBehaviour.Properties.ofFullCopy(Blocks.CRIMSON_PRESSURE_PLATE))));
     public static final BlockEntry<FenceBlock> PRIMO_FENCE = registerDecoMaterialBlock("primo_fence", 64,
-            props -> new FenceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CRIMSON_FENCE).mapColor(MapColor.COLOR_ORANGE)));
+            props -> new FenceBlock(registeredProperties(BlockBehaviour.Properties.ofFullCopy(Blocks.CRIMSON_FENCE)
+                    .mapColor(MapColor.COLOR_ORANGE))));
     public static final BlockEntry<FenceGateBlock> PRIMO_FENCE_GATE = registerDecoMaterialBlock("primo_fence_gate", 64,
-            props -> new FenceGateBlock(WoodType.CRIMSON, BlockBehaviour.Properties.ofFullCopy(Blocks.CRIMSON_FENCE_GATE).mapColor(MapColor.COLOR_ORANGE)));
+            props -> new FenceGateBlock(WoodType.CRIMSON,
+                    registeredProperties(BlockBehaviour.Properties.ofFullCopy(Blocks.CRIMSON_FENCE_GATE)
+                            .mapColor(MapColor.COLOR_ORANGE))));
     public static final BlockEntry<DoorBlock> PRIMO_DOOR = registerDecoMaterialBlock("primo_door", 64,
-            props -> new DoorBlock(BlockSetType.CRIMSON, BlockBehaviour.Properties.ofFullCopy(Blocks.CRIMSON_DOOR).mapColor(MapColor.COLOR_YELLOW)),
+            props -> new DoorBlock(BlockSetType.CRIMSON,
+                    registeredProperties(BlockBehaviour.Properties.ofFullCopy(Blocks.CRIMSON_DOOR)
+                            .mapColor(MapColor.COLOR_YELLOW))),
             (loot, block) -> loot.add(block, loot.createDoorTable(block)));
     public static final BlockEntry<TrapDoorBlock> PRIMO_TRAPDOOR = registerDecoMaterialBlock("primo_trapdoor", 64,
-            props -> new TrapDoorBlock(BlockSetType.CRIMSON, BlockBehaviour.Properties.ofFullCopy(Blocks.CRIMSON_TRAPDOOR).mapColor(MapColor.COLOR_YELLOW)));
+            props -> new TrapDoorBlock(BlockSetType.CRIMSON,
+                    registeredProperties(BlockBehaviour.Properties.ofFullCopy(Blocks.CRIMSON_TRAPDOOR)
+                            .mapColor(MapColor.COLOR_YELLOW))));
     public static final BlockEntry<ParticleLeavesBlock> POOP_LEAVES = registerBlock("poop_leaves", 88,
             props -> new ParticleLeavesBlock(0x5E4228, registeredProperties(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
                     .mapColor(MapColor.COLOR_BROWN)
@@ -678,6 +687,14 @@ public class PoBlocks {
 
     private static BlockBehaviour.Properties logProperties(MapColor color, SoundType sound) {
         return simpleProperties(color, LOG, sound).instrument(NoteBlockInstrument.BASS);
+    }
+
+    private static BlockBehaviour.Properties primoPlankProperties() {
+        return registeredProperties(BlockBehaviour.Properties.of()
+                .mapColor(MapColor.COLOR_ORANGE)
+                .instrument(NoteBlockInstrument.BASS)
+                .strength(2.0F, 3.0F)
+                .sound(SoundType.NETHER_WOOD));
     }
 
     private static BlockBehaviour.Properties plantProperties(MapColor color, SoundType sound) {

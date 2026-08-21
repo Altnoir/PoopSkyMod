@@ -8,18 +8,18 @@ import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IJeiHelpers;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
-import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import mezz.jei.api.recipe.types.IRecipeType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.Locale;
 
 public class ArcadeLootRecipeCategory implements IRecipeCategory<ArcadeLootRecipe> {
-    public static final RecipeType<ArcadeLootRecipe> TYPE = RecipeType.create(PoopSky.MOD_ID, "arcade", ArcadeLootRecipe.class);
+    public static final IRecipeType<ArcadeLootRecipe> TYPE = IRecipeType.create(PoopSky.MOD_ID, "arcade", ArcadeLootRecipe.class);
 
     public static final int OUTPUT_COLUMNS = 7;
     public static final int OUTPUT_ROWS = 7;
@@ -43,7 +43,7 @@ public class ArcadeLootRecipeCategory implements IRecipeCategory<ArcadeLootRecip
     }
 
     @Override
-    public RecipeType<ArcadeLootRecipe> getRecipeType() {
+    public IRecipeType<ArcadeLootRecipe> getRecipeType() {
         return TYPE;
     }
 
@@ -70,7 +70,7 @@ public class ArcadeLootRecipeCategory implements IRecipeCategory<ArcadeLootRecip
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, ArcadeLootRecipe recipe, IFocusGroup focuses) {
         builder.addSlot(RecipeIngredientRole.INPUT, INPUT_X, INPUT_Y)
-                .addItemStack(recipe.input());
+                .add(recipe.input());
 
         for (int index = 0; index < ArcadeLootRecipe.OUTPUT_CAPACITY; index++) {
             int x = PADDING + (index % OUTPUT_COLUMNS) * SLOT_SPACING;
@@ -83,9 +83,10 @@ public class ArcadeLootRecipeCategory implements IRecipeCategory<ArcadeLootRecip
 
             ArcadeLootRecipe.Output output = recipe.outputs().get(index);
             if (output.tag() != null) {
-                slotBuilder.addIngredients(Ingredient.of(output.tag()));
+                BuiltInRegistries.ITEM.get(output.tag()).ifPresent(holders ->
+                        slotBuilder.addItemStacks(holders.stream().map(holder -> new ItemStack(holder.value())).toList()));
             } else {
-                slotBuilder.addItemStack(output.item());
+                slotBuilder.add(output.item());
             }
             slotBuilder.addRichTooltipCallback((slotView, tooltip) -> {
                 String chance = String.format(Locale.ROOT, "%.1f%%", output.chance());

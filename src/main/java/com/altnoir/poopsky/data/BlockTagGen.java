@@ -123,7 +123,8 @@ public final class BlockTagGen {
                 .add(PoBlocks.RAW_POOP_BLOCK.get())
                 .add(PoBlocks.RAW_SAPLING_POOP_BLOCK.get())
                 .add(PoBlocks.RAW_SEA_POOP_BLOCK.get())
-                .add(PoBlocks.RAW_WITHER_POOP_BLOCK.get());
+                .add(PoBlocks.RAW_WITHER_POOP_BLOCK.get())
+                .add(PoBlocks.MYCELIUM_BLOCK.get());
         tag(BlockTags.BEACON_BASE_BLOCKS).addTag(PoTags.Blocks.POOP_BLOCKS);
 
         tag(BlockTags.SUPPORT_OVERRIDE_SNOW_LAYER).addTag(PoTags.Blocks.POOP_BLOCKS);
@@ -157,6 +158,7 @@ public final class BlockTagGen {
                 .add(PoBlocks.RAW_SAPLING_POOP_BLOCK.get())
                 .add(PoBlocks.RAW_SEA_POOP_BLOCK.get())
                 .add(PoBlocks.RAW_WITHER_POOP_BLOCK.get())
+                .add(PoBlocks.MYCELIUM_BLOCK.get())
                 .add(PoBlocks.POOP_LOG.get())
                 .add(PoBlocks.POOP_WOOD.get())
                 .add(PoBlocks.POOP_EMPTY_LOG.get())
@@ -183,7 +185,11 @@ public final class BlockTagGen {
                         PoBlocks.GINKGO_LOG.get(),
                         PoBlocks.GINKGO_WOOD.get(),
                         PoBlocks.STRIPPED_GINKGO_LOG.get(),
-                        PoBlocks.STRIPPED_GINKGO_WOOD.get()
+                        PoBlocks.STRIPPED_GINKGO_WOOD.get(),
+                        PoBlocks.PRIMO_STEM.get(),
+                        PoBlocks.PRIMO_HYPHAE.get(),
+                        PoBlocks.STRIPPED_PRIMO_STEM.get(),
+                        PoBlocks.STRIPPED_PRIMO_HYPHAE.get()
                 );
         tag(Tags.Blocks.STRIPPED_LOGS)
                 .add(PoBlocks.STRIPPED_POOP_LOG.get())
@@ -193,14 +199,14 @@ public final class BlockTagGen {
                 .add(PoBlocks.STRIPPED_GINKGO_WOOD.get());
         tag(BlockTags.LOGS_THAT_BURN).addTag(PoTags.Blocks.GINKGO_LOGS);
         tag(BlockTags.PLANKS).add(PoBlocks.GINKGO_PLANKS.get());
-        tag(BlockTags.WOODEN_STAIRS).add(PoBlocks.GINKGO_STAIRS.get());
-        tag(BlockTags.WOODEN_SLABS).add(PoBlocks.GINKGO_SLAB.get());
-        tag(BlockTags.WOODEN_BUTTONS).add(PoBlocks.GINKGO_BUTTON.get());
-        tag(BlockTags.WOODEN_PRESSURE_PLATES).add(PoBlocks.GINKGO_PRESSURE_PLATE.get());
-        tag(BlockTags.WOODEN_FENCES).add(PoBlocks.GINKGO_FENCE.get());
-        tag(BlockTags.FENCE_GATES).add(PoBlocks.GINKGO_FENCE_GATE.get());
-        tag(BlockTags.WOODEN_DOORS).add(PoBlocks.GINKGO_DOOR.get());
-        tag(BlockTags.WOODEN_TRAPDOORS).add(PoBlocks.GINKGO_TRAPDOOR.get());
+        tag(BlockTags.WOODEN_STAIRS).add(PoBlocks.GINKGO_STAIRS.get(), PoBlocks.PRIMO_STAIRS.get());
+        tag(BlockTags.WOODEN_SLABS).add(PoBlocks.GINKGO_SLAB.get(), PoBlocks.PRIMO_SLAB.get());
+        tag(BlockTags.WOODEN_BUTTONS).add(PoBlocks.GINKGO_BUTTON.get(), PoBlocks.PRIMO_BUTTON.get());
+        tag(BlockTags.WOODEN_PRESSURE_PLATES).add(PoBlocks.GINKGO_PRESSURE_PLATE.get(), PoBlocks.PRIMO_PRESSURE_PLATE.get());
+        tag(BlockTags.WOODEN_FENCES).add(PoBlocks.GINKGO_FENCE.get(), PoBlocks.PRIMO_FENCE.get());
+        tag(BlockTags.FENCE_GATES).add(PoBlocks.GINKGO_FENCE_GATE.get(), PoBlocks.PRIMO_FENCE_GATE.get());
+        tag(BlockTags.WOODEN_DOORS).add(PoBlocks.GINKGO_DOOR.get(), PoBlocks.PRIMO_DOOR.get());
+        tag(BlockTags.WOODEN_TRAPDOORS).add(PoBlocks.GINKGO_TRAPDOOR.get(), PoBlocks.PRIMO_TRAPDOOR.get());
         tag(BlockTags.SAPLINGS).add(PoBlocks.GINKGO_SAPLING.get());
 
         tag(BlockTags.LEAVES)
@@ -241,7 +247,16 @@ public final class BlockTagGen {
                         PoBlocks.GINKGO_FENCE_GATE.get(),
                         PoBlocks.GINKGO_DOOR.get(),
                         PoBlocks.GINKGO_TRAPDOOR.get(),
-                        PoBlocks.GINKGO_TOILET.get()
+                        PoBlocks.GINKGO_TOILET.get(),
+                        PoBlocks.PRIMO_PLANKS.get(),
+                        PoBlocks.PRIMO_STAIRS.get(),
+                        PoBlocks.PRIMO_SLAB.get(),
+                        PoBlocks.PRIMO_VERTICAL_SLAB.get(),
+                        PoBlocks.PRIMO_PRESSURE_PLATE.get(),
+                        PoBlocks.PRIMO_FENCE.get(),
+                        PoBlocks.PRIMO_FENCE_GATE.get(),
+                        PoBlocks.PRIMO_DOOR.get(),
+                        PoBlocks.PRIMO_TRAPDOOR.get()
                 );
 
         var mineableWithPickaxe = tag(BlockTags.MINEABLE_WITH_PICKAXE)
@@ -273,7 +288,11 @@ public final class BlockTagGen {
                 PoBlocks.WATER_COMPOOPER.get(),
                 PoBlocks.LAVA_COMPOOPER.get(),
                 PoBlocks.POWDER_SNOW_COMPOOPER.get(),
-                PoBlocks.URINE_COMPOOPER.get()
+                PoBlocks.URINE_COMPOOPER.get(),
+                PoBlocks.RED_ARCADE.get(),
+                PoBlocks.BLUE_ARCADE.get(),
+                PoBlocks.GACHA_MACHINE.get(),
+                PoBlocks.POOP_SAND.get()
         );
         mineableWithPickaxe.add(PoBlocks.POOP_BRICKS.get(), PoBlocks.CRACKED_POOP_BRICKS.get());
         PoBlocks.POOP_BRICK_FAMILY.blocks().stream().skip(1).forEach(block -> mineableWithPickaxe.add(block.get()));
@@ -281,6 +300,7 @@ public final class BlockTagGen {
 
         tag(BlockTags.MINEABLE_WITH_HOE)
                 .add(
+                        PoBlocks.POOPSKY_BLOCK.get(),
                         PoBlocks.STOOL.get(),
                         PoBlocks.POOP_PIECE.get(),
                         PoBlocks.POOP_FARMLAND.get(),
@@ -291,10 +311,15 @@ public final class BlockTagGen {
                         PoBlocks.RAW_SAPLING_POOP_BLOCK.get(),
                         PoBlocks.RAW_SEA_POOP_BLOCK.get(),
                         PoBlocks.RAW_WITHER_POOP_BLOCK.get(),
+                        PoBlocks.MYCELIUM_BLOCK.get(),
+                        PoBlocks.MYCELIUM_MAT.get(),
+                        PoBlocks.MUSHROOM_BED.get(),
                         PoBlocks.SHIT.get(),
                         PoBlocks.CHILI_SHIT.get(),
                         PoBlocks.GOLDEN_SHIT.get(),
                         PoBlocks.GINKGO_LEAVES.get(),
+                        PoBlocks.PRIMO_CAP.get(),
+                        PoBlocks.GLOW_PRIMO_CAP.get(),
                         PoBlocks.POOP_LEAVES.get(),
                         PoBlocks.POOP_LEAVES_GOLD.get(),
                         PoBlocks.POOP_LEAVES_IRON.get()

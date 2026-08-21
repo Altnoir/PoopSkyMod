@@ -44,8 +44,8 @@ public final class ArcadeLootRecipes {
         for (BlockEntry<ArcadeBlock> entry : PoBlocks.getArcadeBlocks()) {
             var lootKey = ArcadeLootGen.lootTableKey(entry.get());
             Identifier file = Identifier.fromNamespaceAndPath(
-                    lootKey.location().getNamespace(),
-                    "loot_table/" + lootKey.location().getPath() + ".json");
+                    lootKey.identifier().getNamespace(),
+                    "loot_table/" + lootKey.identifier().getPath() + ".json");
             resources.getResource(file).ifPresent(resource -> loadArcade(entry, resource, recipes));
         }
         return recipes;
@@ -94,7 +94,7 @@ public final class ArcadeLootRecipes {
 
         switch (type) {
             case "minecraft:item" -> {
-                Item item = BuiltInRegistries.ITEM.get(id);
+                Item item = BuiltInRegistries.ITEM.getValue(id);
                 if (item != Items.AIR) {
                     outputs.add(new ParsedOutput(item.getDefaultInstance(), null, weight));
                 }
@@ -135,6 +135,6 @@ public final class ArcadeLootRecipes {
     }
 
     private static int tagMemberCount(TagKey<Item> tag) {
-        return BuiltInRegistries.ITEM.getTag(tag).map(HolderSet::size).orElse(0);
+        return BuiltInRegistries.ITEM.get(tag).map(HolderSet::size).orElse(0);
     }
 }

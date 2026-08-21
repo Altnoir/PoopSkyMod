@@ -156,6 +156,7 @@ public class PoopTntUtil {
                             player,
                             explosionParticle,
                             false,
+                            false,
                             x,
                             y,
                             z,

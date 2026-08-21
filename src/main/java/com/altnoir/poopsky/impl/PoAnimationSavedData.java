@@ -52,6 +52,14 @@ public final class PoAnimationSavedData extends SavedData {
         return this.players(animation).contains(playerId) || this.playerNames(animation).contains(playerName);
     }
 
+    public boolean markPlayed(PoAnimation animation, UUID playerId, String playerName) {
+        boolean firstPlay = !hasPlayed(animation, playerId, playerName);
+        this.players(animation).add(playerId);
+        this.playerNames(animation).add(playerName);
+        setDirty();
+        return firstPlay;
+    }
+
     private Set<UUID> players(PoAnimation animation) {
         return animation == PoAnimation.POEM ? this.poemPlayedPlayers : this.playedPlayers;
     }

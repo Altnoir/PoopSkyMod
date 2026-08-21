@@ -18,7 +18,8 @@ import com.altnoir.poopsky.content.entity.model.FlyModel;
 import com.altnoir.poopsky.content.entity.model.ToiletPlugModel;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.content.entity.renderer.GinkgoBoatRenderer;
-import com.altnoir.poopsky.impl.event.PSKeyBoardInput;
+import com.altnoir.poopsky.game.client.ArcadeControlSession;
+import com.altnoir.poopsky.game.client.arcade.ArcadeWorldScreenRenderer;
 import com.altnoir.poopsky.impl.network.PlugActionPayload;
 import com.altnoir.poopsky.impl.network.PlugDismountPayload;
 import com.altnoir.poopsky.init.*;
@@ -74,7 +75,7 @@ public class PoopSkyClient {
 
     public static void registerMod(IEventBus modEventBus) {
         BakedModelEventHandler.register(modEventBus);
-        modEventBus.addListener(PSKeyBoardInput::registerKeyMappings);
+        modEventBus.addListener(PoKeyBoardInput::registerKeyMappings);
         modEventBus.addListener(PoBedrockModelResources::onRegisterBedrockModels);
         modEventBus.addListener(ClientModEvents::modLoad);
         modEventBus.addListener(ClientModEvents::registerLayers);
@@ -103,6 +104,9 @@ public class PoopSkyClient {
         modEventBus.addListener(IntroController::onLoggingOut);
         modEventBus.addListener(IntroController::onSelectMusic);
         modEventBus.addListener(PoAnimationController::onLoggingOut);
+        modEventBus.addListener(ArcadeControlSession::onKeyInput);
+        modEventBus.addListener(ArcadeWorldScreenRenderer::onRenderFrame);
+        modEventBus.addListener(ArcadeWorldScreenRenderer::onLoggingOut);
         modEventBus.addListener(PSJeiRecipeCache::update);
     }
 
@@ -114,6 +118,7 @@ public class PoopSkyClient {
         public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
             event.registerLayerDefinition(ToiletPlugModel.LAYER_LOCATION, ToiletPlugModel::createBodyLayer);
             event.registerLayerDefinition(FlyModel.LAYER_LOCATION, FlyModel::createBodyLayer);
+            event.registerLayerDefinition(FlyModel.MAGGOT_LAYER_LOCATION, FlyModel::createMaggotBodyLayer);
             event.registerLayerDefinition(GinkgoBoatRenderer.BOAT_LAYER, BoatModel::createBoatModel);
             event.registerLayerDefinition(GinkgoBoatRenderer.CHEST_BOAT_LAYER, BoatModel::createChestBoatModel);
         }
@@ -259,10 +264,10 @@ public class PoopSkyClient {
 
             boolean isRidingPlug = mc.player.getVehicle() instanceof ToiletPlugEntity;
 
-            while (PSKeyBoardInput.USE_PLUG_KEY.consumeClick()) {
+            while (PoKeyBoardInput.USE_PLUG_KEY.consumeClick()) {
                 ClientPacketDistributor.sendToServer(new PlugActionPayload());
             }
-            if (isRidingPlug && PSKeyBoardInput.DISMOUNT_PLUG_KEY.consumeClick()) {
+            if (isRidingPlug && PoKeyBoardInput.DISMOUNT_PLUG_KEY.consumeClick()) {
                 ClientPacketDistributor.sendToServer(new PlugDismountPayload());
             }
         }

@@ -67,7 +67,10 @@ public final class PoSectionedCreativeModeTab extends CreativeModeTab {
             padToCompleteRow(newLayoutItems);
         }
 
-        displayItems = List.copyOf(newDisplayItems);
+        // 26.1 renders the tab directly from getDisplayItems(). Keep the
+        // section spacer rows in that collection so the heading occupies
+        // an actual grid row instead of being painted over the first items.
+        displayItems = List.copyOf(newLayoutItems);
         layoutItems = List.copyOf(newLayoutItems);
         searchItems = newSearchItems;
         sectionLayouts = List.copyOf(newLayouts);

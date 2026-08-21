@@ -32,8 +32,7 @@ public record FlushToiletCartInputPayload(
                         payload.backward(),
                         payload.left(),
                         payload.right(),
-                        payload.fast(),
-                        payload.jump()
+                        payload.fast()
                 );
             }
         });

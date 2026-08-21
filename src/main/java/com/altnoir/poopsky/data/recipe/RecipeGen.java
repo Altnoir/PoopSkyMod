@@ -898,8 +898,8 @@ public final class RecipeGen {
                 FlyBarrelEntry.of(FlyTypes.CYAN.get(), Items.PRISMARINE_SHARD),
                 FlyBarrelEntry.of(FlyTypes.LIGHT_BLUE.get(), Items.PRISMARINE_CRYSTALS),
                 FlyBarrelEntry.of(FlyTypes.BLUE.get(), Items.LAPIS_LAZULI),
-                FlyBarrelEntry.of(FlyTypes.PURPLE.get(), Items.AMETHYST_SHARD),
-                FlyBarrelEntry.of(FlyTypes.MAGENTA.get(), Items.CHORUS_FRUIT),
+                FlyBarrelEntry.of(FlyTypes.PURPLE.get(), Items.CHORUS_FLOWER),
+                FlyBarrelEntry.of(FlyTypes.MAGENTA.get(), Items.SHULKER_SHELL),
                 FlyBarrelEntry.of(FlyTypes.PINK.get(), Items.PINK_PETALS),
                 FlyBarrelEntry.of(FlyTypes.IRON.get(), Items.RAW_IRON),
                 FlyBarrelEntry.of(FlyTypes.COPPER.get(), Items.RAW_COPPER),
@@ -911,7 +911,7 @@ public final class RecipeGen {
                 FlyBarrelEntry.of(FlyTypes.GLOWSTONE.get(), Items.GLOWSTONE_DUST),
                 FlyBarrelEntry.of(FlyTypes.ENDER.get(), Items.ENDER_PEARL),
                 // Create
-//                FlyBarrelEntry.of(FlyTypes.ZINC.get(), AllItems.RAW_ZINC, create),
+                FlyBarrelEntry.of(FlyTypes.ZINC.get(), PoMods.CREATE.rl("raw_zinc"), create),
                 // AE2
                 FlyBarrelEntry.of(FlyTypes.CERTUS.get(), PoMods.AE2.rl("certus_quartz_crystal"), ae2),
                 FlyBarrelEntry.of(FlyTypes.SKY_DUST.get(), PoMods.AE2.rl("sky_dust"), ae2),
@@ -968,7 +968,7 @@ public final class RecipeGen {
                 Breeding.of(FlyTypes.EMERALD.get(), FlyTypes.DIAMOND.get(), FlyTypes.NETHERITE.get()),
                 Breeding.of(FlyTypes.NORMAL.get(), FlyTypes.COPPER.get(), FlyTypes.BLACK.get()),
                 // Create
-//                Breeding.of(FlyTypes.CYAN.get(), FlyTypes.IRON.get(), FlyTypes.ZINC.get()).loaded(create),
+                Breeding.of(FlyTypes.CYAN.get(), FlyTypes.IRON.get(), FlyTypes.ZINC.get()).loaded(create),
                 // AE2
                 Breeding.of(FlyTypes.LIGHT_BLUE.get(), FlyTypes.DIAMOND.get(), FlyTypes.CERTUS.get()).loaded(ae2),
                 Breeding.of(FlyTypes.BLACK.get(), FlyTypes.GLOWSTONE.get(), FlyTypes.SKY_DUST.get()).loaded(ae2),

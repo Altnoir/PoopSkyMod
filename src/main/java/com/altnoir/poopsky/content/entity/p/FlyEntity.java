@@ -103,7 +103,8 @@ public class FlyEntity extends Animal implements FlyingAnimal {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 10.0)
                 .add(Attributes.FLYING_SPEED, 0.6F)
-                .add(Attributes.MOVEMENT_SPEED, 0.3F);
+                .add(Attributes.MOVEMENT_SPEED, 0.3F)
+                .add(Attributes.TEMPT_RANGE, 10.0F);
     }
 
     @Override

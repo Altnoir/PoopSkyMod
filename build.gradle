@@ -1,6 +1,5 @@
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
-import java.nio.file.StandardCopyOption
 
 plugins {
     id 'java-library'
@@ -80,63 +79,68 @@ def prepareBundledSbm = tasks.register('prepareBundledSbm', Jar) {
 }
 
 def LangReplacements = [
-        '空中厕所'    : '空中卫生间',
-        '大便失禁'    : '巧克力喷泉',
-        '恶兆污秽'    : '悦动甜蜜',
-        '马桶搋子'    : '魔女扫帚',
-        '马桶制杖'    : '魔女法杖',
-        '食粪者'      : '小谗鬼',
-        '养粪人'      : '甜品师',
-        '一切屎于脚下': '一切食于脚下',
-        '屎溅之铃'    : '时间之铃',
-        '屎'          : '巧克力',
-        '粪水'        : '巧克力液',
-        '化粪'        : '巧克力化',
-        '挑粪匠'      : '高能饮品',
-        '蛆块链'      : '曲块链',
-        '寄生虫'      : '花朵快快长',
-        '蛔虫'        : '白巧克力棒',
-        '苍蝇'        : '暗色蜜蜂',
-        '厕所'        : '巧克力礼盒',
-        '马桶'        : '葡萄酒杯',
-        '蛆'          : '牛奶巧克力',
-        '粪便'        : '巧克力',
-        '粪'          : '巧克力',
-        '大便'        : '草莓塔',
-        '蝇'          : '蜂',
-        '忌讳'        : '甜蜜',
-        '肛气'        : '氨气',
-        '屁声'        : '排气声',
-        '如厕'        : '出恭',
-        '尿'          : '茶水'
+        '空中厕所'     : ['秽之领域', '空中卫生间'],
+        '大便失禁'     : ['秽壤潮涌', '巧克力喷泉'],
+        '恶兆污秽'     : ['恶兆污秽', '悦动甜蜜'],
+        '马桶搋子'     : ['污秽棍', '魔女扫帚'],
+        '马桶制杖'     : ['污秽杖', '魔女法杖'],
+        '食粪者'       : ['食粪者', '小谗鬼'],
+        '养粪人'       : ['污秽者', '甜品师'],
+        '一切屎于脚下' : ['万物始于污秽', '一切食于脚下'],
+        '屎溅之铃'     : ['秽间钟', '时间之铃'],
+        '不屎'         : ['反秽', '巧克力'],
+        '屎'           : ['秽壤', '巧克力'],
+        '粪水'         : ['秽壤液', '巧克力液'],
+        '化粪'         : ['秽壤化', '巧克力化'],
+        '挑粪匠'       : ['拾秽工', '高能饮品'],
+        '蛆块链'       : ['蛆块链', '区块链'],
+        '寄生虫'       : ['寄生虫', '花朵快快长'],
+        '蛔虫'         : ['蛔虫', '白巧克力棒'],
+        '苍蝇'         : ['秽壤飞蝇', '暗色蜜蜂'],
+        '厕所'         : ['还元坑', '巧克力礼盒'],
+        '马桶'         : ['化生龛', '葡萄酒杯'],
+        '蛆'           : ['蛆', '牛奶巧克力'],
+        '粪便'         : ['秽壤', '巧克力'],
+        '粪'           : ['秽壤', '巧克力'],
+        '大便'         : ['秽壤团', '草莓塔'],
+        '蝇'           : ['蝇', '蜂'],
+        '忌讳'         : ['忌讳', '甜蜜'],
+        '肛气'         : ['肛气', '氨气'],
+        '屁声'         : ['秽气声', '排气声'],
+        '如厕'         : ['出恭', '出恭'],
+        '尿'           : ['秽水', '茶水']
 ]
+def officialReplacements = [:]
+def communityReplacements = [:]
+LangReplacements.each { key, value ->
+    officialReplacements[key] = value[0]
+    communityReplacements[key] = value[1]
+}
 
 def generateLang = tasks.register('generateLang') {
     group = 'data generation'
 
     def sourceFile = layout.projectDirectory.file('src/main/resources/assets/poopsky/lang/zh_cn.json')
-    def outputFile = layout.projectDirectory.file('src/main/resources/resourcepacks/poopsky_pack/assets/poopsky/lang/zh_cn.json')
+    def officialOutput = layout.projectDirectory.file('src/main/resources/resourcepacks/poopsky_official_pack/assets/poopsky/lang/zh_cn.json')
+    def communityOutput = layout.projectDirectory.file('src/main/resources/resourcepacks/poopsky_community_pack/assets/poopsky/lang/zh_cn.json')
 
     inputs.file sourceFile
-    inputs.property 'replacements', LangReplacements.collect { source, replacement ->
-        "${source}\u0000${replacement}"
-    }
-    outputs.file outputFile
+    inputs.property 'officialReplacements', officialReplacements.collect { k, v -> "$k\u0000$v" }
+    inputs.property 'communityReplacements', communityReplacements.collect { k, v -> "$k\u0000$v" }
+    outputs.files officialOutput, communityOutput
 
     doLast {
-        def sourcePath = sourceFile.asFile.toPath()
-        def outputPath = outputFile.asFile.toPath()
-        Files.createDirectories(outputPath.parent)
-        Files.copy(sourcePath, outputPath, StandardCopyOption.REPLACE_EXISTING)
-
-        def content = Files.readString(outputPath, StandardCharsets.UTF_8)
-        if (content.startsWith('\uFEFF')) {
-            content = content.substring(1)
+        def sourceContent = Files.readString(sourceFile.asFile.toPath(), StandardCharsets.UTF_8)
+        if (sourceContent.startsWith('\uFEFF')) {
+            sourceContent = sourceContent.substring(1)
         }
-        LangReplacements.each { source, replacement ->
-            content = content.replace(source, replacement)
+        [[officialOutput, officialReplacements], [communityOutput, communityReplacements]].each { target ->
+            def outputPath = target[0].asFile.toPath()
+            Files.createDirectories(outputPath.parent)
+            def content = sourceContent
+            target[1].each { source, replacement -> content = content.replace(source, replacement) }
+            Files.writeString(outputPath, content, StandardCharsets.UTF_8)
         }
-        Files.writeString(outputPath, content, StandardCharsets.UTF_8)
     }
 }
 

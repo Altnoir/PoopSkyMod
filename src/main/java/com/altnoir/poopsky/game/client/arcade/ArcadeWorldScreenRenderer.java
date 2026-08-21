@@ -5,30 +5,18 @@ import com.altnoir.poopsky.content.item.p.GameDiscItem;
 import com.altnoir.poopsky.game.client.ArcadeControlSession;
 import com.altnoir.poopsky.game.client.ClientGame;
 import com.altnoir.poopsky.game.client.ClientGameTypes;
-import com.mojang.blaze3d.pipeline.RenderTarget;
-import com.mojang.blaze3d.platform.NativeImage;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.ByteBufferBuilder;
-import com.mojang.blaze3d.vertex.VertexSorting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.RenderFrameEvent;
-import org.joml.Matrix4f;
-import org.joml.Matrix4fStack;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@OnlyIn(Dist.CLIENT)
 public final class ArcadeWorldScreenRenderer {
     private static final int TEXTURE_WIDTH = 448;
     private static final int TEXTURE_HEIGHT = 320;
@@ -112,39 +100,6 @@ public final class ArcadeWorldScreenRenderer {
             return;
         }
         state.cartridgeClientGame.applySnapshot(state.snapshot);
-
-        RenderSystem.backupProjectionMatrix();
-        Matrix4fStack modelViewStack = RenderSystem.getModelViewStack();
-        modelViewStack.pushMatrix();
-        modelViewStack.identity();
-        modelViewStack.translation(0.0F, 0.0F, -2000.0F);
-        RenderSystem.applyModelViewMatrix();
-
-        state.target.setClearColor(0.0F, 0.0F, 0.0F, 1.0F);
-        state.target.clear(false);
-        state.target.bindWrite(true);
-        RenderSystem.disableDepthTest();
-        RenderSystem.setProjectionMatrix(
-                new Matrix4f().setOrtho(0.0F, ClientGame.WIDTH, ClientGame.HEIGHT, 0.0F, 1000.0F, 3000.0F),
-                VertexSorting.ORTHOGRAPHIC_Z
-        );
-
-        GuiGraphicsExtractor graphics = new GuiGraphicsExtractor(Minecraft.getInstance(), state.bufferSource);
-        state.cartridgeClientGame.render(graphics, 0, 0);
-        graphics.flush();
-
-        NativeImage pixels = state.texture.getPixels();
-        if (pixels != null) {
-            state.target.bindRead();
-            pixels.downloadTexture(0, true);
-            state.target.unbindRead();
-            state.texture.upload();
-        }
-
-        modelViewStack.popMatrix();
-        RenderSystem.applyModelViewMatrix();
-        RenderSystem.restoreProjectionMatrix();
-        Minecraft.getInstance().getMainRenderTarget().bindWrite(true);
     }
 
     private static final class ScreenState {
@@ -153,10 +108,7 @@ public final class ArcadeWorldScreenRenderer {
         private GameDiscItem cartridge;
         private ClientGame cartridgeClientGame;
         private CompoundTag snapshot;
-        private RenderTarget target;
         private DynamicTexture texture;
-        private ByteBufferBuilder bufferBuilder;
-        private MultiBufferSource.BufferSource bufferSource;
 
         private ScreenState(BlockPos pos, GameDiscItem cartridge) {
             this.pos = pos;
@@ -167,34 +119,16 @@ public final class ArcadeWorldScreenRenderer {
         }
 
         private void ensureResources() {
-            if (target == null) {
-                target = new RenderTarget(false) {
-                };
-                target.resize(TEXTURE_WIDTH, TEXTURE_HEIGHT, false);
-            }
             if (texture == null) {
-                texture = new DynamicTexture(TEXTURE_WIDTH, TEXTURE_HEIGHT, false);
+                texture = new DynamicTexture("poopsky arcade", TEXTURE_WIDTH, TEXTURE_HEIGHT, false);
                 Minecraft.getInstance().getTextureManager().register(textureLocation, texture);
-            }
-            if (bufferBuilder == null) {
-                bufferBuilder = new ByteBufferBuilder(786432);
-                bufferSource = MultiBufferSource.immediate(bufferBuilder);
             }
         }
 
         private void close() {
-            if (bufferBuilder != null) {
-                bufferBuilder.close();
-                bufferBuilder = null;
-                bufferSource = null;
-            }
             if (texture != null) {
                 texture.close();
                 texture = null;
-            }
-            if (target != null) {
-                target.destroyBuffers();
-                target = null;
             }
         }
 

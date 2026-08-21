@@ -1,18 +1,24 @@
 {
-  "ambientocclusion": false,
+  "parent": "minecraft:block/block",
   "elements": [
     {
       "faces": {
+        "down": {
+          "texture": "#multiface"
+        },
+        "east": {
+          "texture": "#multiface"
+        },
         "north": {
-          "texture": "#multiface",
-          "uv": [
-            16.0,
-            0.0,
-            0.0,
-            16.0
-          ]
+          "texture": "#multiface"
         },
         "south": {
+          "texture": "#multiface"
+        },
+        "up": {
+          "texture": "#multiface"
+        },
+        "west": {
           "texture": "#multiface"
         }
       },
