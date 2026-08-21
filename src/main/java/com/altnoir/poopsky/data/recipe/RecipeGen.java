@@ -270,8 +270,8 @@ public final class RecipeGen {
                 .unlockedBy(getItemName(PoBlocks.GOLDEN_FLUSH_TOILET), has(PoBlocks.GOLDEN_FLUSH_TOILET))
                 .save(recipeOutput);
         provider.shapeless(RecipeCategory.TRANSPORTATION, PoItems.POP_TNT_MINECART)
-                .requires(Items.MINECART)
                 .requires(PoBlocks.POOP_TNT)
+                .requires(Items.MINECART)
                 .unlockedBy(getHasName(PoBlocks.POOP_TNT), has(PoBlocks.POOP_TNT))
                 .save(recipeOutput);
         provider.shapeless(RecipeCategory.MISC, PoItems.LAWRENCE_MUSIC_DISC)

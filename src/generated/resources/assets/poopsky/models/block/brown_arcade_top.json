@@ -1,0 +1,8 @@
+{
+  "parent": "poopsky:block/arcade_top",
+  "textures": {
+    "arcade": "poopsky:block/arcade/brown_arcade_top",
+    "particle": "poopsky:block/arcade/brown_arcade_particle",
+    "screen": "poopsky:block/arcade/screen"
+  }
+}

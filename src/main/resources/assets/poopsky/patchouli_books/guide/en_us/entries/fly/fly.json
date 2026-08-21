@@ -2,6 +2,7 @@
   "name": "Fly",
   "icon": "poopsky:fly",
   "category": "poopsky:fly",
+  "advancement": "poopsky:fly_catcher",
   "read_by_default": false,
   "sortnum": 1,
   "pages": [
