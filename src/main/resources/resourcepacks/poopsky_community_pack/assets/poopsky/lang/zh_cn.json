@@ -204,6 +204,7 @@
   "item.poopsky.golden_poop_mooncake": "金巧克力月饼",
   "item.poopsky.poop_soup": "巧克力汤",
   "item.poopsky.poop_vegetable_sticks": "巧克力酱蔬菜棒",
+  "item.poopsky.pop_tnt_minecart": "POP矿车",
   "item.poopsky.pooburger_meat": "巧克力堡肉",
   "item.poopsky.pooburger": "巧克力堡包",
   "item.poopsky.poop_pasta": "巧克力意面",
@@ -435,6 +436,8 @@
   "entity.poopsky.poolime": "巧克力莱姆",
   "entity.poopsky.fly": "暗色蜜蜂",
   "entity.poopsky.poop_tnt": "POP",
+  "entity.poopsky.pop_tnt_minecart": "POP矿车",
+  "entity.poopsky.gashapon": "扭蛋",
 
   "key.category.poopsky": "空中卫生间",
   "key.poopsky.use_plug": "召唤魔女扫帚",

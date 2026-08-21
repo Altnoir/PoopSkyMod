@@ -9,7 +9,7 @@
       "type": "patchouli:spotlight",
       "title": "从蛔虫到线",
       "item": "minecraft:string",
-      "text": "把蛔虫放到篝火上烤，等待烹饪完成即可得到线。"
+      "text": "把蛔虫放到营火上烤，等待烹饪完成即可得到线。"
     },
     {
       "type": "patchouli:campfire",

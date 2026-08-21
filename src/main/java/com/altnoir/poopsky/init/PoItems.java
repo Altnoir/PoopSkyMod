@@ -156,6 +156,12 @@ public class PoItems {
             props -> new FlushToiletCartItem(PoEntityType.FLUSH_TOILET_CART, props.stacksTo(1)));
     public static final ItemEntry<FlushToiletCartItem> GOLDEN_FLUSH_TOILET_CART = registerItem("golden_flush_toilet_cart",
             props -> new FlushToiletCartItem(PoEntityType.GOLDEN_FLUSH_TOILET_CART, props.stacksTo(1)));
+    public static final ItemEntry<PopTntMinecartItem> POP_TNT_MINECART = REGISTRATE.item("pop_tnt_minecart",
+            props -> new PopTntMinecartItem(props.stacksTo(1)))
+            .model(() -> (ctx, prov) -> prov.createWithExistingModel(ctx.get(), prov.modLoc("item/pop_tnt_minecart")))
+            .lang("Minecart with POP")
+            .register();
+
     public static final ItemEntry<SpawnEggItem> POOLIME_SPAWN_EGG = registerItemNoModel("poolime_spawn_egg",
             prop -> new SpawnEggItem(prop.spawnEgg(PoEntityType.POOLIME.get())));
     public static final ItemEntry<SpawnEggItem> FLY_SPAWN_EGG = registerItemNoModel("fly_spawn_egg",

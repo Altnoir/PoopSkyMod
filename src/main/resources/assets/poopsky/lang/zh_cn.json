@@ -204,6 +204,7 @@
   "item.poopsky.golden_poop_mooncake": "金粪便月饼",
   "item.poopsky.poop_soup": "粪便汤",
   "item.poopsky.poop_vegetable_sticks": "粪酱蔬菜棒",
+  "item.poopsky.pop_tnt_minecart": "POP矿车",
   "item.poopsky.pooburger_meat": "粪堡肉",
   "item.poopsky.pooburger": "粪堡包",
   "item.poopsky.poop_pasta": "粪意面",
@@ -435,6 +436,8 @@
   "entity.poopsky.poolime": "屎莱姆",
   "entity.poopsky.fly": "苍蝇",
   "entity.poopsky.poop_tnt": "POP",
+  "entity.poopsky.pop_tnt_minecart": "POP矿车",
+  "entity.poopsky.gashapon": "扭蛋",
 
   "key.category.poopsky": "空中厕所",
   "key.poopsky.use_plug": "召唤马桶搋子",

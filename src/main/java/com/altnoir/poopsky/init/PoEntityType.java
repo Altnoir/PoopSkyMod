@@ -1,13 +1,13 @@
 package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
-
 import com.altnoir.poopsky.content.entity.p.*;
 import com.altnoir.poopsky.content.entity.renderer.*;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.EntityEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
+import net.minecraft.client.renderer.entity.TntMinecartRenderer;
 import net.minecraft.world.entity.MobCategory;
 
 public class PoEntityType {
@@ -89,6 +89,16 @@ public class PoEntityType {
                     .fireImmune())
             .renderer(() -> PoopTntRenderer::new)
             .setData(ProviderType.LANG, NonNullBiConsumer.noop())
+            .register();
+
+    public static final EntityEntry<PopTntMinecartEntity> POP_TNT_MINECART = REGISTRATE
+            .entity("pop_tnt_minecart", PopTntMinecartEntity::new, MobCategory.MISC)
+            .properties(properties -> properties
+                    .sized(0.98F, 0.7F)
+                    .clientTrackingRange(8)
+                    .updateInterval(3))
+            .renderer(() -> TntMinecartRenderer::new)
+            .lang("Minecart with POP")
             .register();
 
     public static final EntityEntry<GinkgoBoatEntity> GINKGO_BOAT = REGISTRATE

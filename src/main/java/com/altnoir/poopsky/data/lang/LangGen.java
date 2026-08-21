@@ -307,7 +307,11 @@ public final class LangGen {
         provider.add("death.attack.roundworm.player", "%1$s was killed by %2$s by Roundworm");
         provider.add("death.attack.poop_ball", "%1$s died from Poop Ball");
         provider.add("death.attack.poop_ball.player", "%1$s was killed by %2$s by Poop Ball");
-        provider.add("pack.poopsky.name", "Cognitive Filter");
+        provider.add("item.poopsky.music_disc_theme.desc", "下村陽子 - 森のキノコにご用心");
+        provider.add("pack.poopsky.official.name", "Cognitive Filter");
+        provider.add("pack.poopsky.community.name", "Cognitive Filter (Community Edition)");
+        provider.add("text.poopsky.book.title", "The Scripture of Filthy Soil");
+        provider.add("text.poopsky.book.landing_text", "Blessed by filth, this scripture empowers you to reshape this realm of void!$(br)$(l:https://poop.vmct-cn.top/)Online Documentation$()");
 
         // Effects
         provider.add("effect.poopsky.fecal_incontinence", "Fecal Incontinence");

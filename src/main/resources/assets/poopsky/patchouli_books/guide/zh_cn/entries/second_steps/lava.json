@@ -1,5 +1,5 @@
 {
-  "name": "岩浆",
+  "name": "熔岩",
   "icon": "minecraft:lava_bucket",
   "category": "poopsky:second_steps",
   "read_by_default": false,
@@ -9,12 +9,12 @@
       "type": "patchouli:spotlight",
       "title": "从厕所舀出",
       "item": "minecraft:lava_bucket",
-      "text": "吃完龙息辣椒后，在非木制厕所上排便，厕所会变成岩浆厕所。$(br2)用桶右键岩浆厕所，就能舀出岩浆，同时清空厕所。"
+      "text": "吃完龙息辣椒后，在非木制厕所上排便，厕所会变成熔岩厕所。$(br2)用桶右击熔岩厕所，就能舀出熔岩，同时清空厕所。"
     },
     {
       "type": "patchouli:text",
-      "title": "岩浆的用途",
-      "text": "岩浆可以倒入堆粪桶，得到装有熔岩的堆粪桶；也可以与粪水反应，生成岩浆块或黑曜石。$(br2)与普通水接触就能生成圆石。"
+      "title": "熔岩的用途",
+      "text": "熔岩可以倒入堆粪桶，得到装有熔岩的堆粪桶；也可以与粪水反应，生成熔岩块或黑曜石。$(br2)与普通水接触就能生成圆石。"
     },
     {
       "type": "patchouli:relations",

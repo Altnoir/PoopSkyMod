@@ -15,7 +15,7 @@
       "type": "patchouli:crafting",
       "recipe": "minecraft:coal",
       "title": "拆回煤炭",
-      "text": "煤炭块可以拆回九个煤炭，用于制作篝火。"
+      "text": "煤炭块可以拆回九个煤炭，用于制作营火。"
     },
     {
       "type": "patchouli:relations",

@@ -9,7 +9,7 @@
       "type": "patchouli:spotlight",
       "title": "从厕所取液",
       "item": "poopsky:urine_bucket",
-      "text": "用桶右键默认厕所，可以取得粪水桶。$(br2)把粪水桶倒出去，会形成粪水。"
+      "text": "用桶右击默认厕所，可以取得粪水桶。$(br2)把粪水桶倒出去，会形成粪水。"
     },
     {
       "type": "patchouli:text",
