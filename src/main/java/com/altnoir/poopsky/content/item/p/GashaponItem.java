@@ -82,7 +82,7 @@ public class GashaponItem extends Item implements ProjectileItem {
             level.addFreshEntity(projectile);
         }
         level.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.EGG_THROW, SoundSource.PLAYERS,
-                0.5F, level.getRandom().nextFloat() * 0.4F + 0.8F);
+                0.5F, level.getRandom().nextFloat() * 0.4F + 0.5F);
         player.awardStat(Stats.ITEM_USED.get(this));
         itemstack.shrink(1);
         return InteractionResultHolder.sidedSuccess(itemstack, level.isClientSide());

@@ -69,6 +69,7 @@ public class PoTags {
         TagKey<Item> VILLAGER_LIKE = create("villager_like");
 
         TagKey<Item> POOP_MOONCAKES = create("poop_mooncakes");
+        TagKey<Item> EGG = tag("foods/eggs");
         TagKey<Item> PASTA = tag("foods/pasta");
         TagKey<Item> SOUP = tag("foods/soup");
 

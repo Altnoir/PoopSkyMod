@@ -3,14 +3,14 @@
   "category": "misc",
   "ingredients": [
     {
-      "tag": "c:music_discs"
+      "item": "poopsky:mushroom_bed"
     },
     {
-      "item": "poopsky:poop"
+      "item": "minecraft:bowl"
     }
   ],
   "result": {
     "count": 1,
-    "id": "poopsky:music_disc_lawrence"
+    "id": "minecraft:mushroom_stew"
   }
 }

@@ -163,7 +163,6 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .requires(Items.EGG).requires(Items.SUGAR)
                 .unlockedBy(getItemName(PoItems.POOP_BALL), has(PoItems.POOP_BALL))
                 .save(recipeOutput);
-
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PoBlocks.POOP_CAKE.get())
                 .pattern("MMM")
                 .pattern("SES")
@@ -172,6 +171,17 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .define('S', Items.SUGAR).define('E', Items.EGG)
                 .define('P', PoItems.POOP)
                 .unlockedBy(getItemName(PoItems.MAGGOTS_SEEDS), has(PoItems.MAGGOTS_SEEDS))
+                .save(recipeOutput);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, PoBlocks.MUSHROOM_BED.get())
+                .requires(Items.BROWN_MUSHROOM)
+                .requires(Items.RED_MUSHROOM)
+                .unlockedBy(getItemName(Items.BROWN_MUSHROOM), has(Items.BROWN_MUSHROOM))
+                .save(recipeOutput);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, Items.MUSHROOM_STEW)
+                .requires(PoBlocks.MUSHROOM_BED.get())
+                .requires(Items.BOWL)
+                .unlockedBy(getItemName(PoBlocks.MUSHROOM_BED.get()), has(PoBlocks.MUSHROOM_BED.get()))
                 .save(recipeOutput);
     }
 
@@ -198,7 +208,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .define('D', Items.DIAMOND)
                 .unlockedBy(getItemName(Items.DIAMOND), has(Items.DIAMOND))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, PoItems.RETURN_TOTEM.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, PoItems.RETURN_TOTEM.get(), 8)
                 .pattern(" S ")
                 .pattern("GEG")
                 .pattern(" G ")
@@ -207,7 +217,14 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .define('E', Items.ECHO_SHARD)
                 .unlockedBy(getItemName(Items.ECHO_SHARD), has(Items.ECHO_SHARD))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, PoItems.TOKEN.get(), 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, PoItems.TOTEM_OF_UNPOOPING.get(), 8)
+                .pattern("S")
+                .pattern("E")
+                .define('S', PoBlocks.SHIT)
+                .define('E', Items.ENCHANTED_GOLDEN_APPLE)
+                .unlockedBy(getItemName(Items.ENCHANTED_GOLDEN_APPLE), has(Items.ENCHANTED_GOLDEN_APPLE))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, PoItems.TOKEN.get(), 4)
                 .pattern("RRR")
                 .pattern("RER")
                 .pattern("RRR")
@@ -232,6 +249,11 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .define('I', Items.IRON_INGOT)
                 .define('T', PoBlocks.GOLDEN_FLUSH_TOILET)
                 .unlockedBy(getItemName(PoBlocks.GOLDEN_FLUSH_TOILET), has(PoBlocks.GOLDEN_FLUSH_TOILET))
+                .save(recipeOutput);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PoItems.LAWRENCE_MUSIC_DISC)
+                .requires(Tags.Items.MUSIC_DISCS)
+                .requires(PoItems.POOP)
+                .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, Items.COBWEB)
@@ -405,12 +427,14 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .unlockedBy(getItemName(PoBlocks.POOP_SLAB), has(PoBlocks.POOP_SLAB))
                 .save(recipeOutput);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, PoItems.LAWRENCE_MUSIC_DISC)
-                .requires(Tags.Items.MUSIC_DISCS)
-                .requires(PoItems.POOP)
-                .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP))
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOPSKY_BLOCK)
+                .pattern("RRR")
+                .pattern("RSR")
+                .pattern("RRR")
+                .define('R', PoItems.ROUNDWORM.get())
+                .define('S', PoTags.Items.SHITS)
+                .unlockedBy(getItemName(PoItems.ROUNDWORM), has(PoItems.ROUNDWORM))
                 .save(recipeOutput);
-
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.POOP_CRAFTING_TABLE, 8)
                 .pattern("PP")
                 .define('P', PoBlocks.POOP_BLOCK)
@@ -471,6 +495,15 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .define('M', PoBlocks.MAGGOTS_BLOCK)
                 .define('C', PoBlocks.CUT_POOP_BLOCK)
                 .unlockedBy(getItemName(PoBlocks.MAGGOTS_BLOCK), has(PoBlocks.MAGGOTS_BLOCK))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.GACHA_MACHINE)
+                .pattern("III")
+                .pattern("IEI")
+                .pattern("III")
+                .define('I', Items.IRON_INGOT)
+                .define('E', PoTags.Items.EGG)
+                .unlockedBy(getItemName(Items.IRON_INGOT), has(Items.IRON_INGOT))
                 .save(recipeOutput);
 
         offer2x2CompactingRecipe(recipeOutput, PoBlocks.POOLIME_BLOCK.get(), PoItems.POOP_BALL.get());

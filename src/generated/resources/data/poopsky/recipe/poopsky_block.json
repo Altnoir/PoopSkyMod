@@ -1,21 +1,21 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
+  "category": "building",
   "key": {
-    "E": {
-      "item": "minecraft:nautilus_shell"
-    },
     "R": {
       "item": "poopsky:roundworm"
+    },
+    "S": {
+      "tag": "poopsky:shits"
     }
   },
   "pattern": [
     "RRR",
-    "RER",
+    "RSR",
     "RRR"
   ],
   "result": {
-    "count": 4,
-    "id": "poopsky:token"
+    "count": 1,
+    "id": "poopsky:poopsky_block"
   }
 }

@@ -203,9 +203,17 @@ public final class ItemTagGen {
                         PoItems.CHILI_POOP_MOONCAKE.get(),
                         PoItems.GOLDEN_POOP_MOONCAKE.get()
                 );
+        tag(PoTags.Items.EGG)
+                .add(
+                        Items.EGG,
+                        Items.TURTLE_EGG,
+                        Items.SNIFFER_EGG
+                );
         tag(PoTags.Items.PASTA)
-                .add(PoItems.ROUNDWORM.get())
-                .add(PoItems.POOP_PASTA.get());
+                .add(
+                        PoItems.ROUNDWORM.get(),
+                        PoItems.POOP_PASTA.get()
+                );
         tag(PoTags.Items.SOUP)
                 .add(PoItems.POOP_SOUP.get());
         tag(PoTags.Items.UPRIGHT_ON_BELT).replace(false)

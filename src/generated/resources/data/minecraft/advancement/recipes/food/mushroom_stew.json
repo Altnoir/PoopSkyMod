@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:mushroom_stew"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "mushroom_bed": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:mushroom_bed"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "mushroom_bed"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:mushroom_stew"
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "E": {
+      "tag": "c:foods/eggs"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "III",
+    "IEI",
+    "III"
+  ],
+  "result": {
+    "count": 1,
+    "id": "poopsky:gacha_machine"
+  }
+}
