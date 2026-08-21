@@ -24,11 +24,19 @@ public final class DataMapGen {
     private static void generate(RegistrateDataMapProvider provider) {
         provider.builder(NeoForgeDataMaps.COMPOSTABLES)
                 .add(PoBlocks.GINKGO_SAPLING.getId(), new Compostable(0.3F), false)
-                .add(PoBlocks.GINKGO_LEAVES.getId(), new Compostable(0.3F), false);
+                .add(PoBlocks.GINKGO_LEAVES.getId(), new Compostable(0.3F), false)
+                .add(PoBlocks.PRIMO_FUNGUS.getId(), new Compostable(0.3F), false)
+                .add(PoBlocks.GLOW_PRIMO_FUNGUS.getId(), new Compostable(0.3F), false)
+                .add(PoBlocks.PRIMO_CAP.getId(), new Compostable(1.0F), false)
+                .add(PoBlocks.GLOW_PRIMO_CAP.getId(), new Compostable(1.0F), false)
+                .add(PoBlocks.MUSHROOM_BED.getId(), new Compostable(0.3F), false)
+                .add(PoBlocks.MYCELIUM_MAT.getId(), new Compostable(0.3F), false);
 
         provider.builder(NeoForgeDataMaps.STRIPPABLES)
                 .add(PoBlocks.GINKGO_LOG.getId(), new Strippable(PoBlocks.STRIPPED_GINKGO_LOG.get()), false)
                 .add(PoBlocks.GINKGO_WOOD.getId(), new Strippable(PoBlocks.STRIPPED_GINKGO_WOOD.get()), false)
+                .add(PoBlocks.PRIMO_STEM.getId(), new Strippable(PoBlocks.STRIPPED_PRIMO_STEM.get()), false)
+                .add(PoBlocks.PRIMO_HYPHAE.getId(), new Strippable(PoBlocks.STRIPPED_PRIMO_HYPHAE.get()), false)
                 .add(PoBlocks.POOP_LOG.getId(), new Strippable(PoBlocks.STRIPPED_POOP_LOG.get()), false)
                 .add(PoBlocks.POOP_WOOD.getId(), new Strippable(PoBlocks.STRIPPED_POOP_WOOD.get()), false)
                 .add(PoBlocks.POOP_EMPTY_LOG.getId(), new Strippable(PoBlocks.STRIPPED_POOP_EMPTY_LOG.get()), false);

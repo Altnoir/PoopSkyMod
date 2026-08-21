@@ -1,0 +1,26 @@
+{
+  "name": "String",
+  "icon": "minecraft:string",
+  "category": "poopsky:first_steps",
+  "read_by_default": false,
+  "sortnum": 12,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "From Roundworm to String",
+      "item": "minecraft:string",
+      "text": "Put a roundworm on a campfire and wait for it to finish cooking to get string."
+    },
+    {
+      "type": "patchouli:campfire",
+      "recipe": "poopsky:string_from_campfire_cooking_roundworm"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/roundworm",
+        "poopsky:first_steps/sieve_stable"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "name": "粪水桶",
+  "icon": "poopsky:urine_bucket",
+  "category": "poopsky:second_steps",
+  "read_by_default": false,
+  "sortnum": 6,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "从厕所取液",
+      "item": "poopsky:urine_bucket",
+      "text": "用桶右键默认厕所，可以取得粪水桶。$(br2)把粪水桶倒出去，会形成粪水。"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "粪水与沙子",
+      "text": "粪水接触普通沙子时，会把沙子变成粪便沙。$(br2)也可以把粪水倒进空堆粪桶，得到装有粪的堆粪桶。"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/toilet",
+        "poopsky:second_steps/iron",
+        "poopsky:second_steps/poop_sand",
+        "poopsky:second_steps/urine_compooper"
+      ]
+    }
+  ]
+}

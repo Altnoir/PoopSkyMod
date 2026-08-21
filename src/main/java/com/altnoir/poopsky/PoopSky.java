@@ -243,6 +243,10 @@ public class PoopSky {
         return Identifier.withDefaultNamespace(path);
     }
 
+    public static Identifier tryParse(String value) {
+        return Identifier.tryParse(value);
+    }
+
     public static String getItemPath(Item item) {
         return getItemKey(item).getPath();
     }
@@ -253,6 +257,10 @@ public class PoopSky {
 
     public static Identifier getBlockKey(Block block) {
         return BuiltInRegistries.BLOCK.getKey(block);
+    }
+
+    public static String getBlockPath(Block block) {
+        return getBlockKey(block).getPath();
     }
 
     public static PoRegistrate registrate() {

@@ -1,0 +1,22 @@
+{
+  "name": "蛔虫",
+  "icon": "poopsky:roundworm",
+  "category": "poopsky:first_steps",
+  "read_by_default": false,
+  "sortnum": 11,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "树叶中的寄生者",
+      "item": "poopsky:roundworm",
+      "text": "破坏粪便树叶时，有一定概率掉落蛔虫。$(br2)蛔虫是烤制线的前置材料。"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/poop_tree",
+        "poopsky:first_steps/string"
+      ]
+    }
+  ]
+}

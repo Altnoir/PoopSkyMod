@@ -1,0 +1,27 @@
+{
+  "name": "Toilet",
+  "icon": "poopsky:wooden_toilet",
+  "category": "poopsky:first_steps",
+  "read_by_default": false,
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "Blessing of Filth",
+      "item": "poopsky:wooden_toilet",
+      "link_recipe": true,
+      "text": "The blessing of filth connects you to the first toilet of this world.$(br2)Stand in the center of the toilet and hold Sneak to begin."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Requirements",
+      "text": "Normal trips have a cooldown of about one second and cost a little hunger.$(br2)If your hunger is empty, you cannot poop normally and will be hurt instead."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/poop"
+      ]
+    }
+  ]
+}

@@ -4,7 +4,7 @@
 	"parent": "block/block",
 	"textures": {
 		"particle": "poopsky:block/poop_block",
-		"shit": "poopsky:block/shit"
+		"shit": "poopsky:block/shit/shit"
 	},
 	"elements": [
 		{

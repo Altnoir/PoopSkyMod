@@ -1,0 +1,27 @@
+{
+  "name": "捕蝇网",
+  "icon": "poopsky:fly_catcher",
+  "category": "poopsky:fly",
+  "read_by_default": false,
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "把苍蝇装进口袋",
+      "item": "poopsky:fly_catcher",
+      "text": "对成年苍蝇使用捕蝇网，可以把它变成可携带的苍蝇物品，并消耗 1 点耐久。$(br2)当前捕获活苍蝇时获得的是原苍蝇。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "poopsky:fly_catcher"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:fly/fly",
+        "poopsky:fly/breeding_chest",
+        "poopsky:fly/fly_barrel"
+      ]
+    }
+  ]
+}

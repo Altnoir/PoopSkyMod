@@ -1,0 +1,32 @@
+{
+  "name": "POP",
+  "icon": "poopsky:poop_tnt",
+  "category": "poopsky:second_steps",
+  "read_by_default": false,
+  "sortnum": 4,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "秽壤的推进器",
+      "item": "poopsky:poop_tnt",
+      "link_recipe": true,
+      "text": "用粪便块和火药类材料合成 POP。$(br2)火药和帝王火龙果都能作为火药类材料。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "poopsky:poop_tnt"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "加速与爆炸",
+      "text": "让 POP 穿过空心粪便木组成的管道，空心木会持续推动它，提高速度并扩大爆炸半径。$(br2)触发后，POP 会按配方把范围内的方块转化为其他资源。"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/poop_tree",
+        "poopsky:second_steps/king_of_dragon_fruit"
+      ]
+    }
+  ]
+}

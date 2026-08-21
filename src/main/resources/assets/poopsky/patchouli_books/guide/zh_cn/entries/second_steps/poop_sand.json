@@ -1,0 +1,23 @@
+{
+  "name": "粪便沙",
+  "icon": "poopsky:poop_sand",
+  "category": "poopsky:second_steps",
+  "read_by_default": false,
+  "sortnum": 7,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "被粪水浸透的沙子",
+      "item": "poopsky:poop_sand",
+      "text": "粪水接触普通沙子后，沙子会变成粪便沙。$(br2)对粪便沙催熟，可以长出仙人掌；如果周围有水，也可能长出甘蔗。"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:second_steps/urine_bucket",
+        "poopsky:second_steps/sand",
+        "poopsky:second_steps/cactus"
+      ]
+    }
+  ]
+}

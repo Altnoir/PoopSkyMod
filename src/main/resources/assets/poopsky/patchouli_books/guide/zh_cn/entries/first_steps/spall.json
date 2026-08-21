@@ -1,0 +1,35 @@
+{
+  "name": "碎石",
+  "icon": "poopsky:spall",
+  "category": "poopsky:first_steps",
+  "read_by_default": false,
+  "sortnum": 7,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "树干碎料",
+      "item": "poopsky:spall",
+      "link_recipe": true,
+      "text": "粪便树的树干破碎后形成的材料，也是第一阶段的主要资源来源。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "poopsky:mossy_cobblestone_from_compacting",
+      "text": "九个碎石可以压实成一个苔石。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "title": "建材分支",
+      "recipe": "minecraft:mossy_cobblestone_slab",
+      "recipe2": "minecraft:mossy_cobblestone_wall",
+      "text": "苔石台阶用于堆粪桶，苔石墙用于后续搭建筛架。"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/compooper",
+        "poopsky:first_steps/sieve_stable"
+      ]
+    }
+  ]
+}

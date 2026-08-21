@@ -1,0 +1,31 @@
+{
+  "name": "Roundworm Block",
+  "icon": "poopsky:roundworm_block",
+  "category": "poopsky:second_steps",
+  "read_by_default": false,
+  "sortnum": 16,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "Ready for the Furnace",
+      "item": "poopsky:roundworm_block",
+      "text": "Nine roundworms can be crafted into one roundworm block.$(br2)Smelt it in a furnace to obtain normal sand."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "poopsky:roundworm_block_from_roundworm"
+    },
+    {
+      "type": "patchouli:smelting",
+      "recipe": "poopsky:sand_from_smelting_roundworm_block",
+      "text": "A roundworm block becomes sand after smelting."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/poop_tree",
+        "poopsky:second_steps/sand"
+      ]
+    }
+  ]
+}

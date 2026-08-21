@@ -1,7 +1,6 @@
 package com.altnoir.poopsky.impl.network;
 
 import com.altnoir.poopsky.PoopSky;
-import net.neoforged.neoforge.network.event.RegisterConfigurationTasksEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
 public class PoNetworking {
@@ -40,6 +39,11 @@ public class PoNetworking {
                 ReturnTotemActivationPayload::handle
         );
         registrar.playToClient(
+                UnpoopingTotemActivationPayload.TYPE,
+                UnpoopingTotemActivationPayload.CODEC,
+                UnpoopingTotemActivationPayload::handle
+        );
+        registrar.playToClient(
                 PlayAnimationPayload.TYPE,
                 PlayAnimationPayload.CODEC,
                 PlayAnimationPayload::handle
@@ -54,10 +58,25 @@ public class PoNetworking {
                 AnimationFinishedPayload.CODEC,
                 AnimationFinishedPayload::handle
         );
-        IntroHandshake.registerPayloads(registrar);
-    }
-
-    public static void registerConfigurationTasks(RegisterConfigurationTasksEvent event) {
-        IntroHandshake.registerTask(event);
+        registrar.playToServer(
+                ArcadeInputPacket.TYPE,
+                ArcadeInputPacket.STREAM_CODEC,
+                ArcadeInputPacket::handle
+        );
+        registrar.playToServer(
+                ArcadeResetPacket.TYPE,
+                ArcadeResetPacket.STREAM_CODEC,
+                ArcadeResetPacket::handle
+        );
+        registrar.playToServer(
+                ArcadeStopControlPacket.TYPE,
+                ArcadeStopControlPacket.STREAM_CODEC,
+                ArcadeStopControlPacket::handle
+        );
+        registrar.playToClient(
+                ArcadeGameSnapshotPacket.TYPE,
+                ArcadeGameSnapshotPacket.STREAM_CODEC,
+                ArcadeGameSnapshotPacket::handle
+        );
     }
 }

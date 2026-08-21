@@ -139,10 +139,9 @@ public class ToiletType implements Comparable<ToiletType> {
     /**
      * 供数据驱动注册使用（ToiletTypeManager 调用）
      */
-    static ToiletType registerFromData(String id, @Nullable Block sourceBlock, Category category, Component displayName, @Nullable String texture, float hardness, boolean isRedstone, boolean isGolden, boolean isEnd, @Nullable String nameKey) {
+    static void registerFromData(String id, @Nullable Block sourceBlock, Category category, Component displayName, @Nullable String texture, float hardness, boolean isRedstone, boolean isGolden, boolean isEnd, @Nullable String nameKey) {
         var type = new ToiletType(() -> sourceBlock, category, id, displayName, texture, hardness, isRedstone, isGolden, isEnd, nameKey);
         REGISTRY.put(id, type);
-        return type;
     }
 
     /**

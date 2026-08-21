@@ -1,0 +1,28 @@
+{
+  "name": "苍蝇",
+  "icon": "poopsky:fly",
+  "category": "poopsky:fly",
+  "read_by_default": false,
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "秽壤的黑色生产工",
+      "item": "poopsky:fly",
+      "text": "在蛆块上放置雕刻南瓜，可以生成一只苍蝇。$(br2)苍蝇是繁育箱和苍蝇桶的基础原料。"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "特殊品种",
+      "text": "淹死苍蝇掉落蓝苍蝇；被蛔虫杀死掉落白苍蝇；被仙人掌杀死掉落绿苍蝇；被粪便球杀死掉落棕苍蝇；被雷击掉落黑苍蝇。$(br2)对苍蝇使用辣椒可以获得红苍蝇，使用帝王火龙果可以获得火龙果苍蝇。"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:fly/fly_catcher",
+        "poopsky:fly/breeding_chest",
+        "poopsky:fly/fly_barrel"
+      ]
+    }
+  ]
+}

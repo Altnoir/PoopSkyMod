@@ -1,5 +1,5 @@
 {
-  "parent": "poopsky:fly",
+  "parent": "poopsky:pooop_tnt",
   "criteria": {
     "fly_catcher": {
       "conditions": {

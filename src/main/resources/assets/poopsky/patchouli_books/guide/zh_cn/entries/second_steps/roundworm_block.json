@@ -1,0 +1,31 @@
+{
+  "name": "蛔虫块",
+  "icon": "poopsky:roundworm_block",
+  "category": "poopsky:second_steps",
+  "read_by_default": false,
+  "sortnum": 16,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "烘烤前的原料",
+      "item": "poopsky:roundworm_block",
+      "text": "九个蛔虫可以合成一个蛔虫块。$(br2)把蛔虫块放进熔炉烧制，就能得到普通沙子。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "poopsky:roundworm_block_from_roundworm"
+    },
+    {
+      "type": "patchouli:smelting",
+      "recipe": "poopsky:sand_from_smelting_roundworm_block",
+      "text": "蛔虫块烧制后会变成沙子。"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/poop_tree",
+        "poopsky:second_steps/sand"
+      ]
+    }
+  ]
+}

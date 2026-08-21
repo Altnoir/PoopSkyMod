@@ -1,0 +1,124 @@
+{
+  "variants": {
+    "facing=east,step=0": {
+      "model": "poopsky:block/gacha_machine",
+      "y": 90
+    },
+    "facing=east,step=1": {
+      "model": "poopsky:block/gacha_machine_l",
+      "y": 90
+    },
+    "facing=east,step=2": {
+      "model": "poopsky:block/gacha_machine_c",
+      "y": 90
+    },
+    "facing=east,step=3": {
+      "model": "poopsky:block/gacha_machine_r",
+      "y": 90
+    },
+    "facing=east,step=4": {
+      "model": "poopsky:block/gacha_machine",
+      "y": 90
+    },
+    "facing=east,step=5": {
+      "model": "poopsky:block/gacha_machine_l",
+      "y": 90
+    },
+    "facing=east,step=6": {
+      "model": "poopsky:block/gacha_machine_c",
+      "y": 90
+    },
+    "facing=east,step=7": {
+      "model": "poopsky:block/gacha_machine_r",
+      "y": 90
+    },
+    "facing=north,step=0": {
+      "model": "poopsky:block/gacha_machine"
+    },
+    "facing=north,step=1": {
+      "model": "poopsky:block/gacha_machine_l"
+    },
+    "facing=north,step=2": {
+      "model": "poopsky:block/gacha_machine_c"
+    },
+    "facing=north,step=3": {
+      "model": "poopsky:block/gacha_machine_r"
+    },
+    "facing=north,step=4": {
+      "model": "poopsky:block/gacha_machine"
+    },
+    "facing=north,step=5": {
+      "model": "poopsky:block/gacha_machine_l"
+    },
+    "facing=north,step=6": {
+      "model": "poopsky:block/gacha_machine_c"
+    },
+    "facing=north,step=7": {
+      "model": "poopsky:block/gacha_machine_r"
+    },
+    "facing=south,step=0": {
+      "model": "poopsky:block/gacha_machine",
+      "y": 180
+    },
+    "facing=south,step=1": {
+      "model": "poopsky:block/gacha_machine_l",
+      "y": 180
+    },
+    "facing=south,step=2": {
+      "model": "poopsky:block/gacha_machine_c",
+      "y": 180
+    },
+    "facing=south,step=3": {
+      "model": "poopsky:block/gacha_machine_r",
+      "y": 180
+    },
+    "facing=south,step=4": {
+      "model": "poopsky:block/gacha_machine",
+      "y": 180
+    },
+    "facing=south,step=5": {
+      "model": "poopsky:block/gacha_machine_l",
+      "y": 180
+    },
+    "facing=south,step=6": {
+      "model": "poopsky:block/gacha_machine_c",
+      "y": 180
+    },
+    "facing=south,step=7": {
+      "model": "poopsky:block/gacha_machine_r",
+      "y": 180
+    },
+    "facing=west,step=0": {
+      "model": "poopsky:block/gacha_machine",
+      "y": 270
+    },
+    "facing=west,step=1": {
+      "model": "poopsky:block/gacha_machine_l",
+      "y": 270
+    },
+    "facing=west,step=2": {
+      "model": "poopsky:block/gacha_machine_c",
+      "y": 270
+    },
+    "facing=west,step=3": {
+      "model": "poopsky:block/gacha_machine_r",
+      "y": 270
+    },
+    "facing=west,step=4": {
+      "model": "poopsky:block/gacha_machine",
+      "y": 270
+    },
+    "facing=west,step=5": {
+      "model": "poopsky:block/gacha_machine_l",
+      "y": 270
+    },
+    "facing=west,step=6": {
+      "model": "poopsky:block/gacha_machine_c",
+      "y": 270
+    },
+    "facing=west,step=7": {
+      "model": "poopsky:block/gacha_machine_r",
+      "y": 270
+    }
+  }
+}

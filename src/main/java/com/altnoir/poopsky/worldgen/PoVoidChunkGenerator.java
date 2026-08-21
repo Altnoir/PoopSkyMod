@@ -267,21 +267,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
 
     private boolean isStructureSetAllowed(Holder<StructureSet> holder) {
         return allowedStructureSets != null
-                && allowedStructureSets.contains(holder)
-                && (Config.strongholdGeneration || !isStrongholdStructureSet(holder));
-    }
-
-    private static boolean isStrongholdStructureSet(Holder<StructureSet> holder) {
-        return holder.unwrapKey()
-                .map(ResourceKey::identifier)
-                .filter(STRONGHOLDS_STRUCTURE_SET::equals)
-                .isPresent()
-                || holder.value().structures().stream()
-                .map(StructureSelectionEntry::structure)
-                .map(Holder::unwrapKey)
-                .flatMap(Optional::stream)
-                .map(ResourceKey::identifier)
-                .anyMatch(STRONGHOLD_STRUCTURE::equals);
+                && allowedStructureSets.contains(holder);
     }
 
     @Nullable

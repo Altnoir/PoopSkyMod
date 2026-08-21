@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "poopsky:block/primo_slab"
+    },
+    "type=double": {
+      "model": "poopsky:block/primo_planks"
+    },
+    "type=top": {
+      "model": "poopsky:block/primo_slab_top"
+    }
+  }
+}

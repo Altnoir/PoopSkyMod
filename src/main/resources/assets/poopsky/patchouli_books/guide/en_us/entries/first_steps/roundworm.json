@@ -1,0 +1,22 @@
+{
+  "name": "Roundworm",
+  "icon": "poopsky:roundworm",
+  "category": "poopsky:first_steps",
+  "read_by_default": false,
+  "sortnum": 11,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "Parasite from Leaves",
+      "item": "poopsky:roundworm",
+      "text": "Breaking poop leaves has a chance to drop roundworms.$(br2)Roundworms are the ingredient used to roast string."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/poop_tree",
+        "poopsky:first_steps/string"
+      ]
+    }
+  ]
+}

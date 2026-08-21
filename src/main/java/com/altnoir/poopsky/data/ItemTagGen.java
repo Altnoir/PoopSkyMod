@@ -191,9 +191,12 @@ public final class ItemTagGen {
         tag(ItemTags.VANISHING_ENCHANTABLE).addTag(PoTags.Items.SHITS);
 
         tag(Tags.Items.MUSIC_DISCS)
-                .add(PoItems.LAWRENCE_MUSIC_DISC.get())
-                .add(PoItems.LIGHT_DANCE_MUSIC_DISC.get())
-                .add(PoItems.MOON_BOWL_MUSIC_DISC.get());
+                .add(
+                        PoItems.LAWRENCE_MUSIC_DISC.get(),
+                        PoItems.LIGHT_DANCE_MUSIC_DISC.get(),
+                        PoItems.MOON_BOWL_MUSIC_DISC.get(),
+                        PoItems.THEME_MUSIC_DISC.get()
+                );
 
         tag(PoTags.Items.POOP_MOONCAKES)
                 .add(
@@ -251,13 +254,13 @@ public final class ItemTagGen {
         tag(ItemTags.PLANKS).add(PoBlocks.GINKGO_PLANKS.asItem());
         tag(ItemTags.BOATS).add(PoItems.GINKGO_BOAT.get());
         tag(ItemTags.CHEST_BOATS).add(PoItems.GINKGO_CHEST_BOAT.get());
-        tag(ItemTags.WOODEN_STAIRS).add(PoBlocks.GINKGO_STAIRS.asItem());
-        tag(ItemTags.WOODEN_SLABS).add(PoBlocks.GINKGO_SLAB.asItem());
-        tag(ItemTags.WOODEN_BUTTONS).add(PoBlocks.GINKGO_BUTTON.asItem());
-        tag(ItemTags.WOODEN_PRESSURE_PLATES).add(PoBlocks.GINKGO_PRESSURE_PLATE.asItem());
-        tag(ItemTags.WOODEN_FENCES).add(PoBlocks.GINKGO_FENCE.asItem());
-        tag(ItemTags.WOODEN_DOORS).add(PoBlocks.GINKGO_DOOR.asItem());
-        tag(ItemTags.WOODEN_TRAPDOORS).add(PoBlocks.GINKGO_TRAPDOOR.asItem());
+        copy(BlockTags.WOODEN_STAIRS, ItemTags.WOODEN_STAIRS);
+        copy(BlockTags.WOODEN_SLABS, ItemTags.WOODEN_SLABS);
+        copy(BlockTags.WOODEN_BUTTONS, ItemTags.WOODEN_BUTTONS);
+        copy(BlockTags.WOODEN_PRESSURE_PLATES, ItemTags.WOODEN_PRESSURE_PLATES);
+        copy(BlockTags.WOODEN_FENCES, ItemTags.WOODEN_FENCES);
+        copy(BlockTags.WOODEN_DOORS, ItemTags.WOODEN_DOORS);
+        copy(BlockTags.WOODEN_TRAPDOORS, ItemTags.WOODEN_TRAPDOORS);
         var stairs = tag(ItemTags.STAIRS);
         var slabs = tag(ItemTags.SLABS);
         var walls = tag(ItemTags.WALLS);
@@ -266,24 +269,39 @@ public final class ItemTagGen {
             slabs.add(family.slab().asItem());
             walls.add(family.wall().asItem());
         });
-        stairs.add(PoBlocks.GINKGO_STAIRS.asItem());
-        slabs.add(PoBlocks.GINKGO_SLAB.asItem());
+        stairs.add(PoBlocks.GINKGO_STAIRS.asItem(), PoBlocks.PRIMO_STAIRS.asItem());
+        slabs.add(PoBlocks.GINKGO_SLAB.asItem(), PoBlocks.PRIMO_SLAB.asItem());
 
         tag(ItemTags.BUTTONS)
-                .add(PoBlocks.POOP_BUTTON.asItem())
-                .add(PoBlocks.GINKGO_BUTTON.asItem());
+                .add(
+                        PoBlocks.POOP_BUTTON.asItem(),
+                        PoBlocks.GINKGO_BUTTON.asItem(),
+                        PoBlocks.PRIMO_BUTTON.asItem()
+                );
         tag(ItemTags.FENCES)
-                .add(PoBlocks.POOP_FENCE.asItem())
-                .add(PoBlocks.GINKGO_FENCE.asItem());
+                .add(
+                        PoBlocks.POOP_FENCE.asItem(),
+                        PoBlocks.GINKGO_FENCE.asItem(),
+                        PoBlocks.PRIMO_FENCE.asItem()
+                );
         tag(ItemTags.FENCE_GATES)
-                .add(PoBlocks.POOP_FENCE_GATE.asItem())
-                .add(PoBlocks.GINKGO_FENCE_GATE.asItem());
+                .add(
+                        PoBlocks.POOP_FENCE_GATE.asItem(),
+                        PoBlocks.GINKGO_FENCE_GATE.asItem(),
+                        PoBlocks.PRIMO_FENCE_GATE.asItem()
+                );
         tag(ItemTags.DOORS)
-                .add(PoBlocks.POOP_DOOR.asItem())
-                .add(PoBlocks.GINKGO_DOOR.asItem());
+                .add(
+                        PoBlocks.POOP_DOOR.asItem(),
+                        PoBlocks.GINKGO_DOOR.asItem(),
+                        PoBlocks.PRIMO_DOOR.asItem()
+                );
         tag(ItemTags.TRAPDOORS)
-                .add(PoBlocks.POOP_TRAPDOOR.asItem())
-                .add(PoBlocks.GINKGO_TRAPDOOR.asItem());
+                .add(
+                        PoBlocks.POOP_TRAPDOOR.asItem(),
+                        PoBlocks.GINKGO_TRAPDOOR.asItem(),
+                        PoBlocks.PRIMO_TRAPDOOR.asItem()
+                );
     }
 
     private static TagAppender<Item, Item> tag(TagKey<Item> tag) {

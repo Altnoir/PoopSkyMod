@@ -9,6 +9,10 @@
     "poopsky:ginkgo_log",
     "poopsky:ginkgo_wood",
     "poopsky:stripped_ginkgo_log",
-    "poopsky:stripped_ginkgo_wood"
+    "poopsky:stripped_ginkgo_wood",
+    "poopsky:primo_stem",
+    "poopsky:primo_hyphae",
+    "poopsky:stripped_primo_stem",
+    "poopsky:stripped_primo_hyphae"
   ]
 }

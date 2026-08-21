@@ -30,7 +30,6 @@ public class PoModEvents {
         modEventBus.addListener(DataGenerators::gatherClientData);
         modEventBus.addListener(DataGenerators::gatherServerData);
         modEventBus.addListener(PoNetworking::registerNetworking);
-        modEventBus.addListener(PoNetworking::registerConfigurationTasks);
         modEventBus.addListener(PoModEvents::modLoad);
         modEventBus.addListener(PoModEvents::registerAttributes);
         modEventBus.addListener(PoModEvents::registerSpawnPlacements);
@@ -38,11 +37,13 @@ public class PoModEvents {
         modEventBus.addListener(PoModEvents::registerTicketControllers);
         modEventBus.addListener(PoModEvents::packSetup);
     }
+
     public static void modLoad(final ModConfigEvent event) {
         if (event instanceof ModConfigEvent.Loading || event instanceof ModConfigEvent.Reloading) {
             Config.onLoad(event.getConfig());
         }
     }
+
     public static void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(PoEntityType.POOLIME.get(), PoolimeEntity.createAttributes().build());
         event.put(PoEntityType.FLY.get(), FlyEntity.createAttributes().build());
@@ -104,9 +105,17 @@ public class PoModEvents {
 
     public static void packSetup(AddPackFindersEvent event) {
         event.addPackFinders(
-                PoopSky.loc("resourcepacks/poopsky_pack"),
+                PoopSky.loc("resourcepacks/poopsky_official_pack"),
                 PackType.CLIENT_RESOURCES,
-                Component.translatable("pack.poopsky.name"),
+                Component.translatable("pack.poopsky.official.name"),
+                PackSource.BUILT_IN,
+                false,
+                Pack.Position.TOP
+        );
+        event.addPackFinders(
+                PoopSky.loc("resourcepacks/poopsky_community_pack"),
+                PackType.CLIENT_RESOURCES,
+                Component.translatable("pack.poopsky.community.name"),
                 PackSource.BUILT_IN,
                 false,
                 Pack.Position.TOP

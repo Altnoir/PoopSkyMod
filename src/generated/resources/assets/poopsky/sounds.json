@@ -170,6 +170,16 @@
     ],
     "subtitle": "subtitle.poopsky.block.toilet.lava_empty"
   },
+  "click": {
+    "sounds": [
+      "poopsky:click"
+    ]
+  },
+  "confirm": {
+    "sounds": [
+      "poopsky:confirm"
+    ]
+  },
   "entity.fly.ambient": {
     "sounds": [
       {
@@ -337,12 +347,22 @@
     ],
     "subtitle": "subtitle.poopsky.villager.work_toilet"
   },
+  "explosion": {
+    "sounds": [
+      "poopsky:explosion"
+    ]
+  },
   "fart": {
     "sounds": [
       "poopsky:fart_1",
       "poopsky:fart_2"
     ],
     "subtitle": "subtitle.poopsky.fart"
+  },
+  "game_over": {
+    "sounds": [
+      "poopsky:game_over"
+    ]
   },
   "item.jinkela.use": {
     "sounds": [
@@ -386,6 +406,11 @@
     ],
     "subtitle": "subtitle.poopsky.item.toilet_linker.success"
   },
+  "jump": {
+    "sounds": [
+      "poopsky:jump"
+    ]
+  },
   "lawrence": {
     "sounds": [
       {
@@ -410,9 +435,39 @@
       }
     ]
   },
+  "new_best": {
+    "sounds": [
+      "poopsky:new_best"
+    ]
+  },
+  "point": {
+    "sounds": [
+      "poopsky:point"
+    ]
+  },
   "poopsky_intro": {
     "sounds": [
       "poopsky:poopsky_intro"
+    ]
+  },
+  "select": {
+    "sounds": [
+      "poopsky:select"
+    ]
+  },
+  "shoot": {
+    "sounds": [
+      "poopsky:shoot"
+    ]
+  },
+  "swing": {
+    "sounds": [
+      "poopsky:swing"
+    ]
+  },
+  "switch": {
+    "sounds": [
+      "poopsky:switch"
     ]
   },
   "theme": {

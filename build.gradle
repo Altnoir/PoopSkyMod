@@ -70,6 +70,15 @@ neoForge {
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
+def prepareBundledSbm = tasks.register('prepareBundledSbm', Jar) {
+    archiveFileName = 'simplebedrockmodel-2.5.0-neoforge-mc26.1.jar'
+    destinationDirectory = layout.buildDirectory.dir('generated/local-libs')
+    from zipTree('libs/simplebedrockmodel-2.5.0-neoforge-mc26.1.jar')
+    manifest {
+        attributes 'Automatic-Module-Name': 'com.github.mcmodderanchor.simplebedrockmodel'
+    }
+}
+
 def LangReplacements = [
         '空中厕所'    : '空中卫生间',
         '大便失禁'    : '巧克力喷泉',
@@ -154,6 +163,8 @@ sourceSets {
         java {
             exclude 'com/altnoir/poopsky/compat/create'
             exclude 'com/altnoir/poopsky/compat/jei/create'
+            exclude 'com/altnoir/poopsky/compat/kubejs'
+            exclude 'com/altnoir/poopsky/compat/maid'
         }
     }
 }
@@ -170,7 +181,7 @@ dependencies {
     runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-${minecraft_version}:${flywheel_version}")*/
     implementation jarJar("com.tterrag.registrate:Registrate:${registrate_version}")
     implementation "com.maydaymemory:mae:1.1.4"
-    implementation(files("libs/simplebedrockmodel-2.5.0-neoforge-mc26.1.jar"))
+    implementation(jarJar(files(prepareBundledSbm)))
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {

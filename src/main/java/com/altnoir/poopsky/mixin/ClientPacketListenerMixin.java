@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.mixin;
 
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
-import com.altnoir.poopsky.impl.event.PSKeyBoardInput;
+import com.altnoir.poopsky.init.PoKeyBoardInput;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.network.chat.Component;
@@ -19,7 +19,7 @@ public class ClientPacketListenerMixin {
         if (minecraft.player != null && minecraft.player.getVehicle() instanceof ToiletPlugEntity) {
             minecraft.gui.setOverlayMessage(Component.translatable(
                     "message.poopsky.toilet_plug.dismount",
-                    PSKeyBoardInput.getLocalizedKeyMessage(PSKeyBoardInput.DISMOUNT_PLUG_KEY)
+                    PoKeyBoardInput.getLocalizedKeyMessage(PoKeyBoardInput.DISMOUNT_PLUG_KEY)
             ), false);
         }
     }

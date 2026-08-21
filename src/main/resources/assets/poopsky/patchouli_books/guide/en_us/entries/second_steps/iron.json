@@ -1,0 +1,22 @@
+{
+  "name": "Iron",
+  "icon": "minecraft:iron_ingot",
+  "category": "poopsky:second_steps",
+  "read_by_default": false,
+  "sortnum": 5,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "First Sieve Yield",
+      "item": "minecraft:iron_ingot",
+      "text": "Sieve poop blocks on the sieve stable to obtain iron nuggets and a chance at raw iron.$(br2)Craft the iron into ingots to make buckets."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/sieve_stable",
+        "poopsky:second_steps/urine_bucket"
+      ]
+    }
+  ]
+}

@@ -1,32 +1,62 @@
 {
   "variants": {
-    "closed=false,facing=east": {
+    "closed=false,facing=east,powered=false": {
       "model": "poopsky:block/flush_toilet",
       "y": 90
     },
-    "closed=false,facing=north": {
+    "closed=false,facing=east,powered=true": {
+      "model": "poopsky:block/flush_toilet",
+      "y": 90
+    },
+    "closed=false,facing=north,powered=false": {
       "model": "poopsky:block/flush_toilet"
     },
-    "closed=false,facing=south": {
+    "closed=false,facing=north,powered=true": {
+      "model": "poopsky:block/flush_toilet"
+    },
+    "closed=false,facing=south,powered=false": {
       "model": "poopsky:block/flush_toilet",
       "y": 180
     },
-    "closed=false,facing=west": {
+    "closed=false,facing=south,powered=true": {
+      "model": "poopsky:block/flush_toilet",
+      "y": 180
+    },
+    "closed=false,facing=west,powered=false": {
       "model": "poopsky:block/flush_toilet",
       "y": 270
     },
-    "closed=true,facing=east": {
+    "closed=false,facing=west,powered=true": {
+      "model": "poopsky:block/flush_toilet",
+      "y": 270
+    },
+    "closed=true,facing=east,powered=false": {
       "model": "poopsky:block/flush_toilet_close",
       "y": 90
     },
-    "closed=true,facing=north": {
+    "closed=true,facing=east,powered=true": {
+      "model": "poopsky:block/flush_toilet_close",
+      "y": 90
+    },
+    "closed=true,facing=north,powered=false": {
       "model": "poopsky:block/flush_toilet_close"
     },
-    "closed=true,facing=south": {
+    "closed=true,facing=north,powered=true": {
+      "model": "poopsky:block/flush_toilet_close"
+    },
+    "closed=true,facing=south,powered=false": {
       "model": "poopsky:block/flush_toilet_close",
       "y": 180
     },
-    "closed=true,facing=west": {
+    "closed=true,facing=south,powered=true": {
+      "model": "poopsky:block/flush_toilet_close",
+      "y": 180
+    },
+    "closed=true,facing=west,powered=false": {
+      "model": "poopsky:block/flush_toilet_close",
+      "y": 270
+    },
+    "closed=true,facing=west,powered=true": {
       "model": "poopsky:block/flush_toilet_close",
       "y": 270
     }

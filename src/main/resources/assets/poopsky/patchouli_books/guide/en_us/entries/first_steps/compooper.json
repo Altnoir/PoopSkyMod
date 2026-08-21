@@ -1,0 +1,39 @@
+{
+  "name": "Compooper",
+  "icon": "poopsky:compooper",
+  "category": "poopsky:first_steps",
+  "read_by_default": false,
+  "sortnum": 14,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "First Automated Block",
+      "item": "poopsky:compooper",
+      "link_recipe": true,
+      "text": "Frame a compooper from seven mossy cobblestone slabs. It is the first step toward automating the poop cycle."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "poopsky:compooper"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Composting",
+      "text": "Feed compostable items into the compooper, such as poop, poop blocks, or leaves.$(br2)Each item has a chance to raise the compost level. When full, right-click to collect a sapling poop ball."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Collecting and Distilling",
+      "text": "Right-click a toilet while holding a compooper: default toilets give a urine compooper, while lava toilets give a lava compooper and clear the toilet's lava.$(br2)Place a urine compooper above a lit campfire to distill it into a water compooper.$(br2)Take out the water and lava buckets, then let them touch to make cobblestone."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/sapling_poop_ball",
+        "poopsky:second_steps/urine_compooper",
+        "poopsky:second_steps/water_compooper",
+        "poopsky:second_steps/lava_compooper"
+      ]
+    }
+  ]
+}

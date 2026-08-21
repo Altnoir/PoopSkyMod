@@ -2,6 +2,6 @@
   "parent": "poopsky:block/shit",
   "textures": {
     "particle": "poopsky:block/golden_poop_block",
-    "shit": "poopsky:block/golden_shit"
+    "shit": "poopsky:block/shit/golden_shit"
   }
 }

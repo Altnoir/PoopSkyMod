@@ -33,8 +33,8 @@ A Minecraft mod that introduces many new Poop and items.
 
 ## LICENSE
 
-- [CODE](LICENSE-CODE)
-- [ART](LICENSE-ART)
+- [CODE - MIT](LICENSE-CODE)
+- [ASSETS - CC BY-NC 4.0](LICENSE-ASSETS)
 
 ## Credits
 

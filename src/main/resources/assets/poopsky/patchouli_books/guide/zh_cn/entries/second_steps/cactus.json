@@ -1,0 +1,23 @@
+{
+  "name": "仙人掌",
+  "icon": "minecraft:cactus",
+  "category": "poopsky:second_steps",
+  "read_by_default": false,
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "筛矿的原料",
+      "item": "minecraft:cactus",
+      "text": "在干粪便块上有概率催熟出仙人掌，粪便沙催熟也会长出仙人掌。$(br2)把仙人掌放进筛架筛矿，就能获取帝王火龙果。"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/sieve_stable",
+        "poopsky:second_steps/king_of_dragon_fruit",
+        "poopsky:second_steps/poop_sand"
+      ]
+    }
+  ]
+}

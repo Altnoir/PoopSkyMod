@@ -1,0 +1,36 @@
+{
+  "name": "Fly Barrel",
+  "icon": "poopsky:fly_barrel",
+  "category": "poopsky:fly",
+  "read_by_default": false,
+  "sortnum": 4,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "Automatic Producer",
+      "item": "poopsky:fly_barrel",
+      "text": "Put flies in the input slot and the barrel continuously produces the resource tied to that fly type."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "poopsky:fly_barrel"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Stacking Speed",
+      "text": "The base production interval is about 42.5 seconds. Each extra fly of the same type in the input slot shortens the interval by 0.5 seconds, down to 1 second minimum.$(br2)Insert flies from the top and sides, and extract products from the bottom."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Product Examples",
+      "text": "Normal flies produce maggot seeds, red flies produce redstone, iron flies produce raw iron, diamond flies produce diamonds, dragon fruit flies produce gunpowder, and ender flies produce ender pearls.$(br2)Check JEI for the full product list."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:fly/fly",
+        "poopsky:fly/breeding_chest"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "name": "堆粪桶",
+  "icon": "poopsky:compooper",
+  "category": "poopsky:first_steps",
+  "read_by_default": false,
+  "sortnum": 14,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "第一个自动化方块",
+      "item": "poopsky:compooper",
+      "link_recipe": true,
+      "text": "用七个苔石台阶围出堆粪桶。它是秽壤循环从手工走向自动化的关键。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "poopsky:compooper"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "堆肥与产出",
+      "text": "向堆粪桶投入可堆肥物，例如粪便、粪便块或树叶。$(br2)每次投入都有概率提升堆肥等级，满级后右击即可取出树苗粪便球。"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "取液与蒸馏",
+      "text": "手拿堆粪桶直接右键厕所：默认厕所会取出粪水，变成装有粪的堆粪桶；岩浆厕所会取出岩浆，并清空厕所内的岩浆。$(br2)把装有粪的堆粪桶放在点燃的篝火上，会蒸馏成装有水的堆粪桶。$(br2)取出水桶和熔岩桶后，让水流与岩浆接触就能生成圆石。"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/sapling_poop_ball",
+        "poopsky:second_steps/urine_compooper",
+        "poopsky:second_steps/water_compooper",
+        "poopsky:second_steps/lava_compooper"
+      ]
+    }
+  ]
+}

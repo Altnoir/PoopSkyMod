@@ -16,10 +16,8 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import java.util.function.BiConsumer;
 
 public final class FishingLootGen {
-    public static final ResourceKey<LootTable> FISHING_SENNAE = ResourceKey.create(
-            Registries.LOOT_TABLE, PoopSky.loc("gameplay/fishing/seenae"));
-    public static final ResourceKey<LootTable> FISHING_URINE = ResourceKey.create(
-            Registries.LOOT_TABLE, PoopSky.loc("gameplay/fishing/poop_fluid"));
+    public static final ResourceKey<LootTable> FISHING_SENNAE = ResourceKey.create(Registries.LOOT_TABLE, PoopSky.loc("gameplay/fishing/seenae"));
+    public static final ResourceKey<LootTable> FISHING_URINE = ResourceKey.create(Registries.LOOT_TABLE, PoopSky.loc("gameplay/fishing/poop_fluid"));
 
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 

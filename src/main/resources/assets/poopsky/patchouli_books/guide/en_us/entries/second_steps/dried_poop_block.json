@@ -1,0 +1,26 @@
+{
+  "name": "Dried Poop Block",
+  "icon": "poopsky:dried_poop_block",
+  "category": "poopsky:second_steps",
+  "read_by_default": false,
+  "sortnum": 9,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "Baked Poop Block",
+      "item": "poopsky:dried_poop_block",
+      "text": "Smelt or blast a poop block to obtain a dried poop block."
+    },
+    {
+      "type": "patchouli:smelting",
+      "recipe": "poopsky:dried_poop_block_from_smelting_poop_block",
+      "text": "Blasting is faster."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/poop_block"
+      ]
+    }
+  ]
+}

@@ -14,6 +14,7 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.neoforged.neoforge.resource.ListenerKey;
 
 import java.io.Reader;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ public class FlyTypeManager extends SimplePreparableReloadListener<Map<Identifie
     public static final ListenerKey<FlyTypeManager> LISTENER_KEY = ListenerKey.create(PoopSky.loc("fly_types"));
 
     private volatile List<String> flyTypes = FlyType.FLY_TYPES;
+    private volatile List<FlyTypeDefinition> kubeJsFlyTypes = List.of();
 
     public FlyTypeManager() {
     }
@@ -130,5 +132,21 @@ public class FlyTypeManager extends SimplePreparableReloadListener<Map<Identifie
 
     public boolean isValid(String id) {
         return flyTypes.contains(id);
+    }
+
+    public List<FlyTypeDefinition> getDefinitions() {
+        Map<String, FlyTypeDefinition> combined = new java.util.LinkedHashMap<>();
+        flyTypes.stream().map(FlyTypeDefinition::defaultOf)
+                .forEach(definition -> combined.put(definition.id(), definition));
+        kubeJsFlyTypes.forEach(definition -> combined.put(definition.id(), definition));
+        return List.copyOf(combined.values());
+    }
+
+    public synchronized void replaceKubeJsDefinitions(Collection<FlyTypeDefinition> definitions) {
+        kubeJsFlyTypes = List.copyOf(definitions);
+    }
+
+    public FlyTypeDefinition getDefinition(String id) {
+        return getDefinitions().stream().filter(definition -> definition.id().equals(id)).findFirst().orElse(null);
     }
 }

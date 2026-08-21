@@ -1,0 +1,22 @@
+{
+  "name": "Poop",
+  "icon": "poopsky:poop",
+  "category": "poopsky:first_steps",
+  "read_by_default": false,
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "Basic Resource",
+      "item": "poopsky:poop",
+      "link_recipe": true,
+      "text": "The basic product of a toilet trip.$(br2)It is both a material for crafting poop blocks and a bone meal substitute that fuels the growth of filth."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/poop_block"
+      ]
+    }
+  ]
+}

@@ -3,8 +3,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"toilet": "poopsky:block/portable_toilet_top",
-		"particle": "poopsky:block/portable_toilet_particle"
+		"toilet": "poopsky:block/toilet/portable_toilet_top",
+		"particle": "poopsky:block/toilet/portable_toilet_particle"
 	},
 	"elements": [
 		{

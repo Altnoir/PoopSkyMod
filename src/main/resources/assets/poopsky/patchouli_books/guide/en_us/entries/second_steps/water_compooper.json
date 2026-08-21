@@ -1,0 +1,27 @@
+{
+  "name": "Water Compooper",
+  "icon": "poopsky:water_compooper",
+  "category": "poopsky:second_steps",
+  "read_by_default": false,
+  "sortnum": 14,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "Distilled or Filled",
+      "item": "poopsky:water_compooper",
+      "text": "A urine compooper distills into a water compooper. Empty compoopers can also collect rain or be filled with a water bucket.$(br2)Use a bucket to take the water out."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Making Cobblestone",
+      "text": "Pour water beside lava to create cobblestone.$(br2)Cobblestone is a basic material for later toilets, tools, and infrastructure."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:second_steps/urine_compooper",
+        "poopsky:second_steps/lava"
+      ]
+    }
+  ]
+}

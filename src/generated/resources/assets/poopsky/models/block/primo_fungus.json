@@ -1,0 +1,7 @@
+{
+  "parent": "poopsky:block/mushroom",
+  "textures": {
+    "all": "poopsky:block/mushroom/primo_fungus",
+    "particle": "poopsky:block/primo_planks"
+  }
+}

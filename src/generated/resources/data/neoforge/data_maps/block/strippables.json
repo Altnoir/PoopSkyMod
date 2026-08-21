@@ -14,6 +14,12 @@
     },
     "poopsky:poop_wood": {
       "stripped_block": "poopsky:stripped_poop_wood"
+    },
+    "poopsky:primo_hyphae": {
+      "stripped_block": "poopsky:stripped_primo_hyphae"
+    },
+    "poopsky:primo_stem": {
+      "stripped_block": "poopsky:stripped_primo_stem"
     }
   }
 }

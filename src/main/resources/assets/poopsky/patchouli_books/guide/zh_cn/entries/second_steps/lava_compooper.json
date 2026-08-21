@@ -1,0 +1,27 @@
+{
+  "name": "装有熔岩的堆粪桶",
+  "icon": "poopsky:lava_compooper",
+  "category": "poopsky:second_steps",
+  "read_by_default": false,
+  "sortnum": 15,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "随身岩浆",
+      "item": "poopsky:lava_compooper",
+      "text": "手拿空堆粪桶右键岩浆厕所，可以取走岩浆，变成装有熔岩的堆粪桶。$(br2)用桶右键可以舀出熔岩桶。"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "岩浆的用处",
+      "text": "装有熔岩的堆粪桶能保存岩浆，也可以直接处理物品。$(br2)把熔岩倒到水边，就能获得圆石。"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:second_steps/lava",
+        "poopsky:second_steps/water_compooper"
+      ]
+    }
+  ]
+}

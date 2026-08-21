@@ -1,0 +1,35 @@
+{
+  "name": "Breeding Recipes",
+  "icon": "poopsky:fly",
+  "category": "poopsky:fly",
+  "read_by_default": false,
+  "sortnum": 5,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Parent order does not matter. Each matching recipe has a 20% chance to mutate; failures produce one parent fly.$(br2)These are the current breeding routes."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Base Routes 1",
+      "text": "$(li)Black + Yellow = Brown$(li)Green + Blue = Cyan$(li)Purple + Pink = Magenta$(li)Red + Blue = Purple$(li)Red + Green = Yellow$(li)Red + Yellow = Orange$(li)White + Black = Gray$(li)White + Blue = Light Blue$(li)White + Gray = Light Gray$(li)White + Green = Lime$(li)White + Red = Pink"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Base Routes 2",
+      "text": "$(li)Purple + Cyan = Ender$(li)Green + Yellow = Dragon Fruit$(li)Dragon Fruit + Yellow = Glowstone$(li)White + Orange = Copper$(li)Light Gray + Copper = Iron$(li)Glowstone + Copper = Gold$(li)Lime + Gold = Emerald$(li)Gold + Emerald = Diamond$(li)Emerald + Diamond = Netherite$(li)Normal + Copper = Black"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Integration Recipes",
+      "text": "These recipes require their mods to be loaded:$(br2)$(li)Cyan + Iron = Zinc [Create]$(li)Light Blue + Diamond = Certus [AE2]$(li)Black + Glowstone = Sky Dust [AE2]$(li)Light Gray + Iron = Tin [Mekanism]$(li)Iron + Tin = Lead [Mekanism]$(li)Diamond + Lead = Osmium [Mekanism]$(li)Dragon Fruit + Emerald = Uranium [Mekanism]$(li)Purple + Osmium = Fluorite [Mekanism]"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:fly/breeding_chest",
+        "poopsky:fly/fly_barrel"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "name": "煤炭块",
+  "icon": "minecraft:coal_block",
+  "category": "poopsky:first_steps",
+  "read_by_default": false,
+  "sortnum": 9,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "密封碳化",
+      "item": "minecraft:coal_block",
+      "text": "当粪便木的六个面都被不透光的实心方块包围时，经过一段时间会转化为煤炭块。$(br2)树叶不能参与密封，等待过程中请保持周围方块不变。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "minecraft:coal",
+      "title": "拆回煤炭",
+      "text": "煤炭块可以拆回九个煤炭，用于制作篝火。"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/poop_tree",
+        "poopsky:first_steps/campfire"
+      ]
+    }
+  ]
+}

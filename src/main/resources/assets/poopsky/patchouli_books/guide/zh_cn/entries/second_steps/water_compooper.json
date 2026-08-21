@@ -1,0 +1,27 @@
+{
+  "name": "装有水的堆粪桶",
+  "icon": "poopsky:water_compooper",
+  "category": "poopsky:second_steps",
+  "read_by_default": false,
+  "sortnum": 14,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "蒸馏与装水",
+      "item": "poopsky:water_compooper",
+      "text": "粪水堆粪桶蒸馏后会变成水堆粪桶；也可以用空堆粪桶接雨水，或用水桶直接装满。$(br2)用桶右键可以取出水桶。"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "生成圆石",
+      "text": "把水倒到岩浆源旁，就会生成圆石。$(br2)圆石是后续制作厕所、工具和基础设施的重要材料。"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:second_steps/urine_compooper",
+        "poopsky:second_steps/lava"
+      ]
+    }
+  ]
+}

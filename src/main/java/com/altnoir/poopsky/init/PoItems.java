@@ -9,8 +9,10 @@ import com.altnoir.poopsky.content.item.p.*;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
@@ -96,7 +98,14 @@ public class PoItems {
     public static final ItemEntry<FlyCatcherItem> FLY_CATCHER = registerItemNoModel("fly_catcher",
             props -> new FlyCatcherItem(props.stacksTo(1).durability(88)));
     public static final ItemEntry<JinKeLaItem> JINKELA = registerItem("jinkela", JinKeLaItem::new);
-    public static final ItemEntry<ReturnTotemItem> RETURN_TOTEM = registerItem("return_totem", ReturnTotemItem::new);
+    public static final ItemEntry<ReturnTotemItem> RETURN_TOTEM = registerItem("return_totem",
+            props -> new ReturnTotemItem(props.stacksTo(8)));
+    public static final ItemEntry<Item> TOTEM_OF_UNPOOPING = registerItem("totem_of_unpooping",
+            props -> new Item(props.stacksTo(8)));
+    public static final ItemEntry<TokenItem> TOKEN = registerItem("token",
+            props -> new TokenItem(props.stacksTo(88)));
+    public static final ItemEntry<GashaponItem> GASHAPON = registerItem("gashapon",
+            props -> new GashaponItem(props.stacksTo(16)));
     public static final ItemEntry<TimeBellItem> TIME_BELL = registerItem("time_bell",
             props -> new TimeBellItem(props.stacksTo(1)));
     public static final ItemEntry<Item> SPALL = registerItem("spall", Item::new);
@@ -126,6 +135,13 @@ public class PoItems {
     public static final ItemEntry<Item> LAWRENCE_MUSIC_DISC = registerMusicDisc("music_disc_lawrence", PoSoundEvents.LAWRENCE_KEY);
     public static final ItemEntry<Item> LIGHT_DANCE_MUSIC_DISC = registerMusicDisc("music_disc_light_dance", PoSoundEvents.LIGHT_DANCE_KEY);
     public static final ItemEntry<Item> MOON_BOWL_MUSIC_DISC = registerMusicDisc("music_disc_moon_bowl", PoSoundEvents.MOON_BOWL_KEY);
+    public static final ItemEntry<Item> THEME_MUSIC_DISC = registerMusicDisc("music_disc_theme", PoSoundEvents.THEME_KEY);
+    public static final ItemEntry<GameDiscItem> GAME_DISC_ROUNDWORM = registerItem("game_disc_roundworm",
+            props -> new GameDiscItem(props.rarity(Rarity.RARE), Component.translatable("gamediscs.roundworm").withStyle(ChatFormatting.YELLOW)));
+    public static final ItemEntry<GameDiscItem> GAME_DISC_BLOCKTRIS = registerItem("game_disc_blocktris",
+            props -> new GameDiscItem(props.rarity(Rarity.RARE), Component.translatable("gamediscs.blocktris").withStyle(ChatFormatting.YELLOW)));
+    public static final ItemEntry<GameDiscItem> GAME_DISC_PONG = registerItem("game_disc_pong",
+            props -> new GameDiscItem(props.rarity(Rarity.RARE), Component.translatable("gamediscs.pong").withStyle(ChatFormatting.GRAY)));
     public static final ItemEntry<GinkgoBoatItem> GINKGO_BOAT = registerItem("ginkgo_boat",
             props -> new GinkgoBoatItem(PoEntityType.GINKGO_BOAT.get(), props.stacksTo(1)));
     public static final ItemEntry<GinkgoBoatItem> GINKGO_CHEST_BOAT = REGISTRATE

@@ -1,0 +1,37 @@
+{
+  "name": "Breeding Chest",
+  "icon": "poopsky:breeding_chest",
+  "category": "poopsky:fly",
+  "read_by_default": false,
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "Fly Hybrid Machine",
+      "item": "poopsky:breeding_chest",
+      "text": "Place two flies and poop inside. Each successful breed has a 20% chance to produce the recipe result; failures produce one parent."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "poopsky:breeding_chest"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "5x5x5 Speed and Output",
+      "text": "The breeding chest scans a 5x5x5 area around itself about every 4 seconds.$(br2)Each poop block in range shortens the breeding interval by 0.5 seconds; the base interval is 60 seconds and the fastest is 1 second.$(br2)Each maggot block in range adds +1 output per successful breed and consumes one extra poop per output."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Automation",
+      "text": "Insert poop and flies from the top and sides, and extract products from the bottom.$(br2)Work pauses when the output slots are full, so it works well with hoppers and pipes."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:fly/fly",
+        "poopsky:fly/breeding_recipes",
+        "poopsky:fly/fly_barrel"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "name": "Campfire",
+  "icon": "minecraft:campfire",
+  "category": "poopsky:first_steps",
+  "read_by_default": false,
+  "sortnum": 10,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "First Fire",
+      "item": "minecraft:campfire",
+      "text": "Craft a campfire from coal, logs, and sticks.$(br2)Poop wood counts as logs, so it can provide the campfire's wood."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "minecraft:campfire"
+    },
+    {
+      "type": "patchouli:campfire",
+      "recipe": "poopsky:string_from_campfire_cooking_roundworm",
+      "text": "Roasting a roundworm on the campfire turns it into string."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/coal_block",
+        "poopsky:first_steps/roundworm",
+        "poopsky:first_steps/string"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "comparator_output": 8,
+  "description": {
+    "translate": "item.poopsky.music_disc_theme.desc"
+  },
+  "length_in_seconds": 132.0,
+  "sound_event": "poopsky:theme"
+}

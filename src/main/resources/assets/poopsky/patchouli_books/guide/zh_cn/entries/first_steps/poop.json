@@ -1,0 +1,22 @@
+{
+  "name": "粪便",
+  "icon": "poopsky:poop",
+  "category": "poopsky:first_steps",
+  "read_by_default": false,
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "基础资源",
+      "item": "poopsky:poop",
+      "link_recipe": true,
+      "text": "厕所排出的基础产物。$(br2)它既是制作粪便块的材料，也可以像骨粉一样使用，是加速秽壤生长的关键。"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/poop_block"
+      ]
+    }
+  ]
+}

@@ -48,18 +48,6 @@ public final class PoAnimationSavedData extends SavedData {
         return level.getDataStorage().computeIfAbsent(TYPE);
     }
 
-    public boolean markPlayed(PoAnimation animation, UUID playerId, String playerName) {
-        Set<UUID> players = this.players(animation);
-        Set<String> playerNames = this.playerNames(animation);
-        boolean played = players.contains(playerId) || playerNames.contains(playerName);
-        boolean changed = players.add(playerId);
-        changed |= playerNames.add(playerName);
-        if (changed) {
-            this.setDirty();
-        }
-        return !played;
-    }
-
     public boolean hasPlayed(PoAnimation animation, UUID playerId, String playerName) {
         return this.players(animation).contains(playerId) || this.playerNames(animation).contains(playerName);
     }

@@ -308,7 +308,7 @@ public class FlushToiletCartEntity extends VehicleEntity {
         boolean fast = mc.options.keySprint.isDown();
 
         this.setInput(forward, backward, left, right, fast);
-        ClientPacketDistributor.sendToServer(new FlushToiletCartInputPayload(forward, backward, left, right, fast));
+        ClientPacketDistributor.sendToServer(new FlushToiletCartInputPayload(forward, backward, left, right, fast, false));
     }
 
     private void moveByInput() {

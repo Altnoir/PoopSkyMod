@@ -1,0 +1,28 @@
+{
+  "name": "Coal Block",
+  "icon": "minecraft:coal_block",
+  "category": "poopsky:first_steps",
+  "read_by_default": false,
+  "sortnum": 9,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "Sealed Carbon",
+      "item": "minecraft:coal_block",
+      "text": "When poop wood is enclosed on all six sides by opaque solid blocks, it slowly turns into a coal block.$(br2)Leaves cannot seal it, so keep every side filled while you wait."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "minecraft:coal",
+      "title": "Back to Coal",
+      "text": "A coal block can be broken back into nine coal, which is enough to craft a campfire."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/poop_tree",
+        "poopsky:first_steps/campfire"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "name": "粪便工作台",
+  "icon": "poopsky:poop_crafting_table",
+  "category": "poopsky:first_steps",
+  "read_by_default": false,
+  "sortnum": 4,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "3x3 合成空间",
+      "item": "poopsky:poop_crafting_table",
+      "link_recipe": true,
+      "text": "一个粪便块可以制作出八个粪便工作台。$(br2)后续的堆粪桶等 3x3 配方都需要工作台支持。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "poopsky:poop_crafting_table"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/poop_sapling"
+      ]
+    }
+  ]
+}

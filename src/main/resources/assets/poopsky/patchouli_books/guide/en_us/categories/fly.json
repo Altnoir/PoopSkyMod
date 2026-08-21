@@ -1,0 +1,6 @@
+{
+  "name": "Flies",
+  "description": "Summon the first fly from a maggot block, collect it with a fly catcher, then breed and mass-produce resources.",
+  "icon": "poopsky:fly",
+  "sortnum": 3
+}

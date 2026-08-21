@@ -1,0 +1,23 @@
+{
+  "name": "村民职业",
+  "icon": "minecraft:villager_spawn_egg",
+  "category": "poopsky:second_steps",
+  "read_by_default": false,
+  "sortnum": 11,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "两种秽壤职业",
+      "item": "minecraft:villager_spawn_egg",
+      "text": "秽壤相关的村民职业有两种。$(br2)养粪人以堆粪桶为职业方块，美食家以厕所为职业方块。"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/compooper",
+        "poopsky:first_steps/toilet",
+        "poopsky:second_steps/dragon_breath_chili"
+      ]
+    }
+  ]
+}

@@ -48,6 +48,8 @@ public class PoConfigureFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> GINKGO_TREE = resourceKey("ginkgo_tree");
     public static final ResourceKey<ConfiguredFeature<?, ?>> MEGA_GINKGO_TREE = resourceKey("mega_ginkgo_tree");
     public static final ResourceKey<ConfiguredFeature<?, ?>> GINKGO_BEE_TREE = resourceKey("ginkgo_bee_tree");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> PRIMO_FUNGUS = resourceKey("primo_fungus");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> GLOW_PRIMO_FUNGUS = resourceKey("glow_primo_fungus");
     public static final ResourceKey<ConfiguredFeature<?, ?>> POOP_VEGETATION = resourceKey("poop_vegetation");
     public static final ResourceKey<ConfiguredFeature<?, ?>> POOP_PATCH_BONEMEAL = resourceKey("poop_patch_bonemeal");
     public static final ResourceKey<ConfiguredFeature<?, ?>> CHILI_POOP_VEGETATION = resourceKey("chili_poop_vegetation");
@@ -56,6 +58,7 @@ public class PoConfigureFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> GOLDEN_POOP_PATCH_BONEMEAL = resourceKey("golden_poop_patch_bonemeal");
     public static final ResourceKey<ConfiguredFeature<?, ?>> DRIED_POOP_PATCH = resourceKey("dried_poop_patch");
     public static final ResourceKey<ConfiguredFeature<?, ?>> SALTPETER_PATCH = resourceKey("saltpeter_patch");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> POOP_SAND_PATCH = resourceKey("dried_poop_sand_patch");
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> RAW_SAPLING_POOP_VEGETATION = resourceKey("raw_sapling_poop_vegetation");
     public static final ResourceKey<ConfiguredFeature<?, ?>> RAW_SAPLING_POOP_PATCH_BONEMEAL = resourceKey("raw_sapling_poop_patch_bonemeal");
@@ -63,6 +66,8 @@ public class PoConfigureFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> RAW_SEA_POOP_PATCH_BONEMEAL = resourceKey("raw_sea_poop_patch_bonemeal");
     public static final ResourceKey<ConfiguredFeature<?, ?>> RAW_WITHER_POOP_VEGETATION = resourceKey("raw_wither_poop_vegetation");
     public static final ResourceKey<ConfiguredFeature<?, ?>> RAW_WITHER_POOP_PATCH_BONEMEAL = resourceKey("raw_wither_poop_patch_bonemeal");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> MYCELIUM_VEGETATION = resourceKey("mycelium_vegetation");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> MYCELIUM_PATCH_BONEMEAL = resourceKey("mycelium_patch_bonemeal");
 
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         HolderGetter<ConfiguredFeature<?, ?>> holdergetter = context.lookup(Registries.CONFIGURED_FEATURE);

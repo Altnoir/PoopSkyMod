@@ -1,0 +1,27 @@
+{
+  "name": "King of Dragon Fruit",
+  "icon": "poopsky:king_of_dragon_fruit",
+  "category": "poopsky:second_steps",
+  "read_by_default": false,
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "Gunpowder Fruit",
+      "item": "poopsky:king_of_dragon_fruit",
+      "text": "Sieve cactus on the sieve stable for a chance to obtain King of Dragon Fruit.$(br2)It counts as gunpowder material and can be used directly to craft POP."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "poopsky:gunpowder_from_king_of_dragon_fruit",
+      "text": "One King of Dragon Fruit can also be broken down into one gunpowder."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:second_steps/cactus",
+        "poopsky:second_steps/poop_tnt"
+      ]
+    }
+  ]
+}

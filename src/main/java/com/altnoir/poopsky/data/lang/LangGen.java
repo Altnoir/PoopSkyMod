@@ -187,6 +187,12 @@ public final class LangGen {
 
     private static void addKeybindings() {
         provider.add("key.category.poopsky", "POOPSKY");
+        provider.add("key.poopsky.arcade.up", "Arcade Up");
+        provider.add("key.poopsky.arcade.down", "Arcade Down");
+        provider.add("key.poopsky.arcade.left", "Arcade Left");
+        provider.add("key.poopsky.arcade.right", "Arcade Right");
+        provider.add("key.poopsky.arcade.button1", "Arcade Button 1");
+        provider.add("key.poopsky.arcade.button2", "Arcade Button 2");
         provider.add("key.poopsky.dismount_plug", "Dismount Toilet Plug");
         provider.add("key.poopsky.down", "Descend");
         provider.add("key.poopsky.up", "Up");
@@ -283,7 +289,7 @@ public final class LangGen {
                 PoItemGroups.POOPSKY_DECO_TAB_KEY, "PoopSky Builder Block",
                 PoItemGroups.TS_ITEMS.translationKey(), "Basic Items",
                 PoItemGroups.TS_BLOCKS.translationKey(), "Functional Blocks",
-                PoItemGroups.TS_FLIES.translationKey(), "Flies",
+                PoItemGroups.TS_MOBS.translationKey(), "Flies",
                 PoItemGroups.TS_POTIONS.translationKey(), "Potions",
                 PoItemGroups.TS_DECO_MATERIALS.translationKey(), "Building Blocks",
                 PoItemGroups.TS_DECO_TILES.translationKey(), "Tiles",
@@ -311,12 +317,30 @@ public final class LangGen {
         provider.add("effect.poopsky.seedbed_curse", "Seedbed Curse");
         provider.add("effect.poopsky.bleeding", "Bleeding");
         provider.add("effect.poopsky.moment_of_ptyme", "Moment of Ptyme");
+        provider.add("effect.poopsky.infestation", "Infestation");
 
         // Blocks
         provider.add("block.poopsky.urine", "Urine");
         provider.add("block.poopsky.toilet_block", "Toilet");
         provider.add("block.poopsky.toilet_format", "%s Toilet");
         provider.add("block.poopsky.rainbow_toilet", "Rainbow Toilet");
+
+        // Game
+        provider.add("gamediscs.roundworm", "Roundworm");
+        provider.add("gamediscs.blocktris", "Blocktris");
+        provider.add("gamediscs.pong", "Pong");
+        provider.add("message.gamediscs.light_arcade.no_cartridge", "No cartridge");
+
+        provider.add("gui.gamingconsole.title", "Arcade Machine");
+        provider.add("gui.gamingconsole.press_any_key", "Press any key");
+        provider.add("gui.gamingconsole.score", "Score");
+        provider.add("gui.gamingconsole.best_score", "Best");
+        provider.add("gui.gamingconsole.new_best_score", "New Best");
+        provider.add("gui.gamingconsole.won", "You won!");
+        provider.add("gui.gamingconsole.died", "You lost!");
+        provider.add("gui.gamingconsole.next", "Next");
+        provider.add("gui.gamingconsole.blocktris.botton_1", "Press [%s] to fall");
+        provider.add("gui.gamingconsole.blocktris.botton_2", "Press [%s] to rotate");
 
         // Containers
         provider.add("container.poopsky.fly_barrel", "Fly Barrel");
@@ -355,8 +379,6 @@ public final class LangGen {
         provider.add("tooltip.poopsky.fly_type", "Type");
         provider.add("tooltip.poopsky.item.info_0", "§7Hold §6[Shift] §7to show details");
         provider.add("tooltip.poopsky.item.info_1", "§8Right-click two different toilet blocks to link channels");
-        provider.add("tooltip.poopsky.poop_ball.info_1", "Villager Support");
-        provider.add("tooltip.poopsky.poop_ball.info_2", "500KG Poop");
         provider.add("tooltip.poopsky.toilet_linker.info_1", "Toilet① - DimID: %1$s, Coordinates: %2$s, %3$s, %4$s");
         provider.add("tooltip.poopsky.toilet_linker.info_2", "Toilet② - DimID: %1$s, Coordinates: %2$s, %3$s, %4$s");
         provider.add("tooltip.poopsky.jinkela.info", "§8Fertilizer mixed with Jinkela: one bag spreads like two");
@@ -372,7 +394,13 @@ public final class LangGen {
         provider.add("jei.category.poopsky.anal_pressing", "Anal Pressing");
         provider.add("jei.category.poopsky.fly_barrel", "Fly Barrel");
         provider.add("jei.category.poopsky.breeding_chest", "Breeding Box");
-        provider.add("jei.poopsky.sieve_chance", "Chance: %.2f%%");
+        provider.add("jei.category.poopsky.liquid_interaction", "Liquid Interaction");
+        provider.add("jei.category.poopsky.arcade", "Arcade Rewards");
+        provider.add("jei.poopsky.liquid_interaction.source_flowing", "Source and flowing fluids produce different results");
+        provider.add("jei.poopsky.liquid_interaction.replace_left", "The result replaces the left fluid");
+        provider.add("jei.poopsky.liquid_interaction.below", "The block below must be: %s");
+        provider.add("jei.poopsky.sieve_chance", "Chance: %s");
+        provider.add("jei.poopsky.arcade_chance", "Chance: %s");
         provider.add("jei.poopsky.pop_explosion_radius", "Radius > %s");
         provider.add("jei.poopsky.anal_pressing_replace", "Max Press %s");
         provider.add("jei.poopsky.digesting_chance", "Chance: %.2f%%");
@@ -412,8 +440,6 @@ public final class LangGen {
         addConfig("setPoopskyDefault.tooltip", "Makes dedicated servers use the PoopSky world preset by default");
         addConfig("voidNetherGeneration", "Void Nether Generation");
         addConfig("voidNetherGeneration.tooltip", "Keeps the Nether empty when using the Poopsky custom void generator");
-        addConfig("strongholdGeneration", "Generate Strongholds");
-        addConfig("strongholdGeneration.tooltip", "Whether strongholds generate in PoopSky worlds");
         addConfig("spawnToiletMode", "Spawn Toilet Mode");
         addConfig("spawnToiletMode.tooltip", "Which toilet to generate at the PoopSky world spawn. RANDOM_TOILET selects a random HARD toilet variant");
         addConfig("spawnToiletMode.wooden_toilet", "Wooden Toilet");

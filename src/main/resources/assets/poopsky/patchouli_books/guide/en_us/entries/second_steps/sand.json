@@ -1,0 +1,26 @@
+{
+  "name": "Sand",
+  "icon": "minecraft:sand",
+  "category": "poopsky:second_steps",
+  "read_by_default": false,
+  "sortnum": 8,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "Smelted in a Furnace",
+      "item": "minecraft:sand",
+      "text": "Smelt a roundworm block in a furnace to obtain normal sand.$(br2)Sand is also a useful sieve input and can yield iron nuggets."
+    },
+    {
+      "type": "patchouli:smelting",
+      "recipe": "poopsky:sand_from_smelting_roundworm_block"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:second_steps/roundworm_block",
+        "poopsky:second_steps/iron"
+      ]
+    }
+  ]
+}

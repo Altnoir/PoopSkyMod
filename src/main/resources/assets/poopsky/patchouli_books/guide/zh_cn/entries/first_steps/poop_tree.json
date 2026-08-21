@@ -1,0 +1,39 @@
+{
+  "name": "粪便树",
+  "icon": "poopsky:poop_log",
+  "category": "poopsky:first_steps",
+  "read_by_default": false,
+  "sortnum": 6,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "粪便树",
+      "item": "poopsky:poop_log",
+      "link_recipe": true,
+      "text": "粪便树苗长大后的形态，由粪便原木、粪便木和粪便树叶组成。"
+    },
+    {
+      "type": "patchouli:stonecutting",
+      "recipe": "poopsky:poop_empty_log_from_poop_log_stonecutting",
+      "text": "在切石机中把粪便原木切成空心粪便木。$(br2)空心木会在“秽壤生万物”中用于加速 POP。"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "碳化",
+      "text": "当粪便木的六个面都被不透光的实心方块包围时，等待一段时间就会转化为煤炭块。$(br2)树叶不能作为密封方块，等待时请保持周围方块不变。"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "收获",
+      "text": "没有精准采集时，破坏粪便原木或粪便木会掉落 4 到 5 个碎石。$(br2)树叶会掉落粪便，也可能掉出蛔虫。"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:first_steps/spall",
+        "poopsky:first_steps/coal_block",
+        "poopsky:second_steps/poop_tnt"
+      ]
+    }
+  ]
+}
