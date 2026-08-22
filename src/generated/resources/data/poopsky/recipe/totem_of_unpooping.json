@@ -13,9 +13,9 @@
     }
   },
   "pattern": [
-    "S",
-    "E",
-    "D"
+    " S ",
+    "DED",
+    " D "
   ],
   "result": {
     "count": 8,
