@@ -1,0 +1,19 @@
+{
+  "name": "Maggot Snacks",
+  "icon": "poopsky:baked_maggots",
+  "category": "poopsky:food",
+  "read_by_default": false,
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "Don't Ask, It's Protein",
+      "item": "poopsky:baked_maggots",
+      "text": "Baked Maggots are processed from maggots and can be obtained while building a fly farm.$(br2)Roundworms drop from poop leaves and can be eaten, but they are more often cooked into string."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "If you are brave, you can try raw maggots or roundworms.$(br2)However, cooking them first is usually the wiser choice."
+    }
+  ]
+}

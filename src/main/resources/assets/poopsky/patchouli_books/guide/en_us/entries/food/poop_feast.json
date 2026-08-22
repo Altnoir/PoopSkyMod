@@ -1,0 +1,20 @@
+{
+  "name": "The Filth Feast",
+  "icon": "poopsky:pooburger",
+  "category": "poopsky:food",
+  "read_by_default": false,
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "A Hearty Meal",
+      "item": "poopsky:pooburger",
+      "text": "Once simple snacks are no longer enough, craft a Pooburger, Poop Soup, Poop Pasta, or Poodding.$(br2)These foods restore more hunger and are great before exploring or fighting."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Festive and Advanced",
+      "text": "Poop Mooncakes, Chili Poop Mooncakes, and Golden Poop Mooncakes are more distinctive filth foods.$(br2)They usually require more ingredients but provide better benefits."
+    }
+  ]
+}

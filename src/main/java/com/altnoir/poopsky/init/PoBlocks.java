@@ -339,7 +339,7 @@ public class PoBlocks {
                     .requiresCorrectToolForDrops()
                     .isValidSpawn(Blocks::never)
                     .noOcclusion()));
-    public static final BlockEntry<PoopTntBlock> POOP_TNT = registerBlock("poop_tnt", 88,
+    public static final BlockEntry<PoopTntBlock> POP = registerBlock("poop_tnt", 88,
             props -> new PoopTntBlock(simpleProperties(MapColor.FIRE, 0.0F, SoundType.GRASS)
                     .ignitedByLava()
                     .pushReaction(PushReaction.DESTROY)));

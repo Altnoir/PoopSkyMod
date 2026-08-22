@@ -1,0 +1,33 @@
+{
+  "name": "Maggots",
+  "icon": "poopsky:maggots_seeds",
+  "category": "poopsky:first_steps",
+  "read_by_default": false,
+  "sortnum": 8,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "From a Urine Compooper",
+      "item": "poopsky:maggots_seeds",
+      "text": "A Urine Compooper filled with filth will grow maggots after some time.$(br2)Right-click the compooper, or extract from the bottom, to obtain maggots."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Plantable",
+      "text": "Maggots can be planted like seeds and grow into maggot crops.$(br2)They are a renewable filth crop and one of the basic ingredients for the fly system."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Mature Drops",
+      "text": "A mature maggot crop drops 1-3 maggots and randomly drops one of the following:$(li)Sweet Berries$(li)Carrot$(li)Potato$(li)Beetroot Seeds"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:second_steps/urine_compooper",
+        "poopsky:first_steps/roundworm",
+        "poopsky:fly/fly"
+      ]
+    }
+  ]
+}

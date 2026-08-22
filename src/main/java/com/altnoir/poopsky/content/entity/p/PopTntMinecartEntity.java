@@ -16,7 +16,7 @@ public class PopTntMinecartEntity extends MinecartTNT {
 
     @Override
     public BlockState getDefaultDisplayBlockState() {
-        return PoBlocks.POOP_TNT.get().defaultBlockState();
+        return PoBlocks.POP.get().defaultBlockState();
     }
 
     @Override

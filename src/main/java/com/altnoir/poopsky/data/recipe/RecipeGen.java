@@ -274,9 +274,9 @@ public final class RecipeGen {
                 .unlockedBy(getItemName(PoBlocks.GOLDEN_FLUSH_TOILET), has(PoBlocks.GOLDEN_FLUSH_TOILET))
                 .save(recipeOutput);
         provider.shapeless(RecipeCategory.TRANSPORTATION, PoItems.POP_TNT_MINECART)
-                .requires(PoBlocks.POOP_TNT)
+                .requires(PoBlocks.POP)
                 .requires(Items.MINECART)
-                .unlockedBy(getHasName(PoBlocks.POOP_TNT), has(PoBlocks.POOP_TNT))
+                .unlockedBy(getHasName(PoBlocks.POP), has(PoBlocks.POP))
                 .save(recipeOutput);
         provider.shapeless(RecipeCategory.MISC, PoItems.LAWRENCE_MUSIC_DISC)
                 .requires(Tags.Items.MUSIC_DISCS)
@@ -493,7 +493,7 @@ public final class RecipeGen {
                 .define('A', Items.STRING)
                 .unlockedBy(getItemName(Blocks.MOSSY_COBBLESTONE_WALL), has(Blocks.MOSSY_COBBLESTONE_WALL))
                 .save(recipeOutput);
-        provider.shaped(RecipeCategory.REDSTONE, PoBlocks.POOP_TNT)
+        provider.shaped(RecipeCategory.REDSTONE, PoBlocks.POP)
                 .pattern("SAS")
                 .pattern("ASA")
                 .pattern("SAS")

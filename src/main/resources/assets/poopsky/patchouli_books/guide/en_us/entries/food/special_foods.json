@@ -1,0 +1,20 @@
+{
+  "name": "Special Filth Foods",
+  "icon": "poopsky:dragon_breath_chili",
+  "category": "poopsky:food",
+  "read_by_default": false,
+  "sortnum": 4,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "More Than Just Food",
+      "item": "poopsky:dragon_breath_chili",
+      "text": "Dragon Breath Chili, King of Dragon Fruit, and Fasting Pills are special foods.$(br2)They do more than restore hunger and have unique effects, such as Dragon Breath Chili causing Intestinal Spasm and briefly setting you on fire."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Liquid Food",
+      "text": "Urine Bottles can also be considered a special drink.$(br2)It may not sound delicious, but it can be useful in certain situations."
+    }
+  ]
+}

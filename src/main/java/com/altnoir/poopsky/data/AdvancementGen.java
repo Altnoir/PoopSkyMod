@@ -537,7 +537,7 @@ public final class AdvancementGen {
         AdvancementHolder pop = Advancement.Builder.advancement()
                 .parent(king_of_dragon_fruit)
                 .display(
-                        PoBlocks.POOP_TNT,
+                        PoBlocks.POP,
                         Component.translatable("advancements.poopsky.pooop_tnt.title"),
                         Component.translatable("advancements.poopsky.pooop_tnt.description"),
                         null,
@@ -546,7 +546,7 @@ public final class AdvancementGen {
                         true,
                         false
                 )
-                .addCriterion("pooop_tnt", InventoryChangeTrigger.TriggerInstance.hasItems(PoBlocks.POOP_TNT.get()))
+                .addCriterion("pooop_tnt", InventoryChangeTrigger.TriggerInstance.hasItems(PoBlocks.POP.get()))
                 .save(provider, modId("pooop_tnt"));
         AdvancementHolder fly_catcher = Advancement.Builder.advancement()
                 .parent(pop)

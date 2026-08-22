@@ -1,0 +1,19 @@
+{
+  "name": "马桶搋子",
+  "icon": "poopsky:toilet_plug",
+  "category": "poopsky:misc",
+  "read_by_default": false,
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "经典道具",
+      "item": "poopsky:toilet_plug",
+      "text": "马桶搋子是 PoopSky 的经典道具之一。$(br2)它和厕所系统有紧密联系，也是许多进阶玩法的入口。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "后续会在这里补充马桶搋子的具体用法、获取方式以及相关联动。"
+    }
+  ]
+}

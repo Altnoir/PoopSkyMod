@@ -33,7 +33,7 @@ public class PoopTntRenderer extends EntityRenderer<PoopTntEntity, TntRenderStat
     public void extractRenderState(PoopTntEntity entity, TntRenderState state, float partialTick) {
         super.extractRenderState(entity, state, partialTick);
         state.fuseRemainingInTicks = entity.getFuse() - partialTick + 1.0F;
-        this.blockModelResolver.update(state.blockState, PoBlocks.POOP_TNT.get().defaultBlockState(), BLOCK_DISPLAY_CONTEXT);
+        this.blockModelResolver.update(state.blockState, PoBlocks.POP.get().defaultBlockState(), BLOCK_DISPLAY_CONTEXT);
     }
 
     @Override

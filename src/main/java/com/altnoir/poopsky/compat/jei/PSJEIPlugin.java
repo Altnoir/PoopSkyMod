@@ -96,7 +96,7 @@ public class PSJEIPlugin implements IModPlugin {
         registration.addCraftingStation(SieveRecipeCategory.TYPE, PoBlocks.SIEVE.get());
         registration.addCraftingStation(FlyBarrelRecipeCategory.TYPE, PoBlocks.FLY_BARREL.get());
         registration.addCraftingStation(BreedingChestRecipeCategory.TYPE, PoBlocks.BREEDING_CHEST.get());
-        registration.addCraftingStation(POPExplosionRecipeCategory.TYPE, PoBlocks.POOP_TNT.get());
+        registration.addCraftingStation(POPExplosionRecipeCategory.TYPE, PoBlocks.POP.get());
         registration.addCraftingStation(AnalPressingRecipeCategory.TYPE,
                 PoItems.KING_OF_DRAGON_FRUIT.asStack(),
                 PoItems.DRAGON_BREATH_CHILI.asStack());

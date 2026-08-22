@@ -12,9 +12,20 @@
       "text": "破坏粪便树叶时，有一定概率掉落蛔虫。$(br2)蛔虫是烤制线的前置材料。"
     },
     {
+      "type": "patchouli:text",
+      "title": "可种植",
+      "text": "蛔虫可以种植，长成向上攀爬的蛔虫柱。$(br2)蛔虫柱本身也会对触碰它的生物造成少量伤害。"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "结籽与掉落",
+      "text": "对蛔虫柱使用骨粉可以使其结籽。$(br2)结籽后采集或破坏蛔虫柱，会掉落 1-3 个蛔虫，并随机额外掉落以下物品之一：$(li)南瓜种子$(li)西瓜种子$(li)甜菜种子$(li)青蛙卵"
+    },
+    {
       "type": "patchouli:relations",
       "entries": [
         "poopsky:first_steps/poop_tree",
+        "poopsky:first_steps/maggots",
         "poopsky:first_steps/string"
       ]
     }
