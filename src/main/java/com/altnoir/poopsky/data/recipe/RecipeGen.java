@@ -239,8 +239,10 @@ public final class RecipeGen {
         provider.shaped(RecipeCategory.MISC, PoItems.TOTEM_OF_UNPOOPING.get(), 8)
                 .pattern("S")
                 .pattern("E")
+                .pattern("D")
                 .define('S', PoBlocks.SHIT)
                 .define('E', Items.ENCHANTED_GOLDEN_APPLE)
+                .define('D', PoItems.KING_OF_DRAGON_FRUIT)
                 .unlockedBy(getItemName(Items.ENCHANTED_GOLDEN_APPLE), has(Items.ENCHANTED_GOLDEN_APPLE))
                 .save(recipeOutput);
         provider.shaped(RecipeCategory.MISC, PoItems.TOKEN.get(), 4)
