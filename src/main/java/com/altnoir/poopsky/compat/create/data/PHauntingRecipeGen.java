@@ -1,6 +1,5 @@
 package com.altnoir.poopsky.compat.create.data;
 
-import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.simibubi.create.api.data.recipe.HauntingRecipeGen;
@@ -14,7 +13,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class PHauntingRecipeGen extends HauntingRecipeGen implements IConditionBuilder {
     public PHauntingRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-        super(output, registries,  PoopSky.MOD_ID);
+        super(output, registries, PoMods.CREATE.id());
     }
 
     @Override

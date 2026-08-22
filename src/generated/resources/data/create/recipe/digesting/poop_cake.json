@@ -1,0 +1,19 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "poopsky:digesting",
+  "ingredients": [
+    {
+      "item": "minecraft:cake"
+    }
+  ],
+  "results": [
+    {
+      "id": "poopsky:poop_cake"
+    }
+  ]
+}

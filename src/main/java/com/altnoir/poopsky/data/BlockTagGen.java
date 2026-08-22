@@ -97,6 +97,12 @@ public final class BlockTagGen {
                 );
         PoBlocks.COLORED_TILE_BLOCK_FAMILIES.forEach(family ->
                 family.blocks().forEach(block -> tag(PoTags.Blocks.TILE_BLOCKS).add(block.get())));
+        tag(PoTags.Blocks.ARCADES)
+                .add(
+                        PoBlocks.BROWN_ARCADE.get(),
+                        PoBlocks.RED_ARCADE.get(),
+                        PoBlocks.BLUE_ARCADE.get()
+                );
 
         tag(PoTags.Blocks.POOP_TNT_DESTROY)
                 .addTag(PoTags.Blocks.POOP_BLOCKS)

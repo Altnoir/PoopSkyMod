@@ -139,11 +139,11 @@ public class PoItems {
     public static final ItemEntry<Item> LIGHT_DANCE_MUSIC_DISC = registerMusicDisc("music_disc_light_dance", PoSoundEvents.LIGHT_DANCE_KEY);
     public static final ItemEntry<Item> MOON_BOWL_MUSIC_DISC = registerMusicDisc("music_disc_moon_bowl", PoSoundEvents.MOON_BOWL_KEY);
     public static final ItemEntry<Item> THEME_MUSIC_DISC = registerMusicDisc("music_disc_theme", PoSoundEvents.THEME_KEY);
-    public static final ItemEntry<GameDiscItem> GAME_DISC_ROUNDWORM = registerItem("game_disc_roundworm",
+    public static final ItemEntry<GameDiscItem> GAME_DISC_ROUNDWORM = registerItem("game_disk_roundworm",
             props -> new GameDiscItem(props.rarity(Rarity.RARE), Component.translatable("gamediscs.roundworm").withStyle(ChatFormatting.YELLOW)));
-    public static final ItemEntry<GameDiscItem> GAME_DISC_BLOCKTRIS = registerItem("game_disc_blocktris",
+    public static final ItemEntry<GameDiscItem> GAME_DISC_BLOCKTRIS = registerItem("game_disk_blocktris",
             props -> new GameDiscItem(props.rarity(Rarity.RARE), Component.translatable("gamediscs.blocktris").withStyle(ChatFormatting.YELLOW)));
-    public static final ItemEntry<GameDiscItem> GAME_DISC_PONG = registerItem("game_disc_pong",
+    public static final ItemEntry<GameDiscItem> GAME_DISC_PONG = registerItem("game_disk_pong",
             props -> new GameDiscItem(props.rarity(Rarity.RARE), Component.translatable("gamediscs.pong").withStyle(ChatFormatting.GRAY)));
     public static final ItemEntry<GinkgoBoatItem> GINKGO_BOAT = registerItem("ginkgo_boat",
             props -> new GinkgoBoatItem(PoEntityType.GINKGO_BOAT.get(), props.stacksTo(1)));

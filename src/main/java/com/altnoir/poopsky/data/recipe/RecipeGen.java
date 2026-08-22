@@ -530,6 +530,24 @@ public final class RecipeGen {
                 .unlockedBy(getItemName(PoBlocks.MAGGOTS_BLOCK), has(PoBlocks.MAGGOTS_BLOCK))
                 .save(recipeOutput);
 
+        provider.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.BROWN_ARCADE)
+                .pattern("ISI")
+                .pattern("IGI")
+                .pattern("IDI")
+                .define('I', PoItems.OMINOUS_FILTHY_INGOT)
+                .define('S', PoTags.Items.SHITS)
+                .define('G', PoBlocks.GLOW_PRIMO_CAP)
+                .define('D', Blocks.DROPPER)
+                .unlockedBy(getItemName(PoItems.OMINOUS_FILTHY_INGOT), has(PoItems.OMINOUS_FILTHY_INGOT))
+                .save(recipeOutput);
+        provider.shapeless(RecipeCategory.REDSTONE, PoBlocks.RED_ARCADE)
+                .requires(Items.RED_DYE).requires(PoTags.Items.ARCADES)
+                .unlockedBy(getItemName(PoBlocks.BROWN_ARCADE), has(PoBlocks.BROWN_ARCADE))
+                .save(recipeOutput);
+        provider.shapeless(RecipeCategory.REDSTONE, PoBlocks.BLUE_ARCADE)
+                .requires(Items.BLUE_DYE).requires(PoTags.Items.ARCADES)
+                .unlockedBy(getItemName(PoBlocks.BROWN_ARCADE), has(PoBlocks.BROWN_ARCADE))
+                .save(recipeOutput);
         provider.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.GACHA_MACHINE)
                 .pattern("III")
                 .pattern("IEI")

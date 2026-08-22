@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:brown_arcade"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "ominous_filthy_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:ominous_filthy_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "ominous_filthy_ingot"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "poopsky:brown_arcade"
+    ]
+  }
+}

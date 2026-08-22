@@ -1,6 +1,5 @@
 package com.altnoir.poopsky.compat.create.data;
 
-import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.compat.create.DigestingRecipeGen;
 import com.altnoir.poopsky.init.PoBlocks;
@@ -18,7 +17,7 @@ import java.util.concurrent.CompletableFuture;
 public class PDigestingRecipeGen extends DigestingRecipeGen implements IConditionBuilder {
 
     public PDigestingRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-        super(output, registries, PoopSky.MOD_ID);
+        super(output, registries, PoMods.CREATE.id());
     }
 
     @Override

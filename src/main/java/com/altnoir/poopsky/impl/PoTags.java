@@ -22,6 +22,7 @@ public class PoTags {
         TagKey<Block> EMPTY_LOGS = create("empty_logs");
         TagKey<Block> GINKGO_LOGS = create("ginkgo_logs");
         TagKey<Block> TILE_BLOCKS = create("tile_blocks");
+        TagKey<Block> ARCADES = create("arcades");
 
         TagKey<Block> POOP_BLOCK = create("poop_block");
         TagKey<Block> CHILI_POOP_BLOCK = create("chili_poop_block");
@@ -32,7 +33,6 @@ public class PoTags {
         TagKey<Block> WATER_BLOCK = create("water_block");
         TagKey<Block> POOP_TNT_DESTROY = create("poop_tnt_destroy");
         TagKey<Block> POOP_TNT_REPLACEABLE = create("poop_tnt_replaceable");
-
         TagKey<Block> MYCELIUM_REPLACEABLE = create("mycelium_replaceable");
 
         TagKey<Block> BREEDING_CHEST_ACCELERATOR = create("breeding_chest_accelerator");
@@ -61,6 +61,8 @@ public class PoTags {
         TagKey<Item> TILE_SLABS = create("tile_slabs");
         TagKey<Item> TILE_VERTICAL_SLABS = create("tile_vertical_slabs");
         TagKey<Item> TILE_WALLS = create("tile_walls");
+        TagKey<Item> ARCADES = create("arcades");
+        TagKey<Item> GAME_DISKS = create("game_disks");
 
         TagKey<Item> FLUSH_TOILET_SAVE = create("flush_toilet_save");
         TagKey<Item> BREEDING_CHEST_ACCELERATOR = create("breeding_chest_accelerator");

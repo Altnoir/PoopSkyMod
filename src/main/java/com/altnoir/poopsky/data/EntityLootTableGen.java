@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.data;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.init.PoEntityType;
 import com.altnoir.poopsky.init.PoItems;
@@ -19,6 +20,7 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.entries.TagEntry;
 import net.minecraft.world.level.storage.loot.functions.EnchantedCountIncreaseFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.functions.SmeltItemFunction;
@@ -69,6 +71,12 @@ public final class EntityLootTableGen {
                                                         EntityPredicate.Builder.entity().subPredicate(SlimePredicate.sized(MinMaxBounds.Ints.exactly(1)))
                                                 )
                                         )
+                        )
+                        .withPool(
+                                LootPool.lootPool()
+                                        .setRolls(ConstantValue.exactly(1.0F))
+                                        .add(TagEntry.expandTag(PoTags.Items.GAME_DISKS))
+                                        .when(killedByPlug(registries))
                         )
         );
         loot.add(
@@ -127,5 +135,17 @@ public final class EntityLootTableGen {
         return DamageSourceCondition.hasDamageSource(
                 DamageSourcePredicate.Builder.damageType().source(EntityPredicate.Builder.entity()
                         .of(registries.lookupOrThrow(Registries.ENTITY_TYPE), EntityType.FROG)));
+    }
+
+    private static LootItemCondition.Builder killedByPlug(HolderLookup.Provider registries) {
+        return DamageSourceCondition.hasDamageSource(
+                DamageSourcePredicate.Builder.damageType()
+                        .isDirect(true)
+                        .source(EntityPredicate.Builder.entity()
+                                .of(registries.lookupOrThrow(Registries.ENTITY_TYPE), EntityType.PLAYER)
+                                .equipment(EntityEquipmentPredicate.Builder.equipment()
+                                        .mainhand(ItemPredicate.Builder.item().of(
+                                                registries.lookupOrThrow(Registries.ITEM),
+                                                PoItems.TOILET_PLUG.get())))));
     }
 }
