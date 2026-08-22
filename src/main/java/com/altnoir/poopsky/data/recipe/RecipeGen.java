@@ -237,9 +237,9 @@ public final class RecipeGen {
                 .unlockedBy(getItemName(Items.ECHO_SHARD), has(Items.ECHO_SHARD))
                 .save(recipeOutput);
         provider.shaped(RecipeCategory.MISC, PoItems.TOTEM_OF_UNPOOPING.get(), 8)
-                .pattern("S")
-                .pattern("E")
-                .pattern("D")
+                .pattern(" S ")
+                .pattern("DED")
+                .pattern(" D ")
                 .define('S', PoBlocks.SHIT)
                 .define('E', Items.ENCHANTED_GOLDEN_APPLE)
                 .define('D', PoItems.KING_OF_DRAGON_FRUIT)
