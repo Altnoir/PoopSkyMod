@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.content.block.p;
 
+import com.altnoir.poopsky.content.block.abs.AbsDirEntityBlock;
 import com.altnoir.poopsky.content.block.entity.PlacerBlockEntity;
 import com.altnoir.poopsky.init.PoBlockEntityType;
 import com.altnoir.poopsky.init.PoStats;
@@ -14,7 +15,6 @@ import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.Containers;
@@ -27,14 +27,15 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.util.FakePlayer;
@@ -44,10 +45,9 @@ import org.slf4j.Logger;
 import java.util.Map;
 import java.util.UUID;
 
-public class PlacerBlock extends BaseEntityBlock {
+public class PlacerBlock extends AbsDirEntityBlock {
     private static final Logger LOGGER = LogUtils.getLogger();
     public static final MapCodec<PlacerBlock> CODEC = simpleCodec(PlacerBlock::new);
-    public static final DirectionProperty FACING = DirectionalBlock.FACING;
     public static final BooleanProperty TRIGGERED = BlockStateProperties.TRIGGERED;
     private static final DefaultDispenseItemBehavior DEFAULT_BEHAVIOR = new DefaultDispenseItemBehavior();
     public static final Map<Item, DispenseItemBehavior> PLACER_REGISTRY = Util.make(new Object2ObjectOpenHashMap<>(), map -> map.defaultReturnValue(DEFAULT_BEHAVIOR));
@@ -138,16 +138,6 @@ public class PlacerBlock extends BaseEntityBlock {
         }
     }
 
-    private void playPlacedBlockSound(Level level, BlockPos pos) {
-        BlockState placedState = level.getBlockState(pos);
-        SoundType soundType = placedState.getSoundType(level, pos, null);
-
-        level.playSound(null, pos, soundType.getPlaceSound(), SoundSource.BLOCKS,
-                (soundType.getVolume() + 1.0F) / 2.0F,
-                soundType.getPitch() * 0.8F
-        );
-    }
-
     protected DispenseItemBehavior getDispenseMethod(Level level, ItemStack item) {
         return !item.isItemEnabled(level.enabledFeatures()) ? DEFAULT_BEHAVIOR : PLACER_REGISTRY.get(item.getItem());
     }
@@ -170,8 +160,8 @@ public class PlacerBlock extends BaseEntityBlock {
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState().setValue(FACING, context.getNearestLookingDirection().getOpposite());
+    public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
+        return super.getStateForPlacement(context);
     }
 
     @Override
@@ -185,36 +175,14 @@ public class PlacerBlock extends BaseEntityBlock {
         return true;
     }
 
-    /**
-     * Returns the analog signal this block emits. This is the signal a comparator can read from it.
-     */
     @Override
     protected int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
         return AbstractContainerMenu.getRedstoneSignalFromBlockEntity(level.getBlockEntity(pos));
     }
 
-    /**
-     * The type of render function called. MODEL for mixed tesr and static model, MODELBLOCK_ANIMATED for TESR-only, LIQUID for vanilla liquids, INVISIBLE to skip all rendering
-     */
     @Override
     protected RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
-    }
-
-    /**
-     * Returns the blockstate with the given rotation from the passed blockstate. If inapplicable, returns the passed blockstate.
-     */
-    @Override
-    protected BlockState rotate(BlockState state, Rotation rotation) {
-        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
-    }
-
-    /**
-     * Returns the blockstate with the given mirror of the passed blockstate. If inapplicable, returns the passed blockstate.
-     */
-    @Override
-    protected BlockState mirror(BlockState state, Mirror mirror) {
-        return state.setValue(FACING, mirror.mirror(state.getValue(FACING)));
     }
 
     @Override

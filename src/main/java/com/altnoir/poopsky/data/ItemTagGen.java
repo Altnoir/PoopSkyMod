@@ -45,6 +45,7 @@ public final class ItemTagGen {
         copy(PoTags.Blocks.TOILET_BLOCKS, PoTags.Items.TOILET_BLOCKS);
         copy(PoTags.Blocks.FLUSH_TOILET_BLOCKS, PoTags.Items.FLUSH_TOILET_BLOCKS);
         copy(PoTags.Blocks.GINKGO_LOGS, PoTags.Items.GINKGO_LOGS);
+        copy(PoTags.Blocks.PRIMO_STEMS, PoTags.Items.PRIMO_STEMS);
 
         var tileBlocks = tag(PoTags.Items.TILE_BLOCKS);
         var tileStairs = tag(PoTags.Items.TILE_STAIRS);
@@ -265,9 +266,18 @@ public final class ItemTagGen {
         copy(Tags.Blocks.STRIPPED_LOGS, Tags.Items.STRIPPED_LOGS);
         copy(Tags.Blocks.STRIPPED_WOODS, Tags.Items.STRIPPED_WOODS);
         tag(ItemTags.LOGS_THAT_BURN).addTag(PoTags.Items.GINKGO_LOGS);
-        tag(ItemTags.PLANKS).add(PoBlocks.GINKGO_PLANKS.asItem());
-        tag(ItemTags.BOATS).add(PoItems.GINKGO_BOAT.get());
-        tag(ItemTags.CHEST_BOATS).add(PoItems.GINKGO_CHEST_BOAT.get());
+        tag(ItemTags.PLANKS).add(
+                PoBlocks.GINKGO_PLANKS.asItem(),
+                PoBlocks.PRIMO_PLANKS.asItem()
+        );
+        tag(ItemTags.BOATS).add(
+                PoItems.GINKGO_BOAT.get(),
+                PoItems.PRIMO_BOAT.get()
+        );
+        tag(ItemTags.CHEST_BOATS).add(
+                PoItems.GINKGO_CHEST_BOAT.get(),
+                PoItems.PRIMO_CHEST_BOAT.get()
+        );
         copy(BlockTags.WOODEN_STAIRS, ItemTags.WOODEN_STAIRS);
         copy(BlockTags.WOODEN_SLABS, ItemTags.WOODEN_SLABS);
         copy(BlockTags.WOODEN_BUTTONS, ItemTags.WOODEN_BUTTONS);

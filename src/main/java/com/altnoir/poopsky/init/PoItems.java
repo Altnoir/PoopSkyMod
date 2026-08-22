@@ -37,7 +37,8 @@ public class PoItems {
             props -> new PoopItem(props.food(PFoods.GOLDEN_POOP).stacksTo(88)));
     public static final ItemEntry<Item> SEEDBED_CURSE = registerItem("seedbed_curse",
             props -> new Item(props.stacksTo(88)));
-    public static final ItemEntry<Item> FOLIUM_SENNAE = registerItem("folium_sennae", Item::new);
+    public static final ItemEntry<ItemNameBlockItem> FOLIUM_SENNAE = registerItem("folium_sennae",
+            props -> new ItemNameBlockItem(PoBlocks.FOLIUM_SENNAE_PLANT.get(), props));
 
     public static final ItemEntry<PoopBallItem> POOP_BALL = registerItem("poop_ball",
             props -> new PoopBallItem(props.stacksTo(88)));

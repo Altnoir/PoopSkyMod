@@ -369,6 +369,39 @@ public class PoBlocks {
     public static final BlockEntry<Block> ROUNDWORM_BLOCK = registerBlock("roundworm_block", 88,
             props -> new Block(simpleProperties(MapColor.TERRACOTTA_WHITE, POOP, SoundType.TWISTING_VINES)));
 
+    public static final BlockEntry<SaltpeterBlock> SALTPETER_BLOCK = registerBlock("saltpeter_block",
+            props -> new SaltpeterBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_LIGHT_GRAY)
+                    .strength(1.5F)
+                    .sound(SoundType.AMETHYST)
+                    .requiresCorrectToolForDrops()));
+    public static final BlockEntry<SaltpeterClusterBlock> SALTPETER_CLUSTER = registerBlock("saltpeter_cluster",
+            props -> new SaltpeterClusterBlock(7.0F, 3.0F, BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_LIGHT_GRAY)
+                    .forceSolidOn()
+                    .noOcclusion()
+                    .sound(SoundType.AMETHYST_CLUSTER)
+                    .strength(1.5F)
+                    .lightLevel(state -> 5)
+                    .randomTicks()
+                    .pushReaction(PushReaction.DESTROY)),
+            (loot, block) -> loot.add(block, createSaltpeterClusterDrop(loot, block)));
+    public static final BlockEntry<SaltpeterClusterBlock> LARGE_SALTPETER_BUD = registerBlock("large_saltpeter_bud",
+            props -> new SaltpeterClusterBlock(5.0F, 3.0F, BlockBehaviour.Properties.ofFullCopy(SALTPETER_CLUSTER.get())
+                    .sound(SoundType.MEDIUM_AMETHYST_BUD)
+                    .lightLevel(state -> 4)),
+            RegistrateBlockLootTables::dropWhenSilkTouch);
+    public static final BlockEntry<SaltpeterClusterBlock> MEDIUM_SALTPETER_BUD = registerBlock("medium_saltpeter_bud",
+            props -> new SaltpeterClusterBlock(4.0F, 3.0F, BlockBehaviour.Properties.ofFullCopy(SALTPETER_CLUSTER.get())
+                    .sound(SoundType.LARGE_AMETHYST_BUD)
+                    .lightLevel(state -> 2)),
+            RegistrateBlockLootTables::dropWhenSilkTouch);
+    public static final BlockEntry<SaltpeterClusterBlock> SMALL_SALTPETER_BUD = registerBlock("small_saltpeter_bud",
+            props -> new SaltpeterClusterBlock(3.0F, 4.0F, BlockBehaviour.Properties.ofFullCopy(SALTPETER_CLUSTER.get())
+                    .sound(SoundType.SMALL_AMETHYST_BUD)
+                    .lightLevel(state -> 1)),
+            RegistrateBlockLootTables::dropWhenSilkTouch);
+
     public static final BlockEntry<PoopLogBlock> POOP_LOG = registerPoopBlock("poop_log",
             props -> new PoopLogBlock(logProperties(MapColor.COLOR_BROWN, SoundType.STEM).randomTicks()),
             (loot, block) -> loot.add(block, createSpallOreDrops(loot, block)));
@@ -518,38 +551,17 @@ public class PoBlocks {
                     BlockBehaviour.Properties.ofFullCopy(Blocks.POTTED_OAK_SAPLING)),
             RegistrateBlockLootTables::dropPottedContents);
 
-    public static final BlockEntry<SaltpeterBlock> SALTPETER_BLOCK = registerBlock("saltpeter_block",
-            props -> new SaltpeterBlock(BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.COLOR_LIGHT_GRAY)
-                    .strength(1.5F)
-                    .sound(SoundType.AMETHYST)
-                    .requiresCorrectToolForDrops()));
-    public static final BlockEntry<SaltpeterClusterBlock> SALTPETER_CLUSTER = registerBlock("saltpeter_cluster",
-            props -> new SaltpeterClusterBlock(7.0F, 3.0F, BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.COLOR_LIGHT_GRAY)
-                    .forceSolidOn()
-                    .noOcclusion()
-                    .sound(SoundType.AMETHYST_CLUSTER)
-                    .strength(1.5F)
-                    .lightLevel(state -> 5)
-                    .randomTicks()
+    public static final BlockEntry<FoliumSennaePlantBlock> FOLIUM_SENNAE_PLANT = registerBlockNoItem("folium_sennae_plant",
+            props -> new FoliumSennaePlantBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.PLANT)
+                    .replaceable()
+                    .noCollission()
+                    .instabreak()
+                    .sound(SoundType.GRASS)
+                    .offsetType(BlockBehaviour.OffsetType.XYZ)
+                    .ignitedByLava()
                     .pushReaction(PushReaction.DESTROY)),
-            (loot, block) -> loot.add(block, createSaltpeterClusterDrop(loot, block)));
-    public static final BlockEntry<SaltpeterClusterBlock> LARGE_SALTPETER_BUD = registerBlock("large_saltpeter_bud",
-            props -> new SaltpeterClusterBlock(5.0F, 3.0F, BlockBehaviour.Properties.ofFullCopy(SALTPETER_CLUSTER.get())
-                    .sound(SoundType.MEDIUM_AMETHYST_BUD)
-                    .lightLevel(state -> 4)),
-            RegistrateBlockLootTables::dropWhenSilkTouch);
-    public static final BlockEntry<SaltpeterClusterBlock> MEDIUM_SALTPETER_BUD = registerBlock("medium_saltpeter_bud",
-            props -> new SaltpeterClusterBlock(4.0F, 3.0F, BlockBehaviour.Properties.ofFullCopy(SALTPETER_CLUSTER.get())
-                    .sound(SoundType.LARGE_AMETHYST_BUD)
-                    .lightLevel(state -> 2)),
-            RegistrateBlockLootTables::dropWhenSilkTouch);
-    public static final BlockEntry<SaltpeterClusterBlock> SMALL_SALTPETER_BUD = registerBlock("small_saltpeter_bud",
-            props -> new SaltpeterClusterBlock(3.0F, 4.0F, BlockBehaviour.Properties.ofFullCopy(SALTPETER_CLUSTER.get())
-                    .sound(SoundType.SMALL_AMETHYST_BUD)
-                    .lightLevel(state -> 1)),
-            RegistrateBlockLootTables::dropWhenSilkTouch);
+            (loot, block) -> loot.dropOther(block, PoItems.FOLIUM_SENNAE.get()));
 
     public static final BlockEntry<ArcadeBlock> BROWN_ARCADE = registerArcadeBlock("brown_arcade", DyeColor.BROWN);
     public static final BlockEntry<ArcadeBlock> RED_ARCADE = registerArcadeBlock("red_arcade", DyeColor.RED);

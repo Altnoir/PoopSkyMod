@@ -343,6 +343,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         PoBlocks.COLORED_TILE_BLOCK_FAMILIES.forEach(family -> blockFamilyRecipes(recipeOutput, family));
         tileBlockDyeingRecipes(recipeOutput);
         ginkgoWoodRecipes(recipeOutput);
+        primoWoodRecipes(recipeOutput);
 
         nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PoItems.POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PoBlocks.RAW_POOP_BLOCK);
         nineBlockStorageRecipes(recipeOutput, RecipeCategory.MISC, PoItems.SAPLING_POOP_BALL, RecipeCategory.BUILDING_BLOCKS, PoBlocks.RAW_SAPLING_POOP_BLOCK);
@@ -1194,16 +1195,90 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .define('P', PoBlocks.GINKGO_PLANKS)
                 .unlockedBy(getItemName(PoBlocks.GINKGO_PLANKS), has(PoBlocks.GINKGO_PLANKS))
                 .save(recipeOutput);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, PoItems.GINKGO_CHEST_BOAT)
+                .requires(Items.CHEST)
+                .requires(PoItems.GINKGO_BOAT)
+                .unlockedBy(getItemName(PoItems.GINKGO_BOAT), has(PoItems.GINKGO_BOAT))
+                .save(recipeOutput);
+    }
+
+    private void primoWoodRecipes(RecipeOutput recipeOutput) {
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, PoBlocks.PRIMO_PLANKS, 4)
+                .requires(PoTags.Items.PRIMO_STEMS)
+                .unlockedBy("has_primo_logs", has(PoTags.Items.PRIMO_STEMS))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.PRIMO_HYPHAE, 3)
+                .pattern("LL")
+                .pattern("LL")
+                .define('L', PoBlocks.PRIMO_STEM)
+                .unlockedBy(getItemName(PoBlocks.PRIMO_STEM), has(PoBlocks.PRIMO_STEM))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.STRIPPED_PRIMO_HYPHAE, 3)
+                .pattern("LL")
+                .pattern("LL")
+                .define('L', PoBlocks.STRIPPED_PRIMO_STEM)
+                .unlockedBy(getItemName(PoBlocks.STRIPPED_PRIMO_STEM), has(PoBlocks.STRIPPED_PRIMO_STEM))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.PRIMO_STAIRS, 4)
+                .pattern("P  ")
+                .pattern("PP ")
+                .pattern("PPP")
+                .define('P', PoBlocks.PRIMO_PLANKS)
+                .unlockedBy(getItemName(PoBlocks.PRIMO_PLANKS), has(PoBlocks.PRIMO_PLANKS))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.PRIMO_SLAB, 6)
+                .pattern("PPP")
+                .define('P', PoBlocks.PRIMO_PLANKS)
+                .unlockedBy(getItemName(PoBlocks.PRIMO_PLANKS), has(PoBlocks.PRIMO_PLANKS))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.PRIMO_VERTICAL_SLAB, 6)
+                .pattern("P")
+                .pattern("P")
+                .pattern("P")
+                .define('P', PoBlocks.PRIMO_PLANKS)
+                .unlockedBy(getItemName(PoBlocks.PRIMO_PLANKS), has(PoBlocks.PRIMO_PLANKS))
+                .save(recipeOutput);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, PoBlocks.PRIMO_BUTTON)
+                .requires(PoBlocks.PRIMO_PLANKS)
+                .unlockedBy(getItemName(PoBlocks.PRIMO_PLANKS), has(PoBlocks.PRIMO_PLANKS))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.PRIMO_PRESSURE_PLATE)
+                .pattern("PP")
+                .define('P', PoBlocks.PRIMO_PLANKS)
+                .unlockedBy(getItemName(PoBlocks.PRIMO_PLANKS), has(PoBlocks.PRIMO_PLANKS))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, PoBlocks.PRIMO_FENCE, 3)
+                .pattern("PSP")
+                .pattern("PSP")
+                .define('P', PoBlocks.PRIMO_PLANKS)
+                .define('S', Items.STICK)
+                .unlockedBy(getItemName(PoBlocks.PRIMO_PLANKS), has(PoBlocks.PRIMO_PLANKS))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.PRIMO_FENCE_GATE)
+                .pattern("SPS")
+                .pattern("SPS")
+                .define('P', PoBlocks.PRIMO_PLANKS)
+                .define('S', Items.STICK)
+                .unlockedBy(getItemName(PoBlocks.PRIMO_PLANKS), has(PoBlocks.PRIMO_PLANKS))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.PRIMO_DOOR, 3)
+                .pattern("PP")
+                .pattern("PP")
+                .pattern("PP")
+                .define('P', PoBlocks.PRIMO_PLANKS)
+                .unlockedBy(getItemName(PoBlocks.PRIMO_PLANKS), has(PoBlocks.PRIMO_PLANKS))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.PRIMO_TRAPDOOR, 2)
+                .pattern("PPP")
+                .pattern("PPP")
+                .define('P', PoBlocks.PRIMO_PLANKS)
+                .unlockedBy(getItemName(PoBlocks.PRIMO_PLANKS), has(PoBlocks.PRIMO_PLANKS))
+                .save(recipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, PoItems.PRIMO_BOAT)
                 .pattern("P P")
                 .pattern("PPP")
                 .define('P', PoBlocks.PRIMO_PLANKS)
                 .unlockedBy(getItemName(PoBlocks.PRIMO_PLANKS), has(PoBlocks.PRIMO_PLANKS))
-                .save(recipeOutput);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, PoItems.GINKGO_CHEST_BOAT)
-                .requires(Items.CHEST)
-                .requires(PoItems.GINKGO_BOAT)
-                .unlockedBy(getItemName(PoItems.GINKGO_BOAT), has(PoItems.GINKGO_BOAT))
                 .save(recipeOutput);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, PoItems.PRIMO_CHEST_BOAT)
                 .requires(Items.CHEST)

@@ -77,6 +77,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         maggotsChunkLoader();
         cubeBottomTop(PoBlocks.MAGGOTS_BLOCK.get());
         blockWithItem(PoBlocks.ROUNDWORM_BLOCK.get());
+        foliumSennae(PoBlocks.FOLIUM_SENNAE_PLANT.get());
         chiliVines(PoBlocks.CHILI_VINES.get());
         chiliVines(PoBlocks.CHILI_VINES_PLANT.get());
 
@@ -854,6 +855,13 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
                 .modelForState().modelFile(chiliVinesPlantModel).addModel()
                 .partialState().with(ChiliVines.CHILI, true)
                 .modelForState().modelFile(chiliVinesPlantChiliModel).addModel();
+    }
+
+    private void foliumSennae(Block block) {
+        ModelFile model = models().withExistingParent(getBlockPath(block), mcLoc("block/cross"))
+                .texture("cross", modLoc("block/" + getBlockPath(block))).renderType("cutout");
+
+        simpleBlock(block, model);
     }
 
     private void registerToilet(BlockEntry<? extends Block> block, ToiletType.Category category, boolean hasLava) {

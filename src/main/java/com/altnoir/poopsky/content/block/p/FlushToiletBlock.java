@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.content.block.p;
 
+import com.altnoir.poopsky.content.block.abs.AbsHorDirEntityBlock;
 import com.altnoir.poopsky.content.block.entity.FlushToiletBlockEntity;
 import com.altnoir.poopsky.content.entity.p.FlushToiletEntity;
 import com.altnoir.poopsky.impl.util.ToiletUtil;
@@ -20,13 +21,15 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
@@ -38,8 +41,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class FlushToiletBlock extends BaseEntityBlock {
-    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+public class FlushToiletBlock extends AbsHorDirEntityBlock {
     public static final BooleanProperty CLOSED = BooleanProperty.create("closed");
     public static final BooleanProperty POWERED = BooleanProperty.create("powered");
     public static final MapCodec<FlushToiletBlock> CODEC = simpleCodec(FlushToiletBlock::new);
@@ -90,13 +92,14 @@ public class FlushToiletBlock extends BaseEntityBlock {
         return new FlushToiletBlockEntity(blockPos, blockState);
     }
 
+    @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
+        var state = super.getStateForPlacement(context);
+        if (state == null) return null;
+
         boolean powered = context.getLevel().hasNeighborSignal(context.getClickedPos());
-        return this.defaultBlockState()
-                .setValue(FACING, context.getHorizontalDirection().getOpposite())
-                .setValue(POWERED, powered)
-                .setValue(CLOSED, powered);
+        return state.setValue(POWERED, powered).setValue(CLOSED, powered);
     }
 
     @Override
@@ -248,16 +251,6 @@ public class FlushToiletBlock extends BaseEntityBlock {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING, CLOSED, POWERED);
-    }
-
-    @Override
-    protected BlockState rotate(BlockState state, Rotation rotation) {
-        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
-    }
-
-    @Override
-    protected BlockState mirror(BlockState state, Mirror mirror) {
-        return state.setValue(FACING, mirror.mirror(state.getValue(FACING)));
     }
 
     @Override

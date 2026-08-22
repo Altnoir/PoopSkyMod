@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.client.inventory.PortableToiletMenu;
+import com.altnoir.poopsky.content.block.abs.AbsHorDirBlock;
 import com.altnoir.poopsky.impl.util.ToiletUtil;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -23,11 +24,15 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.piston.PistonMovingBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.*;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -38,9 +43,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class PortableToiletBlock extends Block {
+public class PortableToiletBlock extends AbsHorDirBlock {
     public static final MapCodec<PortableToiletBlock> CODEC = simpleCodec(PortableToiletBlock::new);
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
     private static final Component CONTAINER_TITLE = Component.translatable("container.poopsky.portable_toilet");
@@ -187,13 +191,13 @@ public class PortableToiletBlock extends Block {
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
+        BlockState state = super.getStateForPlacement(context);
+        if (state == null) return null;
+
         BlockPos pos = context.getClickedPos();
         Level level = context.getLevel();
         if (pos.getY() < level.getMaxBuildHeight() - 1 && level.getBlockState(pos.above()).canBeReplaced(context)) {
-            return this.defaultBlockState()
-                    .setValue(FACING, context.getHorizontalDirection().getOpposite())
-                    .setValue(OPEN, false)
-                    .setValue(HALF, DoubleBlockHalf.LOWER);
+            return state.setValue(OPEN, false).setValue(HALF, DoubleBlockHalf.LOWER);
         }
         return null;
     }
@@ -335,16 +339,6 @@ public class PortableToiletBlock extends Block {
             return false;
         }
         return super.canStickTo(state, other);
-    }
-
-    @Override
-    protected BlockState rotate(BlockState state, Rotation rotation) {
-        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
-    }
-
-    @Override
-    protected BlockState mirror(BlockState state, Mirror mirror) {
-        return mirror == Mirror.NONE ? state : rotate(state, mirror.getRotation(state.getValue(FACING)));
     }
 
     @Override
