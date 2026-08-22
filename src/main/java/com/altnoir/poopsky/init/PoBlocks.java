@@ -185,8 +185,8 @@ public class PoBlocks {
             props -> new Block(hardenedProperties(MapColor.COLOR_GREEN, SoundType.FROGLIGHT)));
     public static final BlockFamily MOSSY_POOP_BRICK_FAMILY = registerBlockFamily("mossy_poop_brick", MOSSY_POOP_BRICKS, false);
 
-    public static final BlockEntry<DriedPoopBlock> DRIED_POOP_BLOCK = registerPoopBlock("dried_poop_block",
-            props -> new DriedPoopBlock(hardenedProperties(MapColor.COLOR_ORANGE, SoundType.TUFF)
+    public static final BlockEntry<Block> DRIED_POOP_BLOCK = registerPoopBlock("dried_poop_block",
+            props -> new Block(hardenedProperties(MapColor.COLOR_ORANGE, SoundType.TUFF)
                     .instrument(NoteBlockInstrument.COW_BELL)));
     public static final BlockEntry<ColoredFallingBlock> POOP_SAND = registerBlock("poop_sand", 88,
             props -> new ColoredFallingBlock(new ColorRGBA(9131563),
