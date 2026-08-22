@@ -2,11 +2,11 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "D": {
-      "item": "poopsky:king_of_dragon_fruit"
-    },
     "E": {
       "item": "minecraft:enchanted_golden_apple"
+    },
+    "G": {
+      "tag": "c:gunpowders"
     },
     "S": {
       "item": "poopsky:shit"
@@ -14,8 +14,8 @@
   },
   "pattern": [
     " S ",
-    "DED",
-    " D "
+    "GEG",
+    " G "
   ],
   "result": {
     "count": 8,

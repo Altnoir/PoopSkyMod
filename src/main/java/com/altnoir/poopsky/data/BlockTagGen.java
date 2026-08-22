@@ -107,6 +107,7 @@ public final class BlockTagGen {
                 );
 
         tag(PoTags.Blocks.POOP_TNT_DESTROY)
+                .add(PoBlocks.POOP_SAND.get())
                 .addTag(PoTags.Blocks.POOP_BLOCKS)
                 .addTag(BlockTags.FLOWERS)
                 .addTag(BlockTags.LEAVES);
