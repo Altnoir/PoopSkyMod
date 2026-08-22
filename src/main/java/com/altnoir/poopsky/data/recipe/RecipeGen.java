@@ -92,6 +92,8 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         smelting(recipeOutput, PoBlocks.POOLIME_BLOCK, RecipeCategory.BUILDING_BLOCKS, PoBlocks.BROWN_TILE_BLOCK, 0.1F, 200, "tile_block");
         blasting(recipeOutput, PoBlocks.POOLIME_BLOCK, RecipeCategory.BUILDING_BLOCKS, PoBlocks.BROWN_TILE_BLOCK, 0.1F, 100, "tile_block");
 
+        smelting(recipeOutput, PoBlocks.POOP_SAND, RecipeCategory.BUILDING_BLOCKS, Blocks.BROWN_STAINED_GLASS, 0.1F, 200, "brown_stained_glass");
+
         campfireCooking(recipeOutput, PoItems.POOP, RecipeCategory.MISC, Items.COCOA_BEANS, 0.35F, 600, "cocoa_beans");
         smelting(recipeOutput, PoItems.ROUNDWORM, RecipeCategory.MISC, Items.STRING, 0.35F, 200, "roundworm");
         campfireCooking(recipeOutput, PoItems.ROUNDWORM, RecipeCategory.MISC, Items.STRING, 0.35F, 200, "roundworm");
@@ -216,11 +218,11 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .save(recipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, PoItems.TOTEM_OF_UNPOOPING.get(), 8)
                 .pattern(" S ")
-                .pattern("DED")
-                .pattern(" D ")
+                .pattern("GEG")
+                .pattern(" G ")
                 .define('S', PoBlocks.SHIT)
                 .define('E', Items.ENCHANTED_GOLDEN_APPLE)
-                .define('D', PoItems.KING_OF_DRAGON_FRUIT)
+                .define('G', Tags.Items.GUNPOWDERS)
                 .unlockedBy(getItemName(Items.ENCHANTED_GOLDEN_APPLE), has(Items.ENCHANTED_GOLDEN_APPLE))
                 .save(recipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, PoItems.TOKEN.get(), 4)
@@ -702,6 +704,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         List<PopExplosionEntry> recipes = List.of(
                 PopExplosionEntry.of(Blocks.COBBLESTONE, Blocks.GRAVEL),
                 PopExplosionEntry.of(Blocks.GRAVEL, Blocks.SAND),
+                PopExplosionEntry.of(Blocks.SAND, PoBlocks.POOP_SAND.get()),
                 PopExplosionEntry.of(PoBlocks.DRIED_POOP_BLOCK.get(), PoBlocks.POOP_SAND.get()),
                 PopExplosionEntry.of(Blocks.GRANITE, Blocks.DRIPSTONE_BLOCK),
                 PopExplosionEntry.of(Blocks.DIORITE, Blocks.CALCITE),
