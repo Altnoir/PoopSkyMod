@@ -19,7 +19,7 @@ import com.altnoir.poopsky.content.block.renderer.MaggotsChunkLoaderBlockEntityR
 import com.altnoir.poopsky.content.entity.model.FlyModel;
 import com.altnoir.poopsky.content.entity.model.ToiletPlugModel;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
-import com.altnoir.poopsky.content.entity.renderer.GinkgoBoatRenderer;
+import com.altnoir.poopsky.content.entity.renderer.PoBoatRenderer;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.game.client.arcade.ArcadeWorldScreenRenderer;
 import com.altnoir.poopsky.game.client.ArcadeControlSession;
@@ -115,8 +115,10 @@ public class PoopSkyClient {
             event.registerLayerDefinition(ToiletPlugModel.LAYER_LOCATION, ToiletPlugModel::createBodyLayer);
             event.registerLayerDefinition(FlyModel.LAYER_LOCATION, FlyModel::createFlyBodyLayer);
             event.registerLayerDefinition(FlyModel.MAGGOT_LAYER_LOCATION, FlyModel::createMaggotBodyLayer);
-            event.registerLayerDefinition(GinkgoBoatRenderer.BOAT_LAYER, BoatModel::createBodyModel);
-            event.registerLayerDefinition(GinkgoBoatRenderer.CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel);
+            event.registerLayerDefinition(PoBoatRenderer.boatLayer("ginkgo"), BoatModel::createBodyModel);
+            event.registerLayerDefinition(PoBoatRenderer.chestBoatLayer("ginkgo"), ChestBoatModel::createBodyModel);
+            event.registerLayerDefinition(PoBoatRenderer.boatLayer("primo"), BoatModel::createBodyModel);
+            event.registerLayerDefinition(PoBoatRenderer.chestBoatLayer("primo"), ChestBoatModel::createBodyModel);
         }
 
         public static void registerFluidRenderTypes(FMLClientSetupEvent event) {

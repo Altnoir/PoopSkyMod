@@ -12,10 +12,10 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.function.Supplier;
 
-public class GinkgoBoatItem extends BoatItem {
+public class PoBoatItem extends BoatItem {
     private final Supplier<? extends EntityType<? extends Boat>> entityType;
 
-    public GinkgoBoatItem(boolean hasChest, Supplier<? extends EntityType<? extends Boat>> entityType, Properties properties) {
+    public PoBoatItem(boolean hasChest, Supplier<? extends EntityType<? extends Boat>> entityType, Properties properties) {
         super(hasChest, Boat.Type.OAK, properties);
         this.entityType = entityType;
     }

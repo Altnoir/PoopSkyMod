@@ -1194,10 +1194,21 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .define('P', PoBlocks.GINKGO_PLANKS)
                 .unlockedBy(getItemName(PoBlocks.GINKGO_PLANKS), has(PoBlocks.GINKGO_PLANKS))
                 .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, PoItems.PRIMO_BOAT)
+                .pattern("P P")
+                .pattern("PPP")
+                .define('P', PoBlocks.PRIMO_PLANKS)
+                .unlockedBy(getItemName(PoBlocks.PRIMO_PLANKS), has(PoBlocks.PRIMO_PLANKS))
+                .save(recipeOutput);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, PoItems.GINKGO_CHEST_BOAT)
                 .requires(Items.CHEST)
                 .requires(PoItems.GINKGO_BOAT)
                 .unlockedBy(getItemName(PoItems.GINKGO_BOAT), has(PoItems.GINKGO_BOAT))
+                .save(recipeOutput);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, PoItems.PRIMO_CHEST_BOAT)
+                .requires(Items.CHEST)
+                .requires(PoItems.PRIMO_BOAT)
+                .unlockedBy(getItemName(PoItems.PRIMO_BOAT), has(PoItems.PRIMO_BOAT))
                 .save(recipeOutput);
     }
 

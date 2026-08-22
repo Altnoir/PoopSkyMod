@@ -156,18 +156,24 @@ public class PoItems {
     public static final ItemEntry<GameDiscItem> GAME_DISC_PONG = registerItem("game_disk_pong",
             props -> new GameDiscItem(props.rarity(Rarity.RARE), Component.translatable("gamediscs.pong").withStyle(ChatFormatting.GRAY)));
 
-    public static final ItemEntry<GinkgoBoatItem> GINKGO_BOAT = registerItem("ginkgo_boat",
-            props -> new GinkgoBoatItem(false, PoEntityType.GINKGO_BOAT, props.stacksTo(1)));
-    public static final ItemEntry<GinkgoBoatItem> GINKGO_CHEST_BOAT = REGISTRATE.item("ginkgo_chest_boat",
-                    props -> new GinkgoBoatItem(true, PoEntityType.GINKGO_CHEST_BOAT, props.stacksTo(1)))
+    public static final ItemEntry<PoBoatItem> GINKGO_BOAT = registerItem("ginkgo_boat",
+            props -> new PoBoatItem(false, PoEntityType.GINKGO_BOAT, props.stacksTo(1)));
+    public static final ItemEntry<PoBoatItem> PRIMO_BOAT = registerItem("primo_boat",
+            props -> new PoBoatItem(false, PoEntityType.PRIMO_BOAT, props.stacksTo(1)));
+    public static final ItemEntry<PoBoatItem> GINKGO_CHEST_BOAT = REGISTRATE.item("ginkgo_chest_boat",
+                    props -> new PoBoatItem(true, PoEntityType.GINKGO_CHEST_BOAT, props.stacksTo(1)))
             .lang("Ginkgo Boat with Chest")
+            .register();
+    public static final ItemEntry<PoBoatItem> PRIMO_CHEST_BOAT = REGISTRATE.item("primo_chest_boat",
+                    props -> new PoBoatItem(true, PoEntityType.PRIMO_CHEST_BOAT, props.stacksTo(1)))
+            .lang("Primo Boat with Chest")
             .register();
     public static final ItemEntry<FlushToiletCartItem> FLUSH_TOILET_CART = registerItem("flush_toilet_cart",
             props -> new FlushToiletCartItem(PoEntityType.FLUSH_TOILET_CART, props.stacksTo(1)));
     public static final ItemEntry<FlushToiletCartItem> GOLDEN_FLUSH_TOILET_CART = registerItem("golden_flush_toilet_cart",
             props -> new FlushToiletCartItem(PoEntityType.GOLDEN_FLUSH_TOILET_CART, props.stacksTo(1)));
     public static final ItemEntry<PopMinecartItem> POP_TNT_MINECART = REGISTRATE.item("pop_tnt_minecart",
-            props -> new PopMinecartItem(PoEntityType.POP_TNT_MINECART, props.stacksTo(1)))
+                    props -> new PopMinecartItem(PoEntityType.POP_TNT_MINECART, props.stacksTo(1)))
             .model((ctx, prov) -> prov.generated(ctx, PoopSky.loc("item/poop_minecart")))
             .lang("Minecart with POP")
             .register();
