@@ -75,8 +75,13 @@ public final class EntityLootTableGen {
                         .withPool(
                                 LootPool.lootPool()
                                         .setRolls(ConstantValue.exactly(1.0F))
-                                        .add(TagEntry.expandTag(PoTags.Items.GAME_DISKS))
-                                        .when(killedByPlug(registries))
+                                        .add(TagEntry.expandTag(PoTags.Items.GAME_DISKS).when(killedByPlug(registries)))
+                                        .when(
+                                                LootItemEntityPropertyCondition.hasProperties(
+                                                        LootContext.EntityTarget.THIS,
+                                                        EntityPredicate.Builder.entity().subPredicate(SlimePredicate.sized(MinMaxBounds.Ints.exactly(1)))
+                                                )
+                                        )
                         )
         );
         loot.add(
@@ -139,8 +144,7 @@ public final class EntityLootTableGen {
 
     private static LootItemCondition.Builder killedByPlug(HolderLookup.Provider registries) {
         return DamageSourceCondition.hasDamageSource(
-                DamageSourcePredicate.Builder.damageType()
-                        .isDirect(true)
+                DamageSourcePredicate.Builder.damageType().isDirect(true)
                         .source(EntityPredicate.Builder.entity()
                                 .of(registries.lookupOrThrow(Registries.ENTITY_TYPE), EntityType.PLAYER)
                                 .equipment(EntityEquipmentPredicate.Builder.equipment()
