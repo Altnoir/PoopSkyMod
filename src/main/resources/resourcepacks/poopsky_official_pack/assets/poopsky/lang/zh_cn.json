@@ -193,8 +193,6 @@
   "block.poopsky.ginkgo_trapdoor": "银杏木活板门",
   "item.poopsky.ginkgo_boat": "银杏木船",
   "item.poopsky.ginkgo_chest_boat": "银杏木运输船",
-  "entity.poopsky.ginkgo_boat": "银杏木船",
-  "entity.poopsky.ginkgo_chest_boat": "银杏木运输船",
 
   "block.poopsky.mushroom_bed": "蘑菇床",
   "block.poopsky.mycelium_block": "菌丝块",
@@ -217,6 +215,8 @@
   "block.poopsky.primo_fence_gate": "太初木栅栏门",
   "block.poopsky.primo_door": "太初木门",
   "block.poopsky.primo_trapdoor": "太初木活板门",
+  "item.poopsky.primo_boat": "太初木船",
+  "item.poopsky.primo_chest_boat": "太初木运输船",
 
   "block.poopsky.poopsky_block": "天秽壤方块",
   "block.poopsky.stool": "秽壤凳",
@@ -482,6 +482,10 @@
   "entity.poopsky.fly": "秽壤飞蝇",
   "entity.poopsky.poop_tnt": "POP",
   "entity.poopsky.pop_tnt_minecart": "POP矿车",
+  "entity.poopsky.ginkgo_boat": "银杏木船",
+  "entity.poopsky.ginkgo_chest_boat": "银杏木运输船",
+  "entity.poopsky.primo_boat": "太初木船",
+  "entity.poopsky.primo_chest_boat": "太初木运输船",
   "entity.poopsky.gashapon": "扭蛋",
 
   "key.category.poopsky": "秽之领域",

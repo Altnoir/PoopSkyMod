@@ -101,24 +101,44 @@ public class PoEntityType {
             .lang("Minecart with POP")
             .register();
 
-    public static final EntityEntry<GinkgoBoatEntity> GINKGO_BOAT = REGISTRATE
-            .entity("ginkgo_boat", GinkgoBoatEntity::new, MobCategory.MISC)
+    public static final EntityEntry<PoBoatEntity> GINKGO_BOAT = REGISTRATE
+            .<PoBoatEntity>entity("ginkgo_boat",
+                    (type, level) -> new PoBoatEntity(type, level, PoItems.GINKGO_BOAT::get), MobCategory.MISC)
             .properties(properties -> properties
                     .sized(1.375F, 0.5625F)
                     .eyeHeight(0.5625F)
                     .clientTrackingRange(10))
-            .renderer(() -> GinkgoBoatRenderer.provider(false))
-            .lang("Ginkgo Boat")
+            .renderer(() -> PoBoatRenderer.provider("ginkgo", false))
+            .register();
+    public static final EntityEntry<PoBoatEntity> PRIMO_BOAT = REGISTRATE
+            .<PoBoatEntity>entity("primo_boat",
+                    (type, level) -> new PoBoatEntity(type, level, PoItems.PRIMO_BOAT::get), MobCategory.MISC)
+            .properties(properties -> properties
+                    .sized(1.375F, 0.5625F)
+                    .eyeHeight(0.5625F)
+                    .clientTrackingRange(10))
+            .renderer(() -> PoBoatRenderer.provider("primo", false))
             .register();
 
-    public static final EntityEntry<GinkgoChestBoatEntity> GINKGO_CHEST_BOAT = REGISTRATE
-            .entity("ginkgo_chest_boat", GinkgoChestBoatEntity::new, MobCategory.MISC)
+    public static final EntityEntry<PoChestBoatEntity> GINKGO_CHEST_BOAT = REGISTRATE
+            .<PoChestBoatEntity>entity("ginkgo_chest_boat",
+                    (type, level) -> new PoChestBoatEntity(type, level, PoItems.GINKGO_CHEST_BOAT::get), MobCategory.MISC)
             .properties(properties -> properties
                     .sized(1.375F, 0.5625F)
                     .eyeHeight(0.5625F)
                     .clientTrackingRange(10))
-            .renderer(() -> GinkgoBoatRenderer.provider(true))
+            .renderer(() -> PoBoatRenderer.provider("ginkgo", true))
             .lang("Ginkgo Boat with Chest")
+            .register();
+    public static final EntityEntry<PoChestBoatEntity> PRIMO_CHEST_BOAT = REGISTRATE
+            .<PoChestBoatEntity>entity("primo_chest_boat",
+                    (type, level) -> new PoChestBoatEntity(type, level, PoItems.PRIMO_CHEST_BOAT::get), MobCategory.MISC)
+            .properties(properties -> properties
+                    .sized(1.375F, 0.5625F)
+                    .eyeHeight(0.5625F)
+                    .clientTrackingRange(10))
+            .renderer(() -> PoBoatRenderer.provider("primo", true))
+            .lang("Primo Boat with Chest")
             .register();
 
     public static final EntityEntry<GashaponEntity> GASHAPON = REGISTRATE
