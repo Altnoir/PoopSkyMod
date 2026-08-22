@@ -285,8 +285,8 @@ public class PoBlocks {
     );
     public static final BlockEntry<PinkPetalsBlock> MUSHROOM_BED = registerBlock("mushroom_bed",
             props -> new PinkPetalsBlock(BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.TERRACOTTA_RED).noCollission().sound(SoundType.PINK_PETALS).pushReaction(PushReaction.DESTROY)
-            )
+                    .mapColor(MapColor.TERRACOTTA_RED).noCollission().sound(SoundType.PINK_PETALS).pushReaction(PushReaction.DESTROY)),
+            (loot, block) -> loot.add(block, loot.createPetalsDrops(block))
     );
 
     public static final BlockEntry<PoopSkyBlock> POOPSKY_BLOCK = registerBlockWithItem("poopsky_block", 88,
