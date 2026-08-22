@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.content.block.entity.ArcadeBlockEntity;
-import com.altnoir.poopsky.content.item.p.GameDiscItem;
+import com.altnoir.poopsky.content.item.p.GameDiskItem;
 import com.altnoir.poopsky.game.util.GameUtils;
 import com.altnoir.poopsky.init.PoBlockEntityType;
 import com.altnoir.poopsky.init.PoSoundEvents;
@@ -182,7 +182,7 @@ public class ArcadeBlock extends Block implements EntityBlock {
             return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
         }
         startArcadeControl(level, player, arcade);
-        if (stack.getItem() instanceof GameDiscItem) {
+        if (stack.getItem() instanceof GameDiskItem) {
             if (!level.isClientSide() && arcade.insertCartridge(stack)) {
                 stack.shrink(1);
                 level.playSound(null, arcade.getBlockPos(), PoSoundEvents.CONFIRM.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
@@ -281,7 +281,7 @@ public class ArcadeBlock extends Block implements EntityBlock {
 
     private static void showNoCartridge(Level level, Player player) {
         if (!level.isClientSide()) {
-            player.sendSystemMessage(Component.translatable("message.gamediscs.light_arcade.no_cartridge"));
+            player.sendOverlayMessage(Component.translatable("message.gamedisks.light_arcade.no_cartridge"));
         }
     }
 

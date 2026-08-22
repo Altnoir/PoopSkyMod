@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.game;
 
-import com.altnoir.poopsky.content.item.p.GameDiscItem;
+import com.altnoir.poopsky.content.item.p.GameDiskItem;
 import com.altnoir.poopsky.game.gamediscs.ServerBlocktrisGame;
 import com.altnoir.poopsky.game.gamediscs.ServerPongGame;
 import com.altnoir.poopsky.game.gamediscs.ServerRoundwormGame;
@@ -12,19 +12,19 @@ public final class GameDefinitions {
     public static final GameDefinition ROUNDWORM = new GameDefinition(
             "roundworm",
             "RoundwormGame",
-            PoItems.GAME_DISC_ROUNDWORM,
+            PoItems.GAME_DISK_ROUNDWORM,
             ServerRoundwormGame::new
     );
     public static final GameDefinition BLOCKTRIS = new GameDefinition(
             "blocktris",
             "BlocktrisGame",
-            PoItems.GAME_DISC_BLOCKTRIS,
+            PoItems.GAME_DISK_BLOCKTRIS,
             ServerBlocktrisGame::new
     );
     public static final GameDefinition PONG = new GameDefinition(
             "pong",
             "PongGame",
-            PoItems.GAME_DISC_PONG,
+            PoItems.GAME_DISK_PONG,
             ServerPongGame::new
     );
 
@@ -37,7 +37,7 @@ public final class GameDefinitions {
     private GameDefinitions() {
     }
 
-    public static GameDefinition byDiscItem(GameDiscItem disc) {
+    public static GameDefinition byDiscItem(GameDiskItem disc) {
         for (GameDefinition definition : ALL) {
             if (definition.discItem() == disc) {
                 return definition;

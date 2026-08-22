@@ -110,9 +110,11 @@ public class GachaponItem extends Item implements ProjectileItem {
         if (mobId != null && !mobId.isBlank()) {
             Identifier id = Identifier.tryParse(mobId);
             var entityType = id != null ? BuiltInRegistries.ENTITY_TYPE.getValue(id) : null;
-            tooltip.accept(entityType != null
-                    ? Component.translatable(entityType.getDescriptionId()).withStyle(ChatFormatting.GOLD)
-                    : Component.literal(mobId).withStyle(ChatFormatting.GOLD));
+            Component name = entityType != null
+                    ? Component.translatable(entityType.getDescriptionId())
+                    : Component.literal(mobId);
+            tooltip.accept(Component.translatable("tooltip.poopsky.gachapon")
+                    .append(": ").append(name).withStyle(ChatFormatting.GRAY));
         }
     }
 }

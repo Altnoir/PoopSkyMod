@@ -330,10 +330,10 @@ public final class LangGen {
         provider.add("block.poopsky.rainbow_toilet", "Rainbow Toilet");
 
         // Game
-        provider.add("gamediscs.roundworm", "Roundworm");
-        provider.add("gamediscs.blocktris", "Blocktris");
-        provider.add("gamediscs.pong", "Pong");
-        provider.add("message.gamediscs.light_arcade.no_cartridge", "No cartridge");
+        provider.add("gamedisks.roundworm", "Roundworm");
+        provider.add("gamedisks.blocktris", "Blocktris");
+        provider.add("gamedisks.pong", "Pong");
+        provider.add("message.gamedisks.light_arcade.no_cartridge", "No cartridge");
 
         provider.add("gui.gamingconsole.title", "Arcade Machine");
         provider.add("gui.gamingconsole.press_any_key", "Press any key");
@@ -380,13 +380,14 @@ public final class LangGen {
     }
 
     private static void addTooltips() {
-        provider.add("tooltip.poopsky.fly_type", "Type");
         provider.add("tooltip.poopsky.item.info_0", "§7Hold §6[Shift] §7to show details");
         provider.add("tooltip.poopsky.item.info_1", "§8Right-click two different toilet blocks to link channels");
         provider.add("tooltip.poopsky.toilet_linker.info_1", "Toilet① - DimID: %1$s, Coordinates: %2$s, %3$s, %4$s");
         provider.add("tooltip.poopsky.toilet_linker.info_2", "Toilet② - DimID: %1$s, Coordinates: %2$s, %3$s, %4$s");
         provider.add("tooltip.poopsky.jinkela.info", "§8Fertilizer mixed with Jinkela: one bag spreads like two");
+        provider.add("tooltip.poopsky.fly_type", "Type");
         provider.add("tooltip.poopsky.toilet_type", "Type");
+        provider.add("tooltip.poopsky.gachapon", "Mob");
     }
 
     private static void addJei() {

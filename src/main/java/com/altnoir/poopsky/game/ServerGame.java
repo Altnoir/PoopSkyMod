@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.game;
 
-import com.altnoir.poopsky.content.item.p.GameDiscItem;
+import com.altnoir.poopsky.content.item.p.GameDiskItem;
 import net.minecraft.sounds.SoundEvent;
 
 import java.util.Random;
@@ -82,7 +82,7 @@ public abstract class ServerGame extends Game {
         return gameDefinition != null ? gameDefinition.gameName() : getClass().getSimpleName();
     }
 
-    public static ServerGame create(GameDiscItem disc) {
+    public static ServerGame create(GameDiskItem disc) {
         GameDefinition definition = GameDefinitions.byDiscItem(disc);
         ServerGame game = definition.newServerGame();
         game.prepare();

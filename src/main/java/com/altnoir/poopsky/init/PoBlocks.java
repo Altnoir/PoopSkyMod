@@ -141,6 +141,8 @@ public class PoBlocks {
     public static final BlockEntry<VerticalSlabBlock> POOP_VERTICAL_SLAB = registerDecoMaterialBlock("poop_vertical_slab", 88,
             props -> new VerticalSlabBlock(poopProperties()),
             PoBlocks::createVerticalSlabDrops);
+    public static final BlockEntry<WallBlock> POOP_WALL = registerDecoMaterialBlock("poop_wall", 88,
+            props -> new WallBlock(poopProperties()));
     public static final BlockEntry<PoopPieceBlock> POOP_PIECE = registerDecoMaterialBlock("poop_piece", 88,
             props -> new PoopPieceBlock(poopProperties(0.1F)
                     .replaceable()
@@ -153,8 +155,6 @@ public class PoBlocks {
             props -> new FenceBlock(poopProperties()));
     public static final BlockEntry<FenceGateBlock> POOP_FENCE_GATE = registerDecoMaterialBlock("poop_fence_gate", 88,
             props -> new FenceGateBlock(PoWoodType.POOP, poopProperties()));
-    public static final BlockEntry<WallBlock> POOP_WALL = registerDecoMaterialBlock("poop_wall", 88,
-            props -> new WallBlock(poopProperties()));
     public static final BlockFamily POOP_FAMILY = new BlockFamily(POOP_BLOCK, POOP_STAIRS, POOP_SLAB, POOP_VERTICAL_SLAB, POOP_WALL);
 
     public static final BlockEntry<DoorBlock> POOP_DOOR = registerDecoMaterialBlock("poop_door", 88,
@@ -667,7 +667,7 @@ public class PoBlocks {
     }
 
     private static BlockEntry<FlushToiletBlock> registerFlushToilet(String name, DyeColor color) {
-        return registerBlock(name, 64,
+        return registerBlock(name, 88,
                 props -> new FlushToiletBlock(props
                         .mapColor(color)
                         .strength(HARDEN, HARD_STRENGTH)

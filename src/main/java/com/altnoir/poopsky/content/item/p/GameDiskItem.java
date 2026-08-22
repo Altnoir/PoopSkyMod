@@ -8,10 +8,10 @@ import net.minecraft.world.item.component.TooltipDisplay;
 
 import java.util.function.Consumer;
 
-public class GameDiscItem extends Item {
+public class GameDiskItem extends Item {
     private final Component name;
 
-    public GameDiscItem(Properties properties, Component name) {
+    public GameDiskItem(Properties properties, Component name) {
         super(properties.stacksTo(1));
         this.name = name;
     }

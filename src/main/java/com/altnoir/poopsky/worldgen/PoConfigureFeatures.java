@@ -164,7 +164,7 @@ public class PoConfigureFeatures {
                 new SimpleBlockConfiguration(
                         new WeightedStateProvider(
                                 WeightedList.<BlockState>builder()
-                                        .add(Blocks.SUGAR_CANE.defaultBlockState(), 50)
+                                        .add(Blocks.SUGAR_CANE.defaultBlockState(), 100)
                                         .add(Blocks.CACTUS.defaultBlockState(), 20)
                                         .add(Blocks.DEAD_BUSH.defaultBlockState(), 30)
                         )

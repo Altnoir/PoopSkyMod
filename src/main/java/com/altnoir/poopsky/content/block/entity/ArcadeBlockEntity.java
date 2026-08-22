@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.block.entity;
 
 import com.altnoir.poopsky.content.block.p.ArcadeBlock;
-import com.altnoir.poopsky.content.item.p.GameDiscItem;
+import com.altnoir.poopsky.content.item.p.GameDiskItem;
 import com.altnoir.poopsky.data.ArcadeLootGen;
 import com.altnoir.poopsky.game.Button;
 import com.altnoir.poopsky.game.GameStage;
@@ -75,7 +75,7 @@ public class ArcadeBlockEntity extends BlockEntity {
     }
 
     public boolean insertCartridge(ItemStack stack) {
-        if (hasCartridge() || stack.isEmpty() || !(stack.getItem() instanceof GameDiscItem)) {
+        if (hasCartridge() || stack.isEmpty() || !(stack.getItem() instanceof GameDiskItem)) {
             return false;
         }
 
@@ -188,7 +188,7 @@ public class ArcadeBlockEntity extends BlockEntity {
     }
 
     private void refreshSession() {
-        if (!(getCartridge().getItem() instanceof GameDiscItem disc)) {
+        if (!(getCartridge().getItem() instanceof GameDiskItem disc)) {
             clearSession();
             return;
         }
