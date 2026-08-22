@@ -24,9 +24,10 @@ public class PoTags {
         TagKey<Block> TILE_BLOCKS = create("tile_blocks");
         TagKey<Block> ARCADES = create("arcades");
 
-        TagKey<Block> POOP_BLOCK = create("poop_block");
-        TagKey<Block> CHILI_POOP_BLOCK = create("chili_poop_block");
-        TagKey<Block> GOLDEN_POOP_BLOCK = create("golden_poop_block");
+        TagKey<Block> POOP_PATCH = create("poop_block");
+        TagKey<Block> CHILI_POOP_PATCH = create("chili_poop_block");
+        TagKey<Block> GOLDEN_POOP_PATCH = create("golden_poop_block");
+        TagKey<Block> POOP_SAND_PATCH = create("poop_sands");
         TagKey<Block> RAW_SAPLING_POOP_BLOCK = create("raw_sapling_poop_block");
         TagKey<Block> RAW_SEA_POOP_BLOCK = create("raw_sea_poop_block");
         TagKey<Block> RAW_WITHER_POOP_BLOCK = create("raw_wither_poop_block");

@@ -94,7 +94,7 @@ public class PoopSandBlock extends ColoredFallingBlock implements BonemealableBl
     public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
         level.registryAccess()
                 .registry(Registries.CONFIGURED_FEATURE)
-                .flatMap(holder -> holder.getHolder(PoConfigureFeatures.POOP_SAND_PATCH))
+                .flatMap(holder -> holder.getHolder(PoConfigureFeatures.POOP_SAND_PATCH_BONEMEAL))
                 .ifPresent(reference -> reference.value().place(level, level.getChunkSource().getGenerator(), random, pos.above()));
     }
 

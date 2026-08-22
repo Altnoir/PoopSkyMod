@@ -28,8 +28,10 @@ public final class BlockTagGen {
     private static void generate(RegistrateTagsProvider.IntrinsicImpl<Block> provider) {
         BlockTagGen.provider = provider;
 
-        tag(PoTags.Blocks.POOP_BLOCK).add(PoBlocks.POOP_BLOCK.get());
-        tag(PoTags.Blocks.CHILI_POOP_BLOCK).add(PoBlocks.CHILI_POOP_BLOCK.get());
+        tag(PoTags.Blocks.POOP_PATCH).add(PoBlocks.POOP_BLOCK.get());
+        tag(PoTags.Blocks.CHILI_POOP_PATCH).add(PoBlocks.CHILI_POOP_BLOCK.get());
+        tag(PoTags.Blocks.GOLDEN_POOP_PATCH).add(PoBlocks.GOLDEN_POOP_BLOCK.get());
+        tag(PoTags.Blocks.POOP_SAND_PATCH).add(PoBlocks.POOP_SAND.get()).addTag(Tags.Blocks.SANDS);
         tag(PoTags.Blocks.GINKGO_LOGS)
                 .add(PoBlocks.GINKGO_LOG.get())
                 .add(PoBlocks.STRIPPED_GINKGO_LOG.get())
@@ -164,7 +166,7 @@ public final class BlockTagGen {
                         PoBlocks.RAW_WITHER_POOP_BLOCK.get(),
                         PoBlocks.MYCELIUM_BLOCK.get()
                 );
-        tag(BlockTags.SAND).add(PoBlocks.DRIED_POOP_BLOCK.get());
+        tag(BlockTags.SAND).add(PoBlocks.POOP_SAND.get());
 
         tag(BlockTags.REPLACEABLE_BY_TREES).add(PoBlocks.MYCELIUM_BLOCK.get());
         tag(BlockTags.INSIDE_STEP_SOUND_BLOCKS)
