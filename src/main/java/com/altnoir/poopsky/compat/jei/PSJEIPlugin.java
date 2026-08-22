@@ -132,7 +132,7 @@ public class PSJEIPlugin implements IModPlugin {
         registration.addRecipeCatalyst(new ItemStack(PoBlocks.SIEVE.get()), SieveRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(PoBlocks.FLY_BARREL.get()), FlyBarrelRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(PoBlocks.BREEDING_CHEST.get()), BreedingChestRecipeCategory.TYPE);
-        registration.addRecipeCatalyst(new ItemStack(PoBlocks.POOP_TNT.get()), POPExplosionRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(PoBlocks.POP.get()), POPExplosionRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(PoItems.KING_OF_DRAGON_FRUIT.get()), AnalPressingRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(PoItems.DRAGON_BREATH_CHILI.get()), AnalPressingRecipeCategory.TYPE);
 

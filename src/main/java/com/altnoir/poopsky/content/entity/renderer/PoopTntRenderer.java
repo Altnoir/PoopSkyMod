@@ -40,7 +40,7 @@ public class PoopTntRenderer extends EntityRenderer<PoopTntEntity> {
         poseStack.translate(-0.5F, -0.5F, 0.5F);
         poseStack.mulPose(Axis.YP.rotationDegrees(90.0F));
         TntMinecartRenderer.renderWhiteSolidBlock(this.blockRenderer,
-                PoBlocks.POOP_TNT.get().defaultBlockState(), poseStack, bufferSource, packedLight, fuse / 5 % 2 == 0);
+                PoBlocks.POP.get().defaultBlockState(), poseStack, bufferSource, packedLight, fuse / 5 % 2 == 0);
         poseStack.popPose();
         super.render(p_entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }

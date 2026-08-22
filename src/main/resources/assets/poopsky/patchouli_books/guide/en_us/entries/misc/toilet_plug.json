@@ -1,0 +1,19 @@
+{
+  "name": "Toilet Plug",
+  "icon": "poopsky:toilet_plug",
+  "category": "poopsky:misc",
+  "read_by_default": false,
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "A Classic Tool",
+      "item": "poopsky:toilet_plug",
+      "text": "The Toilet Plug is one of PoopSky's classic items.$(br2)It is closely tied to the toilet system and acts as a gateway to many advanced mechanics."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "More details about how to obtain and use the Toilet Plug will be added here later."
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "屎溅之铃",
+  "icon": "poopsky:time_bell",
+  "category": "poopsky:misc",
+  "read_by_default": false,
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "时间的力量",
+      "item": "poopsky:time_bell",
+      "text": "屎溅之铃可以冻结或解冻游戏时间。$(br2)在某些关键场景下，它能为你争取宝贵的操作时间。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "时停相关行为会受到模组配置影响，例如无限时停和时停滤镜。具体机制后续补充。"
+    }
+  ]
+}

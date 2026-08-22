@@ -40,7 +40,7 @@ public class POPExplosionRecipeCategory implements IRecipeCategory<RecipeHolder<
 
     public POPExplosionRecipeCategory(IJeiHelpers helpers, IDrawable arrow, IDrawable arrow2) {
         var guiHelper = helpers.getGuiHelper();
-        this.icon = guiHelper.createDrawableItemStack(new ItemStack(PoBlocks.POOP_TNT.get()));
+        this.icon = guiHelper.createDrawableItemStack(new ItemStack(PoBlocks.POP.get()));
         this.title = Component.translatable("jei.category." + PoopSky.MOD_ID + ".pop_explosion");
         this.arrow = arrow;
         this.arrow2 = arrow2;

@@ -253,9 +253,9 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .save(recipeOutput);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, PoItems.POP_TNT_MINECART)
-                .requires(PoBlocks.POOP_TNT)
+                .requires(PoBlocks.POP)
                 .requires(Items.MINECART)
-                .unlockedBy(getHasName(PoBlocks.POOP_TNT), has(PoBlocks.POOP_TNT))
+                .unlockedBy(getHasName(PoBlocks.POP), has(PoBlocks.POP))
                 .save(recipeOutput);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PoItems.LAWRENCE_MUSIC_DISC)
                 .requires(Tags.Items.MUSIC_DISCS)
@@ -472,7 +472,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .define('A', Items.STRING)
                 .unlockedBy(getItemName(Blocks.MOSSY_COBBLESTONE_WALL), has(Blocks.MOSSY_COBBLESTONE_WALL))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.POOP_TNT)
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.POP)
                 .pattern("SAS")
                 .pattern("ASA")
                 .pattern("SAS")

@@ -1,0 +1,19 @@
+{
+  "name": "基础秽壤小食",
+  "icon": "poopsky:poop_bread",
+  "category": "poopsky:food",
+  "read_by_default": false,
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "填饱肚子",
+      "item": "poopsky:poop_bread",
+      "text": "粪便面包、粪便粽和粪冰棍都属于基础秽壤食物。$(br2)它们可以在前期为玩家提供稳定的食物来源，适合作为空岛起步阶段的干粮。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "部分秽壤食物还可以继续加工，例如把基础食材升级为更高级的秽壤大餐。$(br2)具体的合成方式可以在 JEI 中查询。"
+    }
+  ]
+}

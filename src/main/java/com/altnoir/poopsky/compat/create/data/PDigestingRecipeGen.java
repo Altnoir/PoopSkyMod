@@ -28,7 +28,7 @@ public class PDigestingRecipeGen extends DigestingRecipeGen implements IConditio
         convert(Items.SNOWBALL, PoItems.POOP_BALL.get()).register(conditionalOutput);
         convert(Items.SNOW, PoBlocks.POOP_PIECE.get()).register(conditionalOutput);
         convert(Blocks.SNOW_BLOCK, PoBlocks.POOP_BLOCK.get()).register(conditionalOutput);
-        convert(Blocks.TNT, PoBlocks.POOP_TNT.get()).register(conditionalOutput);
+        convert(Blocks.TNT, PoBlocks.POP.get()).register(conditionalOutput);
         convert(ItemTags.LEAVES, PoItems.FOLIUM_SENNAE.get()).register(conditionalOutput);
         convert(Items.BREAD, PoItems.POOP_BREAD.get()).register(conditionalOutput);
         convert(Items.CAKE, PoBlocks.POOP_CAKE.get()).register(conditionalOutput);

@@ -2,6 +2,7 @@ package com.altnoir.poopsky.compat.farmersdelight;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.compat.PoMods;
+import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import net.minecraft.advancements.Criterion;
@@ -51,6 +52,14 @@ public class FarmersDelightRecipeGen {
                         PoItems.POOP_PASTA.get(), 2)
                 .unlockedBy(getItemName(PoItems.POOBURGER_MEAT.get()), has(PoItems.POOBURGER_MEAT.get()))
                 .save(output, loc("cutting/poop_pasta"));
+
+        CuttingBoardRecipeBuilder.cuttingRecipe(
+                        Ingredient.of(PoItems.POP_TNT_MINECART.get()),
+                        Ingredient.of(ItemTags.HOES),
+                        Items.MINECART, 1)
+                .addResult(PoBlocks.POP)
+                .unlockedBy(getItemName(PoItems.POP_TNT_MINECART.get()), has(PoItems.POP_TNT_MINECART.get()))
+                .save(output, loc("cutting/poop_tnt_minecart"));
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModItems.ORGANIC_COMPOST.get())
                 .requires(ItemTags.DIRT)

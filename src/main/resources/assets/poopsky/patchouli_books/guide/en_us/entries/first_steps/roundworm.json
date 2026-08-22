@@ -12,9 +12,20 @@
       "text": "Breaking poop leaves has a chance to drop roundworms.$(br2)Roundworms are the ingredient used to roast string."
     },
     {
+      "type": "patchouli:text",
+      "title": "Plantable",
+      "text": "Roundworms can be planted and grow into upward-climbing roundworm vines.$(br2)The vines also deal a small amount of damage to creatures that touch them."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Seeds and Drops",
+      "text": "Use bone meal on roundworm vines to make them bear seeds.$(br2)Harvesting or breaking seeded vines drops 1-3 roundworms and randomly drops one of the following:$(li)Pumpkin Seeds$(li)Melon Seeds$(li)Frogspawn$(li)Beetroot Seeds"
+    },
+    {
       "type": "patchouli:relations",
       "entries": [
         "poopsky:first_steps/poop_tree",
+        "poopsky:first_steps/maggots",
         "poopsky:first_steps/string"
       ]
     }

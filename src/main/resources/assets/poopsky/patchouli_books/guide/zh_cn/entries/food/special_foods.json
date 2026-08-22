@@ -1,0 +1,20 @@
+{
+  "name": "特殊秽壤食物",
+  "icon": "poopsky:dragon_breath_chili",
+  "category": "poopsky:food",
+  "read_by_default": false,
+  "sortnum": 4,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "不只是填饱肚子",
+      "item": "poopsky:dragon_breath_chili",
+      "text": "龙息辣椒、帝王火龙果和辟谷丹都属于特殊食物。$(br2)它们不只能回复饥饿值，还带有独特效果，例如龙息辣椒会引发肠道痉挛并短暂着火。"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "液体食物",
+      "text": "尿瓶也可以被视作一种特殊的“饮品”。$(br2)虽然听起来不太美味，但在特定情况下可能会派上用场。"
+    }
+  ]
+}

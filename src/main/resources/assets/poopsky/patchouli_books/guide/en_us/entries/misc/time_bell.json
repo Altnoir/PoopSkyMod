@@ -1,0 +1,19 @@
+{
+  "name": "Time Bell",
+  "icon": "poopsky:time_bell",
+  "category": "poopsky:misc",
+  "read_by_default": false,
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "The Power of Time",
+      "item": "poopsky:time_bell",
+      "text": "The Time Bell can freeze or unfreeze game time.$(br2)In certain critical moments, it gives you valuable time to act."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Time-stop behavior is affected by mod config options such as Unlimited Freeze and Freeze Filter. More details will be added later."
+    }
+  ]
+}

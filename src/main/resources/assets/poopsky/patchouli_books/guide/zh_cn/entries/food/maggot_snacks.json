@@ -1,0 +1,19 @@
+{
+  "name": "蛆虫小食",
+  "icon": "poopsky:baked_maggots",
+  "category": "poopsky:food",
+  "read_by_default": false,
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "别问，问就是蛋白质",
+      "item": "poopsky:baked_maggots",
+      "text": "烤蛆是蛆的加工食品，适合在苍蝇养殖体系中顺手获得。$(br2)蛔虫则来自粪便树叶，虽然也可以作为食物，但更多时候会被用来烤成线。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "如果你喜欢挑战，也可以直接尝试原味的蛆或蛔虫。$(br2)不过烹饪后再食用通常是更明智的选择。"
+    }
+  ]
+}

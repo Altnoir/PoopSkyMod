@@ -1,0 +1,19 @@
+{
+  "name": "Simple Poop Snacks",
+  "icon": "poopsky:poop_bread",
+  "category": "poopsky:food",
+  "read_by_default": false,
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "Filling Your Stomach",
+      "item": "poopsky:poop_bread",
+      "text": "Poop Bread, Poop Dumplings, and Poopsicles are basic filth foods.$(br2)They provide a steady food source in the early game and make great rations for your skyblock start."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Some filth foods can be processed further, turning basic ingredients into heartier filth meals.$(br2)Check JEI for the exact crafting recipes."
+    }
+  ]
+}

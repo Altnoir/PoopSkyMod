@@ -157,7 +157,7 @@ public class PoopSky {
                     return item;
                 }
             });
-            DispenserBlock.registerBehavior(PoBlocks.POOP_TNT.asItem(), new DefaultDispenseItemBehavior() {
+            DispenserBlock.registerBehavior(PoBlocks.POP.asItem(), new DefaultDispenseItemBehavior() {
                 @Override
                 protected ItemStack execute(BlockSource blockSource, ItemStack item) {
                     Level level = blockSource.level();

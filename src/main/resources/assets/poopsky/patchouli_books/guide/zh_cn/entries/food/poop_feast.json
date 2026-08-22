@@ -1,0 +1,20 @@
+{
+  "name": "秽壤大餐",
+  "icon": "poopsky:pooburger",
+  "category": "poopsky:food",
+  "read_by_default": false,
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "丰盛的一餐",
+      "item": "poopsky:pooburger",
+      "text": "当你不再满足于基础小食后，可以制作粪堡包、粪便汤、粪意面或“布丁”。$(br2)这些食物通常回复更多饥饿值，适合探索和战斗前食用。"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "节日与进阶",
+      "text": "粪便月饼、辣味粪便月饼和金粪便月饼则属于更具特色的秽壤食物。$(br2)它们往往需要更多材料，但也能带来更好的效果。"
+    }
+  ]
+}

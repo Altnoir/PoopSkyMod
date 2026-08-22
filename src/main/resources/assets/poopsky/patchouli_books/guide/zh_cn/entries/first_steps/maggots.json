@@ -1,0 +1,33 @@
+{
+  "name": "蛆",
+  "icon": "poopsky:maggots_seeds",
+  "category": "poopsky:first_steps",
+  "read_by_default": false,
+  "sortnum": 8,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "title": "来自含粪水的堆粪桶",
+      "item": "poopsky:maggots_seeds",
+      "text": "堆粪桶在装满粪水后，经过一段时间会长出蛆。$(br2)右击堆粪桶，或从底部抽取，就可以获得蛆。"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "可种植",
+      "text": "蛆可以像种子一样种下，长成蛆作物。$(br2)它是一种可以重复获取的秽壤作物，也是苍蝇体系的基础原料之一。"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "成熟掉落",
+      "text": "成熟的蛆作物会掉落 1-3 个蛆，并随机额外掉落以下物品之一：$(li)甜浆果$(li)胡萝卜$(li)土豆$(li)甜菜种子"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "poopsky:second_steps/urine_compooper",
+        "poopsky:first_steps/roundworm",
+        "poopsky:fly/fly"
+      ]
+    }
+  ]
+}
