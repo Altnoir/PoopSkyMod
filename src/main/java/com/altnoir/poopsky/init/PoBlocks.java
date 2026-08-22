@@ -130,6 +130,8 @@ public class PoBlocks {
     public static final BlockEntry<VerticalSlabBlock> POOP_VERTICAL_SLAB = registerDecoMaterialBlock("poop_vertical_slab", 88,
             props -> new VerticalSlabBlock(poopProperties()),
             PoBlocks::createVerticalSlabDrops);
+    public static final BlockEntry<WallBlock> POOP_WALL = registerDecoMaterialBlock("poop_wall", 88,
+            props -> new WallBlock(poopProperties()));
     public static final BlockEntry<PoopPieceBlock> POOP_PIECE = registerDecoMaterialBlock("poop_piece", 88,
             props -> new PoopPieceBlock(poopProperties(0.1F)
                     .replaceable()
@@ -142,8 +144,6 @@ public class PoBlocks {
             props -> new FenceBlock(poopProperties()));
     public static final BlockEntry<FenceGateBlock> POOP_FENCE_GATE = registerDecoMaterialBlock("poop_fence_gate", 88,
             props -> new FenceGateBlock(PoWoodType.POOP, poopProperties()));
-    public static final BlockEntry<WallBlock> POOP_WALL = registerDecoMaterialBlock("poop_wall", 88,
-            props -> new WallBlock(poopProperties()));
     public static final BlockFamily POOP_FAMILY = new BlockFamily(POOP_BLOCK, POOP_STAIRS, POOP_SLAB, POOP_VERTICAL_SLAB, POOP_WALL);
 
     public static final BlockEntry<DoorBlock> POOP_DOOR = registerDecoMaterialBlock("poop_door", 88,
@@ -438,10 +438,6 @@ public class PoBlocks {
             props -> new FlamVerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(GINKGO_PLANKS.get())),
             PoBlocks::createVerticalSlabDrops);
 
-    public static final BlockEntry<ButtonBlock> GINKGO_BUTTON = registerDecoMaterialBlock("ginkgo_button", 64,
-            props -> new ButtonBlock(BlockSetType.OAK, 30, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_BUTTON)));
-    public static final BlockEntry<PressurePlateBlock> GINKGO_PRESSURE_PLATE = registerDecoMaterialBlock("ginkgo_pressure_plate", 64,
-            props -> new PressurePlateBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PRESSURE_PLATE)));
     public static final BlockEntry<FlamFenceBlock> GINKGO_FENCE = registerDecoMaterialBlock("ginkgo_fence", 64,
             props -> new FlamFenceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE).mapColor(MapColor.COLOR_YELLOW)));
     public static final BlockEntry<FlamFenceGateBlock> GINKGO_FENCE_GATE = registerDecoMaterialBlock("ginkgo_fence_gate", 64,
@@ -451,6 +447,10 @@ public class PoBlocks {
             (loot, block) -> loot.add(block, loot.createDoorTable(block)));
     public static final BlockEntry<TrapDoorBlock> GINKGO_TRAPDOOR = registerDecoMaterialBlock("ginkgo_trapdoor", 64,
             props -> new TrapDoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_TRAPDOOR).mapColor(MapColor.COLOR_YELLOW)));
+    public static final BlockEntry<PressurePlateBlock> GINKGO_PRESSURE_PLATE = registerDecoMaterialBlock("ginkgo_pressure_plate", 64,
+            props -> new PressurePlateBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PRESSURE_PLATE)));
+    public static final BlockEntry<ButtonBlock> GINKGO_BUTTON = registerDecoMaterialBlock("ginkgo_button", 64,
+            props -> new ButtonBlock(BlockSetType.OAK, 30, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_BUTTON)));
 
     public static final BlockEntry<RotatedPillarBlock> PRIMO_STEM = registerDecoMaterialBlock("primo_stem", 64,
             props -> new RotatedPillarBlock(logProperties(MapColor.COLOR_ORANGE, SoundType.STEM)));
@@ -475,10 +475,6 @@ public class PoBlocks {
     public static final BlockEntry<VerticalSlabBlock> PRIMO_VERTICAL_SLAB = registerDecoMaterialBlock("primo_vertical_slab", 64,
             props -> new VerticalSlabBlock(BlockBehaviour.Properties.ofFullCopy(PRIMO_PLANKS.get())), PoBlocks::createVerticalSlabDrops);
 
-    public static final BlockEntry<ButtonBlock> PRIMO_BUTTON = registerDecoMaterialBlock("primo_button", 64,
-            props -> new ButtonBlock(BlockSetType.CRIMSON, 30, BlockBehaviour.Properties.ofFullCopy(Blocks.CRIMSON_BUTTON)));
-    public static final BlockEntry<PressurePlateBlock> PRIMO_PRESSURE_PLATE = registerDecoMaterialBlock("primo_pressure_plate", 64,
-            props -> new PressurePlateBlock(BlockSetType.CRIMSON, BlockBehaviour.Properties.ofFullCopy(Blocks.CRIMSON_PRESSURE_PLATE)));
     public static final BlockEntry<FenceBlock> PRIMO_FENCE = registerDecoMaterialBlock("primo_fence", 64,
             props -> new FenceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CRIMSON_FENCE).mapColor(MapColor.COLOR_ORANGE)));
     public static final BlockEntry<FenceGateBlock> PRIMO_FENCE_GATE = registerDecoMaterialBlock("primo_fence_gate", 64,
@@ -488,6 +484,10 @@ public class PoBlocks {
             (loot, block) -> loot.add(block, loot.createDoorTable(block)));
     public static final BlockEntry<TrapDoorBlock> PRIMO_TRAPDOOR = registerDecoMaterialBlock("primo_trapdoor", 64,
             props -> new TrapDoorBlock(BlockSetType.CRIMSON, BlockBehaviour.Properties.ofFullCopy(Blocks.CRIMSON_TRAPDOOR).mapColor(MapColor.COLOR_YELLOW)));
+    public static final BlockEntry<PressurePlateBlock> PRIMO_PRESSURE_PLATE = registerDecoMaterialBlock("primo_pressure_plate", 64,
+            props -> new PressurePlateBlock(BlockSetType.CRIMSON, BlockBehaviour.Properties.ofFullCopy(Blocks.CRIMSON_PRESSURE_PLATE)));
+    public static final BlockEntry<ButtonBlock> PRIMO_BUTTON = registerDecoMaterialBlock("primo_button", 64,
+            props -> new ButtonBlock(BlockSetType.CRIMSON, 30, BlockBehaviour.Properties.ofFullCopy(Blocks.CRIMSON_BUTTON)));
 
     public static final BlockEntry<ParticleLeavesBlock> POOP_LEAVES = registerBlock("poop_leaves", 88,
             props -> new ParticleLeavesBlock(0x5E4228, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
@@ -677,7 +677,7 @@ public class PoBlocks {
     }
 
     private static BlockEntry<FlushToiletBlock> registerFlushToilet(String name, DyeColor color) {
-        return registerBlock(name, 64,
+        return registerBlock(name, 88,
                 props -> new FlushToiletBlock(BlockBehaviour.Properties.of()
                         .mapColor(color)
                         .strength(HARDEN, HARD_STRENGTH)

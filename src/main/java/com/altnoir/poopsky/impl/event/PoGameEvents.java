@@ -332,7 +332,7 @@ public class PoGameEvents {
         entity.setHealth(1.0F);
         entity.removeAllEffects();
         entity.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 1));
-        entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 200, 0));
+        entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 400, 0));
         entity.setDeltaMovement(entity.getDeltaMovement().add(new Vec3(0, 1.6, 0)));
 
         if (entity instanceof ServerPlayer serverPlayer) {

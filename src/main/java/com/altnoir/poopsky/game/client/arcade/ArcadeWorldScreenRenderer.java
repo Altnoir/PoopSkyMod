@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.game.client.arcade;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.content.item.p.GameDiscItem;
+import com.altnoir.poopsky.content.item.p.GameDiskItem;
 import com.altnoir.poopsky.game.client.ArcadeControlSession;
 import com.altnoir.poopsky.game.client.ClientGameTypes;
 import com.altnoir.poopsky.game.client.ClientGame;
@@ -48,7 +48,7 @@ public final class ArcadeWorldScreenRenderer {
     }
 
     public static ResourceLocation getScreenTexture(BlockPos pos, ItemStack cartridge) {
-        if (cartridge.isEmpty() || !(cartridge.getItem() instanceof GameDiscItem disc)) {
+        if (cartridge.isEmpty() || !(cartridge.getItem() instanceof GameDiskItem disc)) {
             ScreenState state = SCREENS.remove(pos);
             if (state != null) {
                 state.close();
@@ -62,7 +62,7 @@ public final class ArcadeWorldScreenRenderer {
     }
 
     public static void applyRemoteSnapshot(BlockPos pos, ItemStack cartridge, CompoundTag snapshot) {
-        if (cartridge.isEmpty() || !(cartridge.getItem() instanceof GameDiscItem disc)) {
+        if (cartridge.isEmpty() || !(cartridge.getItem() instanceof GameDiskItem disc)) {
             ScreenState state = SCREENS.remove(pos);
             if (state != null) {
                 state.close();
@@ -93,7 +93,7 @@ public final class ArcadeWorldScreenRenderer {
         }
     }
 
-    private static ScreenState getOrCreate(BlockPos pos, GameDiscItem disc) {
+    private static ScreenState getOrCreate(BlockPos pos, GameDiskItem disc) {
         ScreenState state = SCREENS.get(pos);
         if (state != null && state.cartridge == disc) {
             return state;
@@ -150,7 +150,7 @@ public final class ArcadeWorldScreenRenderer {
     private static final class ScreenState {
         private final BlockPos pos;
         private final ResourceLocation textureLocation;
-        private GameDiscItem cartridge;
+        private GameDiskItem cartridge;
         private ClientGame cartridgeClientGame;
         private CompoundTag snapshot;
         private RenderTarget target;
@@ -158,7 +158,7 @@ public final class ArcadeWorldScreenRenderer {
         private ByteBufferBuilder bufferBuilder;
         private MultiBufferSource.BufferSource bufferSource;
 
-        private ScreenState(BlockPos pos, GameDiscItem cartridge) {
+        private ScreenState(BlockPos pos, GameDiskItem cartridge) {
             this.pos = pos;
             this.cartridge = cartridge;
             this.textureLocation = PoopSky.loc(texturePath(pos));

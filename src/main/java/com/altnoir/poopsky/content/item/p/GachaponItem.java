@@ -10,6 +10,7 @@ import net.minecraft.core.Position;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -107,9 +108,12 @@ public class GachaponItem extends Item implements ProjectileItem {
         if (mobId != null && !mobId.isBlank()) {
             ResourceLocation id = PoopSky.tryParse(mobId);
             var entityType = id != null ? BuiltInRegistries.ENTITY_TYPE.get(id) : null;
-            tooltipComponents.add(entityType != null
-                    ? Component.translatable(entityType.getDescriptionId()).withStyle(ChatFormatting.GOLD)
-                    : Component.literal(mobId).withStyle(ChatFormatting.GOLD));
+            MutableComponent name = entityType != null
+                    ? Component.translatable(entityType.getDescriptionId())
+                    : Component.literal(mobId);
+
+            tooltipComponents.add(Component.translatable("tooltip.poopsky.gachapon")
+                    .append(": ").append(name).withStyle(ChatFormatting.GRAY));
         }
     }
 }

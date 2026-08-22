@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.game.client;
 
-import com.altnoir.poopsky.content.item.p.GameDiscItem;
+import com.altnoir.poopsky.content.item.p.GameDiskItem;
 import com.altnoir.poopsky.game.GameDefinition;
 import com.altnoir.poopsky.game.GameDefinitions;
 import com.altnoir.poopsky.game.gamediscs.render.ClientBlocktrisGame;
@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public final class ClientGameTypes {
-    private static final Map<GameDiscItem, Supplier<ClientGame>> GAMES = new IdentityHashMap<>();
+    private static final Map<GameDiskItem, Supplier<ClientGame>> GAMES = new IdentityHashMap<>();
 
     static {
         register(GameDefinitions.ROUNDWORM, ClientRoundwormGame::new);
@@ -27,7 +27,7 @@ public final class ClientGameTypes {
         GAMES.put(definition.discItem(), factory);
     }
 
-    public static ClientGame newGameFor(GameDiscItem item) {
+    public static ClientGame newGameFor(GameDiskItem item) {
         Supplier<ClientGame> supplier = GAMES.get(item);
         if (supplier == null) {
             throw new IllegalArgumentException("No client game specified for " + item);
