@@ -587,10 +587,6 @@ public class PoBlocks {
                     .randomTicks()
                     .ignitedByLava()),
             (loot, block) -> loot.add(block, createToiletDrop(block)));
-
-    public static final BlockEntry<FlushToiletBlock> FLUSH_TOILET = registerFlushToilet("flush_toilet", DyeColor.WHITE);
-    public static final BlockEntry<FlushToiletBlock> GOLDEN_FLUSH_TOILET = registerFlushToilet("golden_flush_toilet", DyeColor.YELLOW);
-
     public static final BlockEntry<PortableToiletBlock> GINKGO_TOILET = registerBlock("ginkgo_toilet", 8,
             props -> new PortableToiletBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_YELLOW)
@@ -605,8 +601,11 @@ public class PoBlocks {
                     .sound(SoundType.NETHERITE_BLOCK)
                     .noOcclusion()),
             (loot, block) -> loot.add(block, loot.createDoorTable(block)));
+    public static final BlockEntry<FlushToiletBlock> FLUSH_TOILET = registerFlushToilet("flush_toilet", DyeColor.WHITE);
+    public static final BlockEntry<FlushToiletBlock> GOLDEN_FLUSH_TOILET = registerFlushToilet("golden_flush_toilet", DyeColor.YELLOW);
 
 
+    // 独立
     public static final BlockEntry<? extends LiquidBlock> URINE_LIQUID = PoFluids.URINE_LIQUID;
 
     public static final BlockEntry<MaggotsBlock> MAGGOTS = registerBlockNoItem("maggots",
