@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "tag": "poopsky:primo_stems"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "poopsky:primo_planks"
+  }
+}

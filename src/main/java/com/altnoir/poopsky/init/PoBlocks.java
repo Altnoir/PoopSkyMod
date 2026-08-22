@@ -532,6 +532,18 @@ public class PoBlocks {
                     .lightLevel(p_187409_ -> 1))),
             RegistrateBlockLootTables::dropWhenSilkTouch);
 
+    public static final BlockEntry<FoliumSennaePlantBlock> FOLIUM_SENNAE_PLANT = registerBlockNoItem("folium_sennae_plant",
+            props -> new FoliumSennaePlantBlock(props
+                    .mapColor(MapColor.PLANT)
+                    .replaceable()
+                    .noCollision()
+                    .instabreak()
+                    .sound(SoundType.GRASS)
+                    .offsetType(BlockBehaviour.OffsetType.XYZ)
+                    .ignitedByLava()
+                    .pushReaction(PushReaction.DESTROY)),
+            (loot, block) -> loot.dropOther(block, PoItems.FOLIUM_SENNAE.get()));
+
     public static final BlockEntry<? extends LiquidBlock> URINE_LIQUID = PoFluids.URINE_LIQUID;
 
     public static final BlockEntry<Block> MAGGOTS_BLOCK = registerBlock("maggots_block", 88,

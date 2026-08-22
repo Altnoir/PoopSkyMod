@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.client.inventory.PortableToiletMenu;
+import com.altnoir.poopsky.content.block.abs.AbsHorDirBlock;
 import com.altnoir.poopsky.impl.util.ToiletUtil;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -44,9 +45,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class PortableToiletBlock extends Block {
+public class PortableToiletBlock extends AbsHorDirBlock {
     public static final MapCodec<PortableToiletBlock> CODEC = simpleCodec(PortableToiletBlock::new);
-    public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
     private static final Component CONTAINER_TITLE = Component.translatable("container.poopsky.portable_toilet");
@@ -193,11 +193,13 @@ public class PortableToiletBlock extends Block {
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
+        BlockState state = super.getStateForPlacement(context);
+        if (state == null) return null;
+
         BlockPos pos = context.getClickedPos();
         Level level = context.getLevel();
         if (pos.getY() < level.getMaxY() && level.getBlockState(pos.above()).canBeReplaced(context)) {
-            return this.defaultBlockState()
-                    .setValue(FACING, context.getHorizontalDirection().getOpposite())
+            return state
                     .setValue(OPEN, false)
                     .setValue(HALF, DoubleBlockHalf.LOWER);
         }
@@ -350,16 +352,6 @@ public class PortableToiletBlock extends Block {
             return false;
         }
         return super.canStickTo(state, other);
-    }
-
-    @Override
-    protected BlockState rotate(BlockState state, Rotation rotation) {
-        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
-    }
-
-    @Override
-    protected BlockState mirror(BlockState state, Mirror mirror) {
-        return mirror == Mirror.NONE ? state : rotate(state, mirror.getRotation(state.getValue(FACING)));
     }
 
     @Override

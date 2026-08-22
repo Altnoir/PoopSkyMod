@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.content.block.p;
 
+import com.altnoir.poopsky.content.block.abs.AbsHorDirEntityBlock;
 import com.altnoir.poopsky.content.block.entity.FlushToiletBlockEntity;
 import com.altnoir.poopsky.content.entity.p.FlushToiletEntity;
 import com.altnoir.poopsky.impl.util.ToiletUtil;
@@ -20,13 +21,15 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.AABB;
@@ -39,9 +42,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class FlushToiletBlock extends BaseEntityBlock {
-    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
+public class FlushToiletBlock extends AbsHorDirEntityBlock {
     public static final BooleanProperty CLOSED = BooleanProperty.create("closed");
+    public static final BooleanProperty POWERED = BooleanProperty.create("powered");
     public static final MapCodec<FlushToiletBlock> CODEC = simpleCodec(FlushToiletBlock::new);
 
     private static final VoxelShape NORTH_BASE_SHAPE = Shapes.or(
@@ -71,7 +74,8 @@ public class FlushToiletBlock extends BaseEntityBlock {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(FACING, Direction.NORTH)
-                .setValue(CLOSED, false));
+                .setValue(CLOSED, false)
+                .setValue(POWERED, false));
     }
 
     @Override
@@ -89,11 +93,14 @@ public class FlushToiletBlock extends BaseEntityBlock {
         return new FlushToiletBlockEntity(blockPos, blockState);
     }
 
+    @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState()
-                .setValue(FACING, context.getHorizontalDirection().getOpposite())
-                .setValue(CLOSED, context.getLevel().hasNeighborSignal(context.getClickedPos()));
+        var state = super.getStateForPlacement(context);
+        if (state == null) return null;
+
+        boolean powered = context.getLevel().hasNeighborSignal(context.getClickedPos());
+        return state.setValue(POWERED, powered).setValue(CLOSED, powered);
     }
 
     @Override
@@ -205,16 +212,22 @@ public class FlushToiletBlock extends BaseEntityBlock {
     protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, Orientation orientation, boolean moved) {
         super.neighborChanged(state, level, pos, neighborBlock, orientation, moved);
         boolean powered = level.hasNeighborSignal(pos);
-        if (powered != state.getValue(CLOSED)) {
-            if (powered) {
-                if (level.getBlockEntity(pos) instanceof FlushToiletBlockEntity be) {
-                    be.clearContents();
-                }
-                level.playSound(null, pos, SoundEvents.PISTON_EXTEND, SoundSource.BLOCKS, 0.25F, 1.0F);
-            }
-            level.playSound(null, pos, powered ? PoSoundEvents.BLOCK_FLUSH_TOILET_CLOSE.get() : PoSoundEvents.BLOCK_FLUSH_TOILET_OPEN.get(), SoundSource.BLOCKS, 0.5F, level.getRandom().nextFloat() * 0.1F + 0.9F);
-            level.setBlock(pos, state.setValue(CLOSED, powered), Block.UPDATE_CLIENTS);
+        if (powered == state.getValue(POWERED)) {
+            return;
         }
+        BlockState newState = state.setValue(POWERED, powered).setValue(CLOSED, powered);
+        if (powered) {
+            if (level.getBlockEntity(pos) instanceof FlushToiletBlockEntity be) {
+                be.clearContents();
+            }
+            level.playSound(null, pos, SoundEvents.PISTON_EXTEND, SoundSource.BLOCKS, 0.25F, 1.0F);
+        }
+        if (newState.getValue(CLOSED) != state.getValue(CLOSED)) {
+            level.playSound(null, pos,
+                    powered ? PoSoundEvents.BLOCK_FLUSH_TOILET_CLOSE.get() : PoSoundEvents.BLOCK_FLUSH_TOILET_OPEN.get(),
+                    SoundSource.BLOCKS, 0.5F, level.getRandom().nextFloat() * 0.1F + 0.9F);
+        }
+        level.setBlock(pos, newState, Block.UPDATE_CLIENTS);
     }
 
     @Override
@@ -227,17 +240,7 @@ public class FlushToiletBlock extends BaseEntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, CLOSED);
-    }
-
-    @Override
-    protected BlockState rotate(BlockState state, Rotation rotation) {
-        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
-    }
-
-    @Override
-    protected BlockState mirror(BlockState state, Mirror mirror) {
-        return state.setValue(FACING, mirror.mirror(state.getValue(FACING)));
+        builder.add(FACING, CLOSED, POWERED);
     }
 
     @Override

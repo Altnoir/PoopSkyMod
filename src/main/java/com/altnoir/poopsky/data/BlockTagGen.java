@@ -36,6 +36,11 @@ public final class BlockTagGen {
                 .add(PoBlocks.STRIPPED_GINKGO_LOG.get())
                 .add(PoBlocks.GINKGO_WOOD.get())
                 .add(PoBlocks.STRIPPED_GINKGO_WOOD.get());
+    tag(PoTags.Blocks.PRIMO_STEMS)
+                .add(PoBlocks.PRIMO_STEM.get())
+                .add(PoBlocks.STRIPPED_PRIMO_STEM.get())
+                .add(PoBlocks.PRIMO_HYPHAE.get())
+                .add(PoBlocks.STRIPPED_PRIMO_HYPHAE.get());
 
         tag(PoTags.Blocks.RAW_SAPLING_POOP_BLOCK)
                 .add(PoBlocks.RAW_POOP_BLOCK.get())
@@ -240,6 +245,9 @@ public final class BlockTagGen {
                 .add(PoBlocks.MAGGOTS.get());
         tag(BlockTags.MAINTAINS_FARMLAND)
                 .add(PoBlocks.MAGGOTS.get());
+
+        tag(BlockTags.SWORD_EFFICIENT).add(PoBlocks.FOLIUM_SENNAE_PLANT.get());
+        tag(BlockTags.REPLACEABLE).add(PoBlocks.FOLIUM_SENNAE_PLANT.get());
 
         // 工具标签
         tag(BlockTags.MINEABLE_WITH_AXE)
