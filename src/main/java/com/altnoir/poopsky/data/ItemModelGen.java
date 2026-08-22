@@ -3,12 +3,13 @@ package com.altnoir.poopsky.data;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.PoopSkyClient;
 import com.altnoir.poopsky.client.model.FlyTypeItemModelProperty;
-import com.altnoir.poopsky.client.model.GashaponColorItemModelProperty;
+import com.altnoir.poopsky.client.model.GachaponColorItemModelProperty;
 import com.altnoir.poopsky.client.model.ToiletTypeItemModelProperty;
+import com.altnoir.poopsky.client.renderer.GachaponItemRenderer;
 import com.altnoir.poopsky.client.renderer.ToiletPlugItemRenderer;
 import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.ToiletType;
-import com.altnoir.poopsky.content.item.p.GashaponItem;
+import com.altnoir.poopsky.content.item.p.GachaponItem;
 import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
@@ -60,7 +61,7 @@ public final class ItemModelGen {
 
     private static void generate(RegistrateItemModelGenerator prov) {
         flyItem(prov);
-        gashaponItem(prov);
+        gachaponItem(prov);
         toiletPlugItem(prov);
         parentedItem(prov, PoItems.MILOS_SWORD.get(), PoopSky.loc("item/big_sword"));
         parentedItem(prov, PoItems.FLY_CATCHER.get(), prov.mcLoc("item/handheld_rod"));
@@ -139,20 +140,27 @@ public final class ItemModelGen {
                 cases));
     }
 
-    private static void gashaponItem(RegistrateItemModelGenerator prov) {
-        Identifier pinkModel = flatModel(prov, "gashapon", PoopSky.loc("item/gashapon"));
+    private static void gachaponItem(RegistrateItemModelGenerator prov) {
+        Identifier pinkModel = flatModel(prov, "gachapon", PoopSky.loc("item/gachapon"));
         List<net.minecraft.client.renderer.item.SelectItemModel.SwitchCase<String>> cases = List.of(
-                ItemModelUtils.when(GashaponItem.YELLOW,
-                        ItemModelUtils.plainModel(flatModel(prov, "gashapon_yellow", PoopSky.loc("item/gashapon_yellow")))),
-                ItemModelUtils.when(GashaponItem.RED,
-                        ItemModelUtils.plainModel(flatModel(prov, "gashapon_red", PoopSky.loc("item/gashapon_red")))),
-                ItemModelUtils.when(GashaponItem.BLUE,
-                        ItemModelUtils.plainModel(flatModel(prov, "gashapon_blue", PoopSky.loc("item/gashapon_blue"))))
+                ItemModelUtils.when(GachaponItem.YELLOW,
+                        ItemModelUtils.plainModel(flatModel(prov, "gachapon_yellow", PoopSky.loc("item/gachapon_yellow")))),
+                ItemModelUtils.when(GachaponItem.RED,
+                        ItemModelUtils.plainModel(flatModel(prov, "gachapon_red", PoopSky.loc("item/gachapon_red")))),
+                ItemModelUtils.when(GachaponItem.BLUE,
+                        ItemModelUtils.plainModel(flatModel(prov, "gachapon_blue", PoopSky.loc("item/gachapon_blue"))))
         );
-        prov.itemModelOutput.accept(PoItems.GASHAPON.get(), ItemModelUtils.select(
-                GashaponColorItemModelProperty.INSTANCE,
+        ItemModel.Unbaked coloredModel = ItemModelUtils.select(
+                GachaponColorItemModelProperty.INSTANCE,
                 ItemModelUtils.plainModel(pinkModel),
-                cases));
+                cases);
+        Identifier specialBase = prov.modLoc("item/gachapon_special");
+        emit(prov, specialBase, () -> parentModel(prov.mcLoc("builtin/entity")));
+        ItemModel.Unbaked groundModel = ItemModelUtils.specialModel(specialBase, new GachaponItemRenderer.Unbaked());
+        prov.itemModelOutput.accept(PoItems.GACHAPON.get(), ItemModelUtils.select(
+                new DisplayContext(),
+                coloredModel,
+                ItemModelUtils.when(List.of(ItemDisplayContext.GROUND), groundModel)));
     }
 
     public static void toiletItem(RegistrateItemModelGenerator prov, Item item, String blockPath, ToiletType.Category category) {

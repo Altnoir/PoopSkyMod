@@ -141,14 +141,14 @@ public class PoEntityType {
             .lang("Primo Boat with Chest")
             .register();
 
-    public static final EntityEntry<GashaponEntity> GASHAPON = REGISTRATE
-            .entity("gashapon", GashaponEntity::create, MobCategory.MISC)
+    public static final EntityEntry<GachaponEntity> GACHAPON = REGISTRATE
+            .entity("gachapon", GachaponEntity::create, MobCategory.MISC)
             .properties(properties -> properties
                     .sized(0.5F, 0.75F)
                     .eyeHeight(0.375F)
                     .clientTrackingRange(10))
-            .renderer(() -> GashaponRenderer::new)
-            .lang("Gashapon")
+            .renderer(() -> GachaponRenderer::new)
+            .lang("Gachapon")
             .register();
 
     public static void register() {

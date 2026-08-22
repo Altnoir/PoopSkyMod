@@ -25,6 +25,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
+import net.minecraft.core.dispenser.EquipmentDispenseItemBehavior;
 import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
@@ -119,7 +120,10 @@ public class PoopSky {
             DispenserBlock.registerProjectileBehavior(PoItems.POOP_BALL);
             DispenserBlock.registerProjectileBehavior(PoItems.SEA_POOP_BALL);
             DispenserBlock.registerProjectileBehavior(PoItems.WITHER_POOP_BALL);
-            DispenserBlock.registerProjectileBehavior(PoItems.GASHAPON);
+            DispenserBlock.registerProjectileBehavior(PoItems.GACHAPON);
+            DispenserBlock.registerBehavior(PoBlocks.SHIT.asItem(), EquipmentDispenseItemBehavior.INSTANCE);
+            DispenserBlock.registerBehavior(PoBlocks.CHILI_SHIT.asItem(), EquipmentDispenseItemBehavior.INSTANCE);
+            DispenserBlock.registerBehavior(PoBlocks.GOLDEN_SHIT.asItem(), EquipmentDispenseItemBehavior.INSTANCE);
             DispenserBlock.registerBehavior(PoItems.POOP.get(), new OptionalDispenseItemBehavior() {
                 @Override
                 protected ItemStack execute(BlockSource blockSource, ItemStack item) {

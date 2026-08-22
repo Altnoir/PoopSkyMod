@@ -20,6 +20,39 @@ public final class EntityTypeTagsGen {
     }
 
     private static void generate(RegistrateTagsProvider.IntrinsicImpl<EntityType<?>> provider) {
+        provider.tag(PoTags.EntityTypes.GACHAPON_MOB)
+                .add(
+                        EntityType.COW,
+                        EntityType.MOOSHROOM,
+                        EntityType.SHEEP,
+                        EntityType.PIG,
+                        EntityType.CHICKEN,
+                        EntityType.PANDA,
+                        EntityType.POLAR_BEAR,
+                        EntityType.CAMEL,
+                        EntityType.LLAMA,
+                        EntityType.DONKEY,
+                        EntityType.MULE,
+                        EntityType.GOAT,
+                        EntityType.HORSE,
+                        EntityType.RABBIT,
+                        EntityType.COD,
+                        EntityType.SALMON,
+                        EntityType.TROPICAL_FISH,
+                        EntityType.PUFFERFISH,
+                        EntityType.TURTLE,
+                        EntityType.DOLPHIN,
+                        EntityType.BEE,
+                        EntityType.OCELOT,
+                        EntityType.CAT,
+                        EntityType.WOLF,
+                        EntityType.FOX,
+                        EntityType.FROG,
+                        EntityType.ALLAY,
+                        EntityType.PARROT,
+                        EntityType.ARMADILLO,
+                        EntityType.AXOLOTL
+                );
         provider.tag(PoTags.EntityTypes.IGNORES_BLEEDING)
                 .add(EntityType.IRON_GOLEM, EntityType.SNOW_GOLEM);
 

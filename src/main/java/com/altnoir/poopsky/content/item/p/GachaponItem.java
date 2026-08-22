@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.content.item.p;
 
-import com.altnoir.poopsky.content.entity.p.GashaponEntity;
+import com.altnoir.poopsky.content.entity.p.GachaponEntity;
 import com.altnoir.poopsky.init.PoComponents;
 import com.altnoir.poopsky.init.PoItems;
 import net.minecraft.ChatFormatting;
@@ -28,20 +28,20 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
 
-public class GashaponItem extends Item implements ProjectileItem {
+public class GachaponItem extends Item implements ProjectileItem {
     public static final String PINK = "pink";
     public static final String RED = "red";
     public static final String YELLOW = "yellow";
     public static final String BLUE = "blue";
     public static final String[] COLORS = {PINK, RED, YELLOW, BLUE};
 
-    public GashaponItem(Properties properties) {
+    public GachaponItem(Properties properties) {
         super(properties);
     }
 
     public static ItemStack withColor(String color) {
-        ItemStack stack = new ItemStack(PoItems.GASHAPON.get());
-        stack.set(PoComponents.GASHAPON_COLOR.get(), color);
+        ItemStack stack = new ItemStack(PoItems.GACHAPON.get());
+        stack.set(PoComponents.GACHAPON_COLOR.get(), color);
         stack.set(DataComponents.CUSTOM_MODEL_DATA,
                 new CustomModelData(java.util.List.of(), java.util.List.of(), java.util.List.of(),
                         java.util.List.of(getColorModelData(color))));
@@ -50,17 +50,17 @@ public class GashaponItem extends Item implements ProjectileItem {
 
     public static ItemStack withColorAndMob(String color, String mobId) {
         ItemStack stack = withColor(color);
-        stack.set(PoComponents.GASHAPON_MOB.get(), mobId);
+        stack.set(PoComponents.GACHAPON_MOB.get(), mobId);
         return stack;
     }
 
     public static String getColor(ItemStack stack) {
-        String color = stack.get(PoComponents.GASHAPON_COLOR.get());
+        String color = stack.get(PoComponents.GACHAPON_COLOR.get());
         return color != null ? color : PINK;
     }
 
     public static @Nullable String getMobId(ItemStack stack) {
-        return stack.get(PoComponents.GASHAPON_MOB.get());
+        return stack.get(PoComponents.GACHAPON_MOB.get());
     }
 
     private static String getMobIdOrDefault(ItemStack stack) {
@@ -81,8 +81,8 @@ public class GashaponItem extends Item implements ProjectileItem {
     public InteractionResult use(Level level, Player player, InteractionHand usedHand) {
         ItemStack itemstack = player.getItemInHand(usedHand);
         if (!level.isClientSide()) {
-            GashaponEntity projectile = new GashaponEntity(level, player);
-            projectile.setVariant(GashaponEntity.variantFromColor(getColor(itemstack)));
+            GachaponEntity projectile = new GachaponEntity(level, player);
+            projectile.setVariant(GachaponEntity.variantFromColor(getColor(itemstack)));
             projectile.setMobId(getMobIdOrDefault(itemstack));
             projectile.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 1.5F, 1.0F);
             level.addFreshEntity(projectile);
@@ -96,8 +96,8 @@ public class GashaponItem extends Item implements ProjectileItem {
 
     @Override
     public Projectile asProjectile(Level level, Position position, ItemStack itemStack, Direction direction) {
-        GashaponEntity projectile = new GashaponEntity(level, position.x(), position.y(), position.z());
-        projectile.setVariant(GashaponEntity.variantFromColor(getColor(itemStack)));
+        GachaponEntity projectile = new GachaponEntity(level, position.x(), position.y(), position.z());
+        projectile.setVariant(GachaponEntity.variantFromColor(getColor(itemStack)));
         projectile.setMobId(getMobIdOrDefault(itemStack));
         return projectile;
     }

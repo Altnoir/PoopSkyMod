@@ -16,6 +16,8 @@
   "item.poopsky.urine_bucket": "巧克力液桶",
   "block.poopsky.urine_liquid": "巧克力液",
   "item.poopsky.urea": "茶水素",
+  "item.poopsky.gachapon": "扭蛋",
+  "item.poopsky.token": "代币",
 
   "item.poopsky.omen_helmet": "甜蜜头盔",
   "item.poopsky.omen_chestplate": "甜蜜胸甲",
@@ -486,7 +488,7 @@
   "entity.poopsky.ginkgo_chest_boat": "银杏木运输船",
   "entity.poopsky.primo_boat": "太初木船",
   "entity.poopsky.primo_chest_boat": "太初木运输船",
-  "entity.poopsky.gashapon": "扭蛋",
+  "entity.poopsky.gachapon": "扭蛋",
 
   "key.category.poopsky": "空中卫生间",
   "key.poopsky.use_plug": "召唤魔女扫帚",

@@ -5,29 +5,29 @@
       {
         "model": {
           "type": "minecraft:model",
-          "model": "poopsky:item/gashapon_yellow"
+          "model": "poopsky:item/gachapon_yellow"
         },
         "when": "yellow"
       },
       {
         "model": {
           "type": "minecraft:model",
-          "model": "poopsky:item/gashapon_red"
+          "model": "poopsky:item/gachapon_red"
         },
         "when": "red"
       },
       {
         "model": {
           "type": "minecraft:model",
-          "model": "poopsky:item/gashapon_blue"
+          "model": "poopsky:item/gachapon_blue"
         },
         "when": "blue"
       }
     ],
     "fallback": {
       "type": "minecraft:model",
-      "model": "poopsky:item/gashapon"
+      "model": "poopsky:item/gachapon"
     },
-    "property": "poopsky:gashapon_color"
+    "property": "poopsky:gachapon_color"
   }
 }

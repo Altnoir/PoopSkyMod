@@ -105,7 +105,7 @@ public final class EntityLootTableGen {
         loot.add(PoEntityType.POOP_TNT.get(), LootTable.lootTable());
         loot.add(PoEntityType.GINKGO_BOAT.get(), LootTable.lootTable());
         loot.add(PoEntityType.GINKGO_CHEST_BOAT.get(), LootTable.lootTable());
-        loot.add(PoEntityType.GASHAPON.get(), LootTable.lootTable());
+        loot.add(PoEntityType.GACHAPON.get(), LootTable.lootTable());
     }
 
     private static AnyOfCondition.Builder shouldSmeltLoot(HolderLookup.Provider registries) {

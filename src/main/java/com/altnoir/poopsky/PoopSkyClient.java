@@ -127,6 +127,7 @@ public class PoopSkyClient {
 
         public static void registerSpecialModelRenderers(RegisterSpecialModelRendererEvent event) {
             event.register(PoopSky.loc("toilet_plug"), ToiletPlugItemRenderer.Unbaked.MAP_CODEC);
+            event.register(PoopSky.loc("gachapon"), GachaponItemRenderer.Unbaked.MAP_CODEC);
         }
 
         public static void registerGuiOverlays(RegisterGuiLayersEvent event) {

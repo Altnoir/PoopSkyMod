@@ -108,8 +108,8 @@ public class PoItems {
             props -> new Item(props.stacksTo(8)));
     public static final ItemEntry<TokenItem> TOKEN = registerItem("token",
             props -> new TokenItem(props.stacksTo(88)));
-    public static final ItemEntry<GashaponItem> GASHAPON = registerItemNoModel("gashapon",
-            props -> new GashaponItem(props.stacksTo(16)));
+    public static final ItemEntry<GachaponItem> GACHAPON = registerItemNoModel("gachapon",
+            props -> new GachaponItem(props.stacksTo(16)));
     public static final ItemEntry<TimeBellItem> TIME_BELL = registerItem("time_bell",
             props -> new TimeBellItem(props.stacksTo(1)));
     public static final ItemEntry<Item> SPALL = registerItem("spall", Item::new);

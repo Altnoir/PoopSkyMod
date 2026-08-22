@@ -110,7 +110,7 @@ public class BakedModelEventHandler {
     public static void onRegisterItemModelProperties(RegisterSelectItemModelPropertyEvent event) {
         event.register(PoopSky.loc("fly_type"), FlyTypeItemModelProperty.TYPE);
         event.register(PoopSky.loc("toilet_type"), ToiletTypeItemModelProperty.TYPE);
-        event.register(PoopSky.loc("gashapon_color"), GashaponColorItemModelProperty.TYPE);
+        event.register(PoopSky.loc("gachapon_color"), GachaponColorItemModelProperty.TYPE);
     }
 
     public static void register(IEventBus modEventBus) {

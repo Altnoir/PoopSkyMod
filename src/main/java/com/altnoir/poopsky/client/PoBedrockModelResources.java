@@ -7,13 +7,13 @@ import net.minecraft.resources.Identifier;
 
 public final class PoBedrockModelResources {
     public static final Identifier FLUSH_TOILET_CART = PoopSky.loc("flush_toilet_cart.geo");
-    public static final Identifier GASHAPON = PoopSky.loc("gashapon.geo");
+    public static final Identifier GACHAPON = PoopSky.loc("gachapon.geo");
 
     private PoBedrockModelResources() {
     }
 
     public static void onRegisterBedrockModels(RegisterBedrockModelEvent event) {
         event.register(FLUSH_TOILET_CART, RawResourceLoaders.COMMON_LOADER);
-        event.register(GASHAPON, RawResourceLoaders.COMMON_LOADER);
+        event.register(GACHAPON, RawResourceLoaders.COMMON_LOADER);
     }
 }

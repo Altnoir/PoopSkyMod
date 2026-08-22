@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.content.block.abs.AbsHorDirBlock;
-import com.altnoir.poopsky.content.item.p.GashaponItem;
+import com.altnoir.poopsky.content.item.p.GachaponItem;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.impl.util.DispenseUtil;
 import com.mojang.serialization.MapCodec;
@@ -76,7 +76,7 @@ public class GachaBlock extends AbsHorDirBlock {
     private void dispense(ServerLevel level, BlockState state, BlockPos pos, RandomSource random) {
         Direction facing = state.getValue(FACING);
         var registry = level.registryAccess().lookupOrThrow(Registries.ENTITY_TYPE);
-        var mobs = registry.get(PoTags.EntityTypes.GASHAPON_MOB).orElse(null);
+        var mobs = registry.get(PoTags.EntityTypes.GACHAPON_MOB).orElse(null);
         if (mobs == null) {
             return;
         }
@@ -87,8 +87,8 @@ public class GachaBlock extends AbsHorDirBlock {
         }
 
         EntityType<?> entityType = holder.value();
-        String color = GashaponItem.COLORS[random.nextInt(GashaponItem.COLORS.length)];
-        ItemStack stack = GashaponItem.withColorAndMob(color, registry.getKey(entityType).toString());
+        String color = GachaponItem.COLORS[random.nextInt(GachaponItem.COLORS.length)];
+        ItemStack stack = GachaponItem.withColorAndMob(color, registry.getKey(entityType).toString());
 
         DispenseUtil.spawnItem(level, stack, 0.1, facing, pos);
     }

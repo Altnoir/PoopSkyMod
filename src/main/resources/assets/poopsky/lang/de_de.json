@@ -16,7 +16,7 @@
   "item.poopsky.urine_bucket": "Jaucheeimer",
   "block.poopsky.urine_liquid": "Jauche",
   "item.poopsky.urea": "Harnstoff",
-  "item.poopsky.gashapon": "Gashapon",
+  "item.poopsky.gachapon": "Gachapon",
   "item.poopsky.token": "Münze",
 
   "item.poopsky.omen_helmet": "Omen-Helm",
@@ -526,7 +526,7 @@
   "entity.poopsky.fly": "Fliege",
   "entity.poopsky.poop_tnt": "POP",
   "entity.poopsky.pop_tnt_minecart": "Lore mit POP",
-  "entity.poopsky.gashapon": "Gashapon",
+  "entity.poopsky.gachapon": "Gachapon",
 
   "key.category.poopsky": "POOPSKY",
   "key.poopsky.use_plug": "Pümpel beschwören",

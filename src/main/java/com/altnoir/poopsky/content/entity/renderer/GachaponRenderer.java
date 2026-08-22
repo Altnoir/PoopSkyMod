@@ -2,8 +2,8 @@ package com.altnoir.poopsky.content.entity.renderer;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.client.PoBedrockModelResources;
-import com.altnoir.poopsky.content.entity.p.GashaponEntity;
-import com.altnoir.poopsky.content.item.p.GashaponItem;
+import com.altnoir.poopsky.content.entity.p.GachaponEntity;
+import com.altnoir.poopsky.content.item.p.GachaponItem;
 import com.github.mcmodderanchor.simplebedrockmodel.v2.resource.BedrockModelResourceSet;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -17,18 +17,26 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
-public class GashaponRenderer extends EntityRenderer<GashaponEntity, GashaponRenderer.RenderState> {
-    private static final String[] COLORS = {GashaponItem.PINK, GashaponItem.RED, GashaponItem.YELLOW, GashaponItem.BLUE};
+public class GachaponRenderer extends EntityRenderer<GachaponEntity, GachaponRenderer.RenderState> {
+    private static final String[] COLORS = {
+            GachaponItem.PINK,
+            GachaponItem.RED,
+            GachaponItem.YELLOW,
+            GachaponItem.BLUE
+    };
 
-    public GashaponRenderer(EntityRendererProvider.Context context) {
+    public GachaponRenderer(EntityRendererProvider.Context context) {
         super(context);
         this.shadowRadius = 0.35F;
     }
 
-    @Override public RenderState createRenderState() { return new RenderState(); }
+    @Override
+    public RenderState createRenderState() {
+        return new RenderState();
+    }
 
     @Override
-    public void extractRenderState(GashaponEntity entity, RenderState state, float partialTick) {
+    public void extractRenderState(GachaponEntity entity, RenderState state, float partialTick) {
         super.extractRenderState(entity, state, partialTick);
         state.texture = getTexture(COLORS[Math.floorMod(entity.getVariant(), COLORS.length)]);
         state.yRot = Mth.rotLerp(partialTick, entity.yRotO, entity.getYRot());
@@ -37,7 +45,7 @@ public class GashaponRenderer extends EntityRenderer<GashaponEntity, GashaponRen
     @Override
     public void submit(RenderState state, PoseStack poseStack, SubmitNodeCollector collector, CameraRenderState camera) {
         var resources = BedrockModelResourceSet.getInstance();
-        var model = resources == null ? null : resources.getModel(PoBedrockModelResources.GASHAPON);
+        var model = resources == null ? null : resources.getModel(PoBedrockModelResources.GACHAPON);
         if (model != null) {
             poseStack.pushPose();
             poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - state.yRot));
@@ -53,12 +61,12 @@ public class GashaponRenderer extends EntityRenderer<GashaponEntity, GashaponRen
 
     public static Identifier getTexture(String color) {
         String suffix = switch (color) {
-            case GashaponItem.BLUE -> "blue";
-            case GashaponItem.YELLOW -> "yellow";
-            case GashaponItem.RED -> "red";
+            case GachaponItem.BLUE -> "blue";
+            case GachaponItem.YELLOW -> "yellow";
+            case GachaponItem.RED -> "red";
             default -> "pink";
         };
-        return PoopSky.loc("textures/entity/gashapon/gashapon_" + suffix + ".png");
+        return PoopSky.loc("textures/entity/gachapon/gachapon_" + suffix + ".png");
     }
 
     public static class RenderState extends EntityRenderState {

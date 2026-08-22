@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "poopsky:item/gashapon_red"
+    "layer0": "poopsky:item/gachapon_red"
   }
 }

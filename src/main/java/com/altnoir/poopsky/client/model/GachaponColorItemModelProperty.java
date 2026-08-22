@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.client.model;
 
-import com.altnoir.poopsky.content.item.p.GashaponItem;
+import com.altnoir.poopsky.content.item.p.GachaponItem;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -9,18 +9,18 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
-public final class GashaponColorItemModelProperty implements SelectItemModelProperty<String> {
-    public static final GashaponColorItemModelProperty INSTANCE = new GashaponColorItemModelProperty();
-    public static final MapCodec<GashaponColorItemModelProperty> MAP_CODEC = MapCodec.unit(INSTANCE);
-    public static final Type<GashaponColorItemModelProperty, String> TYPE = Type.create(MAP_CODEC, Codec.STRING);
+public final class GachaponColorItemModelProperty implements SelectItemModelProperty<String> {
+    public static final GachaponColorItemModelProperty INSTANCE = new GachaponColorItemModelProperty();
+    public static final MapCodec<GachaponColorItemModelProperty> MAP_CODEC = MapCodec.unit(INSTANCE);
+    public static final Type<GachaponColorItemModelProperty, String> TYPE = Type.create(MAP_CODEC, Codec.STRING);
 
-    private GashaponColorItemModelProperty() {
+    private GachaponColorItemModelProperty() {
     }
 
     @Override
     public String get(ItemStack stack, ClientLevel level, LivingEntity entity, int seed,
                       ItemDisplayContext displayContext) {
-        return GashaponItem.getColor(stack);
+        return GachaponItem.getColor(stack);
     }
 
     @Override
@@ -29,7 +29,7 @@ public final class GashaponColorItemModelProperty implements SelectItemModelProp
     }
 
     @Override
-    public Type<GashaponColorItemModelProperty, String> type() {
+    public Type<GachaponColorItemModelProperty, String> type() {
         return TYPE;
     }
 }
