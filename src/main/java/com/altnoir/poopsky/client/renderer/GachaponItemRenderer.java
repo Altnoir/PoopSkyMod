@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.client.renderer;
 
 import com.altnoir.poopsky.client.PoBedrockModelResources;
-import com.altnoir.poopsky.content.entity.renderer.GashaponRenderer;
-import com.altnoir.poopsky.content.item.p.GashaponItem;
+import com.altnoir.poopsky.content.entity.renderer.GachaponRenderer;
+import com.altnoir.poopsky.content.item.p.GachaponItem;
 import com.altnoir.poopsky.init.PoComponents;
 import com.github.mcmodderanchor.simplebedrockmodel.v1.common.model.BedrockModel;
 import com.github.mcmodderanchor.simplebedrockmodel.v1.resource.BedrockModelResourceSet;
@@ -17,8 +17,8 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-public class GashaponItemRenderer extends BlockEntityWithoutLevelRenderer {
-    public GashaponItemRenderer() {
+public class GachaponItemRenderer extends BlockEntityWithoutLevelRenderer {
+    public GachaponItemRenderer() {
         super(null, null);
     }
 
@@ -33,7 +33,7 @@ public class GashaponItemRenderer extends BlockEntityWithoutLevelRenderer {
             return;
         }
 
-        BedrockModel model = resourceSet.getModel(PoBedrockModelResources.GASHAPON);
+        BedrockModel model = resourceSet.getModel(PoBedrockModelResources.GACHAPON);
         if (model == null) {
             return;
         }
@@ -46,7 +46,7 @@ public class GashaponItemRenderer extends BlockEntityWithoutLevelRenderer {
     }
 
     private static ResourceLocation getTexture(ItemStack stack) {
-        String color = stack.get(PoComponents.GASHAPON_COLOR.get());
-        return color != null ? GashaponRenderer.getTexture(color) : GashaponRenderer.getTexture(GashaponItem.PINK);
+        String color = stack.get(PoComponents.GACHAPON_COLOR.get());
+        return color != null ? GachaponRenderer.getTexture(color) : GachaponRenderer.getTexture(GachaponItem.PINK);
     }
 }

@@ -4,7 +4,7 @@ import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.content.FlyTypeManager;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.item.p.FlyItem;
-import com.altnoir.poopsky.content.item.p.GashaponItem;
+import com.altnoir.poopsky.content.item.p.GachaponItem;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.impl.creative.PoCreativeTabSection;
@@ -79,9 +79,9 @@ public class PoItemGroups {
 
         parameters.holders()
                 .lookup(Registries.ENTITY_TYPE)
-                .flatMap(registry -> registry.get(PoTags.EntityTypes.GASHAPON_MOB))
+                .flatMap(registry -> registry.get(PoTags.EntityTypes.GACHAPON_MOB))
                 .ifPresent(holders -> holders.forEach(holder -> TS_MOBS.add(() ->
-                        GashaponItem.withColorAndMob(GashaponItem.PINK, Objects.requireNonNull(holder.getKey()).location().toString())
+                        GachaponItem.withColorAndMob(GachaponItem.PINK, Objects.requireNonNull(holder.getKey()).location().toString())
                 )));
         for (String id : FlyTypeManager.INSTANCE.getFlyTypes()) {
             if (isFlyVisible(id)) {
@@ -105,7 +105,7 @@ public class PoItemGroups {
                 TS_MOBS.add(item);
                 return;
             }
-            case GashaponItem ignored -> {
+            case GachaponItem ignored -> {
                 TS_ITEMS.add(item);
                 return;
             }

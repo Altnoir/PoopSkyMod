@@ -2,7 +2,7 @@
   "base": {
     "parent": "minecraft:item/generated",
     "textures": {
-      "layer0": "poopsky:item/gashapon_yellow"
+      "layer0": "poopsky:item/gachapon_yellow"
     }
   },
   "gui_light": "front",

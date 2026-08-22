@@ -16,7 +16,7 @@
   "item.poopsky.urine_bucket": "Seau d’urine",
   "block.poopsky.urine_liquid": "Liquide d’urine",
   "item.poopsky.urea": "Urée",
-  "item.poopsky.gashapon": "Gashapon",
+  "item.poopsky.gachapon": "Gachapon",
   "item.poopsky.token": "Jeton",
 
   "item.poopsky.omen_helmet": "Casque de mangeur de fumier",
@@ -518,7 +518,7 @@
   "entity.poopsky.fly": "Mouche",
   "entity.poopsky.poop_tnt": "POP",
   "entity.poopsky.pop_tnt_minecart": "Wagonnet à POP",
-  "entity.poopsky.gashapon": "Gashapon",
+  "entity.poopsky.gachapon": "Gachapon",
 
   "key.category.poopsky": "POOPSKY",
   "key.poopsky.use_plug": "Invoquer la ventouse",

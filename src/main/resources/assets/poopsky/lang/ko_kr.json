@@ -16,7 +16,7 @@
   "item.poopsky.urine_bucket": "똥물 양동이",
   "block.poopsky.urine_liquid": "똥물",
   "item.poopsky.urea": "요소",
-  "item.poopsky.gashapon": "캡슐 뽑기",
+  "item.poopsky.gachapon": "캡슐 뽑기",
   "item.poopsky.token": "토큰",
 
   "item.poopsky.omen_helmet": "기피의 투구",
@@ -518,7 +518,7 @@
   "entity.poopsky.fly": "파리",
   "entity.poopsky.poop_tnt": "POP",
   "entity.poopsky.pop_tnt_minecart": "POP 광산 수레",
-  "entity.poopsky.gashapon": "캡슐 뽑기",
+  "entity.poopsky.gachapon": "캡슐 뽑기",
 
   "key.category.poopsky": "POOPSKY",
   "key.poopsky.use_plug": "변기 뚫어뻥 소환",

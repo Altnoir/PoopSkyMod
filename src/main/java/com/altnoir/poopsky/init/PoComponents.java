@@ -32,14 +32,14 @@ public final class PoComponents {
                     .networkSynchronized(ToiletType.STREAM_CODEC)
             );
 
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> GASHAPON_COLOR =
-            COMPONENTS.registerComponentType("gashapon_color", builder -> builder
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> GACHAPON_COLOR =
+            COMPONENTS.registerComponentType("gachapon_color", builder -> builder
                     .persistent(ExtraCodecs.NON_EMPTY_STRING)
                     .networkSynchronized(ByteBufCodecs.STRING_UTF8)
             );
 
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> GASHAPON_MOB =
-            COMPONENTS.registerComponentType("gashapon_mob", builder -> builder
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> GACHAPON_MOB =
+            COMPONENTS.registerComponentType("gachapon_mob", builder -> builder
                     .persistent(ExtraCodecs.NON_EMPTY_STRING)
                     .networkSynchronized(ByteBufCodecs.STRING_UTF8)
             );

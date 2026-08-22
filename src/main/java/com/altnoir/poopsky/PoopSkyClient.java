@@ -12,7 +12,7 @@ import com.altnoir.poopsky.client.particle.ToiletParticle;
 import com.altnoir.poopsky.client.renderer.TimeBellOverlay;
 import com.altnoir.poopsky.client.renderer.ToiletHighlightRenderer;
 import com.altnoir.poopsky.client.renderer.ToiletPlugItemRenderer;
-import com.altnoir.poopsky.client.renderer.GashaponItemRenderer;
+import com.altnoir.poopsky.client.renderer.GachaponItemRenderer;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.content.block.renderer.MaggotsChunkLoaderBlockEntityRenderer;
@@ -206,13 +206,13 @@ public class PoopSkyClient {
                 }
             }, PoItems.TOILET_PLUG.get());
 
-            var gashaponItemRenderer = new GashaponItemRenderer();
+            var gachaponItemRenderer = new GachaponItemRenderer();
             event.registerItem(new IClientItemExtensions() {
                 @Override
                 public BlockEntityWithoutLevelRenderer getCustomRenderer() {
-                    return gashaponItemRenderer;
+                    return gachaponItemRenderer;
                 }
-            }, PoItems.GASHAPON.get());
+            }, PoItems.GACHAPON.get());
 
             event.registerFluidType(new IClientFluidTypeExtensions() {
                 @Override

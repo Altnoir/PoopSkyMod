@@ -96,7 +96,7 @@ public class PoTags {
 
     public interface EntityTypes {
         TagKey<EntityType<?>> IGNORES_BLEEDING = create("ignore_bleeding");
-        TagKey<EntityType<?>> GASHAPON_MOB = create("gashapon_mob");
+        TagKey<EntityType<?>> GACHAPON_MOB = create("gachapon_mob");
 
         TagKey<EntityType<?>> RETAIN_IN_SUB_LEVEL = createSable("retain_in_sub_level");
         TagKey<EntityType<?>> DESTROY_WITH_SUB_LEVEL = createSable("destroy_with_sub_level");

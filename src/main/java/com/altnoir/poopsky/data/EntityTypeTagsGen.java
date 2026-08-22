@@ -20,7 +20,7 @@ public final class EntityTypeTagsGen {
     }
 
     private static void generate(RegistrateTagsProvider.IntrinsicImpl<EntityType<?>> provider) {
-        provider.addTag(PoTags.EntityTypes.GASHAPON_MOB)
+        provider.addTag(PoTags.EntityTypes.GACHAPON_MOB)
                 .add(
                         EntityType.COW,
                         EntityType.MOOSHROOM,

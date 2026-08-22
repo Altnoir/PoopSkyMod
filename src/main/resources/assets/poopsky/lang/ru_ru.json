@@ -16,7 +16,7 @@
   "item.poopsky.urine_bucket": "Ведро с навозной жижей",
   "block.poopsky.urine_liquid": "Навозная жижа",
   "item.poopsky.urea": "Мочевина",
-  "item.poopsky.gashapon": "Гашапон",
+  "item.poopsky.gachapon": "Гачапон",
   "item.poopsky.token": "Жетон",
 
   "item.poopsky.omen_helmet": "Шлем Зловещего",
@@ -518,7 +518,7 @@
   "entity.poopsky.fly": "Муха",
   "entity.poopsky.poop_tnt": "POP",
   "entity.poopsky.pop_tnt_minecart": "Вагонетка с POP",
-  "entity.poopsky.gashapon": "Гашапон",
+  "entity.poopsky.gachapon": "Гачапон",
 
   "key.category.poopsky": "POOPSKY",
   "key.poopsky.use_plug": "Призвать вантуз",

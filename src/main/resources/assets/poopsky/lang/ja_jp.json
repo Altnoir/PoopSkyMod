@@ -16,7 +16,7 @@
   "item.poopsky.urine_bucket": "糞バケツ",
   "block.poopsky.urine_liquid": "糞液",
   "item.poopsky.urea": "尿素",
-  "item.poopsky.gashapon": "カプセルトイ",
+  "item.poopsky.gachapon": "カプセルトイ",
   "item.poopsky.token": "トークン",
 
   "item.poopsky.omen_helmet": "忌避の兜",
@@ -518,7 +518,7 @@
   "entity.poopsky.fly": "ハエ",
   "entity.poopsky.poop_tnt": "ポップ",
   "entity.poopsky.pop_tnt_minecart": "POP付きトロッコ",
-  "entity.poopsky.gashapon": "カプセルトイ",
+  "entity.poopsky.gachapon": "カプセルトイ",
 
   "key.category.poopsky": "プープスカイ",
   "key.poopsky.use_plug": "ラバーカップを召喚",

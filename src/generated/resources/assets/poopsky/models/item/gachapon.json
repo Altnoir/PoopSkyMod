@@ -2,26 +2,26 @@
   "base": {
     "parent": "minecraft:item/generated",
     "textures": {
-      "layer0": "poopsky:item/gashapon"
+      "layer0": "poopsky:item/gachapon"
     }
   },
   "gui_light": "front",
   "loader": "neoforge:separate_transforms",
   "overrides": [
     {
-      "model": "poopsky:item/gashapon_yellow",
+      "model": "poopsky:item/gachapon_yellow",
       "predicate": {
         "minecraft:custom_model_data": 1.0
       }
     },
     {
-      "model": "poopsky:item/gashapon_red",
+      "model": "poopsky:item/gachapon_red",
       "predicate": {
         "minecraft:custom_model_data": 2.0
       }
     },
     {
-      "model": "poopsky:item/gashapon_blue",
+      "model": "poopsky:item/gachapon_blue",
       "predicate": {
         "minecraft:custom_model_data": 3.0
       }

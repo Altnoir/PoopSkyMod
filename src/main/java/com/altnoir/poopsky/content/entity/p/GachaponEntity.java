@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.entity.p;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.content.item.p.GashaponItem;
+import com.altnoir.poopsky.content.item.p.GachaponItem;
 import com.altnoir.poopsky.init.PoEntityType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
@@ -21,27 +21,27 @@ import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 
-public class GashaponEntity extends ThrowableProjectile {
-    private static final EntityDataAccessor<Byte> DATA_VARIANT = SynchedEntityData.defineId(GashaponEntity.class, EntityDataSerializers.BYTE);
-    private static final EntityDataAccessor<String> DATA_MOB_ID = SynchedEntityData.defineId(GashaponEntity.class, EntityDataSerializers.STRING);
+public class GachaponEntity extends ThrowableProjectile {
+    private static final EntityDataAccessor<Byte> DATA_VARIANT = SynchedEntityData.defineId(GachaponEntity.class, EntityDataSerializers.BYTE);
+    private static final EntityDataAccessor<String> DATA_MOB_ID = SynchedEntityData.defineId(GachaponEntity.class, EntityDataSerializers.STRING);
 
-    public GashaponEntity(EntityType<? extends GashaponEntity> entityType, Level level) {
+    public GachaponEntity(EntityType<? extends GachaponEntity> entityType, Level level) {
         super(entityType, level);
         if (!level.isClientSide) {
             this.setVariant((byte) this.random.nextInt(4));
         }
     }
 
-    public static GashaponEntity create(EntityType<? extends GashaponEntity> entityType, Level level) {
-        return new GashaponEntity(entityType, level);
+    public static GachaponEntity create(EntityType<? extends GachaponEntity> entityType, Level level) {
+        return new GachaponEntity(entityType, level);
     }
 
-    public GashaponEntity(Level level, LivingEntity shooter) {
-        super(PoEntityType.GASHAPON.get(), shooter, level);
+    public GachaponEntity(Level level, LivingEntity shooter) {
+        super(PoEntityType.GACHAPON.get(), shooter, level);
     }
 
-    public GashaponEntity(Level level, double x, double y, double z) {
-        super(PoEntityType.GASHAPON.get(), x, y, z, level);
+    public GachaponEntity(Level level, double x, double y, double z) {
+        super(PoEntityType.GACHAPON.get(), x, y, z, level);
     }
 
     @Override
@@ -84,9 +84,9 @@ public class GashaponEntity extends ThrowableProjectile {
 
     public static byte variantFromColor(String color) {
         return switch (color) {
-            case GashaponItem.RED -> 1;
-            case GashaponItem.YELLOW -> 2;
-            case GashaponItem.BLUE -> 3;
+            case GachaponItem.RED -> 1;
+            case GachaponItem.YELLOW -> 2;
+            case GachaponItem.BLUE -> 3;
             default -> 0;
         };
     }

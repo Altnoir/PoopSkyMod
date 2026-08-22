@@ -16,7 +16,7 @@
   "item.poopsky.urine_bucket": "糞水桶",
   "block.poopsky.urine_liquid": "糞水",
   "item.poopsky.urea": "尿素",
-  "item.poopsky.gashapon": "扭蛋",
+  "item.poopsky.gachapon": "扭蛋",
   "item.poopsky.token": "代幣",
 
   "item.poopsky.omen_helmet": "忌諱頭盔",
@@ -518,7 +518,7 @@
   "entity.poopsky.fly": "蒼蠅",
   "entity.poopsky.poop_tnt": "POP",
   "entity.poopsky.pop_tnt_minecart": "POP 礦車",
-  "entity.poopsky.gashapon": "扭蛋",
+  "entity.poopsky.gachapon": "扭蛋",
 
   "key.category.poopsky": "空中廁所",
   "key.poopsky.use_plug": "召喚廁所吸盤",

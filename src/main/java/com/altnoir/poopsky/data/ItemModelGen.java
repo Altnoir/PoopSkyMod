@@ -44,7 +44,7 @@ public class ItemModelGen extends RegistrateItemModelProvider {
     @Override
     protected void registerModels() {
         flyItem();
-        gashaponItem();
+        gachaponItem();
         toiletPlugItem();
         bigSowordItem();
         flyCatcherItem();
@@ -99,14 +99,14 @@ public class ItemModelGen extends RegistrateItemModelProvider {
         }
     }
 
-    private void gashaponItem() {
+    private void gachaponItem() {
         for (String color : new String[]{"yellow", "red", "blue"}) {
-            gashaponItemModel("gashapon_" + color);
+            gachaponItemModel("gachapon_" + color);
         }
-        gashaponMainModel();
+        gachaponMainModel();
     }
 
-    private void gashaponItemModel(String modelName) {
+    private void gachaponItemModel(String modelName) {
         var base = nested()
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))
                 .texture("layer0", PoopSky.loc("item/" + modelName));
@@ -121,14 +121,14 @@ public class ItemModelGen extends RegistrateItemModelProvider {
                 .guiLight(GuiLight.FRONT);
     }
 
-    private void gashaponMainModel() {
+    private void gachaponMainModel() {
         var base = nested()
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))
-                .texture("layer0", PoopSky.loc("item/gashapon"));
+                .texture("layer0", PoopSky.loc("item/gachapon"));
         var entityModel = nested()
                 .parent(new ModelFile.UncheckedModelFile("builtin/entity"));
 
-        var builder = getBuilder("gashapon")
+        var builder = getBuilder("gachapon")
                 .customLoader(SeparateTransformsModelBuilder::begin)
                 .base(base)
                 .perspective(ItemDisplayContext.GROUND, entityModel)
@@ -140,7 +140,7 @@ public class ItemModelGen extends RegistrateItemModelProvider {
         for (int i = 0; i < colors.length; i++) {
             builder.override()
                     .predicate(PoopSky.mcloc("custom_model_data"), modelData[i])
-                    .model(new ModelFile.UncheckedModelFile(PoopSky.loc("item/gashapon_" + colors[i])))
+                    .model(new ModelFile.UncheckedModelFile(PoopSky.loc("item/gachapon_" + colors[i])))
                     .end();
         }
     }
