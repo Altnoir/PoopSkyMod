@@ -2,6 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
+    "D": {
+      "item": "poopsky:king_of_dragon_fruit"
+    },
     "E": {
       "item": "minecraft:enchanted_golden_apple"
     },
@@ -11,7 +14,8 @@
   },
   "pattern": [
     "S",
-    "E"
+    "E",
+    "D"
   ],
   "result": {
     "count": 8,
