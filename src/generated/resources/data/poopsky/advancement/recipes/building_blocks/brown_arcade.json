@@ -1,23 +1,17 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:mod_loaded",
-      "modid": "farmersdelight"
-    }
-  ],
   "parent": "minecraft:recipes/root",
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "poopsky:organic_compost_from_poop"
+        "recipe": "poopsky:brown_arcade"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "poop": {
+    "ominous_filthy_ingot": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:poop"
+            "items": "poopsky:ominous_filthy_ingot"
           }
         ]
       },
@@ -27,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "poop"
+      "ominous_filthy_ingot"
     ]
   ],
   "rewards": {
     "recipes": [
-      "poopsky:organic_compost_from_poop"
+      "poopsky:brown_arcade"
     ]
   }
 }

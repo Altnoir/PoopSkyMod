@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "brown_arcade": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:brown_arcade"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:red_arcade"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "brown_arcade"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "poopsky:red_arcade"
+    ]
+  }
+}

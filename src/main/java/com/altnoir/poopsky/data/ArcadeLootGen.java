@@ -4,6 +4,7 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.p.ArcadeBlock;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.init.PoBlocks;
+import com.altnoir.poopsky.init.PoItems;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.core.registries.Registries;
@@ -46,6 +47,8 @@ public final class ArcadeLootGen {
         return LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(PoItems.TOKEN).setWeight(80)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(4.0F, 12.0F))))
                         .add(LootItem.lootTableItem(Items.GLOW_INK_SAC).setWeight(35)
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 6.0F))))
                         .add(LootItem.lootTableItem(Items.RABBIT_FOOT).setWeight(35)
@@ -71,7 +74,7 @@ public final class ArcadeLootGen {
                         .add(LootItem.lootTableItem(Items.HEART_OF_THE_SEA).setWeight(5))
                         .add(LootItem.lootTableItem(Items.HEAVY_CORE).setWeight(5))
                         .add(LootItem.lootTableItem(Items.ELYTRA).setWeight(5))
-                        .add(TagEntry.expandTag(ItemTags.CREEPER_DROP_MUSIC_DISCS).setWeight(10))
+                        .add(TagEntry.expandTag(ItemTags.CREEPER_DROP_MUSIC_DISCS).setWeight(3))
                 );
     }
 }

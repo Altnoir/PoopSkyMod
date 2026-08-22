@@ -59,6 +59,13 @@ public final class ItemTagGen {
             tileWalls.add(family.wall().get().asItem());
         });
 
+        copy(PoTags.Blocks.ARCADES, PoTags.Items.ARCADES);
+        tag(PoTags.Items.GAME_DISKS)
+                .add(
+                        PoItems.GAME_DISC_ROUNDWORM.get(),
+                        PoItems.GAME_DISC_BLOCKTRIS.get(),
+                        PoItems.GAME_DISC_PONG.get()
+                );
         tag(PoTags.Items.FLUSH_TOILET_SAVE).addTag(PoTags.Items.POOPS).addTag(PoTags.Items.SHITS);
         copy(PoTags.Blocks.BREEDING_CHEST_ACCELERATOR, PoTags.Items.BREEDING_CHEST_ACCELERATOR);
         copy(PoTags.Blocks.BREEDING_CHEST_PARALLELISM, PoTags.Items.BREEDING_CHEST_PARALLELISM);

@@ -56,10 +56,9 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
     @Override
     protected void buildRecipes(@NotNull RecipeOutput recipeOutput) {
         this.registries = this.registriesFuture.join();
-        buildCookingRecipes(recipeOutput);
-        buildFoodRecipes(recipeOutput);
+        buildSmeltingRecipes(recipeOutput);
         buildItemRecipes(recipeOutput);
-        buildBuildingRecipes(recipeOutput);
+        buildBlockRecipes(recipeOutput);
         buildVanillaRecipes(recipeOutput);
         buildStonecuttingRecipes(recipeOutput);
         buildToiletRecipes(recipeOutput);
@@ -75,7 +74,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         FarmersDelightRecipeGen.buildRecipes(fd);
     }
 
-    private void buildCookingRecipes(RecipeOutput recipeOutput) {
+    private void buildSmeltingRecipes(RecipeOutput recipeOutput) {
         shapeless1x1Recipe(recipeOutput, Blocks.CRIMSON_NYLIUM, Blocks.CRIMSON_FUNGUS, Blocks.NETHERRACK);
         shapeless1x1Recipe(recipeOutput, Blocks.WARPED_NYLIUM, Blocks.WARPED_FUNGUS, Blocks.NETHERRACK);
         shapeless1x1Recipe(recipeOutput, Blocks.SLIME_BLOCK, Items.LIME_DYE, PoBlocks.POOLIME_BLOCK);
@@ -102,7 +101,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         smelting(recipeOutput, PoBlocks.ROUNDWORM_BLOCK, RecipeCategory.BUILDING_BLOCKS, Items.SAND, 0.1F, 200, "roundworm_block");
     }
 
-    private void buildFoodRecipes(RecipeOutput recipeOutput) {
+    private void buildItemRecipes(RecipeOutput recipeOutput) {
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PoItems.POOP_BREAD)
                 .pattern("PMP")
                 .define('P', PoItems.POOP)
@@ -183,9 +182,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .requires(Items.BOWL)
                 .unlockedBy(getItemName(PoBlocks.MUSHROOM_BED.get()), has(PoBlocks.MUSHROOM_BED.get()))
                 .save(recipeOutput);
-    }
 
-    private void buildItemRecipes(RecipeOutput recipeOutput) {
         offer2x2CompactingRecipe(recipeOutput, RecipeCategory.BUILDING_BLOCKS, PoBlocks.SALTPETER_BLOCK, PoItems.SALTPETER_SHARD);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, PoItems.JINKELA, 4)
                 .requires(PoItems.POOP)
@@ -315,7 +312,7 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         omenSmithing(recipeOutput, Items.GOLDEN_BOOTS, RecipeCategory.COMBAT, PoItems.OMEN_BOOTS.get());
     }
 
-    private void buildBuildingRecipes(RecipeOutput recipeOutput) {
+    private void buildBlockRecipes(RecipeOutput recipeOutput) {
         offer2x2CompactingRecipe(recipeOutput, PoBlocks.POOP_BLOCK, PoItems.POOP);
         blockFamilyRecipes(recipeOutput, PoBlocks.POOP_FAMILY);
 
@@ -503,6 +500,24 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .unlockedBy(getItemName(PoBlocks.MAGGOTS_BLOCK), has(PoBlocks.MAGGOTS_BLOCK))
                 .save(recipeOutput);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.BROWN_ARCADE)
+                .pattern("ISI")
+                .pattern("IGI")
+                .pattern("IDI")
+                .define('I', PoItems.OMINOUS_FILTHY_INGOT)
+                .define('S', PoTags.Items.SHITS)
+                .define('G', PoBlocks.GLOW_PRIMO_CAP)
+                .define('D', Blocks.DROPPER)
+                .unlockedBy(getItemName(PoItems.OMINOUS_FILTHY_INGOT), has(PoItems.OMINOUS_FILTHY_INGOT))
+                .save(recipeOutput);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, PoBlocks.RED_ARCADE)
+                .requires(Items.RED_DYE).requires(PoTags.Items.ARCADES)
+                .unlockedBy(getItemName(PoBlocks.BROWN_ARCADE), has(PoBlocks.BROWN_ARCADE))
+                .save(recipeOutput);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, PoBlocks.BLUE_ARCADE)
+                .requires(Items.BLUE_DYE).requires(PoTags.Items.ARCADES)
+                .unlockedBy(getItemName(PoBlocks.BROWN_ARCADE), has(PoBlocks.BROWN_ARCADE))
+                .save(recipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.GACHA_MACHINE)
                 .pattern("III")
                 .pattern("IEI")

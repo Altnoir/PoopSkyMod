@@ -11,6 +11,22 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
+                "max": 12.0,
+                "min": 4.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "poopsky:token",
+          "weight": 80
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
                 "max": 6.0,
                 "min": 2.0
               },
@@ -169,7 +185,7 @@
           "type": "minecraft:tag",
           "expand": true,
           "name": "minecraft:creeper_drop_music_discs",
-          "weight": 10
+          "weight": 3
         }
       ],
       "rolls": 1.0

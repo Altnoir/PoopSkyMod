@@ -9,7 +9,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "poopsky:cooking/poop_vegetable_sticks"
+        "recipe": "farmersdelight:cooking/poop_vegetable_sticks"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
@@ -32,7 +32,7 @@
   ],
   "rewards": {
     "recipes": [
-      "poopsky:cooking/poop_vegetable_sticks"
+      "farmersdelight:cooking/poop_vegetable_sticks"
     ]
   }
 }
