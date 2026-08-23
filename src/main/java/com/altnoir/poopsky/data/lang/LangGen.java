@@ -348,6 +348,7 @@ public final class LangGen {
         provider.add("gui.gamingconsole.blocktris.botton_1", "Press [%s] to fall");
         provider.add("gui.gamingconsole.blocktris.botton_2", "Press [%s] to rotate");
         provider.add("gui.gamingconsole.touhou.shoot", "Press %s to fire danmaku");
+        provider.add("gui.gamingconsole.touhou.slow", "Press %s to slow down");
 
         provider.add("text.poopsky.arcade.total_reward", "Total Score[%s]");
 

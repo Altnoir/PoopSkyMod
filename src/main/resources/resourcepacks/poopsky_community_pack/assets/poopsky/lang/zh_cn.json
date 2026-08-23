@@ -76,7 +76,8 @@
   "gui.gamingconsole.next": "下一个",
   "gui.gamingconsole.blocktris.botton_1": "按[%s]下落",
   "gui.gamingconsole.blocktris.botton_2": "按[%s]旋转",
-    "gui.gamingconsole.touhou.shoot": "按[%s]发射弹幕",
+  "gui.gamingconsole.touhou.shoot": "按[%s]发射弹幕",
+  "gui.gamingconsole.touhou.slow": "按[%s]减速移动",
 
   "item.poopsky.poolime_spawn_egg": "巧克力莱姆刷怪蛋",
   "item.poopsky.fly_spawn_egg": "暗色蜜蜂刷怪蛋",

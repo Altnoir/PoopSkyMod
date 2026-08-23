@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.game.danmaku.modifier;
 
 import com.altnoir.poopsky.game.danmaku.BossModifiers;
+import com.altnoir.poopsky.game.danmaku.CircularRotation;
 
 import java.util.Random;
 
@@ -11,6 +12,7 @@ public class BossModifierTemplate {
     private final FloatProvider bulletSpeed;
     private final IntProvider rotation;
     private final IntProvider angleStep;
+    private final CircularRotation circularRotation;
 
     private BossModifierTemplate(Builder builder) {
         this.bulletCount = builder.bulletCount;
@@ -19,6 +21,7 @@ public class BossModifierTemplate {
         this.bulletSpeed = builder.bulletSpeed;
         this.rotation = builder.rotation;
         this.angleStep = builder.angleStep;
+        this.circularRotation = builder.circularRotation;
     }
 
     public BossModifiers roll(Random random) {
@@ -38,7 +41,8 @@ public class BossModifierTemplate {
                 fireInterval.next(random),
                 bulletSpeed.next(random),
                 rotation.next(random),
-                angleStep.next(random)
+                angleStep.next(random),
+                circularRotation
         );
     }
 
@@ -73,6 +77,8 @@ public class BossModifierTemplate {
         private FloatProvider bulletSpeed = ConstantFloat.of(2.0F);
         private IntProvider rotation = ConstantInt.of(0);
         private IntProvider angleStep = ConstantInt.of(5);
+        private CircularRotation circularRotation;
+        private boolean rotationSet;
 
         public Builder bulletCount(IntProvider bulletCount) {
             this.bulletCount = bulletCount;
@@ -96,6 +102,7 @@ public class BossModifierTemplate {
 
         public Builder rotation(IntProvider rotation) {
             this.rotation = rotation;
+            this.rotationSet = true;
             return this;
         }
 
@@ -104,7 +111,20 @@ public class BossModifierTemplate {
             return this;
         }
 
+        public Builder circularRotation() {
+            this.circularRotation = new CircularRotation(0, 0);
+            return this;
+        }
+
+        public Builder circularRotation(int startDelay, int duration) {
+            this.circularRotation = new CircularRotation(startDelay, duration);
+            return this;
+        }
+
         public BossModifierTemplate build() {
+            if (circularRotation != null && rotationSet) {
+                throw new IllegalStateException(".circularRotation() and .rotation() are mutually exclusive");
+            }
             return new BossModifierTemplate(this);
         }
     }

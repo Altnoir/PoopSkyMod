@@ -14,7 +14,8 @@ public final class TouhouGameState {
     public static final int PLAYER_SIZE = 8;
     public static final int PLAYER_HITBOX_SIZE = 2;
     public static final int PLAYER_BULLET_SIZE = 4;
-    public static final int PLAYER_SPEED = 1;
+    public static final int PLAYER_SPEED = 2;
+    public static final float FOCUS_SPEED_MULTIPLIER = 0.5F;
     public static final int PLAYER_BULLET_SPEED = 4;
     public static final int PLAYER_SHOOT_INTERVAL = 8;
     public static final int PLAYER_SHOOT_INTERVAL_FAST = 4;
@@ -30,7 +31,7 @@ public final class TouhouGameState {
     public static final int BOSS_RESPAWN_DELAY = 40;
     public static final int BOSS_APPEAR_DURATION = 20;
     public static final int BOSS_BULLET_SIZE = 6;
-    public static final float BOSS_BULLET_DRAG = 0.995F;
+    public static final float BOSS_BULLET_DRAG = 0.99F;
 
     public static final int SCORE_PER_BOSS = 5;
 
@@ -68,11 +69,12 @@ public final class TouhouGameState {
         spawnBoss(random);
     }
 
-    public TickResult tick(boolean up, boolean down, boolean left, boolean right, boolean shoot, Random random) {
-        if (up) playerY -= PLAYER_SPEED;
-        if (down) playerY += PLAYER_SPEED;
-        if (left) playerX -= PLAYER_SPEED;
-        if (right) playerX += PLAYER_SPEED;
+    public TickResult tick(boolean up, boolean down, boolean left, boolean right, boolean shoot, boolean focus, Random random) {
+        float playerSpeed = focus ? PLAYER_SPEED * FOCUS_SPEED_MULTIPLIER : PLAYER_SPEED;
+        if (up) playerY -= playerSpeed;
+        if (down) playerY += playerSpeed;
+        if (left) playerX -= playerSpeed;
+        if (right) playerX += playerSpeed;
         playerX = Math.clamp(playerX, 0, PLAY_WIDTH - PLAYER_SIZE);
         playerY = Math.clamp(playerY, 0, PLAY_HEIGHT - PLAYER_SIZE);
 

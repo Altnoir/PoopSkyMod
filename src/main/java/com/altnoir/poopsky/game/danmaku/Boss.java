@@ -46,4 +46,12 @@ public class Boss {
     public int getAngleStep() {
         return modifiers.angleStep();
     }
+
+    public boolean hasCircularRotation() {
+        return modifiers.circularRotation() != null;
+    }
+
+    public CircularRotation getCircularRotation() {
+        return modifiers.circularRotation();
+    }
 }

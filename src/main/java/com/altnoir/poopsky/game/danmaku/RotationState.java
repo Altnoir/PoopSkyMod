@@ -25,4 +25,17 @@ public class RotationState {
         }
         return currentAngle;
     }
+
+    public int nextCircular(int angleStep) {
+        if (angleStep <= 0) {
+            return currentAngle;
+        }
+
+        currentAngle += direction * angleStep;
+        return currentAngle;
+    }
+
+    public int getCurrentAngle() {
+        return currentAngle;
+    }
 }

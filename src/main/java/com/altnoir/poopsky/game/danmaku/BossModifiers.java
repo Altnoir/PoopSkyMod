@@ -6,7 +6,8 @@ public record BossModifiers(
         int fireInterval,
         float bulletSpeed,
         int rotation,
-        int angleStep
+        int angleStep,
+        CircularRotation circularRotation
 ) {
 }
 
