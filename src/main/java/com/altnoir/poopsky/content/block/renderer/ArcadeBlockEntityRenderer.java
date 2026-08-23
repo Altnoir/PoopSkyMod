@@ -44,10 +44,11 @@ public class ArcadeBlockEntityRenderer implements BlockEntityRenderer<ArcadeBloc
 
     @Override
     public void submit(RenderState state, PoseStack poseStack, SubmitNodeCollector collector, CameraRenderState camera) {
-        submitRewardText(state, poseStack, collector);
         if (state.texture == null) {
             return;
         }
+
+        submitRewardText(state, poseStack, collector);
 
         poseStack.pushPose();
         poseStack.translate(0.5F, 1.5F, 0.5F);
