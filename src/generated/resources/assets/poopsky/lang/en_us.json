@@ -464,6 +464,7 @@
   "gui.gamingconsole.score": "Score",
   "gui.gamingconsole.title": "Arcade Machine",
   "gui.gamingconsole.touhou.shoot": "Press %s to fire danmaku",
+  "gui.gamingconsole.touhou.slow": "Press %s to slow down",
   "gui.gamingconsole.won": "You won!",
   "item.minecraft.lingering_potion.effect.fecal_incontinence": "Fecal Incontinence",
   "item.minecraft.lingering_potion.effect.infestation": "Infestation",

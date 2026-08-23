@@ -24,6 +24,7 @@ public class ServerTouhouGame extends ServerGame {
                 leftDown,
                 rightDown,
                 button1Down,
+                button2Down,
                 random
         );
 

@@ -16,11 +16,11 @@ import net.minecraft.world.phys.Vec2;
 public class ClientTouhouGame extends ClientGame {
     private static final int GAME_OFFSET_X = 8;
     private static final Identifier PLAYER_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_player.png");
-    private static final Identifier BOSS_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_boss.png");
-    private static final Identifier BOSS_BULLET_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_boss_bullet.png");
     private static final Identifier PLAYER_BULLET_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_player_bullet.png");
     private static final Identifier SPEED_POWERUP_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_player_speed.png");
     private static final Identifier DOUBLE_POWERUP_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_player_double.png");
+    private static final Identifier BOSS_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_boss.png");
+    private static final Identifier BOSS_BULLET_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_boss_bullet.png");
 
     private final TouhouGameState state = new TouhouGameState();
     private final Sprite player = new Sprite(Vec2.ZERO, new Vec2(TouhouGameState.PLAYER_SIZE, TouhouGameState.PLAYER_SIZE), PLAYER_TEXTURE);
@@ -97,12 +97,17 @@ public class ClientTouhouGame extends ClientGame {
                 PoKeyBoardInput.ARCADE_BUTTON1.getTranslatedKeyMessage()
         );
         graphics.text(font, shootHint, infoX, infoY + 86, 0xFFFFFF);
+        Component slowHint = Component.translatable(
+                "gui.gamingconsole.touhou.slow",
+                PoKeyBoardInput.ARCADE_BUTTON2.getTranslatedKeyMessage()
+        );
+        graphics.text(font, slowHint, infoX, infoY + 96, 0xFFFFFF);
 
         if (state.hasSpeedBoost()) {
-            graphics.text(font, "SPEED UP", infoX, infoY + 100, 0x55FF55);
+            graphics.text(font, "SPEED UP", infoX, infoY + 110, 0x55FF55);
         }
         if (state.hasDoubleShot()) {
-            graphics.text(font, "DOUBLE SHOT", infoX, infoY + 110, 0x55AAFF);
+            graphics.text(font, "DOUBLE SHOT", infoX, infoY + 120, 0x55AAFF);
         }
     }
 

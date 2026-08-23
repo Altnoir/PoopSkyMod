@@ -1,9 +1,6 @@
 package com.altnoir.poopsky.game.danmaku;
 
-import com.altnoir.poopsky.game.danmaku.script.CircleBurstScript;
-import com.altnoir.poopsky.game.danmaku.script.LineScript;
-import com.altnoir.poopsky.game.danmaku.script.ReverseCircleScript;
-import com.altnoir.poopsky.game.danmaku.script.FanScript;
+import com.altnoir.poopsky.game.danmaku.script.*;
 
 import java.util.Random;
 
@@ -14,22 +11,26 @@ public final class BossFactory {
     public static Boss createRandomBoss(Random random, int wave) {
         BossScript script;
         String id;
-        switch (random.nextInt(4)) {
+        switch (random.nextInt(5)) {
             case 0 -> {
-                script = new CircleBurstScript();
-                id = "circle";
+                script = new LineScript();
+                id = "line";
             }
             case 1 -> {
                 script = new FanScript();
                 id = "fan";
             }
             case 2 -> {
-                script = new LineScript();
-                id = "line";
-            }
-            default -> {
                 script = new ReverseCircleScript();
                 id = "reverse";
+            }
+            case 3 -> {
+                script = new QuadLineScript();
+                id = "quadline";
+            }
+            default -> {
+                script = new CircleBurstScript();
+                id = "circle";
             }
         }
 
