@@ -349,6 +349,11 @@ public final class LangGen {
         provider.add("gui.gamingconsole.blocktris.botton_2", "Press [%s] to rotate");
         provider.add("gui.gamingconsole.touhou.shoot", "Press %s to fire danmaku");
         provider.add("gui.gamingconsole.touhou.slow", "Press %s to slow down");
+        provider.add("gui.gamingconsole.touhou.wave", "Wave");
+        provider.add("gui.gamingconsole.touhou.next_boss", "Next Boss");
+        provider.add("gui.gamingconsole.touhou.boss_hp", "Boss HP");
+        provider.add("gui.gamingconsole.touhou.speed_up", "Speed Up");
+        provider.add("gui.gamingconsole.touhou.double_shot", "Double Shot");
 
         provider.add("text.poopsky.arcade.total_reward", "Total Score[%s]");
 
