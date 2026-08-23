@@ -13,6 +13,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -38,6 +39,8 @@ import java.util.Map;
 import java.util.UUID;
 
 public class ArcadeBlockEntity extends BlockEntity {
+    public static final int MAX_REWARD_COUNT = 500;
+
     private final ItemStackHandler inventory = new ItemStackHandler(1) {
         @Override
         protected void onContentsChanged(int slot) {
@@ -115,6 +118,12 @@ public class ArcadeBlockEntity extends BlockEntity {
         if (activePlayer == null || game.getStage() == GameStage.START) {
             beginControl(player.getUUID());
         }
+        if (game.getStage() == GameStage.START && rewardCount >= MAX_REWARD_COUNT) {
+            if (pressed) {
+                player.displayClientMessage(Component.translatable("message.poopsky.arcade.reward_full"), true);
+            }
+            return;
+        }
         game.setButton(button, pressed);
         if (game.getStage() == GameStage.START) {
             resetSessionState();
@@ -129,6 +138,9 @@ public class ArcadeBlockEntity extends BlockEntity {
         if (game != null) {
             if (canControl(player)) {
                 return;
+            }
+            if (!scoreSettled) {
+                settleActiveGame();
             }
             game.prepare();
             resetSessionState();
@@ -290,6 +302,24 @@ public class ArcadeBlockEntity extends BlockEntity {
         markStatusChanged();
         spawnRewards(rewards);
         return true;
+    }
+
+    public void spillAllRewards() {
+        if (!(level instanceof ServerLevel serverLevel)) {
+            return;
+        }
+
+        if (rewardCount <= 0) {
+            level.playSound(null, getBlockPos(), SoundEvents.DISPENSER_FAIL, SoundSource.BLOCKS, 1.0F, 1.0F);
+            return;
+        }
+
+        while (rewardCount > 0) {
+            List<ItemStack> rewards = rollRewards();
+            rewardCount--;
+            spawnRewards(rewards);
+        }
+        markStatusChanged();
     }
 
     private List<ItemStack> rollRewards() {

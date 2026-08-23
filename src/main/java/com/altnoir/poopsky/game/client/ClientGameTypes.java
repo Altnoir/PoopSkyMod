@@ -6,6 +6,7 @@ import com.altnoir.poopsky.game.GameDefinitions;
 import com.altnoir.poopsky.game.gamediscs.render.ClientBlocktrisGame;
 import com.altnoir.poopsky.game.gamediscs.render.ClientPongGame;
 import com.altnoir.poopsky.game.gamediscs.render.ClientRoundwormGame;
+import com.altnoir.poopsky.game.gamediscs.render.ClientTouhouGame;
 
 import java.util.IdentityHashMap;
 import java.util.Map;
@@ -18,6 +19,7 @@ public final class ClientGameTypes {
         register(GameDefinitions.ROUNDWORM, ClientRoundwormGame::new);
         register(GameDefinitions.BLOCKTRIS, ClientBlocktrisGame::new);
         register(GameDefinitions.PONG, ClientPongGame::new);
+        register(GameDefinitions.TOUHOU, ClientTouhouGame::new);
     }
 
     private ClientGameTypes() {

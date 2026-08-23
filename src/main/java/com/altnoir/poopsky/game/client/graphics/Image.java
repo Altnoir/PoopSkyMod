@@ -24,4 +24,11 @@ public class Image extends Renderer {
     public void render(GuiGraphics graphics, int posX, int posY) {
         graphics.blit(file, posX, posY, x, y, width, height, fileWidth, fileHeight);
     }
+
+    @Override
+    public void renderScaled(GuiGraphics graphics, int posX, int posY, float scale) {
+        int w = Math.max(1, Math.round(width * scale));
+        int h = Math.max(1, Math.round(height * scale));
+        graphics.blit(file, posX, posY, w, h, x, y, width, height, fileWidth, fileHeight);
+    }
 }

@@ -6,15 +6,20 @@ import com.altnoir.poopsky.game.client.arcade.ArcadeWorldScreenRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
+import org.joml.Matrix4f;
 
 public class ArcadeBlockEntityRenderer implements BlockEntityRenderer<ArcadeBlockEntity> {
     private static final float SCREEN_MIN_X = 1.0F / 16.0F;
@@ -33,6 +38,8 @@ public class ArcadeBlockEntityRenderer implements BlockEntityRenderer<ArcadeBloc
             return;
         }
 
+        renderRewardText(blockEntity, poseStack, bufferSource, packedLight, state);
+
         ItemStack cartridge = blockEntity.getCartridge();
         ResourceLocation texture = ArcadeWorldScreenRenderer.getScreenTexture(blockEntity.getBlockPos(), cartridge);
         if (texture == null) {
@@ -47,6 +54,24 @@ public class ArcadeBlockEntityRenderer implements BlockEntityRenderer<ArcadeBloc
         VertexConsumer consumer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(texture));
         PoseStack.Pose pose = poseStack.last();
         renderScreenQuad(consumer, pose, packedLight);
+
+        poseStack.popPose();
+    }
+
+    private static void renderRewardText(ArcadeBlockEntity blockEntity, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, BlockState state) {
+        Component text = Component.translatable("text.poopsky.arcade.total_reward", blockEntity.getRewardCount())
+                .withStyle(ChatFormatting.ITALIC, ChatFormatting.AQUA);
+        Font font = Minecraft.getInstance().font;
+        float textWidth = font.width(text);
+        float scale = -0.01785F;
+
+        poseStack.pushPose();
+        poseStack.translate(0.5F, 1.9375F, 0.6876F);
+        poseStack.mulPose(Axis.YP.rotationDegrees(-horizontalRotation(state.getValue(ArcadeBlock.FACING))));
+        poseStack.scale(scale, scale, scale);
+
+        Matrix4f matrix = poseStack.last().pose();
+        font.drawInBatch(text, -textWidth / 2.0F, 0.0F, 0xFFFFFF, false, matrix, bufferSource, Font.DisplayMode.NORMAL, 0, packedLight);
 
         poseStack.popPose();
     }

@@ -156,6 +156,8 @@ public class PoItems {
             props -> new GameDiskItem(props.rarity(Rarity.RARE), Component.translatable("gamedisks.blocktris").withStyle(ChatFormatting.YELLOW)));
     public static final ItemEntry<GameDiskItem> GAME_DISK_PONG = registerItem("game_disk_pong",
             props -> new GameDiskItem(props.rarity(Rarity.RARE), Component.translatable("gamedisks.pong").withStyle(ChatFormatting.YELLOW)));
+    public static final ItemEntry<GameDiskItem> GAME_DISK_TOUHOU = registerItem("game_disk_touhou",
+            props -> new GameDiskItem(props.rarity(Rarity.RARE), Component.translatable("gamedisks.touhou").withStyle(ChatFormatting.RED)));
 
     public static final ItemEntry<FlushToiletCartItem> FLUSH_TOILET_CART = registerItem("flush_toilet_cart",
             props -> new FlushToiletCartItem(PoEntityType.FLUSH_TOILET_CART, props.stacksTo(1)));

@@ -689,6 +689,7 @@
 
   "text.poopsky.book.title":"穢壤真經",
   "text.poopsky.book.landing_text":"受污穢恩賜的你，憑此真經即可改變這片虛無之域！$(br)$(l:https://poop.vmct-cn.top/)線上文件$()",
+    "text.poopsky.arcade.total_reward": "總積分[%s]",
   "tag.item.poopsky.compooper_saplings": "堆糞箱可產出樹苗",
   "tag.item.poopsky.can_compooper": "可堆糞",
   "jei.category.poopsky.compooper": "堆糞箱",
