@@ -25,7 +25,7 @@ public class ReverseCircleScript implements BossScript {
             .build();
 
     private final RotationState rotation = new RotationState();
-    private int intervalCounter;
+    private int intervalCounter = TouhouGameState.BOSS_APPEAR_DURATION;
 
     @Override
     public BossModifiers createModifiers(Random random, int wave) {
