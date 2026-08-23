@@ -193,7 +193,7 @@ public class ArcadeBlockEntity extends BlockEntity {
         }
         snapshotCooldown--;
         if (snapshotCooldown <= 0) {
-            snapshotCooldown = 2;
+            snapshotCooldown = 1;
             sendGameSnapshot();
         }
     }

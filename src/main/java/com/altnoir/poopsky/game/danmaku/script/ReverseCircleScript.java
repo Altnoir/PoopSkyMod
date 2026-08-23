@@ -14,7 +14,7 @@ import java.util.Random;
 public class ReverseCircleScript implements BossScript {
     private static final float ACCELERATION = 0.01F;
     private static final BossModifierTemplate TEMPLATE = BossModifierTemplate.builder()
-            .bulletCount(UniformInt.of(40, 50))
+            .bulletCount(UniformInt.of(30, 40))
             .attackInterval(UniformInt.of(20, 40))
             .bulletSpeed(UniformFloat.of(0.4F, 0.6F))
             .rotation(UniformInt.of(40))

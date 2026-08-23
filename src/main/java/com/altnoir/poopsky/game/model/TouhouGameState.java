@@ -143,7 +143,7 @@ public final class TouhouGameState {
                     playerBullets.remove(i);
                     bossHp--;
                     bossHit = true;
-                    bossHitTicks = 1;
+                    bossHitTicks = 2;
                     trySpawnPowerUp(random);
                     if (bossHp <= 0) {
                         bossKilled = true;
@@ -412,7 +412,7 @@ public final class TouhouGameState {
     }
 
     public float getBossHitScale() {
-        return bossHitTicks == 1 ? 0.8F : 1.0F;
+        return bossHitTicks > 0 ? 0.8F : 1.0F;
     }
 
     public int getBossSpawnTimer() {
