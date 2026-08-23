@@ -76,7 +76,7 @@
   "gui.gamingconsole.next": "下一个",
   "gui.gamingconsole.blocktris.botton_1": "按[%s]下落",
   "gui.gamingconsole.blocktris.botton_2": "按[%s]旋转",
-    "gui.gamingconsole.touhou.shoot": "按 %s 发射弹幕",
+    "gui.gamingconsole.touhou.shoot": "按[%s]发射弹幕",
 
   "item.poopsky.poolime_spawn_egg": "秽壤莱姆刷怪蛋",
   "item.poopsky.fly_spawn_egg": "秽壤飞蝇刷怪蛋",
@@ -327,7 +327,7 @@
   "fly_type.poopsky.gray": "灰秽壤飞蝇",
   "fly_type.poopsky.light_gray": "淡灰秽壤飞蝇",
   "fly_type.poopsky.light_blue": "淡蓝秽壤飞蝇",
-  "fly_type.poopsky.lime": "翠秽壤飞蝇",
+  "fly_type.poopsky.lime": "黄绿秽壤飞蝇",
   "fly_type.poopsky.magenta": "嫣秽壤飞蝇",
   "fly_type.poopsky.cyan": "青秽壤飞蝇",
   "fly_type.poopsky.pink": "粉红秽壤飞蝇",
@@ -700,7 +700,7 @@
 
   "text.poopsky.book.title":"秽壤真经",
   "text.poopsky.book.landing_text":"受污秽恩赐的你，凭此真经即可改变这片虚无之域！$(br)$(l:https://poop.vmct-cn.top/)在线文档$()",
-    "text.poopsky.arcade.total_reward": "总积分[%s]",
+  "text.poopsky.arcade.total_reward": "总积分[%s]",
   "tag.item.poopsky.compooper_saplings": "堆秽壤桶可产出树苗",
   "tag.item.poopsky.can_compooper": "可堆秽壤",
   "jei.category.poopsky.compooper": "堆秽壤桶",

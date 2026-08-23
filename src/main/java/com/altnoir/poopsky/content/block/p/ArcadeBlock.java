@@ -9,8 +9,10 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
@@ -135,10 +137,17 @@ public class ArcadeBlock extends Block implements EntityBlock {
         boolean powered = level.hasNeighborSignal(lowerPos) || level.hasNeighborSignal(pos);
 
         if (powered && !lowerState.getValue(TRIGGERED)) {
-            level.setBlock(lowerPos, lowerState.setValue(TRIGGERED, true), 3);
-            arcade.spillAllRewards();
+            level.scheduleTick(lowerPos, this, 4);
+            level.setBlock(lowerPos, lowerState.setValue(TRIGGERED, true), 2);
         } else if (!powered && lowerState.getValue(TRIGGERED)) {
-            level.setBlock(lowerPos, lowerState.setValue(TRIGGERED, false), 3);
+            level.setBlock(lowerPos, lowerState.setValue(TRIGGERED, false), 2);
+        }
+    }
+
+    @Override
+    public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        if (level.getBlockEntity(pos) instanceof ArcadeBlockEntity arcade) {
+            arcade.spillAllRewards();
         }
     }
 

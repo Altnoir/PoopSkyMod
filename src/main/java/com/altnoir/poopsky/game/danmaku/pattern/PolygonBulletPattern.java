@@ -40,7 +40,8 @@ public class PolygonBulletPattern implements BulletPattern {
                     centerY - TouhouGameState.ENEMY_BULLET_SIZE / 2.0F,
                     vx, vy,
                     600,
-                    maxBounces
+                    maxBounces,
+                    0.0F
             );
         }
     }
@@ -61,7 +62,8 @@ public class PolygonBulletPattern implements BulletPattern {
                         centerY - TouhouGameState.ENEMY_BULLET_SIZE / 2.0F,
                         vx, vy,
                         600,
-                        maxBounces
+                        maxBounces,
+                        0.0F
                 );
             }
         }

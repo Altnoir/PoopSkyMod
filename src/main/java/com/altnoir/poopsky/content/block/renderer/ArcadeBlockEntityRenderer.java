@@ -71,7 +71,7 @@ public class ArcadeBlockEntityRenderer implements BlockEntityRenderer<ArcadeBloc
         poseStack.scale(scale, scale, scale);
 
         Matrix4f matrix = poseStack.last().pose();
-        font.drawInBatch(text, -textWidth / 2.0F, 0.0F, 0xFFFFFF, false, matrix, bufferSource, Font.DisplayMode.NORMAL, 0, packedLight);
+        font.drawInBatch(text, -textWidth / 2.0F, 0.0F, 0xFFFFFF, true, matrix, bufferSource, Font.DisplayMode.NORMAL, 0, packedLight);
 
         poseStack.popPose();
     }

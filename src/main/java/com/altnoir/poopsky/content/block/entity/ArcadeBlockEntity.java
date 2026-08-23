@@ -40,7 +40,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class ArcadeBlockEntity extends BlockEntity {
-    public static final int MAX_REWARD_COUNT = 500;
+    public static final int MAX_REWARD_COUNT = 99;
 
     private final ItemStackHandler inventory = new ItemStackHandler(1) {
         @Override
@@ -124,6 +124,9 @@ public class ArcadeBlockEntity extends BlockEntity {
                 player.displayClientMessage(Component.translatable("message.poopsky.arcade.reward_full"), true);
             }
             return;
+        }
+        if (!scoreSettled && (game.getStage() == GameStage.DIED || game.getStage() == GameStage.WON)) {
+            settleActiveGame();
         }
         game.setButton(button, pressed);
         if (game.getStage() == GameStage.START) {
@@ -270,18 +273,22 @@ public class ArcadeBlockEntity extends BlockEntity {
     }
 
     private void settleActiveGame() {
-        scoreSettled = true;
-        if (!(level instanceof ServerLevel serverLevel) || activePlayer == null || game == null) {
+        if (!(level instanceof ServerLevel serverLevel) || game == null) {
             return;
         }
-        ServerPlayer player = serverLevel.getServer().getPlayerList().getPlayer(activePlayer);
-        if (player == null) {
-            return;
-        }
+
         int currentScore = Math.max(0, game.getScore());
-        bestScores.computeIfAbsent(player.getUUID(), ignored -> new HashMap<>())
-                .merge(game.getGameName(), currentScore, Math::max);
         rewardCount += currentScore;
+
+        if (activePlayer != null) {
+            ServerPlayer player = serverLevel.getServer().getPlayerList().getPlayer(activePlayer);
+            if (player != null) {
+                bestScores.computeIfAbsent(player.getUUID(), ignored -> new HashMap<>())
+                        .merge(game.getGameName(), currentScore, Math::max);
+            }
+        }
+
+        scoreSettled = true;
         markStatusChanged();
     }
 
@@ -311,7 +318,7 @@ public class ArcadeBlockEntity extends BlockEntity {
         }
 
         if (rewardCount <= 0) {
-            level.playSound(null, getBlockPos(), SoundEvents.DISPENSER_FAIL, SoundSource.BLOCKS, 1.0F, 1.0F);
+            level.playSound(null, getBlockPos(), SoundEvents.DISPENSER_FAIL, SoundSource.BLOCKS, 1.0F, 1.2F);
             return;
         }
 

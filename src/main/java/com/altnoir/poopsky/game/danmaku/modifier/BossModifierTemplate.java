@@ -1,0 +1,111 @@
+package com.altnoir.poopsky.game.danmaku.modifier;
+
+import com.altnoir.poopsky.game.danmaku.BossModifiers;
+
+import java.util.Random;
+
+public class BossModifierTemplate {
+    private final IntProvider bulletCount;
+    private final IntProvider maxBounces;
+    private final IntProvider fireInterval;
+    private final FloatProvider bulletSpeed;
+    private final IntProvider rotation;
+    private final IntProvider angleStep;
+
+    private BossModifierTemplate(Builder builder) {
+        this.bulletCount = builder.bulletCount;
+        this.maxBounces = builder.maxBounces;
+        this.fireInterval = builder.attackInterval;
+        this.bulletSpeed = builder.bulletSpeed;
+        this.rotation = builder.rotation;
+        this.angleStep = builder.angleStep;
+    }
+
+    public BossModifiers roll(Random random) {
+        int count;
+        int bounce;
+        if (bulletCount instanceof UniformInt countRange && maxBounces instanceof UniformInt bounceRange) {
+            count = countRange.next(random);
+            bounce = rollLinkedBounce(count, countRange, bounceRange);
+        } else {
+            count = bulletCount.next(random);
+            bounce = maxBounces.next(random);
+        }
+
+        return new BossModifiers(
+                count,
+                bounce,
+                fireInterval.next(random),
+                bulletSpeed.next(random),
+                rotation.next(random),
+                angleStep.next(random)
+        );
+    }
+
+    private static int rollLinkedBounce(int count, UniformInt countRange, UniformInt bounceRange) {
+        int countMin = Math.min(countRange.min(), countRange.max());
+        int countMax = Math.max(countRange.min(), countRange.max());
+        int bounceMin = bounceRange.min();
+        int bounceMax = bounceRange.max();
+        int diff = Math.abs(bounceMax - bounceMin);
+        if (diff <= 0 || countMax <= countMin) {
+            return bounceMin;
+        }
+
+        float p = (count - countMin) / (float) (countMax - countMin);
+        int segments = diff + 1;
+        int segment = (int) Math.floor(p * segments);
+        if (segment >= segments) {
+            segment = segments - 1;
+        }
+
+        return bounceMin > bounceMax ? bounceMin - segment : bounceMin + segment;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+        private IntProvider bulletCount = ConstantInt.of(20);
+        private IntProvider maxBounces = ConstantInt.of(0);
+        private IntProvider attackInterval = ConstantInt.of(8);
+        private FloatProvider bulletSpeed = ConstantFloat.of(2.0F);
+        private IntProvider rotation = ConstantInt.of(0);
+        private IntProvider angleStep = ConstantInt.of(5);
+
+        public Builder bulletCount(IntProvider bulletCount) {
+            this.bulletCount = bulletCount;
+            return this;
+        }
+
+        public Builder maxBounces(IntProvider maxBounces) {
+            this.maxBounces = maxBounces;
+            return this;
+        }
+
+        public Builder attackInterval(IntProvider attackInterval) {
+            this.attackInterval = attackInterval;
+            return this;
+        }
+
+        public Builder bulletSpeed(FloatProvider bulletSpeed) {
+            this.bulletSpeed = bulletSpeed;
+            return this;
+        }
+
+        public Builder rotation(IntProvider rotation) {
+            this.rotation = rotation;
+            return this;
+        }
+
+        public Builder angleStep(IntProvider angleStep) {
+            this.angleStep = angleStep;
+            return this;
+        }
+
+        public BossModifierTemplate build() {
+            return new BossModifierTemplate(this);
+        }
+    }
+}
