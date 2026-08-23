@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.game.gamediscs.render;
+package com.altnoir.poopsky.game.render;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.game.GameStage;
@@ -25,7 +25,7 @@ public class ClientTouhouGame extends ClientGame {
     private final TouhouGameState state = new TouhouGameState();
     private final Sprite player = new Sprite(Vec2.ZERO, new Vec2(TouhouGameState.PLAYER_SIZE, TouhouGameState.PLAYER_SIZE), PLAYER_TEXTURE);
     private final Sprite boss = new Sprite(Vec2.ZERO, new Vec2(TouhouGameState.BOSS_SIZE, TouhouGameState.BOSS_SIZE), BOSS_TEXTURE);
-    private final Sprite bossBullet = new Sprite(Vec2.ZERO, new Vec2(TouhouGameState.ENEMY_BULLET_SIZE, TouhouGameState.ENEMY_BULLET_SIZE), BOSS_BULLET_TEXTURE);
+    private final Sprite bossBullet = new Sprite(Vec2.ZERO, new Vec2(TouhouGameState.BOSS_BULLET_SIZE, TouhouGameState.BOSS_BULLET_SIZE), BOSS_BULLET_TEXTURE);
     private final Sprite playerBullet = new Sprite(Vec2.ZERO, new Vec2(TouhouGameState.PLAYER_BULLET_SIZE, TouhouGameState.PLAYER_BULLET_SIZE), PLAYER_BULLET_TEXTURE);
     private final Sprite speedPowerUp = new Sprite(Vec2.ZERO, new Vec2(TouhouGameState.POWERUP_SIZE, TouhouGameState.POWERUP_SIZE), SPEED_POWERUP_TEXTURE);
     private final Sprite doublePowerUp = new Sprite(Vec2.ZERO, new Vec2(TouhouGameState.POWERUP_SIZE, TouhouGameState.POWERUP_SIZE), DOUBLE_POWERUP_TEXTURE);

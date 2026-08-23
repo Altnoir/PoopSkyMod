@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.game.gamediscs.render;
+package com.altnoir.poopsky.game.render;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.game.client.ClientGame;

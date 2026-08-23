@@ -65,6 +65,7 @@ public final class ItemTagGen {
                 .add(
                         PoItems.GAME_DISK_ROUNDWORM.get(),
                         PoItems.GAME_DISK_BLOCKTRIS.get(),
+                        PoItems.GAME_DISK_TOUHOU.get(),
                         PoItems.GAME_DISK_PONG.get()
                 );
         tag(PoTags.Items.FLUSH_TOILET_SAVE).addTag(PoTags.Items.POOPS).addTag(PoTags.Items.SHITS);

@@ -3,7 +3,7 @@ package com.altnoir.poopsky.game.danmaku;
 import com.altnoir.poopsky.game.danmaku.script.CircleBurstScript;
 import com.altnoir.poopsky.game.danmaku.script.LineScript;
 import com.altnoir.poopsky.game.danmaku.script.ReverseCircleScript;
-import com.altnoir.poopsky.game.danmaku.script.RotatingCircleScript;
+import com.altnoir.poopsky.game.danmaku.script.FanScript;
 
 import java.util.Random;
 
@@ -20,7 +20,7 @@ public final class BossFactory {
                 id = "circle";
             }
             case 1 -> {
-                script = new RotatingCircleScript();
+                script = new FanScript();
                 id = "fan";
             }
             case 2 -> {

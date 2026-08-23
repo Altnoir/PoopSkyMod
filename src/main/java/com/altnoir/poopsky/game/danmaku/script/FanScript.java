@@ -11,7 +11,7 @@ import com.altnoir.poopsky.game.model.TouhouGameState;
 
 import java.util.Random;
 
-public class RotatingCircleScript implements BossScript {
+public class FanScript implements BossScript {
     private static final BossModifierTemplate TEMPLATE = BossModifierTemplate.builder()
             .bulletCount(UniformInt.of(10, 15))
             .attackInterval(UniformInt.of(8, 12))
