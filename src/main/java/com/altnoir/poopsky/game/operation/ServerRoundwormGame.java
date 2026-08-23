@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.game.gamediscs;
+package com.altnoir.poopsky.game.operation;
 
 import com.altnoir.poopsky.game.Button;
 import com.altnoir.poopsky.game.GameStage;

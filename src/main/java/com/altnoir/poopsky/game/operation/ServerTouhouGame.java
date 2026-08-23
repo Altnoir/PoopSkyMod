@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.game.gamediscs;
+package com.altnoir.poopsky.game.operation;
 
 import com.altnoir.poopsky.game.GameStage;
 import com.altnoir.poopsky.game.ServerGame;
@@ -36,10 +36,10 @@ public class ServerTouhouGame extends ServerGame {
             playSound(SoundEvents.WOOL_HIT, 1.2F, 0.5F);
         }
         if (result.bossKilled()) {
-            playSound(PoSoundEvents.EXPLOSION.get(), 1.0F, 1.0F);
+            playSound(PoSoundEvents.EXPLOSION.get(), 1.0F, 0.5F);
         }
         if (result.powerUpPickup()) {
-            playSound(PoSoundEvents.CLICK.get(), 1.2F, 1.0F);
+            playSound(PoSoundEvents.CLICK.get(), 1.2F, 0.5F);
         }
         if (result.playerHit()) {
             stage = GameStage.DIED;

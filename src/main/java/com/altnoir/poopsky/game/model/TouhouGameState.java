@@ -13,23 +13,26 @@ public final class TouhouGameState {
     public static final int PLAY_HEIGHT = 160;
     public static final int PLAYER_SIZE = 8;
     public static final int PLAYER_HITBOX_SIZE = 2;
-    public static final int BOSS_SIZE = 16;
-    public static final int ENEMY_BULLET_SIZE = 6;
     public static final int PLAYER_BULLET_SIZE = 4;
     public static final int PLAYER_SPEED = 1;
     public static final int PLAYER_BULLET_SPEED = 4;
-    public static final float BOSS_BULLET_DRAG = 0.995F;
     public static final int PLAYER_SHOOT_INTERVAL = 8;
     public static final int PLAYER_SHOOT_INTERVAL_FAST = 4;
+
     public static final int POWERUP_SIZE = 8;
     public static final int POWERUP_SPEED = 2;
     public static final int POWERUP_LIFE = 600;
     public static final float POWERUP_SPAWN_CHANCE = 0.15F;
+
     public static final int START_BOSS_HP = 80;
-    public static final int SCORE_PER_BOSS = 10;
+    public static final int BOSS_SIZE = 16;
+    public static final float BOSS_SCALE_MIN = 0.1F;
     public static final int BOSS_RESPAWN_DELAY = 40;
     public static final int BOSS_APPEAR_DURATION = 20;
-    public static final float BOSS_SCALE_MIN = 0.1F;
+    public static final int BOSS_BULLET_SIZE = 6;
+    public static final float BOSS_BULLET_DRAG = 0.995F;
+
+    public static final int SCORE_PER_BOSS = 5;
 
     private float playerX;
     private float playerY;
@@ -164,7 +167,7 @@ public final class TouhouGameState {
         float hitboxMinX = playerCenterX - PLAYER_HITBOX_SIZE / 2.0F;
         float hitboxMinY = playerCenterY - PLAYER_HITBOX_SIZE / 2.0F;
         for (Bullet bullet : enemyBullets) {
-            if (intersects(bullet.x, bullet.y, ENEMY_BULLET_SIZE, ENEMY_BULLET_SIZE,
+            if (intersects(bullet.x, bullet.y, BOSS_BULLET_SIZE, BOSS_BULLET_SIZE,
                     hitboxMinX, hitboxMinY, PLAYER_HITBOX_SIZE, PLAYER_HITBOX_SIZE)) {
                 return new TickResult(shot, bossHit, bossKilled, true, powerUpPickup);
             }
@@ -188,8 +191,8 @@ public final class TouhouGameState {
             float vx = (float) (Math.cos(angle) * speed);
             float vy = (float) (Math.sin(angle) * speed);
             spawnEnemyBullet(
-                    centerX - ENEMY_BULLET_SIZE / 2.0F,
-                    centerY - ENEMY_BULLET_SIZE / 2.0F,
+                    centerX - BOSS_BULLET_SIZE / 2.0F,
+                    centerY - BOSS_BULLET_SIZE / 2.0F,
                     vx, vy,
                     600,
                     maxBounces,
@@ -207,8 +210,8 @@ public final class TouhouGameState {
             float vx = (float) (Math.cos(angle) * speed);
             float vy = (float) (Math.sin(angle) * speed);
             spawnEnemyBullet(
-                    centerX - ENEMY_BULLET_SIZE / 2.0F,
-                    centerY - ENEMY_BULLET_SIZE / 2.0F,
+                    centerX - BOSS_BULLET_SIZE / 2.0F,
+                    centerY - BOSS_BULLET_SIZE / 2.0F,
                     vx, vy,
                     600,
                     maxBounces,
@@ -242,8 +245,8 @@ public final class TouhouGameState {
                 }
                 vx = Math.abs(vx);
                 bounces++;
-            } else if (x >= PLAY_WIDTH - ENEMY_BULLET_SIZE) {
-                x = PLAY_WIDTH - ENEMY_BULLET_SIZE;
+            } else if (x >= PLAY_WIDTH - BOSS_BULLET_SIZE) {
+                x = PLAY_WIDTH - BOSS_BULLET_SIZE;
                 if (Math.abs(vy) < 0.001F || bullet.maxBounces <= 0 || bounces >= bullet.maxBounces) {
                     enemyBullets.remove(i);
                     continue;
@@ -265,7 +268,7 @@ public final class TouhouGameState {
                 continue;
             }
 
-            if (bullet.removeOnBossHit && intersects(x, y, ENEMY_BULLET_SIZE, ENEMY_BULLET_SIZE,
+            if (bullet.removeOnBossHit && intersects(x, y, BOSS_BULLET_SIZE, BOSS_BULLET_SIZE,
                     bossX, bossY, BOSS_SIZE, BOSS_SIZE)) {
                 enemyBullets.remove(i);
                 continue;
@@ -581,12 +584,14 @@ public final class TouhouGameState {
     public record PowerUp(float x, float y, float vx, float vy, PowerUpType type, int life) {
     }
 
-    public record Bullet(float x, float y, float vx, float vy, int life, int bounces, int maxBounces, float acceleration, boolean removeOnBossHit) {
+    public record Bullet(float x, float y, float vx, float vy, int life, int bounces, int maxBounces,
+                         float acceleration, boolean removeOnBossHit) {
         public Bullet(float x, float y, float vx, float vy, int life, int bounces, int maxBounces, float acceleration) {
             this(x, y, vx, vy, life, bounces, maxBounces, acceleration, false);
         }
     }
 
-    public record TickResult(boolean shot, boolean bossHit, boolean bossKilled, boolean playerHit, boolean powerUpPickup) {
+    public record TickResult(boolean shot, boolean bossHit, boolean bossKilled, boolean playerHit,
+                             boolean powerUpPickup) {
     }
 }

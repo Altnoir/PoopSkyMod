@@ -1,10 +1,10 @@
 package com.altnoir.poopsky.game;
 
 import com.altnoir.poopsky.content.item.p.GameDiskItem;
-import com.altnoir.poopsky.game.gamediscs.ServerBlocktrisGame;
-import com.altnoir.poopsky.game.gamediscs.ServerPongGame;
-import com.altnoir.poopsky.game.gamediscs.ServerRoundwormGame;
-import com.altnoir.poopsky.game.gamediscs.ServerTouhouGame;
+import com.altnoir.poopsky.game.operation.ServerBlocktrisGame;
+import com.altnoir.poopsky.game.operation.ServerPongGame;
+import com.altnoir.poopsky.game.operation.ServerRoundwormGame;
+import com.altnoir.poopsky.game.operation.ServerTouhouGame;
 import com.altnoir.poopsky.init.PoItems;
 
 import java.util.List;

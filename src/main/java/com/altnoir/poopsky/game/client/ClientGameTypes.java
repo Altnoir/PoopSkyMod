@@ -3,10 +3,10 @@ package com.altnoir.poopsky.game.client;
 import com.altnoir.poopsky.content.item.p.GameDiskItem;
 import com.altnoir.poopsky.game.GameDefinition;
 import com.altnoir.poopsky.game.GameDefinitions;
-import com.altnoir.poopsky.game.gamediscs.render.ClientBlocktrisGame;
-import com.altnoir.poopsky.game.gamediscs.render.ClientPongGame;
-import com.altnoir.poopsky.game.gamediscs.render.ClientRoundwormGame;
-import com.altnoir.poopsky.game.gamediscs.render.ClientTouhouGame;
+import com.altnoir.poopsky.game.render.ClientBlocktrisGame;
+import com.altnoir.poopsky.game.render.ClientPongGame;
+import com.altnoir.poopsky.game.render.ClientRoundwormGame;
+import com.altnoir.poopsky.game.render.ClientTouhouGame;
 
 import java.util.IdentityHashMap;
 import java.util.Map;

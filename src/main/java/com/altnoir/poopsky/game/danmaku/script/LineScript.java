@@ -15,10 +15,10 @@ import java.util.Random;
 public class LineScript implements BossScript {
     private static final BossModifierTemplate TEMPLATE = BossModifierTemplate.builder()
             .bulletCount(ConstantInt.of(1))
-            .attackInterval(UniformInt.of(2, 4))
-            .bulletSpeed(UniformFloat.of(1.0F, 2.0F))
+            .attackInterval(UniformInt.of(1, 3))
+            .bulletSpeed(UniformFloat.of(2.0F, 3.0F))
             .rotation(UniformInt.of(45))
-            .angleStep(UniformInt.of(5))
+            .angleStep(UniformInt.of(3))
             .build();
 
     private final RotationState rotation = new RotationState();

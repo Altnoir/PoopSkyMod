@@ -37,8 +37,8 @@ public class ReverseCircleScript implements BossScript {
             float centerX = state.getBossCenterX();
             float centerY = state.getBossCenterY();
 
-            float edgeWidth = TouhouGameState.PLAY_WIDTH - TouhouGameState.ENEMY_BULLET_SIZE;
-            float edgeHeight = TouhouGameState.PLAY_HEIGHT - TouhouGameState.ENEMY_BULLET_SIZE;
+            float edgeWidth = TouhouGameState.PLAY_WIDTH - TouhouGameState.BOSS_BULLET_SIZE;
+            float edgeHeight = TouhouGameState.PLAY_HEIGHT - TouhouGameState.BOSS_BULLET_SIZE;
             float perimeter = 2.0F * (edgeWidth + edgeHeight);
             int angle = rotation.next(boss.getRotation(), boss.getAngleStep());
             float perimeterOffset = angle / 360.0F * perimeter;
