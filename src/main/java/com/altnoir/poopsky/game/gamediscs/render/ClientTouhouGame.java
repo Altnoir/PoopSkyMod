@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.game.gamediscs.render;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.game.GameStage;
 import com.altnoir.poopsky.game.client.ClientGame;
 import com.altnoir.poopsky.game.client.graphics.Sprite;
 import com.altnoir.poopsky.game.model.TouhouGameState;
@@ -56,7 +57,7 @@ public class ClientTouhouGame extends ClientGame {
         player.setPos(new Vec2(GAME_OFFSET_X + state.getPlayerX(), state.getPlayerY()));
         player.render(graphics, posX, posY);
 
-        if (state.getBossSpawnTimer() == 0) {
+        if (getStage() == GameStage.PLAYING && state.getBossSpawnTimer() == 0) {
             float scale = state.getBossScale() * state.getBossHitScale();
             float scaledSize = TouhouGameState.BOSS_SIZE * scale;
             float offset = (TouhouGameState.BOSS_SIZE - scaledSize) / 2.0F;

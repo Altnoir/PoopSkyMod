@@ -38,13 +38,13 @@ public class ArcadeBlockEntityRenderer implements BlockEntityRenderer<ArcadeBloc
             return;
         }
 
-        renderRewardText(blockEntity, poseStack, bufferSource, packedLight, state);
-
         ItemStack cartridge = blockEntity.getCartridge();
         ResourceLocation texture = ArcadeWorldScreenRenderer.getScreenTexture(blockEntity.getBlockPos(), cartridge);
         if (texture == null) {
             return;
         }
+
+        renderRewardText(blockEntity, poseStack, bufferSource, packedLight, state);
 
         poseStack.pushPose();
         poseStack.translate(0.5F, 1.5F, 0.5F);

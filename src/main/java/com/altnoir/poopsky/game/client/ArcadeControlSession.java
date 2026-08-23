@@ -20,6 +20,12 @@ import java.util.EnumSet;
 
 public final class ArcadeControlSession {
     private static final EnumSet<Button> HELD_BUTTONS = EnumSet.noneOf(Button.class);
+    private static final float FOV_TRANSITION_DURATION = 0.2F;
+    private static final float ARCADE_FOV_MULTIPLIER = 0.75F;
+
+    private static float currentFovMultiplier = 1.0F;
+    private static float targetFovMultiplier = 1.0F;
+    private static long lastFovUpdateNanos = System.nanoTime();
 
     @Nullable
     private static BlockPos machinePos;
@@ -32,12 +38,22 @@ public final class ArcadeControlSession {
     }
 
     public static float getFovMultiplier() {
-        return isActive() ? 0.8F : 1.0F;
+        long now = System.nanoTime();
+        float deltaSeconds = Math.min((now - lastFovUpdateNanos) / 1_000_000_000.0F, 0.05F);
+        lastFovUpdateNanos = now;
+
+        float progress = Math.min(1.0F, deltaSeconds / FOV_TRANSITION_DURATION);
+        currentFovMultiplier += (targetFovMultiplier - currentFovMultiplier) * progress;
+        if (Math.abs(currentFovMultiplier - targetFovMultiplier) < 0.001F) {
+            currentFovMultiplier = targetFovMultiplier;
+        }
+        return currentFovMultiplier;
     }
 
     public static void enter(BlockPos pos) {
         clear();
         machinePos = pos;
+        targetFovMultiplier = ARCADE_FOV_MULTIPLIER;
     }
 
     public static void onKeyInput(InputEvent.Key event) {
@@ -124,6 +140,7 @@ public final class ArcadeControlSession {
 
     public static void clear() {
         machinePos = null;
+        targetFovMultiplier = 1.0F;
         HELD_BUTTONS.clear();
     }
 

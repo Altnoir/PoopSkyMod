@@ -19,6 +19,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
@@ -317,8 +318,12 @@ public class ArcadeBlockEntity extends BlockEntity {
         while (rewardCount > 0) {
             List<ItemStack> rewards = rollRewards();
             rewardCount--;
-            spawnRewards(rewards);
+            spawnRewardsSilent(rewards);
         }
+
+        Direction facing = getBlockState().getValue(ArcadeBlock.FACING);
+        level.playSound(null, getBlockPos(), SoundEvents.DISPENSER_DISPENSE, SoundSource.BLOCKS, 1.0F, 1.0F);
+        level.levelEvent(2000, getBlockPos(), facing.get3DDataValue());
         markStatusChanged();
     }
 
@@ -341,6 +346,21 @@ public class ArcadeBlockEntity extends BlockEntity {
         Direction facing = getBlockState().getValue(ArcadeBlock.FACING);
         for (ItemStack stack : rewards) {
             DispenseUtil.spawnItem(serverLevel, stack, 0.1, facing, getBlockPos());
+        }
+    }
+
+    private void spawnRewardsSilent(List<ItemStack> rewards) {
+        if (!(level instanceof ServerLevel serverLevel)) {
+            return;
+        }
+        Direction facing = getBlockState().getValue(ArcadeBlock.FACING);
+        for (ItemStack stack : rewards) {
+            Vec3 spawnPos = Vec3.atCenterOf(getBlockPos())
+                    .add(facing.getStepX() * 0.7, 0.1 - 0.5, facing.getStepZ() * 0.7);
+            ItemEntity itemEntity = new ItemEntity(serverLevel, spawnPos.x(), spawnPos.y(), spawnPos.z(), stack);
+            itemEntity.setDeltaMovement(facing.getStepX() * 0.1, 0.1, facing.getStepZ() * 0.1);
+            itemEntity.setDefaultPickUpDelay();
+            serverLevel.addFreshEntity(itemEntity);
         }
     }
 

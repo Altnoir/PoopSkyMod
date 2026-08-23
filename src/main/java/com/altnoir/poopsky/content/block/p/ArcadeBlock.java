@@ -192,6 +192,15 @@ public class ArcadeBlock extends Block implements EntityBlock {
             return InteractionResult.PASS;
         }
 
+        if (player.isShiftKeyDown()) {
+            if (arcade.hasCartridge()) {
+                ejectCartridge(level, player, arcade);
+            } else {
+                showNoCartridge(level, player);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+
         if (handleControlExit(level, player, arcade)) {
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
@@ -225,6 +234,15 @@ public class ArcadeBlock extends Block implements EntityBlock {
                 return ItemInteractionResult.sidedSuccess(level.isClientSide);
             }
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        }
+
+        if (player.isShiftKeyDown()) {
+            if (arcade.hasCartridge()) {
+                ejectCartridge(level, player, arcade);
+            } else {
+                showNoCartridge(level, player);
+            }
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
 
         if (handleControlExit(level, player, arcade)) {
