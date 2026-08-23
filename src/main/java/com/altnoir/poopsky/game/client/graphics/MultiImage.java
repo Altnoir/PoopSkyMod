@@ -4,17 +4,17 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.resources.Identifier;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
-public class MultiImage extends Renderer {
-    private final List<Image> images = new ArrayList<>();
-    private int current = 0;
+public class MultiImage implements Renderer {
+    private final List<Image> images;
+    private int current;
 
     public MultiImage(Identifier file, int fileWidth, int fileHeight, List<Rect2i> rects) {
-        for (Rect2i rect : rects) {
-            images.add(new Image(file, fileWidth, fileHeight, rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight()));
-        }
+        images = rects.stream()
+                .map(rect -> new Image(file, fileWidth, fileHeight, rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight()))
+                .toList();
     }
 
     public MultiImage(Identifier file, int fileWidth, int fileHeight, int count) {
@@ -22,11 +22,10 @@ public class MultiImage extends Renderer {
     }
 
     public static List<Rect2i> fromFile(int fileWidth, int fileHeight, int count) {
-        List<Rect2i> rects = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            rects.add(new Rect2i(0, fileHeight / count * i, fileWidth, fileHeight / count));
-        }
-        return rects;
+        int imageHeight = fileHeight / count;
+        return IntStream.range(0, count)
+                .mapToObj(i -> new Rect2i(0, imageHeight * i, fileWidth, imageHeight))
+                .toList();
     }
 
     public MultiImage setImage(int index) {
@@ -40,8 +39,9 @@ public class MultiImage extends Renderer {
 
     @Override
     public void render(GuiGraphicsExtractor graphics, int posX, int posY) {
-        if (count() > 0) {
+        if (!images.isEmpty()) {
             images.get(current).render(graphics, posX, posY);
         }
     }
 }
+

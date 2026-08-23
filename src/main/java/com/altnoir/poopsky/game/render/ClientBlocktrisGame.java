@@ -30,10 +30,6 @@ public class ClientBlocktrisGame extends ClientGame {
     private BlocktrisPiece piece = new BlocktrisPiece(0, 4, 1, 0, grid);
     private final List<BlocktrisPiece> nexts = new ArrayList<>();
 
-    public ClientBlocktrisGame() {
-        super();
-    }
-
     private static Grid createGrid() {
         return new Grid(
                 GRID_WIDTH,
@@ -73,10 +69,7 @@ public class ClientBlocktrisGame extends ClientGame {
         grid.render(graphics, posX + BOARD_X, posY);
         piece.render(graphics, posX + BOARD_X, posY);
 
-        for (int i = 0; i < nexts.size(); i++) {
-            BlocktrisPiece next = nexts.get(i);
-            next.setRotation(1);
-            next.setPos(NEXT_CELL_X, 4 + i * 3);
+        for (BlocktrisPiece next : nexts) {
             next.renderCentered(graphics, posX, posY);
         }
 

@@ -4,37 +4,33 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 public class Grid {
     private final int[][] map;
-    private final int size;
+    private final int tileSize;
     private final MultiImage images;
 
     public Grid(int width, int height, int tileSize, MultiImage images) {
         map = new int[width][height];
-        size = tileSize;
+        this.tileSize = tileSize;
         this.images = images;
     }
 
     public int tileSize() {
-        return size;
+        return tileSize;
     }
 
     public void set(int x, int y, int value) {
         map[x][y] = value;
     }
 
-    public MultiImage getImages() {
-        return images;
-    }
-
     public void render(GuiGraphicsExtractor graphics, int posX, int posY) {
         for (int x = 0; x < map.length; x++) {
             for (int y = 0; y < map[x].length; y++) {
-                renderTile(graphics, posX, posY, x, y);
+                renderImage(graphics, posX + x * tileSize, posY + y * tileSize, map[x][y]);
             }
         }
     }
 
-    private void renderTile(GuiGraphicsExtractor graphics, int posX, int posY, int x, int y) {
-        images.setImage(map[x][y]);
-        images.render(graphics, posX + x * size, posY + y * size);
+    public void renderImage(GuiGraphicsExtractor graphics, int posX, int posY, int image) {
+        images.setImage(image).render(graphics, posX, posY);
     }
 }
+

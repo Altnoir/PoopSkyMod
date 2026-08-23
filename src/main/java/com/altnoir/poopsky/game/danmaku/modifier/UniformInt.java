@@ -8,7 +8,7 @@ public record UniformInt(int min, int max) implements IntProvider {
     }
 
     public static IntProvider of(int value) {
-        return ConstantInt.of(value);
+        return random -> value;
     }
 
     @Override

@@ -2,7 +2,7 @@ package com.altnoir.poopsky.game.render;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.game.client.ClientGame;
-import com.altnoir.poopsky.game.client.graphics.DirectionalImage;
+import com.altnoir.poopsky.game.client.graphics.MultiImage;
 import com.altnoir.poopsky.game.client.graphics.Sprite;
 import com.altnoir.poopsky.game.model.RoundwormGameState;
 import com.altnoir.poopsky.game.util.VecUtil;
@@ -14,12 +14,12 @@ import net.minecraft.world.phys.Vec2;
 import java.util.List;
 
 public class ClientRoundwormGame extends ClientGame {
-    private final DirectionalImage HEAD = new DirectionalImage(
-            PoopSky.loc("textures/games/sprite/roundworm_head.png"), 8, 32);
-    private final DirectionalImage TAIL = new DirectionalImage(
-            PoopSky.loc("textures/games/sprite/roundworm_tail.png"), 8, 32);
-    private final DirectionalImage CONNECTION = new DirectionalImage(
-            PoopSky.loc("textures/games/sprite/roundworm_connection.png"), 8, 32);
+    private final MultiImage HEAD = new MultiImage(
+            PoopSky.loc("textures/games/sprite/roundworm_head.png"), 8, 32, 4);
+    private final MultiImage TAIL = new MultiImage(
+            PoopSky.loc("textures/games/sprite/roundworm_tail.png"), 8, 32, 4);
+    private final MultiImage CONNECTION = new MultiImage(
+            PoopSky.loc("textures/games/sprite/roundworm_connection.png"), 8, 32, 4);
     private static final Identifier BODY = PoopSky.loc("textures/games/sprite/roundworm_body.png");
     private static final Identifier SHIT = PoopSky.loc("textures/games/sprite/shit.png");
 
@@ -29,10 +29,6 @@ public class ClientRoundwormGame extends ClientGame {
     private final RoundwormGameState state = new RoundwormGameState();
     private final Sprite roundwormRenderer = new Sprite(Vec2.ZERO, new Vec2(TILE_SIZE, TILE_SIZE), BODY);
     private final Sprite shit = new Sprite(Vec2.ZERO, new Vec2(TILE_SIZE, TILE_SIZE), SHIT);
-
-    public ClientRoundwormGame() {
-        super();
-    }
 
     @Override
     public void applySnapshot(CompoundTag tag) {
@@ -60,12 +56,11 @@ public class ClientRoundwormGame extends ClientGame {
             roundwormRenderer.render(graphics, posX, posY);
 
             if (i + 1 < roundworm.size()) {
-                roundwormRenderer.setPos(calcPos(part.add(VecUtil.getFrom(VecUtil.get4DirectionTo(part, roundworm.get(i + 1))).scale(0.5f))));
+                roundwormRenderer.setPos(calcPos(part.add(VecUtil.getFrom(VecUtil.get4DirectionTo(part, roundworm.get(i + 1))).scale(0.5F))));
                 roundwormRenderer.setImage(CONNECTION.setImage(VecUtil.get4DirectionTo(part, roundworm.get(i + 1))));
                 roundwormRenderer.render(graphics, posX, posY);
             }
         }
-
     }
 
     private Vec2 calcPos(Vec2 tile) {
@@ -76,5 +71,5 @@ public class ClientRoundwormGame extends ClientGame {
     public Identifier getBackground() {
         return PoopSky.loc("textures/games/background/roundworm_background.png");
     }
-
 }
+
