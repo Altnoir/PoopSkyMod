@@ -12,7 +12,7 @@ public final class TouhouGameState {
     public static final int PLAY_WIDTH = 144;
     public static final int PLAY_HEIGHT = 160;
     public static final int PLAYER_SIZE = 8;
-    public static final int PLAYER_HITBOX_SIZE = 2;
+    public static final int PLAYER_HITBOX_SIZE = 1;
     public static final int PLAYER_BULLET_SIZE = 4;
     public static final int PLAYER_SPEED = 2;
     public static final float FOCUS_SPEED_MULTIPLIER = 0.5F;
@@ -47,11 +47,10 @@ public final class TouhouGameState {
     private int shootCooldown;
     private int bossSpawnTimer;
     private int bossAppearTimer;
-    private int bossHitTicks;
     private float bossScale = 1.0F;
     private boolean hasSpeedBoost;
     private boolean hasDoubleShot;
-    private Boss boss;
+    private final List<ActiveBoss> bosses = new ArrayList<>();
     private final List<Bullet> enemyBullets = new ArrayList<>();
     private final List<Bullet> playerBullets = new ArrayList<>();
     private final List<PowerUp> powerUps = new ArrayList<>();
@@ -79,8 +78,10 @@ public final class TouhouGameState {
         playerX = Math.clamp(playerX, 0, PLAY_WIDTH - PLAYER_SIZE);
         playerY = Math.clamp(playerY, 0, PLAY_HEIGHT - PLAYER_SIZE);
 
-        if (bossHitTicks > 0) {
-            bossHitTicks--;
+        for (ActiveBoss activeBoss : bosses) {
+            if (activeBoss.hitTicks > 0) {
+                activeBoss.hitTicks--;
+            }
         }
 
         boolean shot = false;
@@ -131,8 +132,17 @@ public final class TouhouGameState {
             }
             bossScale = Math.min(1.0F, BOSS_SCALE_MIN + (bossAppearTimer / (float) BOSS_APPEAR_DURATION) * (1.0F - BOSS_SCALE_MIN));
 
-            if (boss != null && bossAppearTimer >= BOSS_APPEAR_DURATION) {
-                boss.tick(this, random);
+            if (bossAppearTimer >= BOSS_APPEAR_DURATION) {
+                for (ActiveBoss activeBoss : bosses) {
+                    if (activeBoss.boss == null) {
+                        continue;
+                    }
+                    bossX = activeBoss.x;
+                    bossY = activeBoss.y;
+                    activeBoss.boss.tick(this, random);
+                    activeBoss.x = bossX;
+                    activeBoss.y = bossY;
+                }
             }
         }
 
@@ -144,14 +154,28 @@ public final class TouhouGameState {
         if (bossSpawnTimer == 0) {
             for (int i = playerBullets.size() - 1; i >= 0; i--) {
                 Bullet bullet = playerBullets.get(i);
-                if (intersects(bullet.x, bullet.y, PLAYER_BULLET_SIZE, PLAYER_BULLET_SIZE,
-                        bossX, bossY, BOSS_SIZE, BOSS_SIZE)) {
+                ActiveBoss hitBoss = null;
+                for (ActiveBoss activeBoss : bosses) {
+                    if (intersects(bullet.x, bullet.y, PLAYER_BULLET_SIZE, PLAYER_BULLET_SIZE,
+                            activeBoss.x, activeBoss.y, BOSS_SIZE, BOSS_SIZE)) {
+                        hitBoss = activeBoss;
+                        break;
+                    }
+                }
+
+                if (hitBoss != null) {
                     removeUnordered(playerBullets, i);
+                    hitBoss.hp--;
                     bossHp--;
                     bossHit = true;
-                    bossHitTicks = 2;
+                    hitBoss.hitTicks = 2;
                     trySpawnPowerUp(random);
-                    if (bossHp <= 0) {
+
+                    if (hitBoss.hp <= 0) {
+                        bosses.remove(hitBoss);
+                    }
+
+                    if (bosses.isEmpty()) {
                         bossKilled = true;
                         score += SCORE_PER_BOSS;
                         wave++;
@@ -264,10 +288,19 @@ public final class TouhouGameState {
                 continue;
             }
 
-            if (bullet.removeOnBossHit && intersects(bullet.x, bullet.y, BOSS_BULLET_SIZE, BOSS_BULLET_SIZE,
-                    bossX, bossY, BOSS_SIZE, BOSS_SIZE)) {
-                removeUnordered(enemyBullets, i);
-                continue;
+            if (bullet.removeOnBossHit) {
+                boolean hitBoss = false;
+                for (ActiveBoss activeBoss : bosses) {
+                    if (intersects(bullet.x, bullet.y, BOSS_BULLET_SIZE, BOSS_BULLET_SIZE,
+                            activeBoss.x, activeBoss.y, BOSS_SIZE, BOSS_SIZE)) {
+                        hitBoss = true;
+                        break;
+                    }
+                }
+                if (hitBoss) {
+                    removeUnordered(enemyBullets, i);
+                    continue;
+                }
             }
 
             if (bullet.acceleration > 0) {
@@ -375,14 +408,67 @@ public final class TouhouGameState {
 
 
     private void spawnBoss(Random random) {
-        bossMaxHp = START_BOSS_HP + wave * 5;
-        bossHp = bossMaxHp;
-        bossX = PLAY_WIDTH / 2.0F - BOSS_SIZE / 2.0F;
-        bossY = 12;
+        bosses.clear();
+
+        int count = bossCountForWave(wave);
+        int baseMaxHp = START_BOSS_HP + wave * 5;
+        float[][] positions = bossPositions(count);
+
+        for (int i = 0; i < count; i++) {
+            Boss boss = BossFactory.createRandomBoss(random, wave);
+            bosses.add(new ActiveBoss(
+                    boss,
+                    positions[i][0],
+                    positions[i][1],
+                    baseMaxHp,
+                    baseMaxHp
+            ));
+        }
+
+        bossMaxHp = 0;
+        bossHp = 0;
+        for (ActiveBoss activeBoss : bosses) {
+            bossMaxHp += activeBoss.maxHp;
+            bossHp += activeBoss.hp;
+        }
+
+        bossX = bosses.getFirst().x;
+        bossY = bosses.getFirst().y;
         bossSpawnTimer = 0;
         bossAppearTimer = 0;
         bossScale = BOSS_SCALE_MIN;
-        boss = BossFactory.createRandomBoss(random, wave);
+    }
+
+    private static int bossCountForWave(int wave) {
+        if (wave >= 9) {
+            return 3;
+        }
+        if (wave >= 4) {
+            return 2;
+        }
+        return 1;
+    }
+
+    private static float[][] bossPositions(int count) {
+        float centerX = PLAY_WIDTH / 2.0F - BOSS_SIZE / 2.0F;
+        float topY = 12.0F;
+        float sideY = 30.0F;
+        float sideOffset = 30.0F;
+
+        if (count == 2) {
+            return new float[][]{
+                    {centerX - sideOffset, topY},
+                    {centerX + sideOffset, topY}
+            };
+        }
+        if (count == 3) {
+            return new float[][]{
+                    {centerX - sideOffset, sideY},
+                    {centerX, topY},
+                    {centerX + sideOffset, sideY}
+            };
+        }
+        return new float[][]{{centerX, topY}};
     }
 
     private static boolean intersects(float ax, float ay, float aw, float ah,
@@ -406,6 +492,10 @@ public final class TouhouGameState {
         return playerY;
     }
 
+    public List<ActiveBoss> getBosses() {
+        return bosses;
+    }
+
     public float getBossX() {
         return bossX;
     }
@@ -414,12 +504,20 @@ public final class TouhouGameState {
         return bossY;
     }
 
+    public void setBossX(float bossX) {
+        this.bossX = bossX;
+    }
+
+    public void setBossY(float bossY) {
+        this.bossY = bossY;
+    }
+
     public float getBossScale() {
         return bossScale;
     }
 
-    public float getBossHitScale() {
-        return bossHitTicks > 0 ? 0.8F : 1.0F;
+    public float getBossHitScale(ActiveBoss activeBoss) {
+        return activeBoss.hitTicks > 0 ? 0.8F : 1.0F;
     }
 
     public int getBossSpawnTimer() {
@@ -474,10 +572,19 @@ public final class TouhouGameState {
         tag.putInt("shootCooldown", shootCooldown);
         tag.putInt("bossSpawnTimer", bossSpawnTimer);
         tag.putInt("bossAppearTimer", bossAppearTimer);
-        tag.putInt("bossHitTicks", bossHitTicks);
         tag.putFloat("bossScale", bossScale);
         tag.putBoolean("hasSpeedBoost", hasSpeedBoost);
         tag.putBoolean("hasDoubleShot", hasDoubleShot);
+
+        tag.putInt("bossCount", bosses.size());
+        for (int i = 0; i < bosses.size(); i++) {
+            ActiveBoss activeBoss = bosses.get(i);
+            tag.putFloat("bossX" + i, activeBoss.x);
+            tag.putFloat("bossY" + i, activeBoss.y);
+            tag.putInt("bossHp" + i, activeBoss.hp);
+            tag.putInt("bossMaxHp" + i, activeBoss.maxHp);
+            tag.putInt("bossHitTicks" + i, activeBoss.hitTicks);
+        }
 
         tag.putInt("powerUpCount", powerUps.size());
         for (int i = 0; i < powerUps.size(); i++) {
@@ -506,10 +613,33 @@ public final class TouhouGameState {
         shootCooldown = tag.getInt("shootCooldown");
         bossSpawnTimer = tag.getInt("bossSpawnTimer");
         bossAppearTimer = tag.getInt("bossAppearTimer");
-        bossHitTicks = tag.getInt("bossHitTicks");
         bossScale = tag.getFloat("bossScale");
         hasSpeedBoost = tag.getBoolean("hasSpeedBoost");
         hasDoubleShot = tag.getBoolean("hasDoubleShot");
+
+        bosses.clear();
+        int bossCount = tag.getInt("bossCount");
+        if (bossCount > 0) {
+            for (int i = 0; i < bossCount; i++) {
+                ActiveBoss activeBoss = new ActiveBoss(
+                        null,
+                        tag.getFloat("bossX" + i),
+                        tag.getFloat("bossY" + i),
+                        tag.getInt("bossHp" + i),
+                        tag.getInt("bossMaxHp" + i)
+                );
+                activeBoss.hitTicks = tag.getInt("bossHitTicks" + i);
+                bosses.add(activeBoss);
+            }
+        } else if (tag.contains("bossX")) {
+            bosses.add(new ActiveBoss(
+                    null,
+                    tag.getFloat("bossX"),
+                    tag.getFloat("bossY"),
+                    tag.getInt("bossHp"),
+                    tag.getInt("bossMaxHp")
+            ));
+        }
 
         powerUps.clear();
         int powerUpCount = tag.getInt("powerUpCount");
@@ -559,6 +689,23 @@ public final class TouhouGameState {
     }
 
     public record PowerUp(float x, float y, float vx, float vy, PowerUpType type, int life) {
+    }
+
+    public static final class ActiveBoss {
+        public Boss boss;
+        public float x;
+        public float y;
+        public int hp;
+        public int maxHp;
+        public int hitTicks;
+
+        public ActiveBoss(Boss boss, float x, float y, int hp, int maxHp) {
+            this.boss = boss;
+            this.x = x;
+            this.y = y;
+            this.hp = hp;
+            this.maxHp = maxHp;
+        }
     }
 
     public static final class Bullet {

@@ -65,11 +65,14 @@ public class ClientTouhouGame extends ClientGame {
         player.render(graphics, posX, posY);
 
         if (getStage() == GameStage.PLAYING && state.getBossSpawnTimer() == 0) {
-            float scale = state.getBossScale() * state.getBossHitScale();
-            float scaledSize = TouhouGameState.BOSS_SIZE * scale;
-            float offset = (TouhouGameState.BOSS_SIZE - scaledSize) / 2.0F;
-            boss.setPos(GAME_OFFSET_X + state.getBossX() + offset, state.getBossY() + offset);
-            boss.renderScaled(graphics, posX, posY, scale);
+            for (TouhouGameState.ActiveBoss activeBoss : state.getBosses()) {
+                float scale = state.getBossScale() * state.getBossHitScale(activeBoss);
+                float scaledSize = TouhouGameState.BOSS_SIZE * scale;
+                float offset = (TouhouGameState.BOSS_SIZE - scaledSize) / 2.0F;
+
+                boss.setPos(GAME_OFFSET_X + activeBoss.x + offset, activeBoss.y + offset);
+                boss.renderScaled(graphics, posX, posY, scale);
+            }
         }
 
         renderInfo(graphics, posX, posY);

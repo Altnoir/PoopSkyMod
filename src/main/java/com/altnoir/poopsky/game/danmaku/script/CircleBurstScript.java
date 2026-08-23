@@ -6,6 +6,7 @@ import com.altnoir.poopsky.game.danmaku.BossScript;
 import com.altnoir.poopsky.game.danmaku.modifier.BossModifierTemplate;
 import com.altnoir.poopsky.game.danmaku.modifier.UniformFloat;
 import com.altnoir.poopsky.game.danmaku.modifier.UniformInt;
+import com.altnoir.poopsky.game.danmaku.movement.LeftRightBossMovement;
 import com.altnoir.poopsky.game.model.TouhouGameState;
 
 import java.util.Random;
@@ -15,7 +16,9 @@ public class CircleBurstScript implements BossScript {
             .bulletCount(UniformInt.of(25, 40))
             .maxBounces(UniformInt.of(1, 0))
             .attackInterval(UniformInt.of(4, 8))
-            .bulletSpeed(UniformFloat.of(1.5F, 2.5F))
+            .bulletSpeed(UniformFloat.of(2.0F, 3.0F))
+            .movement(new LeftRightBossMovement(30.0F, 1.0F))
+            .movementWave(2, true)
             .build();
     private static final int BURST_VOLLEYS = 4;
     private static final int IDLE_TICKS = 40;

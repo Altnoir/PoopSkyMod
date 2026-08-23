@@ -7,6 +7,7 @@ import com.altnoir.poopsky.game.danmaku.RotationState;
 import com.altnoir.poopsky.game.danmaku.modifier.BossModifierTemplate;
 import com.altnoir.poopsky.game.danmaku.modifier.UniformFloat;
 import com.altnoir.poopsky.game.danmaku.modifier.UniformInt;
+import com.altnoir.poopsky.game.danmaku.movement.OrbitBossMovement;
 import com.altnoir.poopsky.game.model.TouhouGameState;
 
 import java.util.Random;
@@ -15,9 +16,11 @@ public class LineScript implements BossScript {
     private static final BossModifierTemplate TEMPLATE = BossModifierTemplate.builder()
             .bulletCount(UniformInt.of(1))
             .attackInterval(UniformInt.of(4, 6))
-            .bulletSpeed(UniformFloat.of(1.5F, 2.5F))
-            .rotation(UniformInt.of(45))
+            .bulletSpeed(UniformFloat.of(1.5F, 3.0F))
+            .rotation(UniformInt.of(40))
             .angleStep(UniformInt.of(5))
+            .movement(new OrbitBossMovement(40.0F, 1.0F))
+            .movementWave(2, true)
             .build();
 
     private final RotationState rotation = new RotationState();
