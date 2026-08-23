@@ -1,49 +1,55 @@
 package com.altnoir.poopsky.mixin;
 
 import com.altnoir.poopsky.init.PoItems;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-@Mixin(value = Villager.class)
+@Mixin(Villager.class)
 public class VillagerMixin {
-    @Redirect(
+    @WrapOperation(
             method = "eatUntilFull",
             at = @At(value = "INVOKE", target = "Ljava/util/Map;get(Ljava/lang/Object;)Ljava/lang/Object;", remap = false, ordinal = 0)
     )
-    private static Object redirectFoodPointsGet(Map<Item, Integer> map, Object item) {
-        if (map == Villager.FOOD_POINTS && item == PoItems.POOP.get()) return 1;
-        return item instanceof Item key ? map.get(key) : null;
+    private Object poopsky$foodPointsGet(Map<Item, Integer> map, Object item, Operation<Object> original) {
+        Object value = original.call(map, item);
+        if (value == null && map == Villager.FOOD_POINTS && item == PoItems.POOP.get()) {
+            return 1;
+        }
+        return value;
     }
 
-    @Redirect(
+    @WrapOperation(
             method = "countFoodPointsInInventory",
             at = @At(value = "INVOKE", target = "Ljava/util/Map;entrySet()Ljava/util/Set;", remap = false, ordinal = 0)
     )
-    private static Set<Map.Entry<Item, Integer>> redirectEntrySet(Map<Item, Integer> item) {
+    private Set<Map.Entry<Item, Integer>> poopsky$foodPointsEntrySet(
+            Map<Item, Integer> item, Operation<Set<Map.Entry<Item, Integer>>> original) {
         if (item == Villager.FOOD_POINTS) {
-            Map<Item, Integer> FoodPoints = new HashMap<>(item);
-            FoodPoints.put(PoItems.POOP.get(), 1);
-            return FoodPoints.entrySet();
+            Map<Item, Integer> foodPoints = new HashMap<>();
+            original.call(item).forEach(entry -> foodPoints.put(entry.getKey(), entry.getValue()));
+            foodPoints.putIfAbsent(PoItems.POOP.get(), 1);
+            return foodPoints.entrySet();
         }
-        return item.entrySet();
+        return original.call(item);
     }
 
-    @Inject(method = "wantsToPickUp", at = @At("HEAD"), cancellable = true)
-    private void poopsky$acceptPoopAndMaggots(ServerLevel level, ItemStack itemStack, CallbackInfoReturnable<Boolean> cir) {
-        if ((itemStack.is(PoItems.POOP) || itemStack.is(PoItems.MAGGOTS_SEEDS))
-                && ((Villager) (Object) this).getInventory().canAddItem(itemStack)) {
-            cir.setReturnValue(true);
+    @ModifyReturnValue(method = "wantsToPickUp", at = @At("RETURN"))
+    private boolean poopsky$wantsToPickUp(boolean original, ServerLevel level, ItemStack itemStack) {
+        if (original) {
+            return true;
         }
+        return (itemStack.is(PoItems.POOP) || itemStack.is(PoItems.MAGGOTS_SEEDS))
+                && ((Villager) (Object) this).getInventory().canAddItem(itemStack);
     }
 }

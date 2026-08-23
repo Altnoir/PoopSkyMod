@@ -90,7 +90,6 @@ public class ArcadeBlock extends Block implements EntityBlock {
     }
 
     @Nullable
-    @SuppressWarnings("unchecked")
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide() || type != PoBlockEntityType.ARCADE_BLOCK_ENTITY.get()) {

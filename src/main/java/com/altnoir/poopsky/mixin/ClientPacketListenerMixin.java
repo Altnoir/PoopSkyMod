@@ -11,10 +11,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(value = ClientPacketListener.class)
+@Mixin(ClientPacketListener.class)
 public class ClientPacketListenerMixin {
     @Inject(method = "handleSetEntityPassengersPacket", at = @At("TAIL"))
-    private static void replaceToiletPlugDismountMessage(ClientboundSetPassengersPacket packet, CallbackInfo ci) {
+    private void poopsky$replaceToiletPlugDismountMessage(ClientboundSetPassengersPacket packet, CallbackInfo ci) {
         var minecraft = Minecraft.getInstance();
         if (minecraft.player != null && minecraft.player.getVehicle() instanceof ToiletPlugEntity) {
             minecraft.gui.setOverlayMessage(Component.translatable(

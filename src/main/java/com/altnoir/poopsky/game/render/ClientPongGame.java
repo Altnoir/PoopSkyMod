@@ -64,7 +64,7 @@ public class ClientPongGame extends ClientGame {
 
         long now = System.nanoTime();
         if (lastSnapshotNanos != 0) {
-            interpolationTime = Math.max(25_000_000L, Math.min(now - lastSnapshotNanos, 100_000_000L));
+            interpolationTime = Math.clamp(now - lastSnapshotNanos, 25_000_000L, 100_000_000L);
         }
         lastSnapshotNanos = now;
         interpolationStartNanos = now;
