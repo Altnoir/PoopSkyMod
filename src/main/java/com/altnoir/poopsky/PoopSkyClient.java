@@ -255,7 +255,7 @@ public class PoopSkyClient {
         }
 
         public static void onComputeFov(ViewportEvent.ComputeFov event) {
-            double multiplier = TimeBellOverlay.getFovMultiplier();
+            double multiplier = TimeBellOverlay.getFovMultiplier() * ArcadeControlSession.getFovMultiplier();
             if (multiplier != 1.0) {
                 event.setFOV((float) Math.min(event.getFOV() * multiplier, TimeBellOverlay.MAX_FOV));
             }

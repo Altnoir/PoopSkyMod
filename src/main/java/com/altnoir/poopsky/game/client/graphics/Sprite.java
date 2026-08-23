@@ -48,4 +48,8 @@ public class Sprite {
     public void render(GuiGraphicsExtractor graphics, int gameX, int gameY) {
         image.render(graphics, gameX + (int) pos.x, gameY + (int) pos.y);
     }
+
+    public void renderScaled(GuiGraphicsExtractor graphics, int gameX, int gameY, float scale) {
+        image.renderScaled(graphics, gameX + (int) pos.x, gameY + (int) pos.y, scale);
+    }
 }

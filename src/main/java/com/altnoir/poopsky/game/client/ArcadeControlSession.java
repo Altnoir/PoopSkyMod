@@ -31,6 +31,10 @@ public final class ArcadeControlSession {
         return machinePos != null;
     }
 
+    public static float getFovMultiplier() {
+        return isActive() ? 0.8F : 1.0F;
+    }
+
     public static void enter(BlockPos pos) {
         clear();
         machinePos = pos;

@@ -96,7 +96,7 @@ public class ClientBlocktrisGame extends ClientGame {
 
     @Override
     public Identifier getBackground() {
-        return PoopSky.loc("textures/games/background/blocktris_bakground.png");
+        return PoopSky.loc("textures/games/background/blocktris_background.png");
     }
 
     @Override

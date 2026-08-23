@@ -4,6 +4,7 @@ import com.altnoir.poopsky.content.item.p.GameDiskItem;
 import com.altnoir.poopsky.game.gamediscs.ServerBlocktrisGame;
 import com.altnoir.poopsky.game.gamediscs.ServerPongGame;
 import com.altnoir.poopsky.game.gamediscs.ServerRoundwormGame;
+import com.altnoir.poopsky.game.gamediscs.ServerTouhouGame;
 import com.altnoir.poopsky.init.PoItems;
 
 import java.util.List;
@@ -13,25 +14,36 @@ public final class GameDefinitions {
             "roundworm",
             "RoundwormGame",
             PoItems.GAME_DISK_ROUNDWORM,
-            ServerRoundwormGame::new
+            ServerRoundwormGame::new,
+            GameSyncMode.SNAPSHOT
     );
     public static final GameDefinition BLOCKTRIS = new GameDefinition(
             "blocktris",
             "BlocktrisGame",
             PoItems.GAME_DISK_BLOCKTRIS,
-            ServerBlocktrisGame::new
+            ServerBlocktrisGame::new,
+            GameSyncMode.SNAPSHOT
     );
     public static final GameDefinition PONG = new GameDefinition(
             "pong",
             "PongGame",
             PoItems.GAME_DISK_PONG,
-            ServerPongGame::new
+            ServerPongGame::new,
+            GameSyncMode.SNAPSHOT
+    );
+    public static final GameDefinition TOUHOU = new GameDefinition(
+            "touhou",
+            "TouhouGame",
+            PoItems.GAME_DISK_TOUHOU,
+            ServerTouhouGame::new,
+            GameSyncMode.SNAPSHOT
     );
 
     public static final List<GameDefinition> ALL = List.of(
             ROUNDWORM,
             BLOCKTRIS,
-            PONG
+            PONG,
+            TOUHOU
     );
 
     private GameDefinitions() {

@@ -40,6 +40,7 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.redstone.Orientation;
 
 import javax.annotation.Nullable;
 import java.util.EnumMap;
@@ -50,6 +51,7 @@ public class ArcadeBlock extends Block implements EntityBlock {
     public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
     public static final BooleanProperty GAME = BooleanProperty.create("game");
+    public static final BooleanProperty TRIGGERED = BlockStateProperties.TRIGGERED;
 
     private static final VoxelShape TOP_SCREEN_CUTOUT = Block.box(1.0, 0.0, 7.0, 15.0, 10.0, 9.0);
     private static final VoxelShape BOTTOM_NORTH_SHAPE = Shapes.or(
@@ -72,7 +74,8 @@ public class ArcadeBlock extends Block implements EntityBlock {
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(FACING, Direction.NORTH)
                 .setValue(HALF, DoubleBlockHalf.LOWER)
-                .setValue(GAME, false));
+                .setValue(GAME, false)
+                .setValue(TRIGGERED, false));
     }
 
     @Override
@@ -98,7 +101,7 @@ public class ArcadeBlock extends Block implements EntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, HALF, GAME);
+        builder.add(FACING, HALF, GAME, TRIGGERED);
     }
 
     @Nullable
@@ -118,6 +121,31 @@ public class ArcadeBlock extends Block implements EntityBlock {
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
         level.setBlock(pos.above(), state.setValue(HALF, DoubleBlockHalf.UPPER), 3);
+    }
+
+    @Override
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock,
+                                   @Nullable Orientation orientation, boolean movedByPiston) {
+        super.neighborChanged(state, level, pos, neighborBlock, orientation, movedByPiston);
+        if (level.isClientSide()) {
+            return;
+        }
+
+        ArcadeBlockEntity arcade = getArcadeEntity(level, pos, state);
+        if (arcade == null) {
+            return;
+        }
+
+        BlockPos lowerPos = arcade.getBlockPos();
+        BlockState lowerState = level.getBlockState(lowerPos);
+        boolean powered = level.hasNeighborSignal(lowerPos) || level.hasNeighborSignal(pos);
+
+        if (powered && !lowerState.getValue(TRIGGERED)) {
+            level.setBlock(lowerPos, lowerState.setValue(TRIGGERED, true), 3);
+            arcade.spillAllRewards();
+        } else if (!powered && lowerState.getValue(TRIGGERED)) {
+            level.setBlock(lowerPos, lowerState.setValue(TRIGGERED, false), 3);
+        }
     }
 
     @Override
@@ -156,16 +184,32 @@ public class ArcadeBlock extends Block implements EntityBlock {
         if (arcade == null) {
             return InteractionResult.PASS;
         }
+
+        if (state.getValue(HALF) == DoubleBlockHalf.LOWER) {
+            if (arcade.getRewardCount() > 0) {
+                if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
+                    arcade.giveReward(serverPlayer);
+                }
+                return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
+            }
+            if (!arcade.hasCartridge()) {
+                showNoCartridge(level, player);
+                return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
+            }
+            return InteractionResult.PASS;
+        }
+
         if (handleControlExit(level, player, arcade)) {
             return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
         }
-        if (arcade.isController(player) || handleRewardOrEject(level, player, arcade)) {
+        if (arcade.isController(player)) {
+            return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
+        }
+        if (!arcade.hasCartridge()) {
+            showNoCartridge(level, player);
             return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
         }
         startArcadeControl(level, player, arcade);
-        if (!arcade.hasCartridge()) {
-            showNoCartridge(level, player);
-        }
         return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
     }
 
@@ -175,21 +219,39 @@ public class ArcadeBlock extends Block implements EntityBlock {
         if (arcade == null) {
             return InteractionResult.TRY_WITH_EMPTY_HAND;
         }
+
+        if (state.getValue(HALF) == DoubleBlockHalf.LOWER) {
+            if (arcade.getRewardCount() > 0) {
+                if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
+                    arcade.giveReward(serverPlayer);
+                }
+                return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
+            }
+            if (!arcade.hasCartridge()) {
+                showNoCartridge(level, player);
+                return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
+            }
+            return InteractionResult.TRY_WITH_EMPTY_HAND;
+        }
+
         if (handleControlExit(level, player, arcade)) {
             return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
         }
-        if (arcade.isController(player) || handleRewardOrEject(level, player, arcade)) {
+        if (arcade.isController(player)) {
             return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
         }
-        startArcadeControl(level, player, arcade);
-        if (stack.getItem() instanceof GameDiskItem) {
+        if (stack.getItem() instanceof GameDiskItem && !arcade.hasCartridge()) {
             if (!level.isClientSide() && arcade.insertCartridge(stack)) {
                 stack.shrink(1);
                 level.playSound(null, arcade.getBlockPos(), PoSoundEvents.CONFIRM.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
             }
-        } else if (!arcade.hasCartridge()) {
-            showNoCartridge(level, player);
+            return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
         }
+        if (!arcade.hasCartridge()) {
+            showNoCartridge(level, player);
+            return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
+        }
+        startArcadeControl(level, player, arcade);
         return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
     }
 
@@ -203,26 +265,6 @@ public class ArcadeBlock extends Block implements EntityBlock {
             }
             return true;
         }
-        return false;
-    }
-
-    private static boolean handleRewardOrEject(Level level, Player player, ArcadeBlockEntity arcade) {
-        if (arcade.getRewardCount() > 0) {
-            if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
-                return arcade.giveReward(serverPlayer);
-            }
-            return true;
-        }
-
-        if (player.isShiftKeyDown()) {
-            if (arcade.hasCartridge()) {
-                ejectCartridge(level, player, arcade);
-            } else {
-                showNoCartridge(level, player);
-            }
-            return true;
-        }
-
         return false;
     }
 

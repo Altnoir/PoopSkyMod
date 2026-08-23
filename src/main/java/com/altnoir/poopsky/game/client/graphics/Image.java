@@ -24,4 +24,9 @@ public class Image extends Renderer {
     public void render(GuiGraphicsExtractor graphics, int posX, int posY) {
         graphics.blit(file, posX, posY, x, y, width, height, fileWidth, fileHeight);
     }
+
+    @Override
+    public void renderScaled(GuiGraphicsExtractor graphics, int posX, int posY, float scale) {
+        super.renderScaled(graphics, posX, posY, scale);
+    }
 }
