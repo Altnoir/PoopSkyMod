@@ -9,32 +9,13 @@ public final class BossFactory {
     }
 
     public static Boss createRandomBoss(Random random, int wave) {
-        BossScript script;
-        String id;
-        switch (random.nextInt(5)) {
-            case 0 -> {
-                script = new LineScript();
-                id = "line";
-            }
-            case 1 -> {
-                script = new FanScript();
-                id = "fan";
-            }
-            case 2 -> {
-                script = new ReverseCircleScript();
-                id = "reverse";
-            }
-            case 3 -> {
-                script = new QuadLineScript();
-                id = "quadline";
-            }
-            default -> {
-                script = new CircleBurstScript();
-                id = "circle";
-            }
-        }
-
-        BossModifiers modifiers = script.createModifiers(random, wave);
-        return new Boss(id, script, modifiers);
+        BossScript script = switch (random.nextInt(5)) {
+            case 0 -> new LineScript();
+            case 1 -> new FanScript();
+            case 2 -> new ReverseCircleScript();
+            case 3 -> new QuadLineScript();
+            default -> new CircleBurstScript();
+        };
+        return new Boss(script, script.createModifiers(random, wave));
     }
 }

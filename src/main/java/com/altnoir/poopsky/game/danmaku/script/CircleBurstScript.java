@@ -33,6 +33,7 @@ public class CircleBurstScript implements BossScript {
 
     @Override
     public void tick(Boss boss, TouhouGameState state, Random random) {
+        BossModifiers modifiers = boss.modifiers();
         if (idle) {
             idleCounter++;
             if (idleCounter >= IDLE_TICKS) {
@@ -48,12 +49,12 @@ public class CircleBurstScript implements BossScript {
             state.spawnCircle(
                     state.getBossCenterX(),
                     state.getBossCenterY(),
-                    boss.getBulletCount(),
-                    boss.getBulletSpeed(),
-                    boss.getMaxBounces(),
+                    modifiers.bulletCount(),
+                    modifiers.bulletSpeed(),
+                    modifiers.maxBounces(),
                     0.0F
             );
-            intervalCounter = boss.getFireInterval();
+            intervalCounter = modifiers.fireInterval();
             volleysFired++;
 
             if (volleysFired >= BURST_VOLLEYS) {

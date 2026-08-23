@@ -13,6 +13,9 @@ import java.util.Random;
 
 public class ReverseCircleScript implements BossScript {
     private static final float ACCELERATION = 0.01F;
+    private static final float EDGE_WIDTH = TouhouGameState.PLAY_WIDTH - TouhouGameState.BOSS_BULLET_SIZE;
+    private static final float EDGE_HEIGHT = TouhouGameState.PLAY_HEIGHT - TouhouGameState.BOSS_BULLET_SIZE;
+    private static final float PERIMETER = 2.0F * (EDGE_WIDTH + EDGE_HEIGHT);
     private static final BossModifierTemplate TEMPLATE = BossModifierTemplate.builder()
             .bulletCount(UniformInt.of(30, 40))
             .attackInterval(UniformInt.of(20, 40))
@@ -32,51 +35,53 @@ public class ReverseCircleScript implements BossScript {
 
     @Override
     public void tick(Boss boss, TouhouGameState state, Random random) {
+        BossModifiers modifiers = boss.modifiers();
         if (intervalCounter <= 0) {
-            int count = boss.getBulletCount();
+            int count = modifiers.bulletCount();
             float centerX = state.getBossCenterX();
             float centerY = state.getBossCenterY();
+            int angle = rotation.next(modifiers.rotation(), modifiers.angleStep());
+            float distance = angle / 360.0F * PERIMETER;
+            float distanceStep = PERIMETER / count;
+            float speed = modifiers.bulletSpeed();
+            int maxBounces = modifiers.maxBounces();
 
-            float edgeWidth = TouhouGameState.PLAY_WIDTH - TouhouGameState.BOSS_BULLET_SIZE;
-            float edgeHeight = TouhouGameState.PLAY_HEIGHT - TouhouGameState.BOSS_BULLET_SIZE;
-            float perimeter = 2.0F * (edgeWidth + edgeHeight);
-            int angle = rotation.next(boss.getRotation(), boss.getAngleStep());
-            float perimeterOffset = angle / 360.0F * perimeter;
+            if (distance < 0) {
+                distance += PERIMETER;
+            }
 
             for (int i = 0; i < count; i++) {
-                float distance = perimeter * i / count + perimeterOffset;
-                distance %= perimeter;
-                if (distance < 0) {
-                    distance += perimeter;
-                }
                 float spawnX;
                 float spawnY;
 
-                if (distance < edgeWidth) {
+                if (distance < EDGE_WIDTH) {
                     spawnX = distance;
                     spawnY = 0.0F;
-                } else if (distance < edgeWidth + edgeHeight) {
-                    spawnX = edgeWidth;
-                    spawnY = distance - edgeWidth;
-                } else if (distance < 2.0F * edgeWidth + edgeHeight) {
-                    spawnX = edgeWidth - (distance - edgeWidth - edgeHeight);
-                    spawnY = edgeHeight;
+                } else if (distance < EDGE_WIDTH + EDGE_HEIGHT) {
+                    spawnX = EDGE_WIDTH;
+                    spawnY = distance - EDGE_WIDTH;
+                } else if (distance < 2.0F * EDGE_WIDTH + EDGE_HEIGHT) {
+                    spawnX = EDGE_WIDTH - (distance - EDGE_WIDTH - EDGE_HEIGHT);
+                    spawnY = EDGE_HEIGHT;
                 } else {
                     spawnX = 0.0F;
-                    spawnY = edgeHeight - (distance - 2.0F * edgeWidth - edgeHeight);
+                    spawnY = EDGE_HEIGHT - (distance - 2.0F * EDGE_WIDTH - EDGE_HEIGHT);
                 }
 
                 float dx = centerX - spawnX;
                 float dy = centerY - spawnY;
                 float length = Math.max(0.001F, (float) Math.sqrt(dx * dx + dy * dy));
-                float speed = boss.getBulletSpeed();
                 float vx = dx / length * speed;
                 float vy = dy / length * speed;
 
-                state.spawnEnemyBullet(spawnX, spawnY, vx, vy, 600, boss.getMaxBounces(), ACCELERATION, true);
+                state.spawnEnemyBullet(spawnX, spawnY, vx, vy, 600, maxBounces, ACCELERATION, true);
+                distance += distanceStep;
+                if (distance >= PERIMETER) {
+                    distance -= PERIMETER;
+                }
             }
 
-            intervalCounter = boss.getFireInterval();
+            intervalCounter = modifiers.fireInterval();
         } else {
             intervalCounter--;
         }

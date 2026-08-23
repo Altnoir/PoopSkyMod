@@ -32,19 +32,20 @@ public class FanScript implements BossScript {
 
     @Override
     public void tick(Boss boss, TouhouGameState state, Random random) {
+        BossModifiers modifiers = boss.modifiers();
         if (intervalCounter <= 0) {
-            int angle = rotation.next(boss.getRotation(), boss.getAngleStep());
+            int angle = rotation.next(modifiers.rotation(), modifiers.angleStep());
 
             state.spawnArc(
                     state.getBossCenterX(),
                     state.getBossCenterY(),
-                    boss.getBulletCount(),
-                    boss.getBulletSpeed(),
-                    boss.getMaxBounces(),
+                    modifiers.bulletCount(),
+                    modifiers.bulletSpeed(),
+                    modifiers.maxBounces(),
                     90.0F + angle,
                     SPREAD
             );
-            intervalCounter = boss.getFireInterval();
+            intervalCounter = modifiers.fireInterval();
         } else {
             intervalCounter--;
         }

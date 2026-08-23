@@ -60,6 +60,7 @@ public final class ArcadeWorldScreenRenderer {
 
         ScreenState state = getOrCreate(pos, disc);
         state.snapshot = snapshot;
+        state.cartridgeClientGame.applySnapshot(snapshot);
     }
 
     public static void onClientStop() {
@@ -99,7 +100,6 @@ public final class ArcadeWorldScreenRenderer {
         if (state.cartridgeClientGame == null) {
             return;
         }
-        state.cartridgeClientGame.applySnapshot(state.snapshot);
     }
 
     private static final class ScreenState {
