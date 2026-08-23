@@ -32,6 +32,7 @@ public final class TouhouGameState {
     public static final int BOSS_APPEAR_DURATION = 20;
     public static final int BOSS_BULLET_SIZE = 6;
     public static final float BOSS_BULLET_DRAG = 0.99F;
+    private static final int BULLET_DATA_SIZE = 9;
 
     public static final int SCORE_PER_BOSS = 5;
 
@@ -145,7 +146,7 @@ public final class TouhouGameState {
                 Bullet bullet = playerBullets.get(i);
                 if (intersects(bullet.x, bullet.y, PLAYER_BULLET_SIZE, PLAYER_BULLET_SIZE,
                         bossX, bossY, BOSS_SIZE, BOSS_SIZE)) {
-                    playerBullets.remove(i);
+                    removeUnordered(playerBullets, i);
                     bossHp--;
                     bossHit = true;
                     bossHitTicks = 2;
@@ -187,38 +188,34 @@ public final class TouhouGameState {
     }
 
     public void spawnCircle(float centerX, float centerY, int count, float speed, int maxBounces, float angleOffsetDegrees) {
-        double offset = Math.toRadians(angleOffsetDegrees);
-        for (int i = 0; i < count; i++) {
-            double angle = Math.PI * 2 * i / count + offset;
-            float vx = (float) (Math.cos(angle) * speed);
-            float vy = (float) (Math.sin(angle) * speed);
-            spawnEnemyBullet(
-                    centerX - BOSS_BULLET_SIZE / 2.0F,
-                    centerY - BOSS_BULLET_SIZE / 2.0F,
-                    vx, vy,
-                    600,
-                    maxBounces,
-                    0.0F
-            );
-        }
+        spawnArcRadians(centerX, centerY, count, speed, maxBounces,
+                Math.toRadians(angleOffsetDegrees), Math.PI * 2.0 / count);
     }
 
     public void spawnArc(float centerX, float centerY, int count, float speed, int maxBounces, float centerAngleDegrees, float spreadDegrees) {
         double center = Math.toRadians(centerAngleDegrees);
         double spread = Math.toRadians(spreadDegrees);
+        spawnArcRadians(centerX, centerY, count, speed, maxBounces,
+                count <= 1 ? center : center - spread / 2.0, count <= 1 ? 0.0 : spread / (count - 1));
+    }
+
+    private void spawnArcRadians(float centerX, float centerY, int count, float speed, int maxBounces,
+                                 double startAngle, double angleStep) {
+        if (count <= 0) {
+            return;
+        }
+
+        double cos = Math.cos(startAngle);
+        double sin = Math.sin(startAngle);
+        double stepCos = angleStep == 0.0 ? 1.0 : Math.cos(angleStep);
+        double stepSin = angleStep == 0.0 ? 0.0 : Math.sin(angleStep);
+        float x = centerX - BOSS_BULLET_SIZE / 2.0F;
+        float y = centerY - BOSS_BULLET_SIZE / 2.0F;
         for (int i = 0; i < count; i++) {
-            double t = count <= 1 ? 0.0 : (i / (double) (count - 1) - 0.5);
-            double angle = center + t * spread;
-            float vx = (float) (Math.cos(angle) * speed);
-            float vy = (float) (Math.sin(angle) * speed);
-            spawnEnemyBullet(
-                    centerX - BOSS_BULLET_SIZE / 2.0F,
-                    centerY - BOSS_BULLET_SIZE / 2.0F,
-                    vx, vy,
-                    600,
-                    maxBounces,
-                    0.0F
-            );
+            spawnEnemyBullet(x, y, (float) (cos * speed), (float) (sin * speed), 600, maxBounces, 0.0F);
+            double nextCos = cos * stepCos - sin * stepSin;
+            sin = sin * stepCos + cos * stepSin;
+            cos = nextCos;
         }
     }
 
@@ -233,61 +230,58 @@ public final class TouhouGameState {
     private void updateEnemyBullets() {
         for (int i = enemyBullets.size() - 1; i >= 0; i--) {
             Bullet bullet = enemyBullets.get(i);
-            float x = bullet.x + bullet.vx;
-            float y = bullet.y + bullet.vy;
-            float vx = bullet.vx;
-            float vy = bullet.vy;
-            int bounces = bullet.bounces;
+            bullet.x += bullet.vx;
+            bullet.y += bullet.vy;
 
-            if (x <= 0) {
-                x = 0;
-                if (Math.abs(vy) < 0.001F || bullet.maxBounces <= 0 || bounces >= bullet.maxBounces) {
-                    enemyBullets.remove(i);
+            if (bullet.x <= 0) {
+                bullet.x = 0;
+                if (Math.abs(bullet.vy) < 0.001F || bullet.maxBounces <= 0 || bullet.bounces >= bullet.maxBounces) {
+                    removeUnordered(enemyBullets, i);
                     continue;
                 }
-                vx = Math.abs(vx);
-                bounces++;
-            } else if (x >= PLAY_WIDTH - BOSS_BULLET_SIZE) {
-                x = PLAY_WIDTH - BOSS_BULLET_SIZE;
-                if (Math.abs(vy) < 0.001F || bullet.maxBounces <= 0 || bounces >= bullet.maxBounces) {
-                    enemyBullets.remove(i);
+                bullet.vx = Math.abs(bullet.vx);
+                bullet.bounces++;
+            } else if (bullet.x >= PLAY_WIDTH - BOSS_BULLET_SIZE) {
+                bullet.x = PLAY_WIDTH - BOSS_BULLET_SIZE;
+                if (Math.abs(bullet.vy) < 0.001F || bullet.maxBounces <= 0 || bullet.bounces >= bullet.maxBounces) {
+                    removeUnordered(enemyBullets, i);
                     continue;
                 }
-                vx = -Math.abs(vx);
-                bounces++;
+                bullet.vx = -Math.abs(bullet.vx);
+                bullet.bounces++;
             }
 
-            if (y <= 0) {
-                y = 0;
-                if (bullet.maxBounces <= 0 || bounces >= bullet.maxBounces) {
-                    enemyBullets.remove(i);
+            if (bullet.y <= 0) {
+                bullet.y = 0;
+                if (bullet.maxBounces <= 0 || bullet.bounces >= bullet.maxBounces) {
+                    removeUnordered(enemyBullets, i);
                     continue;
                 }
-                vy = Math.abs(vy);
-                bounces++;
-            } else if (y >= PLAY_HEIGHT) {
-                enemyBullets.remove(i);
+                bullet.vy = Math.abs(bullet.vy);
+                bullet.bounces++;
+            } else if (bullet.y >= PLAY_HEIGHT) {
+                removeUnordered(enemyBullets, i);
                 continue;
             }
 
-            if (bullet.removeOnBossHit && intersects(x, y, BOSS_BULLET_SIZE, BOSS_BULLET_SIZE,
+            if (bullet.removeOnBossHit && intersects(bullet.x, bullet.y, BOSS_BULLET_SIZE, BOSS_BULLET_SIZE,
                     bossX, bossY, BOSS_SIZE, BOSS_SIZE)) {
-                enemyBullets.remove(i);
+                removeUnordered(enemyBullets, i);
                 continue;
             }
 
             if (bullet.acceleration > 0) {
-                vx *= (1.0F + bullet.acceleration);
-                vy *= (1.0F + bullet.acceleration);
+                bullet.vx *= 1.0F + bullet.acceleration;
+                bullet.vy *= 1.0F + bullet.acceleration;
             } else {
-                vx *= BOSS_BULLET_DRAG;
-                vy *= BOSS_BULLET_DRAG;
+                bullet.vx *= BOSS_BULLET_DRAG;
+                bullet.vy *= BOSS_BULLET_DRAG;
             }
 
             if (bullet.life <= 0) {
-                enemyBullets.remove(i);
+                removeUnordered(enemyBullets, i);
             } else {
-                enemyBullets.set(i, new Bullet(x, y, vx, vy, bullet.life - 1, bounces, bullet.maxBounces, bullet.acceleration, bullet.removeOnBossHit));
+                bullet.life--;
             }
         }
     }
@@ -295,12 +289,13 @@ public final class TouhouGameState {
     private void updatePlayerBullets() {
         for (int i = playerBullets.size() - 1; i >= 0; i--) {
             Bullet bullet = playerBullets.get(i);
-            float x = bullet.x + bullet.vx;
-            float y = bullet.y + bullet.vy;
-            if (y < -PLAYER_BULLET_SIZE || y > PLAY_HEIGHT || x < -PLAYER_BULLET_SIZE || x > PLAY_WIDTH) {
-                playerBullets.remove(i);
+            bullet.x += bullet.vx;
+            bullet.y += bullet.vy;
+            if (bullet.y < -PLAYER_BULLET_SIZE || bullet.y > PLAY_HEIGHT
+                    || bullet.x < -PLAYER_BULLET_SIZE || bullet.x > PLAY_WIDTH) {
+                removeUnordered(playerBullets, i);
             } else {
-                playerBullets.set(i, new Bullet(x, y, bullet.vx, bullet.vy, bullet.life - 1, 0, 0, 0));
+                bullet.life--;
             }
         }
     }
@@ -358,20 +353,19 @@ public final class TouhouGameState {
             return;
         }
 
-        boolean speedOnField = powerUps.stream().anyMatch(powerUp -> powerUp.type == PowerUpType.SPEED);
-        boolean doubleOnField = powerUps.stream().anyMatch(powerUp -> powerUp.type == PowerUpType.DOUBLE);
-        List<PowerUpType> available = new ArrayList<>();
-        if (!hasSpeedBoost && !speedOnField) {
-            available.add(PowerUpType.SPEED);
+        boolean speedAvailable = !hasSpeedBoost;
+        boolean doubleAvailable = !hasDoubleShot;
+        for (PowerUp powerUp : powerUps) {
+            speedAvailable &= powerUp.type != PowerUpType.SPEED;
+            doubleAvailable &= powerUp.type != PowerUpType.DOUBLE;
         }
-        if (!hasDoubleShot && !doubleOnField) {
-            available.add(PowerUpType.DOUBLE);
-        }
-        if (available.isEmpty()) {
+        if (!speedAvailable && !doubleAvailable) {
             return;
         }
 
-        PowerUpType type = available.get(random.nextInt(available.size()));
+        PowerUpType type = speedAvailable && doubleAvailable
+                ? (random.nextInt(2) == 0 ? PowerUpType.SPEED : PowerUpType.DOUBLE)
+                : speedAvailable ? PowerUpType.SPEED : PowerUpType.DOUBLE;
         float x = random.nextInt(PLAY_WIDTH - POWERUP_SIZE + 1);
         float y = 20 + random.nextInt(PLAY_HEIGHT - POWERUP_SIZE - 40);
         float vx = (random.nextFloat() * 2.0F - 1.0F) * POWERUP_SPEED;
@@ -394,6 +388,14 @@ public final class TouhouGameState {
     private static boolean intersects(float ax, float ay, float aw, float ah,
                                       float bx, float by, float bw, float bh) {
         return ax < bx + bw && ax + aw > bx && ay < by + bh && ay + ah > by;
+    }
+
+    private static <T> void removeUnordered(List<T> list, int index) {
+        int last = list.size() - 1;
+        if (index != last) {
+            list.set(index, list.get(last));
+        }
+        list.removeLast();
     }
 
     public float getPlayerX() {
@@ -488,32 +490,8 @@ public final class TouhouGameState {
             tag.putInt("powerUpLife" + i, powerUp.life);
         }
 
-        tag.putInt("enemyBulletCount", enemyBullets.size());
-        for (int i = 0; i < enemyBullets.size(); i++) {
-            Bullet bullet = enemyBullets.get(i);
-            tag.putFloat("enemyBulletX" + i, bullet.x);
-            tag.putFloat("enemyBulletY" + i, bullet.y);
-            tag.putFloat("enemyBulletVX" + i, bullet.vx);
-            tag.putFloat("enemyBulletVY" + i, bullet.vy);
-            tag.putInt("enemyBulletLife" + i, bullet.life);
-            tag.putInt("enemyBulletBounces" + i, bullet.bounces);
-            tag.putInt("enemyBulletMaxBounces" + i, bullet.maxBounces);
-            tag.putFloat("enemyBulletAcceleration" + i, bullet.acceleration);
-            tag.putBoolean("enemyBulletRemoveOnBossHit" + i, bullet.removeOnBossHit);
-        }
-
-        tag.putInt("playerBulletCount", playerBullets.size());
-        for (int i = 0; i < playerBullets.size(); i++) {
-            Bullet bullet = playerBullets.get(i);
-            tag.putFloat("playerBulletX" + i, bullet.x);
-            tag.putFloat("playerBulletY" + i, bullet.y);
-            tag.putFloat("playerBulletVX" + i, bullet.vx);
-            tag.putFloat("playerBulletVY" + i, bullet.vy);
-            tag.putInt("playerBulletLife" + i, bullet.life);
-            tag.putInt("playerBulletBounces" + i, bullet.bounces);
-            tag.putInt("playerBulletMaxBounces" + i, bullet.maxBounces);
-            tag.putFloat("playerBulletAcceleration" + i, bullet.acceleration);
-        }
+        tag.putIntArray("enemyBullets", writeBullets(enemyBullets));
+        tag.putIntArray("playerBullets", writeBullets(playerBullets));
     }
 
     public void applySnapshot(CompoundTag tag) {
@@ -546,35 +524,32 @@ public final class TouhouGameState {
             ));
         }
 
-        enemyBullets.clear();
-        int enemyCount = tag.getInt("enemyBulletCount");
-        for (int i = 0; i < enemyCount; i++) {
-            enemyBullets.add(new Bullet(
-                    tag.getFloat("enemyBulletX" + i),
-                    tag.getFloat("enemyBulletY" + i),
-                    tag.getFloat("enemyBulletVX" + i),
-                    tag.getFloat("enemyBulletVY" + i),
-                    tag.getInt("enemyBulletLife" + i),
-                    tag.getInt("enemyBulletBounces" + i),
-                    tag.getInt("enemyBulletMaxBounces" + i),
-                    tag.getFloat("enemyBulletAcceleration" + i),
-                    tag.getBoolean("enemyBulletRemoveOnBossHit" + i)
-            ));
-        }
+        readBullets(enemyBullets, tag.getIntArray("enemyBullets"));
+        readBullets(playerBullets, tag.getIntArray("playerBullets"));
+    }
 
-        playerBullets.clear();
-        int playerCount = tag.getInt("playerBulletCount");
-        for (int i = 0; i < playerCount; i++) {
-            playerBullets.add(new Bullet(
-                    tag.getFloat("playerBulletX" + i),
-                    tag.getFloat("playerBulletY" + i),
-                    tag.getFloat("playerBulletVX" + i),
-                    tag.getFloat("playerBulletVY" + i),
-                    tag.getInt("playerBulletLife" + i),
-                    tag.getInt("playerBulletBounces" + i),
-                    tag.getInt("playerBulletMaxBounces" + i),
-                    tag.getFloat("playerBulletAcceleration" + i)
-            ));
+    private static int[] writeBullets(List<Bullet> bullets) {
+        int[] data = new int[bullets.size() * BULLET_DATA_SIZE];
+        for (int i = 0; i < bullets.size(); i++) {
+            bullets.get(i).write(data, i * BULLET_DATA_SIZE);
+        }
+        return data;
+    }
+
+    private static void readBullets(List<Bullet> bullets, int[] data) {
+        int count = data.length / BULLET_DATA_SIZE;
+        while (bullets.size() > count) {
+            bullets.removeLast();
+        }
+        for (int i = 0; i < count; i++) {
+            int offset = i * BULLET_DATA_SIZE;
+            if (i < bullets.size()) {
+                bullets.get(i).read(data, offset);
+            } else {
+                Bullet bullet = new Bullet();
+                bullet.read(data, offset);
+                bullets.add(bullet);
+            }
         }
     }
 
@@ -586,10 +561,54 @@ public final class TouhouGameState {
     public record PowerUp(float x, float y, float vx, float vy, PowerUpType type, int life) {
     }
 
-    public record Bullet(float x, float y, float vx, float vy, int life, int bounces, int maxBounces,
-                         float acceleration, boolean removeOnBossHit) {
+    public static final class Bullet {
+        public float x, y, vx, vy;
+        private float acceleration;
+        private int life, bounces, maxBounces;
+        private boolean removeOnBossHit;
+
+        private Bullet() {
+        }
+
         public Bullet(float x, float y, float vx, float vy, int life, int bounces, int maxBounces, float acceleration) {
             this(x, y, vx, vy, life, bounces, maxBounces, acceleration, false);
+        }
+
+        public Bullet(float x, float y, float vx, float vy, int life, int bounces, int maxBounces,
+                      float acceleration, boolean removeOnBossHit) {
+            set(x, y, vx, vy, life, bounces, maxBounces, acceleration, removeOnBossHit);
+        }
+
+        private void set(float x, float y, float vx, float vy, int life, int bounces, int maxBounces,
+                         float acceleration, boolean removeOnBossHit) {
+            this.x = x;
+            this.y = y;
+            this.vx = vx;
+            this.vy = vy;
+            this.life = life;
+            this.bounces = bounces;
+            this.maxBounces = maxBounces;
+            this.acceleration = acceleration;
+            this.removeOnBossHit = removeOnBossHit;
+        }
+
+        private void write(int[] data, int offset) {
+            data[offset] = Float.floatToRawIntBits(x);
+            data[offset + 1] = Float.floatToRawIntBits(y);
+            data[offset + 2] = Float.floatToRawIntBits(vx);
+            data[offset + 3] = Float.floatToRawIntBits(vy);
+            data[offset + 4] = life;
+            data[offset + 5] = bounces;
+            data[offset + 6] = maxBounces;
+            data[offset + 7] = Float.floatToRawIntBits(acceleration);
+            data[offset + 8] = removeOnBossHit ? 1 : 0;
+        }
+
+        private void read(int[] data, int offset) {
+            set(Float.intBitsToFloat(data[offset]), Float.intBitsToFloat(data[offset + 1]),
+                    Float.intBitsToFloat(data[offset + 2]), Float.intBitsToFloat(data[offset + 3]),
+                    data[offset + 4], data[offset + 5], data[offset + 6], Float.intBitsToFloat(data[offset + 7]),
+                    data[offset + 8] != 0);
         }
     }
 

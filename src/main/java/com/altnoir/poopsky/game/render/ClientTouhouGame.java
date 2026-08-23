@@ -15,6 +15,7 @@ import net.minecraft.world.phys.Vec2;
 
 public class ClientTouhouGame extends ClientGame {
     private static final int GAME_OFFSET_X = 8;
+    private static final float TICK_NANOS = 50_000_000.0F;
     private static final ResourceLocation PLAYER_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_player.png");
     private static final ResourceLocation PLAYER_BULLET_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_player_bullet.png");
     private static final ResourceLocation SPEED_POWERUP_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_player_speed.png");
@@ -29,42 +30,45 @@ public class ClientTouhouGame extends ClientGame {
     private final Sprite playerBullet = new Sprite(Vec2.ZERO, new Vec2(TouhouGameState.PLAYER_BULLET_SIZE, TouhouGameState.PLAYER_BULLET_SIZE), PLAYER_BULLET_TEXTURE);
     private final Sprite speedPowerUp = new Sprite(Vec2.ZERO, new Vec2(TouhouGameState.POWERUP_SIZE, TouhouGameState.POWERUP_SIZE), SPEED_POWERUP_TEXTURE);
     private final Sprite doublePowerUp = new Sprite(Vec2.ZERO, new Vec2(TouhouGameState.POWERUP_SIZE, TouhouGameState.POWERUP_SIZE), DOUBLE_POWERUP_TEXTURE);
+    private long snapshotNanos;
 
     @Override
     public void applySnapshot(CompoundTag tag) {
         super.applySnapshot(tag);
         state.applySnapshot(tag);
+        snapshotNanos = System.nanoTime();
     }
 
     @Override
     protected void renderGame(GuiGraphics graphics, int posX, int posY) {
+        float tickDelta = getStage() == GameStage.PLAYING
+                ? Math.min((System.nanoTime() - snapshotNanos) / TICK_NANOS, 1.0F)
+                : 0.0F;
         for (TouhouGameState.Bullet bullet : state.getEnemyBullets()) {
-            bossBullet.setPos(new Vec2(GAME_OFFSET_X + bullet.x(), bullet.y()));
+            bossBullet.setPos(GAME_OFFSET_X + bullet.x + bullet.vx * tickDelta, bullet.y + bullet.vy * tickDelta);
             bossBullet.render(graphics, posX, posY);
         }
 
         for (TouhouGameState.Bullet bullet : state.getPlayerBullets()) {
-            playerBullet.setPos(new Vec2(GAME_OFFSET_X + bullet.x(), bullet.y()));
+            playerBullet.setPos(GAME_OFFSET_X + bullet.x + bullet.vx * tickDelta, bullet.y + bullet.vy * tickDelta);
             playerBullet.render(graphics, posX, posY);
         }
 
         for (TouhouGameState.PowerUp powerUp : state.getPowerUps()) {
             Sprite powerUpSprite = powerUp.type() == TouhouGameState.PowerUpType.SPEED ? speedPowerUp : doublePowerUp;
-            powerUpSprite.setPos(new Vec2(GAME_OFFSET_X + powerUp.x(), powerUp.y()));
+            powerUpSprite.setPos(GAME_OFFSET_X + powerUp.x() + powerUp.vx() * tickDelta,
+                    powerUp.y() + powerUp.vy() * tickDelta);
             powerUpSprite.render(graphics, posX, posY);
         }
 
-        player.setPos(new Vec2(GAME_OFFSET_X + state.getPlayerX(), state.getPlayerY()));
+        player.setPos(GAME_OFFSET_X + state.getPlayerX(), state.getPlayerY());
         player.render(graphics, posX, posY);
 
         if (getStage() == GameStage.PLAYING && state.getBossSpawnTimer() == 0) {
             float scale = state.getBossScale() * state.getBossHitScale();
             float scaledSize = TouhouGameState.BOSS_SIZE * scale;
             float offset = (TouhouGameState.BOSS_SIZE - scaledSize) / 2.0F;
-            boss.setPos(new Vec2(
-                    GAME_OFFSET_X + state.getBossX() + offset,
-                    state.getBossY() + offset
-            ));
+            boss.setPos(GAME_OFFSET_X + state.getBossX() + offset, state.getBossY() + offset);
             boss.renderScaled(graphics, posX, posY, scale);
         }
 

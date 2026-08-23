@@ -5,12 +5,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec2;
 
 public class Sprite {
-    private Vec2 pos;
+    private float x;
+    private float y;
     private final Vec2 size;
     private Renderer image;
 
     public Sprite(Vec2 pos, Vec2 size, Renderer image) {
-        this.pos = pos;
+        setPos(pos);
         this.size = size;
         this.image = image;
     }
@@ -20,11 +21,16 @@ public class Sprite {
     }
 
     public void setPos(Vec2 pos) {
-        this.pos = pos;
+        setPos(pos.x, pos.y);
+    }
+
+    public void setPos(float x, float y) {
+        this.x = x;
+        this.y = y;
     }
 
     public void setY(float y) {
-        pos = new Vec2(pos.x, y);
+        this.y = y;
     }
 
     public float getWidth() {
@@ -40,10 +46,16 @@ public class Sprite {
     }
 
     public void render(GuiGraphics graphics, int gameX, int gameY) {
-        image.render(graphics, gameX + (int) pos.x, gameY + (int) pos.y);
+        graphics.pose().pushPose();
+        graphics.pose().translate(gameX + x, gameY + y, 0.0F);
+        image.render(graphics, 0, 0);
+        graphics.pose().popPose();
     }
 
     public void renderScaled(GuiGraphics graphics, int gameX, int gameY, float scale) {
-        image.renderScaled(graphics, gameX + (int) pos.x, gameY + (int) pos.y, scale);
+        graphics.pose().pushPose();
+        graphics.pose().translate(gameX + x, gameY + y, 0.0F);
+        image.renderScaled(graphics, 0, 0, scale);
+        graphics.pose().popPose();
     }
 }

@@ -3,8 +3,8 @@ package com.altnoir.poopsky.game.client.arcade;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.item.p.GameDiskItem;
 import com.altnoir.poopsky.game.client.ArcadeControlSession;
-import com.altnoir.poopsky.game.client.ClientGameTypes;
 import com.altnoir.poopsky.game.client.ClientGame;
+import com.altnoir.poopsky.game.client.ClientGameTypes;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -72,6 +72,7 @@ public final class ArcadeWorldScreenRenderer {
 
         ScreenState state = getOrCreate(pos, disc);
         state.snapshot = snapshot;
+        state.cartridgeClientGame.applySnapshot(snapshot);
     }
 
     public static void onClientStop() {
@@ -111,8 +112,6 @@ public final class ArcadeWorldScreenRenderer {
         if (state.cartridgeClientGame == null) {
             return;
         }
-        state.cartridgeClientGame.applySnapshot(state.snapshot);
-
         RenderSystem.backupProjectionMatrix();
         Matrix4fStack modelViewStack = RenderSystem.getModelViewStack();
         modelViewStack.pushMatrix();

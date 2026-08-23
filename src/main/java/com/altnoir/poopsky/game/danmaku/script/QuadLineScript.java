@@ -30,22 +30,25 @@ public class QuadLineScript implements BossScript {
 
     @Override
     public void tick(Boss boss, TouhouGameState state, Random random) {
+        BossModifiers modifiers = boss.modifiers();
         if (intervalCounter <= 0) {
-            int angle = currentAngle(boss);
+            int angle = currentAngle(modifiers);
+            float centerX = state.getBossCenterX();
+            float centerY = state.getBossCenterY();
 
             for (int i = 0; i < DIRECTIONS; i++) {
                 state.spawnArc(
-                        state.getBossCenterX(),
-                        state.getBossCenterY(),
-                        boss.getBulletCount(),
-                        boss.getBulletSpeed(),
-                        boss.getMaxBounces(),
+                        centerX,
+                        centerY,
+                        modifiers.bulletCount(),
+                        modifiers.bulletSpeed(),
+                        modifiers.maxBounces(),
                         90.0F + angle + i * 90.0F,
                         0.0F
                 );
             }
 
-            intervalCounter = boss.getFireInterval();
+            intervalCounter = modifiers.fireInterval();
         } else {
             intervalCounter--;
         }
@@ -53,8 +56,8 @@ public class QuadLineScript implements BossScript {
         activeTicks++;
     }
 
-    private int currentAngle(Boss boss) {
-        CircularRotation circular = boss.getCircularRotation();
+    private int currentAngle(BossModifiers modifiers) {
+        CircularRotation circular = modifiers.circularRotation();
         if (circular == null) {
             return 0;
         }
@@ -63,7 +66,7 @@ public class QuadLineScript implements BossScript {
                 && (circular.neverStops() || activeTicks < circular.startDelay() + circular.duration());
 
         if (rotating) {
-            return rotation.nextCircular(boss.getAngleStep());
+            return rotation.nextCircular(modifiers.angleStep());
         }
 
         return rotation.getCurrentAngle();
