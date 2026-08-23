@@ -141,10 +141,17 @@ public class ArcadeBlock extends Block implements EntityBlock {
         boolean powered = level.hasNeighborSignal(lowerPos) || level.hasNeighborSignal(pos);
 
         if (powered && !lowerState.getValue(TRIGGERED)) {
-            level.setBlock(lowerPos, lowerState.setValue(TRIGGERED, true), 3);
-            arcade.spillAllRewards();
+            level.scheduleTick(lowerPos, this, 4);
+            level.setBlock(lowerPos, lowerState.setValue(TRIGGERED, true), 2);
         } else if (!powered && lowerState.getValue(TRIGGERED)) {
-            level.setBlock(lowerPos, lowerState.setValue(TRIGGERED, false), 3);
+            level.setBlock(lowerPos, lowerState.setValue(TRIGGERED, false), 2);
+        }
+    }
+
+    @Override
+    public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        if (level.getBlockEntity(pos) instanceof ArcadeBlockEntity arcade) {
+            arcade.spillAllRewards();
         }
     }
 

@@ -1,9 +1,7 @@
 package com.altnoir.poopsky.game.model;
 
-import com.altnoir.poopsky.game.danmaku.BulletPattern;
-import com.altnoir.poopsky.game.danmaku.pattern.CircleBulletPattern;
-import com.altnoir.poopsky.game.danmaku.pattern.SquareBulletPattern;
-import com.altnoir.poopsky.game.danmaku.pattern.TriangleBulletPattern;
+import com.altnoir.poopsky.game.danmaku.Boss;
+import com.altnoir.poopsky.game.danmaku.BossFactory;
 import net.minecraft.nbt.CompoundTag;
 
 import java.util.ArrayList;
@@ -20,8 +18,6 @@ public final class TouhouGameState {
     public static final int PLAYER_BULLET_SIZE = 4;
     public static final int PLAYER_SPEED = 1;
     public static final int PLAYER_BULLET_SPEED = 4;
-    public static final int BOSS_FIRE_INTERVAL = 60;
-    public static final float BOSS_BULLET_SPEED = 2.0F;
     public static final float BOSS_BULLET_DRAG = 0.995F;
     public static final int PLAYER_SHOOT_INTERVAL = 8;
     public static final int PLAYER_SHOOT_INTERVAL_FAST = 4;
@@ -44,15 +40,13 @@ public final class TouhouGameState {
     private int wave;
     private int score;
     private int shootCooldown;
-    private int bossFireCooldown;
-    private int bossFireInterval = BOSS_FIRE_INTERVAL;
     private int bossSpawnTimer;
     private int bossAppearTimer;
     private int bossHitTicks;
     private float bossScale = 1.0F;
     private boolean hasSpeedBoost;
     private boolean hasDoubleShot;
-    private BulletPattern bulletPattern = new CircleBulletPattern();
+    private Boss boss;
     private final List<Bullet> enemyBullets = new ArrayList<>();
     private final List<Bullet> playerBullets = new ArrayList<>();
     private final List<PowerUp> powerUps = new ArrayList<>();
@@ -97,20 +91,20 @@ public final class TouhouGameState {
                         bulletX - PLAYER_BULLET_SIZE,
                         bulletY,
                         0, -PLAYER_BULLET_SPEED,
-                        120, 0, 0
+                        120, 0, 0, 0
                 ));
                 playerBullets.add(new Bullet(
                         bulletX + PLAYER_BULLET_SIZE,
                         bulletY,
                         0, -PLAYER_BULLET_SPEED,
-                        120, 0, 0
+                        120, 0, 0, 0
                 ));
             } else {
                 playerBullets.add(new Bullet(
                         bulletX,
                         bulletY,
                         0, -PLAYER_BULLET_SPEED,
-                        120, 0, 0
+                        120, 0, 0, 0
                 ));
             }
             shootCooldown = shootInterval;
@@ -131,11 +125,8 @@ public final class TouhouGameState {
             }
             bossScale = Math.min(1.0F, BOSS_SCALE_MIN + (bossAppearTimer / (float) BOSS_APPEAR_DURATION) * (1.0F - BOSS_SCALE_MIN));
 
-            if (bossFireCooldown <= 0) {
-                bulletPattern.fire(this, random);
-                bossFireCooldown = bossFireInterval;
-            } else {
-                bossFireCooldown--;
+            if (boss != null && bossAppearTimer >= BOSS_APPEAR_DURATION) {
+                boss.tick(this, random);
             }
         }
 
@@ -162,7 +153,6 @@ public final class TouhouGameState {
                         bossSpawnTimer = BOSS_RESPAWN_DELAY;
                         bossAppearTimer = 0;
                         bossScale = 0.0F;
-                        bossFireCooldown = 0;
                     }
                     break;
                 }
@@ -183,12 +173,48 @@ public final class TouhouGameState {
         return new TickResult(shot, bossHit, bossKilled, false, powerUpPickup);
     }
 
-    public void setBulletPattern(BulletPattern bulletPattern) {
-        this.bulletPattern = bulletPattern;
+    public void spawnEnemyBullet(float x, float y, float vx, float vy, int life, int maxBounces, float acceleration) {
+        spawnEnemyBullet(x, y, vx, vy, life, maxBounces, acceleration, false);
     }
 
-    public void spawnEnemyBullet(float x, float y, float vx, float vy, int life, int maxBounces) {
-        enemyBullets.add(new Bullet(x, y, vx, vy, life, 0, maxBounces));
+    public void spawnEnemyBullet(float x, float y, float vx, float vy, int life, int maxBounces, float acceleration, boolean removeOnBossHit) {
+        enemyBullets.add(new Bullet(x, y, vx, vy, life, 0, maxBounces, acceleration, removeOnBossHit));
+    }
+
+    public void spawnCircle(float centerX, float centerY, int count, float speed, int maxBounces, float angleOffsetDegrees) {
+        double offset = Math.toRadians(angleOffsetDegrees);
+        for (int i = 0; i < count; i++) {
+            double angle = Math.PI * 2 * i / count + offset;
+            float vx = (float) (Math.cos(angle) * speed);
+            float vy = (float) (Math.sin(angle) * speed);
+            spawnEnemyBullet(
+                    centerX - ENEMY_BULLET_SIZE / 2.0F,
+                    centerY - ENEMY_BULLET_SIZE / 2.0F,
+                    vx, vy,
+                    600,
+                    maxBounces,
+                    0.0F
+            );
+        }
+    }
+
+    public void spawnArc(float centerX, float centerY, int count, float speed, int maxBounces, float centerAngleDegrees, float spreadDegrees) {
+        double center = Math.toRadians(centerAngleDegrees);
+        double spread = Math.toRadians(spreadDegrees);
+        for (int i = 0; i < count; i++) {
+            double t = count <= 1 ? 0.0 : (i / (double) (count - 1) - 0.5);
+            double angle = center + t * spread;
+            float vx = (float) (Math.cos(angle) * speed);
+            float vy = (float) (Math.sin(angle) * speed);
+            spawnEnemyBullet(
+                    centerX - ENEMY_BULLET_SIZE / 2.0F,
+                    centerY - ENEMY_BULLET_SIZE / 2.0F,
+                    vx, vy,
+                    600,
+                    maxBounces,
+                    0.0F
+            );
+        }
     }
 
     public float getBossCenterX() {
@@ -210,7 +236,7 @@ public final class TouhouGameState {
 
             if (x <= 0) {
                 x = 0;
-                if (bullet.maxBounces <= 0 || bounces >= bullet.maxBounces) {
+                if (Math.abs(vy) < 0.001F || bullet.maxBounces <= 0 || bounces >= bullet.maxBounces) {
                     enemyBullets.remove(i);
                     continue;
                 }
@@ -218,7 +244,7 @@ public final class TouhouGameState {
                 bounces++;
             } else if (x >= PLAY_WIDTH - ENEMY_BULLET_SIZE) {
                 x = PLAY_WIDTH - ENEMY_BULLET_SIZE;
-                if (bullet.maxBounces <= 0 || bounces >= bullet.maxBounces) {
+                if (Math.abs(vy) < 0.001F || bullet.maxBounces <= 0 || bounces >= bullet.maxBounces) {
                     enemyBullets.remove(i);
                     continue;
                 }
@@ -239,13 +265,24 @@ public final class TouhouGameState {
                 continue;
             }
 
-            vx *= BOSS_BULLET_DRAG;
-            vy *= BOSS_BULLET_DRAG;
+            if (bullet.removeOnBossHit && intersects(x, y, ENEMY_BULLET_SIZE, ENEMY_BULLET_SIZE,
+                    bossX, bossY, BOSS_SIZE, BOSS_SIZE)) {
+                enemyBullets.remove(i);
+                continue;
+            }
+
+            if (bullet.acceleration > 0) {
+                vx *= (1.0F + bullet.acceleration);
+                vy *= (1.0F + bullet.acceleration);
+            } else {
+                vx *= BOSS_BULLET_DRAG;
+                vy *= BOSS_BULLET_DRAG;
+            }
 
             if (bullet.life <= 0) {
                 enemyBullets.remove(i);
             } else {
-                enemyBullets.set(i, new Bullet(x, y, vx, vy, bullet.life - 1, bounces, bullet.maxBounces));
+                enemyBullets.set(i, new Bullet(x, y, vx, vy, bullet.life - 1, bounces, bullet.maxBounces, bullet.acceleration, bullet.removeOnBossHit));
             }
         }
     }
@@ -258,7 +295,7 @@ public final class TouhouGameState {
             if (y < -PLAYER_BULLET_SIZE || y > PLAY_HEIGHT || x < -PLAYER_BULLET_SIZE || x > PLAY_WIDTH) {
                 playerBullets.remove(i);
             } else {
-                playerBullets.set(i, new Bullet(x, y, bullet.vx, bullet.vy, bullet.life - 1, 0, 0));
+                playerBullets.set(i, new Bullet(x, y, bullet.vx, bullet.vy, bullet.life - 1, 0, 0, 0));
             }
         }
     }
@@ -343,28 +380,10 @@ public final class TouhouGameState {
         bossHp = bossMaxHp;
         bossX = PLAY_WIDTH / 2.0F - BOSS_SIZE / 2.0F;
         bossY = 12;
-        bossFireCooldown = 30;
         bossSpawnTimer = 0;
         bossAppearTimer = 0;
         bossScale = BOSS_SCALE_MIN;
-
-        int bulletCount = 15 + wave * 4 + random.nextInt(25);
-        float bulletSpeed = BOSS_BULLET_SPEED;
-        bossFireInterval = 30 + random.nextInt(31);
-        int maxBounces;
-        if (bulletCount >= 32) {
-            maxBounces = 0;
-        } else if (bulletCount >= 24) {
-            maxBounces = random.nextInt(2);
-        } else {
-            maxBounces = 1 + random.nextInt(3);
-        }
-
-        bulletPattern = switch (random.nextInt(3)) {
-            case 0 -> new CircleBulletPattern(bulletCount, maxBounces, bulletSpeed);
-            case 1 -> new SquareBulletPattern(bulletCount, maxBounces, bulletSpeed);
-            default -> new TriangleBulletPattern(bulletCount, maxBounces, bulletSpeed);
-        };
+        boss = BossFactory.createRandomBoss(random, wave);
     }
 
     private static boolean intersects(float ax, float ay, float aw, float ah,
@@ -446,7 +465,6 @@ public final class TouhouGameState {
         tag.putInt("wave", wave);
         tag.putInt("score", score);
         tag.putInt("shootCooldown", shootCooldown);
-        tag.putInt("bossFireCooldown", bossFireCooldown);
         tag.putInt("bossSpawnTimer", bossSpawnTimer);
         tag.putInt("bossAppearTimer", bossAppearTimer);
         tag.putInt("bossHitTicks", bossHitTicks);
@@ -475,6 +493,8 @@ public final class TouhouGameState {
             tag.putInt("enemyBulletLife" + i, bullet.life);
             tag.putInt("enemyBulletBounces" + i, bullet.bounces);
             tag.putInt("enemyBulletMaxBounces" + i, bullet.maxBounces);
+            tag.putFloat("enemyBulletAcceleration" + i, bullet.acceleration);
+            tag.putBoolean("enemyBulletRemoveOnBossHit" + i, bullet.removeOnBossHit);
         }
 
         tag.putInt("playerBulletCount", playerBullets.size());
@@ -487,6 +507,7 @@ public final class TouhouGameState {
             tag.putInt("playerBulletLife" + i, bullet.life);
             tag.putInt("playerBulletBounces" + i, bullet.bounces);
             tag.putInt("playerBulletMaxBounces" + i, bullet.maxBounces);
+            tag.putFloat("playerBulletAcceleration" + i, bullet.acceleration);
         }
     }
 
@@ -500,7 +521,6 @@ public final class TouhouGameState {
         wave = tag.getIntOr("wave", 0);
         score = tag.getIntOr("score", 0);
         shootCooldown = tag.getIntOr("shootCooldown", 0);
-        bossFireCooldown = tag.getIntOr("bossFireCooldown", 0);
         bossSpawnTimer = tag.getIntOr("bossSpawnTimer", 0);
         bossAppearTimer = tag.getIntOr("bossAppearTimer", 0);
         bossHitTicks = tag.getIntOr("bossHitTicks", 0);
@@ -531,7 +551,9 @@ public final class TouhouGameState {
                     tag.getFloatOr("enemyBulletVY" + i, 0.0F),
                     tag.getIntOr("enemyBulletLife" + i, 0),
                     tag.getIntOr("enemyBulletBounces" + i, 0),
-                    tag.getIntOr("enemyBulletMaxBounces" + i, 0)
+                    tag.getIntOr("enemyBulletMaxBounces" + i, 0),
+                    tag.getFloatOr("enemyBulletAcceleration" + i, 0.0F),
+                    tag.getBooleanOr("enemyBulletRemoveOnBossHit" + i, false)
             ));
         }
 
@@ -545,7 +567,8 @@ public final class TouhouGameState {
                     tag.getFloatOr("playerBulletVY" + i, 0.0F),
                     tag.getIntOr("playerBulletLife" + i, 0),
                     tag.getIntOr("playerBulletBounces" + i, 0),
-                    tag.getIntOr("playerBulletMaxBounces" + i, 0)
+                    tag.getIntOr("playerBulletMaxBounces" + i, 0),
+                    tag.getFloatOr("playerBulletAcceleration" + i, 0.0F)
             ));
         }
     }
@@ -558,7 +581,10 @@ public final class TouhouGameState {
     public record PowerUp(float x, float y, float vx, float vy, PowerUpType type, int life) {
     }
 
-    public record Bullet(float x, float y, float vx, float vy, int life, int bounces, int maxBounces) {
+    public record Bullet(float x, float y, float vx, float vy, int life, int bounces, int maxBounces, float acceleration, boolean removeOnBossHit) {
+        public Bullet(float x, float y, float vx, float vy, int life, int bounces, int maxBounces, float acceleration) {
+            this(x, y, vx, vy, life, bounces, maxBounces, acceleration, false);
+        }
     }
 
     public record TickResult(boolean shot, boolean bossHit, boolean bossKilled, boolean playerHit, boolean powerUpPickup) {

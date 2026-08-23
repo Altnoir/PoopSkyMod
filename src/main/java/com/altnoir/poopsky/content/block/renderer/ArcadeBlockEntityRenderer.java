@@ -73,7 +73,7 @@ public class ArcadeBlockEntityRenderer implements BlockEntityRenderer<ArcadeBloc
         poseStack.translate(0.5F, 1.9375F, 0.6876F);
         poseStack.mulPose(Axis.YP.rotationDegrees(-state.rotation));
         poseStack.scale(scale, scale, scale);
-        collector.submitText(poseStack, -font.width(text) / 2.0F, 0.0F, text.getVisualOrderText(), false,
+        collector.submitText(poseStack, -font.width(text) / 2.0F, 0.0F, text.getVisualOrderText(), true,
                 Font.DisplayMode.NORMAL, state.lightCoords, 0xFFFFFFFF, 0, 0);
         poseStack.popPose();
     }

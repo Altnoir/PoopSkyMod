@@ -5,6 +5,7 @@ import com.altnoir.poopsky.game.ServerGame;
 import com.altnoir.poopsky.game.model.TouhouGameState;
 import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundEvents;
 
 public class ServerTouhouGame extends ServerGame {
     private final TouhouGameState state = new TouhouGameState();
@@ -32,7 +33,7 @@ public class ServerTouhouGame extends ServerGame {
             playSound(PoSoundEvents.SHOOT.get(), 1.0F, 0.5F);
         }
         if (result.bossHit()) {
-            playSound(PoSoundEvents.POINT.get(), 1.2F, 0.7F);
+            playSound(SoundEvents.WOOL_HIT, 1.2F, 0.5F);
         }
         if (result.bossKilled()) {
             playSound(PoSoundEvents.EXPLOSION.get(), 1.0F, 1.0F);
@@ -42,7 +43,7 @@ public class ServerTouhouGame extends ServerGame {
         }
         if (result.playerHit()) {
             stage = GameStage.DIED;
-            playSound(PoSoundEvents.GAME_OVER.get(), 0.9F, 2.0F);
+            playSound(PoSoundEvents.GAME_OVER.get(), 0.9F, 1.0F);
         }
     }
 
