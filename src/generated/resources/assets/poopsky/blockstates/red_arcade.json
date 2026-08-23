@@ -1,62 +1,122 @@
 {
   "variants": {
-    "facing=east,game=false,half=lower": {
+    "facing=east,game=false,half=lower,triggered=false": {
       "model": "poopsky:block/red_arcade_bottom",
       "y": 90
     },
-    "facing=east,game=false,half=upper": {
-      "model": "poopsky:block/red_arcade_top",
-      "y": 90
-    },
-    "facing=east,game=true,half=lower": {
+    "facing=east,game=false,half=lower,triggered=true": {
       "model": "poopsky:block/red_arcade_bottom",
       "y": 90
     },
-    "facing=east,game=true,half=upper": {
+    "facing=east,game=false,half=upper,triggered=false": {
       "model": "poopsky:block/red_arcade_top",
       "y": 90
     },
-    "facing=north,game=false,half=lower": {
+    "facing=east,game=false,half=upper,triggered=true": {
+      "model": "poopsky:block/red_arcade_top",
+      "y": 90
+    },
+    "facing=east,game=true,half=lower,triggered=false": {
+      "model": "poopsky:block/red_arcade_bottom",
+      "y": 90
+    },
+    "facing=east,game=true,half=lower,triggered=true": {
+      "model": "poopsky:block/red_arcade_bottom",
+      "y": 90
+    },
+    "facing=east,game=true,half=upper,triggered=false": {
+      "model": "poopsky:block/red_arcade_top",
+      "y": 90
+    },
+    "facing=east,game=true,half=upper,triggered=true": {
+      "model": "poopsky:block/red_arcade_top",
+      "y": 90
+    },
+    "facing=north,game=false,half=lower,triggered=false": {
       "model": "poopsky:block/red_arcade_bottom"
     },
-    "facing=north,game=false,half=upper": {
-      "model": "poopsky:block/red_arcade_top"
-    },
-    "facing=north,game=true,half=lower": {
+    "facing=north,game=false,half=lower,triggered=true": {
       "model": "poopsky:block/red_arcade_bottom"
     },
-    "facing=north,game=true,half=upper": {
+    "facing=north,game=false,half=upper,triggered=false": {
       "model": "poopsky:block/red_arcade_top"
     },
-    "facing=south,game=false,half=lower": {
+    "facing=north,game=false,half=upper,triggered=true": {
+      "model": "poopsky:block/red_arcade_top"
+    },
+    "facing=north,game=true,half=lower,triggered=false": {
+      "model": "poopsky:block/red_arcade_bottom"
+    },
+    "facing=north,game=true,half=lower,triggered=true": {
+      "model": "poopsky:block/red_arcade_bottom"
+    },
+    "facing=north,game=true,half=upper,triggered=false": {
+      "model": "poopsky:block/red_arcade_top"
+    },
+    "facing=north,game=true,half=upper,triggered=true": {
+      "model": "poopsky:block/red_arcade_top"
+    },
+    "facing=south,game=false,half=lower,triggered=false": {
       "model": "poopsky:block/red_arcade_bottom",
       "y": 180
     },
-    "facing=south,game=false,half=upper": {
+    "facing=south,game=false,half=lower,triggered=true": {
+      "model": "poopsky:block/red_arcade_bottom",
+      "y": 180
+    },
+    "facing=south,game=false,half=upper,triggered=false": {
       "model": "poopsky:block/red_arcade_top",
       "y": 180
     },
-    "facing=south,game=true,half=lower": {
-      "model": "poopsky:block/red_arcade_bottom",
-      "y": 180
-    },
-    "facing=south,game=true,half=upper": {
+    "facing=south,game=false,half=upper,triggered=true": {
       "model": "poopsky:block/red_arcade_top",
       "y": 180
     },
-    "facing=west,game=false,half=lower": {
+    "facing=south,game=true,half=lower,triggered=false": {
+      "model": "poopsky:block/red_arcade_bottom",
+      "y": 180
+    },
+    "facing=south,game=true,half=lower,triggered=true": {
+      "model": "poopsky:block/red_arcade_bottom",
+      "y": 180
+    },
+    "facing=south,game=true,half=upper,triggered=false": {
+      "model": "poopsky:block/red_arcade_top",
+      "y": 180
+    },
+    "facing=south,game=true,half=upper,triggered=true": {
+      "model": "poopsky:block/red_arcade_top",
+      "y": 180
+    },
+    "facing=west,game=false,half=lower,triggered=false": {
       "model": "poopsky:block/red_arcade_bottom",
       "y": 270
     },
-    "facing=west,game=false,half=upper": {
+    "facing=west,game=false,half=lower,triggered=true": {
+      "model": "poopsky:block/red_arcade_bottom",
+      "y": 270
+    },
+    "facing=west,game=false,half=upper,triggered=false": {
       "model": "poopsky:block/red_arcade_top",
       "y": 270
     },
-    "facing=west,game=true,half=lower": {
+    "facing=west,game=false,half=upper,triggered=true": {
+      "model": "poopsky:block/red_arcade_top",
+      "y": 270
+    },
+    "facing=west,game=true,half=lower,triggered=false": {
       "model": "poopsky:block/red_arcade_bottom",
       "y": 270
     },
-    "facing=west,game=true,half=upper": {
+    "facing=west,game=true,half=lower,triggered=true": {
+      "model": "poopsky:block/red_arcade_bottom",
+      "y": 270
+    },
+    "facing=west,game=true,half=upper,triggered=false": {
+      "model": "poopsky:block/red_arcade_top",
+      "y": 270
+    },
+    "facing=west,game=true,half=upper,triggered=true": {
       "model": "poopsky:block/red_arcade_top",
       "y": 270
     }
