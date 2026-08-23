@@ -16,9 +16,7 @@ public class Sprite {
     }
 
     public Sprite(Vec2 pos, Vec2 size, ResourceLocation image) {
-        this.pos = pos;
-        this.size = size;
-        this.image = new Image(image, (int) size.x, (int) size.y);
+        this(pos, size, new Image(image, (int) size.x, (int) size.y));
     }
 
     public void setPos(Vec2 pos) {
@@ -26,15 +24,11 @@ public class Sprite {
     }
 
     public void setY(float y) {
-        this.pos = new Vec2(this.pos.x, y);
+        pos = new Vec2(pos.x, y);
     }
 
     public float getWidth() {
         return size.x;
-    }
-
-    public Renderer getImage() {
-        return image;
     }
 
     public void setImage(Renderer image) {

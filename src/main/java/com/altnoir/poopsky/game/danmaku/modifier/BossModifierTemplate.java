@@ -71,12 +71,12 @@ public class BossModifierTemplate {
     }
 
     public static class Builder {
-        private IntProvider bulletCount = ConstantInt.of(20);
-        private IntProvider maxBounces = ConstantInt.of(0);
-        private IntProvider attackInterval = ConstantInt.of(8);
-        private FloatProvider bulletSpeed = ConstantFloat.of(2.0F);
-        private IntProvider rotation = ConstantInt.of(0);
-        private IntProvider angleStep = ConstantInt.of(5);
+        private IntProvider bulletCount = random -> 20;
+        private IntProvider maxBounces = random -> 0;
+        private IntProvider attackInterval = random -> 8;
+        private FloatProvider bulletSpeed = random -> 2.0F;
+        private IntProvider rotation = random -> 0;
+        private IntProvider angleStep = random -> 5;
         private CircularRotation circularRotation;
         private boolean rotationSet;
 

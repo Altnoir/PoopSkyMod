@@ -23,18 +23,9 @@ public final class VecUtil {
 
     public static int get4Direction(Vec2 pos) {
         if (pos.x > pos.y) {
-            if (pos.x + pos.y > 0) {
-                return RIGHT;
-            } else {
-                return UP;
-            }
-        } else {
-            if (pos.x + pos.y > 0) {
-                return DOWN;
-            } else {
-                return LEFT;
-            }
+            return pos.x + pos.y > 0 ? RIGHT : UP;
         }
+        return pos.x + pos.y > 0 ? DOWN : LEFT;
     }
 
     public static Vec2 getFrom(int direction) {

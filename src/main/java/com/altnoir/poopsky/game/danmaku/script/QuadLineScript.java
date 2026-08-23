@@ -1,12 +1,7 @@
 package com.altnoir.poopsky.game.danmaku.script;
 
-import com.altnoir.poopsky.game.danmaku.Boss;
-import com.altnoir.poopsky.game.danmaku.BossModifiers;
-import com.altnoir.poopsky.game.danmaku.BossScript;
-import com.altnoir.poopsky.game.danmaku.CircularRotation;
-import com.altnoir.poopsky.game.danmaku.RotationState;
+import com.altnoir.poopsky.game.danmaku.*;
 import com.altnoir.poopsky.game.danmaku.modifier.BossModifierTemplate;
-import com.altnoir.poopsky.game.danmaku.modifier.ConstantInt;
 import com.altnoir.poopsky.game.danmaku.modifier.UniformFloat;
 import com.altnoir.poopsky.game.danmaku.modifier.UniformInt;
 import com.altnoir.poopsky.game.model.TouhouGameState;
@@ -16,7 +11,7 @@ import java.util.Random;
 public class QuadLineScript implements BossScript {
     private static final int DIRECTIONS = 4;
     private static final BossModifierTemplate TEMPLATE = BossModifierTemplate.builder()
-            .bulletCount(ConstantInt.of(1))
+            .bulletCount(UniformInt.of(1))
             .attackInterval(UniformInt.of(4, 6))
             .bulletSpeed(UniformFloat.of(1.5F, 2.5F))
             .circularRotation(20, 0)

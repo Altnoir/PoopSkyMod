@@ -38,6 +38,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -120,6 +121,8 @@ public class PoopSky {
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             CompooperBlock.bootStrap();
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(
+                    PoBlocks.GINKGO_SAPLING.getId(), PoBlocks.POTTED_GINKGO_SAPLING);
             DispenserBlock.registerProjectileBehavior(PoItems.POOP_BALL);
             DispenserBlock.registerProjectileBehavior(PoItems.SEA_POOP_BALL);
             DispenserBlock.registerProjectileBehavior(PoItems.WITHER_POOP_BALL);
@@ -263,23 +266,11 @@ public class PoopSky {
     }
 
     public static String getItemPath(Item item) {
-        return getItemKey(item).getPath();
-    }
-
-    public static String getItemNameSpace(Item item) {
-        return getItemKey(item).getNamespace();
-    }
-
-    public static ResourceLocation getItemKey(Item item) {
-        return BuiltInRegistries.ITEM.getKey(item);
+        return BuiltInRegistries.ITEM.getKey(item).getPath();
     }
 
     public static String getBlockPath(Block block) {
         return getBlockKey(block).getPath();
-    }
-
-    public static String getBlockNameSpace(Block block) {
-        return getBlockKey(block).getNamespace();
     }
 
     public static ResourceLocation getBlockKey(Block block) {

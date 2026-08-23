@@ -31,8 +31,6 @@ public record POPExplosionRecipe(Ingredient input, int radius, Output output) im
 
         public boolean isBlock() { return block != null; }
 
-        public boolean isItem() { return item != null; }
-
         public ItemStack toItemStack() {
             return isBlock() ? new ItemStack(block.asItem()) : new ItemStack(item);
         }
@@ -54,14 +52,9 @@ public record POPExplosionRecipe(Ingredient input, int radius, Output output) im
                         ByteBufCodecs.registry(Registries.ITEM).encode(buf, output.item());
                     }
                 },
-                buf -> {
-                    boolean isBlock = buf.readBoolean();
-                    if (isBlock) {
-                        return new Output(ByteBufCodecs.registry(Registries.BLOCK).decode(buf), null);
-                    } else {
-                        return new Output(null, ByteBufCodecs.registry(Registries.ITEM).decode(buf));
-                    }
-                }
+                buf -> buf.readBoolean()
+                        ? new Output(ByteBufCodecs.registry(Registries.BLOCK).decode(buf), null)
+                        : new Output(null, ByteBufCodecs.registry(Registries.ITEM).decode(buf))
         );
     }
 
