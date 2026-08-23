@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.mixin;
 
 import com.altnoir.poopsky.impl.event.PumkinBlockEvents;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
@@ -14,7 +15,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.function.Predicate;
 
@@ -36,10 +36,8 @@ public class CarvedPumpkinBlockMixin {
         }
     }
 
-    @Inject(method = "canSpawnGolem", at = @At("RETURN"), cancellable = true)
-    private void poopsky$canSpawn(LevelReader level, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-        if (PumkinBlockEvents.canSpawnCustomGolem(level, pos)) {
-            cir.setReturnValue(true);
-        }
+    @ModifyReturnValue(method = "canSpawnGolem", at = @At("RETURN"))
+    private boolean poopsky$canSpawn(boolean original, LevelReader level, BlockPos pos) {
+        return original || PumkinBlockEvents.canSpawnCustomGolem(level, pos);
     }
 }

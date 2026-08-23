@@ -36,7 +36,7 @@ public class FlushToiletCartItem extends Item {
             return InteractionResult.PASS;
         }
 
-        float yRot = context.getPlayer() != null ? context.getPlayer().getYRot() : 0.0F;
+        float yRot = context.getPlayer() != null ? context.getPlayer().getYRot() + 180.0F : 0.0F;
         cart.moveTo(pos.getX() + 0.5, pos.getY() + 0.05, pos.getZ() + 0.5, yRot, 0.0F);
         if (!serverLevel.noCollision(cart)) {
             return InteractionResult.PASS;
