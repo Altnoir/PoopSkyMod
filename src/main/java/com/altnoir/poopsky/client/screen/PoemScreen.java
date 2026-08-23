@@ -27,7 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PoemScreen extends Screen {
-    private static final Identifier TEXT_LOCATION = PoopSky.loc("texts/poopsky.txt");
+    private static final String TEXT_DIRECTORY = "texts/poopsky/";
+    private static final Identifier FALLBACK_TEXT_LOCATION = PoopSky.loc(TEXT_DIRECTORY + "en_us.txt");
     private static final Identifier TITLE_LOCATION = PoopSky.loc("textures/gui/poopsky.png");
     private static final Identifier VIGNETTE_LOCATION = PoopSky.mcloc("textures/misc/credits_vignette.png");
     private static final int CONTENT_WIDTH = 256;
@@ -63,7 +64,8 @@ public class PoemScreen extends Screen {
             return;
         }
 
-        try (Reader reader = this.minecraft.getResourceManager().openAsReader(TEXT_LOCATION);
+        Identifier textLocation = this.getTextLocation();
+        try (Reader reader = this.minecraft.getResourceManager().openAsReader(textLocation);
              BufferedReader bufferedReader = new BufferedReader(reader)) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
@@ -74,8 +76,17 @@ public class PoemScreen extends Screen {
                 }
             }
         } catch (Exception exception) {
-            PoopSky.LOGGER.error("Couldn't load PoopSky poem text from {}", TEXT_LOCATION, exception);
+            PoopSky.LOGGER.error("Couldn't load PoopSky poem text from {}", textLocation, exception);
         }
+    }
+
+    private Identifier getTextLocation() {
+        String languageCode = this.minecraft.getLanguageManager().getSelected();
+        Identifier localizedTextLocation = PoopSky.loc(TEXT_DIRECTORY + languageCode + ".txt");
+        if (this.minecraft.getResourceManager().getResource(localizedTextLocation).isPresent()) {
+            return localizedTextLocation;
+        }
+        return FALLBACK_TEXT_LOCATION;
     }
 
     @Override

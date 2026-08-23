@@ -333,7 +333,9 @@ public final class LangGen {
         provider.add("gamedisks.roundworm", "Roundworm");
         provider.add("gamedisks.blocktris", "Blocktris");
         provider.add("gamedisks.pong", "Pong");
+        provider.add("gamedisks.touhou", "Touhou Filthy Soil Record");
         provider.add("message.gamedisks.light_arcade.no_cartridge", "No cartridge");
+        provider.add("message.poopsky.arcade.reward_full", "Reward capacity is full");
 
         provider.add("gui.gamingconsole.title", "Arcade Machine");
         provider.add("gui.gamingconsole.press_any_key", "Press any key");
@@ -345,6 +347,9 @@ public final class LangGen {
         provider.add("gui.gamingconsole.next", "Next");
         provider.add("gui.gamingconsole.blocktris.botton_1", "Press [%s] to fall");
         provider.add("gui.gamingconsole.blocktris.botton_2", "Press [%s] to rotate");
+        provider.add("gui.gamingconsole.touhou.shoot", "Press %s to fire danmaku");
+
+        provider.add("text.poopsky.arcade.total_reward", "Total Score[%s]");
 
         // Containers
         provider.add("container.poopsky.fly_barrel", "Fly Barrel");

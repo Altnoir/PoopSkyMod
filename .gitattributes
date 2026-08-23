@@ -2,5 +2,5 @@ src/generated/**/.cache/cache text eol=lf
 src/generated/**/*.json text eol=lf
 
 src/generated/** linguist-generated=true
-src/main/resources/resourcepacks/poopsky_pack/assets/** linguist-generated=true
+src/main/resources/resourcepacks/** linguist-generated=true
 *.java text eol=lf charset=utf-8
