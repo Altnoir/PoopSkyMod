@@ -77,6 +77,12 @@
   "gui.gamingconsole.blocktris.botton_1": "Нажмите [%s], чтобы опустить",
   "gui.gamingconsole.blocktris.botton_2": "Нажмите [%s], чтобы повернуть",
   "gui.gamingconsole.touhou.shoot": "Нажмите %s, чтобы стрелять данмаку",
+  "gui.gamingconsole.touhou.slow": "Нажмите %s, чтобы замедлиться",
+  "gui.gamingconsole.touhou.wave": "Волна",
+  "gui.gamingconsole.touhou.next_boss": "Следующий босс",
+  "gui.gamingconsole.touhou.boss_hp": "Здоровье босса",
+  "gui.gamingconsole.touhou.speed_up": "Ускорение",
+  "gui.gamingconsole.touhou.double_shot": "Двойной выстрел",
 
   "item.poopsky.poolime_spawn_egg": "Яйцо призыва Какаслизня",
   "item.poopsky.fly_spawn_egg": "Яйцо призыва мухи",

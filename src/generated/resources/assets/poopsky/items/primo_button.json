@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "poopsky:item/primo_button"
+    "model": "poopsky:block/primo_button"
   }
 }

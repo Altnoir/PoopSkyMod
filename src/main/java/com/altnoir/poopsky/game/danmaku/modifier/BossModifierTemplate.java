@@ -2,6 +2,7 @@ package com.altnoir.poopsky.game.danmaku.modifier;
 
 import com.altnoir.poopsky.game.danmaku.BossModifiers;
 import com.altnoir.poopsky.game.danmaku.CircularRotation;
+import com.altnoir.poopsky.game.danmaku.movement.BossMovement;
 
 import java.util.Random;
 
@@ -13,6 +14,9 @@ public class BossModifierTemplate {
     private final IntProvider rotation;
     private final IntProvider angleStep;
     private final CircularRotation circularRotation;
+    private final BossMovement movement;
+    private final int movementWave;
+    private final boolean randomMovement;
 
     private BossModifierTemplate(Builder builder) {
         this.bulletCount = builder.bulletCount;
@@ -22,6 +26,9 @@ public class BossModifierTemplate {
         this.rotation = builder.rotation;
         this.angleStep = builder.angleStep;
         this.circularRotation = builder.circularRotation;
+        this.movement = builder.movement;
+        this.movementWave = builder.movementWave;
+        this.randomMovement = builder.randomMovement;
     }
 
     public BossModifiers roll(Random random) {
@@ -42,7 +49,10 @@ public class BossModifierTemplate {
                 bulletSpeed.next(random),
                 rotation.next(random),
                 angleStep.next(random),
-                circularRotation
+                circularRotation,
+                movement == null ? null : movement.copy(),
+                movementWave,
+                randomMovement
         );
     }
 
@@ -78,6 +88,9 @@ public class BossModifierTemplate {
         private IntProvider rotation = random -> 0;
         private IntProvider angleStep = random -> 5;
         private CircularRotation circularRotation;
+        private BossMovement movement;
+        private int movementWave = 1;
+        private boolean randomMovement;
         private boolean rotationSet;
 
         public Builder bulletCount(IntProvider bulletCount) {
@@ -108,6 +121,23 @@ public class BossModifierTemplate {
 
         public Builder angleStep(IntProvider angleStep) {
             this.angleStep = angleStep;
+            return this;
+        }
+
+        public Builder movement(BossMovement movement) {
+            this.movement = movement;
+            return this;
+        }
+
+        public Builder movementWave(int movementWave) {
+            this.movementWave = movementWave;
+            this.randomMovement = false;
+            return this;
+        }
+
+        public Builder movementWave(int movementWave, boolean randomMovement) {
+            this.movementWave = movementWave;
+            this.randomMovement = randomMovement;
             return this;
         }
 

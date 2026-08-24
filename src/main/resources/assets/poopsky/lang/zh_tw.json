@@ -77,6 +77,12 @@
   "gui.gamingconsole.blocktris.botton_1": "按 [%s] 落下",
   "gui.gamingconsole.blocktris.botton_2": "按 [%s] 旋轉",
   "gui.gamingconsole.touhou.shoot": "按下 %s 發射彈幕",
+  "gui.gamingconsole.touhou.slow": "按下 %s 減速移動",
+  "gui.gamingconsole.touhou.wave": "波次",
+  "gui.gamingconsole.touhou.next_boss": "下一個 Boss",
+  "gui.gamingconsole.touhou.boss_hp": "Boss 血量",
+  "gui.gamingconsole.touhou.speed_up": "速度提升",
+  "gui.gamingconsole.touhou.double_shot": "雙重射擊",
 
   "item.poopsky.poolime_spawn_egg": "屎萊姆生怪蛋",
   "item.poopsky.fly_spawn_egg": "蒼蠅生怪蛋",

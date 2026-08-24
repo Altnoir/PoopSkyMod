@@ -103,8 +103,11 @@ public final class EntityLootTableGen {
         loot.add(PoEntityType.FLUSH_TOILET_CART.get(), LootTable.lootTable());
         loot.add(PoEntityType.GOLDEN_FLUSH_TOILET_CART.get(), LootTable.lootTable());
         loot.add(PoEntityType.POOP_TNT.get(), LootTable.lootTable());
+        loot.add(PoEntityType.POP_TNT_MINECART.get(), LootTable.lootTable());
         loot.add(PoEntityType.GINKGO_BOAT.get(), LootTable.lootTable());
+        loot.add(PoEntityType.PRIMO_BOAT.get(), LootTable.lootTable());
         loot.add(PoEntityType.GINKGO_CHEST_BOAT.get(), LootTable.lootTable());
+        loot.add(PoEntityType.PRIMO_CHEST_BOAT.get(), LootTable.lootTable());
         loot.add(PoEntityType.GACHAPON.get(), LootTable.lootTable());
     }
 

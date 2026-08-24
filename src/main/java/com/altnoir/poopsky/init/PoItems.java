@@ -155,7 +155,7 @@ public class PoItems {
             props -> new FlushToiletCartItem(PoEntityType.GOLDEN_FLUSH_TOILET_CART, props.stacksTo(1)));
     public static final ItemEntry<PopMinecartItem> POP_TNT_MINECART = REGISTRATE.item("pop_tnt_minecart",
             props -> new PopMinecartItem(PoEntityType.POP_TNT_MINECART, props.stacksTo(1)))
-            .model(() -> (ctx, prov) -> prov.createWithExistingModel(ctx.get(), prov.modLoc("item/pop_tnt_minecart")))
+            .model(() -> (ctx, prov) -> prov.generateFlatItem(ctx.get(), prov.modItemTexture("poop_minecart")))
             .lang("Minecart with POP")
             .register();
     public static final ItemEntry<PoBoatItem> GINKGO_BOAT = registerItem("ginkgo_boat",

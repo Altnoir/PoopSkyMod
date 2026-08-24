@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "D": {
-      "item": "minecraft:dropper"
-    },
-    "G": {
-      "item": "poopsky:glow_primo_cap"
-    },
-    "I": {
-      "item": "poopsky:ominous_filthy_ingot"
-    },
-    "S": {
-      "tag": "poopsky:shits"
-    }
+    "D": "minecraft:dropper",
+    "G": "poopsky:glow_primo_cap",
+    "I": "poopsky:ominous_filthy_ingot",
+    "S": "#poopsky:shits"
   },
   "pattern": [
     "ISI",
@@ -21,7 +13,6 @@
     "IDI"
   ],
   "result": {
-    "count": 1,
     "id": "poopsky:brown_arcade"
   }
 }

@@ -4,11 +4,8 @@
   "cookingtime": 200,
   "experience": 0.1,
   "group": "brown_stained_glass",
-  "ingredient": {
-    "item": "poopsky:poop_sand"
-  },
+  "ingredient": "poopsky:poop_sand",
   "result": {
-    "count": 1,
     "id": "minecraft:brown_stained_glass"
   }
 }

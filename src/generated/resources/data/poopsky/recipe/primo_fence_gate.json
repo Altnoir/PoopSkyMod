@@ -2,19 +2,14 @@
   "type": "minecraft:crafting_shaped",
   "category": "redstone",
   "key": {
-    "P": {
-      "item": "poopsky:primo_planks"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    }
+    "P": "poopsky:primo_planks",
+    "S": "minecraft:stick"
   },
   "pattern": [
     "SPS",
     "SPS"
   ],
   "result": {
-    "count": 1,
     "id": "poopsky:primo_fence_gate"
   }
 }

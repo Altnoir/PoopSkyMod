@@ -97,6 +97,7 @@ public final class ItemModelGen {
         existingItemModel(prov, PoBlocks.PRIMO_TRAPDOOR.get().asItem());
         existingItemModel(prov, PoBlocks.PRIMO_FENCE.get().asItem());
         existingItemModel(prov, PoBlocks.MUSHROOM_BED.get().asItem());
+        existingItemModel(prov, PoBlocks.BROWN_ARCADE.get().asItem());
         existingItemModel(prov, PoBlocks.RED_ARCADE.get().asItem());
         existingItemModel(prov, PoBlocks.BLUE_ARCADE.get().asItem());
         existingItemModel(prov, PoBlocks.POOP_BLOCK.get().asItem());

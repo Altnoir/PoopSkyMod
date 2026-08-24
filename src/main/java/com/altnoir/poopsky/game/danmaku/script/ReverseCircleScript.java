@@ -25,7 +25,7 @@ public class ReverseCircleScript implements BossScript {
             .build();
 
     private final RotationState rotation = new RotationState();
-    private int intervalCounter;
+    private int intervalCounter = TouhouGameState.BOSS_APPEAR_DURATION;
 
     @Override
     public BossModifiers createModifiers(Random random, int wave) {
@@ -68,8 +68,10 @@ public class ReverseCircleScript implements BossScript {
                     spawnY = EDGE_HEIGHT - (distance - 2.0F * EDGE_WIDTH - EDGE_HEIGHT);
                 }
 
-                float dx = centerX - spawnX;
-                float dy = centerY - spawnY;
+                float bulletCenterX = spawnX + TouhouGameState.BOSS_BULLET_SIZE / 2.0F;
+                float bulletCenterY = spawnY + TouhouGameState.BOSS_BULLET_SIZE / 2.0F;
+                float dx = centerX - bulletCenterX;
+                float dy = centerY - bulletCenterY;
                 float length = Math.max(0.001F, (float) Math.sqrt(dx * dx + dy * dy));
                 float vx = dx / length * speed;
                 float vy = dy / length * speed;

@@ -15,7 +15,7 @@ public class FanScript implements BossScript {
     private static final BossModifierTemplate TEMPLATE = BossModifierTemplate.builder()
             .bulletCount(UniformInt.of(10, 15))
             .attackInterval(UniformInt.of(8, 12))
-            .bulletSpeed(UniformFloat.of(1.5F, 2.5F))
+            .bulletSpeed(UniformFloat.of(2.5F, 3.5F))
             .rotation(UniformInt.of(40))
             .angleStep(UniformInt.of(5))
             .build();

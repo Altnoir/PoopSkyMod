@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "R": {
-      "item": "poopsky:roundworm"
-    },
-    "S": {
-      "tag": "poopsky:shits"
-    }
+    "R": "poopsky:roundworm",
+    "S": "#poopsky:shits"
   },
   "pattern": [
     "RRR",
@@ -15,7 +11,6 @@
     "RRR"
   ],
   "result": {
-    "count": 1,
     "id": "poopsky:poopsky_block"
   }
 }

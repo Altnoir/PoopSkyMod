@@ -77,6 +77,12 @@
   "gui.gamingconsole.blocktris.botton_1": "Appuyez sur [%s] pour descendre",
   "gui.gamingconsole.blocktris.botton_2": "Appuyez sur [%s] pour tourner",
   "gui.gamingconsole.touhou.shoot": "Appuyez sur %s pour tirer des danmaku",
+  "gui.gamingconsole.touhou.slow": "Appuyez sur %s pour ralentir",
+  "gui.gamingconsole.touhou.wave": "Vague",
+  "gui.gamingconsole.touhou.next_boss": "Prochain boss",
+  "gui.gamingconsole.touhou.boss_hp": "PV du boss",
+  "gui.gamingconsole.touhou.speed_up": "Vitesse augmentée",
+  "gui.gamingconsole.touhou.double_shot": "Double tir",
 
   "item.poopsky.poolime_spawn_egg": "Œuf d’apparition de Poolime",
   "item.poopsky.fly_spawn_egg": "Œuf d’apparition de mouche",

@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "tag": "poopsky:primo_stems"
-    }
+    "#poopsky:primo_stems"
   ],
   "result": {
     "count": 4,

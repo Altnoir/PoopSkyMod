@@ -2,15 +2,12 @@
   "type": "minecraft:crafting_shaped",
   "category": "redstone",
   "key": {
-    "P": {
-      "item": "poopsky:primo_planks"
-    }
+    "P": "poopsky:primo_planks"
   },
   "pattern": [
     "PP"
   ],
   "result": {
-    "count": 1,
     "id": "poopsky:primo_pressure_plate"
   }
 }

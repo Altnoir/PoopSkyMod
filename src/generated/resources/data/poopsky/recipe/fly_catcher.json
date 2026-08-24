@@ -2,13 +2,14 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
+    "D": "minecraft:diamond",
     "R": "poopsky:roundworm",
     "S": "minecraft:stick"
   },
   "pattern": [
-    "RR",
-    "RS",
-    " S"
+    "RRD",
+    "RS ",
+    "S  "
   ],
   "result": {
     "id": "poopsky:fly_catcher"

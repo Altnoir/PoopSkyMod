@@ -77,6 +77,12 @@
   "gui.gamingconsole.blocktris.botton_1": "Drücke [%s] zum Fallenlassen",
   "gui.gamingconsole.blocktris.botton_2": "Drücke [%s] zum Drehen",
   "gui.gamingconsole.touhou.shoot": "Drücke %s, um Danmaku abzufeuern",
+  "gui.gamingconsole.touhou.slow": "Drücke %s, um dich langsamer zu bewegen",
+  "gui.gamingconsole.touhou.wave": "Welle",
+  "gui.gamingconsole.touhou.next_boss": "Nächster Boss",
+  "gui.gamingconsole.touhou.boss_hp": "Boss-LP",
+  "gui.gamingconsole.touhou.speed_up": "Tempo erhöht",
+  "gui.gamingconsole.touhou.double_shot": "Doppelschuss",
 
   "item.poopsky.poolime_spawn_egg": "Kackschleim-Spawn-Ei",
   "item.poopsky.fly_spawn_egg": "Fliegen-Spawn-Ei",

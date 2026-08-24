@@ -4,6 +4,7 @@ import com.altnoir.poopsky.game.danmaku.*;
 import com.altnoir.poopsky.game.danmaku.modifier.BossModifierTemplate;
 import com.altnoir.poopsky.game.danmaku.modifier.UniformFloat;
 import com.altnoir.poopsky.game.danmaku.modifier.UniformInt;
+import com.altnoir.poopsky.game.danmaku.movement.RandomBossMovement;
 import com.altnoir.poopsky.game.model.TouhouGameState;
 
 import java.util.Random;
@@ -12,10 +13,12 @@ public class QuadLineScript implements BossScript {
     private static final int DIRECTIONS = 4;
     private static final BossModifierTemplate TEMPLATE = BossModifierTemplate.builder()
             .bulletCount(UniformInt.of(1))
-            .attackInterval(UniformInt.of(4, 6))
-            .bulletSpeed(UniformFloat.of(1.5F, 2.5F))
-            .circularRotation(20, 0)
+            .attackInterval(UniformInt.of(4, 8))
+            .bulletSpeed(UniformFloat.of(2.0F, 3.5F))
+            .circularRotation()
             .angleStep(UniformInt.of(5))
+            .movement(new RandomBossMovement(30.0F, 1.0F))
+            .movementWave(2, true)
             .build();
 
     private final RotationState rotation = new RotationState();

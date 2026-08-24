@@ -77,6 +77,12 @@
   "gui.gamingconsole.blocktris.botton_1": "[%s]で落下",
   "gui.gamingconsole.blocktris.botton_2": "[%s]で回転",
   "gui.gamingconsole.touhou.shoot": "%sで弾幕を発射",
+  "gui.gamingconsole.touhou.slow": "%sで低速移動",
+  "gui.gamingconsole.touhou.wave": "ウェーブ",
+  "gui.gamingconsole.touhou.next_boss": "次のボス",
+  "gui.gamingconsole.touhou.boss_hp": "ボスHP",
+  "gui.gamingconsole.touhou.speed_up": "スピードアップ",
+  "gui.gamingconsole.touhou.double_shot": "ダブルショット",
 
   "item.poopsky.poolime_spawn_egg": "プーライムのスポーンエッグ",
   "item.poopsky.fly_spawn_egg": "ハエのスポーンエッグ",

@@ -97,6 +97,7 @@ public class BlockStateGen extends LegacyBlockStateGenerator {
         flushToilet(PoBlocks.GOLDEN_FLUSH_TOILET.get());
         portableToilet(PoBlocks.GINKGO_TOILET.get());
         portableToilet(PoBlocks.PORTABLE_TOILET.get());
+        arcade(PoBlocks.BROWN_ARCADE.get());
         arcade(PoBlocks.RED_ARCADE.get());
         arcade(PoBlocks.BLUE_ARCADE.get());
         gachaMachine(PoBlocks.GACHA_MACHINE.get());

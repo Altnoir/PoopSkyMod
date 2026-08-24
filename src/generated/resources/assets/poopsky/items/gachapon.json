@@ -4,30 +4,46 @@
     "cases": [
       {
         "model": {
-          "type": "minecraft:model",
-          "model": "poopsky:item/gachapon_yellow"
+          "type": "minecraft:special",
+          "base": "poopsky:item/gachapon_special",
+          "model": {
+            "type": "poopsky:gachapon"
+          }
         },
-        "when": "yellow"
-      },
-      {
-        "model": {
-          "type": "minecraft:model",
-          "model": "poopsky:item/gachapon_red"
-        },
-        "when": "red"
-      },
-      {
-        "model": {
-          "type": "minecraft:model",
-          "model": "poopsky:item/gachapon_blue"
-        },
-        "when": "blue"
+        "when": "ground"
       }
     ],
     "fallback": {
-      "type": "minecraft:model",
-      "model": "poopsky:item/gachapon"
+      "type": "minecraft:select",
+      "cases": [
+        {
+          "model": {
+            "type": "minecraft:model",
+            "model": "poopsky:item/gachapon_yellow"
+          },
+          "when": "yellow"
+        },
+        {
+          "model": {
+            "type": "minecraft:model",
+            "model": "poopsky:item/gachapon_red"
+          },
+          "when": "red"
+        },
+        {
+          "model": {
+            "type": "minecraft:model",
+            "model": "poopsky:item/gachapon_blue"
+          },
+          "when": "blue"
+        }
+      ],
+      "fallback": {
+        "type": "minecraft:model",
+        "model": "poopsky:item/gachapon"
+      },
+      "property": "poopsky:gachapon_color"
     },
-    "property": "poopsky:gachapon_color"
+    "property": "minecraft:display_context"
   }
 }

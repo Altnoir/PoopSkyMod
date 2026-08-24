@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "E": {
-      "item": "minecraft:enchanted_golden_apple"
-    },
-    "G": {
-      "tag": "c:gunpowders"
-    },
-    "S": {
-      "item": "poopsky:shit"
-    }
+    "E": "minecraft:enchanted_golden_apple",
+    "G": "#c:gunpowders",
+    "S": "poopsky:shit"
   },
   "pattern": [
     " S ",

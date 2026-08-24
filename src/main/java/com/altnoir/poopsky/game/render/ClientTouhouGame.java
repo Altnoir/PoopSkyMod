@@ -65,11 +65,14 @@ public class ClientTouhouGame extends ClientGame {
         player.render(graphics, posX, posY);
 
         if (getStage() == GameStage.PLAYING && state.getBossSpawnTimer() == 0) {
-            float scale = state.getBossScale() * state.getBossHitScale();
-            float scaledSize = TouhouGameState.BOSS_SIZE * scale;
-            float offset = (TouhouGameState.BOSS_SIZE - scaledSize) / 2.0F;
-            boss.setPos(GAME_OFFSET_X + state.getBossX() + offset, state.getBossY() + offset);
-            boss.renderScaled(graphics, posX, posY, scale);
+            for (TouhouGameState.ActiveBoss activeBoss : state.getBosses()) {
+                float scale = state.getBossScale() * state.getBossHitScale(activeBoss);
+                float scaledSize = TouhouGameState.BOSS_SIZE * scale;
+                float offset = (TouhouGameState.BOSS_SIZE - scaledSize) / 2.0F;
+
+                boss.setPos(GAME_OFFSET_X + activeBoss.x + offset, activeBoss.y + offset);
+                boss.renderScaled(graphics, posX, posY, scale);
+            }
         }
 
         renderInfo(graphics, posX, posY);
@@ -80,16 +83,16 @@ public class ClientTouhouGame extends ClientGame {
         int infoX = posX + GAME_OFFSET_X + TouhouGameState.PLAY_WIDTH + 8;
         int infoY = posY + 8;
 
-        graphics.text(font, "SCORE", infoX, infoY, 0xFFFFFF);
+        graphics.text(font, Component.translatable("gui.gamingconsole.score"), infoX, infoY, 0xFFFFFF);
         graphics.text(font, String.valueOf(state.getScore()), infoX, infoY + 10, 0xFFD700);
 
-        graphics.text(font, "WAVE", infoX, infoY + 30, 0xFFFFFF);
+        graphics.text(font, Component.translatable("gui.gamingconsole.touhou.wave"), infoX, infoY + 30, 0xFFFFFF);
         graphics.text(font, String.valueOf(state.getWave() + 1), infoX, infoY + 40, 0x87CEEB);
 
         if (state.getBossSpawnTimer() > 0) {
-            graphics.text(font, "NEXT BOSS", infoX, infoY + 60, 0xFFFFFF);
+            graphics.text(font, Component.translatable("gui.gamingconsole.touhou.next_boss"), infoX, infoY + 60, 0xFFFFFF);
         } else {
-            graphics.text(font, "BOSS HP", infoX, infoY + 60, 0xFFFFFF);
+            graphics.text(font, Component.translatable("gui.gamingconsole.touhou.boss_hp"), infoX, infoY + 60, 0xFFFFFF);
             int hp = Math.max(0, state.getBossHp());
             int maxHp = Math.max(1, state.getBossMaxHp());
             graphics.fill(infoX, infoY + 70, infoX + 56, infoY + 76, 0xFF333333);
@@ -108,10 +111,10 @@ public class ClientTouhouGame extends ClientGame {
         graphics.text(font, slowHint, infoX, infoY + 96, 0xFFFFFF);
 
         if (state.hasSpeedBoost()) {
-            graphics.text(font, "SPEED UP", infoX, infoY + 110, 0x55FF55);
+            graphics.text(font, Component.translatable("gui.gamingconsole.touhou.speed_up"), infoX, infoY + 110, 0x55FF55);
         }
         if (state.hasDoubleShot()) {
-            graphics.text(font, "DOUBLE SHOT", infoX, infoY + 120, 0x55AAFF);
+            graphics.text(font, Component.translatable("gui.gamingconsole.touhou.double_shot"), infoX, infoY + 120, 0x55AAFF);
         }
     }
 

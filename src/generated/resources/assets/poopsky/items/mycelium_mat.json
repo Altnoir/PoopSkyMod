@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "poopsky:item/mycelium_mat"
+    "model": "poopsky:block/mycelium_mat"
   }
 }
