@@ -60,10 +60,10 @@ public class ArcadeBlockEntityRenderer implements BlockEntityRenderer<ArcadeBloc
 
     private static void renderRewardText(ArcadeBlockEntity blockEntity, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, BlockState state) {
         Component text = Component.translatable("text.poopsky.arcade.total_reward", blockEntity.getRewardCount())
-                .withStyle(ChatFormatting.ITALIC, ChatFormatting.AQUA);
+                .withStyle(ChatFormatting.ITALIC);
         Font font = Minecraft.getInstance().font;
         float textWidth = font.width(text);
-        float scale = -0.01785F;
+        float scale = -0.01475F;
 
         poseStack.pushPose();
         poseStack.translate(0.5F, 1.9375F, 0.6876F);
