@@ -10,6 +10,10 @@ import net.minecraft.sounds.SoundEvents;
 public class ServerTouhouGame extends ServerGame {
     private final TouhouGameState state = new TouhouGameState();
 
+    public ServerTouhouGame() {
+        state.setBossLootConsumer(this::emitItem);
+    }
+
     @Override
     public void prepare() {
         super.prepare();

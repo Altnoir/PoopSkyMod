@@ -214,6 +214,7 @@ public class ArcadeBlockEntity extends BlockEntity {
                 level.playSound(null, getBlockPos().above(), event, SoundSource.BLOCKS, volume, pitch);
             }
         });
+        game.setItemEmitter(stack -> spawnRewards(List.of(stack.copy())));
     }
 
     private void beginControl(UUID player) {

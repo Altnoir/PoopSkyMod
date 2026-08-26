@@ -2,7 +2,9 @@ package com.altnoir.poopsky.game.danmaku;
 
 import com.altnoir.poopsky.game.danmaku.movement.BossMovement;
 import com.altnoir.poopsky.game.model.TouhouGameState;
+import net.minecraft.world.item.ItemStack;
 
+import java.util.List;
 import java.util.Random;
 
 public final class Boss {
@@ -38,5 +40,9 @@ public final class Boss {
 
     public BossModifiers modifiers() {
         return modifiers;
+    }
+
+    public List<ItemStack> getLootDrops() {
+        return script.getLootDrops();
     }
 }

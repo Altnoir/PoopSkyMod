@@ -3,6 +3,7 @@ package com.altnoir.poopsky.game.danmaku;
 import com.altnoir.poopsky.game.danmaku.movement.BossMovement;
 
 public record BossModifiers(
+        int baseHp,
         int bulletCount,
         int maxBounces,
         int fireInterval,
@@ -16,6 +17,7 @@ public record BossModifiers(
 ) {
     public BossModifiers withMovement(BossMovement movement, int movementWave) {
         return new BossModifiers(
+                baseHp,
                 bulletCount,
                 maxBounces,
                 fireInterval,
@@ -29,4 +31,3 @@ public record BossModifiers(
         );
     }
 }
-

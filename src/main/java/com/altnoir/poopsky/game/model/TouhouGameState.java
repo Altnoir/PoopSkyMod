@@ -3,10 +3,12 @@ package com.altnoir.poopsky.game.model;
 import com.altnoir.poopsky.game.danmaku.Boss;
 import com.altnoir.poopsky.game.danmaku.BossFactory;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Consumer;
 
 public final class TouhouGameState {
     public static final int PLAY_WIDTH = 144;
@@ -21,7 +23,8 @@ public final class TouhouGameState {
     public static final int PLAYER_SHOOT_INTERVAL_FAST = 4;
 
     public static final int POWERUP_SIZE = 8;
-    public static final int POWERUP_SPEED = 2;
+    public static final int POWERUP_MAX_SPEED = 2;
+    public static final float POWERUP_MIN_SPEED = 1.0F;
     public static final int POWERUP_LIFE = 600;
     public static final float POWERUP_SPAWN_CHANCE = 0.15F;
 
@@ -50,6 +53,8 @@ public final class TouhouGameState {
     private float bossScale = 1.0F;
     private boolean hasSpeedBoost;
     private boolean hasDoubleShot;
+    private Consumer<ItemStack> bossLootConsumer = stack -> {
+    };
     private final List<ActiveBoss> bosses = new ArrayList<>();
     private final List<Bullet> enemyBullets = new ArrayList<>();
     private final List<Bullet> playerBullets = new ArrayList<>();
@@ -67,6 +72,10 @@ public final class TouhouGameState {
         playerBullets.clear();
         powerUps.clear();
         spawnBoss(random);
+    }
+
+    public void setBossLootConsumer(Consumer<ItemStack> bossLootConsumer) {
+        this.bossLootConsumer = bossLootConsumer;
     }
 
     public TickResult tick(boolean up, boolean down, boolean left, boolean right, boolean shoot, boolean focus, Random random) {
@@ -172,6 +181,9 @@ public final class TouhouGameState {
                     trySpawnPowerUp(random);
 
                     if (hitBoss.hp <= 0) {
+                        for (ItemStack loot : hitBoss.boss.getLootDrops()) {
+                            bossLootConsumer.accept(loot);
+                        }
                         bosses.remove(hitBoss);
                     }
 
@@ -399,10 +411,19 @@ public final class TouhouGameState {
         PowerUpType type = speedAvailable && doubleAvailable
                 ? (random.nextInt(2) == 0 ? PowerUpType.SPEED : PowerUpType.DOUBLE)
                 : speedAvailable ? PowerUpType.SPEED : PowerUpType.DOUBLE;
+
         float x = random.nextInt(PLAY_WIDTH - POWERUP_SIZE + 1);
         float y = 20 + random.nextInt(PLAY_HEIGHT - POWERUP_SIZE - 40);
-        float vx = (random.nextFloat() * 2.0F - 1.0F) * POWERUP_SPEED;
-        float vy = (random.nextFloat() * 2.0F - 1.0F) * POWERUP_SPEED;
+        float vx = (random.nextFloat() * 2.0F - 1.0F) * POWERUP_MAX_SPEED;
+        float vy = (random.nextFloat() * 2.0F - 1.0F) * POWERUP_MAX_SPEED;
+        float speed = (float) Math.sqrt(vx * vx + vy * vy);
+        if (speed < 1.0E-6F) {
+            vx = POWERUP_MIN_SPEED;
+        } else if (speed < POWERUP_MIN_SPEED) {
+            float scale = POWERUP_MIN_SPEED / speed;
+            vx *= scale;
+            vy *= scale;
+        }
         powerUps.add(new PowerUp(x, y, vx, vy, type, POWERUP_LIFE));
     }
 
@@ -411,17 +432,17 @@ public final class TouhouGameState {
         bosses.clear();
 
         int count = bossCountForWave(wave);
-        int baseMaxHp = START_BOSS_HP + wave * 5;
         float[][] positions = bossPositions(count);
 
         for (int i = 0; i < count; i++) {
             Boss boss = BossFactory.createRandomBoss(random, wave);
+            int maxHp = boss.modifiers().baseHp() + wave * 5;
             bosses.add(new ActiveBoss(
                     boss,
                     positions[i][0],
                     positions[i][1],
-                    baseMaxHp,
-                    baseMaxHp
+                    maxHp,
+                    maxHp
             ));
         }
 

@@ -3,10 +3,12 @@ package com.altnoir.poopsky.game.danmaku.modifier;
 import com.altnoir.poopsky.game.danmaku.BossModifiers;
 import com.altnoir.poopsky.game.danmaku.CircularRotation;
 import com.altnoir.poopsky.game.danmaku.movement.BossMovement;
+import com.altnoir.poopsky.game.model.TouhouGameState;
 
 import java.util.Random;
 
 public class BossModifierTemplate {
+    private final IntProvider baseHp;
     private final IntProvider bulletCount;
     private final IntProvider maxBounces;
     private final IntProvider fireInterval;
@@ -19,6 +21,7 @@ public class BossModifierTemplate {
     private final boolean randomMovement;
 
     private BossModifierTemplate(Builder builder) {
+        this.baseHp = builder.baseHp;
         this.bulletCount = builder.bulletCount;
         this.maxBounces = builder.maxBounces;
         this.fireInterval = builder.attackInterval;
@@ -43,6 +46,7 @@ public class BossModifierTemplate {
         }
 
         return new BossModifiers(
+                baseHp.next(random),
                 count,
                 bounce,
                 fireInterval.next(random),
@@ -81,6 +85,7 @@ public class BossModifierTemplate {
     }
 
     public static class Builder {
+        private IntProvider baseHp = random -> TouhouGameState.START_BOSS_HP;
         private IntProvider bulletCount = random -> 20;
         private IntProvider maxBounces = random -> 0;
         private IntProvider attackInterval = random -> 8;
@@ -93,6 +98,11 @@ public class BossModifierTemplate {
         private boolean randomMovement;
         private boolean rotationSet;
 
+        public Builder baseHp(IntProvider baseHp) {
+            this.baseHp = baseHp;
+            return this;
+        }
+
         public Builder bulletCount(IntProvider bulletCount) {
             this.bulletCount = bulletCount;
             return this;
@@ -103,7 +113,7 @@ public class BossModifierTemplate {
             return this;
         }
 
-        public Builder attackInterval(IntProvider attackInterval) {
+            public Builder attackInterval(IntProvider attackInterval) {
             this.attackInterval = attackInterval;
             return this;
         }

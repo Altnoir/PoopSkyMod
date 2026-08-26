@@ -142,9 +142,13 @@ public final class PoKubeJSPlugin implements KubeJSPlugin {
             return;
         }
         PoFlyTypes.INSTANCE.clear();
+        PoCustomBosses.INSTANCE.clear();
         PoopSkyServerEvents.FLY_TYPE.post(ScriptType.SERVER, new ServerFlyTypeKubeEvent());
+        PoopSkyServerEvents.CUSTOM_BOSS.post(ScriptType.SERVER, new CustomBossKubeEvent());
         syncKubeJsFlyTypes(true);
+        PoCustomBosses.INSTANCE.store();
         PoopSky.LOGGER.info("Registered {} KubeJS fly types: {}", PoFlyTypes.INSTANCE.builders().size(), PoFlyTypes.INSTANCE.builders().stream().map(FlyTypeBuilder::id).toList());
+        PoopSky.LOGGER.info("Registered {} KubeJS custom bosses: {}", PoCustomBosses.INSTANCE.definitions().size(), PoCustomBosses.INSTANCE.definitions().stream().map(CustomBossDefinition::id).toList());
     }
 
     @Override

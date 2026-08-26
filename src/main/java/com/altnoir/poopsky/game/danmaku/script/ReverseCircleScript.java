@@ -17,6 +17,7 @@ public class ReverseCircleScript implements BossScript {
     private static final float EDGE_HEIGHT = TouhouGameState.PLAY_HEIGHT - TouhouGameState.BOSS_BULLET_SIZE;
     private static final float PERIMETER = 2.0F * (EDGE_WIDTH + EDGE_HEIGHT);
     private static final BossModifierTemplate TEMPLATE = BossModifierTemplate.builder()
+            .baseHp(UniformInt.of(40))
             .bulletCount(UniformInt.of(30, 40))
             .attackInterval(UniformInt.of(20, 40))
             .bulletSpeed(UniformFloat.of(0.4F, 0.6F))

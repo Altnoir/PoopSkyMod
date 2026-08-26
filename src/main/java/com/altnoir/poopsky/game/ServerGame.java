@@ -2,6 +2,7 @@ package com.altnoir.poopsky.game;
 
 import com.altnoir.poopsky.content.item.p.GameDiskItem;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.Random;
 
@@ -14,6 +15,8 @@ public abstract class ServerGame extends Game {
     protected boolean button1Down;
     protected boolean button2Down;
     private SoundEmitter soundEmitter = (event, pitch, volume) -> {
+    };
+    private ItemEmitter itemEmitter = stack -> {
     };
     private GameDefinition gameDefinition;
 
@@ -31,6 +34,16 @@ public abstract class ServerGame extends Game {
 
     protected void playSound(SoundEvent event, float pitch, float volume) {
         soundEmitter.play(event, pitch, volume);
+    }
+
+    public void setItemEmitter(ItemEmitter itemEmitter) {
+        this.itemEmitter = itemEmitter;
+    }
+
+    protected void emitItem(ItemStack stack) {
+        if (!stack.isEmpty()) {
+            itemEmitter.emit(stack);
+        }
     }
 
     public final void setButton(Button button, boolean pressed) {
@@ -92,5 +105,10 @@ public abstract class ServerGame extends Game {
     @FunctionalInterface
     public interface SoundEmitter {
         void play(SoundEvent event, float pitch, float volume);
+    }
+
+    @FunctionalInterface
+    public interface ItemEmitter {
+        void emit(ItemStack stack);
     }
 }
