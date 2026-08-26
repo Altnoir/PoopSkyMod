@@ -56,6 +56,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
     public float oFlap;
     public float flapping = 1.0F;
     public int eggTime = this.random.nextInt(6000) + 6000;
+    private int underWaterTicks;
 
     private FlyBuzzSoundWrapper buzzSound;
 
@@ -144,6 +145,19 @@ public class FlyEntity extends Animal implements FlyingAnimal {
     }
 
     @Override
+    protected void customServerAiStep() {
+        super.customServerAiStep();
+        if (this.isInWaterOrBubble()) {
+            this.underWaterTicks++;
+        } else {
+            this.underWaterTicks = 0;
+        }
+        if (this.underWaterTicks > 20 && !this.isBaby()) {
+            this.hurt(this.damageSources().drown(), 1.0F);
+        }
+    }
+
+    @Override
     public boolean isFlapping() {
         return this.isFlying() && this.tickCount % TICKS_PER_FLAP == 0;
     }
@@ -190,6 +204,15 @@ public class FlyEntity extends Animal implements FlyingAnimal {
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
         return PoSoundEvents.ENTITY_FLY_HURT.get();
+    }
+
+    @Override
+    protected void playHurtSound(DamageSource source) {
+        if (this.isBaby()) {
+            this.playSound(this.getHurtSound(source), this.getSoundVolume(), this.getVoicePitch() - 0.75F);
+        } else {
+            super.playHurtSound(source);
+        }
     }
 
     @Override

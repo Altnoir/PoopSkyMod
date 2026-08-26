@@ -427,7 +427,6 @@ public final class TouhouGameState {
         powerUps.add(new PowerUp(x, y, vx, vy, type, POWERUP_LIFE));
     }
 
-
     private void spawnBoss(Random random) {
         bosses.clear();
 
