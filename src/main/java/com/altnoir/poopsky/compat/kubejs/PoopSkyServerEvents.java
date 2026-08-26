@@ -5,5 +5,6 @@ import dev.latvian.mods.kubejs.event.EventHandler;
 
 public interface PoopSkyServerEvents {
     EventGroup GROUP = EventGroup.of("PoopSkyServerEvents");
+    EventHandler CUSTOM_BOSS = GROUP.server("customBoss", () -> CustomBossKubeEvent.class);
     EventHandler FLY_TYPE = GROUP.server("flytype", () -> ServerFlyTypeKubeEvent.class);
 }
