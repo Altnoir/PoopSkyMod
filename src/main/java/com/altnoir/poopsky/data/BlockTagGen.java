@@ -7,12 +7,17 @@ import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateTagsProvider;
+import net.fabricmc.fabric.impl.datagen.ForcedTagEntry;
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagBuilder;
+import net.minecraft.tags.TagEntry;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import vectorwing.farmersdelight.common.registry.ModBlocks;
+
+import java.lang.reflect.Field;
 
 public final class BlockTagGen {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
@@ -99,9 +104,9 @@ public final class BlockTagGen {
         PoBlocks.COLORED_TILE_BLOCK_FAMILIES.forEach(family ->
                 family.blocks().forEach(block -> tag(PoTags.Blocks.TILE_BLOCKS).add(block.get())));
 
-        tag(PoTags.Blocks.POOP_TNT_DESTROY)
-                .addTag(PoTags.Blocks.POOP_BLOCKS)
-                .addTag(BlockTags.FLOWERS)
+        var poopTntDestroy = tag(PoTags.Blocks.POOP_TNT_DESTROY)
+                .addTag(PoTags.Blocks.POOP_BLOCKS);
+        forceAddExternalTag(poopTntDestroy, BlockTags.FLOWERS)
                 .addTag(BlockTags.LEAVES);
         tag(PoTags.Blocks.POOP_TNT_REPLACEABLE).addTag(BlockTags.MOSS_REPLACEABLE);
 
@@ -307,12 +312,6 @@ public final class BlockTagGen {
 
         tag(BlockTags.MINEABLE_WITH_SHOVEL).add(PoBlocks.POOP_SAND.get());
 
-        tag(BlockTags.MINEABLE_WITH_SHOVEL)
-                .add(
-                        PoBlocks.POOP_PIECE.get(),
-                        PoBlocks.POOP_FARMLAND.get()
-                );
-
         tag(FabricatedTags.Blocks.VILLAGER_JOB_SITES)
                 .add(
                         PoBlocks.COMPOOPER.get(),
@@ -329,5 +328,18 @@ public final class BlockTagGen {
 
     private static IntrinsicHolderTagsProvider.IntrinsicTagAppender<Block> tag(TagKey<Block> tag) {
         return provider.addTag(tag);
+    }
+
+    private static IntrinsicHolderTagsProvider.IntrinsicTagAppender<Block> forceAddExternalTag(
+            IntrinsicHolderTagsProvider.IntrinsicTagAppender<Block> appender, TagKey<Block> tag) {
+        try {
+            Field builderField = appender.getClass().getSuperclass().getDeclaredField("builder");
+            builderField.setAccessible(true);
+            TagBuilder builder = (TagBuilder) builderField.get(appender);
+            builder.add(new ForcedTagEntry(TagEntry.tag(tag.location())));
+            return appender;
+        } catch (ReflectiveOperationException exception) {
+            throw new IllegalStateException("Unable to add external tag " + tag.location(), exception);
+        }
     }
 }

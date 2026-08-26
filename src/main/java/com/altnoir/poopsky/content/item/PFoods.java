@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.content.item;
 
+import com.altnoir.poopsky.init.PoEffects;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
@@ -109,6 +110,7 @@ public class PFoods {
 
     public static final FoodProperties POOBURGER = new FoodProperties.Builder()
             .nutrition(8).saturationModifier(0.8F)
+            .effect(new MobEffectInstance(PoEffects.SEEDBED_CURSE, 3600), 1.0F)
             .effect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 2400), 1.0F)
             .effect(new MobEffectInstance(MobEffects.HUNGER, 1200, 1), 0.5F)
             .effect(new MobEffectInstance(MobEffects.BLINDNESS, 40), 1.0F)

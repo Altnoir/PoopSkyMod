@@ -162,6 +162,7 @@ public class PoopSkyClient implements ClientModInitializer {
                 PoBlocks.GINKGO_DOOR.get(),
                 PoBlocks.GINKGO_TRAPDOOR.get(),
                 PoBlocks.GINKGO_SAPLING.get(),
+                PoBlocks.POTTED_GINKGO_SAPLING.get(),
                 PoBlocks.GINKGO_LEAVES.get(),
                 PoBlocks.SIEVE.get(),
                 PoBlocks.MAGGOTS.get(),

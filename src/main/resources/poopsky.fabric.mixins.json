@@ -8,14 +8,9 @@
   "mixins": [
     "BlockBehaviourMixin",
     "BlockBehaviourMixin$BlockStateBaseMixin",
-    "BlockEntityMixin",
-    "BlockMixin",
-    "BlockStateMixin",
     "DispenseItemBehaviorMixin",
     "EntityMixin",
     "FireBlockMixin",
-    "ItemMixin",
-    "ItemStackMixin",
     "LevelChunkMixin",
     "LiquidBlockMixin",
     "LivingEntityMixin",
@@ -26,6 +21,7 @@
     "TntBlockMixin"
   ],
   "client": [
+    "BlockModelShaperMixin",
     "ClientLevelMixin",
     "GameRendererMixin",
     "ParticleEngineMixin"

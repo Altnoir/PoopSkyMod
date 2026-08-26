@@ -1,0 +1,9 @@
+{
+  "type": "poopsky:pop_explosion",
+  "input": {
+    "item": "minecraft:sand"
+  },
+  "output": {
+    "block": "poopsky:poop_sand"
+  }
+}

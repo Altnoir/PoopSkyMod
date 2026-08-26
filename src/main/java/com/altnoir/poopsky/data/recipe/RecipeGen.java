@@ -643,6 +643,7 @@ public class RecipeGen extends FabricRecipeProvider {
         List<PopExplosionEntry> recipes = List.of(
                 PopExplosionEntry.of(Blocks.COBBLESTONE, Blocks.GRAVEL),
                 PopExplosionEntry.of(Blocks.GRAVEL, Blocks.SAND),
+                PopExplosionEntry.of(Blocks.SAND, PoBlocks.POOP_SAND.get()),
                 PopExplosionEntry.of(PoBlocks.DRIED_POOP_BLOCK.get(), PoBlocks.POOP_SAND.get()),
                 PopExplosionEntry.of(Blocks.GRANITE, Blocks.DRIPSTONE_BLOCK),
                 PopExplosionEntry.of(Blocks.DIORITE, Blocks.CALCITE),

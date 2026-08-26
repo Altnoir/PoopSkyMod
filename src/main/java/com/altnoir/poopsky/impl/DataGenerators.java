@@ -1,6 +1,8 @@
 package com.altnoir.poopsky.impl;
 
-import com.altnoir.poopsky.data.BlockStateGen;
+import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.data.LegacyGeneratedResourcesGen;
+import com.altnoir.poopsky.data.LootTableRandomSequenceGen;
 import com.altnoir.poopsky.data.PaintingVariantTagsGen;
 import com.altnoir.poopsky.data.ParticleGen;
 import com.altnoir.poopsky.data.recipe.RecipeGen;
@@ -10,6 +12,7 @@ import com.altnoir.poopsky.impl.registrate.SpecialModelGen;
 import com.altnoir.poopsky.impl.type.FlyTypeData;
 import com.altnoir.poopsky.impl.type.ToiletTypeData;
 import com.altnoir.poopsky.impl.type.damageType.DamageTypeTagsGen;
+import com.tterrag.registrate.providers.RegistrateDataProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.data.loot.LootTableProvider;
@@ -23,6 +26,8 @@ public class DataGenerators implements DataGeneratorEntrypoint {
     public void onInitializeDataGenerator(FabricDataGenerator generator) {
         FabricDataGenerator.Pack pack = generator.createPack();
 
+        pack.addProvider((output, registriesFuture) -> new RegistrateDataProvider(
+                PoopSky.registrate(), PoopSky.MOD_ID, output, registriesFuture, false, true));
         pack.addProvider((output, registriesFuture) -> {
             return new LootTableProvider(output, Collections.emptySet(),
                     List.of(
@@ -39,10 +44,11 @@ public class DataGenerators implements DataGeneratorEntrypoint {
         pack.addProvider((output, registriesFuture) ->
                 new PaintingVariantTagsGen(output, datapackProvider.getRegistryProvider()));
 
-        pack.addProvider(BlockStateGen::new);
         pack.addProvider((output, registriesFuture) -> new SpecialModelGen(output));
         pack.addProvider(ParticleGen::new);
         pack.addProvider(SoundGen::new);
+        pack.addProvider((output, registriesFuture) -> new LootTableRandomSequenceGen(output));
+        pack.addProvider((output, registriesFuture) -> new LegacyGeneratedResourcesGen(output));
 
         // Compat
 //        generators.addProvider(event.includeServer(), new PDigestingRecipeGen(packOutput, lookupProvider));
@@ -50,4 +56,3 @@ public class DataGenerators implements DataGeneratorEntrypoint {
 //        generators.addProvider(event.includeServer(), new PHauntingRecipeGen(packOutput, lookupProvider));
     }
 }
-

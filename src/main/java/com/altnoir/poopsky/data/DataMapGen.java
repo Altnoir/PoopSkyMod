@@ -4,6 +4,7 @@ import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
+import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 
 public final class DataMapGen {
     private DataMapGen() {
@@ -12,6 +13,11 @@ public final class DataMapGen {
     public static void register() {
         CompostingChanceRegistry.INSTANCE.add(PoBlocks.GINKGO_SAPLING.asItem(), 0.3F);
         CompostingChanceRegistry.INSTANCE.add(PoBlocks.GINKGO_LEAVES.asItem(), 0.3F);
+
+        StrippableBlockRegistry.register(PoBlocks.GINKGO_LOG.get(), PoBlocks.STRIPPED_GINKGO_LOG.get());
+        StrippableBlockRegistry.register(PoBlocks.GINKGO_WOOD.get(), PoBlocks.STRIPPED_GINKGO_WOOD.get());
+        StrippableBlockRegistry.register(PoBlocks.POOP_LOG.get(), PoBlocks.STRIPPED_POOP_LOG.get());
+        StrippableBlockRegistry.register(PoBlocks.POOP_WOOD.get(), PoBlocks.STRIPPED_POOP_WOOD.get());
 
         FuelRegistry fuels = FuelRegistry.INSTANCE;
         fuels.add(PoItems.POOP.get(), 200);

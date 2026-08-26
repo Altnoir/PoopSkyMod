@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class PistonStructureResolverMixin {
     @Inject(method = "isSticky", at = @At("HEAD"), cancellable = true)
     private static void poopsky$isSticky(BlockState state, CallbackInfoReturnable<Boolean> cir) {
-        if (((IBlockExtension) state.getBlock()).isStickyBlock(state)) {
+        if (state.getBlock().isStickyBlock(state)) {
             cir.setReturnValue(true);
         }
     }
@@ -20,8 +20,8 @@ public class PistonStructureResolverMixin {
     @Inject(method = "canStickToEachOther", at = @At("HEAD"), cancellable = true)
     private static void poopsky$canStickToEachOther(BlockState state, BlockState other,
                                                     CallbackInfoReturnable<Boolean> cir) {
-        IBlockExtension block = (IBlockExtension) state.getBlock();
-        IBlockExtension otherBlock = (IBlockExtension) other.getBlock();
+        IBlockExtension block = state.getBlock();
+        IBlockExtension otherBlock = other.getBlock();
         if (!block.canStickTo(state, other) || !otherBlock.canStickTo(other, state)) {
             cir.setReturnValue(false);
         } else if (block.isStickyBlock(state) || otherBlock.isStickyBlock(other)) {

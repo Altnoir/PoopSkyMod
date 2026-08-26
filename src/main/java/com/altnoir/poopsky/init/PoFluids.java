@@ -4,16 +4,14 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.fluid.UrineLiquidBlock;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.tterrag.registrate.fabric.SimpleFlowableFluid;
-import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import com.tterrag.registrate.util.entry.BlockEntry;
-import com.tterrag.registrate.util.entry.FluidEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
-import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -27,23 +25,18 @@ public final class PoFluids {
     public static final ResourceLocation URINE_FLOWING_TEXTURE = PoopSky.loc("block/urine_liquid_flowing");
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
-    public static final FluidEntry<SimpleFlowableFluid.Flowing> FLOWING_URINE = REGISTRATE
-            .fluid("urine", URINE_STILL_TEXTURE, URINE_FLOWING_TEXTURE, PoFluids::createFlowingUrine)
-            .source(PoFluids::createSourceUrine)
-            .noBlock()
-            .fluidProperties(properties -> properties
-                    //.slopeFindDistance(2)
-                    .levelDecreasePerBlock(1)
-                    .block(PoFluids.URINE_LIQUID))
-            .setData(ProviderType.LANG, NonNullBiConsumer.noop())
-            .bucket()
+    public static final RegistryEntry<Fluid, FlowingFluid> URINE = REGISTRATE
+            .simple("urine", Registries.FLUID, () -> createSourceUrine(urineProperties()));
+    public static final RegistryEntry<Fluid, FlowingFluid> FLOWING_URINE = REGISTRATE
+            .simple("flowing_urine", Registries.FLUID, () -> createFlowingUrine(urineProperties()));
+    public static final ItemEntry<BucketItem> URINE_BUCKET = REGISTRATE
+            .item("urine_bucket", properties -> new BucketItem(URINE.get(), properties))
+            .properties(properties -> properties
+                    .craftRemainder(Items.BUCKET)
+                    .stacksTo(1))
             .model((ctx, prov) -> {
             })
-            .build()
             .register();
-
-    public static final RegistryEntry<Fluid, FlowingFluid> URINE = REGISTRATE.get("urine", Registries.FLUID);
-    public static final ItemEntry<BucketItem> URINE_BUCKET = ItemEntry.cast(REGISTRATE.get("urine_bucket", Registries.ITEM));
     public static final BlockEntry<UrineLiquidBlock> URINE_LIQUID = REGISTRATE
             .block("urine_liquid", properties -> new UrineLiquidBlock(URINE.get(), urineLiquidProperties()))
             .blockstate((ctx, prov) -> {
@@ -55,6 +48,13 @@ public final class PoFluids {
     }
 
     public static void register() {
+    }
+
+    private static SimpleFlowableFluid.Properties urineProperties() {
+        return new SimpleFlowableFluid.Properties(URINE, FLOWING_URINE)
+                .levelDecreasePerBlock(1)
+                .bucket(URINE_BUCKET)
+                .block(URINE_LIQUID);
     }
 
 //    private static FluidType createUrineFluidType() {
