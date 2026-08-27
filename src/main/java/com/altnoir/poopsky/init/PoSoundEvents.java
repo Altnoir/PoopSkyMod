@@ -66,17 +66,12 @@ public class PoSoundEvents {
     public static final RegistryEntry<SoundEvent, SoundEvent> ITEM_TIME_BELL_OPEN = registerSoundEvent("item.time_bell.open");
     public static final RegistryEntry<SoundEvent, SoundEvent> ITEM_TIME_BELL_CLOSE = registerSoundEvent("item.time_bell.close");
 
-    public static final RegistryEntry<SoundEvent, SoundEvent> JUMP = registerSoundEvent("jump");
-    public static final RegistryEntry<SoundEvent, SoundEvent> CLICK = registerSoundEvent("click");
-    public static final RegistryEntry<SoundEvent, SoundEvent> POINT = registerSoundEvent("point");
-    public static final RegistryEntry<SoundEvent, SoundEvent> NEW_BEST = registerSoundEvent("new_best");
-    public static final RegistryEntry<SoundEvent, SoundEvent> GAME_OVER = registerSoundEvent("game_over");
-    public static final RegistryEntry<SoundEvent, SoundEvent> SELECT = registerSoundEvent("select");
-    public static final RegistryEntry<SoundEvent, SoundEvent> CONFIRM = registerSoundEvent("confirm");
-    public static final RegistryEntry<SoundEvent, SoundEvent> EXPLOSION = registerSoundEvent("explosion");
-    public static final RegistryEntry<SoundEvent, SoundEvent> SHOOT = registerSoundEvent("shoot");
-    public static final RegistryEntry<SoundEvent, SoundEvent> SWING = registerSoundEvent("swing");
-    public static final RegistryEntry<SoundEvent, SoundEvent> SWITCH = registerSoundEvent("switch");
+    public static final RegistryEntry<SoundEvent, SoundEvent> POINT = registerSoundEvent("game.point");
+    public static final RegistryEntry<SoundEvent, SoundEvent> NEW_BEST = registerSoundEvent("game.new_best");
+    public static final RegistryEntry<SoundEvent, SoundEvent> GAME_OVER = registerSoundEvent("game.game_over");
+    public static final RegistryEntry<SoundEvent, SoundEvent> EXPLOSION = registerSoundEvent("game.explosion");
+    public static final RegistryEntry<SoundEvent, SoundEvent> SHOOT = registerSoundEvent("game.shoot");
+    public static final RegistryEntry<SoundEvent, SoundEvent> SWING = registerSoundEvent("game.swing");
 
     private static RegistryEntry<SoundEvent, SoundEvent> registerSoundEvent(String name) {
         Identifier id = PoopSky.loc(name);

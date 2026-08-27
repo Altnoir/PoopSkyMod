@@ -13,8 +13,7 @@ public class ServerRoundwormGame extends ServerGame {
     private final RoundwormGameState state = new RoundwormGameState();
 
     @Override
-    public void prepare() {
-        super.prepare();
+    protected void prepareState() {
         state.prepare(random);
     }
 

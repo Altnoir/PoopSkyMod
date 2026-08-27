@@ -270,6 +270,12 @@ public final class LangGen {
         addSubtitle("item.jinkela.use", "Jinkela crinkles");
         addSubtitle("item.time_bell.open", "Time Bell activates");
         addSubtitle("item.time_bell.close", "Time Bell deactivates");
+        addSubtitle("game.point", "Arcade Game sound");
+        addSubtitle("game.new_best", "Arcade Game sound");
+        addSubtitle("game.game_over", "Arcade Game sound");
+        addSubtitle("game.explosion", "Arcade Game sound");
+        addSubtitle("game.shoot", "Arcade Game sound");
+        addSubtitle("game.swing", "Arcade Game sound");
     }
 
     private static void addSubtitle(String key, String value) {

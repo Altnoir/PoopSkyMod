@@ -170,16 +170,6 @@
     ],
     "subtitle": "subtitle.poopsky.block.toilet.lava_empty"
   },
-  "click": {
-    "sounds": [
-      "poopsky:click"
-    ]
-  },
-  "confirm": {
-    "sounds": [
-      "poopsky:confirm"
-    ]
-  },
   "entity.fly.ambient": {
     "sounds": [
       {
@@ -347,11 +337,6 @@
     ],
     "subtitle": "subtitle.poopsky.villager.work_toilet"
   },
-  "explosion": {
-    "sounds": [
-      "poopsky:explosion"
-    ]
-  },
   "fart": {
     "sounds": [
       "poopsky:fart_1",
@@ -359,10 +344,41 @@
     ],
     "subtitle": "subtitle.poopsky.fart"
   },
-  "game_over": {
+  "game.explosion": {
     "sounds": [
-      "poopsky:game_over"
-    ]
+      "poopsky:game/explosion"
+    ],
+    "subtitle": "subtitle.poopsky.game.explosion"
+  },
+  "game.game_over": {
+    "sounds": [
+      "poopsky:game/game_over"
+    ],
+    "subtitle": "subtitle.poopsky.game.game_over"
+  },
+  "game.new_best": {
+    "sounds": [
+      "poopsky:game/new_best"
+    ],
+    "subtitle": "subtitle.poopsky.game.new_best"
+  },
+  "game.point": {
+    "sounds": [
+      "poopsky:game/point"
+    ],
+    "subtitle": "subtitle.poopsky.game.point"
+  },
+  "game.shoot": {
+    "sounds": [
+      "poopsky:game/shoot"
+    ],
+    "subtitle": "subtitle.poopsky.game.shoot"
+  },
+  "game.swing": {
+    "sounds": [
+      "poopsky:game/swing"
+    ],
+    "subtitle": "subtitle.poopsky.game.swing"
   },
   "item.jinkela.use": {
     "sounds": [
@@ -406,11 +422,6 @@
     ],
     "subtitle": "subtitle.poopsky.item.toilet_linker.success"
   },
-  "jump": {
-    "sounds": [
-      "poopsky:jump"
-    ]
-  },
   "lawrence": {
     "sounds": [
       {
@@ -435,39 +446,9 @@
       }
     ]
   },
-  "new_best": {
-    "sounds": [
-      "poopsky:new_best"
-    ]
-  },
-  "point": {
-    "sounds": [
-      "poopsky:point"
-    ]
-  },
   "poopsky_intro": {
     "sounds": [
       "poopsky:poopsky_intro"
-    ]
-  },
-  "select": {
-    "sounds": [
-      "poopsky:select"
-    ]
-  },
-  "shoot": {
-    "sounds": [
-      "poopsky:shoot"
-    ]
-  },
-  "swing": {
-    "sounds": [
-      "poopsky:swing"
-    ]
-  },
-  "switch": {
-    "sounds": [
-      "poopsky:switch"
     ]
   },
   "theme": {

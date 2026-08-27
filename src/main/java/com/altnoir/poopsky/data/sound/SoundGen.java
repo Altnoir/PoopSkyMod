@@ -269,27 +269,23 @@ public class SoundGen extends SoundDefinitionsProvider {
                 .with(sound(PoopSky.loc("moon_bowl")).stream()));
 
 
-        add(PoSoundEvents.JUMP, definition()
-                .with(sound(PoopSky.loc("jump"))));
-        add(PoSoundEvents.CLICK, definition()
-                .with(sound(PoopSky.loc("click"))));
         add(PoSoundEvents.POINT, definition()
-                .with(sound(PoopSky.loc("point"))));
+                .subtitle("subtitle.poopsky.game.point")
+                .with(sound(PoopSky.loc("game/point"))));
         add(PoSoundEvents.NEW_BEST, definition()
-                .with(sound(PoopSky.loc("new_best"))));
+                .subtitle("subtitle.poopsky.game.new_best")
+                .with(sound(PoopSky.loc("game/new_best"))));
         add(PoSoundEvents.GAME_OVER, definition()
-                .with(sound(PoopSky.loc("game_over"))));
-        add(PoSoundEvents.SELECT, definition()
-                .with(sound(PoopSky.loc("select"))));
-        add(PoSoundEvents.CONFIRM, definition()
-                .with(sound(PoopSky.loc("confirm"))));
+                .subtitle("subtitle.poopsky.game.game_over")
+                .with(sound(PoopSky.loc("game/game_over"))));
         add(PoSoundEvents.EXPLOSION, definition()
-                .with(sound(PoopSky.loc("explosion"))));
+                .subtitle("subtitle.poopsky.game.explosion")
+                .with(sound(PoopSky.loc("game/explosion"))));
         add(PoSoundEvents.SHOOT, definition()
-                .with(sound(PoopSky.loc("shoot"))));
+                .subtitle("subtitle.poopsky.game.shoot")
+                .with(sound(PoopSky.loc("game/shoot"))));
         add(PoSoundEvents.SWING, definition()
-                .with(sound(PoopSky.loc("swing"))));
-        add(PoSoundEvents.SWITCH, definition()
-                .with(sound(PoopSky.loc("switch"))));
+                .subtitle("subtitle.poopsky.game.swing")
+                .with(sound(PoopSky.loc("game/swing"))));
     }
 }
