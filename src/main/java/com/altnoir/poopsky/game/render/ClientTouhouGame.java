@@ -80,7 +80,7 @@ public class ClientTouhouGame extends ClientGame {
 
     private void renderInfo(GuiGraphics graphics, int posX, int posY) {
         var font = Minecraft.getInstance().font;
-        int infoX = posX + GAME_OFFSET_X + TouhouGameState.PLAY_WIDTH + 8;
+        int infoX = posX + GAME_OFFSET_X + TouhouGameState.PLAY_WIDTH + 7;
         int infoY = posY + 8;
 
         graphics.drawString(font, Component.translatable("gui.gamingconsole.score"), infoX, infoY, 0xFFFFFF);
@@ -95,8 +95,8 @@ public class ClientTouhouGame extends ClientGame {
             graphics.drawString(font, Component.translatable("gui.gamingconsole.touhou.boss_hp"), infoX, infoY + 60, 0xFFFFFF);
             int hp = Math.max(0, state.getBossHp());
             int maxHp = Math.max(1, state.getBossMaxHp());
-            graphics.fill(infoX, infoY + 70, infoX + 56, infoY + 76, 0xFF333333);
-            graphics.fill(infoX, infoY + 70, infoX + (int) (56.0F * hp / maxHp), infoY + 76, 0xFFCC2222);
+            graphics.fill(infoX + 1, infoY + 71, infoX + 58, infoY + 77, 0xFF333333);
+            graphics.fill(infoX, infoY + 70, infoX + (int) (57.0F * hp / maxHp), infoY + 76, 0xFFCC2222);
         }
 
         Component shootHint = Component.translatable("gui.gamingconsole.touhou.shoot", PoKeyBoardInput.ARCADE_BUTTON1.getTranslatedKeyMessage());

@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.game.operation;
 
-import com.altnoir.poopsky.game.ServerGame;
-import com.altnoir.poopsky.game.GameStage;
 import com.altnoir.poopsky.game.Button;
+import com.altnoir.poopsky.game.GameStage;
+import com.altnoir.poopsky.game.ServerGame;
 import com.altnoir.poopsky.game.model.RoundwormGameState;
 import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.nbt.CompoundTag;
@@ -13,8 +13,7 @@ public class ServerRoundwormGame extends ServerGame {
     private final RoundwormGameState state = new RoundwormGameState();
 
     @Override
-    public void prepare() {
-        super.prepare();
+    protected void prepareState() {
         state.prepare(random);
     }
 

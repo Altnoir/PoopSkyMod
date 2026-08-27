@@ -44,8 +44,6 @@ public class ArcadeBlockEntityRenderer implements BlockEntityRenderer<ArcadeBloc
             return;
         }
 
-        renderRewardText(blockEntity, poseStack, bufferSource, packedLight, state);
-
         poseStack.pushPose();
         poseStack.translate(0.5F, 1.5F, 0.5F);
         poseStack.mulPose(Axis.YP.rotationDegrees(-horizontalRotation(state.getValue(ArcadeBlock.FACING))));
@@ -54,26 +52,22 @@ public class ArcadeBlockEntityRenderer implements BlockEntityRenderer<ArcadeBloc
         VertexConsumer consumer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(texture));
         PoseStack.Pose pose = poseStack.last();
         renderScreenQuad(consumer, pose, packedLight);
+        renderRewardText(blockEntity, bufferSource, pose, packedLight);
 
         poseStack.popPose();
     }
 
-    private static void renderRewardText(ArcadeBlockEntity blockEntity, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, BlockState state) {
+    private static void renderRewardText(ArcadeBlockEntity blockEntity, MultiBufferSource bufferSource, PoseStack.Pose pose, int packedLight) {
         Component text = Component.translatable("text.poopsky.arcade.total_reward", blockEntity.getRewardCount())
-                .withStyle(ChatFormatting.ITALIC);
+                .withStyle(ChatFormatting.ITALIC, ChatFormatting.WHITE);
         Font font = Minecraft.getInstance().font;
         float textWidth = font.width(text);
         float scale = -0.01475F;
 
-        poseStack.pushPose();
-        poseStack.translate(0.5F, 1.9375F, 0.6876F);
-        poseStack.mulPose(Axis.YP.rotationDegrees(-horizontalRotation(state.getValue(ArcadeBlock.FACING))));
-        poseStack.scale(scale, scale, scale);
-
-        Matrix4f matrix = poseStack.last().pose();
+        Matrix4f matrix = new Matrix4f(pose.pose())
+                .translate(0.5F, 0.9375F, SCREEN_Z - 0.25F)
+                .scale(scale, scale, scale);
         font.drawInBatch(text, -textWidth / 2.0F, 0.0F, 0xFFFFFF, true, matrix, bufferSource, Font.DisplayMode.NORMAL, 0, packedLight);
-
-        poseStack.popPose();
     }
 
     private static void renderScreenQuad(VertexConsumer consumer, PoseStack.Pose pose, int packedLight) {

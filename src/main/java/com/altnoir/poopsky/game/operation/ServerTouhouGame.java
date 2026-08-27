@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.game.operation;
 
+import com.altnoir.poopsky.game.Button;
 import com.altnoir.poopsky.game.GameStage;
 import com.altnoir.poopsky.game.ServerGame;
 import com.altnoir.poopsky.game.model.TouhouGameState;
@@ -15,20 +16,19 @@ public class ServerTouhouGame extends ServerGame {
     }
 
     @Override
-    public void prepare() {
-        super.prepare();
+    protected void prepareState() {
         state.prepare(random);
     }
 
     @Override
     protected void gameTick() {
         TouhouGameState.TickResult result = state.tick(
-                upDown,
-                downDown,
-                leftDown,
-                rightDown,
-                button1Down,
-                button2Down,
+                isDown(Button.UP),
+                isDown(Button.DOWN),
+                isDown(Button.LEFT),
+                isDown(Button.RIGHT),
+                isDown(Button.BUTTON1),
+                isDown(Button.BUTTON2),
                 random
         );
 
@@ -38,13 +38,13 @@ public class ServerTouhouGame extends ServerGame {
             playSound(PoSoundEvents.SHOOT.get(), 1.0F, 0.5F);
         }
         if (result.bossHit()) {
-            playSound(SoundEvents.WOOL_HIT, 1.2F, 0.5F);
+            playSound(PoSoundEvents.ENTITY_POOLIME_HURT.get(), 1.2F, 0.5F);
         }
         if (result.bossKilled()) {
             playSound(PoSoundEvents.EXPLOSION.get(), 1.0F, 0.5F);
         }
         if (result.powerUpPickup()) {
-            playSound(PoSoundEvents.CLICK.get(), 1.2F, 0.5F);
+            playSound(SoundEvents.ITEM_PICKUP, 1.2F, 0.6F);
         }
         if (result.playerHit()) {
             stage = GameStage.DIED;

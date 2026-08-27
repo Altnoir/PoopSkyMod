@@ -14,14 +14,12 @@ public class ServerBlocktrisGame extends ServerGame {
     private final BlocktrisGameState state = new BlocktrisGameState();
 
     @Override
-    public void prepare() {
-        super.prepare();
+    protected void prepareState() {
         state.prepare(random);
     }
 
     @Override
-    public void start() {
-        super.start();
+    protected void startState() {
         state.start(random);
     }
 
@@ -80,17 +78,18 @@ public class ServerBlocktrisGame extends ServerGame {
             return;
         }
 
-        if (downDown && state.moveCurrent(0, 1)) {
+        if (isDown(Button.DOWN) && state.moveCurrent(0, 1)) {
             place();
             return;
         }
 
         state.tickPlacementCooldown();
-        if (ticks % MOVE_REPEAT != 0 || state.getPlacementCooldown() > 0 || leftDown == rightDown) {
+        if (ticks % MOVE_REPEAT != 0 || state.getPlacementCooldown() > 0
+                || isDown(Button.LEFT) == isDown(Button.RIGHT)) {
             return;
         }
 
-        moveHorizontal(leftDown ? -1 : 1);
+        moveHorizontal(isDown(Button.LEFT) ? -1 : 1);
     }
 
     private void moveHorizontal(int direction) {

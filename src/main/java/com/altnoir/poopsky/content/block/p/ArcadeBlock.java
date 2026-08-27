@@ -4,13 +4,13 @@ import com.altnoir.poopsky.content.block.entity.ArcadeBlockEntity;
 import com.altnoir.poopsky.content.item.p.GameDiskItem;
 import com.altnoir.poopsky.game.util.GameUtils;
 import com.altnoir.poopsky.init.PoBlockEntityType;
-import com.altnoir.poopsky.init.PoSoundEvents;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -262,7 +262,7 @@ public class ArcadeBlock extends Block implements EntityBlock {
         if (stack.getItem() instanceof GameDiskItem && !arcade.hasCartridge()) {
             if (!level.isClientSide && arcade.insertCartridge(stack)) {
                 stack.shrink(1);
-                level.playSound(null, arcade.getBlockPos(), PoSoundEvents.CONFIRM.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
+                level.playSound(null, arcade.getBlockPos(), SoundEvents.NOTE_BLOCK_BIT.value(), SoundSource.BLOCKS, 1.0F, 1.4F);
             }
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
@@ -338,7 +338,7 @@ public class ArcadeBlock extends Block implements EntityBlock {
         if (!player.getInventory().add(cartridge) && !cartridge.isEmpty()) {
             Block.popResource(level, arcade.getBlockPos(), cartridge);
         }
-        level.playSound(null, arcade.getBlockPos(), PoSoundEvents.SWITCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
+        level.playSound(null, arcade.getBlockPos(), SoundEvents.NOTE_BLOCK_BIT.value(), SoundSource.BLOCKS, 1.0F, 0.7F);
     }
 
     private static void showNoCartridge(Level level, Player player) {

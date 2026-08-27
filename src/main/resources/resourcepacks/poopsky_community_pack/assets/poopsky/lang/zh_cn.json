@@ -672,6 +672,12 @@
   "subtitle.poopsky.item.jinkela.use": "金坷垃：沙沙作响",
   "subtitle.poopsky.item.time_bell.open": "时间之铃：开启",
   "subtitle.poopsky.item.time_bell.close": "时间之铃：关闭",
+  "subtitle.poopsky.game.explosion": "街机：游戏音",
+  "subtitle.poopsky.game.game_over": "街机：游戏音",
+  "subtitle.poopsky.game.new_best": "街机：游戏音",
+  "subtitle.poopsky.game.point": "街机：游戏音",
+  "subtitle.poopsky.game.shoot": "街机：游戏音",
+  "subtitle.poopsky.game.swing": "街机：游戏音",
 
   "painting.poopsky.poop.title": "草莓塔",
   "painting.poopsky.poop.author": "一念之海",

@@ -116,6 +116,9 @@ public class ArcadeBlockEntity extends BlockEntity {
         if (canControl(player)) {
             return;
         }
+        if (game.isResultInputLocked()) {
+            return;
+        }
         if (activePlayer == null || game.getStage() == GameStage.START) {
             beginControl(player.getUUID());
         }
@@ -143,6 +146,9 @@ public class ArcadeBlockEntity extends BlockEntity {
             if (canControl(player)) {
                 return;
             }
+            if (game.isResultInputLocked()) {
+                return;
+            }
             if (!scoreSettled) {
                 settleActiveGame();
             }
@@ -158,7 +164,7 @@ public class ArcadeBlockEntity extends BlockEntity {
         }
         beginControl(player.getUUID());
         if (level != null) {
-            level.playSound(null, getBlockPos(), SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 1.0F, 0.6F);
+            level.playSound(null, getBlockPos(), SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 0.5F, 0.6F);
         }
     }
 
@@ -168,7 +174,7 @@ public class ArcadeBlockEntity extends BlockEntity {
         }
         endControl();
         if (level != null) {
-            level.playSound(null, getBlockPos(), SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 1.0F, 0.5F);
+            level.playSound(null, getBlockPos(), SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 0.5F, 0.5F);
         }
     }
 
