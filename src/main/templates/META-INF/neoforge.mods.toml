@@ -8,23 +8,30 @@ version = "${mod_version}"
 displayName = "${mod_name}"
 issueTrackerURL = "https://github.com/Altnoir/PoopSkyMod/issues"
 displayURL = "https://github.com/Altnoir/PoopSkyMod"
-logoFile="assets/${mod_id}/icon.png"
+logoFile = "assets/${mod_id}/icon.png"
 authors = "${mod_authors}"
 description = '''${mod_description}'''
 
 [[mixins]]
 config = "${mod_id}.mixins.json"
 
-[[dependencies.${ mod_id }]]
+[[dependencies.${mod_id}]]
 modId = "neoforge"
 type = "required"
 versionRange = "${neo_version_range}"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.${ mod_id }]]
+[[dependencies.${mod_id}]]
 modId = "minecraft"
 type = "required"
 versionRange = "${minecraft_version_range}"
 ordering = "NONE"
 side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "jei"
+type = "optional"
+versionRange = "${jei_version_range}"
+ordering = "NONE"
+side = "CLIENT"
