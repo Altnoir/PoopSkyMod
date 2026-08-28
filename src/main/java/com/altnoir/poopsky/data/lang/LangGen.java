@@ -339,8 +339,8 @@ public final class LangGen {
         provider.add("gamedisks.roundworm", "Roundworm");
         provider.add("gamedisks.blocktris", "Blocktris");
         provider.add("gamedisks.pong", "Pong");
-        provider.add("gamedisks.touhou", "Touhou Filthy Soil Record");
-        provider.add("message.gamedisks.light_arcade.no_cartridge", "No cartridge");
+        provider.add("gamedisks.touhou", "Block Dung Beetle Record");
+        provider.add("message.gamedisks.light_arcade.no_cartridge", "No game disk");
         provider.add("message.poopsky.arcade.reward_full", "Reward capacity is full");
 
         provider.add("gui.gamingconsole.title", "Arcade Machine");
