@@ -91,10 +91,4 @@ public class ClientBlocktrisGame extends ClientGame {
     public ResourceLocation getBackground() {
         return PoopSky.loc("textures/games/background/blocktris_background.png");
     }
-
-    @Override
-    public boolean scoreText() {
-        return false;
-    }
-
 }

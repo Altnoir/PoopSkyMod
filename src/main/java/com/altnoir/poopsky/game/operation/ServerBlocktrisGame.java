@@ -100,8 +100,9 @@ public class ServerBlocktrisGame extends ServerGame {
 
     private void place() {
         BlocktrisGameState.PlacementResult result = state.placeCurrent(random);
-        for (int i = 0; i < result.linesCleared(); i++) {
-            score++;
+        int lines = result.linesCleared();
+        if (lines > 0) {
+            score += lines;
             playSound(PoSoundEvents.POINT.get(), 1.0F, 0.7F);
         }
         if (result.died()) {
