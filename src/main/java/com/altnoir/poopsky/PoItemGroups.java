@@ -106,7 +106,9 @@ public class PoItemGroups {
                 return;
             }
             case GachaponItem ignored -> {
-                TS_ITEMS.add(item);
+                for (String color : GachaponItem.COLORS) {
+                    TS_ITEMS.add(() -> GachaponItem.withColor(color));
+                }
                 return;
             }
             case BlockItem ignored when PoBlocks.isBasicBlockItem(item) -> {
