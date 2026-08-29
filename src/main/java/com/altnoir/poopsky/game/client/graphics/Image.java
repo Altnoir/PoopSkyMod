@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.game.client.graphics;
 
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
 
 public class Image implements Renderer {
@@ -23,7 +24,8 @@ public class Image implements Renderer {
 
     @Override
     public void render(GuiGraphicsExtractor graphics, int posX, int posY) {
-        graphics.blit(file, posX, posY, x, y, width, height, fileWidth, fileHeight);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, file, posX, posY,
+                x, y, width, height, fileWidth, fileHeight);
     }
 
     @Override
@@ -35,4 +37,3 @@ public class Image implements Renderer {
         graphics.pose().popMatrix();
     }
 }
-

@@ -9,6 +9,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -51,7 +52,8 @@ public class ClientGame extends Game {
 
     protected void renderBackground(GuiGraphicsExtractor graphics, int posX, int posY) {
         if (getBackground() != null) {
-            graphics.blit(getBackground(), posX, posY, 0, 0, WIDTH, HEIGHT, WIDTH, HEIGHT);
+            graphics.blit(RenderPipelines.GUI_TEXTURED, getBackground(), posX, posY,
+                    0, 0, WIDTH, HEIGHT, WIDTH, HEIGHT);
         }
     }
 
@@ -86,7 +88,9 @@ public class ClientGame extends Game {
             return;
         }
 
-        graphics.blit(PoopSky.loc("textures/gui/score_board.png"), posX + (WIDTH - 140) / 2, posY + (HEIGHT - 100) / 2, 0, 0, 140, 100, 140, 100);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, PoopSky.loc("textures/gui/score_board.png"),
+                posX + (WIDTH - 140) / 2, posY + (HEIGHT - 100) / 2,
+                0, 0, 140, 100, 140, 100);
 
         boolean died = stage == GameStage.DIED;
         drawResult(graphics, font, posX, posY, died);
