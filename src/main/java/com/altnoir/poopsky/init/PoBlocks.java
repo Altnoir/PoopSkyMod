@@ -546,11 +546,6 @@ public class PoBlocks {
                     .sound(SoundType.FUNGUS)
                     .pushReaction(PushReaction.DESTROY)));
 
-    public static final BlockEntry<FlowerPotBlock> POTTED_GINKGO_SAPLING = registerBlockNoItem("potted_ginkgo_sapling",
-            props -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, GINKGO_SAPLING,
-                    BlockBehaviour.Properties.ofFullCopy(Blocks.POTTED_OAK_SAPLING)),
-            RegistrateBlockLootTables::dropPottedContents);
-
     public static final BlockEntry<FoliumSennaePlantBlock> FOLIUM_SENNAE_PLANT = registerBlockNoItem("folium_sennae_plant",
             props -> new FoliumSennaePlantBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.PLANT)
@@ -562,6 +557,15 @@ public class PoBlocks {
                     .ignitedByLava()
                     .pushReaction(PushReaction.DESTROY)),
             (loot, block) -> loot.dropOther(block, PoItems.FOLIUM_SENNAE.get()));
+    public static final BlockEntry<FlowerPotBlock> POTTED_FOLIUM_SENNAE_PLANT = registerBlockNoItem("potted_folium_sennae_plant",
+            props -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, FOLIUM_SENNAE_PLANT,
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.POTTED_OAK_SAPLING)),
+            RegistrateBlockLootTables::dropPottedContents);
+
+    public static final BlockEntry<FlowerPotBlock> POTTED_GINKGO_SAPLING = registerBlockNoItem("potted_ginkgo_sapling",
+            props -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, GINKGO_SAPLING,
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.POTTED_OAK_SAPLING)),
+            RegistrateBlockLootTables::dropPottedContents);
 
     public static final BlockEntry<ArcadeBlock> BROWN_ARCADE = registerArcadeBlock("brown_arcade", DyeColor.BROWN);
     public static final BlockEntry<ArcadeBlock> RED_ARCADE = registerArcadeBlock("red_arcade", DyeColor.RED);
