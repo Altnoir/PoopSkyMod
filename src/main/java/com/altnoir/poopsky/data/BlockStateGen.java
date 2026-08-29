@@ -366,7 +366,10 @@ public class BlockStateGen extends LegacyBlockStateGenerator {
                 .texture("up", modLoc("block/poop_block_liquids"))
                 .texture(PARTICLE, modLoc("block/poop_block"))
                 .element().from(0, 0, 0).to(16, 16, 16)
-                .allFaces((face, faceBuilder) -> faceBuilder.texture("#side"))
+                .allFaces((face, faceBuilder) -> faceBuilder
+                        .texture("#side")
+                        .uvs(0, 0, 16, 16)
+                        .cullface(face))
                 .face(Direction.UP).texture("#up").end();
 
         getVariantBuilder(PoBlocks.POOP_BLOCK.get())
@@ -665,7 +668,10 @@ public class BlockStateGen extends LegacyBlockStateGenerator {
                 .texture("particle", texture)
                 .texture("texture", texture)
                 .element().from(0, 0, 0).to(16, 16, 8)
-                .allFaces((face, builder) -> builder.texture("#texture"))
+                .allFaces((face, builder) -> {
+                    builder.texture("#texture");
+                    if (face != Direction.SOUTH) builder.cullface(face);
+                })
                 .end();
         ModelFile doubleModel = models().cubeAll(path + "_double", texture);
 
