@@ -123,6 +123,8 @@ public class PoopSky {
             CompooperBlock.bootStrap();
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(
                     PoBlocks.GINKGO_SAPLING.getId(), PoBlocks.POTTED_GINKGO_SAPLING);
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(
+                    PoBlocks.FOLIUM_SENNAE_PLANT.getId(), PoBlocks.POTTED_FOLIUM_SENNAE_PLANT);
             DispenserBlock.registerProjectileBehavior(PoItems.POOP_BALL);
             DispenserBlock.registerProjectileBehavior(PoItems.SEA_POOP_BALL);
             DispenserBlock.registerProjectileBehavior(PoItems.WITHER_POOP_BALL);

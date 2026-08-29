@@ -78,6 +78,10 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         cubeBottomTop(PoBlocks.MAGGOTS_BLOCK.get());
         blockWithItem(PoBlocks.ROUNDWORM_BLOCK.get());
         foliumSennae(PoBlocks.FOLIUM_SENNAE_PLANT.get());
+        simpleBlock(PoBlocks.POTTED_FOLIUM_SENNAE_PLANT.get(), models()
+                .withExistingParent(getBlockPath(PoBlocks.POTTED_FOLIUM_SENNAE_PLANT.get()), mcLoc("block/flower_pot_cross"))
+                .texture("plant", blockTexture(PoBlocks.FOLIUM_SENNAE_PLANT.get()))
+                .renderType("cutout"));
         chiliVines(PoBlocks.CHILI_VINES.get());
         chiliVines(PoBlocks.CHILI_VINES_PLANT.get());
 
