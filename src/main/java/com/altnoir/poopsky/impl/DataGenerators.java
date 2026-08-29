@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.impl;
 
+import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.compat.create.data.PDigestingRecipeGen;
 import com.altnoir.poopsky.compat.create.data.PHauntingRecipeGen;
 import com.altnoir.poopsky.compat.create.data.PWashingRecipeGen;
@@ -15,6 +16,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
@@ -44,8 +46,10 @@ public class DataGenerators {
         generators.addProvider(event.includeClient(), new SoundGen(packOutput, existingFileHelper));
 
         // Compat
-        generators.addProvider(event.includeServer(), new PDigestingRecipeGen(packOutput, lookupProvider));
-        generators.addProvider(event.includeServer(), new PWashingRecipeGen(packOutput, lookupProvider));
-        generators.addProvider(event.includeServer(), new PHauntingRecipeGen(packOutput, lookupProvider));
+        if (ModList.get().isLoaded(PoMods.CREATE.id())) {
+            generators.addProvider(event.includeServer(), new PDigestingRecipeGen(packOutput, lookupProvider));
+            generators.addProvider(event.includeServer(), new PWashingRecipeGen(packOutput, lookupProvider));
+            generators.addProvider(event.includeServer(), new PHauntingRecipeGen(packOutput, lookupProvider));
+        }
     }
 }
