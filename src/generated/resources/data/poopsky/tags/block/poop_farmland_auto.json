@@ -1,5 +1,8 @@
 {
   "values": [
-    "farmersdelight:tomatoes_on_rope"
+    {
+      "id": "farmersdelight:tomatoes_on_rope",
+      "required": false
+    }
   ]
 }

@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.data;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.init.PoBlocks;
@@ -12,7 +13,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
-import vectorwing.farmersdelight.common.registry.ModBlocks;
 
 public final class BlockTagGen {
     private static final PoRegistrate REGISTRATE = PoopSky.registrate();
@@ -37,7 +37,7 @@ public final class BlockTagGen {
                 .add(PoBlocks.STRIPPED_GINKGO_LOG.get())
                 .add(PoBlocks.GINKGO_WOOD.get())
                 .add(PoBlocks.STRIPPED_GINKGO_WOOD.get());
-    tag(PoTags.Blocks.PRIMO_STEMS)
+        tag(PoTags.Blocks.PRIMO_STEMS)
                 .add(PoBlocks.PRIMO_STEM.get())
                 .add(PoBlocks.STRIPPED_PRIMO_STEM.get())
                 .add(PoBlocks.PRIMO_HYPHAE.get())
@@ -130,7 +130,7 @@ public final class BlockTagGen {
                 .addTag(PoTags.Blocks.TOILET_BLOCKS);
 
         tag(PoTags.Blocks.POOP_FARMLAND_AUTO)
-                .add(ModBlocks.TOMATO_CROP_ON_ROPE.get());
+                .addOptional(PoopSky.modloc(PoMods.FARMERSDELIGHT.id(), "tomatoes_on_rope"));
 
         tag(PoTags.Blocks.MAGGOTS_CHUNK_LOADER_BASE_BLOCKS)
                 .add(PoBlocks.MAGGOTS_BLOCK.get());
@@ -294,7 +294,7 @@ public final class BlockTagGen {
 
         var mineableWithPickaxe = tag(BlockTags.MINEABLE_WITH_PICKAXE);
         PoBlocks.COLORED_TILE_BLOCK_FAMILIES.forEach(family -> family.blocks().forEach(block -> mineableWithPickaxe.add(block.get())));
-        PoBlocks.POOP_BRICK_FAMILY.blocks().stream().skip(1).forEach(block -> mineableWithPickaxe.add(block.get()));
+        PoBlocks.POOP_BRICK_FAMILY.blocks().forEach(block -> mineableWithPickaxe.add(block.get()));
         PoBlocks.HARDENED_POOP_FAMILIES.stream().skip(1).forEach(family -> family.blocks().forEach(block -> mineableWithPickaxe.add(block.get())));
         mineableWithPickaxe.add(
                 PoBlocks.HARD_TOILET.get(),
