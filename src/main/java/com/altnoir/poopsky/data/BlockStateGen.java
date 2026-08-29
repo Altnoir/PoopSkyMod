@@ -78,10 +78,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         cubeBottomTop(PoBlocks.MAGGOTS_BLOCK.get());
         blockWithItem(PoBlocks.ROUNDWORM_BLOCK.get());
         foliumSennae(PoBlocks.FOLIUM_SENNAE_PLANT.get());
-        simpleBlock(PoBlocks.POTTED_FOLIUM_SENNAE_PLANT.get(), models()
-                .withExistingParent(getBlockPath(PoBlocks.POTTED_FOLIUM_SENNAE_PLANT.get()), mcLoc("block/flower_pot_cross"))
-                .texture("plant", blockTexture(PoBlocks.FOLIUM_SENNAE_PLANT.get()))
-                .renderType("cutout"));
+        pottedPlantBlock(PoBlocks.POTTED_FOLIUM_SENNAE_PLANT.get(), PoBlocks.FOLIUM_SENNAE_PLANT.get());
         chiliVines(PoBlocks.CHILI_VINES.get());
         chiliVines(PoBlocks.CHILI_VINES_PLANT.get());
 
@@ -563,10 +560,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         blockWithItem(set.extraBlock());
         plantGenerator.accept(set.plant());
         if (set.pottedPlant() != null) {
-            simpleBlock(set.pottedPlant(), models()
-                    .withExistingParent(getBlockPath(set.pottedPlant()), mcLoc("block/flower_pot_cross"))
-                    .texture("plant", blockTexture(set.plant()))
-                    .renderType("cutout"));
+            pottedPlantBlock(set.pottedPlant(), set.plant());
         }
 
         simpleBlockItems(set.stairs(), set.slab(), set.pressurePlate(), set.fenceGate());
@@ -658,6 +652,13 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         ModelFile model = models().cross(path, blockTexture(block)).renderType("cutout");
         simpleBlock(block, model);
         generatedItem(block);
+    }
+
+    private void pottedPlantBlock(FlowerPotBlock pottedPlant, Block plant) {
+        simpleBlock(pottedPlant, models()
+                .withExistingParent(getBlockPath(pottedPlant), mcLoc("block/flower_pot_cross"))
+                .texture("plant", blockTexture(plant))
+                .renderType("cutout"));
     }
 
     private void clusterBlock(Block block) {
