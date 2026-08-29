@@ -88,10 +88,7 @@ public class BlockStateGen extends LegacyBlockStateGenerator {
         existingBlockstate(PoBlocks.POOP_SAPLING.get());
         blockWithItem(PoBlocks.ROUNDWORM_BLOCK.get());
         foliumSennae(PoBlocks.FOLIUM_SENNAE_PLANT.get());
-        simpleBlock(PoBlocks.POTTED_FOLIUM_SENNAE_PLANT.get(), models()
-                .withExistingParent(getBlockPath(PoBlocks.POTTED_FOLIUM_SENNAE_PLANT.get()), mcLoc("block/flower_pot_cross"))
-                .texture("plant", blockTexture(PoBlocks.FOLIUM_SENNAE_PLANT.get()))
-                .renderType("cutout"));
+        pottedPlantBlock(PoBlocks.POTTED_FOLIUM_SENNAE_PLANT.get(), PoBlocks.FOLIUM_SENNAE_PLANT.get());
         chiliVines(PoBlocks.CHILI_VINES.get());
         chiliVines(PoBlocks.CHILI_VINES_PLANT.get());
 
@@ -626,6 +623,9 @@ public class BlockStateGen extends LegacyBlockStateGenerator {
         trapdoorBlockWithRenderType(set.trapdoor(), blockTexture(set.trapdoor()), true, "cutout");
         blockWithItem(set.extraBlock());
         plantGenerator.accept(set.plant());
+        if (set.pottedPlant() != null) {
+            pottedPlantBlock(set.pottedPlant(), set.plant());
+        }
 
         simpleBlockItems(set.stairs(), set.slab(), set.pressurePlate(), set.fenceGate());
         ModelFile buttonInventory = models().withExistingParent(getBlockPath(set.button()) + "_inventory", mcLoc("block/button_inventory"))
@@ -691,6 +691,13 @@ public class BlockStateGen extends LegacyBlockStateGenerator {
         ModelFile model = models().cross(path, blockTexture(block)).renderType("cutout");
         simpleBlock(block, model);
         generatedItem(block);
+    }
+
+    private void pottedPlantBlock(FlowerPotBlock pottedPlant, Block plant) {
+        simpleBlock(pottedPlant, models()
+                .withExistingParent(getBlockPath(pottedPlant), mcLoc("block/flower_pot_cross"))
+                .texture("plant", blockTexture(plant))
+                .renderType("cutout"));
     }
 
     private void clusterBlock(Block block) {
