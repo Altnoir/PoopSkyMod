@@ -295,7 +295,7 @@ public final class BlockTagGen {
         var mineableWithPickaxe = tag(BlockTags.MINEABLE_WITH_PICKAXE);
         PoBlocks.COLORED_TILE_BLOCK_FAMILIES.forEach(family -> family.blocks().forEach(block -> mineableWithPickaxe.add(block.get())));
         PoBlocks.POOP_BRICK_FAMILY.blocks().forEach(block -> mineableWithPickaxe.add(block.get()));
-        PoBlocks.HARDENED_POOP_FAMILIES.stream().skip(1).forEach(family -> family.blocks().forEach(block -> mineableWithPickaxe.add(block.get())));
+        PoBlocks.HARDENED_POOP_FAMILIES.forEach(family -> family.blocks().forEach(block -> mineableWithPickaxe.add(block.get())));
         mineableWithPickaxe.add(
                 PoBlocks.HARD_TOILET.get(),
                 PoBlocks.FLUSH_TOILET.get(),
