@@ -17,6 +17,7 @@
     "ClientPacketListenerMixin",
     "CreateWorldScreenWorldTabMixin",
     "KeyBindsListKeyEntryMixin",
+    "MinecraftMixin",
     "WorldCreationUiStateMixin"
   ],
   "injectors": {

@@ -65,13 +65,14 @@ public class ArcadeBlockEntityRenderer implements BlockEntityRenderer<ArcadeBloc
 
     private static void submitRewardText(RenderState state, PoseStack poseStack, SubmitNodeCollector collector) {
         Component text = Component.translatable("text.poopsky.arcade.total_reward", state.rewardCount)
-                .withStyle(ChatFormatting.ITALIC, ChatFormatting.AQUA);
+                .withStyle(ChatFormatting.ITALIC, ChatFormatting.WHITE);
         Font font = Minecraft.getInstance().font;
-        float scale = -0.01785F;
+        float scale = -0.01475F;
 
         poseStack.pushPose();
-        poseStack.translate(0.5F, 1.9375F, 0.6876F);
+        poseStack.translate(0.5F, 1.5F, 0.5F);
         poseStack.mulPose(Axis.YP.rotationDegrees(-state.rotation));
+        poseStack.translate(0.0F, 0.4375F, Z - 0.75F);
         poseStack.scale(scale, scale, scale);
         collector.submitText(poseStack, -font.width(text) / 2.0F, 0.0F, text.getVisualOrderText(), true,
                 Font.DisplayMode.NORMAL, state.lightCoords, 0xFFFFFFFF, 0, 0);

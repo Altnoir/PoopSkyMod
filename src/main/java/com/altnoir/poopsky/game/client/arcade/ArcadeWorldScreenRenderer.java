@@ -5,7 +5,13 @@ import com.altnoir.poopsky.content.item.p.GameDiskItem;
 import com.altnoir.poopsky.game.client.ArcadeControlSession;
 import com.altnoir.poopsky.game.client.ClientGame;
 import com.altnoir.poopsky.game.client.ClientGameTypes;
+import com.altnoir.poopsky.client.renderer.ArcadeRenderTargetOverride;
+import com.mojang.blaze3d.pipeline.RenderTarget;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.render.GuiRenderer;
+import net.minecraft.client.renderer.state.gui.GuiRenderState;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -15,6 +21,7 @@ import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.RenderFrameEvent;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public final class ArcadeWorldScreenRenderer {
@@ -100,6 +107,25 @@ public final class ArcadeWorldScreenRenderer {
         if (state.cartridgeClientGame == null) {
             return;
         }
+
+        Minecraft minecraft = Minecraft.getInstance();
+        var fog = RenderSystem.getShaderFog();
+        if (fog == null) {
+            return;
+        }
+
+        GuiGraphicsExtractor graphics = new GuiGraphicsExtractor(minecraft, state.guiRenderState, 0, 0);
+        graphics.pose().scale(
+                (float) graphics.guiWidth() / ClientGame.WIDTH,
+                (float) graphics.guiHeight() / ClientGame.HEIGHT
+        );
+        state.cartridgeClientGame.render(graphics, 0, 0);
+
+        ArcadeRenderTargetOverride.runWith(state.target, () -> state.guiRenderer.render(fog));
+        RenderSystem.getDevice().createCommandEncoder().copyTextureToTexture(
+                state.target.getColorTexture(), state.texture.getTexture(),
+                0, 0, 0, 0, 0, TEXTURE_WIDTH, TEXTURE_HEIGHT
+        );
     }
 
     private static final class ScreenState {
@@ -108,7 +134,10 @@ public final class ArcadeWorldScreenRenderer {
         private GameDiskItem cartridge;
         private ClientGame cartridgeClientGame;
         private CompoundTag snapshot;
+        private RenderTarget target;
         private DynamicTexture texture;
+        private GuiRenderState guiRenderState;
+        private GuiRenderer guiRenderer;
 
         private ScreenState(BlockPos pos, GameDiskItem cartridge) {
             this.pos = pos;
@@ -119,16 +148,40 @@ public final class ArcadeWorldScreenRenderer {
         }
 
         private void ensureResources() {
+            Minecraft minecraft = Minecraft.getInstance();
+            if (target == null) {
+                target = new RenderTarget("PoopSky arcade", false) {};
+                target.resize(TEXTURE_WIDTH, TEXTURE_HEIGHT);
+            }
             if (texture == null) {
-                texture = new DynamicTexture("poopsky arcade", TEXTURE_WIDTH, TEXTURE_HEIGHT, false);
-                Minecraft.getInstance().getTextureManager().register(textureLocation, texture);
+                texture = new DynamicTexture("PoopSky arcade texture", TEXTURE_WIDTH, TEXTURE_HEIGHT, true);
+                minecraft.getTextureManager().register(textureLocation, texture);
+            }
+            if (guiRenderer == null) {
+                guiRenderState = new GuiRenderState();
+                guiRenderer = new GuiRenderer(
+                        guiRenderState,
+                        minecraft.renderBuffers().bufferSource(),
+                        minecraft.gameRenderer.getSubmitNodeStorage(),
+                        minecraft.gameRenderer.getFeatureRenderDispatcher(),
+                        List.of()
+                );
             }
         }
 
         private void close() {
+            if (guiRenderer != null) {
+                guiRenderer.close();
+                guiRenderer = null;
+                guiRenderState = null;
+            }
             if (texture != null) {
                 texture.close();
                 texture = null;
+            }
+            if (target != null) {
+                target.destroyBuffers();
+                target = null;
             }
         }
 
