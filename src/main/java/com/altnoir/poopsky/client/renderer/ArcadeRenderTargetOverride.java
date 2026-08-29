@@ -1,15 +1,14 @@
 package com.altnoir.poopsky.client.renderer;
 
 import com.mojang.blaze3d.pipeline.RenderTarget;
-import org.jspecify.annotations.Nullable;
 
 public final class ArcadeRenderTargetOverride {
-    private static @Nullable RenderTarget target;
+    private static RenderTarget target;
 
     private ArcadeRenderTargetOverride() {
     }
 
-    public static @Nullable RenderTarget get() {
+    public static RenderTarget get() {
         return target;
     }
 

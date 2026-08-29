@@ -71,8 +71,8 @@ public class ClientGame extends Game {
         if (stage == GameStage.PLAYING) {
             if (showScore()) {
                 Component score = (scoreText() ? Component.translatable("gui.gamingconsole.score").append(": ") : Component.empty()).append(String.valueOf(getScore()));
-                graphics.text(font, score, posX + 2, posY + 2, 0x373737, false);
-                graphics.text(font, score, posX + 1, posY + 1, scoreColor(), false);
+                graphics.text(font, score, posX + 2, posY + 2, 0xFF373737, false);
+                graphics.text(font, score, posX + 1, posY + 1, opaque(scoreColor()), false);
             }
             return;
         }
@@ -124,11 +124,15 @@ public class ClientGame extends Game {
     }
 
     private void drawCentered(GuiGraphicsExtractor graphics, Font font, Component component, int x, int y, int color) {
-        graphics.text(font, component, x + (WIDTH - font.width(component.getVisualOrderText())) / 2, y, color, false);
+        graphics.text(font, component, x + (WIDTH - font.width(component.getVisualOrderText())) / 2, y, opaque(color), false);
     }
 
     private int getColor(Component component) {
-        return component.getStyle().getColor() == null ? 0xFFFFFF : component.getStyle().getColor().getValue();
+        return opaque(component.getStyle().getColor() == null ? 0xFFFFFF : component.getStyle().getColor().getValue());
+    }
+
+    private static int opaque(int color) {
+        return color | 0xFF000000;
     }
 
     public Identifier getBackground() {

@@ -82,9 +82,9 @@ public class ClientBlocktrisGame extends ClientGame {
         Component textBotton2 = Component.translatable("gui.gamingconsole.blocktris.botton_2", keyName2);
 
         int textX = NEXT_LABEL_X + posX - font.width(text.getVisualOrderText()) / 2;
-        graphics.text(font, text, textX, 10 + posY, 0x555555, false);
-        graphics.text(font, textBotton1, textX - 7, 100 + posY, 0x555555, false);
-        graphics.text(font, textBotton2, textX - 7, 110 + posY, 0x555555, false);
+        graphics.text(font, text, textX, 10 + posY, 0xFF555555, false);
+        graphics.text(font, textBotton1, textX - 7, 100 + posY, 0xFF555555, false);
+        graphics.text(font, textBotton2, textX - 7, 110 + posY, 0xFF555555, false);
     }
 
     @Override

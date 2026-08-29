@@ -14,9 +14,11 @@ import com.google.gson.reflect.TypeToken;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -217,7 +219,23 @@ public class ArcadeBlockEntity extends BlockEntity {
         resetSessionState();
         game.setSoundEmitter((event, pitch, volume) -> {
             if (level != null) {
-                level.playSound(null, getBlockPos().above(), event, SoundSource.BLOCKS, volume, pitch);
+                ServerPlayer player = level instanceof ServerLevel serverLevel && activePlayer != null
+                        && serverLevel.getPlayerByUUID(activePlayer) instanceof ServerPlayer serverPlayer
+                        ? serverPlayer
+                        : null;
+                level.playSound(player, getBlockPos().above(), event, SoundSource.BLOCKS, volume, pitch);
+                if (player != null) {
+                    BlockPos soundPos = getBlockPos().above();
+                    player.connection.send(new ClientboundSoundPacket(
+                            BuiltInRegistries.SOUND_EVENT.wrapAsHolder(event),
+                            SoundSource.BLOCKS,
+                            soundPos.getX() + 0.5,
+                            soundPos.getY() + 0.5,
+                            soundPos.getZ() + 0.5,
+                            volume,
+                            pitch,
+                            level.getRandom().nextLong()));
+                }
             }
         });
         game.setItemEmitter(stack -> spawnRewards(List.of(stack.copy())));
