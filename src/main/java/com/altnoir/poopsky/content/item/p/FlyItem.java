@@ -14,10 +14,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -110,41 +109,41 @@ public class FlyItem extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
+    public InteractionResult use(Level level, Player player, InteractionHand usedHand) {
         ItemStack stack = player.getItemInHand(usedHand);
         if (!canSpawnDefaultFly(stack)) {
-            return InteractionResultHolder.pass(stack);
+            return InteractionResult.PASS;
         }
 
         BlockHitResult hitResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.SOURCE_ONLY);
         if (hitResult.getType() != HitResult.Type.BLOCK) {
-            return InteractionResultHolder.pass(stack);
+            return InteractionResult.PASS;
         }
         if (!(level instanceof ServerLevel serverLevel)) {
-            return InteractionResultHolder.success(stack);
+            return InteractionResult.SUCCESS;
         }
 
         BlockPos pos = hitResult.getBlockPos();
         if (!(level.getBlockState(pos).getBlock() instanceof LiquidBlock)) {
-            return InteractionResultHolder.pass(stack);
+            return InteractionResult.PASS;
         }
         if (!level.mayInteract(player, pos) || !player.mayUseItemAt(pos, hitResult.getDirection(), stack)) {
-            return InteractionResultHolder.fail(stack);
+            return InteractionResult.FAIL;
         }
 
         if (!spawnDefaultFly(serverLevel, stack, player, pos, false, false)) {
-            return InteractionResultHolder.pass(stack);
+            return InteractionResult.PASS;
         }
 
         player.awardStat(Stats.ITEM_USED.get(this));
-        return InteractionResultHolder.consume(stack);
+        return InteractionResult.SUCCESS_SERVER.heldItemTransformedTo(stack);
     }
 
     private static boolean spawnDefaultFly(ServerLevel level, ItemStack stack, Player player, BlockPos pos,
                                            boolean randomizeYaw, boolean shouldOffsetYMore) {
         EntityType<?> entityType = PoEntityType.FLY.get();
         Entity entity = entityType.spawn(level, stack, player, pos,
-                MobSpawnType.SPAWN_EGG,
+                EntitySpawnReason.SPAWN_ITEM_USE,
                 randomizeYaw,
                 shouldOffsetYMore
         );

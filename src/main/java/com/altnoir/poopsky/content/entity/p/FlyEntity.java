@@ -145,9 +145,9 @@ public class FlyEntity extends Animal implements FlyingAnimal {
     }
 
     @Override
-    protected void customServerAiStep() {
-        super.customServerAiStep();
-        if (this.isInWaterOrBubble()) {
+    protected void customServerAiStep(ServerLevel level) {
+        super.customServerAiStep(level);
+        if (this.isInWater()) {
             this.underWaterTicks++;
         } else {
             this.underWaterTicks = 0;

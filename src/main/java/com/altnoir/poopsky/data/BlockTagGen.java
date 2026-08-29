@@ -1,7 +1,6 @@
 package com.altnoir.poopsky.data;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.init.PoBlocks;
@@ -127,8 +126,7 @@ public final class BlockTagGen {
                 )
                 .addTag(PoTags.Blocks.TOILET_BLOCKS);
 
-        tag(PoTags.Blocks.POOP_FARMLAND_AUTO)
-                .addOptional(PoopSky.modloc(PoMods.FARMERSDELIGHT.id(), "tomatoes_on_rope"));
+        tag(PoTags.Blocks.POOP_FARMLAND_AUTO);
 
         tag(PoTags.Blocks.MAGGOTS_CHUNK_LOADER_BASE_BLOCKS)
                 .add(PoBlocks.MAGGOTS_BLOCK.get());

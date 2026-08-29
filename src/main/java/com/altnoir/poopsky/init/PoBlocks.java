@@ -543,6 +543,10 @@ public class PoBlocks {
                     .ignitedByLava()
                     .pushReaction(PushReaction.DESTROY)),
             (loot, block) -> loot.dropOther(block, PoItems.FOLIUM_SENNAE.get()));
+    public static final BlockEntry<FlowerPotBlock> POTTED_FOLIUM_SENNAE_PLANT = registerBlockNoItem("potted_folium_sennae_plant",
+            props -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, FOLIUM_SENNAE_PLANT,
+                    registeredProperties(BlockBehaviour.Properties.ofFullCopy(Blocks.POTTED_OAK_SAPLING))),
+            RegistrateBlockLootTables::dropPottedContents);
 
     public static final BlockEntry<? extends LiquidBlock> URINE_LIQUID = PoFluids.URINE_LIQUID;
 
