@@ -17,6 +17,11 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.MoveControl;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -25,6 +30,7 @@ import net.minecraft.world.phys.Vec3;
 
 public class BasiliskEntity extends Frog {
     private static final double BREATH_DISTANCE_SQR = 16.0;
+    private static final double CHASE_SPEED_MODIFIER = 1.15;
     private static final int ATTACK_ANIMATION_DURATION = 15;
     private static final EntityDataAccessor<Integer> ATTACK_ANIMATION_TICKS =
             SynchedEntityData.defineId(BasiliskEntity.class, EntityDataSerializers.INT);
@@ -32,12 +38,21 @@ public class BasiliskEntity extends Frog {
 
     public BasiliskEntity(EntityType<? extends Frog> entityType, Level level) {
         super(entityType, level);
+        this.moveControl = new MoveControl(this);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Frog.createAttributes()
                 .add(Attributes.MAX_HEALTH, 20.0)
-                .add(Attributes.MOVEMENT_SPEED, 0.32);
+                .add(Attributes.MOVEMENT_SPEED, 0.26);
+    }
+
+    @Override
+    protected void registerGoals() {
+        this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0));
+        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
     }
 
     @Override
@@ -67,7 +82,6 @@ public class BasiliskEntity extends Frog {
 
     @Override
     protected void customServerAiStep() {
-        super.customServerAiStep();
         Player target = this.level().getNearestPlayer(this, 24.0);
         if (target == null || target.isCreative() || target.isSpectator()) {
             this.setTarget(null);
@@ -80,7 +94,7 @@ public class BasiliskEntity extends Frog {
             this.getNavigation().stop();
             this.breatheCurse(target);
         } else {
-            this.getNavigation().moveTo(target, 1.15);
+            this.getNavigation().moveTo(target, CHASE_SPEED_MODIFIER);
         }
     }
 
@@ -132,7 +146,7 @@ public class BasiliskEntity extends Frog {
             cloud.setWaitTime(0);
             cloud.setRadiusOnUse(0.0F);
             cloud.setRadiusPerTick(0.0F);
-            cloud.addEffect(new MobEffectInstance(PoEffects.DEATH_BLIGHT, 400, 0));
+            cloud.addEffect(new MobEffectInstance(PoEffects.DEATH_BLIGHT, 400, 0, false, true, true));
             serverLevel.addFreshEntity(cloud);
         }
         this.breathCooldown = 80;

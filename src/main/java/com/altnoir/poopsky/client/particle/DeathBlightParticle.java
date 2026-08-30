@@ -8,10 +8,18 @@ import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.core.particles.SimpleParticleType;
 
 public class DeathBlightParticle extends DragonBreathParticle {
+    private static final float YELLOW_PARTICLE_CHANCE = 0.18F;
+
     protected DeathBlightParticle(ClientLevel level, double x, double y, double z,
                                   double xSpeed, double ySpeed, double zSpeed, SpriteSet sprites) {
         super(level, x, y, z, xSpeed, ySpeed, zSpeed, sprites);
-        this.setColor(0.0F, 0.0F, 0.0F);
+        if (this.random.nextFloat() < YELLOW_PARTICLE_CHANCE) {
+            float brightness = 0.75F + this.random.nextFloat() * 0.25F;
+            this.setColor(0.38F * brightness, 0.29F * brightness, 0.035F * brightness);
+        } else {
+            float blackVariation = this.random.nextFloat() * 0.035F;
+            this.setColor(blackVariation, blackVariation, blackVariation);
+        }
     }
 
     public static class Provider implements ParticleProvider<SimpleParticleType> {
