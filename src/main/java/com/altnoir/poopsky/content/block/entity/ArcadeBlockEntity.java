@@ -52,6 +52,7 @@ import java.util.UUID;
 public class ArcadeBlockEntity extends BlockEntity {
     private static final Gson GSON = new Gson();
     public static final int MAX_REWARD_COUNT = 99;
+    private static final int DEBUG_CHECK_INTERVAL = 20;
     private final ItemStackHandler inventory = new ItemStackHandler(1) {
         @Override
         protected void onContentsChanged(int slot) {
@@ -70,6 +71,8 @@ public class ArcadeBlockEntity extends BlockEntity {
     private UUID activePlayer;
     private boolean scoreSettled;
     private boolean serverInitialized;
+    private boolean debugMode;
+    private int debugCheckCooldown;
 
     public ArcadeBlockEntity(BlockPos pos, BlockState state) {
         super(PoBlockEntityType.ARCADE_BLOCK_ENTITY.get(), pos, state);
@@ -204,7 +207,11 @@ public class ArcadeBlockEntity extends BlockEntity {
         }
 
         if (game instanceof ServerTouhouGame touhouGame && level instanceof ServerLevel serverLevel) {
-            touhouGame.setDebugMode(hasDebugFrame(serverLevel));
+            if (activePlayer != null && --debugCheckCooldown <= 0) {
+                debugCheckCooldown = DEBUG_CHECK_INTERVAL;
+                debugMode = hasDebugFrame(serverLevel);
+            }
+            touhouGame.setDebugMode(activePlayer != null && debugMode);
         }
 
         game.tick();
@@ -263,6 +270,7 @@ public class ArcadeBlockEntity extends BlockEntity {
 
     private void beginControl(UUID player) {
         activePlayer = player;
+        debugCheckCooldown = 0;
         snapshotCooldown = 0;
         if (game == null || game.getStage() != GameStage.DIED && game.getStage() != GameStage.WON) {
             scoreSettled = false;

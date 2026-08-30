@@ -220,6 +220,9 @@ public class ArcadeBlock extends Block implements EntityBlock {
         if (arcade.isController(player)) {
             return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
         }
+        if (hitResult.getDirection() != state.getValue(FACING)) {
+            return InteractionResult.PASS;
+        }
         if (!arcade.hasCartridge()) {
             showNoCartridge(level, player);
             return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
@@ -263,6 +266,9 @@ public class ArcadeBlock extends Block implements EntityBlock {
         }
         if (arcade.isController(player)) {
             return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
+        }
+        if (hitResult.getDirection() != state.getValue(FACING)) {
+            return InteractionResult.TRY_WITH_EMPTY_HAND;
         }
         if (stack.getItem() instanceof GameDiskItem && !arcade.hasCartridge()) {
             if (!level.isClientSide() && arcade.insertCartridge(stack)) {
