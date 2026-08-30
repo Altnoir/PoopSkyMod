@@ -16,7 +16,7 @@ public class CircleBurstScript implements BossScript {
             .bulletCount(UniformInt.of(25, 40))
             .maxBounces(UniformInt.of(1, 0))
             .attackInterval(UniformInt.of(4, 8))
-            .bulletSpeed(UniformFloat.of(2.0F, 3.0F))
+            .bulletSpeed(UniformFloat.of(2.2F, 3.0F))
             .movement(new LeftRightBossMovement(30.0F, 1.0F))
             .movementWave(2, true)
             .build();
