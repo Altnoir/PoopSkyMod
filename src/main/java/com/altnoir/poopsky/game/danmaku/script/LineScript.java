@@ -16,7 +16,7 @@ public class LineScript implements BossScript {
     private static final BossModifierTemplate TEMPLATE = BossModifierTemplate.builder()
             .bulletCount(UniformInt.of(1))
             .attackInterval(UniformInt.of(4, 6))
-            .bulletSpeed(UniformFloat.of(1.5F, 3.0F))
+            .bulletSpeed(UniformFloat.of(2.0F, 3.0F))
             .rotation(UniformInt.of(40))
             .angleStep(UniformInt.of(5))
             .movement(new OrbitBossMovement(40.0F, 1.0F))

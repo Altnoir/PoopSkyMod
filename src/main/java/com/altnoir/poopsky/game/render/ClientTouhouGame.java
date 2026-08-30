@@ -83,26 +83,28 @@ public class ClientTouhouGame extends ClientGame {
         int infoX = posX + GAME_OFFSET_X + TouhouGameState.PLAY_WIDTH + 7;
         int infoY = posY + 8;
 
-        graphics.drawString(font, Component.translatable("gui.gamingconsole.score"), infoX, infoY, 0xFFFFFF);
+        graphics.drawString(font, Component.translatable("gui.gamingconsole.score"), infoX, infoY, 0x555555, false);
         graphics.drawString(font, String.valueOf(state.getScore()), infoX, infoY + 10, 0xFFD700);
 
-        graphics.drawString(font, Component.translatable("gui.gamingconsole.touhou.wave"), infoX, infoY + 30, 0xFFFFFF);
+        graphics.drawString(font, Component.translatable("gui.gamingconsole.touhou.wave"), infoX, infoY + 30, 0x555555, false);
         graphics.drawString(font, String.valueOf(state.getWave() + 1), infoX, infoY + 40, 0x87CEEB);
 
         if (state.getBossSpawnTimer() > 0) {
-            graphics.drawString(font, Component.translatable("gui.gamingconsole.touhou.next_boss"), infoX, infoY + 60, 0xFFFFFF);
+            graphics.drawString(font, Component.translatable("gui.gamingconsole.touhou.next_boss"), infoX, infoY + 60, 0x555555, false);
         } else {
-            graphics.drawString(font, Component.translatable("gui.gamingconsole.touhou.boss_hp"), infoX, infoY + 60, 0xFFFFFF);
+            graphics.drawString(font, Component.translatable("gui.gamingconsole.touhou.boss_hp"), infoX, infoY + 60, 0x555555, false);
             int hp = Math.max(0, state.getBossHp());
             int maxHp = Math.max(1, state.getBossMaxHp());
             graphics.fill(infoX + 1, infoY + 71, infoX + 58, infoY + 77, 0xFF333333);
             graphics.fill(infoX, infoY + 70, infoX + (int) (57.0F * hp / maxHp), infoY + 76, 0xFFCC2222);
         }
+        Component keyName1 = PoKeyBoardInput.ARCADE_BUTTON1.getTranslatedKeyMessage();
+        Component keyName2 = PoKeyBoardInput.ARCADE_BUTTON2.getTranslatedKeyMessage();
 
-        Component shootHint = Component.translatable("gui.gamingconsole.touhou.shoot", PoKeyBoardInput.ARCADE_BUTTON1.getTranslatedKeyMessage());
-        Component slowHint = Component.translatable("gui.gamingconsole.touhou.slow", PoKeyBoardInput.ARCADE_BUTTON2.getTranslatedKeyMessage());
-        graphics.drawString(font, shootHint, infoX, infoY + 86, 0xFFFFFF);
-        graphics.drawString(font, slowHint, infoX, infoY + 96, 0xFFFFFF);
+        Component shootHint = Component.translatable("gui.gamingconsole.touhou.shoot", keyName1);
+        Component slowHint = Component.translatable("gui.gamingconsole.touhou.slow", keyName2);
+        graphics.drawString(font, shootHint, infoX, infoY + 86, 0x555555, false);
+        graphics.drawString(font, slowHint, infoX, infoY + 96, 0x555555, false);
 
         if (state.hasSpeedBoost()) {
             graphics.drawString(font, Component.translatable("gui.gamingconsole.touhou.speed_up"), infoX, infoY + 110, 0x55FF55);

@@ -14,7 +14,7 @@ public class QuadLineScript implements BossScript {
     private static final BossModifierTemplate TEMPLATE = BossModifierTemplate.builder()
             .bulletCount(UniformInt.of(1))
             .attackInterval(UniformInt.of(4, 8))
-            .bulletSpeed(UniformFloat.of(2.0F, 3.5F))
+            .bulletSpeed(UniformFloat.of(2.5F, 3.5F))
             .circularRotation()
             .angleStep(UniformInt.of(5))
             .movement(new RandomBossMovement(30.0F, 1.0F))

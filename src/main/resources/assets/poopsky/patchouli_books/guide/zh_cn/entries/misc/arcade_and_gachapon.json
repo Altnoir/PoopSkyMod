@@ -9,7 +9,7 @@
       "type": "patchouli:spotlight",
       "title": "娱乐内容",
       "item": "poopsky:token",
-      "text": "空中厕所里还有街机、游戏盘、扭蛋机和代币等娱乐内容。$(br2)它们和主线生存关系不大，但能提供额外的挑战与奖励。"
+      "text": "空中厕所里还有街机、游戏盘、扭蛋机和代币等娱乐内容。$(br2)它们能为空岛生存提供一些稀有资源。"
     },
     {
       "type": "patchouli:text",
