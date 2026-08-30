@@ -626,10 +626,6 @@ public class BlockStateGen extends LegacyBlockStateGenerator {
         trapdoorBlockWithRenderType(set.trapdoor(), blockTexture(set.trapdoor()), true, "cutout");
         blockWithItem(set.extraBlock());
         plantGenerator.accept(set.plant());
-        if (set.pottedPlant() != null) {
-            pottedPlantBlock(set.pottedPlant(), set.plant());
-        }
-
         simpleBlockItems(set.stairs(), set.slab(), set.pressurePlate(), set.fenceGate());
         ModelFile buttonInventory = models().withExistingParent(getBlockPath(set.button()) + "_inventory", mcLoc("block/button_inventory"))
                 .texture("texture", planks);

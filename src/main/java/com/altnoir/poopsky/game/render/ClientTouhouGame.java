@@ -16,22 +16,13 @@ import net.minecraft.world.phys.Vec2;
 public class ClientTouhouGame extends ClientGame {
     private static final int GAME_OFFSET_X = 8;
     private static final float TICK_NANOS = 50_000_000.0F;
-<<<<<<< HEAD
     private static final Identifier PLAYER_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_player.png");
     private static final Identifier PLAYER_BULLET_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_player_bullet.png");
     private static final Identifier SPEED_POWERUP_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_player_speed.png");
     private static final Identifier DOUBLE_POWERUP_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_player_double.png");
+    private static final Identifier DING_POWERUP_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_player_ding.png");
     private static final Identifier BOSS_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_boss.png");
     private static final Identifier BOSS_BULLET_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_boss_bullet.png");
-=======
-    private static final ResourceLocation PLAYER_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_player.png");
-    private static final ResourceLocation PLAYER_BULLET_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_player_bullet.png");
-    private static final ResourceLocation SPEED_POWERUP_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_player_speed.png");
-    private static final ResourceLocation DOUBLE_POWERUP_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_player_double.png");
-    private static final ResourceLocation DING_POWERUP_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_player_ding.png");
-    private static final ResourceLocation BOSS_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_boss.png");
-    private static final ResourceLocation BOSS_BULLET_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_boss_bullet.png");
->>>>>>> 498d65c1 (2.2.1-dev2)
 
     private final TouhouGameState state = new TouhouGameState();
     private final Sprite player = new Sprite(Vec2.ZERO, new Vec2(TouhouGameState.PLAYER_SIZE, TouhouGameState.PLAYER_SIZE), PLAYER_TEXTURE);
@@ -114,6 +105,8 @@ public class ClientTouhouGame extends ClientGame {
             graphics.fill(infoX, infoY + 70, infoX + (int) (57.0F * hp / maxHp), infoY + 76, 0xFFCC2222);
         }
 
+        Component keyName1 = PoKeyBoardInput.ARCADE_BUTTON1.getTranslatedKeyMessage();
+        Component keyName2 = PoKeyBoardInput.ARCADE_BUTTON2.getTranslatedKeyMessage();
         Component shootHint = Component.translatable("gui.gamingconsole.touhou.shoot", keyName1);
         Component slowHint = Component.translatable("gui.gamingconsole.touhou.slow", keyName2);
         graphics.text(font, shootHint, infoX, infoY + 86, 0xFF555555);
