@@ -66,7 +66,8 @@ public final class ItemTagGen {
                         PoItems.GAME_DISK_ROUNDWORM.get(),
                         PoItems.GAME_DISK_BLOCKTRIS.get(),
                         PoItems.GAME_DISK_TOUHOU.get(),
-                        PoItems.GAME_DISK_PONG.get()
+                        PoItems.GAME_DISK_PONG.get(),
+                        PoItems.GAME_DISK_RHYTHM.get()
                 );
         tag(PoTags.Items.FLUSH_TOILET_SAVE).addTag(PoTags.Items.POOPS).addTag(PoTags.Items.SHITS);
         copy(PoTags.Blocks.BREEDING_CHEST_ACCELERATOR, PoTags.Items.BREEDING_CHEST_ACCELERATOR);

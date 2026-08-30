@@ -2,6 +2,7 @@ package com.altnoir.poopsky.game.client.arcade;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.item.p.GameDiskItem;
+import com.altnoir.poopsky.game.Button;
 import com.altnoir.poopsky.game.client.ArcadeControlSession;
 import com.altnoir.poopsky.game.client.ClientGame;
 import com.altnoir.poopsky.game.client.ClientGameTypes;
@@ -73,6 +74,14 @@ public final class ArcadeWorldScreenRenderer {
         ScreenState state = getOrCreate(pos, disc);
         state.snapshot = snapshot;
         state.cartridgeClientGame.applySnapshot(snapshot);
+    }
+
+    /** 玩家按下街机按键（仅本地操作者）：转发给对应屏幕的客户端游戏做本地展示。 */
+    public static void onButtonPressed(BlockPos pos, Button button) {
+        ScreenState state = SCREENS.get(pos);
+        if (state != null && state.cartridgeClientGame != null) {
+            state.cartridgeClientGame.onButtonDown(button);
+        }
     }
 
     public static void onClientStop() {
@@ -182,6 +191,9 @@ public final class ArcadeWorldScreenRenderer {
         }
 
         private void close() {
+            if (cartridgeClientGame != null) {
+                cartridgeClientGame.onRemoved();
+            }
             if (bufferBuilder != null) {
                 bufferBuilder.close();
                 bufferBuilder = null;

@@ -3,6 +3,7 @@ package com.altnoir.poopsky.game;
 import com.altnoir.poopsky.content.item.p.GameDiskItem;
 import com.altnoir.poopsky.game.operation.ServerBlocktrisGame;
 import com.altnoir.poopsky.game.operation.ServerPongGame;
+import com.altnoir.poopsky.game.operation.ServerRhythmGame;
 import com.altnoir.poopsky.game.operation.ServerRoundwormGame;
 import com.altnoir.poopsky.game.operation.ServerTouhouGame;
 import com.altnoir.poopsky.init.PoItems;
@@ -38,12 +39,20 @@ public final class GameDefinitions {
             ServerTouhouGame::new,
             GameSyncMode.SNAPSHOT
     );
+    public static final GameDefinition RHYTHM = new GameDefinition(
+            "rhythm",
+            "RhythmGame",
+            PoItems.GAME_DISK_RHYTHM,
+            ServerRhythmGame::new,
+            GameSyncMode.SNAPSHOT
+    );
 
     public static final List<GameDefinition> ALL = List.of(
             ROUNDWORM,
             BLOCKTRIS,
             PONG,
-            TOUHOU
+            TOUHOU,
+            RHYTHM
     );
 
     private GameDefinitions() {

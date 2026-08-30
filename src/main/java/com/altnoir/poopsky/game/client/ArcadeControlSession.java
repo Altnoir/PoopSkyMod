@@ -2,6 +2,7 @@ package com.altnoir.poopsky.game.client;
 
 import com.altnoir.poopsky.content.block.entity.ArcadeBlockEntity;
 import com.altnoir.poopsky.game.Button;
+import com.altnoir.poopsky.game.client.arcade.ArcadeWorldScreenRenderer;
 import com.altnoir.poopsky.init.PoKeyBoardInput;
 import com.altnoir.poopsky.impl.network.ArcadeInputPacket;
 import com.altnoir.poopsky.impl.network.ArcadeResetPacket;
@@ -89,6 +90,8 @@ public final class ArcadeControlSession {
                 mc.options.keyChat.consumeClick();
                 mc.options.keyCommand.consumeClick();
             }
+            // 转发给本地屏幕的客户端游戏（纯客户端展示用，如节奏游戏的判定文字/动效）
+            ArcadeWorldScreenRenderer.onButtonPressed(machinePos, button);
         } else {
             HELD_BUTTONS.remove(button);
         }

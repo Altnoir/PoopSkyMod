@@ -1,6 +1,7 @@
 package com.altnoir.poopsky.game.client;
 
 import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.game.Button;
 import com.altnoir.poopsky.game.Game;
 import com.altnoir.poopsky.game.GameDefinition;
 import com.altnoir.poopsky.game.GameStage;
@@ -29,6 +30,14 @@ public class ClientGame extends Game {
 
     public void setArcadeMachine(BlockPos pos) {
         this.arcadeMachinePos = pos;
+    }
+
+    /** 街机屏幕关闭（退盘/登出）时回调，用于释放客户端资源（如停止游戏音乐）。 */
+    public void onRemoved() {
+    }
+
+    /** 玩家按下街机按键（仅本地操作者触发）。客户端游戏可据此做本地展示判定（如命中动效/文字）。 */
+    public void onButtonDown(Button button) {
     }
 
     public boolean isArcadeGame() {
