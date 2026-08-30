@@ -16,12 +16,22 @@ import net.minecraft.world.phys.Vec2;
 public class ClientTouhouGame extends ClientGame {
     private static final int GAME_OFFSET_X = 8;
     private static final float TICK_NANOS = 50_000_000.0F;
+<<<<<<< HEAD
     private static final Identifier PLAYER_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_player.png");
     private static final Identifier PLAYER_BULLET_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_player_bullet.png");
     private static final Identifier SPEED_POWERUP_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_player_speed.png");
     private static final Identifier DOUBLE_POWERUP_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_player_double.png");
     private static final Identifier BOSS_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_boss.png");
     private static final Identifier BOSS_BULLET_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_boss_bullet.png");
+=======
+    private static final ResourceLocation PLAYER_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_player.png");
+    private static final ResourceLocation PLAYER_BULLET_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_player_bullet.png");
+    private static final ResourceLocation SPEED_POWERUP_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_player_speed.png");
+    private static final ResourceLocation DOUBLE_POWERUP_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_player_double.png");
+    private static final ResourceLocation DING_POWERUP_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_player_ding.png");
+    private static final ResourceLocation BOSS_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_boss.png");
+    private static final ResourceLocation BOSS_BULLET_TEXTURE = PoopSky.loc("textures/games/sprite/touhou_boss_bullet.png");
+>>>>>>> 498d65c1 (2.2.1-dev2)
 
     private final TouhouGameState state = new TouhouGameState();
     private final Sprite player = new Sprite(Vec2.ZERO, new Vec2(TouhouGameState.PLAYER_SIZE, TouhouGameState.PLAYER_SIZE), PLAYER_TEXTURE);
@@ -30,6 +40,7 @@ public class ClientTouhouGame extends ClientGame {
     private final Sprite playerBullet = new Sprite(Vec2.ZERO, new Vec2(TouhouGameState.PLAYER_BULLET_SIZE, TouhouGameState.PLAYER_BULLET_SIZE), PLAYER_BULLET_TEXTURE);
     private final Sprite speedPowerUp = new Sprite(Vec2.ZERO, new Vec2(TouhouGameState.POWERUP_SIZE, TouhouGameState.POWERUP_SIZE), SPEED_POWERUP_TEXTURE);
     private final Sprite doublePowerUp = new Sprite(Vec2.ZERO, new Vec2(TouhouGameState.POWERUP_SIZE, TouhouGameState.POWERUP_SIZE), DOUBLE_POWERUP_TEXTURE);
+    private final Sprite dingPowerUp = new Sprite(Vec2.ZERO, new Vec2(TouhouGameState.POWERUP_SIZE, TouhouGameState.POWERUP_SIZE), DING_POWERUP_TEXTURE);
     private long snapshotNanos;
 
     @Override
@@ -55,7 +66,11 @@ public class ClientTouhouGame extends ClientGame {
         }
 
         for (TouhouGameState.PowerUp powerUp : state.getPowerUps()) {
-            Sprite powerUpSprite = powerUp.type() == TouhouGameState.PowerUpType.SPEED ? speedPowerUp : doublePowerUp;
+            Sprite powerUpSprite = switch (powerUp.type()) {
+                case SPEED -> speedPowerUp;
+                case DOUBLE -> doublePowerUp;
+                case DING -> dingPowerUp;
+            };
             powerUpSprite.setPos(GAME_OFFSET_X + powerUp.x() + powerUp.vx() * tickDelta,
                     powerUp.y() + powerUp.vy() * tickDelta);
             powerUpSprite.render(graphics, posX, posY);
@@ -104,7 +119,9 @@ public class ClientTouhouGame extends ClientGame {
         graphics.text(font, shootHint, infoX, infoY + 86, 0xFF555555);
         graphics.text(font, slowHint, infoX, infoY + 96, 0xFF555555);
 
-        if (state.hasSpeedBoost()) {
+        if (state.hasDing()) {
+            graphics.text(font, Component.translatable("gui.gamingconsole.touhou.ding"), infoX, infoY + 110, 0xFFFFAA00);
+        } else if (state.hasSpeedBoost()) {
             graphics.text(font, Component.translatable("gui.gamingconsole.touhou.speed_up"), infoX, infoY + 110, 0xFF55FF55);
         }
         if (state.hasDoubleShot()) {

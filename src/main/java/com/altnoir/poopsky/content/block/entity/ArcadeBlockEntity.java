@@ -6,11 +6,13 @@ import com.altnoir.poopsky.data.ArcadeLootGen;
 import com.altnoir.poopsky.game.Button;
 import com.altnoir.poopsky.game.GameStage;
 import com.altnoir.poopsky.game.ServerGame;
+import com.altnoir.poopsky.game.operation.ServerTouhouGame;
 import com.altnoir.poopsky.impl.network.ArcadeGameSnapshotPacket;
 import com.altnoir.poopsky.impl.util.DispenseUtil;
 import com.altnoir.poopsky.init.PoBlockEntityType;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.altnoir.poopsky.init.PoItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -23,6 +25,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.decoration.GlowItemFrame;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -35,6 +38,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -199,6 +203,10 @@ public class ArcadeBlockEntity extends BlockEntity {
             return;
         }
 
+        if (game instanceof ServerTouhouGame touhouGame && level instanceof ServerLevel serverLevel) {
+            touhouGame.setDebugMode(hasDebugFrame(serverLevel));
+        }
+
         game.tick();
         if (!scoreSettled && (game.getStage() == GameStage.DIED || game.getStage() == GameStage.WON)) {
             settleActiveGame();
@@ -208,6 +216,18 @@ public class ArcadeBlockEntity extends BlockEntity {
             snapshotCooldown = 1;
             sendGameSnapshot();
         }
+    }
+
+    private boolean hasDebugFrame(ServerLevel serverLevel) {
+        Direction back = getBlockState().getValue(ArcadeBlock.FACING).getOpposite();
+        BlockPos framePos = getBlockPos().relative(back);
+        return !serverLevel.getEntitiesOfClass(
+                GlowItemFrame.class,
+                new AABB(framePos),
+                frame -> frame.getPos().equals(framePos)
+                        && frame.getDirection() == back
+                        && frame.getItem().is(PoItems.TIME_BELL.get())
+        ).isEmpty();
     }
 
     private void refreshSession() {
