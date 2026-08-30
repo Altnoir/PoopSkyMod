@@ -360,6 +360,7 @@ public final class LangGen {
         provider.add("gui.gamingconsole.touhou.boss_hp", "Boss HP");
         provider.add("gui.gamingconsole.touhou.speed_up", "Speed Up");
         provider.add("gui.gamingconsole.touhou.double_shot", "Double Shot");
+        provider.add("gui.gamingconsole.touhou.ding", "Extreme Speed");
 
         provider.add("text.poopsky.arcade.total_reward", "Total Score[%s]");
 
