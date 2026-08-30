@@ -252,6 +252,9 @@ public final class LangGen {
         addSubtitle("fly.ambient", "Fly buzzes");
         addSubtitle("fly.hurt", "Fly hurts");
         addSubtitle("fly.death", "Fly dies");
+        addSubtitle("basilisk.ambient", "Basilisk croaks");
+        addSubtitle("basilisk.hurt", "Basilisk hurts");
+        addSubtitle("basilisk.death", "Basilisk dies");
         addSubtitle("fly.capture", "Fly captured");
         addSubtitle("pop.primed", "POP fizzes");
         addSubtitle("item.toilet_linker.boop", "Toilet Plug Wand links");
@@ -328,6 +331,7 @@ public final class LangGen {
         provider.add("effect.poopsky.bleeding", "Bleeding");
         provider.add("effect.poopsky.moment_of_ptyme", "Moment of Ptyme");
         provider.add("effect.poopsky.infestation", "Infestation");
+        provider.add("effect.poopsky.death_blight", "Death Blight");
 
         // Blocks
         provider.add("block.poopsky.urine", "Urine");

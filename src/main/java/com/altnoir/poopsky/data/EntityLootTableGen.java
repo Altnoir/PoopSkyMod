@@ -95,6 +95,7 @@ public final class EntityLootTableGen {
                                         )
                         )
         );
+        loot.add(PoEntityType.BASILISK.get(), LootTable.lootTable());
     }
 
     private static AnyOfCondition.Builder shouldSmeltLoot(HolderLookup.Provider registries) {

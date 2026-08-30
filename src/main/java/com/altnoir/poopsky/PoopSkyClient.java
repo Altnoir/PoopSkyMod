@@ -6,6 +6,7 @@ import com.altnoir.poopsky.client.PoBedrockModelResources;
 import com.altnoir.poopsky.client.ToiletClientBlockExtensions;
 import com.altnoir.poopsky.client.creative.PoSectionedCreativeTabRenderer;
 import com.altnoir.poopsky.client.model.BakedModelEventHandler;
+import com.altnoir.poopsky.client.particle.DeathBlightParticle;
 import com.altnoir.poopsky.client.particle.LeavesParticle;
 import com.altnoir.poopsky.client.particle.PoopParticle;
 import com.altnoir.poopsky.client.particle.ToiletParticle;
@@ -28,6 +29,7 @@ import com.altnoir.poopsky.impl.network.PlugDismountPayload;
 import com.altnoir.poopsky.init.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.RecipeBookCategories;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
 import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;
 import net.minecraft.client.model.BoatModel;
@@ -58,6 +60,7 @@ import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.player.PlayerHeartTypeEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 
@@ -75,7 +78,7 @@ public class PoopSkyClient {
     public static void registerMod(IEventBus modEventBus) {
         BakedModelEventHandler.register(modEventBus);
         modEventBus.addListener(PoKeyBoardInput::registerKeyMappings);
-        modEventBus.addListener(PoBedrockModelResources::onRegisterBedrockModels);
+        modEventBus.addListener(PoBedrockModelResources::onRegisterV2BedrockResources);
         modEventBus.addListener(ClientModEvents::modLoad);
         modEventBus.addListener(ClientModEvents::registerLayers);
         modEventBus.addListener(ClientModEvents::registerFluidRenderTypes);
@@ -95,6 +98,7 @@ public class PoopSkyClient {
         modEventBus.addListener(ClientGameEvents::onClientTick);
         modEventBus.addListener(ArcadeControlSession::onKeyInput);
         modEventBus.addListener(ClientGameEvents::onComputeFov);
+        modEventBus.addListener(ClientGameEvents::onPlayerHeartType);
         modEventBus.addListener(ArcadeWorldScreenRenderer::onRenderFrame);
         modEventBus.addListener(ArcadeWorldScreenRenderer::onLoggingOut);
         modEventBus.addListener(PoSectionedCreativeTabRenderer::onRenderForeground);
@@ -167,6 +171,7 @@ public class PoopSkyClient {
         public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
             event.registerSpriteSet(PoParticles.POOP_PARTICLE.get(), PoopParticle.Provider::new);
             event.registerSpriteSet(PoParticles.TOILET_PARTICLE.get(), ToiletParticle.Provider::new);
+            event.registerSpriteSet(PoParticles.DEATH_BLIGHT.get(), DeathBlightParticle.Provider::new);
             event.registerSpriteSet(PoParticles.LEAVES_PARTICLE.get(), LeavesParticle.provider());
         }
 
@@ -259,6 +264,12 @@ public class PoopSkyClient {
             double multiplier = TimeBellOverlay.getFovMultiplier() * ArcadeControlSession.getFovMultiplier();
             if (multiplier != 1.0) {
                 event.setFOV(Math.min(event.getFOV() * multiplier, TimeBellOverlay.MAX_FOV));
+            }
+        }
+
+        public static void onPlayerHeartType(PlayerHeartTypeEvent event) {
+            if (event.getEntity().hasEffect(PoEffects.DEATH_BLIGHT)) {
+                event.setType(Gui.HeartType.WITHERED);
             }
         }
 

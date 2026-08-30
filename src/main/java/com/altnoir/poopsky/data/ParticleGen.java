@@ -5,6 +5,7 @@ import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.init.PoParticles;
 import com.tterrag.registrate.providers.ProviderType;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.common.data.ParticleDescriptionProvider;
 
@@ -25,6 +26,12 @@ public final class ParticleGen extends ParticleDescriptionProvider {
     protected void addDescriptions() {
         spriteSet(PoParticles.POOP_PARTICLE.get(), PoopSky.loc("poop_particle"));
         spriteSet(PoParticles.TOILET_PARTICLE.get(), PoopSky.loc("poop_particle"));
+        spriteSet(
+                PoParticles.DEATH_BLIGHT.get(),
+                ResourceLocation.withDefaultNamespace("generic_5"),
+                ResourceLocation.withDefaultNamespace("generic_6"),
+                ResourceLocation.withDefaultNamespace("generic_7")
+        );
         spriteSet(PoParticles.LEAVES_PARTICLE.get(), PoopSky.loc("leaves"), 12, false);
     }
 }

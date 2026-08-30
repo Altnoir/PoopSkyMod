@@ -100,6 +100,7 @@
 
   "item.poopsky.poolime_spawn_egg": "Kackschleim-Spawn-Ei",
   "item.poopsky.fly_spawn_egg": "Fliegen-Spawn-Ei",
+  "item.poopsky.basilisk_spawn_egg": "Basilisken-Spawn-Ei",
   "item.poopsky.music_disc_lawrence": "Schallplatte",
   "item.poopsky.music_disc_lawrence.desc": "Ryuichi Sakamoto - Merry Christmas Mr. Lawrence",
   "item.poopsky.music_disc_light_dance": "Schallplatte",
@@ -159,6 +160,7 @@
   "effect.poopsky.bleeding": "Blutung",
   "effect.poopsky.moment_of_ptyme": "Moment der Kacke",
   "effect.poopsky.infestation": "Befall",
+  "effect.poopsky.death_blight": "Todespest",
 
   "block.poopsky.shit": "Kackhaufen",
   "block.poopsky.chili_shit": "Scharfer Kackhaufen",
@@ -542,6 +544,7 @@
   "entity.poopsky.stool_entity": "Kackhocker",
   "entity.poopsky.poolime": "Kackschleim",
   "entity.poopsky.fly": "Fliege",
+  "entity.poopsky.basilisk": "Basilisk",
   "entity.poopsky.poop_tnt": "POP",
   "entity.poopsky.pop_tnt_minecart": "Lore mit POP",
   "entity.poopsky.ginkgo_boat": "Ginkgoholzboot",
@@ -668,6 +671,9 @@
   "subtitle.poopsky.fly.ambient": "Fliege summt",
   "subtitle.poopsky.fly.hurt": "Fliege wird verletzt",
   "subtitle.poopsky.fly.death": "Fliege stirbt",
+  "subtitle.poopsky.basilisk.ambient": "Basilisk quakt",
+  "subtitle.poopsky.basilisk.hurt": "Basilisk nimmt Schaden",
+  "subtitle.poopsky.basilisk.death": "Basilisk stirbt",
   "subtitle.poopsky.fly.capture": "Fliege gefangen",
   "subtitle.poopsky.pop.primed": "POP zischt",
   "subtitle.poopsky.item.toilet_linker.boop": "Toilettenverbinder: Verbindung",

@@ -4,8 +4,9 @@ import com.altnoir.poopsky.client.PoBedrockModelResources;
 import com.altnoir.poopsky.content.entity.renderer.GachaponRenderer;
 import com.altnoir.poopsky.content.item.p.GachaponItem;
 import com.altnoir.poopsky.init.PoComponents;
-import com.github.mcmodderanchor.simplebedrockmodel.v1.common.model.BedrockModel;
-import com.github.mcmodderanchor.simplebedrockmodel.v1.resource.BedrockModelResourceSet;
+import com.github.mcmodderanchor.simplebedrockmodel.v2.common.model.baked.BakedBedrockModel;
+import com.github.mcmodderanchor.simplebedrockmodel.v2.common.model.runtime.BakedModelInstance;
+import com.github.mcmodderanchor.simplebedrockmodel.v2.resource.BedrockModelResources;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -18,6 +19,9 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public class GachaponItemRenderer extends BlockEntityWithoutLevelRenderer {
+    private BakedBedrockModel model;
+    private BakedModelInstance instance;
+
     public GachaponItemRenderer() {
         super(null, null);
     }
@@ -28,21 +32,29 @@ public class GachaponItemRenderer extends BlockEntityWithoutLevelRenderer {
             return;
         }
 
-        BedrockModelResourceSet resourceSet = BedrockModelResourceSet.getInstance();
-        if (resourceSet == null) {
+        this.refreshResources();
+        if (this.instance == null) {
             return;
         }
 
-        BedrockModel model = resourceSet.getModel(PoBedrockModelResources.GACHAPON);
-        if (model == null) {
-            return;
-        }
-
+        this.instance.resetPose();
         poseStack.pushPose();
         poseStack.translate(0.5F, 0.5F, 0.5F);
         VertexConsumer consumer = bufferSource.getBuffer(RenderType.entityCutout(getTexture(stack)));
-        model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY);
+        this.instance.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY);
         poseStack.popPose();
+    }
+
+    private void refreshResources() {
+        BedrockModelResources resources = BedrockModelResources.getInstance();
+        if (resources == null) {
+            return;
+        }
+        BakedBedrockModel loadedModel = resources.getBakedModel(PoBedrockModelResources.GACHAPON);
+        if (loadedModel != this.model) {
+            this.model = loadedModel;
+            this.instance = loadedModel == null ? null : loadedModel.createInstance();
+        }
     }
 
     private static ResourceLocation getTexture(ItemStack stack) {

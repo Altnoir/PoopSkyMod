@@ -59,6 +59,10 @@ public class PoEffects {
             "infestation",
             () -> new InfestationEffect(MobEffectCategory.HARMFUL, 0xF7DFBA)
     );
+    public static final RegistryEntry<MobEffect, MobEffect> DEATH_BLIGHT = registerMobEffect(
+            "death_blight",
+            DeathBlightEffect::new
+    );
 
     private static RegistryEntry<MobEffect, MobEffect> registerMobEffect(String name, NonNullSupplier<MobEffect> effect) {
         return REGISTRATE.simple(name, Registries.MOB_EFFECT, effect);

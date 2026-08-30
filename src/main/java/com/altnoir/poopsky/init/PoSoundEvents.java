@@ -60,6 +60,10 @@ public class PoSoundEvents {
     public static final RegistryEntry<SoundEvent, SoundEvent> ENTITY_FLY_HURT = registerSoundEvent("entity.fly.hurt");
     public static final RegistryEntry<SoundEvent, SoundEvent> ENTITY_FLY_DEATH = registerSoundEvent("entity.fly.death");
     public static final RegistryEntry<SoundEvent, SoundEvent> ENTITY_FLY_CAPTURE = registerSoundEvent("entity.fly.capture");
+    public static final RegistryEntry<SoundEvent, SoundEvent> ENTITY_BASILISK_AMBIENT = registerSoundEvent("entity.basilisk.ambient");
+    public static final RegistryEntry<SoundEvent, SoundEvent> ENTITY_BASILISK_HURT = registerSoundEvent("entity.basilisk.hurt");
+    public static final RegistryEntry<SoundEvent, SoundEvent> ENTITY_BASILISK_DEATH = registerSoundEvent("entity.basilisk.death");
+    public static final RegistryEntry<SoundEvent, SoundEvent> ENTITY_BASILISK_STEP = registerSoundEvent("entity.basilisk.step");
 
     public static final RegistryEntry<SoundEvent, SoundEvent> ITEM_TOILET_LINKER_BOOP = registerSoundEvent("item.toilet_linker.boop");
     public static final RegistryEntry<SoundEvent, SoundEvent> ITEM_TOILET_LINKER_SUCCESS = registerSoundEvent("item.toilet_linker.success");

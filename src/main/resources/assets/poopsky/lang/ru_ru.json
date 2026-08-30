@@ -100,6 +100,7 @@
 
   "item.poopsky.poolime_spawn_egg": "Яйцо призыва Какаслизня",
   "item.poopsky.fly_spawn_egg": "Яйцо призыва мухи",
+  "item.poopsky.basilisk_spawn_egg": "Яйцо призыва василиска",
   "item.poopsky.music_disc_lawrence": "Музыкальный диск",
   "item.poopsky.music_disc_lawrence.desc": "Рюичи Сакамото - Merry Christmas Mr. Lawrence",
   "item.poopsky.music_disc_light_dance": "Музыкальный диск",
@@ -159,6 +160,7 @@
   "effect.poopsky.bleeding": "Кровотечение",
   "effect.poopsky.moment_of_ptyme": "Момент кала",
   "effect.poopsky.infestation": "Заражение",
+  "effect.poopsky.death_blight": "Скверна смерти",
 
   "block.poopsky.shit": "Куча кала",
   "block.poopsky.chili_shit": "Острая куча кала",
@@ -542,6 +544,7 @@
   "entity.poopsky.stool_entity": "Какашечный табурет",
   "entity.poopsky.poolime": "Какаслизень",
   "entity.poopsky.fly": "Муха",
+  "entity.poopsky.basilisk": "Василиск",
   "entity.poopsky.poop_tnt": "POP",
   "entity.poopsky.pop_tnt_minecart": "Вагонетка с POP",
   "entity.poopsky.ginkgo_boat": "Лодка из гинкго",
@@ -668,6 +671,9 @@
   "subtitle.poopsky.fly.ambient": "Муха жужжит",
   "subtitle.poopsky.fly.hurt": "Муха ранена",
   "subtitle.poopsky.fly.death": "Муха умирает",
+  "subtitle.poopsky.basilisk.ambient": "Василиск квакает",
+  "subtitle.poopsky.basilisk.hurt": "Василиск ранен",
+  "subtitle.poopsky.basilisk.death": "Василиск погибает",
   "subtitle.poopsky.fly.capture": "Муха поймана",
   "subtitle.poopsky.pop.primed": "POP шипит",
   "subtitle.poopsky.item.toilet_linker.boop": "Соединитель унитазов: связь",

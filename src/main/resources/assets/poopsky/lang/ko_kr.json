@@ -100,6 +100,7 @@
 
   "item.poopsky.poolime_spawn_egg": "똥 슬라임 생성 알",
   "item.poopsky.fly_spawn_egg": "파리 생성 알",
+  "item.poopsky.basilisk_spawn_egg": "바실리스크 생성 알",
   "item.poopsky.music_disc_lawrence": "음반",
   "item.poopsky.music_disc_lawrence.desc": "사카모토 류이치 - Merry Christmas Mr. Lawrence",
   "item.poopsky.music_disc_light_dance": "음반",
@@ -159,6 +160,7 @@
   "effect.poopsky.bleeding": "출혈",
   "effect.poopsky.moment_of_ptyme": "똥의 순간",
   "effect.poopsky.infestation": "감염",
+  "effect.poopsky.death_blight": "죽음",
 
   "block.poopsky.shit": "대변",
   "block.poopsky.chili_shit": "매운 대변",
@@ -542,6 +544,7 @@
   "entity.poopsky.stool_entity": "똥 의자",
   "entity.poopsky.poolime": "똥 슬라임",
   "entity.poopsky.fly": "파리",
+  "entity.poopsky.basilisk": "바실리스크",
   "entity.poopsky.poop_tnt": "POP",
   "entity.poopsky.pop_tnt_minecart": "POP 광산 수레",
   "entity.poopsky.ginkgo_boat": "은행나무 보트",
@@ -668,6 +671,9 @@
   "subtitle.poopsky.fly.ambient": "파리: 윙윙",
   "subtitle.poopsky.fly.hurt": "파리: 피해",
   "subtitle.poopsky.fly.death": "파리: 사망",
+  "subtitle.poopsky.basilisk.ambient": "바실리스크가 개굴개굴 욺",
+  "subtitle.poopsky.basilisk.hurt": "바실리스크가 상처를 입음",
+  "subtitle.poopsky.basilisk.death": "바실리스크가 죽음",
   "subtitle.poopsky.fly.capture": "파리 잡힘",
   "subtitle.poopsky.pop.primed": "POP: 치익",
   "subtitle.poopsky.item.toilet_linker.boop": "변기 연결기: 연결",

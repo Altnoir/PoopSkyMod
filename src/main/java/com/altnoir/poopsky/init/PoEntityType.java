@@ -44,6 +44,16 @@ public class PoEntityType {
             .setData(ProviderType.LANG, NonNullBiConsumer.noop())
             .register();
 
+    public static final EntityEntry<BasiliskEntity> BASILISK = REGISTRATE
+            .entity("basilisk", BasiliskEntity::new, MobCategory.MONSTER)
+            .properties(properties -> properties
+                    .sized(0.9F, 0.7F)
+                    .eyeHeight(0.5F)
+                    .clientTrackingRange(8))
+            .renderer(() -> BasiliskRenderer::new)
+            .lang("Basilisk")
+            .register();
+
     public static final EntityEntry<ChairEntity> STOOL = REGISTRATE
             .entity("stool_entity", ChairEntity::new, MobCategory.MISC)
             .properties(properties -> properties

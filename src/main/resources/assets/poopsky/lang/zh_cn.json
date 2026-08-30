@@ -100,6 +100,7 @@
 
   "item.poopsky.poolime_spawn_egg": "屎莱姆刷怪蛋",
   "item.poopsky.fly_spawn_egg": "苍蝇刷怪蛋",
+  "item.poopsky.basilisk_spawn_egg": "咒蛙刷怪蛋",
   "item.poopsky.music_disc_lawrence": "音乐唱片",
   "item.poopsky.music_disc_lawrence.desc": "坂本龍一 - Merry Christmas Mr. Lawrence",
   "item.poopsky.music_disc_light_dance": "音乐唱片",
@@ -159,6 +160,7 @@
   "effect.poopsky.bleeding": "出血",
   "effect.poopsky.moment_of_ptyme": "屎之刻",
   "effect.poopsky.infestation": "感染",
+  "effect.poopsky.death_blight": "咒死",
 
   "block.poopsky.shit": "大便",
   "block.poopsky.chili_shit": "辣味大便",
@@ -542,6 +544,7 @@
   "entity.poopsky.stool_entity": "粪便凳",
   "entity.poopsky.poolime": "屎莱姆",
   "entity.poopsky.fly": "苍蝇",
+  "entity.poopsky.basilisk": "咒蛙",
   "entity.poopsky.poop_tnt": "POP",
   "entity.poopsky.pop_tnt_minecart": "POP矿车",
   "entity.poopsky.ginkgo_boat": "银杏木船",
@@ -668,6 +671,9 @@
   "subtitle.poopsky.fly.ambient": "苍蝇：嗡嗡",
   "subtitle.poopsky.fly.hurt": "苍蝇：受伤",
   "subtitle.poopsky.fly.death": "苍蝇：死亡",
+  "subtitle.poopsky.basilisk.ambient": "咒蛙：咕呱",
+  "subtitle.poopsky.basilisk.hurt": "咒蛙：受伤",
+  "subtitle.poopsky.basilisk.death": "咒蛙：死亡",
   "subtitle.poopsky.fly.capture": "苍蝇：捕获",
   "subtitle.poopsky.pop.primed": "POP：嘶嘶作响",
   "subtitle.poopsky.item.toilet_linker.boop": "马桶制杖：连接",

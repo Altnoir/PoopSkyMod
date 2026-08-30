@@ -198,6 +198,8 @@ public class PoItems {
             prop -> new DeferredSpawnEggItem(PoEntityType.POOLIME, 0x7D5F36, 0x5E4228, prop));
     public static final ItemEntry<DeferredSpawnEggItem> FLY_SPAWN_EGG = registerItemNoModel("fly_spawn_egg",
             prop -> new DeferredSpawnEggItem(PoEntityType.FLY, 0x3B4346, 0x900D2D, prop));
+    public static final ItemEntry<DeferredSpawnEggItem> BASILISK_SPAWN_EGG = registerItemNoModel("basilisk_spawn_egg",
+            prop -> new DeferredSpawnEggItem(PoEntityType.BASILISK, 0x000000, 0x2B2B2B, prop));
 
     public static final ItemEntry<FlyItem> FLY = registerItemNoModel("fly",
             props -> new FlyItem(props.stacksTo(88)));
