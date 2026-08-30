@@ -14,6 +14,7 @@ public class PoSoundEvents {
 
     public static final RegistryEntry<SoundEvent, SoundEvent> FART = registerSoundEvent("fart");
     public static final RegistryEntry<SoundEvent, SoundEvent> POOPSKY_INTRO = registerSoundEvent("poopsky_intro");
+
     public static final RegistryEntry<SoundEvent, SoundEvent> THEME = registerSoundEvent("theme");
     public static final ResourceKey<JukeboxSong> THEME_KEY = registerJukeboxSong("theme");
     public static final RegistryEntry<SoundEvent, SoundEvent> LAWRENCE = registerSoundEvent("lawrence");

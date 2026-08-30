@@ -425,7 +425,7 @@
   "lawrence": {
     "sounds": [
       {
-        "name": "poopsky:merry_christmas_mr_lawrence",
+        "name": "poopsky:disc/merry_christmas_mr_lawrence",
         "stream": true
       }
     ]
@@ -433,7 +433,7 @@
   "light_dance": {
     "sounds": [
       {
-        "name": "poopsky:light_dance",
+        "name": "poopsky:disc/light_dance",
         "stream": true
       }
     ]
@@ -441,7 +441,7 @@
   "moon_bowl": {
     "sounds": [
       {
-        "name": "poopsky:moon_bowl",
+        "name": "poopsky:disc/moon_bowl",
         "stream": true
       }
     ]
@@ -454,7 +454,7 @@
   "theme": {
     "sounds": [
       {
-        "name": "poopsky:theme",
+        "name": "poopsky:disc/theme",
         "stream": true
       }
     ]

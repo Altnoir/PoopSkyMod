@@ -191,11 +191,11 @@ public class ArcadeBlock extends Block implements EntityBlock {
                 if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
                     arcade.giveReward(serverPlayer);
                 }
-                return InteractionResult.sidedSuccess(level.isClientSide);
+                return interactionSuccess(level);
             }
             if (!arcade.hasCartridge()) {
                 showNoCartridge(level, player);
-                return InteractionResult.sidedSuccess(level.isClientSide);
+                return interactionSuccess(level);
             }
             return InteractionResult.PASS;
         }
@@ -206,21 +206,21 @@ public class ArcadeBlock extends Block implements EntityBlock {
             } else {
                 showNoCartridge(level, player);
             }
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return interactionSuccess(level);
         }
 
-        if (handleControlExit(level, player, arcade)) {
-            return InteractionResult.sidedSuccess(level.isClientSide);
+        if (handleControlExit(level, player, arcade) || arcade.isController(player)) {
+            return interactionSuccess(level);
         }
-        if (arcade.isController(player)) {
-            return InteractionResult.sidedSuccess(level.isClientSide);
+        if (hitResult.getDirection() != state.getValue(FACING)) {
+            return InteractionResult.PASS;
         }
         if (!arcade.hasCartridge()) {
             showNoCartridge(level, player);
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return interactionSuccess(level);
         }
         startArcadeControl(level, player, arcade);
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return interactionSuccess(level);
     }
 
     @Override
@@ -235,11 +235,11 @@ public class ArcadeBlock extends Block implements EntityBlock {
                 if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
                     arcade.giveReward(serverPlayer);
                 }
-                return ItemInteractionResult.sidedSuccess(level.isClientSide);
+                return itemInteractionSuccess(level);
             }
             if (!arcade.hasCartridge()) {
                 showNoCartridge(level, player);
-                return ItemInteractionResult.sidedSuccess(level.isClientSide);
+                return itemInteractionSuccess(level);
             }
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
@@ -250,27 +250,35 @@ public class ArcadeBlock extends Block implements EntityBlock {
             } else {
                 showNoCartridge(level, player);
             }
-            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+            return itemInteractionSuccess(level);
         }
 
-        if (handleControlExit(level, player, arcade)) {
-            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        if (handleControlExit(level, player, arcade) || arcade.isController(player)) {
+            return itemInteractionSuccess(level);
         }
-        if (arcade.isController(player)) {
-            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        if (hitResult.getDirection() != state.getValue(FACING)) {
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
         if (stack.getItem() instanceof GameDiskItem && !arcade.hasCartridge()) {
             if (!level.isClientSide && arcade.insertCartridge(stack)) {
                 stack.shrink(1);
                 level.playSound(null, arcade.getBlockPos(), SoundEvents.NOTE_BLOCK_BIT.value(), SoundSource.BLOCKS, 1.0F, 1.4F);
             }
-            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+            return itemInteractionSuccess(level);
         }
         if (!arcade.hasCartridge()) {
             showNoCartridge(level, player);
-            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+            return itemInteractionSuccess(level);
         }
         startArcadeControl(level, player, arcade);
+        return itemInteractionSuccess(level);
+    }
+
+    private static InteractionResult interactionSuccess(Level level) {
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    private static ItemInteractionResult itemInteractionSuccess(Level level) {
         return ItemInteractionResult.sidedSuccess(level.isClientSide);
     }
 

@@ -258,16 +258,16 @@ public class SoundGen extends SoundDefinitionsProvider {
                 .with(sound(PoopSky.loc("poopsky_intro"))));
 
         add(PoSoundEvents.THEME, definition()
-                .with(sound(PoopSky.loc("theme")).stream()));
+                .with(sound(PoopSky.loc("disc/theme")).stream()));
 
         add(PoSoundEvents.LAWRENCE, definition()
-                .with(sound(PoopSky.loc("merry_christmas_mr_lawrence")).stream()));
+                .with(sound(PoopSky.loc("disc/merry_christmas_mr_lawrence")).stream()));
 
         add(PoSoundEvents.LIGHT_DANCE, definition()
-                .with(sound(PoopSky.loc("light_dance")).stream()));
+                .with(sound(PoopSky.loc("disc/light_dance")).stream()));
 
         add(PoSoundEvents.MOON_BOWL, definition()
-                .with(sound(PoopSky.loc("moon_bowl")).stream()));
+                .with(sound(PoopSky.loc("disc/moon_bowl")).stream()));
 
 
         add(PoSoundEvents.POINT, definition()
