@@ -56,6 +56,9 @@ public class ItemModelGen extends RegistrateItemModelProvider {
         withExistingParent(name(PoItems.POOLIME_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
         withExistingParent(name(PoItems.FLY_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
         withExistingParent(name(PoItems.BASILISK_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
+        withExistingParent(name(PoItems.EXPLOSIVE_CHICKEN_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
+        withExistingParent(name(PoItems.EXPLOSIVE_CHICKEN_EGG), mcLoc("item/generated"))
+                .texture("layer0", mcLoc("item/egg"));
         generated(PoItems.URINE_BUCKET);
     }
 

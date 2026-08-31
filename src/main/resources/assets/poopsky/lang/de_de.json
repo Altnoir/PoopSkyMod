@@ -19,6 +19,7 @@
   "block.poopsky.urine_liquid": "Jauche",
   "item.poopsky.urea": "Harnstoff",
   "item.poopsky.gachapon": "Kapselspielzeug",
+  "item.poopsky.explosive_chicken_egg": "Explosionshühnerei",
   "item.poopsky.token": "Münze",
 
   "item.poopsky.omen_helmet": "Omen-Helm",
@@ -101,6 +102,7 @@
   "item.poopsky.poolime_spawn_egg": "Kackschleim-Spawn-Ei",
   "item.poopsky.fly_spawn_egg": "Fliegen-Spawn-Ei",
   "item.poopsky.basilisk_spawn_egg": "Basilisken-Spawn-Ei",
+  "item.poopsky.explosive_chicken_spawn_egg": "Explosionshuhn-Spawn-Ei",
   "item.poopsky.music_disc_lawrence": "Schallplatte",
   "item.poopsky.music_disc_lawrence.desc": "Ryuichi Sakamoto - Merry Christmas Mr. Lawrence",
   "item.poopsky.music_disc_light_dance": "Schallplatte",
@@ -546,6 +548,7 @@
   "entity.poopsky.poolime": "Kackschleim",
   "entity.poopsky.fly": "Fliege",
   "entity.poopsky.basilisk": "Basilisk",
+  "entity.poopsky.explosive_chicken": "Explosionshuhn",
   "entity.poopsky.poop_tnt": "POP",
   "entity.poopsky.pop_tnt_minecart": "Lore mit POP",
   "entity.poopsky.ginkgo_boat": "Ginkgoholzboot",

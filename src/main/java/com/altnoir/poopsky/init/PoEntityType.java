@@ -7,6 +7,7 @@ import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.EntityEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
+import net.minecraft.client.renderer.entity.ChickenRenderer;
 import net.minecraft.client.renderer.entity.TntMinecartRenderer;
 import net.minecraft.world.entity.MobCategory;
 
@@ -52,6 +53,16 @@ public class PoEntityType {
                     .clientTrackingRange(8))
             .renderer(() -> BasiliskRenderer::new)
             .lang("Basilisk")
+            .register();
+
+    public static final EntityEntry<ExplosiveChickenEntity> EXPLOSIVE_CHICKEN = REGISTRATE
+            .entity("explosive_chicken", ExplosiveChickenEntity::new, MobCategory.CREATURE)
+            .properties(properties -> properties
+                    .sized(0.4F, 0.7F)
+                    .eyeHeight(0.644F)
+                    .clientTrackingRange(10))
+            .renderer(() -> ChickenRenderer::new)
+            .lang("Explosive Chicken")
             .register();
 
     public static final EntityEntry<ChairEntity> STOOL = REGISTRATE

@@ -219,6 +219,7 @@ public final class ItemTagGen {
         tag(PoTags.Items.EGG)
                 .add(
                         Items.EGG,
+                        PoItems.EXPLOSIVE_CHICKEN_EGG.get(),
                         Items.TURTLE_EGG,
                         Items.SNIFFER_EGG
                 );

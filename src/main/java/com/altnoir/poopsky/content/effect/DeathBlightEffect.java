@@ -11,7 +11,8 @@ public class DeathBlightEffect extends MobEffect {
 
     @Override
     public boolean applyEffectTick(LivingEntity livingEntity, int amplifier) {
-        return livingEntity.hurt(livingEntity.damageSources().wither(), 2.0F + amplifier);
+        livingEntity.hurt(livingEntity.damageSources().wither(), 2.0F + amplifier);
+        return true;
     }
 
     @Override

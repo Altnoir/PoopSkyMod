@@ -33,6 +33,9 @@ import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.ai.util.AirAndWaterRandomPos;
+import net.minecraft.world.entity.ai.util.DefaultRandomPos;
+import net.minecraft.world.entity.ai.util.HoverRandomPos;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.player.Player;
@@ -53,7 +56,6 @@ import java.util.EnumSet;
 public class FlyEntity extends Animal implements FlyingAnimal {
     public static final int TICKS_PER_FLAP = Mth.ceil(1.4959966F);
     private static final double RIDE_SCALE_LIMIT = 0.5D;
-    private static final double RIDDEN_FLY_SPEED = 0.45D;
     private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(FlyEntity.class, EntityDataSerializers.BYTE);
 
     public float flap;
@@ -99,7 +101,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
         this.goalSelector.addGoal(3, new AttractedByShitGoal(this, 1.25));
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, itemStack -> itemStack.is(PoTags.Items.FLY_LIKE), false));
         this.goalSelector.addGoal(4, new FlyToToiletGoal(this, 1.1)); // 主动寻找厕所
-        this.goalSelector.addGoal(5, new WaterAvoidingRandomFlyingGoal(this, 1.0)); // 随机飞行，避开水面
+        this.goalSelector.addGoal(5, new IdleMovementGoal(this, 1.0));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F)); // 看向附近的玩家
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this)); // 随机环顾四周
     }
@@ -168,32 +170,35 @@ public class FlyEntity extends Animal implements FlyingAnimal {
     @Override
     public void tick() {
         super.tick();
-        if (!this.level().isClientSide) {
-            this.controlRiddenFlight();
+        if (this.getControllingPassenger() == null && this.riddenFlight) {
+            this.setNoGravity(false);
+            this.riddenFlight = false;
         }
     }
 
-    private void controlRiddenFlight() {
-        if (!(this.getControllingPassenger() instanceof Player player) || !this.isHoldingPoopOnAStick(player)) {
-            if (this.riddenFlight) {
-                this.setNoGravity(false);
-                this.riddenFlight = false;
-            }
-            return;
-        }
-
+    @Override
+    protected void tickRidden(Player player, Vec3 travelVector) {
+        super.tickRidden(player, travelVector);
         this.getNavigation().stop();
         this.setNoGravity(true);
         this.riddenFlight = true;
-        this.setYRot(player.getYRot());
+        this.setRot(player.getYRot(), player.getXRot());
+        this.yRotO = this.getYRot();
         this.setYBodyRot(this.getYRot());
         this.setYHeadRot(this.getYRot());
-        float yaw = (float) Math.toRadians(this.getYRot());
-        Vec3 movement = new Vec3(-Mth.sin(yaw), 0.0, Mth.cos(yaw)).scale(RIDDEN_FLY_SPEED);
-        this.setDeltaMovement(movement);
-        this.move(MoverType.SELF, movement);
-        this.setDeltaMovement(Vec3.ZERO);
-        this.hasImpulse = true;
+    }
+
+    @Override
+    protected Vec3 getRiddenInput(Player player, Vec3 travelVector) {
+        float pitch = player.getXRot() * Mth.DEG_TO_RAD;
+        return new Vec3(0.0, -Mth.sin(pitch), Mth.cos(pitch));
+    }
+
+    @Override
+    protected float getRiddenSpeed(Player player) {
+        return (float) this.getAttributeValue(this.onGround()
+                ? Attributes.MOVEMENT_SPEED
+                : Attributes.FLYING_SPEED);
     }
 
     private boolean isHoldingPoopOnAStick(Player player) {
@@ -229,8 +234,8 @@ public class FlyEntity extends Animal implements FlyingAnimal {
     @Override
     @Nullable
     public LivingEntity getControllingPassenger() {
-        return this.getFirstPassenger() instanceof LivingEntity livingEntity
-                ? livingEntity
+        return this.getFirstPassenger() instanceof Player player && this.isHoldingPoopOnAStick(player)
+                ? player
                 : super.getControllingPassenger();
     }
 
@@ -287,6 +292,37 @@ public class FlyEntity extends Animal implements FlyingAnimal {
                 return;
             }
             super.tick();
+        }
+    }
+
+    private static class IdleMovementGoal extends RandomStrollGoal {
+        private final FlyEntity fly;
+
+        private IdleMovementGoal(FlyEntity fly, double speedModifier) {
+            super(fly, speedModifier, 40, false);
+            this.fly = fly;
+        }
+
+        @Override
+        protected Vec3 getPosition() {
+            if (this.fly.isBaby()) {
+                return DefaultRandomPos.getPos(this.fly, 8, 4);
+            }
+
+            Vec3 viewVector = this.fly.getViewVector(0.0F);
+            Vec3 hoverPosition = HoverRandomPos.getPos(
+                    this.fly,
+                    8,
+                    7,
+                    viewVector.x,
+                    viewVector.z,
+                    Mth.HALF_PI,
+                    3,
+                    1
+            );
+            return hoverPosition != null
+                    ? hoverPosition
+                    : AirAndWaterRandomPos.getPos(this.fly, 8, 4, -2, viewVector.x, viewVector.z, Mth.HALF_PI);
         }
     }
 

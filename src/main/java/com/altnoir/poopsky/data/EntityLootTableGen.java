@@ -13,6 +13,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -96,6 +97,29 @@ public final class EntityLootTableGen {
                         )
         );
         loot.add(PoEntityType.BASILISK.get(), LootTable.lootTable());
+        loot.add(
+                PoEntityType.EXPLOSIVE_CHICKEN.get(),
+                LootTable.lootTable()
+                        .withPool(
+                                LootPool.lootPool()
+                                        .setRolls(ConstantValue.exactly(1.0F))
+                                        .add(
+                                                LootItem.lootTableItem(Items.FEATHER)
+                                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
+                                                        .apply(EnchantedCountIncreaseFunction.lootingMultiplier(registries, UniformGenerator.between(0.0F, 1.0F)))
+                                        )
+                        )
+                        .withPool(
+                                LootPool.lootPool()
+                                        .setRolls(ConstantValue.exactly(1.0F))
+                                        .add(
+                                                LootItem.lootTableItem(Items.CHICKEN)
+                                                        .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))
+                                                        .apply(SmeltItemFunction.smelted().when(shouldSmeltLoot(registries)))
+                                                        .apply(EnchantedCountIncreaseFunction.lootingMultiplier(registries, ConstantValue.exactly(1.0F)))
+                                        )
+                        )
+        );
     }
 
     private static AnyOfCondition.Builder shouldSmeltLoot(HolderLookup.Provider registries) {

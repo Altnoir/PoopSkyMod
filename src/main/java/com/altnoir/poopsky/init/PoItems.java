@@ -116,6 +116,7 @@ public class PoItems {
             props -> new TokenItem(props.stacksTo(88)));
     public static final ItemEntry<GachaponItem> GACHAPON = registerItem("gachapon",
             props -> new GachaponItem(props.stacksTo(16)));
+    public static final ItemEntry<Item> EXPLOSIVE_CHICKEN_EGG = registerItemNoModel("explosive_chicken_egg", Item::new);
     public static final ItemEntry<TimeBellItem> TIME_BELL = registerItem("time_bell",
             props -> new TimeBellItem(props.stacksTo(1)));
     public static final ItemEntry<Item> SPALL = registerItem("spall", Item::new);
@@ -201,7 +202,9 @@ public class PoItems {
     public static final ItemEntry<DeferredSpawnEggItem> FLY_SPAWN_EGG = registerItemNoModel("fly_spawn_egg",
             prop -> new DeferredSpawnEggItem(PoEntityType.FLY, 0x3B4346, 0x900D2D, prop));
     public static final ItemEntry<DeferredSpawnEggItem> BASILISK_SPAWN_EGG = registerItemNoModel("basilisk_spawn_egg",
-            prop -> new DeferredSpawnEggItem(PoEntityType.BASILISK, 0x000000, 0x2B2B2B, prop));
+            prop -> new DeferredSpawnEggItem(PoEntityType.BASILISK, 0x71877A, 0xE1CCA8, prop));
+    public static final ItemEntry<DeferredSpawnEggItem> EXPLOSIVE_CHICKEN_SPAWN_EGG = registerItemNoModel("explosive_chicken_spawn_egg",
+            prop -> new DeferredSpawnEggItem(PoEntityType.EXPLOSIVE_CHICKEN, 0xA1A1A1, 0x8B5A2B, prop));
 
     public static final ItemEntry<FlyItem> FLY = registerItemNoModel("fly",
             props -> new FlyItem(props.stacksTo(88)));

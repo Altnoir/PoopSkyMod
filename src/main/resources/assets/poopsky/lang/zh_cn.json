@@ -19,6 +19,7 @@
   "block.poopsky.urine_liquid": "粪水",
   "item.poopsky.urea": "尿素",
   "item.poopsky.gachapon": "扭蛋",
+  "item.poopsky.explosive_chicken_egg": "爆炸鸡蛋",
   "item.poopsky.token": "代币",
 
   "item.poopsky.omen_helmet": "忌讳头盔",
@@ -101,6 +102,7 @@
   "item.poopsky.poolime_spawn_egg": "屎莱姆刷怪蛋",
   "item.poopsky.fly_spawn_egg": "苍蝇刷怪蛋",
   "item.poopsky.basilisk_spawn_egg": "咒蛙刷怪蛋",
+  "item.poopsky.explosive_chicken_spawn_egg": "爆炸鸡刷怪蛋",
   "item.poopsky.music_disc_lawrence": "音乐唱片",
   "item.poopsky.music_disc_lawrence.desc": "坂本龍一 - Merry Christmas Mr. Lawrence",
   "item.poopsky.music_disc_light_dance": "音乐唱片",
@@ -546,6 +548,7 @@
   "entity.poopsky.poolime": "屎莱姆",
   "entity.poopsky.fly": "苍蝇",
   "entity.poopsky.basilisk": "咒蛙",
+  "entity.poopsky.explosive_chicken": "爆炸鸡",
   "entity.poopsky.poop_tnt": "POP",
   "entity.poopsky.pop_tnt_minecart": "POP矿车",
   "entity.poopsky.ginkgo_boat": "银杏木船",

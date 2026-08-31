@@ -4,6 +4,7 @@ import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.entity.MaggotsChunkLoaderBlockEntity;
 import com.altnoir.poopsky.content.entity.p.BasiliskEntity;
+import com.altnoir.poopsky.content.entity.p.ExplosiveChickenEntity;
 import com.altnoir.poopsky.content.entity.p.FlyEntity;
 import com.altnoir.poopsky.content.entity.p.PoolimeEntity;
 import com.altnoir.poopsky.impl.DataGenerators;
@@ -48,6 +49,7 @@ public class PoModEvents {
         event.put(PoEntityType.POOLIME.get(), PoolimeEntity.createAttributes().build());
         event.put(PoEntityType.FLY.get(), FlyEntity.createAttributes().build());
         event.put(PoEntityType.BASILISK.get(), BasiliskEntity.createAttributes().build());
+        event.put(PoEntityType.EXPLOSIVE_CHICKEN.get(), ExplosiveChickenEntity.createAttributes().build());
     }
 
     public static void registerSpawnPlacements(RegisterSpawnPlacementsEvent event) {

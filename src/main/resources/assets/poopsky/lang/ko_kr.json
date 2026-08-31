@@ -19,6 +19,7 @@
   "block.poopsky.urine_liquid": "똥물",
   "item.poopsky.urea": "요소",
   "item.poopsky.gachapon": "캡슐 뽑기",
+  "item.poopsky.explosive_chicken_egg": "폭발 닭의 알",
   "item.poopsky.token": "토큰",
 
   "item.poopsky.omen_helmet": "기피의 투구",
@@ -101,6 +102,7 @@
   "item.poopsky.poolime_spawn_egg": "똥 슬라임 생성 알",
   "item.poopsky.fly_spawn_egg": "파리 생성 알",
   "item.poopsky.basilisk_spawn_egg": "바실리스크 생성 알",
+  "item.poopsky.explosive_chicken_spawn_egg": "폭발 닭 생성 알",
   "item.poopsky.music_disc_lawrence": "음반",
   "item.poopsky.music_disc_lawrence.desc": "사카모토 류이치 - Merry Christmas Mr. Lawrence",
   "item.poopsky.music_disc_light_dance": "음반",
@@ -546,6 +548,7 @@
   "entity.poopsky.poolime": "똥 슬라임",
   "entity.poopsky.fly": "파리",
   "entity.poopsky.basilisk": "바실리스크",
+  "entity.poopsky.explosive_chicken": "폭발 닭",
   "entity.poopsky.poop_tnt": "POP",
   "entity.poopsky.pop_tnt_minecart": "POP 광산 수레",
   "entity.poopsky.ginkgo_boat": "은행나무 보트",

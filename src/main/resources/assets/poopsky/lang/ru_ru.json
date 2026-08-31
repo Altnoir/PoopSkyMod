@@ -19,6 +19,7 @@
   "block.poopsky.urine_liquid": "Навозная жижа",
   "item.poopsky.urea": "Мочевина",
   "item.poopsky.gachapon": "Гачапон",
+  "item.poopsky.explosive_chicken_egg": "Яйцо взрывной курицы",
   "item.poopsky.token": "Жетон",
 
   "item.poopsky.omen_helmet": "Шлем Зловещего",
@@ -101,6 +102,7 @@
   "item.poopsky.poolime_spawn_egg": "Яйцо призыва Какаслизня",
   "item.poopsky.fly_spawn_egg": "Яйцо призыва мухи",
   "item.poopsky.basilisk_spawn_egg": "Яйцо призыва василиска",
+  "item.poopsky.explosive_chicken_spawn_egg": "Яйцо призыва взрывной курицы",
   "item.poopsky.music_disc_lawrence": "Музыкальный диск",
   "item.poopsky.music_disc_lawrence.desc": "Рюичи Сакамото - Merry Christmas Mr. Lawrence",
   "item.poopsky.music_disc_light_dance": "Музыкальный диск",
@@ -546,6 +548,7 @@
   "entity.poopsky.poolime": "Какаслизень",
   "entity.poopsky.fly": "Муха",
   "entity.poopsky.basilisk": "Василиск",
+  "entity.poopsky.explosive_chicken": "Взрывная курица",
   "entity.poopsky.poop_tnt": "POP",
   "entity.poopsky.pop_tnt_minecart": "Вагонетка с POP",
   "entity.poopsky.ginkgo_boat": "Лодка из гинкго",
