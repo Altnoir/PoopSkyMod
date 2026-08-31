@@ -19,6 +19,8 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.*;
@@ -50,6 +52,8 @@ import java.util.EnumSet;
 
 public class FlyEntity extends Animal implements FlyingAnimal {
     public static final int TICKS_PER_FLAP = Mth.ceil(1.4959966F);
+    private static final double RIDE_SCALE_LIMIT = 0.5D;
+    private static final double RIDDEN_FLY_SPEED = 0.45D;
     private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(FlyEntity.class, EntityDataSerializers.BYTE);
 
     public float flap;
@@ -59,6 +63,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
     public float flapping = 1.0F;
     public int eggTime = this.random.nextInt(6000) + 6000;
     private int underWaterTicks;
+    private boolean riddenFlight;
 
     private FlyBuzzSoundWrapper buzzSound;
 
@@ -158,6 +163,75 @@ public class FlyEntity extends Animal implements FlyingAnimal {
             this.gameEvent(GameEvent.ENTITY_PLACE);
             this.eggTime = this.random.nextInt(6000) + 6000;
         }
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (!this.level().isClientSide) {
+            this.controlRiddenFlight();
+        }
+    }
+
+    private void controlRiddenFlight() {
+        if (!(this.getControllingPassenger() instanceof Player player) || !this.isHoldingPoopOnAStick(player)) {
+            if (this.riddenFlight) {
+                this.setNoGravity(false);
+                this.riddenFlight = false;
+            }
+            return;
+        }
+
+        this.getNavigation().stop();
+        this.setNoGravity(true);
+        this.riddenFlight = true;
+        this.setYRot(player.getYRot());
+        this.setYBodyRot(this.getYRot());
+        this.setYHeadRot(this.getYRot());
+        float yaw = (float) Math.toRadians(this.getYRot());
+        Vec3 movement = new Vec3(-Mth.sin(yaw), 0.0, Mth.cos(yaw)).scale(RIDDEN_FLY_SPEED);
+        this.setDeltaMovement(movement);
+        this.move(MoverType.SELF, movement);
+        this.setDeltaMovement(Vec3.ZERO);
+        this.hasImpulse = true;
+    }
+
+    private boolean isHoldingPoopOnAStick(Player player) {
+        return player.getMainHandItem().is(PoItems.POOP_ON_A_STICK.get())
+                || player.getOffhandItem().is(PoItems.POOP_ON_A_STICK.get());
+    }
+
+    private boolean canRide(Player player) {
+        return !this.isBaby()
+                && player.getAttributeValue(Attributes.SCALE) <= RIDE_SCALE_LIMIT
+                && this.isHoldingPoopOnAStick(player);
+    }
+
+    @Override
+    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+        if (!this.canRide(player)) {
+            return super.mobInteract(player, hand);
+        }
+
+        if (this.level().isClientSide) {
+            return InteractionResult.SUCCESS;
+        }
+        return player.startRiding(this) ? InteractionResult.CONSUME : InteractionResult.PASS;
+    }
+
+    @Override
+    protected boolean canAddPassenger(Entity passenger) {
+        return this.getPassengers().isEmpty()
+                && passenger instanceof Player player
+                && this.canRide(player);
+    }
+
+    @Override
+    @Nullable
+    public LivingEntity getControllingPassenger() {
+        return this.getFirstPassenger() instanceof LivingEntity livingEntity
+                ? livingEntity
+                : super.getControllingPassenger();
     }
 
     @Override

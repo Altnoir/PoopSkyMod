@@ -105,6 +105,8 @@ public class PoItems {
 
     public static final ItemEntry<FlyCatcherItem> FLY_CATCHER = registerItemNoModel("fly_catcher",
             props -> new FlyCatcherItem(props.stacksTo(1).durability(88)));
+    public static final ItemEntry<Item> POOP_ON_A_STICK = registerItemNoModel("poop_on_a_stick",
+            props -> new Item(props.stacksTo(1).durability(64)));
     public static final ItemEntry<JinKeLaItem> JINKELA = registerItem("jinkela", JinKeLaItem::new);
     public static final ItemEntry<ReturnTotemItem> RETURN_TOTEM = registerItem("return_totem",
             props -> new ReturnTotemItem(props.stacksTo(8)));

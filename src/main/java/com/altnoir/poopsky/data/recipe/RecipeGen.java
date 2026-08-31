@@ -207,6 +207,13 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .define('D', Items.DIAMOND)
                 .unlockedBy(getItemName(Items.DIAMOND), has(Items.DIAMOND))
                 .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, PoItems.POOP_ON_A_STICK)
+                .pattern("F  ")
+                .pattern(" P ")
+                .define('F', Items.FISHING_ROD)
+                .define('P', PoItems.POOP)
+                .unlockedBy(getItemName(PoItems.POOP), has(PoItems.POOP))
+                .save(recipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, PoItems.RETURN_TOTEM.get(), 8)
                 .pattern(" S ")
                 .pattern("GEG")

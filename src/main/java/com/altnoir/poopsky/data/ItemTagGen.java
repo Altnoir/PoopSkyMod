@@ -72,7 +72,10 @@ public final class ItemTagGen {
         tag(PoTags.Items.FLUSH_TOILET_SAVE).addTag(PoTags.Items.POOPS).addTag(PoTags.Items.SHITS);
         copy(PoTags.Blocks.BREEDING_CHEST_ACCELERATOR, PoTags.Items.BREEDING_CHEST_ACCELERATOR);
         copy(PoTags.Blocks.BREEDING_CHEST_PARALLELISM, PoTags.Items.BREEDING_CHEST_PARALLELISM);
-        tag(PoTags.Items.FLY_LIKE).addTag(PoTags.Items.FLUSH_TOILET_SAVE);
+        tag(PoTags.Items.FLY_LIKE)
+                .addTag(PoTags.Items.FLUSH_TOILET_SAVE)
+                .add(PoItems.POOP_ON_A_STICK.get());
+        tag(ItemTags.DURABILITY_ENCHANTABLE).add(PoItems.POOP_ON_A_STICK.get());
         tag(PoTags.Items.VILLAGER_LIKE).addTag(PoTags.Items.FLUSH_TOILET_SAVE);
 
         tag(PoTags.Items.CAN_COMPOSTABLE)

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "F": {
+      "item": "minecraft:fishing_rod"
+    },
+    "P": {
+      "item": "poopsky:poop"
+    }
+  },
+  "pattern": [
+    "F  ",
+    " P "
+  ],
+  "result": {
+    "count": 1,
+    "id": "poopsky:poop_on_a_stick"
+  }
+}

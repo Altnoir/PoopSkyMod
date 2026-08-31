@@ -48,6 +48,7 @@ public class ItemModelGen extends RegistrateItemModelProvider {
         toiletPlugItem();
         bigSowordItem();
         flyCatcherItem();
+        poopOnAStickItem();
         trimmedArmorItem(PoItems.OMEN_HELMET);
         trimmedArmorItem(PoItems.OMEN_CHESTPLATE);
         trimmedArmorItem(PoItems.OMEN_LEGGINGS);
@@ -84,6 +85,11 @@ public class ItemModelGen extends RegistrateItemModelProvider {
     private void flyCatcherItem() {
         this.withExistingParent(name(PoItems.FLY_CATCHER), mcLoc("item/handheld_rod"))
                 .texture("layer0", itemTexture(PoItems.FLY_CATCHER));
+    }
+
+    private void poopOnAStickItem() {
+        this.withExistingParent(name(PoItems.POOP_ON_A_STICK), mcLoc("item/handheld_rod"))
+                .texture("layer0", itemTexture(PoItems.POOP_ON_A_STICK));
     }
 
     private void flyItem() {
