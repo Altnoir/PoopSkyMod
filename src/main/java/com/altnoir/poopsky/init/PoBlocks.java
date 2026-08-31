@@ -338,6 +338,10 @@ public class PoBlocks {
             props -> new PlacerBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
                     .instrument(NoteBlockInstrument.BASEDRUM)
                     .requiresCorrectToolForDrops().strength(3.5F)));
+    public static final BlockEntry<IgneousExtruderBlock> IGNEOUS_EXTRUDER = registerBlock("igneous_extruder",
+            props -> new IgneousExtruderBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops().strength(3.5F)));
     public static final BlockEntry<SieveBlock> SIEVE = registerBlock("sieve_stable",
             props -> new SieveBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.STONE)

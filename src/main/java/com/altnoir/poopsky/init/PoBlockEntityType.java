@@ -27,6 +27,11 @@ public class PoBlockEntityType {
             .validBlock(PoBlocks.PLACER)
             .register();
 
+    public static final BlockEntityEntry<IgneousExtruderBlockEntity> IGNEOUS_EXTRUDER = REGISTRATE
+            .<IgneousExtruderBlockEntity>blockEntity("igneous_extruder", (type, pos, state) -> new IgneousExtruderBlockEntity(pos, state))
+            .validBlock(PoBlocks.IGNEOUS_EXTRUDER)
+            .register();
+
     public static final BlockEntityEntry<MaggotsChunkLoaderBlockEntity> MAGGOTS_CHUNK_LOADER = REGISTRATE
             .<MaggotsChunkLoaderBlockEntity>blockEntity("maggots_chunk_loader", (type, pos, state) -> new MaggotsChunkLoaderBlockEntity(pos, state))
             .validBlock(PoBlocks.MAGGOTS_CHUNK_LOADER)

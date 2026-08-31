@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "poopsky:block/compooper_bottom",
+    "side": "poopsky:block/compooper_side",
+    "top": "poopsky:block/compooper_top"
+  }
+}

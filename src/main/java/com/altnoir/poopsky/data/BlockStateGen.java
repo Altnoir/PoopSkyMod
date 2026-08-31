@@ -72,6 +72,7 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
         clusterBlock(PoBlocks.SMALL_SALTPETER_BUD.get());
         cubeBottomTop(PoBlocks.POP.get());
         cubeBottomTopFace(PoBlocks.FLY_BARREL.get());
+        cubeBottomTop(PoBlocks.IGNEOUS_EXTRUDER.get(), "compooper_top", "compooper_side", "compooper_bottom");
         cubeBottomTop(PoBlocks.BREEDING_CHEST.get(), PoBlocks.CUT_POOP_BLOCK.get());
         orientable(PoBlocks.PLACER.get());
         maggotsChunkLoader();
