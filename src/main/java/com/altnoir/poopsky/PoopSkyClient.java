@@ -27,6 +27,7 @@ import com.altnoir.poopsky.game.client.arcade.ArcadeWorldScreenRenderer;
 import com.altnoir.poopsky.impl.network.PlugActionPayload;
 import com.altnoir.poopsky.impl.network.PlugDismountPayload;
 import com.altnoir.poopsky.init.*;
+import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.RecipeBookCategories;
 import net.minecraft.client.gui.Gui;
@@ -42,6 +43,7 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.levelgen.presets.WorldPreset;
@@ -98,6 +100,8 @@ public class PoopSkyClient {
         modEventBus.addListener(ClientGameEvents::onClientTick);
         modEventBus.addListener(ArcadeControlSession::onKeyInput);
         modEventBus.addListener(ClientGameEvents::onComputeFov);
+        modEventBus.addListener(ClientGameEvents::onComputeFogColor);
+        modEventBus.addListener(ClientGameEvents::onRenderFog);
         modEventBus.addListener(ClientGameEvents::onPlayerHeartType);
         modEventBus.addListener(ArcadeWorldScreenRenderer::onRenderFrame);
         modEventBus.addListener(ArcadeWorldScreenRenderer::onLoggingOut);
@@ -265,6 +269,34 @@ public class PoopSkyClient {
             if (multiplier != 1.0) {
                 event.setFOV(Math.min(event.getFOV() * multiplier, TimeBellOverlay.MAX_FOV));
             }
+        }
+
+        public static void onComputeFogColor(ViewportEvent.ComputeFogColor event) {
+            if (isCameraInUrine(event.getCamera())) return;
+
+            event.setRed(0.30F);
+            event.setGreen(0.18F);
+            event.setBlue(0.08F);
+        }
+
+        public static void onRenderFog(ViewportEvent.RenderFog event) {
+            Camera camera = event.getCamera();
+            if (isCameraInUrine(camera)) return;
+
+            boolean hasOmener = camera.getEntity() instanceof LivingEntity livingEntity
+                    && livingEntity.hasEffect(PoEffects.OMENER);
+            event.setNearPlaneDistance(hasOmener ? 0.0F : 0.25F);
+            event.setFarPlaneDistance(hasOmener ? 5.0F : 1.0F);
+            event.setCanceled(true);
+        }
+
+        private static boolean isCameraInUrine(Camera camera) {
+            var entity = camera.getEntity();
+
+            var pos = camera.getBlockPosition();
+            var fluidState = entity.level().getFluidState(pos);
+            return fluidState.getFluidType() != PoFluids.URINE_FLUID_TYPE.get()
+                    || !(camera.getPosition().y < pos.getY() + fluidState.getHeight(entity.level(), pos));
         }
 
         public static void onPlayerHeartType(PlayerHeartTypeEvent event) {
