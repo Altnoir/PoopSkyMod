@@ -101,6 +101,7 @@
 
   "item.poopsky.poolime_spawn_egg": "똥 슬라임 생성 알",
   "item.poopsky.fly_spawn_egg": "파리 생성 알",
+  "item.poopsky.snail_spawn_egg": "달팽이 생성 알",
   "item.poopsky.basilisk_spawn_egg": "바실리스크 생성 알",
   "item.poopsky.explosive_chicken_spawn_egg": "폭발 닭 생성 알",
   "item.poopsky.music_disc_lawrence": "음반",
@@ -548,6 +549,7 @@
   "entity.poopsky.stool_entity": "똥 의자",
   "entity.poopsky.poolime": "똥 슬라임",
   "entity.poopsky.fly": "파리",
+  "entity.poopsky.snail": "달팽이",
   "entity.poopsky.basilisk": "바실리스크",
   "entity.poopsky.explosive_chicken": "폭발 닭",
   "entity.poopsky.poop_tnt": "POP",

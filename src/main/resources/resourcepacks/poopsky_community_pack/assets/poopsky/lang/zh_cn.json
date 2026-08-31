@@ -101,6 +101,7 @@
 
   "item.poopsky.poolime_spawn_egg": "可可莱姆刷怪蛋",
   "item.poopsky.fly_spawn_egg": "暗色蜜蜂刷怪蛋",
+  "item.poopsky.snail_spawn_egg": "蜗牛刷怪蛋",
   "item.poopsky.basilisk_spawn_egg": "咒蛙刷怪蛋",
   "item.poopsky.explosive_chicken_spawn_egg": "爆炸鸡刷怪蛋",
   "item.poopsky.music_disc_lawrence": "音乐唱片",
@@ -548,6 +549,7 @@
   "entity.poopsky.stool_entity": "巧克力凳",
   "entity.poopsky.poolime": "可可莱姆",
   "entity.poopsky.fly": "暗色蜜蜂",
+  "entity.poopsky.snail": "蜗牛",
   "entity.poopsky.basilisk": "咒蛙",
   "entity.poopsky.explosive_chicken": "爆炸鸡",
   "entity.poopsky.poop_tnt": "POP",

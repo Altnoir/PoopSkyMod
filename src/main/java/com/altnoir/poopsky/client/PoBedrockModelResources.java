@@ -9,6 +9,8 @@ public final class PoBedrockModelResources {
     public static final ResourceLocation GACHAPON = PoopSky.loc("gachapon.geo");
     public static final ResourceLocation BASILISK_MODEL = PoopSky.loc("basilisk.geo");
     public static final ResourceLocation BASILISK_ANIMATION = PoopSky.loc("basilisk.animation");
+    public static final ResourceLocation SNAIL_MODEL = PoopSky.loc("snail.geo");
+    public static final ResourceLocation SNAIL_ANIMATION = PoopSky.loc("snail.animation");
 
     private PoBedrockModelResources() {
     }
@@ -20,6 +22,9 @@ public final class PoBedrockModelResources {
                 .register();
         event.bakedModel(BASILISK_MODEL)
                 .animation(BASILISK_ANIMATION)
+                .register();
+        event.bakedModel(SNAIL_MODEL)
+                .animation(SNAIL_ANIMATION)
                 .register();
     }
 }

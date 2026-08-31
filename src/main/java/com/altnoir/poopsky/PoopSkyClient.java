@@ -274,9 +274,9 @@ public class PoopSkyClient {
         public static void onComputeFogColor(ViewportEvent.ComputeFogColor event) {
             if (isCameraInUrine(event.getCamera())) return;
 
-            event.setRed(0.30F);
-            event.setGreen(0.18F);
-            event.setBlue(0.08F);
+            event.setRed(0.5255F);
+            event.setGreen(0.3804F);
+            event.setBlue(0.1765F);
         }
 
         public static void onRenderFog(ViewportEvent.RenderFog event) {

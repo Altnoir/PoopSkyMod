@@ -101,6 +101,7 @@
 
   "item.poopsky.poolime_spawn_egg": "プーライムのスポーンエッグ",
   "item.poopsky.fly_spawn_egg": "ハエのスポーンエッグ",
+  "item.poopsky.snail_spawn_egg": "カタツムリのスポーンエッグ",
   "item.poopsky.basilisk_spawn_egg": "バジリスクのスポーンエッグ",
   "item.poopsky.explosive_chicken_spawn_egg": "爆発ニワトリのスポーンエッグ",
   "item.poopsky.music_disc_lawrence": "音楽レコード",
@@ -548,6 +549,7 @@
   "entity.poopsky.stool_entity": "糞のスツール",
   "entity.poopsky.poolime": "プーライム",
   "entity.poopsky.fly": "ハエ",
+  "entity.poopsky.snail": "カタツムリ",
   "entity.poopsky.basilisk": "バジリスク",
   "entity.poopsky.explosive_chicken": "爆発ニワトリ",
   "entity.poopsky.poop_tnt": "ポップ",

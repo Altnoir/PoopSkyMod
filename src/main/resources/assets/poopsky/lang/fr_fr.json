@@ -101,6 +101,7 @@
 
   "item.poopsky.poolime_spawn_egg": "Œuf d’apparition de Poolime",
   "item.poopsky.fly_spawn_egg": "Œuf d'apparition de mouche",
+  "item.poopsky.snail_spawn_egg": "Œuf d'apparition d'escargot",
   "item.poopsky.basilisk_spawn_egg": "Œuf d'apparition de basilic",
   "item.poopsky.explosive_chicken_spawn_egg": "Œuf d'apparition de poule explosive",
   "item.poopsky.music_disc_lawrence": "Disque de musique",
@@ -548,6 +549,7 @@
   "entity.poopsky.stool_entity": "Tabouret de crotte",
   "entity.poopsky.poolime": "Poolime",
   "entity.poopsky.fly": "Mouche",
+  "entity.poopsky.snail": "Escargot",
   "entity.poopsky.basilisk": "Basilic",
   "entity.poopsky.explosive_chicken": "Poule explosive",
   "entity.poopsky.poop_tnt": "POP",

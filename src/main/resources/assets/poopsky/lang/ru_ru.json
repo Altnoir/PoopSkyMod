@@ -101,6 +101,7 @@
 
   "item.poopsky.poolime_spawn_egg": "Яйцо призыва Какаслизня",
   "item.poopsky.fly_spawn_egg": "Яйцо призыва мухи",
+  "item.poopsky.snail_spawn_egg": "Яйцо призыва улитки",
   "item.poopsky.basilisk_spawn_egg": "Яйцо призыва василиска",
   "item.poopsky.explosive_chicken_spawn_egg": "Яйцо призыва взрывной курицы",
   "item.poopsky.music_disc_lawrence": "Музыкальный диск",
@@ -548,6 +549,7 @@
   "entity.poopsky.stool_entity": "Какашечный табурет",
   "entity.poopsky.poolime": "Какаслизень",
   "entity.poopsky.fly": "Муха",
+  "entity.poopsky.snail": "Улитка",
   "entity.poopsky.basilisk": "Василиск",
   "entity.poopsky.explosive_chicken": "Взрывная курица",
   "entity.poopsky.poop_tnt": "POP",

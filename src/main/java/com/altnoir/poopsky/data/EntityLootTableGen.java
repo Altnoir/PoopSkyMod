@@ -97,6 +97,7 @@ public final class EntityLootTableGen {
                         )
         );
         loot.add(PoEntityType.BASILISK.get(), LootTable.lootTable());
+        loot.add(PoEntityType.SNAIL.get(), LootTable.lootTable());
         loot.add(
                 PoEntityType.EXPLOSIVE_CHICKEN.get(),
                 LootTable.lootTable()

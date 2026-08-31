@@ -1,0 +1,63 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.snail",
+				"texture_width": 64,
+				"texture_height": 64,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 2.5,
+				"visible_bounds_offset": [0, 0.75, 0]
+			},
+			"bones": [
+				{
+					"name": "root",
+					"pivot": [0, 1.52747, -0.63052]
+				},
+				{
+					"name": "body",
+					"parent": "root",
+					"pivot": [0, 0.66465, -0.59345],
+					"cubes": [
+						{"origin": [-2.5, 0, -4], "size": [5, 3, 10], "uv": [0, 30]},
+						{"origin": [-4, 0.1, -4], "size": [8, 0, 14], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "head",
+					"parent": "body",
+					"pivot": [0, 1.4, -3.5],
+					"cubes": [
+						{"origin": [-2, 1.4, -10.5], "size": [4, 3, 8], "pivot": [0, 1.4, -5.5], "rotation": [-25, 0, 0], "uv": [30, 14]}
+					]
+				},
+				{
+					"name": "right_eye",
+					"parent": "head",
+					"pivot": [-1.73716, 5.40776, -7.56036],
+					"cubes": [
+						{"origin": [-1.8, 4.85624, -8.06869], "size": [1, 6, 1], "pivot": [-1.5, 5.35624, -8.06869], "rotation": [-24.66569, -4.20854, -9.07947], "uv": [30, 33]}
+					]
+				},
+				{
+					"name": "left_eye",
+					"parent": "head",
+					"pivot": [1.73716, 5.40776, -7.56036],
+					"cubes": [
+						{"origin": [0.8, 4.85624, -8.06869], "size": [1, 6, 1], "pivot": [1.5, 5.35624, -8.06869], "rotation": [-24.66569, 4.20854, 9.07947], "uv": [30, 33], "mirror": true}
+					]
+				},
+				{
+					"name": "shell",
+					"parent": "root",
+					"pivot": [0, 2.39029, -0.66759],
+					"cubes": [
+						{"origin": [-3.5, 1.5, -3.7], "size": [7, 8, 8], "pivot": [-0.4, 1.5, 1.3], "rotation": [-22.5, 0, 0], "uv": [0, 14]},
+						{"origin": [-3.5, 1.1, -4.7], "size": [7, 2, 6], "inflate": 0.1, "pivot": [-0.4, 1.5, 1.3], "rotation": [-22.5, 0, 0], "uv": [30, 25]}
+					]
+				}
+			]
+		}
+	]
+}

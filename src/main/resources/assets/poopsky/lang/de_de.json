@@ -101,6 +101,7 @@
 
   "item.poopsky.poolime_spawn_egg": "Kackschleim-Spawn-Ei",
   "item.poopsky.fly_spawn_egg": "Fliegen-Spawn-Ei",
+  "item.poopsky.snail_spawn_egg": "Schnecken-Spawn-Ei",
   "item.poopsky.basilisk_spawn_egg": "Basilisken-Spawn-Ei",
   "item.poopsky.explosive_chicken_spawn_egg": "Explosionshuhn-Spawn-Ei",
   "item.poopsky.music_disc_lawrence": "Schallplatte",
@@ -548,6 +549,7 @@
   "entity.poopsky.stool_entity": "Kackhocker",
   "entity.poopsky.poolime": "Kackschleim",
   "entity.poopsky.fly": "Fliege",
+  "entity.poopsky.snail": "Schnecke",
   "entity.poopsky.basilisk": "Basilisk",
   "entity.poopsky.explosive_chicken": "Explosionshuhn",
   "entity.poopsky.poop_tnt": "POP",

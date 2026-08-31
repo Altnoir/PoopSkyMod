@@ -45,6 +45,16 @@ public class PoEntityType {
             .setData(ProviderType.LANG, NonNullBiConsumer.noop())
             .register();
 
+    public static final EntityEntry<SnailEntity> SNAIL = REGISTRATE
+            .entity("snail", SnailEntity::new, MobCategory.CREATURE)
+            .properties(properties -> properties
+                    .sized(0.65F, 0.55F)
+                    .eyeHeight(0.35F)
+                    .clientTrackingRange(8))
+            .renderer(() -> SnailRenderer::new)
+            .setData(ProviderType.LANG, NonNullBiConsumer.noop())
+            .register();
+
     public static final EntityEntry<BasiliskEntity> BASILISK = REGISTRATE
             .entity("basilisk", BasiliskEntity::new, MobCategory.MONSTER)
             .properties(properties -> properties
