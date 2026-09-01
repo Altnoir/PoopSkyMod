@@ -1,0 +1,32 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.toilet_plug",
+				"texture_width": 64,
+				"texture_height": 64,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 1.5,
+				"visible_bounds_offset": [0, 0.25, 0]
+			},
+			"bones": [
+				{
+					"name": "bb_main",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{"origin": [0, 3, -8], "size": [0, 0, 0], "uv": [0, 0]},
+						{"origin": [-1, 2, -10], "size": [2, 2, 15], "pivot": [0, 0, 0], "rotation": [0, 180, 0], "uv": [1, 0]},
+						{"origin": [-3, 0, 6], "size": [6, 6, 2], "pivot": [0, 0, 0], "rotation": [0, 180, 0], "uv": [0, 17]},
+						{"origin": [-3, 0, 6], "size": [6, 6, 2], "inflate": 0.05, "pivot": [0, 0, 0], "rotation": [0, 180, 0], "uv": [0, 0]},
+						{"origin": [-2, 5, -8], "size": [4, 1, 2], "pivot": [0, 6, -6], "rotation": [-150, 0, 180], "uv": [16, 23]},
+						{"origin": [-2, 4.59808, -6.5], "size": [4, 1, 2], "pivot": [0, 3, -6], "rotation": [-150, 0, 90], "uv": [16, 23]},
+						{"origin": [-2, 4.59808, -6.5], "size": [4, 1, 2], "pivot": [0, 3, -6], "rotation": [-150, 0, 0], "uv": [16, 23]},
+						{"origin": [-2, 4.59808, -6.5], "size": [4, 1, 2], "pivot": [0, 3, -6], "rotation": [-150, 0, -90], "uv": [16, 23]},
+						{"origin": [-2, 1, 9.75], "size": [4, 4, 2], "pivot": [0, -1, 2.75], "rotation": [0, 180, 0], "uv": [16, 17]}
+					]
+				}
+			]
+		}
+	]
+}

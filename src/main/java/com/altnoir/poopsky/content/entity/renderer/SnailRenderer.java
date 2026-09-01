@@ -62,7 +62,14 @@ public class SnailRenderer extends EntityRenderer<SnailEntity> {
 
         BakedModelInstance instance = this.instances.computeIfAbsent(entity, ignored -> this.model.createInstance());
         instance.resetPose();
-        if (this.walkAnimation != null) {
+        double movedX = entity.getX() - entity.xo;
+        double movedY = entity.getY() - entity.yo;
+        double movedZ = entity.getZ() - entity.zo;
+        double movedSqr = movedX * movedX + movedZ * movedZ;
+        if (entity.isClimbing()) {
+            movedSqr += movedY * movedY;
+        }
+        if (this.walkAnimation != null && movedSqr > 1.0E-6D) {
             float elapsed = (entity.tickCount + partialTick) / 20.0F;
             float length = this.walkAnimation.getSpecifiedEndTimeS();
             Pose pose = this.walkAnimation.evaluate(length > 0.0F ? elapsed % length : elapsed);
@@ -70,7 +77,14 @@ public class SnailRenderer extends EntityRenderer<SnailEntity> {
         }
 
         poseStack.pushPose();
-        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - Mth.rotLerp(partialTick, entity.yBodyRotO, entity.yBodyRot)));
+        float bodyYaw = entity.isClimbing()
+                ? entity.getWallDirection().toYRot()
+                : Mth.rotLerp(partialTick, entity.yBodyRotO, entity.yBodyRot);
+        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - bodyYaw));
+        if (entity.isClimbing()) {
+            poseStack.translate(0.0F, entity.getBbWidth(), -entity.getBbWidth() * 0.5F);
+            poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
+        }
         VertexConsumer consumer = bufferSource.getBuffer(RenderType.entityCutout(this.getTextureLocation(entity)));
         instance.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.pack(0.0F, entity.hurtTime > 0 || entity.deathTime > 0));
         poseStack.popPose();

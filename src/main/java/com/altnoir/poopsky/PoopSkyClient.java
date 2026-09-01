@@ -18,7 +18,6 @@ import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.content.block.renderer.MaggotsChunkLoaderBlockEntityRenderer;
 import com.altnoir.poopsky.content.entity.model.FlyModel;
-import com.altnoir.poopsky.content.entity.model.ToiletPlugModel;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.content.entity.renderer.PoBoatRenderer;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
@@ -119,9 +118,7 @@ public class PoopSkyClient {
         }
 
         public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
-            event.registerLayerDefinition(ToiletPlugModel.LAYER_LOCATION, ToiletPlugModel::createBodyLayer);
             event.registerLayerDefinition(FlyModel.LAYER_LOCATION, FlyModel::createFlyBodyLayer);
-            event.registerLayerDefinition(FlyModel.MAGGOT_LAYER_LOCATION, FlyModel::createMaggotBodyLayer);
             event.registerLayerDefinition(PoBoatRenderer.boatLayer("ginkgo"), BoatModel::createBodyModel);
             event.registerLayerDefinition(PoBoatRenderer.chestBoatLayer("ginkgo"), ChestBoatModel::createBodyModel);
             event.registerLayerDefinition(PoBoatRenderer.boatLayer("primo"), BoatModel::createBodyModel);

@@ -77,6 +77,7 @@ public final class ItemTagGen {
                 .add(PoItems.POOP_ON_A_STICK.get());
         tag(ItemTags.DURABILITY_ENCHANTABLE).add(PoItems.POOP_ON_A_STICK.get());
         tag(PoTags.Items.VILLAGER_LIKE).addTag(PoTags.Items.FLUSH_TOILET_SAVE);
+        tag(PoTags.Items.SNAIL_FOOD).addTag(ItemTags.FLOWERS);
 
         tag(PoTags.Items.CAN_COMPOSTABLE)
                 .add(

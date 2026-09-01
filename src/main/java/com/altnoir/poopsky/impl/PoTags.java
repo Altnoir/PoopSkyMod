@@ -72,6 +72,7 @@ public class PoTags {
         TagKey<Item> BREEDING_CHEST_PARALLELISM = create("breeding_chest_parallelism");
         TagKey<Item> FLY_LIKE = create("fly_like");
         TagKey<Item> VILLAGER_LIKE = create("villager_like");
+        TagKey<Item> SNAIL_FOOD = create("snail_food");
 
         TagKey<Item> POOP_MOONCAKES = create("poop_mooncakes");
         TagKey<Item> EGG = tag("foods/eggs");

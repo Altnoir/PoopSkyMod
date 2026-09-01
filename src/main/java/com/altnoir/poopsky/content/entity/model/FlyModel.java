@@ -15,9 +15,6 @@ import net.minecraft.util.Mth;
 
 public class FlyModel<T extends FlyEntity> extends AgeableListModel<T> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(PoopSky.loc("fly"), "main");
-    public static final ModelLayerLocation MAGGOT_LAYER_LOCATION = new ModelLayerLocation(PoopSky.loc("maggot"), "main");
-
-    private static final int MAGGOT_SEGMENT_COUNT = 7;
 
     private final ModelPart bone;
     private final ModelPart rightWing;
@@ -25,10 +22,8 @@ public class FlyModel<T extends FlyEntity> extends AgeableListModel<T> {
     private final ModelPart frontLeg;
     private final ModelPart midLeg;
     private final ModelPart backLeg;
-    private final ModelPart maggot;
-    private final ModelPart[] maggotSegments = new ModelPart[MAGGOT_SEGMENT_COUNT];
 
-    public FlyModel(ModelPart root, ModelPart maggotRoot) {
+    public FlyModel(ModelPart root) {
         super(false, 24.0F, 0.0F, 2.0F, 1.5F, 12.0F);
         this.bone = root.getChild("bone");
         ModelPart body = this.bone.getChild("body");
@@ -37,10 +32,6 @@ public class FlyModel<T extends FlyEntity> extends AgeableListModel<T> {
         this.frontLeg = body.getChild("leg_front");
         this.midLeg = body.getChild("leg_mid");
         this.backLeg = body.getChild("leg_back");
-        this.maggot = maggotRoot;
-        for (int i = 0; i < MAGGOT_SEGMENT_COUNT; i++) {
-            this.maggotSegments[i] = this.maggot.getChild("segment" + i);
-        }
     }
 
     public static LayerDefinition createFlyBodyLayer() {
@@ -83,20 +74,6 @@ public class FlyModel<T extends FlyEntity> extends AgeableListModel<T> {
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
 
-    public static LayerDefinition createMaggotBodyLayer() {
-        MeshDefinition meshdefinition = new MeshDefinition();
-        PartDefinition partdefinition = meshdefinition.getRoot();
-        PartDefinition maggot = addPart(partdefinition, "maggot", CubeListBuilder.create(), PartPose.ZERO);
-        addMaggotSegment(maggot, 0, -1.5F, 0.0F, -1.0F, 3.0F, 2.0F, 2.0F, 0, 0, 0.0F, 22.0F, -3.5F);
-        addMaggotSegment(maggot, 1, -2.0F, 0.0F, -1.0F, 4.0F, 3.0F, 2.0F, 0, 4, 0.0F, 21.0F, -1.5F);
-        addMaggotSegment(maggot, 2, -3.0F, 0.0F, -1.5F, 6.0F, 4.0F, 3.0F, 0, 9, 0.0F, 20.0F, 1.0F);
-        addMaggotSegment(maggot, 3, -1.5F, 0.0F, -1.5F, 3.0F, 3.0F, 3.0F, 0, 16, 0.0F, 21.0F, 4.0F);
-        addMaggotSegment(maggot, 4, -1.0F, 0.0F, -1.5F, 2.0F, 2.0F, 3.0F, 0, 22, 0.0F, 22.0F, 7.0F);
-        addMaggotSegment(maggot, 5, -1.0F, 0.0F, -1.0F, 2.0F, 1.0F, 2.0F, 11, 0, 0.0F, 23.0F, 9.5F);
-        addMaggotSegment(maggot, 6, -0.5F, 0.0F, -1.0F, 1.0F, 1.0F, 2.0F, 13, 4, 0.0F, 23.0F, 11.5F);
-        return LayerDefinition.create(meshdefinition, 32, 32);
-    }
-
     private static PartDefinition addPart(
             PartDefinition parent,
             String name,
@@ -106,39 +83,11 @@ public class FlyModel<T extends FlyEntity> extends AgeableListModel<T> {
         return parent.addOrReplaceChild(name, cubes, pose);
     }
 
-    private static void addMaggotSegment(
-            PartDefinition maggot,
-            int index,
-            float x,
-            float y,
-            float z,
-            float width,
-            float height,
-            float depth,
-            int texU,
-            int texV,
-            float offsetX,
-            float offsetY,
-            float offsetZ
-    ) {
-        addPart(
-                maggot,
-                "segment" + index,
-                CubeListBuilder.create().texOffs(texU, texV).addBox(x, y, z, width, height, depth),
-                PartPose.offset(offsetX, offsetY, offsetZ)
-        );
-    }
-
     public void prepareMobModel(T entity, float limbSwing, float limbSwingAmount, float partialTick) {
         super.prepareMobModel(entity, limbSwing, limbSwingAmount, partialTick);
     }
 
     public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (entity.isBaby()) {
-            this.setupMaggotAnim(ageInTicks);
-            return;
-        }
-
         this.bone.xRot = 0.0F;
         boolean flag = entity.onGround() && entity.getDeltaMovement().lengthSqr() < 1.0E-7;
         if (flag) {
@@ -166,15 +115,6 @@ public class FlyModel<T extends FlyEntity> extends AgeableListModel<T> {
         }
     }
 
-    private void setupMaggotAnim(float ageInTicks) {
-        for (int i = 0; i < MAGGOT_SEGMENT_COUNT; i++) {
-            ModelPart part = this.maggotSegments[i];
-            float wave = ageInTicks * 0.9F + i * 0.15F * (float) Math.PI;
-            part.yRot = Mth.cos(wave) * (float) Math.PI * 0.05F * (float) (1 + Math.abs(i - 2));
-            part.x = Mth.sin(wave) * (float) Math.PI * 0.2F * (float) Math.abs(i - 2);
-        }
-    }
-
     @Override
     protected Iterable<ModelPart> headParts() {
         return ImmutableList.of();
@@ -182,6 +122,6 @@ public class FlyModel<T extends FlyEntity> extends AgeableListModel<T> {
 
     @Override
     protected Iterable<ModelPart> bodyParts() {
-        return this.young ? ImmutableList.of(this.maggot) : ImmutableList.of(this.bone);
+        return ImmutableList.of(this.bone);
     }
 }
