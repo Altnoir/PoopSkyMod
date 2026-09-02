@@ -196,10 +196,10 @@ public final class ItemTagGen {
                 PoItems.TOILET_PLUG.get(),
                 PoItems.TOILET_PLUG_WAND.get()
         );
-        tag(ItemTags.FOOT_ARMOR).add(PoItems.OMEN_BOOTS.get());
-        tag(ItemTags.LEG_ARMOR).add(PoItems.OMEN_LEGGINGS.get());
-        tag(ItemTags.CHEST_ARMOR).add(PoItems.OMEN_CHESTPLATE.get());
-        tag(ItemTags.HEAD_ARMOR).add(PoItems.OMEN_HELMET.get());
+        tag(ItemTags.FOOT_ARMOR).add(PoItems.OMEN_BOOTS.get(), PoItems.ROUNDWORM_BOOTS.get());
+        tag(ItemTags.LEG_ARMOR).add(PoItems.OMEN_LEGGINGS.get(), PoItems.ROUNDWORM_LEGGINGS.get());
+        tag(ItemTags.CHEST_ARMOR).add(PoItems.OMEN_CHESTPLATE.get(), PoItems.ROUNDWORM_CHESTPLATE.get());
+        tag(ItemTags.HEAD_ARMOR).add(PoItems.OMEN_HELMET.get(), PoItems.ROUNDWORM_HELMET.get());
         tag(ItemTags.EQUIPPABLE_ENCHANTABLE).addTag(PoTags.Items.SHITS);
         tag(ItemTags.VANISHING_ENCHANTABLE).addTag(PoTags.Items.SHITS);
 

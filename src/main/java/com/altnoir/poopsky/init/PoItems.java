@@ -99,6 +99,18 @@ public class PoItems {
     public static final ItemEntry<ArmorItem> OMEN_BOOTS = registerItemNoModel("omen_boots",
             prop -> new ArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
                     new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(24))));
+    public static final ItemEntry<ArmorItem> ROUNDWORM_HELMET = registerItemNoModel("roundworm_helmet",
+            prop -> new ArmorItem(PArmorMaterials.ROUNDWORM_ARMOR_MATERIAL, ArmorItem.Type.HELMET,
+                    prop.durability(ArmorItem.Type.HELMET.getDurability(7))));
+    public static final ItemEntry<ArmorItem> ROUNDWORM_CHESTPLATE = registerItemNoModel("roundworm_chestplate",
+            prop -> new ArmorItem(PArmorMaterials.ROUNDWORM_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE,
+                    prop.durability(ArmorItem.Type.CHESTPLATE.getDurability(7))));
+    public static final ItemEntry<ArmorItem> ROUNDWORM_LEGGINGS = registerItemNoModel("roundworm_leggings",
+            prop -> new ArmorItem(PArmorMaterials.ROUNDWORM_ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS,
+                    prop.durability(ArmorItem.Type.LEGGINGS.getDurability(7))));
+    public static final ItemEntry<ArmorItem> ROUNDWORM_BOOTS = registerItemNoModel("roundworm_boots",
+            prop -> new ArmorItem(PArmorMaterials.ROUNDWORM_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
+                    prop.durability(ArmorItem.Type.BOOTS.getDurability(7))));
 
     public static final ItemEntry<SmithingTemplateItem> OMEN_UPGRADE_SMITHING_TEMPLATE = registerItem("omen_upgrade_smithing_template",
             props -> OmenSmithingTemplateItem.createOmenUpgradeTemplate());

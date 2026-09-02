@@ -321,6 +321,36 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
         omenSmithing(recipeOutput, Items.GOLDEN_LEGGINGS, RecipeCategory.COMBAT, PoItems.OMEN_LEGGINGS.get());
         omenSmithing(recipeOutput, Items.GOLDEN_HELMET, RecipeCategory.COMBAT, PoItems.OMEN_HELMET.get());
         omenSmithing(recipeOutput, Items.GOLDEN_BOOTS, RecipeCategory.COMBAT, PoItems.OMEN_BOOTS.get());
+        roundwormArmorRecipes(recipeOutput);
+    }
+
+    private void roundwormArmorRecipes(RecipeOutput recipeOutput) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, PoItems.ROUNDWORM_HELMET)
+                .pattern("RRR")
+                .pattern("R R")
+                .define('R', PoBlocks.ROUNDWORM_BLOCK)
+                .unlockedBy(getItemName(PoBlocks.ROUNDWORM_BLOCK), has(PoBlocks.ROUNDWORM_BLOCK))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, PoItems.ROUNDWORM_CHESTPLATE)
+                .pattern("R R")
+                .pattern("RRR")
+                .pattern("RRR")
+                .define('R', PoBlocks.ROUNDWORM_BLOCK)
+                .unlockedBy(getItemName(PoBlocks.ROUNDWORM_BLOCK), has(PoBlocks.ROUNDWORM_BLOCK))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, PoItems.ROUNDWORM_LEGGINGS)
+                .pattern("RRR")
+                .pattern("R R")
+                .pattern("R R")
+                .define('R', PoBlocks.ROUNDWORM_BLOCK)
+                .unlockedBy(getItemName(PoBlocks.ROUNDWORM_BLOCK), has(PoBlocks.ROUNDWORM_BLOCK))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, PoItems.ROUNDWORM_BOOTS)
+                .pattern("R R")
+                .pattern("R R")
+                .define('R', PoBlocks.ROUNDWORM_BLOCK)
+                .unlockedBy(getItemName(PoBlocks.ROUNDWORM_BLOCK), has(PoBlocks.ROUNDWORM_BLOCK))
+                .save(recipeOutput);
     }
 
     private void buildBlockRecipes(RecipeOutput recipeOutput) {

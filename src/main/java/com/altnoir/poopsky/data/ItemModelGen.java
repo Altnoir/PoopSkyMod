@@ -53,6 +53,10 @@ public class ItemModelGen extends RegistrateItemModelProvider {
         trimmedArmorItem(PoItems.OMEN_CHESTPLATE);
         trimmedArmorItem(PoItems.OMEN_LEGGINGS);
         trimmedArmorItem(PoItems.OMEN_BOOTS);
+        trimmedArmorItem(PoItems.ROUNDWORM_HELMET);
+        trimmedArmorItem(PoItems.ROUNDWORM_CHESTPLATE);
+        trimmedArmorItem(PoItems.ROUNDWORM_LEGGINGS);
+        generated(PoItems.ROUNDWORM_BOOTS);
         withExistingParent(name(PoItems.POOLIME_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
         withExistingParent(name(PoItems.FLY_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
         withExistingParent(name(PoItems.SNAIL_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
