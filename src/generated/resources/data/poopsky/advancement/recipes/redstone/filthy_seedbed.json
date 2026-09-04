@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:filthy_seedbed"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "seedbed_curse": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:seedbed_curse"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "seedbed_curse"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "poopsky:filthy_seedbed"
+    ]
+  }
+}

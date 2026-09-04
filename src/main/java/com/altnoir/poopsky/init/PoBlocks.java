@@ -122,6 +122,9 @@ public class PoBlocks {
                     .sound(SoundType.SLIME_BLOCK)
                     .noOcclusion()));
 
+    public static final BlockEntry<FilthySeedbedBlock> FILTHY_SEEDBED = registerBlock("filthy_seedbed", 1,
+            props -> new FilthySeedbedBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT)));
+
     public static final BlockEntry<StairBlock> POOP_STAIRS = registerDecoMaterialBlock("poop_stairs", 88,
             props -> new StairBlock(POOP_BLOCK.get().defaultBlockState(), poopProperties()));
 

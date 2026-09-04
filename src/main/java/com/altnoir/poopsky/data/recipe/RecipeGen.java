@@ -541,6 +541,15 @@ public class RecipeGen extends RegistrateRecipeProvider implements IConditionBui
                 .define('C', PoBlocks.CUT_POOP_BLOCK)
                 .unlockedBy(getItemName(PoBlocks.MAGGOTS_BLOCK), has(PoBlocks.MAGGOTS_BLOCK))
                 .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.FILTHY_SEEDBED)
+                .pattern("SPS")
+                .pattern("PMP")
+                .pattern("SPS")
+                .define('S', PoBlocks.POOP_BLOCK)
+                .define('P', PoItems.SEEDBED_CURSE)
+                .define('M', PoBlocks.MAGGOTS_BLOCK)
+                .unlockedBy(getItemName(PoItems.SEEDBED_CURSE), has(PoItems.SEEDBED_CURSE))
+                .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.BROWN_ARCADE)
                 .pattern("ISI")

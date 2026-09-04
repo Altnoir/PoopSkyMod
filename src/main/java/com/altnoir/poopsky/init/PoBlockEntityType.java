@@ -48,6 +48,11 @@ public class PoBlockEntityType {
             .validBlock(PoBlocks.BREEDING_CHEST)
             .register();
 
+    public static final BlockEntityEntry<FilthySeedbedBlockEntity> FILTHY_SEEDBED = REGISTRATE
+            .<FilthySeedbedBlockEntity>blockEntity("filthy_seedbed", (type, pos, state) -> new FilthySeedbedBlockEntity(pos, state))
+            .validBlock(PoBlocks.FILTHY_SEEDBED)
+            .register();
+
     public static final BlockEntityEntry<FlushToiletBlockEntity> FLUSH_TOILET = REGISTRATE
             .<FlushToiletBlockEntity>blockEntity("flush_toilet", (type, pos, state) -> new FlushToiletBlockEntity(pos, state))
             .validBlocks(PoBlocks.FLUSH_TOILET, PoBlocks.GOLDEN_FLUSH_TOILET)

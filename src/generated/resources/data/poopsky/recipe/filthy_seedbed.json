@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "M": {
+      "item": "poopsky:maggots_block"
+    },
+    "P": {
+      "item": "poopsky:seedbed_curse"
+    },
+    "S": {
+      "item": "poopsky:poop_block"
+    }
+  },
+  "pattern": [
+    "SPS",
+    "PMP",
+    "SPS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "poopsky:filthy_seedbed"
+  }
+}
