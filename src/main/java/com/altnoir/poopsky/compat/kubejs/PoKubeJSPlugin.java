@@ -7,7 +7,7 @@ import com.altnoir.poopsky.content.FlyTypeManager;
 import com.altnoir.poopsky.content.recipe.FlyBarrelRecipe;
 import com.altnoir.poopsky.content.recipe.POPExplosionRecipe;
 import com.altnoir.poopsky.content.recipe.SieveRecipe;
-import com.altnoir.poopsky.impl.creative.PoSectionedCreativeModeTab;
+import com.altnoir.abysslib.creative.ALSectionedCreativeModeTab;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -172,7 +172,7 @@ public final class PoKubeJSPlugin implements KubeJSPlugin {
         FlyTypeManager.INSTANCE.replaceKubeJsDefinitions(PoFlyTypes.INSTANCE.storedDefinitions());
         if (rebuildCreativeTab
                 && FMLLoader.getDist().isClient()
-                && PoItemGroups.POOPSKY_TAB.get() instanceof PoSectionedCreativeModeTab tab) {
+                && PoItemGroups.POOPSKY_TAB.get() instanceof ALSectionedCreativeModeTab tab) {
             tab.rebuild();
         }
         if (FMLLoader.getDist().isClient()) {

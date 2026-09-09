@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.worldgen;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.impl.registrate.PoRegistrate;
+import com.altnoir.abysslib.registrate.ALRegistrate;
 import com.altnoir.poopsky.worldgen.feature.PoHugeFungusConfiguration;
 import com.altnoir.poopsky.worldgen.feature.PoHugeFungusFeature;
 import com.tterrag.registrate.util.entry.RegistryEntry;
@@ -10,7 +10,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.feature.Feature;
 
 public class PoFeatures {
-    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
+    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
 
     public static final RegistryEntry<Feature<?>, Feature<PoHugeFungusConfiguration>> HUGE_PRIMO_FUNGUS = registerFeature("huge_primo_fungus");
 

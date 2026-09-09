@@ -2,7 +2,7 @@ package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.effect.*;
-import com.altnoir.poopsky.impl.registrate.PoRegistrate;
+import com.altnoir.abysslib.registrate.ALRegistrate;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.core.registries.Registries;
@@ -12,7 +12,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
 public class PoEffects {
-    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
+    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
 
     public static final RegistryEntry<MobEffect, MobEffect> FECAL_INCONTINENCE = registerMobEffect(
             "fecal_incontinence",

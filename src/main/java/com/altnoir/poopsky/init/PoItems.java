@@ -7,7 +7,7 @@ import com.altnoir.poopsky.content.item.PArmorMaterials;
 import com.altnoir.poopsky.content.item.PFoods;
 import com.altnoir.poopsky.content.item.PToolTiers;
 import com.altnoir.poopsky.content.item.p.*;
-import com.altnoir.poopsky.impl.registrate.PoRegistrate;
+import com.altnoir.abysslib.registrate.ALRegistrate;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import net.minecraft.ChatFormatting;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PoItems {
-    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
+    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
 
     static {
         REGISTRATE.defaultCreativeSection(PoItemGroups.TS_ITEMS);

@@ -5,11 +5,11 @@ import com.altnoir.poopsky.content.block.entity.*;
 import com.altnoir.poopsky.content.block.renderer.ArcadeBlockEntityRenderer;
 import com.altnoir.poopsky.content.block.renderer.MaggotsChunkLoaderBlockEntityRenderer;
 import com.altnoir.poopsky.content.block.renderer.SieveBlockEntityRenderer;
-import com.altnoir.poopsky.impl.registrate.PoRegistrate;
+import com.altnoir.abysslib.registrate.ALRegistrate;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 
 public class PoBlockEntityType {
-    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
+    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
 
     public static final BlockEntityEntry<ToiletBlockEntity> TOILET_BLOCK_ENTITY = REGISTRATE
             .<ToiletBlockEntity>blockEntity("toilet_block_entity", (type, pos, state) -> new ToiletBlockEntity(pos, state))

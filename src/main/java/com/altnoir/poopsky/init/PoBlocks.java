@@ -9,7 +9,7 @@ import com.altnoir.poopsky.content.block.p.MyceliumBlock;
 import com.altnoir.poopsky.content.item.p.CompooperBlockItem;
 import com.altnoir.poopsky.content.item.p.PoopSkyBlockItem;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
-import com.altnoir.poopsky.impl.registrate.PoRegistrate;
+import com.altnoir.abysslib.registrate.ALRegistrate;
 import com.altnoir.poopsky.impl.type.PoBlockSetType;
 import com.altnoir.poopsky.impl.type.PoWoodType;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
@@ -69,7 +69,7 @@ public class PoBlocks {
     protected static final float[] LEAVES_SAPLING_CHANCES = {0.1F, 0.125F, 0.25F, 0.5F};
     protected static final float[] LEAVES_STICK_CHANCES = {0.05F, 0.075F, 0.1F, 0.125F, 0.25F};
 
-    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
+    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
 
     private static final List<BlockEntry<ArcadeBlock>> ARCADE_BLOCKS = new ArrayList<>();
 

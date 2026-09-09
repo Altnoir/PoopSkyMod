@@ -2,7 +2,7 @@ package com.altnoir.poopsky.data;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.impl.PoTags;
-import com.altnoir.poopsky.impl.registrate.PoRegistrate;
+import com.altnoir.abysslib.registrate.ALRegistrate;
 import com.altnoir.poopsky.init.PoEntityType;
 import com.altnoir.poopsky.init.PoItems;
 import com.tterrag.registrate.providers.ProviderType;
@@ -33,7 +33,7 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import java.util.List;
 
 public final class EntityLootTableGen {
-    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
+    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
 
     private EntityLootTableGen() {
     }

@@ -4,7 +4,7 @@ import com.altnoir.poopsky.PoItemGroups;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.ToiletType;
-import com.altnoir.poopsky.impl.registrate.PoRegistrate;
+import com.altnoir.abysslib.registrate.ALRegistrate;
 import com.altnoir.poopsky.init.PoPotions;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateLangProvider;
@@ -12,7 +12,7 @@ import com.tterrag.registrate.providers.RegistrateLangProvider;
 import java.util.Map;
 
 public final class LangGen {
-    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
+    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
     private static RegistrateLangProvider provider; // 静态字段
 
     private LangGen() {

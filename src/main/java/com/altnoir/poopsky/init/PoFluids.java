@@ -2,7 +2,7 @@ package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.fluid.UrineLiquidBlock;
-import com.altnoir.poopsky.impl.registrate.PoRegistrate;
+import com.altnoir.abysslib.registrate.ALRegistrate;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -31,7 +31,7 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 public final class PoFluids {
     public static final ResourceLocation URINE_STILL_TEXTURE = PoopSky.loc("block/urine_liquid");
     public static final ResourceLocation URINE_FLOWING_TEXTURE = PoopSky.loc("block/urine_liquid_flowing");
-    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
+    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
 
     public static final RegistryEntry<FluidType, FluidType> URINE_FLUID_TYPE = REGISTRATE.simple(
             "urine",

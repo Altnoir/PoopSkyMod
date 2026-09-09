@@ -4,7 +4,6 @@ import com.altnoir.poopsky.client.IntroController;
 import com.altnoir.poopsky.client.PoAnimationController;
 import com.altnoir.poopsky.client.PoBedrockModelResources;
 import com.altnoir.poopsky.client.ToiletClientBlockExtensions;
-import com.altnoir.poopsky.client.creative.PoSectionedCreativeTabRenderer;
 import com.altnoir.poopsky.client.model.BakedModelEventHandler;
 import com.altnoir.poopsky.client.particle.DeathBlightParticle;
 import com.altnoir.poopsky.client.particle.LeavesParticle;
@@ -104,7 +103,7 @@ public class PoopSkyClient {
         modEventBus.addListener(ClientGameEvents::onPlayerHeartType);
         modEventBus.addListener(ArcadeWorldScreenRenderer::onRenderFrame);
         modEventBus.addListener(ArcadeWorldScreenRenderer::onLoggingOut);
-        modEventBus.addListener(PoSectionedCreativeTabRenderer::onRenderForeground);
+        // 分区创造栏标题渲染：由 AbyssLib 的 AbyssLibClient 自动注册（ALSectionedCreativeTabRenderer）
         modEventBus.addListener(ToiletHighlightRenderer::onRenderLevel);
         modEventBus.addListener(MaggotsChunkLoaderBlockEntityRenderer::onLevelUnload);
         modEventBus.addListener(IntroController::onLoggingOut);

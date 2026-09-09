@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.worldgen;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.impl.registrate.PoRegistrate;
+import com.altnoir.abysslib.registrate.ALRegistrate;
 import com.mojang.serialization.MapCodec;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
@@ -9,7 +9,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 
 public class PoChunkGenerators {
-    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
+    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
 
     public static final RegistryEntry<MapCodec<? extends ChunkGenerator>, MapCodec<PoVoidChunkGenerator>> VOID = registerChunkGenerator(
             "void", () -> PoVoidChunkGenerator.CODEC);

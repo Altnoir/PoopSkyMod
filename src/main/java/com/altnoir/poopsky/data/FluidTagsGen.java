@@ -2,7 +2,7 @@ package com.altnoir.poopsky.data;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.impl.PoTags;
-import com.altnoir.poopsky.impl.registrate.PoRegistrate;
+import com.altnoir.abysslib.registrate.ALRegistrate;
 import com.altnoir.poopsky.init.PoFluids;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateTagsProvider;
@@ -10,7 +10,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.material.Fluid;
 
 public final class FluidTagsGen {
-    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
+    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
 
     private FluidTagsGen() {
     }

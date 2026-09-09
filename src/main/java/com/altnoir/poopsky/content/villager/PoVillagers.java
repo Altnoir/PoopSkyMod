@@ -3,7 +3,7 @@ package com.altnoir.poopsky.content.villager;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.init.PoSoundEvents;
-import com.altnoir.poopsky.impl.registrate.PoRegistrate;
+import com.altnoir.abysslib.registrate.ALRegistrate;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -20,7 +20,7 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 public class PoVillagers {
-    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
+    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
 
     public static final ResourceKey<PoiType> COMPOOPER_POI_KEY = registryPoiKey("compooper");
     public static final ResourceKey<PoiType> TOILET_POI_KEY = registryPoiKey("toilet");

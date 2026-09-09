@@ -7,9 +7,9 @@ import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.content.item.p.GachaponItem;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.impl.PoTags;
-import com.altnoir.poopsky.impl.creative.PoCreativeTabSection;
-import com.altnoir.poopsky.impl.creative.PoSectionedCreativeModeTab;
-import com.altnoir.poopsky.impl.registrate.PoRegistrate;
+import com.altnoir.abysslib.creative.ALCreativeTabSection;
+import com.altnoir.abysslib.creative.ALSectionedCreativeModeTab;
+import com.altnoir.abysslib.registrate.ALRegistrate;
 import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
@@ -31,23 +31,23 @@ import java.util.List;
 import java.util.Objects;
 
 public class PoItemGroups {
-    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
+    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
 
     public static final String POOPSKY_TAB_KEY = "itemgroup.poopsky";
     public static final String POOPSKY_DECO_TAB_KEY = "itemgroup.poopsky_deco";
 
-    public static final PoCreativeTabSection TS_ITEMS = section("itemGroup.poopsky.section.items");
-    public static final PoCreativeTabSection TS_BLOCKS = section("itemGroup.poopsky.section.blocks");
-    public static final PoCreativeTabSection TS_MOBS = section("itemGroup.poopsky.section.mobs");
-    public static final PoCreativeTabSection TS_POTIONS = section("itemGroup.poopsky.section.potions");
+    public static final ALCreativeTabSection TS_ITEMS = section("itemGroup.poopsky.section.items");
+    public static final ALCreativeTabSection TS_BLOCKS = section("itemGroup.poopsky.section.blocks");
+    public static final ALCreativeTabSection TS_MOBS = section("itemGroup.poopsky.section.mobs");
+    public static final ALCreativeTabSection TS_POTIONS = section("itemGroup.poopsky.section.potions");
 
-    public static final PoCreativeTabSection TS_DECO_MATERIALS = section("itemGroup.poopsky_deco.section.materials");
-    public static final PoCreativeTabSection TS_DECO_TILES = section("itemGroup.poopsky_deco.section.tiles");
-    public static final PoCreativeTabSection TS_DECO_TOILETS = section("itemGroup.poopsky_deco.section.toilets");
+    public static final ALCreativeTabSection TS_DECO_MATERIALS = section("itemGroup.poopsky_deco.section.materials");
+    public static final ALCreativeTabSection TS_DECO_TILES = section("itemGroup.poopsky_deco.section.tiles");
+    public static final ALCreativeTabSection TS_DECO_TOILETS = section("itemGroup.poopsky_deco.section.toilets");
 
     public static final RegistryEntry<CreativeModeTab, CreativeModeTab> POOPSKY_TAB = REGISTRATE.generic("poopsky",
             Registries.CREATIVE_MODE_TAB, () ->
-                    PoSectionedCreativeModeTab.configure(
+                    ALSectionedCreativeModeTab.configure(
                             CreativeModeTab.builder()
                                     .title(Component.translatable(POOPSKY_TAB_KEY))
                                     .icon(PoBlocks.FLUSH_TOILET::asStack),
@@ -61,7 +61,7 @@ public class PoItemGroups {
 
     public static final RegistryEntry<CreativeModeTab, CreativeModeTab> POOPSKY_DECORATIVE = REGISTRATE.generic("poopsky_deco",
             Registries.CREATIVE_MODE_TAB, () ->
-                    PoSectionedCreativeModeTab.configure(
+                    ALSectionedCreativeModeTab.configure(
                             CreativeModeTab.builder()
                                     .title(Component.translatable(POOPSKY_DECO_TAB_KEY))
                                     .icon(PoBlocks.BROWN_TILE_BLOCK::asStack),
@@ -149,8 +149,8 @@ public class PoItemGroups {
         }
     }
 
-    private static PoCreativeTabSection section(String translationKey) {
-        return new PoCreativeTabSection(translationKey);
+    private static ALCreativeTabSection section(String translationKey) {
+        return new ALCreativeTabSection(translationKey);
     }
 
     public static List<String> translationKeys() {

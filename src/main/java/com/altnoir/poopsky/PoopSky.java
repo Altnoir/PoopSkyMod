@@ -14,7 +14,7 @@ import com.altnoir.poopsky.data.*;
 import com.altnoir.poopsky.data.lang.LangGen;
 import com.altnoir.poopsky.impl.event.PoGameEvents;
 import com.altnoir.poopsky.impl.event.PoModEvents;
-import com.altnoir.poopsky.impl.registrate.PoRegistrate;
+import com.altnoir.abysslib.registrate.ALRegistrate;
 import com.altnoir.poopsky.init.*;
 import com.altnoir.poopsky.worldgen.PoChunkGenerators;
 import com.altnoir.poopsky.worldgen.PoFeatures;
@@ -56,7 +56,7 @@ import org.slf4j.Logger;
 public class PoopSky {
     public static final String MOD_ID = "poopsky";
     public static final Logger LOGGER = LogUtils.getLogger();
-    private static final PoRegistrate REGISTRATE = PoRegistrate.create(MOD_ID);
+    private static final ALRegistrate REGISTRATE = ALRegistrate.create(MOD_ID);
 
     static {
         REGISTRATE.defaultCreativeTab((ResourceKey<CreativeModeTab>) null);
@@ -279,7 +279,7 @@ public class PoopSky {
         return BuiltInRegistries.BLOCK.getKey(block);
     }
 
-    public static PoRegistrate registrate() {
+    public static ALRegistrate registrate() {
         return REGISTRATE;
     }
 }

@@ -32,16 +32,15 @@ PoopSkyMod/
 └── src/main/
     ├── templates/META-INF/neoforge.mods.toml
     ├── java/com/altnoir/poopsky/
-    │   ├── PoopSky.java                 # @Mod 入口、PoRegistrate 实例与注册编排
+    │   ├── PoopSky.java                 # @Mod 入口、ALRegistrate 实例与注册编排
     │   ├── PoopSkyClient.java           # 客户端初始化
     │   ├── Config.java / PoItemGroups.java
     │   ├── init/                        # PoBlocks、PoItems、PoEntityType 等注册类
     │   ├── content/                     # 方块、物品、实体、配方、村民等玩法
     │   ├── client/                      # 菜单屏幕、模型、粒子、渲染、循环音效
     │   ├── compat/                      # Create、JEI、车万女仆兼容
-    │   ├── impl/                        # 事件、网络、datagen、标签、工具与 Registrate 扩展
+    │   ├── impl/                        # 事件、网络、datagen、标签与工具
     │   │   ├── network/                 # CustomPacketPayload 与 PoNetworking
-    │   │   ├── registrate/              # PoRegistrate 及各类 Datagen provider
     │   │   └── type/                    # 苍蝇/厕所类型与伤害类型数据
     │   ├── mixin/                        # Mixin 注入
     │   └── worldgen/                    # 虚空区块生成、特征、结构与树叶生成器
@@ -75,17 +74,24 @@ PoopSkyMod/
 | **KubeJS**          | `2101.7.2-build.295` | 脚本扩展                     |
 | **车万女仆**        | -                    | 女仆AI联动                   |
 
-## 注册模式 (PoRegistrate + DeferredRegister)
+## 注册模式 (AbyssLib ALRegistrate + DeferredRegister)
 
-项目以 `PoopSky.registrate()` 返回的自定义 `PoRegistrate` 为主。方块、物品、实体、方块实体、菜单、流体、效果、药水、粒子、音效、统计、村民与世界生成等均优先沿用 Registrate。`PoRecipes`、`PoComponents` 和 `PFluidTypes` 等少数注册类仍使用 NeoForge `DeferredRegister`。
+项目以 `PoopSky.registrate()` 返回的 `ALRegistrate`（来自前置库 **AbyssLib**，包
+`com.altnoir.abysslib.registrate`）为主。方块、物品、实体、方块实体、菜单、流体、效果、
+药水、粒子、音效、统计、村民与世界生成等均优先沿用 Registrate；**Registrate 与
+Simple Bedrock Model 由 AbyssLib 在运行时以 jarJar 唯一提供**，本模组只 compileOnly 引用，
+不得自行 jarJar。`PoRecipes`、`PoComponents` 和 `PFluidTypes` 等少数注册类仍使用
+NeoForge `DeferredRegister`。
 
-`PoRegistrate.create(MOD_ID)` 会自行挂载 mod event bus；每个注册类保留空 `register()` 方法用于触发类加载，由 `PoopSky` 构造函数统一调用。
+`ALRegistrate.create(MOD_ID)` 会自行挂载 mod event bus；每个注册类保留空 `register()`
+方法用于触发类加载，由 `PoopSky` 构造函数统一调用。创造栏分区/标题渲染亦由 AbyssLib
+提供（`ALCreativeTabSection` / `ALSectionedCreativeModeTab`，客户端自动渲染）。
 
 ### 方块注册
 
 ```java
 // PoBlocks.java
-private static final PoRegistrate REGISTRATE = PoopSky.registrate();
+private static final ALRegistrate REGISTRATE = PoopSky.registrate();
 
 public static final BlockEntry<PoopBlock> POOP_BLOCK = registerPoopBlock("poop_block",
         props -> new PoopBlock(poopProperties()
@@ -103,7 +109,7 @@ public static final BlockEntry<PoopBlock> POOP_BLOCK = registerPoopBlock("poop_b
 
 ```java
 // PoItems.java
-private static final PoRegistrate REGISTRATE = PoopSky.registrate();
+private static final ALRegistrate REGISTRATE = PoopSky.registrate();
 
 public static final ItemEntry<PoopItem> POOP = registerItem("poop",
         props -> new PoopItem(props.food(PFoods.POOP).stacksTo(88)));

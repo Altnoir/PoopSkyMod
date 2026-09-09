@@ -26,8 +26,7 @@ public class FrogspawnBlockMixin {
     }
 
     @WrapMethod(method = "tick")
-    private void poopsky$hatchBasilisks(BlockState state, ServerLevel level, BlockPos pos, RandomSource random,
-                                        Operation<Void> original) {
+    private void poopsky$hatchBasilisks(BlockState state, ServerLevel level, BlockPos pos, RandomSource random, Operation<Void> original) {
         if (!level.getFluidState(pos.below()).is(PoFluids.URINE.get())
                 && !level.getFluidState(pos.below()).is(PoFluids.FLOWING_URINE.get())) {
             original.call(state, level, pos, random);
