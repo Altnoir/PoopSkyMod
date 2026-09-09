@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.content.entity.p;
 
-import com.altnoir.poopsky.PoopSky;
+import com.altnoir.abysslib.AbyssLib;
 import com.altnoir.poopsky.content.item.p.GachaponItem;
 import com.altnoir.poopsky.init.PoEntityType;
 import net.minecraft.core.BlockPos;
@@ -124,7 +124,7 @@ public class GachaponEntity extends ThrowableProjectile {
             return;
         }
 
-        ResourceLocation id = PoopSky.tryParse(mobId);
+        ResourceLocation id = AbyssLib.tryParse(mobId);
         if (id == null) {
             return;
         }

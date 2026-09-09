@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.content.item.p;
 
-import com.altnoir.poopsky.PoopSky;
+import com.altnoir.abysslib.AbyssLib;
 import com.altnoir.poopsky.content.entity.p.GachaponEntity;
 import com.altnoir.poopsky.init.PoComponents;
 import com.altnoir.poopsky.init.PoItems;
@@ -106,7 +106,7 @@ public class GachaponItem extends Item implements ProjectileItem {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
         String mobId = getMobId(stack);
         if (mobId != null && !mobId.isBlank()) {
-            ResourceLocation id = PoopSky.tryParse(mobId);
+            ResourceLocation id = AbyssLib.tryParse(mobId);
             var entityType = id != null ? BuiltInRegistries.ENTITY_TYPE.get(id) : null;
             MutableComponent name = entityType != null
                     ? Component.translatable(entityType.getDescriptionId())

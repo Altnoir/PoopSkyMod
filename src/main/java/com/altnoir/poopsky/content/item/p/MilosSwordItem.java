@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.content.item.p;
 
-import com.altnoir.poopsky.PoopSky;
+import com.altnoir.abysslib.AbyssLib;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.init.PoEffects;
 import net.minecraft.resources.ResourceLocation;
@@ -16,7 +16,7 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 
 public class MilosSwordItem extends SwordItem {
-    public static final ResourceLocation BASE_INTERACTION_RANGE_ID = PoopSky.mcloc("base_interaction_range");
+    public static final ResourceLocation BASE_INTERACTION_RANGE_ID = AbyssLib.mcloc("base_interaction_range");
 
     public MilosSwordItem(Tier tier, Properties properties) {
         super(tier, properties);

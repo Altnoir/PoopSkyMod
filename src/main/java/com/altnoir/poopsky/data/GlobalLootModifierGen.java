@@ -1,7 +1,8 @@
 package com.altnoir.poopsky.data;
 
-import com.altnoir.poopsky.PoopSky;
+import com.altnoir.abysslib.AbyssLib;
 import com.altnoir.abysslib.registrate.ALRegistrate;
+import com.altnoir.poopsky.PoopSky;
 import com.tterrag.registrate.providers.ProviderType;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.FishingHookPredicate;
@@ -36,7 +37,7 @@ public final class GlobalLootModifierGen extends GlobalLootModifierProvider {
                 new AddTableLootModifier(
                         new LootItemCondition[]{
                                 LootTableIdCondition.builder(
-                                        PoopSky.mcloc("gameplay/fishing")
+                                        AbyssLib.mcloc("gameplay/fishing")
                                 ).build(),
                                 LootItemEntityPropertyCondition.hasProperties(
                                         LootContext.EntityTarget.THIS,

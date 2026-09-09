@@ -7,6 +7,7 @@ import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.content.item.p.GachaponItem;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.impl.PoTags;
+import com.altnoir.abysslib.creative.ALBannerStyle;
 import com.altnoir.abysslib.creative.ALCreativeTabSection;
 import com.altnoir.abysslib.creative.ALSectionedCreativeModeTab;
 import com.altnoir.abysslib.registrate.ALRegistrate;
@@ -36,6 +37,14 @@ public class PoItemGroups {
     public static final String POOPSKY_TAB_KEY = "itemgroup.poopsky";
     public static final String POOPSKY_DECO_TAB_KEY = "itemgroup.poopsky_deco";
 
+    /** PoopSky 创造栏横幅配色（蓝系，两个标签页共用）。 */
+    private static final ALBannerStyle BANNER = ALBannerStyle.colors(
+            0xFF4A3728,  // 背景
+            0xFF6B5440,  // 暗边框
+            0xFF8B7355,  // 亮边框
+            0xFFD4C4A8   // 文字
+    );
+
     public static final ALCreativeTabSection TS_ITEMS = section("itemGroup.poopsky.section.items");
     public static final ALCreativeTabSection TS_BLOCKS = section("itemGroup.poopsky.section.blocks");
     public static final ALCreativeTabSection TS_MOBS = section("itemGroup.poopsky.section.mobs");
@@ -51,6 +60,7 @@ public class PoItemGroups {
                             CreativeModeTab.builder()
                                     .title(Component.translatable(POOPSKY_TAB_KEY))
                                     .icon(PoBlocks.FLUSH_TOILET::asStack),
+                            BANNER,
                             PoItemGroups::populateBasicSections,
                             TS_ITEMS,
                             TS_BLOCKS,
@@ -65,6 +75,7 @@ public class PoItemGroups {
                             CreativeModeTab.builder()
                                     .title(Component.translatable(POOPSKY_DECO_TAB_KEY))
                                     .icon(PoBlocks.BROWN_TILE_BLOCK::asStack),
+                            BANNER,
                             parameters -> populateDecorativeSections(),
                             TS_DECO_MATERIALS,
                             TS_DECO_TILES,

@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.compat.jei;
 
+import com.altnoir.abysslib.AbyssLib;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.p.ArcadeBlock;
 import com.altnoir.poopsky.data.ArcadeLootGen;
@@ -69,7 +70,7 @@ public final class ArcadeLootRecipes {
             }
 
             ItemStack input = new ItemStack(entry.get());
-            String blockPath = PoopSky.getBlockPath(entry.get());
+            String blockPath = AbyssLib.getBlockPath(entry.get());
             List<ArcadeLootRecipe.Output> outputs = calculateOutputs(parsedOutputs);
             int pageCount = (outputs.size() + ArcadeLootRecipe.OUTPUT_CAPACITY - 1) / ArcadeLootRecipe.OUTPUT_CAPACITY;
             for (int page = 0; page < pageCount; page++) {

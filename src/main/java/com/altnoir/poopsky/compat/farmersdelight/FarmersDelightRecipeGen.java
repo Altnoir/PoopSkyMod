@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.compat.farmersdelight;
 
-import com.altnoir.poopsky.PoopSky;
+import com.altnoir.abysslib.AbyssLib;
 import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
@@ -80,6 +80,6 @@ public class FarmersDelightRecipeGen {
     }
 
     public static ResourceLocation loc(String path) {
-        return PoopSky.modloc(PoMods.FARMERSDELIGHT.id(), path);
+        return AbyssLib.modloc(PoMods.FARMERSDELIGHT.id(), path);
     }
 }

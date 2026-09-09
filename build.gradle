@@ -205,11 +205,15 @@ dependencies {
     implementation("net.createmod.ponder:Ponder-NeoForge-${minecraft_version}:${ponder_version}")
     compileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-${minecraft_version}:${flywheel_version}")
     runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-${minecraft_version}:${flywheel_version}")
-    // Registrate / Simple Bedrock Model：运行时由 AbyssLib 的 jarJar 唯一提供（禁止再各自 jarJar）。
-    // AbyssLib 的 POM runtime 依赖会把两者带入 dev/运行 classpath；编译期 API 用 compileOnly 声明。
-    implementation("com.altnoir.abysslib:AbyssLib:1.1.0")
-    compileOnly "com.tterrag.registrate:Registrate:${registrate_version}"
-    compileOnly "com.github.mcmodderanchor:simplebedrockmodel:${sbm_version}-neoforge-mc1.21.1"
+    // Registrate：由 AbyssLib 提供（api 编译期 + jarJar 运行时），禁止本模组再各自 jarJar。
+    implementation("com.altnoir.abysslib:AbyssLib:$abysslib_version")
+    // Simple Bedrock Model。
+    implementation jarJar("com.github.mcmodderanchor:simplebedrockmodel:$sbm_version-neoforge-mc1.21.1") {
+        version {
+            prefer "$sbm_version"
+        }
+    }
+    // mae：SBM 的动画运行库，编译期需要（运行时由 SBM 的 jar-in-jar 内嵌提供）。
     compileOnly("com.maydaymemory:mae:$mae_version") {
         exclude group: 'com.google.code.gson', module: 'gson'
         exclude group: 'com.google.code.findbugs', module: 'jsr305'

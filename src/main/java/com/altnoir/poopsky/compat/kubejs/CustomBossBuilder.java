@@ -1,12 +1,8 @@
 package com.altnoir.poopsky.compat.kubejs;
 
-import com.altnoir.poopsky.PoopSky;
+import com.altnoir.abysslib.AbyssLib;
 import com.altnoir.poopsky.game.danmaku.CircularRotation;
-import com.altnoir.poopsky.game.danmaku.modifier.BossModifierTemplate;
-import com.altnoir.poopsky.game.danmaku.modifier.FloatProvider;
-import com.altnoir.poopsky.game.danmaku.modifier.IntProvider;
-import com.altnoir.poopsky.game.danmaku.modifier.UniformFloat;
-import com.altnoir.poopsky.game.danmaku.modifier.UniformInt;
+import com.altnoir.poopsky.game.danmaku.modifier.*;
 import com.altnoir.poopsky.game.danmaku.movement.BossMovement;
 import com.altnoir.poopsky.game.danmaku.movement.LeftRightBossMovement;
 import com.altnoir.poopsky.game.danmaku.movement.OrbitBossMovement;
@@ -169,7 +165,7 @@ public final class CustomBossBuilder {
     }
 
     public CustomBossBuilder loot(String itemId) {
-        ResourceLocation item = PoopSky.tryParse(itemId);
+        ResourceLocation item = AbyssLib.tryParse(itemId);
         if (item == null || !BuiltInRegistries.ITEM.containsKey(item)) {
             throw new IllegalArgumentException("Invalid item id: " + itemId);
         }

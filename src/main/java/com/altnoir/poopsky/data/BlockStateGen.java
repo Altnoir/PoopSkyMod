@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.data;
 
+import com.altnoir.abysslib.AbyssLib;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.ChiliVines;
@@ -1165,15 +1166,15 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
     }
 
     private String getItemPath(Block block) {
-        return PoopSky.getItemPath(block.asItem());
+        return AbyssLib.getItemPath(block.asItem());
     }
 
     private String getBlockPath(Block block) {
-        return PoopSky.getBlockKey(block).getPath();
+        return AbyssLib.getBlockKey(block).getPath();
     }
 
     private String getBlockNameSpace(Block block) {
-        return PoopSky.getBlockKey(block).getNamespace();
+        return AbyssLib.getBlockKey(block).getNamespace();
     }
 
     private ResourceLocation toiletTexture(ToiletType toiletType) {
@@ -1182,11 +1183,11 @@ public class BlockStateGen extends RegistrateBlockstateProvider {
             String namespace = toiletType.sourceBlock() != null
                     ? getBlockNameSpace(Objects.requireNonNull(toiletType.sourceBlock()))
                     : PoopSky.MOD_ID;
-            return PoopSky.modloc(namespace, "block/" + tex);
+            return AbyssLib.modloc(namespace, "block/" + tex);
         }
         Block sourceBlock = toiletType.sourceBlock();
         String key = getBlockNameSpace(sourceBlock);
         String path = getBlockPath(sourceBlock);
-        return PoopSky.modloc(key, "block/" + path);
+        return AbyssLib.modloc(key, "block/" + path);
     }
 }

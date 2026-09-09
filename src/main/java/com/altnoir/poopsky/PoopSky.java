@@ -1,5 +1,7 @@
 package com.altnoir.poopsky;
 
+import com.altnoir.abysslib.AbyssLib;
+import com.altnoir.abysslib.registrate.ALRegistrate;
 import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.compat.create.CreatePlugin;
 import com.altnoir.poopsky.compat.maid.MaidPlugin;
@@ -14,7 +16,6 @@ import com.altnoir.poopsky.data.*;
 import com.altnoir.poopsky.data.lang.LangGen;
 import com.altnoir.poopsky.impl.event.PoGameEvents;
 import com.altnoir.poopsky.impl.event.PoModEvents;
-import com.altnoir.abysslib.registrate.ALRegistrate;
 import com.altnoir.poopsky.init.*;
 import com.altnoir.poopsky.worldgen.PoChunkGenerators;
 import com.altnoir.poopsky.worldgen.PoFeatures;
@@ -27,7 +28,6 @@ import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -35,7 +35,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.FlowerPotBlock;
@@ -248,35 +247,7 @@ public class PoopSky {
     }
 
     public static ResourceLocation loc(String path) {
-        return modloc(PoopSky.MOD_ID, path);
-    }
-
-    public static ResourceLocation modloc(String namespace, String path) {
-        return ResourceLocation.fromNamespaceAndPath(namespace, path);
-    }
-
-    public static ResourceLocation mcloc(String path) {
-        return ResourceLocation.withDefaultNamespace(path);
-    }
-
-    public static ResourceLocation parse(String location) {
-        return ResourceLocation.parse(location);
-    }
-
-    public static ResourceLocation tryParse(String location) {
-        return ResourceLocation.tryParse(location);
-    }
-
-    public static String getItemPath(Item item) {
-        return BuiltInRegistries.ITEM.getKey(item).getPath();
-    }
-
-    public static String getBlockPath(Block block) {
-        return getBlockKey(block).getPath();
-    }
-
-    public static ResourceLocation getBlockKey(Block block) {
-        return BuiltInRegistries.BLOCK.getKey(block);
+        return AbyssLib.modloc(MOD_ID, path);
     }
 
     public static ALRegistrate registrate() {

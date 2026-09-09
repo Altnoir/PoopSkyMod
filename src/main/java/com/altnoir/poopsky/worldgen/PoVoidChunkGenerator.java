@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.worldgen;
 
+import com.altnoir.abysslib.AbyssLib;
 import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.worldgen.structure.PoopIslandStructure;
@@ -45,8 +46,8 @@ import java.util.stream.Collectors;
 public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
     private static final int VIRTUAL_SURFACE_Y = 64;
     private static final int SPAWN_STRUCTURE_PROTECTION_RADIUS = 50;
-    private static final ResourceLocation STRONGHOLDS_STRUCTURE_SET = PoopSky.mcloc("strongholds");
-    private static final ResourceLocation STRONGHOLD_STRUCTURE = PoopSky.mcloc("stronghold");
+    private static final ResourceLocation STRONGHOLDS_STRUCTURE_SET = AbyssLib.mcloc("strongholds");
+    private static final ResourceLocation STRONGHOLD_STRUCTURE = AbyssLib.mcloc("stronghold");
 
     private static final Codec<List<ResourceKey<StructureSet>>> STRUCTURE_SET_KEYS_CODEC =
             Codec.either(ResourceLocation.CODEC.listOf(), ResourceLocation.CODEC).xmap(
@@ -95,7 +96,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
         super(biomeSource, settings);
         this.settings = settings;
         this.allowedStructureSets = allowedStructureSets;
-        this.generateNormal = settings.is(PoopSky.parse("minecraft:nether")) && !Config.voidNetherGeneration;
+        this.generateNormal = settings.is(AbyssLib.parse("minecraft:nether")) && !Config.voidNetherGeneration;
     }
 
     @Override
@@ -198,7 +199,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
             filterStructureStarts(registries, structureState.getLevelSeed(), chunk);
         }
 
-        if (!generateNormal && settings.is(PoopSky.parse("minecraft:overworld")) && isStructureAllowed(registries, PoopSky.loc("poop_island"))) {
+        if (!generateNormal && settings.is(AbyssLib.parse("minecraft:overworld")) && isStructureAllowed(registries, PoopSky.loc("poop_island"))) {
             PoopIslandStructure.addGuaranteedSpawnStart(registries, chunk, structureManager, templateManager, structureState.getLevelSeed());
         }
     }
@@ -291,7 +292,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
 
     @Nullable
     private Pair<BlockPos, Holder<Structure>> findGuaranteedSpawnIsland(ServerLevel level, HolderSet<Structure> structures, BlockPos pos, int searchRadius, boolean skipKnownStructures) {
-        if (skipKnownStructures || generateNormal || !settings.is(PoopSky.parse("minecraft:overworld")) || !isStructureAllowed(level.registryAccess(), PoopSky.loc("poop_island"))) {
+        if (skipKnownStructures || generateNormal || !settings.is(AbyssLib.parse("minecraft:overworld")) || !isStructureAllowed(level.registryAccess(), PoopSky.loc("poop_island"))) {
             return null;
         }
 
@@ -327,7 +328,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
 
     private void filterStructureStarts(RegistryAccess registries, long seed, ChunkAccess chunk) {
         Set<Structure> allowedStructures = resolveAllowedStructures(registries);
-        boolean protectSpawn = settings.is(PoopSky.parse("minecraft:overworld"));
+        boolean protectSpawn = settings.is(AbyssLib.parse("minecraft:overworld"));
         BlockPos spawn = protectSpawn ? defaultSpawnPosition(seed) : BlockPos.ZERO;
 
         for (Map.Entry<Structure, StructureStart> entry : List.copyOf(chunk.getAllStarts().entrySet())) {

@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.impl;
 
+import com.altnoir.abysslib.AbyssLib;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.compat.PoMods;
 import net.minecraft.core.registries.Registries;
@@ -131,7 +132,7 @@ public class PoTags {
         public static final TagKey<PaintingVariant> PLACEABLE = create("placeable");
 
         private static TagKey<PaintingVariant> create(String name) {
-            return TagKey.create(Registries.PAINTING_VARIANT, PoopSky.mcloc(name));
+            return TagKey.create(Registries.PAINTING_VARIANT, AbyssLib.mcloc(name));
         }
     }
 }

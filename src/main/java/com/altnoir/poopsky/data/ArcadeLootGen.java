@@ -1,8 +1,9 @@
 package com.altnoir.poopsky.data;
 
+import com.altnoir.abysslib.AbyssLib;
+import com.altnoir.abysslib.registrate.ALRegistrate;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.p.ArcadeBlock;
-import com.altnoir.abysslib.registrate.ALRegistrate;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
 import com.tterrag.registrate.providers.ProviderType;
@@ -34,7 +35,7 @@ public final class ArcadeLootGen {
     }
 
     public static ResourceKey<LootTable> lootTableKey(Block block) {
-        return ResourceKey.create(Registries.LOOT_TABLE, PoopSky.loc("gameplay/arcade/" + PoopSky.getBlockPath(block)));
+        return ResourceKey.create(Registries.LOOT_TABLE, PoopSky.loc("gameplay/arcade/" + AbyssLib.getBlockPath(block)));
     }
 
     private static void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> consumer) {

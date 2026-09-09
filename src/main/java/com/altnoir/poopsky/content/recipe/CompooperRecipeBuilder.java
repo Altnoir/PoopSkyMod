@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.content.recipe;
 
+import com.altnoir.abysslib.AbyssLib;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.init.PoRecipes;
 import net.minecraft.advancements.Advancement;
@@ -68,7 +69,7 @@ public final class CompooperRecipeBuilder implements RecipeBuilder {
 
     @Override
     public void save(@NotNull RecipeOutput recipeOutput) {
-        String itemId = PoopSky.getItemPath(output.getItem());
+        String itemId = AbyssLib.getItemPath(output.getItem());
         save(recipeOutput, itemId);
     }
 

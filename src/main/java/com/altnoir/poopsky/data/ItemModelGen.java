@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.data;
 
+import com.altnoir.abysslib.AbyssLib;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.init.FlyTypes;
@@ -154,7 +155,7 @@ public class ItemModelGen extends RegistrateItemModelProvider {
         String[] colors = {"yellow", "red", "blue"};
         for (int i = 0; i < colors.length; i++) {
             builder.override()
-                    .predicate(PoopSky.mcloc("custom_model_data"), modelData[i])
+                    .predicate(AbyssLib.mcloc("custom_model_data"), modelData[i])
                     .model(new ModelFile.UncheckedModelFile(PoopSky.loc("item/gachapon_" + colors[i])))
                     .end();
         }
@@ -176,7 +177,7 @@ public class ItemModelGen extends RegistrateItemModelProvider {
             String armorItemPath = name(itemDeferredItem);
             String trimPath = "trims/items/" + armorType + "_trim_" + trimMaterial.location().getPath();
             String currentTrimName = armorItemPath + "_" + trimMaterial.location().getPath() + "_trim";
-            ResourceLocation trimResLoc = PoopSky.parse(trimPath); // minecraft namespace
+            ResourceLocation trimResLoc = AbyssLib.parse(trimPath); // minecraft namespace
             ResourceLocation trimNameResLoc = modLoc(currentTrimName);
 
             existingFileHelper.trackGenerated(trimResLoc, PackType.CLIENT_RESOURCES, ".png", "textures");

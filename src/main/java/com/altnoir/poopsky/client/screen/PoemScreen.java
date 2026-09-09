@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.client.screen;
 
+import com.altnoir.abysslib.AbyssLib;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.client.PoAnimationController;
 import com.altnoir.poopsky.init.PoSoundEvents;
@@ -33,7 +34,7 @@ public class PoemScreen extends Screen {
     private static final String TEXT_DIRECTORY = "texts/poopsky/";
     private static final ResourceLocation FALLBACK_TEXT_LOCATION = PoopSky.loc(TEXT_DIRECTORY + "en_us.txt");
     private static final ResourceLocation TITLE_LOCATION = PoopSky.loc("textures/gui/poopsky.png");
-    private static final ResourceLocation VIGNETTE_LOCATION = PoopSky.mcloc("textures/misc/credits_vignette.png");
+    private static final ResourceLocation VIGNETTE_LOCATION = AbyssLib.mcloc("textures/misc/credits_vignette.png");
 
     private static final int CONTENT_WIDTH = 256;
     private static final int TITLE_TEXTURE_WIDTH = 710;

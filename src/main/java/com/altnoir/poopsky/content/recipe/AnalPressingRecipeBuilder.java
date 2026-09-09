@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.content.recipe;
 
+import com.altnoir.abysslib.AbyssLib;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.init.PoRecipes;
 import net.minecraft.advancements.Advancement;
@@ -67,7 +68,7 @@ public final class AnalPressingRecipeBuilder implements RecipeBuilder {
 
     @Override
     public void save(RecipeOutput recipeOutput) {
-        String itemId = PoopSky.getItemPath(output.asItem());
+        String itemId = AbyssLib.getItemPath(output.asItem());
         save(recipeOutput, itemId);
     }
 

@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.block.entity;
 
-import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.ToiletType;
+import com.altnoir.poopsky.content.block.abs.AbstractLinkedToiletBlockEntity;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.block.p.HardToiletBlock;
@@ -10,27 +10,20 @@ import com.altnoir.poopsky.init.PoFluids;
 import com.altnoir.poopsky.init.ToiletTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import org.jetbrains.annotations.Nullable;
 
-public class ToiletBlockEntity extends BlockEntity {
-    private BlockPos linkedPos;
-    private String linkedDim;
+public class ToiletBlockEntity extends AbstractLinkedToiletBlockEntity {
     private ToiletType toiletType;
 
     public final FluidTank fluidTank = new FluidTank(8888000) {
@@ -82,54 +75,11 @@ public class ToiletBlockEntity extends BlockEntity {
         }
     }
 
-    public String getLinkedDim() {
-        return linkedDim;
-    }
-
-    public BlockPos getLinkedPos() {
-        return linkedPos;
-    }
-
-    public void clearLinkedBlock() {
-        if (level == null || level.isClientSide()) return;
-        if (linkedPos == null || linkedDim == null || linkedDim.isBlank()) return;
-
-        var targetDimension = PoopSky.tryParse(linkedDim);
-        if (targetDimension == null) return;
-
-        var server = ((ServerLevel) level).getServer();
-        var targetWorld = server.getLevel(ResourceKey.create(Registries.DIMENSION, targetDimension));
-        if (targetWorld == null) return;
-
-        var chunkPos = new ChunkPos(this.getLinkedPos());
-
-        targetWorld.getChunkSource().getChunk(chunkPos.x, chunkPos.z, ChunkStatus.FULL, true);
-
-        if (targetWorld.getBlockEntity(linkedPos) instanceof ToiletBlockEntity be) {
-            be.setLinkedPos(BlockPos.ZERO, "");
-        }
-    }
-
-    public void setLinkedPos(BlockPos pos, String dim) {
-        this.linkedPos = pos;
-        this.linkedDim = dim;
-        this.setChanged();
-    }
-
-    public void setLinkedPos(BlockPos pos, ServerLevel serverLevel) {
-        this.linkedPos = pos;
-        this.linkedDim = serverLevel.dimension().location().toString();
-        this.setChanged();
-    }
-
     @Override
     public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         this.fluidTank.readFromNBT(registries, tag);
-        if (tag.contains("LinkedPos")) {
-            this.linkedPos = BlockPos.of(tag.getLong("LinkedPos"));
-            this.linkedDim = tag.getString("LinkedDim");
-        }
+        loadLinkedData(tag);
         if (tag.contains("ToiletType")) {
             String id = tag.getString("ToiletType");
             ToiletType type = ToiletType.byId(id);
@@ -147,10 +97,7 @@ public class ToiletBlockEntity extends BlockEntity {
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         this.fluidTank.writeToNBT(registries, tag);
-        if (linkedPos != null && linkedDim != null) {
-            tag.putLong("LinkedPos", linkedPos.asLong());
-            tag.putString("LinkedDim", linkedDim);
-        }
+        saveLinkedData(tag);
         if (toiletType != null) {
             tag.putString("ToiletType", toiletType.id());
         }
@@ -159,10 +106,7 @@ public class ToiletBlockEntity extends BlockEntity {
     @Override
     public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider registries) {
         super.handleUpdateTag(tag, registries);
-        if (tag.contains("LinkedPos")) {
-            this.linkedPos = BlockPos.of(tag.getLong("LinkedPos"));
-            this.linkedDim = tag.getString("LinkedDim");
-        }
+        loadLinkedData(tag);
         if (tag.contains("ToiletType")) {
             String id = tag.getString("ToiletType");
             ToiletType type = ToiletType.byId(id);

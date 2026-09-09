@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.impl.util;
 
-import com.altnoir.poopsky.PoopSky;
+import com.altnoir.abysslib.AbyssLib;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.entity.FlushToiletBlockEntity;
@@ -447,7 +447,7 @@ public class ToiletUtil {
         var server = level.getServer();
         if (server == null) return false;
 
-        var targetDimension = PoopSky.tryParse(linkedDim);
+        var targetDimension = AbyssLib.tryParse(linkedDim);
         if (targetDimension == null) return false;
 
         var targetWorld = server.getLevel(ResourceKey.create(Registries.DIMENSION, targetDimension));

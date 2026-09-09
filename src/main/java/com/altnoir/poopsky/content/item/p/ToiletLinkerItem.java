@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.content.item.p;
 
-import com.altnoir.poopsky.PoopSky;
+import com.altnoir.abysslib.AbyssLib;
 import com.altnoir.poopsky.content.block.ToiletComponent;
 import com.altnoir.poopsky.content.block.entity.FlushToiletBlockEntity;
 import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
@@ -142,7 +142,7 @@ public class ToiletLinkerItem extends PoBaseItem {
 
     private Optional<ServerLevel> getLevelFromKey(MinecraftServer server, String dimStr) {
         if (dimStr.isEmpty()) return Optional.empty();
-        ResourceLocation loc = PoopSky.tryParse(dimStr);
+        ResourceLocation loc = AbyssLib.tryParse(dimStr);
         if (loc == null) return Optional.empty();
         ResourceKey<Level> registryKey = ResourceKey.create(Registries.DIMENSION, loc);
         return Optional.ofNullable(server.getLevel(registryKey));
