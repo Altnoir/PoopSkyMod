@@ -32,7 +32,7 @@ PoopSkyMod/
 └── src/main/
     ├── templates/META-INF/neoforge.mods.toml
     ├── java/com/altnoir/poopsky/
-    │   ├── PoopSky.java                 # @Mod 入口、ALRegistrate 实例与注册编排
+    │   ├── PoopSky.java                 # @Mod 入口、Reginth 实例与注册编排
     │   ├── PoopSkyClient.java           # 客户端初始化
     │   ├── Config.java / PoItemGroups.java
     │   ├── init/                        # PoBlocks、PoItems、PoEntityType 等注册类
@@ -74,24 +74,45 @@ PoopSkyMod/
 | **KubeJS**          | `2101.7.2-build.295` | 脚本扩展                     |
 | **车万女仆**        | -                    | 女仆AI联动                   |
 
-## 注册模式 (AbyssLib ALRegistrate + DeferredRegister)
+## 注册模式 (AbyssLib Reginth + DeferredRegister)
 
-项目以 `PoopSky.registrate()` 返回的 `ALRegistrate`（来自前置库 **AbyssLib**，包
-`com.altnoir.abysslib.registrate`）为主。方块、物品、实体、方块实体、菜单、流体、效果、
-药水、粒子、音效、统计、村民与世界生成等均优先沿用 Registrate；**Registrate 与
-Simple Bedrock Model 由 AbyssLib 在运行时以 jarJar 唯一提供**，本模组只 compileOnly 引用，
-不得自行 jarJar。`PoRecipes`、`PoComponents` 和 `PFluidTypes` 等少数注册类仍使用
-NeoForge `DeferredRegister`。
+项目以 `PoopSky.registrate()` 返回的 `Reginth`（来自前置库 **AbyssLib**，包
+`com.altnoir.abysslib.reginth`）为主。方块、物品、实体、方块实体、菜单、流体、效果、
+药水、粒子、音效、统计、村民与世界生成等均优先沿用 Reginth；**AbyssLib 自 1.4.0 起把注册框架
+源码级内置**（fork 自上游 Registrate，改名 `Reginth`），类就在 abysslib 的 jar 里，
+本模组无需声明任何注册框架依赖、也不得自行 jarJar。`PoRecipes`、`PoComponents` 和
+`PFluidTypes` 等少数注册类仍使用 NeoForge `DeferredRegister`。
 
-`ALRegistrate.create(MOD_ID)` 会自行挂载 mod event bus；每个注册类保留空 `register()`
+`Reginth.create(MOD_ID)` 会自行挂载 mod event bus；每个注册类保留空 `register()`
 方法用于触发类加载，由 `PoopSky` 构造函数统一调用。创造栏分区/标题渲染亦由 AbyssLib
 提供（`ALCreativeTabSection` / `ALSectionedCreativeModeTab`，客户端自动渲染）。
+
+> **上游 Registrate 的残留用法（`compileOnly` + `runtimeOnly`，均为被动/环境需求）**
+>
+> `build.gradle` 里声明了上游 `com.tterrag.registrate:Registrate`，**这不是本模组的注册框架**——
+> 本模组自己的注册一律用 `Reginth`。这两行存在的原因是：
+>
+> - **`compileOnly`——Create 的 API 传染**。Create 把上游 Registrate 类型写进了公开 API
+>   （`AllItems.PROPELLER` 的类型是 `com.tterrag.registrate.util.entry.ItemEntry<Item>`，
+>   `AllBlocks.ENCASED_FAN` 是 `...BlockEntry<EncasedFanBlock>`），javac 类型检查时必须解析这些
+>   声明。**本模组源码没有 import registrate**，触碰点集中在：
+>   `compat/jei/create/FanDigestingCategory.java:32-33`、
+>   `data/recipe/RecipeGen.java:945,947,949,953,954`。删掉本行会直接编译失败。
+> - **`runtimeOnly`——dev 运行环境需求**。AbyssLib ≤1.3.0 曾用 jarJar 内嵌上游 Registrate，
+>   所以旧 dev 运行时类路径上有 `com.tterrag.registrate`；1.4.0 改源码内置后不再提供，
+>   导致 `run/mods` 下引用该包类型的第三方 mod（如车万女仆）mixin 应用失败并崩溃：
+>   `MixinTransformerError ... ClassNotFoundException: com.tterrag.registrate.util.entry.ItemEntry`
+>   （无 crash-report、`latest.log` 中途截断，极难定位）。
+>
+> 两者都**不进发布产物**（`compileOnly`/`runtimeOnly` 都不打进 jar）；正式环境由 Create 官方分发内嵌提供。
+> 若日后想彻底去掉 `compileOnly`，把上述触碰点的 `ItemEntry`/`BlockEntry` 改为
+> `.get()` / `.asItem()` 先取出具体类型即可，代价是失去编译期类型保护。
 
 ### 方块注册
 
 ```java
 // PoBlocks.java
-private static final ALRegistrate REGISTRATE = PoopSky.registrate();
+private static final Reginth REGISTRATE = PoopSky.registrate();
 
 public static final BlockEntry<PoopBlock> POOP_BLOCK = registerPoopBlock("poop_block",
         props -> new PoopBlock(poopProperties()
@@ -109,7 +130,7 @@ public static final BlockEntry<PoopBlock> POOP_BLOCK = registerPoopBlock("poop_b
 
 ```java
 // PoItems.java
-private static final ALRegistrate REGISTRATE = PoopSky.registrate();
+private static final Reginth REGISTRATE = PoopSky.registrate();
 
 public static final ItemEntry<PoopItem> POOP = registerItem("poop",
         props -> new PoopItem(props.food(PFoods.POOP).stacksTo(88)));
@@ -422,7 +443,8 @@ if (ModList.get().isLoaded(PoMods.CREATE.id())) {
 - 需要自定义方块物品、战利品表或无物品方块时，使用 `PBlocks.registerBlock`、`registerDefaultBlock`、`registerBlockNoItem`、`registerCompooperBlock`、`registerToiletBlock` 等现有 helper。
 - 实体、方块实体、菜单、配方、粒子、音效、数据组件、流体、村民、世界生成注册仍使用对应注册类中的 `DeferredRegister`。
 - 新增 `DeferredRegister` 时应放入现有注册类并由 `PRegistries.registerAll(modEventBus)` 或对应兼容插件统一挂到 mod event bus。
-- Registrate API 中所有需要 `Supplier` 的地方必须使用 `com.tterrag.registrate.util.nullness.NonNullSupplier`，而非 `java.util.function.Supplier`。例如 `REGISTRATE.simple(name, registry, supplier)` 的第三个参数类型为 `NonNullSupplier<T>`。
+- Reginth API 中所有需要 `Supplier` 的地方必须使用 `com.altnoir.abysslib.reginth.util.nullness.NonNullSupplier`，而非 `java.util.function.Supplier`。例如 `REGISTRATE.simple(name, registry, supplier)` 的第三个参数类型为 `NonNullSupplier<T>`。
+- 注意区分：`com.tterrag.registrate.*`（上游 Registrate）**只在 compat/create 里因 Create 的 API 类型而被动出现**，本模组业务代码一律不要 `import` 它。
 
 ### 2. 方块属性
 

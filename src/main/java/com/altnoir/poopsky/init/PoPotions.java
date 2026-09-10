@@ -1,9 +1,9 @@
 package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.abysslib.registrate.ALRegistrate;
-import com.tterrag.registrate.util.entry.RegistryEntry;
-import com.tterrag.registrate.util.nullness.NonNullSupplier;
+import com.altnoir.abysslib.reginth.Reginth;
+import com.altnoir.abysslib.reginth.util.entry.RegistryEntry;
+import com.altnoir.abysslib.reginth.util.nullness.NonNullSupplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class PoPotions {
-    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
+    private static final Reginth REGISTRATE = PoopSky.registrate();
     private static final List<RegistryEntry<Potion, Potion>> ALL = new ArrayList<>();
 
     public static final RegistryEntry<Potion, Potion> FECAL_INCONTINENCE_POTION = registerPotion(

@@ -5,8 +5,8 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoItems;
-import com.tterrag.registrate.providers.RegistrateItemModelProvider;
-import com.tterrag.registrate.util.entry.ItemEntry;
+import com.altnoir.abysslib.reginth.providers.ReginthItemModelProvider;
+import com.altnoir.abysslib.reginth.util.entry.ItemEntry;
 import net.minecraft.client.renderer.block.model.BlockModel.GuiLight;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
@@ -22,7 +22,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.LinkedHashMap;
 
-public class ItemModelGen extends RegistrateItemModelProvider {
+public class ItemModelGen extends ReginthItemModelProvider {
     private static final LinkedHashMap<ResourceKey<TrimMaterial>, Float> trimMaterials = new LinkedHashMap<>();
 
     static {

@@ -1,15 +1,15 @@
 package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.abysslib.registrate.ALRegistrate;
-import com.tterrag.registrate.util.entry.RegistryEntry;
+import com.altnoir.abysslib.reginth.Reginth;
+import com.altnoir.abysslib.reginth.util.entry.RegistryEntry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.stats.StatFormatter;
 import net.minecraft.stats.Stats;
 
 public class PoStats {
-    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
+    private static final Reginth REGISTRATE = PoopSky.registrate();
 
     public static final RegistryEntry<ResourceLocation, ResourceLocation> POOP_STATS = REGISTRATE.simple("poop_stats", Registries.CUSTOM_STAT, () ->
             PoopSky.loc("poop_stats"));

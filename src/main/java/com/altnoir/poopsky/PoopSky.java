@@ -1,7 +1,7 @@
 package com.altnoir.poopsky;
 
 import com.altnoir.abysslib.AbyssLib;
-import com.altnoir.abysslib.registrate.ALRegistrate;
+import com.altnoir.abysslib.reginth.Reginth;
 import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.compat.create.CreatePlugin;
 import com.altnoir.poopsky.compat.maid.MaidPlugin;
@@ -55,10 +55,10 @@ import org.slf4j.Logger;
 public class PoopSky {
     public static final String MOD_ID = "poopsky";
     public static final Logger LOGGER = LogUtils.getLogger();
-    private static final ALRegistrate REGISTRATE = ALRegistrate.create(MOD_ID);
+    private static final Reginth REGINTH = Reginth.create(MOD_ID);
 
     static {
-        REGISTRATE.defaultCreativeTab((ResourceKey<CreativeModeTab>) null);
+        REGINTH.defaultCreativeTab((ResourceKey<CreativeModeTab>) null);
     }
 
     public PoopSky(IEventBus modEventBus, ModContainer modContainer) {
@@ -250,7 +250,7 @@ public class PoopSky {
         return AbyssLib.modloc(MOD_ID, path);
     }
 
-    public static ALRegistrate registrate() {
-        return REGISTRATE;
+    public static Reginth registrate() {
+        return REGINTH;
     }
 }

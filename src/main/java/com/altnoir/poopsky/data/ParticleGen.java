@@ -1,16 +1,16 @@
 package com.altnoir.poopsky.data;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.abysslib.registrate.ALRegistrate;
+import com.altnoir.abysslib.reginth.Reginth;
 import com.altnoir.poopsky.init.PoParticles;
-import com.tterrag.registrate.providers.ProviderType;
+import com.altnoir.abysslib.reginth.providers.ProviderType;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.common.data.ParticleDescriptionProvider;
 
 public final class ParticleGen extends ParticleDescriptionProvider {
-    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
+    private static final Reginth REGISTRATE = PoopSky.registrate();
 
     private ParticleGen(PackOutput output, ExistingFileHelper fileHelper) {
         super(output, fileHelper);

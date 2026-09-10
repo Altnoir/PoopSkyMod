@@ -1,18 +1,18 @@
 package com.altnoir.poopsky.data;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.abysslib.registrate.ALRegistrate;
+import com.altnoir.abysslib.reginth.Reginth;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
-import com.tterrag.registrate.providers.ProviderType;
-import com.tterrag.registrate.providers.RegistrateDataMapProvider;
+import com.altnoir.abysslib.reginth.providers.ProviderType;
+import com.altnoir.abysslib.reginth.providers.ReginthDataMapProvider;
 import net.neoforged.neoforge.registries.datamaps.builtin.Compostable;
 import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel;
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps;
 import net.neoforged.neoforge.registries.datamaps.builtin.Strippable;
 
 public final class DataMapGen {
-    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
+    private static final Reginth REGISTRATE = PoopSky.registrate();
 
     private DataMapGen() {
     }
@@ -21,7 +21,7 @@ public final class DataMapGen {
         REGISTRATE.addDataGenerator(ProviderType.DATA_MAP, DataMapGen::generate);
     }
 
-    private static void generate(RegistrateDataMapProvider provider) {
+    private static void generate(ReginthDataMapProvider provider) {
         provider.builder(NeoForgeDataMaps.COMPOSTABLES)
                 .add(PoBlocks.GINKGO_SAPLING.getId(), new Compostable(0.3F), false)
                 .add(PoBlocks.GINKGO_LEAVES.getId(), new Compostable(0.3F), false)

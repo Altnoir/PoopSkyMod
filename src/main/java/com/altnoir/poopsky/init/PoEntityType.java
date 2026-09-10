@@ -3,16 +3,16 @@ package com.altnoir.poopsky.init;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.entity.p.*;
 import com.altnoir.poopsky.content.entity.renderer.*;
-import com.altnoir.abysslib.registrate.ALRegistrate;
-import com.tterrag.registrate.providers.ProviderType;
-import com.tterrag.registrate.util.entry.EntityEntry;
-import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
+import com.altnoir.abysslib.reginth.Reginth;
+import com.altnoir.abysslib.reginth.providers.ProviderType;
+import com.altnoir.abysslib.reginth.util.entry.EntityEntry;
+import com.altnoir.abysslib.reginth.util.nullness.NonNullBiConsumer;
 import net.minecraft.client.renderer.entity.ChickenRenderer;
 import net.minecraft.client.renderer.entity.TntMinecartRenderer;
 import net.minecraft.world.entity.MobCategory;
 
 public class PoEntityType {
-    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
+    private static final Reginth REGISTRATE = PoopSky.registrate();
 
     public static final EntityEntry<ToiletPlugEntity> TOILET_PLUG = REGISTRATE
             .entity("toilet_plug", ToiletPlugEntity::new, MobCategory.MISC)

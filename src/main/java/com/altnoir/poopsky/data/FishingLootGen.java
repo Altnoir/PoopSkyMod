@@ -1,9 +1,9 @@
 package com.altnoir.poopsky.data;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.abysslib.registrate.ALRegistrate;
+import com.altnoir.abysslib.reginth.Reginth;
 import com.altnoir.poopsky.init.PoItems;
-import com.tterrag.registrate.providers.ProviderType;
+import com.altnoir.abysslib.reginth.providers.ProviderType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Items;
@@ -19,7 +19,7 @@ public final class FishingLootGen {
     public static final ResourceKey<LootTable> FISHING_SENNAE = ResourceKey.create(Registries.LOOT_TABLE, PoopSky.loc("gameplay/fishing/seenae"));
     public static final ResourceKey<LootTable> FISHING_URINE = ResourceKey.create(Registries.LOOT_TABLE, PoopSky.loc("gameplay/fishing/poop_fluid"));
 
-    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
+    private static final Reginth REGISTRATE = PoopSky.registrate();
 
     private FishingLootGen() {
     }

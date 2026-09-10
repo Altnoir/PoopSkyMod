@@ -4,7 +4,7 @@ import com.altnoir.abysslib.AbyssLib;
 import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
-import com.tterrag.registrate.providers.RegistrateRecipeProvider;
+import com.altnoir.abysslib.reginth.providers.ReginthRecipeProvider;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -72,11 +72,11 @@ public class FarmersDelightRecipeGen {
     }
 
     public static String getItemName(ItemLike itemLike) {
-        return RegistrateRecipeProvider.getItemName(itemLike);
+        return ReginthRecipeProvider.getItemName(itemLike);
     }
 
     private static Criterion<InventoryChangeTrigger.TriggerInstance> has(ItemLike itemLike) {
-        return RegistrateRecipeProvider.has(itemLike);
+        return ReginthRecipeProvider.has(itemLike);
     }
 
     public static ResourceLocation loc(String path) {

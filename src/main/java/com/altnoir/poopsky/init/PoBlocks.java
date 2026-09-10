@@ -9,13 +9,13 @@ import com.altnoir.poopsky.content.block.p.MyceliumBlock;
 import com.altnoir.poopsky.content.item.p.CompooperBlockItem;
 import com.altnoir.poopsky.content.item.p.PoopSkyBlockItem;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
-import com.altnoir.abysslib.registrate.ALRegistrate;
+import com.altnoir.abysslib.reginth.Reginth;
 import com.altnoir.poopsky.impl.type.PoBlockSetType;
 import com.altnoir.poopsky.impl.type.PoWoodType;
-import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
-import com.tterrag.registrate.util.entry.BlockEntry;
-import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
-import com.tterrag.registrate.util.nullness.NonNullFunction;
+import com.altnoir.abysslib.reginth.providers.loot.ReginthBlockLootTables;
+import com.altnoir.abysslib.reginth.util.entry.BlockEntry;
+import com.altnoir.abysslib.reginth.util.nullness.NonNullBiConsumer;
+import com.altnoir.abysslib.reginth.util.nullness.NonNullFunction;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -69,7 +69,7 @@ public class PoBlocks {
     protected static final float[] LEAVES_SAPLING_CHANCES = {0.1F, 0.125F, 0.25F, 0.5F};
     protected static final float[] LEAVES_STICK_CHANCES = {0.05F, 0.075F, 0.1F, 0.125F, 0.25F};
 
-    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
+    private static final Reginth REGISTRATE = PoopSky.registrate();
 
     private static final List<BlockEntry<ArcadeBlock>> ARCADE_BLOCKS = new ArrayList<>();
 
@@ -300,7 +300,7 @@ public class PoBlocks {
                     .noOcclusion()
                     .lightLevel(GlowLichenBlock.emission(2))
             ),
-            RegistrateBlockLootTables::dropSelf, PoopSkyBlockItem::new, BlockTab.BASIC_BLOCKS);
+            ReginthBlockLootTables::dropSelf, PoopSkyBlockItem::new, BlockTab.BASIC_BLOCKS);
     public static final BlockEntry<ChairBlock> STOOL = registerBlock("stool", 88,
             props -> new ChairBlock(poopProperties().pushReaction(PushReaction.DESTROY).noOcclusion()));
     public static final BlockEntry<PoopCraftingTableBlock> POOP_CRAFTING_TABLE = registerBlock("poop_crafting_table", 88,
@@ -397,17 +397,17 @@ public class PoBlocks {
             props -> new SaltpeterClusterBlock(5.0F, 3.0F, BlockBehaviour.Properties.ofFullCopy(SALTPETER_CLUSTER.get())
                     .sound(SoundType.MEDIUM_AMETHYST_BUD)
                     .lightLevel(state -> 4)),
-            RegistrateBlockLootTables::dropWhenSilkTouch);
+            ReginthBlockLootTables::dropWhenSilkTouch);
     public static final BlockEntry<SaltpeterClusterBlock> MEDIUM_SALTPETER_BUD = registerBlock("medium_saltpeter_bud",
             props -> new SaltpeterClusterBlock(4.0F, 3.0F, BlockBehaviour.Properties.ofFullCopy(SALTPETER_CLUSTER.get())
                     .sound(SoundType.LARGE_AMETHYST_BUD)
                     .lightLevel(state -> 2)),
-            RegistrateBlockLootTables::dropWhenSilkTouch);
+            ReginthBlockLootTables::dropWhenSilkTouch);
     public static final BlockEntry<SaltpeterClusterBlock> SMALL_SALTPETER_BUD = registerBlock("small_saltpeter_bud",
             props -> new SaltpeterClusterBlock(3.0F, 4.0F, BlockBehaviour.Properties.ofFullCopy(SALTPETER_CLUSTER.get())
                     .sound(SoundType.SMALL_AMETHYST_BUD)
                     .lightLevel(state -> 1)),
-            RegistrateBlockLootTables::dropWhenSilkTouch);
+            ReginthBlockLootTables::dropWhenSilkTouch);
 
     public static final BlockEntry<PoopLogBlock> POOP_LOG = registerPoopBlock("poop_log",
             props -> new PoopLogBlock(logProperties(MapColor.COLOR_BROWN, SoundType.STEM).randomTicks()),
@@ -567,12 +567,12 @@ public class PoBlocks {
     public static final BlockEntry<FlowerPotBlock> POTTED_FOLIUM_SENNAE_PLANT = registerBlockNoItem("potted_folium_sennae_plant",
             props -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, FOLIUM_SENNAE_PLANT,
                     BlockBehaviour.Properties.ofFullCopy(Blocks.POTTED_OAK_SAPLING)),
-            RegistrateBlockLootTables::dropPottedContents);
+            ReginthBlockLootTables::dropPottedContents);
 
     public static final BlockEntry<FlowerPotBlock> POTTED_GINKGO_SAPLING = registerBlockNoItem("potted_ginkgo_sapling",
             props -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, GINKGO_SAPLING,
                     BlockBehaviour.Properties.ofFullCopy(Blocks.POTTED_OAK_SAPLING)),
-            RegistrateBlockLootTables::dropPottedContents);
+            ReginthBlockLootTables::dropPottedContents);
 
     public static final BlockEntry<ArcadeBlock> BROWN_ARCADE = registerArcadeBlock("brown_arcade", DyeColor.BROWN);
     public static final BlockEntry<ArcadeBlock> RED_ARCADE = registerArcadeBlock("red_arcade", DyeColor.RED);
@@ -806,7 +806,7 @@ public class PoBlocks {
                                 .lightLevel(state -> state.getValue(PoopCandleCakeBlock.LIT) ? 3 : 0)))
                 .blockstate((ctx, prov) -> {
                 })
-                .loot((loot, block) -> loot.add(block, RegistrateBlockLootTables.createCandleCakeDrops(candle)))
+                .loot((loot, block) -> loot.add(block, ReginthBlockLootTables.createCandleCakeDrops(candle)))
                 .register();
     }
 
@@ -825,50 +825,50 @@ public class PoBlocks {
 
     public static <T extends
             Block> BlockEntry<T> registerBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory) {
-        return registerBlock(name, 64, factory, RegistrateBlockLootTables::dropSelf);
+        return registerBlock(name, 64, factory, ReginthBlockLootTables::dropSelf);
     }
 
     public static <T extends
-            Block> BlockEntry<T> registerBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
+            Block> BlockEntry<T> registerBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<ReginthBlockLootTables, T> loot) {
         return registerBlock(name, 64, factory, loot);
     }
 
     public static <T extends Block> BlockEntry<T> registerBlock(String name, int stackSize, NonNullFunction<
             BlockBehaviour.Properties, T> factory) {
-        return registerBlock(name, stackSize, factory, RegistrateBlockLootTables::dropSelf);
+        return registerBlock(name, stackSize, factory, ReginthBlockLootTables::dropSelf);
     }
 
     public static <T extends Block> BlockEntry<T> registerBlock(String name, int stackSize, NonNullFunction<
-            BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
+            BlockBehaviour.Properties, T> factory, NonNullBiConsumer<ReginthBlockLootTables, T> loot) {
         return registerBlockWithItem(name, stackSize, factory, loot, BlockItem::new, BlockTab.BASIC_BLOCKS);
     }
 
     public static <T extends Block> BlockEntry<T> registerDecoMaterialBlock(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory) {
-        return registerDecoMaterialBlock(name, stackSize, factory, RegistrateBlockLootTables::dropSelf);
+        return registerDecoMaterialBlock(name, stackSize, factory, ReginthBlockLootTables::dropSelf);
     }
 
-    public static <T extends Block> BlockEntry<T> registerDecoMaterialBlock(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
+    public static <T extends Block> BlockEntry<T> registerDecoMaterialBlock(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<ReginthBlockLootTables, T> loot) {
         return registerBlockWithItem(name, stackSize, factory, loot, BlockItem::new, BlockTab.DECO_MATERIALS);
     }
 
     public static <T extends Block> BlockEntry<T> registerPoopBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory) {
-        return registerPoopBlock(name, factory, RegistrateBlockLootTables::dropSelf);
+        return registerPoopBlock(name, factory, ReginthBlockLootTables::dropSelf);
     }
 
-    public static <T extends Block> BlockEntry<T> registerPoopBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
+    public static <T extends Block> BlockEntry<T> registerPoopBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<ReginthBlockLootTables, T> loot) {
         return registerBlockWithItem(name, 88, factory, loot, BlockItem::new, BlockTab.BASIC_BLOCKS, BlockTab.DECO_MATERIALS);
     }
 
     public static <T extends Block> BlockEntry<T> registerTileBlock(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory) {
-        return registerTileBlock(name, stackSize, factory, RegistrateBlockLootTables::dropSelf);
+        return registerTileBlock(name, stackSize, factory, ReginthBlockLootTables::dropSelf);
     }
 
-    public static <T extends Block> BlockEntry<T> registerTileBlock(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
+    public static <T extends Block> BlockEntry<T> registerTileBlock(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<ReginthBlockLootTables, T> loot) {
         return registerBlockWithItem(name, stackSize, factory, loot, BlockItem::new, BlockTab.DECO_TILE);
     }
 
     public static <T extends
-            Block> BlockEntry<T> registerBlockNoItem(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
+            Block> BlockEntry<T> registerBlockNoItem(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<ReginthBlockLootTables, T> loot) {
         return REGISTRATE.block(name, factory)
                 .blockstate((ctx, prov) -> {
                 })
@@ -876,7 +876,7 @@ public class PoBlocks {
                 .register();
     }
 
-    public static <T extends Block> BlockEntry<T> registerBlockNoTab(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
+    public static <T extends Block> BlockEntry<T> registerBlockNoTab(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<ReginthBlockLootTables, T> loot) {
         return registerBlockWithItem(name, stackSize, factory, loot, BlockItem::new, BlockTab.NO_TAB);
     }
 
@@ -884,7 +884,7 @@ public class PoBlocks {
             String name,
             int stackSize,
             NonNullFunction<BlockBehaviour.Properties, T> factory,
-            NonNullBiConsumer<RegistrateBlockLootTables, T> loot,
+            NonNullBiConsumer<ReginthBlockLootTables, T> loot,
             BiFunction<Block, Item.Properties, ? extends BlockItem> itemFactory,
             BlockTab... tabs
     ) {
@@ -903,11 +903,11 @@ public class PoBlocks {
         return entry;
     }
 
-    public static <T extends Block> BlockEntry<T> registerCompooperBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
+    public static <T extends Block> BlockEntry<T> registerCompooperBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<ReginthBlockLootTables, T> loot) {
         return registerBlockWithItem(name, 64, factory, loot, CompooperBlockItem::new, BlockTab.BASIC_BLOCKS);
     }
 
-    public static <T extends Block> BlockEntry<T> registerToiletBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<RegistrateBlockLootTables, T> loot) {
+    public static <T extends Block> BlockEntry<T> registerToiletBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<ReginthBlockLootTables, T> loot) {
         return registerBlockWithItem(name, 88, factory, loot, ToiletBlockItem::new, BlockTab.BASIC_BLOCKS);
     }
 
@@ -998,7 +998,7 @@ public class PoBlocks {
     }
 
     // Loot
-    private static void createMaggotsLoot(RegistrateBlockLootTables loot, MaggotsBlock block) {
+    private static void createMaggotsLoot(ReginthBlockLootTables loot, MaggotsBlock block) {
         LootItemCondition.Builder grownCondition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
                 .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, CropBlock.MAX_AGE));
         var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
@@ -1019,7 +1019,7 @@ public class PoBlocks {
     }
 
     private static void createRoundwormVinesPlantLoot
-            (RegistrateBlockLootTables loot, RoundwormVinesPlantBlock block) {
+            (ReginthBlockLootTables loot, RoundwormVinesPlantBlock block) {
         LootItemCondition.Builder seedsCondition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
                 .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(RoundwormVinesPlantBlock.SEEDS, true));
         var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
@@ -1056,7 +1056,7 @@ public class PoBlocks {
                                 .apply(SetToiletTypeFunction.setType())));
     }
 
-    private static LootTable.Builder createPoopPieceDrop(RegistrateBlockLootTables loot, Block block, Item item) {
+    private static LootTable.Builder createPoopPieceDrop(ReginthBlockLootTables loot, Block block, Item item) {
         var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
         LootItemCondition.Builder hasSilkTouch = hasSilkTouch(loot);
 
@@ -1089,7 +1089,7 @@ public class PoBlocks {
                 );
     }
 
-    private static LootTable.Builder createSpallOreDrops(RegistrateBlockLootTables loot, Block block) {
+    private static LootTable.Builder createSpallOreDrops(ReginthBlockLootTables loot, Block block) {
         var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
         return loot.createSilkTouchDispatchTable(block,
                 loot.applyExplosionDecay(block,
@@ -1099,16 +1099,16 @@ public class PoBlocks {
         );
     }
 
-    private static LootTable.Builder createIronLeavesDrops(RegistrateBlockLootTables loot, Block block) {
+    private static LootTable.Builder createIronLeavesDrops(ReginthBlockLootTables loot, Block block) {
         return createNuggetLeavesDrops(loot, block, Items.IRON_NUGGET, 3.0F);
     }
 
-    private static LootTable.Builder createGoldLeavesDrops(RegistrateBlockLootTables loot, Block block) {
+    private static LootTable.Builder createGoldLeavesDrops(ReginthBlockLootTables loot, Block block) {
         return createNuggetLeavesDrops(loot, block, Items.GOLD_NUGGET, 2.0F);
     }
 
     private static LootTable.Builder createNuggetLeavesDrops
-            (RegistrateBlockLootTables loot, Block block, Item nugget, float maxCount) {
+            (ReginthBlockLootTables loot, Block block, Item nugget, float maxCount) {
         var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
         return createShearsOrSilkTouchDispatchTable(loot, block,
                 LootItem.lootTableItem(nugget)
@@ -1116,7 +1116,7 @@ public class PoBlocks {
                         .apply(ApplyBonusCount.addUniformBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE))));
     }
 
-    private static LootTable.Builder createLeavesDrops(RegistrateBlockLootTables loot, Block block, Item dropItem) {
+    private static LootTable.Builder createLeavesDrops(ReginthBlockLootTables loot, Block block, Item dropItem) {
         var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
         LootItemCondition.Builder hasShearsOrSilkTouch = hasShearsOrSilkTouch(loot);
         return createShearsOrSilkTouchDispatchTable(loot, block,
@@ -1134,12 +1134,12 @@ public class PoBlocks {
         );
     }
 
-    private static LootTable.Builder createGinkgoLeavesDrops(RegistrateBlockLootTables loot, Block block) {
+    private static LootTable.Builder createGinkgoLeavesDrops(ReginthBlockLootTables loot, Block block) {
         return createVanillaLeavesDrops(loot, block, PoBlocks.GINKGO_SAPLING.get());
     }
 
     private static LootTable.Builder createVanillaLeavesDrops
-            (RegistrateBlockLootTables loot, Block block, Block sapling) {
+            (ReginthBlockLootTables loot, Block block, Block sapling) {
         var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
         LootItemCondition.Builder hasShearsOrSilkTouch = hasShearsOrSilkTouch(loot);
         return createShearsOrSilkTouchDispatchTable(loot, block,
@@ -1163,7 +1163,7 @@ public class PoBlocks {
     }
 
     private static LootTable.Builder createShearsOrSilkTouchDispatchTable
-            (RegistrateBlockLootTables loot, Block block, LootPoolSingletonContainer.Builder<?> fallback) {
+            (ReginthBlockLootTables loot, Block block, LootPoolSingletonContainer.Builder<?> fallback) {
         LootItemCondition.Builder hasShearsOrSilkTouch = hasShearsOrSilkTouch(loot);
         return LootTable.lootTable()
                 .withPool(LootPool.lootPool()
@@ -1174,12 +1174,12 @@ public class PoBlocks {
                         )));
     }
 
-    private static LootItemCondition.Builder hasShearsOrSilkTouch(RegistrateBlockLootTables loot) {
+    private static LootItemCondition.Builder hasShearsOrSilkTouch(ReginthBlockLootTables loot) {
         return MatchTool.toolMatches(ItemPredicate.Builder.item().of(Items.SHEARS))
                 .or(hasSilkTouch(loot));
     }
 
-    private static LootItemCondition.Builder hasSilkTouch(RegistrateBlockLootTables loot) {
+    private static LootItemCondition.Builder hasSilkTouch(ReginthBlockLootTables loot) {
         var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
         return MatchTool.toolMatches(
                 ItemPredicate.Builder.item()
@@ -1191,7 +1191,7 @@ public class PoBlocks {
                         ));
     }
 
-    private static LootTable.Builder createSaltpeterClusterDrop(RegistrateBlockLootTables loot, Block block) {
+    private static LootTable.Builder createSaltpeterClusterDrop(ReginthBlockLootTables loot, Block block) {
         var registrylookup = loot.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
         return loot.createSilkTouchDispatchTable(block,
                 LootItem.lootTableItem(PoItems.SALTPETER_SHARD.get())
@@ -1202,7 +1202,7 @@ public class PoBlocks {
                                 LootItem.lootTableItem(PoItems.SALTPETER_SHARD.get()).apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))))));
     }
 
-    private static void createVerticalSlabDrops(RegistrateBlockLootTables loot, VerticalSlabBlock block) {
+    private static void createVerticalSlabDrops(ReginthBlockLootTables loot, VerticalSlabBlock block) {
         loot.add(block, LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0F))

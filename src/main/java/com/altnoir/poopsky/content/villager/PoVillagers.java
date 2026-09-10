@@ -3,12 +3,12 @@ package com.altnoir.poopsky.content.villager;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.init.PoSoundEvents;
-import com.altnoir.abysslib.registrate.ALRegistrate;
+import com.altnoir.abysslib.reginth.Reginth;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import com.tterrag.registrate.util.entry.RegistryEntry;
-import com.tterrag.registrate.util.nullness.NonNullSupplier;
+import com.altnoir.abysslib.reginth.util.entry.RegistryEntry;
+import com.altnoir.abysslib.reginth.util.nullness.NonNullSupplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvent;
@@ -20,7 +20,7 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 public class PoVillagers {
-    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
+    private static final Reginth REGISTRATE = PoopSky.registrate();
 
     public static final ResourceKey<PoiType> COMPOOPER_POI_KEY = registryPoiKey("compooper");
     public static final ResourceKey<PoiType> TOILET_POI_KEY = registryPoiKey("toilet");

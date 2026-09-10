@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.init;
 
-import com.tterrag.registrate.util.entry.RegistryEntry;
+import com.altnoir.abysslib.reginth.util.entry.RegistryEntry;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.fluids.FluidType;
 

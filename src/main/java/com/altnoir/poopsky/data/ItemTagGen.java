@@ -2,11 +2,11 @@ package com.altnoir.poopsky.data;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.impl.PoTags;
-import com.altnoir.abysslib.registrate.ALRegistrate;
+import com.altnoir.abysslib.reginth.Reginth;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
-import com.tterrag.registrate.providers.ProviderType;
-import com.tterrag.registrate.providers.RegistrateItemTagsProvider;
+import com.altnoir.abysslib.reginth.providers.ProviderType;
+import com.altnoir.abysslib.reginth.providers.ReginthItemTagsProvider;
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
@@ -17,8 +17,8 @@ import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
 
 public final class ItemTagGen {
-    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
-    private static RegistrateItemTagsProvider provider;
+    private static final Reginth REGISTRATE = PoopSky.registrate();
+    private static ReginthItemTagsProvider provider;
 
     private ItemTagGen() {
     }
@@ -27,7 +27,7 @@ public final class ItemTagGen {
         REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, ItemTagGen::generate);
     }
 
-    private static void generate(RegistrateItemTagsProvider provider) {
+    private static void generate(ReginthItemTagsProvider provider) {
         ItemTagGen.provider = provider;
         tag(PoTags.Items.POOPS)
                 .add(

@@ -14,8 +14,8 @@ import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.init.ToiletTypes;
 import com.simibubi.create.AllItems;
-import com.tterrag.registrate.providers.RegistrateRecipeProvider;
-import com.tterrag.registrate.util.entry.BlockEntry;
+import com.altnoir.abysslib.reginth.providers.ReginthRecipeProvider;
+import com.altnoir.abysslib.reginth.util.entry.BlockEntry;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
@@ -44,7 +44,7 @@ import vectorwing.farmersdelight.common.registry.ModItems;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class RecipeGen extends RegistrateRecipeProvider implements IConditionBuilder {
+public class RecipeGen extends ReginthRecipeProvider implements IConditionBuilder {
     private final CompletableFuture<HolderLookup.Provider> registriesFuture;
     private HolderLookup.Provider registries;
 

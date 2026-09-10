@@ -2,7 +2,7 @@ package com.altnoir.poopsky.content.entity.renderer;
 
 import com.altnoir.poopsky.PoopSky;
 import com.mojang.datafixers.util.Pair;
-import com.tterrag.registrate.util.nullness.NonNullFunction;
+import com.altnoir.abysslib.reginth.util.nullness.NonNullFunction;
 import net.minecraft.client.model.BoatModel;
 import net.minecraft.client.model.ChestBoatModel;
 import net.minecraft.client.model.ListModel;

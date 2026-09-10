@@ -2,14 +2,14 @@ package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.fluid.UrineLiquidBlock;
-import com.altnoir.abysslib.registrate.ALRegistrate;
-import com.tterrag.registrate.providers.ProviderType;
-import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
-import com.tterrag.registrate.util.entry.BlockEntry;
-import com.tterrag.registrate.util.entry.FluidEntry;
-import com.tterrag.registrate.util.entry.ItemEntry;
-import com.tterrag.registrate.util.entry.RegistryEntry;
-import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
+import com.altnoir.abysslib.reginth.Reginth;
+import com.altnoir.abysslib.reginth.providers.ProviderType;
+import com.altnoir.abysslib.reginth.providers.loot.ReginthBlockLootTables;
+import com.altnoir.abysslib.reginth.util.entry.BlockEntry;
+import com.altnoir.abysslib.reginth.util.entry.FluidEntry;
+import com.altnoir.abysslib.reginth.util.entry.ItemEntry;
+import com.altnoir.abysslib.reginth.util.entry.RegistryEntry;
+import com.altnoir.abysslib.reginth.util.nullness.NonNullBiConsumer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -31,7 +31,7 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 public final class PoFluids {
     public static final ResourceLocation URINE_STILL_TEXTURE = PoopSky.loc("block/urine_liquid");
     public static final ResourceLocation URINE_FLOWING_TEXTURE = PoopSky.loc("block/urine_liquid_flowing");
-    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
+    private static final Reginth REGISTRATE = PoopSky.registrate();
 
     public static final RegistryEntry<FluidType, FluidType> URINE_FLUID_TYPE = REGISTRATE.simple(
             "urine",
@@ -59,7 +59,7 @@ public final class PoFluids {
                     properties -> new UrineLiquidBlock(URINE.get(), urineLiquidProperties()))
             .blockstate((ctx, prov) -> {
             })
-            .loot(RegistrateBlockLootTables::dropSelf)
+            .loot(ReginthBlockLootTables::dropSelf)
             .register();
 
     private PoFluids() {

@@ -205,8 +205,15 @@ dependencies {
     implementation("net.createmod.ponder:Ponder-NeoForge-${minecraft_version}:${ponder_version}")
     compileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-${minecraft_version}:${flywheel_version}")
     runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-${minecraft_version}:${flywheel_version}")
-    // Registrate：由 AbyssLib 提供（api 编译期 + jarJar 运行时），禁止本模组再各自 jarJar。
+    // 注册框架（Reginth）由 AbyssLib 源码内置提供（类在 abysslib 的 jar 里），本模组无需声明。
     implementation("com.altnoir.abysslib:AbyssLib:$abysslib_version")
+    // 上游 Registrate：仅编译期。Create 的公开 API 用了它的类型（AllItems.PROPELLER 是
+    // com.tterrag.registrate.util.entry.ItemEntry），javac 类型检查必须能解析，删掉会编译失败。
+    // 触碰点：compat/jei/create/FanDigestingCategory.java、data/recipe/RecipeGen.java。
+    compileOnly("com.tterrag.registrate:Registrate:${registrate_version}")
+    // 上游 Registrate：仅 dev 运行时。AbyssLib ≤1.3.0 曾 jarJar 内嵌它，1.4.0 改源码内置后没了，
+    // run/mods 里引用该包的第三方 mod（车万女仆等）mixin 会以 ClassNotFoundException 崩掉。
+    runtimeOnly("com.tterrag.registrate:Registrate:${registrate_version}")
     // Simple Bedrock Model。
     implementation jarJar("com.github.mcmodderanchor:simplebedrockmodel:$sbm_version-neoforge-mc1.21.1") {
         version {

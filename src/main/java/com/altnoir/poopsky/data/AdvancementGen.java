@@ -1,10 +1,10 @@
 package com.altnoir.poopsky.data;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.abysslib.registrate.ALRegistrate;
+import com.altnoir.abysslib.reginth.Reginth;
 import com.altnoir.poopsky.init.*;
-import com.tterrag.registrate.providers.ProviderType;
-import com.tterrag.registrate.providers.RegistrateAdvancementProvider;
+import com.altnoir.abysslib.reginth.providers.ProviderType;
+import com.altnoir.abysslib.reginth.providers.ReginthAdvancementProvider;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRequirements;
@@ -18,7 +18,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 
 public final class AdvancementGen {
-    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
+    private static final Reginth REGISTRATE = PoopSky.registrate();
 
     private AdvancementGen() {
     }
@@ -27,7 +27,7 @@ public final class AdvancementGen {
         REGISTRATE.addDataGenerator(ProviderType.ADVANCEMENT, AdvancementGen::generate);
     }
 
-    private static void generate(RegistrateAdvancementProvider provider) {
+    private static void generate(ReginthAdvancementProvider provider) {
         AdvancementHolder root = Advancement.Builder.advancement()
                 .display(
                         PoBlocks.WOODEN_TOILET.get(),

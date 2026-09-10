@@ -8,7 +8,7 @@ import com.altnoir.poopsky.init.PoBlocks;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.tterrag.registrate.util.entry.BlockEntry;
+import com.altnoir.abysslib.reginth.util.entry.BlockEntry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;

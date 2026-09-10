@@ -4,16 +4,16 @@ import com.altnoir.poopsky.PoItemGroups;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.ToiletType;
-import com.altnoir.abysslib.registrate.ALRegistrate;
+import com.altnoir.abysslib.reginth.Reginth;
 import com.altnoir.poopsky.init.PoPotions;
-import com.tterrag.registrate.providers.ProviderType;
-import com.tterrag.registrate.providers.RegistrateLangProvider;
+import com.altnoir.abysslib.reginth.providers.ProviderType;
+import com.altnoir.abysslib.reginth.providers.ReginthLangProvider;
 
 import java.util.Map;
 
 public final class LangGen {
-    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
-    private static RegistrateLangProvider provider; // 静态字段
+    private static final Reginth REGISTRATE = PoopSky.registrate();
+    private static ReginthLangProvider provider; // 静态字段
 
     private LangGen() {
     }
@@ -22,7 +22,7 @@ public final class LangGen {
         REGISTRATE.addDataGenerator(ProviderType.LANG, LangGen::generateEnUs);
     }
 
-    private static void generateEnUs(RegistrateLangProvider provider) {
+    private static void generateEnUs(ReginthLangProvider provider) {
         LangGen.provider = provider;
         addAdvancements();
         addToiletTypes();

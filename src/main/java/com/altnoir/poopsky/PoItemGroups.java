@@ -10,11 +10,11 @@ import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.abysslib.creative.ALBannerStyle;
 import com.altnoir.abysslib.creative.ALCreativeTabSection;
 import com.altnoir.abysslib.creative.ALSectionedCreativeModeTab;
-import com.altnoir.abysslib.registrate.ALRegistrate;
+import com.altnoir.abysslib.reginth.Reginth;
 import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
-import com.tterrag.registrate.util.entry.RegistryEntry;
+import com.altnoir.abysslib.reginth.util.entry.RegistryEntry;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class PoItemGroups {
-    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
+    private static final Reginth REGISTRATE = PoopSky.registrate();
 
     public static final String POOPSKY_TAB_KEY = "itemgroup.poopsky";
     public static final String POOPSKY_DECO_TAB_KEY = "itemgroup.poopsky_deco";

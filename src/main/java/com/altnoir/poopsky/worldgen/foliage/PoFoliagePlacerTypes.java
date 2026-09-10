@@ -1,15 +1,15 @@
 package com.altnoir.poopsky.worldgen.foliage;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.abysslib.registrate.ALRegistrate;
+import com.altnoir.abysslib.reginth.Reginth;
 import com.mojang.serialization.MapCodec;
-import com.tterrag.registrate.util.entry.RegistryEntry;
+import com.altnoir.abysslib.reginth.util.entry.RegistryEntry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
 
 public class PoFoliagePlacerTypes {
-    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
+    private static final Reginth REGISTRATE = PoopSky.registrate();
 
     public static final RegistryEntry<FoliagePlacerType<?>, FoliagePlacerType<RhombusFoliagePlacer>> RHOMBUS_FOLIAGE_PLACER =
             registerFoliagePlacer("rhombus_foliage_placer", RhombusFoliagePlacer.CODEC);

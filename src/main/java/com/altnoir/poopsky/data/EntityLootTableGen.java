@@ -2,12 +2,12 @@ package com.altnoir.poopsky.data;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.impl.PoTags;
-import com.altnoir.abysslib.registrate.ALRegistrate;
+import com.altnoir.abysslib.reginth.Reginth;
 import com.altnoir.poopsky.init.PoEntityType;
 import com.altnoir.poopsky.init.PoItems;
-import com.tterrag.registrate.providers.ProviderType;
-import com.tterrag.registrate.providers.loot.RegistrateEntityLootTables;
-import com.tterrag.registrate.providers.loot.RegistrateLootTableProvider.LootType;
+import com.altnoir.abysslib.reginth.providers.ProviderType;
+import com.altnoir.abysslib.reginth.providers.loot.ReginthEntityLootTables;
+import com.altnoir.abysslib.reginth.providers.loot.ReginthLootTableProvider.LootType;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -33,7 +33,7 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import java.util.List;
 
 public final class EntityLootTableGen {
-    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
+    private static final Reginth REGISTRATE = PoopSky.registrate();
 
     private EntityLootTableGen() {
     }
@@ -44,7 +44,7 @@ public final class EntityLootTableGen {
                 provider -> provider.addLootAction(LootType.ENTITY, EntityLootTableGen::generate));
     }
 
-    private static void generate(RegistrateEntityLootTables loot) {
+    private static void generate(ReginthEntityLootTables loot) {
         HolderLookup.Provider registries = loot.getRegistries();
 
         loot.add(

@@ -1,9 +1,9 @@
 package com.altnoir.poopsky.data;
 
 import com.altnoir.abysslib.AbyssLib;
-import com.altnoir.abysslib.registrate.ALRegistrate;
+import com.altnoir.abysslib.reginth.Reginth;
 import com.altnoir.poopsky.PoopSky;
-import com.tterrag.registrate.providers.ProviderType;
+import com.altnoir.abysslib.reginth.providers.ProviderType;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.FishingHookPredicate;
 import net.minecraft.core.HolderLookup;
@@ -19,7 +19,7 @@ import net.neoforged.neoforge.common.loot.LootTableIdCondition;
 import java.util.concurrent.CompletableFuture;
 
 public final class GlobalLootModifierGen extends GlobalLootModifierProvider {
-    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
+    private static final Reginth REGISTRATE = PoopSky.registrate();
 
     private GlobalLootModifierGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries, PoopSky.MOD_ID);

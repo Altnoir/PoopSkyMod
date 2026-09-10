@@ -2,12 +2,12 @@ package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.client.inventory.*;
-import com.altnoir.abysslib.registrate.ALRegistrate;
-import com.tterrag.registrate.builders.MenuBuilder;
-import com.tterrag.registrate.util.entry.MenuEntry;
+import com.altnoir.abysslib.reginth.Reginth;
+import com.altnoir.abysslib.reginth.builders.MenuBuilder;
+import com.altnoir.abysslib.reginth.util.entry.MenuEntry;
 
 public final class PoMenuTypes {
-    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
+    private static final Reginth REGISTRATE = PoopSky.registrate();
 
     public static final MenuEntry<FlyBarrelMenu> FLY_BARREL = REGISTRATE.menu("fly_barrel",
             (MenuBuilder.MenuFactory<FlyBarrelMenu>) FlyBarrelMenu::new, () -> FlyBarrelScreen::new).register();

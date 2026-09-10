@@ -7,8 +7,8 @@ import com.altnoir.poopsky.content.block.ChiliVines;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.p.*;
 import com.altnoir.poopsky.init.PoBlocks;
-import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
-import com.tterrag.registrate.util.entry.BlockEntry;
+import com.altnoir.abysslib.reginth.providers.ReginthBlockstateProvider;
+import com.altnoir.abysslib.reginth.util.entry.BlockEntry;
 import net.minecraft.client.renderer.block.model.BlockModel.GuiLight;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
@@ -28,7 +28,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import java.util.*;
 import java.util.function.Consumer;
 
-public class BlockStateGen extends RegistrateBlockstateProvider {
+public class BlockStateGen extends ReginthBlockstateProvider {
     public static final String PARTICLE = "particle";
 
     public BlockStateGen(PackOutput packOutput, ExistingFileHelper exFileHelper) {

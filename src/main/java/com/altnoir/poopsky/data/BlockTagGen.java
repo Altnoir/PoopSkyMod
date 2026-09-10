@@ -1,13 +1,13 @@
 package com.altnoir.poopsky.data;
 
 import com.altnoir.abysslib.AbyssLib;
-import com.altnoir.abysslib.registrate.ALRegistrate;
+import com.altnoir.abysslib.reginth.Reginth;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.init.PoBlocks;
-import com.tterrag.registrate.providers.ProviderType;
-import com.tterrag.registrate.providers.RegistrateTagsProvider;
+import com.altnoir.abysslib.reginth.providers.ProviderType;
+import com.altnoir.abysslib.reginth.providers.ReginthTagsProvider;
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
@@ -16,8 +16,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 
 public final class BlockTagGen {
-    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
-    private static RegistrateTagsProvider.IntrinsicImpl<Block> provider;
+    private static final Reginth REGISTRATE = PoopSky.registrate();
+    private static ReginthTagsProvider.IntrinsicImpl<Block> provider;
 
     private BlockTagGen() {
     }
@@ -26,7 +26,7 @@ public final class BlockTagGen {
         REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, BlockTagGen::generate);
     }
 
-    private static void generate(RegistrateTagsProvider.IntrinsicImpl<Block> provider) {
+    private static void generate(ReginthTagsProvider.IntrinsicImpl<Block> provider) {
         BlockTagGen.provider = provider;
 
         tag(PoTags.Blocks.POOP_PATCH).add(PoBlocks.POOP_BLOCK.get());

@@ -2,13 +2,13 @@ package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.SetToiletTypeFunction;
-import com.altnoir.abysslib.registrate.ALRegistrate;
-import com.tterrag.registrate.util.entry.RegistryEntry;
+import com.altnoir.abysslib.reginth.Reginth;
+import com.altnoir.abysslib.reginth.util.entry.RegistryEntry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 
 public class PoLootFunctions {
-    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
+    private static final Reginth REGISTRATE = PoopSky.registrate();
 
     public static final RegistryEntry<LootItemFunctionType<?>, LootItemFunctionType<SetToiletTypeFunction>> SET_TOILET_TYPE = REGISTRATE.simple("set_toilet_type", Registries.LOOT_FUNCTION_TYPE,
             () -> new LootItemFunctionType<>(SetToiletTypeFunction.CODEC));

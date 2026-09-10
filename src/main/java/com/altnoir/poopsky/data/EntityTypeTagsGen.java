@@ -2,15 +2,15 @@ package com.altnoir.poopsky.data;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.impl.PoTags;
-import com.altnoir.abysslib.registrate.ALRegistrate;
+import com.altnoir.abysslib.reginth.Reginth;
 import com.altnoir.poopsky.init.PoEntityType;
-import com.tterrag.registrate.providers.ProviderType;
-import com.tterrag.registrate.providers.RegistrateTagsProvider;
+import com.altnoir.abysslib.reginth.providers.ProviderType;
+import com.altnoir.abysslib.reginth.providers.ReginthTagsProvider;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.EntityType;
 
 public final class EntityTypeTagsGen {
-    private static final ALRegistrate REGISTRATE = PoopSky.registrate();
+    private static final Reginth REGISTRATE = PoopSky.registrate();
 
     private EntityTypeTagsGen() {
     }
@@ -19,7 +19,7 @@ public final class EntityTypeTagsGen {
         REGISTRATE.addDataGenerator(ProviderType.ENTITY_TAGS, EntityTypeTagsGen::generate);
     }
 
-    private static void generate(RegistrateTagsProvider.IntrinsicImpl<EntityType<?>> provider) {
+    private static void generate(ReginthTagsProvider.IntrinsicImpl<EntityType<?>> provider) {
         provider.addTag(PoTags.EntityTypes.GACHAPON_MOB)
                 .add(
                         EntityType.COW,
