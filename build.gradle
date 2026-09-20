@@ -206,7 +206,9 @@ dependencies {
     compileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-${minecraft_version}:${flywheel_version}")
     runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-${minecraft_version}:${flywheel_version}")
     // 注册框架（Reginth）由 AbyssLib 源码内置提供（类在 abysslib 的 jar 里），本模组无需声明。
-    implementation("com.altnoir.abysslib:AbyssLib:$abysslib_version")
+    // 坐标形如 com.altnoir:abysslib-<MC 版本>:<版本>：artifactId 里的 MC 版本是必须的，
+    // 因为 AbyssLib 的 26.1 线用的是同一个 group 和同一个 mod_version，不区分就会互相覆盖。
+    implementation("com.altnoir:abysslib-${minecraft_version}:${abysslib_version}")
     // 上游 Registrate：仅编译期。Create 的公开 API 用了它的类型（AllItems.PROPELLER 是
     // com.tterrag.registrate.util.entry.ItemEntry），javac 类型检查必须能解析，删掉会编译失败。
     // 触碰点：compat/jei/create/FanDigestingCategory.java、data/recipe/RecipeGen.java。
