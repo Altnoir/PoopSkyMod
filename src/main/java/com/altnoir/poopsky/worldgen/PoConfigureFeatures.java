@@ -100,7 +100,7 @@ public class PoConfigureFeatures {
                                 .add(PoBlocks.POOP_LEAVES_GOLD.get().defaultBlockState(), 1)
                                 .build()),
 
-                        new RhombusFoliagePlacer(ConstantInt.of(4), ConstantInt.of(1), UniformInt.of(13, 17)),
+                        new RhombusFoliagePlacer(ConstantInt.of(4), UniformInt.of(12, 15)),
                         new TwoLayersFeatureSize(1, 1, 2)
                 )
                         .decorators(ImmutableList.of(new AlterGroundDecorator(BlockStateProvider.simple(Blocks.MUD))))
@@ -109,15 +109,15 @@ public class PoConfigureFeatures {
 
         register(context, GINKGO_TREE, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
                 BlockStateProvider.simple(PoBlocks.GINKGO_LOG.get()),
-                new StraightTrunkPlacer(8, 2, 1),
+                new StraightTrunkPlacer(12, 2, 3),
                 BlockStateProvider.simple(PoBlocks.GINKGO_LEAVES.get()),
-                new RhombusFoliagePlacer(ConstantInt.of(2), ConstantInt.of(1), UniformInt.of(7, 8)),
+                new RhombusFoliagePlacer(ConstantInt.of(2), UniformInt.of(7, 8)),
                 new TwoLayersFeatureSize(2, 0, 2)
         ).build());
 
         register(context, MEGA_GINKGO_TREE, Feature.TREE, (new TreeConfiguration.TreeConfigurationBuilder(
                 BlockStateProvider.simple(PoBlocks.GINKGO_LOG.get()),
-                new GiantTrunkPlacer(13, 2, 14),
+                new GiantTrunkPlacer(18, 2, 14),
                 BlockStateProvider.simple(PoBlocks.GINKGO_LEAVES.get()),
                 new MegaPineFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0), UniformInt.of(13, 17)),
                 new TwoLayersFeatureSize(1, 1, 2))
@@ -125,9 +125,9 @@ public class PoConfigureFeatures {
 
         register(context, GINKGO_BEE_TREE, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
                 BlockStateProvider.simple(PoBlocks.GINKGO_LOG.get()),
-                new StraightTrunkPlacer(8, 2, 1),
+                new StraightTrunkPlacer(12, 2, 3),
                 BlockStateProvider.simple(PoBlocks.GINKGO_LEAVES.get()),
-                new RhombusFoliagePlacer(ConstantInt.of(2), ConstantInt.of(1), UniformInt.of(7, 8)),
+                new RhombusFoliagePlacer(ConstantInt.of(2),UniformInt.of(7, 8)),
                 new TwoLayersFeatureSize(2, 0, 2)
         ).decorators(List.of(new BeehiveDecorator(0.05F))).build());
 
