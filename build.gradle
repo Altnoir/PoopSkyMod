@@ -17,12 +17,12 @@ group = mod_group_id
 
 repositories {
     mavenLocal()
-    maven { url = file("../AbyssLib/repo") } // AbyssLib 本地发布仓库（先 ./gradlew -p ../AbyssLib publish）
     maven { url = "https://maven.createmod.net" } // Create, Ponder, Flywheel
     maven { url = "https://mvn.devos.one/snapshots" } // Registrate
     maven { url = "https://maven.blamejared.com" } // JEI, Patchouli
     maven { url = "https://cursemaven.com" }
     maven { url = "https://api.modrinth.com/maven" } // Simple Bedrock Model
+    maven { url = "https://maven.ringlo.im/releases" } // AbyssLib
     // KubeJS, Rhino
     maven {
         url = "https://maven.latvian.dev/releases"
@@ -205,16 +205,8 @@ dependencies {
     implementation("net.createmod.ponder:Ponder-NeoForge-${minecraft_version}:${ponder_version}")
     compileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-${minecraft_version}:${flywheel_version}")
     runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-${minecraft_version}:${flywheel_version}")
-    // 注册框架（Reginth）由 AbyssLib 源码内置提供（类在 abysslib 的 jar 里），本模组无需声明。
-    // 坐标形如 com.altnoir:abysslib-<MC 版本>:<版本>：artifactId 里的 MC 版本是必须的，
-    // 因为 AbyssLib 的 26.1 线用的是同一个 group 和同一个 mod_version，不区分就会互相覆盖。
     implementation("com.altnoir:abysslib-${minecraft_version}:${abysslib_version}")
-    // 上游 Registrate：仅编译期。Create 的公开 API 用了它的类型（AllItems.PROPELLER 是
-    // com.tterrag.registrate.util.entry.ItemEntry），javac 类型检查必须能解析，删掉会编译失败。
-    // 触碰点：compat/jei/create/FanDigestingCategory.java、data/recipe/RecipeGen.java。
     compileOnly("com.tterrag.registrate:Registrate:${registrate_version}")
-    // 上游 Registrate：仅 dev 运行时。AbyssLib ≤1.3.0 曾 jarJar 内嵌它，1.4.0 改源码内置后没了，
-    // run/mods 里引用该包的第三方 mod（车万女仆等）mixin 会以 ClassNotFoundException 崩掉。
     runtimeOnly("com.tterrag.registrate:Registrate:${registrate_version}")
     // Simple Bedrock Model。
     implementation jarJar("com.github.mcmodderanchor:simplebedrockmodel:$sbm_version-neoforge-mc1.21.1") {
@@ -222,7 +214,6 @@ dependencies {
             prefer "$sbm_version"
         }
     }
-    // mae：SBM 的动画运行库，编译期需要（运行时由 SBM 的 jar-in-jar 内嵌提供）。
     compileOnly("com.maydaymemory:mae:$mae_version") {
         exclude group: 'com.google.code.gson', module: 'gson'
         exclude group: 'com.google.code.findbugs', module: 'jsr305'

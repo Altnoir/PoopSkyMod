@@ -291,7 +291,7 @@
 
   "block.poopsky.poopsky_block": "天屎方块",
   "block.poopsky.stool": "粪便凳",
-  "block.poopsky.poolime_block": "粘屎块",
+  "block.poopsky.poolime_block": "黏屎块",
   "block.poopsky.poolime_maggots_block": "屎莱姆蛆块",
   "block.poopsky.poop_crafting_table": "一次性粪便工作台",
   "block.poopsky.compooper": "堆粪桶",
@@ -604,7 +604,7 @@
   "advancements.poopsky.poop_ball.title": "金坷垃！",
   "advancements.poopsky.poop_ball.description": "击杀屎莱姆获取粪便球",
   "advancements.poopsky.poolime_block.title": "人造黏液块",
-  "advancements.poopsky.poolime_block.description": "通过粪便球合成获得，可通过染色变为粘液块",
+  "advancements.poopsky.poolime_block.description": "通过粪便球合成获得，可通过染色变为黏液块",
   "advancements.poopsky.brown_tile_block.title": "干净又卫生",
   "advancements.poopsky.brown_tile_block.description": "烧制黏屎块获得棕色瓷砖，可通过染色获得其他颜色变种",
   "advancements.poopsky.wither_poop_ball.title": "！中剧毒了！",
