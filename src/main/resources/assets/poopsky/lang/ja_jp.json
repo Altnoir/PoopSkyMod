@@ -724,6 +724,7 @@
   "stat.poopsky.inspect_placer": "設置器調査回数",
   "container.placer": "設置器",
   "generator.poopsky.poopsky": "プープスカイ",
+  "structure.poopsky.poop_island": "プーライムの空島",
   "stat.poopsky.poop_stat": "排便統計",
   "death.attack.roundworm": "%1$s は回虫で死亡した",
   "death.attack.roundworm.player": "%1$s は %2$s の回虫で殺された",

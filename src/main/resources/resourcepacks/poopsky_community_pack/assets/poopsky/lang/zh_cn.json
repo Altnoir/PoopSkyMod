@@ -724,6 +724,7 @@
   "stat.poopsky.inspect_placer": "搜查放置器次数",
   "container.placer": "放置器",
   "generator.poopsky.poopsky": "空中卫生间",
+  "structure.poopsky.poop_island": "可可莱姆空岛",
   "stat.poopsky.poop_stat": "排便数",
   "death.attack.roundworm": "%1$s 死于白巧克力棒",
   "death.attack.roundworm.player": "%1$s 被 %2$s 用白巧克力棒杀死了",

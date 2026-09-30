@@ -1,5 +1,10 @@
 package com.altnoir.poopsky.init;
 
+import com.altnoir.abysslib.reginth.Reginth;
+import com.altnoir.abysslib.reginth.providers.ProviderType;
+import com.altnoir.abysslib.reginth.util.entry.ItemEntry;
+import com.altnoir.abysslib.reginth.util.nullness.NonNullBiConsumer;
+import com.altnoir.abysslib.reginth.util.nullness.NonNullFunction;
 import com.altnoir.poopsky.PoItemGroups;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.ToiletComponent;
@@ -7,9 +12,6 @@ import com.altnoir.poopsky.content.item.PArmorMaterials;
 import com.altnoir.poopsky.content.item.PFoods;
 import com.altnoir.poopsky.content.item.PToolTiers;
 import com.altnoir.poopsky.content.item.p.*;
-import com.altnoir.abysslib.reginth.Reginth;
-import com.altnoir.abysslib.reginth.util.entry.ItemEntry;
-import com.altnoir.abysslib.reginth.util.nullness.NonNullFunction;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -122,8 +124,10 @@ public class PoItems {
     public static final ItemEntry<JinKeLaItem> JINKELA = registerItem("jinkela", JinKeLaItem::new);
     public static final ItemEntry<ReturnTotemItem> RETURN_TOTEM = registerItem("return_totem",
             props -> new ReturnTotemItem(props.stacksTo(8)));
-    public static final ItemEntry<Item> TOTEM_OF_UNPOOPING = registerItem("totem_of_unpooping",
-            props -> new Item(props.stacksTo(8)));
+    public static final ItemEntry<Item> TOTEM_OF_UNPOOPING = REGISTRATE.item("totem_of_unpooping",
+                    props -> new Item(props.stacksTo(8)))
+            .setData(ProviderType.LANG, NonNullBiConsumer.noop())
+            .register();
     public static final ItemEntry<TokenItem> TOKEN = registerItem("token",
             props -> new TokenItem(props.stacksTo(88)));
     public static final ItemEntry<GachaponItem> GACHAPON = registerItem("gachapon",

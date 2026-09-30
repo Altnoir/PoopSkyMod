@@ -724,6 +724,7 @@
   "stat.poopsky.inspect_placer": "Осмотров размещателя",
   "container.placer": "Размещатель",
   "generator.poopsky.poopsky": "PoopSky",
+  "structure.poopsky.poop_island": "Небесный остров какаслизней",
   "stat.poopsky.poop_stat": "Статистика каканья",
   "death.attack.roundworm": "%1$s умер от аскариды",
   "death.attack.roundworm.player": "%1$s был убит %2$s с помощью аскариды",

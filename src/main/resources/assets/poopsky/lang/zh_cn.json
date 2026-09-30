@@ -724,6 +724,7 @@
   "stat.poopsky.inspect_placer": "搜查放置器次数",
   "container.placer": "放置器",
   "generator.poopsky.poopsky": "空中厕所",
+  "structure.poopsky.poop_island": "屎莱姆空岛",
   "stat.poopsky.poop_stat": "排便数",
   "death.attack.roundworm": "%1$s 死于蛔虫",
   "death.attack.roundworm.player": "%1$s 被 %2$s 用蛔虫杀死了",

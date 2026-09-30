@@ -724,6 +724,7 @@
   "stat.poopsky.inspect_placer": "설치기 조사 횟수",
   "container.placer": "설치기",
   "generator.poopsky.poopsky": "PoopSky",
+  "structure.poopsky.poop_island": "똥 슬라임 하늘섬",
   "stat.poopsky.poop_stat": "배변 횟수",
   "death.attack.roundworm": "%1$s이(가) 회충 때문에 죽었습니다",
   "death.attack.roundworm.player": "%1$s이(가) %2$s의 회충에 의해 죽었습니다",
