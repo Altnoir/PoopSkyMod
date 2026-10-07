@@ -85,7 +85,7 @@ PoopSkyMod/
 
 `Reginth.create(MOD_ID)` 会自行挂载 mod event bus；每个注册类保留空 `register()`
 方法用于触发类加载，由 `PoopSky` 构造函数统一调用。创造栏分区/标题渲染亦由 AbyssLib
-提供（`ALCreativeTabSection` / `ALSectionedCreativeModeTab`，客户端自动渲染）。
+提供（`CreativeTabSection` / `SectionedCreativeModeTab`，客户端自动渲染）。
 
 > **上游 Registrate 的残留用法（`compileOnly` + `runtimeOnly`，均为被动/环境需求）**
 >

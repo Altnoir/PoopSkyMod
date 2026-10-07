@@ -103,7 +103,7 @@ public class PoopSkyClient {
         modEventBus.addListener(ClientGameEvents::onPlayerHeartType);
         modEventBus.addListener(ArcadeWorldScreenRenderer::onRenderFrame);
         modEventBus.addListener(ArcadeWorldScreenRenderer::onLoggingOut);
-        // 分区创造栏标题渲染：由 AbyssLib 的 AbyssLibClient 自动注册（ALSectionedCreativeTabRenderer）
+        // 分区创造栏标题渲染：由 AbyssLib 的 AbyssLibClient 自动注册（SectionedCreativeTabRenderer）
         modEventBus.addListener(ToiletHighlightRenderer::onRenderLevel);
         modEventBus.addListener(MaggotsChunkLoaderBlockEntityRenderer::onLevelUnload);
         modEventBus.addListener(IntroController::onLoggingOut);

@@ -7,9 +7,9 @@ import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.content.item.p.GachaponItem;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.impl.PoTags;
-import com.altnoir.abysslib.creative.ALBannerStyle;
-import com.altnoir.abysslib.creative.ALCreativeTabSection;
-import com.altnoir.abysslib.creative.ALSectionedCreativeModeTab;
+import com.altnoir.abysslib.creative.BannerStyle;
+import com.altnoir.abysslib.creative.CreativeTabSection;
+import com.altnoir.abysslib.creative.SectionedCreativeModeTab;
 import com.altnoir.abysslib.reginth.Reginth;
 import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoBlocks;
@@ -38,25 +38,25 @@ public class PoItemGroups {
     public static final String POOPSKY_DECO_TAB_KEY = "itemgroup.poopsky_deco";
 
     /** PoopSky 创造栏横幅配色（蓝系，两个标签页共用）。 */
-    private static final ALBannerStyle BANNER = ALBannerStyle.colors(
+    private static final BannerStyle BANNER = BannerStyle.colors(
             0xFF4A3728,  // 背景
             0xFF6B5440,  // 暗边框
             0xFF8B7355,  // 亮边框
             0xFFD4C4A8   // 文字
     );
 
-    public static final ALCreativeTabSection TS_ITEMS = section("itemGroup.poopsky.section.items");
-    public static final ALCreativeTabSection TS_BLOCKS = section("itemGroup.poopsky.section.blocks");
-    public static final ALCreativeTabSection TS_MOBS = section("itemGroup.poopsky.section.mobs");
-    public static final ALCreativeTabSection TS_POTIONS = section("itemGroup.poopsky.section.potions");
+    public static final CreativeTabSection TS_ITEMS = section("itemGroup.poopsky.section.items");
+    public static final CreativeTabSection TS_BLOCKS = section("itemGroup.poopsky.section.blocks");
+    public static final CreativeTabSection TS_MOBS = section("itemGroup.poopsky.section.mobs");
+    public static final CreativeTabSection TS_POTIONS = section("itemGroup.poopsky.section.potions");
 
-    public static final ALCreativeTabSection TS_DECO_MATERIALS = section("itemGroup.poopsky_deco.section.materials");
-    public static final ALCreativeTabSection TS_DECO_TILES = section("itemGroup.poopsky_deco.section.tiles");
-    public static final ALCreativeTabSection TS_DECO_TOILETS = section("itemGroup.poopsky_deco.section.toilets");
+    public static final CreativeTabSection TS_DECO_MATERIALS = section("itemGroup.poopsky_deco.section.materials");
+    public static final CreativeTabSection TS_DECO_TILES = section("itemGroup.poopsky_deco.section.tiles");
+    public static final CreativeTabSection TS_DECO_TOILETS = section("itemGroup.poopsky_deco.section.toilets");
 
     public static final RegistryEntry<CreativeModeTab, CreativeModeTab> POOPSKY_TAB = REGISTRATE.generic("poopsky",
             Registries.CREATIVE_MODE_TAB, () ->
-                    ALSectionedCreativeModeTab.configure(
+                    SectionedCreativeModeTab.configure(
                             CreativeModeTab.builder()
                                     .title(Component.translatable(POOPSKY_TAB_KEY))
                                     .icon(PoBlocks.FLUSH_TOILET::asStack),
@@ -71,7 +71,7 @@ public class PoItemGroups {
 
     public static final RegistryEntry<CreativeModeTab, CreativeModeTab> POOPSKY_DECORATIVE = REGISTRATE.generic("poopsky_deco",
             Registries.CREATIVE_MODE_TAB, () ->
-                    ALSectionedCreativeModeTab.configure(
+                    SectionedCreativeModeTab.configure(
                             CreativeModeTab.builder()
                                     .title(Component.translatable(POOPSKY_DECO_TAB_KEY))
                                     .icon(PoBlocks.BROWN_TILE_BLOCK::asStack),
@@ -160,8 +160,8 @@ public class PoItemGroups {
         }
     }
 
-    private static ALCreativeTabSection section(String translationKey) {
-        return new ALCreativeTabSection(translationKey);
+    private static CreativeTabSection section(String translationKey) {
+        return new CreativeTabSection(translationKey);
     }
 
     public static List<String> translationKeys() {
