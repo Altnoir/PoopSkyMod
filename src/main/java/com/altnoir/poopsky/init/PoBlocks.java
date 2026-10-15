@@ -1,5 +1,10 @@
 package com.altnoir.poopsky.init;
 
+import com.altnoir.abysslib.reginth.Reginth;
+import com.altnoir.abysslib.reginth.providers.loot.ReginthBlockLootTables;
+import com.altnoir.abysslib.reginth.util.entry.BlockEntry;
+import com.altnoir.abysslib.reginth.util.nullness.NonNullBiConsumer;
+import com.altnoir.abysslib.reginth.util.nullness.NonNullFunction;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.SetToiletTypeFunction;
 import com.altnoir.poopsky.content.block.ChiliVines;
@@ -9,13 +14,8 @@ import com.altnoir.poopsky.content.block.p.MyceliumBlock;
 import com.altnoir.poopsky.content.item.p.CompooperBlockItem;
 import com.altnoir.poopsky.content.item.p.PoopSkyBlockItem;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
-import com.altnoir.abysslib.reginth.Reginth;
 import com.altnoir.poopsky.impl.type.PoBlockSetType;
 import com.altnoir.poopsky.impl.type.PoWoodType;
-import com.altnoir.abysslib.reginth.providers.loot.ReginthBlockLootTables;
-import com.altnoir.abysslib.reginth.util.entry.BlockEntry;
-import com.altnoir.abysslib.reginth.util.nullness.NonNullBiConsumer;
-import com.altnoir.abysslib.reginth.util.nullness.NonNullFunction;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -66,6 +66,8 @@ public class PoBlocks {
     private static final float HARD_STRENGTH = 10.0F;
     private static final float TOILET_RESISTANCE = 1200.0F;
     private static final int LAVA_LIGHT_LEVEL = 15;
+    private static final int DEFAULT_STACK_SIZE = 64;
+    private static final int POOP_STACK_SIZE = 88;
     protected static final float[] LEAVES_SAPLING_CHANCES = {0.1F, 0.125F, 0.25F, 0.5F};
     protected static final float[] LEAVES_STICK_CHANCES = {0.05F, 0.075F, 0.1F, 0.125F, 0.25F};
 
@@ -823,24 +825,20 @@ public class PoBlocks {
         return true;
     }
 
-    public static <T extends
-            Block> BlockEntry<T> registerBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory) {
-        return registerBlock(name, 64, factory, ReginthBlockLootTables::dropSelf);
+    public static <T extends Block> BlockEntry<T> registerBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory) {
+        return registerBlock(name, DEFAULT_STACK_SIZE, factory, ReginthBlockLootTables::dropSelf);
     }
 
-    public static <T extends
-            Block> BlockEntry<T> registerBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<ReginthBlockLootTables, T> loot) {
-        return registerBlock(name, 64, factory, loot);
+    public static <T extends Block> BlockEntry<T> registerBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<ReginthBlockLootTables, T> loot) {
+        return registerBlock(name, DEFAULT_STACK_SIZE, factory, loot);
     }
 
-    public static <T extends Block> BlockEntry<T> registerBlock(String name, int stackSize, NonNullFunction<
-            BlockBehaviour.Properties, T> factory) {
+    public static <T extends Block> BlockEntry<T> registerBlock(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory) {
         return registerBlock(name, stackSize, factory, ReginthBlockLootTables::dropSelf);
     }
 
-    public static <T extends Block> BlockEntry<T> registerBlock(String name, int stackSize, NonNullFunction<
-            BlockBehaviour.Properties, T> factory, NonNullBiConsumer<ReginthBlockLootTables, T> loot) {
-        return registerBlockWithItem(name, stackSize, factory, loot, BlockItem::new, BlockTab.BASIC_BLOCKS);
+    public static <T extends Block> BlockEntry<T> registerBlock(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<ReginthBlockLootTables, T> loot) {
+        return registerBlockWithItem(name, stackSize, factory, loot, BlockTab.BASIC_BLOCKS);
     }
 
     public static <T extends Block> BlockEntry<T> registerDecoMaterialBlock(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory) {
@@ -848,7 +846,7 @@ public class PoBlocks {
     }
 
     public static <T extends Block> BlockEntry<T> registerDecoMaterialBlock(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<ReginthBlockLootTables, T> loot) {
-        return registerBlockWithItem(name, stackSize, factory, loot, BlockItem::new, BlockTab.DECO_MATERIALS);
+        return registerBlockWithItem(name, stackSize, factory, loot, BlockTab.DECO_MATERIALS);
     }
 
     public static <T extends Block> BlockEntry<T> registerPoopBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory) {
@@ -856,7 +854,7 @@ public class PoBlocks {
     }
 
     public static <T extends Block> BlockEntry<T> registerPoopBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<ReginthBlockLootTables, T> loot) {
-        return registerBlockWithItem(name, 88, factory, loot, BlockItem::new, BlockTab.BASIC_BLOCKS, BlockTab.DECO_MATERIALS);
+        return registerBlockWithItem(name, POOP_STACK_SIZE, factory, loot, BlockTab.BASIC_BLOCKS, BlockTab.DECO_MATERIALS);
     }
 
     public static <T extends Block> BlockEntry<T> registerTileBlock(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory) {
@@ -864,11 +862,10 @@ public class PoBlocks {
     }
 
     public static <T extends Block> BlockEntry<T> registerTileBlock(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<ReginthBlockLootTables, T> loot) {
-        return registerBlockWithItem(name, stackSize, factory, loot, BlockItem::new, BlockTab.DECO_TILE);
+        return registerBlockWithItem(name, stackSize, factory, loot, BlockTab.DECO_TILE);
     }
 
-    public static <T extends
-            Block> BlockEntry<T> registerBlockNoItem(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<ReginthBlockLootTables, T> loot) {
+    public static <T extends Block> BlockEntry<T> registerBlockNoItem(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<ReginthBlockLootTables, T> loot) {
         return REGISTRATE.block(name, factory)
                 .blockstate((ctx, prov) -> {
                 })
@@ -877,7 +874,17 @@ public class PoBlocks {
     }
 
     public static <T extends Block> BlockEntry<T> registerBlockNoTab(String name, int stackSize, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<ReginthBlockLootTables, T> loot) {
-        return registerBlockWithItem(name, stackSize, factory, loot, BlockItem::new, BlockTab.NO_TAB);
+        return registerBlockWithItem(name, stackSize, factory, loot, BlockTab.NO_TAB);
+    }
+
+    private static <T extends Block> BlockEntry<T> registerBlockWithItem(
+            String name,
+            int stackSize,
+            NonNullFunction<BlockBehaviour.Properties, T> factory,
+            NonNullBiConsumer<ReginthBlockLootTables, T> loot,
+            BlockTab... tabs
+    ) {
+        return registerBlockWithItem(name, stackSize, factory, loot, BlockItem::new, tabs);
     }
 
     private static <T extends Block> BlockEntry<T> registerBlockWithItem(
@@ -904,11 +911,11 @@ public class PoBlocks {
     }
 
     public static <T extends Block> BlockEntry<T> registerCompooperBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<ReginthBlockLootTables, T> loot) {
-        return registerBlockWithItem(name, 64, factory, loot, CompooperBlockItem::new, BlockTab.BASIC_BLOCKS);
+        return registerBlockWithItem(name, DEFAULT_STACK_SIZE, factory, loot, CompooperBlockItem::new, BlockTab.BASIC_BLOCKS);
     }
 
     public static <T extends Block> BlockEntry<T> registerToiletBlock(String name, NonNullFunction<BlockBehaviour.Properties, T> factory, NonNullBiConsumer<ReginthBlockLootTables, T> loot) {
-        return registerBlockWithItem(name, 88, factory, loot, ToiletBlockItem::new, BlockTab.BASIC_BLOCKS);
+        return registerBlockWithItem(name, POOP_STACK_SIZE, factory, loot, ToiletBlockItem::new, BlockTab.BASIC_BLOCKS);
     }
 
     public static BlockEntry<ArcadeBlock> registerArcadeBlock(String name, DyeColor color) {

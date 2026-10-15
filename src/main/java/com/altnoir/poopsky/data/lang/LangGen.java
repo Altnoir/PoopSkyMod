@@ -1,13 +1,13 @@
 package com.altnoir.poopsky.data.lang;
 
+import com.altnoir.abysslib.reginth.Reginth;
+import com.altnoir.abysslib.reginth.providers.ProviderType;
+import com.altnoir.abysslib.reginth.providers.ReginthLangProvider;
 import com.altnoir.poopsky.PoItemGroups;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.ToiletType;
-import com.altnoir.abysslib.reginth.Reginth;
 import com.altnoir.poopsky.init.PoPotions;
-import com.altnoir.abysslib.reginth.providers.ProviderType;
-import com.altnoir.abysslib.reginth.providers.ReginthLangProvider;
 
 import java.util.Map;
 
@@ -175,6 +175,7 @@ public final class LangGen {
     }
 
     private static void addItemExtras() {
+        provider.add("item.poopsky.totem_of_unpooping", "No \"Oh Shit\" Totem");
         provider.add("upgrade.poopsky.omen_upgrade", "Omen Upgrade");
         provider.add("item.poopsky.smithing_template.omen_upgrade.applies_to", "Golden Equipment");
         provider.add("item.poopsky.smithing_template.omen_upgrade.ingredients", "Ominous Filthy Ingot");
@@ -312,6 +313,7 @@ public final class LangGen {
     private static void addMisc() {
         provider.add("container.placer", "Placer");
         provider.add("generator.poopsky.poopsky", "PoopSky");
+        provider.add("structure.poopsky.poop_island", "Poolime Sky Island");
         provider.add("death.attack.roundworm", "%1$s died from Roundworm");
         provider.add("death.attack.roundworm.player", "%1$s was killed by %2$s by Roundworm");
         provider.add("death.attack.poop_ball", "%1$s died from Poop Ball");
