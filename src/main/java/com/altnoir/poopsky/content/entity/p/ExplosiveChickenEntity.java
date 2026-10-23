@@ -4,6 +4,7 @@ import com.altnoir.poopsky.impl.util.PoopTntUtil;
 import com.altnoir.poopsky.init.PoEntityType;
 import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.init.PoSoundEvents;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -64,7 +65,7 @@ public class ExplosiveChickenEntity extends Chicken {
         super.aiStep();
         if (this.level().isClientSide()) {
             if (this.getFuse() > 0) {
-                this.level().addParticle(net.minecraft.core.particles.ParticleTypes.SMOKE,
+                this.level().addParticle(ParticleTypes.SMOKE,
                         this.getX(), this.getY() + 0.5, this.getZ(), 0.0, 0.0, 0.0);
             }
             return;

@@ -10,10 +10,7 @@ import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 
 import java.io.Reader;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class FlyTypeManager extends SimpleJsonResourceReloadListener {
     private static final Gson GSON = new GsonBuilder().create();
@@ -119,7 +116,7 @@ public class FlyTypeManager extends SimpleJsonResourceReloadListener {
     }
 
     public List<FlyTypeDefinition> getDefinitions() {
-        Map<String, FlyTypeDefinition> combined = new java.util.LinkedHashMap<>();
+        Map<String, FlyTypeDefinition> combined = new LinkedHashMap<>();
         for (FlyTypeDefinition definition : dataPackFlyTypes) {
             combined.putIfAbsent(definition.id(), definition);
         }

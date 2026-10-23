@@ -5,6 +5,8 @@ import com.github.mcmodderanchor.simplebedrockmodel.v2.common.model.baked.BakerO
 import com.github.mcmodderanchor.simplebedrockmodel.v2.event.RegisterV2BedrockResourcesEvent;
 import net.minecraft.resources.ResourceLocation;
 
+import java.util.Set;
+
 public final class PoBedrockModelResources {
     public static final ResourceLocation FLUSH_TOILET_CART = PoopSky.loc("flush_toilet_cart.geo");
     public static final ResourceLocation GACHAPON = PoopSky.loc("gachapon.geo");
@@ -30,7 +32,7 @@ public final class PoBedrockModelResources {
                 .animation(SNAIL_ANIMATION)
                 .register();
         event.bakedModel(MAGGOT_MODEL)
-                .options(BakerOptions.ofAnimatedBones(java.util.Set.of(
+                .options(BakerOptions.ofAnimatedBones(Set.of(
                         "bodyPart_0",
                         "bodyPart_1",
                         "bodyPart_2",

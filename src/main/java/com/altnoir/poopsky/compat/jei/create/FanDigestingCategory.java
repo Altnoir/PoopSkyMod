@@ -11,6 +11,7 @@ import com.simibubi.create.compat.jei.DoubleItemIcon;
 import com.simibubi.create.compat.jei.EmptyBackground;
 import com.simibubi.create.compat.jei.category.ProcessingViaFanCategory;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
+import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.component.DataComponents;
@@ -22,7 +23,7 @@ import java.util.List;
 
 public class FanDigestingCategory extends ProcessingViaFanCategory.MultiOutput<DigestingRecipe> {
 
-    public static final mezz.jei.api.recipe.RecipeType<RecipeHolder<DigestingRecipe>> TYPE = mezz.jei.api.recipe.RecipeType.createRecipeHolderType(PSRecipeTypes.DIGESTING.getId());
+    public static final RecipeType<RecipeHolder<DigestingRecipe>> TYPE = RecipeType.createRecipeHolderType(PSRecipeTypes.DIGESTING.getId());
     private final AnimatedUrineLiquid urineLiquid = new AnimatedUrineLiquid();
 
     public static FanDigestingCategory create() {
