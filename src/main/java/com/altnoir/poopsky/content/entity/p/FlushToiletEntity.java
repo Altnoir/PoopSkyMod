@@ -74,11 +74,14 @@ public class FlushToiletEntity extends Entity {
 
     @Override
     protected void removePassenger(Entity passenger) {
+        super.removePassenger(passenger);
+        // 客户端同步乘客时会临时解绑，座位生命周期由服务端维护。
+        if (this.level().isClientSide) return;
+
         if (passenger instanceof LivingEntity living) {
             living.setDeltaMovement(living.getDeltaMovement().add(0.0, 0.4, 0.0));
             living.hasImpulse = true;
         }
-        super.removePassenger(passenger);
         if (!this.isRemoved()) {
             this.kill();
         }
