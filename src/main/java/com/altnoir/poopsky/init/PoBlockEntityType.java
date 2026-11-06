@@ -11,6 +11,12 @@ import com.altnoir.abysslib.reginth.util.entry.BlockEntityEntry;
 public class PoBlockEntityType {
     private static final Reginth REGISTRATE = PoopSky.registrate();
 
+    public static final BlockEntityEntry<PoopFlowerBlockEntity> POOP_FLOWER = REGISTRATE
+            .<PoopFlowerBlockEntity>blockEntity("poop_flower", (type, pos, state) -> new PoopFlowerBlockEntity(pos, state))
+            .validBlocks(PoBlocks.SHIT, PoBlocks.CHILI_SHIT, PoBlocks.GOLDEN_SHIT)
+            .renderer(() -> com.altnoir.poopsky.client.renderer.PoopFlowerRenderer::new)
+            .register();
+
     public static final BlockEntityEntry<ToiletBlockEntity> TOILET_BLOCK_ENTITY = REGISTRATE
             .<ToiletBlockEntity>blockEntity("toilet_block_entity", (type, pos, state) -> new ToiletBlockEntity(pos, state))
             .validBlocks(PoBlocks.WOODEN_TOILET, PoBlocks.HARD_TOILET)
