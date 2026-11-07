@@ -32,7 +32,10 @@ public class BasiliskEntity extends Frog {
     private static final double BREATH_DISTANCE_SQR = 16.0;
     private static final double CHASE_SPEED_MODIFIER = 1.15;
     private static final int ATTACK_ANIMATION_DURATION = 15;
+    private static final int HOP_DURATION = 15;
     private static final EntityDataAccessor<Integer> ATTACK_ANIMATION_TICKS =
+            SynchedEntityData.defineId(BasiliskEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> HOP_TICK =
             SynchedEntityData.defineId(BasiliskEntity.class, EntityDataSerializers.INT);
     private int breathCooldown;
 
@@ -57,6 +60,15 @@ public class BasiliskEntity extends Frog {
 
     @Override
     public void aiStep() {
+        if (!this.level().isClientSide()) {
+            int hopTick = this.getHopTick();
+            boolean moving = !this.getNavigation().isDone();
+            if (hopTick < 0 && moving) {
+                this.entityData.set(HOP_TICK, 0);
+            } else if (hopTick >= 0) {
+                this.entityData.set(HOP_TICK, hopTick + 1 < HOP_DURATION ? hopTick + 1 : moving ? 0 : -1);
+            }
+        }
         super.aiStep();
         if (this.breathCooldown > 0) {
             this.breathCooldown--;
@@ -70,6 +82,28 @@ public class BasiliskEntity extends Frog {
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         builder.define(ATTACK_ANIMATION_TICKS, 0);
+        builder.define(HOP_TICK, -1);
+    }
+
+    public int getHopTick() {
+        return this.entityData.get(HOP_TICK);
+    }
+
+    @Override
+    public void travel(Vec3 travelVector) {
+        int hopTick = this.getHopTick();
+        if (hopTick >= 0 && this.onGround() && !this.isInWaterOrBubble()) {
+            float speed = this.getSpeed();
+            float multiplier = hopTick < 2 ? 0.4F : hopTick < 8 ? 2.0F : 0.0F;
+            this.setSpeed(speed * multiplier);
+            try {
+                super.travel(travelVector);
+            } finally {
+                this.setSpeed(speed);
+            }
+            return;
+        }
+        super.travel(travelVector);
     }
 
     public int getAttackAnimationTicks() {
@@ -92,7 +126,9 @@ public class BasiliskEntity extends Frog {
         this.getLookControl().setLookAt(target, 30.0F, 30.0F);
         if (this.canBreatheAt(target)) {
             this.getNavigation().stop();
-            this.breatheCurse(target);
+            if (this.getHopTick() < 0) {
+                this.breatheCurse(target);
+            }
         } else {
             this.getNavigation().moveTo(target, CHASE_SPEED_MODIFIER);
         }

@@ -6,6 +6,7 @@ import com.altnoir.poopsky.content.entity.p.BasiliskEntity;
 import com.github.mcmodderanchor.simplebedrockmodel.v1.common.animation.BedrockAnimation;
 import com.github.mcmodderanchor.simplebedrockmodel.v2.common.model.baked.BakedBedrockModel;
 import com.github.mcmodderanchor.simplebedrockmodel.v2.common.model.runtime.BakedModelInstance;
+import com.github.mcmodderanchor.simplebedrockmodel.v2.common.model.runtime.BoneState;
 import com.github.mcmodderanchor.simplebedrockmodel.v2.resource.BedrockModelResources;
 import com.maydaymemory.mae.basic.ArrayPoseBuilder;
 import com.maydaymemory.mae.basic.Pose;
@@ -32,7 +33,7 @@ public class BasiliskRenderer extends EntityRenderer<BasiliskEntity> {
     private static final ResourceLocation TEXTURE = PoopSky.loc("textures/entity/basilisk.png");
     private static final EulerAdditiveBlender BLENDER = new SimpleEulerAdditiveBlender(new ZYXBoneTransformFactory(), ArrayPoseBuilder::new);
 
-    private final WeakHashMap<BasiliskEntity, BakedModelInstance> instances = new WeakHashMap<>();
+    private final WeakHashMap<BasiliskEntity, AnimationState> instances = new WeakHashMap<>();
     private final Map<String, BedrockAnimation> animations = new HashMap<>();
     private BakedBedrockModel model;
 
@@ -54,12 +55,25 @@ public class BasiliskRenderer extends EntityRenderer<BasiliskEntity> {
             return;
         }
 
-        BakedModelInstance instance = this.instances.computeIfAbsent(entity, ignored -> this.model.createInstance());
+        AnimationState state = this.instances.computeIfAbsent(entity, ignored -> new AnimationState(this.model.createInstance()));
+        BakedModelInstance instance = state.instance;
         instance.resetPose();
-        BedrockAnimation animation = this.selectAnimation(entity);
-        float animationTime = this.getAnimationTime(entity, animation, partialTick);
-        Pose animatedPose = animation.evaluate(animationTime);
-        instance.applyPose(BLENDER.blend(instance.getBindPose(), animatedPose));
+        BedrockAnimation walking = this.animations.get("walking");
+        float walkTime = state.updateWalk(entity, partialTick, walking);
+        BedrockAnimation animation = entity.getAttackAnimationTicks() > 0
+                ? this.animations.get("attack")
+                : walkTime >= 0.0F ? walking : null;
+        if (animation != null) {
+            float animationTime = animation == walking ? walkTime
+                    : (BasiliskEntity.getAttackAnimationDuration() - entity.getAttackAnimationTicks() + partialTick) / 20.0F;
+            Pose animatedPose = animation.evaluate(animationTime);
+            instance.applyPose(BLENDER.blend(instance.getBindPose(), animatedPose));
+        }
+        BoneState head = instance.getBone("head");
+        if (head != null) {
+            float pitch = Mth.clamp(Mth.lerp(partialTick, entity.xRotO, entity.getXRot()), -22.5F, 22.5F);
+            head.rotation.rotateX(-pitch * Mth.DEG_TO_RAD);
+        }
 
         poseStack.pushPose();
         poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - Mth.rotLerp(partialTick, entity.yBodyRotO, entity.yBodyRot)));
@@ -100,22 +114,35 @@ public class BasiliskRenderer extends EntityRenderer<BasiliskEntity> {
         }
     }
 
-    private BedrockAnimation selectAnimation(BasiliskEntity entity) {
-        if (entity.getAttackAnimationTicks() > 0) {
-            return this.animations.get("attack");
-        }
-        if (entity.getDeltaMovement().horizontalDistanceSqr() > 1.0E-4D) {
-            return this.animations.get("walking");
-        }
-        return this.animations.get("idle");
-    }
+    private static class AnimationState {
+        private final BakedModelInstance instance;
+        private float lastRenderTick = -1.0F;
+        private float walkTime = -1.0F;
 
-    private float getAnimationTime(BasiliskEntity entity, BedrockAnimation animation, float partialTick) {
-        if (entity.getAttackAnimationTicks() > 0 && "attack".equals(animation.getName())) {
-            return (BasiliskEntity.getAttackAnimationDuration() - entity.getAttackAnimationTicks() + partialTick) / 20.0F;
+        private AnimationState(BakedModelInstance instance) {
+            this.instance = instance;
         }
-        float length = animation.getSpecifiedEndTimeS();
-        float elapsed = (entity.tickCount + partialTick) / 20.0F;
-        return length > 0.0F ? elapsed % length : elapsed;
+
+        private float updateWalk(BasiliskEntity entity, float partialTick, BedrockAnimation animation) {
+            float renderTick = entity.tickCount + partialTick;
+            float elapsed = this.lastRenderTick < 0.0F ? 0.0F : Math.max(0.0F, renderTick - this.lastRenderTick) / 20.0F;
+            this.lastRenderTick = renderTick;
+            if (animation == null || animation.getSpecifiedEndTimeS() <= 0.0F) {
+                this.walkTime = -1.0F;
+                return this.walkTime;
+            }
+            float length = animation.getSpecifiedEndTimeS();
+            if (this.walkTime < 0.0F) {
+                if (entity.getHopTick() >= 0) {
+                    this.walkTime = (entity.getHopTick() + partialTick) / 20.0F % length;
+                }
+            } else {
+                this.walkTime += elapsed;
+                if (this.walkTime >= length) {
+                    this.walkTime = entity.getHopTick() >= 0 ? this.walkTime % length : -1.0F;
+                }
+            }
+            return this.walkTime;
+        }
     }
 }

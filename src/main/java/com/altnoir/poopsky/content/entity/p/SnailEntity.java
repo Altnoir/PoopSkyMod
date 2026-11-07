@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.content.entity.p;
 
+import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.init.PoEntityType;
 import net.minecraft.core.Direction;
@@ -7,9 +8,12 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -20,9 +24,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 public class SnailEntity extends Animal {
+    private static final ResourceLocation SPEED_MODIFIER = PoopSky.loc("snail_movement_speed");
+    private static final double MAX_CLIMB_SPEED = 0.025;
     private static final EntityDataAccessor<Boolean> DATA_CLIMBING =
             SynchedEntityData.defineId(SnailEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> DATA_WALL_DIRECTION =
@@ -33,6 +40,7 @@ public class SnailEntity extends Animal {
 
     public SnailEntity(EntityType<? extends SnailEntity> entityType, Level level) {
         super(entityType, level);
+        this.applyMovementSpeedModifier();
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -80,6 +88,25 @@ public class SnailEntity extends Animal {
     @Override
     public boolean onClimbable() {
         return this.isClimbing();
+    }
+
+    @Override
+    public void travel(Vec3 travelVector) {
+        if (this.isClimbing() && this.horizontalCollision && !this.isInWaterOrBubble()) {
+            Vec3 velocity = this.getDeltaMovement();
+            if (velocity.y > MAX_CLIMB_SPEED) {
+                this.setDeltaMovement(velocity.x, MAX_CLIMB_SPEED, velocity.z);
+            }
+        }
+        super.travel(travelVector);
+    }
+
+    private void applyMovementSpeedModifier() {
+        AttributeInstance speed = this.getAttribute(Attributes.MOVEMENT_SPEED);
+        if (speed != null && !speed.hasModifier(SPEED_MODIFIER)) {
+            speed.addTransientModifier(new AttributeModifier(
+                    SPEED_MODIFIER, 1.0, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+        }
     }
 
     @Override
@@ -160,6 +187,7 @@ public class SnailEntity extends Animal {
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
+        this.applyMovementSpeedModifier();
         this.setColor(Color.byId(tag.getInt("Color")));
     }
 
