@@ -36,11 +36,6 @@ public class PSJEIInfo {
                 Component.translatable("jei.poopsky.sugar_cane")
         );
         registration.addIngredientInfo(
-                FlyItem.withType(FlyTypes.WHITE.get()),
-                VanillaTypes.ITEM_STACK,
-                Component.translatable("jei.poopsky.fly_desc.white")
-        );
-        registration.addIngredientInfo(
                 FlyItem.withType(FlyTypes.BLACK.get()),
                 VanillaTypes.ITEM_STACK,
                 Component.translatable("jei.poopsky.fly_desc.black")

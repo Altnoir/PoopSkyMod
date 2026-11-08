@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "poopsky:maggots_seeds_orange"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:orange_dye"
+  }
+}

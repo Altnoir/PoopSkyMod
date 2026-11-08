@@ -2,13 +2,14 @@ package com.altnoir.poopsky.content.item.p;
 
 import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.entity.p.FlyEntity;
-import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.init.FlyTypes;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -45,6 +46,7 @@ public class FlyCatcherItem extends Item {
     }
 
     private static FlyType.Type getFlyTypeFromEntity(FlyEntity fly) {
-        return FlyTypes.NORMAL.get();
+        DyeColor color = fly.getColor();
+        return color == DyeColor.WHITE ? FlyTypes.NORMAL.get() : FlyTypes.valueOf(color.name()).get();
     }
 }

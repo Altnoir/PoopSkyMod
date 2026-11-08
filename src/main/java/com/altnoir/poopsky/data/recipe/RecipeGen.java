@@ -1,5 +1,7 @@
 package com.altnoir.poopsky.data.recipe;
 
+import com.altnoir.abysslib.reginth.providers.ReginthRecipeProvider;
+import com.altnoir.abysslib.reginth.util.entry.BlockEntry;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.compat.farmersdelight.FarmersDelightRecipeGen;
@@ -14,8 +16,6 @@ import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.init.ToiletTypes;
 import com.simibubi.create.AllItems;
-import com.altnoir.abysslib.reginth.providers.ReginthRecipeProvider;
-import com.altnoir.abysslib.reginth.util.entry.BlockEntry;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
@@ -26,9 +26,7 @@ import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -58,6 +56,7 @@ public class RecipeGen extends ReginthRecipeProvider implements IConditionBuilde
         this.registries = this.registriesFuture.join();
         buildSmeltingRecipes(recipeOutput);
         buildItemRecipes(recipeOutput);
+        buildMaggotDyeRecipes(recipeOutput);
         buildBlockRecipes(recipeOutput);
         buildVanillaRecipes(recipeOutput);
         buildStonecuttingRecipes(recipeOutput);
@@ -974,6 +973,21 @@ public class RecipeGen extends ReginthRecipeProvider implements IConditionBuilde
                 .save(fdLoaded, "rich_soil_has_farmersdelight");
     }
 
+    private void buildMaggotDyeRecipes(RecipeOutput output) {
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.BONE_MEAL)
+                .requires(PoItems.MAGGOTS_SEEDS)
+                .unlockedBy(getHasName(PoItems.MAGGOTS_SEEDS), has(PoItems.MAGGOTS_SEEDS))
+                .save(output, PoopSky.loc("bone_meal_from_maggots"));
+        for (DyeColor color : DyeColor.values()) {
+            if (color == DyeColor.WHITE) continue;
+            ItemLike maggots = PoItems.COLORED_MAGGOTS.get(color);
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, DyeItem.byColor(color))
+                    .requires(maggots)
+                    .unlockedBy(getHasName(maggots), has(maggots))
+                    .save(output, PoopSky.loc(color.getName() + "_dye_from_maggots"));
+        }
+    }
+
     private void buildFlyBarrelRecipes(RecipeOutput recipeOutput) {
         RecipeOutput create = recipeOutput.withConditions(modLoaded(PoMods.CREATE.id()));
         RecipeOutput ae2 = recipeOutput.withConditions(modLoaded(PoMods.AE2.id()));
@@ -995,22 +1009,21 @@ public class RecipeGen extends ReginthRecipeProvider implements IConditionBuilde
 
         List<FlyBarrelEntry> recipes = List.of(
                 FlyBarrelEntry.of(FlyTypes.NORMAL.get(), PoItems.MAGGOTS_SEEDS),
-                FlyBarrelEntry.of(FlyTypes.WHITE.get(), Items.BONE_MEAL),
-                FlyBarrelEntry.of(FlyTypes.LIGHT_GRAY.get(), Items.QUARTZ),
-                FlyBarrelEntry.of(FlyTypes.GRAY.get(), Items.GRAVEL),
-                FlyBarrelEntry.of(FlyTypes.BLACK.get(), Items.WITHER_ROSE),
-                FlyBarrelEntry.of(FlyTypes.BROWN.get(), Items.COCOA_BEANS),
-                FlyBarrelEntry.of(FlyTypes.RED.get(), Items.REDSTONE),
-                FlyBarrelEntry.of(FlyTypes.ORANGE.get(), Items.TORCHFLOWER),
-                FlyBarrelEntry.of(FlyTypes.YELLOW.get(), Items.GLOW_BERRIES),
-                FlyBarrelEntry.of(FlyTypes.LIME.get(), Items.SEA_PICKLE),
-                FlyBarrelEntry.of(FlyTypes.GREEN.get(), Items.CACTUS),
-                FlyBarrelEntry.of(FlyTypes.CYAN.get(), Items.PRISMARINE_SHARD),
-                FlyBarrelEntry.of(FlyTypes.LIGHT_BLUE.get(), Items.PRISMARINE_CRYSTALS),
-                FlyBarrelEntry.of(FlyTypes.BLUE.get(), Items.LAPIS_LAZULI),
-                FlyBarrelEntry.of(FlyTypes.PURPLE.get(), Items.CHORUS_FLOWER),
-                FlyBarrelEntry.of(FlyTypes.MAGENTA.get(), Items.SHULKER_SHELL),
-                FlyBarrelEntry.of(FlyTypes.PINK.get(), Items.PINK_PETALS),
+                FlyBarrelEntry.of(FlyTypes.LIGHT_GRAY.get(), PoItems.COLORED_MAGGOTS.get(DyeColor.LIGHT_GRAY)),
+                FlyBarrelEntry.of(FlyTypes.GRAY.get(), PoItems.COLORED_MAGGOTS.get(DyeColor.GRAY)),
+                FlyBarrelEntry.of(FlyTypes.BLACK.get(), PoItems.COLORED_MAGGOTS.get(DyeColor.BLACK)),
+                FlyBarrelEntry.of(FlyTypes.BROWN.get(), PoItems.COLORED_MAGGOTS.get(DyeColor.BROWN)),
+                FlyBarrelEntry.of(FlyTypes.RED.get(), PoItems.COLORED_MAGGOTS.get(DyeColor.RED)),
+                FlyBarrelEntry.of(FlyTypes.ORANGE.get(), PoItems.COLORED_MAGGOTS.get(DyeColor.ORANGE)),
+                FlyBarrelEntry.of(FlyTypes.YELLOW.get(), PoItems.COLORED_MAGGOTS.get(DyeColor.YELLOW)),
+                FlyBarrelEntry.of(FlyTypes.LIME.get(), PoItems.COLORED_MAGGOTS.get(DyeColor.LIME)),
+                FlyBarrelEntry.of(FlyTypes.GREEN.get(), PoItems.COLORED_MAGGOTS.get(DyeColor.GREEN)),
+                FlyBarrelEntry.of(FlyTypes.CYAN.get(), PoItems.COLORED_MAGGOTS.get(DyeColor.CYAN)),
+                FlyBarrelEntry.of(FlyTypes.LIGHT_BLUE.get(), PoItems.COLORED_MAGGOTS.get(DyeColor.LIGHT_BLUE)),
+                FlyBarrelEntry.of(FlyTypes.BLUE.get(), PoItems.COLORED_MAGGOTS.get(DyeColor.BLUE)),
+                FlyBarrelEntry.of(FlyTypes.PURPLE.get(), PoItems.COLORED_MAGGOTS.get(DyeColor.PURPLE)),
+                FlyBarrelEntry.of(FlyTypes.MAGENTA.get(), PoItems.COLORED_MAGGOTS.get(DyeColor.MAGENTA)),
+                FlyBarrelEntry.of(FlyTypes.PINK.get(), PoItems.COLORED_MAGGOTS.get(DyeColor.PINK)),
                 FlyBarrelEntry.of(FlyTypes.IRON.get(), Items.RAW_IRON),
                 FlyBarrelEntry.of(FlyTypes.COPPER.get(), Items.RAW_COPPER),
                 FlyBarrelEntry.of(FlyTypes.GOLD.get(), Items.RAW_GOLD),
@@ -1062,15 +1075,15 @@ public class RecipeGen extends ReginthRecipeProvider implements IConditionBuilde
                 Breeding.of(FlyTypes.RED.get(), FlyTypes.BLUE.get(), FlyTypes.PURPLE.get()),
                 Breeding.of(FlyTypes.RED.get(), FlyTypes.GREEN.get(), FlyTypes.YELLOW.get()),
                 Breeding.of(FlyTypes.RED.get(), FlyTypes.YELLOW.get(), FlyTypes.ORANGE.get()),
-                Breeding.of(FlyTypes.WHITE.get(), FlyTypes.BLACK.get(), FlyTypes.GRAY.get()),
-                Breeding.of(FlyTypes.WHITE.get(), FlyTypes.BLUE.get(), FlyTypes.LIGHT_BLUE.get()),
-                Breeding.of(FlyTypes.WHITE.get(), FlyTypes.GRAY.get(), FlyTypes.LIGHT_GRAY.get()),
-                Breeding.of(FlyTypes.WHITE.get(), FlyTypes.GREEN.get(), FlyTypes.LIME.get()),
-                Breeding.of(FlyTypes.WHITE.get(), FlyTypes.RED.get(), FlyTypes.PINK.get()),
+                Breeding.of(FlyTypes.NORMAL.get(), FlyTypes.BLACK.get(), FlyTypes.GRAY.get()),
+                Breeding.of(FlyTypes.NORMAL.get(), FlyTypes.BLUE.get(), FlyTypes.LIGHT_BLUE.get()),
+                Breeding.of(FlyTypes.NORMAL.get(), FlyTypes.GRAY.get(), FlyTypes.LIGHT_GRAY.get()),
+                Breeding.of(FlyTypes.NORMAL.get(), FlyTypes.GREEN.get(), FlyTypes.LIME.get()),
+                Breeding.of(FlyTypes.NORMAL.get(), FlyTypes.RED.get(), FlyTypes.PINK.get()),
                 Breeding.of(FlyTypes.PURPLE.get(), FlyTypes.CYAN.get(), FlyTypes.ENDER.get()),
                 Breeding.of(FlyTypes.GREEN.get(), FlyTypes.YELLOW.get(), FlyTypes.DRAGON_FRUIT.get()),
                 Breeding.of(FlyTypes.DRAGON_FRUIT.get(), FlyTypes.YELLOW.get(), FlyTypes.GLOWSTONE.get()),
-                Breeding.of(FlyTypes.WHITE.get(), FlyTypes.ORANGE.get(), FlyTypes.COPPER.get()),
+                Breeding.of(FlyTypes.NORMAL.get(), FlyTypes.ORANGE.get(), FlyTypes.COPPER.get()),
                 Breeding.of(FlyTypes.LIGHT_GRAY.get(), FlyTypes.COPPER.get(), FlyTypes.IRON.get()),
                 Breeding.of(FlyTypes.GLOWSTONE.get(), FlyTypes.COPPER.get(), FlyTypes.GOLD.get()),
                 Breeding.of(FlyTypes.LIME.get(), FlyTypes.GOLD.get(), FlyTypes.EMERALD.get()),

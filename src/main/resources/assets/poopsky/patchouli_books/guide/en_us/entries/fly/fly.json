@@ -15,7 +15,7 @@
     {
       "type": "patchouli:text",
       "title": "Special Variants",
-      "text": "Drowning a fly drops a blue fly; killing it with a roundworm drops a white fly; cactus drops a green fly; a poop ball drops a brown fly; lightning drops a black fly.$(br2)Feeding a fly chili gives a red fly, while feeding it King of Dragon Fruit gives a dragon fruit fly."
+      "text": "A fly turns blue from drowning damage, green from cactus damage, brown from a poop ball, and black from a lightning strike.$(br2)Feeding a fly chili turns it red."
     },
     {
       "type": "patchouli:relations",

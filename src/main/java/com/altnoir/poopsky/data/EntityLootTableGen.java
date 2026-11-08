@@ -1,18 +1,20 @@
 package com.altnoir.poopsky.data;
 
-import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.abysslib.reginth.Reginth;
-import com.altnoir.poopsky.init.PoEntityType;
-import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.abysslib.reginth.providers.ProviderType;
 import com.altnoir.abysslib.reginth.providers.loot.ReginthEntityLootTables;
 import com.altnoir.abysslib.reginth.providers.loot.ReginthLootTableProvider.LootType;
+import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.impl.PoTags;
+import com.altnoir.poopsky.init.PoEntityType;
+import com.altnoir.poopsky.init.PoItems;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -83,19 +85,21 @@ public final class EntityLootTableGen {
                                         )
                         )
         );
-        loot.add(
-                PoEntityType.FLY.get(),
-                LootTable.lootTable()
-                        .withPool(
-                                LootPool.lootPool()
-                                        .setRolls(ConstantValue.exactly(1.0F))
-                                        .add(
-                                                LootItem.lootTableItem(PoItems.MAGGOTS_SEEDS.get())
-                                                        .apply(SmeltItemFunction.smelted().when(shouldSmeltLoot(registries)))
-                                                        .apply(EnchantedCountIncreaseFunction.lootingMultiplier(registries, ConstantValue.exactly(1.0F)))
-                                        )
-                        )
-        );
+        LootPool.Builder flyDrops = LootPool.lootPool()
+                .setRolls(ConstantValue.exactly(1.0F))
+                .apply(SmeltItemFunction.smelted().when(shouldSmeltLoot(registries)))
+                .apply(EnchantedCountIncreaseFunction.lootingMultiplier(registries, ConstantValue.exactly(1.0F)));
+        for (DyeColor color : DyeColor.values()) {
+            CompoundTag tag = new CompoundTag();
+            tag.putInt("Color", color.getId());
+            flyDrops.add(LootItem.lootTableItem(color == DyeColor.WHITE
+                            ? PoItems.MAGGOTS_SEEDS.get()
+                            : PoItems.COLORED_MAGGOTS.get(color).get())
+                    .when(LootItemEntityPropertyCondition.hasProperties(
+                            LootContext.EntityTarget.THIS,
+                            EntityPredicate.Builder.entity().nbt(new NbtPredicate(tag)))));
+        }
+        loot.add(PoEntityType.FLY.get(), LootTable.lootTable().withPool(flyDrops));
         loot.add(PoEntityType.BASILISK.get(), LootTable.lootTable());
         loot.add(PoEntityType.SNAIL.get(), LootTable.lootTable());
         loot.add(

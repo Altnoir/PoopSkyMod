@@ -4,7 +4,6 @@ import com.altnoir.poopsky.content.FlyType;
 
 public enum FlyTypes {
     NORMAL,
-    WHITE,
     BLACK,
     GREEN,
     BLUE,

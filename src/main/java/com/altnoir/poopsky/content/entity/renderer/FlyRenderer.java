@@ -23,17 +23,25 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.item.DyeColor;
 import org.joml.Vector3f;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.WeakHashMap;
+import java.util.*;
 
 public class FlyRenderer extends MobRenderer<FlyEntity, FlyModel<FlyEntity>> {
-    private static final ResourceLocation MAGGOT_TEXTURE = PoopSky.loc("textures/entity/maggot.png");
+    private static final Map<DyeColor, ResourceLocation> MAGGOT_TEXTURES = new EnumMap<>(DyeColor.class);
+    private static final Map<DyeColor, ResourceLocation> FLY_TEXTURES = new EnumMap<>(DyeColor.class);
     private static final ZYXBoneTransformFactory TRANSFORM_FACTORY = new ZYXBoneTransformFactory();
     private static final EulerAdditiveBlender BLENDER = new SimpleEulerAdditiveBlender(TRANSFORM_FACTORY, ArrayPoseBuilder::new);
+
+    static {
+        for (DyeColor color : DyeColor.values()) {
+            String name = color == DyeColor.WHITE ? "fly" : "fly_" + color.getName();
+            FLY_TEXTURES.put(color, PoopSky.loc("textures/entity/fly/" + name + ".png"));
+            String maggotName = color == DyeColor.WHITE ? "maggot" : "maggot_" + color.getName();
+            MAGGOT_TEXTURES.put(color, PoopSky.loc("textures/entity/maggot/" + maggotName + ".png"));
+        }
+    }
 
     private final WeakHashMap<FlyEntity, BakedModelInstance> maggotInstances = new WeakHashMap<>();
     private BakedBedrockModel maggotModel;
@@ -45,8 +53,8 @@ public class FlyRenderer extends MobRenderer<FlyEntity, FlyModel<FlyEntity>> {
     @Override
     public ResourceLocation getTextureLocation(FlyEntity entity) {
         return entity.isBaby()
-                ? MAGGOT_TEXTURE
-                : PoopSky.loc("textures/entity/fly.png");
+                ? MAGGOT_TEXTURES.get(entity.getColor())
+                : FLY_TEXTURES.get(entity.getColor());
     }
 
     @Override
@@ -67,7 +75,7 @@ public class FlyRenderer extends MobRenderer<FlyEntity, FlyModel<FlyEntity>> {
         instance.applyPose(BLENDER.blend(instance.getBindPose(), this.createSilverfishPose(entity.tickCount + partialTick)));
         poseStack.pushPose();
         poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - Mth.rotLerp(partialTick, entity.yBodyRotO, entity.yBodyRot)));
-        VertexConsumer consumer = bufferSource.getBuffer(RenderType.entityCutout(MAGGOT_TEXTURE));
+        VertexConsumer consumer = bufferSource.getBuffer(RenderType.entityCutout(this.getTextureLocation(entity)));
         instance.renderToBuffer(poseStack, consumer, packedLight,
                 OverlayTexture.pack(0.0F, entity.hurtTime > 0 || entity.deathTime > 0));
         poseStack.popPose();

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_maggots_seeds_lime": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:maggots_seeds_lime"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:lime_dye_from_maggots"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_maggots_seeds_lime"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "poopsky:lime_dye_from_maggots"
+    ]
+  }
+}

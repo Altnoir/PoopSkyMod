@@ -2,10 +2,8 @@ package com.altnoir.poopsky.content.entity.p;
 
 import com.altnoir.poopsky.client.sound.FlyBuzzSoundWrapper;
 import com.altnoir.poopsky.content.block.p.ShitBlock;
-import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.impl.type.damageType.PoDamageTypes;
-import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoEntityType;
 import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.init.PoSoundEvents;
@@ -17,6 +15,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -39,7 +38,11 @@ import net.minecraft.world.entity.ai.util.HoverRandomPos;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
@@ -52,11 +55,13 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
+import java.util.List;
 
 public class FlyEntity extends Animal implements FlyingAnimal {
     public static final int TICKS_PER_FLAP = Mth.ceil(1.4959966F);
     private static final double RIDE_SCALE_LIMIT = 0.5D;
     private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(FlyEntity.class, EntityDataSerializers.BYTE);
+    private static final EntityDataAccessor<Integer> DATA_COLOR = SynchedEntityData.defineId(FlyEntity.class, EntityDataSerializers.INT);
 
     public float flap;
     public float flapSpeed;
@@ -214,6 +219,15 @@ public class FlyEntity extends Animal implements FlyingAnimal {
 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        if (this.isAlive() && stack.getItem() instanceof DyeItem dye && dye.getDyeColor() != this.getColor()) {
+            this.level().playSound(player, this, SoundEvents.DYE_USE, SoundSource.PLAYERS, 1.0F, 1.0F);
+            if (!this.level().isClientSide) {
+                this.setColor(dye.getDyeColor());
+                stack.consume(1, player);
+            }
+            return InteractionResult.sidedSuccess(this.level().isClientSide);
+        }
         if (!this.canRide(player)) {
             return super.mobInteract(player, hand);
         }
@@ -334,6 +348,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
+        this.setColor(DyeColor.byId(compound.getInt("Color")));
         if (compound.contains("EggLayTime")) {
             this.eggTime = compound.getInt("EggLayTime");
         }
@@ -342,6 +357,7 @@ public class FlyEntity extends Animal implements FlyingAnimal {
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
+        compound.putInt("Color", this.getColor().getId());
         compound.putInt("EggLayTime", this.eggTime);
     }
 
@@ -383,44 +399,49 @@ public class FlyEntity extends Animal implements FlyingAnimal {
 
     @Override
     public @Nullable FlyEntity getBreedOffspring(ServerLevel level, AgeableMob otherParent) {
-        return PoEntityType.FLY.get().create(level);
+        FlyEntity child = PoEntityType.FLY.get().create(level);
+        if (child != null && otherParent instanceof FlyEntity otherFly) {
+            DyeColor firstColor = this.getColor();
+            DyeColor secondColor = otherFly.getColor();
+            CraftingInput input = CraftingInput.of(2, 1, List.of(
+                    new ItemStack(DyeItem.byColor(firstColor)),
+                    new ItemStack(DyeItem.byColor(secondColor))));
+            DyeColor childColor = level.getRecipeManager()
+                    .getRecipeFor(RecipeType.CRAFTING, input, level)
+                    .map(recipe -> recipe.value().assemble(input, level.registryAccess()))
+                    .map(ItemStack::getItem)
+                    .filter(DyeItem.class::isInstance)
+                    .map(DyeItem.class::cast)
+                    .map(DyeItem::getDyeColor)
+                    .orElseGet(() -> level.random.nextBoolean() ? firstColor : secondColor);
+            child.setColor(childColor);
+        }
+        return child;
     }
 
     @Override
-    public void die(DamageSource source) {
-        if (!this.level().isClientSide && !this.isBaby()) {
+    public boolean hurt(DamageSource source, float amount) {
+        if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && !this.isInvulnerableTo(source)) {
             if (source.is(DamageTypes.DROWN)) {
-                var blueFlyItem = FlyItem.withType(FlyTypes.BLUE.get());
-                this.spawnAtLocation(blueFlyItem);
-            }
-            if (source.is(PoDamageTypes.ROUNDWORM)) {
-                var whiteFlyItem = FlyItem.withType(FlyTypes.WHITE.get());
-                this.spawnAtLocation(whiteFlyItem);
+                this.setColor(DyeColor.BLUE);
+                return true;
             }
             if (source.is(DamageTypes.CACTUS)) {
-                var greenFlyItem = FlyItem.withType(FlyTypes.GREEN.get());
-                var itemEntity = this.spawnAtLocation(greenFlyItem);
-                if (itemEntity != null) {
-                    itemEntity.setInvulnerable(true);
-                }
+                this.setColor(DyeColor.GREEN);
+                return true;
             }
             if (source.is(PoDamageTypes.POOP_BALL)) {
-                var brownFlyItem = FlyItem.withType(FlyTypes.BROWN.get());
-                this.spawnAtLocation(brownFlyItem);
+                this.setColor(DyeColor.BROWN);
+                return true;
             }
         }
-        super.die(source);
+        return super.hurt(source, amount);
     }
 
     @Override
     public void thunderHit(ServerLevel level, LightningBolt lightning) {
         if (!this.level().isClientSide && !this.isBaby()) {
-            var blackFlyItem = FlyItem.withType(FlyTypes.BLACK.get());
-            var itemEntity = this.spawnAtLocation(blackFlyItem);
-            if (itemEntity != null) {
-                itemEntity.setInvulnerable(true);
-            }
-            this.kill();
+            this.setColor(DyeColor.BLACK);
         }
     }
 
@@ -441,6 +462,15 @@ public class FlyEntity extends Animal implements FlyingAnimal {
     protected void defineSynchedData(SynchedEntityData.@NotNull Builder builder) {
         super.defineSynchedData(builder);
         builder.define(DATA_FLAGS_ID, (byte) 0);
+        builder.define(DATA_COLOR, DyeColor.WHITE.getId());
+    }
+
+    public DyeColor getColor() {
+        return DyeColor.byId(this.entityData.get(DATA_COLOR));
+    }
+
+    public void setColor(DyeColor color) {
+        this.entityData.set(DATA_COLOR, color.getId());
     }
 
     private static class AttractedByShitGoal extends Goal {

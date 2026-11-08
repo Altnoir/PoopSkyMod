@@ -22,7 +22,9 @@ import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 public class PoItems {
     private static final Reginth REGISTRATE = PoopSky.registrate();
@@ -68,6 +70,20 @@ public class PoItems {
     public static final ItemEntry<SimpleFeedableItem> BAKED_MAGGOTS = registerFood("baked_maggots", PFoods.BAKED_MAGGOTS);
     public static final ItemEntry<FeedableBlockItem> MAGGOTS_SEEDS = registerItem("maggots_seeds",
             props -> new FeedableBlockItem(PoBlocks.MAGGOTS.get(), new Item.Properties().food(PFoods.MAGGOTS_SEEDS).stacksTo(88)));
+    public static final Map<DyeColor, ItemEntry<Item>> COLORED_MAGGOTS = registerColoredMaggots();
+
+    private static Map<DyeColor, ItemEntry<Item>> registerColoredMaggots() {
+        Map<DyeColor, ItemEntry<Item>> items = new EnumMap<>(DyeColor.class);
+        for (DyeColor color : DyeColor.values()) {
+            if (color != DyeColor.WHITE) {
+                items.put(color, REGISTRATE.item("maggots_seeds_" + color.getName(), Item::new)
+                        .lang(color.getName().replace('_', ' ') + " maggots")
+                        .register());
+            }
+        }
+        return Map.copyOf(items);
+    }
+
     public static final ItemEntry<FeedableBlockItem> ROUNDWORM = registerItem("roundworm",
             props -> new FeedableBlockItem(PoBlocks.ROUNDWORM_VINES.get(), new Item.Properties().food(PFoods.ROUNDWORM).stacksTo(88)));
     public static final ItemEntry<ChiliItem> DRAGON_BREATH_CHILI = registerItem("dragon_breath_chili",

@@ -299,7 +299,8 @@ public final class LangGen {
                 PoItemGroups.POOPSKY_DECO_TAB_KEY, "PoopSky Builder Block",
                 PoItemGroups.TS_ITEMS.translationKey(), "Basic Items",
                 PoItemGroups.TS_BLOCKS.translationKey(), "Functional Blocks",
-                PoItemGroups.TS_MOBS.translationKey(), "Flies",
+                PoItemGroups.TS_MOBS.translationKey(), "Mobs",
+                PoItemGroups.TS_FLIES.translationKey(), "Flies",
                 PoItemGroups.TS_POTIONS.translationKey(), "Potions",
                 PoItemGroups.TS_DECO_MATERIALS.translationKey(), "Building Blocks",
                 PoItemGroups.TS_DECO_TILES.translationKey(), "Tiles",
@@ -442,12 +443,11 @@ public final class LangGen {
         provider.add("jei.poopsky.poop_farmland", "Right-click a Poop Block with a hoe to create it; it does not require water.\nRight-click it with a shovel to automatically harvest the crop above.\nRight-click it with Jinkela to accelerate the growth of the crop above.");
         provider.add("jei.poopsky.cactus", "Cactus");
         provider.add("jei.poopsky.sugar_cane", "Sugar Cane");
-        provider.add("jei.poopsky.fly_desc.white", "Obtained by killing with Ascarid");
-        provider.add("jei.poopsky.fly_desc.black", "Obtained by lightning strike");
+        provider.add("jei.poopsky.fly_desc.black", "A fly becomes black when struck by lightning");
         provider.add("jei.poopsky.fly_desc.red", "Obtained by feeding chili");
-        provider.add("jei.poopsky.fly_desc.green", "Obtained by killing with cactus");
-        provider.add("jei.poopsky.fly_desc.blue", "Obtained by drowning");
-        provider.add("jei.poopsky.fly_desc.dragon_fruit", "Obtained by feeding King of Dragon Fruit");
+        provider.add("jei.poopsky.fly_desc.green", "A fly becomes green when damaged by a cactus");
+        provider.add("jei.poopsky.fly_desc.blue", "A fly becomes blue when damaged by drowning");
+        provider.add("jei.poopsky.fly_desc.dragon_fruit", "Breed a green fly and a yellow fly in a breeding chest");
         provider.add("jei.poopsky.urea", "Place a urine-filled Compooper on a campfire and wait for it to turn into a water-filled Compooper");
         provider.add("jei.poopsky.saltpeter_shard", "Obtained by mining saltpeter clusters.\nPlacing a poop block below a toilet has a chance to spawn saltpeter clusters nearby");
         provider.add("jei.poopsky.saltpeter_cluster", "When waterlogged, it turns into ice. When attached to ice and waterlogged, it turns into Powder Snow");

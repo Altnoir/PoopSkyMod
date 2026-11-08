@@ -2,11 +2,11 @@ package com.altnoir.poopsky.content.item.p;
 
 import com.altnoir.poopsky.content.entity.p.FlyEntity;
 import com.altnoir.poopsky.content.item.IFeedable;
-import com.altnoir.poopsky.init.FlyTypes;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -34,9 +34,7 @@ public class ChiliItem extends ItemNameBlockItem implements IFeedable {
         if (feedResult.consumesAction()) return feedResult;
         if (target instanceof FlyEntity fly && fly.isAlive()) {
             if (!player.level().isClientSide) {
-                ItemStack redFlyItem = FlyItem.withType(FlyTypes.RED.get());
-                fly.spawnAtLocation(redFlyItem);
-                fly.kill();
+                fly.setColor(DyeColor.RED);
                 stack.consume(1, player);
             }
             return InteractionResult.SUCCESS;

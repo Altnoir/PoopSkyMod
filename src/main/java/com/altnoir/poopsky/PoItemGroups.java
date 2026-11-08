@@ -1,5 +1,10 @@
 package com.altnoir.poopsky;
 
+import com.altnoir.abysslib.creative.BannerStyle;
+import com.altnoir.abysslib.creative.CreativeTabSection;
+import com.altnoir.abysslib.creative.SectionedCreativeModeTab;
+import com.altnoir.abysslib.reginth.Reginth;
+import com.altnoir.abysslib.reginth.util.entry.RegistryEntry;
 import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.content.FlyTypeManager;
 import com.altnoir.poopsky.content.ToiletType;
@@ -7,22 +12,14 @@ import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.content.item.p.GachaponItem;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.impl.PoTags;
-import com.altnoir.abysslib.creative.BannerStyle;
-import com.altnoir.abysslib.creative.CreativeTabSection;
-import com.altnoir.abysslib.creative.SectionedCreativeModeTab;
-import com.altnoir.abysslib.reginth.Reginth;
 import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
-import com.altnoir.abysslib.reginth.util.entry.RegistryEntry;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.flag.FeatureFlagSet;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.block.Block;
@@ -47,6 +44,7 @@ public class PoItemGroups {
 
     public static final CreativeTabSection TS_ITEMS = section("itemGroup.poopsky.section.items");
     public static final CreativeTabSection TS_BLOCKS = section("itemGroup.poopsky.section.blocks");
+    public static final CreativeTabSection TS_FLIES = section("itemGroup.poopsky.section.flies");
     public static final CreativeTabSection TS_MOBS = section("itemGroup.poopsky.section.mobs");
     public static final CreativeTabSection TS_POTIONS = section("itemGroup.poopsky.section.potions");
 
@@ -65,6 +63,7 @@ public class PoItemGroups {
                             TS_ITEMS,
                             TS_BLOCKS,
                             TS_MOBS,
+                            TS_FLIES,
                             TS_POTIONS
                     ).build()
     ).register();
@@ -96,7 +95,14 @@ public class PoItemGroups {
                 )));
         for (String id : FlyTypeManager.INSTANCE.getFlyTypes()) {
             if (isFlyVisible(id)) {
-                TS_MOBS.add(() -> FlyItem.withType(id));
+                TS_FLIES.add(() -> FlyItem.withType(id));
+            }
+        }
+
+        TS_FLIES.add(PoItems.MAGGOTS_SEEDS.get());
+        for (var color : DyeColor.values()) {
+            if (color != DyeColor.WHITE) {
+                TS_FLIES.add(PoItems.COLORED_MAGGOTS.get(color).get());
             }
         }
 
@@ -107,7 +113,8 @@ public class PoItemGroups {
     }
 
     private static void addBasicItem(Item item) {
-        if (item == Items.AIR || item instanceof FlyItem || PoBlocks.isNoTabItem(item)) {
+        if (item == Items.AIR || item instanceof FlyItem || item == PoItems.MAGGOTS_SEEDS.get()
+                || PoItems.COLORED_MAGGOTS.values().stream().anyMatch(entry -> entry.get() == item) || PoBlocks.isNoTabItem(item)) {
             return;
         }
 
@@ -171,6 +178,7 @@ public class PoItemGroups {
                 TS_ITEMS.translationKey(),
                 TS_BLOCKS.translationKey(),
                 TS_MOBS.translationKey(),
+                TS_FLIES.translationKey(),
                 TS_POTIONS.translationKey(),
                 TS_DECO_MATERIALS.translationKey(),
                 TS_DECO_TILES.translationKey(),

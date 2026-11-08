@@ -2,57 +2,261 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "bonus_rolls": 0.0,
+      "bonus_rolls": 0,
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "conditions": [
             {
-              "conditions": [
-                {
-                  "condition": "minecraft:any_of",
-                  "terms": [
-                    {
-                      "condition": "minecraft:entity_properties",
-                      "entity": "this",
-                      "predicate": {
-                        "flags": {
-                          "is_on_fire": true
-                        }
-                      }
-                    },
-                    {
-                      "condition": "minecraft:entity_properties",
-                      "entity": "direct_attacker",
-                      "predicate": {
-                        "equipment": {
-                          "mainhand": {
-                            "predicates": {
-                              "minecraft:enchantments": [
-                                {
-                                  "enchantments": "#minecraft:smelts_loot"
-                                }
-                              ]
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
-                }
-              ],
-              "function": "minecraft:furnace_smelt"
-            },
-            {
-              "count": 1.0,
-              "enchantment": "minecraft:looting",
-              "function": "minecraft:enchanted_count_increase"
+              "condition": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "nbt": "{Color:0}"
+              }
             }
           ],
           "name": "poopsky:maggots_seeds"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "nbt": "{Color:1}"
+              }
+            }
+          ],
+          "name": "poopsky:maggots_seeds_orange"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "nbt": "{Color:2}"
+              }
+            }
+          ],
+          "name": "poopsky:maggots_seeds_magenta"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "nbt": "{Color:3}"
+              }
+            }
+          ],
+          "name": "poopsky:maggots_seeds_light_blue"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "nbt": "{Color:4}"
+              }
+            }
+          ],
+          "name": "poopsky:maggots_seeds_yellow"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "nbt": "{Color:5}"
+              }
+            }
+          ],
+          "name": "poopsky:maggots_seeds_lime"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "nbt": "{Color:6}"
+              }
+            }
+          ],
+          "name": "poopsky:maggots_seeds_pink"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "nbt": "{Color:7}"
+              }
+            }
+          ],
+          "name": "poopsky:maggots_seeds_gray"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "nbt": "{Color:8}"
+              }
+            }
+          ],
+          "name": "poopsky:maggots_seeds_light_gray"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "nbt": "{Color:9}"
+              }
+            }
+          ],
+          "name": "poopsky:maggots_seeds_cyan"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "nbt": "{Color:10}"
+              }
+            }
+          ],
+          "name": "poopsky:maggots_seeds_purple"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "nbt": "{Color:11}"
+              }
+            }
+          ],
+          "name": "poopsky:maggots_seeds_blue"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "nbt": "{Color:12}"
+              }
+            }
+          ],
+          "name": "poopsky:maggots_seeds_brown"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "nbt": "{Color:13}"
+              }
+            }
+          ],
+          "name": "poopsky:maggots_seeds_green"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "nbt": "{Color:14}"
+              }
+            }
+          ],
+          "name": "poopsky:maggots_seeds_red"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "nbt": "{Color:15}"
+              }
+            }
+          ],
+          "name": "poopsky:maggots_seeds_black"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1,
+      "functions": [
+        {
+          "conditions": [
+            {
+              "condition": "minecraft:any_of",
+              "terms": [
+                {
+                  "condition": "minecraft:entity_properties",
+                  "entity": "this",
+                  "predicate": {
+                    "flags": {
+                      "is_on_fire": true
+                    }
+                  }
+                },
+                {
+                  "condition": "minecraft:entity_properties",
+                  "entity": "direct_attacker",
+                  "predicate": {
+                    "equipment": {
+                      "mainhand": {
+                        "predicates": {
+                          "minecraft:enchantments": [
+                            {
+                              "enchantments": "#minecraft:smelts_loot"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ],
+          "function": "minecraft:furnace_smelt"
+        },
+        {
+          "count": 1,
+          "enchantment": "minecraft:looting",
+          "function": "minecraft:enchanted_count_increase"
+        }
+      ]
     }
   ],
   "random_sequence": "poopsky:entities/fly"

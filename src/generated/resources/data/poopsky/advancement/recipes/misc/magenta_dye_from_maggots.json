@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_maggots_seeds_magenta": {
+      "conditions": {
+        "items": [
+          {
+            "items": "poopsky:maggots_seeds_magenta"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:magenta_dye_from_maggots"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_maggots_seeds_magenta"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "poopsky:magenta_dye_from_maggots"
+    ]
+  }
+}
