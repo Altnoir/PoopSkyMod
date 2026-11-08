@@ -114,7 +114,7 @@ public class ShitBlock extends AbsHorDirBlock implements Equipable {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (this instanceof PottedShitBlock potted) {
+        if (this instanceof PottedShitBlock potted && player.getMainHandItem().isEmpty()) {
             if (!level.isClientSide) {
                 level.setBlock(pos, potted.getBase().defaultBlockState().setValue(FACING, state.getValue(FACING)), 3);
                 giveFlower(player, new ItemStack(potted.getFlower()));
@@ -127,20 +127,17 @@ public class ShitBlock extends AbsHorDirBlock implements Equipable {
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (this instanceof PottedShitBlock && !stack.isEmpty()) {
+            return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
+        }
         if (stack.getItem() instanceof BlockItem item
                 && item.getBlock().defaultBlockState().is(BlockTags.SMALL_FLOWERS)
                 && !(item.getBlock() instanceof DoublePlantBlock)) {
-            Block potted = PoBlocks.getPottedShit(this instanceof PottedShitBlock planted ? planted.getBase() : this,
-                    item.getBlock());
+            Block potted = PoBlocks.getPottedShit(this, item.getBlock());
             if (potted == null) return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
-            if (this instanceof PottedShitBlock planted && planted.getFlower() == item.getBlock()) {
-                return ItemInteractionResult.sidedSuccess(level.isClientSide);
-            }
             if (!level.isClientSide) {
-                Block oldFlower = this instanceof PottedShitBlock planted ? planted.getFlower() : null;
                 level.setBlock(pos, potted.defaultBlockState().setValue(FACING, state.getValue(FACING)), 3);
                 stack.consume(1, player);
-                if (oldFlower != null) giveFlower(player, new ItemStack(oldFlower));
                 level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
             }
             return ItemInteractionResult.sidedSuccess(level.isClientSide);

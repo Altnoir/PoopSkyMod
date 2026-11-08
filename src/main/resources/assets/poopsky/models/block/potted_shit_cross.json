@@ -1,72 +1,72 @@
 {
-  "parent": "minecraft:block/block",
-  "render_type": "minecraft:cutout",
-  "textures": {
-    "particle": "#particle"
-  },
-  "elements": [
-    {
-      "from": [3, 0, 3],
-      "to": [13, 3, 13],
-      "faces": {
-        "north": {"uv": [0, 1.5, 5, 3], "texture": "#shit"},
-        "east": {"uv": [0, 0, 5, 1.5], "texture": "#shit"},
-        "south": {"uv": [0, 4.5, 5, 6], "texture": "#shit"},
-        "west": {"uv": [0, 3, 5, 4.5], "texture": "#shit"},
-        "up": {"uv": [10, 5, 5, 0], "texture": "#shit"},
-        "down": {"uv": [15, 0, 10, 5], "texture": "#shit"}
-      }
-    },
-    {
-      "from": [4, 3, 4],
-      "to": [12, 6, 12],
-      "faces": {
-        "north": {"uv": [0, 7.5, 4, 9], "texture": "#shit"},
-        "east": {"uv": [0, 6, 4, 7.5], "texture": "#shit"},
-        "south": {"uv": [0, 10.5, 4, 12], "texture": "#shit"},
-        "west": {"uv": [0, 9, 4, 10.5], "texture": "#shit"},
-        "up": {"uv": [8, 10, 4, 6], "texture": "#shit"}
-      }
-    },
-    {
-      "from": [5, 5, 5],
-      "to": [11, 8, 11],
-      "faces": {
-        "north": {"uv": [8, 6.5, 11, 8], "texture": "#shit"},
-        "east": {"uv": [8, 5, 11, 6.5], "texture": "#shit"},
-        "south": {"uv": [8, 9.5, 11, 11], "texture": "#shit"},
-        "west": {"uv": [8, 8, 11, 9.5], "texture": "#shit"},
-        "up": {"uv": [14, 8, 11, 5], "texture": "#shit"}
-      }
-    },
-    {
-      "from": [6, 8, 6],
-      "to": [9, 11, 9],
-      "faces": {
-        "north": {"uv": [3, 12, 4.5, 13.5], "texture": "#shit"},
-        "east": {"uv": [1.5, 12, 3, 13.5], "texture": "#shit"},
-        "south": {"uv": [6, 12, 7.5, 13.5], "texture": "#shit"},
-        "west": {"uv": [4.5, 12, 6, 13.5], "texture": "#shit"},
-        "up": {"uv": [1.5, 13.5, 0, 12], "texture": "#shit"}
-      }
-    },
-    {
-      "from": [5.3, 11, 8],
-      "to": [10.7, 17, 8],
-      "rotation": {"origin": [8, 13, 8], "axis": "y", "angle": 45, "rescale": true},
-      "faces": {
-        "north": {"uv": [0, 0, 16, 16], "texture": "#plant"},
-        "south": {"uv": [0, 0, 16, 16], "texture": "#plant"}
-      }
-    },
-    {
-      "from": [8, 11, 5.3],
-      "to": [8, 17, 10.7],
-      "rotation": {"origin": [8, 13, 8], "axis": "y", "angle": 45, "rescale": true},
-      "faces": {
-        "west": {"uv": [0, 0, 16, 16], "texture": "#plant"},
-        "east": {"uv": [0, 0, 16, 16], "texture": "#plant"}
-      }
-    }
-  ]
+	"parent": "minecraft:block/block",
+	"render_type": "minecraft:cutout",
+	"textures": {
+		"particle": "#shit"
+	},
+	"elements": [
+		{
+			"from": [3, 0, 3],
+			"to": [13, 3, 13],
+			"faces": {
+				"north": {"uv": [0, 1.5, 5, 3], "texture": "#shit"},
+				"east": {"uv": [0, 0, 5, 1.5], "texture": "#shit"},
+				"south": {"uv": [0, 4.5, 5, 6], "texture": "#shit"},
+				"west": {"uv": [0, 3, 5, 4.5], "texture": "#shit"},
+				"up": {"uv": [10, 5, 5, 0], "texture": "#shit"},
+				"down": {"uv": [15, 0, 10, 5], "texture": "#shit"}
+			}
+		},
+		{
+			"from": [4, 3, 4],
+			"to": [12, 6, 12],
+			"faces": {
+				"north": {"uv": [0, 7.5, 4, 9], "texture": "#shit"},
+				"east": {"uv": [0, 6, 4, 7.5], "texture": "#shit"},
+				"south": {"uv": [0, 10.5, 4, 12], "texture": "#shit"},
+				"west": {"uv": [0, 9, 4, 10.5], "texture": "#shit"},
+				"up": {"uv": [8, 10, 4, 6], "texture": "#shit"}
+			}
+		},
+		{
+			"from": [5, 5, 5],
+			"to": [11, 8, 11],
+			"faces": {
+				"north": {"uv": [8, 6.5, 11, 8], "texture": "#shit"},
+				"east": {"uv": [8, 5, 11, 6.5], "texture": "#shit"},
+				"south": {"uv": [8, 9.5, 11, 11], "texture": "#shit"},
+				"west": {"uv": [8, 8, 11, 9.5], "texture": "#shit"},
+				"up": {"uv": [14, 8, 11, 5], "texture": "#shit"}
+			}
+		},
+		{
+			"from": [6, 8, 6],
+			"to": [9, 11, 9],
+			"faces": {
+				"north": {"uv": [3, 12, 4.5, 13.5], "texture": "#shit"},
+				"east": {"uv": [1.5, 12, 3, 13.5], "texture": "#shit"},
+				"south": {"uv": [6, 12, 7.5, 13.5], "texture": "#shit"},
+				"west": {"uv": [4.5, 12, 6, 13.5], "texture": "#shit"},
+				"up": {"uv": [1.5, 13.5, 0, 12], "texture": "#shit"}
+			}
+		},
+		{
+			"from": [2.1, 10, 7.5],
+			"to": [12.9, 22, 7.5],
+			"rotation": {"angle": 45, "axis": "y", "origin": [7.5, 14, 7.5], "rescale": true},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#plant"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#plant"}
+			}
+		},
+		{
+			"from": [7.5, 10, 2.1],
+			"to": [7.5, 22, 12.9],
+			"rotation": {"angle": 45, "axis": "y", "origin": [7.5, 14, 7.5], "rescale": true},
+			"faces": {
+				"east": {"uv": [0, 0, 16, 16], "texture": "#plant"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#plant"}
+			}
+		}
+	]
 }
