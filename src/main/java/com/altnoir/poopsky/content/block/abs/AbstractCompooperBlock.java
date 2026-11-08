@@ -11,7 +11,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -50,27 +50,27 @@ public abstract class AbstractCompooperBlock extends Block {
     }
 
     @Override
-    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPES[state.getValue(LEVEL)];
     }
 
     @Override
-    protected VoxelShape getInteractionShape(BlockState state, BlockGetter level, BlockPos pos) {
+    public VoxelShape getInteractionShape(BlockState state, BlockGetter level, BlockPos pos) {
         return OUTER_SHAPE;
     }
 
     @Override
-    protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPES[0];
     }
 
     @Override
-    protected boolean hasAnalogOutputSignal(BlockState state) {
+    public boolean hasAnalogOutputSignal(BlockState state) {
         return true;
     }
 
     @Override
-    protected int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
+    public int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
         return blockState.getValue(LEVEL);
     }
 
@@ -79,24 +79,24 @@ public abstract class AbstractCompooperBlock extends Block {
         builder.add(LEVEL);
     }
 
-    protected ItemInteractionResult BucketUse(ItemStack stack, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, ItemStack item) {
+    protected InteractionResult BucketUse(ItemStack stack, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, ItemStack item) {
         return BucketUse(stack, level, pos, player, hand, sound, 1.0F, item);
     }
 
-    protected ItemInteractionResult BucketUse(ItemStack stack, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, float pitch, ItemStack item) {
+    protected InteractionResult BucketUse(ItemStack stack, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, float pitch, ItemStack item) {
         var newState = defaultBlockState().setValue(LEVEL, MIN_LEVEL);
         setBlock(newState, level, pos, player, sound, pitch);
         ItemStack itemStack = ItemUtils.createFilledResult(stack, player, item);
         player.setItemInHand(hand, itemStack);
 
-        return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
-    protected ItemInteractionResult liquidBottleUse(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound) {
+    protected InteractionResult liquidBottleUse(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound) {
         return liquidBottleUse(stack, state, level, pos, player, hand, sound, 1.0F);
     }
 
-    protected ItemInteractionResult liquidBottleUse(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, float pitch) {
+    protected InteractionResult liquidBottleUse(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, float pitch) {
         int currentLevel = state.getValue(LEVEL);
         int newLevel = currentLevel + 1;
 
@@ -110,14 +110,14 @@ public abstract class AbstractCompooperBlock extends Block {
             level.scheduleTick(pos, this, 20);
         }
 
-        return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
-    protected ItemInteractionResult glassBottleUse(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, ItemStack item) {
+    protected InteractionResult glassBottleUse(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, ItemStack item) {
         return glassBottleUse(stack, state, level, pos, player, hand, sound, 1.0F, item);
     }
 
-    protected ItemInteractionResult glassBottleUse(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, float pitch, ItemStack item) {
+    protected InteractionResult glassBottleUse(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, float pitch, ItemStack item) {
         int currentLevel = state.getValue(LEVEL);
         int newLevel = currentLevel - 1;
 
@@ -127,7 +127,7 @@ public abstract class AbstractCompooperBlock extends Block {
         ItemStack itemStack = ItemUtils.createFilledResult(stack, player, item);
         player.setItemInHand(hand, itemStack);
 
-        return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
     protected void setBlock(BlockState state, Level level, BlockPos pos, Player player, SoundEvent sound, float pitch) {
@@ -229,7 +229,7 @@ public abstract class AbstractCompooperBlock extends Block {
     }
 
     @Override
-    protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
+    public boolean isPathfindable(BlockState state, net.minecraft.world.level.BlockGetter pathLevel, net.minecraft.core.BlockPos pathPos, PathComputationType pathComputationType) {
         return false;
     }
 }

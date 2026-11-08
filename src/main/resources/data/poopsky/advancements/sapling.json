@@ -1,0 +1,34 @@
+{
+  "parent": "poopsky:compooper",
+  "criteria": {
+    "sapling": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "poopsky:sapling_poop_ball"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.poopsky.sapling.description"
+    },
+    "icon": {
+      "count": 1,
+      "item": "poopsky:sapling_poop_ball"
+    },
+    "title": {
+      "translate": "advancements.poopsky.sapling.title"
+    }
+  },
+  "requirements": [
+    [
+      "sapling"
+    ]
+  ]
+}

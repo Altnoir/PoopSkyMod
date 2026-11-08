@@ -1,0 +1,9 @@
+{
+  "type": "poopsky:pop_explosion",
+  "input": {
+    "item": "minecraft:gravel"
+  },
+  "output": {
+    "block": "minecraft:sand"
+  }
+}

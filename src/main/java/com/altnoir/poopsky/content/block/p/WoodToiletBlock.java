@@ -3,11 +3,10 @@ package com.altnoir.poopsky.content.block.p;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.init.ToiletTypes;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -17,17 +16,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class WoodToiletBlock extends AbstractToiletBlock {
-    public static final MapCodec<WoodToiletBlock> CODEC = simpleCodec(WoodToiletBlock::new);
+public class WoodToiletBlock extends AbstractToiletBlock implements com.altnoir.poopsky.content.block.PoBlockInteraction {
 
     public WoodToiletBlock(Properties properties) {
         super(properties);
     }
 
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
-    }
 
     @Override
     public ToiletType getDefaultToiletType() {
@@ -35,10 +29,10 @@ public class WoodToiletBlock extends AbstractToiletBlock {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        ItemInteractionResult result = handleVariantReplacement(stack, level, pos, player, ToiletType.Category.WOOD);
+    public InteractionResult poopsky$useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        InteractionResult result = handleVariantReplacement(stack, level, pos, player, ToiletType.Category.WOOD);
         if (result != null) return result;
-        return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
+        return super.poopsky$useItemOn(stack, state, level, pos, player, hand, hitResult);
     }
 
     @Override
@@ -59,5 +53,13 @@ public class WoodToiletBlock extends AbstractToiletBlock {
     @Override
     public MapColor getMapColor(BlockState state, BlockGetter level, BlockPos pos, MapColor defaultColor) {
         return MapColor.WOOD;
+    }
+
+    @Override
+    public net.minecraft.world.InteractionResult use(net.minecraft.world.level.block.state.BlockState state,
+            net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
+        return poopsky$interact(state, level, pos, player, hand, hit);
     }
 }

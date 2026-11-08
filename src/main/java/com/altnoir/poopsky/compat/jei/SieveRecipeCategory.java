@@ -15,12 +15,11 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
 
 import java.util.Locale;
 
-public class SieveRecipeCategory implements IRecipeCategory<RecipeHolder<SieveRecipe>> {
-    public static final RecipeType<RecipeHolder<SieveRecipe>> TYPE = RecipeType.createRecipeHolderType(PoopSky.loc("sieve"));
+public class SieveRecipeCategory implements IRecipeCategory<SieveRecipe> {
+    public static final RecipeType<SieveRecipe> TYPE = new RecipeType<>(PoopSky.loc("sieve"), SieveRecipe.class);
 
     private static final int WIDTH = 145;
     private static final int HEIGHT = 36;
@@ -48,9 +47,12 @@ public class SieveRecipeCategory implements IRecipeCategory<RecipeHolder<SieveRe
     }
 
     @Override
-    public RecipeType<RecipeHolder<SieveRecipe>> getRecipeType() {
+    public RecipeType<SieveRecipe> getRecipeType() {
         return TYPE;
     }
+
+    @Override
+    public net.minecraft.resources.ResourceLocation getRegistryName(SieveRecipe recipe) { return recipe.getId(); }
 
     @Override
     public Component getTitle() {
@@ -63,8 +65,8 @@ public class SieveRecipeCategory implements IRecipeCategory<RecipeHolder<SieveRe
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<SieveRecipe> recipeHolder, IFocusGroup focuses) {
-        var recipe = recipeHolder.value();
+    public void setRecipe(IRecipeLayoutBuilder builder, SieveRecipe recipeHolder, IFocusGroup focuses) {
+        var recipe = recipeHolder;
         builder.addSlot(RecipeIngredientRole.INPUT, INPUT_X, INPUT_Y)
                 .addIngredients(recipe.input());
 
@@ -85,7 +87,7 @@ public class SieveRecipeCategory implements IRecipeCategory<RecipeHolder<SieveRe
     }
 
     @Override
-    public void draw(RecipeHolder<SieveRecipe> recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+    public void draw(SieveRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         this.slot.draw(guiGraphics, INPUT_X - 1, INPUT_Y - 1);
         this.arrow.draw(guiGraphics, ARROW_X, ARROW_Y);
 

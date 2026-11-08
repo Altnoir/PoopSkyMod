@@ -16,17 +16,17 @@ public class ClientPongGame extends ClientGame {
     private final Sprite player = new Sprite(
             new Vec2(10, (float) HEIGHT / 2 - 10),
             new Vec2(5, 20),
-            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/white_concrete.png")
+            new ResourceLocation("minecraft", "textures/block/white_concrete.png")
     );
     private final Sprite opponent = new Sprite(
             new Vec2(WIDTH - 15, (float) HEIGHT / 2 - 10),
             new Vec2(5, 20),
-            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/white_concrete.png")
+            new ResourceLocation("minecraft", "textures/block/white_concrete.png")
     );
     private final Sprite ball = new Sprite(
             new Vec2((float) WIDTH / 2 - 2, (float) HEIGHT / 2 - 2),
             new Vec2(4, 4),
-            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/white_concrete.png")
+            new ResourceLocation("minecraft", "textures/block/white_concrete.png")
     );
     private final MultiImage numbers = new MultiImage(PoopSky.loc("textures/games/sprite/numbers.png"), 8, 120, 10);
     private final Sprite numberRenderer = new Sprite(new Vec2(0, 0), new Vec2(8, 12), numbers);
@@ -64,7 +64,7 @@ public class ClientPongGame extends ClientGame {
 
         long now = System.nanoTime();
         if (lastSnapshotNanos != 0) {
-            interpolationTime = Math.clamp(now - lastSnapshotNanos, 25_000_000L, 100_000_000L);
+            interpolationTime = Math.max(25_000_000L, Math.min(now - lastSnapshotNanos, 100_000_000L));
         }
         lastSnapshotNanos = now;
         interpolationStartNanos = now;

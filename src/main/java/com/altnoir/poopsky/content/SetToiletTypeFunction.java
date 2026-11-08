@@ -18,11 +18,13 @@ import java.util.List;
 
 public class SetToiletTypeFunction extends LootItemConditionalFunction {
 
-    public static final MapCodec<SetToiletTypeFunction> CODEC = RecordCodecBuilder.mapCodec(
-            instance -> commonFields(instance).apply(instance, SetToiletTypeFunction::new)
-    );
+    public static class Serializer extends LootItemConditionalFunction.Serializer<SetToiletTypeFunction> {
+        @Override public SetToiletTypeFunction deserialize(com.google.gson.JsonObject json, com.google.gson.JsonDeserializationContext context, LootItemCondition[] conditions) {
+            return new SetToiletTypeFunction(conditions);
+        }
+    }
 
-    protected SetToiletTypeFunction(List<LootItemCondition> conditions) {
+    protected SetToiletTypeFunction(LootItemCondition[] conditions) {
         super(conditions);
     }
 
@@ -39,14 +41,14 @@ public class SetToiletTypeFunction extends LootItemConditionalFunction {
         }
 
         if (type != null) {
-            stack.set(PoComponents.TOILET_TYPE.get(), type);
+            PoComponents.TOILET_TYPE.set(stack, type);
         }
 
         return stack;
     }
 
     @Override
-    public LootItemFunctionType<SetToiletTypeFunction> getType() {
+    public LootItemFunctionType getType() {
         return PoLootFunctions.SET_TOILET_TYPE.get();
     }
 

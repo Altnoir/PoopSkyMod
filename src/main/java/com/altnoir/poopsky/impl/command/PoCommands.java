@@ -5,8 +5,8 @@ import com.altnoir.poopsky.impl.network.PoAnimation;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.neoforged.neoforge.event.RegisterCommandsEvent;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.minecraftforge.event.RegisterCommandsEvent;
+import com.altnoir.poopsky.impl.network.PoNetworking;
 
 public final class PoCommands {
     private PoCommands() {
@@ -24,7 +24,7 @@ public final class PoCommands {
     private static LiteralArgumentBuilder<CommandSourceStack> animation(PoAnimation animation) {
         return Commands.literal(animation.serializedName())
                 .executes(context -> {
-                    PacketDistributor.sendToPlayer(
+                    PoNetworking.sendToPlayer(
                             context.getSource().getPlayerOrException(),
                             new PlayAnimationPayload(animation)
                     );

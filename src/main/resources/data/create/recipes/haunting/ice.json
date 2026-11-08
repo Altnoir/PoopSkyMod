@@ -1,0 +1,19 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:haunting",
+  "ingredients": [
+    {
+      "item": "poopsky:poolime_block"
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:ice"
+    }
+  ]
+}

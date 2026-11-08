@@ -46,11 +46,11 @@ public class PlacerBlockEntity extends DispenserBlockEntity {
     }
 
     public ItemStack insertItem(ItemStack stack) {
-        int i = this.getMaxStackSize(stack);
+        int i = Math.min(this.getMaxStackSize(), stack.getMaxStackSize());
 
         for (int j = 0; j < this.items.size(); ++j) {
             ItemStack itemstack = this.items.get(j);
-            if (itemstack.isEmpty() || ItemStack.isSameItemSameComponents(stack, itemstack)) {
+            if (itemstack.isEmpty() || ItemStack.isSameItemSameTags(stack, itemstack)) {
                 int k = Math.min(stack.getCount(), i - itemstack.getCount());
                 if (k > 0) {
                     if (itemstack.isEmpty()) {
@@ -74,18 +74,18 @@ public class PlacerBlockEntity extends DispenserBlockEntity {
         return Component.translatable("container.placer");
     }
 
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
+    public void load(CompoundTag tag) {
+        super.load(tag);
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         if (!this.tryLoadLootTable(tag)) {
-            ContainerHelper.loadAllItems(tag, this.items, registries);
+            ContainerHelper.loadAllItems(tag, this.items);
         }
     }
 
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
         if (!this.trySaveLootTable(tag)) {
-            ContainerHelper.saveAllItems(tag, this.items, registries);
+            ContainerHelper.saveAllItems(tag, this.items);
         }
     }
 

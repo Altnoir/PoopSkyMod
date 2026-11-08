@@ -4,9 +4,8 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.client.PoBedrockModelResources;
 import com.altnoir.poopsky.content.entity.p.GachaponEntity;
 import com.altnoir.poopsky.content.item.p.GachaponItem;
-import com.github.mcmodderanchor.simplebedrockmodel.v2.common.model.baked.BakedBedrockModel;
-import com.github.mcmodderanchor.simplebedrockmodel.v2.common.model.runtime.BakedModelInstance;
-import com.github.mcmodderanchor.simplebedrockmodel.v2.resource.BedrockModelResources;
+import com.github.mcmodderanchor.simplebedrockmodel.v1.common.model.BedrockModel;
+import com.github.mcmodderanchor.simplebedrockmodel.v1.resource.BedrockModelResourceSet;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
@@ -25,8 +24,6 @@ public class GachaponRenderer extends EntityRenderer<GachaponEntity> {
             GachaponItem.YELLOW,
             GachaponItem.BLUE
     };
-    private BakedBedrockModel model;
-    private BakedModelInstance instance;
 
     public GachaponRenderer(EntityRendererProvider.Context context) {
         super(context);
@@ -49,27 +46,17 @@ public class GachaponRenderer extends EntityRenderer<GachaponEntity> {
 
     @Override
     public void render(GachaponEntity entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
-        this.refreshResources();
-        if (this.instance != null) {
-            this.instance.resetPose();
-            poseStack.pushPose();
-            poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - Mth.rotLerp(partialTick, entity.yRotO, entity.getYRot())));
-            VertexConsumer consumer = bufferSource.getBuffer(RenderType.entityCutout(this.getTextureLocation(entity)));
-            this.instance.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY);
-            poseStack.popPose();
+        BedrockModelResourceSet resourceSet = BedrockModelResourceSet.getInstance();
+        if (resourceSet != null) {
+            BedrockModel model = resourceSet.getModel(PoBedrockModelResources.GACHAPON);
+            if (model != null) {
+                poseStack.pushPose();
+                poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - Mth.rotLerp(partialTick, entity.yRotO, entity.getYRot())));
+                VertexConsumer consumer = bufferSource.getBuffer(RenderType.entityCutout(this.getTextureLocation(entity)));
+                model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+                poseStack.popPose();
+            }
         }
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
-    }
-
-    private void refreshResources() {
-        BedrockModelResources resources = BedrockModelResources.getInstance();
-        if (resources == null) {
-            return;
-        }
-        BakedBedrockModel loadedModel = resources.getBakedModel(PoBedrockModelResources.GACHAPON);
-        if (loadedModel != this.model) {
-            this.model = loadedModel;
-            this.instance = loadedModel == null ? null : loadedModel.createInstance();
-        }
     }
 }

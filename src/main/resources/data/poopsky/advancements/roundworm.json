@@ -1,0 +1,34 @@
+{
+  "parent": "poopsky:poop_sapling",
+  "criteria": {
+    "roundworm": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "poopsky:roundworm"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.poopsky.roundworm.description"
+    },
+    "icon": {
+      "count": 1,
+      "item": "poopsky:roundworm"
+    },
+    "title": {
+      "translate": "advancements.poopsky.roundworm.title"
+    }
+  },
+  "requirements": [
+    [
+      "roundworm"
+    ]
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "poopsky:golden_poop_block"
+  },
+  "result": "poopsky:golden_poop_vertical_slab",
+  "count": 2
+}

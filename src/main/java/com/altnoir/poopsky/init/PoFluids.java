@@ -2,14 +2,14 @@ package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.fluid.UrineLiquidBlock;
-import com.altnoir.abysslib.reginth.Reginth;
-import com.altnoir.abysslib.reginth.providers.ProviderType;
-import com.altnoir.abysslib.reginth.providers.loot.ReginthBlockLootTables;
-import com.altnoir.abysslib.reginth.util.entry.BlockEntry;
-import com.altnoir.abysslib.reginth.util.entry.FluidEntry;
-import com.altnoir.abysslib.reginth.util.entry.ItemEntry;
-import com.altnoir.abysslib.reginth.util.entry.RegistryEntry;
-import com.altnoir.abysslib.reginth.util.nullness.NonNullBiConsumer;
+import com.altnoir.poopsky.impl.registrate.PoRegistrate;
+import com.tterrag.registrate.providers.ProviderType;
+import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
+import com.tterrag.registrate.util.entry.BlockEntry;
+import com.tterrag.registrate.util.entry.FluidEntry;
+import com.tterrag.registrate.util.entry.ItemEntry;
+import com.tterrag.registrate.util.entry.RegistryEntry;
+import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -23,22 +23,22 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.*;
-import net.neoforged.neoforge.common.SoundActions;
-import net.neoforged.neoforge.fluids.BaseFlowingFluid;
-import net.neoforged.neoforge.fluids.FluidType;
-import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import net.minecraftforge.common.SoundActions;
+import net.minecraftforge.fluids.ForgeFlowingFluid;
+import net.minecraftforge.fluids.FluidType;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public final class PoFluids {
     public static final ResourceLocation URINE_STILL_TEXTURE = PoopSky.loc("block/urine_liquid");
     public static final ResourceLocation URINE_FLOWING_TEXTURE = PoopSky.loc("block/urine_liquid_flowing");
-    private static final Reginth REGISTRATE = PoopSky.registrate();
+    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
-    public static final RegistryEntry<FluidType, FluidType> URINE_FLUID_TYPE = REGISTRATE.simple(
+    public static final RegistryEntry<FluidType> URINE_FLUID_TYPE = REGISTRATE.simple(
             "urine",
-            NeoForgeRegistries.Keys.FLUID_TYPES,
+            ForgeRegistries.Keys.FLUID_TYPES,
             PoFluids::createUrineFluidType);
 
-    public static final FluidEntry<BaseFlowingFluid.Flowing> FLOWING_URINE = REGISTRATE
+    public static final FluidEntry<ForgeFlowingFluid.Flowing> FLOWING_URINE = REGISTRATE
             .fluid("urine", URINE_STILL_TEXTURE, URINE_FLOWING_TEXTURE, URINE_FLUID_TYPE, PoFluids::createFlowingUrine)
             .source(PoFluids::createSourceUrine)
             .noBlock()
@@ -53,13 +53,13 @@ public final class PoFluids {
             .build()
             .register();
 
-    public static final RegistryEntry<Fluid, FlowingFluid> URINE = REGISTRATE.get("urine", Registries.FLUID);
+    public static final RegistryEntry<FlowingFluid> URINE = REGISTRATE.get("urine", Registries.FLUID);
     public static final ItemEntry<BucketItem> URINE_BUCKET = ItemEntry.cast(REGISTRATE.get("urine_bucket", Registries.ITEM));
     public static final BlockEntry<UrineLiquidBlock> URINE_LIQUID = REGISTRATE.block("urine_liquid",
                     properties -> new UrineLiquidBlock(URINE.get(), urineLiquidProperties()))
             .blockstate((ctx, prov) -> {
             })
-            .loot(ReginthBlockLootTables::dropSelf)
+            .loot(RegistrateBlockLootTables::dropSelf)
             .register();
 
     private PoFluids() {
@@ -84,6 +84,11 @@ public final class PoFluids {
                 .viscosity(6000)
         ) {
             @Override
+            public void initializeClient(java.util.function.Consumer<net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions> consumer) {
+                consumer.accept(com.altnoir.poopsky.client.PoClientExtensions.urine());
+            }
+
+            @Override
             public boolean canConvertToSource(FluidState state, LevelReader reader, BlockPos pos) {
                 if (reader instanceof Level level) {
                     return level.getGameRules().getBoolean(GameRules.RULE_WATER_SOURCE_CONVERSION);
@@ -93,7 +98,7 @@ public final class PoFluids {
 
             @Override
             public double motionScale(Entity entity) {
-                if (entity instanceof LivingEntity livingEntity && livingEntity.hasEffect(PoEffects.OMENER)) {
+                if (entity instanceof LivingEntity livingEntity && livingEntity.hasEffect(PoEffects.OMENER.get())) {
                     return 0.014D;
                 }
                 return 0.0023D;
@@ -115,8 +120,8 @@ public final class PoFluids {
                 .sound(SoundType.EMPTY);
     }
 
-    private static BaseFlowingFluid.Source createSourceUrine(BaseFlowingFluid.Properties properties) {
-        return new BaseFlowingFluid.Source(properties) {
+    private static ForgeFlowingFluid.Source createSourceUrine(ForgeFlowingFluid.Properties properties) {
+        return new ForgeFlowingFluid.Source(properties) {
             @Override
             public int getTickDelay(LevelReader level) {
                 return 10;
@@ -124,8 +129,8 @@ public final class PoFluids {
         };
     }
 
-    private static BaseFlowingFluid.Flowing createFlowingUrine(BaseFlowingFluid.Properties properties) {
-        return new BaseFlowingFluid.Flowing(properties) {
+    private static ForgeFlowingFluid.Flowing createFlowingUrine(ForgeFlowingFluid.Properties properties) {
+        return new ForgeFlowingFluid.Flowing(properties) {
             @Override
             public int getTickDelay(LevelReader level) {
                 return 10;

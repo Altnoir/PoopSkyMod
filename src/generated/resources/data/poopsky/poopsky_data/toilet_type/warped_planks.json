@@ -1,8 +1,0 @@
-{
-  "category": "wood",
-  "is_end": false,
-  "is_golden": false,
-  "is_redstone": false,
-  "name_key": "block.poopsky.toilet.warped",
-  "source_block": "minecraft:warped_planks"
-}

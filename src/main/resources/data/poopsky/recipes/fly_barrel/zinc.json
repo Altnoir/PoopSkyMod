@@ -1,0 +1,14 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "poopsky:fly_barrel",
+  "fly_type": "zinc",
+  "result": {
+    "count": 1,
+    "item": "create:raw_zinc"
+  }
+}

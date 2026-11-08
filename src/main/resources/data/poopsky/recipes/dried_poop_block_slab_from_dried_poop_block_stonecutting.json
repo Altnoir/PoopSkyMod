@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "poopsky:dried_poop_block"
+  },
+  "result": "poopsky:dried_poop_block_slab",
+  "count": 2
+}

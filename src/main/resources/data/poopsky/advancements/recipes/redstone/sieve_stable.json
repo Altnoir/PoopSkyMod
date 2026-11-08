@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:sieve_stable"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "mossy_cobblestone_wall": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:mossy_cobblestone_wall"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "mossy_cobblestone_wall"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "poopsky:sieve_stable"
+    ]
+  }
+}

@@ -1,14 +1,14 @@
 package com.altnoir.poopsky.init;
 
-import com.altnoir.abysslib.reginth.util.entry.RegistryEntry;
+import com.tterrag.registrate.util.entry.RegistryEntry;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.fluids.FluidType;
+import net.minecraftforge.fluids.FluidType;
 
 public final class PFluidTypes {
     public static final ResourceLocation URINE_STILL_TEXTURE = PoFluids.URINE_STILL_TEXTURE;
     public static final ResourceLocation URINE_FLOWING_TEXTURE = PoFluids.URINE_FLOWING_TEXTURE;
 
-    public static final RegistryEntry<FluidType, FluidType> URINE_FLUID_TYPE = PoFluids.URINE_FLUID_TYPE;
+    public static final RegistryEntry<FluidType> URINE_FLUID_TYPE = PoFluids.URINE_FLUID_TYPE;
 
     private PFluidTypes() {
     }

@@ -16,7 +16,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.PacketDistributor;
+import com.altnoir.poopsky.impl.network.PoNetworking;
 
 import java.util.Optional;
 
@@ -44,7 +44,7 @@ public class ReturnTotemItem extends Item {
             return InteractionResultHolder.pass(stack);
         }
 
-        Optional<ServerPlayer.RespawnPosAngle> respawnInfo = targetLevel.getBlockState(respawn).getRespawnPosition(EntityType.PLAYER, targetLevel, respawn, serverPlayer.getRespawnAngle());
+        Optional<Vec3> respawnInfo = targetLevel.getBlockState(respawn).getRespawnPosition(EntityType.PLAYER, targetLevel, respawn, serverPlayer.getRespawnAngle(), serverPlayer);
         if (respawnInfo.isEmpty()) {
             player.displayClientMessage(Component.translatable("message.poopsky.return_totem.obstructed"), true);
             return InteractionResultHolder.pass(stack);
@@ -52,11 +52,10 @@ public class ReturnTotemItem extends Item {
 
         ItemStack activationStack = stack.copy();
         stack.shrink(1);
-        PacketDistributor.sendToPlayer(serverPlayer, new ReturnTotemActivationPayload(activationStack));
+        PoNetworking.sendToPlayer(serverPlayer, new ReturnTotemActivationPayload(activationStack));
 
-        ServerPlayer.RespawnPosAngle angle = respawnInfo.get();
-        Vec3 destination = angle.position();
-        float yaw = angle.yaw();
+        Vec3 destination = respawnInfo.get();
+        float yaw = targetLevel.getBlockState(respawn).getValue(PortableToiletBlock.FACING).toYRot();
         Vec3 origin = serverPlayer.position();
         TotemEffectUtil.spawnActivationParticles(serverPlayer.serverLevel(), origin);
 

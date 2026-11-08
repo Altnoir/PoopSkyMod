@@ -10,7 +10,10 @@ import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 
 import java.io.Reader;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class FlyTypeManager extends SimpleJsonResourceReloadListener {
     private static final Gson GSON = new GsonBuilder().create();
@@ -81,7 +84,7 @@ public class FlyTypeManager extends SimpleJsonResourceReloadListener {
             // 构造结果 key：去掉目录前缀和 .json 后缀
             String path = location.getPath();
             String key = path.substring("poopsky_data/".length(), path.length() - ".json".length());
-            resultMap.put(ResourceLocation.fromNamespaceAndPath(location.getNamespace(), key), mergedArray);
+            resultMap.put(new ResourceLocation(location.getNamespace(), key), mergedArray);
         }
 
         return resultMap;
@@ -116,7 +119,7 @@ public class FlyTypeManager extends SimpleJsonResourceReloadListener {
     }
 
     public List<FlyTypeDefinition> getDefinitions() {
-        Map<String, FlyTypeDefinition> combined = new LinkedHashMap<>();
+        Map<String, FlyTypeDefinition> combined = new java.util.LinkedHashMap<>();
         for (FlyTypeDefinition definition : dataPackFlyTypes) {
             combined.putIfAbsent(definition.id(), definition);
         }

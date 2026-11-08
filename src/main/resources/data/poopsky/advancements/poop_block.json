@@ -1,0 +1,34 @@
+{
+  "parent": "poopsky:root",
+  "criteria": {
+    "poop_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "poopsky:poop_block"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.poopsky.poop_block.description"
+    },
+    "icon": {
+      "count": 1,
+      "item": "poopsky:poop_block"
+    },
+    "title": {
+      "translate": "advancements.poopsky.poop_block.title"
+    }
+  },
+  "requirements": [
+    [
+      "poop_block"
+    ]
+  ]
+}

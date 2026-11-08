@@ -1,0 +1,13 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "poopsky:breeding_chest",
+  "chance": 0.2,
+  "parent1": "cyan",
+  "parent2": "iron",
+  "result": "zinc"
+}

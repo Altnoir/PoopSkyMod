@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "M": {
+      "item": "poopsky:spall"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "M",
+    "M",
+    "S"
+  ],
+  "result": {
+    "count": 1,
+    "item": "poopsky:spall_sword",
+    "nbt": {
+      "Enchantments": [
+        {
+          "id": "minecraft:looting",
+          "lvl": 1
+        }
+      ]
+    }
+  }
+}

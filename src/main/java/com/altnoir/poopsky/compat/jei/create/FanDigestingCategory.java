@@ -11,19 +11,16 @@ import com.simibubi.create.compat.jei.DoubleItemIcon;
 import com.simibubi.create.compat.jei.EmptyBackground;
 import com.simibubi.create.compat.jei.category.ProcessingViaFanCategory;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
-import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
 
 import java.util.List;
 
 public class FanDigestingCategory extends ProcessingViaFanCategory.MultiOutput<DigestingRecipe> {
 
-    public static final RecipeType<RecipeHolder<DigestingRecipe>> TYPE = RecipeType.createRecipeHolderType(PSRecipeTypes.DIGESTING.getId());
+    public static final mezz.jei.api.recipe.RecipeType<DigestingRecipe> TYPE = new mezz.jei.api.recipe.RecipeType<>(PSRecipeTypes.DIGESTING.getId(), DigestingRecipe.class);
     private final AnimatedUrineLiquid urineLiquid = new AnimatedUrineLiquid();
 
     public static FanDigestingCategory create() {
@@ -32,7 +29,7 @@ public class FanDigestingCategory extends ProcessingViaFanCategory.MultiOutput<D
         var background = new EmptyBackground(178, 72);
         var icon = new DoubleItemIcon(AllItems.PROPELLER::asStack, () -> new ItemStack(PoItems.URINE_BUCKET.get()));
         var catalyst = AllBlocks.ENCASED_FAN.asStack();
-        catalyst.set(DataComponents.CUSTOM_NAME, Component.translatable("jei.category." + PoopSky.MOD_ID + ".digesting.fan").withStyle(style -> style.withItalic(false)));
+        catalyst.setHoverName(Component.translatable("jei.category." + PoopSky.MOD_ID + ".digesting.fan").withStyle(style -> style.withItalic(false)));
         var info = new Info<>(TYPE, title, background, icon, FanDigestingCategory::getAllRecipes, List.of(() -> catalyst));
         return new FanDigestingCategory(info);
     }
@@ -51,7 +48,7 @@ public class FanDigestingCategory extends ProcessingViaFanCategory.MultiOutput<D
         urineLiquid.draw(graphics, 0, 0);
     }
 
-    private static List<RecipeHolder<DigestingRecipe>> getAllRecipes() {
+    private static List<DigestingRecipe> getAllRecipes() {
         var level = Minecraft.getInstance().level;
         if (level == null) return List.of();
         return level.getRecipeManager().getAllRecipesFor(PSRecipeTypes.DIGESTING.getType());

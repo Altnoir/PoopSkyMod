@@ -24,7 +24,7 @@ public class FungusBlockMixin {
     private Block requiredBlock;
 
     @Inject(method = "isValidBonemealTarget", at = @At("HEAD"), cancellable = true)
-    private void poopsky$isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, CallbackInfoReturnable<Boolean> cir) {
+    private void poopsky$isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, boolean isClient, CallbackInfoReturnable<Boolean> cir) {
         BlockState blockstate = level.getBlockState(pos.below());
         if (blockstate.is(PoBlocks.CHILI_POOP_BLOCK.get())) {
             cir.setReturnValue(true);

@@ -14,7 +14,6 @@ public class InfestationEffect extends MobEffect {
         super(category, color);
     }
 
-    @Override
     public void onMobHurt(LivingEntity entity, int amplifier, DamageSource source, float damage) {
         if (entity.level().isClientSide || entity.getRandom().nextFloat() >= SPAWN_CHANCE) {
             return;

@@ -4,7 +4,6 @@ import com.altnoir.poopsky.content.block.entity.ArcadeBlockEntity;
 import com.altnoir.poopsky.content.item.p.GameDiskItem;
 import com.altnoir.poopsky.game.util.GameUtils;
 import com.altnoir.poopsky.init.PoBlockEntityType;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -15,7 +14,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -43,8 +42,7 @@ import javax.annotation.Nullable;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class ArcadeBlock extends Block implements EntityBlock {
-    public static final MapCodec<ArcadeBlock> CODEC = simpleCodec(ArcadeBlock::new);
+public class ArcadeBlock extends Block implements EntityBlock, com.altnoir.poopsky.content.block.PoBlockInteraction {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
     public static final BooleanProperty GAME = BooleanProperty.create("game");
@@ -75,10 +73,6 @@ public class ArcadeBlock extends Block implements EntityBlock {
                 .setValue(TRIGGERED, false));
     }
 
-    @Override
-    protected MapCodec<? extends Block> codec() {
-        return CODEC;
-    }
 
     @Nullable
     @Override
@@ -120,7 +114,7 @@ public class ArcadeBlock extends Block implements EntityBlock {
     }
 
     @Override
-    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
         super.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston);
         if (level.isClientSide) {
             return;
@@ -151,7 +145,7 @@ public class ArcadeBlock extends Block implements EntityBlock {
     }
 
     @Override
-    protected BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
         DoubleBlockHalf half = state.getValue(HALF);
         if (facing.getAxis() != Direction.Axis.Y || half == DoubleBlockHalf.LOWER != (facing == Direction.UP)) {
             return half == DoubleBlockHalf.LOWER && facing == Direction.DOWN && !state.canSurvive(level, currentPos)
@@ -165,8 +159,8 @@ public class ArcadeBlock extends Block implements EntityBlock {
     }
 
     @Override
-    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-        if (!level.isClientSide && (player.isCreative() || !player.hasCorrectToolForDrops(state, level, pos))) {
+    public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+        if (!level.isClientSide && (player.isCreative() || !player.hasCorrectToolForDrops(state))) {
             if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
                 BlockPos lowerPos = pos.below();
                 BlockState lowerState = level.getBlockState(lowerPos);
@@ -176,11 +170,11 @@ public class ArcadeBlock extends Block implements EntityBlock {
                 }
             }
         }
-        return super.playerWillDestroy(level, pos, state, player);
+        super.playerWillDestroy(level, pos, state, player);
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+    public InteractionResult poopsky$useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         ArcadeBlockEntity arcade = getArcadeEntity(level, pos, state);
         if (arcade == null) {
             return InteractionResult.PASS;
@@ -191,11 +185,11 @@ public class ArcadeBlock extends Block implements EntityBlock {
                 if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
                     arcade.giveReward(serverPlayer);
                 }
-                return interactionSuccess(level);
+                return InteractionResult.sidedSuccess(level.isClientSide);
             }
             if (!arcade.hasCartridge()) {
                 showNoCartridge(level, player);
-                return interactionSuccess(level);
+                return InteractionResult.sidedSuccess(level.isClientSide);
             }
             return InteractionResult.PASS;
         }
@@ -206,28 +200,28 @@ public class ArcadeBlock extends Block implements EntityBlock {
             } else {
                 showNoCartridge(level, player);
             }
-            return interactionSuccess(level);
+            return InteractionResult.sidedSuccess(level.isClientSide);
         }
 
-        if (handleControlExit(level, player, arcade) || arcade.isController(player)) {
-            return interactionSuccess(level);
+        if (handleControlExit(level, player, arcade)) {
+            return InteractionResult.sidedSuccess(level.isClientSide);
         }
-        if (hitResult.getDirection() != state.getValue(FACING)) {
-            return InteractionResult.PASS;
+        if (arcade.isController(player)) {
+            return InteractionResult.sidedSuccess(level.isClientSide);
         }
         if (!arcade.hasCartridge()) {
             showNoCartridge(level, player);
-            return interactionSuccess(level);
+            return InteractionResult.sidedSuccess(level.isClientSide);
         }
         startArcadeControl(level, player, arcade);
-        return interactionSuccess(level);
+        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    public InteractionResult poopsky$useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         ArcadeBlockEntity arcade = getArcadeEntity(level, pos, state);
         if (arcade == null) {
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            return InteractionResult.PASS;
         }
 
         if (state.getValue(HALF) == DoubleBlockHalf.LOWER) {
@@ -235,13 +229,13 @@ public class ArcadeBlock extends Block implements EntityBlock {
                 if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
                     arcade.giveReward(serverPlayer);
                 }
-                return itemInteractionSuccess(level);
+                return InteractionResult.sidedSuccess(level.isClientSide);
             }
             if (!arcade.hasCartridge()) {
                 showNoCartridge(level, player);
-                return itemInteractionSuccess(level);
+                return InteractionResult.sidedSuccess(level.isClientSide);
             }
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            return InteractionResult.PASS;
         }
 
         if (player.isShiftKeyDown()) {
@@ -250,36 +244,28 @@ public class ArcadeBlock extends Block implements EntityBlock {
             } else {
                 showNoCartridge(level, player);
             }
-            return itemInteractionSuccess(level);
+            return InteractionResult.sidedSuccess(level.isClientSide);
         }
 
-        if (handleControlExit(level, player, arcade) || arcade.isController(player)) {
-            return itemInteractionSuccess(level);
+        if (handleControlExit(level, player, arcade)) {
+            return InteractionResult.sidedSuccess(level.isClientSide);
         }
-        if (hitResult.getDirection() != state.getValue(FACING)) {
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        if (arcade.isController(player)) {
+            return InteractionResult.sidedSuccess(level.isClientSide);
         }
         if (stack.getItem() instanceof GameDiskItem && !arcade.hasCartridge()) {
             if (!level.isClientSide && arcade.insertCartridge(stack)) {
                 stack.shrink(1);
                 level.playSound(null, arcade.getBlockPos(), SoundEvents.NOTE_BLOCK_BIT.value(), SoundSource.BLOCKS, 1.0F, 1.4F);
             }
-            return itemInteractionSuccess(level);
+            return InteractionResult.sidedSuccess(level.isClientSide);
         }
         if (!arcade.hasCartridge()) {
             showNoCartridge(level, player);
-            return itemInteractionSuccess(level);
+            return InteractionResult.sidedSuccess(level.isClientSide);
         }
         startArcadeControl(level, player, arcade);
-        return itemInteractionSuccess(level);
-    }
-
-    private static InteractionResult interactionSuccess(Level level) {
         return InteractionResult.sidedSuccess(level.isClientSide);
-    }
-
-    private static ItemInteractionResult itemInteractionSuccess(Level level) {
-        return ItemInteractionResult.sidedSuccess(level.isClientSide);
     }
 
     private static boolean handleControlExit(Level level, Player player, ArcadeBlockEntity arcade) {
@@ -310,7 +296,7 @@ public class ArcadeBlock extends Block implements EntityBlock {
     }
 
     @Override
-    protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+    public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
         if (state.getValue(HALF) == DoubleBlockHalf.LOWER) {
             return true;
         }
@@ -367,7 +353,7 @@ public class ArcadeBlock extends Block implements EntityBlock {
     }
 
     @Override
-    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return getArcadeShape(state);
     }
 
@@ -377,7 +363,7 @@ public class ArcadeBlock extends Block implements EntityBlock {
     }
 
     @Override
-    protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return getArcadeShape(state);
     }
 
@@ -387,17 +373,17 @@ public class ArcadeBlock extends Block implements EntityBlock {
     }
 
     @Override
-    protected BlockState rotate(BlockState state, Rotation rotation) {
+    public BlockState rotate(BlockState state, Rotation rotation) {
         return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
     }
 
     @Override
-    protected BlockState mirror(BlockState state, Mirror mirror) {
+    public BlockState mirror(BlockState state, Mirror mirror) {
         return mirror == Mirror.NONE ? state : rotate(state, mirror.getRotation(state.getValue(FACING)));
     }
 
     @Override
-    protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
+    public boolean isPathfindable(BlockState state, net.minecraft.world.level.BlockGetter pathLevel, net.minecraft.core.BlockPos pathPos, PathComputationType pathComputationType) {
         return false;
     }
 
@@ -432,5 +418,13 @@ public class ArcadeBlock extends Block implements EntityBlock {
             case WEST -> Block.box(minZ, minY, 16.0 - maxX, maxZ, maxY, 16.0 - minX);
             default -> Block.box(minX, minY, minZ, maxX, maxY, maxZ);
         };
+    }
+
+    @Override
+    public net.minecraft.world.InteractionResult use(net.minecraft.world.level.block.state.BlockState state,
+            net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
+        return poopsky$interact(state, level, pos, player, hand, hit);
     }
 }

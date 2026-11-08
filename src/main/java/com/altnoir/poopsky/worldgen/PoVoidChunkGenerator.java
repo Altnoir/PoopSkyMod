@@ -1,13 +1,12 @@
 package com.altnoir.poopsky.worldgen;
 
-import com.altnoir.abysslib.AbyssLib;
 import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.worldgen.structure.PoopIslandStructure;
 import com.mojang.datafixers.util.Either;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.CrashReport;
 import net.minecraft.ReportedException;
@@ -46,8 +45,8 @@ import java.util.stream.Collectors;
 public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
     private static final int VIRTUAL_SURFACE_Y = 64;
     private static final int SPAWN_STRUCTURE_PROTECTION_RADIUS = 50;
-    private static final ResourceLocation STRONGHOLDS_STRUCTURE_SET = AbyssLib.mcloc("strongholds");
-    private static final ResourceLocation STRONGHOLD_STRUCTURE = AbyssLib.mcloc("stronghold");
+    private static final ResourceLocation STRONGHOLDS_STRUCTURE_SET = PoopSky.mcloc("strongholds");
+    private static final ResourceLocation STRONGHOLD_STRUCTURE = PoopSky.mcloc("stronghold");
 
     private static final Codec<List<ResourceKey<StructureSet>>> STRUCTURE_SET_KEYS_CODEC =
             Codec.either(ResourceLocation.CODEC.listOf(), ResourceLocation.CODEC).xmap(
@@ -58,7 +57,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
                             location -> List.of(ResourceKey.create(Registries.STRUCTURE_SET, location))
                     ),
                     keys -> keys.size() == 1
-                            ? Either.right(keys.getFirst().location())
+                            ? Either.right(keys.get(0).location())
                             : Either.left(keys.stream().map(ResourceKey::location).toList())
             );
 
@@ -76,8 +75,8 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
                             : Either.right(allowed.keys())
             );
 
-    public static final MapCodec<PoVoidChunkGenerator> CODEC =
-            RecordCodecBuilder.mapCodec(instance -> instance.group(
+    public static final Codec<PoVoidChunkGenerator> CODEC =
+            RecordCodecBuilder.create(instance -> instance.group(
                     BiomeSource.CODEC.fieldOf("biome_source")
                             .forGetter(generator -> generator.biomeSource),
                     NoiseGeneratorSettings.CODEC.fieldOf("settings")
@@ -96,11 +95,11 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
         super(biomeSource, settings);
         this.settings = settings;
         this.allowedStructureSets = allowedStructureSets;
-        this.generateNormal = settings.is(AbyssLib.parse("minecraft:nether")) && !Config.voidNetherGeneration;
+        this.generateNormal = settings.is(PoopSky.parse("minecraft:nether")) && !Config.voidNetherGeneration;
     }
 
     @Override
-    protected MapCodec<? extends ChunkGenerator> codec() {
+    protected Codec<? extends ChunkGenerator> codec() {
         return CODEC;
     }
 
@@ -155,9 +154,9 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
     }
 
     @Override
-    public CompletableFuture<ChunkAccess> fillFromNoise(Blender blender, RandomState randomState, StructureManager structureManager, ChunkAccess chunk) {
+    public CompletableFuture<ChunkAccess> fillFromNoise(java.util.concurrent.Executor executor, Blender blender, RandomState randomState, StructureManager structureManager, ChunkAccess chunk) {
         return generateNormal
-                ? super.fillFromNoise(blender, randomState, structureManager, chunk)
+                ? super.fillFromNoise(executor, blender, randomState, structureManager, chunk)
                 : CompletableFuture.completedFuture(chunk);
     }
 
@@ -199,7 +198,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
             filterStructureStarts(registries, structureState.getLevelSeed(), chunk);
         }
 
-        if (!generateNormal && settings.is(AbyssLib.parse("minecraft:overworld")) && isStructureAllowed(registries, PoopSky.loc("poop_island"))) {
+        if (!generateNormal && settings.is(PoopSky.parse("minecraft:overworld")) && isStructureAllowed(registries, PoopSky.loc("poop_island"))) {
             PoopIslandStructure.addGuaranteedSpawnStart(registries, chunk, structureManager, templateManager, structureState.getLevelSeed());
         }
     }
@@ -292,7 +291,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
 
     @Nullable
     private Pair<BlockPos, Holder<Structure>> findGuaranteedSpawnIsland(ServerLevel level, HolderSet<Structure> structures, BlockPos pos, int searchRadius, boolean skipKnownStructures) {
-        if (skipKnownStructures || generateNormal || !settings.is(AbyssLib.parse("minecraft:overworld")) || !isStructureAllowed(level.registryAccess(), PoopSky.loc("poop_island"))) {
+        if (skipKnownStructures || generateNormal || !settings.is(PoopSky.parse("minecraft:overworld")) || !isStructureAllowed(level.registryAccess(), PoopSky.loc("poop_island"))) {
             return null;
         }
 
@@ -328,7 +327,7 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
 
     private void filterStructureStarts(RegistryAccess registries, long seed, ChunkAccess chunk) {
         Set<Structure> allowedStructures = resolveAllowedStructures(registries);
-        boolean protectSpawn = settings.is(AbyssLib.parse("minecraft:overworld"));
+        boolean protectSpawn = settings.is(PoopSky.parse("minecraft:overworld"));
         BlockPos spawn = protectSpawn ? defaultSpawnPosition(seed) : BlockPos.ZERO;
 
         for (Map.Entry<Structure, StructureStart> entry : List.copyOf(chunk.getAllStarts().entrySet())) {
@@ -345,8 +344,8 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
     }
 
     private static boolean intersectsSpawnProtection(BoundingBox box, BlockPos spawn) {
-        int nearestX = Math.clamp(spawn.getX(), box.minX(), box.maxX());
-        int nearestZ = Math.clamp(spawn.getZ(), box.minZ(), box.maxZ());
+        int nearestX = net.minecraft.util.Mth.clamp(spawn.getX(), box.minX(), box.maxX());
+        int nearestZ = net.minecraft.util.Mth.clamp(spawn.getZ(), box.minZ(), box.maxZ());
         long deltaX = nearestX - spawn.getX();
         long deltaZ = nearestZ - spawn.getZ();
         return deltaX * deltaX + deltaZ * deltaZ <= (long) SPAWN_STRUCTURE_PROTECTION_RADIUS * SPAWN_STRUCTURE_PROTECTION_RADIUS;
@@ -451,6 +450,6 @@ public class PoVoidChunkGenerator extends NoiseBasedChunkGenerator {
     }
 
     private static int virtualSurfaceY(LevelHeightAccessor level) {
-        return Math.clamp(VIRTUAL_SURFACE_Y, level.getMinBuildHeight() + 1, level.getMaxBuildHeight());
+        return net.minecraft.util.Mth.clamp(VIRTUAL_SURFACE_Y, level.getMinBuildHeight() + 1, level.getMaxBuildHeight());
     }
 }

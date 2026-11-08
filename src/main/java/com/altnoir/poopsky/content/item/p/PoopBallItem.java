@@ -12,11 +12,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ProjectileItem;
+import com.altnoir.poopsky.content.item.PoProjectileItem;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class PoopBallItem extends Item implements ProjectileItem {
+public class PoopBallItem extends Item implements PoProjectileItem {
     public PoopBallItem(Properties properties) {
         super(properties);
     }
@@ -42,7 +42,7 @@ public class PoopBallItem extends Item implements ProjectileItem {
         }
 
         player.awardStat(Stats.ITEM_USED.get(this));
-        itemstack.consume(1, player);
+        if (!player.getAbilities().instabuild) itemstack.shrink(1);
         return InteractionResultHolder.sidedSuccess(itemstack, level.isClientSide());
     }
 

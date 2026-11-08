@@ -1,7 +1,6 @@
 package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.client.inventory.PoopCraftingMenu;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.stats.Stats;
@@ -20,8 +19,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class PoopCraftingTableBlock extends CraftingTableBlock {
-    public static final MapCodec<PoopCraftingTableBlock> CODEC = simpleCodec(PoopCraftingTableBlock::new);
+public class PoopCraftingTableBlock extends CraftingTableBlock implements com.altnoir.poopsky.content.block.PoBlockInteraction {
     private static final Component CONTAINER_TITLE = Component.translatable("container.crafting");
     private static final VoxelShape SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 8.0, 16.0);
 
@@ -29,18 +27,14 @@ public class PoopCraftingTableBlock extends CraftingTableBlock {
         super(properties);
     }
 
-    @Override
-    public MapCodec<? extends CraftingTableBlock> codec() {
-        return CODEC;
-    }
 
     @Override
-    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+    public InteractionResult poopsky$useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (level.isClientSide) {
             return InteractionResult.SUCCESS;
         } else {
@@ -51,8 +45,16 @@ public class PoopCraftingTableBlock extends CraftingTableBlock {
     }
 
     @Override
-    protected MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
+    public MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
         return new SimpleMenuProvider((containerId, inventory, access) ->
                 new PoopCraftingMenu(containerId, inventory, ContainerLevelAccess.create(level, pos)), CONTAINER_TITLE);
+    }
+
+    @Override
+    public net.minecraft.world.InteractionResult use(net.minecraft.world.level.block.state.BlockState state,
+            net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
+        return poopsky$interact(state, level, pos, player, hand, hit);
     }
 }

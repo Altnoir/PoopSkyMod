@@ -1,0 +1,8 @@
+{
+  "type": "poopsky:fly_barrel",
+  "fly_type": "dragon_fruit",
+  "result": {
+    "count": 1,
+    "item": "minecraft:gunpowder"
+  }
+}

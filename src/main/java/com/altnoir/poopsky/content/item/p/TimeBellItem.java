@@ -20,7 +20,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.PacketDistributor;
+import com.altnoir.poopsky.impl.network.PoNetworking;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -31,7 +31,9 @@ public class TimeBellItem extends Item {
     private static final int DELAY_TICKS = 20;
     private static final int FREEZE_TICKS = 160;
     private static final Map<UUID, PendingAction> PENDING = new ConcurrentHashMap<>();
-    private static final Map<UUID, boolean[]> SAVED_ABILITIES = new ConcurrentHashMap<>();
+    private record SavedState(boolean mayfly, boolean flying, boolean noGravity, double speed) {}
+    private static final Map<UUID, SavedState> SAVED_ABILITIES = new ConcurrentHashMap<>();
+    private static UUID freezeOwner;
     private static final Map<UUID, Vec3> FROZEN_POS = new ConcurrentHashMap<>();
     private static volatile boolean timeBellFreeze = false;
 
@@ -53,7 +55,7 @@ public class TimeBellItem extends Item {
     }
 
     @Override
-    public int getUseDuration(ItemStack stack, LivingEntity entity) {
+    public int getUseDuration(ItemStack stack) {
         return 72000;
     }
 
@@ -67,15 +69,15 @@ public class TimeBellItem extends Item {
         if (!(livingEntity instanceof Player player)) return;
         if (level.isClientSide) return;
 
-        int usedTicks = this.getUseDuration(stack, livingEntity) - remainingUseDuration;
+        int usedTicks = this.getUseDuration(stack) - remainingUseDuration;
         if (usedTicks != DELAY_TICKS) return;
 
         MinecraftServer server = level.getServer();
         if (server == null) return;
 
-        boolean unfreezing = server.tickRateManager().isFrozen();
+        boolean unfreezing = com.altnoir.poopsky.impl.PoTimeFreeze.serverFrozen();
         if (unfreezing) {
-            player.removeEffect(PoEffects.MOMENT_OF_PTYME);
+            player.removeEffect(PoEffects.MOMENT_OF_PTYME.get());
             executeUnfreeze(server, player);
         } else {
             executeFreeze(server, player);
@@ -88,7 +90,7 @@ public class TimeBellItem extends Item {
     public void releaseUsing(ItemStack stack, Level level, LivingEntity livingEntity, int timeLeft) {
         if (!(livingEntity instanceof Player)) return;
 
-        int usedTicks = this.getUseDuration(stack, livingEntity) - timeLeft;
+        int usedTicks = this.getUseDuration(stack) - timeLeft;
 
         if (level.isClientSide && usedTicks < DELAY_TICKS) {
             Minecraft.getInstance().getSoundManager().stop(PoSoundEvents.ITEM_TIME_BELL_OPEN.get().getLocation(), SoundSource.PLAYERS);
@@ -97,13 +99,14 @@ public class TimeBellItem extends Item {
 
     private static void executeFreeze(MinecraftServer server, Player player) {
         timeBellFreeze = true;
-        server.tickRateManager().setFrozen(true);
+        com.altnoir.poopsky.impl.PoTimeFreeze.setServerFrozen(true);
         broadcastFreezeState(server, true);
 
         UUID userId = player.getUUID();
+        freezeOwner = userId;
         for (ServerPlayer sp : server.getPlayerList().getPlayers()) {
             var abilities = sp.getAbilities();
-            SAVED_ABILITIES.put(sp.getUUID(), new boolean[]{abilities.mayfly, abilities.flying});
+            SAVED_ABILITIES.put(sp.getUUID(), new SavedState(abilities.mayfly, abilities.flying, sp.isNoGravity(), sp.getAttribute(Attributes.MOVEMENT_SPEED).getBaseValue()));
 
             if (sp.getUUID().equals(userId)) {
                 abilities.mayfly = true;
@@ -120,38 +123,75 @@ public class TimeBellItem extends Item {
         }
 
         if (!Config.unlimitedFreeze) {
-            player.addEffect(new MobEffectInstance(PoEffects.MOMENT_OF_PTYME, FREEZE_TICKS, 0, false, false));
+            player.addEffect(new MobEffectInstance(PoEffects.MOMENT_OF_PTYME.get(), FREEZE_TICKS, 0, false, false));
         }
         player.displayClientMessage(Component.translatable("message.poopsky.time_bell.frozen"), true);
     }
 
     static void executeUnfreeze(MinecraftServer server, Player player) {
         timeBellFreeze = false;
-        server.tickRateManager().setFrozen(false);
+        com.altnoir.poopsky.impl.PoTimeFreeze.setServerFrozen(false);
 
-        for (ServerPlayer sp : server.getPlayerList().getPlayers()) {
-            boolean[] saved = SAVED_ABILITIES.remove(sp.getUUID());
-            if (saved != null) {
-                sp.getAbilities().mayfly = saved[0];
-                sp.getAbilities().flying = saved[1];
-                sp.onUpdateAbilities();
-            }
-            sp.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.1);
-            sp.setNoGravity(false);
-        }
+        for (ServerPlayer sp : server.getPlayerList().getPlayers()) restore(sp);
         FROZEN_POS.clear();
+        SAVED_ABILITIES.clear();
+        freezeOwner = null;
 
         broadcastFreezeState(server, false);
-        player.level().playSound(null, player, PoSoundEvents.ITEM_TIME_BELL_CLOSE.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
-        player.displayClientMessage(Component.translatable("message.poopsky.time_bell.unfrozen"), true);
+        if (player != null) {
+            player.level().playSound(null, player, PoSoundEvents.ITEM_TIME_BELL_CLOSE.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
+            player.displayClientMessage(Component.translatable("message.poopsky.time_bell.unfrozen"), true);
+        }
     }
 
     public static void unfreeze(MinecraftServer server, Player player) {
         executeUnfreeze(server, player);
     }
 
+    private static void restore(ServerPlayer player) {
+        SavedState saved = SAVED_ABILITIES.remove(player.getUUID());
+        if (saved != null) {
+            player.getAbilities().mayfly = saved.mayfly();
+            player.getAbilities().flying = saved.flying();
+            player.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(saved.speed());
+            player.setNoGravity(saved.noGravity());
+            player.onUpdateAbilities();
+        }
+        FROZEN_POS.remove(player.getUUID());
+    }
+
+    public static void playerLeft(ServerPlayer player) {
+        if (player.getUUID().equals(freezeOwner)) executeUnfreeze(player.server, player);
+        else restore(player);
+        PENDING.remove(player.getUUID());
+    }
+
+    public static void playerJoined(ServerPlayer player) {
+        PoNetworking.sendToPlayer(player, new TimeBellFreezePayload(timeBellFreeze));
+        if (!timeBellFreeze) return;
+        var abilities = player.getAbilities();
+        SAVED_ABILITIES.put(player.getUUID(), new SavedState(abilities.mayfly, abilities.flying, player.isNoGravity(), player.getAttribute(Attributes.MOVEMENT_SPEED).getBaseValue()));
+        abilities.mayfly = false;
+        abilities.flying = false;
+        player.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0);
+        FROZEN_POS.put(player.getUUID(), player.position());
+        player.setNoGravity(true);
+        player.onUpdateAbilities();
+    }
+
+    public static void serverStopping(MinecraftServer server) {
+        if (timeBellFreeze) executeUnfreeze(server, null);
+        PENDING.clear(); SAVED_ABILITIES.clear(); FROZEN_POS.clear(); freezeOwner = null;
+    }
+
     public static void freezeTick(MinecraftServer server) {
-        if (!timeBellFreeze || FROZEN_POS.isEmpty()) return;
+        if (!timeBellFreeze) return;
+        ServerPlayer owner = freezeOwner == null ? null : server.getPlayerList().getPlayer(freezeOwner);
+        if (owner == null || !owner.isAlive() || (!Config.unlimitedFreeze && !owner.hasEffect(PoEffects.MOMENT_OF_PTYME.get()))) {
+            executeUnfreeze(server, owner);
+            return;
+        }
+        if (FROZEN_POS.isEmpty()) return;
         for (ServerPlayer sp : server.getPlayerList().getPlayers()) {
             Vec3 pos = FROZEN_POS.get(sp.getUUID());
             if (pos != null) {
@@ -168,7 +208,7 @@ public class TimeBellItem extends Item {
 
     private static void broadcastFreezeState(MinecraftServer server, boolean frozen) {
         for (ServerPlayer serverPlayer : server.getPlayerList().getPlayers()) {
-            PacketDistributor.sendToPlayer(serverPlayer, new TimeBellFreezePayload(frozen));
+            PoNetworking.sendToPlayer(serverPlayer, new TimeBellFreezePayload(frozen));
         }
     }
 

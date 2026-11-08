@@ -3,123 +3,61 @@ package com.altnoir.poopsky.impl.event;
 import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.entity.MaggotsChunkLoaderBlockEntity;
-import com.altnoir.poopsky.content.entity.p.*;
-import com.altnoir.poopsky.impl.DataGenerators;
+import com.altnoir.poopsky.content.entity.p.FlyEntity;
+import com.altnoir.poopsky.content.entity.p.PoolimeEntity;
 import com.altnoir.poopsky.impl.network.PoNetworking;
-import com.altnoir.poopsky.init.PoBlockEntityType;
 import com.altnoir.poopsky.init.PoEntityType;
-import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
-import net.minecraft.world.entity.SpawnPlacementTypes;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.event.config.ModConfigEvent;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.common.world.chunk.RegisterTicketControllersEvent;
-import net.neoforged.neoforge.event.AddPackFindersEvent;
-import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
-import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.world.ForgeChunkManager;
+import net.minecraftforge.event.AddPackFindersEvent;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
+import net.minecraftforge.resource.PathPackResources;
 
 public class PoModEvents {
     public static void registerMod(IEventBus modEventBus) {
-        modEventBus.addListener(DataGenerators::gatherData);
-        modEventBus.addListener(PoNetworking::registerNetworking);
+        PoNetworking.registerNetworking();
         modEventBus.addListener(PoModEvents::modLoad);
         modEventBus.addListener(PoModEvents::registerAttributes);
         modEventBus.addListener(PoModEvents::registerSpawnPlacements);
-        modEventBus.addListener(PoModEvents::registerCapabilities);
-        modEventBus.addListener(PoModEvents::registerTicketControllers);
         modEventBus.addListener(PoModEvents::packSetup);
+        MinecraftForge.EVENT_BUS.addGenericListener(BlockEntity.class, PoBlockCapabilities::attach);
+        ForgeChunkManager.setForcedChunkLoadingCallback(PoopSky.MOD_ID, MaggotsChunkLoaderBlockEntity::validateTickets);
     }
-
-    public static void modLoad(final ModConfigEvent event) {
-        if (event instanceof ModConfigEvent.Loading || event instanceof ModConfigEvent.Reloading) {
-            Config.onLoad(event.getConfig());
-        }
+    public static void modLoad(ModConfigEvent event) {
+        if (event instanceof ModConfigEvent.Loading || event instanceof ModConfigEvent.Reloading) Config.onLoad(event.getConfig());
     }
-
     public static void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(PoEntityType.POOLIME.get(), PoolimeEntity.createAttributes().build());
         event.put(PoEntityType.FLY.get(), FlyEntity.createAttributes().build());
-        event.put(PoEntityType.SNAIL.get(), SnailEntity.createAttributes().build());
-        event.put(PoEntityType.BASILISK.get(), BasiliskEntity.createAttributes().build());
-        event.put(PoEntityType.EXPLOSIVE_CHICKEN.get(), ExplosiveChickenEntity.createAttributes().build());
     }
-
-    public static void registerSpawnPlacements(RegisterSpawnPlacementsEvent event) {
-        event.register(PoEntityType.POOLIME.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                PoolimeEntity::checkPoolimeSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
-        event.register(PoEntityType.FLY.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                FlyEntity::checkFlySpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
+    public static void registerSpawnPlacements(SpawnPlacementRegisterEvent event) {
+        event.register(PoEntityType.POOLIME.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                PoolimeEntity::checkPoolimeSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+        event.register(PoEntityType.FLY.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                FlyEntity::checkFlySpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
     }
-
-    public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(
-                Capabilities.ItemHandler.BLOCK,
-                PoBlockEntityType.SIEVE_BLOCK_ENTITY.get(),
-                (blockEntity, direction) -> {
-                    if (direction == null || direction == Direction.DOWN) {
-                        return blockEntity.getBottomHandler();
-                    }
-                    return blockEntity.getTopSideHandler();
-                }
-        );
-        event.registerBlockEntity(
-                Capabilities.FluidHandler.BLOCK,
-                PoBlockEntityType.TOILET_BLOCK_ENTITY.get(),
-                (blockEntity, side) -> blockEntity.fluidTank
-        );
-        event.registerBlockEntity(
-                Capabilities.ItemHandler.BLOCK,
-                PoBlockEntityType.FLY_BARREL.get(),
-                (blockEntity, direction) -> {
-                    if (direction == null || direction == Direction.DOWN) {
-                        return blockEntity.getBottomHandler();
-                    }
-                    return blockEntity.getTopSideHandler();
-                }
-        );
-        event.registerBlockEntity(
-                Capabilities.ItemHandler.BLOCK,
-                PoBlockEntityType.BREEDING_CHEST.get(),
-                (blockEntity, direction) -> {
-                    if (direction == null || direction == Direction.DOWN) {
-                        return blockEntity.getBottomHandler();
-                    }
-                    return blockEntity.getTopSideHandler();
-                }
-        );
-        event.registerBlockEntity(
-                Capabilities.ItemHandler.BLOCK,
-                PoBlockEntityType.FLUSH_TOILET.get(),
-                (blockEntity, direction) -> blockEntity.getBottomHandler()
-        );
-    }
-
-    public static void registerTicketControllers(RegisterTicketControllersEvent event) {
-        event.register(MaggotsChunkLoaderBlockEntity.TICKET_CONTROLLER);
-    }
-
     public static void packSetup(AddPackFindersEvent event) {
-        event.addPackFinders(
-                PoopSky.loc("resourcepacks/poopsky_official_pack"),
-                PackType.CLIENT_RESOURCES,
-                Component.translatable("pack.poopsky.official.name"),
-                PackSource.BUILT_IN,
-                false,
-                Pack.Position.TOP
-        );
-        event.addPackFinders(
-                PoopSky.loc("resourcepacks/poopsky_community_pack"),
-                PackType.CLIENT_RESOURCES,
-                Component.translatable("pack.poopsky.community.name"),
-                PackSource.BUILT_IN,
-                false,
-                Pack.Position.TOP
-        );
+        if (event.getPackType() != PackType.CLIENT_RESOURCES) return;
+        addPack(event, "poopsky_official_pack", "pack.poopsky.official.name");
+        addPack(event, "poopsky_community_pack", "pack.poopsky.community.name");
+    }
+    private static void addPack(AddPackFindersEvent event, String directory, String translation) {
+        var path = ModList.get().getModFileById(PoopSky.MOD_ID).getFile().findResource("resourcepacks", directory);
+        event.addRepositorySource(consumer -> {
+            Pack pack = Pack.readMetaAndCreate(PoopSky.MOD_ID + ":" + directory, Component.translatable(translation), false,
+                    id -> new PathPackResources(id, true, path), PackType.CLIENT_RESOURCES, Pack.Position.TOP, PackSource.BUILT_IN);
+            if (pack != null) consumer.accept(pack);
+        });
     }
 }

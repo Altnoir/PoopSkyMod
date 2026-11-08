@@ -22,21 +22,22 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.Boat;
+import com.altnoir.poopsky.content.entity.PoLeashable;
 import net.minecraft.world.entity.vehicle.DismountHelper;
-import net.minecraft.world.entity.vehicle.VehicleEntity;
+import com.altnoir.poopsky.content.entity.PoVehicleEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import com.altnoir.poopsky.impl.network.PoNetworking;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
 
-public class ToiletPlugEntity extends VehicleEntity implements Leashable {
+public class ToiletPlugEntity extends PoVehicleEntity implements PoLeashable {
     private LeashData leashData;
     private boolean inputForward;
     private boolean inputBackward;
@@ -87,8 +88,8 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        super.defineSynchedData(builder);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
     }
 
     @Override
@@ -117,7 +118,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
     }
 
     @Override
-    public void lerpTo(double x, double y, double z, float yRot, float xRot, int steps) {
+    public void lerpTo(double x, double y, double z, float yRot, float xRot, int steps, boolean teleport) {
         this.lerpX = x;
         this.lerpY = y;
         this.lerpZ = z;
@@ -245,7 +246,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
     private void moveByInput() {
         float MAX_SPEED = inputFast ? 0.35f : 0.2f;
         var driver = this.getControllingPassenger();
-        if (driver != null && driver.hasEffect(PoEffects.OMENER)) {
+        if (driver != null && driver.hasEffect(PoEffects.OMENER.get())) {
             MAX_SPEED *= 2.0f;
         }
         if (this.isUnderWater()) {
@@ -385,7 +386,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
         if (isSprintingNow) inputFast = true;
         if (!isMoving()) inputFast = false;
 
-        PacketDistributor.sendToServer(new PlugInputPayload(
+        PoNetworking.sendToServer(new PlugInputPayload(
                 inputForward,
                 inputBackward,
                 inputLeft,
@@ -421,7 +422,7 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
     }
 
     @Override
-    public boolean ignoreExplosion(Explosion explosion) {
+    public boolean ignoreExplosion() {
         return true;
     }
 
@@ -524,12 +525,12 @@ public class ToiletPlugEntity extends VehicleEntity implements Leashable {
 
     @Nullable
     @Override
-    public Leashable.LeashData getLeashData() {
+    public PoLeashable.LeashData getLeashData() {
         return this.leashData;
     }
 
     @Override
-    public void setLeashData(@Nullable Leashable.LeashData leashData) {
+    public void setLeashData(@Nullable PoLeashable.LeashData leashData) {
         this.leashData = leashData;
     }
 

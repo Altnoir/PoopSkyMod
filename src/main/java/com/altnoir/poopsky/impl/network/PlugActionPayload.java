@@ -5,21 +5,21 @@ import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.init.PoEntityType;
 import com.altnoir.poopsky.init.PoItems;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import com.altnoir.poopsky.impl.network.codec.StreamCodec;
+import com.altnoir.poopsky.impl.network.PoPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import com.altnoir.poopsky.impl.network.PoPayloadContext;
 
-public record PlugActionPayload() implements CustomPacketPayload {
-    public static final CustomPacketPayload.Type<PlugActionPayload> TYPE = new CustomPacketPayload.Type<>(PoopSky.loc("use_plug"));
+public record PlugActionPayload() implements PoPayload {
+    public static final PoPayload.Type<PlugActionPayload> TYPE = new PoPayload.Type<>(PoopSky.loc("use_plug"));
     public static final StreamCodec<FriendlyByteBuf, PlugActionPayload> CODEC = StreamCodec.unit(new PlugActionPayload());
 
-    public static void handle(final PlugActionPayload payload, final IPayloadContext context) {
+    public static void handle(final PlugActionPayload payload, final PoPayloadContext context) {
         context.enqueueWork(() -> {
             ServerPlayer player = (ServerPlayer) context.player();
 
@@ -84,7 +84,7 @@ public record PlugActionPayload() implements CustomPacketPayload {
     }
 
     @Override
-    public Type<? extends CustomPacketPayload> type() {
+    public Type<? extends PoPayload> type() {
         return TYPE;
     }
 }

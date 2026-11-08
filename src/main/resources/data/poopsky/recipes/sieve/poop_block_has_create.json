@@ -1,0 +1,56 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "poopsky:sieve",
+  "input": {
+    "item": "poopsky:poop_block"
+  },
+  "outputs": [
+    {
+      "chance": 1.0,
+      "item": {
+        "count": 8,
+        "item": "minecraft:iron_nugget"
+      }
+    },
+    {
+      "chance": 1.0,
+      "item": {
+        "count": 8,
+        "item": "create:zinc_nugget"
+      }
+    },
+    {
+      "chance": 0.5,
+      "item": {
+        "count": 8,
+        "item": "minecraft:iron_nugget"
+      }
+    },
+    {
+      "chance": 0.5,
+      "item": {
+        "count": 8,
+        "item": "create:zinc_nugget"
+      }
+    },
+    {
+      "chance": 0.5,
+      "item": {
+        "count": 1,
+        "item": "minecraft:raw_iron"
+      }
+    },
+    {
+      "chance": 0.5,
+      "item": {
+        "count": 1,
+        "item": "create:raw_zinc"
+      }
+    }
+  ]
+}

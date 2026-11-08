@@ -15,7 +15,7 @@ public abstract class AbstractRawBlock extends Block implements BonemealableBloc
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader levelReader, BlockPos blockPos, BlockState blockState) {
+    public boolean isValidBonemealTarget(LevelReader levelReader, BlockPos blockPos, BlockState blockState, boolean client) {
         return levelReader.getBlockState(blockPos.above()).isAir();
     }
 
@@ -29,8 +29,4 @@ public abstract class AbstractRawBlock extends Block implements BonemealableBloc
 
     }
 
-    @Override
-    public Type getType() {
-        return BonemealableBlock.Type.NEIGHBOR_SPREADER;
-    }
 }

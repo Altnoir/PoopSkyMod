@@ -1,13 +1,12 @@
 package com.altnoir.poopsky.content.item.p;
 
-import com.altnoir.abysslib.AbyssLib;
+import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.entity.p.GachaponEntity;
 import com.altnoir.poopsky.init.PoComponents;
 import com.altnoir.poopsky.init.PoItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -21,20 +20,24 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ProjectileItem;
+import com.altnoir.poopsky.content.item.PoProjectileItem;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.component.CustomModelData;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class GachaponItem extends Item implements ProjectileItem {
+public class GachaponItem extends Item implements PoProjectileItem {
     public static final String PINK = "pink";
     public static final String RED = "red";
     public static final String YELLOW = "yellow";
     public static final String BLUE = "blue";
     public static final String[] COLORS = {PINK, RED, YELLOW, BLUE};
+
+    @Override
+    public void initializeClient(java.util.function.Consumer<net.minecraftforge.client.extensions.common.IClientItemExtensions> consumer) {
+        consumer.accept(com.altnoir.poopsky.client.PoClientExtensions.gachapon());
+    }
 
     public GachaponItem(Properties properties) {
         super(properties);
@@ -42,24 +45,24 @@ public class GachaponItem extends Item implements ProjectileItem {
 
     public static ItemStack withColor(String color) {
         ItemStack stack = new ItemStack(PoItems.GACHAPON.get());
-        stack.set(PoComponents.GACHAPON_COLOR.get(), color);
-        stack.set(DataComponents.CUSTOM_MODEL_DATA, new CustomModelData(getColorModelData(color)));
+        PoComponents.GACHAPON_COLOR.set(stack, color);
+        stack.getOrCreateTag().putInt("CustomModelData", getColorModelData(color));
         return stack;
     }
 
     public static ItemStack withColorAndMob(String color, String mobId) {
         ItemStack stack = withColor(color);
-        stack.set(PoComponents.GACHAPON_MOB.get(), mobId);
+        PoComponents.GACHAPON_MOB.set(stack, mobId);
         return stack;
     }
 
     public static String getColor(ItemStack stack) {
-        String color = stack.get(PoComponents.GACHAPON_COLOR.get());
+        String color = PoComponents.GACHAPON_COLOR.get(stack);
         return color != null ? color : PINK;
     }
 
     public static @Nullable String getMobId(ItemStack stack) {
-        return stack.get(PoComponents.GACHAPON_MOB.get());
+        return PoComponents.GACHAPON_MOB.get(stack);
     }
 
     private static String getMobIdOrDefault(ItemStack stack) {
@@ -102,11 +105,11 @@ public class GachaponItem extends Item implements ProjectileItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+    public void appendHoverText(ItemStack stack, net.minecraft.world.level.Level context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
         String mobId = getMobId(stack);
         if (mobId != null && !mobId.isBlank()) {
-            ResourceLocation id = AbyssLib.tryParse(mobId);
+            ResourceLocation id = PoopSky.tryParse(mobId);
             var entityType = id != null ? BuiltInRegistries.ENTITY_TYPE.get(id) : null;
             MutableComponent name = entityType != null
                     ? Component.translatable(entityType.getDescriptionId())

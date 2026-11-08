@@ -1,6 +1,5 @@
 package com.altnoir.poopsky.compat.kubejs;
 
-import com.altnoir.abysslib.AbyssLib;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.FlyTypeDefinition;
 import net.minecraft.resources.ResourceLocation;
@@ -55,7 +54,7 @@ public final class FlyTypeBuilder {
     }
 
     public FlyTypeBuilder texture(String texture) {
-        ResourceLocation parsed = AbyssLib.tryParse(texture);
+        ResourceLocation parsed = PoopSky.tryParse(texture);
         if (parsed == null) {
             throw new IllegalArgumentException("Invalid texture id: " + texture);
         }
@@ -76,7 +75,7 @@ public final class FlyTypeBuilder {
         if (count < 1 || count > 99) {
             throw new IllegalArgumentException("flyBarrel count must be between 1 and 99");
         }
-        ResourceLocation parsed = AbyssLib.tryParse(result);
+        ResourceLocation parsed = PoopSky.tryParse(result);
         if (parsed == null) {
             throw new IllegalArgumentException("Invalid item id: " + result);
         }

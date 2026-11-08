@@ -21,7 +21,7 @@ public class FlushToiletEntity extends Entity {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+    protected void defineSynchedData() {
 
     }
 
@@ -53,11 +53,11 @@ public class FlushToiletEntity extends Entity {
             return;
         }
 
-        Entity passenger = this.getPassengers().getFirst();
+        Entity passenger = this.getPassengers().get(0);
         if (passenger instanceof LivingEntity livingEntity) {
             this.setYRot(state.getValue(FlushToiletBlock.FACING).toYRot());
 
-            boolean hasSpasm = livingEntity.hasEffect(PoEffects.INTESTINAL_SPASM);
+            boolean hasSpasm = livingEntity.hasEffect(PoEffects.INTESTINAL_SPASM.get());
             boolean isGolden = state.is(PoBlocks.GOLDEN_FLUSH_TOILET.get());
             boolean inserted = ToiletUtil.containerPoop(level(), blockPosition(), livingEntity, hasSpasm, isGolden, poopTime, time -> this.poopTime = time);
 

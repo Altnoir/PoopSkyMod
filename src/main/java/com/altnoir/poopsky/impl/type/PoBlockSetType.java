@@ -8,9 +8,6 @@ public class PoBlockSetType {
     public static final BlockSetType POOP = BlockSetType.register(
             new BlockSetType("poop",
                     true,
-                    true,
-                    true,
-                    BlockSetType.PressurePlateSensitivity.EVERYTHING,
                     SoundType.MUD,
                     SoundEvents.HONEY_BLOCK_BREAK,  // 门关闭音效（示例）
                     SoundEvents.MUD_HIT,  // 门开启音效（示例）

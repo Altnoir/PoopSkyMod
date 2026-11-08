@@ -4,7 +4,6 @@ import com.altnoir.poopsky.content.entity.p.FlyEntity;
 import com.altnoir.poopsky.impl.type.damageType.PoDamageTypes;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -30,13 +29,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class RoundwormVinesPlantBlock extends GrowingPlantBodyBlock implements BonemealableBlock {
-    public static final MapCodec<RoundwormVinesPlantBlock> CODEC = simpleCodec(RoundwormVinesPlantBlock::new);
+public class RoundwormVinesPlantBlock extends GrowingPlantBodyBlock implements BonemealableBlock, com.altnoir.poopsky.content.block.PoBlockInteraction {
     public static final BooleanProperty SEEDS = BooleanProperty.create("seeds");
     public static final VoxelShape SHAPE = Block.box(4.0, 0.0, 4.0, 12.0, 16.0, 12.0);
 
@@ -45,10 +43,6 @@ public class RoundwormVinesPlantBlock extends GrowingPlantBodyBlock implements B
         this.registerDefaultState(this.stateDefinition.any().setValue(SEEDS, Boolean.FALSE));
     }
 
-    @Override
-    protected MapCodec<RoundwormVinesPlantBlock> codec() {
-        return CODEC;
-    }
 
     @Override
     protected GrowingPlantHeadBlock getHeadBlock() {
@@ -56,12 +50,12 @@ public class RoundwormVinesPlantBlock extends GrowingPlantBodyBlock implements B
     }
 
     @Override
-    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
+    public ItemStack getCloneItemStack(net.minecraft.world.level.BlockGetter level, BlockPos pos, BlockState state) {
         return new ItemStack(PoItems.ROUNDWORM.get());
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+    public InteractionResult poopsky$useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (state.getValue(SEEDS)) {
             int chance = level.getRandom().nextInt(3);
             ItemStack dropItem = switch (chance) {
@@ -82,11 +76,11 @@ public class RoundwormVinesPlantBlock extends GrowingPlantBodyBlock implements B
     }
 
     @Override
-    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if (entity instanceof FlyEntity fly && fly.isAlive()) {
-            fly.hurt(level.damageSources().source(PoDamageTypes.ROUNDWORM), 2.0F);
+            fly.hurt(PoDamageTypes.source(level, PoDamageTypes.ROUNDWORM), 2.0F);
         } else if (entity instanceof LivingEntity livingEntity) {
-            livingEntity.hurt(level.damageSources().source(PoDamageTypes.ROUNDWORM), 0.5F);
+            livingEntity.hurt(PoDamageTypes.source(level, PoDamageTypes.ROUNDWORM), 0.5F);
         }
         super.entityInside(state, level, pos, entity);
     }
@@ -97,7 +91,7 @@ public class RoundwormVinesPlantBlock extends GrowingPlantBodyBlock implements B
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, boolean client) {
         return !state.getValue(SEEDS);
     }
 
@@ -112,7 +106,15 @@ public class RoundwormVinesPlantBlock extends GrowingPlantBodyBlock implements B
     }
 
     @Override
-    public PathType getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, @Nullable Mob mob) {
-        return PathType.DAMAGE_OTHER;
+    public BlockPathTypes getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, @Nullable Mob mob) {
+        return BlockPathTypes.DAMAGE_OTHER;
+    }
+
+    @Override
+    public net.minecraft.world.InteractionResult use(net.minecraft.world.level.block.state.BlockState state,
+            net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
+        return poopsky$interact(state, level, pos, player, hand, hit);
     }
 }

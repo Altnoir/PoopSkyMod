@@ -17,7 +17,6 @@ public final class PoAnimationSavedData extends SavedData {
     private static final String DATA_NAME = "poopsky_intro";
     private static final String PLAYED_PLAYERS_TAG = "played_players";
     private static final String PLAYED_PLAYER_NAMES_TAG = "played_player_names";
-    private static final Factory<PoAnimationSavedData> FACTORY = new Factory<>(PoAnimationSavedData::new, PoAnimationSavedData::load);
 
     private final Set<UUID> playedPlayers = new HashSet<>();
     private final Set<String> playedPlayerNames = new HashSet<>();
@@ -25,10 +24,10 @@ public final class PoAnimationSavedData extends SavedData {
     private final Set<String> poemPlayedPlayerNames = new HashSet<>();
 
     public static PoAnimationSavedData get(ServerLevel level) {
-        return level.getDataStorage().computeIfAbsent(FACTORY, DATA_NAME);
+        return level.getDataStorage().computeIfAbsent(PoAnimationSavedData::load, PoAnimationSavedData::new, DATA_NAME);
     }
 
-    private static PoAnimationSavedData load(CompoundTag tag, HolderLookup.Provider registries) {
+    private static PoAnimationSavedData load(CompoundTag tag) {
         PoAnimationSavedData data = new PoAnimationSavedData();
         readUuids(tag, PLAYED_PLAYERS_TAG, data.playedPlayers);
         readNames(tag, PLAYED_PLAYER_NAMES_TAG, data.playedPlayerNames);
@@ -42,7 +41,7 @@ public final class PoAnimationSavedData extends SavedData {
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag, HolderLookup.Provider registries) {
+    public CompoundTag save(CompoundTag tag) {
         tag.put(PLAYED_PLAYERS_TAG, toList(this.playedPlayers));
         tag.put(PLAYED_PLAYER_NAMES_TAG, toList(this.playedPlayerNames));
         tag.put(tagName(PoAnimation.POEM, PLAYED_PLAYERS_TAG), toList(this.poemPlayedPlayers));

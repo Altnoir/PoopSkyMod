@@ -1,0 +1,8 @@
+{
+  "type": "poopsky:fly_barrel",
+  "fly_type": "cyan",
+  "result": {
+    "count": 1,
+    "item": "minecraft:prismarine_shard"
+  }
+}

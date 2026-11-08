@@ -1,0 +1,34 @@
+{
+  "parent": "poopsky:poop_block",
+  "criteria": {
+    "poop_crafting_table": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "poopsky:poop_crafting_table"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.poopsky.poop_crafting_table.description"
+    },
+    "icon": {
+      "count": 1,
+      "item": "poopsky:poop_crafting_table"
+    },
+    "title": {
+      "translate": "advancements.poopsky.poop_crafting_table.title"
+    }
+  },
+  "requirements": [
+    [
+      "poop_crafting_table"
+    ]
+  ]
+}

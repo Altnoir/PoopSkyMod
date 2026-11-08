@@ -1,0 +1,19 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "poopsky:digesting",
+  "ingredients": [
+    {
+      "item": "minecraft:cake"
+    }
+  ],
+  "results": [
+    {
+      "item": "poopsky:poop_cake"
+    }
+  ]
+}

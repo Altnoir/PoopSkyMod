@@ -32,7 +32,7 @@ public class BlocktrisPiece {
 
     public void renderCentered(GuiGraphics graphics, int posX, int posY) {
         List<Vec2> parts = current();
-        Vec2 first = parts.getFirst();
+        Vec2 first = parts.get(0);
         float minX = first.x;
         float minY = first.y;
         float maxX = first.x;

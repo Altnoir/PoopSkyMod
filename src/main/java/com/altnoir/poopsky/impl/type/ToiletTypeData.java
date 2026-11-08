@@ -8,7 +8,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
-import net.minecraft.network.chat.ComponentSerialization;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 
@@ -50,8 +50,7 @@ public class ToiletTypeData implements DataProvider {
 
         // display_name (有 source_block 时自动读取，不显式写出)
         if (sourceBlock == null) {
-            var displayNameResult = ComponentSerialization.CODEC.encodeStart(JsonOps.INSTANCE, type.displayName());
-            displayNameResult.ifSuccess(displayNameJson -> json.add("display_name", displayNameJson));
+            json.add("display_name", Component.Serializer.toJsonTree(type.displayName()));
         }
 
         // texture (optional)
@@ -76,7 +75,7 @@ public class ToiletTypeData implements DataProvider {
         // name_key (始终写出，用于自定义名称或默认指向源方块翻译键)
         json.addProperty("name_key", type.nameKey());
 
-        Path outputPath = this.pathProvider.json(ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, type.id()));
+        Path outputPath = this.pathProvider.json(new ResourceLocation(PoopSky.MOD_ID, type.id()));
         return DataProvider.saveStable(cachedOutput, json, outputPath);
     }
 

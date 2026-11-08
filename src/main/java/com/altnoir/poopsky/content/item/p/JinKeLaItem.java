@@ -40,12 +40,12 @@ public class JinKeLaItem extends Item {
                 return InteractionResult.PASS;
             }
             if (level instanceof ServerLevel serverLevel && tryApplyToBlock(serverLevel, pos, state)) {
-                context.getItemInHand().consume(1, context.getPlayer());
+                if (context.getPlayer() == null || !context.getPlayer().getAbilities().instabuild) context.getItemInHand().shrink(1);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         } else if (state.isRandomlyTicking()) {
             if (level instanceof ServerLevel serverLevel && tryApplyToBlock(serverLevel, pos, state)) {
-                context.getItemInHand().consume(1, context.getPlayer());
+                if (context.getPlayer() == null || !context.getPlayer().getAbilities().instabuild) context.getItemInHand().shrink(1);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
@@ -104,7 +104,7 @@ public class JinKeLaItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+    public void appendHoverText(ItemStack stack, net.minecraft.world.level.Level context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         tooltipComponents.add(Component.translatable("tooltip.poopsky.jinkela.info"));
     }
 }

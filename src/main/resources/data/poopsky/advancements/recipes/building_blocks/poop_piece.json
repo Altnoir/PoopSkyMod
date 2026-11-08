@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "poopsky:poop_piece"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "poop_slab": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "poopsky:poop_slab"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "poop_slab"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "poopsky:poop_piece"
+    ]
+  }
+}

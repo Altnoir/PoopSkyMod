@@ -17,10 +17,9 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
 
-public class BreedingChestRecipeCategory implements IRecipeCategory<RecipeHolder<BreedingChestRecipe>> {
-    public static final RecipeType<RecipeHolder<BreedingChestRecipe>> TYPE = RecipeType.createRecipeHolderType(PoopSky.loc("breeding_chest"));
+public class BreedingChestRecipeCategory implements IRecipeCategory<BreedingChestRecipe> {
+    public static final RecipeType<BreedingChestRecipe> TYPE = new RecipeType<>(PoopSky.loc("breeding_chest"), BreedingChestRecipe.class);
 
     private static final int HEIGHT = 36;
     private static final int INPUT_X = 1;
@@ -46,9 +45,12 @@ public class BreedingChestRecipeCategory implements IRecipeCategory<RecipeHolder
     }
 
     @Override
-    public RecipeType<RecipeHolder<BreedingChestRecipe>> getRecipeType() {
+    public RecipeType<BreedingChestRecipe> getRecipeType() {
         return TYPE;
     }
+
+    @Override
+    public net.minecraft.resources.ResourceLocation getRegistryName(BreedingChestRecipe recipe) { return recipe.getId(); }
 
     @Override
     public Component getTitle() {
@@ -71,8 +73,8 @@ public class BreedingChestRecipeCategory implements IRecipeCategory<RecipeHolder
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<BreedingChestRecipe> recipeHolder, IFocusGroup focuses) {
-        var recipe = recipeHolder.value();
+    public void setRecipe(IRecipeLayoutBuilder builder, BreedingChestRecipe recipeHolder, IFocusGroup focuses) {
+        var recipe = recipeHolder;
         builder.addSlot(RecipeIngredientRole.INPUT, INPUT_X, INPUT_Y).addItemStack(FlyItem.withType(FlyType.byId(recipe.parent1())));
         builder.addSlot(RecipeIngredientRole.INPUT, INPUT_X, INPUT2_Y).addItemStack(FlyItem.withType(FlyType.byId(recipe.parent2())));
 
@@ -85,7 +87,7 @@ public class BreedingChestRecipeCategory implements IRecipeCategory<RecipeHolder
     }
 
     @Override
-    public void draw(RecipeHolder<BreedingChestRecipe> recipeHolder, IRecipeSlotsView slotsView, GuiGraphics graphics, double mouseX, double mouseY) {
+    public void draw(BreedingChestRecipe recipeHolder, IRecipeSlotsView slotsView, GuiGraphics graphics, double mouseX, double mouseY) {
         this.slot.draw(graphics, INPUT_X - 1, INPUT_Y - 1);
         this.slot.draw(graphics, INPUT_X - 1, INPUT2_Y - 1);
         this.arrow.draw(graphics, ARROW_X, ARROW_Y);

@@ -17,15 +17,14 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.neoforged.neoforge.items.wrapper.RangedWrapper;
+import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.RangedWrapper;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -238,8 +237,8 @@ public class SieveBlockEntity extends BlockEntity {
     private Optional<SieveRecipe> findRecipe(ItemStack stack) {
         if (level == null || stack.isEmpty()) return Optional.empty();
         return level.getRecipeManager()
-                .getRecipeFor(PoRecipes.SIEVE.type().get(), new SingleRecipeInput(stack), level)
-                .map(RecipeHolder::value);
+                .getRecipeFor(PoRecipes.SIEVE.type().get(), new SimpleContainer(stack), level)
+                ;
     }
 
     private void consumeInputForRecipe() {
@@ -283,7 +282,7 @@ public class SieveBlockEntity extends BlockEntity {
             interpolatedProgress = Math.min(progress + partialTick, maxProgress);
         }
 
-        return Math.clamp(interpolatedProgress / (float) maxProgress, 0.0F, 1.0F);
+        return net.minecraft.util.Mth.clamp(interpolatedProgress / (float) maxProgress, 0.0F, 1.0F);
     }
 
     public ItemStackHandler getItemHandler() {
@@ -299,27 +298,27 @@ public class SieveBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.put("inventory", itemHandler.serializeNBT(registries));
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        tag.put("inventory", itemHandler.serializeNBT());
         tag.putInt("progress", progress);
         tag.putInt("maxProgress", maxProgress);
         tag.putBoolean("autoMode", autoMode);
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        itemHandler.deserializeNBT(registries, tag.getCompound("inventory"));
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        itemHandler.deserializeNBT(tag.getCompound("inventory"));
         progress = tag.getInt("progress");
         maxProgress = tag.getInt("maxProgress");
         autoMode = tag.getBoolean("autoMode");
     }
 
     @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+    public CompoundTag getUpdateTag() {
         CompoundTag tag = new CompoundTag();
-        saveAdditional(tag, registries);
+        saveAdditional(tag);
         return tag;
     }
 

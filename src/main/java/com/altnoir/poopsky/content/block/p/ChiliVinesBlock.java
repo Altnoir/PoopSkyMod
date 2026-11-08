@@ -3,7 +3,6 @@ package com.altnoir.poopsky.content.block.p;
 import com.altnoir.poopsky.content.block.ChiliVines;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -22,13 +21,8 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
-public class ChiliVinesBlock extends GrowingPlantHeadBlock implements BonemealableBlock, ChiliVines {
-    public static final MapCodec<ChiliVinesBlock> CODEC = simpleCodec(ChiliVinesBlock::new);
+public class ChiliVinesBlock extends GrowingPlantHeadBlock implements BonemealableBlock, ChiliVines, com.altnoir.poopsky.content.block.PoBlockInteraction {
 
-    @Override
-    protected MapCodec<? extends GrowingPlantHeadBlock> codec() {
-        return CODEC;
-    }
 
     public ChiliVinesBlock(Properties properties) {
         super(properties, Direction.DOWN, SHAPE, false, 0.1);
@@ -61,12 +55,12 @@ public class ChiliVinesBlock extends GrowingPlantHeadBlock implements Bonemealab
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, net.minecraft.world.level.BlockGetter level, BlockPos pos, Player player) {
         return new ItemStack(PoItems.DRAGON_BREATH_CHILI.get());
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+    public InteractionResult poopsky$useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         return ChiliVines.use(player, state, level, pos);
     }
 
@@ -77,7 +71,7 @@ public class ChiliVinesBlock extends GrowingPlantHeadBlock implements Bonemealab
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, boolean client) {
         return !state.getValue(CHILI);
     }
 
@@ -89,5 +83,13 @@ public class ChiliVinesBlock extends GrowingPlantHeadBlock implements Bonemealab
     @Override
     public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
         level.setBlock(pos, state.setValue(CHILI, true), 2);
+    }
+
+    @Override
+    public net.minecraft.world.InteractionResult use(net.minecraft.world.level.block.state.BlockState state,
+            net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
+        return poopsky$interact(state, level, pos, player, hand, hit);
     }
 }

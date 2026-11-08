@@ -1,0 +1,12 @@
+{
+  "type": "poopsky:compooper",
+  "fluid_type": "lava",
+  "input": {
+    "count": 1,
+    "item": "minecraft:stick"
+  },
+  "output": {
+    "count": 1,
+    "item": "minecraft:blaze_rod"
+  }
+}

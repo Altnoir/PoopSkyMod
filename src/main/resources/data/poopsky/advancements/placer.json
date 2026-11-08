@@ -1,0 +1,34 @@
+{
+  "parent": "poopsky:toilet_plug",
+  "criteria": {
+    "placer": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "poopsky:placer"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.poopsky.placer.description"
+    },
+    "icon": {
+      "count": 1,
+      "item": "poopsky:placer"
+    },
+    "title": {
+      "translate": "advancements.poopsky.placer.title"
+    }
+  },
+  "requirements": [
+    [
+      "placer"
+    ]
+  ]
+}

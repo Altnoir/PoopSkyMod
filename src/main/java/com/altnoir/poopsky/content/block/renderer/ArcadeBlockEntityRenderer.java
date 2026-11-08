@@ -71,30 +71,30 @@ public class ArcadeBlockEntityRenderer implements BlockEntityRenderer<ArcadeBloc
     }
 
     private static void renderScreenQuad(VertexConsumer consumer, PoseStack.Pose pose, int packedLight) {
-        consumer.addVertex(pose, SCREEN_MIN_X, SCREEN_MAX_Y, SCREEN_Z)
-                .setColor(255, 255, 255, 255)
-                .setUv(1.0F, 1.0F)
-                .setOverlay(OverlayTexture.NO_OVERLAY)
-                .setLight(packedLight)
-                .setNormal(0.0F, 0.0F, -1.0F);
-        consumer.addVertex(pose, SCREEN_MAX_X, SCREEN_MAX_Y, SCREEN_Z)
-                .setColor(255, 255, 255, 255)
-                .setUv(0.0F, 1.0F)
-                .setOverlay(OverlayTexture.NO_OVERLAY)
-                .setLight(packedLight)
-                .setNormal(0.0F, 0.0F, -1.0F);
-        consumer.addVertex(pose, SCREEN_MAX_X, SCREEN_MIN_Y, SCREEN_Z)
-                .setColor(255, 255, 255, 255)
-                .setUv(0.0F, 0.0F)
-                .setOverlay(OverlayTexture.NO_OVERLAY)
-                .setLight(packedLight)
-                .setNormal(0.0F, 0.0F, -1.0F);
-        consumer.addVertex(pose, SCREEN_MIN_X, SCREEN_MIN_Y, SCREEN_Z)
-                .setColor(255, 255, 255, 255)
-                .setUv(1.0F, 0.0F)
-                .setOverlay(OverlayTexture.NO_OVERLAY)
-                .setLight(packedLight)
-                .setNormal(0.0F, 0.0F, -1.0F);
+        consumer.vertex(pose.pose(), SCREEN_MIN_X, SCREEN_MAX_Y, SCREEN_Z)
+                .color(255, 255, 255, 255)
+                .uv(1.0F, 1.0F)
+                .overlayCoords(OverlayTexture.NO_OVERLAY)
+                .uv2(packedLight)
+                .normal(0.0F, 0.0F, -1.0F).endVertex();
+        consumer.vertex(pose.pose(), SCREEN_MAX_X, SCREEN_MAX_Y, SCREEN_Z)
+                .color(255, 255, 255, 255)
+                .uv(0.0F, 1.0F)
+                .overlayCoords(OverlayTexture.NO_OVERLAY)
+                .uv2(packedLight)
+                .normal(0.0F, 0.0F, -1.0F).endVertex();
+        consumer.vertex(pose.pose(), SCREEN_MAX_X, SCREEN_MIN_Y, SCREEN_Z)
+                .color(255, 255, 255, 255)
+                .uv(0.0F, 0.0F)
+                .overlayCoords(OverlayTexture.NO_OVERLAY)
+                .uv2(packedLight)
+                .normal(0.0F, 0.0F, -1.0F).endVertex();
+        consumer.vertex(pose.pose(), SCREEN_MIN_X, SCREEN_MIN_Y, SCREEN_Z)
+                .color(255, 255, 255, 255)
+                .uv(1.0F, 0.0F)
+                .overlayCoords(OverlayTexture.NO_OVERLAY)
+                .uv2(packedLight)
+                .normal(0.0F, 0.0F, -1.0F).endVertex();
     }
 
     private static int horizontalRotation(Direction direction) {

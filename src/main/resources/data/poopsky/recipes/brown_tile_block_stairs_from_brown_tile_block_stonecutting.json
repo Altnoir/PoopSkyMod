@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "poopsky:brown_tile_block"
+  },
+  "result": "poopsky:brown_tile_block_stairs",
+  "count": 1
+}

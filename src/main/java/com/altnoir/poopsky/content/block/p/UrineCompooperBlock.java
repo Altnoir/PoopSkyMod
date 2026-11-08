@@ -6,7 +6,6 @@ import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.init.PoParticles;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustColorTransitionOptions;
@@ -38,8 +37,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
-public class UrineCompooperBlock extends AbstractCompooperBlock implements WorldlyContainerHolder {
-    public static final MapCodec<UrineCompooperBlock> CODEC = simpleCodec(UrineCompooperBlock::new);
+public class UrineCompooperBlock extends AbstractCompooperBlock implements WorldlyContainerHolder, com.altnoir.poopsky.content.block.PoBlockInteraction {
     public static final BooleanProperty MAGGOTS = BooleanProperty.create("maggots");
 
     public UrineCompooperBlock(Properties properties) {
@@ -50,18 +48,14 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
                         .setValue(MAGGOTS, false));
     }
 
-    @Override
-    protected MapCodec<? extends Block> codec() {
-        return CODEC;
-    }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, net.minecraft.world.level.BlockGetter level, BlockPos pos, Player player) {
         return new ItemStack(PoBlocks.COMPOOPER.get());
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    public InteractionResult poopsky$useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         int i = state.getValue(LEVEL);
 
         Item bottle = PoItems.URINE_BOTTLE.get();
@@ -77,11 +71,11 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
         if (i > MIN_LEVEL && stack.getItem() == Items.GLASS_BOTTLE) {
             return glassBottleUse(stack, state, level, pos, player, hand, SoundEvents.BOTTLE_FILL, 0.6F, bottle.getDefaultInstance());
         }
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return InteractionResult.PASS;
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+    public InteractionResult poopsky$useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (state.getValue(MAGGOTS)) {
             extractProduce(player, state, level, pos);
             return InteractionResult.sidedSuccess(level.isClientSide);
@@ -116,7 +110,7 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
     }
 
     @Override
-    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if (level.isClientSide || !isEntityInsideContent(pos, state, entity)) {
             return;
         }
@@ -133,7 +127,7 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
     }
 
     @Override
-    protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
+    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
         if (!level.isClientSide && state.getValue(LEVEL) == MAX_LEVEL && isHot((ServerLevel) level, pos)) {
             level.scheduleTick(pos, this, 80);
         }
@@ -141,7 +135,7 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
     }
 
     @Override
-    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
         if (!level.isClientSide && neighborPos.equals(pos.below()) && state.getValue(LEVEL) == MAX_LEVEL && isHot((ServerLevel) level, pos)) {
             level.scheduleTick(pos, this, 80);
         }
@@ -149,7 +143,7 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
     }
 
     @Override
-    protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+    public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (state.getValue(LEVEL) != MAX_LEVEL || !isHot(level, pos)) {
             return;
         }
@@ -189,20 +183,20 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
     }
 
     @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         super.onRemove(state, level, pos, newState, movedByPiston);
         if (!state.is(newState.getBlock())) {
-            level.invalidateCapabilities(pos);
+            if (level.getBlockEntity(pos) != null) level.getBlockEntity(pos).invalidateCaps();
         }
     }
 
     @Override
-    protected int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
+    public int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
         return blockState.getValue(MAGGOTS) ? 1 : 0;
     }
 
     @Override
-    protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (!state.getValue(MAGGOTS) && state.getValue(LEVEL) == MAX_LEVEL) {
             level.setBlockAndUpdate(pos, state.setValue(MAGGOTS, true));
             level.playSound(null, pos, PoSoundEvents.BLOCK_COMPOOPER_MAGGOTS.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
@@ -281,5 +275,13 @@ public class UrineCompooperBlock extends AbstractCompooperBlock implements World
         var blockstate = state.setValue(MAGGOTS, false);
         level.setBlock(pos, blockstate, 3);
         level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(entity, blockstate));
+    }
+
+    @Override
+    public net.minecraft.world.InteractionResult use(net.minecraft.world.level.block.state.BlockState state,
+            net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
+        return poopsky$interact(state, level, pos, player, hand, hit);
     }
 }

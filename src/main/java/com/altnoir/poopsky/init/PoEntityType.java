@@ -3,16 +3,15 @@ package com.altnoir.poopsky.init;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.entity.p.*;
 import com.altnoir.poopsky.content.entity.renderer.*;
-import com.altnoir.abysslib.reginth.Reginth;
-import com.altnoir.abysslib.reginth.providers.ProviderType;
-import com.altnoir.abysslib.reginth.util.entry.EntityEntry;
-import com.altnoir.abysslib.reginth.util.nullness.NonNullBiConsumer;
-import net.minecraft.client.renderer.entity.ChickenRenderer;
+import com.altnoir.poopsky.impl.registrate.PoRegistrate;
+import com.tterrag.registrate.providers.ProviderType;
+import com.tterrag.registrate.util.entry.EntityEntry;
+import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import net.minecraft.client.renderer.entity.TntMinecartRenderer;
 import net.minecraft.world.entity.MobCategory;
 
 public class PoEntityType {
-    private static final Reginth REGISTRATE = PoopSky.registrate();
+    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
     public static final EntityEntry<ToiletPlugEntity> TOILET_PLUG = REGISTRATE
             .entity("toilet_plug", ToiletPlugEntity::new, MobCategory.MISC)
@@ -28,8 +27,6 @@ public class PoEntityType {
             .entity("poolime", PoolimeEntity::new, MobCategory.MONSTER)
             .properties(properties -> properties
                     .sized(0.52F, 0.52F)
-                    .eyeHeight(0.325F)
-                    .spawnDimensionsScale(4.0F)
                     .clientTrackingRange(10))
             .renderer(() -> PoolimeRenderer::new)
             .setData(ProviderType.LANG, NonNullBiConsumer.noop())
@@ -39,40 +36,9 @@ public class PoEntityType {
             .entity("fly", FlyEntity::new, MobCategory.CREATURE)
             .properties(properties -> properties
                     .sized(0.5F, 0.6F)
-                    .eyeHeight(0.3F)
                     .clientTrackingRange(8))
             .renderer(() -> FlyRenderer::new)
             .setData(ProviderType.LANG, NonNullBiConsumer.noop())
-            .register();
-
-    public static final EntityEntry<SnailEntity> SNAIL = REGISTRATE
-            .entity("snail", SnailEntity::new, MobCategory.CREATURE)
-            .properties(properties -> properties
-                    .sized(0.65F, 0.55F)
-                    .eyeHeight(0.35F)
-                    .clientTrackingRange(8))
-            .renderer(() -> SnailRenderer::new)
-            .setData(ProviderType.LANG, NonNullBiConsumer.noop())
-            .register();
-
-    public static final EntityEntry<BasiliskEntity> BASILISK = REGISTRATE
-            .entity("basilisk", BasiliskEntity::new, MobCategory.MONSTER)
-            .properties(properties -> properties
-                    .sized(0.9F, 0.7F)
-                    .eyeHeight(0.5F)
-                    .clientTrackingRange(8))
-            .renderer(() -> BasiliskRenderer::new)
-            .lang("Basilisk")
-            .register();
-
-    public static final EntityEntry<ExplosiveChickenEntity> EXPLOSIVE_CHICKEN = REGISTRATE
-            .entity("explosive_chicken", ExplosiveChickenEntity::new, MobCategory.CREATURE)
-            .properties(properties -> properties
-                    .sized(0.4F, 0.7F)
-                    .eyeHeight(0.644F)
-                    .clientTrackingRange(10))
-            .renderer(() -> ChickenRenderer::new)
-            .lang("Explosive Chicken")
             .register();
 
     public static final EntityEntry<ChairEntity> STOOL = REGISTRATE
@@ -95,7 +61,6 @@ public class PoEntityType {
             .entity("flush_toilet_cart", FlushToiletCartEntity::new, MobCategory.MISC)
             .properties(properties -> properties
                     .sized(0.75F, 0.5F)
-                    .eyeHeight(0.375F)
                     .clientTrackingRange(10))
             .renderer(() -> FlushToiletCartRenderer::new)
             .lang("Flush Toilet Cart")
@@ -104,7 +69,6 @@ public class PoEntityType {
             .entity("golden_flush_toilet_cart", FlushToiletCartEntity::new, MobCategory.MISC)
             .properties(properties -> properties
                     .sized(0.75F, 0.5F)
-                    .eyeHeight(0.375F)
                     .clientTrackingRange(10))
             .renderer(() -> FlushToiletCartRenderer::new)
             .lang("Golden Flush Toilet Cart")
@@ -114,7 +78,6 @@ public class PoEntityType {
             .<PoopTntEntity>entity("poop_tnt", PoopTntEntity::new, MobCategory.MISC)
             .properties(properties -> properties
                     .sized(0.75F, 0.75F)
-                    .eyeHeight(0.15F)
                     .clientTrackingRange(10)
                     .updateInterval(10)
                     .fireImmune())
@@ -137,7 +100,6 @@ public class PoEntityType {
                     (type, level) -> new PoBoatEntity(PoItems.GINKGO_BOAT.get(), type, level), MobCategory.MISC)
             .properties(properties -> properties
                     .sized(1.375F, 0.5625F)
-                    .eyeHeight(0.5625F)
                     .clientTrackingRange(10))
             .renderer(() -> PoBoatRenderer.provider("ginkgo", false))
             .register();
@@ -146,7 +108,6 @@ public class PoEntityType {
                     (type, level) -> new PoBoatEntity(PoItems.PRIMO_BOAT.get(), type, level), MobCategory.MISC)
             .properties(properties -> properties
                     .sized(1.375F, 0.5625F)
-                    .eyeHeight(0.5625F)
                     .clientTrackingRange(10))
             .renderer(() -> PoBoatRenderer.provider("primo", false))
             .register();
@@ -156,7 +117,6 @@ public class PoEntityType {
                     (type, level) -> new PoChestBoatEntity(PoItems.GINKGO_CHEST_BOAT.get(), type, level), MobCategory.MISC)
             .properties(properties -> properties
                     .sized(1.375F, 0.5625F)
-                    .eyeHeight(0.5625F)
                     .clientTrackingRange(10))
             .renderer(() -> PoBoatRenderer.provider("ginkgo", true))
             .lang("Ginkgo Boat with Chest")
@@ -166,7 +126,6 @@ public class PoEntityType {
                     (type, level) -> new PoChestBoatEntity(PoItems.PRIMO_CHEST_BOAT.get(), type, level), MobCategory.MISC)
             .properties(properties -> properties
                     .sized(1.375F, 0.5625F)
-                    .eyeHeight(0.5625F)
                     .clientTrackingRange(10))
             .renderer(() -> PoBoatRenderer.provider("primo", true))
             .lang("Primo Boat with Chest")
@@ -176,10 +135,26 @@ public class PoEntityType {
             .entity("gachapon", GachaponEntity::create, MobCategory.MISC)
             .properties(properties -> properties
                     .sized(0.5F, 0.75F)
-                    .eyeHeight(0.375F)
                     .clientTrackingRange(10))
             .renderer(() -> GachaponRenderer::new)
             .lang("Gachapon")
+            .register();
+
+    // 必须使用自己的实体类型，否则客户端会生成原版雪球并使用雪球贴图。
+    public static final EntityEntry<PoopBall> POOP_BALL = REGISTRATE
+            .<PoopBall>entity("poop_ball", PoopBall::new, MobCategory.MISC)
+            .properties(p -> p.sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10))
+            .renderer(() -> net.minecraft.client.renderer.entity.ThrownItemRenderer::new)
+            .register();
+    public static final EntityEntry<SeaPoopBall> SEA_POOP_BALL = REGISTRATE
+            .<SeaPoopBall>entity("sea_poop_ball", SeaPoopBall::new, MobCategory.MISC)
+            .properties(p -> p.sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10))
+            .renderer(() -> net.minecraft.client.renderer.entity.ThrownItemRenderer::new)
+            .register();
+    public static final EntityEntry<WitherPoopBall> WITHER_POOP_BALL = REGISTRATE
+            .<WitherPoopBall>entity("wither_poop_ball", WitherPoopBall::new, MobCategory.MISC)
+            .properties(p -> p.sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10))
+            .renderer(() -> net.minecraft.client.renderer.entity.ThrownItemRenderer::new)
             .register();
 
     public static void register() {

@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.client.renderer;
 
 import com.altnoir.poopsky.Config;
-import net.minecraft.client.DeltaTracker;
+import net.minecraft.Util;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.util.Mth;
 
@@ -31,8 +31,12 @@ public final class TimeBellOverlay {
         frozen = value;
     }
 
-    public static void render(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
-        float deltaTicks = Math.min(deltaTracker.getRealtimeDeltaTicks(), 2.0F);
+    private static long lastRenderMillis;
+
+    public static void render(GuiGraphics guiGraphics) {
+        long now = Util.getMillis();
+        float deltaTicks = lastRenderMillis == 0 ? 0 : Math.min((now - lastRenderMillis) / 50.0F, 2.0F);
+        lastRenderMillis = now;
         fovKickTimer = Math.max(0.0F, fovKickTimer - deltaTicks);
 
         if (!Config.freezeFilter) {

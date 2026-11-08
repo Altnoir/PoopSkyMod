@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.impl.util;
 
-import com.altnoir.abysslib.AbyssLib;
+import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.entity.FlushToiletBlockEntity;
@@ -33,12 +33,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.minecraft.world.level.levelgen.feature.EndPlatformFeature;
-import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.minecraftforge.items.ItemStackHandler;
+import com.altnoir.poopsky.impl.network.PoNetworking;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -75,7 +73,7 @@ public class ToiletUtil {
             return;
         }
 
-        playerToiletPoop(level, player, player.hasEffect(PoEffects.INTESTINAL_SPASM), false, 0.1F, 0.5F);
+        playerToiletPoop(level, player, player.hasEffect(PoEffects.INTESTINAL_SPASM.get()), false, 0.1F, 0.5F);
     }
 
     private static boolean isEntityInsidePortableToiletRange(BlockState state, BlockPos blockPos, Entity entity) {
@@ -110,13 +108,13 @@ public class ToiletUtil {
 
     public static void lavaToiletStepOn(Level level, BlockPos pos, BlockState state, Entity entity, boolean isGolden) {
         if (!level.isClientSide && entity instanceof Player player && player.isShiftKeyDown() && isEntityCentered(pos, player) && !state.getValue(BaseToiletLavaBlock.LAVA)) {
-            if (player.hasEffect(PoEffects.INTESTINAL_SPASM)) {
+            if (player.hasEffect(PoEffects.INTESTINAL_SPASM.get())) {
                 level.setBlock(pos, state.setValue(BaseToiletLavaBlock.LAVA, true), 3);
                 level.playSound(null, pos, PoSoundEvents.BLOCK_TOILET_LAVA_EMPTY.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
-                player.removeEffect(PoEffects.INTESTINAL_SPASM);
+                player.removeEffect(PoEffects.INTESTINAL_SPASM.get());
                 player.causeFoodExhaustion(1.0F);
             } else {
-                boolean hasIncontinence = player.hasEffect(PoEffects.FECAL_INCONTINENCE);
+                boolean hasIncontinence = player.hasEffect(PoEffects.FECAL_INCONTINENCE.get());
                 boolean isFire = hasIncontinence && !isGolden;
                 float pitchOffset = isGolden ? -0.5F : 0.5F;
                 playerToiletPoop(level, player, isFire, isGolden, 0.1F, pitchOffset);
@@ -126,13 +124,13 @@ public class ToiletUtil {
 
     public static void playerToiletPoop(Level level, Player player, boolean isFire, boolean isGolden,
                                         float yOffset, float pitchOffset) {
-        long lastPoopTime = player.getData(PoAttachments.POOP_TIME.get());
+        long lastPoopTime = PoAttachments.POOP_TIME.get(player);
         canPoop(level, player, isFire, isGolden, yOffset, pitchOffset, lastPoopTime,
-                time -> player.setData(PoAttachments.POOP_TIME.get(), time));
+                time -> PoAttachments.POOP_TIME.set(player, time));
     }
 
     public static void canPoop(Level level, LivingEntity entity, boolean isFire, boolean isGolden, float yOffset, float pitchOffset, long lastPoopTime, LongConsumer poopTimeSetter) {
-        boolean hasIncontinence = entity.hasEffect(PoEffects.FECAL_INCONTINENCE);
+        boolean hasIncontinence = entity.hasEffect(PoEffects.FECAL_INCONTINENCE.get());
 
         if (hasIncontinence) {
             onPoop(level, entity, isFire, isGolden, yOffset, pitchOffset);
@@ -169,7 +167,7 @@ public class ToiletUtil {
             Item poopItem = getPoopItem(isFire, isGolden);
             var poop = new ItemEntity(level, livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), new ItemStack(poopItem));
             poop.setDefaultPickUpDelay();
-            if (livingEntity.hasEffect(PoEffects.FECAL_INCONTINENCE)) {
+            if (livingEntity.hasEffect(PoEffects.FECAL_INCONTINENCE.get())) {
                 Vec3 backward = getBackwardDirection(livingEntity);
                 poop.setDeltaMovement(backward.x * 0.5F, 0.2F, backward.z * 0.5F);
             }
@@ -180,7 +178,7 @@ public class ToiletUtil {
     }
 
     public static boolean containerPoop(Level level, BlockPos pos, LivingEntity entity, boolean hasSpasm, boolean isGolden, long lastPoopTime, LongConsumer poopTimeSetter) {
-        boolean hasIncontinence = entity.hasEffect(PoEffects.FECAL_INCONTINENCE);
+        boolean hasIncontinence = entity.hasEffect(PoEffects.FECAL_INCONTINENCE.get());
         long gameTime = level.getGameTime();
 
         if (!hasIncontinence) {
@@ -230,7 +228,7 @@ public class ToiletUtil {
         double z = pos.getZ() + 0.5;
         float pitch = level.random.nextFloat() - 0.4F;
         level.sendParticles(PoParticles.TOILET_PARTICLE.get(), x, y - 0.5, z, 100, 0.05, 0.05, 0.05, 0.5);
-        level.playSound(null, x, y, z, PoSoundEvents.FART, SoundSource.BLOCKS, 1.0F, pitch);
+        level.playSound(null, x, y, z, PoSoundEvents.FART.get(), SoundSource.BLOCKS, 1.0F, pitch);
 
         AABB area = new AABB(pos.getX(), y, pos.getZ(), pos.getX() + 1, y + 2, pos.getZ() + 1);
         for (Entity entity : level.getEntitiesOfClass(Entity.class, area)) {
@@ -248,7 +246,7 @@ public class ToiletUtil {
             handler.setStackInSlot(0, stack.copy());
             return true;
         }
-        if (current.is(stack.getItem()) && ItemStack.isSameItemSameComponents(current, stack)) {
+        if (current.is(stack.getItem()) && ItemStack.isSameItemSameTags(current, stack)) {
             int maxStack = current.getMaxStackSize();
             int space = maxStack - current.getCount();
             if (space >= stack.getCount()) {
@@ -340,47 +338,43 @@ public class ToiletUtil {
         Vec3 destination;
         if (targetKey == Level.END) {
             BlockPos spawnPos = ServerLevel.END_SPAWN_POINT;
-            destination = spawnPos.getBottomCenter();
-            EndPlatformFeature.createEndPlatform(targetLevel, BlockPos.containing(destination).below(), true);
+            destination = Vec3.atBottomCenterOf(spawnPos);
+            ServerLevel.makeObsidianPlatform(targetLevel);
             yRot = Direction.WEST.toYRot();
             if (entity instanceof ServerPlayer) {
                 destination = destination.subtract(0.0, 1.0, 0.0);
             }
         } else {
-            if (entity instanceof ServerPlayer serverPlayer) {
-                entity.setPortalCooldown();
-                return entity.changeDimension(serverPlayer.findRespawnPositionAndUseSpawnBlock(false, DimensionTransition.DO_NOTHING)) != null;
+            if (entity instanceof ServerPlayer player && player.getRespawnPosition() != null) {
+                ServerLevel respawnLevel = serverLevel.getServer().getLevel(player.getRespawnDimension());
+                if (respawnLevel != null) {
+                    var respawn = Player.findRespawnPositionAndUseSpawnBlock(respawnLevel, player.getRespawnPosition(), player.getRespawnAngle(), player.isRespawnForced(), true);
+                    if (respawn.isPresent()) return PoTeleport.move(player, respawnLevel, respawn.get(), player.getRespawnAngle(), player.getXRot(), false) != null;
+                }
             }
-            destination = entity.adjustSpawnLocation(targetLevel, targetLevel.getSharedSpawnPos()).getBottomCenter();
+            destination = Vec3.atBottomCenterOf(targetLevel.getSharedSpawnPos());
         }
 
         entity.setPortalCooldown();
-        return entity.changeDimension(new DimensionTransition(
-                targetLevel,
-                destination,
-                entity.getDeltaMovement(),
-                yRot,
-                entity.getXRot(),
-                DimensionTransition.PLAY_PORTAL_SOUND.then(DimensionTransition.PLACE_PORTAL_TICKET)
-        )) != null;
+        return PoTeleport.move(entity, targetLevel, destination, yRot, entity.getXRot(), true) != null;
     }
 
     private static boolean beginEndToiletPoem(ServerPlayer player, BlockPos toiletPos) {
         PoAnimationSavedData legacy = PoAnimationSavedData.get(player.getServer().overworld());
-        if (player.getData(PoAttachments.SEEN_POEM.get())) {
+        if (PoAttachments.SEEN_POEM.get(player)) {
             return false;
         }
         if (legacy.hasPlayed(PoAnimation.POEM, player.getUUID(), player.getGameProfile().getName())) {
-            player.setData(PoAttachments.SEEN_POEM.get(), true);
+            PoAttachments.SEEN_POEM.set(player, true);
             return false;
         }
-        player.setData(PoAttachments.SEEN_POEM.get(), true);
+        PoAttachments.SEEN_POEM.set(player, true);
         PendingEndToiletTeleport pending = new PendingEndToiletTeleport(
                 player.level().dimension(),
                 toiletPos.immutable()
         );
         if (PENDING_END_TOILET_TELEPORTS.putIfAbsent(player.getUUID(), pending) == null) {
-            PacketDistributor.sendToPlayer(player, new PlayAnimationAndWaitPayload(PoAnimation.POEM));
+            PoNetworking.sendToPlayer(player, new PlayAnimationAndWaitPayload(PoAnimation.POEM));
         }
         return true;
     }
@@ -447,7 +441,7 @@ public class ToiletUtil {
         var server = level.getServer();
         if (server == null) return false;
 
-        var targetDimension = AbyssLib.tryParse(linkedDim);
+        var targetDimension = PoopSky.tryParse(linkedDim);
         if (targetDimension == null) return false;
 
         var targetWorld = server.getLevel(ResourceKey.create(Registries.DIMENSION, targetDimension));
@@ -462,23 +456,21 @@ public class ToiletUtil {
         }
         entity.setPortalCooldown();
 
-        boolean teleported = true;
         if (passenger != null) {
-            teleported &= passenger.teleportTo(targetWorld, destination.x, destination.y, destination.z, Set.of(), entity.getYRot(), entity.getXRot());
+            passenger.stopRiding();
+            if (PoTeleport.move(passenger, targetWorld, destination, entity.getYRot(), entity.getXRot(), false) == null) return false;
         }
-        teleported &= entity.teleportTo(targetWorld, destination.x, destination.y, destination.z, Set.of(), entity.getYRot(), entity.getXRot());
-        if (!teleported) {
-            return false;
-        }
+        Entity movedEntity = PoTeleport.move(entity, targetWorld, destination, entity.getYRot(), entity.getXRot(), false);
+        if (movedEntity == null) return false;
 
         var pitch = targetWorld.random.nextFloat() + 0.1F;
         targetWorld.playSound(null, destination.x, destination.y, destination.z, SoundEvents.MUD_BREAK, SoundSource.PLAYERS, 1.0F, pitch);
 
         var bounce = Math.sqrt(2 * 0.08 * fallDistance) * 0.85;
         server.tell(new TickTask(server.getTickCount() + 1, () -> {
-            entity.setDeltaMovement(entity.getDeltaMovement().x, bounce, entity.getDeltaMovement().z);
-            entity.hurtMarked = true;
-            entity.hasImpulse = true;
+            movedEntity.setDeltaMovement(movedEntity.getDeltaMovement().x, bounce, movedEntity.getDeltaMovement().z);
+            movedEntity.hurtMarked = true;
+            movedEntity.hasImpulse = true;
         }));
         return true;
     }

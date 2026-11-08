@@ -7,31 +7,31 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.network.FriendlyByteBuf;
+import com.altnoir.poopsky.impl.network.codec.StreamCodec;
+import com.altnoir.poopsky.impl.network.PoPayload;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import com.altnoir.poopsky.impl.network.PoPayloadContext;
 
-public record ArcadeGameSnapshotPacket(BlockPos machinePos, CompoundTag gameSnapshot) implements CustomPacketPayload {
+public record ArcadeGameSnapshotPacket(BlockPos machinePos, CompoundTag gameSnapshot) implements PoPayload {
     public static final Type<ArcadeGameSnapshotPacket> TYPE = new Type<>(PoopSky.loc("arcade_game_snapshot"));
 
-    public static final StreamCodec<RegistryFriendlyByteBuf, ArcadeGameSnapshotPacket> STREAM_CODEC = new StreamCodec<>() {
+    public static final StreamCodec<FriendlyByteBuf, ArcadeGameSnapshotPacket> STREAM_CODEC = new StreamCodec<>() {
         @Override
-        public ArcadeGameSnapshotPacket decode(RegistryFriendlyByteBuf buffer) {
+        public ArcadeGameSnapshotPacket decode(FriendlyByteBuf buffer) {
             BlockPos machinePos = buffer.readBlockPos();
             CompoundTag gameSnapshot = buffer.readNbt();
             return new ArcadeGameSnapshotPacket(machinePos, gameSnapshot != null ? gameSnapshot : new CompoundTag());
         }
 
         @Override
-        public void encode(RegistryFriendlyByteBuf buffer, ArcadeGameSnapshotPacket payload) {
+        public void encode(FriendlyByteBuf buffer, ArcadeGameSnapshotPacket payload) {
             buffer.writeBlockPos(payload.machinePos());
             buffer.writeNbt(payload.gameSnapshot());
         }
     };
 
-    public static void handle(ArcadeGameSnapshotPacket payload, IPayloadContext context) {
+    public static void handle(ArcadeGameSnapshotPacket payload, PoPayloadContext context) {
         context.enqueueWork(() -> {
             ClientLevel level = Minecraft.getInstance().level;
             if (level == null || !level.isLoaded(payload.machinePos())) {

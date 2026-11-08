@@ -2,7 +2,6 @@ package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.content.block.entity.MaggotsChunkLoaderBlockEntity;
 import com.altnoir.poopsky.init.PoBlockEntityType;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -24,7 +23,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 public class MaggotsChunkLoaderBlock extends BaseEntityBlock {
-    public static final MapCodec<MaggotsChunkLoaderBlock> CODEC = simpleCodec(MaggotsChunkLoaderBlock::new);
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     private static final VoxelShape SHAPE = Shapes.or(
             Block.box(3.0, 3.0, 3.0, 13.0, 14.0, 13.0),
@@ -36,10 +34,6 @@ public class MaggotsChunkLoaderBlock extends BaseEntityBlock {
         registerDefaultState(stateDefinition.any().setValue(POWERED, false));
     }
 
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
-    }
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
@@ -59,7 +53,7 @@ public class MaggotsChunkLoaderBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
         if (level instanceof ServerLevel serverLevel) {
             boolean powered = level.hasNeighborSignal(pos);
             boolean poweredChanged = state.getValue(POWERED) != powered;
@@ -74,7 +68,7 @@ public class MaggotsChunkLoaderBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         if (!state.is(newState.getBlock()) && level instanceof ServerLevel serverLevel
                 && level.getBlockEntity(pos) instanceof MaggotsChunkLoaderBlockEntity blockEntity) {
             blockEntity.releaseAllChunks(serverLevel);
@@ -83,17 +77,17 @@ public class MaggotsChunkLoaderBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected RenderShape getRenderShape(BlockState state) {
+    public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }
 
     @Override
-    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 
     @Override
-    protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 

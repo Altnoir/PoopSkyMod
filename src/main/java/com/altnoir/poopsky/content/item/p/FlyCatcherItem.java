@@ -34,7 +34,7 @@ public class FlyCatcherItem extends Item {
                         PoSoundEvents.ENTITY_FLY_CAPTURE.get(), SoundSource.NEUTRAL, 1.0F, 1.0F);
 
                 if (!player.getAbilities().instabuild) {
-                    stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
+                    stack.hurtAndBreak(1, player, user -> user.broadcastBreakEvent(hand));
                 }
 
                 fly.discard();

@@ -12,18 +12,17 @@ public class MomentOfPtymeEffect extends MobEffect {
     }
 
     @Override
-    public boolean applyEffectTick(LivingEntity livingEntity, int amplifier) {
+    public void applyEffectTick(LivingEntity livingEntity, int amplifier) {
         if (!livingEntity.level().isClientSide && livingEntity instanceof Player player) {
             var server = livingEntity.level().getServer();
-            if (server != null && server.tickRateManager().isFrozen()) {
+            if (server != null && com.altnoir.poopsky.impl.PoTimeFreeze.serverFrozen()) {
                 TimeBellItem.unfreeze(server, player);
             }
         }
-        return true;
     }
 
     @Override
-    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
+    public boolean isDurationEffectTick(int duration, int amplifier) {
         return duration <= 1;
     }
 }

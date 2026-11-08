@@ -48,7 +48,7 @@ public class FlyType {
 
         @Override
         public boolean equals(Object obj) {
-            return obj instanceof Type(String id1) && this.id.equals(id1);
+            return obj instanceof Type other && this.id.equals(other.id());
         }
 
         @Override

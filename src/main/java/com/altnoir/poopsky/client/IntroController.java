@@ -4,8 +4,9 @@ import com.altnoir.poopsky.ClientConfig;
 import com.altnoir.poopsky.client.screen.IntroScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
-import net.neoforged.neoforge.client.event.SelectMusicEvent;
+import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
+import net.minecraftforge.client.event.sound.PlaySoundEvent;
+import net.minecraft.sounds.SoundSource;
 
 public final class IntroController {
     private static IntroScreen activeScreen;
@@ -55,9 +56,9 @@ public final class IntroController {
         clear();
     }
 
-    public static void onSelectMusic(SelectMusicEvent event) {
-        if (activeScreen != null) {
-            event.overrideMusic(null);
+    public static void onSelectMusic(PlaySoundEvent event) {
+        if (activeScreen != null && event.getSound() != null && event.getSound().getSource() == SoundSource.MUSIC) {
+            event.setSound(null);
         }
     }
 

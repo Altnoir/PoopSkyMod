@@ -1,0 +1,27 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "farmersdelight"
+    }
+  ],
+  "type": "farmersdelight:cutting",
+  "ingredients": [
+    {
+      "item": "poopsky:pop_tnt_minecart"
+    }
+  ],
+  "result": [
+    {
+      "count": 1,
+      "item": "minecraft:minecart"
+    },
+    {
+      "count": 1,
+      "item": "poopsky:poop_tnt"
+    }
+  ],
+  "tool": {
+    "tag": "minecraft:hoes"
+  }
+}

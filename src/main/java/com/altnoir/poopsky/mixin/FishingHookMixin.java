@@ -6,8 +6,8 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.ReloadableServerRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.storage.loot.LootDataManager;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -26,8 +26,8 @@ public class FishingHookMixin {
         return original || fluidstate.is(PoFluids.URINE.get()) || fluidstate.is(PoFluids.FLOWING_URINE.get());
     }
 
-    @WrapOperation(method = "retrieve", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/ReloadableServerRegistries$Holder;getLootTable(Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/world/level/storage/loot/LootTable;"))
-    private LootTable poopsky$getLootTable(ReloadableServerRegistries.Holder lookup, ResourceKey<LootTable> key,
+    @WrapOperation(method = "retrieve", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/storage/loot/LootDataManager;getLootTable(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/world/level/storage/loot/LootTable;"))
+    private LootTable poopsky$getLootTable(LootDataManager lookup, ResourceLocation key,
                                            Operation<LootTable> original) {
         if ((poopSky$fishingHook.level().getFluidState(poopSky$fishingHook.blockPosition()).is(PoFluids.URINE.get())
                 || poopSky$fishingHook.level().getFluidState(poopSky$fishingHook.blockPosition()).is(PoFluids.FLOWING_URINE.get()))

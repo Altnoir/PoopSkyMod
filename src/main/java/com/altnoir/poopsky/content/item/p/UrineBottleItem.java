@@ -15,7 +15,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
 
@@ -40,7 +40,7 @@ public class UrineBottleItem extends Item implements IFeedable {
             return new ItemStack(Items.GLASS_BOTTLE);
         } else {
             if (entity instanceof Player player) {
-                if (!player.hasInfiniteMaterials()) {
+                if (!player.getAbilities().instabuild) {
                     ItemStack itemstack = new ItemStack(Items.GLASS_BOTTLE);
                     if (!player.getInventory().add(itemstack)) {
                         player.drop(itemstack, false);
@@ -57,7 +57,7 @@ public class UrineBottleItem extends Item implements IFeedable {
         if (feedResult.consumesAction()) return feedResult;
         if (entity.isAlive() && entity instanceof Chicken chicken) {
             if (!player.level().isClientSide) {
-                var waterPotion = PotionContents.createItemStack(Items.POTION, Potions.WATER);
+                var waterPotion = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER);
 
                 chicken.playSound(SoundEvents.CHICKEN_EGG);
                 chicken.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 1200, 1));

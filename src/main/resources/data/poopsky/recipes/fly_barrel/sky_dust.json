@@ -1,0 +1,14 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "ae2"
+    }
+  ],
+  "type": "poopsky:fly_barrel",
+  "fly_type": "sky_dust",
+  "result": {
+    "count": 1,
+    "item": "ae2:sky_dust"
+  }
+}

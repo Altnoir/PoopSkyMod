@@ -2,13 +2,12 @@ package com.altnoir.poopsky.content.block.p;
 
 import com.altnoir.poopsky.content.entity.p.PoopTntEntity;
 import com.altnoir.poopsky.init.PoSoundEvents;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -30,14 +29,9 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
-public class PoopTntBlock extends Block {
-    public static final MapCodec<PoopTntBlock> CODEC = simpleCodec(PoopTntBlock::new);
+public class PoopTntBlock extends Block implements com.altnoir.poopsky.content.block.PoBlockInteraction {
     public static final BooleanProperty UNSTABLE = BlockStateProperties.UNSTABLE;
 
-    @Override
-    public MapCodec<PoopTntBlock> codec() {
-        return CODEC;
-    }
 
     public PoopTntBlock(BlockBehaviour.Properties properties) {
         super(properties);
@@ -50,7 +44,7 @@ public class PoopTntBlock extends Block {
     }
 
     @Override
-    protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
+    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
         if (!oldState.is(state.getBlock())) {
             if (level.hasNeighborSignal(pos)) {
                 onCaughtFire(state, level, pos, null, null);
@@ -60,7 +54,7 @@ public class PoopTntBlock extends Block {
     }
 
     @Override
-    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
         if (level.hasNeighborSignal(pos)) {
             onCaughtFire(state, level, pos, null, null);
             level.removeBlock(pos, false);
@@ -68,11 +62,11 @@ public class PoopTntBlock extends Block {
     }
 
     @Override
-    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+    public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
         if (!level.isClientSide && !player.isCreative() && state.getValue(UNSTABLE)) {
             onCaughtFire(state, level, pos, null, null);
         }
-        return super.playerWillDestroy(level, pos, state, player);
+        super.playerWillDestroy(level, pos, state, player);
     }
 
     @Override
@@ -80,7 +74,7 @@ public class PoopTntBlock extends Block {
         if (!level.isClientSide) {
             PoopTntEntity tnt = new PoopTntEntity(level,
                     pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5,
-                    explosion.getIndirectSourceEntity() instanceof LivingEntity living ? living : null);
+                    explosion.getIndirectSourceEntity());
             int i = tnt.getFuse();
             tnt.setFuse(level.random.nextInt(i / 4) + i / 8);
             level.addFreshEntity(tnt);
@@ -92,27 +86,27 @@ public class PoopTntBlock extends Block {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(
+    public InteractionResult poopsky$useItemOn(
             ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult
     ) {
         if (!stack.is(Items.FLINT_AND_STEEL) && !stack.is(Items.FIRE_CHARGE)) {
-            return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
+            return InteractionResult.PASS;
         } else {
             onCaughtFire(state, level, pos, hitResult.getDirection(), player);
             level.setBlock(pos, Blocks.AIR.defaultBlockState(), 11);
             Item item = stack.getItem();
             if (stack.is(Items.FLINT_AND_STEEL)) {
-                stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
+                stack.hurtAndBreak(1, player, user -> user.broadcastBreakEvent(hand));
             } else {
-                stack.consume(1, player);
+                if (!player.getAbilities().instabuild) stack.shrink(1);
             }
             player.awardStat(Stats.ITEM_USED.get(item));
-            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+            return InteractionResult.sidedSuccess(level.isClientSide);
         }
     }
 
     @Override
-    protected void onProjectileHit(Level level, BlockState state, BlockHitResult hit, Projectile projectile) {
+    public void onProjectileHit(Level level, BlockState state, BlockHitResult hit, Projectile projectile) {
         if (!level.isClientSide) {
             BlockPos pos = hit.getBlockPos();
             Entity entity = projectile.getOwner();
@@ -142,5 +136,13 @@ public class PoopTntBlock extends Block {
                     PoSoundEvents.ENTITY_POP_PRIMED.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
             level.gameEvent(igniter, GameEvent.PRIME_FUSE, pos);
         }
+    }
+
+    @Override
+    public net.minecraft.world.InteractionResult use(net.minecraft.world.level.block.state.BlockState state,
+            net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
+        return poopsky$interact(state, level, pos, player, hand, hit);
     }
 }

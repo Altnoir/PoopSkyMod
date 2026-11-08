@@ -4,12 +4,11 @@ import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.impl.util.ToiletUtil;
 import com.altnoir.poopsky.init.ToiletTypes;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -22,11 +21,10 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.event.EventHooks;
+import net.minecraftforge.event.ForgeEventFactory;
 import org.jetbrains.annotations.NotNull;
 
-public class HardToiletBlock extends BaseToiletLavaBlock {
-    public static final MapCodec<HardToiletBlock> CODEC = simpleCodec(HardToiletBlock::new);
+public class HardToiletBlock extends BaseToiletLavaBlock implements com.altnoir.poopsky.content.block.PoBlockInteraction {
 
     public enum ToiletMode implements StringRepresentable {
         DEFAULT("default"),
@@ -55,10 +53,6 @@ public class HardToiletBlock extends BaseToiletLavaBlock {
                 .setValue(TOILET_MODE, ToiletMode.DEFAULT));
     }
 
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
-    }
 
     @Override
     public ToiletType getDefaultToiletType() {
@@ -78,12 +72,12 @@ public class HardToiletBlock extends BaseToiletLavaBlock {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    public InteractionResult poopsky$useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (!state.getValue(LAVA)) {
-            ItemInteractionResult result = handleVariantReplacement(stack, level, pos, player, ToiletType.Category.HARD);
+            InteractionResult result = handleVariantReplacement(stack, level, pos, player, ToiletType.Category.HARD);
             if (result != null) return result;
         }
-        return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
+        return super.poopsky$useItemOn(stack, state, level, pos, player, hand, hitResult);
     }
 
     public BlockState applyVariant(BlockState state, ToiletType toiletType) {
@@ -109,7 +103,7 @@ public class HardToiletBlock extends BaseToiletLavaBlock {
         ToiletType type = getToiletType(level, pos);
         if (type != null) {
             float hardness = type.hardness();
-            int i = EventHooks.doPlayerHarvestCheck(player, state, level, pos) ? 30 : 100;
+            int i = ForgeEventFactory.doPlayerHarvestCheck(player, state, player.hasCorrectToolForDrops(state)) ? 30 : 100;
             return player.getDigSpeed(state, pos) / hardness / (float) i;
         }
         return super.getDestroyProgress(state, player, level, pos);
@@ -118,5 +112,13 @@ public class HardToiletBlock extends BaseToiletLavaBlock {
     @Override
     public MapColor getMapColor(BlockState state, BlockGetter level, BlockPos pos, MapColor defaultColor) {
         return MapColor.STONE;
+    }
+
+    @Override
+    public net.minecraft.world.InteractionResult use(net.minecraft.world.level.block.state.BlockState state,
+            net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
+        return poopsky$interact(state, level, pos, player, hand, hit);
     }
 }

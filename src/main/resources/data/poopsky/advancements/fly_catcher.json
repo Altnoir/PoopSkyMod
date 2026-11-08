@@ -1,0 +1,34 @@
+{
+  "parent": "poopsky:pooop_tnt",
+  "criteria": {
+    "fly_catcher": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "poopsky:fly_catcher"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.poopsky.fly_catcher.description"
+    },
+    "icon": {
+      "count": 1,
+      "item": "poopsky:fly_catcher"
+    },
+    "title": {
+      "translate": "advancements.poopsky.fly_catcher.title"
+    }
+  },
+  "requirements": [
+    [
+      "fly_catcher"
+    ]
+  ]
+}

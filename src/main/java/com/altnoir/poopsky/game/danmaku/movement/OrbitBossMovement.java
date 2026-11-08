@@ -42,12 +42,12 @@ public class OrbitBossMovement implements BossMovement {
         float bossCenterX = centerX + (float) (Math.cos(radians) * orbitRadius);
         float bossCenterY = centerY + (float) (Math.sin(radians) * orbitRadius);
 
-        state.setBossX(Math.clamp(
+        state.setBossX(net.minecraft.util.Mth.clamp(
                 bossCenterX - TouhouGameState.BOSS_SIZE / 2.0F,
                 0.0F,
                 (float) (TouhouGameState.PLAY_WIDTH - TouhouGameState.BOSS_SIZE)
         ));
-        state.setBossY(Math.clamp(
+        state.setBossY(net.minecraft.util.Mth.clamp(
                 bossCenterY - TouhouGameState.BOSS_SIZE / 2.0F,
                 0.0F,
                 (float) (TouhouGameState.PLAY_HEIGHT - TouhouGameState.BOSS_SIZE)

@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.client.model.BakedModelWrapper;
+import net.minecraftforge.client.model.BakedModelWrapper;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
@@ -36,7 +36,7 @@ public class ToiletItemBakedModel extends BakedModelWrapper<BakedModel> {
 
         @Override
         public @Nullable BakedModel resolve(BakedModel model, ItemStack stack, @Nullable ClientLevel level, @Nullable LivingEntity entity, int seed) {
-            ToiletType type = stack.get(PoComponents.TOILET_TYPE.get());
+            ToiletType type = PoComponents.TOILET_TYPE.get(stack);
             if (type != null) {
                 BakedModel variant = typeModels.get(type.id());
                 if (variant != null) {

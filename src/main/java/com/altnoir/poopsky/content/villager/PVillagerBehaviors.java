@@ -39,7 +39,7 @@ public class PVillagerBehaviors {
         }
 
         VillagerProfession profession = villager.getVillagerData().getProfession();
-        return profession == PoVillagers.POOP_MAKER.value() || profession == PoVillagers.GASTRONOME.value();
+        return profession == PoVillagers.POOP_MAKER.get() || profession == PoVillagers.GASTRONOME.get();
     }
 
     private static boolean isHoldingPoop(Player player) {

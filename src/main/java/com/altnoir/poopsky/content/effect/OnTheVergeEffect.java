@@ -23,25 +23,25 @@ public class OnTheVergeEffect extends MobEffect {
     }
 
     @Override
-    public boolean applyEffectTick(LivingEntity livingEntity, int amplifier) {
+    public void applyEffectTick(LivingEntity livingEntity, int amplifier) {
         Level level = livingEntity.level();
         boolean result = false;
         boolean result2 = false;
 
         if (!level.isClientSide) {
-            int duration = Objects.requireNonNull(livingEntity.getEffect(PoEffects.ON_THE_VERGE)).getDuration();
+            int duration = Objects.requireNonNull(livingEntity.getEffect(PoEffects.ON_THE_VERGE.get())).getDuration();
             boolean openTheDoor = false;
 
             if (livingEntity instanceof Player player) {
                 if (player.isShiftKeyDown()) {
-                    if (player.hasEffect(PoEffects.INTESTINAL_SPASM)) {
+                    if (player.hasEffect(PoEffects.INTESTINAL_SPASM.get())) {
                         BlockPos pos = livingEntity.blockPosition().below();
                         BlockPos stonePos = pos.below();
                         BlockState state = level.getBlockState(pos);
                         BlockState stoneState = level.getBlockState(stonePos);
 
                         for (var holder : level.getRecipeManager().getAllRecipesFor(PoRecipes.ANAL_PRESSING.type().get())) {
-                            var recipe = holder.value();
+                            var recipe = holder;
                             if (recipe.input().test(new ItemStack(state.getBlock().asItem())) && recipe.replaceTarget() == stoneState.getBlock()) {
                                 level.removeBlock(pos, false);
                                 recipe.applyConversion(level, stonePos);
@@ -77,16 +77,15 @@ public class OnTheVergeEffect extends MobEffect {
         }
 
         if (result) {
-            livingEntity.removeEffect(PoEffects.ON_THE_VERGE);
+            livingEntity.removeEffect(PoEffects.ON_THE_VERGE.get());
         }
         if (result2) {
-            livingEntity.removeEffect(PoEffects.INTESTINAL_SPASM);
+            livingEntity.removeEffect(PoEffects.INTESTINAL_SPASM.get());
         }
-        return true;
     }
 
     @Override
-    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
+    public boolean isDurationEffectTick(int duration, int amplifier) {
         return true;
     }
 }

@@ -15,6 +15,19 @@ public class SimpleFeedableItem extends Item implements IFeedable {
     }
 
     @Override
+    public ItemStack finishUsingItem(ItemStack stack, net.minecraft.world.level.Level level, LivingEntity entity) {
+        boolean bowl = getFoodProperties(stack, entity) == com.altnoir.poopsky.content.item.PFoods.POOP_SOUP;
+        ItemStack result = super.finishUsingItem(stack, level, entity);
+        if (bowl && (!(entity instanceof Player player) || !player.getAbilities().instabuild)) {
+            ItemStack container = new ItemStack(net.minecraft.world.item.Items.BOWL);
+            if (result.isEmpty()) return container;
+            if (entity instanceof Player player) { if (!player.getInventory().add(container)) player.drop(container, false); }
+            else entity.spawnAtLocation(container);
+        }
+        return result;
+    }
+
+    @Override
     public @NotNull InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
         InteractionResult feedResult = tryFeedToPlayer(stack, player, target);
         if (feedResult.consumesAction()) return feedResult;

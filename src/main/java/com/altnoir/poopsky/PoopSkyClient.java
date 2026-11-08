@@ -4,8 +4,8 @@ import com.altnoir.poopsky.client.IntroController;
 import com.altnoir.poopsky.client.PoAnimationController;
 import com.altnoir.poopsky.client.PoBedrockModelResources;
 import com.altnoir.poopsky.client.ToiletClientBlockExtensions;
+import com.altnoir.poopsky.client.creative.PoSectionedCreativeTabRenderer;
 import com.altnoir.poopsky.client.model.BakedModelEventHandler;
-import com.altnoir.poopsky.client.particle.DeathBlightParticle;
 import com.altnoir.poopsky.client.particle.LeavesParticle;
 import com.altnoir.poopsky.client.particle.PoopParticle;
 import com.altnoir.poopsky.client.particle.ToiletParticle;
@@ -17,6 +17,7 @@ import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.content.block.renderer.MaggotsChunkLoaderBlockEntityRenderer;
 import com.altnoir.poopsky.content.entity.model.FlyModel;
+import com.altnoir.poopsky.content.entity.model.ToiletPlugModel;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.content.entity.renderer.PoBoatRenderer;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
@@ -25,10 +26,8 @@ import com.altnoir.poopsky.game.client.arcade.ArcadeWorldScreenRenderer;
 import com.altnoir.poopsky.impl.network.PlugActionPayload;
 import com.altnoir.poopsky.impl.network.PlugDismountPayload;
 import com.altnoir.poopsky.init.*;
-import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.RecipeBookCategories;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
 import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;
 import net.minecraft.client.model.BoatModel;
@@ -41,36 +40,31 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.levelgen.presets.WorldPreset;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.event.config.ModConfigEvent;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.client.event.*;
-import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
-import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
-import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
-import net.neoforged.neoforge.client.gui.ConfigurationScreen;
-import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
-import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
-import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.entity.player.PlayerHeartTypeEvent;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModContainer;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.client.event.*;
+import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.common.MinecraftForge;
+import com.altnoir.poopsky.impl.network.PoNetworking;
 import org.jetbrains.annotations.NotNull;
 
-@Mod(value = PoopSky.MOD_ID, dist = Dist.CLIENT)
 public class PoopSkyClient {
-    public PoopSkyClient(IEventBus modEventBus, ModContainer modContainer) {
-        modContainer.registerConfig(ModConfig.Type.CLIENT, ClientConfig.CLIENT_SPEC);
-        modContainer.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
+    public static void initialize() {
+        IEventBus modEventBus = net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext.get().getModEventBus();
+        net.minecraftforge.fml.ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfig.CLIENT_SPEC);
 
-        var gameEventBus = NeoForge.EVENT_BUS;
+        var gameEventBus = MinecraftForge.EVENT_BUS;
         PoopSkyClient.registerMod(modEventBus);
         PoopSkyClient.registerGame(gameEventBus);
     }
@@ -78,7 +72,7 @@ public class PoopSkyClient {
     public static void registerMod(IEventBus modEventBus) {
         BakedModelEventHandler.register(modEventBus);
         modEventBus.addListener(PoKeyBoardInput::registerKeyMappings);
-        modEventBus.addListener(PoBedrockModelResources::onRegisterV2BedrockResources);
+        modEventBus.addListener(PoBedrockModelResources::onRegisterBedrockModels);
         modEventBus.addListener(ClientModEvents::modLoad);
         modEventBus.addListener(ClientModEvents::registerLayers);
         modEventBus.addListener(ClientModEvents::registerFluidRenderTypes);
@@ -90,7 +84,6 @@ public class PoopSkyClient {
         modEventBus.addListener(ClientModEvents::registerItemColors);
         modEventBus.addListener(ClientModEvents::registerBlockRenderBuffers);
         modEventBus.addListener(ClientModEvents::registerGuiOverlays);
-        modEventBus.addListener(ClientModEvents::registerClientExtensions);
     }
 
     public static void registerGame(IEventBus modEventBus) {
@@ -98,17 +91,18 @@ public class PoopSkyClient {
         modEventBus.addListener(ClientGameEvents::onClientTick);
         modEventBus.addListener(ArcadeControlSession::onKeyInput);
         modEventBus.addListener(ClientGameEvents::onComputeFov);
-        modEventBus.addListener(ClientGameEvents::onComputeFogColor);
-        modEventBus.addListener(ClientGameEvents::onRenderFog);
-        modEventBus.addListener(ClientGameEvents::onPlayerHeartType);
         modEventBus.addListener(ArcadeWorldScreenRenderer::onRenderFrame);
         modEventBus.addListener(ArcadeWorldScreenRenderer::onLoggingOut);
-        // 分区创造栏标题渲染：由 AbyssLib 的 AbyssLibClient 自动注册（SectionedCreativeTabRenderer）
+        modEventBus.addListener(PoSectionedCreativeTabRenderer::onRenderForeground);
         modEventBus.addListener(ToiletHighlightRenderer::onRenderLevel);
         modEventBus.addListener(MaggotsChunkLoaderBlockEntityRenderer::onLevelUnload);
         modEventBus.addListener(IntroController::onLoggingOut);
         modEventBus.addListener(IntroController::onSelectMusic);
         modEventBus.addListener(PoAnimationController::onLoggingOut);
+        modEventBus.addListener((net.minecraftforge.client.event.ClientPlayerNetworkEvent.LoggingOut event) -> {
+            com.altnoir.poopsky.impl.PoTimeFreeze.setClientFrozen(false);
+            TimeBellOverlay.setFrozen(false);
+        });
     }
 
     public static class ClientModEvents {
@@ -117,7 +111,9 @@ public class PoopSkyClient {
         }
 
         public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+            event.registerLayerDefinition(ToiletPlugModel.LAYER_LOCATION, ToiletPlugModel::createBodyLayer);
             event.registerLayerDefinition(FlyModel.LAYER_LOCATION, FlyModel::createFlyBodyLayer);
+            event.registerLayerDefinition(FlyModel.MAGGOT_LAYER_LOCATION, FlyModel::createMaggotBodyLayer);
             event.registerLayerDefinition(PoBoatRenderer.boatLayer("ginkgo"), BoatModel::createBodyModel);
             event.registerLayerDefinition(PoBoatRenderer.chestBoatLayer("ginkgo"), ChestBoatModel::createBodyModel);
             event.registerLayerDefinition(PoBoatRenderer.boatLayer("primo"), BoatModel::createBodyModel);
@@ -131,12 +127,13 @@ public class PoopSkyClient {
             });
         }
 
-        public static void registerGuiOverlays(RegisterGuiLayersEvent event) {
-            event.registerBelow(VanillaGuiLayers.CAMERA_OVERLAYS, PoopSky.loc("time_bell_overlay"), TimeBellOverlay::render);
+        public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
+            event.registerBelow(VanillaGuiOverlay.VIGNETTE.id(), "time_bell_overlay",
+                    (gui, graphics, partialTick, width, height) -> TimeBellOverlay.render(graphics));
         }
 
         public static void registerRenderTypes(RegisterNamedRenderTypesEvent event) {
-            event.register(PoopSky.loc("poop_empty_log"), RenderType.cutout(), RenderType.entityCutout(PoBlocks.POOP_EMPTY_LOG.getId()));
+            event.register("poop_empty_log", RenderType.cutout(), RenderType.entityCutout(PoBlocks.POOP_EMPTY_LOG.getId()));
         }
 
         public static void registerRecipeBookCategories(RegisterRecipeBookCategoriesEvent event) {
@@ -153,7 +150,7 @@ public class PoopSkyClient {
                     if (item instanceof ToiletBlockItem && item != Items.AIR) {
                         ItemProperties.register(item, PoopSky.loc("toilet_type"),
                                 (stack, level, entity, seed) -> {
-                                    ToiletType type = stack.get(PoComponents.TOILET_TYPE.get());
+                                    ToiletType type = PoComponents.TOILET_TYPE.get(stack);
                                     if (type == null) return 0;
                                     var categoryTypes = ToiletType.getByCategory(type.category());
                                     int localIndex = 0;
@@ -171,7 +168,6 @@ public class PoopSkyClient {
         public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
             event.registerSpriteSet(PoParticles.POOP_PARTICLE.get(), PoopParticle.Provider::new);
             event.registerSpriteSet(PoParticles.TOILET_PARTICLE.get(), ToiletParticle.Provider::new);
-            event.registerSpriteSet(PoParticles.DEATH_BLIGHT.get(), DeathBlightParticle.Provider::new);
             event.registerSpriteSet(PoParticles.LEAVES_PARTICLE.get(), LeavesParticle.provider());
         }
 
@@ -193,48 +189,16 @@ public class PoopSkyClient {
             event.register((stack, tintIndex) -> tintIndex == 1 ? 0x3F76E4 : -1, PoBlocks.WATER_COMPOOPER.get());
         }
 
-        public static void registerBlockRenderBuffers(RegisterRenderBuffersEvent event) {
-            event.registerRenderBuffer(RenderType.translucent());
-            event.registerRenderBuffer(RenderType.lightning());
-            event.registerRenderBuffer(PoRenderTypes.chunkLoaderGlow());
+        public static void registerBlockRenderBuffers(FMLClientSetupEvent event) {
+            event.enqueueWork(() -> {
+                var source = Minecraft.getInstance().renderBuffers().bufferSource();
+                var buffers = ((com.altnoir.poopsky.mixin.BufferSourceAccessor) source).poopsky$fixedBuffers();
+                for (RenderType type : new RenderType[]{RenderType.translucent(), RenderType.lightning(), PoRenderTypes.chunkLoaderGlow()}) {
+                    buffers.computeIfAbsent(type, key -> new com.mojang.blaze3d.vertex.BufferBuilder(key.bufferSize()));
+                }
+            });
         }
 
-        public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
-            event.registerBlock(ToiletClientBlockExtensions.INSTANCE, PoBlocks.WOODEN_TOILET.get(), PoBlocks.HARD_TOILET.get());
-
-            var toiletPlugRenderer = new ToiletPlugItemRenderer();
-            event.registerItem(new IClientItemExtensions() {
-                @Override
-                public BlockEntityWithoutLevelRenderer getCustomRenderer() {
-                    return toiletPlugRenderer;
-                }
-            }, PoItems.TOILET_PLUG.get());
-
-            var gachaponItemRenderer = new GachaponItemRenderer();
-            event.registerItem(new IClientItemExtensions() {
-                @Override
-                public BlockEntityWithoutLevelRenderer getCustomRenderer() {
-                    return gachaponItemRenderer;
-                }
-            }, PoItems.GACHAPON.get());
-
-            event.registerFluidType(new IClientFluidTypeExtensions() {
-                @Override
-                public @NotNull ResourceLocation getStillTexture() {
-                    return PFluidTypes.URINE_STILL_TEXTURE;
-                }
-
-                @Override
-                public @NotNull ResourceLocation getFlowingTexture() {
-                    return PFluidTypes.URINE_FLOWING_TEXTURE;
-                }
-
-                @Override
-                public ResourceLocation getOverlayTexture() {
-                    return null;
-                }
-            }, PFluidTypes.URINE_FLUID_TYPE.get());
-        }
     }
 
     public static class ClientGameEvents {
@@ -267,41 +231,8 @@ public class PoopSkyClient {
             }
         }
 
-        public static void onComputeFogColor(ViewportEvent.ComputeFogColor event) {
-            if (isCameraInUrine(event.getCamera())) return;
-
-            event.setRed(0.5255F);
-            event.setGreen(0.3804F);
-            event.setBlue(0.1765F);
-        }
-
-        public static void onRenderFog(ViewportEvent.RenderFog event) {
-            Camera camera = event.getCamera();
-            if (isCameraInUrine(camera)) return;
-
-            boolean hasOmener = camera.getEntity() instanceof LivingEntity livingEntity
-                    && livingEntity.hasEffect(PoEffects.OMENER);
-            event.setNearPlaneDistance(hasOmener ? 0.0F : 0.25F);
-            event.setFarPlaneDistance(hasOmener ? 5.0F : 1.0F);
-            event.setCanceled(true);
-        }
-
-        private static boolean isCameraInUrine(Camera camera) {
-            var entity = camera.getEntity();
-
-            var pos = camera.getBlockPosition();
-            var fluidState = entity.level().getFluidState(pos);
-            return fluidState.getFluidType() != PoFluids.URINE_FLUID_TYPE.get()
-                    || !(camera.getPosition().y < pos.getY() + fluidState.getHeight(entity.level(), pos));
-        }
-
-        public static void onPlayerHeartType(PlayerHeartTypeEvent event) {
-            if (event.getEntity().hasEffect(PoEffects.DEATH_BLIGHT)) {
-                event.setType(Gui.HeartType.WITHERED);
-            }
-        }
-
-        public static void onClientTick(ClientTickEvent.Pre event) {
+        public static void onClientTick(TickEvent.ClientTickEvent event) {
+            if (event.phase != TickEvent.Phase.START) return;
             var mc = Minecraft.getInstance();
             if (mc.player == null || mc.level == null) {
                 ArcadeControlSession.clear();
@@ -312,10 +243,10 @@ public class PoopSkyClient {
             boolean isRidingPlug = mc.player.getVehicle() instanceof ToiletPlugEntity;
 
             while (PoKeyBoardInput.USE_PLUG_KEY.consumeClick()) {
-                PacketDistributor.sendToServer(new PlugActionPayload());
+                PoNetworking.sendToServer(new PlugActionPayload());
             }
             if (isRidingPlug && PoKeyBoardInput.DISMOUNT_PLUG_KEY.consumeClick()) {
-                PacketDistributor.sendToServer(new PlugDismountPayload());
+                PoNetworking.sendToServer(new PlugDismountPayload());
             }
         }
     }

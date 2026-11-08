@@ -10,14 +10,9 @@ import net.minecraft.sounds.SoundEvents;
 
 public class ServerTouhouGame extends ServerGame {
     private final TouhouGameState state = new TouhouGameState();
-    private boolean debugMode;
 
     public ServerTouhouGame() {
         state.setBossLootConsumer(this::emitItem);
-    }
-
-    public void setDebugMode(boolean debugMode) {
-        this.debugMode = debugMode;
     }
 
     @Override
@@ -27,7 +22,6 @@ public class ServerTouhouGame extends ServerGame {
 
     @Override
     protected void gameTick() {
-        state.setDebugMode(debugMode);
         TouhouGameState.TickResult result = state.tick(
                 isDown(Button.UP),
                 isDown(Button.DOWN),
@@ -52,7 +46,7 @@ public class ServerTouhouGame extends ServerGame {
         if (result.powerUpPickup()) {
             playSound(SoundEvents.ITEM_PICKUP, 1.2F, 0.6F);
         }
-        if (result.playerHit() && !debugMode) {
+        if (result.playerHit()) {
             stage = GameStage.DIED;
             playSound(PoSoundEvents.GAME_OVER.get(), 0.9F, 1.0F);
         }

@@ -4,7 +4,6 @@ import com.altnoir.poopsky.content.block.abs.AbsHorDirBlock;
 import com.altnoir.poopsky.content.item.p.GachaponItem;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.impl.util.DispenseUtil;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
@@ -25,7 +24,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 
 public class GachaBlock extends AbsHorDirBlock {
-    public static final MapCodec<GachaBlock> CODEC = simpleCodec(GachaBlock::new);
     public static final IntegerProperty STEP = IntegerProperty.create("step", 0, 7);
 
     public GachaBlock(Properties properties) {
@@ -35,10 +33,6 @@ public class GachaBlock extends AbsHorDirBlock {
                 .setValue(STEP, 0));
     }
 
-    @Override
-    protected MapCodec<? extends Block> codec() {
-        return CODEC;
-    }
 
     public boolean advanceTokenSpin(ServerLevel level, BlockPos pos) {
         BlockState state = level.getBlockState(pos);

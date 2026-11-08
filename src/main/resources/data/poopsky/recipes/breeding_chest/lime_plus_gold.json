@@ -1,0 +1,7 @@
+{
+  "type": "poopsky:breeding_chest",
+  "chance": 0.2,
+  "parent1": "lime",
+  "parent2": "gold",
+  "result": "emerald"
+}

@@ -75,7 +75,7 @@ public class FlushToiletMenu extends AbstractContainerMenu {
                 return ItemStack.EMPTY;
             }
         } else {
-            Slot flushSlot = this.slots.getFirst();
+            Slot flushSlot = this.slots.get(0);
             ItemStack slotItem = flushSlot.getItem();
 
             if (!canReplaceSlot(slotItem, source)) {
@@ -103,7 +103,7 @@ public class FlushToiletMenu extends AbstractContainerMenu {
     private boolean canReplaceSlot(ItemStack slotItem, ItemStack newItem) {
         if (slotItem.isEmpty()) return true;
         if (!slotItem.is(PoTags.Items.FLUSH_TOILET_SAVE)) return true;
-        return !ItemStack.isSameItemSameComponents(slotItem, newItem);
+        return !ItemStack.isSameItemSameTags(slotItem, newItem);
     }
 
     private void replaceSlotItem(Slot flushSlot, Slot sourceSlot, ItemStack newItem) {

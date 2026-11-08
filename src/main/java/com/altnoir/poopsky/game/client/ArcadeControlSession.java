@@ -2,7 +2,6 @@ package com.altnoir.poopsky.game.client;
 
 import com.altnoir.poopsky.content.block.entity.ArcadeBlockEntity;
 import com.altnoir.poopsky.game.Button;
-import com.altnoir.poopsky.game.client.arcade.ArcadeWorldScreenRenderer;
 import com.altnoir.poopsky.init.PoKeyBoardInput;
 import com.altnoir.poopsky.impl.network.ArcadeInputPacket;
 import com.altnoir.poopsky.impl.network.ArcadeResetPacket;
@@ -11,9 +10,9 @@ import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.neoforged.neoforge.client.event.InputEvent;
-import net.neoforged.neoforge.network.PacketDistributor;
+import com.altnoir.poopsky.impl.network.PoPayload;
+import net.minecraftforge.client.event.InputEvent;
+import com.altnoir.poopsky.impl.network.PoNetworking;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
@@ -90,8 +89,6 @@ public final class ArcadeControlSession {
                 mc.options.keyChat.consumeClick();
                 mc.options.keyCommand.consumeClick();
             }
-            // 转发给本地屏幕的客户端游戏（纯客户端展示用，如节奏游戏的判定文字/动效）
-            ArcadeWorldScreenRenderer.onButtonPressed(machinePos, button);
         } else {
             HELD_BUTTONS.remove(button);
         }
@@ -153,8 +150,8 @@ public final class ArcadeControlSession {
         }
     }
 
-    private static void send(CustomPacketPayload packet) {
-        PacketDistributor.sendToServer(packet);
+    private static void send(PoPayload packet) {
+        PoNetworking.sendToServer(packet);
     }
 
     private static void suppressVanillaMovement(Options options) {

@@ -4,7 +4,7 @@ import com.altnoir.poopsky.content.FlyTypeManager;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.minecraftforge.event.AddReloadListenerEvent;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;

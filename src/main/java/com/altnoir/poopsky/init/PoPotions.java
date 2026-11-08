@@ -1,9 +1,9 @@
 package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.abysslib.reginth.Reginth;
-import com.altnoir.abysslib.reginth.util.entry.RegistryEntry;
-import com.altnoir.abysslib.reginth.util.nullness.NonNullSupplier;
+import com.altnoir.poopsky.impl.registrate.PoRegistrate;
+import com.tterrag.registrate.util.entry.RegistryEntry;
+import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -14,56 +14,56 @@ import java.util.Collections;
 import java.util.List;
 
 public class PoPotions {
-    private static final Reginth REGISTRATE = PoopSky.registrate();
-    private static final List<RegistryEntry<Potion, Potion>> ALL = new ArrayList<>();
+    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
+    private static final List<RegistryEntry<Potion>> ALL = new ArrayList<>();
 
-    public static final RegistryEntry<Potion, Potion> FECAL_INCONTINENCE_POTION = registerPotion(
+    public static final RegistryEntry<Potion> FECAL_INCONTINENCE_POTION = registerPotion(
             "fecal_incontinence_potion",
-            () -> new Potion(new MobEffectInstance(PoEffects.FECAL_INCONTINENCE, 3600, 0))
+            () -> new Potion(new MobEffectInstance(PoEffects.FECAL_INCONTINENCE.get(), 3600, 0))
     );
-    public static final RegistryEntry<Potion, Potion> LONG_FECAL_INCONTINENCE_POTION = registerPotion(
+    public static final RegistryEntry<Potion> LONG_FECAL_INCONTINENCE_POTION = registerPotion(
             "long_fecal_incontinence_potion",
-            () -> new Potion(new MobEffectInstance(PoEffects.FECAL_INCONTINENCE, 9600, 0))
+            () -> new Potion(new MobEffectInstance(PoEffects.FECAL_INCONTINENCE.get(), 9600, 0))
     );
-    public static final RegistryEntry<Potion, Potion> STRONG_FECAL_INCONTINENCE_POTION = registerPotion(
+    public static final RegistryEntry<Potion> STRONG_FECAL_INCONTINENCE_POTION = registerPotion(
             "strong_fecal_incontinence_potion",
-            () -> new Potion(new MobEffectInstance(PoEffects.FECAL_INCONTINENCE, 1800, 1))
+            () -> new Potion(new MobEffectInstance(PoEffects.FECAL_INCONTINENCE.get(), 1800, 1))
     );
-    public static final RegistryEntry<Potion, Potion> SUPER_FECAL_INCONTINENCE_POTION = registerPotion(
+    public static final RegistryEntry<Potion> SUPER_FECAL_INCONTINENCE_POTION = registerPotion(
             "super_fecal_incontinence_potion",
             () -> new Potion(
-                    new MobEffectInstance(PoEffects.FECAL_INCONTINENCE, 1800, 3),
+                    new MobEffectInstance(PoEffects.FECAL_INCONTINENCE.get(), 1800, 3),
                     new MobEffectInstance(MobEffects.WEAKNESS, 1800, 1))
     );
 
-    public static final RegistryEntry<Potion, Potion> ON_THE_VGE_POTION = registerPotion(
+    public static final RegistryEntry<Potion> ON_THE_VGE_POTION = registerPotion(
             "on_the_verge_potion",
-            () -> new Potion(new MobEffectInstance(PoEffects.ON_THE_VERGE, 3600, 0))
+            () -> new Potion(new MobEffectInstance(PoEffects.ON_THE_VERGE.get(), 3600, 0))
     );
-    public static final RegistryEntry<Potion, Potion> LONG_ON_THE_VGE_POTION = registerPotion(
+    public static final RegistryEntry<Potion> LONG_ON_THE_VGE_POTION = registerPotion(
             "long_on_the_verge_potion",
-            () -> new Potion(new MobEffectInstance(PoEffects.ON_THE_VERGE, 9600, 0))
+            () -> new Potion(new MobEffectInstance(PoEffects.ON_THE_VERGE.get(), 9600, 0))
     );
-    public static final RegistryEntry<Potion, Potion> STRONG_ON_THE_VGE_POTION = registerPotion(
+    public static final RegistryEntry<Potion> STRONG_ON_THE_VGE_POTION = registerPotion(
             "strong_on_the_verge_potion",
-            () -> new Potion(new MobEffectInstance(PoEffects.ON_THE_VERGE, 1800, 1))
+            () -> new Potion(new MobEffectInstance(PoEffects.ON_THE_VERGE.get(), 1800, 1))
     );
 
-    public static final RegistryEntry<Potion, Potion> INFESTATION_POTION = registerPotion(
+    public static final RegistryEntry<Potion> INFESTATION_POTION = registerPotion(
             "infestation_potion",
-            () -> new Potion(new MobEffectInstance(PoEffects.INFESTATION, 3600, 0))
+            () -> new Potion(new MobEffectInstance(PoEffects.INFESTATION.get(), 3600, 0))
     );
-    public static final RegistryEntry<Potion, Potion> LONG_INFESTATION_POTION = registerPotion(
+    public static final RegistryEntry<Potion> LONG_INFESTATION_POTION = registerPotion(
             "long_infestation_potion",
-            () -> new Potion(new MobEffectInstance(PoEffects.INFESTATION, 9600, 0))
+            () -> new Potion(new MobEffectInstance(PoEffects.INFESTATION.get(), 9600, 0))
     );
-    public static final RegistryEntry<Potion, Potion> STRONG_INFESTATION_POTION = registerPotion(
+    public static final RegistryEntry<Potion> STRONG_INFESTATION_POTION = registerPotion(
             "strong_infestation_potion",
-            () -> new Potion(new MobEffectInstance(PoEffects.INFESTATION, 1800, 1))
+            () -> new Potion(new MobEffectInstance(PoEffects.INFESTATION.get(), 1800, 1))
     );
 
-    private static RegistryEntry<Potion, Potion> registerPotion(String name, NonNullSupplier<Potion> potion) {
-        RegistryEntry<Potion, Potion> entry = REGISTRATE.simple(name, Registries.POTION, potion);
+    private static RegistryEntry<Potion> registerPotion(String name, NonNullSupplier<Potion> potion) {
+        RegistryEntry<Potion> entry = REGISTRATE.simple(name, Registries.POTION, potion);
         ALL.add(entry);
         return entry;
     }
@@ -71,7 +71,7 @@ public class PoPotions {
     public static void register() {
     }
 
-    public static List<RegistryEntry<Potion, Potion>> all() {
+    public static List<RegistryEntry<Potion>> all() {
         return Collections.unmodifiableList(ALL);
     }
 }

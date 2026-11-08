@@ -25,7 +25,7 @@ public class ToiletBlockItem extends BlockItem {
 
     public static ItemStack withType(Block block, ToiletType toiletType) {
         var stack = new ItemStack(block);
-        stack.set(PoComponents.TOILET_TYPE.get(), toiletType);
+        PoComponents.TOILET_TYPE.set(stack, toiletType);
         return stack;
     }
 
@@ -33,7 +33,7 @@ public class ToiletBlockItem extends BlockItem {
 
     @Override
     public Component getName(ItemStack stack) {
-        ToiletType type = stack.get(PoComponents.TOILET_TYPE.get());
+        ToiletType type = PoComponents.TOILET_TYPE.get(stack);
         if (type != null && type.nameKey() != null) {
             return Component.translatable(TOILET_FORMAT_KEY, Component.translatable(type.nameKey()));
         }
@@ -45,7 +45,7 @@ public class ToiletBlockItem extends BlockItem {
         BlockState state = super.getPlacementState(context);
         if (state == null) return null;
 
-        ToiletType type = context.getItemInHand().get(PoComponents.TOILET_TYPE.get());
+        ToiletType type = PoComponents.TOILET_TYPE.get(context.getItemInHand());
         if (type == null) return state;
 
         Block block = getBlock();
@@ -62,7 +62,7 @@ public class ToiletBlockItem extends BlockItem {
     protected boolean placeBlock(BlockPlaceContext context, BlockState state) {
         boolean result = super.placeBlock(context, state);
         if (result) {
-            ToiletType type = context.getItemInHand().get(PoComponents.TOILET_TYPE.get());
+            ToiletType type = PoComponents.TOILET_TYPE.get(context.getItemInHand());
             if (type != null) {
                 Level level = context.getLevel();
                 BlockPos pos = context.getClickedPos();
@@ -75,9 +75,9 @@ public class ToiletBlockItem extends BlockItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+    public void appendHoverText(ItemStack stack, net.minecraft.world.level.Level context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-        ToiletType type = stack.get(PoComponents.TOILET_TYPE.get());
+        ToiletType type = PoComponents.TOILET_TYPE.get(stack);
         if (type == null) return;
 
         tooltipComponents.add(Component.translatable("tooltip.poopsky.toilet_type")

@@ -11,7 +11,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -27,26 +27,26 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class PoopCakeBlock extends CakeBlock {
+public class PoopCakeBlock extends CakeBlock implements com.altnoir.poopsky.content.block.PoBlockInteraction {
     public PoopCakeBlock(Properties properties) {
         super(properties);
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    public InteractionResult poopsky$useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         Item item = stack.getItem();
         BlockState candleCake = getCandleCakeState(stack, state);
         //noinspection ConstantConditions
         if (candleCake == null) {
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            return InteractionResult.PASS;
         }
 
-        stack.consume(1, player);
+        if (!player.getAbilities().instabuild) stack.shrink(1);
         level.playSound(null, pos, SoundEvents.CAKE_ADD_CANDLE, SoundSource.BLOCKS, 1.0F, 1.0F);
         level.setBlockAndUpdate(pos, candleCake);
         level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
         player.awardStat(Stats.ITEM_USED.get(item));
-        return ItemInteractionResult.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
     private static BlockState getCandleCakeState(ItemStack stack, BlockState cakeState) {
@@ -59,7 +59,7 @@ public class PoopCakeBlock extends CakeBlock {
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+    public InteractionResult poopsky$useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (level.isClientSide) {
             if (eat(level, pos, state, player).consumesAction()) {
                 return InteractionResult.SUCCESS;
@@ -106,7 +106,7 @@ public class PoopCakeBlock extends CakeBlock {
         }
     }
 
-    private static void addOrExtendEffect(Player player, Holder<MobEffect> effect, int duration, int amplifier) {
+    private static void addOrExtendEffect(Player player, MobEffect effect, int duration, int amplifier) {
         MobEffectInstance current = player.getEffect(effect);
 
         if (current == null) {
@@ -122,5 +122,13 @@ public class PoopCakeBlock extends CakeBlock {
                 current.isVisible(),
                 current.showIcon()
         ), player);
+    }
+
+    @Override
+    public net.minecraft.world.InteractionResult use(net.minecraft.world.level.block.state.BlockState state,
+            net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
+        return poopsky$interact(state, level, pos, player, hand, hit);
     }
 }

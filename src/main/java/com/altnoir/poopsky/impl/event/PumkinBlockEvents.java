@@ -1,6 +1,5 @@
 package com.altnoir.poopsky.impl.event;
 
-import com.altnoir.poopsky.content.entity.p.ExplosiveChickenEntity;
 import com.altnoir.poopsky.content.entity.p.FlyEntity;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoEntityType;
@@ -27,8 +26,7 @@ public class PumkinBlockEvents {
     public enum GolemType {
         VILLAGER,
         BLAZE,
-        FLY,
-        EXPLOSIVE_CHICKEN
+        FLY
     }
 
     public record SpawnResult(GolemType type, Entity entity, BlockPattern.BlockPatternMatch match, BlockPos spawnPos) {
@@ -49,10 +47,6 @@ public class PumkinBlockEvents {
         if (match != null) {
             return createFly(level, match);
         }
-        match = getExplosiveChicken(predicate).find(level, pos);
-        if (match != null) {
-            return createExplosiveChicken(level, match);
-        }
         return null;
     }
 
@@ -67,7 +61,7 @@ public class PumkinBlockEvents {
     private static SpawnResult createBlaze(Level level, BlockPattern.BlockPatternMatch match) {
         Blaze blaze = EntityType.BLAZE.create(level);
         if (blaze != null) {
-            blaze.getAttribute(Attributes.SCALE).setBaseValue(0.5);
+            blaze.getAttribute(com.altnoir.poopsky.init.PoAttributes.SCALE.get()).setBaseValue(0.5);
             blaze.targetSelector.getAvailableGoals().removeIf(goal -> goal.getGoal() instanceof NearestAttackableTargetGoal);
             blaze.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(blaze, Mob.class, 10, true, false,
                     livingEntity -> livingEntity instanceof Enemy && !(livingEntity instanceof Blaze)));
@@ -80,16 +74,10 @@ public class PumkinBlockEvents {
         return new SpawnResult(GolemType.FLY, fly, match, match.getBlock(0, 1, 0).getPos());
     }
 
-    private static SpawnResult createExplosiveChicken(Level level, BlockPattern.BlockPatternMatch match) {
-        ExplosiveChickenEntity chicken = PoEntityType.EXPLOSIVE_CHICKEN.get().create(level);
-        return new SpawnResult(GolemType.EXPLOSIVE_CHICKEN, chicken, match, match.getBlock(0, 1, 0).getPos());
-    }
-
     public static boolean canSpawnCustomGolem(LevelReader level, BlockPos pos) {
         return getVillagerDispenser().find(level, pos) != null
                 || getBlazeDispenser().find(level, pos) != null
-                || getFlyDispenser().find(level, pos) != null
-                || getExplosiveChickenDispenser().find(level, pos) != null;
+                || getFlyDispenser().find(level, pos) != null;
     }
 
 
@@ -135,21 +123,6 @@ public class PumkinBlockEvents {
         return BlockPatternBuilder.start()
                 .aisle(" ", "#")
                 .where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(PoBlocks.MAGGOTS_BLOCK.get())))
-                .build();
-    }
-
-    private static BlockPattern getExplosiveChicken(Predicate<BlockState> predicate) {
-        return BlockPatternBuilder.start()
-                .aisle("^", "#")
-                .where('^', BlockInWorld.hasState(predicate))
-                .where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(PoBlocks.POP.get())))
-                .build();
-    }
-
-    private static BlockPattern getExplosiveChickenDispenser() {
-        return BlockPatternBuilder.start()
-                .aisle(" ", "#")
-                .where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(PoBlocks.POP.get())))
                 .build();
     }
 

@@ -6,11 +6,9 @@ import com.altnoir.poopsky.data.ArcadeLootGen;
 import com.altnoir.poopsky.game.Button;
 import com.altnoir.poopsky.game.GameStage;
 import com.altnoir.poopsky.game.ServerGame;
-import com.altnoir.poopsky.game.operation.ServerTouhouGame;
 import com.altnoir.poopsky.impl.network.ArcadeGameSnapshotPacket;
 import com.altnoir.poopsky.impl.util.DispenseUtil;
 import com.altnoir.poopsky.init.PoBlockEntityType;
-import com.altnoir.poopsky.init.PoItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -21,7 +19,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.entity.decoration.GlowItemFrame;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -32,10 +29,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.minecraftforge.items.ItemStackHandler;
+import com.altnoir.poopsky.impl.network.PoNetworking;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -45,7 +41,6 @@ import java.util.UUID;
 
 public class ArcadeBlockEntity extends BlockEntity {
     public static final int MAX_REWARD_COUNT = 99;
-    private static final int DEBUG_CHECK_INTERVAL = 20;
 
     private final ItemStackHandler inventory = new ItemStackHandler(1) {
         @Override
@@ -65,8 +60,6 @@ public class ArcadeBlockEntity extends BlockEntity {
     private UUID activePlayer;
     private boolean scoreSettled;
     private boolean serverInitialized;
-    private boolean debugMode;
-    private int debugCheckCooldown;
 
     public ArcadeBlockEntity(BlockPos pos, BlockState state) {
         super(PoBlockEntityType.ARCADE_BLOCK_ENTITY.get(), pos, state);
@@ -200,14 +193,6 @@ public class ArcadeBlockEntity extends BlockEntity {
             return;
         }
 
-        if (game instanceof ServerTouhouGame touhouGame && level instanceof ServerLevel serverLevel) {
-            if (activePlayer != null && --debugCheckCooldown <= 0) {
-                debugCheckCooldown = DEBUG_CHECK_INTERVAL;
-                debugMode = hasDebugFrame(serverLevel);
-            }
-            touhouGame.setDebugMode(activePlayer != null && debugMode);
-        }
-
         game.tick();
         if (!scoreSettled && (game.getStage() == GameStage.DIED || game.getStage() == GameStage.WON)) {
             settleActiveGame();
@@ -217,18 +202,6 @@ public class ArcadeBlockEntity extends BlockEntity {
             snapshotCooldown = 1;
             sendGameSnapshot();
         }
-    }
-
-    private boolean hasDebugFrame(ServerLevel serverLevel) {
-        Direction back = getBlockState().getValue(ArcadeBlock.FACING).getOpposite();
-        BlockPos framePos = getBlockPos().relative(back);
-        return !serverLevel.getEntitiesOfClass(
-                GlowItemFrame.class,
-                new AABB(framePos),
-                frame -> frame.getPos().equals(framePos)
-                        && frame.getDirection() == back
-                        && frame.getItem().is(PoItems.TIME_BELL.get())
-        ).isEmpty();
     }
 
     private void refreshSession() {
@@ -248,7 +221,6 @@ public class ArcadeBlockEntity extends BlockEntity {
 
     private void beginControl(UUID player) {
         activePlayer = player;
-        debugCheckCooldown = 0;
         snapshotCooldown = 0;
         if (game == null || game.getStage() != GameStage.DIED && game.getStage() != GameStage.WON) {
             scoreSettled = false;
@@ -373,7 +345,7 @@ public class ArcadeBlockEntity extends BlockEntity {
         if (!(level instanceof ServerLevel serverLevel)) {
             return List.of();
         }
-        LootTable lootTable = serverLevel.getServer().reloadableRegistries()
+        LootTable lootTable = serverLevel.getServer().getLootData()
                 .getLootTable(ArcadeLootGen.lootTableKey(getBlockState().getBlock()));
         LootParams params = new LootParams.Builder(serverLevel).create(LootContextParamSets.EMPTY);
         return lootTable.getRandomItems(params).stream()
@@ -417,7 +389,7 @@ public class ArcadeBlockEntity extends BlockEntity {
         if (!(level instanceof ServerLevel serverLevel) || game == null) {
             return;
         }
-        PacketDistributor.sendToPlayersTrackingChunk(
+        PoNetworking.sendToPlayersTrackingChunk(
                 serverLevel,
                 new ChunkPos(getBlockPos()),
                 new ArcadeGameSnapshotPacket(
@@ -434,8 +406,8 @@ public class ArcadeBlockEntity extends BlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
-        CompoundTag tag = saveWithoutMetadata(registries);
+    public CompoundTag getUpdateTag() {
+        CompoundTag tag = saveWithoutMetadata();
         if (activePlayer != null) {
             tag.putString("active_player", activePlayer.toString());
         }
@@ -448,9 +420,9 @@ public class ArcadeBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.put("cartridge", inventory.serializeNBT(registries));
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        tag.put("cartridge", inventory.serializeNBT());
         tag.putInt("reward_count", rewardCount);
 
         CompoundTag scores = new CompoundTag();
@@ -463,10 +435,10 @@ public class ArcadeBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
+    public void load(CompoundTag tag) {
+        super.load(tag);
         if (tag.contains("cartridge")) {
-            inventory.deserializeNBT(registries, tag.getCompound("cartridge"));
+            inventory.deserializeNBT(tag.getCompound("cartridge"));
         }
 
         rewardCount = tag.getInt("reward_count");

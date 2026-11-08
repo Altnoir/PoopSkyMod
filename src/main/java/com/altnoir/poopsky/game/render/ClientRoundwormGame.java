@@ -46,7 +46,7 @@ public class ClientRoundwormGame extends ClientGame {
             if (i == 0) {
                 roundwormRenderer.setImage(TAIL.setImage(VecUtil.get4DirectionTo(roundworm.get(0), roundworm.get(1))));
             } else if (i == roundworm.size() - 1) {
-                roundwormRenderer.setImage(HEAD.setImage(VecUtil.get4DirectionTo(roundworm.get(roundworm.size() - 2), roundworm.getLast())));
+                roundwormRenderer.setImage(HEAD.setImage(VecUtil.get4DirectionTo(roundworm.get(roundworm.size() - 2), roundworm.get(roundworm.size() - 1))));
             } else {
                 roundwormRenderer.setImage(BODY);
             }

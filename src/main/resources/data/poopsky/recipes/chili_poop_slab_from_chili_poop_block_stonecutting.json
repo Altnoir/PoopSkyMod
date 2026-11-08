@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "poopsky:chili_poop_block"
+  },
+  "result": "poopsky:chili_poop_slab",
+  "count": 2
+}

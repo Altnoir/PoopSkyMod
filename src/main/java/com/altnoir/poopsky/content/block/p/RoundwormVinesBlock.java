@@ -4,7 +4,6 @@ import com.altnoir.poopsky.content.entity.p.FlyEntity;
 import com.altnoir.poopsky.impl.type.damageType.PoDamageTypes;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -20,23 +19,18 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.GrowingPlantHeadBlock;
 import net.minecraft.world.level.block.NetherVines;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 public class RoundwormVinesBlock extends GrowingPlantHeadBlock {
-    public static final MapCodec<RoundwormVinesBlock> CODEC = simpleCodec(RoundwormVinesBlock::new);
     public static final VoxelShape SHAPE = Block.box(4.0, 0.0, 4.0, 12.0, 15.0, 12.0);
 
     public RoundwormVinesBlock(Properties properties) {
         super(properties, Direction.UP, SHAPE, false, 0.1);
     }
 
-    @Override
-    protected MapCodec<? extends GrowingPlantHeadBlock> codec() {
-        return CODEC;
-    }
 
     @Override
     protected Block getBodyBlock() {
@@ -54,22 +48,22 @@ public class RoundwormVinesBlock extends GrowingPlantHeadBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, net.minecraft.world.level.BlockGetter level, BlockPos pos, Player player) {
         return new ItemStack(PoItems.ROUNDWORM.get());
     }
 
     @Override
-    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if (entity instanceof FlyEntity fly && fly.isAlive()) {
-            fly.hurt(level.damageSources().source(PoDamageTypes.ROUNDWORM), 2.0F);
+            fly.hurt(PoDamageTypes.source(level, PoDamageTypes.ROUNDWORM), 2.0F);
         } else if (entity instanceof LivingEntity livingEntity) {
-            livingEntity.hurt(level.damageSources().source(PoDamageTypes.ROUNDWORM), 0.5F);
+            livingEntity.hurt(PoDamageTypes.source(level, PoDamageTypes.ROUNDWORM), 0.5F);
         }
         super.entityInside(state, level, pos, entity);
     }
 
     @Override
-    public PathType getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, @Nullable Mob mob) {
-        return PathType.DAMAGE_OTHER;
+    public BlockPathTypes getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, @Nullable Mob mob) {
+        return BlockPathTypes.DAMAGE_OTHER;
     }
 }

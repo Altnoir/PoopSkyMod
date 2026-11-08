@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "A": {
+      "item": "poopsky:poop_block"
+    },
+    "S": {
+      "tag": "forge:gunpowder"
+    }
+  },
+  "pattern": [
+    "SAS",
+    "ASA",
+    "SAS"
+  ],
+  "result": {
+    "count": 1,
+    "item": "poopsky:poop_tnt"
+  }
+}

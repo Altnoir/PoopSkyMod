@@ -5,17 +5,11 @@ import com.altnoir.poopsky.content.block.entity.*;
 import com.altnoir.poopsky.content.block.renderer.ArcadeBlockEntityRenderer;
 import com.altnoir.poopsky.content.block.renderer.MaggotsChunkLoaderBlockEntityRenderer;
 import com.altnoir.poopsky.content.block.renderer.SieveBlockEntityRenderer;
-import com.altnoir.abysslib.reginth.Reginth;
-import com.altnoir.abysslib.reginth.util.entry.BlockEntityEntry;
+import com.altnoir.poopsky.impl.registrate.PoRegistrate;
+import com.tterrag.registrate.util.entry.BlockEntityEntry;
 
 public class PoBlockEntityType {
-    private static final Reginth REGISTRATE = PoopSky.registrate();
-
-    public static final BlockEntityEntry<PoopFlowerBlockEntity> POOP_FLOWER = REGISTRATE
-            .<PoopFlowerBlockEntity>blockEntity("poop_flower", (type, pos, state) -> new PoopFlowerBlockEntity(pos, state))
-            .validBlocks(PoBlocks.SHIT, PoBlocks.CHILI_SHIT, PoBlocks.GOLDEN_SHIT)
-            .renderer(() -> com.altnoir.poopsky.client.renderer.PoopFlowerRenderer::new)
-            .register();
+    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
     public static final BlockEntityEntry<ToiletBlockEntity> TOILET_BLOCK_ENTITY = REGISTRATE
             .<ToiletBlockEntity>blockEntity("toilet_block_entity", (type, pos, state) -> new ToiletBlockEntity(pos, state))
@@ -33,11 +27,6 @@ public class PoBlockEntityType {
             .validBlock(PoBlocks.PLACER)
             .register();
 
-    public static final BlockEntityEntry<IgneousExtruderBlockEntity> IGNEOUS_EXTRUDER = REGISTRATE
-            .<IgneousExtruderBlockEntity>blockEntity("igneous_extruder", (type, pos, state) -> new IgneousExtruderBlockEntity(pos, state))
-            .validBlock(PoBlocks.IGNEOUS_EXTRUDER)
-            .register();
-
     public static final BlockEntityEntry<MaggotsChunkLoaderBlockEntity> MAGGOTS_CHUNK_LOADER = REGISTRATE
             .<MaggotsChunkLoaderBlockEntity>blockEntity("maggots_chunk_loader", (type, pos, state) -> new MaggotsChunkLoaderBlockEntity(pos, state))
             .validBlock(PoBlocks.MAGGOTS_CHUNK_LOADER)
@@ -52,11 +41,6 @@ public class PoBlockEntityType {
     public static final BlockEntityEntry<BreedingChestBlockEntity> BREEDING_CHEST = REGISTRATE
             .<BreedingChestBlockEntity>blockEntity("breeding_chest", (type, pos, state) -> new BreedingChestBlockEntity(pos, state))
             .validBlock(PoBlocks.BREEDING_CHEST)
-            .register();
-
-    public static final BlockEntityEntry<FilthySeedbedBlockEntity> FILTHY_SEEDBED = REGISTRATE
-            .<FilthySeedbedBlockEntity>blockEntity("filthy_seedbed", (type, pos, state) -> new FilthySeedbedBlockEntity(pos, state))
-            .validBlock(PoBlocks.FILTHY_SEEDBED)
             .register();
 
     public static final BlockEntityEntry<FlushToiletBlockEntity> FLUSH_TOILET = REGISTRATE

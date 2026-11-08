@@ -25,12 +25,21 @@ import net.minecraft.world.phys.HitResult;
 
 public class PoopBall extends ThrowableItemProjectile {
 
+    public PoopBall(EntityType<? extends PoopBall> type, Level level) {
+        super(type, level);
+    }
+
     public PoopBall(Level level, LivingEntity shooter) {
-        super(EntityType.SNOWBALL, shooter, level);
+        super(com.altnoir.poopsky.init.PoEntityType.POOP_BALL.get(), shooter, level);
     }
 
     public PoopBall(Level level, double x, double y, double z) {
-        super(EntityType.SNOWBALL, x, y, z, level);
+        super(com.altnoir.poopsky.init.PoEntityType.POOP_BALL.get(), x, y, z, level);
+    }
+
+    @Override
+    public net.minecraft.network.protocol.Packet<net.minecraft.network.protocol.game.ClientGamePacketListener> getAddEntityPacket() {
+        return net.minecraftforge.network.NetworkHooks.getEntitySpawningPacket(this);
     }
 
     @Override
@@ -40,7 +49,7 @@ public class PoopBall extends ThrowableItemProjectile {
 
     private ParticleOptions getParticle() {
         ItemStack itemstack = this.getItem();
-        return !itemstack.isEmpty() && !itemstack.is(this.getDefaultItem()) ? new ItemParticleOption(ParticleTypes.ITEM, itemstack) : ParticleTypes.ITEM_SNOWBALL;
+        return new ItemParticleOption(ParticleTypes.ITEM, itemstack);
     }
 
     /**
@@ -65,7 +74,7 @@ public class PoopBall extends ThrowableItemProjectile {
         super.onHitEntity(result);
         Entity entity = result.getEntity();
         int i = entity instanceof Slime ? 3 : 1;
-        entity.hurt(this.damageSources().source(PoDamageTypes.POOP_BALL, this, this.getOwner()), (float) i);
+        entity.hurt(PoDamageTypes.source(this.level(), PoDamageTypes.POOP_BALL, this, this.getOwner()), (float) i);
 
         if (entity instanceof LivingEntity livingEntity) {
             livingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 100, 0), this.getOwner());

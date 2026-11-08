@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "A": {
+      "item": "minecraft:redstone"
+    },
+    "P": {
+      "item": "poopsky:toilet_plug"
+    },
+    "S": {
+      "item": "minecraft:mossy_cobblestone"
+    }
+  },
+  "pattern": [
+    "SSS",
+    "SPS",
+    "SAS"
+  ],
+  "result": {
+    "count": 1,
+    "item": "poopsky:placer"
+  }
+}

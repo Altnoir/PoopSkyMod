@@ -24,7 +24,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.Spawner;
+import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -41,27 +41,27 @@ public class FlyItem extends Item {
 
     public static ItemStack withType(FlyType.Type type) {
         var stack = new ItemStack(PoItems.FLY.get());
-        stack.set(PoComponents.FLY_TYPE.get(), type.id());
+        PoComponents.FLY_TYPE.set(stack, type.id());
         return stack;
     }
 
     public static ItemStack withType(String typeId) {
         var stack = new ItemStack(PoItems.FLY.get());
-        stack.set(PoComponents.FLY_TYPE.get(), typeId);
+        PoComponents.FLY_TYPE.set(stack, typeId);
         return stack;
     }
 
     public static FlyType.Type getFlyType(ItemStack stack) {
-        String typeId = stack.get(PoComponents.FLY_TYPE.get());
+        String typeId = PoComponents.FLY_TYPE.get(stack);
         return typeId != null ? FlyType.byId(typeId) : FlyTypes.NORMAL.get();
     }
 
     public static boolean isFlyItem(ItemStack stack) {
-        return stack.has(PoComponents.FLY_TYPE.get());
+        return PoComponents.FLY_TYPE.has(stack);
     }
 
     public static boolean canSpawnDefaultFly(ItemStack stack) {
-        String typeId = stack.get(PoComponents.FLY_TYPE.get());
+        String typeId = PoComponents.FLY_TYPE.get(stack);
         return typeId == null || typeId.equals(FlyTypes.NORMAL.id());
     }
 
@@ -80,8 +80,8 @@ public class FlyItem extends Item {
         BlockPos clickedPos = context.getClickedPos();
         Direction direction = context.getClickedFace();
         BlockState state = level.getBlockState(clickedPos);
-        if (level.getBlockEntity(clickedPos) instanceof Spawner spawner) {
-            spawner.setEntityId(PoEntityType.FLY.get(), level.getRandom());
+        if (level.getBlockEntity(clickedPos) instanceof SpawnerBlockEntity spawner) {
+            spawner.getSpawner().setEntityId(PoEntityType.FLY.get(), level, level.getRandom(), clickedPos);
             level.sendBlockUpdated(clickedPos, state, state, 3);
             level.gameEvent(context.getPlayer(), GameEvent.BLOCK_CHANGE, clickedPos);
             stack.shrink(1);
@@ -142,13 +142,13 @@ public class FlyItem extends Item {
             return false;
         }
 
-        stack.consume(1, player);
+        if (!player.getAbilities().instabuild) stack.shrink(1);
         level.gameEvent(player, GameEvent.ENTITY_PLACE, entity.position());
         return true;
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+    public void appendHoverText(ItemStack stack, net.minecraft.world.level.Level context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
         FlyType.Type type = getFlyType(stack);
         tooltipComponents.add(Component.translatable("tooltip.poopsky.fly_type")

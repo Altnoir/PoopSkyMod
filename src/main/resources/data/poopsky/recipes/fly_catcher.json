@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "R": {
+      "item": "poopsky:roundworm"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "RRD",
+    "RS ",
+    "S  "
+  ],
+  "result": {
+    "count": 1,
+    "item": "poopsky:fly_catcher"
+  }
+}

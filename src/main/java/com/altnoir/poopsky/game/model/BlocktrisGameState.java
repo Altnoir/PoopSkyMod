@@ -51,7 +51,7 @@ public final class BlocktrisGameState {
     public PlacementResult placeCurrent(Random random) {
         piece.place();
         int clearedLines = clearLines();
-        piece = next.removeFirst();
+        piece = next.remove(0);
         next.add(new Piece(random.nextInt(BlocktrisShapes.PIECES.size())));
         return new PlacementResult(clearedLines, piece.touches());
     }

@@ -13,7 +13,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.event.level.LevelEvent;
+import net.minecraftforge.event.level.LevelEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -144,9 +144,9 @@ public class MaggotsChunkLoaderBlockEntityRenderer implements BlockEntityRendere
                                    float x3, float y3, float z3,
                                    float x4, float y4, float z4,
                                    float alpha, float red, float green, float blue) {
-        consumer.addVertex(pose, x1, y1, z1).setColor(red, green, blue, alpha);
-        consumer.addVertex(pose, x2, y2, z2).setColor(red, green, blue, alpha);
-        consumer.addVertex(pose, x3, y3, z3).setColor(red, green, blue, alpha);
-        consumer.addVertex(pose, x4, y4, z4).setColor(red, green, blue, alpha);
+        consumer.vertex(pose.pose(), x1, y1, z1).color(red, green, blue, alpha).endVertex();
+        consumer.vertex(pose.pose(), x2, y2, z2).color(red, green, blue, alpha).endVertex();
+        consumer.vertex(pose.pose(), x3, y3, z3).color(red, green, blue, alpha).endVertex();
+        consumer.vertex(pose.pose(), x4, y4, z4).color(red, green, blue, alpha).endVertex();
     }
 }

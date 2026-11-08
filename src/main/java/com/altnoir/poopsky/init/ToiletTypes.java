@@ -57,8 +57,8 @@ public final class ToiletTypes {
     public static final ToiletType DEEPSLATE_BRICK = ToiletType.register(Blocks.DEEPSLATE_BRICKS, ToiletType.Category.HARD);
     public static final ToiletType DEEPSLATE_TILE = ToiletType.register(Blocks.DEEPSLATE_TILES, ToiletType.Category.HARD);
     public static final ToiletType TUFF = ToiletType.register(Blocks.TUFF, ToiletType.Category.HARD);
-    public static final ToiletType POLISHED_TUFF = ToiletType.register(Blocks.POLISHED_TUFF, ToiletType.Category.HARD);
-    public static final ToiletType TUFF_BRICK = ToiletType.register(Blocks.TUFF_BRICKS, ToiletType.Category.HARD);
+    public static final ToiletType POLISHED_TUFF = ToiletType.register(com.altnoir.poopsky.init.PoVanillaBackport.POLISHED_TUFF.get(), ToiletType.Category.HARD);
+    public static final ToiletType TUFF_BRICK = ToiletType.register(com.altnoir.poopsky.init.PoVanillaBackport.TUFF_BRICKS.get(), ToiletType.Category.HARD);
     public static final ToiletType BRICK = ToiletType.register(Blocks.BRICKS, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.brick");
     public static final ToiletType MUD_BRICK = ToiletType.register(Blocks.MUD_BRICKS, ToiletType.Category.HARD);
     public static final ToiletType SANDSTONE = ToiletType.register(Blocks.SANDSTONE, ToiletType.Category.HARD);
@@ -124,10 +124,10 @@ public final class ToiletTypes {
     public static final ToiletType EXPOSED_COPPER = ToiletType.register(Blocks.EXPOSED_COPPER, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.exposed_copper");
     public static final ToiletType WEATHERED_COPPER = ToiletType.register(Blocks.WEATHERED_COPPER, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.weathered_copper");
     public static final ToiletType OXIDIZED_COPPER = ToiletType.register(Blocks.OXIDIZED_COPPER, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.oxidized_copper");
-    public static final ToiletType CHISELED_COPPER = ToiletType.register(Blocks.CHISELED_COPPER, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.chiseled_copper");
-    public static final ToiletType EXPOSED_CHISELED_COPPER = ToiletType.register(Blocks.EXPOSED_CHISELED_COPPER, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.exposed_chiseled_copper");
-    public static final ToiletType WEATHERED_CHISELED_COPPER = ToiletType.register(Blocks.WEATHERED_CHISELED_COPPER, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.weathered_chiseled_copper");
-    public static final ToiletType OXIDIZED_CHISELED_COPPER = ToiletType.register(Blocks.OXIDIZED_CHISELED_COPPER, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.oxidized_chiseled_copper");
+    public static final ToiletType CHISELED_COPPER = ToiletType.register(com.altnoir.poopsky.init.PoVanillaBackport.CHISELED_COPPER.get(), ToiletType.Category.HARD).nameKey("block.poopsky.toilet.chiseled_copper");
+    public static final ToiletType EXPOSED_CHISELED_COPPER = ToiletType.register(com.altnoir.poopsky.init.PoVanillaBackport.EXPOSED_CHISELED_COPPER.get(), ToiletType.Category.HARD).nameKey("block.poopsky.toilet.exposed_chiseled_copper");
+    public static final ToiletType WEATHERED_CHISELED_COPPER = ToiletType.register(com.altnoir.poopsky.init.PoVanillaBackport.WEATHERED_CHISELED_COPPER.get(), ToiletType.Category.HARD).nameKey("block.poopsky.toilet.weathered_chiseled_copper");
+    public static final ToiletType OXIDIZED_CHISELED_COPPER = ToiletType.register(com.altnoir.poopsky.init.PoVanillaBackport.OXIDIZED_CHISELED_COPPER.get(), ToiletType.Category.HARD).nameKey("block.poopsky.toilet.oxidized_chiseled_copper");
     public static final ToiletType CUT_COPPER = ToiletType.register(Blocks.CUT_COPPER, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.cut_copper");
     public static final ToiletType EXPOSED_CUT_COPPER = ToiletType.register(Blocks.EXPOSED_CUT_COPPER, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.exposed_cut_copper");
     public static final ToiletType WEATHERED_CUT_COPPER = ToiletType.register(Blocks.WEATHERED_CUT_COPPER, ToiletType.Category.HARD).nameKey("block.poopsky.toilet.weathered_cut_copper");

@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.game;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.codec.StreamCodec;
+import com.altnoir.poopsky.impl.network.codec.StreamCodec;
 
 public enum Button {
     UP, DOWN, LEFT, RIGHT, BUTTON1, BUTTON2;

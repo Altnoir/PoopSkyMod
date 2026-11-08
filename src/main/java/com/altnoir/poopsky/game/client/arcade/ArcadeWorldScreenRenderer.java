@@ -2,14 +2,13 @@ package com.altnoir.poopsky.game.client.arcade;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.item.p.GameDiskItem;
-import com.altnoir.poopsky.game.Button;
 import com.altnoir.poopsky.game.client.ArcadeControlSession;
 import com.altnoir.poopsky.game.client.ClientGame;
 import com.altnoir.poopsky.game.client.ClientGameTypes;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.ByteBufferBuilder;
+import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.VertexSorting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -19,10 +18,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
-import net.neoforged.neoforge.client.event.RenderFrameEvent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
+import net.minecraftforge.event.TickEvent;
 import org.joml.Matrix4f;
 import org.joml.Matrix4fStack;
 
@@ -39,7 +38,8 @@ public final class ArcadeWorldScreenRenderer {
     private ArcadeWorldScreenRenderer() {
     }
 
-    public static void onRenderFrame(RenderFrameEvent.Pre event) {
+    public static void onRenderFrame(TickEvent.RenderTickEvent event) {
+        if (event.phase != TickEvent.Phase.START) return;
         renderFrame();
     }
 
@@ -74,14 +74,6 @@ public final class ArcadeWorldScreenRenderer {
         ScreenState state = getOrCreate(pos, disc);
         state.snapshot = snapshot;
         state.cartridgeClientGame.applySnapshot(snapshot);
-    }
-
-    /** 玩家按下街机按键（仅本地操作者）：转发给对应屏幕的客户端游戏做本地展示。 */
-    public static void onButtonPressed(BlockPos pos, Button button) {
-        ScreenState state = SCREENS.get(pos);
-        if (state != null && state.cartridgeClientGame != null) {
-            state.cartridgeClientGame.onButtonDown(button);
-        }
     }
 
     public static void onClientStop() {
@@ -122,10 +114,10 @@ public final class ArcadeWorldScreenRenderer {
             return;
         }
         RenderSystem.backupProjectionMatrix();
-        Matrix4fStack modelViewStack = RenderSystem.getModelViewStack();
-        modelViewStack.pushMatrix();
-        modelViewStack.identity();
-        modelViewStack.translation(0.0F, 0.0F, -2000.0F);
+        var modelViewStack = RenderSystem.getModelViewStack();
+        modelViewStack.pushPose();
+        modelViewStack.setIdentity();
+        modelViewStack.translate(0.0F, 0.0F, -2000.0F);
         RenderSystem.applyModelViewMatrix();
 
         state.target.setClearColor(0.0F, 0.0F, 0.0F, 1.0F);
@@ -149,7 +141,7 @@ public final class ArcadeWorldScreenRenderer {
             state.texture.upload();
         }
 
-        modelViewStack.popMatrix();
+        modelViewStack.popPose();
         RenderSystem.applyModelViewMatrix();
         RenderSystem.restoreProjectionMatrix();
         Minecraft.getInstance().getMainRenderTarget().bindWrite(true);
@@ -163,7 +155,7 @@ public final class ArcadeWorldScreenRenderer {
         private CompoundTag snapshot;
         private RenderTarget target;
         private DynamicTexture texture;
-        private ByteBufferBuilder bufferBuilder;
+        private BufferBuilder bufferBuilder;
         private MultiBufferSource.BufferSource bufferSource;
 
         private ScreenState(BlockPos pos, GameDiskItem cartridge) {
@@ -185,17 +177,14 @@ public final class ArcadeWorldScreenRenderer {
                 Minecraft.getInstance().getTextureManager().register(textureLocation, texture);
             }
             if (bufferBuilder == null) {
-                bufferBuilder = new ByteBufferBuilder(786432);
+                bufferBuilder = new BufferBuilder(786432);
                 bufferSource = MultiBufferSource.immediate(bufferBuilder);
             }
         }
 
         private void close() {
-            if (cartridgeClientGame != null) {
-                cartridgeClientGame.onRemoved();
-            }
             if (bufferBuilder != null) {
-                bufferBuilder.close();
+                bufferBuilder.clear();
                 bufferBuilder = null;
                 bufferSource = null;
             }

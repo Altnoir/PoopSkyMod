@@ -13,7 +13,7 @@ import com.altnoir.poopsky.init.ToiletTypes;
 import com.altnoir.poopsky.worldgen.PoConfigureFeatures;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.dispenser.BlockSource;
+import net.minecraft.core.BlockSource;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -25,7 +25,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
@@ -55,11 +55,11 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.common.ItemAbilities;
+import net.minecraftforge.common.ToolActions;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class AbstractToiletBlock extends BaseEntityBlock {
+public abstract class AbstractToiletBlock extends BaseEntityBlock implements com.altnoir.poopsky.content.block.PoBlockInteraction {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final EnumProperty<ToiletState> CONNECTION = EnumProperty.create("connection", ToiletState.class);
 
@@ -104,9 +104,13 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
         }
     }
 
+    @Override
+    public void initializeClient(java.util.function.Consumer<net.minecraftforge.client.extensions.common.IClientBlockExtensions> consumer) {
+        consumer.accept(com.altnoir.poopsky.client.ToiletClientBlockExtensions.INSTANCE);
+    }
+
     public AbstractToiletBlock(Properties properties) {
         super(properties);
-        ToiletTypes.init();
         this.registerDefaultState(
                 this.defaultBlockState()
                         .setValue(FACING, Direction.NORTH)
@@ -136,7 +140,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, net.minecraft.world.level.BlockGetter level, BlockPos pos, Player player) {
         return ToiletBlockItem.withType(this, getToiletTypeOrDefault(level, pos));
     }
 
@@ -164,9 +168,9 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (!stack.canPerformAction(ItemAbilities.FIRESTARTER_LIGHT)) {
-            return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
+    public InteractionResult poopsky$useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (!(stack.is(net.minecraft.world.item.Items.FLINT_AND_STEEL) || stack.is(net.minecraft.world.item.Items.FIRE_CHARGE))) {
+            return InteractionResult.PASS;
         }
 
         Item item = stack.getItem();
@@ -176,19 +180,19 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
 
         consumeFireStarter(stack, player, hand);
         player.awardStat(Stats.ITEM_USED.get(item));
-        return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
     private void consumeFireStarter(ItemStack stack, Player player, InteractionHand hand) {
         if (stack.is(Items.FIRE_CHARGE)) {
-            stack.consume(1, player);
+            if (!player.getAbilities().instabuild) stack.shrink(1);
             return;
         }
-        stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
+        stack.hurtAndBreak(1, player, user -> user.broadcastBreakEvent(hand));
     }
 
     @Nullable
-    protected ItemInteractionResult handleVariantReplacement(ItemStack stack, Level level, BlockPos pos, Player player, ToiletType.Category acceptedCategory) {
+    protected InteractionResult handleVariantReplacement(ItemStack stack, Level level, BlockPos pos, Player player, ToiletType.Category acceptedCategory) {
         if (!(stack.getItem() instanceof BlockItem blockItem)) {
             return null;
         }
@@ -199,7 +203,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
         }
 
         if (level.isClientSide) {
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
 
         if (!(level.getBlockEntity(pos) instanceof ToiletBlockEntity blockEntity)) {
@@ -207,7 +211,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
         }
 
         replaceVariant(blockItem, stack, level, pos, player, blockEntity, newType);
-        return ItemInteractionResult.sidedSuccess(false);
+        return InteractionResult.sidedSuccess(false);
     }
 
     private void replaceVariant(BlockItem blockItem, ItemStack stack, Level level, BlockPos pos, Player player, ToiletBlockEntity blockEntity, ToiletType newType) {
@@ -219,7 +223,7 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
         blockEntity.setToiletType(newType);
         playVariantReplaceSound(blockItem, level, pos, player);
 
-        stack.consume(1, player);
+        if (!player.getAbilities().instabuild) stack.shrink(1);
         if (!player.getAbilities().instabuild && currentType != null) {
             dropVariantSource(level, pos, currentType);
         }
@@ -283,14 +287,14 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
         if (!level.isClientSide && entity instanceof Player player) {
             if (player.isShiftKeyDown() && ToiletUtil.isEntityCentered(pos, player)) {
-                ToiletUtil.playerToiletPoop(level, player, player.hasEffect(PoEffects.INTESTINAL_SPASM),
+                ToiletUtil.playerToiletPoop(level, player, player.hasEffect(PoEffects.INTESTINAL_SPASM.get()),
                         false, 0.1F, 0.5F);
             }
         }
     }
 
     @Override
-    protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (state.getBlock() instanceof BaseToiletLavaBlock && state.getValue(BaseToiletLavaBlock.LAVA)) {
             return;
         }
@@ -328,12 +332,12 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected VoxelShape getInteractionShape(BlockState state, BlockGetter level, BlockPos pos) {
+    public VoxelShape getInteractionShape(BlockState state, BlockGetter level, BlockPos pos) {
         return Shapes.block();
     }
 
     @Override
-    protected VoxelShape getVisualShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public VoxelShape getVisualShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return getToiletShape(state);
     }
 
@@ -484,13 +488,13 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     }
 
     public static void dispenserToiletExplosion(ItemLike item, ToiletExplosionConsumer onToilet) {
-        DispenseItemBehavior original = DispenserBlock.DISPENSER_REGISTRY.get(item.asItem());
+        DispenseItemBehavior original = com.altnoir.poopsky.mixin.DispenserAccessor.poopsky$getBehaviors().get(item.asItem());
         DispenserBlock.registerBehavior(item, new OptionalDispenseItemBehavior() {
             @Override
             protected ItemStack execute(BlockSource source, ItemStack stack) {
-                ServerLevel level = source.level();
-                Direction direction = source.state().getValue(DispenserBlock.FACING);
-                BlockPos pos = source.pos().relative(direction);
+                ServerLevel level = source.getLevel();
+                Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
+                BlockPos pos = source.getPos().relative(direction);
 
                 if (level.getBlockState(pos).getBlock() instanceof AbstractToiletBlock toilet) {
                     this.setSuccess(true);
@@ -505,12 +509,20 @@ public abstract class AbstractToiletBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
+    public boolean isPathfindable(BlockState state, net.minecraft.world.level.BlockGetter pathLevel, net.minecraft.core.BlockPos pathPos, PathComputationType pathComputationType) {
         return false;
     }
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
         return level.isClientSide() ? null : createTickerHelper(blockEntityType, PoBlockEntityType.TOILET_BLOCK_ENTITY.get(), ToiletBlockEntity::tick);
+    }
+
+    @Override
+    public net.minecraft.world.InteractionResult use(net.minecraft.world.level.block.state.BlockState state,
+            net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
+        return poopsky$interact(state, level, pos, player, hand, hit);
     }
 }

@@ -1,24 +1,25 @@
 package com.altnoir.poopsky.content.block;
 
-import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.worldgen.PoConfigureFeatures;
-import net.minecraft.world.level.block.grower.TreeGrower;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.grower.AbstractTreeGrower;
+import net.minecraft.world.level.block.grower.AbstractMegaTreeGrower;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 
-import java.util.Optional;
-
-public class PoTreeGrower {
-    public static final TreeGrower GINKGO = new TreeGrower(PoopSky.MOD_ID + ":ginkgo",
-            Optional.of(PoConfigureFeatures.MEGA_GINKGO_TREE),
-            Optional.of(PoConfigureFeatures.GINKGO_TREE),
-            Optional.of(PoConfigureFeatures.GINKGO_BEE_TREE));
-
-    public static final TreeGrower PRIMO = new TreeGrower(PoopSky.MOD_ID + ":primo",
-            Optional.empty(),
-            Optional.of(PoConfigureFeatures.PRIMO_FUNGUS),
-            Optional.empty());
-
-    public static final TreeGrower GLOW_PRIMO = new TreeGrower(PoopSky.MOD_ID + ":glow_primo",
-            Optional.empty(),
-            Optional.of(PoConfigureFeatures.GLOW_PRIMO_FUNGUS),
-            Optional.empty());
+public final class PoTreeGrower {
+    public static final AbstractTreeGrower GINKGO = new AbstractMegaTreeGrower() {
+        @Override protected ResourceKey<ConfiguredFeature<?, ?>> getConfiguredFeature(RandomSource random, boolean flowers) {
+            return flowers ? PoConfigureFeatures.GINKGO_BEE_TREE : PoConfigureFeatures.GINKGO_TREE;
+        }
+        @Override protected ResourceKey<ConfiguredFeature<?, ?>> getConfiguredMegaFeature(RandomSource random) { return PoConfigureFeatures.MEGA_GINKGO_TREE; }
+    };
+    public static final AbstractTreeGrower PRIMO = simple(PoConfigureFeatures.PRIMO_FUNGUS);
+    public static final AbstractTreeGrower GLOW_PRIMO = simple(PoConfigureFeatures.GLOW_PRIMO_FUNGUS);
+    public static AbstractTreeGrower simple(ResourceKey<ConfiguredFeature<?, ?>> feature) {
+        return new AbstractTreeGrower() {
+            @Override protected ResourceKey<ConfiguredFeature<?, ?>> getConfiguredFeature(RandomSource random, boolean flowers) { return feature; }
+        };
+    }
+    private PoTreeGrower() {}
 }

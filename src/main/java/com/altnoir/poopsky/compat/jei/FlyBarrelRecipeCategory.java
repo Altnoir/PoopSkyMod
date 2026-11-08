@@ -16,10 +16,9 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
 
-public class FlyBarrelRecipeCategory implements IRecipeCategory<RecipeHolder<FlyBarrelRecipe>> {
-    public static final RecipeType<RecipeHolder<FlyBarrelRecipe>> TYPE = RecipeType.createRecipeHolderType(PoopSky.loc("fly_barrel"));
+public class FlyBarrelRecipeCategory implements IRecipeCategory<FlyBarrelRecipe> {
+    public static final RecipeType<FlyBarrelRecipe> TYPE = new RecipeType<>(PoopSky.loc("fly_barrel"), FlyBarrelRecipe.class);
 
     private static final int HEIGHT = 18;
     private static final int INPUT_X = 1;
@@ -43,9 +42,12 @@ public class FlyBarrelRecipeCategory implements IRecipeCategory<RecipeHolder<Fly
     }
 
     @Override
-    public RecipeType<RecipeHolder<FlyBarrelRecipe>> getRecipeType() {
+    public RecipeType<FlyBarrelRecipe> getRecipeType() {
         return TYPE;
     }
+
+    @Override
+    public net.minecraft.resources.ResourceLocation getRegistryName(FlyBarrelRecipe recipe) { return recipe.getId(); }
 
     @Override
     public Component getTitle() {
@@ -68,14 +70,14 @@ public class FlyBarrelRecipeCategory implements IRecipeCategory<RecipeHolder<Fly
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<FlyBarrelRecipe> recipeHolder, IFocusGroup focuses) {
-        var recipe = recipeHolder.value();
+    public void setRecipe(IRecipeLayoutBuilder builder, FlyBarrelRecipe recipeHolder, IFocusGroup focuses) {
+        var recipe = recipeHolder;
         builder.addSlot(RecipeIngredientRole.INPUT, INPUT_X, INPUT_Y).addItemStack(FlyItem.withType(FlyType.byId(recipe.flyTypeId())));
         builder.addSlot(RecipeIngredientRole.OUTPUT, OUTPUT_X, INPUT_Y).addItemStack(recipe.resultStack());
     }
 
     @Override
-    public void draw(RecipeHolder<FlyBarrelRecipe> recipeHolder, IRecipeSlotsView slotsView, GuiGraphics graphics, double mouseX, double mouseY) {
+    public void draw(FlyBarrelRecipe recipeHolder, IRecipeSlotsView slotsView, GuiGraphics graphics, double mouseX, double mouseY) {
         this.slot.draw(graphics, INPUT_X - 1, INPUT_Y - 1);
         this.arrow.draw(graphics, ARROW_X, ARROW_Y);
         this.slot.draw(graphics, OUTPUT_X - 1, INPUT_Y - 1);

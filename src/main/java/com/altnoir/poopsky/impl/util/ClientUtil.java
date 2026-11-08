@@ -24,7 +24,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.lighting.LevelLightEngine;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.neoforged.neoforge.client.model.data.ModelData;
+import net.minecraftforge.client.model.data.ModelData;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4fStack;
 import org.joml.Vector3f;
@@ -70,14 +70,14 @@ public class ClientUtil {
             buffers.endBatch();
         } else {
             RenderType renderType = ItemBlockRenderTypes.getRenderLayer(fluidState);
-            Matrix4fStack modelView = RenderSystem.getModelViewStack();
+            PoseStack modelView = RenderSystem.getModelViewStack();
             Tesselator tesselator = Tesselator.getInstance();
             renderType.setupRenderState();
-            modelView.pushMatrix();
-            modelView.mul(poseStack.last().pose());
+            modelView.pushPose();
+            modelView.mulPoseMatrix(poseStack.last().pose());
             RenderSystem.applyModelViewMatrix();
 
-            BufferBuilder builder = tesselator.begin(renderType.mode(), renderType.format());
+            BufferBuilder builder = com.altnoir.poopsky.client.PoRenderCompat.begin(renderType.mode(), renderType.format());
 
             Dummy.tempState = state;
             Dummy.tempFluid = fluidState;
@@ -85,13 +85,13 @@ public class ClientUtil {
             Dummy.tempFluid = EMPTY;
             Dummy.tempState = AIR;
 
-            MeshData build = builder.build();
+            BufferBuilder.RenderedBuffer build = builder.endOrDiscardIfEmpty();
             if (build != null) {
                 BufferUploader.drawWithShader(build);
             }
 
             renderType.clearRenderState();
-            modelView.popMatrix();
+            modelView.popPose();
             RenderSystem.applyModelViewMatrix();
         }
 

@@ -1,0 +1,18 @@
+{
+  "base": {
+    "parent": "minecraft:item/generated",
+    "textures": {
+      "layer0": "poopsky:item/chili_shit"
+    }
+  },
+  "gui_light": "front",
+  "loader": "forge:separate_transforms",
+  "perspectives": {
+    "ground": {
+      "parent": "poopsky:block/chili_shit"
+    },
+    "head": {
+      "parent": "poopsky:block/chili_shit"
+    }
+  }
+}

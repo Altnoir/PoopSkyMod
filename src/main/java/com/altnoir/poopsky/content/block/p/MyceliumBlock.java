@@ -34,7 +34,7 @@ public class MyceliumBlock extends Block implements BonemealableBlock {
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader levelReader, BlockPos blockPos, BlockState blockState) {
+    public boolean isValidBonemealTarget(LevelReader levelReader, BlockPos blockPos, BlockState blockState, boolean client) {
         return levelReader.getBlockState(blockPos.above()).isAir();
     }
 
@@ -51,8 +51,4 @@ public class MyceliumBlock extends Block implements BonemealableBlock {
                 .ifPresent(reference -> reference.value().place(serverLevel, serverLevel.getChunkSource().getGenerator(), randomSource, blockPos.above()));
     }
 
-    @Override
-    public Type getType() {
-        return BonemealableBlock.Type.NEIGHBOR_SPREADER;
-    }
 }

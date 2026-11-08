@@ -6,7 +6,7 @@ import net.minecraft.client.particle.ParticleEngine;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.client.extensions.common.IClientBlockExtensions;
+import net.minecraftforge.client.extensions.common.IClientBlockExtensions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +21,6 @@ public class ToiletClientBlockExtensions implements IClientBlockExtensions {
     private ToiletClientBlockExtensions() {
     }
 
-    @Override
     public boolean playBreakSound(BlockState state, Level level, BlockPos pos) {
         cacheToiletType(state, level, pos);
         BlockState particleState = getParticleState(state, level, pos);

@@ -136,8 +136,8 @@ public final class CustomBossTickContext {
     }
 
     public void setBossPosition(float x, float y) {
-        state.setBossX(Math.clamp(x, 0.0F, (float) (TouhouGameState.PLAY_WIDTH - TouhouGameState.BOSS_SIZE)));
-        state.setBossY(Math.clamp(y, 0.0F, (float) (TouhouGameState.PLAY_HEIGHT - TouhouGameState.BOSS_SIZE)));
+        state.setBossX(net.minecraft.util.Mth.clamp(x, 0.0F, (float) (TouhouGameState.PLAY_WIDTH - TouhouGameState.BOSS_SIZE)));
+        state.setBossY(net.minecraft.util.Mth.clamp(y, 0.0F, (float) (TouhouGameState.PLAY_HEIGHT - TouhouGameState.BOSS_SIZE)));
     }
 
     public void moveToPlayerX(float speed) {

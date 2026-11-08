@@ -1,0 +1,15 @@
+{
+  "values": [
+    "#minecraft:is_fire",
+    "#minecraft:is_freezing",
+    "#minecraft:is_drowning",
+    "#minecraft:is_lightning",
+    "#minecraft:is_fall",
+    "#minecraft:bypasses_invulnerability",
+    "#minecraft:bypasses_enchantments",
+    "minecraft:indirect_magic",
+    "minecraft:magic",
+    "minecraft:wither",
+    "minecraft:dragon_breath"
+  ]
+}

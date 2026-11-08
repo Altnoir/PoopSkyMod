@@ -1,0 +1,34 @@
+{
+  "parent": "poopsky:coal_block",
+  "criteria": {
+    "string": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:string"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.poopsky.string.description"
+    },
+    "icon": {
+      "count": 1,
+      "item": "minecraft:string"
+    },
+    "title": {
+      "translate": "advancements.poopsky.string.title"
+    }
+  },
+  "requirements": [
+    [
+      "string"
+    ]
+  ]
+}

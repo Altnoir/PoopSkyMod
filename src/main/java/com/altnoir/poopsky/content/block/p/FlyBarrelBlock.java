@@ -4,7 +4,6 @@ import com.altnoir.poopsky.content.block.abs.AbsDirEntityBlock;
 import com.altnoir.poopsky.content.block.entity.FlyBarrelBlockEntity;
 import com.altnoir.poopsky.init.PoBlockEntityType;
 import com.altnoir.poopsky.init.PoSoundEvents;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
@@ -25,13 +24,8 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
-public class FlyBarrelBlock extends AbsDirEntityBlock {
-    protected static final MapCodec<FlyBarrelBlock> CODEC = simpleCodec(FlyBarrelBlock::new);
+public class FlyBarrelBlock extends AbsDirEntityBlock implements com.altnoir.poopsky.content.block.PoBlockInteraction {
 
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
-    }
 
     public FlyBarrelBlock(Properties properties) {
         super(properties);
@@ -59,12 +53,12 @@ public class FlyBarrelBlock extends AbsDirEntityBlock {
     }
 
     @Override
-    protected RenderShape getRenderShape(BlockState state) {
+    public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+    public InteractionResult poopsky$useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (!level.isClientSide) {
             if (level.getBlockEntity(pos) instanceof FlyBarrelBlockEntity be) {
                 level.playSound(null, pos, PoSoundEvents.BLOCK_FLY_BARREL_OPEN.get(), SoundSource.BLOCKS, 0.5F, 0.7F);
@@ -75,7 +69,7 @@ public class FlyBarrelBlock extends AbsDirEntityBlock {
     }
 
     @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         if (!state.is(newState.getBlock())) {
             if (level.getBlockEntity(pos) instanceof FlyBarrelBlockEntity be) {
                 for (int i = 0; i < FlyBarrelBlockEntity.TOTAL_SLOTS; i++) {
@@ -87,12 +81,20 @@ public class FlyBarrelBlock extends AbsDirEntityBlock {
     }
 
     @Override
-    protected boolean hasAnalogOutputSignal(BlockState state) {
+    public boolean hasAnalogOutputSignal(BlockState state) {
         return true;
     }
 
     @Override
-    protected int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
+    public int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
         return AbstractContainerMenu.getRedstoneSignalFromBlockEntity(level.getBlockEntity(pos));
+    }
+
+    @Override
+    public net.minecraft.world.InteractionResult use(net.minecraft.world.level.block.state.BlockState state,
+            net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
+        return poopsky$interact(state, level, pos, player, hand, hit);
     }
 }

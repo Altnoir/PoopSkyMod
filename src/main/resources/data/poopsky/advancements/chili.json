@@ -1,0 +1,31 @@
+{
+  "parent": "poopsky:compooper",
+  "criteria": {
+    "chili": {
+      "conditions": {
+        "effects": {
+          "poopsky:intestinal_spasm": {}
+        }
+      },
+      "trigger": "minecraft:effects_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.poopsky.chili.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "item": "poopsky:dragon_breath_chili"
+    },
+    "title": {
+      "translate": "advancements.poopsky.chili.title"
+    }
+  },
+  "requirements": [
+    [
+      "chili"
+    ]
+  ]
+}

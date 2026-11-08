@@ -35,7 +35,7 @@ public class DragonFruitRItem extends Item implements IFeedable {
                 ItemStack dragonFlyItem = FlyItem.withType(FlyTypes.DRAGON_FRUIT.get());
                 fly.spawnAtLocation(dragonFlyItem);
                 fly.kill();
-                stack.consume(1, player);
+                if (!player.getAbilities().instabuild) stack.shrink(1);
             }
             return InteractionResult.SUCCESS;
         }
@@ -52,11 +52,11 @@ public class DragonFruitRItem extends Item implements IFeedable {
         }
 
         if (!level.isClientSide) {
-            if (!livingEntity.hasEffect(PoEffects.ON_THE_VERGE)) {
-                livingEntity.addEffect(new MobEffectInstance(PoEffects.ON_THE_VERGE, 200));
+            if (!livingEntity.hasEffect(PoEffects.ON_THE_VERGE.get())) {
+                livingEntity.addEffect(new MobEffectInstance(PoEffects.ON_THE_VERGE.get(), 200));
             } else {
-                int amplifier = livingEntity.getEffect(PoEffects.ON_THE_VERGE).getAmplifier() + 1;
-                livingEntity.addEffect(new MobEffectInstance(PoEffects.ON_THE_VERGE, 200, amplifier));
+                int amplifier = livingEntity.getEffect(PoEffects.ON_THE_VERGE.get()).getAmplifier() + 1;
+                livingEntity.addEffect(new MobEffectInstance(PoEffects.ON_THE_VERGE.get(), 200, amplifier));
             }
             livingEntity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 200));
         }

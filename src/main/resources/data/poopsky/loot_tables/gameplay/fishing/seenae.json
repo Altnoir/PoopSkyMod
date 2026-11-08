@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:fishing",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "poopsky:folium_sennae",
+          "weight": 100
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

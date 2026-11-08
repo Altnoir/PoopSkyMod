@@ -21,7 +21,6 @@ public final class TouhouGameState {
     public static final int PLAYER_BULLET_SPEED = 4;
     public static final int PLAYER_SHOOT_INTERVAL = 8;
     public static final int PLAYER_SHOOT_INTERVAL_FAST = 4;
-    public static final int PLAYER_SHOOT_INTERVAL_DING = 2;
 
     public static final int POWERUP_SIZE = 8;
     public static final int POWERUP_MAX_SPEED = 2;
@@ -54,8 +53,6 @@ public final class TouhouGameState {
     private float bossScale = 1.0F;
     private boolean hasSpeedBoost;
     private boolean hasDoubleShot;
-    private boolean hasDing;
-    private boolean debugMode;
     private Consumer<ItemStack> bossLootConsumer = stack -> {
     };
     private final List<ActiveBoss> bosses = new ArrayList<>();
@@ -71,7 +68,6 @@ public final class TouhouGameState {
         shootCooldown = 0;
         hasSpeedBoost = false;
         hasDoubleShot = false;
-        hasDing = false;
         enemyBullets.clear();
         playerBullets.clear();
         powerUps.clear();
@@ -82,21 +78,14 @@ public final class TouhouGameState {
         this.bossLootConsumer = bossLootConsumer;
     }
 
-    public void setDebugMode(boolean debugMode) {
-        this.debugMode = debugMode;
-        powerUps.removeIf(powerUp -> debugMode
-                ? powerUp.type() != PowerUpType.DING
-                : powerUp.type() == PowerUpType.DING);
-    }
-
     public TickResult tick(boolean up, boolean down, boolean left, boolean right, boolean shoot, boolean focus, Random random) {
         float playerSpeed = focus ? PLAYER_SPEED * FOCUS_SPEED_MULTIPLIER : PLAYER_SPEED;
         if (up) playerY -= playerSpeed;
         if (down) playerY += playerSpeed;
         if (left) playerX -= playerSpeed;
         if (right) playerX += playerSpeed;
-        playerX = Math.clamp(playerX, 0, PLAY_WIDTH - PLAYER_SIZE);
-        playerY = Math.clamp(playerY, 0, PLAY_HEIGHT - PLAYER_SIZE);
+        playerX = net.minecraft.util.Mth.clamp(playerX, 0, PLAY_WIDTH - PLAYER_SIZE);
+        playerY = net.minecraft.util.Mth.clamp(playerY, 0, PLAY_HEIGHT - PLAYER_SIZE);
 
         for (ActiveBoss activeBoss : bosses) {
             if (activeBoss.hitTicks > 0) {
@@ -110,14 +99,7 @@ public final class TouhouGameState {
         boolean powerUpPickup = false;
 
         if (shoot && shootCooldown <= 0) {
-            int shootInterval;
-            if (hasDing) {
-                shootInterval = PLAYER_SHOOT_INTERVAL_DING;
-            } else if (hasSpeedBoost) {
-                shootInterval = PLAYER_SHOOT_INTERVAL_FAST;
-            } else {
-                shootInterval = PLAYER_SHOOT_INTERVAL;
-            }
+            int shootInterval = hasSpeedBoost ? PLAYER_SHOOT_INTERVAL_FAST : PLAYER_SHOOT_INTERVAL;
             float bulletX = playerX + PLAYER_SIZE / 2.0F - PLAYER_BULLET_SIZE / 2.0F;
             float bulletY = playerY - PLAYER_BULLET_SIZE;
             if (hasDoubleShot) {
@@ -402,11 +384,7 @@ public final class TouhouGameState {
                 powerUps.remove(i);
                 if (powerUp.type == PowerUpType.SPEED) {
                     hasSpeedBoost = true;
-                } else if (powerUp.type == PowerUpType.DOUBLE) {
-                    hasDoubleShot = true;
                 } else {
-                    hasDing = true;
-                    hasSpeedBoost = true;
                     hasDoubleShot = true;
                 }
                 return true;
@@ -420,27 +398,19 @@ public final class TouhouGameState {
             return;
         }
 
-        PowerUpType type;
-        if (debugMode) {
-            if (hasDing) {
-                return;
-            }
-            type = PowerUpType.DING;
-        } else {
-            boolean speedAvailable = !hasSpeedBoost;
-            boolean doubleAvailable = !hasDoubleShot;
-            for (PowerUp powerUp : powerUps) {
-                speedAvailable &= powerUp.type != PowerUpType.SPEED;
-                doubleAvailable &= powerUp.type != PowerUpType.DOUBLE;
-            }
-            if (!speedAvailable && !doubleAvailable) {
-                return;
-            }
-
-            type = speedAvailable && doubleAvailable
-                    ? (random.nextInt(2) == 0 ? PowerUpType.SPEED : PowerUpType.DOUBLE)
-                    : speedAvailable ? PowerUpType.SPEED : PowerUpType.DOUBLE;
+        boolean speedAvailable = !hasSpeedBoost;
+        boolean doubleAvailable = !hasDoubleShot;
+        for (PowerUp powerUp : powerUps) {
+            speedAvailable &= powerUp.type != PowerUpType.SPEED;
+            doubleAvailable &= powerUp.type != PowerUpType.DOUBLE;
         }
+        if (!speedAvailable && !doubleAvailable) {
+            return;
+        }
+
+        PowerUpType type = speedAvailable && doubleAvailable
+                ? (random.nextInt(2) == 0 ? PowerUpType.SPEED : PowerUpType.DOUBLE)
+                : speedAvailable ? PowerUpType.SPEED : PowerUpType.DOUBLE;
 
         float x = random.nextInt(PLAY_WIDTH - POWERUP_SIZE + 1);
         float y = 20 + random.nextInt(PLAY_HEIGHT - POWERUP_SIZE - 40);
@@ -482,8 +452,8 @@ public final class TouhouGameState {
             bossHp += activeBoss.hp;
         }
 
-        bossX = bosses.getFirst().x;
-        bossY = bosses.getFirst().y;
+        bossX = bosses.get(0).x;
+        bossY = bosses.get(0).y;
         bossSpawnTimer = 0;
         bossAppearTimer = 0;
         bossScale = BOSS_SCALE_MIN;
@@ -531,7 +501,7 @@ public final class TouhouGameState {
         if (index != last) {
             list.set(index, list.get(last));
         }
-        list.removeLast();
+        list.remove(list.size() - 1);
     }
 
     public float getPlayerX() {
@@ -598,10 +568,6 @@ public final class TouhouGameState {
         return hasDoubleShot;
     }
 
-    public boolean hasDing() {
-        return hasDing;
-    }
-
     public List<PowerUp> getPowerUps() {
         return powerUps;
     }
@@ -629,7 +595,6 @@ public final class TouhouGameState {
         tag.putFloat("bossScale", bossScale);
         tag.putBoolean("hasSpeedBoost", hasSpeedBoost);
         tag.putBoolean("hasDoubleShot", hasDoubleShot);
-        tag.putBoolean("hasDing", hasDing);
 
         tag.putInt("bossCount", bosses.size());
         for (int i = 0; i < bosses.size(); i++) {
@@ -671,7 +636,6 @@ public final class TouhouGameState {
         bossScale = tag.getFloat("bossScale");
         hasSpeedBoost = tag.getBoolean("hasSpeedBoost");
         hasDoubleShot = tag.getBoolean("hasDoubleShot");
-        hasDing = tag.getBoolean("hasDing");
 
         bosses.clear();
         int bossCount = tag.getInt("bossCount");
@@ -725,7 +689,7 @@ public final class TouhouGameState {
     private static void readBullets(List<Bullet> bullets, int[] data) {
         int count = data.length / BULLET_DATA_SIZE;
         while (bullets.size() > count) {
-            bullets.removeLast();
+            bullets.remove(bullets.size() - 1);
         }
         for (int i = 0; i < count; i++) {
             int offset = i * BULLET_DATA_SIZE;
@@ -741,8 +705,7 @@ public final class TouhouGameState {
 
     public enum PowerUpType {
         SPEED,
-        DOUBLE,
-        DING
+        DOUBLE
     }
 
     public record PowerUp(float x, float y, float vx, float vy, PowerUpType type, int life) {

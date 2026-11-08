@@ -43,7 +43,7 @@ public final class PongGameState {
         if (down) {
             playerY += PLAYER_SPEED;
         }
-        playerY = Math.clamp(playerY, 0, Game.HEIGHT - PADDLE_HEIGHT);
+        playerY = net.minecraft.util.Mth.clamp(playerY, 0, Game.HEIGHT - PADDLE_HEIGHT);
 
         updateOpponent();
 
@@ -60,7 +60,7 @@ public final class PongGameState {
         boolean opponentBounce = false;
 
         if (ballY <= 0 || ballY >= Game.HEIGHT - BALL_SIZE) {
-            ballY = Math.clamp(ballY, 0, Game.HEIGHT - BALL_SIZE);
+            ballY = net.minecraft.util.Mth.clamp(ballY, 0, Game.HEIGHT - BALL_SIZE);
             ballVY = -ballVY;
             wallBounce = true;
         }
@@ -99,7 +99,7 @@ public final class PongGameState {
         if (Math.abs(delta) > OPPONENT_DEAD_ZONE) {
             opponentY += Math.copySign(Math.min(Math.abs(delta), OPPONENT_SPEED), delta);
         }
-        opponentY = Math.clamp(opponentY, 0, Game.HEIGHT - PADDLE_HEIGHT);
+        opponentY = net.minecraft.util.Mth.clamp(opponentY, 0, Game.HEIGHT - PADDLE_HEIGHT);
     }
 
     public double getPlayerY() {

@@ -1,0 +1,36 @@
+{
+  "type": "poopsky:sieve",
+  "input": {
+    "tag": "minecraft:sand"
+  },
+  "outputs": [
+    {
+      "chance": 1.0,
+      "item": {
+        "count": 1,
+        "item": "minecraft:clay"
+      }
+    },
+    {
+      "chance": 0.5,
+      "item": {
+        "count": 4,
+        "item": "minecraft:iron_nugget"
+      }
+    },
+    {
+      "chance": 0.25,
+      "item": {
+        "count": 4,
+        "item": "minecraft:gold_nugget"
+      }
+    },
+    {
+      "chance": 0.01,
+      "item": {
+        "count": 4,
+        "item": "minecraft:turtle_egg"
+      }
+    }
+  ]
+}

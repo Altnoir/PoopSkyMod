@@ -2,47 +2,40 @@ package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.client.particle.LeavesParticleOptions;
-import com.altnoir.abysslib.reginth.Reginth;
+import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.mojang.serialization.MapCodec;
-import com.altnoir.abysslib.reginth.util.entry.RegistryEntry;
-import com.altnoir.abysslib.reginth.util.nullness.NonNullSupplier;
+import com.tterrag.registrate.util.entry.RegistryEntry;
+import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.FriendlyByteBuf;
+import com.altnoir.poopsky.impl.network.codec.StreamCodec;
 
 public final class PoParticles {
-    private static final Reginth REGISTRATE = PoopSky.registrate();
+    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
-    public static final RegistryEntry<ParticleType<?>, SimpleParticleType> POOP_PARTICLE = registerSimpleParticle(
+    public static final RegistryEntry<SimpleParticleType> POOP_PARTICLE = registerSimpleParticle(
             "poop_particle");
-    public static final RegistryEntry<ParticleType<?>, SimpleParticleType> TOILET_PARTICLE = registerSimpleParticle(
+    public static final RegistryEntry<SimpleParticleType> TOILET_PARTICLE = registerSimpleParticle(
             "toilet_particle");
-    public static final RegistryEntry<ParticleType<?>, SimpleParticleType> DEATH_BLIGHT = registerSimpleParticle(
-            "death_blight");
 
-    public static final RegistryEntry<ParticleType<?>, ParticleType<LeavesParticleOptions>> LEAVES_PARTICLE = registerParticle(
+    public static final RegistryEntry<ParticleType<LeavesParticleOptions>> LEAVES_PARTICLE = registerParticle(
             "leaves_particle", PoParticles::createLeavesParticleType);
 
-    private static RegistryEntry<ParticleType<?>, SimpleParticleType> registerSimpleParticle(String name) {
+    private static RegistryEntry<SimpleParticleType> registerSimpleParticle(String name) {
         return REGISTRATE.simple(name, Registries.PARTICLE_TYPE, () -> new SimpleParticleType(false));
     }
 
-    private static <T extends ParticleType<?>> RegistryEntry<ParticleType<?>, T> registerParticle(String name, NonNullSupplier<T> type) {
+    private static <T extends ParticleType<?>> RegistryEntry<T> registerParticle(String name, NonNullSupplier<T> type) {
         return REGISTRATE.simple(name, Registries.PARTICLE_TYPE, type);
     }
 
     private static ParticleType<LeavesParticleOptions> createLeavesParticleType() {
-        return new ParticleType<>(false) {
+        return new ParticleType<>(false, LeavesParticleOptions.DESERIALIZER) {
             @Override
-            public MapCodec<LeavesParticleOptions> codec() {
-                return LeavesParticleOptions.CODEC;
-            }
-
-            @Override
-            public StreamCodec<? super RegistryFriendlyByteBuf, LeavesParticleOptions> streamCodec() {
-                return LeavesParticleOptions.STREAM_CODEC;
+            public com.mojang.serialization.Codec<LeavesParticleOptions> codec() {
+                return LeavesParticleOptions.CODEC.codec();
             }
         };
     }

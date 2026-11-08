@@ -6,7 +6,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.ColorRGBA;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -16,13 +15,13 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BonemealableBlock;
-import net.minecraft.world.level.block.ColoredFallingBlock;
+import net.minecraft.world.level.block.SandBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import org.jetbrains.annotations.Nullable;
 
-public class PoopSandBlock extends ColoredFallingBlock implements BonemealableBlock {
-    public PoopSandBlock(ColorRGBA dustColor, Properties properties) {
+public class PoopSandBlock extends SandBlock implements BonemealableBlock {
+    public PoopSandBlock(int dustColor, Properties properties) {
         super(dustColor, properties);
     }
 
@@ -53,7 +52,7 @@ public class PoopSandBlock extends ColoredFallingBlock implements BonemealableBl
     }
 
     @Override
-    protected BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
         return shouldSolidify(level, currentPos, state) ? Blocks.SOUL_SAND.defaultBlockState()
                 : super.updateShape(state, facing, facingState, level, currentPos, facingPos);
     }
@@ -81,7 +80,7 @@ public class PoopSandBlock extends ColoredFallingBlock implements BonemealableBl
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, boolean client) {
         return level.getBlockState(pos.above()).isAir();
     }
 
@@ -98,8 +97,4 @@ public class PoopSandBlock extends ColoredFallingBlock implements BonemealableBl
                 .ifPresent(reference -> reference.value().place(level, level.getChunkSource().getGenerator(), random, pos.above()));
     }
 
-    @Override
-    public Type getType() {
-        return BonemealableBlock.Type.NEIGHBOR_SPREADER;
-    }
 }

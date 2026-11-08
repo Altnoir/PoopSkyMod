@@ -16,10 +16,9 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
 
-public class AnalPressingRecipeCategory implements IRecipeCategory<RecipeHolder<AnalPressingRecipe>> {
-    public static final RecipeType<RecipeHolder<AnalPressingRecipe>> TYPE = RecipeType.createRecipeHolderType(PoopSky.loc("anal_pressing"));
+public class AnalPressingRecipeCategory implements IRecipeCategory<AnalPressingRecipe> {
+    public static final RecipeType<AnalPressingRecipe> TYPE = new RecipeType<>(PoopSky.loc("anal_pressing"), AnalPressingRecipe.class);
 
     private static final int HEIGHT = 18;
     private static final int INPUT1_X = 1;
@@ -50,9 +49,12 @@ public class AnalPressingRecipeCategory implements IRecipeCategory<RecipeHolder<
     }
 
     @Override
-    public RecipeType<RecipeHolder<AnalPressingRecipe>> getRecipeType() {
+    public RecipeType<AnalPressingRecipe> getRecipeType() {
         return TYPE;
     }
+
+    @Override
+    public net.minecraft.resources.ResourceLocation getRegistryName(AnalPressingRecipe recipe) { return recipe.getId(); }
 
     @Override
     public Component getTitle() {
@@ -75,8 +77,8 @@ public class AnalPressingRecipeCategory implements IRecipeCategory<RecipeHolder<
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<AnalPressingRecipe> recipeHolder, IFocusGroup focuses) {
-        var recipe = recipeHolder.value();
+    public void setRecipe(IRecipeLayoutBuilder builder, AnalPressingRecipe recipeHolder, IFocusGroup focuses) {
+        var recipe = recipeHolder;
         int count = (2 * recipe.radius() + 1) * (2 * recipe.radius() + 1);
         builder.addSlot(RecipeIngredientRole.INPUT, INPUT1_X, INPUT1_Y).addIngredients(recipe.input());
         builder.addSlot(RecipeIngredientRole.INPUT, INPUT2_X, INPUT2_Y).addItemStack(new ItemStack(recipe.replaceTarget(), count));
@@ -84,7 +86,7 @@ public class AnalPressingRecipeCategory implements IRecipeCategory<RecipeHolder<
     }
 
     @Override
-    public void draw(RecipeHolder<AnalPressingRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+    public void draw(AnalPressingRecipe recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         this.slot.draw(guiGraphics, INPUT1_X - 1, INPUT1_Y - 1);
         this.plus.draw(guiGraphics, PLUS_X, PLUS_Y);
         this.slot.draw(guiGraphics, INPUT2_X - 1, INPUT2_Y - 1);
@@ -93,8 +95,8 @@ public class AnalPressingRecipeCategory implements IRecipeCategory<RecipeHolder<
     }
 
     @Override
-    public void getTooltip(ITooltipBuilder tooltip, RecipeHolder<AnalPressingRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
-        var recipe = recipeHolder.value();
+    public void getTooltip(ITooltipBuilder tooltip, AnalPressingRecipe recipeHolder, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+        var recipe = recipeHolder;
         int count = (2 * recipe.radius() + 1) * (2 * recipe.radius() + 1);
         if (mouseX >= ARROW_X && mouseX < ARROW_X + 22
                 && mouseY >= ARROW_Y && mouseY < ARROW_Y + 15) {

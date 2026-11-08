@@ -29,7 +29,7 @@ public class MultiImage implements Renderer {
     }
 
     public MultiImage setImage(int index) {
-        current = Math.clamp(index, 0, count() - 1);
+        current = net.minecraft.util.Mth.clamp(index, 0, count() - 1);
         return this;
     }
 

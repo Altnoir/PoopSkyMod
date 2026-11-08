@@ -3,7 +3,6 @@ package com.altnoir.poopsky.content.block.p;
 import com.altnoir.poopsky.client.inventory.PortableToiletMenu;
 import com.altnoir.poopsky.content.block.abs.AbsHorDirBlock;
 import com.altnoir.poopsky.impl.util.ToiletUtil;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -43,8 +42,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class PortableToiletBlock extends AbsHorDirBlock {
-    public static final MapCodec<PortableToiletBlock> CODEC = simpleCodec(PortableToiletBlock::new);
+public class PortableToiletBlock extends AbsHorDirBlock implements com.altnoir.poopsky.content.block.PoBlockInteraction {
     public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
     private static final Component CONTAINER_TITLE = Component.translatable("container.poopsky.portable_toilet");
@@ -178,10 +176,6 @@ public class PortableToiletBlock extends AbsHorDirBlock {
                 && modelZ >= 6.0 && modelZ <= 15.0;
     }
 
-    @Override
-    protected MapCodec<? extends Block> codec() {
-        return CODEC;
-    }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -208,7 +202,7 @@ public class PortableToiletBlock extends AbsHorDirBlock {
     }
 
     @Override
-    protected BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
         DoubleBlockHalf half = state.getValue(HALF);
         if (facing.getAxis() != Direction.Axis.Y || half == DoubleBlockHalf.LOWER != (facing == Direction.UP)) {
             return half == DoubleBlockHalf.LOWER && facing == Direction.DOWN && !state.canSurvive(level, currentPos)
@@ -223,8 +217,8 @@ public class PortableToiletBlock extends AbsHorDirBlock {
     }
 
     @Override
-    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-        if (!level.isClientSide && (player.isCreative() || !player.hasCorrectToolForDrops(state, level, pos))) {
+    public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+        if (!level.isClientSide && (player.isCreative() || !player.hasCorrectToolForDrops(state))) {
             if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
                 BlockPos lowerPos = pos.below();
                 BlockState lowerState = level.getBlockState(lowerPos);
@@ -234,11 +228,11 @@ public class PortableToiletBlock extends AbsHorDirBlock {
                 }
             }
         }
-        return super.playerWillDestroy(level, pos, state, player);
+        super.playerWillDestroy(level, pos, state, player);
     }
 
     @Override
-    protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+    public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
         if (state.getValue(HALF) == DoubleBlockHalf.LOWER) {
             return true;
         }
@@ -256,7 +250,7 @@ public class PortableToiletBlock extends AbsHorDirBlock {
     }
 
     @Override
-    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         super.entityInside(state, level, pos, entity);
         if (state.getValue(HALF) == DoubleBlockHalf.LOWER) {
             ToiletUtil.portableToiletInside(level, pos, state, entity);
@@ -264,7 +258,7 @@ public class PortableToiletBlock extends AbsHorDirBlock {
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+    public InteractionResult poopsky$useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (player instanceof ServerPlayer serverPlayer && state.getValue(HALF) == DoubleBlockHalf.UPPER && isRespawnDifferent(serverPlayer, level, pos)) {
             serverPlayer.setRespawnPosition(level.dimension(), pos, player.getYRot(), false, true);
         }
@@ -287,7 +281,7 @@ public class PortableToiletBlock extends AbsHorDirBlock {
     }
 
     @Override
-    protected MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
+    public MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
         return new SimpleMenuProvider((containerId, inventory, player) ->
                 new PortableToiletMenu(containerId, inventory, ContainerLevelAccess.create(level, pos)), CONTAINER_TITLE);
     }
@@ -303,26 +297,26 @@ public class PortableToiletBlock extends AbsHorDirBlock {
     }
 
     @Override
-    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return getPortableToiletShape(state);
     }
 
     @Override
-    protected VoxelShape getInteractionShape(BlockState state, BlockGetter level, BlockPos pos) {
+    public VoxelShape getInteractionShape(BlockState state, BlockGetter level, BlockPos pos) {
         return Shapes.block();
     }
 
     @Override
-    protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return getPortableToiletShape(state);
     }
 
     @Override
-    public Optional<ServerPlayer.RespawnPosAngle> getRespawnPosition(BlockState state, EntityType<?> type, LevelReader level, BlockPos pos, float orientation) {
+    public Optional<Vec3> getRespawnPosition(BlockState state, EntityType<?> type, LevelReader level, BlockPos pos, float orientation, LivingEntity entity) {
         if (!state.is(this) || state.getValue(HALF) != DoubleBlockHalf.UPPER) {
             return Optional.empty();
         }
-        return Optional.of(ServerPlayer.RespawnPosAngle.of(Vec3.atCenterOf(pos), pos));
+        return Optional.of(Vec3.atCenterOf(pos));
     }
 
     @Override
@@ -342,7 +336,15 @@ public class PortableToiletBlock extends AbsHorDirBlock {
     }
 
     @Override
-    protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
+    public boolean isPathfindable(BlockState state, net.minecraft.world.level.BlockGetter pathLevel, net.minecraft.core.BlockPos pathPos, PathComputationType pathComputationType) {
         return false;
+    }
+
+    @Override
+    public net.minecraft.world.InteractionResult use(net.minecraft.world.level.block.state.BlockState state,
+            net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
+        return poopsky$interact(state, level, pos, player, hand, hit);
     }
 }

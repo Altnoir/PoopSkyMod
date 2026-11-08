@@ -1,8 +1,0 @@
-{
-  "type": "poopsky:anal_pressing",
-  "input": {
-    "item": "poopsky:mycelium_block"
-  },
-  "output": "minecraft:mycelium",
-  "replace_target": "minecraft:dirt"
-}

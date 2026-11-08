@@ -15,7 +15,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
@@ -45,7 +45,7 @@ public class DigestingFanProcessingType implements FanProcessingType {
 
     @Override
     public boolean canProcess(ItemStack stack, Level level) {
-        var input = new SingleRecipeInput(stack);
+        var input = new SimpleContainer(stack);
         return level.getRecipeManager()
                 .getRecipeFor(PSRecipeTypes.DIGESTING.getType(), input, level)
                 .isPresent();
@@ -53,10 +53,10 @@ public class DigestingFanProcessingType implements FanProcessingType {
 
     @Override
     public @Nullable List<ItemStack> process(ItemStack stack, Level level) {
-        var input = new SingleRecipeInput(stack);
+        var input = new SimpleContainer(stack);
         return level.getRecipeManager()
                 .getRecipeFor(PSRecipeTypes.DIGESTING.getType(), input, level)
-                .map(recipe -> RecipeApplier.applyRecipeOn(level, stack, recipe.value(), true))
+                .map(recipe -> RecipeApplier.applyRecipeOn(level, stack, recipe, true))
                 .orElse(null);
     }
 
@@ -88,7 +88,7 @@ public class DigestingFanProcessingType implements FanProcessingType {
         if (random.nextFloat() < 1 / 64f)
             particleAccess.spawnExtraParticle(PoParticles.POOP_PARTICLE.get(), .125f);
         if (random.nextFloat() < 1 / 128f)
-            particleAccess.spawnExtraParticle(ParticleTypes.DUST_PLUME, .075f);
+            particleAccess.spawnExtraParticle(com.altnoir.poopsky.init.PoVanillaBackport.DUST_PLUME.get(), .075f);
     }
 
     @Override

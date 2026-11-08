@@ -3,12 +3,12 @@ package com.altnoir.poopsky.impl.network;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.client.PoAnimationController;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.neoforged.neoforge.network.PacketDistributor;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import com.altnoir.poopsky.impl.network.codec.StreamCodec;
+import com.altnoir.poopsky.impl.network.PoPayload;
+import com.altnoir.poopsky.impl.network.PoNetworking;
+import com.altnoir.poopsky.impl.network.PoPayloadContext;
 
-public record PlayAnimationAndWaitPayload(PoAnimation animation) implements CustomPacketPayload {
+public record PlayAnimationAndWaitPayload(PoAnimation animation) implements PoPayload {
     public static final Type<PlayAnimationAndWaitPayload> TYPE =
             new Type<>(PoopSky.loc("play_animation_and_wait"));
     public static final StreamCodec<FriendlyByteBuf, PlayAnimationAndWaitPayload> CODEC = StreamCodec.of(
@@ -16,10 +16,10 @@ public record PlayAnimationAndWaitPayload(PoAnimation animation) implements Cust
             PlayAnimationAndWaitPayload::decode
     );
 
-    public static void handle(PlayAnimationAndWaitPayload payload, IPayloadContext context) {
+    public static void handle(PlayAnimationAndWaitPayload payload, PoPayloadContext context) {
         context.enqueueWork(() -> PoAnimationController.play(
                 payload.animation(),
-                () -> PacketDistributor.sendToServer(new AnimationFinishedPayload(payload.animation()))
+                () -> PoNetworking.sendToServer(new AnimationFinishedPayload(payload.animation()))
         ));
     }
 
@@ -32,7 +32,7 @@ public record PlayAnimationAndWaitPayload(PoAnimation animation) implements Cust
     }
 
     @Override
-    public Type<? extends CustomPacketPayload> type() {
+    public Type<? extends PoPayload> type() {
         return TYPE;
     }
 }

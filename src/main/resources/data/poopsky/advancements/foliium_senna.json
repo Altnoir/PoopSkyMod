@@ -1,0 +1,34 @@
+{
+  "parent": "poopsky:string",
+  "criteria": {
+    "foliium_senna": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "poopsky:folium_sennae"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.poopsky.foliium_senna.description"
+    },
+    "icon": {
+      "count": 1,
+      "item": "poopsky:folium_sennae"
+    },
+    "title": {
+      "translate": "advancements.poopsky.foliium_senna.title"
+    }
+  },
+  "requirements": [
+    [
+      "foliium_senna"
+    ]
+  ]
+}

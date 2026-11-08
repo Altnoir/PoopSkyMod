@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "poopsky:poop_block"
+  },
+  "result": "poopsky:poop_door",
+  "count": 1
+}

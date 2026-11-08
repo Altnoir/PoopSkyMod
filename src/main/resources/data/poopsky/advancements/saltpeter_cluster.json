@@ -1,0 +1,34 @@
+{
+  "parent": "poopsky:poop_block",
+  "criteria": {
+    "saltpeter_cluster": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "poopsky:saltpeter_shard"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.poopsky.saltpeter_cluster.description"
+    },
+    "icon": {
+      "count": 1,
+      "item": "poopsky:saltpeter_cluster"
+    },
+    "title": {
+      "translate": "advancements.poopsky.saltpeter_cluster.title"
+    }
+  },
+  "requirements": [
+    [
+      "saltpeter_cluster"
+    ]
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "parent": "poopsky:poop_sapling",
+  "criteria": {
+    "coal_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:coal_block"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.poopsky.coal_block.description"
+    },
+    "icon": {
+      "count": 1,
+      "item": "minecraft:coal_block"
+    },
+    "title": {
+      "translate": "advancements.poopsky.coal_block.title"
+    }
+  },
+  "requirements": [
+    [
+      "coal_block"
+    ]
+  ]
+}

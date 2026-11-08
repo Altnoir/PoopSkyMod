@@ -3,8 +3,8 @@ package com.altnoir.poopsky.content.block;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
+import com.altnoir.poopsky.impl.network.codec.ByteBufCodecs;
+import com.altnoir.poopsky.impl.network.codec.StreamCodec;
 
 public record ToiletComponent(String level1, String level2, int x1, int y1, int z1, int x2, int y2, int z2) {
     public static final ToiletComponent EMPTY = new ToiletComponent("", "", 0, 0, 0, 0, 0, 0);

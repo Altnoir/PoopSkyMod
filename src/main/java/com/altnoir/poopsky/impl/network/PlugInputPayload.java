@@ -3,10 +3,10 @@ package com.altnoir.poopsky.impl.network;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import com.altnoir.poopsky.impl.network.codec.StreamCodec;
+import com.altnoir.poopsky.impl.network.PoPayload;
 import net.minecraft.server.level.ServerPlayer;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import com.altnoir.poopsky.impl.network.PoPayloadContext;
 
 public record PlugInputPayload(
         boolean forward,
@@ -16,8 +16,8 @@ public record PlugInputPayload(
         boolean up,
         boolean down,
         boolean fast
-) implements CustomPacketPayload {
-    public static final CustomPacketPayload.Type<PlugInputPayload> TYPE = new CustomPacketPayload.Type<>(
+) implements PoPayload {
+    public static final PoPayload.Type<PlugInputPayload> TYPE = new PoPayload.Type<>(
             PoopSky.loc("plug_input")
     );
     public static final StreamCodec<FriendlyByteBuf, PlugInputPayload> CODEC = StreamCodec.of(
@@ -25,7 +25,7 @@ public record PlugInputPayload(
             PlugInputPayload::decode
     );
 
-    public static void handle(final PlugInputPayload payload, final IPayloadContext context) {
+    public static void handle(final PlugInputPayload payload, final PoPayloadContext context) {
         context.enqueueWork(() -> {
             if (context.player() instanceof ServerPlayer player && player.getVehicle() instanceof ToiletPlugEntity plug) {
                 plug.setInput(
@@ -64,7 +64,7 @@ public record PlugInputPayload(
     }
 
     @Override
-    public Type<? extends CustomPacketPayload> type() {
+    public Type<? extends PoPayload> type() {
         return TYPE;
     }
 }

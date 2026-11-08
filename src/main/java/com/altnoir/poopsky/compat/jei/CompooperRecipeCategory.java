@@ -18,13 +18,12 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class CompooperRecipeCategory implements IRecipeCategory<RecipeHolder<CompooperRecipe>> {
-    public static final RecipeType<RecipeHolder<CompooperRecipe>> TYPE = RecipeType.createRecipeHolderType(PoopSky.loc("compooper"));
+public class CompooperRecipeCategory implements IRecipeCategory<CompooperRecipe> {
+    public static final RecipeType<CompooperRecipe> TYPE = new RecipeType<>(PoopSky.loc("compooper"), CompooperRecipe.class);
 
     private static final int WIDTH = 140;
     private static final int HEIGHT = 48;
@@ -47,9 +46,12 @@ public class CompooperRecipeCategory implements IRecipeCategory<RecipeHolder<Com
     }
 
     @Override
-    public RecipeType<RecipeHolder<CompooperRecipe>> getRecipeType() {
+    public RecipeType<CompooperRecipe> getRecipeType() {
         return TYPE;
     }
+
+    @Override
+    public net.minecraft.resources.ResourceLocation getRegistryName(CompooperRecipe recipe) { return recipe.getId(); }
 
     @Override
     public Component getTitle() {
@@ -72,15 +74,15 @@ public class CompooperRecipeCategory implements IRecipeCategory<RecipeHolder<Com
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<CompooperRecipe> recipeHolder, IFocusGroup focuses) {
-        CompooperRecipe recipe = recipeHolder.value();
+    public void setRecipe(IRecipeLayoutBuilder builder, CompooperRecipe recipeHolder, IFocusGroup focuses) {
+        CompooperRecipe recipe = recipeHolder;
         builder.addSlot(RecipeIngredientRole.INPUT, 4, 18).addItemStack(recipe.input());
         builder.addSlot(RecipeIngredientRole.OUTPUT, 120, 18).addItemStack(recipe.output());
     }
 
     @Override
-    public void draw(RecipeHolder<CompooperRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
-        CompooperRecipe recipe = recipeHolder.value();
+    public void draw(CompooperRecipe recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+        CompooperRecipe recipe = recipeHolder;
         BlockState state = getFluidBlockState(recipe.fluidType());
 
         this.slot.draw(guiGraphics, 3, 17);
@@ -91,8 +93,8 @@ public class CompooperRecipeCategory implements IRecipeCategory<RecipeHolder<Com
     }
 
     @Override
-    public void getTooltip(ITooltipBuilder tooltip, RecipeHolder<CompooperRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
-        CompooperRecipe recipe = recipeHolder.value();
+    public void getTooltip(ITooltipBuilder tooltip, CompooperRecipe recipeHolder, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+        CompooperRecipe recipe = recipeHolder;
         if (54 < mouseX && mouseX < 86 && 10 < mouseY && mouseY < 42) {
             BlockState state = getFluidBlockState(recipe.fluidType());
             Block block = state.getBlock();

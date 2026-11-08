@@ -9,13 +9,11 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
@@ -26,23 +24,24 @@ public class ToiletPlugItem extends Item {
     private static final ResourceLocation BASE_ATTACK_KNOCKBACK_ID = PoopSky.loc("base_attack_knockback");
     private static final int POISON_DURATION = 60;
 
+    @Override
+    public void initializeClient(java.util.function.Consumer<net.minecraftforge.client.extensions.common.IClientItemExtensions> consumer) {
+        consumer.accept(com.altnoir.poopsky.client.PoClientExtensions.toiletPlug());
+    }
+
     public ToiletPlugItem(Properties properties) {
         super(properties);
     }
 
-    public static ItemAttributeModifiers createWeaponAttributes() {
-        return ItemAttributeModifiers.builder()
-                .add(
-                        Attributes.ATTACK_DAMAGE,
-                        new AttributeModifier(BASE_ATTACK_DAMAGE_ID, ATTACK_DAMAGE_MODIFIER, AttributeModifier.Operation.ADD_VALUE),
-                        EquipmentSlotGroup.MAINHAND
-                )
-                .add(
-                        Attributes.ATTACK_KNOCKBACK,
-                        new AttributeModifier(BASE_ATTACK_KNOCKBACK_ID, ATTACK_KNOCKBACK_MODIFIER, AttributeModifier.Operation.ADD_VALUE),
-                        EquipmentSlotGroup.MAINHAND
-                )
-                .build();
+    public static com.google.common.collect.Multimap<net.minecraft.world.entity.ai.attributes.Attribute, AttributeModifier> createWeaponAttributes() {
+        return com.google.common.collect.ImmutableMultimap.<net.minecraft.world.entity.ai.attributes.Attribute, AttributeModifier>builder()
+            .put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", ATTACK_DAMAGE_MODIFIER, AttributeModifier.Operation.ADDITION))
+            .put(Attributes.ATTACK_KNOCKBACK, new AttributeModifier(java.util.UUID.nameUUIDFromBytes(BASE_ATTACK_KNOCKBACK_ID.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8)), "PoopSky attack knockback", ATTACK_KNOCKBACK_MODIFIER, AttributeModifier.Operation.ADDITION))
+            .build();
+    }
+    @Override
+    public com.google.common.collect.Multimap<net.minecraft.world.entity.ai.attributes.Attribute, AttributeModifier> getDefaultAttributeModifiers(net.minecraft.world.entity.EquipmentSlot slot) {
+        return slot == net.minecraft.world.entity.EquipmentSlot.MAINHAND ? createWeaponAttributes() : super.getDefaultAttributeModifiers(slot);
     }
 
     public static boolean poisonOnHit(LivingEntity target, LivingEntity attacker) {

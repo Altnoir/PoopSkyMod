@@ -1,0 +1,34 @@
+{
+  "parent": "poopsky:poop_crafting_table",
+  "criteria": {
+    "compooper": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "poopsky:compooper"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.poopsky.compooper.description"
+    },
+    "icon": {
+      "count": 1,
+      "item": "poopsky:compooper"
+    },
+    "title": {
+      "translate": "advancements.poopsky.compooper.title"
+    }
+  },
+  "requirements": [
+    [
+      "compooper"
+    ]
+  ]
+}

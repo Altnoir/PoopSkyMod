@@ -21,7 +21,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
 
 public class ToiletHighlightRenderer {
     public static void onRenderLevel(RenderLevelStageEvent event) {
@@ -41,7 +41,7 @@ public class ToiletHighlightRenderer {
             }
         }
 
-        ToiletComponent comp = stack.get(PoComponents.TOILET_COMPONENT.get());
+        ToiletComponent comp = PoComponents.TOILET_COMPONENT.get(stack);
         if (comp == null || comp.level1().isEmpty() || !comp.level2().isEmpty()) {
             return;
         }
@@ -104,12 +104,12 @@ public class ToiletHighlightRenderer {
             normalX /= length;
             normalY /= length;
             normalZ /= length;
-            vertexConsumer.addVertex(pose, (float) (minX + x), (float) (minY + y), (float) (minZ + z))
-                    .setColor(red, green, blue, alpha)
-                    .setNormal(pose, normalX, normalY, normalZ);
-            vertexConsumer.addVertex(pose, (float) (maxX + x), (float) (maxY + y), (float) (maxZ + z))
-                    .setColor(red, green, blue, alpha)
-                    .setNormal(pose, normalX, normalY, normalZ);
+            vertexConsumer.vertex(pose.pose(), (float) (minX + x), (float) (minY + y), (float) (minZ + z))
+                    .color(red, green, blue, alpha)
+                    .normal(pose.normal(), normalX, normalY, normalZ).endVertex();
+            vertexConsumer.vertex(pose.pose(), (float) (maxX + x), (float) (maxY + y), (float) (maxZ + z))
+                    .color(red, green, blue, alpha)
+                    .normal(pose.normal(), normalX, normalY, normalZ).endVertex();
         });
     }
 }

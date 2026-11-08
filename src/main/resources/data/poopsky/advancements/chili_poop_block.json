@@ -1,0 +1,34 @@
+{
+  "parent": "poopsky:chili_poop",
+  "criteria": {
+    "chili_poop_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "poopsky:chili_poop_block"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.poopsky.chili_poop_block.description"
+    },
+    "icon": {
+      "count": 1,
+      "item": "poopsky:chili_poop_block"
+    },
+    "title": {
+      "translate": "advancements.poopsky.chili_poop_block.title"
+    }
+  },
+  "requirements": [
+    [
+      "chili_poop_block"
+    ]
+  ]
+}

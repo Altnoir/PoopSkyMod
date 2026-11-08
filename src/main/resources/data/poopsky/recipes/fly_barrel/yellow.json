@@ -1,0 +1,8 @@
+{
+  "type": "poopsky:fly_barrel",
+  "fly_type": "yellow",
+  "result": {
+    "count": 1,
+    "item": "minecraft:glow_berries"
+  }
+}

@@ -4,8 +4,8 @@
 	"parent": "block/block",
 	"render_type": "minecraft:cutout",
 	"textures": {
-		"particle": "poopsky:block/blue_arcade_bottom",
-		"arcade": "poopsky:block/blue_arcade_bottom"
+		"particle": "poopsky:block/arcade/blue_arcade_bottom",
+		"arcade": "poopsky:block/arcade/blue_arcade_bottom"
 	},
 	"elements": [
 		{

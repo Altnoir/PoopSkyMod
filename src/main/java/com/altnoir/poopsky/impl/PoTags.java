@@ -1,6 +1,5 @@
 package com.altnoir.poopsky.impl;
 
-import com.altnoir.abysslib.AbyssLib;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.compat.PoMods;
 import net.minecraft.core.registries.Registries;
@@ -73,7 +72,6 @@ public class PoTags {
         TagKey<Item> BREEDING_CHEST_PARALLELISM = create("breeding_chest_parallelism");
         TagKey<Item> FLY_LIKE = create("fly_like");
         TagKey<Item> VILLAGER_LIKE = create("villager_like");
-        TagKey<Item> SNAIL_FOOD = create("snail_food");
 
         TagKey<Item> POOP_MOONCAKES = create("poop_mooncakes");
         TagKey<Item> EGG = tag("foods/eggs");
@@ -87,11 +85,11 @@ public class PoTags {
         }
 
         private static TagKey<Item> tag(String name) {
-            return ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", name));
+            return ItemTags.create(new ResourceLocation("forge", name.equals("foods/eggs") ? "eggs" : name));
         }
 
         private static TagKey<Item> createCreate(String name) {
-            return ItemTags.create(ResourceLocation.fromNamespaceAndPath("create", name));
+            return ItemTags.create(new ResourceLocation("create", name));
         }
 
     }
@@ -132,7 +130,7 @@ public class PoTags {
         public static final TagKey<PaintingVariant> PLACEABLE = create("placeable");
 
         private static TagKey<PaintingVariant> create(String name) {
-            return TagKey.create(Registries.PAINTING_VARIANT, AbyssLib.mcloc(name));
+            return TagKey.create(Registries.PAINTING_VARIANT, PoopSky.mcloc(name));
         }
     }
 }

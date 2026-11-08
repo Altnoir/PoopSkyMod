@@ -17,9 +17,9 @@ import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.neoforged.neoforge.client.model.BakedModelWrapper;
-import net.neoforged.neoforge.client.model.data.ModelData;
-import net.neoforged.neoforge.client.model.data.ModelProperty;
+import net.minecraftforge.client.model.BakedModelWrapper;
+import net.minecraftforge.client.model.data.ModelData;
+import net.minecraftforge.client.model.data.ModelProperty;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.joml.Vector4f;
@@ -160,10 +160,12 @@ public class ToiletBakedModel extends BakedModelWrapper<BakedModel> {
             float unInterpU = sprite.getUOffset(u);
             float unInterpV = sprite.getVOffset(v);
 
-            float cu = unInterpU - 0.5f;
-            float cv = unInterpV - 0.5f;
-            float newUnInterpU = cu * cos - cv * sin + 0.5f;
-            float newUnInterpV = cu * sin + cv * cos + 0.5f;
+            // 1.20.1 的贴图坐标范围是 0..16，而不是 1.21.1 的 0..1。
+            // 绕 8,8 旋转，避免采到图集里其他方块的贴图。
+            float cu = unInterpU - 8.0f;
+            float cv = unInterpV - 8.0f;
+            float newUnInterpU = cu * cos - cv * sin + 8.0f;
+            float newUnInterpV = cu * sin + cv * cos + 8.0f;
 
             vertexData[offset + 4] = Float.floatToRawIntBits(sprite.getU(newUnInterpU));
             vertexData[offset + 5] = Float.floatToRawIntBits(sprite.getV(newUnInterpV));

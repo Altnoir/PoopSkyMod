@@ -1,9 +1,12 @@
 {
   "pack": {
-    "pack_format": 42,
-    "supported_formats": [15,999],
-    "min_format": [15],
-    "max_format": [999],
+    "pack_format": 15,
+    "min_format": [
+      15
+    ],
+    "max_format": [
+      999
+    ],
     "description": "§6适用于直播/视频的和谐包\n§eBy xia_bi418"
   }
 }

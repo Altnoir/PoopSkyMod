@@ -16,7 +16,7 @@ public class PoopPieceBlock extends SnowLayerBlock {
     }
 
     @Override
-    protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+    public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
         BlockState blockstate = level.getBlockState(pos.below());
         if (blockstate.is(BlockTags.SNOW_LAYER_CANNOT_SURVIVE_ON)) {
             return false;

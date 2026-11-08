@@ -2,57 +2,38 @@ package com.altnoir.poopsky.compat.create;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.compat.create.content.kinetics.fan.processing.DigestingRecipe;
-import com.simibubi.create.content.processing.recipe.StandardProcessingRecipe;
+import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder.ProcessingRecipeFactory;
+import com.simibubi.create.content.processing.recipe.ProcessingRecipeSerializer;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 
 @SuppressWarnings("unchecked")
 public enum PSRecipeTypes implements IRecipeTypeInfo {
     DIGESTING(DigestingRecipe::new);
-
     public final ResourceLocation id;
-    public final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<?>> serializerObject;
-    public final DeferredHolder<RecipeType<?>, RecipeType<?>> typeObject;
-
-    PSRecipeTypes(StandardProcessingRecipe.Factory<?> processingFactory) {
-        String name = name().toLowerCase();
+    public final RegistryObject<RecipeSerializer<?>> serializerObject;
+    public final RegistryObject<RecipeType<?>> typeObject;
+    PSRecipeTypes(ProcessingRecipeFactory<?> factory) {
+        String name = name().toLowerCase(java.util.Locale.ROOT);
         id = PoopSky.loc(name);
-        serializerObject = Registers.SERIALIZER_REGISTER.register(name, () -> new StandardProcessingRecipe.Serializer<>(processingFactory));
-        typeObject = Registers.TYPE_REGISTER.register(name, () -> RecipeType.simple(id));
+        serializerObject = Registers.SERIALIZERS.register(name, () -> new ProcessingRecipeSerializer<>(factory));
+        typeObject = Registers.TYPES.register(name, () -> new RecipeType<DigestingRecipe>() {
+            @Override public String toString() { return id.toString(); }
+        });
     }
-
-    public static void register(IEventBus modEventBus) {
-        Registers.SERIALIZER_REGISTER.register(modEventBus);
-        Registers.TYPE_REGISTER.register(modEventBus);
-    }
-
-    @Override
-    public ResourceLocation getId() {
-        return id;
-    }
-
-    @Override
-    public <T extends RecipeSerializer<?>> T getSerializer() {
-        return (T) serializerObject.get();
-    }
-
-    @Override
-    public <I extends RecipeInput, R extends Recipe<I>> RecipeType<R> getType() {
-        return (RecipeType<R>) typeObject.get();
-    }
-
+    public static void register(IEventBus bus) { Registers.SERIALIZERS.register(bus); Registers.TYPES.register(bus); }
+    @Override public ResourceLocation getId() { return id; }
+    @Override public <T extends RecipeSerializer<?>> T getSerializer() { return (T) serializerObject.get(); }
+    @Override public <T extends RecipeType<?>> T getType() { return (T) typeObject.get(); }
     private static class Registers {
-        private static final DeferredRegister<RecipeSerializer<?>> SERIALIZER_REGISTER =
-                DeferredRegister.create(BuiltInRegistries.RECIPE_SERIALIZER, PoopSky.MOD_ID);
-        private static final DeferredRegister<RecipeType<?>> TYPE_REGISTER =
-                DeferredRegister.create(BuiltInRegistries.RECIPE_TYPE, PoopSky.MOD_ID);
+        static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, PoopSky.MOD_ID);
+        static final DeferredRegister<RecipeType<?>> TYPES = DeferredRegister.create(Registries.RECIPE_TYPE, PoopSky.MOD_ID);
     }
 }

@@ -8,9 +8,10 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.client.model.BakedModelWrapper;
+import net.minecraftforge.client.model.BakedModelWrapper;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashMap;
@@ -41,7 +42,7 @@ public class FlyItemBakedModel extends BakedModelWrapper<BakedModel> {
 
         @Override
         public @Nullable BakedModel resolve(BakedModel model, ItemStack stack, @Nullable ClientLevel level, @Nullable LivingEntity entity, int seed) {
-            String typeId = stack.get(PoComponents.FLY_TYPE.get());
+            String typeId = PoComponents.FLY_TYPE.get(stack);
             if (typeId != null) {
                 BakedModel variant = flyModels.get(typeId);
                 if (variant != null) {
@@ -52,11 +53,11 @@ public class FlyItemBakedModel extends BakedModelWrapper<BakedModel> {
         }
     }
 
-    public static Map<String, BakedModel> collectFlyModels(Map<ModelResourceLocation, BakedModel> models) {
+    public static Map<String, BakedModel> collectFlyModels(Map<ResourceLocation, BakedModel> models) {
         Map<String, BakedModel> flyModels = new LinkedHashMap<>();
         for (String id : FlyTypeManager.INSTANCE.getFlyTypes()) {
             String flyId = id.equals(FlyTypes.NORMAL.id()) ? "fly" : "fly_" + id;
-            ModelResourceLocation modelLoc = new ModelResourceLocation(PoopSky.loc("item/" + flyId), ModelResourceLocation.STANDALONE_VARIANT);
+            ResourceLocation modelLoc = PoopSky.loc("item/" + flyId);
             BakedModel baked = models.get(modelLoc);
             if (baked != null) {
                 flyModels.put(id, baked);

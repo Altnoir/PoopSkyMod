@@ -2,23 +2,43 @@
   "required": true,
   "minVersion": "0.8",
   "package": "com.altnoir.poopsky.mixin",
-  "compatibilityLevel": "JAVA_21",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "poopsky.refmap.json",
   "mixins": [
+    "KubeScriptManagerMixin",
+    "DispenserAccessor",
+    "PoStackContainerMixin",
+    "PoStackItemEntityMixin",
     "BaseCoralPlantTypeBlockMixin",
     "CarvedPumpkinBlockMixin",
     "FishingHookMixin",
-    "FrogspawnBlockMixin",
     "FungusBlockMixin",
     "LivingEntityMixin",
     "NoiseBasedChunkGeneratorMixin",
     "TradeWithVillagerMixin",
-    "VillagerMixin"
+    "VillagerMixin",
+    "TimeFreezeServerLevelMixin",
+    "TimeFreezeLevelMixin",
+    "TimeFreezeLevelTicksMixin",
+    "TimeFreezeNaturalSpawnerMixin",
+    "TimeFreezeRaidsMixin",
+    "PoCopperWeatheringMixin",
+    "PoCopperWaxMixin",
+    "MovementEfficiencyMixin",
+    "WaterEfficiencyMixin"
   ],
   "client": [
+    "BufferSourceAccessor",
+    "ToiletBreakEffectsMixin",
+    "CreativeScreenAccessor",
+    "FontAccessor",
+    "BakedGlyphAccessor",
     "ClientPacketListenerMixin",
     "CreateWorldScreenWorldTabMixin",
     "KeyBindsListKeyEntryMixin",
-    "WorldCreationUiStateMixin"
+    "WorldCreationUiStateMixin",
+    "TimeFreezeClientLevelMixin",
+    "PoScaleRenderMixin"
   ],
   "injectors": {
     "defaultRequire": 1

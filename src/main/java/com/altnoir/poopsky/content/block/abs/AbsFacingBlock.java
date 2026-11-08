@@ -37,12 +37,12 @@ public abstract class AbsFacingBlock extends Block {
     }
 
     @Override
-    protected BlockState rotate(BlockState state, Rotation rotation) {
+    public BlockState rotate(BlockState state, Rotation rotation) {
         return state.setValue(getFacingProperty(), rotation.rotate(state.getValue(getFacingProperty())));
     }
 
     @Override
-    protected BlockState mirror(BlockState state, Mirror mirror) {
+    public BlockState mirror(BlockState state, Mirror mirror) {
         if (mirror == Mirror.NONE) {
             return state;
         }

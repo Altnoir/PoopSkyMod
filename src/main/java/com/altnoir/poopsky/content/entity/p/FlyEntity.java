@@ -19,8 +19,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.*;
@@ -33,9 +31,6 @@ import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.ai.util.AirAndWaterRandomPos;
-import net.minecraft.world.entity.ai.util.DefaultRandomPos;
-import net.minecraft.world.entity.ai.util.HoverRandomPos;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.player.Player;
@@ -44,10 +39,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -55,7 +50,6 @@ import java.util.EnumSet;
 
 public class FlyEntity extends Animal implements FlyingAnimal {
     public static final int TICKS_PER_FLAP = Mth.ceil(1.4959966F);
-    private static final double RIDE_SCALE_LIMIT = 0.5D;
     private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(FlyEntity.class, EntityDataSerializers.BYTE);
 
     public float flap;
@@ -65,18 +59,17 @@ public class FlyEntity extends Animal implements FlyingAnimal {
     public float flapping = 1.0F;
     public int eggTime = this.random.nextInt(6000) + 6000;
     private int underWaterTicks;
-    private boolean riddenFlight;
 
     private FlyBuzzSoundWrapper buzzSound;
 
     public FlyEntity(EntityType<FlyEntity> entityType, Level level) {
         super(entityType, level);
         this.moveControl = new FlyingMoveControl(this, 10, false);
-        this.setPathfindingMalus(PathType.DANGER_FIRE, -1.0F);
-        this.setPathfindingMalus(PathType.WATER, -1.0F);
-        this.setPathfindingMalus(PathType.WATER_BORDER, 16.0F);
-        this.setPathfindingMalus(PathType.COCOA, -1.0F);
-        this.setPathfindingMalus(PathType.FENCE, -1.0F);
+        this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1.0F);
+        this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
+        this.setPathfindingMalus(BlockPathTypes.WATER_BORDER, 16.0F);
+        this.setPathfindingMalus(BlockPathTypes.COCOA, -1.0F);
+        this.setPathfindingMalus(BlockPathTypes.FENCE, -1.0F);
         if (level.isClientSide()) {
             initClient();
         }
@@ -99,9 +92,9 @@ public class FlyEntity extends Animal implements FlyingAnimal {
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.4)); // 受到伤害时逃跑
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0)); // 繁殖行为
         this.goalSelector.addGoal(3, new AttractedByShitGoal(this, 1.25));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, itemStack -> itemStack.is(PoTags.Items.FLY_LIKE), false));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, net.minecraft.world.item.crafting.Ingredient.of(PoTags.Items.FLY_LIKE), false));
         this.goalSelector.addGoal(4, new FlyToToiletGoal(this, 1.1)); // 主动寻找厕所
-        this.goalSelector.addGoal(5, new IdleMovementGoal(this, 1.0));
+        this.goalSelector.addGoal(5, new WaterAvoidingRandomFlyingGoal(this, 1.0)); // 随机飞行，避开水面
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F)); // 看向附近的玩家
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this)); // 随机环顾四周
     }
@@ -168,78 +161,6 @@ public class FlyEntity extends Animal implements FlyingAnimal {
     }
 
     @Override
-    public void tick() {
-        super.tick();
-        if (this.getControllingPassenger() == null && this.riddenFlight) {
-            this.setNoGravity(false);
-            this.riddenFlight = false;
-        }
-    }
-
-    @Override
-    protected void tickRidden(Player player, Vec3 travelVector) {
-        super.tickRidden(player, travelVector);
-        this.getNavigation().stop();
-        this.setNoGravity(true);
-        this.riddenFlight = true;
-        this.setRot(player.getYRot(), player.getXRot());
-        this.yRotO = this.getYRot();
-        this.setYBodyRot(this.getYRot());
-        this.setYHeadRot(this.getYRot());
-    }
-
-    @Override
-    protected Vec3 getRiddenInput(Player player, Vec3 travelVector) {
-        float pitch = player.getXRot() * Mth.DEG_TO_RAD;
-        return new Vec3(0.0, -Mth.sin(pitch), Mth.cos(pitch));
-    }
-
-    @Override
-    protected float getRiddenSpeed(Player player) {
-        return (float) this.getAttributeValue(this.onGround()
-                ? Attributes.MOVEMENT_SPEED
-                : Attributes.FLYING_SPEED);
-    }
-
-    private boolean isHoldingPoopOnAStick(Player player) {
-        return player.getMainHandItem().is(PoItems.POOP_ON_A_STICK.get())
-                || player.getOffhandItem().is(PoItems.POOP_ON_A_STICK.get());
-    }
-
-    private boolean canRide(Player player) {
-        return !this.isBaby()
-                && player.getAttributeValue(Attributes.SCALE) <= RIDE_SCALE_LIMIT
-                && this.isHoldingPoopOnAStick(player);
-    }
-
-    @Override
-    public InteractionResult mobInteract(Player player, InteractionHand hand) {
-        if (!this.canRide(player)) {
-            return super.mobInteract(player, hand);
-        }
-
-        if (this.level().isClientSide) {
-            return InteractionResult.SUCCESS;
-        }
-        return player.startRiding(this) ? InteractionResult.CONSUME : InteractionResult.PASS;
-    }
-
-    @Override
-    protected boolean canAddPassenger(Entity passenger) {
-        return this.getPassengers().isEmpty()
-                && passenger instanceof Player player
-                && this.canRide(player);
-    }
-
-    @Override
-    @Nullable
-    public LivingEntity getControllingPassenger() {
-        return this.getFirstPassenger() instanceof Player player && this.isHoldingPoopOnAStick(player)
-                ? player
-                : super.getControllingPassenger();
-    }
-
-    @Override
     protected void customServerAiStep() {
         super.customServerAiStep();
         if (this.isInWaterOrBubble()) {
@@ -292,37 +213,6 @@ public class FlyEntity extends Animal implements FlyingAnimal {
                 return;
             }
             super.tick();
-        }
-    }
-
-    private static class IdleMovementGoal extends RandomStrollGoal {
-        private final FlyEntity fly;
-
-        private IdleMovementGoal(FlyEntity fly, double speedModifier) {
-            super(fly, speedModifier, 40, false);
-            this.fly = fly;
-        }
-
-        @Override
-        protected Vec3 getPosition() {
-            if (this.fly.isBaby()) {
-                return DefaultRandomPos.getPos(this.fly, 8, 4);
-            }
-
-            Vec3 viewVector = this.fly.getViewVector(0.0F);
-            Vec3 hoverPosition = HoverRandomPos.getPos(
-                    this.fly,
-                    8,
-                    7,
-                    viewVector.x,
-                    viewVector.z,
-                    Mth.HALF_PI,
-                    3,
-                    1
-            );
-            return hoverPosition != null
-                    ? hoverPosition
-                    : AirAndWaterRandomPos.getPos(this.fly, 8, 4, -2, viewVector.x, viewVector.z, Mth.HALF_PI);
         }
     }
 
@@ -434,13 +324,13 @@ public class FlyEntity extends Animal implements FlyingAnimal {
     }
 
     public static boolean checkFlySpawnRules(EntityType<FlyEntity> fly, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
-        return MobSpawnType.isSpawner(spawnType);
+        return spawnType == MobSpawnType.SPAWNER;
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.@NotNull Builder builder) {
-        super.defineSynchedData(builder);
-        builder.define(DATA_FLAGS_ID, (byte) 0);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        entityData.define(DATA_FLAGS_ID, (byte) 0);
     }
 
     private static class AttractedByShitGoal extends Goal {
@@ -569,4 +459,6 @@ public class FlyEntity extends Animal implements FlyingAnimal {
             return nearest;
         }
     }
+    @Override
+    protected float getStandingEyeHeight(net.minecraft.world.entity.Pose pose, net.minecraft.world.entity.EntityDimensions dimensions) { return 0.3F; }
 }

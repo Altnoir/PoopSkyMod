@@ -49,8 +49,8 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        builder.define(DATA_FUSE_ID, DEFAULT_FUSE_TIME);
+    protected void defineSynchedData() {
+        entityData.define(DATA_FUSE_ID, DEFAULT_FUSE_TIME);
     }
 
     @Override
@@ -63,18 +63,17 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
         return !this.isRemoved();
     }
 
-    @Override
     protected double getDefaultGravity() {
         return 0.04;
     }
 
     @Override
     public void tick() {
-        this.handlePortal();
+        this.baseTick();
 
         Direction logFacing = this.getLogFacing();
         if (logFacing == null || logFacing == Direction.DOWN) {
-            this.applyGravity();
+            if (!this.isNoGravity()) this.setDeltaMovement(this.getDeltaMovement().add(0, -getDefaultGravity(), 0));
         }
 
         Vec3 movement = this.getDeltaMovement();
@@ -190,4 +189,6 @@ public class PoopTntEntity extends Entity implements TraceableEntity {
     public boolean hurt(DamageSource source, float amount) {
         return false;
     }
+    @Override
+    protected float getEyeHeight(net.minecraft.world.entity.Pose pose, net.minecraft.world.entity.EntityDimensions dimensions) { return 0.15F; }
 }

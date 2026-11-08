@@ -3,12 +3,12 @@ package com.altnoir.poopsky.content.villager;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.init.PoSoundEvents;
-import com.altnoir.abysslib.reginth.Reginth;
+import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import com.altnoir.abysslib.reginth.util.entry.RegistryEntry;
-import com.altnoir.abysslib.reginth.util.nullness.NonNullSupplier;
+import com.tterrag.registrate.util.entry.RegistryEntry;
+import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvent;
@@ -20,7 +20,7 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 public class PoVillagers {
-    private static final Reginth REGISTRATE = PoopSky.registrate();
+    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
     public static final ResourceKey<PoiType> COMPOOPER_POI_KEY = registryPoiKey("compooper");
     public static final ResourceKey<PoiType> TOILET_POI_KEY = registryPoiKey("toilet");
@@ -42,27 +42,27 @@ public class PoVillagers {
             .filter(state -> state.getBlock() instanceof AbstractToiletBlock)
             .collect(ImmutableSet.toImmutableSet());
 
-    public static final RegistryEntry<PoiType, PoiType> COMPOOPER_POI_TYPE =
+    public static final RegistryEntry<PoiType> COMPOOPER_POI_TYPE =
             registerPoiType("compooper", () -> new PoiType(COMPOOPER_POI.get(), 1, 1));
-    public static final RegistryEntry<PoiType, PoiType> TOILET_POI_TYPE =
+    public static final RegistryEntry<PoiType> TOILET_POI_TYPE =
             registerPoiType("toilet", () -> new PoiType(TOILET_POI.get(), 1, 1));
 
-    public static final RegistryEntry<VillagerProfession, VillagerProfession> POOP_MAKER =
+    public static final RegistryEntry<VillagerProfession> POOP_MAKER =
             registerProfession("poopmaker", COMPOOPER_POI_KEY, PoSoundEvents.ENTITY_VILLAGER_WORK_COMPOOPER);
-    public static final RegistryEntry<VillagerProfession, VillagerProfession> GASTRONOME =
+    public static final RegistryEntry<VillagerProfession> GASTRONOME =
             registerProfession("gastronome", TOILET_POI_KEY, PoSoundEvents.ENTITY_VILLAGER_WORK_TOILET);
 
     public static void register() {
     }
 
-    private static RegistryEntry<PoiType, PoiType> registerPoiType(
+    private static RegistryEntry<PoiType> registerPoiType(
             String name, NonNullSupplier<PoiType> type) {
         return REGISTRATE.simple(name, Registries.POINT_OF_INTEREST_TYPE, type);
     }
 
-    private static RegistryEntry<VillagerProfession, VillagerProfession> registerProfession(
+    private static RegistryEntry<VillagerProfession> registerProfession(
             String name, ResourceKey<PoiType> poiKey,
-            RegistryEntry<SoundEvent, SoundEvent> workSound) {
+            RegistryEntry<SoundEvent> workSound) {
         return REGISTRATE.simple(name, Registries.VILLAGER_PROFESSION,
                 () -> new VillagerProfession(name,
                         holder -> holder.is(poiKey),

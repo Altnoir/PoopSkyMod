@@ -16,10 +16,9 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
 
-public class POPExplosionRecipeCategory implements IRecipeCategory<RecipeHolder<POPExplosionRecipe>> {
-    public static final RecipeType<RecipeHolder<POPExplosionRecipe>> TYPE = RecipeType.createRecipeHolderType(PoopSky.loc("pop_explosion"));
+public class POPExplosionRecipeCategory implements IRecipeCategory<POPExplosionRecipe> {
+    public static final RecipeType<POPExplosionRecipe> TYPE = new RecipeType<>(PoopSky.loc("pop_explosion"), POPExplosionRecipe.class);
 
     private static final int WIDTH = 73;
     private static final int HEIGHT = 18;
@@ -48,9 +47,12 @@ public class POPExplosionRecipeCategory implements IRecipeCategory<RecipeHolder<
     }
 
     @Override
-    public RecipeType<RecipeHolder<POPExplosionRecipe>> getRecipeType() {
+    public RecipeType<POPExplosionRecipe> getRecipeType() {
         return TYPE;
     }
+
+    @Override
+    public net.minecraft.resources.ResourceLocation getRegistryName(POPExplosionRecipe recipe) { return recipe.getId(); }
 
     @Override
     public Component getTitle() {
@@ -73,8 +75,8 @@ public class POPExplosionRecipeCategory implements IRecipeCategory<RecipeHolder<
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<POPExplosionRecipe> recipeHolder, IFocusGroup focuses) {
-        var recipe = recipeHolder.value();
+    public void setRecipe(IRecipeLayoutBuilder builder, POPExplosionRecipe recipeHolder, IFocusGroup focuses) {
+        var recipe = recipeHolder;
         builder.addSlot(RecipeIngredientRole.INPUT, INPUT_X, INPUT_Y)
                 .addIngredients(recipe.input());
         builder.addSlot(RecipeIngredientRole.OUTPUT, OUTPUT_X, OUTPUT_Y)
@@ -82,16 +84,16 @@ public class POPExplosionRecipeCategory implements IRecipeCategory<RecipeHolder<
     }
 
     @Override
-    public void draw(RecipeHolder<POPExplosionRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+    public void draw(POPExplosionRecipe recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         this.slot.draw(guiGraphics, INPUT_X - 1, INPUT_Y - 1);
-        IDrawable arrow = recipeHolder.value().radius() > 0 ? this.arrow2 : this.arrow;
+        IDrawable arrow = recipeHolder.radius() > 0 ? this.arrow2 : this.arrow;
         arrow.draw(guiGraphics, ARROW_X, ARROW_Y);
         this.slot.draw(guiGraphics, OUTPUT_X - 1, OUTPUT_Y - 1);
     }
 
     @Override
-    public void getTooltip(ITooltipBuilder tooltip, RecipeHolder<POPExplosionRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
-        var recipe = recipeHolder.value();
+    public void getTooltip(ITooltipBuilder tooltip, POPExplosionRecipe recipeHolder, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+        var recipe = recipeHolder;
         if (recipe.radius() <= 0) return;
 
         if (mouseX >= ARROW_X && mouseX < ARROW_X + ARROW_WIDTH

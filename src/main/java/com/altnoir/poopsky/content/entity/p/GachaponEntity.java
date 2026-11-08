@@ -1,6 +1,6 @@
 package com.altnoir.poopsky.content.entity.p;
 
-import com.altnoir.abysslib.AbyssLib;
+import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.item.p.GachaponItem;
 import com.altnoir.poopsky.init.PoEntityType;
 import net.minecraft.core.BlockPos;
@@ -45,9 +45,9 @@ public class GachaponEntity extends ThrowableProjectile {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        builder.define(DATA_VARIANT, (byte) 0);
-        builder.define(DATA_MOB_ID, "");
+    protected void defineSynchedData() {
+        entityData.define(DATA_VARIANT, (byte) 0);
+        entityData.define(DATA_MOB_ID, "");
     }
 
     public byte getVariant() {
@@ -124,7 +124,7 @@ public class GachaponEntity extends ThrowableProjectile {
             return;
         }
 
-        ResourceLocation id = AbyssLib.tryParse(mobId);
+        ResourceLocation id = PoopSky.tryParse(mobId);
         if (id == null) {
             return;
         }
@@ -139,4 +139,6 @@ public class GachaponEntity extends ThrowableProjectile {
             this.level().playSound(entity, pos, SoundEvents.CHICKEN_EGG, SoundSource.PLAYERS, 0.5F, 1.0F);
         }
     }
+    @Override
+    protected float getEyeHeight(net.minecraft.world.entity.Pose pose, net.minecraft.world.entity.EntityDimensions dimensions) { return 0.375F; }
 }

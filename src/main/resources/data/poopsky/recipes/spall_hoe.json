@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "M": {
+      "item": "poopsky:spall"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "MM",
+    " S",
+    " S"
+  ],
+  "result": {
+    "count": 1,
+    "item": "poopsky:spall_hoe",
+    "nbt": {
+      "Enchantments": [
+        {
+          "id": "minecraft:unbreaking",
+          "lvl": 1
+        }
+      ]
+    }
+  }
+}

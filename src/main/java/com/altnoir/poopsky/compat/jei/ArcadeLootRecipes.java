@@ -1,6 +1,5 @@
 package com.altnoir.poopsky.compat.jei;
 
-import com.altnoir.abysslib.AbyssLib;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.p.ArcadeBlock;
 import com.altnoir.poopsky.data.ArcadeLootGen;
@@ -8,7 +7,7 @@ import com.altnoir.poopsky.init.PoBlocks;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.altnoir.abysslib.reginth.util.entry.BlockEntry;
+import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -44,9 +43,9 @@ public final class ArcadeLootRecipes {
         List<ArcadeLootRecipe> recipes = new ArrayList<>();
         for (BlockEntry<ArcadeBlock> entry : PoBlocks.getArcadeBlocks()) {
             var lootKey = ArcadeLootGen.lootTableKey(entry.get());
-            ResourceLocation file = ResourceLocation.fromNamespaceAndPath(
-                    lootKey.location().getNamespace(),
-                    "loot_table/" + lootKey.location().getPath() + ".json");
+            ResourceLocation file = new ResourceLocation(
+                    lootKey.getNamespace(),
+                    "loot_tables/" + lootKey.getPath() + ".json");
             resources.getResource(file).ifPresent(resource -> loadArcade(entry, resource, recipes));
         }
         return recipes;
@@ -70,13 +69,13 @@ public final class ArcadeLootRecipes {
             }
 
             ItemStack input = new ItemStack(entry.get());
-            String blockPath = AbyssLib.getBlockPath(entry.get());
+            String blockPath = PoopSky.getBlockPath(entry.get());
             List<ArcadeLootRecipe.Output> outputs = calculateOutputs(parsedOutputs);
             int pageCount = (outputs.size() + ArcadeLootRecipe.OUTPUT_CAPACITY - 1) / ArcadeLootRecipe.OUTPUT_CAPACITY;
             for (int page = 0; page < pageCount; page++) {
                 int start = page * ArcadeLootRecipe.OUTPUT_CAPACITY;
                 int end = Math.min(start + ArcadeLootRecipe.OUTPUT_CAPACITY, outputs.size());
-                ResourceLocation id = ResourceLocation.fromNamespaceAndPath(PoopSky.MOD_ID, "arcade/" + blockPath + "_" + (page + 1));
+                ResourceLocation id = new ResourceLocation(PoopSky.MOD_ID, "arcade/" + blockPath + "_" + (page + 1));
                 recipes.add(new ArcadeLootRecipe(id, input, List.copyOf(outputs.subList(start, end))));
             }
         } catch (Exception e) {
@@ -91,7 +90,7 @@ public final class ArcadeLootRecipes {
 
         String type = entry.get("type").getAsString();
         int weight = entry.has("weight") ? entry.get("weight").getAsInt() : 1;
-        ResourceLocation id = ResourceLocation.parse(entry.get("name").getAsString());
+        ResourceLocation id = new ResourceLocation(entry.get("name").getAsString());
 
         switch (type) {
             case "minecraft:item" -> {

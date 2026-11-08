@@ -44,7 +44,7 @@ public class PoopSkyBlockItem extends BlockItem {
             return InteractionResultHolder.pass(stack);
         }
 
-        Direction direction = Direction.getNearest(look);
+        Direction direction = Direction.getNearest(look.x, look.y, look.z);
         BlockHitResult hitResult = new BlockHitResult(Vec3.atCenterOf(target), direction, target, false);
         BlockPlaceContext context = new BlockPlaceContext(player, hand, stack, hitResult);
         InteractionResult result = place(context);

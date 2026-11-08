@@ -166,7 +166,7 @@ public class IntroScreen extends Screen {
         float pitch = 0.78F + this.random.nextFloat() * 0.35F;
         float volume = 0.85F + this.random.nextFloat() * 0.2F;
 
-        this.minecraft.getSoundManager().play(SimpleSoundInstance.forUI(PoSoundEvents.FART.value(), pitch, volume));
+        this.minecraft.getSoundManager().play(SimpleSoundInstance.forUI(PoSoundEvents.FART.get(), pitch, volume));
 
         this.completionSoundStage++;
         this.nextExplosionTick += 3;
@@ -282,15 +282,14 @@ public class IntroScreen extends Screen {
         float top = this.titleLayout.iconY();
         float right = left + ICON_SIZE;
         float bottom = top + ICON_SIZE;
-        int color = FastColor.ARGB32.colorFromFloat(alpha, 1.0F, 1.0F, 1.0F);
+        int color = com.altnoir.poopsky.client.PoRenderCompat.colorFromFloat(alpha, 1.0F, 1.0F, 1.0F);
         Matrix4f matrix = guiGraphics.pose().last().pose();
-        BufferBuilder builder = RenderSystem.renderThreadTesselator()
-                .begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-        builder.addVertex(matrix, left, top, 0.0F).setUv(0.0F, 0.0F).setColor(color);
-        builder.addVertex(matrix, left, bottom, 0.0F).setUv(0.0F, 1.0F).setColor(color);
-        builder.addVertex(matrix, right, bottom, 0.0F).setUv(1.0F, 1.0F).setColor(color);
-        builder.addVertex(matrix, right, top, 0.0F).setUv(1.0F, 0.0F).setColor(color);
-        BufferUploader.drawWithShader(builder.buildOrThrow());
+        BufferBuilder builder = com.altnoir.poopsky.client.PoRenderCompat.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
+        builder.vertex(matrix, left, top, 0.0F).uv(0.0F, 0.0F).color(color).endVertex();
+        builder.vertex(matrix, left, bottom, 0.0F).uv(0.0F, 1.0F).color(color).endVertex();
+        builder.vertex(matrix, right, bottom, 0.0F).uv(1.0F, 1.0F).color(color).endVertex();
+        builder.vertex(matrix, right, top, 0.0F).uv(1.0F, 0.0F).color(color).endVertex();
+        BufferUploader.drawWithShader(builder.end());
     }
 
     private void drawYear(GuiGraphics guiGraphics, float alpha) {
@@ -373,9 +372,8 @@ public class IntroScreen extends Screen {
         RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
         RenderSystem.setShaderTexture(0, POOP_TEXTURE);
 
-        BufferBuilder builder = RenderSystem.renderThreadTesselator()
-                .begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-        int color = FastColor.ARGB32.colorFromFloat(alpha, 1.0F, 1.0F, 1.0F);
+        BufferBuilder builder = com.altnoir.poopsky.client.PoRenderCompat.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
+        int color = com.altnoir.poopsky.client.PoRenderCompat.colorFromFloat(alpha, 1.0F, 1.0F, 1.0F);
         float gravity = 190.0F * shatterTime * shatterTime;
         for (PoopScatter poop : this.poopScatter) {
             float centerX = poop.x() + poop.velocityX() * shatterTime;
@@ -388,7 +386,7 @@ public class IntroScreen extends Screen {
             addPoopQuad(builder, matrix, centerX, centerY, halfSize, poop.spin() * shatterTime, color);
         }
 
-        MeshData mesh = builder.build();
+        BufferBuilder.RenderedBuffer mesh = builder.endOrDiscardIfEmpty();
         if (mesh != null) {
             BufferUploader.drawWithShader(mesh);
         }
@@ -400,14 +398,14 @@ public class IntroScreen extends Screen {
         float downY = halfSize * Mth.cos(angle);
         float rightY = halfSize * Mth.sin(angle);
         float downX = -rightY;
-        builder.addVertex(matrix, centerX - downY - downX, centerY - rightY - downY, 0.0F)
-                .setUv(0.0F, 0.0F).setColor(color);
-        builder.addVertex(matrix, centerX - downY + downX, centerY - rightY + downY, 0.0F)
-                .setUv(0.0F, 1.0F).setColor(color);
-        builder.addVertex(matrix, centerX + downY + downX, centerY + rightY + downY, 0.0F)
-                .setUv(1.0F, 1.0F).setColor(color);
-        builder.addVertex(matrix, centerX + downY - downX, centerY + rightY - downY, 0.0F)
-                .setUv(1.0F, 0.0F).setColor(color);
+        builder.vertex(matrix, centerX - downY - downX, centerY - rightY - downY, 0.0F)
+                .uv(0.0F, 0.0F).color(color).endVertex();
+        builder.vertex(matrix, centerX - downY + downX, centerY - rightY + downY, 0.0F)
+                .uv(0.0F, 1.0F).color(color).endVertex();
+        builder.vertex(matrix, centerX + downY + downX, centerY + rightY + downY, 0.0F)
+                .uv(1.0F, 1.0F).color(color).endVertex();
+        builder.vertex(matrix, centerX + downY - downX, centerY + rightY - downY, 0.0F)
+                .uv(1.0F, 0.0F).color(color).endVertex();
     }
 
     private void drawReflectionGlyphs(GuiGraphics guiGraphics, float offsetX, float offsetY, int color) {
@@ -431,21 +429,20 @@ public class IntroScreen extends Screen {
         while (startY > minY) startY -= TILE_SIZE;
 
         Matrix4f matrix = guiGraphics.pose().last().pose();
-        int color = FastColor.ARGB32.colorFromFloat(alpha, red, green, blue);
+        int color = com.altnoir.poopsky.client.PoRenderCompat.colorFromFloat(alpha, red, green, blue);
         RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
         RenderSystem.setShaderTexture(0, SKY_TEXTURE);
-        BufferBuilder builder = RenderSystem.renderThreadTesselator()
-                .begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
+        BufferBuilder builder = com.altnoir.poopsky.client.PoRenderCompat.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
 
         for (int x = startX; x < maxX; x += TILE_SIZE) {
             for (int y = startY; y < maxY; y += TILE_SIZE) {
-                builder.addVertex(matrix, x, y, 0.0F).setUv(0.0F, 0.0F).setColor(color);
-                builder.addVertex(matrix, x, y + TILE_SIZE, 0.0F).setUv(0.0F, 1.0F).setColor(color);
-                builder.addVertex(matrix, x + TILE_SIZE, y + TILE_SIZE, 0.0F).setUv(1.0F, 1.0F).setColor(color);
-                builder.addVertex(matrix, x + TILE_SIZE, y, 0.0F).setUv(1.0F, 0.0F).setColor(color);
+                builder.vertex(matrix, x, y, 0.0F).uv(0.0F, 0.0F).color(color).endVertex();
+                builder.vertex(matrix, x, y + TILE_SIZE, 0.0F).uv(0.0F, 1.0F).color(color).endVertex();
+                builder.vertex(matrix, x + TILE_SIZE, y + TILE_SIZE, 0.0F).uv(1.0F, 1.0F).color(color).endVertex();
+                builder.vertex(matrix, x + TILE_SIZE, y, 0.0F).uv(1.0F, 0.0F).color(color).endVertex();
             }
         }
-        BufferUploader.drawWithShader(builder.buildOrThrow());
+        BufferUploader.drawWithShader(builder.end());
     }
 
     private void drawScaledText(GuiGraphics guiGraphics, Component text, float x, float y, float scale, int color) {
@@ -457,7 +454,7 @@ public class IntroScreen extends Screen {
     }
 
     private void drawVanillaText(GuiGraphics guiGraphics, String text, int color) {
-        FontSet fontSet = this.font.getFontSet(FONT);
+        FontSet fontSet = ((com.altnoir.poopsky.mixin.FontAccessor) this.font).poopsky$getFontSet(FONT);
         Matrix4f matrix = guiGraphics.pose().last().pose();
         float red = (color >> 16 & 255) / 255.0F;
         float green = (color >> 8 & 255) / 255.0F;
@@ -483,9 +480,9 @@ public class IntroScreen extends Screen {
         float iconX;
         float iconY = ICON_TOP;
         if (title.getString().equals("poopsky")) {
-            FontSet fontSet = font.getFontSet(FONT);
+            FontSet fontSet = ((com.altnoir.poopsky.mixin.FontAccessor) font).poopsky$getFontSet(FONT);
             BakedGlyph secondP = fontSet.getGlyph('p');
-            float secondPCenter = measureVanillaText(font, "poo") + (secondP.left + secondP.right) * 0.5F;
+            float secondPCenter = measureVanillaText(font, "poo") + (((com.altnoir.poopsky.mixin.BakedGlyphAccessor) secondP).poopsky$getLeft() + ((com.altnoir.poopsky.mixin.BakedGlyphAccessor) secondP).poopsky$getRight()) * 0.5F;
             iconX = TITLE_LEFT + secondPCenter * scale - ICON_SIZE * 0.5F;
             if (PoMods.MODERNUI.isLoaded()) {
                 iconX += MODERN_UI_ICON_OFFSET_X;
@@ -499,7 +496,7 @@ public class IntroScreen extends Screen {
     }
 
     private static float measureVanillaText(Font font, String text) {
-        FontSet fontSet = font.getFontSet(FONT);
+        FontSet fontSet = ((com.altnoir.poopsky.mixin.FontAccessor) font).poopsky$getFontSet(FONT);
         float width = 0.0F;
         for (int offset = 0; offset < text.length(); ) {
             int codePoint = text.codePointAt(offset);

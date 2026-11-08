@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "P": {
+      "item": "poopsky:poop_ball"
+    },
+    "S": {
+      "item": "poopsky:maggots_seeds"
+    }
+  },
+  "pattern": [
+    "S S",
+    " P ",
+    "S S"
+  ],
+  "result": {
+    "count": 1,
+    "item": "minecraft:cobweb"
+  }
+}

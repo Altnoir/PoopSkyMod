@@ -11,7 +11,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockTags;
@@ -75,7 +75,7 @@ public class PoConfigureFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> MYCELIUM_VEGETATION = resourceKey("mycelium_vegetation");
     public static final ResourceKey<ConfiguredFeature<?, ?>> MYCELIUM_PATCH_BONEMEAL = resourceKey("mycelium_patch_bonemeal");
 
-    public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
+    public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
         HolderGetter<ConfiguredFeature<?, ?>> holdergetter = context.lookup(Registries.CONFIGURED_FEATURE);
 
         register(context, POOP_TREE, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
@@ -100,7 +100,7 @@ public class PoConfigureFeatures {
                                 .add(PoBlocks.POOP_LEAVES_GOLD.get().defaultBlockState(), 1)
                                 .build()),
 
-                        new RhombusFoliagePlacer(ConstantInt.of(4), UniformInt.of(12, 15)),
+                        new RhombusFoliagePlacer(ConstantInt.of(4), ConstantInt.of(1), UniformInt.of(13, 17)),
                         new TwoLayersFeatureSize(1, 1, 2)
                 )
                         .decorators(ImmutableList.of(new AlterGroundDecorator(BlockStateProvider.simple(Blocks.MUD))))
@@ -109,15 +109,15 @@ public class PoConfigureFeatures {
 
         register(context, GINKGO_TREE, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
                 BlockStateProvider.simple(PoBlocks.GINKGO_LOG.get()),
-                new StraightTrunkPlacer(12, 2, 3),
+                new StraightTrunkPlacer(8, 2, 1),
                 BlockStateProvider.simple(PoBlocks.GINKGO_LEAVES.get()),
-                new RhombusFoliagePlacer(ConstantInt.of(2), UniformInt.of(7, 8)),
+                new RhombusFoliagePlacer(ConstantInt.of(2), ConstantInt.of(1), UniformInt.of(7, 8)),
                 new TwoLayersFeatureSize(2, 0, 2)
         ).build());
 
         register(context, MEGA_GINKGO_TREE, Feature.TREE, (new TreeConfiguration.TreeConfigurationBuilder(
                 BlockStateProvider.simple(PoBlocks.GINKGO_LOG.get()),
-                new GiantTrunkPlacer(18, 2, 14),
+                new GiantTrunkPlacer(13, 2, 14),
                 BlockStateProvider.simple(PoBlocks.GINKGO_LEAVES.get()),
                 new MegaPineFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0), UniformInt.of(13, 17)),
                 new TwoLayersFeatureSize(1, 1, 2))
@@ -125,9 +125,9 @@ public class PoConfigureFeatures {
 
         register(context, GINKGO_BEE_TREE, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
                 BlockStateProvider.simple(PoBlocks.GINKGO_LOG.get()),
-                new StraightTrunkPlacer(12, 2, 3),
+                new StraightTrunkPlacer(8, 2, 1),
                 BlockStateProvider.simple(PoBlocks.GINKGO_LEAVES.get()),
-                new RhombusFoliagePlacer(ConstantInt.of(2),UniformInt.of(7, 8)),
+                new RhombusFoliagePlacer(ConstantInt.of(2), ConstantInt.of(1), UniformInt.of(7, 8)),
                 new TwoLayersFeatureSize(2, 0, 2)
         ).decorators(List.of(new BeehiveDecorator(0.05F))).build());
 
@@ -274,19 +274,19 @@ public class PoConfigureFeatures {
                 new SimpleBlockConfiguration(
                         new WeightedStateProvider(
                                 SimpleWeightedRandomList.<BlockState>builder()
-                                        .add(Blocks.DANDELION.defaultBlockState())
-                                        .add(Blocks.POPPY.defaultBlockState())
-                                        .add(Blocks.BLUE_ORCHID.defaultBlockState())
-                                        .add(Blocks.ALLIUM.defaultBlockState())
-                                        .add(Blocks.AZURE_BLUET.defaultBlockState())
-                                        .add(Blocks.RED_TULIP.defaultBlockState())
-                                        .add(Blocks.ORANGE_TULIP.defaultBlockState())
-                                        .add(Blocks.WHITE_TULIP.defaultBlockState())
-                                        .add(Blocks.PINK_TULIP.defaultBlockState())
-                                        .add(Blocks.OXEYE_DAISY.defaultBlockState())
-                                        .add(Blocks.CORNFLOWER.defaultBlockState())
-                                        .add(Blocks.LILY_OF_THE_VALLEY.defaultBlockState())
-                                        .add(Blocks.PINK_PETALS.defaultBlockState().setValue(PinkPetalsBlock.AMOUNT, PinkPetalsBlock.MAX_FLOWERS))
+                                        .add(Blocks.DANDELION.defaultBlockState(), 1)
+                                        .add(Blocks.POPPY.defaultBlockState(), 1)
+                                        .add(Blocks.BLUE_ORCHID.defaultBlockState(), 1)
+                                        .add(Blocks.ALLIUM.defaultBlockState(), 1)
+                                        .add(Blocks.AZURE_BLUET.defaultBlockState(), 1)
+                                        .add(Blocks.RED_TULIP.defaultBlockState(), 1)
+                                        .add(Blocks.ORANGE_TULIP.defaultBlockState(), 1)
+                                        .add(Blocks.WHITE_TULIP.defaultBlockState(), 1)
+                                        .add(Blocks.PINK_TULIP.defaultBlockState(), 1)
+                                        .add(Blocks.OXEYE_DAISY.defaultBlockState(), 1)
+                                        .add(Blocks.CORNFLOWER.defaultBlockState(), 1)
+                                        .add(Blocks.LILY_OF_THE_VALLEY.defaultBlockState(), 1)
+                                        .add(Blocks.PINK_PETALS.defaultBlockState().setValue(PinkPetalsBlock.AMOUNT, PinkPetalsBlock.MAX_FLOWERS), 1)
                         ))
         );
         register(context, RAW_SAPLING_POOP_PATCH_BONEMEAL, Feature.VEGETATION_PATCH,
@@ -297,16 +297,16 @@ public class PoConfigureFeatures {
                 new SimpleBlockConfiguration(
                         new WeightedStateProvider(
                                 SimpleWeightedRandomList.<BlockState>builder()
-                                        .add(Blocks.TUBE_CORAL.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false))
-                                        .add(Blocks.TUBE_CORAL_FAN.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false))
-                                        .add(Blocks.BRAIN_CORAL.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false))
-                                        .add(Blocks.BRAIN_CORAL_FAN.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false))
-                                        .add(Blocks.BUBBLE_CORAL.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false))
-                                        .add(Blocks.BUBBLE_CORAL_FAN.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false))
-                                        .add(Blocks.FIRE_CORAL.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false))
-                                        .add(Blocks.FIRE_CORAL_FAN.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false))
-                                        .add(Blocks.HORN_CORAL.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false))
-                                        .add(Blocks.HORN_CORAL_FAN.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false))
+                                        .add(Blocks.TUBE_CORAL.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false), 1)
+                                        .add(Blocks.TUBE_CORAL_FAN.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false), 1)
+                                        .add(Blocks.BRAIN_CORAL.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false), 1)
+                                        .add(Blocks.BRAIN_CORAL_FAN.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false), 1)
+                                        .add(Blocks.BUBBLE_CORAL.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false), 1)
+                                        .add(Blocks.BUBBLE_CORAL_FAN.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false), 1)
+                                        .add(Blocks.FIRE_CORAL.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false), 1)
+                                        .add(Blocks.FIRE_CORAL_FAN.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false), 1)
+                                        .add(Blocks.HORN_CORAL.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false), 1)
+                                        .add(Blocks.HORN_CORAL_FAN.defaultBlockState().setValue(BaseCoralPlantTypeBlock.WATERLOGGED, false), 1)
                         ))
         );
         register(context, RAW_SEA_POOP_PATCH_BONEMEAL, Feature.VEGETATION_PATCH,
@@ -363,7 +363,7 @@ public class PoConfigureFeatures {
         return ResourceKey.create(Registries.CONFIGURED_FEATURE, PoopSky.loc(name));
     }
 
-    private static <FC extends FeatureConfiguration, F extends Feature<FC>> void register(BootstrapContext<ConfiguredFeature<?, ?>> context, ResourceKey<ConfiguredFeature<?, ?>> key, F feature, FC configuration) {
+    private static <FC extends FeatureConfiguration, F extends Feature<FC>> void register(BootstapContext<ConfiguredFeature<?, ?>> context, ResourceKey<ConfiguredFeature<?, ?>> key, F feature, FC configuration) {
         context.register(key, new ConfiguredFeature<>(feature, configuration));
     }
 }

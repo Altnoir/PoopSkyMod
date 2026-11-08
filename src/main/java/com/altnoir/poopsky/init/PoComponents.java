@@ -3,48 +3,41 @@ package com.altnoir.poopsky.init;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.ToiletComponent;
-import net.minecraft.core.component.DataComponentType;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.util.ExtraCodecs;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import com.mojang.serialization.Codec;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.eventbus.api.IEventBus;
+import org.jetbrains.annotations.Nullable;
 
+/** 1.20.1 用物品 NBT 保存自定义状态；原版物品同步和合成复制会保留这些字段。 */
 public final class PoComponents {
-    public static final DeferredRegister.DataComponents COMPONENTS = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, PoopSky.MOD_ID);
+    public static final Key<ToiletComponent> TOILET_COMPONENT = new Key<>("toilet_component", ToiletComponent.BASIC_CODEC);
+    public static final Key<String> FLY_TYPE = new Key<>("fly_type", Codec.STRING);
+    public static final Key<ToiletType> TOILET_TYPE = new Key<>("toilet_type", ToiletType.CODEC);
+    public static final Key<String> GACHAPON_COLOR = new Key<>("gachapon_color", Codec.STRING);
+    public static final Key<String> GACHAPON_MOB = new Key<>("gachapon_mob", Codec.STRING);
+    private PoComponents() {}
+    public static void register(IEventBus bus) {}
 
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<ToiletComponent>> TOILET_COMPONENT =
-            COMPONENTS.registerComponentType("toilet_component", builder -> builder
-                    .persistent(ToiletComponent.BASIC_CODEC)
-                    .networkSynchronized(ToiletComponent.STREAM_CODEC)
-            );
-
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> FLY_TYPE =
-            COMPONENTS.registerComponentType("fly_type", builder -> builder
-                    .persistent(ExtraCodecs.NON_EMPTY_STRING)
-                    .networkSynchronized(ByteBufCodecs.STRING_UTF8)
-            );
-
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<ToiletType>> TOILET_TYPE =
-            COMPONENTS.registerComponentType("toilet_type", builder -> builder
-                    .persistent(ToiletType.CODEC)
-                    .networkSynchronized(ToiletType.STREAM_CODEC)
-            );
-
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> GACHAPON_COLOR =
-            COMPONENTS.registerComponentType("gachapon_color", builder -> builder
-                    .persistent(ExtraCodecs.NON_EMPTY_STRING)
-                    .networkSynchronized(ByteBufCodecs.STRING_UTF8)
-            );
-
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> GACHAPON_MOB =
-            COMPONENTS.registerComponentType("gachapon_mob", builder -> builder
-                    .persistent(ExtraCodecs.NON_EMPTY_STRING)
-                    .networkSynchronized(ByteBufCodecs.STRING_UTF8)
-            );
-
-    public static void register(IEventBus eventBus) {
-        COMPONENTS.register(eventBus);
+    public record Key<T>(String name, Codec<T> codec) {
+        public String tagName() { return "poopsky:" + name; }
+        public Key<T> get() { return this; }
+        public boolean has(ItemStack stack) { return stack.hasTag() && stack.getTag().contains(tagName()); }
+        @Nullable
+        public T get(ItemStack stack) {
+            if (!has(stack)) return null;
+            return codec.parse(NbtOps.INSTANCE, stack.getTag().get(tagName()))
+                    .resultOrPartial(error -> PoopSky.LOGGER.warn("Invalid {} item data: {}", tagName(), error)).orElse(null);
+        }
+        public T getOrDefault(ItemStack stack, T fallback) {
+            T value = get(stack);
+            return value == null ? fallback : value;
+        }
+        public void set(ItemStack stack, T value) {
+            if (value == null) { stack.removeTagKey(tagName()); return; }
+            var encoded = codec.encodeStart(NbtOps.INSTANCE, value)
+                    .getOrThrow(false, error -> PoopSky.LOGGER.error("Unable to save {}: {}", tagName(), error));
+            stack.getOrCreateTag().put(tagName(), encoded);
+        }
     }
 }

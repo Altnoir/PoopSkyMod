@@ -1,19 +1,19 @@
 package com.altnoir.poopsky.init;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.abysslib.reginth.Reginth;
-import com.altnoir.abysslib.reginth.util.entry.RegistryEntry;
+import com.altnoir.poopsky.impl.registrate.PoRegistrate;
+import com.tterrag.registrate.util.entry.RegistryEntry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.stats.StatFormatter;
 import net.minecraft.stats.Stats;
 
 public class PoStats {
-    private static final Reginth REGISTRATE = PoopSky.registrate();
+    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
-    public static final RegistryEntry<ResourceLocation, ResourceLocation> POOP_STATS = REGISTRATE.simple("poop_stats", Registries.CUSTOM_STAT, () ->
+    public static final RegistryEntry<ResourceLocation> POOP_STATS = REGISTRATE.simple("poop_stats", Registries.CUSTOM_STAT, () ->
             PoopSky.loc("poop_stats"));
-    public static final RegistryEntry<ResourceLocation, ResourceLocation> INSPECT_PLACER = REGISTRATE.simple("inspect_placer", Registries.CUSTOM_STAT, () ->
+    public static final RegistryEntry<ResourceLocation> INSPECT_PLACER = REGISTRATE.simple("inspect_placer", Registries.CUSTOM_STAT, () ->
             PoopSky.loc("inspect_placer"));
 
     public static void register() {

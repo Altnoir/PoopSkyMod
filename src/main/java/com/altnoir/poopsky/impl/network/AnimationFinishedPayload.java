@@ -3,12 +3,12 @@ package com.altnoir.poopsky.impl.network;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.impl.util.ToiletUtil;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import com.altnoir.poopsky.impl.network.codec.StreamCodec;
+import com.altnoir.poopsky.impl.network.PoPayload;
 import net.minecraft.server.level.ServerPlayer;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import com.altnoir.poopsky.impl.network.PoPayloadContext;
 
-public record AnimationFinishedPayload(PoAnimation animation) implements CustomPacketPayload {
+public record AnimationFinishedPayload(PoAnimation animation) implements PoPayload {
     public static final Type<AnimationFinishedPayload> TYPE =
             new Type<>(PoopSky.loc("animation_finished"));
     public static final StreamCodec<FriendlyByteBuf, AnimationFinishedPayload> CODEC = StreamCodec.of(
@@ -16,7 +16,7 @@ public record AnimationFinishedPayload(PoAnimation animation) implements CustomP
             AnimationFinishedPayload::decode
     );
 
-    public static void handle(AnimationFinishedPayload payload, IPayloadContext context) {
+    public static void handle(AnimationFinishedPayload payload, PoPayloadContext context) {
         context.enqueueWork(() -> {
             if (payload.animation() == PoAnimation.POEM && context.player() instanceof ServerPlayer player) {
                 ToiletUtil.finishPendingEndToiletTeleport(player);
@@ -33,7 +33,7 @@ public record AnimationFinishedPayload(PoAnimation animation) implements CustomP
     }
 
     @Override
-    public Type<? extends CustomPacketPayload> type() {
+    public Type<? extends PoPayload> type() {
         return TYPE;
     }
 }

@@ -1,0 +1,35 @@
+{
+  "parent": "poopsky:fly_catcher",
+  "criteria": {
+    "fly_barrel": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "poopsky:fly_barrel"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.poopsky.fly_barrel.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "item": "poopsky:fly_barrel"
+    },
+    "title": {
+      "translate": "advancements.poopsky.fly_barrel.title"
+    }
+  },
+  "requirements": [
+    [
+      "fly_barrel"
+    ]
+  ]
+}

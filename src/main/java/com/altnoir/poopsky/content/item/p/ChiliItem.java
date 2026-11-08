@@ -23,7 +23,7 @@ public class ChiliItem extends ItemNameBlockItem implements IFeedable {
         super.finishUsingItem(stack, level, livingEntity);
         if (!level.isClientSide) {
             livingEntity.hurt(livingEntity.damageSources().inFire(), 1.0F);
-            livingEntity.igniteForSeconds(3);
+            livingEntity.setSecondsOnFire(3);
         }
         return stack;
     }
@@ -37,7 +37,7 @@ public class ChiliItem extends ItemNameBlockItem implements IFeedable {
                 ItemStack redFlyItem = FlyItem.withType(FlyTypes.RED.get());
                 fly.spawnAtLocation(redFlyItem);
                 fly.kill();
-                stack.consume(1, player);
+                if (!player.getAbilities().instabuild) stack.shrink(1);
             }
             return InteractionResult.SUCCESS;
         }

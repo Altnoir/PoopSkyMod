@@ -1,0 +1,14 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "ae2"
+    }
+  ],
+  "type": "poopsky:fly_barrel",
+  "fly_type": "certus",
+  "result": {
+    "count": 1,
+    "item": "ae2:certus_quartz_crystal"
+  }
+}

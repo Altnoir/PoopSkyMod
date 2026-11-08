@@ -2,7 +2,7 @@ package com.altnoir.poopsky.worldgen.structure;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.worldgen.PoStructures;
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.Codec;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -29,7 +29,7 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class PoopIslandStructure extends Structure {
-    public static final MapCodec<PoopIslandStructure> CODEC = simpleCodec(PoopIslandStructure::new);
+    public static final Codec<PoopIslandStructure> CODEC = simpleCodec(PoopIslandStructure::new);
     public static final List<ResourceLocation> DIRT_ISLAND_TEMPLATES = List.of(
             PoopSky.loc("islands/dirt/0x1x0"),
             PoopSky.loc("islands/dirt/11x1x11"),
@@ -126,7 +126,7 @@ public class PoopIslandStructure extends Structure {
     public static BlockPos getGuaranteedSpawnIslandCenter(long seed, BlockPos spawn) {
         RandomSource random = RandomSource.create(seed ^ BlockPos.asLong(spawn.getX(), spawn.getY(), spawn.getZ()));
         int distance = random.nextIntBetweenInclusive(SPAWN_ISLAND_MIN_DISTANCE, SPAWN_ISLAND_MAX_DISTANCE);
-        double angle = random.nextDouble() * Math.TAU;
+        double angle = random.nextDouble() * (Math.PI * 2.0);
 
         return new BlockPos(
                 spawn.getX() + (int) Math.round(Math.cos(angle) * distance),
@@ -154,6 +154,6 @@ public class PoopIslandStructure extends Structure {
     }
 
     private static int clampIslandY(LevelHeightAccessor level, int y) {
-        return Math.clamp(y, level.getMinBuildHeight() + 8, level.getMaxBuildHeight() - 32);
+        return net.minecraft.util.Mth.clamp(y, level.getMinBuildHeight() + 8, level.getMaxBuildHeight() - 32);
     }
 }

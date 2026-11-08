@@ -4,7 +4,7 @@ import com.altnoir.poopsky.ClientConfig;
 import com.altnoir.poopsky.client.screen.PoemScreen;
 import com.altnoir.poopsky.impl.network.PoAnimation;
 import net.minecraft.client.Minecraft;
-import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
+import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 
 public final class PoAnimationController {
     private static PoemScreen poemScreen;

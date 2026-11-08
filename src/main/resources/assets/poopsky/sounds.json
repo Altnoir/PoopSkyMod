@@ -1,0 +1,462 @@
+{
+  "block.breeding_chest.work": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.beehive.work"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.breeding_chest.work"
+  },
+  "block.compooper.bucket_fill": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "item.bucket.fill"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.block.compooper.bucket_fill"
+  },
+  "block.compooper.bucket_fill_lava": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "item.bucket.fill_lava"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.block.compooper.bucket_fill"
+  },
+  "block.compooper.empty": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.composter.empty"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.block.compooper.empty"
+  },
+  "block.compooper.fill": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.composter.fill"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.block.compooper.fill"
+  },
+  "block.compooper.fill_success": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.composter.fill_success"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.block.compooper.fill"
+  },
+  "block.compooper.maggots": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.pointed_dripstone.drip_water_into_cauldron"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.compooper.maggots"
+  },
+  "block.compooper.ready": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.composter.ready"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.block.compooper.ready"
+  },
+  "block.flush_toilet.close": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.bamboo_wood_trapdoor.close"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.block.flush_toilet.close"
+  },
+  "block.flush_toilet.open": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.bamboo_wood_trapdoor.open"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.block.flush_toilet.open"
+  },
+  "block.fly_barrel.close": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.barrel.close"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.fly_barrel.close"
+  },
+  "block.fly_barrel.open": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.barrel.open"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.fly_barrel.open"
+  },
+  "block.fly_barrel.work": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.beehive.work"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.fly_barrel.work"
+  },
+  "block.maggots_chunk_loader.activate": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.beacon.activate"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.block.maggots_chunk_loader.activate"
+  },
+  "block.maggots_chunk_loader.ambient": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.beacon.ambient"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.block.maggots_chunk_loader.ambient"
+  },
+  "block.maggots_chunk_loader.deactivate": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.beacon.deactivate"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.block.maggots_chunk_loader.deactivate"
+  },
+  "block.poop_block.slide": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.honey_block.slide"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.block.poop_block.slide"
+  },
+  "block.saltpeter.chime": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.amethyst_block.chime"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.block.saltpeter.chime"
+  },
+  "block.toilet.lava_empty": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "item.bucket.empty_lava"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.block.toilet.lava_empty"
+  },
+  "entity.fly.ambient": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.bee.loop_aggressive"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.fly.ambient"
+  },
+  "entity.fly.capture": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.beehive.exit"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.fly.capture"
+  },
+  "entity.fly.death": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.bee.death"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.fly.death"
+  },
+  "entity.fly.hurt": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.bee.hurt"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.fly.hurt"
+  },
+  "entity.poolime.attack": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.slime.attack"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.poolime.attack"
+  },
+  "entity.poolime.death": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.slime.death"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.poolime.death"
+  },
+  "entity.poolime.death_small": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.slime.death_small"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.poolime.death"
+  },
+  "entity.poolime.hurt": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.slime.hurt"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.poolime.hurt"
+  },
+  "entity.poolime.hurt_small": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.slime.hurt_small"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.poolime.hurt"
+  },
+  "entity.poolime.jump": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.slime.jump"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.poolime.squish"
+  },
+  "entity.poolime.jump_small": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.slime.jump_small"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.poolime.squish"
+  },
+  "entity.poolime.squish": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.slime.squish"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.poolime.squish"
+  },
+  "entity.poolime.squish_small": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.slime.squish_small"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.poolime.squish"
+  },
+  "entity.poop_ball.throw": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.snowball.throw"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.poop_ball.throw"
+  },
+  "entity.pop.primed": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.tnt.primed"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.pop.primed"
+  },
+  "entity.villager.work_compooper": {
+    "sounds": [
+      "poopsky:fart_1",
+      "poopsky:fart_2",
+      {
+        "name": "poopsky:fart_1",
+        "pitch": 0.6
+      },
+      {
+        "name": "poopsky:fart_2",
+        "pitch": 1.4
+      }
+    ],
+    "subtitle": "subtitle.poopsky.villager.work_compooper"
+  },
+  "entity.villager.work_toilet": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.generic.eat"
+      },
+      {
+        "type": "event",
+        "name": "entity.generic.drink"
+      },
+      {
+        "type": "event",
+        "name": "entity.player.burp"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.villager.work_toilet"
+  },
+  "fart": {
+    "sounds": [
+      "poopsky:fart_1",
+      "poopsky:fart_2"
+    ],
+    "subtitle": "subtitle.poopsky.fart"
+  },
+  "game.explosion": {
+    "sounds": [
+      "poopsky:game/explosion"
+    ],
+    "subtitle": "subtitle.poopsky.game.explosion"
+  },
+  "game.game_over": {
+    "sounds": [
+      "poopsky:game/game_over"
+    ],
+    "subtitle": "subtitle.poopsky.game.game_over"
+  },
+  "game.new_best": {
+    "sounds": [
+      "poopsky:game/new_best"
+    ],
+    "subtitle": "subtitle.poopsky.game.new_best"
+  },
+  "game.point": {
+    "sounds": [
+      "poopsky:game/point"
+    ],
+    "subtitle": "subtitle.poopsky.game.point"
+  },
+  "game.shoot": {
+    "sounds": [
+      "poopsky:game/shoot"
+    ],
+    "subtitle": "subtitle.poopsky.game.shoot"
+  },
+  "game.swing": {
+    "sounds": [
+      "poopsky:game/swing"
+    ],
+    "subtitle": "subtitle.poopsky.game.swing"
+  },
+  "item.jinkela.use": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "item.bone_meal.use"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.item.jinkela.use"
+  },
+  "item.time_bell.close": {
+    "sounds": [
+      "poopsky:the_world_close"
+    ],
+    "subtitle": "subtitle.poopsky.item.time_bell.close"
+  },
+  "item.time_bell.open": {
+    "sounds": [
+      {
+        "name": "poopsky:the_world_open",
+        "stream": true
+      }
+    ],
+    "subtitle": "subtitle.poopsky.item.time_bell.open"
+  },
+  "item.toilet_linker.boop": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.mud.break"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.item.toilet_linker.boop"
+  },
+  "item.toilet_linker.success": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.mud.place"
+      }
+    ],
+    "subtitle": "subtitle.poopsky.item.toilet_linker.success"
+  },
+  "lawrence": {
+    "sounds": [
+      {
+        "name": "poopsky:merry_christmas_mr_lawrence",
+        "stream": true
+      }
+    ]
+  },
+  "light_dance": {
+    "sounds": [
+      {
+        "name": "poopsky:light_dance",
+        "stream": true
+      }
+    ]
+  },
+  "moon_bowl": {
+    "sounds": [
+      {
+        "name": "poopsky:moon_bowl",
+        "stream": true
+      }
+    ]
+  },
+  "poopsky_intro": {
+    "sounds": [
+      "poopsky:poopsky_intro"
+    ]
+  },
+  "theme": {
+    "sounds": [
+      {
+        "name": "poopsky:theme",
+        "stream": true
+      }
+    ]
+  }
+}

@@ -48,7 +48,7 @@ public class TokenItem extends Item {
     }
 
     @Override
-    public int getUseDuration(ItemStack stack, LivingEntity entity) {
+    public int getUseDuration(ItemStack stack) {
         return 24;
     }
 
@@ -72,12 +72,12 @@ public class TokenItem extends Item {
 
         BlockPos pos = blockHitResult.getBlockPos();
         ACTIVE_TARGETS.put(player.getUUID(), pos);
-        int useTicks = getUseDuration(stack, livingEntity) - remainingUseDuration + 1;
+        int useTicks = getUseDuration(stack) - remainingUseDuration + 1;
         if (useTicks % 3 != 0) {
             return;
         }
         if (gacha.advanceTokenSpin(serverLevel, pos)) {
-            stack.consume(1, player);
+            if (!player.getAbilities().instabuild) stack.shrink(1);
             gacha.completeTokenSpin(serverLevel, pos);
             livingEntity.releaseUsingItem();
         }
@@ -97,7 +97,7 @@ public class TokenItem extends Item {
         return ProjectileUtil.getHitResultOnViewVector(
                 player,
                 entity -> !entity.isSpectator() && entity.isPickable(),
-                player.blockInteractionRange()
+                player.getBlockReach()
         );
     }
 }

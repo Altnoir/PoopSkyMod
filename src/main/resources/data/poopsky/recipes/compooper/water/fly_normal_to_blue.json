@@ -1,0 +1,18 @@
+{
+  "type": "poopsky:compooper",
+  "fluid_type": "water",
+  "input": {
+    "count": 1,
+    "item": "poopsky:fly",
+    "nbt": {
+      "poopsky:fly_type": "normal"
+    }
+  },
+  "output": {
+    "count": 1,
+    "item": "poopsky:fly",
+    "nbt": {
+      "poopsky:fly_type": "blue"
+    }
+  }
+}

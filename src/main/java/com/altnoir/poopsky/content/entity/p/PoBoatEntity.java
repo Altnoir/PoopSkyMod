@@ -17,4 +17,6 @@ public class PoBoatEntity extends Boat {
     public Item getDropItem() {
         return dropItem != null ? dropItem : super.getDropItem();
     }
+    @Override
+    protected float getEyeHeight(net.minecraft.world.entity.Pose pose, net.minecraft.world.entity.EntityDimensions dimensions) { return 0.5625F; }
 }

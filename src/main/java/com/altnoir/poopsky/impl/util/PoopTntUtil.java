@@ -14,8 +14,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -120,11 +119,11 @@ public class PoopTntUtil {
     private static POPExplosionRecipe.@Nullable Output findExplosionTransformOutput(Level level, Block block, int explosionRadius) {
         if (level.isClientSide) return null;
         ItemStack itemStack = new ItemStack(block.asItem());
-        SingleRecipeInput input = new SingleRecipeInput(itemStack);
+        SimpleContainer input = new SimpleContainer(itemStack);
 
-        for (RecipeHolder<POPExplosionRecipe> holder : level.getRecipeManager().getAllRecipesFor(PoRecipes.POP_EXPLOSION.type().get())) {
-            if (holder.value().matches(input, explosionRadius)) {
-                return holder.value().output();
+        for (POPExplosionRecipe holder : level.getRecipeManager().getAllRecipesFor(PoRecipes.POP_EXPLOSION.type().get())) {
+            if (holder.matches(input, explosionRadius)) {
+                return holder.output();
             }
         }
         return null;

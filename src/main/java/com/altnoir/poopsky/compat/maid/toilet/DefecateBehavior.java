@@ -92,7 +92,7 @@ public class DefecateBehavior extends Behavior<EntityMaid> {
             te.setPos(te.getX() + offsetX, te.getY(), te.getZ() + offsetZ);
             toiletEntity = te;
         } else {
-            toiletEntity = entities.getFirst();
+            toiletEntity = entities.get(0);
         }
 
         if (toiletEntity.getPassengers().isEmpty()) {

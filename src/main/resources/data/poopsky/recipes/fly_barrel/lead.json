@@ -1,0 +1,14 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "type": "poopsky:fly_barrel",
+  "fly_type": "lead",
+  "result": {
+    "count": 1,
+    "item": "mekanism:raw_lead"
+  }
+}

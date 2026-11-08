@@ -1,32 +1,15 @@
-# eclipse
-bin
-*.launch
-.settings
-.metadata
-.classpath
-.project
-
-# idea
-out
-*.ipr
-*.iws
+build/
+.gradle/
+run/
+logs/
+*.class
+reference/
+runtime-test/
+libs/
+dist/
+.idea/
+.vscode/
 *.iml
-.idea
-
-# vscode
-.vscode
-
-# gradle
-build
-.gradle
-build_output.txt
-
-# other
-eclipse
-run
-runs
-run-data
-
-repo
-/src/generated/resources/.cache
-*.bak
+out/
+.DS_Store
+Thumbs.db

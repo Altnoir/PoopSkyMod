@@ -1,0 +1,8 @@
+{
+  "type": "poopsky:anal_pressing",
+  "input": {
+    "item": "minecraft:lapis_block"
+  },
+  "output": "minecraft:deepslate_lapis_ore",
+  "replace_target": "minecraft:deepslate"
+}

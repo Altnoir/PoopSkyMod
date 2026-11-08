@@ -1,6 +1,5 @@
 package com.altnoir.poopsky.client.screen;
 
-import com.altnoir.abysslib.AbyssLib;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.client.PoAnimationController;
 import com.altnoir.poopsky.init.PoSoundEvents;
@@ -34,7 +33,7 @@ public class PoemScreen extends Screen {
     private static final String TEXT_DIRECTORY = "texts/poopsky/";
     private static final ResourceLocation FALLBACK_TEXT_LOCATION = PoopSky.loc(TEXT_DIRECTORY + "en_us.txt");
     private static final ResourceLocation TITLE_LOCATION = PoopSky.loc("textures/gui/poopsky.png");
-    private static final ResourceLocation VIGNETTE_LOCATION = AbyssLib.mcloc("textures/misc/credits_vignette.png");
+    private static final ResourceLocation VIGNETTE_LOCATION = PoopSky.mcloc("textures/misc/credits_vignette.png");
 
     private static final int CONTENT_WIDTH = 256;
     private static final int TITLE_TEXTURE_WIDTH = 710;
@@ -47,7 +46,7 @@ public class PoemScreen extends Screen {
     private static final int TITLE_HOLD_TICKS = 10;
     private static final int TITLE_ROTATION_TICKS = 30;
     private static final int SCROLL_START_TICK = TITLE_HOLD_TICKS + TITLE_ROTATION_TICKS;
-    private static final Music POEM_MUSIC = new Music(PoSoundEvents.THEME, 0, 0, true);
+    private static final Music POEM_MUSIC = new Music(net.minecraft.core.Holder.direct(PoSoundEvents.THEME.get()), 0, 0, true);
 
     private final List<FormattedCharSequence> lines = new ArrayList<>();
     private final IntSet speedupModifiers = new IntOpenHashSet();
@@ -110,6 +109,7 @@ public class PoemScreen extends Screen {
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        this.renderBackground(guiGraphics);
         super.render(guiGraphics, mouseX, mouseY, partialTick);
         this.renderVignette(guiGraphics);
 
@@ -206,8 +206,8 @@ public class PoemScreen extends Screen {
     }
 
     @Override
-    public void renderBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        guiGraphics.fillRenderType(RenderType.endPortal(), 0, 0, this.width, this.height, 0);
+    public void renderBackground(GuiGraphics guiGraphics) {
+        guiGraphics.fill(RenderType.endPortal(), 0, 0, this.width, this.height, 0);
     }
 
     private float calculateScrollSpeed() {
@@ -249,7 +249,7 @@ public class PoemScreen extends Screen {
         float[] x = {startX};
 
         line.accept((index, style, codePoint) -> {
-            FontSet fontSet = this.font.getFontSet(style.getFont());
+            FontSet fontSet = ((com.altnoir.poopsky.mixin.FontAccessor) this.font).poopsky$getFontSet(style.getFont());
             boolean bold = style.isBold();
             BakedGlyph glyph = fontSet.getGlyph(codePoint);
             VertexConsumer consumer = guiGraphics.bufferSource().getBuffer(

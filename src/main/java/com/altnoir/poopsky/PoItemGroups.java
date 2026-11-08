@@ -7,14 +7,13 @@ import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.content.item.p.GachaponItem;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.impl.PoTags;
-import com.altnoir.abysslib.creative.BannerStyle;
-import com.altnoir.abysslib.creative.CreativeTabSection;
-import com.altnoir.abysslib.creative.SectionedCreativeModeTab;
-import com.altnoir.abysslib.reginth.Reginth;
+import com.altnoir.poopsky.impl.creative.PoCreativeTabSection;
+import com.altnoir.poopsky.impl.creative.PoSectionedCreativeModeTab;
+import com.altnoir.poopsky.impl.registrate.PoRegistrate;
 import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
-import com.altnoir.abysslib.reginth.util.entry.RegistryEntry;
+import com.tterrag.registrate.util.entry.RegistryEntry;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -24,43 +23,35 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
-import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.common.DeferredSpawnEggItem;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 
 import java.util.List;
 import java.util.Objects;
 
 public class PoItemGroups {
-    private static final Reginth REGISTRATE = PoopSky.registrate();
+    private static final PoRegistrate REGISTRATE = PoopSky.registrate();
 
     public static final String POOPSKY_TAB_KEY = "itemgroup.poopsky";
     public static final String POOPSKY_DECO_TAB_KEY = "itemgroup.poopsky_deco";
 
-    /** PoopSky 创造栏横幅配色（蓝系，两个标签页共用）。 */
-    private static final BannerStyle BANNER = BannerStyle.colors(
-            0xFF4A3728,  // 背景
-            0xFF6B5440,  // 暗边框
-            0xFF8B7355,  // 亮边框
-            0xFFD4C4A8   // 文字
-    );
+    public static final PoCreativeTabSection TS_ITEMS = section("itemGroup.poopsky.section.items");
+    public static final PoCreativeTabSection TS_BLOCKS = section("itemGroup.poopsky.section.blocks");
+    public static final PoCreativeTabSection TS_MOBS = section("itemGroup.poopsky.section.mobs");
+    public static final PoCreativeTabSection TS_POTIONS = section("itemGroup.poopsky.section.potions");
 
-    public static final CreativeTabSection TS_ITEMS = section("itemGroup.poopsky.section.items");
-    public static final CreativeTabSection TS_BLOCKS = section("itemGroup.poopsky.section.blocks");
-    public static final CreativeTabSection TS_MOBS = section("itemGroup.poopsky.section.mobs");
-    public static final CreativeTabSection TS_POTIONS = section("itemGroup.poopsky.section.potions");
+    public static final PoCreativeTabSection TS_DECO_MATERIALS = section("itemGroup.poopsky_deco.section.materials");
+    public static final PoCreativeTabSection TS_DECO_TILES = section("itemGroup.poopsky_deco.section.tiles");
+    public static final PoCreativeTabSection TS_DECO_TOILETS = section("itemGroup.poopsky_deco.section.toilets");
 
-    public static final CreativeTabSection TS_DECO_MATERIALS = section("itemGroup.poopsky_deco.section.materials");
-    public static final CreativeTabSection TS_DECO_TILES = section("itemGroup.poopsky_deco.section.tiles");
-    public static final CreativeTabSection TS_DECO_TOILETS = section("itemGroup.poopsky_deco.section.toilets");
-
-    public static final RegistryEntry<CreativeModeTab, CreativeModeTab> POOPSKY_TAB = REGISTRATE.generic("poopsky",
+    public static final RegistryEntry<CreativeModeTab> POOPSKY_TAB = REGISTRATE.generic("poopsky",
             Registries.CREATIVE_MODE_TAB, () ->
-                    SectionedCreativeModeTab.configure(
+                    PoSectionedCreativeModeTab.configure(
                             CreativeModeTab.builder()
                                     .title(Component.translatable(POOPSKY_TAB_KEY))
                                     .icon(PoBlocks.FLUSH_TOILET::asStack),
-                            BANNER,
                             PoItemGroups::populateBasicSections,
                             TS_ITEMS,
                             TS_BLOCKS,
@@ -69,13 +60,12 @@ public class PoItemGroups {
                     ).build()
     ).register();
 
-    public static final RegistryEntry<CreativeModeTab, CreativeModeTab> POOPSKY_DECORATIVE = REGISTRATE.generic("poopsky_deco",
+    public static final RegistryEntry<CreativeModeTab> POOPSKY_DECORATIVE = REGISTRATE.generic("poopsky_deco",
             Registries.CREATIVE_MODE_TAB, () ->
-                    SectionedCreativeModeTab.configure(
+                    PoSectionedCreativeModeTab.configure(
                             CreativeModeTab.builder()
                                     .title(Component.translatable(POOPSKY_DECO_TAB_KEY))
                                     .icon(PoBlocks.BROWN_TILE_BLOCK::asStack),
-                            BANNER,
                             parameters -> populateDecorativeSections(),
                             TS_DECO_MATERIALS,
                             TS_DECO_TILES,
@@ -92,7 +82,7 @@ public class PoItemGroups {
                 .lookup(Registries.ENTITY_TYPE)
                 .flatMap(registry -> registry.get(PoTags.EntityTypes.GACHAPON_MOB))
                 .ifPresent(holders -> holders.forEach(holder -> TS_MOBS.add(() ->
-                        GachaponItem.withColorAndMob(GachaponItem.PINK, Objects.requireNonNull(holder.getKey()).location().toString())
+                        GachaponItem.withColorAndMob(GachaponItem.PINK, net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getKey(holder.value()).toString())
                 )));
         for (String id : FlyTypeManager.INSTANCE.getFlyTypes()) {
             if (isFlyVisible(id)) {
@@ -111,23 +101,19 @@ public class PoItemGroups {
             return;
         }
 
-        switch (item) {
-            case DeferredSpawnEggItem ignored -> {
-                TS_MOBS.add(item);
-                return;
+        if (item instanceof ForgeSpawnEggItem) {
+            TS_MOBS.add(item);
+            return;
+        }
+        if (item instanceof GachaponItem) {
+            for (String color : GachaponItem.COLORS) {
+                TS_ITEMS.add(() -> GachaponItem.withColor(color));
             }
-            case GachaponItem ignored -> {
-                for (String color : GachaponItem.COLORS) {
-                    TS_ITEMS.add(() -> GachaponItem.withColor(color));
-                }
-                return;
-            }
-            case BlockItem ignored when PoBlocks.isBasicBlockItem(item) -> {
-                TS_BLOCKS.add(item);
-                return;
-            }
-            default -> {
-            }
+            return;
+        }
+        if (item instanceof BlockItem && PoBlocks.isBasicBlockItem(item)) {
+            TS_BLOCKS.add(item);
+            return;
         }
 
         if (!PoBlocks.isDecoMaterialItem(item) && !PoBlocks.isDecoTileItem(item)) {
@@ -160,8 +146,8 @@ public class PoItemGroups {
         }
     }
 
-    private static CreativeTabSection section(String translationKey) {
-        return new CreativeTabSection(translationKey);
+    private static PoCreativeTabSection section(String translationKey) {
+        return new PoCreativeTabSection(translationKey);
     }
 
     public static List<String> translationKeys() {
@@ -194,9 +180,8 @@ public class PoItemGroups {
 
     private static void addPotions(HolderLookup<Potion> potions, Item item, FeatureFlagSet requiredFeatures) {
         potions.listElements()
-                .filter(reference -> reference.value().isEnabled(requiredFeatures))
                 .filter(reference -> reference.key().location().getNamespace().equals(PoopSky.MOD_ID))
-                .map(reference -> PotionContents.createItemStack(item, reference))
+                .map(reference -> PotionUtils.setPotion(new ItemStack(item), reference.value()))
                 .forEach(TS_POTIONS::add);
     }
 

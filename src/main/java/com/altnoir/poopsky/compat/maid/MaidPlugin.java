@@ -11,23 +11,23 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.SensorType;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
 
 import java.util.Optional;
 
 @LittleMaidExtension
 public class MaidPlugin implements ILittleMaid {
-    public static DeferredHolder<MemoryModuleType<?>, MemoryModuleType<BlockPos>> TOILET_MEMORY;
-    public static DeferredHolder<SensorType<?>, SensorType<ToiletSensor>> TOILET_SENSOR;
+    public static RegistryObject<MemoryModuleType<BlockPos>> TOILET_MEMORY;
+    public static RegistryObject<SensorType<ToiletSensor>> TOILET_SENSOR;
 
     public static void registry(IEventBus bus) {
-        var MEMORY = DeferredRegister.create(BuiltInRegistries.MEMORY_MODULE_TYPE, PoopSky.MOD_ID);
-        var SENSOR = DeferredRegister.create(BuiltInRegistries.SENSOR_TYPE, PoopSky.MOD_ID);
+        var MEMORY = DeferredRegister.create(net.minecraft.core.registries.Registries.MEMORY_MODULE_TYPE, PoopSky.MOD_ID);
+        var SENSOR = DeferredRegister.create(net.minecraft.core.registries.Registries.SENSOR_TYPE, PoopSky.MOD_ID);
 
-        TOILET_MEMORY = MEMORY.register("toilet_memory", resourceLocation -> new MemoryModuleType<>(Optional.of(BlockPos.CODEC)));
-        TOILET_SENSOR = SENSOR.register("toilet_sensor", resourceLocation -> new SensorType<>(ToiletSensor::new));
+        TOILET_MEMORY = MEMORY.register("toilet_memory", () -> new MemoryModuleType<>(Optional.of(BlockPos.CODEC)));
+        TOILET_SENSOR = SENSOR.register("toilet_sensor", () -> new SensorType<>(ToiletSensor::new));
         SENSOR.register(bus);
         MEMORY.register(bus);
     }

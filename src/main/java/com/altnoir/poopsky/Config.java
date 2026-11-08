@@ -1,14 +1,14 @@
 package com.altnoir.poopsky;
 
 import net.minecraft.network.chat.Component;
-import net.neoforged.fml.config.ModConfig;
-import net.neoforged.neoforge.common.ModConfigSpec;
-import net.neoforged.neoforge.common.TranslatableEnum;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.common.ForgeConfigSpec;
+
 
 public class Config {
-    private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
+    private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
-    public enum SpawnToiletMode implements TranslatableEnum {
+    public enum SpawnToiletMode {
         WOODEN_TOILET("poopsky.configuration.spawnToiletMode.wooden_toilet"),
         SKY_FLUSH_TOILET("poopsky.configuration.spawnToiletMode.sky_flush_toilet"),
         RANDOM_TOILET("poopsky.configuration.spawnToiletMode.random_toilet");
@@ -19,7 +19,6 @@ public class Config {
             this.translationKey = translationKey;
         }
 
-        @Override
         public Component getTranslatedName() {
             return Component.translatable(this.translationKey);
         }
@@ -39,9 +38,9 @@ public class Config {
     public static boolean unlimitedFreeze;
     public static boolean freezeFilter;
 
-    private static ModConfigSpec.BooleanValue booleanOption(String section, String path, boolean defaultValue, String... comments) {
+    private static ForgeConfigSpec.BooleanValue booleanOption(String section, String path, boolean defaultValue, String... comments) {
         BUILDER.push(section);
-        ModConfigSpec.BooleanValue value = BUILDER
+        ForgeConfigSpec.BooleanValue value = BUILDER
                 .comment(comments)
                 .translation("poopsky.configuration." + path)
                 .define(path, defaultValue);
@@ -49,9 +48,9 @@ public class Config {
         return value;
     }
 
-    private static <V extends Enum<V>> ModConfigSpec.EnumValue<V> enumOption(String section, String path, V defaultValue, String... comments) {
+    private static <V extends Enum<V>> ForgeConfigSpec.EnumValue<V> enumOption(String section, String path, V defaultValue, String... comments) {
         BUILDER.push(section);
-        ModConfigSpec.EnumValue<V> value = BUILDER
+        ForgeConfigSpec.EnumValue<V> value = BUILDER
                 .comment(comments)
                 .translation("poopsky.configuration." + path)
                 .defineEnum(path, defaultValue);
@@ -62,38 +61,38 @@ public class Config {
     /**
      * 世界生成相关的配置
      */
-    private static final ModConfigSpec.BooleanValue SET_POOPSKY_DEFAULT = booleanOption("world", "setPoopskyDefault", true,
+    private static final ForgeConfigSpec.BooleanValue SET_POOPSKY_DEFAULT = booleanOption("world", "setPoopskyDefault", true,
             "Whether the dedicated server level-type default should be set to poopsky");
-    private static final ModConfigSpec.BooleanValue VOID_NETHER_GENERATION = booleanOption("world", "voidNetherGeneration", true,
+    private static final ForgeConfigSpec.BooleanValue VOID_NETHER_GENERATION = booleanOption("world", "voidNetherGeneration", true,
             "Whether the custom void generator should also keep the nether empty");
-    private static final ModConfigSpec.EnumValue<SpawnToiletMode> SPAWN_TOILET_MODE = enumOption("world", "spawnToiletMode", SpawnToiletMode.WOODEN_TOILET,
+    private static final ForgeConfigSpec.EnumValue<SpawnToiletMode> SPAWN_TOILET_MODE = enumOption("world", "spawnToiletMode", SpawnToiletMode.WOODEN_TOILET,
             "Which toilet to generate at the PoopSky spawn point.",
             "Allowed values: WOODEN_TOILET, SKY_FLUSH_TOILET, RANDOM_TOILET");
-    private static final ModConfigSpec.BooleanValue DESPERATE_WORLD = booleanOption("world", "desperateWorld", false,
+    private static final ForgeConfigSpec.BooleanValue DESPERATE_WORLD = booleanOption("world", "desperateWorld", false,
             "Whether to Enable the Desperate World (Enabling it will cause the device to lag)");
-    private static final ModConfigSpec.BooleanValue LAVA_FLUID_BLOCK = booleanOption("world", "lavaFluid", true,
+    private static final ForgeConfigSpec.BooleanValue LAVA_FLUID_BLOCK = booleanOption("world", "lavaFluid", true,
             "Whether to Disable the underground lava lake");
     /**
      * 合成相关的配置
      */
-    private static final ModConfigSpec.BooleanValue COMPOOPER_CRAFTING = booleanOption("crafting", "compooperCrafting", false,
+    private static final ForgeConfigSpec.BooleanValue COMPOOPER_CRAFTING = booleanOption("crafting", "compooperCrafting", false,
             "Whether to Disable the consumption of liquid when sticks crafting");
     /**
      * 交易相关的配置
      */
-    private static final ModConfigSpec.BooleanValue PLUG_TRADES = booleanOption("trades", "plugTrades", false,
+    private static final ForgeConfigSpec.BooleanValue PLUG_TRADES = booleanOption("trades", "plugTrades", false,
             "Whether to Disable the plug trades");
-    private static final ModConfigSpec.BooleanValue UPGRADE_TEMPLATE = booleanOption("trades", "upgradeTemplate", false,
+    private static final ForgeConfigSpec.BooleanValue UPGRADE_TEMPLATE = booleanOption("trades", "upgradeTemplate", false,
             "Whether to Disable the upgrade template trades");
     /**
      * 时停相关的配置
      */
-    private static final ModConfigSpec.BooleanValue UNLIMITED_FREEZE = booleanOption("timeStop", "unlimitedFreeze", false,
+    private static final ForgeConfigSpec.BooleanValue UNLIMITED_FREEZE = booleanOption("timeStop", "unlimitedFreeze", false,
             "Whether to Enable the unlimited freeze");
-    private static final ModConfigSpec.BooleanValue FREEZE_FILTER = booleanOption("timeStop", "freezeFilter", true,
+    private static final ForgeConfigSpec.BooleanValue FREEZE_FILTER = booleanOption("timeStop", "freezeFilter", true,
             "Whether to Disable the freeze filter");
 
-    static final ModConfigSpec SPEC = BUILDER.build();
+    static final ForgeConfigSpec SPEC = BUILDER.build();
 
     public static void onLoad(ModConfig config) {
         if (config.getSpec() == SPEC) {

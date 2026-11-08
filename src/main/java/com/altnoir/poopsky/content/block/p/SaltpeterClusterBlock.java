@@ -20,12 +20,12 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
 
 public class SaltpeterClusterBlock extends AmethystClusterBlock implements BonemealableBlock {
-    public SaltpeterClusterBlock(float height, float aabbOffset, Properties properties) {
+    public SaltpeterClusterBlock(int height, int aabbOffset, Properties properties) {
         super(height, aabbOffset, properties);
     }
 
     @Override
-    protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (state.is(PoBlocks.SALTPETER_CLUSTER.get()) || !state.canSurvive(level, pos)) {
             return;
         }
@@ -33,7 +33,7 @@ public class SaltpeterClusterBlock extends AmethystClusterBlock implements Bonem
     }
 
     @Override
-    protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+    public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         Direction facing = state.getValue(BlockStateProperties.FACING);
         if (level.getBlockState(pos.relative(facing.getOpposite())).is(BlockTags.ICE)) {
             level.setBlockAndUpdate(pos, Blocks.POWDER_SNOW.defaultBlockState());
@@ -43,7 +43,7 @@ public class SaltpeterClusterBlock extends AmethystClusterBlock implements Bonem
     }
 
     @Override
-    protected BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
         isDone(level, pos, state);
         return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
     }
@@ -61,7 +61,7 @@ public class SaltpeterClusterBlock extends AmethystClusterBlock implements Bonem
     }
 
     @Override
-    protected void onProjectileHit(Level level, BlockState state, BlockHitResult hit, Projectile projectile) {
+    public void onProjectileHit(Level level, BlockState state, BlockHitResult hit, Projectile projectile) {
         BlockPos pos = hit.getBlockPos();
         if (!level.isClientSide && projectile.mayInteract(level, pos)) {
             level.playSound(null, pos, PoSoundEvents.BLOCK_SALTPETER_CHIME.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
@@ -69,7 +69,7 @@ public class SaltpeterClusterBlock extends AmethystClusterBlock implements Bonem
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader levelReader, BlockPos blockPos, BlockState blockState) {
+    public boolean isValidBonemealTarget(LevelReader levelReader, BlockPos blockPos, BlockState blockState, boolean client) {
         return this != PoBlocks.SALTPETER_CLUSTER.get();
     }
 

@@ -17,19 +17,14 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.world.chunk.TicketController;
-import net.neoforged.neoforge.common.world.chunk.TicketHelper;
-import net.neoforged.neoforge.common.world.chunk.TicketSet;
+import net.minecraftforge.common.world.ForgeChunkManager;
+import net.minecraftforge.common.world.ForgeChunkManager.TicketHelper;
 
 import java.util.Map;
 
 public class MaggotsChunkLoaderBlockEntity extends BlockEntity {
     public static final int MAX_STRUCTURE_LEVEL = 4;
     private static final int MAX_LOADED_RADIUS = MAX_STRUCTURE_LEVEL - 1;
-    public static final TicketController TICKET_CONTROLLER = new TicketController(
-            PoopSky.loc("maggots_chunk_loader"),
-            MaggotsChunkLoaderBlockEntity::validateTickets
-    );
 
     private static final int STRUCTURE_SCAN_INTERVAL = 80;
     private static final int BLOCKS_PER_TICK = 10;
@@ -192,7 +187,7 @@ public class MaggotsChunkLoaderBlockEntity extends BlockEntity {
         int cleanupRadius = Math.max(loadedRadius, MAX_LOADED_RADIUS);
         for (int offsetX = -cleanupRadius; offsetX <= cleanupRadius; offsetX++) {
             for (int offsetZ = -cleanupRadius; offsetZ <= cleanupRadius; offsetZ++) {
-                TICKET_CONTROLLER.forceChunk(level, worldPosition, center.x + offsetX, center.z + offsetZ, false, true);
+                ForgeChunkManager.forceChunk(level, PoopSky.MOD_ID, worldPosition, center.x + offsetX, center.z + offsetZ, false, true);
             }
         }
         loadedRadius = -1;
@@ -208,7 +203,7 @@ public class MaggotsChunkLoaderBlockEntity extends BlockEntity {
                 boolean wasLoaded = inRadius(offsetX, offsetZ, oldRadius);
                 boolean shouldLoad = inRadius(offsetX, offsetZ, newRadius);
                 if (wasLoaded != shouldLoad) {
-                    TICKET_CONTROLLER.forceChunk(level, worldPosition, center.x + offsetX, center.z + offsetZ, shouldLoad, true);
+                    ForgeChunkManager.forceChunk(level, PoopSky.MOD_ID, worldPosition, center.x + offsetX, center.z + offsetZ, shouldLoad, true);
                 }
             }
         }
@@ -218,8 +213,8 @@ public class MaggotsChunkLoaderBlockEntity extends BlockEntity {
         return radius >= 0 && Math.abs(offsetX) <= radius && Math.abs(offsetZ) <= radius;
     }
 
-    private static void validateTickets(ServerLevel level, TicketHelper helper) {
-        for (Map.Entry<BlockPos, TicketSet> entry : helper.getBlockTickets().entrySet()) {
+    public static void validateTickets(ServerLevel level, TicketHelper helper) {
+        for (var entry : helper.getBlockTickets().entrySet()) {
             BlockPos owner = entry.getKey();
             BlockState state = level.getBlockState(owner);
             if (!state.is(PoBlocks.MAGGOTS_CHUNK_LOADER.get()) || !level.hasNeighborSignal(owner)) {
@@ -229,10 +224,10 @@ public class MaggotsChunkLoaderBlockEntity extends BlockEntity {
 
             int radius = getStructureLevel(level, owner) - 1;
             ChunkPos center = new ChunkPos(owner);
-            for (long chunk : new LongOpenHashSet(entry.getValue().nonTicking())) {
+            for (long chunk : new LongOpenHashSet(entry.getValue().getFirst())) {
                 helper.removeTicket(owner, chunk, false);
             }
-            for (long chunk : new LongOpenHashSet(entry.getValue().ticking())) {
+            for (long chunk : new LongOpenHashSet(entry.getValue().getSecond())) {
                 ChunkPos chunkPos = new ChunkPos(chunk);
                 if (!inRadius(chunkPos.x - center.x, chunkPos.z - center.z, radius)) {
                     helper.removeTicket(owner, chunk, true);
@@ -247,19 +242,19 @@ public class MaggotsChunkLoaderBlockEntity extends BlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
-        return saveCustomOnly(registries);
+    public CompoundTag getUpdateTag() {
+        return saveWithoutMetadata();
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
         tag.putInt("loaded_radius", loadedRadius);
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
+    public void load(CompoundTag tag) {
+        super.load(tag);
         loadedRadius = tag.contains("loaded_radius") ? tag.getInt("loaded_radius") : -1;
     }
 }

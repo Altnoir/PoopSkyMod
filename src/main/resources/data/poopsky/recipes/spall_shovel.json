@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "M": {
+      "item": "poopsky:spall"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "M",
+    "S",
+    "S"
+  ],
+  "result": {
+    "count": 1,
+    "item": "poopsky:spall_shovel",
+    "nbt": {
+      "Enchantments": [
+        {
+          "id": "minecraft:efficiency",
+          "lvl": 1
+        }
+      ]
+    }
+  }
+}

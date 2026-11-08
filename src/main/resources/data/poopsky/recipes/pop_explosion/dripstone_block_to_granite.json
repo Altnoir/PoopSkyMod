@@ -1,0 +1,9 @@
+{
+  "type": "poopsky:pop_explosion",
+  "input": {
+    "item": "minecraft:granite"
+  },
+  "output": {
+    "block": "minecraft:dripstone_block"
+  }
+}

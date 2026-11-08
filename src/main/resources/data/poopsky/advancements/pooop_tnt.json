@@ -1,0 +1,35 @@
+{
+  "parent": "poopsky:king_of_dragon_fruit",
+  "criteria": {
+    "pooop_tnt": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "poopsky:poop_tnt"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.poopsky.pooop_tnt.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "item": "poopsky:poop_tnt"
+    },
+    "title": {
+      "translate": "advancements.poopsky.pooop_tnt.title"
+    }
+  },
+  "requirements": [
+    [
+      "pooop_tnt"
+    ]
+  ]
+}

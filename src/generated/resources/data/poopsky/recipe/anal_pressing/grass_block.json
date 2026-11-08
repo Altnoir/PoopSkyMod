@@ -1,8 +1,0 @@
-{
-  "type": "poopsky:anal_pressing",
-  "input": {
-    "item": "minecraft:moss_block"
-  },
-  "output": "minecraft:grass_block",
-  "replace_target": "minecraft:dirt"
-}

@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "M": {
+      "item": "poopsky:spall"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "MM",
+    "MS",
+    " S"
+  ],
+  "result": {
+    "count": 1,
+    "item": "poopsky:spall_axe",
+    "nbt": {
+      "Enchantments": [
+        {
+          "id": "minecraft:silk_touch",
+          "lvl": 1
+        }
+      ]
+    }
+  }
+}

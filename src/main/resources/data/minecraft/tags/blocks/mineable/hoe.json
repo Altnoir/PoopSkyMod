@@ -1,0 +1,28 @@
+{
+  "values": [
+    "poopsky:poopsky_block",
+    "poopsky:stool",
+    "poopsky:poop_piece",
+    "poopsky:poop_farmland",
+    "poopsky:poop_crafting_table",
+    "poopsky:maggots_block",
+    "poopsky:roundworm_block",
+    "poopsky:raw_poop_block",
+    "poopsky:raw_sapling_poop_block",
+    "poopsky:raw_sea_poop_block",
+    "poopsky:raw_wither_poop_block",
+    "poopsky:mycelium_block",
+    "poopsky:mycelium_mat",
+    "poopsky:mushroom_bed",
+    "poopsky:shit",
+    "poopsky:chili_shit",
+    "poopsky:golden_shit",
+    "poopsky:ginkgo_leaves",
+    "poopsky:primo_cap",
+    "poopsky:glow_primo_cap",
+    "poopsky:poop_leaves",
+    "poopsky:poop_leaves_gold",
+    "poopsky:poop_leaves_iron",
+    "#poopsky:poop_building_blocks"
+  ]
+}

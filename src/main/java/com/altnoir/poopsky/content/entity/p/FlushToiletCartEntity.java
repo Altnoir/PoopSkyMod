@@ -17,21 +17,21 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.DismountHelper;
-import net.minecraft.world.entity.vehicle.VehicleEntity;
+import com.altnoir.poopsky.content.entity.PoVehicleEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import com.altnoir.poopsky.impl.network.PoNetworking;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
 
-public class FlushToiletCartEntity extends VehicleEntity {
+public class FlushToiletCartEntity extends PoVehicleEntity {
     private static final Map<Pose, List<Integer>> POSE_DISMOUNT_HEIGHTS = Map.of(
             Pose.STANDING, List.of(0, 1, -1),
             Pose.CROUCHING, List.of(0, 1, -1),
@@ -95,10 +95,10 @@ public class FlushToiletCartEntity extends VehicleEntity {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        super.defineSynchedData(builder);
-        builder.define(WHEEL_LEFT_ROTATION, 0.0F);
-        builder.define(WHEEL_RIGHT_ROTATION, 0.0F);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        entityData.define(WHEEL_LEFT_ROTATION, 0.0F);
+        entityData.define(WHEEL_RIGHT_ROTATION, 0.0F);
     }
 
     @Override
@@ -173,7 +173,7 @@ public class FlushToiletCartEntity extends VehicleEntity {
 
         for (Pose pose : poses) {
             EntityDimensions dimensions = passenger.getDimensions(pose);
-            float halfWidth = Math.min(dimensions.width(), 1.0F) / 2.0F;
+            float halfWidth = Math.min(dimensions.width, 1.0F) / 2.0F;
             for (int heightOffset : POSE_DISMOUNT_HEIGHTS.get(pose)) {
                 for (int[] offset : offsets) {
                     mutableBlockPos.set(blockPos.getX() + offset[0], blockPos.getY() + heightOffset, blockPos.getZ() + offset[1]);
@@ -187,7 +187,7 @@ public class FlushToiletCartEntity extends VehicleEntity {
                                 0.0,
                                 -halfWidth,
                                 halfWidth,
-                                dimensions.height(),
+                                dimensions.height,
                                 halfWidth
                         );
                         Vec3 position = Vec3.upFromBottomCenterOf(mutableBlockPos, floorHeight);
@@ -203,7 +203,7 @@ public class FlushToiletCartEntity extends VehicleEntity {
         double topY = this.getBoundingBox().maxY;
         mutableBlockPos.set(blockPos.getX(), topY, blockPos.getZ());
         for (Pose pose : poses) {
-            double passengerHeight = passenger.getDimensions(pose).height();
+            double passengerHeight = passenger.getDimensions(pose).height;
             int ceilingSearch = Mth.ceil(topY - mutableBlockPos.getY() + passengerHeight);
             double ceiling = DismountHelper.findCeilingFrom(
                     mutableBlockPos,
@@ -234,7 +234,7 @@ public class FlushToiletCartEntity extends VehicleEntity {
     }
 
     @Override
-    public void lerpTo(double x, double y, double z, float yRot, float xRot, int steps) {
+    public void lerpTo(double x, double y, double z, float yRot, float xRot, int steps, boolean teleport) {
         this.lerpX = x;
         this.lerpY = y;
         this.lerpZ = z;
@@ -331,7 +331,7 @@ public class FlushToiletCartEntity extends VehicleEntity {
 
     private boolean hasOmenDriver() {
         LivingEntity driver = this.getControllingPassenger();
-        return driver != null && driver.hasEffect(PoEffects.OMENER);
+        return driver != null && driver.hasEffect(PoEffects.OMENER.get());
     }
 
     private void resetPassengerFallDistance() {
@@ -361,7 +361,7 @@ public class FlushToiletCartEntity extends VehicleEntity {
         boolean jump = mc.options.keyJump.isDown();
 
         this.setInput(forward, backward, left, right, fast, jump);
-        PacketDistributor.sendToServer(new FlushToiletCartInputPayload(forward, backward, left, right, fast, jump));
+        PoNetworking.sendToServer(new FlushToiletCartInputPayload(forward, backward, left, right, fast, jump));
     }
 
     private void tickLerp() {
@@ -463,4 +463,6 @@ public class FlushToiletCartEntity extends VehicleEntity {
     public float getWheelRightRotation(float partialTick) {
         return Mth.lerp(partialTick, this.wheelRightRotationO, this.wheelRightRotation);
     }
+    @Override
+    protected float getEyeHeight(net.minecraft.world.entity.Pose pose, net.minecraft.world.entity.EntityDimensions dimensions) { return 0.375F; }
 }

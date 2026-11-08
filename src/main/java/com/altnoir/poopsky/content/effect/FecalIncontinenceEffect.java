@@ -28,7 +28,7 @@ public class FecalIncontinenceEffect extends MobEffect {
     }
 
     @Override
-    public boolean applyEffectTick(LivingEntity entity, int amplifier) {
+    public void applyEffectTick(LivingEntity entity, int amplifier) {
         int chance = entity.getRandom().nextInt(Math.max(1, 20 - amplifier * 5));
         if (amplifier >= 1 && entity instanceof Player player && player.isShiftKeyDown()) {
             player.causeFoodExhaustion(0.1F * (amplifier + 2));
@@ -41,7 +41,6 @@ public class FecalIncontinenceEffect extends MobEffect {
                 fecalIncontinence(entity, amplifier);
             }
         }
-        return true;
     }
 
     private void fecalIncontinence(LivingEntity entity, int amplifier) {
@@ -56,7 +55,7 @@ public class FecalIncontinenceEffect extends MobEffect {
             var level = (ServerLevel) entity.level();
             BlockPos entityPos = entity.blockPosition();
 
-            if (!entity.hasEffect(PoEffects.INTESTINAL_SPASM)) {
+            if (!entity.hasEffect(PoEffects.INTESTINAL_SPASM.get())) {
                 BlockState compooperState = level.getBlockState(entityPos);
                 if (compooperState.getBlock() instanceof CompooperBlock) {
                     BlockState state = level.getBlockState(entityPos);
@@ -74,7 +73,7 @@ public class FecalIncontinenceEffect extends MobEffect {
             Item stack = PoItems.POOP.get();
 
             boolean dropPoop = false;
-            if (!entity.hasEffect(PoEffects.INTESTINAL_SPASM)) {
+            if (!entity.hasEffect(PoEffects.INTESTINAL_SPASM.get())) {
                 dropPoop = BlockPos.betweenClosedStream(entityPos.offset(0, -1, 0), entityPos.offset(0, 1, 0))
                         .anyMatch(targetPos -> {
                             boolean applied = BoneMealItem.applyBonemeal(new ItemStack(PoItems.POOP.get()), level, targetPos, null)
@@ -88,7 +87,7 @@ public class FecalIncontinenceEffect extends MobEffect {
                         });
             }
 
-            if (entity.hasEffect(PoEffects.INTESTINAL_SPASM)) {
+            if (entity.hasEffect(PoEffects.INTESTINAL_SPASM.get())) {
                 stack = PoItems.CHILI_POOP.get();
             } else if (ToiletUtil.isGoldenToilet(level, entityPos.below())) {
                 stack = PoItems.GOLDEN_POOP.get();
@@ -128,7 +127,7 @@ public class FecalIncontinenceEffect extends MobEffect {
     }
 
     @Override
-    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
+    public boolean isDurationEffectTick(int duration, int amplifier) {
         return true;
     }
 }

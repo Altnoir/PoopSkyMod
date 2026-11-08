@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 
-public final class PoRenderTypes {
+public final class PoRenderTypes extends RenderStateShard {
     private static final RenderType CHUNK_LOADER_GLOW = RenderType.create(
             "poopsky_chunk_loader_glow",
             DefaultVertexFormat.POSITION_COLOR,
@@ -22,6 +22,7 @@ public final class PoRenderTypes {
     );
 
     private PoRenderTypes() {
+        super("poopsky", () -> {}, () -> {});
     }
 
     public static RenderType chunkLoaderGlow() {

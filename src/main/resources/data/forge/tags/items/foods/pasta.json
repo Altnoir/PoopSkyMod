@@ -1,0 +1,7 @@
+{
+  "values": [
+    "poopsky:roundworm",
+    "poopsky:poop_pasta",
+    {"id": "#farmersdelight:pasta", "required": false}
+  ]
+}

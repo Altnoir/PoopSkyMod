@@ -66,12 +66,12 @@ public class PSJEIPlugin implements IModPlugin {
         registration.registerSubtypeInterpreter(PoItems.FLY.get(), new ISubtypeInterpreter<>() {
             @Override
             public @Nullable Object getSubtypeData(ItemStack itemStack, UidContext context) {
-                return itemStack.get(PoComponents.FLY_TYPE.get());
+                return PoComponents.FLY_TYPE.get(itemStack);
             }
 
             @Override
             public String getLegacyStringSubtypeInfo(ItemStack itemStack, UidContext context) {
-                String flyType = itemStack.get(PoComponents.FLY_TYPE.get());
+                String flyType = PoComponents.FLY_TYPE.get(itemStack);
                 return flyType != null ? flyType : "";
             }
         });
@@ -79,13 +79,13 @@ public class PSJEIPlugin implements IModPlugin {
         ISubtypeInterpreter<ItemStack> toiletSubtypeInterpreter = new ISubtypeInterpreter<>() {
             @Override
             public @Nullable Object getSubtypeData(ItemStack itemStack, UidContext context) {
-                ToiletType toiletType = itemStack.get(PoComponents.TOILET_TYPE.get());
+                ToiletType toiletType = PoComponents.TOILET_TYPE.get(itemStack);
                 return toiletType != null ? toiletType.id() : null;
             }
 
             @Override
             public String getLegacyStringSubtypeInfo(ItemStack itemStack, UidContext context) {
-                ToiletType toiletType = itemStack.get(PoComponents.TOILET_TYPE.get());
+                ToiletType toiletType = PoComponents.TOILET_TYPE.get(itemStack);
                 return toiletType != null ? toiletType.id() : "";
             }
         };
@@ -95,7 +95,7 @@ public class PSJEIPlugin implements IModPlugin {
 
     @Override
     public void registerVanillaCategoryExtensions(IVanillaCategoryExtensionRegistration registration) {
-        registration.getCraftingCategory().addExtension(ToiletShapedRecipe.class, new ToiletCraftingExtension());
+        registration.getCraftingCategory().addCategoryExtension(ToiletShapedRecipe.class, ToiletCraftingExtension::new);
     }
 
     @Override

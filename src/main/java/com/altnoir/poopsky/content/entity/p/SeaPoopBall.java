@@ -18,12 +18,21 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 
 public class SeaPoopBall extends ThrowableItemProjectile {
+    public SeaPoopBall(EntityType<? extends SeaPoopBall> type, Level level) {
+        super(type, level);
+    }
+
     public SeaPoopBall(Level level, LivingEntity shooter) {
-        super(EntityType.SNOWBALL, shooter, level);
+        super(com.altnoir.poopsky.init.PoEntityType.SEA_POOP_BALL.get(), shooter, level);
     }
 
     public SeaPoopBall(Level level, double x, double y, double z) {
-        super(EntityType.SNOWBALL, x, y, z, level);
+        super(com.altnoir.poopsky.init.PoEntityType.SEA_POOP_BALL.get(), x, y, z, level);
+    }
+
+    @Override
+    public net.minecraft.network.protocol.Packet<net.minecraft.network.protocol.game.ClientGamePacketListener> getAddEntityPacket() {
+        return net.minecraftforge.network.NetworkHooks.getEntitySpawningPacket(this);
     }
 
     @Override
@@ -33,7 +42,7 @@ public class SeaPoopBall extends ThrowableItemProjectile {
 
     private ParticleOptions getParticle() {
         ItemStack itemstack = this.getItem();
-        return !itemstack.isEmpty() && !itemstack.is(this.getDefaultItem()) ? new ItemParticleOption(ParticleTypes.ITEM, itemstack) : ParticleTypes.ITEM_SNOWBALL;
+        return new ItemParticleOption(ParticleTypes.ITEM, itemstack);
     }
 
     /**

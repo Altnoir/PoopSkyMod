@@ -4,13 +4,11 @@ import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.init.PoSoundEvents;
-import com.mojang.serialization.MapCodec;
 import it.unimi.dsi.fastutil.objects.Object2FloatMap;
 import it.unimi.dsi.fastutil.objects.Object2FloatOpenHashMap;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -25,7 +23,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ItemLike;
@@ -45,8 +43,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class CompooperBlock extends AbstractCompooperBlock implements WorldlyContainerHolder {
-    public static final MapCodec<CompooperBlock> CODEC = simpleCodec(CompooperBlock::new);
+public class CompooperBlock extends AbstractCompooperBlock implements WorldlyContainerHolder, com.altnoir.poopsky.content.block.PoBlockInteraction {
     public static final int READY = 8;
     public static final IntegerProperty POOP_LEVEL = IntegerProperty.create("level", MIN_LEVEL, READY);
     public static final Object2FloatMap<ItemLike> COMPOSTABLES = new Object2FloatOpenHashMap<>();
@@ -59,10 +56,6 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
         shapes[READY] = shapes[READY - 1];
     });
 
-    @Override
-    public MapCodec<CompooperBlock> codec() {
-        return CODEC;
-    }
 
     public static void bootStrap() {
         COMPOSTABLES.defaultReturnValue(-1.0F);
@@ -115,17 +108,17 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
     }
 
     @Override
-    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPES[state.getValue(POOP_LEVEL)];
     }
 
     @Override
-    protected VoxelShape getInteractionShape(BlockState state, BlockGetter level, BlockPos pos) {
+    public VoxelShape getInteractionShape(BlockState state, BlockGetter level, BlockPos pos) {
         return OUTER_SHAPE;
     }
 
     @Override
-    protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPES[0];
     }
 
@@ -136,11 +129,11 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
 
 
     @Override
-    protected ItemInteractionResult useItemOn(
+    public InteractionResult poopsky$useItemOn(
             ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult
     ) {
         int i = state.getValue(POOP_LEVEL);
-        PotionContents potioncontents = stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
+        var potioncontents = PotionUtils.getPotion(stack);
 
         if (i == MIN_LEVEL) {
             if (stack.getItem() == PoItems.URINE_BUCKET.get()) {
@@ -153,7 +146,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
                 return liquidUse(stack, level, pos, player, hand, SoundEvents.BUCKET_EMPTY_POWDER_SNOW, PoBlocks.POWDER_SNOW_COMPOOPER.get(), true);
             } else if (stack.getItem() == PoItems.URINE_BOTTLE.get()) {
                 return liquidUse(stack, level, pos, player, hand, SoundEvents.BOTTLE_EMPTY, 0.6F, PoBlocks.URINE_COMPOOPER.get(), false);
-            } else if (potioncontents.is(Potions.WATER)) {
+            } else if (potioncontents == Potions.WATER) {
                 return liquidUse(stack, level, pos, player, hand, SoundEvents.BOTTLE_EMPTY, PoBlocks.WATER_COMPOOPER.get(), false);
             }
         }
@@ -162,17 +155,17 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
 
             playCompostEffect(level, pos, !state.equals(newState));
             player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
-            stack.consume(1, player);
-            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+            if (!player.getAbilities().instabuild) stack.shrink(1);
+            return InteractionResult.sidedSuccess(level.isClientSide);
         }
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return InteractionResult.PASS;
     }
 
-    private ItemInteractionResult liquidUse(ItemStack stack, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, Block newBlock, boolean bucket) {
+    private InteractionResult liquidUse(ItemStack stack, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, Block newBlock, boolean bucket) {
         return liquidUse(stack, level, pos, player, hand, sound, 1.0F, newBlock, bucket);
     }
 
-    private ItemInteractionResult liquidUse(ItemStack stack, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, float pitch, Block newBlock, boolean bucket) {
+    private InteractionResult liquidUse(ItemStack stack, Level level, BlockPos pos, Player player, InteractionHand hand, SoundEvent sound, float pitch, Block newBlock, boolean bucket) {
         var newState = newBlock.defaultBlockState().setValue(AbstractCompooperBlock.LEVEL, bucket ? MAX_LEVEL : MIN_LEVEL + 1);
 
         level.playSound(null, pos, sound, SoundSource.BLOCKS, 1.0F, pitch);
@@ -182,27 +175,27 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
         ItemStack itemStack = ItemUtils.createFilledResult(stack, player, bucket ? Items.BUCKET.getDefaultInstance() : Items.GLASS_BOTTLE.getDefaultInstance());
         player.setItemInHand(hand, itemStack);
 
-        return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
 
     @Override
-    protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
+    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
         if (state.getValue(POOP_LEVEL) == READY - 1) {
             level.scheduleTick(pos, state.getBlock(), 20);
         }
     }
 
     @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         super.onRemove(state, level, pos, newState, movedByPiston);
         if (!state.is(newState.getBlock())) {
-            level.invalidateCapabilities(pos);
+            if (level.getBlockEntity(pos) != null) level.getBlockEntity(pos).invalidateCaps();
         }
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+    public InteractionResult poopsky$useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         int i = state.getValue(POOP_LEVEL);
         if (i == READY) {
             extractProduce(player, state, level, pos);
@@ -260,7 +253,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
     }
 
     @Override
-    protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+    public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (state.getValue(POOP_LEVEL) == READY - 1) {
             level.setBlock(pos, state.cycle(POOP_LEVEL), 3);
             level.playSound(null, pos, PoSoundEvents.BLOCK_COMPOOPER_READY.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
@@ -289,7 +282,7 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
     }
 
     @Override
-    protected int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
+    public int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
         return blockState.getValue(POOP_LEVEL);
     }
 
@@ -434,5 +427,13 @@ public class CompooperBlock extends AbstractCompooperBlock implements WorldlyCon
     public static float getValue(ItemStack stack) {
         float value = COMPOSTABLES.getFloat(stack.getItem());
         return value == 0f ? -1f : value;
+    }
+
+    @Override
+    public net.minecraft.world.InteractionResult use(net.minecraft.world.level.block.state.BlockState state,
+            net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
+        return poopsky$interact(state, level, pos, player, hand, hit);
     }
 }

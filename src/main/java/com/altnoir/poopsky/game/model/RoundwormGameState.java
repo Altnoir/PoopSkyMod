@@ -48,7 +48,7 @@ public final class RoundwormGameState {
             nextDirection = null;
         }
 
-        Vec2 head = body.getLast();
+        Vec2 head = body.get(body.size() - 1);
         Vec2 newPos = new Vec2(head.x + direction.x, head.y + direction.y);
         if (newPos.x < 0 || newPos.x >= GRID_WIDTH || newPos.y < 0 || newPos.y >= GRID_HEIGHT
                 || containsPoint(body, newPos) || containsPoint(BLOCKED, newPos)) {
@@ -61,7 +61,7 @@ public final class RoundwormGameState {
             return TickResult.ATE;
         }
 
-        body.removeFirst();
+        body.remove(0);
         return TickResult.MOVED;
     }
 

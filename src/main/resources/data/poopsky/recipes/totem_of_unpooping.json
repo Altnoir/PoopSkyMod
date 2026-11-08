@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": {
+      "item": "minecraft:enchanted_golden_apple"
+    },
+    "G": {
+      "tag": "forge:gunpowder"
+    },
+    "S": {
+      "item": "poopsky:shit"
+    }
+  },
+  "pattern": [
+    " S ",
+    "GEG",
+    " G "
+  ],
+  "result": {
+    "count": 8,
+    "item": "poopsky:totem_of_unpooping"
+  }
+}

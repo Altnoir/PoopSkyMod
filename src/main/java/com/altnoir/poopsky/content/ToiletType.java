@@ -7,9 +7,8 @@ import com.mojang.serialization.JsonOps;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.ComponentSerialization;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
+import com.altnoir.poopsky.impl.network.codec.ByteBufCodecs;
+import com.altnoir.poopsky.impl.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.block.Block;
@@ -175,7 +174,7 @@ public class ToiletType implements Comparable<ToiletType> {
             ToiletType::id
     );
 
-    public static final Codec<Category> CATEGORY_CODEC = StringRepresentable.fromValues(Category::values);
+    public static final Codec<Category> CATEGORY_CODEC = StringRepresentable.fromEnum(Category::values);
 
     /**
      * 从 JsonElement 解析一个 ToiletType 并注册到 REGISTRY
@@ -187,19 +186,19 @@ public class ToiletType implements Comparable<ToiletType> {
         Block sourceBlock = null;
         if (obj.has("source_block") && !obj.get("source_block").isJsonNull()) {
             String blockId = obj.get("source_block").getAsString();
-            sourceBlock = BuiltInRegistries.BLOCK.get(ResourceLocation.parse(blockId));
+            sourceBlock = BuiltInRegistries.BLOCK.get(new ResourceLocation(blockId));
         }
 
         // category (可选，默认 "wood")
         Category category = Category.WOOD;
         if (obj.has("category")) {
-            category = CATEGORY_CODEC.parse(JsonOps.INSTANCE, obj.get("category")).getOrThrow();
+            category = CATEGORY_CODEC.parse(JsonOps.INSTANCE, obj.get("category")).getOrThrow(false, message -> { throw new IllegalArgumentException(message); });
         }
 
         // display_name (可选 - 有 source_block 则自动读取其名称，否则用 id)
         Component displayName;
         if (obj.has("display_name")) {
-            displayName = ComponentSerialization.CODEC.parse(JsonOps.INSTANCE, obj.get("display_name")).getOrThrow();
+            displayName = Component.Serializer.fromJson(obj.get("display_name"));
         } else if (sourceBlock != null) {
             displayName = sourceBlock.getName();
         } else {

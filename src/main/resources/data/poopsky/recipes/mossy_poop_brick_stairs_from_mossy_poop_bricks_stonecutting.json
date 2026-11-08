@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "poopsky:mossy_poop_bricks"
+  },
+  "result": "poopsky:mossy_poop_brick_stairs",
+  "count": 1
+}

@@ -20,7 +20,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Map;
 
-public class PoopCandleCakeBlock extends CandleCakeBlock {
+public class PoopCandleCakeBlock extends CandleCakeBlock implements com.altnoir.poopsky.content.block.PoBlockInteraction {
     private static final Map<Block, Block> VANILLA_CANDLE_CAKES = Map.ofEntries(
             Map.entry(Blocks.CANDLE, Blocks.CANDLE_CAKE),
             Map.entry(Blocks.WHITE_CANDLE, Blocks.WHITE_CANDLE_CAKE),
@@ -69,7 +69,7 @@ public class PoopCandleCakeBlock extends CandleCakeBlock {
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+    public InteractionResult poopsky$useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (state.getValue(LIT) && isHittingCandle(hitResult, pos)) {
             extinguish(state, level, pos, player);
             return InteractionResult.sidedSuccess(level.isClientSide);
@@ -95,7 +95,15 @@ public class PoopCandleCakeBlock extends CandleCakeBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
+    public ItemStack getCloneItemStack(net.minecraft.world.level.BlockGetter level, BlockPos pos, BlockState state) {
         return PoBlocks.POOP_CAKE.get().asItem().getDefaultInstance();
+    }
+
+    @Override
+    public net.minecraft.world.InteractionResult use(net.minecraft.world.level.block.state.BlockState state,
+            net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
+        return poopsky$interact(state, level, pos, player, hand, hit);
     }
 }

@@ -58,20 +58,19 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
-import net.neoforged.neoforge.event.entity.EntityMountEvent;
-import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
-import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
-import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
-import net.neoforged.neoforge.event.level.LevelEvent;
-import net.neoforged.neoforge.event.tick.EntityTickEvent;
-import net.neoforged.neoforge.event.tick.ServerTickEvent;
-import net.neoforged.neoforge.event.village.VillagerTradesEvent;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.common.Tags;
+import net.minecraftforge.event.entity.EntityMountEvent;
+import net.minecraftforge.event.entity.living.MobSpawnEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.MobEffectEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.level.LevelEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.village.VillagerTradesEvent;
+import com.altnoir.poopsky.impl.network.PoNetworking;
 
 import java.util.Objects;
 import java.util.Set;
@@ -81,7 +80,6 @@ public class PoGameEvents {
         gameEventBus.addListener(PoGameEvents::onItemCrafted);
         gameEventBus.addListener(PoGameEvents::onRightClickBlock);
         gameEventBus.addListener(PoGameEvents::onRightClickItem);
-        gameEventBus.addListener(PoGameEvents::onBrewingRecipeRegistry);
         gameEventBus.addListener(PoGameEvents::onVillagerTrades);
         gameEventBus.addListener(PoGameEvents::onEntityDismount);
         gameEventBus.addListener(PoGameEvents::onMobEffectApplicable);
@@ -97,8 +95,8 @@ public class PoGameEvents {
     }
 
     public static void onItemCrafted(PlayerEvent.ItemCraftedEvent event) {
-        if (event.getEntity() instanceof Player player
-                && !player.level().isClientSide
+        Player player = event.getEntity();
+        if (!player.level().isClientSide
                 && player.containerMenu instanceof PoopCraftingMenu menu) {
             menu.consumeCraftingTable();
         }
@@ -111,7 +109,7 @@ public class PoGameEvents {
         var hand = event.getHand();
         var heldItem = player.getItemInHand(hand);
 
-        if (!(heldItem.getItem() instanceof BottleItem) && !heldItem.is(Tags.Items.BUCKETS_EMPTY)) return;
+        if (!(heldItem.getItem() instanceof BottleItem) && !heldItem.is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, new net.minecraft.resources.ResourceLocation("forge", "buckets/empty")))) return;
         if (!(level.getBlockState(pos).getBlock() instanceof AbstractToiletBlock abstractToiletBlock)) return;
         if (abstractToiletBlock instanceof BaseToiletLavaBlock && level.getBlockState(pos).getValue(BaseToiletLavaBlock.LAVA))
             return;
@@ -119,7 +117,7 @@ public class PoGameEvents {
         if (!level.isClientSide) {
             SoundEvent sound;
             Item item;
-            if (heldItem.is(Tags.Items.BUCKETS_EMPTY)) {
+            if (heldItem.is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, new net.minecraft.resources.ResourceLocation("forge", "buckets/empty")))) {
                 sound = SoundEvents.BUCKET_FILL;
                 item = PoItems.URINE_BUCKET.get();
             } else {
@@ -144,7 +142,7 @@ public class PoGameEvents {
         Level level = event.getLevel();
 
         if (!stack.isEmpty() && stack.getItem() instanceof BottleItem) {
-            BlockHitResult blockhitresult = Item.getPlayerPOVHitResult(level, player, ClipContext.Fluid.SOURCE_ONLY);
+            BlockHitResult blockhitresult = level.clip(new ClipContext(player.getEyePosition(), player.getEyePosition().add(player.getViewVector(1.0F).scale(player.getBlockReach())), ClipContext.Block.OUTLINE, ClipContext.Fluid.SOURCE_ONLY, player));
             BlockPos blockpos = blockhitresult.getBlockPos();
 
             if (blockhitresult.getType() == HitResult.Type.BLOCK && level.mayInteract(player, blockpos) && level.getFluidState(blockpos).is(PoFluids.URINE.get())) {
@@ -162,21 +160,20 @@ public class PoGameEvents {
         }
     }
 
-    public static void onBrewingRecipeRegistry(RegisterBrewingRecipesEvent event) {
-        PotionBrewing.Builder builder = event.getBuilder();
+    public static void registerBrewingRecipes() {
 
-        builder.addMix(Potions.AWKWARD, PoItems.FOLIUM_SENNAE.get(), PoPotions.FECAL_INCONTINENCE_POTION);
-        builder.addMix(PoPotions.FECAL_INCONTINENCE_POTION, Items.REDSTONE, PoPotions.LONG_FECAL_INCONTINENCE_POTION);
-        builder.addMix(PoPotions.FECAL_INCONTINENCE_POTION, Items.GLOWSTONE_DUST, PoPotions.STRONG_FECAL_INCONTINENCE_POTION);
-        builder.addMix(PoPotions.FECAL_INCONTINENCE_POTION, Items.GLOWSTONE, PoPotions.SUPER_FECAL_INCONTINENCE_POTION);
+        com.altnoir.poopsky.impl.util.PoBrewing.addMix(Potions.AWKWARD, PoItems.FOLIUM_SENNAE.get(), PoPotions.FECAL_INCONTINENCE_POTION.get());
+        com.altnoir.poopsky.impl.util.PoBrewing.addMix(PoPotions.FECAL_INCONTINENCE_POTION.get(), Items.REDSTONE, PoPotions.LONG_FECAL_INCONTINENCE_POTION.get());
+        com.altnoir.poopsky.impl.util.PoBrewing.addMix(PoPotions.FECAL_INCONTINENCE_POTION.get(), Items.GLOWSTONE_DUST, PoPotions.STRONG_FECAL_INCONTINENCE_POTION.get());
+        com.altnoir.poopsky.impl.util.PoBrewing.addMix(PoPotions.FECAL_INCONTINENCE_POTION.get(), Items.GLOWSTONE, PoPotions.SUPER_FECAL_INCONTINENCE_POTION.get());
 
-        builder.addMix(Potions.AWKWARD, PoItems.KING_OF_DRAGON_FRUIT.get(), PoPotions.ON_THE_VGE_POTION);
-        builder.addMix(PoPotions.ON_THE_VGE_POTION, Items.REDSTONE, PoPotions.LONG_ON_THE_VGE_POTION);
-        builder.addMix(PoPotions.ON_THE_VGE_POTION, Items.GLOWSTONE_DUST, PoPotions.STRONG_ON_THE_VGE_POTION);
+        com.altnoir.poopsky.impl.util.PoBrewing.addMix(Potions.AWKWARD, PoItems.KING_OF_DRAGON_FRUIT.get(), PoPotions.ON_THE_VGE_POTION.get());
+        com.altnoir.poopsky.impl.util.PoBrewing.addMix(PoPotions.ON_THE_VGE_POTION.get(), Items.REDSTONE, PoPotions.LONG_ON_THE_VGE_POTION.get());
+        com.altnoir.poopsky.impl.util.PoBrewing.addMix(PoPotions.ON_THE_VGE_POTION.get(), Items.GLOWSTONE_DUST, PoPotions.STRONG_ON_THE_VGE_POTION.get());
 
-        builder.addMix(Potions.AWKWARD, PoItems.MAGGOTS_SEEDS.get(), PoPotions.INFESTATION_POTION);
-        builder.addMix(PoPotions.INFESTATION_POTION, Items.REDSTONE, PoPotions.LONG_INFESTATION_POTION);
-        builder.addMix(PoPotions.INFESTATION_POTION, Items.GLOWSTONE_DUST, PoPotions.STRONG_INFESTATION_POTION);
+        com.altnoir.poopsky.impl.util.PoBrewing.addMix(Potions.AWKWARD, PoItems.MAGGOTS_SEEDS.get(), PoPotions.INFESTATION_POTION.get());
+        com.altnoir.poopsky.impl.util.PoBrewing.addMix(PoPotions.INFESTATION_POTION.get(), Items.REDSTONE, PoPotions.LONG_INFESTATION_POTION.get());
+        com.altnoir.poopsky.impl.util.PoBrewing.addMix(PoPotions.INFESTATION_POTION.get(), Items.GLOWSTONE_DUST, PoPotions.STRONG_INFESTATION_POTION.get());
     }
 
     public static void onVillagerTrades(VillagerTradesEvent event) {
@@ -194,40 +191,40 @@ public class PoGameEvents {
         LivingEntity entity = event.getEntity();
         MobEffectInstance effectInstance = event.getEffectInstance();
 
-        if (effectInstance.is(PoEffects.INFESTATION)
-                && entity.getType().is(EntityTypeTags.IMMUNE_TO_INFESTED)) {
-            event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
+        if ((effectInstance.getEffect() == PoEffects.INFESTATION.get())
+                && entity.getType().is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, new net.minecraft.resources.ResourceLocation("minecraft", "immune_to_infested")))) {
+            event.setResult(net.minecraftforge.eventbus.api.Event.Result.DENY);
             return;
         }
 
-        if (OMEN_EFFECTS.contains(effectInstance.getEffect()) && entity.hasEffect(PoEffects.OMENER)) {
-            if (!effectInstance.is(MobEffects.CONFUSION) && !entity.hasEffect(MobEffects.REGENERATION)) {
-                int amplifier = entity.getEffect(PoEffects.OMENER).getAmplifier();
+        if (OMEN_EFFECTS.contains(effectInstance.getEffect()) && entity.hasEffect(PoEffects.OMENER.get())) {
+            if (!(effectInstance.getEffect() == MobEffects.CONFUSION) && !entity.hasEffect(MobEffects.REGENERATION)) {
+                int amplifier = entity.getEffect(PoEffects.OMENER.get()).getAmplifier();
                 entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 40, amplifier + 1));
             }
-            event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
+            event.setResult(net.minecraftforge.eventbus.api.Event.Result.DENY);
         }
     }
 
-    private static final Set<Holder<MobEffect>> OMEN_EFFECTS = Set.of(
+    private static final Set<MobEffect> OMEN_EFFECTS = Set.of(
             MobEffects.POISON,
             MobEffects.WITHER,
             MobEffects.CONFUSION
     );
 
-    public static void onEntityTick(EntityTickEvent.Pre event) {
+    public static void onEntityTick(LivingEvent.LivingTickEvent event) {
         Entity entity = event.getEntity();
         if (!(entity instanceof Villager villager) || entity.level().isClientSide || entity.tickCount % 10 != 0) return;
 
         PVillagerBehaviors.tickPoopTemptation(villager);
     }
 
-    public static void onFinalizeSpawn(FinalizeSpawnEvent event) {
+    public static void onFinalizeSpawn(MobSpawnEvent.FinalizeSpawn event) {
         if (event.getLevel().isClientSide() || !Config.desperateWorld) return;
         Mob mob = event.getEntity();
 
-        if (mob.hasEffect(PoEffects.FECAL_INCONTINENCE)) return;
-        mob.addEffect(new MobEffectInstance(PoEffects.FECAL_INCONTINENCE, MobEffectInstance.INFINITE_DURATION, 3));
+        if (mob.hasEffect(PoEffects.FECAL_INCONTINENCE.get())) return;
+        mob.addEffect(new MobEffectInstance(PoEffects.FECAL_INCONTINENCE.get(), MobEffectInstance.INFINITE_DURATION, 3));
     }
 
     public static void onCreateSpawnToilet(LevelEvent.CreateSpawnPosition event) {
@@ -267,17 +264,18 @@ public class PoGameEvents {
 
     public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
+        TimeBellItem.playerJoined(player);
 
         ServerLevel overworld = Objects.requireNonNull(player.getServer()).overworld();
         if (!(overworld.getChunkSource().getGenerator() instanceof PoVoidChunkGenerator)) return;
 
         PoAnimationSavedData legacy = PoAnimationSavedData.get(overworld);
-        if (player.getData(PoAttachments.SEEN_INTRO.get())) {
+        if (PoAttachments.SEEN_INTRO.get(player)) {
             return;
         }
-        player.setData(PoAttachments.SEEN_INTRO.get(), true);
+        PoAttachments.SEEN_INTRO.set(player, true);
         if (!legacy.hasPlayed(PoAnimation.INTRO, player.getUUID(), player.getGameProfile().getName())) {
-            PacketDistributor.sendToPlayer(player, new PlayAnimationPayload(PoAnimation.INTRO));
+            PoNetworking.sendToPlayer(player, new PlayAnimationPayload(PoAnimation.INTRO));
             if ("zh_cn".equalsIgnoreCase(player.getLanguage())) {
                 player.sendSystemMessage(Component.literal(
                         "温馨提示：如果您正在直播或录制，可在资源包中启用空中厕所的“认知滤网”资源包"
@@ -288,6 +286,7 @@ public class PoGameEvents {
 
     public static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
+            TimeBellItem.playerLeft(player);
             ToiletUtil.clearPendingEndToiletTeleport(player);
         }
     }
@@ -339,7 +338,7 @@ public class PoGameEvents {
             serverPlayer.awardStat(Stats.ITEM_USED.get(PoItems.TOTEM_OF_UNPOOPING.get()));
             CriteriaTriggers.USED_TOTEM.trigger(serverPlayer, totem);
             entity.gameEvent(GameEvent.ITEM_INTERACT_FINISH);
-            PacketDistributor.sendToPlayer(serverPlayer, new UnpoopingTotemActivationPayload(totem));
+            PoNetworking.sendToPlayer(serverPlayer, new UnpoopingTotemActivationPayload(totem));
         }
         if (entity.level() instanceof ServerLevel serverLevel) {
             TotemEffectUtil.spawnActivationParticles(serverLevel, entity.position());
@@ -349,7 +348,8 @@ public class PoGameEvents {
         PoopTntUtil.triggerExplosion(entity, 6);
     }
 
-    public static void onServerTick(ServerTickEvent.Post event) {
+    public static void onServerTick(TickEvent.ServerTickEvent event) {
+        if (event.phase != TickEvent.Phase.END) return;
         TimeBellItem.tickPending(event.getServer());
         TimeBellItem.freezeTick(event.getServer());
     }

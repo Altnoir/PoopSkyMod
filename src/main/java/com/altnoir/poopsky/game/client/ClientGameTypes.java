@@ -5,7 +5,6 @@ import com.altnoir.poopsky.game.GameDefinition;
 import com.altnoir.poopsky.game.GameDefinitions;
 import com.altnoir.poopsky.game.render.ClientBlocktrisGame;
 import com.altnoir.poopsky.game.render.ClientPongGame;
-import com.altnoir.poopsky.game.render.ClientRhythmGame;
 import com.altnoir.poopsky.game.render.ClientRoundwormGame;
 import com.altnoir.poopsky.game.render.ClientTouhouGame;
 
@@ -21,7 +20,6 @@ public final class ClientGameTypes {
         register(GameDefinitions.BLOCKTRIS, ClientBlocktrisGame::new);
         register(GameDefinitions.PONG, ClientPongGame::new);
         register(GameDefinitions.TOUHOU, ClientTouhouGame::new);
-        register(GameDefinitions.RHYTHM, ClientRhythmGame::new);
     }
 
     private ClientGameTypes() {

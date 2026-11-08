@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 
 public class FlamFenceGateBlock extends FenceGateBlock {
     public FlamFenceGateBlock(WoodType type, Properties properties) {
-        super(type, properties);
+        super(properties, type);
     }
 
     @Override

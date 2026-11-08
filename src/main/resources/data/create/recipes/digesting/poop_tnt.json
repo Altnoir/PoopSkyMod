@@ -1,0 +1,19 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "poopsky:digesting",
+  "ingredients": [
+    {
+      "item": "minecraft:tnt"
+    }
+  ],
+  "results": [
+    {
+      "item": "poopsky:poop_tnt"
+    }
+  ]
+}

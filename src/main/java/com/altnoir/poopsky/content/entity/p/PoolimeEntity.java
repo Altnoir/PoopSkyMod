@@ -77,7 +77,7 @@ public class PoolimeEntity extends Slime {
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.POISON, 120, 0));
                 this.playSound(PoSoundEvents.ENTITY_POOLIME_ATTACK.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
                 if (this.level() instanceof ServerLevel serverLevel) {
-                    EnchantmentHelper.doPostAttackEffects(serverLevel, livingEntity, damageSource);
+                    this.doEnchantDamageEffects(this, livingEntity);
                 }
             }
         }
@@ -88,7 +88,7 @@ public class PoolimeEntity extends Slime {
             return false;
         }
 
-        if (MobSpawnType.isSpawner(spawnType)) {
+        if ((spawnType == MobSpawnType.SPAWNER)) {
             return true;
         }
 
