@@ -47,7 +47,7 @@ public class PoModEvents {
         event.put(PoEntityType.FLY.get(), FlyEntity.createAttributes().build());
         event.put(PoEntityType.SNAIL.get(), SnailEntity.createAttributes().build());
         event.put(PoEntityType.BASILISK.get(), BasiliskEntity.createAttributes().build());
-        event.put(PoEntityType.EXPLOSIVE_CHICKEN.get(), ExplosiveChickenEntity.createAttributes().build());
+        event.put(PoEntityType.POP_CHICKEN.get(), ExplosiveChickenEntity.createAttributes().build());
     }
 
     public static void registerSpawnPlacements(RegisterSpawnPlacementsEvent event) {

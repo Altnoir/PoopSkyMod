@@ -15,6 +15,7 @@ public final class PoBedrockModelResources {
     public static final ResourceLocation SNAIL_MODEL = PoopSky.loc("snail.geo");
     public static final ResourceLocation SNAIL_ANIMATION = PoopSky.loc("snail.animation");
     public static final ResourceLocation MAGGOT_MODEL = PoopSky.loc("maggot.geo");
+    public static final ResourceLocation POP_CHICKEN_MODEL = PoopSky.loc("pop_chicken.geo");
     public static final ResourceLocation TOILET_PLUG_MODEL = PoopSky.loc("toilet_plug.geo");
 
     private PoBedrockModelResources() {
@@ -43,6 +44,9 @@ public final class PoBedrockModelResources {
                 )))
                 .register();
         event.bakedModel(TOILET_PLUG_MODEL)
+                .register();
+        event.bakedModel(POP_CHICKEN_MODEL)
+                .options(BakerOptions.ofAnimatedBones(Set.of("left", "right")))
                 .register();
     }
 }

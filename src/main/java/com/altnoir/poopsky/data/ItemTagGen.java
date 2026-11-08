@@ -1,12 +1,12 @@
 package com.altnoir.poopsky.data;
 
-import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.abysslib.reginth.Reginth;
-import com.altnoir.poopsky.init.PoBlocks;
-import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.abysslib.reginth.providers.ProviderType;
 import com.altnoir.abysslib.reginth.providers.ReginthItemTagsProvider;
+import com.altnoir.poopsky.PoopSky;
+import com.altnoir.poopsky.impl.PoTags;
+import com.altnoir.poopsky.init.PoBlocks;
+import com.altnoir.poopsky.init.PoItems;
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
@@ -75,9 +75,11 @@ public final class ItemTagGen {
         tag(PoTags.Items.FLY_LIKE)
                 .addTag(PoTags.Items.FLUSH_TOILET_SAVE)
                 .add(PoItems.POOP_ON_A_STICK.get());
-        tag(ItemTags.DURABILITY_ENCHANTABLE).add(PoItems.POOP_ON_A_STICK.get());
         tag(PoTags.Items.VILLAGER_LIKE).addTag(PoTags.Items.FLUSH_TOILET_SAVE);
+        tag(PoTags.Items.POP_CHICKEN_LIKE).addTag(PoTags.Items.FLY_LIKE);
         tag(PoTags.Items.SNAIL_FOOD).addTag(ItemTags.FLOWERS);
+
+        tag(ItemTags.DURABILITY_ENCHANTABLE).add(PoItems.POOP_ON_A_STICK.get());
 
         tag(PoTags.Items.CAN_COMPOSTABLE)
                 .add(
@@ -220,7 +222,6 @@ public final class ItemTagGen {
         tag(PoTags.Items.EGG)
                 .add(
                         Items.EGG,
-                        PoItems.EXPLOSIVE_CHICKEN_EGG.get(),
                         Items.TURTLE_EGG,
                         Items.SNIFFER_EGG
                 );

@@ -1,12 +1,12 @@
 package com.altnoir.poopsky.data;
 
 import com.altnoir.abysslib.AbyssLib;
+import com.altnoir.abysslib.reginth.providers.ReginthItemModelProvider;
+import com.altnoir.abysslib.reginth.util.entry.ItemEntry;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoItems;
-import com.altnoir.abysslib.reginth.providers.ReginthItemModelProvider;
-import com.altnoir.abysslib.reginth.util.entry.ItemEntry;
 import net.minecraft.client.renderer.block.model.BlockModel.GuiLight;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
@@ -62,9 +62,7 @@ public class ItemModelGen extends ReginthItemModelProvider {
         withExistingParent(name(PoItems.FLY_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
         withExistingParent(name(PoItems.SNAIL_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
         withExistingParent(name(PoItems.BASILISK_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
-        withExistingParent(name(PoItems.EXPLOSIVE_CHICKEN_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
-        withExistingParent(name(PoItems.EXPLOSIVE_CHICKEN_EGG), mcLoc("item/generated"))
-                .texture("layer0", mcLoc("item/egg"));
+        withExistingParent(name(PoItems.POP_CHICKEN_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
         generated(PoItems.URINE_BUCKET);
     }
 

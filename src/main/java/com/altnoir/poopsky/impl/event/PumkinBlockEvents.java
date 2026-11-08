@@ -81,7 +81,7 @@ public class PumkinBlockEvents {
     }
 
     private static SpawnResult createExplosiveChicken(Level level, BlockPattern.BlockPatternMatch match) {
-        ExplosiveChickenEntity chicken = PoEntityType.EXPLOSIVE_CHICKEN.get().create(level);
+        ExplosiveChickenEntity chicken = PoEntityType.POP_CHICKEN.get().create(level);
         return new SpawnResult(GolemType.EXPLOSIVE_CHICKEN, chicken, match, match.getBlock(0, 1, 0).getPos());
     }
 

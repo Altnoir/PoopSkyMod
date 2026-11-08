@@ -2,7 +2,7 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "bonus_rolls": 0,
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
@@ -213,7 +213,6 @@
           "name": "poopsky:maggots_seeds_black"
         }
       ],
-      "rolls": 1,
       "functions": [
         {
           "conditions": [
@@ -252,11 +251,12 @@
           "function": "minecraft:furnace_smelt"
         },
         {
-          "count": 1,
+          "count": 1.0,
           "enchantment": "minecraft:looting",
           "function": "minecraft:enchanted_count_increase"
         }
-      ]
+      ],
+      "rolls": 1.0
     }
   ],
   "random_sequence": "poopsky:entities/fly"
