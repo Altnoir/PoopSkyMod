@@ -1,33 +1,31 @@
 package com.altnoir.poopsky.content.block.p;
 
-import com.altnoir.poopsky.content.block.entity.PoopFlowerBlockEntity;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.ItemInteractionResult;
-import net.minecraft.world.level.block.DoublePlantBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.BlockHitResult;
 import com.altnoir.poopsky.content.block.abs.AbsHorDirBlock;
+import com.altnoir.poopsky.init.PoBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Equipable;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -37,7 +35,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class ShitBlock extends AbsHorDirBlock implements Equipable, EntityBlock {
+public class ShitBlock extends AbsHorDirBlock implements Equipable {
     private static final VoxelShape NORTH_SHAPE = Shapes.or(
             Block.box(3, 0, 3, 13, 3, 13),
             Block.box(4, 3, 4, 12, 6, 12),
@@ -113,19 +111,13 @@ public class ShitBlock extends AbsHorDirBlock implements Equipable, EntityBlock 
     protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
         return false;
     }
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new PoopFlowerBlockEntity(pos, state);
-    }
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (level.getBlockEntity(pos) instanceof PoopFlowerBlockEntity flower && !flower.getFlower().isEmpty()) {
+        if (this instanceof PottedShitBlock potted) {
             if (!level.isClientSide) {
-                ItemStack stack = flower.getFlower().copy();
-                flower.setFlower(ItemStack.EMPTY);
-                if ((!player.getAbilities().instabuild || !player.getInventory().contains(stack))
-                        && !player.addItem(stack)) player.drop(stack, false);
+                level.setBlock(pos, potted.getBase().defaultBlockState().setValue(FACING, state.getValue(FACING)), 3);
+                giveFlower(player, new ItemStack(potted.getFlower()));
                 level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
@@ -134,33 +126,30 @@ public class ShitBlock extends AbsHorDirBlock implements Equipable, EntityBlock 
     }
 
     @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean moving) {
-        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof PoopFlowerBlockEntity flower) {
-            popResource(level, pos, flower.getFlower());
-        }
-        super.onRemove(state, level, pos, newState, moving);
-    }
-
-    @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (stack.getItem() instanceof BlockItem item
                 && item.getBlock().defaultBlockState().is(BlockTags.SMALL_FLOWERS)
-                && !(item.getBlock() instanceof DoublePlantBlock)
-                && level.getBlockEntity(pos) instanceof PoopFlowerBlockEntity flower) {
-            if (ItemStack.isSameItemSameComponents(stack, flower.getFlower())) {
+                && !(item.getBlock() instanceof DoublePlantBlock)) {
+            Block potted = PoBlocks.getPottedShit(this instanceof PottedShitBlock planted ? planted.getBase() : this,
+                    item.getBlock());
+            if (potted == null) return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
+            if (this instanceof PottedShitBlock planted && planted.getFlower() == item.getBlock()) {
                 return ItemInteractionResult.sidedSuccess(level.isClientSide);
             }
             if (!level.isClientSide) {
-                ItemStack previous = flower.getFlower().copy();
-                flower.setFlower(stack.copyWithCount(1));
+                Block oldFlower = this instanceof PottedShitBlock planted ? planted.getFlower() : null;
+                level.setBlock(pos, potted.defaultBlockState().setValue(FACING, state.getValue(FACING)), 3);
                 stack.consume(1, player);
-                if (!previous.isEmpty()
-                        && (!player.getAbilities().instabuild || !player.getInventory().contains(previous))
-                        && !player.addItem(previous)) player.drop(previous, false);
+                if (oldFlower != null) giveFlower(player, new ItemStack(oldFlower));
                 level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
             }
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
         return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
+    }
+
+    private static void giveFlower(Player player, ItemStack stack) {
+        if ((!player.getAbilities().instabuild || !player.getInventory().contains(stack))
+                && !player.addItem(stack)) player.drop(stack, false);
     }
 }

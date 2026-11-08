@@ -1,0 +1,6 @@
+{
+  "parent": "poopsky:block/potted_golden_shit",
+  "textures": {
+    "plant": "minecraft:block/cornflower"
+  }
+}

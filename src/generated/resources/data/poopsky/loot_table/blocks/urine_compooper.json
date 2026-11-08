@@ -5,32 +5,31 @@
       "bonus_rolls": 0.0,
       "entries": [
         {
-          "type": "minecraft:item",
-          "functions": [
+          "type": "minecraft:group",
+          "children": [
             {
-              "function": "minecraft:explosion_decay"
+              "type": "minecraft:item",
+              "functions": [
+                {
+                  "function": "minecraft:explosion_decay"
+                }
+              ],
+              "name": "poopsky:compooper"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "block": "poopsky:urine_compooper",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "maggots": "true"
+                  }
+                }
+              ],
+              "name": "poopsky:maggots_seeds"
             }
-          ],
-          "name": "poopsky:compooper"
-        }
-      ],
-      "rolls": 1.0
-    },
-    {
-      "bonus_rolls": 0.0,
-      "conditions": [
-        {
-          "block": "poopsky:urine_compooper",
-          "condition": "minecraft:block_state_property",
-          "properties": {
-            "maggots": "true"
-          }
-        }
-      ],
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "poopsky:maggots_seeds"
+          ]
         }
       ],
       "rolls": 1.0

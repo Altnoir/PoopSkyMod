@@ -1,0 +1,6 @@
+{
+  "parent": "poopsky:block/potted_shit",
+  "textures": {
+    "plant": "minecraft:block/blue_orchid"
+  }
+}

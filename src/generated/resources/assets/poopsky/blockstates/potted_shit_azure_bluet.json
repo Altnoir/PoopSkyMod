@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "poopsky:block/potted_shit_azure_bluet",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "poopsky:block/potted_shit_azure_bluet"
+    },
+    "facing=south": {
+      "model": "poopsky:block/potted_shit_azure_bluet",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "poopsky:block/potted_shit_azure_bluet",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "poopsky:block/potted_shit_allium",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "poopsky:block/potted_shit_allium"
+    },
+    "facing=south": {
+      "model": "poopsky:block/potted_shit_allium",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "poopsky:block/potted_shit_allium",
+      "y": 270
+    }
+  }
+}

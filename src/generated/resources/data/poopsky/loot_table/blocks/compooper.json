@@ -5,32 +5,31 @@
       "bonus_rolls": 0.0,
       "entries": [
         {
-          "type": "minecraft:item",
-          "functions": [
+          "type": "minecraft:group",
+          "children": [
             {
-              "function": "minecraft:explosion_decay"
+              "type": "minecraft:item",
+              "functions": [
+                {
+                  "function": "minecraft:explosion_decay"
+                }
+              ],
+              "name": "poopsky:compooper"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "block": "poopsky:compooper",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "level": "8"
+                  }
+                }
+              ],
+              "name": "poopsky:sapling_poop_ball"
             }
-          ],
-          "name": "poopsky:compooper"
-        }
-      ],
-      "rolls": 1.0
-    },
-    {
-      "bonus_rolls": 0.0,
-      "conditions": [
-        {
-          "block": "poopsky:compooper",
-          "condition": "minecraft:block_state_property",
-          "properties": {
-            "level": "8"
-          }
-        }
-      ],
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "poopsky:sapling_poop_ball"
+          ]
         }
       ],
       "rolls": 1.0

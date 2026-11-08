@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "poopsky:block/potted_golden_shit_wither_rose",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "poopsky:block/potted_golden_shit_wither_rose"
+    },
+    "facing=south": {
+      "model": "poopsky:block/potted_golden_shit_wither_rose",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "poopsky:block/potted_golden_shit_wither_rose",
+      "y": 270
+    }
+  }
+}

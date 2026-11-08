@@ -1,14 +1,14 @@
 package com.altnoir.poopsky.data;
 
 import com.altnoir.abysslib.AbyssLib;
+import com.altnoir.abysslib.reginth.providers.ReginthBlockstateProvider;
+import com.altnoir.abysslib.reginth.util.entry.BlockEntry;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.ChiliVines;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.p.*;
 import com.altnoir.poopsky.init.PoBlocks;
-import com.altnoir.abysslib.reginth.providers.ReginthBlockstateProvider;
-import com.altnoir.abysslib.reginth.util.entry.BlockEntry;
 import net.minecraft.client.renderer.block.model.BlockModel.GuiLight;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
@@ -95,6 +95,7 @@ public class BlockStateGen extends ReginthBlockstateProvider {
         shitBlock(PoBlocks.SHIT.get(), PoBlocks.POOP_BLOCK.get());
         shitBlock(PoBlocks.CHILI_SHIT.get(), PoBlocks.CHILI_POOP_BLOCK.get());
         shitBlock(PoBlocks.GOLDEN_SHIT.get(), PoBlocks.GOLDEN_POOP_BLOCK.get());
+        PoBlocks.getPottedShits().forEach(entry -> pottedShitBlock(entry.get()));
 
         fluidBlockWithItem(PoBlocks.URINE_LIQUID.get());
         makeCropBlock(PoBlocks.MAGGOTS.get(), "maggots_stage", "maggots_stage");
@@ -329,7 +330,6 @@ public class BlockStateGen extends ReginthBlockstateProvider {
                         new ConfiguredModel(models().getExistingFile(modLoc("block/poop_block3")), 0, 0, false, 2)
                 );
         verticalSlabBlock(PoBlocks.POOP_VERTICAL_SLAB.get(), blockTexture(PoBlocks.POOP_BLOCK.get()));
-        simpleBlockItem(PoBlocks.POOP_VERTICAL_SLAB.get(), blockModel(PoBlocks.POOP_VERTICAL_SLAB.get()));
         simpleBlockItem(PoBlocks.POOP_BLOCK.get(), models().getExistingFile(modLoc("block/poop_block1")));
     }
 
@@ -627,15 +627,8 @@ public class BlockStateGen extends ReginthBlockstateProvider {
 
     private void verticalSlabBlock(VerticalSlabBlock block, ResourceLocation texture) {
         String path = getBlockPath(block);
-        ModelFile model = models().withExistingParent(path, mcLoc("block/block"))
-                .texture("particle", texture)
-                .texture("texture", texture)
-                .element().from(0, 0, 0).to(16, 16, 8)
-                .allFaces((face, builder) -> {
-                    builder.texture("#texture");
-                    if (face != Direction.SOUTH) builder.cullface(face);
-                })
-                .end();
+        ModelFile model = models().withExistingParent(path, modLoc("block/vertical_slab_template"))
+                .texture("texture", texture);
         ModelFile doubleModel = models().cubeAll(path + "_double", texture);
 
         getVariantBuilder(block).forAllStates(state -> {
@@ -647,12 +640,9 @@ public class BlockStateGen extends ReginthBlockstateProvider {
                     .build();
         });
 
-        itemModels().withExistingParent(getItemPath(block), mcLoc("block/block"))
-                .texture("particle", texture)
-                .texture("texture", texture)
-                .element().from(0, 0, 4).to(16, 16, 12)
-                .allFaces((face, builder) -> builder.texture("#texture"))
-                .end();
+        itemModels().getBuilder(getItemPath(block))
+                .parent(new ModelFile.UncheckedModelFile(modLoc("block/vertical_slab_item_template")))
+                .texture("texture", texture);
     }
 
     private void saplingBlock(SaplingBlock block) {
@@ -1070,6 +1060,20 @@ public class BlockStateGen extends ReginthBlockstateProvider {
                 .perspective(ItemDisplayContext.GROUND, blockModel)
                 .end()
                 .guiLight(GuiLight.FRONT);
+    }
+
+    private void pottedShitBlock(PottedShitBlock block) {
+        String path = getBlockPath(block);
+        String basePath = getBlockPath(block.getBase());
+        ResourceLocation flowerTexture = ResourceLocation.withDefaultNamespace("block/"
+                + net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(block.getFlower()).getPath());
+        ModelFile model = models().withExistingParent(path, modLoc("block/potted_" + basePath))
+                .texture("plant", flowerTexture);
+
+        getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder()
+                .modelFile(model)
+                .rotationY(horizontalRotation(state.getValue(ShitBlock.FACING)))
+                .build());
     }
 
     private void blockWithItem(Block block) {

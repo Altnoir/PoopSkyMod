@@ -41,10 +41,7 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.entries.AlternativesEntry;
-import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
-import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
+import net.minecraft.world.level.storage.loot.entries.*;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.*;
@@ -89,6 +86,21 @@ public class PoBlocks {
     public static final BlockEntry<ShitBlock> SHIT = registerShitBlock("shit");
     public static final BlockEntry<ShitBlock> CHILI_SHIT = registerShitBlock("chili_shit");
     public static final BlockEntry<ShitBlock> GOLDEN_SHIT = registerShitBlock("golden_shit");
+    private static final Map<BlockEntry<ShitBlock>, Map<Block, BlockEntry<PottedShitBlock>>> POTTED_SHITS = registerPottedShits();
+
+    public static Block getPottedShit(Block base, Block flower) {
+        for (var variant : POTTED_SHITS.entrySet()) {
+            if (variant.getKey().get() == base) {
+                BlockEntry<PottedShitBlock> entry = variant.getValue().get(flower);
+                return entry == null ? null : entry.get();
+            }
+        }
+        return null;
+    }
+
+    public static Collection<BlockEntry<PottedShitBlock>> getPottedShits() {
+        return POTTED_SHITS.values().stream().flatMap(map -> map.values().stream()).toList();
+    }
 
     public static final BlockEntry<PoopCakeBlock> POOP_CAKE = registerBlock("poop_cake", 88,
             props -> new PoopCakeBlock(poopCakeProperties()),
@@ -314,12 +326,12 @@ public class PoBlocks {
                     .requiresCorrectToolForDrops()),
             (loot, block) -> loot.add(block, LootTable.lootTable()
                     .withPool(LootPool.lootPool()
-                            .add(loot.applyExplosionDecay(block, LootItem.lootTableItem(block))))
-                    .withPool(LootPool.lootPool()
-                            .add(LootItem.lootTableItem(PoItems.SAPLING_POOP_BALL.get()))
-                            .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
-                                    .setProperties(StatePropertiesPredicate.Builder.properties()
-                                            .hasProperty(CompooperBlock.POOP_LEVEL, CompooperBlock.READY))))));
+                            .add(EntryGroup.list(
+                                    loot.applyExplosionDecay(block, LootItem.lootTableItem(block)),
+                                    LootItem.lootTableItem(PoItems.SAPLING_POOP_BALL.get())
+                                            .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                                                    .setProperties(StatePropertiesPredicate.Builder.properties()
+                                                            .hasProperty(CompooperBlock.POOP_LEVEL, CompooperBlock.READY))))))));
     public static final BlockEntry<WaterCompooperBlock> WATER_COMPOOPER = registerBlockNoTab("water_compooper", 64,
             props -> new WaterCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get())),
             (loot, block) -> loot.dropOther(block, COMPOOPER.get()));
@@ -333,12 +345,12 @@ public class PoBlocks {
             props -> new UrineCompooperBlock(BlockBehaviour.Properties.ofFullCopy(COMPOOPER.get()).randomTicks()),
             (loot, block) -> loot.add(block, LootTable.lootTable()
                     .withPool(LootPool.lootPool()
-                            .add(loot.applyExplosionDecay(block, LootItem.lootTableItem(COMPOOPER.get()))))
-                    .withPool(LootPool.lootPool()
-                            .add(LootItem.lootTableItem(PoItems.MAGGOTS_SEEDS.get()))
-                            .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
-                                    .setProperties(StatePropertiesPredicate.Builder.properties()
-                                            .hasProperty(UrineCompooperBlock.MAGGOTS, true))))));
+                            .add(EntryGroup.list(
+                                    loot.applyExplosionDecay(block, LootItem.lootTableItem(COMPOOPER.get())),
+                                    LootItem.lootTableItem(PoItems.MAGGOTS_SEEDS.get())
+                                            .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                                                    .setProperties(StatePropertiesPredicate.Builder.properties()
+                                                            .hasProperty(UrineCompooperBlock.MAGGOTS, true))))))));
     public static final BlockEntry<PlacerBlock> PLACER = registerBlock("placer",
             props -> new PlacerBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
                     .instrument(NoteBlockInstrument.BASEDRUM)
@@ -569,12 +581,12 @@ public class PoBlocks {
     public static final BlockEntry<FlowerPotBlock> POTTED_FOLIUM_SENNAE_PLANT = registerBlockNoItem("potted_folium_sennae_plant",
             props -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, FOLIUM_SENNAE_PLANT,
                     BlockBehaviour.Properties.ofFullCopy(Blocks.POTTED_OAK_SAPLING)),
-            ReginthBlockLootTables::dropPottedContents);
+            PoBlocks::dropPottedContents);
 
     public static final BlockEntry<FlowerPotBlock> POTTED_GINKGO_SAPLING = registerBlockNoItem("potted_ginkgo_sapling",
             props -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, GINKGO_SAPLING,
                     BlockBehaviour.Properties.ofFullCopy(Blocks.POTTED_OAK_SAPLING)),
-            ReginthBlockLootTables::dropPottedContents);
+            PoBlocks::dropPottedContents);
 
     public static final BlockEntry<ArcadeBlock> BROWN_ARCADE = registerArcadeBlock("brown_arcade", DyeColor.BROWN);
     public static final BlockEntry<ArcadeBlock> RED_ARCADE = registerArcadeBlock("red_arcade", DyeColor.RED);
@@ -687,6 +699,33 @@ public class PoBlocks {
         return registerBlock(name, 88,
                 props -> new ShitBlock(poopProperties(0.1F)
                         .pushReaction(PushReaction.DESTROY)));
+    }
+
+    private static Map<BlockEntry<ShitBlock>, Map<Block, BlockEntry<PottedShitBlock>>> registerPottedShits() {
+        List<Block> flowers = List.of(Blocks.DANDELION, Blocks.POPPY, Blocks.BLUE_ORCHID,
+                Blocks.ALLIUM, Blocks.AZURE_BLUET, Blocks.RED_TULIP, Blocks.ORANGE_TULIP,
+                Blocks.WHITE_TULIP, Blocks.PINK_TULIP, Blocks.OXEYE_DAISY, Blocks.CORNFLOWER,
+                Blocks.LILY_OF_THE_VALLEY, Blocks.WITHER_ROSE, Blocks.TORCHFLOWER);
+        Map<BlockEntry<ShitBlock>, Map<Block, BlockEntry<PottedShitBlock>>> result = new LinkedHashMap<>();
+        for (BlockEntry<ShitBlock> baseEntry : List.of(SHIT, CHILI_SHIT, GOLDEN_SHIT)) {
+            Map<Block, BlockEntry<PottedShitBlock>> variants = new IdentityHashMap<>();
+            for (Block flower : flowers) {
+                String name = "potted_" + baseEntry.getId().getPath() + "_"
+                        + BuiltInRegistries.BLOCK.getKey(flower).getPath();
+                variants.put(flower, registerBlockNoItem(name,
+                        props -> new PottedShitBlock(baseEntry::get, flower, poopProperties(0.1F)
+                                .pushReaction(PushReaction.DESTROY)),
+                        (loot, block) -> loot.add(block, LootTable.lootTable()
+                                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                                        .add(EntryGroup.list(
+                                                LootItem.lootTableItem(baseEntry.get())
+                                                        .when(ExplosionCondition.survivesExplosion()),
+                                                LootItem.lootTableItem(flower)
+                                                        .when(ExplosionCondition.survivesExplosion())))))));
+            }
+            result.put(baseEntry, variants);
+        }
+        return result;
     }
 
     private static BlockEntry<FlushToiletBlock> registerFlushToilet(String name, DyeColor color) {
@@ -1005,6 +1044,16 @@ public class PoBlocks {
     }
 
     // Loot
+    private static void dropPottedContents(ReginthBlockLootTables loot, FlowerPotBlock block) {
+        loot.add(block, LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .add(EntryGroup.list(
+                                LootItem.lootTableItem(Items.FLOWER_POT)
+                                        .when(ExplosionCondition.survivesExplosion()),
+                                LootItem.lootTableItem(block.getPotted())
+                                        .when(ExplosionCondition.survivesExplosion())))));
+    }
+
     private static void createMaggotsLoot(ReginthBlockLootTables loot, MaggotsBlock block) {
         LootItemCondition.Builder grownCondition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
                 .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, CropBlock.MAX_AGE));

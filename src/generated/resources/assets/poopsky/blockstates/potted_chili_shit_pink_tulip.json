@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "poopsky:block/potted_chili_shit_pink_tulip",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "poopsky:block/potted_chili_shit_pink_tulip"
+    },
+    "facing=south": {
+      "model": "poopsky:block/potted_chili_shit_pink_tulip",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "poopsky:block/potted_chili_shit_pink_tulip",
+      "y": 270
+    }
+  }
+}

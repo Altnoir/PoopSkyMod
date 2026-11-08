@@ -1,46 +1,6 @@
 {
-  "parent": "minecraft:block/block",
-  "elements": [
-    {
-      "faces": {
-        "down": {
-          "cullface": "down",
-          "texture": "#texture"
-        },
-        "east": {
-          "cullface": "east",
-          "texture": "#texture"
-        },
-        "north": {
-          "cullface": "north",
-          "texture": "#texture"
-        },
-        "south": {
-          "texture": "#texture"
-        },
-        "up": {
-          "cullface": "up",
-          "texture": "#texture"
-        },
-        "west": {
-          "cullface": "west",
-          "texture": "#texture"
-        }
-      },
-      "from": [
-        0,
-        0,
-        0
-      ],
-      "to": [
-        16,
-        16,
-        8
-      ]
-    }
-  ],
+  "parent": "poopsky:block/vertical_slab_template",
   "textures": {
-    "particle": "poopsky:block/magenta_tile_block",
     "texture": "poopsky:block/magenta_tile_block"
   }
 }

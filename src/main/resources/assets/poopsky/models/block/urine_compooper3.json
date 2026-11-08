@@ -1,14 +1,7 @@
 {
-    "textures": {
-        "particle": "poopsky:block/urine_liquid",
-        "inside": "poopsky:block/urine_liquid"
-    },
-    "elements": [
-        {   "from": [ 2, 0, 2 ],
-            "to": [ 14, 15, 14 ],
-            "faces": {
-                "up": { "texture": "#inside", "tintindex": 1}
-            }
-        }
-    ]
+  "parent": "poopsky:block/compooper_liquid3",
+  "textures": {
+    "particle": "poopsky:block/urine_liquid",
+    "inside": "poopsky:block/urine_liquid"
+  }
 }

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "poopsky:block/potted_golden_shit_lily_of_the_valley",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "poopsky:block/potted_golden_shit_lily_of_the_valley"
+    },
+    "facing=south": {
+      "model": "poopsky:block/potted_golden_shit_lily_of_the_valley",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "poopsky:block/potted_golden_shit_lily_of_the_valley",
+      "y": 270
+    }
+  }
+}

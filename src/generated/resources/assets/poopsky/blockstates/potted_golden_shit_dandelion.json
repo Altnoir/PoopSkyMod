@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "poopsky:block/potted_golden_shit_dandelion",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "poopsky:block/potted_golden_shit_dandelion"
+    },
+    "facing=south": {
+      "model": "poopsky:block/potted_golden_shit_dandelion",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "poopsky:block/potted_golden_shit_dandelion",
+      "y": 270
+    }
+  }
+}

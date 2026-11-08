@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "poopsky:block/potted_golden_shit_oxeye_daisy",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "poopsky:block/potted_golden_shit_oxeye_daisy"
+    },
+    "facing=south": {
+      "model": "poopsky:block/potted_golden_shit_oxeye_daisy",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "poopsky:block/potted_golden_shit_oxeye_daisy",
+      "y": 270
+    }
+  }
+}

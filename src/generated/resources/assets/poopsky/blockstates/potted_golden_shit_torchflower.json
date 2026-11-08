@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "poopsky:block/potted_golden_shit_torchflower",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "poopsky:block/potted_golden_shit_torchflower"
+    },
+    "facing=south": {
+      "model": "poopsky:block/potted_golden_shit_torchflower",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "poopsky:block/potted_golden_shit_torchflower",
+      "y": 270
+    }
+  }
+}

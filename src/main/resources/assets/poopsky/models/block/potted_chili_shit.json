@@ -1,0 +1,7 @@
+{
+  "parent": "poopsky:block/potted_shit_cross",
+  "textures": {
+    "particle": "poopsky:block/chili_poop_block",
+    "shit": "poopsky:block/shit/chili_shit"
+  }
+}

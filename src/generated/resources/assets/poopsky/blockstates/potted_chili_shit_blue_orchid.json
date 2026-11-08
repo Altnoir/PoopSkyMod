@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "poopsky:block/potted_chili_shit_blue_orchid",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "poopsky:block/potted_chili_shit_blue_orchid"
+    },
+    "facing=south": {
+      "model": "poopsky:block/potted_chili_shit_blue_orchid",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "poopsky:block/potted_chili_shit_blue_orchid",
+      "y": 270
+    }
+  }
+}
