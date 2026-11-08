@@ -266,6 +266,16 @@ public class SoundGen extends SoundDefinitionsProvider {
                         sound(mcloc("entity.frog.step"), SoundDefinition.SoundType.EVENT)
                 ));
 
+        add(PoSoundEvents.ENTITY_SNAIL_HURT, definition()
+                .subtitle("subtitle.poopsky.snail.hurt")
+                .with(
+                        sound(mcloc("mob/turtle/hurt1")),
+                        sound(mcloc("mob/turtle/hurt2")),
+                        sound(mcloc("mob/turtle/hurt3")),
+                        sound(mcloc("mob/turtle/hurt4")),
+                        sound(mcloc("mob/turtle/hurt5"))
+                ));
+
         add(PoSoundEvents.ITEM_JINKELA_USE, definition()
                 .subtitle("subtitle.poopsky.item.jinkela.use")
                 .with(
