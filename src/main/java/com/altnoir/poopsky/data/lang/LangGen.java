@@ -256,6 +256,7 @@ public final class LangGen {
         addSubtitle("basilisk.ambient", "Basilisk croaks");
         addSubtitle("basilisk.hurt", "Basilisk hurts");
         addSubtitle("basilisk.death", "Basilisk dies");
+        addSubtitle("snail.hurt", "Snail hurts");
         addSubtitle("fly.capture", "Fly captured");
         addSubtitle("pop.primed", "POP fizzes");
         addSubtitle("item.toilet_linker.boop", "Toilet Plug Wand links");

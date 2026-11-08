@@ -341,6 +341,16 @@
     ],
     "subtitle": "subtitle.poopsky.pop.primed"
   },
+  "entity.snail.hurt": {
+    "sounds": [
+      "mob/turtle/hurt1",
+      "mob/turtle/hurt2",
+      "mob/turtle/hurt3",
+      "mob/turtle/hurt4",
+      "mob/turtle/hurt5"
+    ],
+    "subtitle": "subtitle.poopsky.snail.hurt"
+  },
   "entity.villager.work_compooper": {
     "sounds": [
       "poopsky:fart_1",

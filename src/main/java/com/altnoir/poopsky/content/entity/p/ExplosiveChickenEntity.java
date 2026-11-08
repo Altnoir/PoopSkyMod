@@ -10,6 +10,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -55,6 +56,11 @@ public class ExplosiveChickenEntity extends Chicken {
     public static AttributeSupplier.Builder createAttributes() {
         return Chicken.createAttributes()
                 .add(Attributes.ATTACK_DAMAGE, 1.0);
+    }
+
+    @Override
+    public Fallsounds getFallSounds() {
+        return new Fallsounds(SoundEvents.GENERIC_SMALL_FALL, SoundEvents.CHICKEN_HURT);
     }
 
     @Override

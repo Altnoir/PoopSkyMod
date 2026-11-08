@@ -1,8 +1,8 @@
 package com.altnoir.poopsky.init;
 
-import com.altnoir.poopsky.PoopSky;
 import com.altnoir.abysslib.reginth.Reginth;
 import com.altnoir.abysslib.reginth.util.entry.RegistryEntry;
+import com.altnoir.poopsky.PoopSky;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -64,6 +64,7 @@ public class PoSoundEvents {
     public static final RegistryEntry<SoundEvent, SoundEvent> ENTITY_BASILISK_HURT = registerSoundEvent("entity.basilisk.hurt");
     public static final RegistryEntry<SoundEvent, SoundEvent> ENTITY_BASILISK_DEATH = registerSoundEvent("entity.basilisk.death");
     public static final RegistryEntry<SoundEvent, SoundEvent> ENTITY_BASILISK_STEP = registerSoundEvent("entity.basilisk.step");
+    public static final RegistryEntry<SoundEvent, SoundEvent> ENTITY_SNAIL_HURT = registerSoundEvent("entity.snail.hurt");
 
     public static final RegistryEntry<SoundEvent, SoundEvent> ITEM_TOILET_LINKER_BOOP = registerSoundEvent("item.toilet_linker.boop");
     public static final RegistryEntry<SoundEvent, SoundEvent> ITEM_TOILET_LINKER_SUCCESS = registerSoundEvent("item.toilet_linker.success");
