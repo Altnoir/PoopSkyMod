@@ -74,6 +74,11 @@ public class PoModEvents {
                 (blockEntity, side) -> blockEntity.fluidTank
         );
         event.registerBlockEntity(
+                Capabilities.FluidHandler.BLOCK,
+                PoBlockEntityType.FLY_BARREL.get(),
+                (blockEntity, side) -> blockEntity.getFluidHandler()
+        );
+        event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
                 PoBlockEntityType.FLY_BARREL.get(),
                 (blockEntity, direction) -> {

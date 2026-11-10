@@ -5,22 +5,35 @@ import com.altnoir.poopsky.init.PoRecipes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 public class PFlyRecipes {
     public record JeiMutationRecipe(FlyType.Type parent1, FlyType.Type parent2, FlyType.Type result, float chance) {}
 
     public static ItemStack getProduct(Level level, FlyType.Type type) {
-        if (level == null) return ItemStack.EMPTY;
+        return getBarrelRecipe(level, type).map(FlyBarrelRecipe::resultStack).orElse(ItemStack.EMPTY);
+    }
+
+    public static Optional<FlyBarrelRecipe> getBarrelRecipe(Level level, FlyType.Type type) {
+        if (level == null) return Optional.empty();
         return level.getRecipeManager()
                 .getAllRecipesFor(PoRecipes.FLY_BARREL.type().get())
                 .stream()
                 .filter(holder -> holder.value().matches(type.id()))
                 .findFirst()
-                .map(holder -> holder.value().resultStack())
-                .orElse(ItemStack.EMPTY);
+                .map(RecipeHolder::value);
+    }
+
+    public static Optional<RecipeHolder<FlyBarrelRecipe>> getBarrelRecipe(Level level, FlyType.Type type, FluidStack fluid) {
+        if (level == null || fluid.isEmpty()) return Optional.empty();
+        return level.getRecipeManager().getAllRecipesFor(PoRecipes.FLY_BARREL.type().get()).stream()
+                .filter(holder -> holder.value().matches(type.id()))
+                .filter(holder -> fluid.getFluid().isSame(holder.value().fluidInputs().toStack().getFluid()))
+                .findFirst();
     }
 
     public static MutationResult tryMutate(Level level, FlyType.Type parent1, FlyType.Type parent2) {

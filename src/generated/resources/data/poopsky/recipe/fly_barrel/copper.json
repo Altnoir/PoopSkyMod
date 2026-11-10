@@ -4,5 +4,9 @@
   "result": {
     "count": 1,
     "id": "minecraft:raw_copper"
+  },
+  "fluid_inputs": {
+    "amount": 800,
+    "fluid": "poopsky:urine"
   }
 }

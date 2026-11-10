@@ -24,7 +24,8 @@ public class FlyBarrelRecipeCategory implements IRecipeCategory<RecipeHolder<Fly
     private static final int HEIGHT = 18;
     private static final int INPUT_X = 1;
     private static final int INPUT_Y = 1;
-    private static final int ARROW_X = INPUT_X + 24;
+    private static final int FLUID_X = INPUT_X + 20;
+    private static final int ARROW_X = FLUID_X + 24;
     private static final int ARROW_Y = INPUT_Y + 1;
     private static final int OUTPUT_X = ARROW_X + 31;
     private static final int WIDTH = OUTPUT_X + 17;
@@ -71,12 +72,15 @@ public class FlyBarrelRecipeCategory implements IRecipeCategory<RecipeHolder<Fly
     public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<FlyBarrelRecipe> recipeHolder, IFocusGroup focuses) {
         var recipe = recipeHolder.value();
         builder.addSlot(RecipeIngredientRole.INPUT, INPUT_X, INPUT_Y).addItemStack(FlyItem.withType(FlyType.byId(recipe.flyTypeId())));
+        builder.addSlot(RecipeIngredientRole.INPUT, FLUID_X, INPUT_Y)
+                .addFluidStack(recipe.fluidInputs().toStack().getFluid(), recipe.fluidInputs().amount());
         builder.addSlot(RecipeIngredientRole.OUTPUT, OUTPUT_X, INPUT_Y).addItemStack(recipe.resultStack());
     }
 
     @Override
     public void draw(RecipeHolder<FlyBarrelRecipe> recipeHolder, IRecipeSlotsView slotsView, GuiGraphics graphics, double mouseX, double mouseY) {
         this.slot.draw(graphics, INPUT_X - 1, INPUT_Y - 1);
+        this.slot.draw(graphics, FLUID_X - 1, INPUT_Y - 1);
         this.arrow.draw(graphics, ARROW_X, ARROW_Y);
         this.slot.draw(graphics, OUTPUT_X - 1, INPUT_Y - 1);
     }

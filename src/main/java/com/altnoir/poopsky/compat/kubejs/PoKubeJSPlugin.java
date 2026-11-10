@@ -1,5 +1,6 @@
 package com.altnoir.poopsky.compat.kubejs;
 
+import com.altnoir.abysslib.creative.SectionedCreativeModeTab;
 import com.altnoir.poopsky.PoItemGroups;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.FlyTypeDefinition;
@@ -7,7 +8,6 @@ import com.altnoir.poopsky.content.FlyTypeManager;
 import com.altnoir.poopsky.content.recipe.FlyBarrelRecipe;
 import com.altnoir.poopsky.content.recipe.POPExplosionRecipe;
 import com.altnoir.poopsky.content.recipe.SieveRecipe;
-import com.altnoir.abysslib.creative.SectionedCreativeModeTab;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -53,11 +53,33 @@ public final class PoKubeJSPlugin implements KubeJSPlugin {
         registry.register(PoopSkyServerEvents.GROUP);
     }
 
-    @Override
-    public void registerRecipeComponents(RecipeComponentTypeRegistry registry) {
-        registry.register(KubeJSRecipeComponents.SIEVE_OUTPUT_TYPE);
-        registry.register(KubeJSRecipeComponents.BLOCK_OR_ITEM_TYPE);
-        registry.register(KubeJSRecipeComponents.FLY_BARREL_RESULT_TYPE);
+    private static List<GeneratedRecipe> generatedRecipes(FlyTypeBuilder builder) {
+        List<GeneratedRecipe> recipes = new ArrayList<>();
+        if (builder.hasFlyBarrel()) {
+            JsonObject recipe = new JsonObject();
+            recipe.addProperty("type", "poopsky:fly_barrel");
+            recipe.addProperty("fly_type", builder.id());
+            JsonObject result = new JsonObject();
+            result.addProperty("id", builder.flyBarrelResult());
+            result.addProperty("count", builder.flyBarrelCount());
+            recipe.add("result", result);
+            JsonObject fluidInputs = new JsonObject();
+            fluidInputs.addProperty("amount", 800);
+            fluidInputs.addProperty("fluid", PoopSky.loc("urine").toString());
+            recipe.add("fluid_inputs", fluidInputs);
+            recipes.add(new GeneratedRecipe(PoopSky.loc("recipe/fly_barrel/" + builder.id()), recipe));
+        }
+        for (FlyTypeBuilder.BreedingRecipe breeding : builder.breedingRecipes()) {
+            JsonObject recipe = new JsonObject();
+            recipe.addProperty("type", "poopsky:breeding_chest");
+            recipe.addProperty("parent1", breeding.parent1());
+            recipe.addProperty("parent2", breeding.parent2());
+            recipe.addProperty("result", builder.id());
+            recipe.addProperty("chance", breeding.chance());
+            String path = "recipe/breeding_chest/" + builder.id() + "_from_" + breeding.parent1() + "_and_" + breeding.parent2();
+            recipes.add(new GeneratedRecipe(PoopSky.loc(path), recipe));
+        }
+        return recipes;
     }
 
     @Override
@@ -71,64 +93,11 @@ public final class PoKubeJSPlugin implements KubeJSPlugin {
     }
 
     @Override
-    public void registerRecipeSchemas(RecipeSchemaRegistry registry) {
-        var poopsky = registry.namespace("poopsky");
-
-        RecipeKey<Ingredient> sieveInput = IngredientComponent.INGREDIENT.inputKey("input");
-        RecipeKey<java.util.List<SieveRecipe.ChanceItemStack>> sieveOutputs =
-                KubeJSRecipeComponents.SIEVE_OUTPUT.asList().outputKey("outputs");
-        RecipeKey<Integer> sieveTime = NumberComponent.NON_NEGATIVE_INT
-                .otherKey("processingTime")
-                .optional(200);
-        poopsky.register("sieve", new RecipeSchema(sieveInput, sieveOutputs, sieveTime)
-                .constructor(sieveInput, sieveOutputs)
-                .constructor(sieveInput, sieveOutputs, sieveTime));
-
-        RecipeKey<FlyBarrelRecipe.Output> flyBarrelResult = KubeJSRecipeComponents.FLY_BARREL_RESULT.outputKey("result");
-        RecipeKey<String> flyType = StringComponent.STRING
-                .otherKey("fly_type")
-                .alt("flyType");
-        poopsky.register("fly_barrel", new RecipeSchema(flyType, flyBarrelResult));
-
-        RecipeKey<String> parent1 = StringComponent.STRING.otherKey("parent1");
-        RecipeKey<String> parent2 = StringComponent.STRING.otherKey("parent2");
-        RecipeKey<String> breedingResult = StringComponent.STRING.otherKey("result");
-        RecipeKey<Float> chance = NumberComponent.NON_NEGATIVE_FLOAT
-                .otherKey("chance")
-                .optional(0.2F)
-                .alwaysWrite();
-        poopsky.register("breeding_chest", new RecipeSchema(parent1, parent2, breedingResult, chance)
-                .constructor(parent1, parent2, breedingResult)
-                .constructor(parent1, parent2, breedingResult, chance));
-
-        RecipeKey<Ingredient> popInput = IngredientComponent.INGREDIENT.inputKey("input");
-        RecipeKey<POPExplosionRecipe.Output> popOutput = KubeJSRecipeComponents.BLOCK_OR_ITEM.outputKey("output");
-        RecipeKey<Integer> popRadius = NumberComponent.NON_NEGATIVE_INT
-                .otherKey("radius")
-                .optional(0);
-        poopsky.register("pop_explosion", new RecipeSchema(popInput, popOutput, popRadius)
-                .constructor(popInput, popOutput)
-                .constructor(popInput, popOutput, popRadius));
-
-        RecipeKey<Ingredient> analInput = IngredientComponent.INGREDIENT.inputKey("input");
-        RecipeKey<Block> analOutput = BlockComponent.BLOCK.outputKey("output");
-        RecipeKey<Block> replaceTarget = BlockComponent.BLOCK
-                .otherKey("replace_target")
-                .alt("replaceTarget")
-                .optional(Blocks.STONE);
-        RecipeKey<Integer> analRadius = NumberComponent.NON_NEGATIVE_INT
-                .otherKey("radius")
-                .optional(1);
-        poopsky.register("anal_pressing", new RecipeSchema(analInput, analOutput, replaceTarget, analRadius)
-                .constructor(analInput, analOutput, replaceTarget, analRadius));
-
-        RecipeKey<String> fluidType = StringComponent.STRING
-                .otherKey("fluid_type")
-                .alt("fluidType");
-        RecipeKey<ItemStack> compooperInput = ItemStackComponent.ITEM_STACK.inputKey("input");
-        RecipeKey<ItemStack> compooperOutput = ItemStackComponent.ITEM_STACK.outputKey("output");
-        poopsky.register("compooper", new RecipeSchema(fluidType, compooperInput, compooperOutput)
-                .constructor(fluidType, compooperInput, compooperOutput));
+    public void registerRecipeComponents(RecipeComponentTypeRegistry registry) {
+        registry.register(KubeJSRecipeComponents.SIEVE_OUTPUT_TYPE);
+        registry.register(KubeJSRecipeComponents.BLOCK_OR_ITEM_TYPE);
+        registry.register(KubeJSRecipeComponents.FLY_BARREL_RESULT_TYPE);
+        registry.register(KubeJSRecipeComponents.FLY_BARREL_FLUID_TYPE);
     }
 
     @Override
@@ -238,29 +207,67 @@ public final class PoKubeJSPlugin implements KubeJSPlugin {
         PoFlyTypes.INSTANCE.clear();
     }
 
-    private static List<GeneratedRecipe> generatedRecipes(FlyTypeBuilder builder) {
-        List<GeneratedRecipe> recipes = new ArrayList<>();
-        if (builder.hasFlyBarrel()) {
-            JsonObject recipe = new JsonObject();
-            recipe.addProperty("type", "poopsky:fly_barrel");
-            recipe.addProperty("fly_type", builder.id());
-            JsonObject result = new JsonObject();
-            result.addProperty("id", builder.flyBarrelResult());
-            result.addProperty("count", builder.flyBarrelCount());
-            recipe.add("result", result);
-            recipes.add(new GeneratedRecipe(PoopSky.loc("recipe/fly_barrel/" + builder.id()), recipe));
-        }
-        for (FlyTypeBuilder.BreedingRecipe breeding : builder.breedingRecipes()) {
-            JsonObject recipe = new JsonObject();
-            recipe.addProperty("type", "poopsky:breeding_chest");
-            recipe.addProperty("parent1", breeding.parent1());
-            recipe.addProperty("parent2", breeding.parent2());
-            recipe.addProperty("result", builder.id());
-            recipe.addProperty("chance", breeding.chance());
-            String path = "recipe/breeding_chest/" + builder.id() + "_from_" + breeding.parent1() + "_and_" + breeding.parent2();
-            recipes.add(new GeneratedRecipe(PoopSky.loc(path), recipe));
-        }
-        return recipes;
+    @Override
+    public void registerRecipeSchemas(RecipeSchemaRegistry registry) {
+        var poopsky = registry.namespace("poopsky");
+
+        RecipeKey<Ingredient> sieveInput = IngredientComponent.INGREDIENT.inputKey("input");
+        RecipeKey<java.util.List<SieveRecipe.ChanceItemStack>> sieveOutputs =
+                KubeJSRecipeComponents.SIEVE_OUTPUT.asList().outputKey("outputs");
+        RecipeKey<Integer> sieveTime = NumberComponent.NON_NEGATIVE_INT
+                .otherKey("processingTime")
+                .optional(200);
+        poopsky.register("sieve", new RecipeSchema(sieveInput, sieveOutputs, sieveTime)
+                .constructor(sieveInput, sieveOutputs)
+                .constructor(sieveInput, sieveOutputs, sieveTime));
+
+        RecipeKey<FlyBarrelRecipe.Output> flyBarrelResult = KubeJSRecipeComponents.FLY_BARREL_RESULT.outputKey("result");
+        RecipeKey<String> flyType = StringComponent.STRING
+                .otherKey("fly_type")
+                .alt("flyType");
+        RecipeKey<FlyBarrelRecipe.FluidInput> fluidInputs = KubeJSRecipeComponents.FLY_BARREL_FLUID.inputKey("fluid_inputs");
+        poopsky.register("fly_barrel", new RecipeSchema(flyType, flyBarrelResult, fluidInputs)
+                .constructor(flyType, flyBarrelResult, fluidInputs));
+
+        RecipeKey<String> parent1 = StringComponent.STRING.otherKey("parent1");
+        RecipeKey<String> parent2 = StringComponent.STRING.otherKey("parent2");
+        RecipeKey<String> breedingResult = StringComponent.STRING.otherKey("result");
+        RecipeKey<Float> chance = NumberComponent.NON_NEGATIVE_FLOAT
+                .otherKey("chance")
+                .optional(0.2F)
+                .alwaysWrite();
+        poopsky.register("breeding_chest", new RecipeSchema(parent1, parent2, breedingResult, chance)
+                .constructor(parent1, parent2, breedingResult)
+                .constructor(parent1, parent2, breedingResult, chance));
+
+        RecipeKey<Ingredient> popInput = IngredientComponent.INGREDIENT.inputKey("input");
+        RecipeKey<POPExplosionRecipe.Output> popOutput = KubeJSRecipeComponents.BLOCK_OR_ITEM.outputKey("output");
+        RecipeKey<Integer> popRadius = NumberComponent.NON_NEGATIVE_INT
+                .otherKey("radius")
+                .optional(0);
+        poopsky.register("pop_explosion", new RecipeSchema(popInput, popOutput, popRadius)
+                .constructor(popInput, popOutput)
+                .constructor(popInput, popOutput, popRadius));
+
+        RecipeKey<Ingredient> analInput = IngredientComponent.INGREDIENT.inputKey("input");
+        RecipeKey<Block> analOutput = BlockComponent.BLOCK.outputKey("output");
+        RecipeKey<Block> replaceTarget = BlockComponent.BLOCK
+                .otherKey("replace_target")
+                .alt("replaceTarget")
+                .optional(Blocks.STONE);
+        RecipeKey<Integer> analRadius = NumberComponent.NON_NEGATIVE_INT
+                .otherKey("radius")
+                .optional(1);
+        poopsky.register("anal_pressing", new RecipeSchema(analInput, analOutput, replaceTarget, analRadius)
+                .constructor(analInput, analOutput, replaceTarget, analRadius));
+
+        RecipeKey<String> fluidType = StringComponent.STRING
+                .otherKey("fluid_type")
+                .alt("fluidType");
+        RecipeKey<ItemStack> compooperInput = ItemStackComponent.ITEM_STACK.inputKey("input");
+        RecipeKey<ItemStack> compooperOutput = ItemStackComponent.ITEM_STACK.outputKey("output");
+        poopsky.register("compooper", new RecipeSchema(fluidType, compooperInput, compooperOutput)
+                .constructor(fluidType, compooperInput, compooperOutput));
     }
 
     private record GeneratedRecipe(ResourceLocation id, JsonObject json) {

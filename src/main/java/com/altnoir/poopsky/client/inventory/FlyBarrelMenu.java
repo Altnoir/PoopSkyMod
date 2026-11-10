@@ -2,12 +2,14 @@ package com.altnoir.poopsky.client.inventory;
 
 import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.init.PoMenuTypes;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.material.Fluid;
 
 /**
  * 苍蝇窝GUI菜单。
@@ -32,7 +34,7 @@ public class FlyBarrelMenu extends AbstractContainerMenu {
     private final ContainerData data;
 
     public FlyBarrelMenu(MenuType<FlyBarrelMenu> menuType, int containerId, Inventory playerInventory) {
-        this(menuType, containerId, playerInventory, new SimpleContainer(SLOT_COUNT), new SimpleContainerData(2));
+        this(menuType, containerId, playerInventory, new SimpleContainer(SLOT_COUNT), new SimpleContainerData(4));
     }
 
     public FlyBarrelMenu(int containerId, Inventory playerInventory, Container container, ContainerData data) {
@@ -42,7 +44,7 @@ public class FlyBarrelMenu extends AbstractContainerMenu {
     private FlyBarrelMenu(MenuType<FlyBarrelMenu> menuType, int containerId, Inventory playerInventory, Container container, ContainerData data) {
         super(menuType, containerId);
         checkContainerSize(container, SLOT_COUNT);
-        checkContainerDataCount(data, 2);
+        checkContainerDataCount(data, 4);
         this.flyBarrel = container;
         this.data = data;
         container.startOpen(playerInventory.player);
@@ -146,5 +148,13 @@ public class FlyBarrelMenu extends AbstractContainerMenu {
 
     public int getMaxProgress() {
         return this.data.get(1);
+    }
+
+    public Fluid getFluid() {
+        return BuiltInRegistries.FLUID.byId(this.data.get(3));
+    }
+
+    public int getFluidAmount() {
+        return this.data.get(2);
     }
 }

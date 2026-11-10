@@ -1,16 +1,19 @@
 package com.altnoir.poopsky.content.block.entity;
 
 import com.altnoir.poopsky.client.inventory.FlyBarrelMenu;
-import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.item.p.FlyItem;
+import com.altnoir.poopsky.content.recipe.FlyBarrelRecipe;
 import com.altnoir.poopsky.content.recipe.PFlyRecipes;
-import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.init.PoBlockEntityType;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
@@ -24,6 +27,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.wrapper.RangedWrapper;
@@ -36,20 +42,33 @@ public class FlyBarrelBlockEntity extends BlockEntity implements MenuProvider {
     public static final int SLOT_OUTPUT_3 = 3;
     public static final int SLOT_OUTPUT_4 = 4;
     public static final int TOTAL_SLOTS = 5;
+    public static final int FLUID_CAPACITY = 8000;
+    private static final int TOILET_PULL_INTERVAL = 20;
 
     private static final int BASE_TICK_INTERVAL = 850;  // 基础生产间隔（tick），1只苍蝇=44.5秒
     private static final int STACK_BONUS_PER_ITEM = 10;  // 输入堆叠每多1个减少的tick数（0.5秒=10tick）
     private static final int MIN_INTERVAL = 20;          // 最快生产间隔（1秒=20tick）
+    private static final Direction[] TOILET_DIRECTIONS = {
+            Direction.DOWN, Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST
+    };
+    private final FluidTank fluidTank = new FluidTank(FLUID_CAPACITY) {
+        @Override
+        protected void onContentsChanged() {
+            setChanged();
+            syncToClient();
+        }
+    };
 
     private int progress = 0;
-    private int currentInterval = BASE_TICK_INTERVAL;
-
+    private final int toiletPullOffset;
     private final ContainerData data = new ContainerData() {
         @Override
         public int get(int index) {
             return switch (index) {
                 case 0 -> FlyBarrelBlockEntity.this.progress;
                 case 1 -> FlyBarrelBlockEntity.this.currentInterval;
+                case 2 -> FlyBarrelBlockEntity.this.fluidTank.getFluidAmount();
+                case 3 -> BuiltInRegistries.FLUID.getId(FlyBarrelBlockEntity.this.fluidTank.getFluid().getFluid());
                 default -> 0;
             };
         }
@@ -65,9 +84,11 @@ public class FlyBarrelBlockEntity extends BlockEntity implements MenuProvider {
 
         @Override
         public int getCount() {
-            return 2;
+            return 4;
         }
     };
+    private int currentInterval = BASE_TICK_INTERVAL;
+    @Nullable private ResourceLocation activeRecipe;
 
     private final ItemStackHandler itemHandler = new ItemStackHandler(TOTAL_SLOTS) {
         @Override
@@ -116,20 +137,37 @@ public class FlyBarrelBlockEntity extends BlockEntity implements MenuProvider {
 
     public FlyBarrelBlockEntity(BlockPos pos, BlockState blockState) {
         super(PoBlockEntityType.FLY_BARREL.get(), pos, blockState);
+        this.toiletPullOffset = Math.floorMod(pos.hashCode(), TOILET_PULL_INTERVAL);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, FlyBarrelBlockEntity be) {
         if (level.isClientSide) return;
 
+        if (be.fluidTank.getFluidAmount() < be.fluidTank.getCapacity()
+                && level.getGameTime() % TOILET_PULL_INTERVAL == be.toiletPullOffset) {
+            be.pullFromToilets(level, pos);
+        }
+
         ItemStack inputStack = be.itemHandler.getStackInSlot(SLOT_INPUT);
         if (inputStack.isEmpty() || !FlyItem.isFlyItem(inputStack)) {
             be.progress = 0;
+            be.activeRecipe = null;
             be.currentInterval = BASE_TICK_INTERVAL;
             return;
         }
 
-        // 所有输出槽满则停止生产
-        if (be.areOutputsFull()) return;
+        var holder = PFlyRecipes.getBarrelRecipe(level, FlyItem.getFlyType(inputStack), be.fluidTank.getFluid()).orElse(null);
+        if (holder == null) return;
+        if (!holder.id().equals(be.activeRecipe)) {
+            be.progress = 0;
+            be.activeRecipe = holder.id();
+            be.setChanged();
+        }
+        FlyBarrelRecipe recipe = holder.value();
+        FluidStack required = recipe.fluidInputs().toStack();
+        ItemStack product = recipe.resultStack();
+        if (be.fluidTank.drain(required, IFluidHandler.FluidAction.SIMULATE).getAmount() < required.getAmount()
+                || product.isEmpty() || !be.canInsert(product)) return;
 
         // 堆叠加速：输入堆叠每多1个减少0.5秒（10tick）
         int stackBonus = (inputStack.getCount() - 1) * STACK_BONUS_PER_ITEM;
@@ -137,8 +175,9 @@ public class FlyBarrelBlockEntity extends BlockEntity implements MenuProvider {
         be.progress++;
 
         if (be.progress >= be.currentInterval) {
-            be.produce();
+            be.produce(product, required);
             be.progress = 0;
+            be.pullFromToilets(level, pos);
         }
 
         if (level.getRandom().nextDouble() < 0.005) {
@@ -148,20 +187,41 @@ public class FlyBarrelBlockEntity extends BlockEntity implements MenuProvider {
         be.setChanged();
     }
 
-    private boolean areOutputsFull() {
-        for (int i = SLOT_OUTPUT_1; i <= SLOT_OUTPUT_4; i++) {
-            ItemStack stack = itemHandler.getStackInSlot(i);
-            if (stack.getCount() < stack.getMaxStackSize()) return false;
+    private void pullFromToilets(Level level, BlockPos pos) {
+        for (Direction direction : TOILET_DIRECTIONS) {
+            int space = fluidTank.getCapacity() - fluidTank.getFluidAmount();
+            if (space <= 0) return;
+
+            BlockPos neighborPos = pos.relative(direction);
+            if (!level.hasChunkAt(neighborPos) || !(level.getBlockEntity(neighborPos) instanceof ToiletBlockEntity toilet)) {
+                continue;
+            }
+
+            FluidStack available = toilet.fluidTank.drain(space, IFluidHandler.FluidAction.SIMULATE);
+            int accepted = fluidTank.fill(available, IFluidHandler.FluidAction.SIMULATE);
+            if (accepted > 0) {
+                FluidStack extracted = toilet.fluidTank.drain(accepted, IFluidHandler.FluidAction.EXECUTE);
+                fluidTank.fill(extracted, IFluidHandler.FluidAction.EXECUTE);
+            }
         }
-        return true;
     }
 
-    private void produce() {
-        ItemStack inputStack = itemHandler.getStackInSlot(SLOT_INPUT);
-        FlyType.Type type = FlyItem.getFlyType(inputStack);
-        ItemStack product = PFlyRecipes.getProduct(level, type);
-        if (product.isEmpty()) return;
+    private boolean canInsert(ItemStack product) {
+        int remaining = product.getCount();
+        for (int i = SLOT_OUTPUT_1; i <= SLOT_OUTPUT_4; i++) {
+            ItemStack current = itemHandler.getStackInSlot(i);
+            if (current.isEmpty()) {
+                remaining -= Math.min(itemHandler.getSlotLimit(i), product.getMaxStackSize());
+            } else if (ItemStack.isSameItemSameComponents(current, product)) {
+                remaining -= Math.max(0, Math.min(itemHandler.getSlotLimit(i), current.getMaxStackSize()) - current.getCount());
+            }
+            if (remaining <= 0) return true;
+        }
+        return false;
+    }
 
+    private void produce(ItemStack product, FluidStack required) {
+        fluidTank.drain(required, IFluidHandler.FluidAction.EXECUTE);
         ItemStack toInsert = product.copy();
         for (int i = SLOT_OUTPUT_1; i <= SLOT_OUTPUT_4; i++) {
             toInsert = tryInsert(i, toInsert);
@@ -172,11 +232,13 @@ public class FlyBarrelBlockEntity extends BlockEntity implements MenuProvider {
     private ItemStack tryInsert(int slot, ItemStack stack) {
         ItemStack current = itemHandler.getStackInSlot(slot);
         if (current.isEmpty()) {
-            itemHandler.setStackInSlot(slot, stack.copy());
-            return ItemStack.EMPTY;
+            int amount = Math.min(stack.getCount(), Math.min(itemHandler.getSlotLimit(slot), stack.getMaxStackSize()));
+            itemHandler.setStackInSlot(slot, stack.copyWithCount(amount));
+            stack.shrink(amount);
+            return stack;
         }
         if (ItemStack.isSameItemSameComponents(current, stack)) {
-            int space = current.getMaxStackSize() - current.getCount();
+            int space = Math.min(itemHandler.getSlotLimit(slot), current.getMaxStackSize()) - current.getCount();
             int toAdd = Math.min(space, stack.getCount());
             if (toAdd > 0) {
                 current.grow(toAdd);
@@ -263,6 +325,10 @@ public class FlyBarrelBlockEntity extends BlockEntity implements MenuProvider {
         return itemHandler;
     }
 
+    public IFluidHandler getFluidHandler() {
+        return fluidTank;
+    }
+
     public IItemHandler getTopSideHandler() {
         return topSideHandler;
     }
@@ -276,6 +342,8 @@ public class FlyBarrelBlockEntity extends BlockEntity implements MenuProvider {
         super.saveAdditional(tag, registries);
         tag.put("inventory", itemHandler.serializeNBT(registries));
         tag.putInt("progress", progress);
+        if (activeRecipe != null) tag.putString("active_recipe", activeRecipe.toString());
+        tag.put("fluid", fluidTank.writeToNBT(registries, new CompoundTag()));
     }
 
     @Override
@@ -283,6 +351,8 @@ public class FlyBarrelBlockEntity extends BlockEntity implements MenuProvider {
         super.loadAdditional(tag, registries);
         itemHandler.deserializeNBT(registries, tag.getCompound("inventory"));
         progress = tag.getInt("progress");
+        activeRecipe = ResourceLocation.tryParse(tag.getString("active_recipe"));
+        fluidTank.readFromNBT(registries, tag.getCompound("fluid"));
     }
 
     @Override

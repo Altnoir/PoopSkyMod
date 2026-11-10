@@ -33,6 +33,10 @@ public final class KubeJSRecipeComponents {
             RecipeComponentType.unit(PoopSky.loc("fly_barrel_result"), FlyBarrelResultComponent::new);
     public static final RecipeComponent<FlyBarrelRecipe.Output> FLY_BARREL_RESULT = FLY_BARREL_RESULT_TYPE.instance();
 
+    public static final RecipeComponentType<FlyBarrelRecipe.FluidInput> FLY_BARREL_FLUID_TYPE =
+            RecipeComponentType.unit(PoopSky.loc("fly_barrel_fluid"), FlyBarrelFluidComponent::new);
+    public static final RecipeComponent<FlyBarrelRecipe.FluidInput> FLY_BARREL_FLUID = FLY_BARREL_FLUID_TYPE.instance();
+
     private KubeJSRecipeComponents() {
     }
 
@@ -120,6 +124,24 @@ public final class KubeJSRecipeComponents {
                 }
             }
             throw new IllegalArgumentException("Invalid fly barrel result: " + value);
+        }
+    }
+
+    private static final class FlyBarrelFluidComponent extends SimpleRecipeComponent<FlyBarrelRecipe.FluidInput> {
+        private FlyBarrelFluidComponent(RecipeComponentType<FlyBarrelRecipe.FluidInput> type) {
+            super(type, FlyBarrelRecipe.FluidInput.CODEC, TypeInfo.OBJECT);
+        }
+
+        @Override
+        public FlyBarrelRecipe.FluidInput wrap(RecipeScriptContext context, Object value) {
+            if (value instanceof FlyBarrelRecipe.FluidInput input) return input;
+            if (value instanceof Map<?, ?> map && map.get("fluid") != null && map.get("amount") instanceof Number amount) {
+                ResourceLocation id = AbyssLib.tryParse(map.get("fluid").toString());
+                if (id != null && BuiltInRegistries.FLUID.containsKey(id) && amount.intValue() > 0) {
+                    return new FlyBarrelRecipe.FluidInput(id, amount.intValue());
+                }
+            }
+            throw new IllegalArgumentException("Invalid fly barrel fluid input: " + value);
         }
     }
 

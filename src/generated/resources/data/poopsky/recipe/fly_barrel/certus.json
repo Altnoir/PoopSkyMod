@@ -10,5 +10,9 @@
   "result": {
     "count": 1,
     "id": "ae2:certus_quartz_crystal"
+  },
+  "fluid_inputs": {
+    "amount": 800,
+    "fluid": "poopsky:urine"
   }
 }
