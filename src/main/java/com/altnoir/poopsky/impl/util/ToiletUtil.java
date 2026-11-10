@@ -152,6 +152,10 @@ public class ToiletUtil {
     }
 
     public static void onPoop(Level level, LivingEntity livingEntity, boolean isFire, boolean isGolden, float yOffset, float pitchOffset) {
+        onPoop(level, livingEntity, isFire, isGolden, yOffset, pitchOffset, false);
+    }
+
+    public static void onPoop(Level level, LivingEntity livingEntity, boolean isFire, boolean isGolden, float yOffset, float pitchOffset, boolean forceEject) {
         boolean shouldPoop = true;
 
         if (livingEntity instanceof Player player) {
@@ -169,7 +173,7 @@ public class ToiletUtil {
             Item poopItem = getPoopItem(isFire, isGolden);
             var poop = new ItemEntity(level, livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), new ItemStack(poopItem));
             poop.setDefaultPickUpDelay();
-            if (livingEntity.hasEffect(PoEffects.FECAL_INCONTINENCE)) {
+            if (forceEject || livingEntity.hasEffect(PoEffects.FECAL_INCONTINENCE)) {
                 Vec3 backward = getBackwardDirection(livingEntity);
                 poop.setDeltaMovement(backward.x * 0.5F, 0.2F, backward.z * 0.5F);
             }
@@ -264,7 +268,7 @@ public class ToiletUtil {
         return false;
     }
 
-    private static void playPoopEffects(Level level, double x, double y, double z, float pitch) {
+    public static void playPoopEffects(Level level, double x, double y, double z, float pitch) {
         level.playSound(null, x, y, z, PoSoundEvents.FART.get(), SoundSource.PLAYERS, 1.0F, pitch);
         ((ServerLevel) level).sendParticles(
                 PoParticles.POOP_PARTICLE.get(),

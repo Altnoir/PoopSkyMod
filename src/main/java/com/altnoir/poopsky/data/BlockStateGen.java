@@ -6,6 +6,7 @@ import com.altnoir.abysslib.reginth.util.entry.BlockEntry;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.ChiliVines;
+import com.altnoir.poopsky.content.block.PigstyPart;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.p.*;
 import com.altnoir.poopsky.init.PoBlocks;
@@ -73,6 +74,7 @@ public class BlockStateGen extends ReginthBlockstateProvider {
         clusterBlock(PoBlocks.SMALL_SALTPETER_BUD.get());
         cubeBottomTop(PoBlocks.POP.get());
         cubeBottomTopFace(PoBlocks.FLY_BARREL.get());
+        pigsty();
         cubeBottomTop(PoBlocks.IGNEOUS_EXTRUDER.get(), "compooper_top", "compooper_side", "compooper_bottom");
         cubeBottomTop(PoBlocks.BREEDING_CHEST.get(), PoBlocks.CUT_POOP_BLOCK.get());
         orientable(PoBlocks.PLACER.get());
@@ -974,6 +976,16 @@ public class BlockStateGen extends ReginthBlockstateProvider {
             model.texture("screen", modLoc("block/arcade/screen"));
         }
         return model;
+    }
+
+    private void pigsty() {
+        ModelFile front = models().getExistingFile(modLoc("block/pigsty_front"));
+        ModelFile back = models().getExistingFile(modLoc("block/pigsty_back"));
+        getVariantBuilder(PoBlocks.PIGSTY.get()).forAllStates(state -> ConfiguredModel.builder()
+                .modelFile(state.getValue(PigstyBlock.PART) == PigstyPart.FRONT ? front : back)
+                .rotationY(((int) state.getValue(PigstyBlock.FACING).toYRot() + 360) % 360)
+                .build());
+        itemModels().withExistingParent("pigsty", modLoc("item/pigsty_item"));
     }
 
     private void arcade(Block block) {

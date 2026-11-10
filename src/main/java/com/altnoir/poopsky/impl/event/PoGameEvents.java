@@ -6,6 +6,7 @@ import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractToiletBlock;
 import com.altnoir.poopsky.content.block.entity.ToiletBlockEntity;
 import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
+import com.altnoir.poopsky.content.block.p.PigstyBlock;
 import com.altnoir.poopsky.content.block.p.PortableToiletBlock;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.content.item.p.TimeBellItem;
@@ -44,6 +45,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
@@ -81,11 +83,14 @@ public class PoGameEvents {
         gameEventBus.addListener(PoGameEvents::onItemCrafted);
         gameEventBus.addListener(PoGameEvents::onRightClickBlock);
         gameEventBus.addListener(PoGameEvents::onRightClickItem);
+        gameEventBus.addListener(PoGameEvents::onPigstyInteract);
+        gameEventBus.addListener(PoGameEvents::onPigstyInteractSpecific);
         gameEventBus.addListener(PoGameEvents::onBrewingRecipeRegistry);
         gameEventBus.addListener(PoGameEvents::onVillagerTrades);
         gameEventBus.addListener(PoGameEvents::onEntityDismount);
         gameEventBus.addListener(PoGameEvents::onMobEffectApplicable);
         gameEventBus.addListener(PoGameEvents::onEntityTick);
+        gameEventBus.addListener(PoGameEvents::onPigstyPigTick);
         gameEventBus.addListener(PoGameEvents::onFinalizeSpawn);
         gameEventBus.addListener(PoGameEvents::onLivingDeath);
         gameEventBus.addListener(PoGameEvents::onCreateSpawnToilet);
@@ -162,6 +167,33 @@ public class PoGameEvents {
         }
     }
 
+    public static void onPigstyInteract(PlayerInteractEvent.EntityInteract event) {
+        if (feedPigstyPig(event.getEntity(), event.getHand(), event.getTarget())) {
+            event.setCancellationResult(InteractionResult.SUCCESS);
+            event.setCanceled(true);
+        }
+    }
+
+    public static void onPigstyInteractSpecific(PlayerInteractEvent.EntityInteractSpecific event) {
+        if (feedPigstyPig(event.getEntity(), event.getHand(), event.getTarget())) {
+            event.setCancellationResult(InteractionResult.SUCCESS);
+            event.setCanceled(true);
+        }
+    }
+
+    private static boolean feedPigstyPig(Player player, InteractionHand hand, Entity target) {
+        ItemStack stack = player.getItemInHand(hand);
+        if (player.isSpectator() || !stack.is(PoItems.DRAGON_BREATH_CHILI.get())
+                || !(target instanceof Pig pig) || !pig.isAlive() || !PigstyBlock.isConfined(pig)) {
+            return false;
+        }
+        if (!player.level().isClientSide) {
+            stack.copyWithCount(1).finishUsingItem(player.level(), pig);
+            stack.consume(1, player);
+        }
+        return true;
+    }
+
     public static void onBrewingRecipeRegistry(RegisterBrewingRecipesEvent event) {
         PotionBrewing.Builder builder = event.getBuilder();
 
@@ -220,6 +252,10 @@ public class PoGameEvents {
         if (!(entity instanceof Villager villager) || entity.level().isClientSide || entity.tickCount % 10 != 0) return;
 
         PVillagerBehaviors.tickPoopTemptation(villager);
+    }
+
+    public static void onPigstyPigTick(EntityTickEvent.Post event) {
+        if (event.getEntity() instanceof Pig pig) PigstyBlock.tickPig(pig);
     }
 
     public static void onFinalizeSpawn(FinalizeSpawnEvent event) {

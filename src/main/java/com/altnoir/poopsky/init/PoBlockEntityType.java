@@ -43,6 +43,11 @@ public class PoBlockEntityType {
             .validBlock(PoBlocks.FLY_BARREL)
             .register();
 
+    public static final BlockEntityEntry<PigstyBlockEntity> PIGSTY = REGISTRATE
+            .<PigstyBlockEntity>blockEntity("pigsty", (type, pos, state) -> new PigstyBlockEntity(pos, state))
+            .validBlock(PoBlocks.PIGSTY)
+            .register();
+
     public static final BlockEntityEntry<BreedingChestBlockEntity> BREEDING_CHEST = REGISTRATE
             .<BreedingChestBlockEntity>blockEntity("breeding_chest", (type, pos, state) -> new BreedingChestBlockEntity(pos, state))
             .validBlock(PoBlocks.BREEDING_CHEST)

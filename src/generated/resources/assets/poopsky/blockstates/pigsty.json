@@ -1,0 +1,82 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "facing": "south",
+        "part": "back"
+      },
+      "apply": {
+        "model": "poopsky:block/pigsty_back"
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "front"
+      },
+      "apply": {
+        "model": "poopsky:block/pigsty_front"
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "back"
+      },
+      "apply": {
+        "model": "poopsky:block/pigsty_back",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "front"
+      },
+      "apply": {
+        "model": "poopsky:block/pigsty_front",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "back"
+      },
+      "apply": {
+        "model": "poopsky:block/pigsty_back",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "front"
+      },
+      "apply": {
+        "model": "poopsky:block/pigsty_front",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "back"
+      },
+      "apply": {
+        "model": "poopsky:block/pigsty_back",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "front"
+      },
+      "apply": {
+        "model": "poopsky:block/pigsty_front",
+        "y": 270
+      }
+    }
+  ]
+}

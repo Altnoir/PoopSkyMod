@@ -332,6 +332,7 @@
 
   "block.poopsky.poopsky_block": "天屎方塊",
   "block.poopsky.stool": "糞便凳",
+  "block.poopsky.pigsty": "豬舍",
   "block.poopsky.poolime_block": "屎萊姆塊",
   "block.poopsky.poolime_maggots_block": "屎萊姆蛆塊",
   "block.poopsky.poop_crafting_table": "糞便工作台",
@@ -437,6 +438,7 @@
   "fly_type.poopsky.uranium": "鈾蒼蠅",
   "fly_type.poopsky.fluorite": "氟石蒼蠅",
   "tooltip.poopsky.fly_type": "品種",
+  "tooltip.poopsky.pigsty.captured": "已捕獲豬",
 
   "block.poopsky.toilet.oak": "橡木",
   "block.poopsky.toilet.spruce": "杉木",

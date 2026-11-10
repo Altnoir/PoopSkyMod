@@ -332,6 +332,7 @@
 
   "block.poopsky.poopsky_block": "天蚀方块",
   "block.poopsky.stool": "秽壤凳",
+  "block.poopsky.pigsty": "猪舍",
   "block.poopsky.poolime_block": "黏蚀块",
   "block.poopsky.poolime_maggots_block": "蚀莱姆蛆块",
   "block.poopsky.poop_crafting_table": "一次性秽壤工作台",
@@ -437,6 +438,7 @@
   "fly_type.poopsky.uranium": "铀秽壤飞蝇",
   "fly_type.poopsky.fluorite": "氟石秽壤飞蝇",
   "tooltip.poopsky.fly_type": "品种",
+  "tooltip.poopsky.pigsty.captured": "已捕获猪",
 
   "block.poopsky.toilet.oak": "橡木",
   "block.poopsky.toilet.spruce": "云杉木",

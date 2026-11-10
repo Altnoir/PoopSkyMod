@@ -332,6 +332,7 @@
 
   "block.poopsky.poopsky_block": "Bloc PoopSky",
   "block.poopsky.stool": "Tabouret de crotte",
+  "block.poopsky.pigsty": "Porcherie",
   "block.poopsky.poolime_block": "Bloc de Poolime",
   "block.poopsky.poolime_maggots_block": "Bloc d’asticots de Poolime",
   "block.poopsky.poop_crafting_table": "Établi de crotte",
@@ -437,6 +438,7 @@
   "fly_type.poopsky.uranium": "Mouche d’uranium",
   "fly_type.poopsky.fluorite": "Mouche de fluorite",
   "tooltip.poopsky.fly_type": "Espèce",
+  "tooltip.poopsky.pigsty.captured": "Cochon capturé",
 
   "block.poopsky.toilet.oak": "chêne",
   "block.poopsky.toilet.spruce": "sapin",

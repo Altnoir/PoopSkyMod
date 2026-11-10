@@ -1,17 +1,19 @@
 package com.altnoir.poopsky.content.effect;
 
 import com.altnoir.poopsky.content.block.p.CompooperBlock;
+import com.altnoir.poopsky.content.block.p.PigstyBlock;
 import com.altnoir.poopsky.content.entity.p.FlushToiletEntity;
-import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.impl.util.ToiletUtil;
 import com.altnoir.poopsky.init.PoEffects;
 import com.altnoir.poopsky.init.PoItems;
 import com.altnoir.poopsky.init.PoParticles;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BoneMealItem;
@@ -29,6 +31,9 @@ public class FecalIncontinenceEffect extends MobEffect {
 
     @Override
     public boolean applyEffectTick(LivingEntity entity, int amplifier) {
+        if (!entity.level().isClientSide && entity instanceof Pig pig && PigstyBlock.isConfined(pig)) {
+            return true;
+        }
         int chance = entity.getRandom().nextInt(Math.max(1, 20 - amplifier * 5));
         if (amplifier >= 1 && entity instanceof Player player && player.isShiftKeyDown()) {
             player.causeFoodExhaustion(0.1F * (amplifier + 2));

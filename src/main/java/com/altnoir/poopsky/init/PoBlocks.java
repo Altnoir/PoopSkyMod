@@ -8,10 +8,12 @@ import com.altnoir.abysslib.reginth.util.nullness.NonNullFunction;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.SetToiletTypeFunction;
 import com.altnoir.poopsky.content.block.ChiliVines;
+import com.altnoir.poopsky.content.block.PigstyPart;
 import com.altnoir.poopsky.content.block.PoTreeGrower;
 import com.altnoir.poopsky.content.block.p.*;
 import com.altnoir.poopsky.content.block.p.MyceliumBlock;
 import com.altnoir.poopsky.content.item.p.CompooperBlockItem;
+import com.altnoir.poopsky.content.item.p.PigstyBlockItem;
 import com.altnoir.poopsky.content.item.p.PoopSkyBlockItem;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.impl.type.PoBlockSetType;
@@ -351,6 +353,17 @@ public class PoBlocks {
                                             .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
                                                     .setProperties(StatePropertiesPredicate.Builder.properties()
                                                             .hasProperty(UrineCompooperBlock.MAGGOTS, true))))))));
+    public static final BlockEntry<PigstyBlock> PIGSTY = registerBlockWithItem("pigsty", 64,
+            props -> new PigstyBlock(hardenedProperties(MapColor.COLOR_BROWN, SoundType.STONE)
+                    .noOcclusion().pushReaction(PushReaction.DESTROY)),
+            (loot, block) -> loot.add(block, LootTable.lootTable().withPool(LootPool.lootPool()
+                    .when(ExplosionCondition.survivesExplosion())
+                    .add(LootItem.lootTableItem(block)
+                            .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                                    .setProperties(StatePropertiesPredicate.Builder.properties()
+                                            .hasProperty(PigstyBlock.PART, PigstyPart.FRONT)))))),
+            PigstyBlockItem::new, BlockTab.BASIC_BLOCKS);
+
     public static final BlockEntry<PlacerBlock> PLACER = registerBlock("placer",
             props -> new PlacerBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
                     .instrument(NoteBlockInstrument.BASEDRUM)

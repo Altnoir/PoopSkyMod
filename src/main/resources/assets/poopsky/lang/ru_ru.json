@@ -332,6 +332,7 @@
 
   "block.poopsky.poopsky_block": "Блок PoopSky",
   "block.poopsky.stool": "Какашечный табурет",
+  "block.poopsky.pigsty": "Свинарник",
   "block.poopsky.poolime_block": "Блок какаслизня",
   "block.poopsky.poolime_maggots_block": "Опарышевый блок какаслизня",
   "block.poopsky.poop_crafting_table": "Какашечный верстак",
@@ -437,6 +438,7 @@
   "fly_type.poopsky.uranium": "Урановая муха",
   "fly_type.poopsky.fluorite": "Флюоритовая муха",
   "tooltip.poopsky.fly_type": "Тип",
+  "tooltip.poopsky.pigsty.captured": "Свинья поймана",
 
   "block.poopsky.toilet.oak": "Дубовый",
   "block.poopsky.toilet.spruce": "Еловый",

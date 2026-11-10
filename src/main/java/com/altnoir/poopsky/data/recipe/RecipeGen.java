@@ -492,6 +492,14 @@ public class RecipeGen extends ReginthRecipeProvider implements IConditionBuilde
                 .define('S', Blocks.MOSSY_COBBLESTONE_SLAB)
                 .unlockedBy(getItemName(Blocks.MOSSY_COBBLESTONE_SLAB), has(Blocks.MOSSY_COBBLESTONE_SLAB))
                 .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.PIGSTY)
+                .pattern("B B")
+                .pattern("B B")
+                .pattern("BPB")
+                .define('B', PoBlocks.BROWN_TILE_BLOCK_FAMILY.slab())
+                .define('P', PoBlocks.POOP_PIECE)
+                .unlockedBy(getItemName(PoBlocks.BROWN_TILE_BLOCK_FAMILY.slab()), has(PoBlocks.BROWN_TILE_BLOCK_FAMILY.slab()))
+                .save(recipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.PLACER)
                 .pattern("SSS")
                 .pattern("SPS")

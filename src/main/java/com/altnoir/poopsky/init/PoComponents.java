@@ -7,6 +7,7 @@ import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.util.ExtraCodecs;
+import net.minecraft.world.item.component.CustomData;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -25,6 +26,11 @@ public final class PoComponents {
                     .persistent(ExtraCodecs.NON_EMPTY_STRING)
                     .networkSynchronized(ByteBufCodecs.STRING_UTF8)
             );
+
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<CustomData>> PIGSTY_PIG =
+            COMPONENTS.registerComponentType("pigsty_pig", builder -> builder
+                    .persistent(CustomData.CODEC)
+                    .networkSynchronized(CustomData.STREAM_CODEC));
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<ToiletType>> TOILET_TYPE =
             COMPONENTS.registerComponentType("toilet_type", builder -> builder

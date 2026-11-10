@@ -332,6 +332,7 @@
 
   "block.poopsky.poopsky_block": "天可可方块",
   "block.poopsky.stool": "巧克力凳",
+  "block.poopsky.pigsty": "猪舍",
   "block.poopsky.poolime_block": "黏可可块",
   "block.poopsky.poolime_maggots_block": "可可莱姆牛奶巧克力块",
   "block.poopsky.poop_crafting_table": "一次性巧克力工作台",
@@ -437,6 +438,7 @@
   "fly_type.poopsky.uranium": "铀暗色蜜蜂",
   "fly_type.poopsky.fluorite": "氟石暗色蜜蜂",
   "tooltip.poopsky.fly_type": "品种",
+  "tooltip.poopsky.pigsty.captured": "已捕获猪",
 
   "block.poopsky.toilet.oak": "橡木",
   "block.poopsky.toilet.spruce": "云杉木",

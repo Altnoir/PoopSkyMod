@@ -332,6 +332,7 @@
 
   "block.poopsky.poopsky_block": "PoopSkyブロック",
   "block.poopsky.stool": "糞のスツール",
+  "block.poopsky.pigsty": "豚小屋",
   "block.poopsky.poolime_block": "プーライムブロック",
   "block.poopsky.poolime_maggots_block": "プーライムの蛆ブロック",
   "block.poopsky.poop_crafting_table": "糞の作業台",
@@ -437,6 +438,7 @@
   "fly_type.poopsky.uranium": "ウランハエ",
   "fly_type.poopsky.fluorite": "蛍石ハエ",
   "tooltip.poopsky.fly_type": "種類",
+  "tooltip.poopsky.pigsty.captured": "ブタを捕獲済み",
 
   "block.poopsky.toilet.oak": "オーク",
   "block.poopsky.toilet.spruce": "トウヒ",

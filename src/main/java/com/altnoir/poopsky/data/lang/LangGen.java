@@ -406,6 +406,7 @@ public final class LangGen {
     }
 
     private static void addTooltips() {
+        provider.add("tooltip.poopsky.pigsty.captured", "Pig captured");
         provider.add("tooltip.poopsky.item.info_0", "§7Hold §6[Shift] §7to show details");
         provider.add("tooltip.poopsky.item.info_1", "§8Right-click two different toilet blocks to link channels");
         provider.add("tooltip.poopsky.toilet_linker.info_1", "Toilet① - DimID: %1$s, Coordinates: %2$s, %3$s, %4$s");

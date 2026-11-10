@@ -332,6 +332,7 @@
 
   "block.poopsky.poopsky_block": "PoopSky 블록",
   "block.poopsky.stool": "똥 의자",
+  "block.poopsky.pigsty": "돼지우리",
   "block.poopsky.poolime_block": "똥 슬라임 블록",
   "block.poopsky.poolime_maggots_block": "똥 슬라임 구더기 블록",
   "block.poopsky.poop_crafting_table": "똥 제작대",
@@ -437,6 +438,7 @@
   "fly_type.poopsky.uranium": "우라늄 파리",
   "fly_type.poopsky.fluorite": "형석 파리",
   "tooltip.poopsky.fly_type": "종류",
+  "tooltip.poopsky.pigsty.captured": "돼지를 포획함",
 
   "block.poopsky.toilet.oak": "참나무",
   "block.poopsky.toilet.spruce": "가문비나무",

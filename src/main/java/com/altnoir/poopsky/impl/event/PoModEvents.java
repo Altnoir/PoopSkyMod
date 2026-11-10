@@ -60,6 +60,12 @@ public class PoModEvents {
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
+                PoBlockEntityType.PIGSTY.get(),
+                (blockEntity, direction) -> direction == null || direction == Direction.DOWN
+                        ? blockEntity.getOutputHandler() : null
+        );
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
                 PoBlockEntityType.SIEVE_BLOCK_ENTITY.get(),
                 (blockEntity, direction) -> {
                     if (direction == null || direction == Direction.DOWN) {

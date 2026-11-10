@@ -332,6 +332,7 @@
 
   "block.poopsky.poopsky_block": "PoopSky-Block",
   "block.poopsky.stool": "Kackhocker",
+  "block.poopsky.pigsty": "Schweinestall",
   "block.poopsky.poolime_block": "Kackschleimblock",
   "block.poopsky.poolime_maggots_block": "Kackschleim-Madenblock",
   "block.poopsky.poop_crafting_table": "Kackwerkbank",
@@ -437,6 +438,7 @@
   "fly_type.poopsky.uranium": "Uranfliege",
   "fly_type.poopsky.fluorite": "Fluoritfliege",
   "tooltip.poopsky.fly_type": "Typ",
+  "tooltip.poopsky.pigsty.captured": "Schwein eingefangen",
 
   "block.poopsky.toilet.oak": "Eiche",
   "block.poopsky.toilet.spruce": "Fichte",

@@ -2,12 +2,12 @@ package com.altnoir.poopsky.data;
 
 import com.altnoir.abysslib.AbyssLib;
 import com.altnoir.abysslib.reginth.Reginth;
+import com.altnoir.abysslib.reginth.providers.ProviderType;
+import com.altnoir.abysslib.reginth.providers.ReginthTagsProvider;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.init.PoBlocks;
-import com.altnoir.abysslib.reginth.providers.ProviderType;
-import com.altnoir.abysslib.reginth.providers.ReginthTagsProvider;
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
@@ -307,6 +307,7 @@ public final class BlockTagGen {
                 PoBlocks.POOP_WOOD.get(),
                 PoBlocks.STRIPPED_POOP_LOG.get(),
                 PoBlocks.STRIPPED_POOP_WOOD.get(),
+                PoBlocks.PIGSTY.get(),
                 PoBlocks.SIEVE.get(),
                 PoBlocks.PLACER.get(),
                 PoBlocks.BREEDING_CHEST.get(),

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "B": {
+      "item": "poopsky:brown_tile_block_slab"
+    },
+    "P": {
+      "item": "poopsky:poop_piece"
+    }
+  },
+  "pattern": [
+    "B B",
+    "B B",
+    "BPB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "poopsky:pigsty"
+  }
+}

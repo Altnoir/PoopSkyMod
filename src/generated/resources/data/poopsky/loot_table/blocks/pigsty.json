@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "poopsky:pigsty",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "part": "front"
+              }
+            }
+          ],
+          "name": "poopsky:pigsty"
+        }
+      ],
+      "rolls": 1
+    }
+  ],
+  "random_sequence": "poopsky:blocks/pigsty"
+}
