@@ -14,6 +14,9 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
@@ -65,6 +68,46 @@ public class PigstyBlockEntity extends BlockEntity {
         }
     };
 
+    private static final int TANK_CAPACITY = Integer.MAX_VALUE;
+
+    private final IFluidHandler waterSource = new IFluidHandler() {
+        @Override
+        public int getTanks() {
+            return 1;
+        }
+
+        @Override
+        public FluidStack getFluidInTank(int tank) {
+            return isInfiniteWater() ? new FluidStack(Fluids.WATER, TANK_CAPACITY) : FluidStack.EMPTY;
+        }
+
+        @Override
+        public int getTankCapacity(int tank) {
+            return TANK_CAPACITY;
+        }
+
+        @Override
+        public boolean isFluidValid(int tank, FluidStack stack) {
+            return false;
+        }
+
+        @Override
+        public int fill(FluidStack resource, FluidAction action) {
+            return 0;
+        }
+
+        @Override
+        public FluidStack drain(FluidStack resource, FluidAction action) {
+            if (resource.isEmpty() || resource.getFluid() != Fluids.WATER) return FluidStack.EMPTY;
+            return drain(resource.getAmount(), action);
+        }
+
+        @Override
+        public FluidStack drain(int maxDrain, FluidAction action) {
+            return isInfiniteWater() && maxDrain > 0 ? new FluidStack(Fluids.WATER, maxDrain) : FluidStack.EMPTY;
+        }
+    };
+
     public PigstyBlockEntity(BlockPos pos, BlockState state) {
         super(PoBlockEntityType.PIGSTY.get(), pos, state);
     }
@@ -81,8 +124,33 @@ public class PigstyBlockEntity extends BlockEntity {
         return false;
     }
 
+    private static boolean isWaterlogged(PigstyBlockEntity pigsty) {
+        BlockState state = pigsty.getBlockState();
+        return state.getBlock() instanceof PigstyBlock && state.getValue(PigstyBlock.WATERLOGGED);
+    }
+
+    private static @Nullable PairPositions resolvePairPositions(Level level, BlockPos pos) {
+        if (!level.hasChunkAt(pos)) return null;
+        BlockState state = level.getBlockState(pos);
+        if (!(state.getBlock() instanceof PigstyBlock)) return null;
+        BlockPos backPos = PigstyBlock.mainPos(state, pos);
+        BlockPos frontPos = backPos.relative(state.getValue(PigstyBlock.FACING).getOpposite());
+        if (!level.hasChunkAt(backPos) || !level.hasChunkAt(frontPos)) return null;
+        BlockState backState = level.getBlockState(backPos);
+        BlockState frontState = level.getBlockState(frontPos);
+        if (!(backState.getBlock() instanceof PigstyBlock) || !frontState.is(backState.getBlock())
+                || backState.getValue(PigstyBlock.PART) != PigstyPart.BACK
+                || frontState.getValue(PigstyBlock.PART) != PigstyPart.FRONT
+                || backState.getValue(PigstyBlock.FACING) != frontState.getValue(PigstyBlock.FACING)) return null;
+        return new PairPositions(backPos, frontPos);
+    }
+
     public IItemHandler getOutputHandler() {
         return output;
+    }
+
+    public IFluidHandler getFluidHandler() {
+        return waterSource;
     }
 
     private @Nullable PigstyBlockEntity getTarget(int slot) {
@@ -91,23 +159,23 @@ public class PigstyBlockEntity extends BlockEntity {
         return pair == null ? null : pair[slot];
     }
 
+    private boolean isInfiniteWater() {
+        PigstyBlockEntity[] pair = getPair();
+        return pair != null && isWaterlogged(pair[0]) && isWaterlogged(pair[1]);
+    }
+
     public @Nullable PigstyBlockEntity[] getPair() {
-        if (level == null || isRemoved() || !level.hasChunkAt(worldPosition)) return null;
-        BlockState state = level.getBlockState(worldPosition);
-        if (!(state.getBlock() instanceof PigstyBlock)) return null;
-        BlockPos backPos = PigstyBlock.mainPos(state, worldPosition);
-        BlockPos frontPos = backPos.relative(state.getValue(PigstyBlock.FACING));
-        if (!level.hasChunkAt(backPos) || !level.hasChunkAt(frontPos)) return null;
-        BlockState backState = level.getBlockState(backPos);
-        BlockState frontState = level.getBlockState(frontPos);
-        if (!(backState.getBlock() instanceof PigstyBlock) || !frontState.is(backState.getBlock())
-                || backState.getValue(PigstyBlock.PART) != PigstyPart.BACK
-                || frontState.getValue(PigstyBlock.PART) != PigstyPart.FRONT
-                || backState.getValue(PigstyBlock.FACING) != frontState.getValue(PigstyBlock.FACING)) return null;
-        if (!(level.getBlockEntity(backPos) instanceof PigstyBlockEntity back)
-                || !(level.getBlockEntity(frontPos) instanceof PigstyBlockEntity front)
+        Level level = this.level;
+        if (level == null || isRemoved()) return null;
+        PairPositions positions = resolvePairPositions(level, worldPosition);
+        if (positions == null) return null;
+        if (!(level.getBlockEntity(positions.back()) instanceof PigstyBlockEntity back)
+                || !(level.getBlockEntity(positions.front()) instanceof PigstyBlockEntity front)
                 || back.isRemoved() || front.isRemoved()) return null;
         return new PigstyBlockEntity[]{back, front};
+    }
+
+    private record PairPositions(BlockPos back, BlockPos front) {
     }
 
     public void dropContents(Level level, BlockPos pos) {

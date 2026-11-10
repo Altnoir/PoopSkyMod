@@ -6,13 +6,13 @@
     }
   ],
   "type": "poopsky:fly_barrel",
+  "fluid_inputs": {
+    "amount": 800,
+    "fluid": "poopsky:urine"
+  },
   "fly_type": "tin",
   "result": {
     "count": 1,
     "id": "mekanism:raw_tin"
-  },
-  "fluid_inputs": {
-    "amount": 800,
-    "fluid": "poopsky:urine"
   }
 }

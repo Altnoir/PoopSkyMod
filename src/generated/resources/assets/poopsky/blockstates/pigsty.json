@@ -1,82 +1,40 @@
 {
-  "multipart": [
-    {
-      "when": {
-        "facing": "south",
-        "part": "back"
-      },
-      "apply": {
-        "model": "poopsky:block/pigsty_back"
-      }
+  "variants": {
+    "facing=east,part=back": {
+      "model": "poopsky:block/pigsty_back",
+      "uvlock": true,
+      "y": 90
     },
-    {
-      "when": {
-        "facing": "south",
-        "part": "front"
-      },
-      "apply": {
-        "model": "poopsky:block/pigsty_front"
-      }
+    "facing=east,part=front": {
+      "model": "poopsky:block/pigsty_front",
+      "uvlock": true,
+      "y": 90
     },
-    {
-      "when": {
-        "facing": "west",
-        "part": "back"
-      },
-      "apply": {
-        "model": "poopsky:block/pigsty_back",
-        "y": 90
-      }
+    "facing=north,part=back": {
+      "model": "poopsky:block/pigsty_back"
     },
-    {
-      "when": {
-        "facing": "west",
-        "part": "front"
-      },
-      "apply": {
-        "model": "poopsky:block/pigsty_front",
-        "y": 90
-      }
+    "facing=north,part=front": {
+      "model": "poopsky:block/pigsty_front"
     },
-    {
-      "when": {
-        "facing": "north",
-        "part": "back"
-      },
-      "apply": {
-        "model": "poopsky:block/pigsty_back",
-        "y": 180
-      }
+    "facing=south,part=back": {
+      "model": "poopsky:block/pigsty_back",
+      "uvlock": true,
+      "y": 180
     },
-    {
-      "when": {
-        "facing": "north",
-        "part": "front"
-      },
-      "apply": {
-        "model": "poopsky:block/pigsty_front",
-        "y": 180
-      }
+    "facing=south,part=front": {
+      "model": "poopsky:block/pigsty_front",
+      "uvlock": true,
+      "y": 180
     },
-    {
-      "when": {
-        "facing": "east",
-        "part": "back"
-      },
-      "apply": {
-        "model": "poopsky:block/pigsty_back",
-        "y": 270
-      }
+    "facing=west,part=back": {
+      "model": "poopsky:block/pigsty_back",
+      "uvlock": true,
+      "y": 270
     },
-    {
-      "when": {
-        "facing": "east",
-        "part": "front"
-      },
-      "apply": {
-        "model": "poopsky:block/pigsty_front",
-        "y": 270
-      }
+    "facing=west,part=front": {
+      "model": "poopsky:block/pigsty_front",
+      "uvlock": true,
+      "y": 270
     }
-  ]
+  }
 }

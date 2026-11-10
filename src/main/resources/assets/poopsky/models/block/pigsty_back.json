@@ -2,9 +2,9 @@
 	"format_version": "1.9.0",
 	"credit": "Made with Blockbench",
 	"textures": {
+		"particle": "poopsky:block/brown_tile_block",
 		"tile": "poopsky:block/brown_tile_block",
-		"dirt": "poopsky:block/poop_block",
-		"particle": "poopsky:block/brown_tile_block"
+		"dirt": "poopsky:block/poop_block"
 	},
 	"elements": [
 		{
@@ -24,7 +24,7 @@
 			"faces": {
 				"north": {"uv": [16, 0, 0, 15], "texture": "#tile"},
 				"east": {"uv": [2, 0, 0, 15], "texture": "#tile"},
-				"south": {"uv": [16, 0, 0, 15], "texture": "#tile"},
+				"south": {"uv": [0, 0, 16, 15], "texture": "#tile"},
 				"west": {"uv": [0, 0, 2, 15], "texture": "#tile"},
 				"up": {"uv": [16, 2, 0, 0], "rotation": 180, "texture": "#tile"}
 			}

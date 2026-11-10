@@ -6,13 +6,13 @@
     }
   ],
   "type": "poopsky:fly_barrel",
+  "fluid_inputs": {
+    "amount": 800,
+    "fluid": "poopsky:urine"
+  },
   "fly_type": "lead",
   "result": {
     "count": 1,
     "id": "mekanism:raw_lead"
-  },
-  "fluid_inputs": {
-    "amount": 800,
-    "fluid": "poopsky:urine"
   }
 }

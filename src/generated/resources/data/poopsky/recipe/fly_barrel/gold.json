@@ -1,12 +1,12 @@
 {
   "type": "poopsky:fly_barrel",
+  "fluid_inputs": {
+    "amount": 800,
+    "fluid": "poopsky:urine"
+  },
   "fly_type": "gold",
   "result": {
     "count": 1,
     "id": "minecraft:raw_gold"
-  },
-  "fluid_inputs": {
-    "amount": 800,
-    "fluid": "poopsky:urine"
   }
 }

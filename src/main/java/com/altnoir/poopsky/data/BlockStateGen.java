@@ -981,10 +981,14 @@ public class BlockStateGen extends ReginthBlockstateProvider {
     private void pigsty() {
         ModelFile front = models().getExistingFile(modLoc("block/pigsty_front"));
         ModelFile back = models().getExistingFile(modLoc("block/pigsty_back"));
-        getVariantBuilder(PoBlocks.PIGSTY.get()).forAllStates(state -> ConfiguredModel.builder()
-                .modelFile(state.getValue(PigstyBlock.PART) == PigstyPart.FRONT ? front : back)
-                .rotationY(((int) state.getValue(PigstyBlock.FACING).toYRot() + 360) % 360)
-                .build());
+        getVariantBuilder(PoBlocks.PIGSTY.get()).forAllStates(state -> {
+            int yRot = ((int) state.getValue(PigstyBlock.FACING).getOpposite().toYRot() + 360) % 360;
+            return ConfiguredModel.builder()
+                    .modelFile(state.getValue(PigstyBlock.PART) == PigstyPart.FRONT ? front : back)
+                    .rotationY(yRot)
+                    .uvLock(yRot != 0)
+                    .build();
+        });
         itemModels().withExistingParent("pigsty", modLoc("item/pigsty_item"));
     }
 

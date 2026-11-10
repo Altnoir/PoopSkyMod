@@ -61,8 +61,12 @@ public class PoModEvents {
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
                 PoBlockEntityType.PIGSTY.get(),
-                (blockEntity, direction) -> direction == null || direction == Direction.DOWN
-                        ? blockEntity.getOutputHandler() : null
+                (blockEntity, direction) -> blockEntity.getOutputHandler()
+        );
+        event.registerBlockEntity(
+                Capabilities.FluidHandler.BLOCK,
+                PoBlockEntityType.PIGSTY.get(),
+                (blockEntity, direction) -> blockEntity.getFluidHandler()
         );
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,

@@ -1,12 +1,12 @@
 {
   "type": "poopsky:fly_barrel",
+  "fluid_inputs": {
+    "amount": 800,
+    "fluid": "poopsky:urine"
+  },
   "fly_type": "netherite",
   "result": {
     "count": 1,
     "id": "minecraft:netherite_scrap"
-  },
-  "fluid_inputs": {
-    "amount": 800,
-    "fluid": "poopsky:urine"
   }
 }
