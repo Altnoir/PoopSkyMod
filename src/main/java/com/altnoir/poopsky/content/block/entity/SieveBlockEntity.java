@@ -30,7 +30,14 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public class SieveBlockEntity extends BlockEntity {
+public class SieveBlockEntity extends BlockEntity implements Overclockable {
+    private final OverclockState overclockState = new OverclockState();
+
+    @Override
+    public OverclockState getOverclockState() {
+        return overclockState;
+    }
+
     private static final int INPUT_SLOT = 0;
     private static final int MANUAL_PROGRESS_PER_CLICK = 20;
 
@@ -115,12 +122,13 @@ public class SieveBlockEntity extends BlockEntity {
 
     public static void tick(Level level, BlockPos pos, BlockState state, SieveBlockEntity be) {
         if (level.isClientSide) return;
+        int speed = be.updateOverclock(level, pos);
 
         boolean powered = state.getValue(SieveBlock.POWERED);
         be.autoMode = powered;
         if (!powered) return;
 
-        be.advanceProgress(1, true);
+        be.advanceProgress(speed, true);
     }
 
     private void completeRecipe() {
@@ -152,24 +160,23 @@ public class SieveBlockEntity extends BlockEntity {
     }
 
     private void advanceProgress(int amount, boolean automatic) {
-        ItemStack input = itemHandler.getStackInSlot(INPUT_SLOT);
-        Optional<SieveRecipe> recipe = findRecipe(input);
-        if (recipe.isEmpty()) {
-            if (progress != 0 || automatic != autoMode) {
-                resetProgress();
-            }
-            return;
-        }
-
         autoMode = automatic;
-        maxProgress = recipe.get().processingTime();
-        progress = Math.min(progress + amount, maxProgress);
-
-        if (progress >= maxProgress) {
-            completeRecipe();
-            return;
+        while (amount > 0) {
+            Optional<SieveRecipe> recipe = findRecipe(itemHandler.getStackInSlot(INPUT_SLOT));
+            if (recipe.isEmpty()) {
+                resetProgress();
+                return;
+            }
+            autoMode = automatic;
+            maxProgress = Math.max(1, recipe.get().processingTime());
+            int step = Math.min(amount, maxProgress - progress);
+            progress += step;
+            amount -= step;
+            if (progress >= maxProgress) {
+                completeRecipe();
+                if (!automatic) return;
+            }
         }
-
         setChanged();
         syncToClient();
     }

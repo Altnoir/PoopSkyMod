@@ -51,7 +51,7 @@ public class PoEntityType {
                     .eyeHeight(0.35F)
                     .clientTrackingRange(8))
             .renderer(() -> SnailRenderer::new)
-            .setData(ProviderType.LANG, NonNullBiConsumer.noop())
+            .lang("Snail")
             .register();
 
     public static final EntityEntry<BasiliskEntity> BASILISK = REGISTRATE

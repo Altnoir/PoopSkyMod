@@ -35,7 +35,14 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.wrapper.RangedWrapper;
 import org.jetbrains.annotations.Nullable;
 
-public class FlyBarrelBlockEntity extends BlockEntity implements MenuProvider {
+public class FlyBarrelBlockEntity extends BlockEntity implements MenuProvider, Overclockable {
+    private final OverclockState overclockState = new OverclockState();
+
+    @Override
+    public OverclockState getOverclockState() {
+        return overclockState;
+    }
+
     public static final int SLOT_INPUT = 0;
     public static final int SLOT_OUTPUT_1 = 1;
     public static final int SLOT_OUTPUT_2 = 2;
@@ -142,6 +149,7 @@ public class FlyBarrelBlockEntity extends BlockEntity implements MenuProvider {
 
     public static void tick(Level level, BlockPos pos, BlockState state, FlyBarrelBlockEntity be) {
         if (level.isClientSide) return;
+        int speed = be.updateOverclock(level, pos);
 
         if (be.fluidTank.getFluidAmount() < be.fluidTank.getCapacity()
                 && level.getGameTime() % TOILET_PULL_INTERVAL == be.toiletPullOffset) {
@@ -172,11 +180,16 @@ public class FlyBarrelBlockEntity extends BlockEntity implements MenuProvider {
         // 堆叠加速：输入堆叠每多1个减少0.5秒（10tick）
         int stackBonus = (inputStack.getCount() - 1) * STACK_BONUS_PER_ITEM;
         be.currentInterval = Math.max(MIN_INTERVAL, BASE_TICK_INTERVAL - stackBonus);
-        be.progress++;
+        be.progress += speed;
 
-        if (be.progress >= be.currentInterval) {
+        while (be.progress >= be.currentInterval) {
+            if (!be.fluidTank.getFluid().is(required.getFluid())
+                    || be.fluidTank.getFluidAmount() < required.getAmount() || !be.canInsert(product)) {
+                be.progress = 0;
+                break;
+            }
             be.produce(product, required);
-            be.progress = 0;
+            be.progress -= be.currentInterval;
             be.pullFromToilets(level, pos);
         }
 

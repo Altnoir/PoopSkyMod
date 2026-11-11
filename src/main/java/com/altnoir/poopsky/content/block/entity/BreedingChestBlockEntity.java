@@ -4,9 +4,9 @@ import com.altnoir.poopsky.client.inventory.BreedingChestMenu;
 import com.altnoir.poopsky.content.FlyType;
 import com.altnoir.poopsky.content.item.p.FlyItem;
 import com.altnoir.poopsky.content.recipe.PFlyRecipes;
-import com.altnoir.poopsky.init.PoSoundEvents;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.init.PoBlockEntityType;
+import com.altnoir.poopsky.init.PoSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -30,7 +30,14 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.wrapper.RangedWrapper;
 import org.jetbrains.annotations.Nullable;
 
-public class BreedingChestBlockEntity extends BlockEntity implements MenuProvider {
+public class BreedingChestBlockEntity extends BlockEntity implements MenuProvider, Overclockable {
+    private final OverclockState overclockState = new OverclockState();
+
+    @Override
+    public OverclockState getOverclockState() {
+        return overclockState;
+    }
+
     public static final int SLOT_FECES = 0;
     public static final int SLOT_FLY_1 = 1;
     public static final int SLOT_FLY_2 = 2;
@@ -134,6 +141,7 @@ public class BreedingChestBlockEntity extends BlockEntity implements MenuProvide
 
     public static void tick(Level level, BlockPos pos, BlockState state, BreedingChestBlockEntity be) {
         if (level.isClientSide) return;
+        int speed = be.updateOverclock(level, pos);
 
         ItemStack fly1 = be.itemHandler.getStackInSlot(SLOT_FLY_1);
         ItemStack fly2 = be.itemHandler.getStackInSlot(SLOT_FLY_2);
@@ -175,11 +183,15 @@ public class BreedingChestBlockEntity extends BlockEntity implements MenuProvide
         }
 
         be.currentInterval = Math.max(20, BASE_TICK_INTERVAL - be.currentPoopBonus * 10);
-        be.progress++;
+        be.progress += speed;
 
-        if (be.progress >= be.currentInterval) {
+        while (be.progress >= be.currentInterval) {
+            if (feces.getCount() < neededFeces || be.areOutputsFull()) {
+                be.progress = 0;
+                break;
+            }
             be.breed();
-            be.progress = 0;
+            be.progress -= be.currentInterval;
         }
 
         if (level.getRandom().nextDouble() < 0.005) {

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "S": {
+      "item": "poopsky:snail_shell"
+    }
+  },
+  "pattern": [
+    " S ",
+    " R ",
+    "III"
+  ],
+  "result": {
+    "count": 1,
+    "id": "poopsky:overclock_unit"
+  }
+}

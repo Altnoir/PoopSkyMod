@@ -39,6 +39,8 @@ public class BlockStateGen extends ReginthBlockstateProvider {
 
     @Override
     protected void registerStatesAndModels() {
+        directionalBlock(PoBlocks.OVERCLOCK_UNIT.get(), models().getExistingFile(modLoc("block/overclock_unit")));
+        simpleBlockItem(PoBlocks.OVERCLOCK_UNIT.get(), models().getExistingFile(modLoc("block/overclock_unit")));
         poopBlock();
         poopWoodSet();
         poopDecoSet();

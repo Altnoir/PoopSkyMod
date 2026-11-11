@@ -101,7 +101,10 @@ public final class EntityLootTableGen {
         }
         loot.add(PoEntityType.FLY.get(), LootTable.lootTable().withPool(flyDrops));
         loot.add(PoEntityType.BASILISK.get(), LootTable.lootTable());
-        loot.add(PoEntityType.SNAIL.get(), LootTable.lootTable());
+        loot.add(PoEntityType.SNAIL.get(), LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(PoItems.SNAIL_SHELL.get()))));
         loot.add(
                 PoEntityType.POP_CHICKEN.get(),
                 LootTable.lootTable()

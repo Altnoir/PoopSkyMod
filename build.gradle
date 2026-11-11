@@ -1,3 +1,6 @@
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 
@@ -179,6 +182,21 @@ def generateLang = tasks.register('generateLang') {
 
 tasks.named('runData').configure {
     dependsOn generateLang
+    doLast {
+        def schema = file('src/main/resources/assets/poopsky/lang/zh_cn.json').readLines('UTF-8')
+        fileTree('src/generated/resources/assets/poopsky/lang').matching { include '*.json' }.each { langFile ->
+            def translations = new JsonSlurper().parse(langFile, 'UTF-8')
+            def lines = schema.collect { line ->
+                def match = line =~ /^ {2}"([^"]+)":/
+                if (!match.find()) return line
+                def key = match.group(1)
+                if (!translations.containsKey(key)) throw new GradleException("Missing ${key} in ${langFile.name}")
+                def value = JsonOutput.prettyPrint(JsonOutput.toJson(translations[key]), true)
+                return '  "' + key + '": ' + value + (line.endsWith(',') ? ',' : '')
+            }
+            langFile.setText(lines.join('\n') + '\n', 'UTF-8')
+        }
+    }
 }
 
 tasks.named('processResources').configure {

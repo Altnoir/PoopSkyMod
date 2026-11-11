@@ -24,6 +24,17 @@ public final class LangGen {
 
     private static void generateEnUs(ReginthLangProvider provider) {
         LangGen.provider = provider;
+        provider.add("gamedisks.rhythm", "Poop Rhythm");
+        provider.add("gamedisks.rhythm.song.light_dance", "Light Dance");
+        provider.add("gui.gamingconsole.rhythm.perfect", "PERFECT");
+        provider.add("gui.gamingconsole.rhythm.great", "GREAT");
+        provider.add("gui.gamingconsole.rhythm.good", "GOOD");
+        provider.add("gui.gamingconsole.rhythm.miss", "MISS");
+        provider.add("gui.gamingconsole.rhythm.combo", "Combo");
+        provider.add("gui.gamingconsole.rhythm.max_combo", "Max Combo");
+        provider.add("gui.gamingconsole.rhythm.lives", "Lives");
+        provider.add("gui.gamingconsole.rhythm.rhythm_score", "Rhythm Score");
+        provider.add("gui.gamingconsole.rhythm.reward", "Reward Points");
         addAdvancements();
         addToiletTypes();
         addFlyTypes();

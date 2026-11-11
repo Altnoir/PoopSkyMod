@@ -503,6 +503,15 @@ public class RecipeGen extends ReginthRecipeProvider implements IConditionBuilde
                 .define('P', PoItems.TOILET_PLUG)
                 .unlockedBy(getItemName(PoItems.TOILET_PLUG), has(PoItems.TOILET_PLUG))
                 .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.OVERCLOCK_UNIT)
+                .pattern(" S ")
+                .pattern(" R ")
+                .pattern("III")
+                .define('S', PoItems.SNAIL_SHELL)
+                .define('R', Items.REDSTONE)
+                .define('I', Items.IRON_INGOT)
+                .unlockedBy(getItemName(PoItems.SNAIL_SHELL), has(PoItems.SNAIL_SHELL))
+                .save(recipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.SIEVE)
                 .pattern("SAS")
                 .pattern("S S")

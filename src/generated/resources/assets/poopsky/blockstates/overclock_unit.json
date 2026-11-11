@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "poopsky:block/overclock_unit",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "poopsky:block/overclock_unit",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "poopsky:block/overclock_unit",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "poopsky:block/overclock_unit",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "poopsky:block/overclock_unit"
+    },
+    "facing=west": {
+      "model": "poopsky:block/overclock_unit",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

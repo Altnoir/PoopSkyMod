@@ -23,7 +23,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-public class IgneousExtruderBlockEntity extends BlockEntity {
+public class IgneousExtruderBlockEntity extends BlockEntity implements Overclockable {
+    private final OverclockState overclockState = new OverclockState();
+
+    @Override
+    public OverclockState getOverclockState() {
+        return overclockState;
+    }
+
     private static final int TICKS_PER_OPERATION = 20;
 
     private int progress;
@@ -33,17 +40,19 @@ public class IgneousExtruderBlockEntity extends BlockEntity {
     }
 
     public static void tick(Level level, IgneousExtruderBlockEntity blockEntity) {
+        int speed = blockEntity.updateOverclock(level, blockEntity.getBlockPos());
         Block result = blockEntity.findResult(level);
         if (result == null) {
             blockEntity.progress = 0;
             return;
         }
 
-        if (++blockEntity.progress < TICKS_PER_OPERATION) {
+        if ((blockEntity.progress += speed) < TICKS_PER_OPERATION) {
             return;
         }
-        blockEntity.progress = 0;
-        blockEntity.output(level, new ItemStack(result));
+        int operations = blockEntity.progress / TICKS_PER_OPERATION;
+        blockEntity.progress %= TICKS_PER_OPERATION;
+        blockEntity.output(level, new ItemStack(result, operations));
     }
 
     private void output(Level level, ItemStack stack) {

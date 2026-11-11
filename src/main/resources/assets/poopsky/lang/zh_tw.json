@@ -104,6 +104,7 @@
 
   "item.poopsky.poolime_spawn_egg": "屎萊姆生怪蛋",
   "item.poopsky.fly_spawn_egg": "蒼蠅生怪蛋",
+  "item.poopsky.snail_shell": "蝸牛殼",
   "item.poopsky.snail_spawn_egg": "蝸牛生怪蛋",
   "item.poopsky.basilisk_spawn_egg": "咒蛙生怪蛋",
   "item.poopsky.pop_chicken_spawn_egg": "雞O雞生怪蛋",
@@ -342,6 +343,7 @@
   "block.poopsky.powder_snow_compooper": "裝粉雪的堆糞箱",
   "block.poopsky.urine_compooper": "裝尿液的堆糞箱",
   "block.poopsky.placer": "放置器",
+  "block.poopsky.overclock_unit": "超頻單元",
   "block.poopsky.igneous_extruder": "自動造石機",
   "block.poopsky.sieve_stable": "篩台",
   "block.poopsky.poop_tnt": "POP",

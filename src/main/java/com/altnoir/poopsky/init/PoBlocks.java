@@ -368,6 +368,10 @@ public class PoBlocks {
             props -> new PlacerBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
                     .instrument(NoteBlockInstrument.BASEDRUM)
                     .requiresCorrectToolForDrops().strength(3.5F)));
+    public static final BlockEntry<OverclockUnitBlock> OVERCLOCK_UNIT = registerBlock("overclock_unit",
+            props -> new OverclockUnitBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.END_ROD)
+                    .lightLevel(state -> 0)));
+
     public static final BlockEntry<IgneousExtruderBlock> IGNEOUS_EXTRUDER = registerBlock("igneous_extruder",
             props -> new IgneousExtruderBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL)
                     .instrument(NoteBlockInstrument.BASEDRUM)
