@@ -1,8 +1,6 @@
 {
-  "parent": "minecraft:block/outer_stairs",
+  "parent": "poopsky:block/outer_stairs_template",
   "textures": {
-    "bottom": "poopsky:block/pink_tile_block",
-    "side": "poopsky:block/pink_tile_block",
-    "top": "poopsky:block/pink_tile_block"
+    "texture": "poopsky:block/pink_tile_block"
   }
 }

@@ -16,6 +16,7 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.armortrim.TrimMaterials;
+import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.client.model.generators.loaders.SeparateTransformsModelBuilder;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -120,14 +121,14 @@ public class ItemModelGen extends ReginthItemModelProvider {
         gachaponMainModel();
     }
 
-    private void gachaponItemModel(String modelName) {
+    private ItemModelBuilder gachaponItemModel(String modelName) {
         var base = nested()
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))
                 .texture("layer0", PoopSky.loc("item/" + modelName));
         var entityModel = nested()
                 .parent(new ModelFile.UncheckedModelFile("builtin/entity"));
 
-        getBuilder(modelName)
+        return getBuilder(modelName)
                 .customLoader(SeparateTransformsModelBuilder::begin)
                 .base(base)
                 .perspective(ItemDisplayContext.GROUND, entityModel)
@@ -136,18 +137,7 @@ public class ItemModelGen extends ReginthItemModelProvider {
     }
 
     private void gachaponMainModel() {
-        var base = nested()
-                .parent(new ModelFile.UncheckedModelFile("item/generated"))
-                .texture("layer0", PoopSky.loc("item/gachapon"));
-        var entityModel = nested()
-                .parent(new ModelFile.UncheckedModelFile("builtin/entity"));
-
-        var builder = getBuilder("gachapon")
-                .customLoader(SeparateTransformsModelBuilder::begin)
-                .base(base)
-                .perspective(ItemDisplayContext.GROUND, entityModel)
-                .end()
-                .guiLight(GuiLight.FRONT);
+        var builder = gachaponItemModel("gachapon");
 
         int[] modelData = {1, 2, 3};
         String[] colors = {"yellow", "red", "blue"};

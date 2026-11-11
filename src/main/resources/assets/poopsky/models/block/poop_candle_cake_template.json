@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/template_cake_with_candle",
+  "textures": {
+    "particle": "#side",
+    "bottom": "poopsky:block/poop_cake_bottom",
+    "top": "poopsky:block/poop_cake_top",
+    "side": "poopsky:block/poop_cake_side"
+  }
+}

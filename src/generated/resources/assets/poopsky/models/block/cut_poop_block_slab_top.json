@@ -1,8 +1,6 @@
 {
-  "parent": "minecraft:block/slab_top",
+  "parent": "poopsky:block/slab_top_template",
   "textures": {
-    "bottom": "poopsky:block/cut_poop_block",
-    "side": "poopsky:block/cut_poop_block",
-    "top": "poopsky:block/cut_poop_block"
+    "texture": "poopsky:block/cut_poop_block"
   }
 }

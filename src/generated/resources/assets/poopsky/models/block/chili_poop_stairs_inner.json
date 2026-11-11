@@ -1,8 +1,6 @@
 {
-  "parent": "minecraft:block/inner_stairs",
+  "parent": "poopsky:block/inner_stairs_template",
   "textures": {
-    "bottom": "poopsky:block/chili_poop_block",
-    "side": "poopsky:block/chili_poop_block",
-    "top": "poopsky:block/chili_poop_block"
+    "texture": "poopsky:block/chili_poop_block"
   }
 }

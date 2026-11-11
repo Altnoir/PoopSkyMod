@@ -1,8 +1,6 @@
 {
-  "parent": "minecraft:block/stairs",
+  "parent": "poopsky:block/stairs_template",
   "textures": {
-    "bottom": "poopsky:block/primo_planks",
-    "side": "poopsky:block/primo_planks",
-    "top": "poopsky:block/primo_planks"
+    "texture": "poopsky:block/primo_planks"
   }
 }

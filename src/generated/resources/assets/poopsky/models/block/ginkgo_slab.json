@@ -1,8 +1,6 @@
 {
-  "parent": "minecraft:block/slab",
+  "parent": "poopsky:block/slab_template",
   "textures": {
-    "bottom": "poopsky:block/ginkgo_planks",
-    "side": "poopsky:block/ginkgo_planks",
-    "top": "poopsky:block/ginkgo_planks"
+    "texture": "poopsky:block/ginkgo_planks"
   }
 }

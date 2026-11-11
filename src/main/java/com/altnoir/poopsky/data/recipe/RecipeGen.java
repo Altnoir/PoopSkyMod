@@ -102,6 +102,15 @@ public class RecipeGen extends ReginthRecipeProvider implements IConditionBuilde
         smelting(recipeOutput, PoBlocks.ROUNDWORM_BLOCK, RecipeCategory.BUILDING_BLOCKS, Items.SAND, 0.1F, 200, "roundworm_block");
     }
 
+    private static void mooncakeRecipe(RecipeOutput recipeOutput, ItemLike result, ItemLike filling) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, result, 2)
+                .pattern("WPW")
+                .define('W', Items.WHEAT)
+                .define('P', filling)
+                .unlockedBy(getItemName(Items.WHEAT), has(Items.WHEAT))
+                .save(recipeOutput);
+    }
+
     private void buildItemRecipes(RecipeOutput recipeOutput) {
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PoItems.POOP_BREAD)
                 .pattern("PMP")
@@ -109,24 +118,9 @@ public class RecipeGen extends ReginthRecipeProvider implements IConditionBuilde
                 .define('M', PoItems.MAGGOTS_SEEDS)
                 .unlockedBy(getItemName(PoItems.MAGGOTS_SEEDS), has(PoItems.MAGGOTS_SEEDS))
                 .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PoItems.POOP_MOONCAKE, 2)
-                .pattern("WPW")
-                .define('W', Items.WHEAT)
-                .define('P', PoItems.POOP)
-                .unlockedBy(getItemName(Items.WHEAT), has(Items.WHEAT))
-                .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PoItems.CHILI_POOP_MOONCAKE, 2)
-                .pattern("WPW")
-                .define('W', Items.WHEAT)
-                .define('P', PoItems.CHILI_POOP)
-                .unlockedBy(getItemName(Items.WHEAT), has(Items.WHEAT))
-                .save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, PoItems.GOLDEN_POOP_MOONCAKE, 2)
-                .pattern("WPW")
-                .define('W', Items.WHEAT)
-                .define('P', PoItems.GOLDEN_POOP)
-                .unlockedBy(getItemName(Items.WHEAT), has(Items.WHEAT))
-                .save(recipeOutput);
+        mooncakeRecipe(recipeOutput, PoItems.POOP_MOONCAKE, PoItems.POOP);
+        mooncakeRecipe(recipeOutput, PoItems.CHILI_POOP_MOONCAKE, PoItems.CHILI_POOP);
+        mooncakeRecipe(recipeOutput, PoItems.GOLDEN_POOP_MOONCAKE, PoItems.GOLDEN_POOP);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PoItems.POOP_DUMPLINGS)
                 .requires(PoItems.POOP_BALL.get())
                 .requires(ItemTags.LEAVES)
@@ -1175,13 +1169,7 @@ public class RecipeGen extends ReginthRecipeProvider implements IConditionBuilde
     }
 
     private void stairsRecipe(RecipeOutput recipeOutput, ItemLike output, ItemLike input) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 8)
-                .pattern("P  ")
-                .pattern("PP ")
-                .pattern("PPP")
-                .define('P', input)
-                .unlockedBy(getItemName(input), has(input))
-                .save(recipeOutput);
+        shapedBuildingRecipe(recipeOutput, output, input, 8, "P  ", "PP ", "PPP");
     }
 
     private void ginkgoWoodRecipes(RecipeOutput recipeOutput) {
@@ -1396,31 +1384,26 @@ public class RecipeGen extends ReginthRecipeProvider implements IConditionBuilde
             Items.BLUE_DYE, Items.PURPLE_DYE, Items.MAGENTA_DYE, Items.PINK_DYE
     );
 
-    private void slabRecipe(RecipeOutput recipeOutput, ItemLike output, ItemLike input) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 6)
-                .pattern("PPP")
-                .define('P', input)
+    private static void shapedBuildingRecipe(RecipeOutput recipeOutput, ItemLike output, ItemLike input, int count, String... rows) {
+        var builder = ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, count);
+        for (String row : rows) {
+            builder.pattern(row);
+        }
+        builder.define('P', input)
                 .unlockedBy(getItemName(input), has(input))
                 .save(recipeOutput);
+    }
+
+    private void slabRecipe(RecipeOutput recipeOutput, ItemLike output, ItemLike input) {
+        shapedBuildingRecipe(recipeOutput, output, input, 6, "PPP");
     }
 
     private void verticalSlabRecipe(RecipeOutput recipeOutput, ItemLike output, ItemLike input) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 6)
-                .pattern("P")
-                .pattern("P")
-                .pattern("P")
-                .define('P', input)
-                .unlockedBy(getItemName(input), has(input))
-                .save(recipeOutput);
+        shapedBuildingRecipe(recipeOutput, output, input, 6, "P", "P", "P");
     }
 
     private void wallRecipe(RecipeOutput recipeOutput, ItemLike output, ItemLike input) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 6)
-                .pattern("PPP")
-                .pattern("PPP")
-                .define('P', input)
-                .unlockedBy(getItemName(input), has(input))
-                .save(recipeOutput);
+        shapedBuildingRecipe(recipeOutput, output, input, 6, "PPP", "PPP");
     }
 
     private static void offerCompactingRecipe(RecipeOutput recipeOutput, RecipeCategory category, ItemLike output, ItemLike input) {

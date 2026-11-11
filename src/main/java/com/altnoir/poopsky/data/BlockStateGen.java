@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.SlabType;
+import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
@@ -128,19 +129,23 @@ public class BlockStateGen extends ReginthBlockstateProvider {
     }
 
     private void weightedLogBlock(Block block, ResourceLocation side, ResourceLocation side2, ResourceLocation end) {
+        weightedLogBlock(block, side, side2, end, end);
+    }
+
+    private void weightedLogBlock(Block block, ResourceLocation side, ResourceLocation side2, ResourceLocation end, ResourceLocation end2) {
         String path = getBlockPath(block);
         ModelFile vertical = models().withExistingParent(path, mcLoc("block/cube_column"))
                 .texture("side", side)
                 .texture("end", end);
         ModelFile vertical2 = models().withExistingParent(path + "2", mcLoc("block/cube_column"))
                 .texture("side", side2)
-                .texture("end", end);
+                .texture("end", end2);
         ModelFile horizontal = models().withExistingParent(path + "_horizontal", mcLoc("block/cube_column_horizontal"))
                 .texture("side", side)
                 .texture("end", end);
         ModelFile horizontal2 = models().withExistingParent(path + "_horizontal2", mcLoc("block/cube_column_horizontal"))
                 .texture("side", side2)
-                .texture("end", end);
+                .texture("end", end2);
 
         getVariantBuilder(block)
                 .partialState().with(RotatedPillarBlock.AXIS, Direction.Axis.Y)
@@ -161,42 +166,13 @@ public class BlockStateGen extends ReginthBlockstateProvider {
     }
 
     private void weightedAxisBlock(Block block, ResourceLocation side, ResourceLocation side2) {
-        String path = getBlockPath(block);
-        ModelFile vertical = models().withExistingParent(path, mcLoc("block/cube_column"))
-                .texture("side", side)
-                .texture("end", side);
-        ModelFile vertical2 = models().withExistingParent(path + "2", mcLoc("block/cube_column"))
-                .texture("side", side2)
-                .texture("end", side2);
-        ModelFile horizontal = models().withExistingParent(path + "_horizontal", mcLoc("block/cube_column_horizontal"))
-                .texture("side", side)
-                .texture("end", side);
-        ModelFile horizontal2 = models().withExistingParent(path + "_horizontal2", mcLoc("block/cube_column_horizontal"))
-                .texture("side", side2)
-                .texture("end", side2);
-
-        getVariantBuilder(block)
-                .partialState().with(RotatedPillarBlock.AXIS, Direction.Axis.Y)
-                .addModels(
-                        new ConfiguredModel(vertical, 0, 0, false, 4),
-                        new ConfiguredModel(vertical2, 0, 0, false, 1)
-                )
-                .partialState().with(RotatedPillarBlock.AXIS, Direction.Axis.Z)
-                .addModels(
-                        new ConfiguredModel(horizontal, 90, 0, false, 4),
-                        new ConfiguredModel(horizontal2, 90, 0, false, 1)
-                )
-                .partialState().with(RotatedPillarBlock.AXIS, Direction.Axis.X)
-                .addModels(
-                        new ConfiguredModel(horizontal, 90, 90, false, 4),
-                        new ConfiguredModel(horizontal2, 90, 90, false, 1)
-                );
+        weightedLogBlock(block, side, side2, side, side2);
     }
 
     private void poopDecoSet() {
         ResourceLocation texture = blockTexture(PoBlocks.POOP_BLOCK.get());
 
-        stairsBlock(PoBlocks.POOP_STAIRS.get(), texture);
+        uniformStairsBlock(PoBlocks.POOP_STAIRS.get(), texture);
         poopSlab(PoBlocks.POOP_SLAB.get(), texture);
         wallBlock(PoBlocks.POOP_WALL.get(), texture);
         buttonBlock(PoBlocks.POOP_BUTTON.get(), texture);
@@ -228,36 +204,18 @@ public class BlockStateGen extends ReginthBlockstateProvider {
         ResourceLocation maggots = modLoc("block/poop_block_maggots");
         ResourceLocation liquids = modLoc("block/poop_block_liquids");
 
-        ModelFile bottom = models().withExistingParent("poop_slab", mcLoc("block/slab"))
-                .texture("bottom", base)
-                .texture("side", base)
-                .texture("top", base);
-        ModelFile top = models().withExistingParent("poop_slab_top", mcLoc("block/slab_top"))
-                .texture("bottom", base)
-                .texture("side", base)
-                .texture("top", base);
+        ModelFile bottom = uniformModel("poop_slab", "slab", base);
+        ModelFile top = uniformModel("poop_slab_top", "slab_top", base);
         ModelFile doubleModel = models().withExistingParent("poop_slab_double", mcLoc("block/cube_column"))
                 .texture("end", base)
                 .texture("side", base);
-        ModelFile bottomMaggots = models().withExistingParent("poop_slab_maggots", mcLoc("block/slab"))
-                .texture("bottom", maggots)
-                .texture("side", maggots)
-                .texture("top", maggots);
-        ModelFile topMaggots = models().withExistingParent("poop_slab_top_maggots", mcLoc("block/slab_top"))
-                .texture("bottom", maggots)
-                .texture("side", maggots)
-                .texture("top", maggots);
+        ModelFile bottomMaggots = uniformModel("poop_slab_maggots", "slab", maggots);
+        ModelFile topMaggots = uniformModel("poop_slab_top_maggots", "slab_top", maggots);
         ModelFile doubleMaggots = models().withExistingParent("poop_slab_double_maggots", mcLoc("block/cube_column"))
                 .texture("end", maggots)
                 .texture("side", maggots);
-        ModelFile bottomLiquids = models().withExistingParent("poop_slab_liquids", mcLoc("block/slab"))
-                .texture("bottom", base)
-                .texture("side", base)
-                .texture("top", liquids);
-        ModelFile topLiquids = models().withExistingParent("poop_slab_top_liquids", mcLoc("block/slab_top"))
-                .texture("bottom", base)
-                .texture("side", base)
-                .texture("top", liquids);
+        ModelFile bottomLiquids = uniformModel("poop_slab_liquids", "slab", base).texture("top", liquids);
+        ModelFile topLiquids = uniformModel("poop_slab_top_liquids", "slab_top", base).texture("top", liquids);
         ModelFile doubleLiquids = models().withExistingParent("poop_slab_double_liquids", modLoc("block/poop_block3"));
 
         getVariantBuilder(slabBlock)
@@ -430,8 +388,8 @@ public class BlockStateGen extends ReginthBlockstateProvider {
         PoBlocks.getPoopCandleCakes().forEach((candle, candleCake) -> {
             String candleCakePath = getBlockPath(candleCake.get());
             String candlePath = getBlockPath(candle);
-            var unlitModel = candleCakeModel(candleCakePath, candlePath, bottom, top, side);
-            var litModel = candleCakeModel(candleCakePath + "_lit", candlePath + "_lit", bottom, top, side);
+            var unlitModel = candleCakeModel(candleCakePath, candlePath);
+            var litModel = candleCakeModel(candleCakePath + "_lit", candlePath + "_lit");
 
             getVariantBuilder(candleCake.get())
                     .partialState().with(PoopCandleCakeBlock.LIT, false).addModels(new ConfiguredModel(unlitModel))
@@ -451,12 +409,8 @@ public class BlockStateGen extends ReginthBlockstateProvider {
         return model;
     }
 
-    private ModelFile candleCakeModel(String name, String candleTexture, ResourceLocation bottom, ResourceLocation top, ResourceLocation side) {
-        return models().withExistingParent(name, mcLoc("block/template_cake_with_candle"))
-                .texture(PARTICLE, side)
-                .texture("bottom", bottom)
-                .texture("top", top)
-                .texture("side", side)
+    private ModelFile candleCakeModel(String name, String candleTexture) {
+        return models().withExistingParent(name, modLoc("block/poop_candle_cake_template"))
                 .texture("candle", mcLoc("block/" + candleTexture));
     }
 
@@ -555,8 +509,8 @@ public class BlockStateGen extends ReginthBlockstateProvider {
 
         ResourceLocation planks = blockTexture(set.planks());
         blockWithItem(set.planks());
-        stairsBlock(set.stairs(), planks);
-        slabBlock(set.slab(), planks, planks);
+        uniformStairsBlock(set.stairs(), planks);
+        uniformSlabBlock(set.slab(), planks, planks);
         verticalSlabBlock(set.verticalSlab(), planks);
         buttonBlock(set.button(), planks);
         pressurePlateBlock(set.pressurePlate(), planks);
@@ -625,6 +579,27 @@ public class BlockStateGen extends ReginthBlockstateProvider {
                 .part().modelFile(bottom).addModel().end()
                 .part().modelFile(top).addModel().end();
         generatedItem(fungus, "item");
+    }
+
+    private BlockModelBuilder uniformModel(String name, String shape, ResourceLocation texture) {
+        return models().withExistingParent(name, modLoc("block/" + shape + "_template"))
+                .texture("texture", texture);
+    }
+
+    private void uniformStairsBlock(StairBlock block, ResourceLocation texture) {
+        String path = getBlockPath(block);
+        stairsBlock(block,
+                uniformModel(path, "stairs", texture),
+                uniformModel(path + "_inner", "inner_stairs", texture),
+                uniformModel(path + "_outer", "outer_stairs", texture));
+    }
+
+    private void uniformSlabBlock(SlabBlock block, ResourceLocation doubleSlab, ResourceLocation texture) {
+        String path = getBlockPath(block);
+        slabBlock(block,
+                uniformModel(path, "slab", texture),
+                uniformModel(path + "_top", "slab_top", texture),
+                new ModelFile.UncheckedModelFile(doubleSlab));
     }
 
     private void verticalSlabBlock(VerticalSlabBlock block, ResourceLocation texture) {
@@ -1149,8 +1124,8 @@ public class BlockStateGen extends ReginthBlockstateProvider {
     private void blockFamily(Block block, Block stairs, Block slab, Block verticalSlab, Block wall) {
         var texture = blockTexture(block);
         blockWithItem(block);
-        stairsBlock((StairBlock) stairs, texture);
-        slabBlock((SlabBlock) slab, texture, texture);
+        uniformStairsBlock((StairBlock) stairs, texture);
+        uniformSlabBlock((SlabBlock) slab, texture, texture);
         verticalSlabBlock((VerticalSlabBlock) verticalSlab, texture);
         wallBlock((WallBlock) wall, texture);
 

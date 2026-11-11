@@ -1,8 +1,6 @@
 {
-  "parent": "minecraft:block/stairs",
+  "parent": "poopsky:block/stairs_template",
   "textures": {
-    "bottom": "poopsky:block/poop_bricks",
-    "side": "poopsky:block/poop_bricks",
-    "top": "poopsky:block/poop_bricks"
+    "texture": "poopsky:block/poop_bricks"
   }
 }

@@ -1,15 +1,4 @@
 {
-    "render_type": "minecraft:translucent",
-    "textures": {
-        "particle": "minecraft:block/water_still",
-        "inside": "minecraft:block/water_still"
-    },
-    "elements": [
-        {   "from": [ 2, 0, 2 ],
-            "to": [ 14, 10, 14 ],
-            "faces": {
-                "up": { "texture": "#inside", "tintindex": 1}
-            }
-        }
-    ]
+  "parent": "poopsky:block/compooper_liquid2",
+  "render_type": "minecraft:translucent"
 }
