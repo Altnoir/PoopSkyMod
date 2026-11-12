@@ -1,0 +1,38 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/block",
+	"render_type": "minecraft:cutout",
+	"textures": {
+		"top": "poopsky:block/placer_front_vertical",
+		"side": "poopsky:block/igneous_extruder_side",
+		"particle": "poopsky:block/placer_top",
+		"side2": "poopsky:block/placer_top"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#side"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#side"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#side"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#side"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#top"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#side2"}
+			}
+		},
+		{
+			"from": [16, 13, 16],
+			"to": [0, 3, 0],
+			"faces": {
+				"north": {"uv": [0, 3, 16, 13], "texture": "#side2"},
+				"east": {"uv": [0, 3, 16, 13], "texture": "#side2"},
+				"south": {"uv": [0, 3, 16, 13], "texture": "#side2"},
+				"west": {"uv": [0, 3, 16, 13], "texture": "#side2"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#side2"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#top"}
+			}
+		}
+	]
+}

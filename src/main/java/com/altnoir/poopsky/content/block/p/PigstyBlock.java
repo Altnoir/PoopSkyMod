@@ -55,7 +55,7 @@ public class PigstyBlock extends HorizontalDirectionalBlock implements EntityBlo
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     private static final String PIGSTY_DATA = "poopsky_pigsty";
     private static final int PRODUCTION_INTERVAL = 20;
-    private static final float HEAD_TURN_SPEED = 10.0F;
+    private static final float HEAD_TURN_SPEED = 20.0F;
 
     public PigstyBlock(Properties properties) {
         super(properties);

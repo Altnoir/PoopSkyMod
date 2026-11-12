@@ -2,20 +2,17 @@
   "type": "minecraft:crafting_shaped",
   "category": "redstone",
   "key": {
-    "I": {
-      "item": "minecraft:iron_ingot"
+    "O": {
+      "item": "poopsky:ominous_filthy_ingot"
     },
-    "R": {
-      "item": "minecraft:redstone"
-    },
-    "S": {
-      "item": "poopsky:snail_shell"
+    "P": {
+      "item": "poopsky:power_slug"
     }
   },
   "pattern": [
-    " S ",
-    " R ",
-    "III"
+    "O",
+    "P",
+    "O"
   ],
   "result": {
     "count": 1,

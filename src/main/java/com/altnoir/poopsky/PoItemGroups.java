@@ -62,8 +62,8 @@ public class PoItemGroups {
                             PoItemGroups::populateBasicSections,
                             TS_ITEMS,
                             TS_BLOCKS,
-                            TS_MOBS,
                             TS_FLIES,
+                            TS_MOBS,
                             TS_POTIONS
                     ).build()
     ).register();
@@ -177,8 +177,8 @@ public class PoItemGroups {
                 POOPSKY_DECO_TAB_KEY,
                 TS_ITEMS.translationKey(),
                 TS_BLOCKS.translationKey(),
-                TS_MOBS.translationKey(),
                 TS_FLIES.translationKey(),
+                TS_MOBS.translationKey(),
                 TS_POTIONS.translationKey(),
                 TS_DECO_MATERIALS.translationKey(),
                 TS_DECO_TILES.translationKey(),

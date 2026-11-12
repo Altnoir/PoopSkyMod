@@ -1,0 +1,16 @@
+{
+  "type": "poopsky:igneous_extruder",
+  "below": "minecraft:stone",
+  "inputs": [
+    {
+      "fluid": "minecraft:lava"
+    },
+    {
+      "fluid": "minecraft:water"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:stone"
+  }
+}

@@ -63,8 +63,6 @@ public class PoItems {
     public static final ItemEntry<SimpleFeedableItem> POOP_VEGETABLE_STICKS = registerFood("poop_vegetable_sticks", PFoods.POOP_VEGETABLE_STICKS);
     public static final ItemEntry<SimpleFeedableItem> POOBURGER_MEAT = registerFood("pooburger_meat", PFoods.POOBURGER_MEAT);
     public static final ItemEntry<SimpleFeedableItem> POOBURGER = registerFood("pooburger", PFoods.POOBURGER);
-    public static final ItemEntry<Item> SNAIL_SHELL = registerItem("snail_shell", Item::new);
-
     public static final ItemEntry<SimpleFeedableItem> FASTING_PILL = registerFood("fasting_pill", PFoods.FASTING_PILL);
     public static final ItemEntry<SimpleFeedableItem> POOP_PASTA = registerFood("poop_pasta", PFoods.POOP_PASTA);
     public static final ItemEntry<SimpleFeedableItem> POODDING = registerFood("poodding", PFoods.POODDING);
@@ -92,6 +90,7 @@ public class PoItems {
             props -> new ChiliItem(PoBlocks.CHILI_VINES.get(), props.food(PFoods.DRAGON_BREATH_CHILI)));
     public static final ItemEntry<DragonFruitRItem> KING_OF_DRAGON_FRUIT = registerItem("king_of_dragon_fruit",
             props -> new DragonFruitRItem(props.food(PFoods.KING_OF_DRAGON_FRUIT)));
+    public static final ItemEntry<Item> POWER_SLUG = registerItem("power_slug", Item::new);
 
     public static final ItemEntry<ToiletPlugItem> TOILET_PLUG = registerItemNoModel("toilet_plug",
             props -> new ToiletPlugItem(props.attributes(ToiletPlugItem.createWeaponAttributes())
@@ -119,18 +118,6 @@ public class PoItems {
     public static final ItemEntry<ArmorItem> OMEN_BOOTS = registerItemNoModel("omen_boots",
             prop -> new ArmorItem(PArmorMaterials.OMEN_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
                     new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(24))));
-    public static final ItemEntry<ArmorItem> ROUNDWORM_HELMET = registerItemNoModel("roundworm_helmet",
-            prop -> new ArmorItem(PArmorMaterials.ROUNDWORM_ARMOR_MATERIAL, ArmorItem.Type.HELMET,
-                    prop.durability(ArmorItem.Type.HELMET.getDurability(7))));
-    public static final ItemEntry<ArmorItem> ROUNDWORM_CHESTPLATE = registerItemNoModel("roundworm_chestplate",
-            prop -> new ArmorItem(PArmorMaterials.ROUNDWORM_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE,
-                    prop.durability(ArmorItem.Type.CHESTPLATE.getDurability(7))));
-    public static final ItemEntry<ArmorItem> ROUNDWORM_LEGGINGS = registerItemNoModel("roundworm_leggings",
-            prop -> new ArmorItem(PArmorMaterials.ROUNDWORM_ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS,
-                    prop.durability(ArmorItem.Type.LEGGINGS.getDurability(7))));
-    public static final ItemEntry<ArmorItem> ROUNDWORM_BOOTS = registerItemNoModel("roundworm_boots",
-            prop -> new ArmorItem(PArmorMaterials.ROUNDWORM_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
-                    prop.durability(ArmorItem.Type.BOOTS.getDurability(7))));
 
     public static final ItemEntry<SmithingTemplateItem> OMEN_UPGRADE_SMITHING_TEMPLATE = registerItem("omen_upgrade_smithing_template",
             props -> OmenSmithingTemplateItem.createOmenUpgradeTemplate());
@@ -200,10 +187,6 @@ public class PoItems {
             .register();
     public static final ItemEntry<GameDiskItem> GAME_DISK_PONG = REGISTRATE.item("game_disk_pong",
                     props -> new GameDiskItem(props.rarity(Rarity.RARE), Component.translatable("gamedisks.pong").withStyle(ChatFormatting.YELLOW)))
-            .lang("Game Disk")
-            .register();
-    public static final ItemEntry<GameDiskItem> GAME_DISK_RHYTHM = REGISTRATE.item("game_disk_rhythm",
-                    props -> new GameDiskItem(props.rarity(Rarity.RARE), Component.translatable("gamedisks.rhythm").withStyle(ChatFormatting.YELLOW)))
             .lang("Game Disk")
             .register();
 

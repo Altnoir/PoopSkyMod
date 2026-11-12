@@ -6,6 +6,7 @@ import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.FlyTypeDefinition;
 import com.altnoir.poopsky.content.FlyTypeManager;
 import com.altnoir.poopsky.content.recipe.FlyBarrelRecipe;
+import com.altnoir.poopsky.content.recipe.IgneousExtruderRecipe.SideInput;
 import com.altnoir.poopsky.content.recipe.POPExplosionRecipe;
 import com.altnoir.poopsky.content.recipe.SieveRecipe;
 import com.google.gson.JsonArray;
@@ -90,6 +91,7 @@ public final class PoKubeJSPlugin implements KubeJSPlugin {
         registry.register("pop_explosion", PoopSky.loc("pop_explosion"));
         registry.register("anal_pressing", PoopSky.loc("anal_pressing"));
         registry.register("compooper", PoopSky.loc("compooper"));
+        registry.register("igneous_extruder", PoopSky.loc("igneous_extruder"));
     }
 
     @Override
@@ -98,6 +100,7 @@ public final class PoKubeJSPlugin implements KubeJSPlugin {
         registry.register(KubeJSRecipeComponents.BLOCK_OR_ITEM_TYPE);
         registry.register(KubeJSRecipeComponents.FLY_BARREL_RESULT_TYPE);
         registry.register(KubeJSRecipeComponents.FLY_BARREL_FLUID_TYPE);
+        registry.register(KubeJSRecipeComponents.IGNEOUS_SIDE_INPUT_TYPE);
     }
 
     @Override
@@ -268,6 +271,13 @@ public final class PoKubeJSPlugin implements KubeJSPlugin {
         RecipeKey<ItemStack> compooperOutput = ItemStackComponent.ITEM_STACK.outputKey("output");
         poopsky.register("compooper", new RecipeSchema(fluidType, compooperInput, compooperOutput)
                 .constructor(fluidType, compooperInput, compooperOutput));
+
+        RecipeKey<List<SideInput>> igneousInputs = KubeJSRecipeComponents.IGNEOUS_SIDE_INPUT.asList().inputKey("inputs");
+        RecipeKey<ItemStack> igneousResult = ItemStackComponent.ITEM_STACK.outputKey("result");
+        RecipeKey<Block> igneousBelow = BlockComponent.BLOCK.inputKey("below").defaultOptional();
+        poopsky.register("igneous_extruder", new RecipeSchema(igneousInputs, igneousResult, igneousBelow)
+                .constructor(igneousInputs, igneousResult)
+                .constructor(igneousInputs, igneousResult, igneousBelow));
     }
 
     private record GeneratedRecipe(ResourceLocation id, JsonObject json) {

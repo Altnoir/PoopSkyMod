@@ -9,10 +9,7 @@ import com.altnoir.poopsky.client.particle.DeathBlightParticle;
 import com.altnoir.poopsky.client.particle.LeavesParticle;
 import com.altnoir.poopsky.client.particle.PoopParticle;
 import com.altnoir.poopsky.client.particle.ToiletParticle;
-import com.altnoir.poopsky.client.renderer.GachaponItemRenderer;
-import com.altnoir.poopsky.client.renderer.TimeBellOverlay;
-import com.altnoir.poopsky.client.renderer.ToiletHighlightRenderer;
-import com.altnoir.poopsky.client.renderer.ToiletPlugItemRenderer;
+import com.altnoir.poopsky.client.renderer.*;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
 import com.altnoir.poopsky.content.block.renderer.MaggotsChunkLoaderBlockEntityRenderer;
@@ -81,6 +78,7 @@ public class PoopSkyClient {
         modEventBus.addListener(PoBedrockModelResources::onRegisterV2BedrockResources);
         modEventBus.addListener(ClientModEvents::modLoad);
         modEventBus.addListener(ClientModEvents::registerLayers);
+        modEventBus.addListener(ClientModEvents::registerRenderers);
         modEventBus.addListener(ClientModEvents::registerFluidRenderTypes);
         modEventBus.addListener(ClientModEvents::registerItemProperties);
         modEventBus.addListener(ClientModEvents::registerRenderTypes);
@@ -122,6 +120,10 @@ public class PoopSkyClient {
             event.registerLayerDefinition(PoBoatRenderer.chestBoatLayer("ginkgo"), ChestBoatModel::createBodyModel);
             event.registerLayerDefinition(PoBoatRenderer.boatLayer("primo"), BoatModel::createBodyModel);
             event.registerLayerDefinition(PoBoatRenderer.chestBoatLayer("primo"), ChestBoatModel::createBodyModel);
+        }
+
+        public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+            event.registerBlockEntityRenderer(PoBlockEntityType.IGNEOUS_EXTRUDER.get(), IgneousExtruderBlockEntityRenderer::new);
         }
 
         public static void registerFluidRenderTypes(FMLClientSetupEvent event) {

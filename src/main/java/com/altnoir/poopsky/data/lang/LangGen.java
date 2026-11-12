@@ -24,17 +24,6 @@ public final class LangGen {
 
     private static void generateEnUs(ReginthLangProvider provider) {
         LangGen.provider = provider;
-        provider.add("gamedisks.rhythm", "Poop Rhythm");
-        provider.add("gamedisks.rhythm.song.light_dance", "Light Dance");
-        provider.add("gui.gamingconsole.rhythm.perfect", "PERFECT");
-        provider.add("gui.gamingconsole.rhythm.great", "GREAT");
-        provider.add("gui.gamingconsole.rhythm.good", "GOOD");
-        provider.add("gui.gamingconsole.rhythm.miss", "MISS");
-        provider.add("gui.gamingconsole.rhythm.combo", "Combo");
-        provider.add("gui.gamingconsole.rhythm.max_combo", "Max Combo");
-        provider.add("gui.gamingconsole.rhythm.lives", "Lives");
-        provider.add("gui.gamingconsole.rhythm.rhythm_score", "Rhythm Score");
-        provider.add("gui.gamingconsole.rhythm.reward", "Reward Points");
         addAdvancements();
         addToiletTypes();
         addFlyTypes();
@@ -442,6 +431,7 @@ public final class LangGen {
         provider.add("jei.poopsky.liquid_interaction.source_flowing", "Source and flowing fluids produce different results");
         provider.add("jei.poopsky.liquid_interaction.replace_left", "The result replaces the left fluid");
         provider.add("jei.poopsky.liquid_interaction.below", "The block below must be: %s");
+        provider.add("jei.poopsky.igneous_extruder.source", "Requires a fluid source");
         provider.add("jei.poopsky.sieve_chance", "Chance: %s");
         provider.add("jei.poopsky.arcade_chance", "Chance: %s");
         provider.add("jei.poopsky.pop_explosion_radius", "Radius > %s");
@@ -476,6 +466,7 @@ public final class LangGen {
     }
 
     private static void addConfigs() {
+        provider.add("config.jade.plugin_poopsky.igneous_extruder_output", "Extruder Output");
         addConfig("title", "%s Options");
         addConfig("world", "World");
         addConfig("setPoopskyDefault", "Default Dedicated Server World Type");

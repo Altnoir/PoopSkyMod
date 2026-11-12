@@ -4,7 +4,9 @@ import com.altnoir.poopsky.content.block.entity.IgneousExtruderBlockEntity;
 import com.altnoir.poopsky.init.PoBlockEntityType;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -33,6 +35,25 @@ public class IgneousExtruderBlock extends BaseEntityBlock {
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new IgneousExtruderBlockEntity(pos, state);
+    }
+
+    @Override
+    protected BlockState updateShape(BlockState state, Direction direction, BlockState neighborState,
+                                     LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+        if (direction != Direction.UP && !level.isClientSide()
+                && level.getBlockEntity(pos) instanceof IgneousExtruderBlockEntity extruder) {
+            extruder.invalidateRecipeInputs();
+        }
+        return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
+    }
+
+    @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        if (!level.isClientSide && !state.is(newState.getBlock())
+                && level.getBlockEntity(pos) instanceof IgneousExtruderBlockEntity extruder) {
+            extruder.dropPendingOutput(level);
+        }
+        super.onRemove(state, level, pos, newState, movedByPiston);
     }
 
     @Override

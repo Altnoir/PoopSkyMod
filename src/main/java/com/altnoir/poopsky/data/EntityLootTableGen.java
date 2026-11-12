@@ -104,7 +104,7 @@ public final class EntityLootTableGen {
         loot.add(PoEntityType.SNAIL.get(), LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0F))
-                        .add(LootItem.lootTableItem(PoItems.SNAIL_SHELL.get()))));
+                        .add(LootItem.lootTableItem(PoItems.POWER_SLUG.get()))));
         loot.add(
                 PoEntityType.POP_CHICKEN.get(),
                 LootTable.lootTable()

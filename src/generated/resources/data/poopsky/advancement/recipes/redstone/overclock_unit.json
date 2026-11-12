@@ -7,11 +7,11 @@
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "snail_shell": {
+    "power_slug": {
       "conditions": {
         "items": [
           {
-            "items": "poopsky:snail_shell"
+            "items": "poopsky:power_slug"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "snail_shell"
+      "power_slug"
     ]
   ],
   "rewards": {

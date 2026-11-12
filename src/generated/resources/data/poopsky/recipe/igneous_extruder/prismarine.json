@@ -1,0 +1,16 @@
+{
+  "type": "poopsky:igneous_extruder",
+  "below": "poopsky:raw_sea_poop_block",
+  "inputs": [
+    {
+      "fluid": "minecraft:lava"
+    },
+    {
+      "block": "minecraft:blue_ice"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:prismarine"
+  }
+}

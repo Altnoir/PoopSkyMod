@@ -3,7 +3,6 @@
     "poopsky:game_disk_roundworm",
     "poopsky:game_disk_blocktris",
     "poopsky:game_disk_touhou",
-    "poopsky:game_disk_pong",
-    "poopsky:game_disk_rhythm"
+    "poopsky:game_disk_pong"
   ]
 }

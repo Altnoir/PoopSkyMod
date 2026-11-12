@@ -3,6 +3,7 @@ package com.altnoir.poopsky.compat.kubejs;
 import com.altnoir.abysslib.AbyssLib;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.recipe.FlyBarrelRecipe;
+import com.altnoir.poopsky.content.recipe.IgneousExtruderRecipe.SideInput;
 import com.altnoir.poopsky.content.recipe.POPExplosionRecipe;
 import com.altnoir.poopsky.content.recipe.SieveRecipe;
 import dev.latvian.mods.kubejs.recipe.RecipeScriptContext;
@@ -36,6 +37,10 @@ public final class KubeJSRecipeComponents {
     public static final RecipeComponentType<FlyBarrelRecipe.FluidInput> FLY_BARREL_FLUID_TYPE =
             RecipeComponentType.unit(PoopSky.loc("fly_barrel_fluid"), FlyBarrelFluidComponent::new);
     public static final RecipeComponent<FlyBarrelRecipe.FluidInput> FLY_BARREL_FLUID = FLY_BARREL_FLUID_TYPE.instance();
+
+    public static final RecipeComponentType<SideInput> IGNEOUS_SIDE_INPUT_TYPE =
+            RecipeComponentType.unit(PoopSky.loc("igneous_side_input"), IgneousSideInputComponent::new);
+    public static final RecipeComponent<SideInput> IGNEOUS_SIDE_INPUT = IGNEOUS_SIDE_INPUT_TYPE.instance();
 
     private KubeJSRecipeComponents() {
     }
@@ -142,6 +147,38 @@ public final class KubeJSRecipeComponents {
                 }
             }
             throw new IllegalArgumentException("Invalid fly barrel fluid input: " + value);
+        }
+    }
+
+    private static final class IgneousSideInputComponent extends SimpleRecipeComponent<SideInput> {
+        private IgneousSideInputComponent(RecipeComponentType<SideInput> type) {
+            super(type, SideInput.CODEC, TypeInfo.OBJECT);
+        }
+
+        @Override
+        public SideInput wrap(RecipeScriptContext context, Object value) {
+            if (value instanceof SideInput input) return input;
+            if (value instanceof Map<?, ?> map) {
+                Object fluid = map.get("fluid");
+                Object block = map.get("block");
+                if (fluid != null && block == null) {
+                    ResourceLocation id = AbyssLib.tryParse(fluid.toString());
+                    if (id != null) {
+                        return BuiltInRegistries.FLUID.getOptional(id)
+                                .filter(entry -> entry.defaultFluidState().isSource())
+                                .map(SideInput::of)
+                                .orElseThrow(() -> new IllegalArgumentException("Invalid source fluid: " + id));
+                    }
+                }
+                if (block != null && fluid == null) {
+                    ResourceLocation id = AbyssLib.tryParse(block.toString());
+                    if (id != null) {
+                        return BuiltInRegistries.BLOCK.getOptional(id).map(SideInput::of)
+                                .orElseThrow(() -> new IllegalArgumentException("Invalid block: " + id));
+                    }
+                }
+            }
+            throw new IllegalArgumentException("An igneous extruder side input requires exactly one fluid or block ID: " + value);
         }
     }
 

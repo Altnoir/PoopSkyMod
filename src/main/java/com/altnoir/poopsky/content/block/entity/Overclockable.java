@@ -2,6 +2,7 @@ package com.altnoir.poopsky.content.block.entity;
 
 import com.altnoir.poopsky.init.PoBlocks;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 
 public interface Overclockable {
@@ -12,6 +13,10 @@ public interface Overclockable {
     }
 
     final class OverclockState {
+        private static final int SCAN_SIZE = 27;
+        private static final int SCAN_BUDGET = 10;
+        private static final int SCAN_COOLDOWN = 77;
+
         private int cooldown;
         private int index;
         private int count;
@@ -23,7 +28,18 @@ public interface Overclockable {
                 cooldown--;
                 return multiplier;
             }
-            int end = Math.min(index + 10, 27);
+            scan(level, pos, SCAN_BUDGET);
+            return multiplier;
+        }
+
+        public void refresh(ServerLevel level, BlockPos pos) {
+            index = 0;
+            count = 0;
+            scan(level, pos, SCAN_SIZE);
+        }
+
+        private void scan(Level level, BlockPos pos, int budget) {
+            int end = Math.min(index + budget, SCAN_SIZE);
             while (index < end) {
                 int i = index++;
                 BlockPos target = pos.offset(i / 9 - 1, i / 3 % 3 - 1, i % 3 - 1);
@@ -32,13 +48,12 @@ public interface Overclockable {
                     count++;
                 }
             }
-            if (index == 27) {
+            if (index == SCAN_SIZE) {
                 multiplier = 1 << count;
                 index = 0;
                 count = 0;
-                cooldown = 77;
+                cooldown = SCAN_COOLDOWN;
             }
-            return multiplier;
         }
     }
 }

@@ -39,8 +39,6 @@ public class BlockStateGen extends ReginthBlockstateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        directionalBlock(PoBlocks.OVERCLOCK_UNIT.get(), models().getExistingFile(modLoc("block/overclock_unit")));
-        simpleBlockItem(PoBlocks.OVERCLOCK_UNIT.get(), models().getExistingFile(modLoc("block/overclock_unit")));
         poopBlock();
         poopWoodSet();
         poopDecoSet();
@@ -78,7 +76,8 @@ public class BlockStateGen extends ReginthBlockstateProvider {
         cubeBottomTop(PoBlocks.POP.get());
         cubeBottomTopFace(PoBlocks.FLY_BARREL.get());
         pigsty();
-        cubeBottomTop(PoBlocks.IGNEOUS_EXTRUDER.get(), "compooper_top", "compooper_side", "compooper_bottom");
+        overclockUnit();
+        simpleBlockWithItem(PoBlocks.IGNEOUS_EXTRUDER.get(), models().getExistingFile(modLoc("block/igneous_extruder")));
         cubeBottomTop(PoBlocks.BREEDING_CHEST.get(), PoBlocks.CUT_POOP_BLOCK.get());
         orientable(PoBlocks.PLACER.get());
         maggotsChunkLoader();
@@ -967,6 +966,18 @@ public class BlockStateGen extends ReginthBlockstateProvider {
                     .build();
         });
         itemModels().withExistingParent("pigsty", modLoc("item/pigsty_item"));
+    }
+
+    private void overclockUnit() {
+        getVariantBuilder(PoBlocks.OVERCLOCK_UNIT.get()).forAllStates(state -> {
+            Direction.Axis axis = state.getValue(OverclockUnitBlock.AXIS);
+            return ConfiguredModel.builder()
+                    .modelFile(models().getExistingFile(modLoc("block/overclock_unit")))
+                    .rotationX(axis == Direction.Axis.Y ? 0 : 90)
+                    .rotationY(axis == Direction.Axis.X ? 90 : 0)
+                    .build();
+        });
+        simpleBlockItem(PoBlocks.OVERCLOCK_UNIT.get(), models().getExistingFile(modLoc("block/overclock_unit")));
     }
 
     private void arcade(Block block) {

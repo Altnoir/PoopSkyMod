@@ -37,8 +37,6 @@ public final class PoFluidInteractions {
         registerLavaIceInteraction(PoBlocks.DRIED_POOP_BLOCK.get(), Blocks.DEEPSLATE);
         registerLavaIceInteraction(PoBlocks.DRIED_CHILI_POOP_BLOCK.get(), Blocks.NETHERRACK);
         registerLavaIceInteraction(PoBlocks.DRIED_GOLDEN_POOP_BLOCK.get(), Blocks.END_STONE);
-        registerLavaIceInteraction(PoBlocks.RAW_POOP_BLOCK.get(), Blocks.ANDESITE);
-        registerLavaIceInteraction(PoBlocks.RAW_SAPLING_POOP_BLOCK.get(), Blocks.GRANITE);
         registerLavaIceInteraction(PoBlocks.RAW_SEA_POOP_BLOCK.get(), Blocks.PRISMARINE);
         registerLavaIceInteraction(PoBlocks.RAW_WITHER_POOP_BLOCK.get(), Blocks.BLACKSTONE);
     }

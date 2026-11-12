@@ -364,18 +364,6 @@ public class PoBlocks {
                                             .hasProperty(PigstyBlock.PART, PigstyPart.FRONT)))))),
             PigstyBlockItem::new, BlockTab.BASIC_BLOCKS);
 
-    public static final BlockEntry<PlacerBlock> PLACER = registerBlock("placer",
-            props -> new PlacerBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
-                    .instrument(NoteBlockInstrument.BASEDRUM)
-                    .requiresCorrectToolForDrops().strength(3.5F)));
-    public static final BlockEntry<OverclockUnitBlock> OVERCLOCK_UNIT = registerBlock("overclock_unit",
-            props -> new OverclockUnitBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.END_ROD)
-                    .lightLevel(state -> 0)));
-
-    public static final BlockEntry<IgneousExtruderBlock> IGNEOUS_EXTRUDER = registerBlock("igneous_extruder",
-            props -> new IgneousExtruderBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL)
-                    .instrument(NoteBlockInstrument.BASEDRUM)
-                    .requiresCorrectToolForDrops().strength(3.5F)));
     public static final BlockEntry<SieveBlock> SIEVE = registerBlock("sieve_stable",
             props -> new SieveBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.STONE)
@@ -383,6 +371,14 @@ public class PoBlocks {
                     .requiresCorrectToolForDrops()
                     .isValidSpawn(Blocks::never)
                     .noOcclusion()));
+    public static final BlockEntry<PlacerBlock> PLACER = registerBlock("placer",
+            props -> new PlacerBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops().strength(3.5F)));
+    public static final BlockEntry<IgneousExtruderBlock> IGNEOUS_EXTRUDER = registerBlock("igneous_extruder",
+            props -> new IgneousExtruderBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops().strength(3.5F)));
     public static final BlockEntry<PoopTntBlock> POP = registerBlock("poop_tnt", 88,
             props -> new PoopTntBlock(simpleProperties(MapColor.FIRE, 0.0F, SoundType.GRASS)
                     .ignitedByLava()
@@ -394,6 +390,14 @@ public class PoBlocks {
             props -> new BreedingChestBlock(simpleProperties(MapColor.COLOR_BROWN, 1.0F, SoundType.POLISHED_TUFF)
                     .requiresCorrectToolForDrops()
                     .noOcclusion()));
+    public static final BlockEntry<OverclockUnitBlock> OVERCLOCK_UNIT = registerBlock("overclock_unit",
+            props -> new OverclockUnitBlock(BlockBehaviour.Properties.of()
+                    .forceSolidOn()
+                    .strength(HARDEN)
+                    .sound(SoundType.LANTERN)
+                    .lightLevel(state -> 14)
+                    .noOcclusion()
+                    .requiresCorrectToolForDrops()));
     public static final BlockEntry<MaggotsChunkLoaderBlock> MAGGOTS_CHUNK_LOADER = registerBlock("maggots_chunk_loader", 88,
             props -> new MaggotsChunkLoaderBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.TERRACOTTA_WHITE)

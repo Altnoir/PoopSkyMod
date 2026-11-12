@@ -50,7 +50,7 @@ public class SnailEntity extends Animal {
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 8.0)
-                .add(Attributes.MOVEMENT_SPEED, 0.08)
+                .add(Attributes.MOVEMENT_SPEED, 0.16)
                 .add(Attributes.STEP_HEIGHT, 0.0);
     }
 

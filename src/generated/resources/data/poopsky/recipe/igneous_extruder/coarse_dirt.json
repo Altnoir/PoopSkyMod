@@ -1,0 +1,16 @@
+{
+  "type": "poopsky:igneous_extruder",
+  "below": "minecraft:coarse_dirt",
+  "inputs": [
+    {
+      "fluid": "poopsky:urine"
+    },
+    {
+      "fluid": "minecraft:water"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:coarse_dirt"
+  }
+}

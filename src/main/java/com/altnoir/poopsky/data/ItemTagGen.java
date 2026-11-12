@@ -66,8 +66,7 @@ public final class ItemTagGen {
                         PoItems.GAME_DISK_ROUNDWORM.get(),
                         PoItems.GAME_DISK_BLOCKTRIS.get(),
                         PoItems.GAME_DISK_TOUHOU.get(),
-                        PoItems.GAME_DISK_PONG.get(),
-                        PoItems.GAME_DISK_RHYTHM.get()
+                        PoItems.GAME_DISK_PONG.get()
                 );
         tag(PoTags.Items.FLUSH_TOILET_SAVE).addTag(PoTags.Items.POOPS).addTag(PoTags.Items.SHITS);
         copy(PoTags.Blocks.BREEDING_CHEST_ACCELERATOR, PoTags.Items.BREEDING_CHEST_ACCELERATOR);
@@ -198,10 +197,10 @@ public final class ItemTagGen {
                 PoItems.TOILET_PLUG.get(),
                 PoItems.TOILET_PLUG_WAND.get()
         );
-        tag(ItemTags.FOOT_ARMOR).add(PoItems.OMEN_BOOTS.get(), PoItems.ROUNDWORM_BOOTS.get());
-        tag(ItemTags.LEG_ARMOR).add(PoItems.OMEN_LEGGINGS.get(), PoItems.ROUNDWORM_LEGGINGS.get());
-        tag(ItemTags.CHEST_ARMOR).add(PoItems.OMEN_CHESTPLATE.get(), PoItems.ROUNDWORM_CHESTPLATE.get());
-        tag(ItemTags.HEAD_ARMOR).add(PoItems.OMEN_HELMET.get(), PoItems.ROUNDWORM_HELMET.get());
+        tag(ItemTags.FOOT_ARMOR).add(PoItems.OMEN_BOOTS.get());
+        tag(ItemTags.LEG_ARMOR).add(PoItems.OMEN_LEGGINGS.get());
+        tag(ItemTags.CHEST_ARMOR).add(PoItems.OMEN_CHESTPLATE.get());
+        tag(ItemTags.HEAD_ARMOR).add(PoItems.OMEN_HELMET.get());
         tag(ItemTags.EQUIPPABLE_ENCHANTABLE).addTag(PoTags.Items.SHITS);
         tag(ItemTags.VANISHING_ENCHANTABLE).addTag(PoTags.Items.SHITS);
 
