@@ -34,6 +34,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -92,6 +93,7 @@ public final class PoKubeJSPlugin implements KubeJSPlugin {
         registry.register("anal_pressing", PoopSky.loc("anal_pressing"));
         registry.register("compooper", PoopSky.loc("compooper"));
         registry.register("igneous_extruder", PoopSky.loc("igneous_extruder"));
+        registry.register("ominous_altar", PoopSky.loc("ominous_altar"));
     }
 
     @Override
@@ -278,6 +280,15 @@ public final class PoKubeJSPlugin implements KubeJSPlugin {
         poopsky.register("igneous_extruder", new RecipeSchema(igneousInputs, igneousResult, igneousBelow)
                 .constructor(igneousInputs, igneousResult)
                 .constructor(igneousInputs, igneousResult, igneousBelow));
+
+        RecipeKey<Ingredient> altarInput = IngredientComponent.INGREDIENT.inputKey("input");
+        RecipeKey<List<Ingredient>> altarPedestals = IngredientComponent.INGREDIENT.instance().asList().inputKey("pedestals");
+        RecipeKey<FluidStack> altarFluid = FluidStackComponent.FLUID_STACK.inputKey("fluid");
+        RecipeKey<ItemStack> altarResult = ItemStackComponent.ITEM_STACK.outputKey("result");
+        RecipeKey<Integer> altarDuration = NumberComponent.NON_NEGATIVE_INT.otherKey("duration").optional(200);
+        poopsky.register("ominous_altar", new RecipeSchema(altarInput, altarPedestals, altarFluid, altarResult, altarDuration)
+                .constructor(altarInput, altarPedestals, altarFluid, altarResult)
+                .constructor(altarInput, altarPedestals, altarFluid, altarResult, altarDuration));
     }
 
     private record GeneratedRecipe(ResourceLocation id, JsonObject json) {

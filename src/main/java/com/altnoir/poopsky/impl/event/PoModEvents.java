@@ -60,6 +60,21 @@ public class PoModEvents {
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
+                PoBlockEntityType.OMINOUS_ALTAR.get(),
+                (blockEntity, direction) -> blockEntity.getHandler(direction)
+        );
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                PoBlockEntityType.PEDESTAL.get(),
+                (blockEntity, direction) -> blockEntity.getHandler(direction)
+        );
+        event.registerBlockEntity(
+                Capabilities.FluidHandler.BLOCK,
+                PoBlockEntityType.GLASS_JAR.get(),
+                (blockEntity, direction) -> blockEntity.getTank()
+        );
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
                 PoBlockEntityType.PIGSTY.get(),
                 (blockEntity, direction) -> blockEntity.getOutputHandler()
         );

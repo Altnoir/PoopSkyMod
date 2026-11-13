@@ -78,6 +78,9 @@ public class BlockStateGen extends ReginthBlockstateProvider {
         pigsty();
         overclockUnit();
         simpleBlockWithItem(PoBlocks.IGNEOUS_EXTRUDER.get(), models().getExistingFile(modLoc("block/igneous_extruder")));
+        simpleBlockWithItem(PoBlocks.OMINOUS_ALTAR.get(), models().getExistingFile(modLoc("block/ominous_altar")));
+        simpleBlockWithItem(PoBlocks.PEDESTAL.get(), models().getExistingFile(modLoc("block/pedestal")));
+        simpleBlockWithItem(PoBlocks.GLASS_JAR.get(), models().getExistingFile(modLoc("block/glass_jar")));
         cubeBottomTop(PoBlocks.BREEDING_CHEST.get(), PoBlocks.CUT_POOP_BLOCK.get());
         orientable(PoBlocks.PLACER.get());
         maggotsChunkLoader();

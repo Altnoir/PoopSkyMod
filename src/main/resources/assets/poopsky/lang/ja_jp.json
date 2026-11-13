@@ -329,6 +329,9 @@
   "block.poopsky.placer": "設置器",
   "block.poopsky.overclock_unit": "オーバークロックユニット",
   "block.poopsky.igneous_extruder": "自動丸石製造機",
+  "block.poopsky.glass_jar": "ガラス瓶",
+  "block.poopsky.pedestal": "台座",
+  "block.poopsky.ominous_altar": "不吉な祭壇",
   "block.poopsky.sieve_stable": "篩",
   "block.poopsky.poop_tnt": "ポップ",
 
@@ -425,6 +428,8 @@
   "fly_type.poopsky.fluorite": "蛍石ハエ",
   "tooltip.poopsky.fly_type": "種類",
   "tooltip.poopsky.pigsty.captured": "ブタを捕獲済み",
+  "tooltip.poopsky.glass_jar.fluid_amount": "%1$s：%2$s mB",
+  "tooltip.poopsky.glass_jar.empty": "空の瓶",
 
   "block.poopsky.toilet.oak": "オーク",
   "block.poopsky.toilet.spruce": "トウヒ",
@@ -802,6 +807,9 @@
   "jei.category.poopsky.fly_barrel": "ハエの巣",
   "jei.category.poopsky.breeding_chest": "繁殖箱",
   "jei.poopsky.igneous_extruder.source": "液体の源が必要",
+  "jei.poopsky.altar_duration": "%sティック",
+  "jei.poopsky.altar.description.rain": "雨を呼ぶ",
+  "jei.poopsky.altar.description.thunder": "雷雨を呼ぶ",
   "jei.category.poopsky.liquid_interaction": "液体の相互作用",
   "jei.category.poopsky.arcade": "アーケード報酬",
   "jei.poopsky.liquid_interaction.source_flowing": "源泉と流れる液体では結果が異なります",

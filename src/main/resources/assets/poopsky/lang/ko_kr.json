@@ -329,6 +329,9 @@
   "block.poopsky.placer": "설치기",
   "block.poopsky.overclock_unit": "오버클럭 유닛",
   "block.poopsky.igneous_extruder": "자동 조약돌 생성기",
+  "block.poopsky.glass_jar": "유리병",
+  "block.poopsky.pedestal": "받침대",
+  "block.poopsky.ominous_altar": "불길한 제단",
   "block.poopsky.sieve_stable": "체",
   "block.poopsky.poop_tnt": "POP",
 
@@ -425,6 +428,8 @@
   "fly_type.poopsky.fluorite": "형석 파리",
   "tooltip.poopsky.fly_type": "종류",
   "tooltip.poopsky.pigsty.captured": "돼지를 포획함",
+  "tooltip.poopsky.glass_jar.fluid_amount": "%1$s: %2$s mB",
+  "tooltip.poopsky.glass_jar.empty": "빈 유리병",
 
   "block.poopsky.toilet.oak": "참나무",
   "block.poopsky.toilet.spruce": "가문비나무",
@@ -802,6 +807,9 @@
   "jei.category.poopsky.fly_barrel": "파리 둥지",
   "jei.category.poopsky.breeding_chest": "번식 상자",
   "jei.poopsky.igneous_extruder.source": "액체 근원 필요",
+  "jei.poopsky.altar_duration": "%s틱",
+  "jei.poopsky.altar.description.rain": "비 부르기",
+  "jei.poopsky.altar.description.thunder": "뇌우 부르기",
   "jei.category.poopsky.liquid_interaction": "액체 상호작용",
   "jei.category.poopsky.arcade": "아케이드 보상",
   "jei.poopsky.liquid_interaction.source_flowing": "원천 액체와 흐르는 액체는 다른 결과를 만듭니다",

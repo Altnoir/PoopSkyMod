@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "M": {
+      "item": "minecraft:mossy_cobblestone"
+    },
+    "O": {
+      "item": "poopsky:ominous_filthy_ingot"
+    }
+  },
+  "pattern": [
+    "OOO",
+    " M ",
+    "MMM"
+  ],
+  "result": {
+    "count": 1,
+    "id": "poopsky:ominous_altar"
+  }
+}

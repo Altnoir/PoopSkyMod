@@ -329,6 +329,9 @@
   "block.poopsky.placer": "放置器",
   "block.poopsky.overclock_unit": "超頻單元",
   "block.poopsky.igneous_extruder": "自動造石機",
+  "block.poopsky.glass_jar": "玻璃罐",
+  "block.poopsky.pedestal": "置物台",
+  "block.poopsky.ominous_altar": "厄兆祭壇",
   "block.poopsky.sieve_stable": "篩台",
   "block.poopsky.poop_tnt": "POP",
 
@@ -425,6 +428,8 @@
   "fly_type.poopsky.fluorite": "氟石蒼蠅",
   "tooltip.poopsky.fly_type": "品種",
   "tooltip.poopsky.pigsty.captured": "已捕獲豬",
+  "tooltip.poopsky.glass_jar.fluid_amount": "%1$s：%2$s mB",
+  "tooltip.poopsky.glass_jar.empty": "空罐",
 
   "block.poopsky.toilet.oak": "橡木",
   "block.poopsky.toilet.spruce": "杉木",
@@ -802,6 +807,9 @@
   "jei.category.poopsky.fly_barrel": "蒼蠅巢",
   "jei.category.poopsky.breeding_chest": "繁育箱",
   "jei.poopsky.igneous_extruder.source": "需要流體源頭",
+  "jei.poopsky.altar_duration": "%s 刻",
+  "jei.poopsky.altar.description.rain": "喚雨",
+  "jei.poopsky.altar.description.thunder": "召喚雷雨",
   "jei.category.poopsky.liquid_interaction": "液體交互",
   "jei.category.poopsky.arcade": "街機獎勵",
   "jei.poopsky.liquid_interaction.source_flowing": "源液體和流動液體會生成不同產物",

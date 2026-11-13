@@ -23,6 +23,7 @@ public class PoRecipes {
     public static final RecipeEntry<AnalPressingRecipe.Serializer, AnalPressingRecipe> ANAL_PRESSING = register("anal_pressing", AnalPressingRecipe.Serializer::new);
     public static final RecipeEntry<CompooperRecipe.Serializer, CompooperRecipe> COMPOOPER = register("compooper", CompooperRecipe.Serializer::new);
     public static final RecipeEntry<IgneousExtruderRecipe.Serializer, IgneousExtruderRecipe> IGNEOUS_EXTRUDER = register("igneous_extruder", IgneousExtruderRecipe.Serializer::new);
+    public static final RecipeEntry<AltarRecipe.Serializer, AltarRecipe> ALTAR = register("ominous_altar", AltarRecipe.Serializer::new);
 
     public static final DeferredHolder<RecipeSerializer<?>, ToiletShapedRecipe.Serializer> TOILET_SHAPED_SERIALIZER = registerSerializer("toilet_shaped", ToiletShapedRecipe.Serializer::new);
 

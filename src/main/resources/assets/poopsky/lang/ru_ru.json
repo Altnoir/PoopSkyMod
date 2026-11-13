@@ -329,6 +329,9 @@
   "block.poopsky.placer": "Размещатель",
   "block.poopsky.overclock_unit": "Модуль разгона",
   "block.poopsky.igneous_extruder": "Автоматический генератор камня",
+  "block.poopsky.glass_jar": "Стеклянная банка",
+  "block.poopsky.pedestal": "Пьедестал",
+  "block.poopsky.ominous_altar": "Зловещий алтарь",
   "block.poopsky.sieve_stable": "Сито",
   "block.poopsky.poop_tnt": "POP",
 
@@ -425,6 +428,8 @@
   "fly_type.poopsky.fluorite": "Флюоритовая муха",
   "tooltip.poopsky.fly_type": "Тип",
   "tooltip.poopsky.pigsty.captured": "Свинья поймана",
+  "tooltip.poopsky.glass_jar.fluid_amount": "%1$s: %2$s mB",
+  "tooltip.poopsky.glass_jar.empty": "Пустая банка",
 
   "block.poopsky.toilet.oak": "Дубовый",
   "block.poopsky.toilet.spruce": "Еловый",
@@ -802,6 +807,9 @@
   "jei.category.poopsky.fly_barrel": "Мушиное гнездо",
   "jei.category.poopsky.breeding_chest": "Ящик для разведения",
   "jei.poopsky.igneous_extruder.source": "Требуется источник жидкости",
+  "jei.poopsky.altar_duration": "%s тактов",
+  "jei.poopsky.altar.description.rain": "Вызов дождя",
+  "jei.poopsky.altar.description.thunder": "Вызов грозы",
   "jei.category.poopsky.liquid_interaction": "Взаимодействие жидкостей",
   "jei.category.poopsky.arcade": "Награды аркад",
   "jei.poopsky.liquid_interaction.source_flowing": "Исходная и текучая жидкости дают разные результаты",

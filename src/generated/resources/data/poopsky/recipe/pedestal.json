@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "M": {
+      "item": "minecraft:mossy_cobblestone"
+    },
+    "P": {
+      "item": "poopsky:spall"
+    },
+    "S": {
+      "item": "minecraft:mossy_cobblestone_stairs"
+    }
+  },
+  "pattern": [
+    " M ",
+    "SPS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "poopsky:pedestal"
+  }
+}

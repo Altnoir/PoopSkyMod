@@ -6,13 +6,16 @@ import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.init.FlyTypes;
 import com.altnoir.poopsky.init.PoBlocks;
 import com.altnoir.poopsky.init.PoItems;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.ModelEvent;
+import net.neoforged.neoforge.client.model.BakedModelWrapper;
 
 import java.util.*;
 
@@ -52,6 +55,19 @@ public class BakedModelEventHandler {
         wrapToiletItemModel(models, PoBlocks.WOODEN_TOILET.get(), "wooden_toilet", ToiletType.Category.WOOD);
         wrapToiletItemModel(models, PoBlocks.HARD_TOILET.get(), "hard_toilet", ToiletType.Category.HARD);
         wrapFlyItemModel(models);
+        models.computeIfPresent(ModelResourceLocation.inventory(PoBlocks.GLASS_JAR.getId()),
+                (key, original) -> new BakedModelWrapper<>(original) {
+                    @Override
+                    public boolean isCustomRenderer() {
+                        return true;
+                    }
+
+                    @Override
+                    public BakedModel applyTransform(ItemDisplayContext context, PoseStack poses, boolean leftHand) {
+                        originalModel.applyTransform(context, poses, leftHand);
+                        return this;
+                    }
+                });
     }
 
     private static void registerFlyItemModels(ModelEvent.RegisterAdditional event) {

@@ -1,0 +1,41 @@
+{
+  "type": "poopsky:ominous_altar",
+  "duration": 800,
+  "fluid": {
+    "amount": 8000,
+    "id": "poopsky:urine"
+  },
+  "input": {
+    "item": "minecraft:stick"
+  },
+  "pedestals": [
+    {
+      "item": "poopsky:fly"
+    },
+    {
+      "item": "minecraft:breeze_rod"
+    },
+    {
+      "item": "minecraft:breeze_rod"
+    },
+    {
+      "item": "poopsky:ominous_filthy_ingot"
+    },
+    {
+      "item": "poopsky:ominous_filthy_ingot"
+    },
+    {
+      "item": "poopsky:ominous_filthy_ingot"
+    },
+    {
+      "item": "minecraft:breeze_rod"
+    },
+    {
+      "item": "minecraft:breeze_rod"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "poopsky:toilet_plug"
+  }
+}

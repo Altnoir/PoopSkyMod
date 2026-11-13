@@ -310,6 +310,8 @@ public final class BlockTagGen {
                 PoBlocks.PIGSTY.get(),
                 PoBlocks.SIEVE.get(),
                 PoBlocks.PLACER.get(),
+                PoBlocks.PEDESTAL.get(),
+                PoBlocks.OMINOUS_ALTAR.get(),
                 PoBlocks.IGNEOUS_EXTRUDER.get(),
                 PoBlocks.BREEDING_CHEST.get(),
                 PoBlocks.OVERCLOCK_UNIT.get(),

@@ -407,6 +407,8 @@ public final class LangGen {
 
     private static void addTooltips() {
         provider.add("tooltip.poopsky.pigsty.captured", "Pig captured");
+        provider.add("tooltip.poopsky.glass_jar.fluid_amount", "%1$s: %2$s mB");
+        provider.add("tooltip.poopsky.glass_jar.empty", "Empty jar");
         provider.add("tooltip.poopsky.item.info_0", "§7Hold §6[Shift] §7to show details");
         provider.add("tooltip.poopsky.item.info_1", "§8Right-click two different toilet blocks to link channels");
         provider.add("tooltip.poopsky.toilet_linker.info_1", "Toilet① - DimID: %1$s, Coordinates: %2$s, %3$s, %4$s");
@@ -432,6 +434,9 @@ public final class LangGen {
         provider.add("jei.poopsky.liquid_interaction.replace_left", "The result replaces the left fluid");
         provider.add("jei.poopsky.liquid_interaction.below", "The block below must be: %s");
         provider.add("jei.poopsky.igneous_extruder.source", "Requires a fluid source");
+        provider.add("jei.poopsky.altar.description.rain", "Summon Rain");
+        provider.add("jei.poopsky.altar.description.thunder", "Summon Thunderstorm");
+        provider.add("jei.poopsky.altar_duration", "%s ticks");
         provider.add("jei.poopsky.sieve_chance", "Chance: %s");
         provider.add("jei.poopsky.arcade_chance", "Chance: %s");
         provider.add("jei.poopsky.pop_explosion_radius", "Radius > %s");

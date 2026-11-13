@@ -2,8 +2,10 @@ package com.altnoir.poopsky.content.block.abs;
 
 import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.content.block.CompooperType;
+import com.altnoir.poopsky.content.block.p.CompooperBlock;
 import com.altnoir.poopsky.content.recipe.PCompooperRecipes;
 import com.altnoir.poopsky.init.PoBlocks;
+import com.altnoir.poopsky.init.PoFluids;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -27,12 +29,17 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import org.jetbrains.annotations.Nullable;
 
 public abstract class AbstractCompooperBlock extends Block {
     public static final int MIN_LEVEL = 0;
@@ -157,6 +164,86 @@ public abstract class AbstractCompooperBlock extends Block {
                 : state.setValue(LEVEL, newLevel);
         level.setBlockAndUpdate(pos, newState);
         level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(newState));
+    }
+
+    public static @Nullable IFluidHandler bucketFluidHandler(Level level, BlockPos pos) {
+        BlockState state = level.getBlockState(pos);
+        if (!(state.getBlock() instanceof AbstractCompooperBlock) || state.is(PoBlocks.POWDER_SNOW_COMPOOPER.get())) {
+            return null;
+        }
+        return new IFluidHandler() {
+            @Override
+            public int getTanks() {
+                return 1;
+            }
+
+            @Override
+            public FluidStack getFluidInTank(int tank) {
+                BlockState state = level.getBlockState(pos);
+                if (!state.hasProperty(LEVEL) || state.getValue(LEVEL) != MAX_LEVEL) {
+                    return FluidStack.EMPTY;
+                }
+                if (state.is(PoBlocks.WATER_COMPOOPER.get())) {
+                    return new FluidStack(Fluids.WATER, FluidType.BUCKET_VOLUME);
+                }
+                if (state.is(PoBlocks.LAVA_COMPOOPER.get())) {
+                    return new FluidStack(Fluids.LAVA, FluidType.BUCKET_VOLUME);
+                }
+                if (state.is(PoBlocks.URINE_COMPOOPER.get())) {
+                    return new FluidStack(PoFluids.URINE.get(), FluidType.BUCKET_VOLUME);
+                }
+                return FluidStack.EMPTY;
+            }
+
+            @Override
+            public int getTankCapacity(int tank) {
+                return FluidType.BUCKET_VOLUME;
+            }
+
+            @Override
+            public boolean isFluidValid(int tank, FluidStack stack) {
+                return stack.getComponents().isEmpty()
+                        && (stack.is(Fluids.WATER) || stack.is(Fluids.LAVA) || stack.is(PoFluids.URINE.get()));
+            }
+
+            @Override
+            public int fill(FluidStack resource, FluidAction action) {
+                BlockState state = level.getBlockState(pos);
+                if (resource.getAmount() < FluidType.BUCKET_VOLUME || !isFluidValid(0, resource)
+                        || !state.is(PoBlocks.COMPOOPER.get()) || state.getValue(CompooperBlock.POOP_LEVEL) != MIN_LEVEL) {
+                    return 0;
+                }
+                if (action.execute()) {
+                    Block filled = resource.is(Fluids.WATER) ? PoBlocks.WATER_COMPOOPER.get()
+                            : resource.is(Fluids.LAVA) ? PoBlocks.LAVA_COMPOOPER.get() : PoBlocks.URINE_COMPOOPER.get();
+                    if (!level.setBlockAndUpdate(pos, filled.defaultBlockState().setValue(LEVEL, MAX_LEVEL))) {
+                        return 0;
+                    }
+                }
+                return FluidType.BUCKET_VOLUME;
+            }
+
+            @Override
+            public FluidStack drain(FluidStack resource, FluidAction action) {
+                if (!FluidStack.isSameFluidSameComponents(getFluidInTank(0), resource)) {
+                    return FluidStack.EMPTY;
+                }
+                return drain(resource.getAmount(), action);
+            }
+
+            @Override
+            public FluidStack drain(int amount, FluidAction action) {
+                if (amount < FluidType.BUCKET_VOLUME) {
+                    return FluidStack.EMPTY;
+                }
+                FluidStack contents = getFluidInTank(0);
+                if (!contents.isEmpty() && action.execute()
+                        && !level.setBlockAndUpdate(pos, PoBlocks.COMPOOPER.get().defaultBlockState())) {
+                    return FluidStack.EMPTY;
+                }
+                return contents;
+            }
+        };
     }
 
     protected void catalyst(ItemEntity itemEntity, BlockState state, Level level, BlockPos pos, int count, ItemStack result, ItemStack input) {

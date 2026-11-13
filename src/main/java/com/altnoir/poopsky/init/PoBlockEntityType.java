@@ -32,6 +32,21 @@ public class PoBlockEntityType {
             .validBlock(PoBlocks.IGNEOUS_EXTRUDER)
             .register();
 
+    public static final BlockEntityEntry<GlassJarBlockEntity> GLASS_JAR = REGISTRATE
+            .<GlassJarBlockEntity>blockEntity("glass_jar", (type, pos, state) -> new GlassJarBlockEntity(pos, state))
+            .validBlock(PoBlocks.GLASS_JAR)
+            .register();
+
+    public static final BlockEntityEntry<PedestalBlockEntity> PEDESTAL = REGISTRATE
+            .<PedestalBlockEntity>blockEntity("pedestal", (type, pos, state) -> new PedestalBlockEntity(pos, state))
+            .validBlock(PoBlocks.PEDESTAL)
+            .register();
+
+    public static final BlockEntityEntry<OminousAltarBlockEntity> OMINOUS_ALTAR = REGISTRATE
+            .<OminousAltarBlockEntity>blockEntity("ominous_altar", (type, pos, state) -> new OminousAltarBlockEntity(pos, state))
+            .validBlock(PoBlocks.OMINOUS_ALTAR)
+            .register();
+
     public static final BlockEntityEntry<MaggotsChunkLoaderBlockEntity> MAGGOTS_CHUNK_LOADER = REGISTRATE
             .<MaggotsChunkLoaderBlockEntity>blockEntity("maggots_chunk_loader", (type, pos, state) -> new MaggotsChunkLoaderBlockEntity(pos, state))
             .validBlock(PoBlocks.MAGGOTS_CHUNK_LOADER)

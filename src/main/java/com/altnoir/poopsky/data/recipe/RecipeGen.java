@@ -317,6 +317,7 @@ public class RecipeGen extends ReginthRecipeProvider implements IConditionBuilde
         buildPopExplosionRecipes(recipeOutput);
         buildAnalPressingRecipes(recipeOutput);
         buildIgneousExtruderRecipes(recipeOutput);
+        buildAltarRecipes(recipeOutput);
         buildFlyBarrelRecipes(recipeOutput);
         buildBreedingChestRecipes(recipeOutput);
 
@@ -898,6 +899,30 @@ public class RecipeGen extends ReginthRecipeProvider implements IConditionBuilde
                 .define('O', PoItems.OMINOUS_FILTHY_INGOT)
                 .unlockedBy(getItemName(PoItems.POWER_SLUG), has(PoItems.POWER_SLUG))
                 .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.OMINOUS_ALTAR)
+                .pattern("OOO")
+                .pattern(" M ")
+                .pattern("MMM")
+                .define('O', PoItems.OMINOUS_FILTHY_INGOT)
+                .define('M', Blocks.MOSSY_COBBLESTONE)
+                .unlockedBy(getItemName(PoItems.OMINOUS_FILTHY_INGOT), has(PoItems.OMINOUS_FILTHY_INGOT))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.PEDESTAL)
+                .pattern(" M ")
+                .pattern("SPS")
+                .define('M', Blocks.MOSSY_COBBLESTONE)
+                .define('S', Blocks.MOSSY_COBBLESTONE_SLAB)
+                .define('P', PoItems.SPALL)
+                .unlockedBy(getItemName(PoItems.SPALL), has(PoItems.SPALL))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, PoBlocks.GLASS_JAR)
+                .pattern("GRG")
+                .pattern("G G")
+                .pattern("GGG")
+                .define('G', Tags.Items.GLASS_PANES)
+                .define('R', PoBlocks.ROUNDWORM_BLOCK)
+                .unlockedBy(getItemName(PoBlocks.ROUNDWORM_BLOCK), has(PoBlocks.ROUNDWORM_BLOCK))
+                .save(recipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, PoBlocks.POP)
                 .pattern("SAS")
                 .pattern("ASA")
@@ -1014,6 +1039,39 @@ public class RecipeGen extends ReginthRecipeProvider implements IConditionBuilde
         igneousRecipe(recipeOutput, "end_stone", lava, blueIce, PoBlocks.DRIED_GOLDEN_POOP_BLOCK.get(), Blocks.END_STONE);
         igneousRecipe(recipeOutput, "prismarine", lava, blueIce, PoBlocks.RAW_SEA_POOP_BLOCK.get(), Blocks.PRISMARINE);
         igneousRecipe(recipeOutput, "blackstone", lava, blueIce, PoBlocks.RAW_WITHER_POOP_BLOCK.get(), Blocks.BLACKSTONE);
+    }
+
+    private void buildAltarRecipes(RecipeOutput recipeOutput) {
+        AltarRecipeBuilder.altar(Items.STICK, PoItems.TOILET_PLUG)
+                .pedestals(PoItems.FLY, Items.BREEZE_ROD, Items.BREEZE_ROD, PoItems.OMINOUS_FILTHY_INGOT,
+                        PoItems.OMINOUS_FILTHY_INGOT, PoItems.OMINOUS_FILTHY_INGOT, Items.BREEZE_ROD, Items.BREEZE_ROD)
+                .fluid(PoFluids.URINE.get(), 8000)
+                .duration(800)
+                .save(recipeOutput, PoItems.TOILET_PLUG.getId().getPath());
+        AltarRecipeBuilder.altar(PoBlocks.POOP_BLOCK, PoItems.OMEN_UPGRADE_SMITHING_TEMPLATE)
+                .pedestals(PoItems.UREA, PoItems.SEEDBED_CURSE.get(), PoItems.SEEDBED_CURSE.get(), PoItems.SEEDBED_CURSE.get(),
+                        PoItems.UREA, PoItems.SEEDBED_CURSE.get(), PoItems.SEEDBED_CURSE.get(), PoItems.SEEDBED_CURSE.get())
+                .fluid(PoFluids.URINE.get(), 4000)
+                .duration(1600)
+                .save(recipeOutput, PoItems.OMEN_UPGRADE_SMITHING_TEMPLATE.getId().getPath());
+
+        AltarRecipeBuilder.altar(Items.GUNPOWDER)
+                .pedestals(Items.PACKED_ICE, Items.PACKED_ICE, Items.PACKED_ICE, Items.PACKED_ICE,
+                        Items.PACKED_ICE, Items.PACKED_ICE, Items.PACKED_ICE, Items.PACKED_ICE)
+                .fluid(Fluids.WATER, 8000)
+                .duration(1600)
+                .command("weather rain 6000")
+                .description("jei.poopsky.altar.description.rain")
+                .save(recipeOutput, "rain");
+
+        AltarRecipeBuilder.altar(Items.GUNPOWDER)
+                .pedestals(Items.LIGHTNING_ROD, Items.PACKED_ICE, Items.LIGHTNING_ROD, Items.PACKED_ICE,
+                        Items.LIGHTNING_ROD, Items.PACKED_ICE, Items.LIGHTNING_ROD, Items.PACKED_ICE)
+                .fluid(Fluids.WATER, 16000)
+                .duration(3200)
+                .command("weather thunder 6000")
+                .description("jei.poopsky.altar.description.thunder")
+                .save(recipeOutput, "thunder");
     }
 
     private void buildFlyBarrelRecipes(RecipeOutput recipeOutput) {

@@ -1,0 +1,39 @@
+{
+  "type": "poopsky:ominous_altar",
+  "command": "weather thunder 6000",
+  "description": "jei.poopsky.altar.description.thunder",
+  "duration": 400,
+  "fluid": {
+    "amount": 2000,
+    "id": "poopsky:urine"
+  },
+  "input": {
+    "item": "minecraft:gunpowder"
+  },
+  "pedestals": [
+    {
+      "item": "minecraft:lightning_rod"
+    },
+    {
+      "item": "minecraft:packed_ice"
+    },
+    {
+      "item": "minecraft:lightning_rod"
+    },
+    {
+      "item": "minecraft:packed_ice"
+    },
+    {
+      "item": "minecraft:lightning_rod"
+    },
+    {
+      "item": "minecraft:packed_ice"
+    },
+    {
+      "item": "minecraft:lightning_rod"
+    },
+    {
+      "item": "minecraft:packed_ice"
+    }
+  ]
+}

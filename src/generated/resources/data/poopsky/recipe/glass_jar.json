@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "G": {
+      "tag": "c:glass_panes"
+    },
+    "R": {
+      "item": "poopsky:roundworm_block"
+    }
+  },
+  "pattern": [
+    "GRG",
+    "G G",
+    "GGG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "poopsky:glass_jar"
+  }
+}

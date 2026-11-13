@@ -329,6 +329,9 @@
   "block.poopsky.placer": "Placeur",
   "block.poopsky.overclock_unit": "Unité de surcadençage",
   "block.poopsky.igneous_extruder": "Générateur de pierre automatique",
+  "block.poopsky.glass_jar": "Bocal en verre",
+  "block.poopsky.pedestal": "Piédestal",
+  "block.poopsky.ominous_altar": "Autel sinistre",
   "block.poopsky.sieve_stable": "Tamis",
   "block.poopsky.poop_tnt": "POP",
 
@@ -425,6 +428,8 @@
   "fly_type.poopsky.fluorite": "Mouche de fluorite",
   "tooltip.poopsky.fly_type": "Espèce",
   "tooltip.poopsky.pigsty.captured": "Cochon capturé",
+  "tooltip.poopsky.glass_jar.fluid_amount": "%1$s : %2$s mB",
+  "tooltip.poopsky.glass_jar.empty": "Bocal vide",
 
   "block.poopsky.toilet.oak": "chêne",
   "block.poopsky.toilet.spruce": "sapin",
@@ -802,6 +807,9 @@
   "jei.category.poopsky.fly_barrel": "Nid de mouches",
   "jei.category.poopsky.breeding_chest": "Boîte d’élevage",
   "jei.poopsky.igneous_extruder.source": "Nécessite une source de liquide",
+  "jei.poopsky.altar_duration": "%s ticks",
+  "jei.poopsky.altar.description.rain": "Invoquer la pluie",
+  "jei.poopsky.altar.description.thunder": "Invoquer l'orage",
   "jei.category.poopsky.liquid_interaction": "Interaction de liquides",
   "jei.category.poopsky.arcade": "Récompenses d'arcade",
   "jei.poopsky.liquid_interaction.source_flowing": "Les fluides source et courants produisent des résultats différents",

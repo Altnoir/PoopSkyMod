@@ -21,10 +21,28 @@ public final class PoRenderTypes {
                     .createCompositeState(false)
     );
 
+    private static final RenderType ALTAR_BEAM = RenderType.create(
+            "poopsky_altar_beam",
+            DefaultVertexFormat.POSITION_COLOR,
+            VertexFormat.Mode.QUADS,
+            1536,
+            false,
+            true,
+            RenderType.CompositeState.builder()
+                    .setShaderState(RenderStateShard.RENDERTYPE_LIGHTNING_SHADER)
+                    .setWriteMaskState(RenderStateShard.COLOR_DEPTH_WRITE)
+                    .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
+                    .createCompositeState(false)
+    );
+
     private PoRenderTypes() {
     }
 
     public static RenderType chunkLoaderGlow() {
         return CHUNK_LOADER_GLOW;
+    }
+
+    public static RenderType altarBeam() {
+        return ALTAR_BEAM;
     }
 }

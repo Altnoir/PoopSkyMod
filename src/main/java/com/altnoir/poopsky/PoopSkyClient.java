@@ -9,14 +9,22 @@ import com.altnoir.poopsky.client.particle.DeathBlightParticle;
 import com.altnoir.poopsky.client.particle.LeavesParticle;
 import com.altnoir.poopsky.client.particle.PoopParticle;
 import com.altnoir.poopsky.client.particle.ToiletParticle;
-import com.altnoir.poopsky.client.renderer.*;
+import com.altnoir.poopsky.client.renderer.IgneousExtruderBlockEntityRenderer;
+import com.altnoir.poopsky.client.renderer.TimeBellOverlay;
+import com.altnoir.poopsky.client.renderer.ToiletHighlightRenderer;
 import com.altnoir.poopsky.content.ToiletType;
 import com.altnoir.poopsky.content.block.abs.AbstractCompooperBlock;
+import com.altnoir.poopsky.content.block.renderer.GlassJarBlockEntityRenderer;
 import com.altnoir.poopsky.content.block.renderer.MaggotsChunkLoaderBlockEntityRenderer;
+import com.altnoir.poopsky.content.block.renderer.OminousAltarBlockEntityRenderer;
+import com.altnoir.poopsky.content.block.renderer.PedestalBlockEntityRenderer;
 import com.altnoir.poopsky.content.entity.model.FlyModel;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.content.entity.renderer.PoBoatRenderer;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
+import com.altnoir.poopsky.content.item.renderer.GachaponItemRenderer;
+import com.altnoir.poopsky.content.item.renderer.GlassJarItemRenderer;
+import com.altnoir.poopsky.content.item.renderer.ToiletPlugItemRenderer;
 import com.altnoir.poopsky.game.client.ArcadeControlSession;
 import com.altnoir.poopsky.game.client.arcade.ArcadeWorldScreenRenderer;
 import com.altnoir.poopsky.impl.network.PlugActionPayload;
@@ -101,7 +109,6 @@ public class PoopSkyClient {
         modEventBus.addListener(ClientGameEvents::onPlayerHeartType);
         modEventBus.addListener(ArcadeWorldScreenRenderer::onRenderFrame);
         modEventBus.addListener(ArcadeWorldScreenRenderer::onLoggingOut);
-        // 分区创造栏标题渲染：由 AbyssLib 的 AbyssLibClient 自动注册（SectionedCreativeTabRenderer）
         modEventBus.addListener(ToiletHighlightRenderer::onRenderLevel);
         modEventBus.addListener(MaggotsChunkLoaderBlockEntityRenderer::onLevelUnload);
         modEventBus.addListener(IntroController::onLoggingOut);
@@ -124,12 +131,16 @@ public class PoopSkyClient {
 
         public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
             event.registerBlockEntityRenderer(PoBlockEntityType.IGNEOUS_EXTRUDER.get(), IgneousExtruderBlockEntityRenderer::new);
+            event.registerBlockEntityRenderer(PoBlockEntityType.GLASS_JAR.get(), GlassJarBlockEntityRenderer::new);
+            event.registerBlockEntityRenderer(PoBlockEntityType.PEDESTAL.get(), PedestalBlockEntityRenderer::new);
+            event.registerBlockEntityRenderer(PoBlockEntityType.OMINOUS_ALTAR.get(), OminousAltarBlockEntityRenderer::new);
         }
 
         public static void registerFluidRenderTypes(FMLClientSetupEvent event) {
             event.enqueueWork(() -> {
                 ItemBlockRenderTypes.setRenderLayer(PoFluids.URINE.get(), RenderType.translucent());
                 ItemBlockRenderTypes.setRenderLayer(PoFluids.FLOWING_URINE.get(), RenderType.translucent());
+                ItemBlockRenderTypes.setRenderLayer(PoBlocks.GLASS_JAR.get(), RenderType.translucent());
             });
         }
 
@@ -219,6 +230,14 @@ public class PoopSkyClient {
                     return gachaponItemRenderer;
                 }
             }, PoItems.GACHAPON.get());
+
+            var glassJarRenderer = new GlassJarItemRenderer();
+            event.registerItem(new IClientItemExtensions() {
+                @Override
+                public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                    return glassJarRenderer;
+                }
+            }, PoBlocks.GLASS_JAR.asItem());
 
             event.registerFluidType(new IClientFluidTypeExtensions() {
                 @Override

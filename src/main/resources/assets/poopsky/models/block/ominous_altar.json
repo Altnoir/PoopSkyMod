@@ -1,0 +1,47 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"texture_size": [32, 32],
+	"textures": {
+		"all": "poopsky:block/ominous_altar/all",
+		"particle": "poopsky:block/ominous_altar/particle"
+	},
+	"elements": [
+		{
+			"from": [1, 8, 1],
+			"to": [15, 14, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 8, 0]},
+			"faces": {
+				"north": {"uv": [0, 7, 7, 10], "texture": "#all"},
+				"east": {"uv": [0, 7, 7, 10], "texture": "#all"},
+				"south": {"uv": [0, 7, 7, 10], "texture": "#all"},
+				"west": {"uv": [0, 7, 7, 10], "texture": "#all"},
+				"up": {"uv": [0, 0, 7, 7], "texture": "#all"},
+				"down": {"uv": [0, 0, 7, 7], "texture": "#all"}
+			}
+		},
+		{
+			"from": [3, 7, 3],
+			"to": [13, 8, 13],
+			"faces": {
+				"north": {"uv": [0, 10, 5, 10.5], "texture": "#all"},
+				"east": {"uv": [0, 10, 5, 10.5], "texture": "#all"},
+				"south": {"uv": [0, 10, 5, 10.5], "texture": "#all"},
+				"west": {"uv": [0, 10, 5, 10.5], "texture": "#all"}
+			}
+		},
+		{
+			"from": [2, 0, 2],
+			"to": [14, 7, 14],
+			"faces": {
+				"north": {"uv": [8, 0, 14, 3.5], "texture": "#all"},
+				"east": {"uv": [8, 0, 14, 3.5], "texture": "#all"},
+				"south": {"uv": [8, 0, 14, 3.5], "texture": "#all"},
+				"west": {"uv": [8, 0, 14, 3.5], "texture": "#all"},
+				"up": {"uv": [0.5, 0.5, 6.5, 6.5], "texture": "#all"},
+				"down": {"uv": [0.5, 0.5, 6.5, 6.5], "texture": "#all"}
+			}
+		}
+	]
+}

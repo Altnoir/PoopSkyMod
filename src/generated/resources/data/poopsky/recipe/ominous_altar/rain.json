@@ -1,0 +1,38 @@
+{
+  "type": "poopsky:ominous_altar",
+  "command": "weather rain 6000",
+  "description": "jei.poopsky.altar.description.rain",
+  "fluid": {
+    "amount": 1000,
+    "id": "minecraft:water"
+  },
+  "input": {
+    "item": "minecraft:gunpowder"
+  },
+  "pedestals": [
+    {
+      "item": "minecraft:packed_ice"
+    },
+    {
+      "item": "minecraft:packed_ice"
+    },
+    {
+      "item": "minecraft:packed_ice"
+    },
+    {
+      "item": "minecraft:packed_ice"
+    },
+    {
+      "item": "minecraft:packed_ice"
+    },
+    {
+      "item": "minecraft:packed_ice"
+    },
+    {
+      "item": "minecraft:packed_ice"
+    },
+    {
+      "item": "minecraft:packed_ice"
+    }
+  ]
+}

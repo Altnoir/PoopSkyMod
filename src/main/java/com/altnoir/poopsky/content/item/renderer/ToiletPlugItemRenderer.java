@@ -1,4 +1,4 @@
-package com.altnoir.poopsky.client.renderer;
+package com.altnoir.poopsky.content.item.renderer;
 
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.client.PoBedrockModelResources;

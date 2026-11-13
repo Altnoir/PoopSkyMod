@@ -1,0 +1,41 @@
+{
+  "type": "poopsky:ominous_altar",
+  "duration": 1600,
+  "fluid": {
+    "amount": 4000,
+    "id": "poopsky:urine"
+  },
+  "input": {
+    "item": "poopsky:poop_block"
+  },
+  "pedestals": [
+    {
+      "item": "poopsky:urea"
+    },
+    {
+      "item": "poopsky:seedbed_curse"
+    },
+    {
+      "item": "poopsky:seedbed_curse"
+    },
+    {
+      "item": "poopsky:seedbed_curse"
+    },
+    {
+      "item": "poopsky:urea"
+    },
+    {
+      "item": "poopsky:seedbed_curse"
+    },
+    {
+      "item": "poopsky:seedbed_curse"
+    },
+    {
+      "item": "poopsky:seedbed_curse"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "poopsky:omen_upgrade_smithing_template"
+  }
+}

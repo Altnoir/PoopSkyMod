@@ -329,6 +329,9 @@
   "block.poopsky.placer": "Platzierer",
   "block.poopsky.overclock_unit": "Übertaktungseinheit",
   "block.poopsky.igneous_extruder": "Automatischer Steinhersteller",
+  "block.poopsky.glass_jar": "Glasgefäß",
+  "block.poopsky.pedestal": "Podest",
+  "block.poopsky.ominous_altar": "Unheilvoller Altar",
   "block.poopsky.sieve_stable": "Sieb",
   "block.poopsky.poop_tnt": "POP",
 
@@ -425,6 +428,8 @@
   "fly_type.poopsky.fluorite": "Fluoritfliege",
   "tooltip.poopsky.fly_type": "Typ",
   "tooltip.poopsky.pigsty.captured": "Schwein eingefangen",
+  "tooltip.poopsky.glass_jar.fluid_amount": "%1$s: %2$s mB",
+  "tooltip.poopsky.glass_jar.empty": "Leeres Glas",
 
   "block.poopsky.toilet.oak": "Eiche",
   "block.poopsky.toilet.spruce": "Fichte",
@@ -802,6 +807,9 @@
   "jei.category.poopsky.fly_barrel": "Fliegennest",
   "jei.category.poopsky.breeding_chest": "Zuchtbox",
   "jei.poopsky.igneous_extruder.source": "Benötigt einen Flüssigkeitsquellblock",
+  "jei.poopsky.altar_duration": "%s Ticks",
+  "jei.poopsky.altar.description.rain": "Regen beschwören",
+  "jei.poopsky.altar.description.thunder": "Gewitter beschwören",
   "jei.category.poopsky.liquid_interaction": "Flüssigkeitsinteraktion",
   "jei.category.poopsky.arcade": "Arcade-Belohnungen",
   "jei.poopsky.liquid_interaction.source_flowing": "Quell- und fließende Flüssigkeiten erzeugen unterschiedliche Ergebnisse",

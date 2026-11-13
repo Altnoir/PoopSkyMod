@@ -43,6 +43,7 @@ public class PSJEIPlugin implements IModPlugin {
         var arrow = helper.createDrawable(PS_JEI_TEXTURE, 0, 18, 22, 15);
         var arrow2 = helper.createDrawable(PS_JEI_TEXTURE, 0, 33, 22, 15);
         var plus = helper.createDrawable(PS_JEI_TEXTURE, 22, 18, 13, 13);
+        var commandIcon = helper.createDrawable(PS_JEI_TEXTURE, 35, 18, 15, 15);
 
         registration.addRecipeCategories(
                 new CompooperRecipeCategory(registration.getJeiHelpers(), arrow),
@@ -52,6 +53,7 @@ public class PSJEIPlugin implements IModPlugin {
                 new POPExplosionRecipeCategory(registration.getJeiHelpers(), arrow, arrow2),
                 new AnalPressingRecipeCategory(registration.getJeiHelpers(), arrow, plus),
                 new IgneousExtruderRecipeCategory(registration.getJeiHelpers(), arrow, plus),
+                new AltarRecipeCategory(registration.getJeiHelpers(), arrow, commandIcon),
                 new LiquidInteractionRecipeCategory(registration.getJeiHelpers(), arrow, plus),
                 new ArcadeLootRecipeCategory(registration.getJeiHelpers()));
 
@@ -110,6 +112,7 @@ public class PSJEIPlugin implements IModPlugin {
         registration.addRecipes(POPExplosionRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PoRecipes.POP_EXPLOSION.type().get()));
         registration.addRecipes(AnalPressingRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PoRecipes.ANAL_PRESSING.type().get()));
         registration.addRecipes(IgneousExtruderRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PoRecipes.IGNEOUS_EXTRUDER.type().get()));
+        registration.addRecipes(AltarRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PoRecipes.ALTAR.type().get()));
         registration.addRecipes(FlyBarrelRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PoRecipes.FLY_BARREL.type().get()));
         registration.addRecipes(BreedingChestRecipeCategory.TYPE, recipeManager.getAllRecipesFor(PoRecipes.BREEDING_CHEST.type().get()));
 
@@ -136,6 +139,7 @@ public class PSJEIPlugin implements IModPlugin {
         registration.addRecipeCatalyst(new ItemStack(PoBlocks.BREEDING_CHEST.get()), BreedingChestRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(PoBlocks.POP.get()), POPExplosionRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(PoBlocks.IGNEOUS_EXTRUDER.get()), IgneousExtruderRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(PoBlocks.OMINOUS_ALTAR.get()), AltarRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(PoItems.KING_OF_DRAGON_FRUIT.get()), AnalPressingRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(PoItems.DRAGON_BREATH_CHILI.get()), AnalPressingRecipeCategory.TYPE);
 
