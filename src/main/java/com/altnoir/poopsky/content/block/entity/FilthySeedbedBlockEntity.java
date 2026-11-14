@@ -78,7 +78,7 @@ public class FilthySeedbedBlockEntity extends BlockEntity {
                 continue;
             }
 
-            mob.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(spawnPos),
+            EventHooks.finalizeMobSpawn(mob, serverLevel, serverLevel.getCurrentDifficultyAt(spawnPos),
                     MobSpawnType.NATURAL, null);
             serverLevel.addFreshEntityWithPassengers(mob);
             break;

@@ -212,7 +212,7 @@ public class IgneousExtruderBlockEntity extends BlockEntity implements Overclock
         List<BlockState> sides = new ArrayList<>(4);
         for (Direction direction : Direction.Plane.HORIZONTAL) {
             BlockPos side = worldPosition.relative(direction);
-            if (!level.hasChunkAt(side)) {
+            if (!level.isLoaded(side)) {
                 return null;
             }
             sides.add(level.getBlockState(side));

@@ -3,6 +3,7 @@ package com.altnoir.poopsky.content.block.renderer;
 import com.altnoir.poopsky.content.block.AltarRitualAnimation;
 import com.altnoir.poopsky.content.block.entity.OminousAltarBlockEntity;
 import com.altnoir.poopsky.content.block.entity.PedestalBlockEntity;
+import com.altnoir.poopsky.impl.util.ClientUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -40,7 +41,7 @@ public class PedestalBlockEntityRenderer implements BlockEntityRenderer<Pedestal
         Vec3 position = new Vec3(0.5D, AltarRitualAnimation.pedestalItemY(time), 0.5D);
         for (BlockPos offset : OminousAltarBlockEntity.PEDESTAL_OFFSETS) {
             BlockPos pos = pedestal.getBlockPos().offset(offset);
-            if (level.hasChunkAt(pos) && level.getBlockEntity(pos) instanceof OminousAltarBlockEntity altar
+            if (level.isLoaded(pos) && level.getBlockEntity(pos) instanceof OminousAltarBlockEntity altar
                     && altar.getClientProgress() > 0 && altar.isClientPedestal(pedestal.getBlockPos())) {
                 position = AltarRitualAnimation.orbitPosition(pedestal.getBlockPos().subtract(pos), time,
                         altar.getClientProgress(partialTick)).add(offset.getX(), 0, offset.getZ());
@@ -48,7 +49,7 @@ public class PedestalBlockEntityRenderer implements BlockEntityRenderer<Pedestal
             }
         }
         var model = itemRenderer.getModel(stack, level, null, 0);
-        var offset = model.getTransforms().getTransform(ItemDisplayContext.GROUND).translation;
+        var offset = ClientUtil.itemTransformOffset(model, ItemDisplayContext.GROUND);
         poses.pushPose();
         poses.translate(position.x, position.y, position.z);
         poses.mulPose(Axis.YP.rotation((float) (time / 20.0D % Mth.TWO_PI)));

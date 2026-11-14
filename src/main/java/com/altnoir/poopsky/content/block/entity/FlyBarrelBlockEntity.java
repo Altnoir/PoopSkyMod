@@ -206,7 +206,7 @@ public class FlyBarrelBlockEntity extends BlockEntity implements MenuProvider, O
             if (space <= 0) return;
 
             BlockPos neighborPos = pos.relative(direction);
-            if (!level.hasChunkAt(neighborPos) || !(level.getBlockEntity(neighborPos) instanceof ToiletBlockEntity toilet)) {
+            if (!level.isLoaded(neighborPos) || !(level.getBlockEntity(neighborPos) instanceof ToiletBlockEntity toilet)) {
                 continue;
             }
 

@@ -39,6 +39,12 @@ public class ClientUtil {
     private static final Vector3f L1 = new Vector3f(0.4F, 0.0F, 1.0F).normalize();
     private static final Vector3f L2 = new Vector3f(-0.4F, 1.0F, -0.2F).normalize();
 
+    public static Vector3f itemTransformOffset(BakedModel model, net.minecraft.world.item.ItemDisplayContext context) {
+        PoseStack transform = new PoseStack();
+        model.applyTransform(context, transform, false);
+        return transform.last().pose().getTranslation(new Vector3f());
+    }
+
     public static void renderBlock(GuiGraphics guiGraphics, BlockState state, float x, float y, float z, float scale) {
         PoseStack poseStack = guiGraphics.pose();
 

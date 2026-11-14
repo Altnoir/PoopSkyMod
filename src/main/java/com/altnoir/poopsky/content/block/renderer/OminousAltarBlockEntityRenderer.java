@@ -28,7 +28,7 @@ public class OminousAltarBlockEntityRenderer implements BlockEntityRenderer<Omin
     private static final float ALTAR_LINE_Y = 0.875F;
     private static final int LINE_SEGMENTS = 32;
     private static final float LINE_GROWTH_PORTION = 0.125F;
-    private static final float BEAM_HALF_WIDTH = 0.03F;
+    private static final float BEAM_HALF_WIDTH = 0.16F;
     private final ItemRenderer itemRenderer;
 
     public OminousAltarBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
@@ -42,22 +42,23 @@ public class OminousAltarBlockEntityRenderer implements BlockEntityRenderer<Omin
     }
 
     private static void beamQuad(VertexConsumer consumer, PoseStack.Pose pose, Vector3f from, Vector3f fromSide,
-                                 Vector3f to, Vector3f toSide, int color) {
-        quadVertex(consumer, pose, from.x - fromSide.x, from.y - fromSide.y, from.z - fromSide.z, color);
-        quadVertex(consumer, pose, from.x + fromSide.x, from.y + fromSide.y, from.z + fromSide.z, color);
-        quadVertex(consumer, pose, to.x + toSide.x, to.y + toSide.y, to.z + toSide.z, color);
-        quadVertex(consumer, pose, to.x - toSide.x, to.y - toSide.y, to.z - toSide.z, color);
+                                 Vector3f to, Vector3f toSide, int color, float u0, float u1) {
+        quadVertex(consumer, pose, from.x - fromSide.x, from.y - fromSide.y, from.z - fromSide.z, color, u0, 0);
+        quadVertex(consumer, pose, from.x + fromSide.x, from.y + fromSide.y, from.z + fromSide.z, color, u0, 1);
+        quadVertex(consumer, pose, to.x + toSide.x, to.y + toSide.y, to.z + toSide.z, color, u1, 1);
+        quadVertex(consumer, pose, to.x - toSide.x, to.y - toSide.y, to.z - toSide.z, color, u1, 0);
     }
 
-    private static void quadVertex(VertexConsumer consumer, PoseStack.Pose pose, float x, float y, float z, int color) {
+    private static void quadVertex(VertexConsumer consumer, PoseStack.Pose pose, float x, float y, float z, int color, float u, float v) {
         consumer.addVertex(pose, x, y, z)
-                .setColor(FastColor.ARGB32.red(color), FastColor.ARGB32.green(color), FastColor.ARGB32.blue(color), 255);
+                .setColor(FastColor.ARGB32.red(color), FastColor.ARGB32.green(color), FastColor.ARGB32.blue(color), 255)
+                .setUv(u, v);
     }
 
     @Override
     public AABB getRenderBoundingBox(OminousAltarBlockEntity altar) {
         AABB bounds = new AABB(altar.getBlockPos()).expandTowards(0, 1, 0);
-        return altar.getClientJars().isEmpty() ? bounds : bounds.inflate(3.0D, 0.1D, 3.0D);
+        return altar.getClientJars().isEmpty() ? bounds : bounds.inflate(3.5D, 1.0D, 3.5D);
     }
 
     @Override
@@ -69,7 +70,7 @@ public class OminousAltarBlockEntityRenderer implements BlockEntityRenderer<Omin
         double time = level.getGameTime() + (double) partialTick;
         if (!stack.isEmpty()) {
             var model = itemRenderer.getModel(stack, level, null, 0);
-            var offset = model.getTransforms().getTransform(ItemDisplayContext.GROUND).translation;
+            var offset = com.altnoir.poopsky.impl.util.ClientUtil.itemTransformOffset(model, ItemDisplayContext.GROUND);
             poses.pushPose();
             poses.translate(0.5D, AltarRitualAnimation.altarItemY(time), 0.5D);
             poses.mulPose(Axis.YP.rotation((float) (time / 20.0D % Mth.TWO_PI)));
@@ -87,7 +88,7 @@ public class OminousAltarBlockEntityRenderer implements BlockEntityRenderer<Omin
                 (float) (camPos.y - altarPos.getY()), (float) (camPos.z - altarPos.getZ()));
         VertexConsumer beams = buffers.getBuffer(PoRenderTypes.altarBeam());
         for (BlockPos pos : altar.getClientJars()) {
-            if (!level.hasChunkAt(pos) || !(level.getBlockEntity(pos) instanceof GlassJarBlockEntity jar)
+            if (!level.isLoaded(pos) || !(level.getBlockEntity(pos) instanceof GlassJarBlockEntity jar)
                     || jar.getTank().isEmpty()) continue;
             int color = GlassJarBlockEntityRenderer.getFluidColor(jar.getTank().getFluid());
             float dx = pos.getX() - altarPos.getX();
@@ -106,7 +107,8 @@ public class OminousAltarBlockEntityRenderer implements BlockEntityRenderer<Omin
                         : side.normalize(BEAM_HALF_WIDTH);
             }
             for (int i = 0; i < LINE_SEGMENTS; i++) {
-                beamQuad(beams, poses.last(), points[i], sides[i], points[i + 1], sides[i + 1], color);
+                beamQuad(beams, poses.last(), points[i], sides[i], points[i + 1], sides[i + 1], color,
+                        growth * i / LINE_SEGMENTS, growth * (i + 1) / LINE_SEGMENTS);
             }
         }
     }

@@ -1,5 +1,6 @@
 {
   "type": "poopsky:ominous_altar",
+  "duration": 100,
   "command": "weather rain 6000",
   "description": "jei.poopsky.altar.description.rain",
   "fluid": {

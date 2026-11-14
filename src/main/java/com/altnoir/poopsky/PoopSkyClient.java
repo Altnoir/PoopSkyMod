@@ -9,6 +9,7 @@ import com.altnoir.poopsky.client.particle.DeathBlightParticle;
 import com.altnoir.poopsky.client.particle.LeavesParticle;
 import com.altnoir.poopsky.client.particle.PoopParticle;
 import com.altnoir.poopsky.client.particle.ToiletParticle;
+import com.altnoir.poopsky.client.renderer.AltarShaders;
 import com.altnoir.poopsky.client.renderer.IgneousExtruderBlockEntityRenderer;
 import com.altnoir.poopsky.client.renderer.TimeBellOverlay;
 import com.altnoir.poopsky.client.renderer.ToiletHighlightRenderer;
@@ -82,6 +83,7 @@ public class PoopSkyClient {
 
     public static void registerMod(IEventBus modEventBus) {
         BakedModelEventHandler.register(modEventBus);
+        modEventBus.addListener(AltarShaders::register);
         modEventBus.addListener(PoKeyBoardInput::registerKeyMappings);
         modEventBus.addListener(PoBedrockModelResources::onRegisterV2BedrockResources);
         modEventBus.addListener(ClientModEvents::modLoad);
@@ -140,7 +142,6 @@ public class PoopSkyClient {
             event.enqueueWork(() -> {
                 ItemBlockRenderTypes.setRenderLayer(PoFluids.URINE.get(), RenderType.translucent());
                 ItemBlockRenderTypes.setRenderLayer(PoFluids.FLOWING_URINE.get(), RenderType.translucent());
-                ItemBlockRenderTypes.setRenderLayer(PoBlocks.GLASS_JAR.get(), RenderType.translucent());
             });
         }
 

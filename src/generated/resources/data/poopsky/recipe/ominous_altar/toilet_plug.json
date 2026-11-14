@@ -1,6 +1,6 @@
 {
   "type": "poopsky:ominous_altar",
-  "duration": 800,
+  "duration": 400,
   "fluid": {
     "amount": 8000,
     "id": "poopsky:urine"

@@ -110,7 +110,7 @@ public class PigstyBlock extends HorizontalDirectionalBlock implements EntityBlo
         BlockPos pos = BlockPos.of(data.getLong("pos"));
         pig.setDeltaMovement(0, 0, 0);
         pig.setPos(data.getDouble("x"), pos.getY() + 0.0625, data.getDouble("z"));
-        if (!level.hasChunkAt(pos)) return;
+        if (!level.isLoaded(pos)) return;
         BlockState state = level.getBlockState(pos);
         if (!(state.getBlock() instanceof PigstyBlock) || state.getValue(PART) != PigstyPart.BACK) {
             release(pig);

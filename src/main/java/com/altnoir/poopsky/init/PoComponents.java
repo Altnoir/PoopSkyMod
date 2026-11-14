@@ -30,7 +30,7 @@ public final class PoComponents {
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<CustomData>> PIGSTY_PIG =
             COMPONENTS.registerComponentType("pigsty_pig", builder -> builder
                     .persistent(CustomData.CODEC)
-                    .networkSynchronized(CustomData.STREAM_CODEC));
+                    .networkSynchronized(ByteBufCodecs.COMPOUND_TAG.map(CustomData::of, CustomData::copyTag)));
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<ToiletType>> TOILET_TYPE =
             COMPONENTS.registerComponentType("toilet_type", builder -> builder

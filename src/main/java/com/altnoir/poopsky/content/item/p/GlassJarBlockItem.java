@@ -87,7 +87,7 @@ public class GlassJarBlockItem extends BlockItem {
         var action = pickup ? SoundActions.BUCKET_FILL : SoundActions.BUCKET_EMPTY;
         var sound = fluid.getFluidType().getSound(player, level, pos, action);
         if (sound == null) {
-            boolean lava = fluid.getFluid().is(FluidTags.LAVA);
+            boolean lava = fluid.is(FluidTags.LAVA);
             sound = pickup ? (lava ? SoundEvents.BUCKET_FILL_LAVA : SoundEvents.BUCKET_FILL)
                     : (lava ? SoundEvents.BUCKET_EMPTY_LAVA : SoundEvents.BUCKET_EMPTY);
         }
