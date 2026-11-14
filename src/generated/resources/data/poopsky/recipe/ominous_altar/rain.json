@@ -2,8 +2,9 @@
   "type": "poopsky:ominous_altar",
   "command": "weather rain 6000",
   "description": "jei.poopsky.altar.description.rain",
+  "duration": 1600,
   "fluid": {
-    "amount": 1000,
+    "amount": 8000,
     "id": "minecraft:water"
   },
   "input": {

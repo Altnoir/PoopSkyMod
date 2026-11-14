@@ -44,6 +44,16 @@ public class PoEntityType {
             .setData(ProviderType.LANG, NonNullBiConsumer.noop())
             .register();
 
+    public static final EntityEntry<ExplosiveChickenEntity> POP_CHICKEN = REGISTRATE
+            .entity("pop_chicken", ExplosiveChickenEntity::new, MobCategory.CREATURE)
+            .properties(properties -> properties
+                    .sized(0.4F, 0.7F)
+                    .eyeHeight(0.644F)
+                    .clientTrackingRange(10))
+            .renderer(() -> PopChickenRenderer::new)
+            .lang("POP Chicken")
+            .register();
+
     public static final EntityEntry<SnailEntity> SNAIL = REGISTRATE
             .entity("snail", SnailEntity::new, MobCategory.CREATURE)
             .properties(properties -> properties
@@ -62,16 +72,6 @@ public class PoEntityType {
                     .clientTrackingRange(8))
             .renderer(() -> BasiliskRenderer::new)
             .lang("Basilisk")
-            .register();
-
-    public static final EntityEntry<ExplosiveChickenEntity> POP_CHICKEN = REGISTRATE
-            .entity("pop_chicken", ExplosiveChickenEntity::new, MobCategory.CREATURE)
-            .properties(properties -> properties
-                    .sized(0.4F, 0.7F)
-                    .eyeHeight(0.644F)
-                    .clientTrackingRange(10))
-            .renderer(() -> PopChickenRenderer::new)
-            .lang("POP Chicken")
             .register();
 
     public static final EntityEntry<ChairEntity> STOOL = REGISTRATE

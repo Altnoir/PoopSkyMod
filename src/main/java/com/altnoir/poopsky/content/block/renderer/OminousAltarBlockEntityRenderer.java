@@ -1,22 +1,20 @@
 package com.altnoir.poopsky.content.block.renderer;
 
+import com.altnoir.poopsky.client.renderer.FloatingItemRenderer;
 import com.altnoir.poopsky.content.block.AltarRitualAnimation;
 import com.altnoir.poopsky.content.block.entity.GlassJarBlockEntity;
 import com.altnoir.poopsky.content.block.entity.OminousAltarBlockEntity;
 import com.altnoir.poopsky.init.PoRenderTypes;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -68,15 +66,8 @@ public class OminousAltarBlockEntityRenderer implements BlockEntityRenderer<Omin
         ItemStack stack = (altar.getClientProgress() > 0 || altar.getOutput().isEmpty()) ? altar.getInput() : altar.getOutput();
         double time = level.getGameTime() + (double) partialTick;
         if (!stack.isEmpty()) {
-            var model = itemRenderer.getModel(stack, level, null, 0);
-            var offset = model.getTransforms().getTransform(ItemDisplayContext.GROUND).translation;
-            poses.pushPose();
-            poses.translate(0.5D, AltarRitualAnimation.altarItemY(time), 0.5D);
-            poses.mulPose(Axis.YP.rotation((float) (time / 20.0D % Mth.TWO_PI)));
-            poses.scale(2.0F, 2.0F, 2.0F);
-            poses.translate(-offset.x(), -offset.y(), -offset.z());
-            itemRenderer.render(stack, ItemDisplayContext.GROUND, false, poses, buffers, light, OverlayTexture.NO_OVERLAY, model);
-            poses.popPose();
+            FloatingItemRenderer.render(itemRenderer, stack, level, poses, buffers, light,
+                    new Vec3(0.5D, AltarRitualAnimation.altarItemY(time), 0.5D), time, 2.0F);
         }
         float progress = altar.getClientProgress(partialTick);
         if (progress <= 0.0F || altar.getClientJars().isEmpty()) return;

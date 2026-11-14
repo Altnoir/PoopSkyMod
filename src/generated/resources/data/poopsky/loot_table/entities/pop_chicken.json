@@ -12,34 +12,8 @@
               "count": {
                 "type": "minecraft:uniform",
                 "max": 2.0,
-                "min": 0.0
+                "min": 1.0
               },
-              "function": "minecraft:set_count"
-            },
-            {
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 1.0,
-                "min": 0.0
-              },
-              "enchantment": "minecraft:looting",
-              "function": "minecraft:enchanted_count_increase"
-            }
-          ],
-          "name": "minecraft:feather"
-        }
-      ],
-      "rolls": 1.0
-    },
-    {
-      "bonus_rolls": 0.0,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": 1.0,
               "function": "minecraft:set_count"
             },
             {
@@ -79,12 +53,16 @@
               "function": "minecraft:furnace_smelt"
             },
             {
-              "count": 1.0,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": 0.0
+              },
               "enchantment": "minecraft:looting",
               "function": "minecraft:enchanted_count_increase"
             }
           ],
-          "name": "minecraft:chicken"
+          "name": "minecraft:gunpowder"
         }
       ],
       "rolls": 1.0

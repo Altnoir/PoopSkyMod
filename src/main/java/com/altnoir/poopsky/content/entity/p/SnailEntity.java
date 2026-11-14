@@ -1,6 +1,5 @@
 package com.altnoir.poopsky.content.entity.p;
 
-import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.impl.PoTags;
 import com.altnoir.poopsky.init.PoEntityType;
 import com.altnoir.poopsky.init.PoSoundEvents;
@@ -9,15 +8,12 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -32,7 +28,6 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 public class SnailEntity extends Animal {
-    private static final ResourceLocation SPEED_MODIFIER = PoopSky.loc("snail_movement_speed");
     private static final double MAX_CLIMB_SPEED = 0.025;
     private static final EntityDataAccessor<Boolean> DATA_CLIMBING =
             SynchedEntityData.defineId(SnailEntity.class, EntityDataSerializers.BOOLEAN);
@@ -40,11 +35,12 @@ public class SnailEntity extends Animal {
             SynchedEntityData.defineId(SnailEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> DATA_COLOR =
             SynchedEntityData.defineId(SnailEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> DATA_POWERED =
+            SynchedEntityData.defineId(SnailEntity.class, EntityDataSerializers.BOOLEAN);
     private static final int COLOR_COUNT = Color.values().length;
 
     public SnailEntity(EntityType<? extends SnailEntity> entityType, Level level) {
         super(entityType, level);
-        this.applyMovementSpeedModifier();
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -85,6 +81,21 @@ public class SnailEntity extends Animal {
         builder.define(DATA_CLIMBING, false);
         builder.define(DATA_WALL_DIRECTION, Direction.NORTH.get3DDataValue());
         builder.define(DATA_COLOR, 0);
+        builder.define(DATA_POWERED, false);
+    }
+
+    @Override
+    public void thunderHit(ServerLevel level, LightningBolt lightning) {
+        super.thunderHit(level, lightning);
+        this.setPowered(true);
+    }
+
+    public boolean isPowered() {
+        return this.entityData.get(DATA_POWERED);
+    }
+
+    public void setPowered(boolean powered) {
+        this.entityData.set(DATA_POWERED, powered);
     }
 
     @Override
@@ -113,14 +124,6 @@ public class SnailEntity extends Animal {
             }
         }
         super.travel(travelVector);
-    }
-
-    private void applyMovementSpeedModifier() {
-        AttributeInstance speed = this.getAttribute(Attributes.MOVEMENT_SPEED);
-        if (speed != null && !speed.hasModifier(SPEED_MODIFIER)) {
-            speed.addTransientModifier(new AttributeModifier(
-                    SPEED_MODIFIER, 1.0, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
-        }
     }
 
     @Override
@@ -179,7 +182,7 @@ public class SnailEntity extends Animal {
 
     @Override
     public boolean isFood(ItemStack stack) {
-        return stack.is(PoTags.Items.SNAIL_FOOD);
+        return stack.is(PoTags.Items.SNAIL_LIKE);
     }
 
     @Nullable
@@ -196,13 +199,14 @@ public class SnailEntity extends Animal {
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putInt("Color", this.getColor().ordinal());
+        tag.putBoolean("powered", this.isPowered());
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        this.applyMovementSpeedModifier();
         this.setColor(Color.byId(tag.getInt("Color")));
+        this.setPowered(tag.getBoolean("powered"));
     }
 
     public enum Color {

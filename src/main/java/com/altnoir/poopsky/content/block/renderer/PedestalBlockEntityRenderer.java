@@ -1,18 +1,15 @@
 package com.altnoir.poopsky.content.block.renderer;
 
+import com.altnoir.poopsky.client.renderer.FloatingItemRenderer;
 import com.altnoir.poopsky.content.block.AltarRitualAnimation;
 import com.altnoir.poopsky.content.block.entity.OminousAltarBlockEntity;
 import com.altnoir.poopsky.content.block.entity.PedestalBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.Mth;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -47,13 +44,6 @@ public class PedestalBlockEntityRenderer implements BlockEntityRenderer<Pedestal
                 break;
             }
         }
-        var model = itemRenderer.getModel(stack, level, null, 0);
-        var offset = model.getTransforms().getTransform(ItemDisplayContext.GROUND).translation;
-        poses.pushPose();
-        poses.translate(position.x, position.y, position.z);
-        poses.mulPose(Axis.YP.rotation((float) (time / 20.0D % Mth.TWO_PI)));
-        poses.translate(-offset.x(), -offset.y(), -offset.z());
-        itemRenderer.render(stack, ItemDisplayContext.GROUND, false, poses, buffers, light, OverlayTexture.NO_OVERLAY, model);
-        poses.popPose();
+        FloatingItemRenderer.render(itemRenderer, stack, level, poses, buffers, light, position, time, 1.0F);
     }
 }

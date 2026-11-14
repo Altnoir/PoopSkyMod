@@ -11,6 +11,7 @@ import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
@@ -76,7 +77,19 @@ public final class ItemTagGen {
                 .add(PoItems.POOP_ON_A_STICK.get());
         tag(PoTags.Items.VILLAGER_LIKE).addTag(PoTags.Items.FLUSH_TOILET_SAVE);
         tag(PoTags.Items.POP_CHICKEN_LIKE).addTag(PoTags.Items.FLY_LIKE);
-        tag(PoTags.Items.SNAIL_FOOD).addTag(ItemTags.FLOWERS);
+        tag(PoTags.Items.SNAIL_LIKE)
+                .addTag(PoTags.Items.POOPS)
+                .addTag(PoTags.Items.MAGGOTS)
+                .add(PoItems.ROUNDWORM.get());
+
+        var maggots = tag(PoTags.Items.MAGGOTS);
+        maggots.add(PoItems.MAGGOTS_SEEDS.get());
+        for (DyeColor color : DyeColor.values()) {
+            var entry = PoItems.COLORED_MAGGOTS.get(color);
+            if (entry != null) {
+                maggots.add(entry.get());
+            }
+        }
 
         tag(ItemTags.DURABILITY_ENCHANTABLE).add(PoItems.POOP_ON_A_STICK.get());
 

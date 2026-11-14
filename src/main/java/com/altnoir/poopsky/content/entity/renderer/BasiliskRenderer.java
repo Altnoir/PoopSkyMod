@@ -76,7 +76,17 @@ public class BasiliskRenderer extends EntityRenderer<BasiliskEntity> {
         }
 
         poseStack.pushPose();
+        float ageScale = entity.getAgeScale();
         poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - Mth.rotLerp(partialTick, entity.yBodyRotO, entity.yBodyRot)));
+        if (entity.deathTime > 0) {
+            float fall = ((float) entity.deathTime + partialTick - 1.0F) / 20.0F * 1.6F;
+            fall = Mth.sqrt(fall);
+            if (fall > 1.0F) {
+                fall = 1.0F;
+            }
+            poseStack.mulPose(Axis.ZP.rotationDegrees(fall * 90.0F));
+        }
+        poseStack.scale(ageScale, ageScale, ageScale);
         VertexConsumer consumer = bufferSource.getBuffer(RenderType.entityCutout(TEXTURE));
         instance.renderToBuffer(
                 poseStack,
@@ -144,5 +154,10 @@ public class BasiliskRenderer extends EntityRenderer<BasiliskEntity> {
             }
             return this.walkTime;
         }
+    }
+
+    @Override
+    protected float getShadowRadius(BasiliskEntity entity) {
+        return super.getShadowRadius(entity) * entity.getAgeScale();
     }
 }

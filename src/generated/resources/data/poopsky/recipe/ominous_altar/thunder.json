@@ -2,10 +2,10 @@
   "type": "poopsky:ominous_altar",
   "command": "weather thunder 6000",
   "description": "jei.poopsky.altar.description.thunder",
-  "duration": 400,
+  "duration": 3200,
   "fluid": {
-    "amount": 2000,
-    "id": "poopsky:urine"
+    "amount": 16000,
+    "id": "minecraft:water"
   },
   "input": {
     "item": "minecraft:gunpowder"

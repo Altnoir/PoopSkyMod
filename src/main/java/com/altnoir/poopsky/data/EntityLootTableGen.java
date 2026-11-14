@@ -100,11 +100,28 @@ public final class EntityLootTableGen {
                             EntityPredicate.Builder.entity().nbt(new NbtPredicate(tag)))));
         }
         loot.add(PoEntityType.FLY.get(), LootTable.lootTable().withPool(flyDrops));
-        loot.add(PoEntityType.BASILISK.get(), LootTable.lootTable());
+        CompoundTag poweredTag = new CompoundTag();
+        poweredTag.putBoolean("powered", true);
+        CompoundTag normalTag = new CompoundTag();
+        normalTag.putBoolean("powered", false);
         loot.add(PoEntityType.SNAIL.get(), LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0F))
-                        .add(LootItem.lootTableItem(PoItems.POWER_SLUG.get()))));
+                        .add(LootItem.lootTableItem(PoItems.SLUG.get())
+                                .apply(EnchantedCountIncreaseFunction.lootingMultiplier(registries, UniformGenerator.between(0.0F, 1.0F))))
+                        .when(LootItemEntityPropertyCondition.hasProperties(
+                                LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().nbt(new NbtPredicate(normalTag)))))
+                .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(PoItems.POWER_SLUG.get()))
+                        .when(LootItemEntityPropertyCondition.hasProperties(
+                                LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().nbt(new NbtPredicate(poweredTag))))));
+        loot.add(PoEntityType.BASILISK.get(), LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(PoItems.EYE_OF_BASILISK.get())
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
+                                .apply(EnchantedCountIncreaseFunction.lootingMultiplier(registries, UniformGenerator.between(0.0F, 1.0F))))));
         loot.add(
                 PoEntityType.POP_CHICKEN.get(),
                 LootTable.lootTable()
@@ -112,19 +129,10 @@ public final class EntityLootTableGen {
                                 LootPool.lootPool()
                                         .setRolls(ConstantValue.exactly(1.0F))
                                         .add(
-                                                LootItem.lootTableItem(Items.FEATHER)
-                                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
-                                                        .apply(EnchantedCountIncreaseFunction.lootingMultiplier(registries, UniformGenerator.between(0.0F, 1.0F)))
-                                        )
-                        )
-                        .withPool(
-                                LootPool.lootPool()
-                                        .setRolls(ConstantValue.exactly(1.0F))
-                                        .add(
-                                                LootItem.lootTableItem(Items.CHICKEN)
-                                                        .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))
+                                                LootItem.lootTableItem(Items.GUNPOWDER)
+                                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))
                                                         .apply(SmeltItemFunction.smelted().when(shouldSmeltLoot(registries)))
-                                                        .apply(EnchantedCountIncreaseFunction.lootingMultiplier(registries, ConstantValue.exactly(1.0F)))
+                                                        .apply(EnchantedCountIncreaseFunction.lootingMultiplier(registries, UniformGenerator.between(0.0F, 1.0F)))
                                         )
                         )
         );

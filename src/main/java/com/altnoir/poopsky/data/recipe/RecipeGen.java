@@ -58,6 +58,30 @@ public class RecipeGen extends ReginthRecipeProvider implements IConditionBuilde
         recipeOutput.accept(PoopSky.loc(PoRecipes.IGNEOUS_EXTRUDER.folder() + "/" + name), recipe, null);
     }
 
+    @Override
+    protected void buildRecipes(@NotNull RecipeOutput recipeOutput) {
+        this.registries = this.registriesFuture.join();
+        buildSmeltingRecipes(recipeOutput);
+        buildItemRecipes(recipeOutput);
+        buildMaggotDyeRecipes(recipeOutput);
+        buildBlockRecipes(recipeOutput);
+        buildVanillaRecipes(recipeOutput);
+        buildStonecuttingRecipes(recipeOutput);
+        buildToiletRecipes(recipeOutput);
+
+        buildSieveRecipes(recipeOutput);
+        buildCompooperRecipes(recipeOutput);
+        buildPopExplosionRecipes(recipeOutput);
+        buildAnalPressingRecipes(recipeOutput);
+        buildIgneousExtruderRecipes(recipeOutput);
+        buildAltarRecipes(recipeOutput);
+        buildFlyBarrelRecipes(recipeOutput);
+        buildBreedingChestRecipes(recipeOutput);
+
+        RecipeOutput fd = recipeOutput.withConditions(modLoaded(PoMods.FARMERSDELIGHT.id()));
+        FarmersDelightRecipeGen.buildRecipes(fd);
+    }
+
     private void buildSmeltingRecipes(RecipeOutput recipeOutput) {
         shapeless1x1Recipe(recipeOutput, Blocks.CRIMSON_NYLIUM, Blocks.CRIMSON_FUNGUS, Blocks.NETHERRACK);
         shapeless1x1Recipe(recipeOutput, Blocks.WARPED_NYLIUM, Blocks.WARPED_FUNGUS, Blocks.NETHERRACK);
@@ -299,30 +323,6 @@ public class RecipeGen extends ReginthRecipeProvider implements IConditionBuilde
         omenSmithing(recipeOutput, Items.GOLDEN_LEGGINGS, RecipeCategory.COMBAT, PoItems.OMEN_LEGGINGS.get());
         omenSmithing(recipeOutput, Items.GOLDEN_HELMET, RecipeCategory.COMBAT, PoItems.OMEN_HELMET.get());
         omenSmithing(recipeOutput, Items.GOLDEN_BOOTS, RecipeCategory.COMBAT, PoItems.OMEN_BOOTS.get());
-    }
-
-    @Override
-    protected void buildRecipes(@NotNull RecipeOutput recipeOutput) {
-        this.registries = this.registriesFuture.join();
-        buildSmeltingRecipes(recipeOutput);
-        buildItemRecipes(recipeOutput);
-        buildMaggotDyeRecipes(recipeOutput);
-        buildBlockRecipes(recipeOutput);
-        buildVanillaRecipes(recipeOutput);
-        buildStonecuttingRecipes(recipeOutput);
-        buildToiletRecipes(recipeOutput);
-
-        buildSieveRecipes(recipeOutput);
-        buildCompooperRecipes(recipeOutput);
-        buildPopExplosionRecipes(recipeOutput);
-        buildAnalPressingRecipes(recipeOutput);
-        buildIgneousExtruderRecipes(recipeOutput);
-        buildAltarRecipes(recipeOutput);
-        buildFlyBarrelRecipes(recipeOutput);
-        buildBreedingChestRecipes(recipeOutput);
-
-        RecipeOutput fd = recipeOutput.withConditions(modLoaded(PoMods.FARMERSDELIGHT.id()));
-        FarmersDelightRecipeGen.buildRecipes(fd);
     }
 
     private void buildVanillaRecipes(RecipeOutput recipeOutput) {
@@ -1063,7 +1063,6 @@ public class RecipeGen extends ReginthRecipeProvider implements IConditionBuilde
                 .command("weather rain 6000")
                 .description("jei.poopsky.altar.description.rain")
                 .save(recipeOutput, "rain");
-
         AltarRecipeBuilder.altar(Items.GUNPOWDER)
                 .pedestals(Items.LIGHTNING_ROD, Items.PACKED_ICE, Items.LIGHTNING_ROD, Items.PACKED_ICE,
                         Items.LIGHTNING_ROD, Items.PACKED_ICE, Items.LIGHTNING_ROD, Items.PACKED_ICE)

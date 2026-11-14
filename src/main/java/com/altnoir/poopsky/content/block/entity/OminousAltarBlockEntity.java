@@ -166,6 +166,10 @@ public class OminousAltarBlockEntity extends BlockEntity {
         return inventory.insertItem(INPUT, stack.copyWithCount(1), false).isEmpty();
     }
 
+    public ItemStack removeInput() {
+        return inventory.extractItem(INPUT, 1, false);
+    }
+
     public ItemStack takeItem() {
         return !getOutput().isEmpty() ? inventory.extractItem(OUTPUT, 64, false) : inventory.extractItem(INPUT, 1, false);
     }

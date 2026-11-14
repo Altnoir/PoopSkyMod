@@ -33,6 +33,7 @@ import java.util.WeakHashMap;
 public class SnailRenderer extends EntityRenderer<SnailEntity> {
     private static final EulerAdditiveBlender BLENDER = new SimpleEulerAdditiveBlender(new ZYXBoneTransformFactory(), ArrayPoseBuilder::new);
     private static final Map<SnailEntity.Color, ResourceLocation> TEXTURES = new EnumMap<>(SnailEntity.Color.class);
+    private static final ResourceLocation POWER_TEXTURE = ResourceLocation.withDefaultNamespace("textures/entity/creeper/creeper_armor.png");
 
     static {
         for (SnailEntity.Color color : SnailEntity.Color.values()) {
@@ -88,13 +89,30 @@ public class SnailRenderer extends EntityRenderer<SnailEntity> {
         }
 
         poseStack.pushPose();
+        float ageScale = entity.getAgeScale();
         float groundYaw = Mth.rotLerp(partialTick, entity.yBodyRotO, entity.yBodyRot);
         float bodyYaw = Mth.rotLerp(climbProgress, groundYaw, entity.getWallDirection().toYRot());
         poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - bodyYaw));
         poseStack.translate(0.0F, entity.getBbWidth() * climbProgress, -entity.getBbWidth() * 0.5F * climbProgress);
         poseStack.mulPose(Axis.XP.rotationDegrees(90.0F * climbProgress));
+        if (entity.deathTime > 0) {
+            float fall = ((float) entity.deathTime + partialTick - 1.0F) / 20.0F * 1.6F;
+            fall = Mth.sqrt(fall);
+            if (fall > 1.0F) {
+                fall = 1.0F;
+            }
+            poseStack.mulPose(Axis.ZP.rotationDegrees(fall * 90.0F));
+        }
+        poseStack.scale(ageScale, ageScale, ageScale);
         VertexConsumer consumer = bufferSource.getBuffer(RenderType.entityCutout(this.getTextureLocation(entity)));
         instance.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.pack(0.0F, entity.hurtTime > 0 || entity.deathTime > 0));
+        if (entity.isPowered()) {
+            float swirl = (float) entity.tickCount + partialTick;
+            VertexConsumer powerConsumer = bufferSource.getBuffer(RenderType.energySwirl(
+                    POWER_TEXTURE, swirl * 0.01F % 1.0F, swirl * 0.01F % 1.0F));
+            poseStack.scale(1.06F, 1.06F, 1.06F);
+            instance.renderToBuffer(poseStack, powerConsumer, packedLight, OverlayTexture.NO_OVERLAY);
+        }
         poseStack.popPose();
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
@@ -161,5 +179,10 @@ public class SnailRenderer extends EntityRenderer<SnailEntity> {
             float interpolated = Mth.lerp(partialTick, this.previousTime, this.time < this.previousTime ? this.time + length : this.time);
             return length > 0.0F ? interpolated % length : 0.0F;
         }
+    }
+
+    @Override
+    protected float getShadowRadius(SnailEntity entity) {
+        return super.getShadowRadius(entity) * entity.getAgeScale();
     }
 }

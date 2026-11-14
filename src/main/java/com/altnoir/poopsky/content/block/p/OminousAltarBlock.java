@@ -29,8 +29,12 @@ import org.jetbrains.annotations.Nullable;
 
 public class OminousAltarBlock extends AbstractWaterloggedEntityBlock {
     private static final MapCodec<OminousAltarBlock> CODEC = simpleCodec(OminousAltarBlock::new);
-    private static final VoxelShape SHAPE = Shapes.or(box(2, 0, 2, 14, 7, 14),
-            box(3, 7, 3, 13, 8, 13), box(1, 8, 1, 15, 14, 15));
+    private static final VoxelShape SHAPE = Shapes.or(
+            box(0, 0, 0, 16, 2, 16),
+            box(2, 2, 2, 14, 9, 14),
+            box(3, 9, 3, 13, 10, 13),
+            box(1, 10, 1, 15, 16, 15)
+    );
 
     public OminousAltarBlock(Properties properties) {
         super(properties);
@@ -46,6 +50,19 @@ public class OminousAltarBlock extends AbstractWaterloggedEntityBlock {
         return new OminousAltarBlockEntity(pos, state);
     }
 
+    private static void giveBack(Player player, ItemStack held, InteractionHand hand, ItemStack previous) {
+        if (!previous.isEmpty() && !player.getAbilities().instabuild && held.getCount() <= 1) {
+            player.setItemInHand(hand, previous);
+            return;
+        }
+        if (!player.getAbilities().instabuild) {
+            held.shrink(1);
+        }
+        if (!previous.isEmpty()) {
+            player.getInventory().placeItemBackInInventory(previous);
+        }
+    }
+
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
                                               Player player, InteractionHand hand, BlockHitResult hit) {
@@ -56,12 +73,21 @@ public class OminousAltarBlock extends AbstractWaterloggedEntityBlock {
                 && (stack.is(Items.WATER_BUCKET) || (state.getValue(WATERLOGGED) && stack.is(Items.BUCKET)))) {
             return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
         }
-        if (level.getBlockEntity(pos) instanceof OminousAltarBlockEntity altar && altar.getInput().isEmpty()) {
-            if (!level.isClientSide && altar.insertOne(stack)) {
-                if (!player.getAbilities().instabuild) {
-                    stack.shrink(1);
+        if (level.getBlockEntity(pos) instanceof OminousAltarBlockEntity altar) {
+            if (!level.isClientSide) {
+                if (!ItemStack.isSameItemSameComponents(altar.getInput(), stack)) {
+                    ItemStack previous = altar.removeInput();
+                    if (altar.insertOne(stack)) {
+                        giveBack(player, stack, hand, previous);
+                        level.playSound(null, pos, SoundEvents.ITEM_FRAME_ADD_ITEM, SoundSource.BLOCKS, 0.5F, 1.0F);
+                    } else if (!previous.isEmpty()) {
+                        altar.insertOne(previous);
+                    }
                 }
-                level.playSound(null, pos, SoundEvents.ITEM_FRAME_ADD_ITEM, SoundSource.BLOCKS, 0.5F, 1.0F);
+                if (!altar.getOutput().isEmpty()) {
+                    player.getInventory().placeItemBackInInventory(altar.takeItem());
+                    level.playSound(null, pos, SoundEvents.ITEM_FRAME_REMOVE_ITEM, SoundSource.BLOCKS, 0.5F, 1.0F);
+                }
             }
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }

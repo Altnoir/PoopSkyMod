@@ -54,6 +54,7 @@ public class PoTags {
     public interface Items {
         TagKey<Item> POOPS = create("poops");
         TagKey<Item> SHITS = create("shits");
+        TagKey<Item> MAGGOTS = create("maggots");
         TagKey<Item> POOP_BLOCKS = create("poop_blocks");
         TagKey<Item> TOILET_BLOCKS = create("toilet_blocks");
         TagKey<Item> FLUSH_TOILET_BLOCKS = create("flush_toilet_blocks");
@@ -72,9 +73,10 @@ public class PoTags {
         TagKey<Item> BREEDING_CHEST_ACCELERATOR = create("breeding_chest_accelerator");
         TagKey<Item> BREEDING_CHEST_PARALLELISM = create("breeding_chest_parallelism");
         TagKey<Item> FLY_LIKE = create("fly_like");
-        TagKey<Item> VILLAGER_LIKE = create("villager_like");
         TagKey<Item> POP_CHICKEN_LIKE = create("pop_chicken_like");
-        TagKey<Item> SNAIL_FOOD = create("snail_food");
+        TagKey<Item> SNAIL_LIKE = create("snail_like");
+
+        TagKey<Item> VILLAGER_LIKE = create("villager_like");
 
         TagKey<Item> POOP_MOONCAKES = create("poop_mooncakes");
         TagKey<Item> EGG = tag("foods/eggs");

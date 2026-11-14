@@ -90,7 +90,9 @@ public class PoItems {
             props -> new ChiliItem(PoBlocks.CHILI_VINES.get(), props.food(PFoods.DRAGON_BREATH_CHILI)));
     public static final ItemEntry<DragonFruitRItem> KING_OF_DRAGON_FRUIT = registerItem("king_of_dragon_fruit",
             props -> new DragonFruitRItem(props.food(PFoods.KING_OF_DRAGON_FRUIT)));
+    public static final ItemEntry<Item> SLUG = registerItem("slug", Item::new);
     public static final ItemEntry<Item> POWER_SLUG = registerItem("power_slug", Item::new);
+    public static final ItemEntry<Item> EYE_OF_BASILISK = registerItem("eye_of_basilisk", Item::new);
 
     public static final ItemEntry<ToiletPlugItem> TOILET_PLUG = registerItemNoModel("toilet_plug",
             props -> new ToiletPlugItem(props.attributes(ToiletPlugItem.createWeaponAttributes())
@@ -217,15 +219,12 @@ public class PoItems {
             prop -> new DeferredSpawnEggItem(PoEntityType.POOLIME, 0x7D5F36, 0x5E4228, prop));
     public static final ItemEntry<DeferredSpawnEggItem> FLY_SPAWN_EGG = registerItemNoModel("fly_spawn_egg",
             prop -> new DeferredSpawnEggItem(PoEntityType.FLY, 0x3B4346, 0x900D2D, prop));
+    public static final ItemEntry<DeferredSpawnEggItem> POP_CHICKEN_SPAWN_EGG = registerItemNoModel("pop_chicken_spawn_egg",
+            prop -> new DeferredSpawnEggItem(PoEntityType.POP_CHICKEN, 0xA1A1A1, 0x8B5A2B, prop));
     public static final ItemEntry<DeferredSpawnEggItem> SNAIL_SPAWN_EGG = registerItemNoModel("snail_spawn_egg",
             prop -> new DeferredSpawnEggItem(PoEntityType.SNAIL, 0xE7C83F, 0x9A3B26, prop));
     public static final ItemEntry<DeferredSpawnEggItem> BASILISK_SPAWN_EGG = registerItemNoModel("basilisk_spawn_egg",
             prop -> new DeferredSpawnEggItem(PoEntityType.BASILISK, 0x71877A, 0xE1CCA8, prop));
-    public static final ItemEntry<DeferredSpawnEggItem> POP_CHICKEN_SPAWN_EGG = REGISTRATE.item("pop_chicken_spawn_egg",
-                    prop -> new DeferredSpawnEggItem(PoEntityType.POP_CHICKEN, 0xA1A1A1, 0x8B5A2B, prop))
-            .model((ctx, prov) -> {})
-            .lang("POP Chicken Spawn Egg")
-            .register();
 
     public static final ItemEntry<FlyItem> FLY = registerItemNoModel("fly",
             props -> new FlyItem(props.stacksTo(88)));

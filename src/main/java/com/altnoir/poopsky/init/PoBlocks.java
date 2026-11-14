@@ -396,14 +396,23 @@ public class PoBlocks {
                     .noOcclusion()
                     .requiresCorrectToolForDrops()));
     public static final BlockEntry<OminousAltarBlock> OMINOUS_ALTAR = registerBlock("ominous_altar",
-            props -> new OminousAltarBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED)
-                    .strength(3.5F, 6.0F).sound(SoundType.NETHERRACK).requiresCorrectToolForDrops().noOcclusion()));
+            props -> new OminousAltarBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_RED)
+                    .lightLevel(state -> 1)
+                    .strength(3.5F, 6.0F)
+                    .sound(SoundType.NETHERITE_BLOCK)
+                    .requiresCorrectToolForDrops().noOcclusion()));
     public static final BlockEntry<PedestalBlock> PEDESTAL = registerBlock("pedestal",
-            props -> new PedestalBlock(BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_GREEN)
-                    .strength(0.5F).requiresCorrectToolForDrops().forceSolidOn().noOcclusion()));
+            props -> new PedestalBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_GREEN)
+                    .strength(0.5F)
+                    .requiresCorrectToolForDrops()
+                    .forceSolidOn().noOcclusion()));
     public static final BlockEntry<GlassJarBlock> GLASS_JAR = registerBlockWithItem("glass_jar", DEFAULT_STACK_SIZE,
-            props -> new GlassJarBlock(BlockBehaviour.Properties.of().mapColor(MapColor.NONE)
-                    .strength(0.3F).sound(SoundType.GLASS).noOcclusion()),
+            props -> new GlassJarBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.NONE)
+                    .strength(0.3F)
+                    .sound(SoundType.GLASS).noOcclusion()),
             ReginthBlockLootTables::dropSelf, GlassJarBlockItem::new, BlockTab.BASIC_BLOCKS);
     public static final BlockEntry<MaggotsChunkLoaderBlock> MAGGOTS_CHUNK_LOADER = registerBlock("maggots_chunk_loader", 88,
             props -> new MaggotsChunkLoaderBlock(BlockBehaviour.Properties.of()

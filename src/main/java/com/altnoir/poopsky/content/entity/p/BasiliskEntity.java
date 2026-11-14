@@ -46,7 +46,7 @@ public class BasiliskEntity extends Frog {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Frog.createAttributes()
-                .add(Attributes.MAX_HEALTH, 20.0)
+                .add(Attributes.MAX_HEALTH, 10.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.26);
     }
 

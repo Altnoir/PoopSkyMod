@@ -46,6 +46,19 @@ public class PedestalBlock extends AbstractWaterloggedEntityBlock {
         return new PedestalBlockEntity(pos, state);
     }
 
+    private static void giveBack(Player player, ItemStack held, InteractionHand hand, ItemStack previous) {
+        if (!previous.isEmpty() && !player.getAbilities().instabuild && held.getCount() <= 1) {
+            player.setItemInHand(hand, previous);
+            return;
+        }
+        if (!player.getAbilities().instabuild) {
+            held.shrink(1);
+        }
+        if (!previous.isEmpty()) {
+            player.getInventory().placeItemBackInInventory(previous);
+        }
+    }
+
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
                                               Player player, InteractionHand hand, BlockHitResult hit) {
@@ -56,12 +69,15 @@ public class PedestalBlock extends AbstractWaterloggedEntityBlock {
                 && (stack.is(Items.WATER_BUCKET) || (state.getValue(WATERLOGGED) && stack.is(Items.BUCKET)))) {
             return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
         }
-        if (level.getBlockEntity(pos) instanceof PedestalBlockEntity pedestal && pedestal.getItem().isEmpty()) {
-            if (!level.isClientSide && pedestal.insertOne(stack)) {
-                if (!player.getAbilities().instabuild) {
-                    stack.shrink(1);
+        if (level.getBlockEntity(pos) instanceof PedestalBlockEntity pedestal) {
+            if (!level.isClientSide && !ItemStack.isSameItemSameComponents(pedestal.getItem(), stack)) {
+                ItemStack previous = pedestal.removeItem();
+                if (pedestal.insertOne(stack)) {
+                    giveBack(player, stack, hand, previous);
+                    level.playSound(null, pos, SoundEvents.ITEM_FRAME_ADD_ITEM, SoundSource.BLOCKS, 0.5F, 1.0F);
+                } else if (!previous.isEmpty()) {
+                    pedestal.insertOne(previous);
                 }
-                level.playSound(null, pos, SoundEvents.ITEM_FRAME_ADD_ITEM, SoundSource.BLOCKS, 0.5F, 1.0F);
             }
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
