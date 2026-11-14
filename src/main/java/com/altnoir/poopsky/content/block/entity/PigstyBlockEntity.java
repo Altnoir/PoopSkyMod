@@ -130,12 +130,12 @@ public class PigstyBlockEntity extends BlockEntity {
     }
 
     private static @Nullable PairPositions resolvePairPositions(Level level, BlockPos pos) {
-        if (!level.isLoaded(pos)) return null;
+        if (!level.hasChunkAt(pos)) return null;
         BlockState state = level.getBlockState(pos);
         if (!(state.getBlock() instanceof PigstyBlock)) return null;
         BlockPos backPos = PigstyBlock.mainPos(state, pos);
         BlockPos frontPos = backPos.relative(state.getValue(PigstyBlock.FACING).getOpposite());
-        if (!level.isLoaded(backPos) || !level.isLoaded(frontPos)) return null;
+        if (!level.hasChunkAt(backPos) || !level.hasChunkAt(frontPos)) return null;
         BlockState backState = level.getBlockState(backPos);
         BlockState frontState = level.getBlockState(frontPos);
         if (!(backState.getBlock() instanceof PigstyBlock) || !frontState.is(backState.getBlock())

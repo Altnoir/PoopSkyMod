@@ -191,18 +191,9 @@ public class OminousAltarBlockEntity extends BlockEntity {
             AltarRitualAnimation.spawnSpark(level,
                     Vec3.atLowerCornerWithOffset(worldPosition, 0.5D, AltarRitualAnimation.altarItemY(time), 0.5D));
         }
-        for (int i = 0; i < 2; i++) {
-            double angle = time * 0.045D + i * Math.PI;
-            double radius = 1.5D - clientProgress * 0.7D;
-            level.addParticle(ParticleTypes.END_ROD,
-                    worldPosition.getX() + 0.5D + Math.cos(angle) * radius,
-                    worldPosition.getY() + 1.1D + Math.sin(time * 0.035D) * 0.15D,
-                    worldPosition.getZ() + 0.5D + Math.sin(angle) * radius,
-                    0.0D, 0.008D, 0.0D);
-        }
         for (BlockPos pedestalPos : clientPedestals) {
             if (level.random.nextDouble() < 0.015D + 0.065D * density
-                    && level.isLoaded(pedestalPos)
+                    && level.hasChunkAt(pedestalPos)
                     && level.getBlockEntity(pedestalPos) instanceof PedestalBlockEntity pedestal
                     && !pedestal.getItem().isEmpty()) {
                 Vec3 position = AltarRitualAnimation.orbitPosition(pedestalPos.subtract(worldPosition), time, getClientProgress(0.5F));
@@ -218,10 +209,10 @@ public class OminousAltarBlockEntity extends BlockEntity {
             if (level.getRecipeManager().byKey(active.id()).orElse(null) != active || !inputsUnchanged()
                     || inputVersion != startInputVersion
                     || participants.entrySet().stream().anyMatch(entry ->
-                    !level.isLoaded(entry.getKey()) || level.getBlockEntity(entry.getKey()) != entry.getValue()
+                    !level.hasChunkAt(entry.getKey()) || level.getBlockEntity(entry.getKey()) != entry.getValue()
                             || entry.getValue().getContentsVersion() != participantVersions.get(entry.getKey()))
                     || !canOutput(active.value().result()) || supplying.entrySet().stream().anyMatch(entry ->
-                    !level.isLoaded(entry.getKey()) || level.getBlockEntity(entry.getKey()) != entry.getValue())) {
+                    !level.hasChunkAt(entry.getKey()) || level.getBlockEntity(entry.getKey()) != entry.getValue())) {
                 cancel();
                 return;
             }
@@ -270,7 +261,7 @@ public class OminousAltarBlockEntity extends BlockEntity {
         }
         for (int n = 0; n < SCAN_BUDGET && scanIndex < 49; n++, scanIndex++) {
             BlockPos pos = worldPosition.offset(scanIndex / 7 - 3, 0, scanIndex % 7 - 3);
-            if (!level.isLoaded(pos)) {
+            if (!level.hasChunkAt(pos)) {
                 jars.remove(pos);
             } else if (level.getBlockEntity(pos) instanceof GlassJarBlockEntity jar) {
                 jars.put(pos.immutable(), jar);
@@ -286,7 +277,7 @@ public class OminousAltarBlockEntity extends BlockEntity {
 
     private List<GlassJarBlockEntity> matchingJars(FluidStack required) {
         return jars.entrySet().stream()
-                .filter(entry -> level.isLoaded(entry.getKey()) && level.getBlockEntity(entry.getKey()) == entry.getValue())
+                .filter(entry -> level.hasChunkAt(entry.getKey()) && level.getBlockEntity(entry.getKey()) == entry.getValue())
                 .map(Map.Entry::getValue)
                 .filter(jar -> FluidStack.isSameFluidSameComponents(jar.getTank().getFluid(), required)
                         && !jar.getTank().isEmpty())
@@ -301,7 +292,7 @@ public class OminousAltarBlockEntity extends BlockEntity {
             cancel();
             return;
         }
-        rateRemainder += recipe.fluid().getAmount();
+        rateRemainder += (long) available.size() * recipe.fluid().getAmount();
         int budget = (int) Math.min(recipe.fluid().getAmount() - consumed, rateRemainder / recipe.duration());
         rateRemainder %= recipe.duration();
         supplying.clear();
@@ -309,7 +300,7 @@ public class OminousAltarBlockEntity extends BlockEntity {
         for (int i = 0; i < available.size(); i++) {
             GlassJarBlockEntity jar = available.get(i);
             if (budget <= 0) break;
-            int amount = Math.clamp((int) Math.ceil((double) budget / (available.size() - i)), 1, budget);
+            int amount = Math.min(budget, Math.max(1, (int) Math.ceil((double) budget / (available.size() - i))));
             FluidStack drained = jar.getTank().drain(recipe.fluid().copyWithAmount(amount), IFluidHandler.FluidAction.EXECUTE);
             if (!drained.isEmpty()) {
                 consumed += drained.getAmount();
@@ -373,7 +364,7 @@ public class OminousAltarBlockEntity extends BlockEntity {
         stacks.add(getInput().copy());
         for (BlockPos offset : PEDESTAL_OFFSETS) {
             BlockPos pos = worldPosition.offset(offset);
-            if (!level.isLoaded(pos)) return List.of();
+            if (!level.hasChunkAt(pos)) return List.of();
             if (level.getBlockEntity(pos) instanceof PedestalBlockEntity pedestal)
                 stacks.add(pedestal.getItem().copy());
             else stacks.add(ItemStack.EMPTY);
@@ -381,17 +372,9 @@ public class OminousAltarBlockEntity extends BlockEntity {
         return stacks;
     }
 
-    private static boolean stacksMatch(List<ItemStack> first, List<ItemStack> second) {
-        if (first.size() != second.size()) return false;
-        for (int i = 0; i < first.size(); i++) {
-            if (!ItemStack.matches(first.get(i), second.get(i))) return false;
-        }
-        return true;
-    }
-
     private boolean inputsUnchanged() {
         List<ItemStack> current = currentStacks();
-        return current.size() == snapshot.size() && stacksMatch(current, snapshot);
+        return current.size() == snapshot.size() && ItemStack.listMatches(current, snapshot);
     }
 
     private void cancel() {
@@ -466,7 +449,6 @@ public class OminousAltarBlockEntity extends BlockEntity {
                     ? (nextProgress - lastSyncedProgress) / elapsed : 0.0F;
             lastSyncedProgress = nextProgress;
             lastProgressSyncTick = now;
-            clientProgress = nextProgress;
             if (nextProgress <= 0.0F) {
                 clientProgress = 0.0F;
                 clientProgressStep = 0.0F;
@@ -506,12 +488,12 @@ public class OminousAltarBlockEntity extends BlockEntity {
         ListTag pedestals = saved.getList("pedestals", Tag.TAG_COMPOUND);
         ListTag sources = saved.getList("sources", Tag.TAG_COMPOUND);
         for (BlockPos offset : PEDESTAL_OFFSETS) {
-            if (!level.isLoaded(worldPosition.offset(offset))) return false;
+            if (!level.hasChunkAt(worldPosition.offset(offset))) return false;
         }
         for (ListTag list : List.of(pedestals, sources)) {
             for (int i = 0; i < list.size(); i++) {
                 BlockPos pos = BlockPos.of(list.getCompound(i).getLong("pos"));
-                if (!level.isLoaded(pos)) return false;
+                if (!level.hasChunkAt(pos)) return false;
             }
         }
         ResourceLocation id = ResourceLocation.tryParse(saved.getString("recipe"));
@@ -526,7 +508,7 @@ public class OminousAltarBlockEntity extends BlockEntity {
         for (int i = 0; i < savedItems.size(); i++) {
             items.add(ItemStack.parseOptional(level.registryAccess(), savedItems.getCompound(i)));
         }
-        if (items.size() != 9 || !stacksMatch(items, currentStacks())
+        if (items.size() != 9 || !ItemStack.listMatches(items, currentStacks())
                 || !recipe.matches(new AltarRecipe.Input(items.getFirst(),
                 items.subList(1, items.size()).stream().filter(stack -> !stack.isEmpty()).toList()), level)) {
             cancel();

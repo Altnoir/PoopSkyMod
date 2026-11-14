@@ -43,7 +43,7 @@ public interface Overclockable {
             while (index < end) {
                 int i = index++;
                 BlockPos target = pos.offset(i / 9 - 1, i / 3 % 3 - 1, i % 3 - 1);
-                if (!target.equals(pos) && level.isLoaded(target)
+                if (!target.equals(pos) && level.hasChunkAt(target)
                         && level.getBlockState(target).is(PoBlocks.OVERCLOCK_UNIT.get())) {
                     count++;
                 }

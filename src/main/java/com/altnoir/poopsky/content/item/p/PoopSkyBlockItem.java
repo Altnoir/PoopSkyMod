@@ -49,7 +49,7 @@ public class PoopSkyBlockItem extends BlockItem {
         BlockPlaceContext context = new BlockPlaceContext(player, hand, stack, hitResult);
         InteractionResult result = place(context);
         if (result.consumesAction() && player instanceof ServerPlayer serverPlayer) {
-            SoundType soundType = level.getBlockState(target).getSoundType(level, target, player);
+            SoundType soundType = level.getBlockState(target).getSoundType();
             serverPlayer.playNotifySound(
                     soundType.getPlaceSound(),
                     SoundSource.BLOCKS,

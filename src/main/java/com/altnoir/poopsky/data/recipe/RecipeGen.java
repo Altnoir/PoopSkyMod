@@ -1046,20 +1046,20 @@ public class RecipeGen extends ReginthRecipeProvider implements IConditionBuilde
                 .pedestals(PoItems.FLY, Items.BREEZE_ROD, Items.BREEZE_ROD, PoItems.OMINOUS_FILTHY_INGOT,
                         PoItems.OMINOUS_FILTHY_INGOT, PoItems.OMINOUS_FILTHY_INGOT, Items.BREEZE_ROD, Items.BREEZE_ROD)
                 .fluid(PoFluids.URINE.get(), 8000)
-                .duration(400)
+                .duration(800)
                 .save(recipeOutput, PoItems.TOILET_PLUG.getId().getPath());
         AltarRecipeBuilder.altar(PoBlocks.POOP_BLOCK, PoItems.OMEN_UPGRADE_SMITHING_TEMPLATE)
                 .pedestals(PoItems.UREA, PoItems.SEEDBED_CURSE.get(), PoItems.SEEDBED_CURSE.get(), PoItems.SEEDBED_CURSE.get(),
                         PoItems.UREA, PoItems.SEEDBED_CURSE.get(), PoItems.SEEDBED_CURSE.get(), PoItems.SEEDBED_CURSE.get())
                 .fluid(PoFluids.URINE.get(), 4000)
-                .duration(800)
+                .duration(1600)
                 .save(recipeOutput, PoItems.OMEN_UPGRADE_SMITHING_TEMPLATE.getId().getPath());
 
         AltarRecipeBuilder.altar(Items.GUNPOWDER)
                 .pedestals(Items.PACKED_ICE, Items.PACKED_ICE, Items.PACKED_ICE, Items.PACKED_ICE,
                         Items.PACKED_ICE, Items.PACKED_ICE, Items.PACKED_ICE, Items.PACKED_ICE)
                 .fluid(Fluids.WATER, 8000)
-                .duration(100)
+                .duration(1600)
                 .command("weather rain 6000")
                 .description("jei.poopsky.altar.description.rain")
                 .save(recipeOutput, "rain");
@@ -1068,7 +1068,7 @@ public class RecipeGen extends ReginthRecipeProvider implements IConditionBuilde
                 .pedestals(Items.LIGHTNING_ROD, Items.PACKED_ICE, Items.LIGHTNING_ROD, Items.PACKED_ICE,
                         Items.LIGHTNING_ROD, Items.PACKED_ICE, Items.LIGHTNING_ROD, Items.PACKED_ICE)
                 .fluid(Fluids.WATER, 16000)
-                .duration(200)
+                .duration(3200)
                 .command("weather thunder 6000")
                 .description("jei.poopsky.altar.description.thunder")
                 .save(recipeOutput, "thunder");

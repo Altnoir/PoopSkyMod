@@ -2,7 +2,7 @@
   "type": "poopsky:ominous_altar",
   "command": "weather thunder 6000",
   "description": "jei.poopsky.altar.description.thunder",
-  "duration": 200,
+  "duration": 400,
   "fluid": {
     "amount": 2000,
     "id": "poopsky:urine"

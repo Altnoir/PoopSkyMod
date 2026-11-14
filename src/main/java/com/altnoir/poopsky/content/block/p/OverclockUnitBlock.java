@@ -38,7 +38,7 @@ public class OverclockUnitBlock extends RotatedPillarBlock implements SimpleWate
 
     private static void refreshNearbyMachines(ServerLevel level, BlockPos pos) {
         for (BlockPos target : BlockPos.betweenClosed(pos.offset(-1, -1, -1), pos.offset(1, 1, 1))) {
-            if (level.isLoaded(target) && level.getBlockEntity(target) instanceof Overclockable machine) {
+            if (level.hasChunkAt(target) && level.getBlockEntity(target) instanceof Overclockable machine) {
                 machine.getOverclockState().refresh(level, target);
             }
         }

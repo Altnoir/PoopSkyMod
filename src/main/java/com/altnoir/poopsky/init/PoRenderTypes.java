@@ -1,6 +1,5 @@
 package com.altnoir.poopsky.init;
 
-import com.altnoir.poopsky.client.renderer.AltarShaders;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.renderer.RenderStateShard;
@@ -24,16 +23,15 @@ public final class PoRenderTypes {
 
     private static final RenderType ALTAR_BEAM = RenderType.create(
             "poopsky_altar_beam",
-            DefaultVertexFormat.POSITION_TEX_COLOR,
+            DefaultVertexFormat.POSITION_COLOR,
             VertexFormat.Mode.QUADS,
-            8192,
+            1536,
             false,
             true,
             RenderType.CompositeState.builder()
-                    .setShaderState(new RenderStateShard.ShaderStateShard(AltarShaders::beam))
-                    .setWriteMaskState(RenderStateShard.COLOR_WRITE)
+                    .setShaderState(RenderStateShard.RENDERTYPE_LIGHTNING_SHADER)
+                    .setWriteMaskState(RenderStateShard.COLOR_DEPTH_WRITE)
                     .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
-                    .setCullState(RenderStateShard.NO_CULL)
                     .createCompositeState(false)
     );
 

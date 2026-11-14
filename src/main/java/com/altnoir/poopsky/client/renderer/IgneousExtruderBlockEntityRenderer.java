@@ -1,7 +1,6 @@
 package com.altnoir.poopsky.client.renderer;
 
 import com.altnoir.poopsky.content.block.entity.IgneousExtruderBlockEntity;
-import com.altnoir.poopsky.impl.util.ClientUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.LevelRenderer;
@@ -49,7 +48,7 @@ public class IgneousExtruderBlockEntityRenderer implements BlockEntityRenderer<I
         double time = level.getGameTime() + (double) partialTick;
         float spin = (float) (time / 40.0D % Mth.TWO_PI);
         var model = itemRenderer.getModel(stack, level, null, 0);
-        var offset = ClientUtil.itemTransformOffset(model, ItemDisplayContext.GROUND);
+        var offset = model.getTransforms().getTransform(ItemDisplayContext.GROUND).translation;
         int light = getOpeningLight(level, blockEntity.getBlockPos(), packedLight);
 
         poseStack.pushPose();
