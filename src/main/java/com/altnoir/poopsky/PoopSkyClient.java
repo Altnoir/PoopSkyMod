@@ -227,7 +227,7 @@ public class PoopSkyClient {
                         EquipmentSlot slot, HumanoidModel<?> original) {
                     return model;
                 }
-            }, PoItems.SNAIL_SHELL.get(), PoItems.RED_SNAIL_SHELL.get(),
+            }, PoItems.SNAIL_SHELL.get(),
                     PoItems.BROWN_SNAIL_SHELL.get(), PoItems.BLACK_SNAIL_SHELL.get());
 
             var toiletPlugRenderer = new ToiletPlugItemRenderer();

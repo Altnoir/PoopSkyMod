@@ -2,9 +2,14 @@
   "type": "minecraft:crafting_shapeless",
   "category": "equipment",
   "ingredients": [
-    {
-      "tag": "poopsky:snail_shells"
-    },
+    [
+      {
+        "item": "poopsky:snail_shell"
+      },
+      {
+        "item": "poopsky:black_snail_shell"
+      }
+    ],
     {
       "item": "minecraft:brown_dye"
     }

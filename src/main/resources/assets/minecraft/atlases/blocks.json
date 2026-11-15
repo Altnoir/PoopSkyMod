@@ -6,10 +6,6 @@
     },
     {
       "type": "minecraft:single",
-      "resource": "poopsky:entity/snail/red_snail"
-    },
-    {
-      "type": "minecraft:single",
       "resource": "poopsky:entity/snail/brown_snail"
     },
     {

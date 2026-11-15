@@ -98,7 +98,6 @@ public class PoItems {
     public static final ItemEntry<Item> POWER_SLUG = registerItem("power_slug", Item::new);
     public static final ItemEntry<Item> SNAIL_SHELL_FRAGMENT = registerItemNoModel("snail_shell_fragment", Item::new);
     public static final ItemEntry<SnailShellItem> SNAIL_SHELL = registerSnailShell("snail_shell", "yellow");
-    public static final ItemEntry<SnailShellItem> RED_SNAIL_SHELL = registerSnailShell("red_snail_shell", "red");
     public static final ItemEntry<SnailShellItem> BROWN_SNAIL_SHELL = registerSnailShell("brown_snail_shell", "brown");
     public static final ItemEntry<SnailShellItem> BLACK_SNAIL_SHELL = registerSnailShell("black_snail_shell", "black");
 

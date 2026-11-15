@@ -1,6 +1,0 @@
-{
-  "parent": "poopsky:item/snail_shell_template",
-  "textures": {
-    "shell": "poopsky:entity/snail/red_snail"
-  }
-}
