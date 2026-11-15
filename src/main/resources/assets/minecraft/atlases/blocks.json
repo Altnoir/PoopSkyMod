@@ -1,0 +1,20 @@
+{
+  "sources": [
+    {
+      "type": "minecraft:single",
+      "resource": "poopsky:entity/snail/yellow_snail"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "poopsky:entity/snail/red_snail"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "poopsky:entity/snail/brown_snail"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "poopsky:entity/snail/black_snail"
+    }
+  ]
+}

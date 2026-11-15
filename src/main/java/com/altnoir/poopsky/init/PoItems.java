@@ -16,8 +16,12 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
@@ -92,6 +96,12 @@ public class PoItems {
             props -> new DragonFruitRItem(props.food(PFoods.KING_OF_DRAGON_FRUIT)));
     public static final ItemEntry<Item> SLUG = registerItem("slug", Item::new);
     public static final ItemEntry<Item> POWER_SLUG = registerItem("power_slug", Item::new);
+    public static final ItemEntry<Item> SNAIL_SHELL_FRAGMENT = registerItemNoModel("snail_shell_fragment", Item::new);
+    public static final ItemEntry<SnailShellItem> SNAIL_SHELL = registerSnailShell("snail_shell", "yellow");
+    public static final ItemEntry<SnailShellItem> RED_SNAIL_SHELL = registerSnailShell("red_snail_shell", "red");
+    public static final ItemEntry<SnailShellItem> BROWN_SNAIL_SHELL = registerSnailShell("brown_snail_shell", "brown");
+    public static final ItemEntry<SnailShellItem> BLACK_SNAIL_SHELL = registerSnailShell("black_snail_shell", "black");
+
     public static final ItemEntry<Item> EYE_OF_BASILISK = registerItem("eye_of_basilisk", Item::new);
 
     public static final ItemEntry<ToiletPlugItem> TOILET_PLUG = registerItemNoModel("toilet_plug",
@@ -235,6 +245,15 @@ public class PoItems {
                 .toList();
 
         return new ArrayList<>(registrateItems);
+    }
+
+    private static ItemEntry<SnailShellItem> registerSnailShell(String name, String color) {
+        return registerItemNoModel(name, props -> new SnailShellItem(color,
+                props.attributes(ItemAttributeModifiers.builder()
+                        .add(Attributes.ARMOR,
+                                new AttributeModifier(PoopSky.loc("snail_shell"), 4, AttributeModifier.Operation.ADD_VALUE),
+                                EquipmentSlotGroup.CHEST)
+                        .build())));
     }
 
     private static <T extends Item> ItemEntry<T> registerItem(String name, NonNullFunction<Item.Properties, T> factory) {

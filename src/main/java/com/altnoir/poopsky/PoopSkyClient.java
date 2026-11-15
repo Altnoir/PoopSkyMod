@@ -5,6 +5,7 @@ import com.altnoir.poopsky.client.PoAnimationController;
 import com.altnoir.poopsky.client.PoBedrockModelResources;
 import com.altnoir.poopsky.client.ToiletClientBlockExtensions;
 import com.altnoir.poopsky.client.model.BakedModelEventHandler;
+import com.altnoir.poopsky.client.model.SnailShellArmorModel;
 import com.altnoir.poopsky.client.particle.DeathBlightParticle;
 import com.altnoir.poopsky.client.particle.LeavesParticle;
 import com.altnoir.poopsky.client.particle.PoopParticle;
@@ -38,6 +39,7 @@ import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
 import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;
 import net.minecraft.client.model.BoatModel;
 import net.minecraft.client.model.ChestBoatModel;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -46,8 +48,10 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.levelgen.presets.WorldPreset;
 import net.neoforged.api.distmarker.Dist;
@@ -214,6 +218,17 @@ public class PoopSkyClient {
 
         public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
             event.registerBlock(ToiletClientBlockExtensions.INSTANCE, PoBlocks.WOODEN_TOILET.get(), PoBlocks.HARD_TOILET.get());
+
+            event.registerItem(new IClientItemExtensions() {
+                private final SnailShellArmorModel model = new SnailShellArmorModel();
+
+                @Override
+                public HumanoidModel<?> getHumanoidArmorModel(LivingEntity entity, ItemStack stack,
+                        EquipmentSlot slot, HumanoidModel<?> original) {
+                    return model;
+                }
+            }, PoItems.SNAIL_SHELL.get(), PoItems.RED_SNAIL_SHELL.get(),
+                    PoItems.BROWN_SNAIL_SHELL.get(), PoItems.BLACK_SNAIL_SHELL.get());
 
             var toiletPlugRenderer = new ToiletPlugItemRenderer();
             event.registerItem(new IClientItemExtensions() {

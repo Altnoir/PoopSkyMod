@@ -406,6 +406,10 @@ public final class LangGen {
     }
 
     private static void addTooltips() {
+        provider.add("tooltip.poopsky.equippable", "Can be worn on %s");
+        provider.add("tooltip.poopsky.equipment_slot.head", "Head");
+        provider.add("tooltip.poopsky.equipment_slot.chest", "Chest");
+
         provider.add("tooltip.poopsky.pigsty.captured", "Pig captured");
         provider.add("tooltip.poopsky.glass_jar.fluid_amount", "%1$s: %2$s mB");
         provider.add("tooltip.poopsky.glass_jar.empty", "Empty jar");
