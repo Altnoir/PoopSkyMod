@@ -635,8 +635,6 @@
   "key.poopsky.arcade.right": "アーケード右",
   "key.poopsky.arcade.button1": "アーケードボタン 1",
   "key.poopsky.arcade.button2": "アーケードボタン 2",
-  "key.poopsky.observe_shell": "汝自身を知れ",
-  "message.poopsky.snail_shell.observe": "%sで自分自身を観察",
   "message.poopsky.toilet_plug.dismount": "%sを押してラバーカップから降りる",
 
   "upgrade.poopsky.omen_upgrade":"忌避アップグレード",

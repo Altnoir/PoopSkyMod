@@ -209,8 +209,6 @@ public final class LangGen {
         provider.add("message.poopsky.toilet_linker.4", "Cleared");
         provider.add("message.poopsky.return_totem.not_bound", "Not bound to a Portable Toilet");
         provider.add("message.poopsky.return_totem.obstructed", "The Portable Toilet is obstructed");
-        provider.add("key.poopsky.observe_shell", "Know Thyself");
-        provider.add("message.poopsky.snail_shell.observe", "Press %s to know thyself");
         provider.add("message.poopsky.toilet_plug.dismount", "Press %s to dismount Toilet Plug");
     }
 

@@ -635,8 +635,6 @@
   "key.poopsky.arcade.right": "Аркада: вправо",
   "key.poopsky.arcade.button1": "Аркада: кнопка 1",
   "key.poopsky.arcade.button2": "Аркада: кнопка 2",
-  "key.poopsky.observe_shell": "Познай самого себя",
-  "message.poopsky.snail_shell.observe": "Нажмите %s, чтобы посмотреть на себя",
   "message.poopsky.toilet_plug.dismount": "Нажмите %s, чтобы слезть с вантуза",
 
   "upgrade.poopsky.omen_upgrade":"Зловещее улучшение",

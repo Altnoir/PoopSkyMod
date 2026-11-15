@@ -21,7 +21,6 @@
     "HumanoidArmorLayerMixin",
     "KeyBindsListKeyEntryMixin",
     "PlayerRendererMixin",
-    "SnailShellCameraMixin",
     "WorldCreationUiStateMixin"
   ],
   "injectors": {

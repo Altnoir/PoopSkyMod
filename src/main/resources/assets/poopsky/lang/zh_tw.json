@@ -635,8 +635,6 @@
   "key.poopsky.arcade.right": "街機右",
   "key.poopsky.arcade.button1": "街機按鈕 1",
   "key.poopsky.arcade.button2": "街機按鈕 2",
-  "key.poopsky.observe_shell": "認識你自己",
-  "message.poopsky.snail_shell.observe": "按 %s 認識你自己",
   "message.poopsky.toilet_plug.dismount": "按下 %s 來離開廁所吸盤",
 
   "upgrade.poopsky.omen_upgrade":"忌諱升級",

@@ -1,6 +1,9 @@
 package com.altnoir.poopsky;
 
-import com.altnoir.poopsky.client.*;
+import com.altnoir.poopsky.client.IntroController;
+import com.altnoir.poopsky.client.PoAnimationController;
+import com.altnoir.poopsky.client.PoBedrockModelResources;
+import com.altnoir.poopsky.client.ToiletClientBlockExtensions;
 import com.altnoir.poopsky.client.model.BakedModelEventHandler;
 import com.altnoir.poopsky.client.model.SnailShellArmorModel;
 import com.altnoir.poopsky.client.particle.DeathBlightParticle;
@@ -104,7 +107,6 @@ public class PoopSkyClient {
         modEventBus.addListener(ClientGameEvents::onScreenOpen);
         modEventBus.addListener(ClientGameEvents::onClientTick);
         modEventBus.addListener(ArcadeControlSession::onKeyInput);
-        modEventBus.addListener(SnailShellCamera::onCameraAngles);
         modEventBus.addListener(ClientGameEvents::onComputeFov);
         modEventBus.addListener(ClientGameEvents::onComputeFogColor);
         modEventBus.addListener(ClientGameEvents::onRenderFog);
@@ -336,7 +338,6 @@ public class PoopSkyClient {
         }
 
         public static void onClientTick(ClientTickEvent.Pre event) {
-            SnailShellCamera.tick();
             var mc = Minecraft.getInstance();
             if (mc.player == null || mc.level == null) {
                 ArcadeControlSession.clear();

@@ -635,8 +635,6 @@
   "key.poopsky.arcade.right": "街机-右",
   "key.poopsky.arcade.button1": "街机-按钮 1",
   "key.poopsky.arcade.button2": "街机-按钮 2",
-  "key.poopsky.observe_shell": "认识你自己",
-  "message.poopsky.snail_shell.observe": "按 %s 认识你自己",
   "message.poopsky.toilet_plug.dismount": "按下%s来脱离污秽棍",
 
   "upgrade.poopsky.omen_upgrade":"忌讳升级",

@@ -24,7 +24,7 @@ public class SnailShellArmorModel extends HumanoidModel<LivingEntity> {
         root.getChild("body").addOrReplaceChild("shell", CubeListBuilder.create()
                         .texOffs(0, 14).addBox(-3.5F, -8, -4, 7, 8, 8)
                         .texOffs(30, 25).addBox(-3.5F, -1.6F, -1, 7, 2, 6, new CubeDeformation(0.1F)),
-                PartPose.offsetAndRotation(0, 6, 2.1F, -(float) Math.PI / 2, 0, 0));
+                PartPose.offsetAndRotation(0, 6, 2.1F, -(float) Math.PI * 5 / 8, 0, 0));
         return LayerDefinition.create(mesh, 64, 64).bakeRoot();
     }
 }
