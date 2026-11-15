@@ -18,7 +18,10 @@
   "client": [
     "ClientPacketListenerMixin",
     "CreateWorldScreenWorldTabMixin",
+    "HumanoidArmorLayerMixin",
     "KeyBindsListKeyEntryMixin",
+    "PlayerRendererMixin",
+    "SnailShellCameraMixin",
     "WorldCreationUiStateMixin"
   ],
   "injectors": {

@@ -635,6 +635,8 @@
   "key.poopsky.arcade.right": "Arcade: rechts",
   "key.poopsky.arcade.button1": "Arcade: Taste 1",
   "key.poopsky.arcade.button2": "Arcade: Taste 2",
+  "key.poopsky.observe_shell": "Erkenne dich selbst",
+  "message.poopsky.snail_shell.observe": "Drücke %s, um dich selbst zu betrachten",
   "message.poopsky.toilet_plug.dismount": "Drücke %s, um vom Pümpel abzusteigen",
 
   "upgrade.poopsky.omen_upgrade":"Omen-Aufwertung",

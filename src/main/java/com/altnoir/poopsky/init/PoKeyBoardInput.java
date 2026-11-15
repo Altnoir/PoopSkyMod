@@ -9,6 +9,11 @@ import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import org.lwjgl.glfw.GLFW;
 
 public class PoKeyBoardInput {
+    public static final KeyMapping OBSERVE_SHELL_KEY = new KeyMapping("key.poopsky.observe_shell",
+            KeyConflictContext.IN_GAME,
+            InputConstants.Type.KEYSYM,
+            GLFW.GLFW_KEY_LEFT_ALT,
+            "key.category.poopsky");
     public static final KeyMapping USE_PLUG_KEY = new KeyMapping("key.poopsky.use_plug",
             KeyConflictContext.IN_GAME,
             InputConstants.Type.KEYSYM,
@@ -56,6 +61,7 @@ public class PoKeyBoardInput {
     }
 
     public static void registerKeyMappings(RegisterKeyMappingsEvent event) {
+        event.register(OBSERVE_SHELL_KEY);
         event.register(USE_PLUG_KEY);
         event.register(DISMOUNT_PLUG_KEY);
 

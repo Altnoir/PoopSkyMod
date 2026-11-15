@@ -9,6 +9,10 @@ import net.minecraft.world.entity.LivingEntity;
 public class SnailShellArmorModel extends HumanoidModel<LivingEntity> {
     public SnailShellArmorModel() {
         super(createRoot());
+        ModelPart shell = body.getChild("shell");
+        shell.xScale = 1.3F;
+        shell.yScale = 1.3F;
+        shell.zScale = 1.3F;
     }
 
     private static ModelPart createRoot() {

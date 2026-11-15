@@ -635,6 +635,8 @@
   "key.poopsky.arcade.right": "아케이드 오른쪽",
   "key.poopsky.arcade.button1": "아케이드 버튼 1",
   "key.poopsky.arcade.button2": "아케이드 버튼 2",
+  "key.poopsky.observe_shell": "너 자신을 알라",
+  "message.poopsky.snail_shell.observe": "%s 키로 자신의 모습 살펴보기",
   "message.poopsky.toilet_plug.dismount": "%s 키를 눌러 변기 뚫어뻥에서 내리기",
 
   "upgrade.poopsky.omen_upgrade":"기피 업그레이드",
