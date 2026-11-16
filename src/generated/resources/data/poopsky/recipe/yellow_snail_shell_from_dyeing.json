@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    [
+      {
+        "item": "poopsky:brown_snail_shell"
+      },
+      {
+        "item": "poopsky:black_snail_shell"
+      }
+    ],
+    {
+      "item": "minecraft:yellow_dye"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "poopsky:snail_shell"
+  }
+}

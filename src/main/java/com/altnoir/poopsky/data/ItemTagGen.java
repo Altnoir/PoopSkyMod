@@ -30,6 +30,8 @@ public final class ItemTagGen {
 
     private static void generate(ReginthItemTagsProvider provider) {
         ItemTagGen.provider = provider;
+        tag(PoTags.Items.SNAIL_SHELLS).add(PoItems.SNAIL_SHELL.get(),
+                PoItems.BROWN_SNAIL_SHELL.get(), PoItems.BLACK_SNAIL_SHELL.get());
         tag(PoTags.Items.POOPS)
                 .add(
                         PoItems.POOP.get(),

@@ -106,6 +106,11 @@ public final class EntityLootTableGen {
         normalTag.putBoolean("powered", false);
         loot.add(PoEntityType.SNAIL.get(), LootTable.lootTable()
                 .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1))
+                        .add(LootItem.lootTableItem(PoItems.SNAIL_SHELL_FRAGMENT.get())
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 2)))
+                                .apply(EnchantedCountIncreaseFunction.lootingMultiplier(registries, UniformGenerator.between(0, 1)))))
+                .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0F))
                         .add(LootItem.lootTableItem(PoItems.SLUG.get())
                                 .apply(EnchantedCountIncreaseFunction.lootingMultiplier(registries, UniformGenerator.between(0.0F, 1.0F))))

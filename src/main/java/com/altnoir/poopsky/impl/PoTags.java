@@ -75,6 +75,7 @@ public class PoTags {
         TagKey<Item> FLY_LIKE = create("fly_like");
         TagKey<Item> POP_CHICKEN_LIKE = create("pop_chicken_like");
         TagKey<Item> SNAIL_LIKE = create("snail_like");
+        TagKey<Item> SNAIL_SHELLS = create("snail_shells");
 
         TagKey<Item> VILLAGER_LIKE = create("villager_like");
 
