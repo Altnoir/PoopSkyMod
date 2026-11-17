@@ -253,9 +253,6 @@ public final class LangGen {
         addSubtitle("fly.ambient", "Fly buzzes");
         addSubtitle("fly.hurt", "Fly hurts");
         addSubtitle("fly.death", "Fly dies");
-        addSubtitle("basilisk.ambient", "Basilisk croaks");
-        addSubtitle("basilisk.hurt", "Basilisk hurts");
-        addSubtitle("basilisk.death", "Basilisk dies");
         addSubtitle("snail.hurt", "Snail hurts");
         addSubtitle("fly.capture", "Fly captured");
         addSubtitle("pop.primed", "POP fizzes");

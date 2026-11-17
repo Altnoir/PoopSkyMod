@@ -9,6 +9,7 @@ import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.block.p.PigstyBlock;
 import com.altnoir.poopsky.content.block.p.PortableToiletBlock;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
+import com.altnoir.poopsky.content.item.p.SnailShellItem;
 import com.altnoir.poopsky.content.item.p.TimeBellItem;
 import com.altnoir.poopsky.content.villager.PVillagerBehaviors;
 import com.altnoir.poopsky.content.villager.PVillagerTrades;
@@ -41,10 +42,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
@@ -55,6 +53,11 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.FungusBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.BlockHitResult;
@@ -67,10 +70,12 @@ import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
+import net.neoforged.neoforge.event.entity.player.BonemealEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -93,10 +98,12 @@ public class PoGameEvents {
         gameEventBus.addListener(PoGameEvents::onPigstyPigTick);
         gameEventBus.addListener(PoGameEvents::onFinalizeSpawn);
         gameEventBus.addListener(PoGameEvents::onLivingDeath);
+        gameEventBus.addListener(PoGameEvents::onBonemeal);
         gameEventBus.addListener(PoGameEvents::onCreateSpawnToilet);
         gameEventBus.addListener(PoGameEvents::onPlayerLoggedIn);
         gameEventBus.addListener(PoGameEvents::onPlayerLoggedOut);
         gameEventBus.addListener(PoGameEvents::onPlayerRespawn);
+        gameEventBus.addListener(PoGameEvents::onPlayerTick);
         gameEventBus.addListener(PoGameEvents::onServerTick);
         gameEventBus.addListener(PoCommands::register);
     }
@@ -328,6 +335,21 @@ public class PoGameEvents {
         }
     }
 
+    public static void onPlayerTick(PlayerTickEvent.Post event) {
+        Player player = event.getEntity();
+        boolean crawling = player.isAlive()
+                && !player.isPassenger()
+                && !player.isSleeping()
+                && !player.isFallFlying()
+                && !player.getAbilities().flying
+                && player.getForcedPose() == null
+                && player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof SnailShellItem;
+
+        if (crawling && player.getPose() != Pose.SWIMMING) {
+            player.setPose(Pose.SWIMMING);
+        }
+    }
+
     public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
 
@@ -342,6 +364,42 @@ public class PoGameEvents {
         player.setForcedPose(Pose.SWIMMING);
         player.setPose(Pose.SWIMMING);
         player.server.tell(new TickTask(player.server.getTickCount() + 1, () -> player.setForcedPose(null)));
+    }
+
+    public static void onBonemeal(BonemealEvent event) {
+        BlockState state = event.getState();
+        if (!(state.getBlock() instanceof FungusBlock)) {
+            return;
+        }
+
+        Level level = event.getLevel();
+        BlockPos pos = event.getPos();
+        if (!level.getBlockState(pos.below()).is(PoBlocks.CHILI_POOP_BLOCK.get())) {
+            return;
+        }
+
+        Block grownOn = state.is(Blocks.WARPED_FUNGUS) ? Blocks.WARPED_NYLIUM
+                : state.is(Blocks.CRIMSON_FUNGUS) ? Blocks.CRIMSON_NYLIUM : null;
+        if (grownOn == null) {
+            return;
+        }
+
+        event.setSuccessful(true);
+        if (!(level instanceof ServerLevel serverLevel) || !(state.getBlock() instanceof BonemealableBlock bonemealable)) {
+            return;
+        }
+
+        event.getStack().shrink(1);
+        if (!bonemealable.isBonemealSuccess(serverLevel, serverLevel.getRandom(), pos, state)) {
+            return;
+        }
+
+        serverLevel.setBlock(pos.below(), grownOn.defaultBlockState(), 3);
+        try {
+            bonemealable.performBonemeal(serverLevel, serverLevel.getRandom(), pos, state);
+        } finally {
+            serverLevel.setBlock(pos.below(), PoBlocks.CHILI_POOP_BLOCK.get().defaultBlockState(), 3);
+        }
     }
 
     public static void onLivingDeath(LivingDeathEvent event) {

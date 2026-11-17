@@ -10,8 +10,6 @@ import java.util.Set;
 public final class PoBedrockModelResources {
     public static final ResourceLocation FLUSH_TOILET_CART = PoopSky.loc("flush_toilet_cart.geo");
     public static final ResourceLocation GACHAPON = PoopSky.loc("gachapon.geo");
-    public static final ResourceLocation BASILISK_MODEL = PoopSky.loc("basilisk.geo");
-    public static final ResourceLocation BASILISK_ANIMATION = PoopSky.loc("basilisk.animation");
     public static final ResourceLocation SNAIL_MODEL = PoopSky.loc("snail.geo");
     public static final ResourceLocation SNAIL_ANIMATION = PoopSky.loc("snail.animation");
     public static final ResourceLocation MAGGOT_MODEL = PoopSky.loc("maggot.geo");
@@ -25,9 +23,6 @@ public final class PoBedrockModelResources {
         event.treeModel(FLUSH_TOILET_CART)
                 .register();
         event.bakedModel(GACHAPON)
-                .register();
-        event.bakedModel(BASILISK_MODEL)
-                .animation(BASILISK_ANIMATION)
                 .register();
         event.bakedModel(SNAIL_MODEL)
                 .animation(SNAIL_ANIMATION)

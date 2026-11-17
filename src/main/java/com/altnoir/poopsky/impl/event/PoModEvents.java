@@ -3,7 +3,10 @@ package com.altnoir.poopsky.impl.event;
 import com.altnoir.poopsky.Config;
 import com.altnoir.poopsky.PoopSky;
 import com.altnoir.poopsky.content.block.entity.MaggotsChunkLoaderBlockEntity;
-import com.altnoir.poopsky.content.entity.p.*;
+import com.altnoir.poopsky.content.entity.p.ExplosiveChickenEntity;
+import com.altnoir.poopsky.content.entity.p.FlyEntity;
+import com.altnoir.poopsky.content.entity.p.PoolimeEntity;
+import com.altnoir.poopsky.content.entity.p.SnailEntity;
 import com.altnoir.poopsky.impl.DataGenerators;
 import com.altnoir.poopsky.impl.network.PoNetworking;
 import com.altnoir.poopsky.init.PoBlockEntityType;
@@ -46,7 +49,6 @@ public class PoModEvents {
         event.put(PoEntityType.POOLIME.get(), PoolimeEntity.createAttributes().build());
         event.put(PoEntityType.FLY.get(), FlyEntity.createAttributes().build());
         event.put(PoEntityType.SNAIL.get(), SnailEntity.createAttributes().build());
-        event.put(PoEntityType.BASILISK.get(), BasiliskEntity.createAttributes().build());
         event.put(PoEntityType.POP_CHICKEN.get(), ExplosiveChickenEntity.createAttributes().build());
     }
 

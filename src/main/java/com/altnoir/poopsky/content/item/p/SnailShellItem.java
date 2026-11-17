@@ -1,7 +1,7 @@
 package com.altnoir.poopsky.content.item.p;
 
 import com.altnoir.poopsky.PoopSky;
-import com.altnoir.poopsky.init.PoItems;
+import com.altnoir.poopsky.impl.PoTags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -26,7 +26,7 @@ public class SnailShellItem extends ArmorItem {
 
     @Override
     public boolean isValidRepairItem(ItemStack stack, ItemStack ingredient) {
-        return ingredient.is(PoItems.SNAIL_SHELL_FRAGMENT.get());
+        return ingredient.is(PoTags.Items.SNAIL_SHELLS);
     }
 
     @Override

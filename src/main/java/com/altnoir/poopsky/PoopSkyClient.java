@@ -22,6 +22,7 @@ import com.altnoir.poopsky.content.block.renderer.PedestalBlockEntityRenderer;
 import com.altnoir.poopsky.content.entity.model.FlyModel;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
 import com.altnoir.poopsky.content.entity.renderer.PoBoatRenderer;
+import com.altnoir.poopsky.content.item.p.SnailShellItem;
 import com.altnoir.poopsky.content.item.p.ToiletBlockItem;
 import com.altnoir.poopsky.content.item.renderer.GachaponItemRenderer;
 import com.altnoir.poopsky.content.item.renderer.GlassJarItemRenderer;
@@ -40,6 +41,8 @@ import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;
 import net.minecraft.client.model.BoatModel;
 import net.minecraft.client.model.ChestBoatModel;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -111,6 +114,7 @@ public class PoopSkyClient {
         modEventBus.addListener(ClientGameEvents::onComputeFogColor);
         modEventBus.addListener(ClientGameEvents::onRenderFog);
         modEventBus.addListener(ClientGameEvents::onPlayerHeartType);
+        modEventBus.addListener(ClientGameEvents::onRenderPlayer);
         modEventBus.addListener(ArcadeWorldScreenRenderer::onRenderFrame);
         modEventBus.addListener(ArcadeWorldScreenRenderer::onLoggingOut);
         modEventBus.addListener(ToiletHighlightRenderer::onRenderLevel);
@@ -227,7 +231,7 @@ public class PoopSkyClient {
                         EquipmentSlot slot, HumanoidModel<?> original) {
                     return model;
                 }
-            }, PoItems.SNAIL_SHELL.get(),
+            }, PoItems.SNAIL_SHELL.get(), PoItems.RED_SNAIL_SHELL.get(),
                     PoItems.BROWN_SNAIL_SHELL.get(), PoItems.BLACK_SNAIL_SHELL.get());
 
             var toiletPlugRenderer = new ToiletPlugItemRenderer();
@@ -275,6 +279,17 @@ public class PoopSkyClient {
 
     public static class ClientGameEvents {
         public static Holder<WorldPreset> originalDefaultWorldPreset;
+
+        public static void onRenderPlayer(RenderPlayerEvent.Pre event) {
+            if (!(event.getEntity().getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof SnailShellItem)) {
+                return;
+            }
+            PlayerModel<AbstractClientPlayer> model = event.getRenderer().getModel();
+            model.leftLeg.visible = false;
+            model.rightLeg.visible = false;
+            model.leftPants.visible = false;
+            model.rightPants.visible = false;
+        }
 
         public static void onScreenOpen(ScreenEvent.Opening event) {
             if (ArcadeControlSession.isActive()) {

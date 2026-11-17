@@ -61,28 +61,6 @@ public class RecipeGen extends ReginthRecipeProvider implements IConditionBuilde
     @Override
     protected void buildRecipes(@NotNull RecipeOutput recipeOutput) {
         this.registries = this.registriesFuture.join();
-        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, PoItems.SNAIL_SHELL.get())
-                .pattern("FFF")
-                .pattern("F F")
-                .pattern("FFF")
-                .define('F', PoItems.SNAIL_SHELL_FRAGMENT.get())
-                .unlockedBy("has_snail_shell_fragment", has(PoItems.SNAIL_SHELL_FRAGMENT.get()))
-                .save(recipeOutput);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.COMBAT, PoItems.SNAIL_SHELL.get())
-                .requires(Ingredient.of(PoItems.BROWN_SNAIL_SHELL.get(), PoItems.BLACK_SNAIL_SHELL.get()))
-                .requires(Items.YELLOW_DYE)
-                .unlockedBy("has_snail_shell", has(PoTags.Items.SNAIL_SHELLS))
-                .save(recipeOutput, PoopSky.loc("yellow_snail_shell_from_dyeing"));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.COMBAT, PoItems.BROWN_SNAIL_SHELL.get())
-                .requires(Ingredient.of(PoItems.SNAIL_SHELL.get(), PoItems.BLACK_SNAIL_SHELL.get()))
-                .requires(Items.BROWN_DYE)
-                .unlockedBy("has_snail_shell", has(PoTags.Items.SNAIL_SHELLS))
-                .save(recipeOutput, PoopSky.loc("brown_snail_shell_from_dyeing"));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.COMBAT, PoItems.BLACK_SNAIL_SHELL.get())
-                .requires(Ingredient.of(PoItems.SNAIL_SHELL.get(), PoItems.BROWN_SNAIL_SHELL.get()))
-                .requires(Items.BLACK_DYE)
-                .unlockedBy("has_snail_shell", has(PoTags.Items.SNAIL_SHELLS))
-                .save(recipeOutput, PoopSky.loc("black_snail_shell_from_dyeing"));
         buildSmeltingRecipes(recipeOutput);
         buildItemRecipes(recipeOutput);
         buildMaggotDyeRecipes(recipeOutput);

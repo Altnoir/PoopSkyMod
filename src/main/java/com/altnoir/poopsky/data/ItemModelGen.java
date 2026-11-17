@@ -58,9 +58,17 @@ public class ItemModelGen extends ReginthItemModelProvider {
         withExistingParent(name(PoItems.POOLIME_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
         withExistingParent(name(PoItems.FLY_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
         withExistingParent(name(PoItems.SNAIL_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
-        withExistingParent(name(PoItems.BASILISK_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
         withExistingParent(name(PoItems.POP_CHICKEN_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
+        snailShell(PoItems.SNAIL_SHELL, "yellow");
+        snailShell(PoItems.RED_SNAIL_SHELL, "red");
+        snailShell(PoItems.BROWN_SNAIL_SHELL, "brown");
+        snailShell(PoItems.BLACK_SNAIL_SHELL, "black");
         generated(PoItems.URINE_BUCKET);
+    }
+
+    private void snailShell(ItemEntry<?> item, String color) {
+        withExistingParent(name(item), modLoc("item/snail_shell_template"))
+                .texture("shell", modLoc("entity/snail/" + color + "_snail"));
     }
 
     private void toiletPlugItem() {

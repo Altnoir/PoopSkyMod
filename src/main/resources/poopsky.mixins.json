@@ -7,21 +7,14 @@
     "BaseCoralPlantTypeBlockMixin",
     "CarvedPumpkinBlockMixin",
     "FishingHookMixin",
-    "FrogspawnBlockMixin",
-    "FungusBlockMixin",
     "LivingEntityMixin",
     "NoiseBasedChunkGeneratorMixin",
-    "PlayerMixin",
     "TradeWithVillagerMixin",
     "VillagerMixin"
   ],
   "client": [
     "ClientPacketListenerMixin",
-    "CreateWorldScreenWorldTabMixin",
-    "HumanoidArmorLayerMixin",
-    "KeyBindsListKeyEntryMixin",
-    "PlayerRendererMixin",
-    "WorldCreationUiStateMixin"
+    "HumanoidArmorLayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

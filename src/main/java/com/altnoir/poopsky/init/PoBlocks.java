@@ -674,6 +674,7 @@ public class PoBlocks {
                     .noCollission()
                     .randomTicks()),
             PoBlocks::createMaggotsLoot);
+
     public static final BlockEntry<RoundwormVinesBlock> ROUNDWORM_VINES = registerBlockNoItem("roundworm_vines",
             props -> new RoundwormVinesBlock(
                     plantProperties(MapColor.TERRACOTTA_WHITE, SoundType.TWISTING_VINES)

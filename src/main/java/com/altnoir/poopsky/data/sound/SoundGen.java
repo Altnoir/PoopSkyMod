@@ -242,30 +242,6 @@ public class SoundGen extends SoundDefinitionsProvider {
                         sound(mcloc("block.beehive.exit"), SoundDefinition.SoundType.EVENT)
                 ));
 
-        add(PoSoundEvents.ENTITY_BASILISK_AMBIENT, definition()
-                .subtitle("subtitle.poopsky.basilisk.ambient")
-                .with(
-                        sound(mcloc("entity.frog.ambient"), SoundDefinition.SoundType.EVENT)
-                ));
-
-        add(PoSoundEvents.ENTITY_BASILISK_HURT, definition()
-                .subtitle("subtitle.poopsky.basilisk.hurt")
-                .with(
-                        sound(mcloc("entity.frog.hurt"), SoundDefinition.SoundType.EVENT)
-                ));
-
-        add(PoSoundEvents.ENTITY_BASILISK_DEATH, definition()
-                .subtitle("subtitle.poopsky.basilisk.death")
-                .with(
-                        sound(mcloc("entity.frog.death"), SoundDefinition.SoundType.EVENT)
-                ));
-
-        add(PoSoundEvents.ENTITY_BASILISK_STEP, definition()
-                .subtitle("subtitles.block.generic.footsteps")
-                .with(
-                        sound(mcloc("entity.frog.step"), SoundDefinition.SoundType.EVENT)
-                ));
-
         add(PoSoundEvents.ENTITY_SNAIL_HURT, definition()
                 .subtitle("subtitle.poopsky.snail.hurt")
                 .with(

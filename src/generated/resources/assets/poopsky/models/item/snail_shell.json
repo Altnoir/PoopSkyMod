@@ -1,6 +1,6 @@
 {
   "parent": "poopsky:item/snail_shell_template",
   "textures": {
-    "shell": "poopsky:entity/snail/brown_snail"
+    "shell": "poopsky:entity/snail/yellow_snail"
   }
 }

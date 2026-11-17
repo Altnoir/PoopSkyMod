@@ -4,6 +4,7 @@ import com.altnoir.poopsky.compat.PoMods;
 import com.altnoir.poopsky.compat.create.data.PDigestingRecipeGen;
 import com.altnoir.poopsky.compat.create.data.PHauntingRecipeGen;
 import com.altnoir.poopsky.compat.create.data.PWashingRecipeGen;
+import com.altnoir.poopsky.data.AtlasGen;
 import com.altnoir.poopsky.data.BlockStateGen;
 import com.altnoir.poopsky.data.ItemModelGen;
 import com.altnoir.poopsky.data.PaintingVariantTagsGen;
@@ -41,6 +42,7 @@ public class DataGenerators {
         generators.addProvider(event.includeServer(), datapackProvider);
         generators.addProvider(event.includeServer(), damageTypeTagsProvider);
 
+        generators.addProvider(event.includeClient(), new AtlasGen(packOutput, lookupProvider, existingFileHelper));
         generators.addProvider(event.includeClient(), new BlockStateGen(packOutput, existingFileHelper));
         generators.addProvider(event.includeClient(), new ItemModelGen(packOutput, existingFileHelper));
         generators.addProvider(event.includeClient(), new SoundGen(packOutput, existingFileHelper));

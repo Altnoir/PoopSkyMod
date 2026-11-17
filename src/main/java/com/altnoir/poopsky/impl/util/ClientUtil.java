@@ -1,19 +1,16 @@
 package com.altnoir.poopsky.impl.util;
 
-import com.altnoir.poopsky.init.PoWorldPreset;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Holder;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.ColorResolver;
@@ -29,7 +26,6 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4fStack;
 import org.joml.Vector3f;
 
-import java.util.Optional;
 
 public class ClientUtil {
     private static final Minecraft mc = Minecraft.getInstance();
@@ -155,16 +151,5 @@ public class ClientUtil {
         public int getMinBuildHeight() {
             return 0;
         }
-    }
-
-    public static boolean isPoopSkyWorldType(WorldCreationUiState uiState) {
-        return isPoopSkyWorldType(uiState.getWorldType());
-    }
-
-    public static boolean isPoopSkyWorldType(WorldCreationUiState.WorldTypeEntry worldType) {
-        return Optional.ofNullable(worldType.preset())
-                .flatMap(Holder::unwrapKey)
-                .filter(PoWorldPreset.POOPSKY::equals)
-                .isPresent();
     }
 }

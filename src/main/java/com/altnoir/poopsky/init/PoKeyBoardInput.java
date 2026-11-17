@@ -20,32 +20,32 @@ public class PoKeyBoardInput {
             GLFW.GLFW_KEY_C,
             "key.category.poopsky");
 
-    public static final KeyMapping ARCADE_UP = new KeyMapping("key.poopsky.arcade.up",
+    public static final KeyMapping ARCADE_UP = new ArcadeKeyMapping("key.poopsky.arcade.up",
             ArcadeKeyConflictContext.INSTANCE,
             InputConstants.Type.KEYSYM,
             GLFW.GLFW_KEY_W,
             "key.category.poopsky");
-    public static final KeyMapping ARCADE_DOWN = new KeyMapping("key.poopsky.arcade.down",
+    public static final KeyMapping ARCADE_DOWN = new ArcadeKeyMapping("key.poopsky.arcade.down",
             ArcadeKeyConflictContext.INSTANCE,
             InputConstants.Type.KEYSYM,
             GLFW.GLFW_KEY_S,
             "key.category.poopsky");
-    public static final KeyMapping ARCADE_LEFT = new KeyMapping("key.poopsky.arcade.left",
+    public static final KeyMapping ARCADE_LEFT = new ArcadeKeyMapping("key.poopsky.arcade.left",
             ArcadeKeyConflictContext.INSTANCE,
             InputConstants.Type.KEYSYM,
             GLFW.GLFW_KEY_A,
             "key.category.poopsky");
-    public static final KeyMapping ARCADE_RIGHT = new KeyMapping("key.poopsky.arcade.right",
+    public static final KeyMapping ARCADE_RIGHT = new ArcadeKeyMapping("key.poopsky.arcade.right",
             ArcadeKeyConflictContext.INSTANCE,
             InputConstants.Type.KEYSYM,
             GLFW.GLFW_KEY_D,
             "key.category.poopsky");
-    public static final KeyMapping ARCADE_BUTTON1 = new KeyMapping("key.poopsky.arcade.button1",
+    public static final KeyMapping ARCADE_BUTTON1 = new ArcadeKeyMapping("key.poopsky.arcade.button1",
             ArcadeKeyConflictContext.INSTANCE,
             InputConstants.Type.KEYSYM,
             GLFW.GLFW_KEY_J,
             "key.category.poopsky");
-    public static final KeyMapping ARCADE_BUTTON2 = new KeyMapping("key.poopsky.arcade.button2",
+    public static final KeyMapping ARCADE_BUTTON2 = new ArcadeKeyMapping("key.poopsky.arcade.button2",
             ArcadeKeyConflictContext.INSTANCE,
             InputConstants.Type.KEYSYM,
             GLFW.GLFW_KEY_K,
@@ -78,6 +78,17 @@ public class PoKeyBoardInput {
         @Override
         public boolean conflicts(IKeyConflictContext other) {
             return this == other;
+        }
+    }
+
+    public static class ArcadeKeyMapping extends KeyMapping {
+        public ArcadeKeyMapping(String description, IKeyConflictContext conflictContext, InputConstants.Type type, int keyCode, String category) {
+            super(description, conflictContext, type, keyCode, category);
+        }
+
+        @Override
+        public boolean same(KeyMapping other) {
+            return other.getKeyConflictContext() instanceof ArcadeKeyConflictContext && super.same(other);
         }
     }
 }

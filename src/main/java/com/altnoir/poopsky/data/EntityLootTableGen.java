@@ -15,20 +15,19 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
 import net.minecraft.world.level.storage.loot.entries.TagEntry;
 import net.minecraft.world.level.storage.loot.functions.EnchantedCountIncreaseFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.functions.SmeltItemFunction;
-import net.minecraft.world.level.storage.loot.predicates.AnyOfCondition;
-import net.minecraft.world.level.storage.loot.predicates.DamageSourceCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
+import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
@@ -105,11 +104,7 @@ public final class EntityLootTableGen {
         CompoundTag normalTag = new CompoundTag();
         normalTag.putBoolean("powered", false);
         loot.add(PoEntityType.SNAIL.get(), LootTable.lootTable()
-                .withPool(LootPool.lootPool()
-                        .setRolls(ConstantValue.exactly(1))
-                        .add(LootItem.lootTableItem(PoItems.SNAIL_SHELL_FRAGMENT.get())
-                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 2)))
-                                .apply(EnchantedCountIncreaseFunction.lootingMultiplier(registries, UniformGenerator.between(0, 1)))))
+                .withPool(snailShellPool(registries))
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0F))
                         .add(LootItem.lootTableItem(PoItems.SLUG.get())
@@ -121,12 +116,6 @@ public final class EntityLootTableGen {
                         .add(LootItem.lootTableItem(PoItems.POWER_SLUG.get()))
                         .when(LootItemEntityPropertyCondition.hasProperties(
                                 LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().nbt(new NbtPredicate(poweredTag))))));
-        loot.add(PoEntityType.BASILISK.get(), LootTable.lootTable()
-                .withPool(LootPool.lootPool()
-                        .setRolls(ConstantValue.exactly(1.0F))
-                        .add(LootItem.lootTableItem(PoItems.EYE_OF_BASILISK.get())
-                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
-                                .apply(EnchantedCountIncreaseFunction.lootingMultiplier(registries, UniformGenerator.between(0.0F, 1.0F))))));
         loot.add(
                 PoEntityType.POP_CHICKEN.get(),
                 LootTable.lootTable()
@@ -169,6 +158,25 @@ public final class EntityLootTableGen {
                                 )
                 )
         );
+    }
+
+    private static LootPool.Builder snailShellPool(HolderLookup.Provider registries) {
+        LootPool.Builder pool = LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F));
+        pool.add(snailShell(registries, 0, PoItems.SNAIL_SHELL.get()));
+        pool.add(snailShell(registries, 1, PoItems.RED_SNAIL_SHELL.get()));
+        pool.add(snailShell(registries, 2, PoItems.BROWN_SNAIL_SHELL.get()));
+        pool.add(snailShell(registries, 3, PoItems.BLACK_SNAIL_SHELL.get()));
+        return pool;
+    }
+
+    private static LootPoolEntryContainer.Builder<?> snailShell(HolderLookup.Provider registries, int color, Item shell) {
+        CompoundTag colorTag = new CompoundTag();
+        colorTag.putInt("Color", color);
+        return LootItem.lootTableItem(shell)
+                .when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS,
+                        EntityPredicate.Builder.entity().nbt(new NbtPredicate(colorTag))))
+                .when(LootItemKilledByPlayerCondition.killedByPlayer())
+                .when(LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries, 0.025F, 0.01F));
     }
 
     private static LootItemCondition.Builder killedByFrog() {

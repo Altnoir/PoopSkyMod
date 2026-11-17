@@ -96,12 +96,10 @@ public class PoItems {
             props -> new DragonFruitRItem(props.food(PFoods.KING_OF_DRAGON_FRUIT)));
     public static final ItemEntry<Item> SLUG = registerItem("slug", Item::new);
     public static final ItemEntry<Item> POWER_SLUG = registerItem("power_slug", Item::new);
-    public static final ItemEntry<Item> SNAIL_SHELL_FRAGMENT = registerItemNoModel("snail_shell_fragment", Item::new);
     public static final ItemEntry<SnailShellItem> SNAIL_SHELL = registerSnailShell("snail_shell", "yellow");
+    public static final ItemEntry<SnailShellItem> RED_SNAIL_SHELL = registerSnailShell("red_snail_shell", "red");
     public static final ItemEntry<SnailShellItem> BROWN_SNAIL_SHELL = registerSnailShell("brown_snail_shell", "brown");
     public static final ItemEntry<SnailShellItem> BLACK_SNAIL_SHELL = registerSnailShell("black_snail_shell", "black");
-
-    public static final ItemEntry<Item> EYE_OF_BASILISK = registerItem("eye_of_basilisk", Item::new);
 
     public static final ItemEntry<ToiletPlugItem> TOILET_PLUG = registerItemNoModel("toilet_plug",
             props -> new ToiletPlugItem(props.attributes(ToiletPlugItem.createWeaponAttributes())
@@ -232,8 +230,6 @@ public class PoItems {
             prop -> new DeferredSpawnEggItem(PoEntityType.POP_CHICKEN, 0xA1A1A1, 0x8B5A2B, prop));
     public static final ItemEntry<DeferredSpawnEggItem> SNAIL_SPAWN_EGG = registerItemNoModel("snail_spawn_egg",
             prop -> new DeferredSpawnEggItem(PoEntityType.SNAIL, 0xE7C83F, 0x9A3B26, prop));
-    public static final ItemEntry<DeferredSpawnEggItem> BASILISK_SPAWN_EGG = registerItemNoModel("basilisk_spawn_egg",
-            prop -> new DeferredSpawnEggItem(PoEntityType.BASILISK, 0x71877A, 0xE1CCA8, prop));
 
     public static final ItemEntry<FlyItem> FLY = registerItemNoModel("fly",
             props -> new FlyItem(props.stacksTo(88)));
@@ -247,12 +243,16 @@ public class PoItems {
     }
 
     private static ItemEntry<SnailShellItem> registerSnailShell(String name, String color) {
-        return registerItemNoModel(name, props -> new SnailShellItem(color,
-                props.attributes(ItemAttributeModifiers.builder()
-                        .add(Attributes.ARMOR,
-                                new AttributeModifier(PoopSky.loc("snail_shell"), 4, AttributeModifier.Operation.ADD_VALUE),
-                                EquipmentSlotGroup.CHEST)
-                        .build())));
+        return REGISTRATE.item(name, props -> new SnailShellItem(color,
+                        props.attributes(ItemAttributeModifiers.builder()
+                                .add(Attributes.ARMOR,
+                                        new AttributeModifier(PoopSky.loc("snail_shell"), 4, AttributeModifier.Operation.ADD_VALUE),
+                                        EquipmentSlotGroup.CHEST)
+                                .build()).rarity(Rarity.RARE)))
+                .model((ctx, prov) -> {
+                })
+                .lang("Snail Shell")
+                .register();
     }
 
     private static <T extends Item> ItemEntry<T> registerItem(String name, NonNullFunction<Item.Properties, T> factory) {

@@ -1,7 +1,7 @@
 {
   "sources": [
     {
-      "type": "single",
+      "type": "minecraft:single",
       "resource": "minecraft:mob_effect/wither",
       "sprite": "poopsky:death_blight"
     }
