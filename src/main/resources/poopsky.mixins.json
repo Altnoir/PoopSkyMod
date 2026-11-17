@@ -11,16 +11,13 @@
     "FungusBlockMixin",
     "LivingEntityMixin",
     "NoiseBasedChunkGeneratorMixin",
-    "PlayerMixin",
     "TradeWithVillagerMixin",
     "VillagerMixin"
   ],
   "client": [
     "ClientPacketListenerMixin",
     "CreateWorldScreenWorldTabMixin",
-    "HumanoidArmorLayerMixin",
     "KeyBindsListKeyEntryMixin",
-    "PlayerRendererMixin",
     "WorldCreationUiStateMixin"
   ],
   "injectors": {

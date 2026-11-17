@@ -11,6 +11,7 @@ import com.altnoir.poopsky.client.particle.LeavesParticle;
 import com.altnoir.poopsky.client.particle.PoopParticle;
 import com.altnoir.poopsky.client.particle.ToiletParticle;
 import com.altnoir.poopsky.client.renderer.IgneousExtruderBlockEntityRenderer;
+import com.altnoir.poopsky.client.renderer.SnailShellArmorLayer;
 import com.altnoir.poopsky.client.renderer.TimeBellOverlay;
 import com.altnoir.poopsky.client.renderer.ToiletHighlightRenderer;
 import com.altnoir.poopsky.content.ToiletType;
@@ -91,6 +92,7 @@ public class PoopSkyClient {
         modEventBus.addListener(ClientModEvents::modLoad);
         modEventBus.addListener(ClientModEvents::registerLayers);
         modEventBus.addListener(ClientModEvents::registerRenderers);
+        modEventBus.addListener(SnailShellArmorLayer::registerLayers);
         modEventBus.addListener(ClientModEvents::registerFluidRenderTypes);
         modEventBus.addListener(ClientModEvents::registerItemProperties);
         modEventBus.addListener(ClientModEvents::registerRenderTypes);
@@ -105,6 +107,7 @@ public class PoopSkyClient {
 
     public static void registerGame(IEventBus modEventBus) {
         modEventBus.addListener(ClientGameEvents::onScreenOpen);
+        modEventBus.addListener(SnailShellArmorLayer::onRenderPlayer);
         modEventBus.addListener(ClientGameEvents::onClientTick);
         modEventBus.addListener(ArcadeControlSession::onKeyInput);
         modEventBus.addListener(ClientGameEvents::onComputeFov);

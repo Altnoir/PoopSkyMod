@@ -9,6 +9,7 @@ import com.altnoir.poopsky.content.block.p.BaseToiletLavaBlock;
 import com.altnoir.poopsky.content.block.p.PigstyBlock;
 import com.altnoir.poopsky.content.block.p.PortableToiletBlock;
 import com.altnoir.poopsky.content.entity.p.ToiletPlugEntity;
+import com.altnoir.poopsky.content.item.p.SnailShellItem;
 import com.altnoir.poopsky.content.item.p.TimeBellItem;
 import com.altnoir.poopsky.content.villager.PVillagerBehaviors;
 import com.altnoir.poopsky.content.villager.PVillagerTrades;
@@ -41,10 +42,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
@@ -71,6 +69,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -90,6 +89,7 @@ public class PoGameEvents {
         gameEventBus.addListener(PoGameEvents::onEntityDismount);
         gameEventBus.addListener(PoGameEvents::onMobEffectApplicable);
         gameEventBus.addListener(PoGameEvents::onEntityTick);
+        gameEventBus.addListener(PoGameEvents::onSnailShellPlayerTick);
         gameEventBus.addListener(PoGameEvents::onPigstyPigTick);
         gameEventBus.addListener(PoGameEvents::onFinalizeSpawn);
         gameEventBus.addListener(PoGameEvents::onLivingDeath);
@@ -99,6 +99,16 @@ public class PoGameEvents {
         gameEventBus.addListener(PoGameEvents::onPlayerRespawn);
         gameEventBus.addListener(PoGameEvents::onServerTick);
         gameEventBus.addListener(PoCommands::register);
+    }
+
+    public static void onSnailShellPlayerTick(PlayerTickEvent.Post event) {
+        Player player = event.getEntity();
+        if (player.isAlive() && !player.isPassenger() && !player.isSleeping()
+                && !player.isFallFlying() && !player.getAbilities().flying
+                && player.getForcedPose() == null
+                && player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof SnailShellItem) {
+            player.setPose(Pose.SWIMMING);
+        }
     }
 
     public static void onItemCrafted(PlayerEvent.ItemCraftedEvent event) {
